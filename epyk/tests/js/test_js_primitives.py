@@ -1,4 +1,3 @@
-import pytest
 
 from epyk.core.js import Js
 from epyk.core.js import JsUtils
@@ -12,7 +11,7 @@ print(jsObj.objects.number.new(349.673, "MyNumber").toStr())
 
 
 jsObj = Js.JsBase()
-f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0], path=r"C:\Users\olivier\Documents\youpi\jsFiles")
+f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0])
 f.writeJs([
 jsObj.objects.array.new([2, 5, 12, -3], "MyArray"),
 jsObj.objects.array.new([3, -9, 2, -6], "MyArray2"),
@@ -55,7 +54,7 @@ f.close()
 
 # Boolean
 jsObj = Js.JsBase()
-f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0], path=r"C:\Users\olivier\Documents\youpi\jsFiles")
+f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0])
 f.writeJs([
   jsObj.objects.boolean.new(False, "testBool"),
   jsObj.console.log(jsObj.objects.boolean.get("testBool")),
@@ -69,7 +68,7 @@ f.close()
 
 from epyk.core.js import Js
 
-f = JsUtils.JsFile("jsDate", path=r"C:\Users\olivier\Documents\youpi\jsFiles")
+f = JsUtils.JsFile("jsDate")
 
 dt = JsDate.new("2019-05-03")
 f.writeJs([dt,
@@ -104,7 +103,7 @@ from epyk.core.js import Js
 from epyk.core.js import JsUtils
 
 jsObj = Js.JsBase()
-f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0], path=r"C:\Users\olivier\Documents\youpi\jsFiles")
+f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0])
 f.writeJs([
   jsObj.objects.number.new(349.673, "MyNumber"),
   jsObj.console.log(jsObj.objects.number.get("MyNumber").toPrecision(2)),
@@ -122,7 +121,7 @@ import os
 from epyk.core.js import Js
 
 jsObj = Js.JsBase()
-f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0], path=r"C:\Users\olivier\Documents\youpi\jsFiles")
+f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0])
 f.writeJs([
   jsObj.objects.new({}, varName="MyObject"),
   jsObj.objects.number.new(13, varName="MyNumber"),
@@ -147,7 +146,7 @@ import os
 from epyk.core.js import Js
 
 jsObj = Js.JsBase()
-f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0], path=r"C:\Users\olivier\Documents\youpi\jsFiles")
+f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0])
 
 string = JsString.new("te st", "testStr")
 f.writeJs([
