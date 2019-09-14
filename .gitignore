@@ -8,6 +8,8 @@
 *.so
 *.pyc
 *.bat
+*.xml
+*.iml
 
 # Packages #
 ############
