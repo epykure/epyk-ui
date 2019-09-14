@@ -493,7 +493,7 @@ class JsWindow(object):
     Download the data from a flat file
 
     Example
-    rptObj.js.window.download(rptObj.js.window.btoa(rptObj.js.objects.get("youpi")), fileName="test.txt")
+    rptObj.js.window.download(rptObj.js.window.btoa(rptObj.js.objects.get("test")), fileName="test.txt")
 
     Documentation
 
