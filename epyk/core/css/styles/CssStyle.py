@@ -22,7 +22,7 @@ def cssName(cssRef):
   Basically before creating a CSS class, and in order to avoid clashes the framework will add a prefix py_.
 
   :param cssRef: The original classname
-  
+
   :return: The classname string
 
   #TODO: Check that all the HTML Objects are using self.pyStyle instead of self.__pyStyle
