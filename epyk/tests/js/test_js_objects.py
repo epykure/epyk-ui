@@ -8,7 +8,7 @@ import os
     htmlId = "test"
 
   dom = JsHtml.JsHtml(HtmlComp())
-  f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0], path=r"C:\Users\olivier\Documents\youpi\jsFiles")
+  f = JsUtils.JsFile(os.path.basename(__file__).split(".")[0])
 
   f.writeJs([
     dom.hide(),
