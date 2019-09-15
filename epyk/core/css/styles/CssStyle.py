@@ -9,6 +9,8 @@ import inspect
 import importlib
 
 from epyk.core.css import Color
+from epyk.core.css import Defaults
+
 
 # The CSS module factory in charge of storing all the available styles in the framework
 factory = None
@@ -99,7 +101,7 @@ def getCssObj(clsName, context=None, colors=None, theme=None):
   return None
 
 
-def setCssObj(clsName, cssAttrs, context, theme=None, forceReload=False):
+def setCssObj(clsName, css_attrs, context, theme=None, force_reload=False):
   """
   CSS Factory
 
@@ -110,15 +112,18 @@ def setCssObj(clsName, cssAttrs, context, theme=None, forceReload=False):
   Indeed this will be directly converted to CSS and added to the result page
 
   :param clsName: The CSS classname as a string
-  :param cssAttrs: A Python dictionary with all the CSS attributes
+  :param css_attrs: A Python dictionary with all the CSS attributes
   :param context: The context object
+  :param theme:
+  :param force_reload:
+
   :return:
   """
   global factory
 
   load()
-  if not clsName in factory or forceReload:
-    factory[clsName] = {'object': cssAttrs}
+  if not clsName in factory or force_reload:
+    factory[clsName] = {'object': css_attrs}
   return getCssObj(clsName, context, theme=theme)
 
 
@@ -161,7 +166,7 @@ class CssCls(object):
         self.eventsStyles["%(type)s%(value)s" % childKind] = childKind['style']
     self.customize(self.style, self.eventsStyles)
 
-  def customize(self, style, eventsStyles):
+  def customize(self, style, events_styles):
     """
     CSS Style Builder
 
@@ -170,7 +175,7 @@ class CssCls(object):
     In the base class this method is not defined
 
     :param style: A dictionary with the CSS attributes used to define the class
-    :param eventsStyles: A dictionary of dictionary with all the CSS special attributes
+    :param events_styles: A dictionary of dictionary with all the CSS special attributes
     """
     pass
 
@@ -188,13 +193,13 @@ class CssCls(object):
 
     :return: A python dictionary with all the Css class object events
     """
-    cssEvent = {}
+    css_event = {}
     for state, cssRecord in self.eventsStyles.items():
       if cssRecord is None or len(cssRecord) == 0:
         continue
 
-      cssEvent[state] = self.toCss(cssRecord)
-    return cssEvent
+      css_event[state] = self.toCss(cssRecord)
+    return css_event
 
 
   # -------------------------------------------------------------------------------
@@ -227,36 +232,47 @@ class CssCls(object):
       self.cssId = cssId['reference']
       return self.cssId
 
-    cssIdParts = []
+    css_id_parts = []
     if 'parent' in cssId:
-      cssIdParts.append("%s > " % cssId['parent'])
+      css_id_parts.append("%s > " % cssId['parent'])
     elif 'preceed' in cssId:
-      cssIdParts.append("%s ~ " % cssId['preceed'])
+      css_id_parts.append("%s ~ " % cssId['preceed'])
 
     if 'id' in cssId:
-      cssIdParts.append("#%s" % cssId['id'])
+      css_id_parts.append("#%s" % cssId['id'])
     else:
       if 'tag' in cssId:
         if cssId['tag'].startswith(":"):
-          cssIdParts.append(".%s%s" % (self.classname, cssId['tag']))
+          css_id_parts.append(".%s%s" % (self.classname, cssId['tag']))
         else:
-          cssIdParts.append("%s.%s" % (cssId['tag'], self.classname))
+          css_id_parts.append("%s.%s" % (cssId['tag'], self.classname))
       elif 'direct' in cssId:
-        cssIdParts.append(".%s > %s" % (self.classname, cssId['direct']))
+        css_id_parts.append(".%s > %s" % (self.classname, cssId['direct']))
       elif 'child' in cssId:
-        cssIdParts.append(".%s %s" % (self.classname, cssId['child']))
+        css_id_parts.append(".%s %s" % (self.classname, cssId['child']))
       else:
-        cssIdParts.append(".%s" % self.classname)
+        css_id_parts.append(".%s" % self.classname)
     if 'type' in cssId:
-      cssIdParts.append("[%s=%s]" % (cssId['type'][0], cssId['type'][1]))
-    self.cssId = ''.join(cssIdParts)
+      css_id_parts.append("[%s=%s]" % (cssId['type'][0], cssId['type'][1]))
+    self.cssId = ''.join(css_id_parts)
     return self.cssId
 
-  def getStyles(self):
+  def getStyles(self, to_str=True):
     """
-    CSS Style Builder
+    CSS Style Builder.
+
+    This will always return the original CSS styles. No override will be applied at this level.
+
+    To get the current value of a style, the getStyles() of the CSS object should be used instead
+
+    Example
+    >>> cssCls = getCssObj('CssButtonBasic', colors={'colors': {9: 'orange'}})
+    >>> cssCls.getStyles()['.py_cssbuttonbasic:focus']
+    '{ outline: 0; }'
 
     Function to process the Static CSS Python configuration and to convert it to String fragments following the CSS Web standard.
+
+    :param to_str: Optional. Flag to convert the CSS style to a valid CSS string object. Default True
 
     :return: A Python dictionary with all the different styles and selector to be written to the page for a given Python CSS Class
     """
@@ -272,39 +288,43 @@ class CssCls(object):
         skey = "::" if "::" in ['before', 'after'] else ":"
         res["%s > %s%s%s" % (self.cssId, self.directChildrenTag, skey, key)] = val
     else:
-      res[self.cssId] = self.toCss(self.style)
+      res[self.cssId] = self.toCss(self.style) if to_str else self.style
       for key, val in self.events().items():
         skey = "::" if "::" in ['before', 'after'] else ":"
         res["%s%s%s" % (self.cssId, skey, key)] = val
     return res
 
-  def getStyleId(self, htmlRef):
+  def getStyleId(self, html_reference):
     """
     CSS Style Builder
 
     Produce based on the CSS Python classes the correct CSS Name
 
+    :param html_reference:
+
     return: Returns the CSS part to be written in the page by HTML tag
     """
-    htmlId = "#%s" % htmlRef
-    cssData = str(self)
+    htmlId = "#%s" % html_reference
+    css_data = str(self)
     if htmlId in self.cssObj.cssStyles:
-      if self.cssObj.cssStyles[htmlId] != cssData:
-        raise Exception("CSS style conflict for %s" % htmlRef)
+      if self.cssObj.cssStyles[htmlId] != css_data:
+        raise Exception("CSS style conflict for %s" % html_reference)
 
-    self.cssObj.cssStyles[htmlId] = cssData
+    self.cssObj.cssStyles[htmlId] = css_data
 
-  def getStyleTag(self, htmlTag):
+  def getStyleTag(self, html_tag):
     """
     CSS Style Builder
 
     Produce based on the CSS Python classes the correct CSS Name
 
+    :param html_tag:
+
     return: Returns the CSS part to be written in the page by HTML tag
     """
-    self.cssObj.cssStyles[htmlTag] = self.toCss(self.style)
+    self.cssObj.cssStyles[html_tag] = self.toCss(self.style)
 
-  def getStyleCls(self, clss, htmlType=None):
+  def getStyleCls(self, clss, html_type=None):
     """
     CSS Style Builder
 
@@ -313,56 +333,63 @@ class CssCls(object):
     Documentation
     https://www.w3schools.com/cssref/sel_class.asp
 
+    :param html_type:
+
     return: Returns the CSS part to be written in the page by class name
     """
-    if htmlType is not None:
-      self.cssObj.cssStyles["%s.%s" % (htmlType, clss)] = self.toCss(self.style)
+    if html_type is not None:
+      self.cssObj.cssStyles["%s.%s" % (html_type, clss)] = self.toCss(self.style)
     else:
       self.cssObj.cssStyles[".%s" % clss] = self.toCss(self.style)
 
-  def getStyleName(self, htmlType, name):
+  def getStyleName(self, html_type, name):
     """
     CSS Style Builder
 
     Add the CSS Fragment for a very bespoke CSS configuration based on HTML item names.
     This can be used when only some components with the tag (or not) are impacting by a CSS Style
 
+    :param html_type:
+
     :return: Returns the CSS part to be written in the page by class name
     """
-    self.cssObj.cssStyles["%s[name='%s']" % (htmlType, name)] = self.toCss(self.style)
+    self.cssObj.cssStyles["%s[name='%s']" % (html_type, name)] = self.toCss(self.style)
 
-  def css(self, attr, value=None, eventAttrs=None):
+  def css(self, attr, value=None, event_attrs=None):
     """
     Update a pre defined CSS style. This function is working in the same way than the css jquery function.
 
     Example:
-      - cssCls.css('color', 'blue')
-      - cssCls.css({'color': 'blue'}, eventAttrs={'color': 'red'})
+    cssCls.css('color', 'blue')
+    cssCls.css({'color': 'blue'}, eventAttrs={'color': 'red'})
 
     :param attr: The CSS key or the CSS dictionary to add to the class
     :param value: The CSS value for the given key
+    :param event_attrs:
+
     :return: The cssCls Object
     """
     if isinstance(attr, dict) and value is None:
       self.style.update(dict([(k, v) for k, v in attr.items() if v if not None]))
     else:
       self.style[attr] = value
-    if eventAttrs is not None:
-      for event, cssDef in eventAttrs.items():
+    if event_attrs is not None:
+      for event, cssDef in event_attrs.items():
         self.eventsStyles[event].update(cssDef)
     return self
 
-  def __add__(self, cssStyle):
+  def __add__(self, css_style):
     """
     CSS Style Builder
 
     Override the CSS style attributes with the new CSS object
 
-    :param cssStyle: A Python CSS Style object
+    :param css_style: A Python CSS Style object
+
     :return: The cssCls Object
     """
-    self.style.update(cssStyle.style)
-    for event, css in cssStyle.eventsStyles.items():
+    self.style.update(css_style.style)
+    for event, css in css_style.eventsStyles.items():
       self.eventsStyles[event].update(css)
     return self
 
@@ -374,28 +401,32 @@ class CssCls(object):
 
     :param name: The color label
     :param index: The color index in the list
+
     :return: The hexadecimal color code
     """
     if self.theme is not None:
-      colorObj = Color.ColorMaker(self.rptObj, theme=self.theme)
+      color_obj = Color.ColorMaker(self.rptObj, theme=self.theme)
     else:
-      colorObj = Color.ColorMaker(self.rptObj)
+      color_obj = Color.ColorMaker(self.rptObj)
     if self.colorsCalc is not None and name in self.colorsCalc:
-      countCategory = len(colorObj.get(name))
+      count_category = len(color_obj.get(name))
       if index > 0:
-        invIndex = index - countCategory - 1
+        inv_index = index - count_category - 1
         if index in self.colorsCalc[name]:
           return self.colorsCalc[name][index]
-        elif invIndex in self.colorsCalc[name]:
-          return self.colorsCalc[name][invIndex]
-      if index < 0:
-        invIndex = countCategory + index + 1
-        if index in self.colorsCalc[name]:
-          return self.colorsCalc[name][index]
-        elif invIndex in self.colorsCalc[name]:
-          return self.colorsCalc[name][invIndex]
 
-    return colorObj.get(name, index)
+        elif inv_index in self.colorsCalc[name]:
+          return self.colorsCalc[name][inv_index]
+
+      if index < 0:
+        inv_index = count_category + index + 1
+        if index in self.colorsCalc[name]:
+          return self.colorsCalc[name][index]
+
+        elif inv_index in self.colorsCalc[name]:
+          return self.colorsCalc[name][inv_index]
+
+    return color_obj.get(name, index)
 
   def color(self, category, index=None, color=None):
     """
@@ -404,22 +435,24 @@ class CssCls(object):
     :param category: The color category
     :param index: The color index in the list
     :param color: The hexadecimal color code
+
     :return: The hexadecimal color code
     """
-    colorObj = Color.ColorMaker(self.rptObj, theme=self.theme)
-    return colorObj.get(category, index, color)
+    color_obj = Color.ColorMaker(self.rptObj, theme=self.theme)
+    return color_obj.get(category, index, color)
 
-  def toCss(self, paramsCss):
+  def toCss(self, params_css):
     """
     Convert a Python CSS Class to a well defined CSS Class
 
     Example:
     CssCls().toCss({"text-align": 'right'})
 
-    :param paramsCss: A Python dictionary with the CSS content
+    :param params_css: A Python dictionary with the CSS content
+
     :return: the Python String in a CSS format
     """
-    return "{ %s; }" % "; ".join(["%s: %s" % (k, v) for k, v in paramsCss.items()])
+    return "{ %s; }" % "; ".join(["%s: %s" % (k, v) for k, v in params_css.items()])
 
   def clone(self, name):
     """
@@ -428,16 +461,9 @@ class CssCls(object):
     Create a new CSS object derived from the existing one.
 
     :param name: The new CSS reference
+
     :return: The CSS Class
     """
-    clsVirt = type(name, (self.__class__,), {})
-    clsVirt.name = name
-    return clsVirt
-
-
-if __name__ == "__main__":
-  cssCls = getCssObj('CssButtonBasic', colors={'colors': {9: 'orange'}})
-  #cssCls.color('colors', -1, "orange")
-  print("-------------")
-  print(cssCls.getStyles())
-  #print( CssCls().toCss({"text-align": 'right'}) )
+    cls_virtual = type(name, (self.__class__,), {})
+    cls_virtual.name = name
+    return cls_virtual
