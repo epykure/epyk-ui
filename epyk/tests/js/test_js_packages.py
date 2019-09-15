@@ -1,6 +1,12 @@
 
+from epyk.core.js import JsUtils
 
-# Crossfilter
+from epyk.core.js.packages import JsCrossFilter
+from epyk.core.js.packages import JsDatatable
+from epyk.core.js.packages import JsDc
+from epyk.core.js.packages import JsRequire
+from epyk.core.js.packages import JsTabulator
+
 
 data = [
     {"name": "banana", "category": "fruit", "country": "Martinique", "outOfDateQuantity": 3, "quantity": 12},
@@ -8,43 +14,51 @@ data = [
     {"name": "tomato", "category": "vegetable", "country": "Spain", "outOfDateQuantity": 2, "quantity": 25}
   ]
 
-js = [
-CrossFilter(data, 'cross1').dimension("quantity").filter([9, 13]),
-CrossFilter(data, 'cross1').dimension("quantity").top(10)
-]
 
-for j in js:
-print(j.toStr())
-
-
-#cross = CrossFilter(data, 'cross1').dimension("category").group()
-#rData = cross.reduceCount()
-#rDataAll = cross.all()
-
-#print(rData.toStr())
-#print(rDataAll.toStr())
-
+# ------------------------------------------------------------------------------------------------------------------
 #
-
-datatable = DatatableAPI().draw('page').clear().cell().data()
-  print(datatable.toStr())
-
-  datatable = DatatableAPI().draw('page').state()
-  print(datatable.toStr())
-
-  print(DatatableAPI().columns([1, 2]).search("%test").draw().jquery_nodes().toStr())
-
-  colTable = DatatableAPI().columns([1, 2]).search("%test").draw()
-  print(colTable.toStr())
+f = JsUtils.JsFile("CrossFilter", path=r"../outs")
+f.writeJs([
+    JsCrossFilter.CrossFilter(data, 'cross1').dimension("quantity").filter([9, 13]),
+    JsCrossFilter.CrossFilter(data, 'cross1').dimension("quantity").top(10),
+    # JsCrossFilter.CrossFilter(data, 'cross1').dimension("category").group().reduceCount()
+])
+f.close()
 
 
-dcChart = DC()
-  print(dcChart.width(23).height(23).toStr())
+# ------------------------------------------------------------------------------------------------------------------
+#
+f = JsUtils.JsFile("Datatable", path=r"../outs")
+f.writeJs([
+    JsDatatable.DatatableAPI().draw('page').clear().cell().data(),
+    JsDatatable.DatatableAPI().draw('page').state(),
+    JsDatatable.DatatableAPI().columns([1, 2]).search("%test").draw().jquery_nodes(),
+    JsDatatable.DatatableAPI().columns([1, 2]).search("%test").draw()
+])
+f.close()
 
 
+# ------------------------------------------------------------------------------------------------------------------
+#
+dcChart = JsDc.DC()
+f = JsUtils.JsFile("DC", path=r"../outs")
+f.writeJs([
+    dcChart.width(23).height(23).toStr()
+])
+f.close()
 
-repObj = JsRequire(False)
-  print(repObj.getImports(['socket.io', 'd3', 'bootstrap', 'tabulator', 'c3', 'datatables']))
 
-tabulator = Tabulator()
-print(tabulator.getRow(2).select().toStr())
+# ------------------------------------------------------------------------------------------------------------------
+#
+#repObj = JsRequire.JsRequire(False)
+#print(repObj.getImports(['socket.io', 'd3', 'bootstrap', 'tabulator', 'c3', 'datatables']))
+
+
+# ------------------------------------------------------------------------------------------------------------------
+#
+tabulator = JsTabulator.Tabulator()
+f = JsUtils.JsFile("Tabulator", path=r"../outs")
+f.writeJs([
+    tabulator.getRow(2).select()
+])
+f.close()

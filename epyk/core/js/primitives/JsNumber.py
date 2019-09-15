@@ -38,7 +38,7 @@ class JsNumber(JsObject.JsObject):
     """
     return JsNumber("Number.NEGATIVE_INFINITY")
 
-  @property
+  @classmethod
   def POSITIVE_INFINITY(self):
     """
     The POSITIVE_INFINITY property represents positive infinity.
@@ -54,7 +54,7 @@ class JsNumber(JsObject.JsObject):
     """
     return JsNumber("Number.POSITIVE_INFINITY")
 
-  @property
+  @classmethod
   def MAX_VALUE(self):
     """
     The MAX_VALUE property returns the largest number possible in JavaScript.

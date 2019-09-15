@@ -59,4 +59,4 @@ class DC(object):
 
     strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
+    return strData

@@ -2,6 +2,7 @@
 Module with some Python helpers for the Javascript framework
 """
 
+import os
 import re
 import json
 import functools
@@ -196,7 +197,10 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None):
 class JsFile(object):
   def __init__(self, scriptName, path=None):
     self.scriptName, self.path = scriptName, path
-    self.outFile = open(r"%s\%s.js" % (path, scriptName), "w")
+    file_path = os.path.join(path, "js") # all the files will be put in a common directory
+    if not os.path.exists(file_path):
+      os.mkdir(file_path)
+    self.outFile = open(os.path.join(file_path, "%s.js" % scriptName), "w")
     self.__data = []
 
   def writeJs(self, jsFncs):

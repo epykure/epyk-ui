@@ -2,7 +2,7 @@
 
 """
 
-from epyk.lib.ui import UIDeps
+from epyk.core.js import Imports
 
 
 class JsRequire(object):
@@ -26,6 +26,7 @@ class JsRequire(object):
     :param modules:
     :param moduleStack:
     :param level:
+
     :return:
     """
     for m in modules:

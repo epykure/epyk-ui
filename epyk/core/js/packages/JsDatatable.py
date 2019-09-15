@@ -91,7 +91,7 @@ class SelectAPI(object):
 
     strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
+    return strData
 
 
 class CellAPI(object):
@@ -235,8 +235,6 @@ class CellAPI(object):
     self._js.append("blur()")
     return self
 
-
-
   def toStr(self):
     """
     Javascript representation
@@ -251,7 +249,7 @@ class CellAPI(object):
 
     strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
+    return strData
 
 
 class ColumnAPI(object):
@@ -430,7 +428,7 @@ class ColumnAPI(object):
 
     strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
+    return strData
 
 
 class RowAPI(object):
@@ -613,7 +611,7 @@ class RowAPI(object):
 
     strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
+    return strData
 
 
 class DatatableAPI(object):
@@ -891,4 +889,4 @@ class DatatableAPI(object):
 
     strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
+    return strData

@@ -738,7 +738,7 @@ class RowComponent(object):
 
     strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
+    return strData
 
 
 class Tabulator(object):
@@ -891,4 +891,4 @@ class Tabulator(object):
 
     strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
+    return strData
