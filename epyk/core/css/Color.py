@@ -32,6 +32,39 @@ class Theme(object):
   """
   themes, selected, name = None, None, None
 
+  @classmethod
+  def toHtml(cls, theme_name=None, path=None):
+    """
+    Export the theme to a HTML flat file
+
+    :param theme_name: The theme reference (alias) in the framework
+    :param path: Optional. The path for the HTML file
+    """
+    if theme_name is None:
+      theme_name = cls.name
+    if theme_name is None:
+      raise Exception("theme_name should be defined")
+
+    color_path = os.path.join(path, "colors")
+    if not os.path.exists(color_path):
+      os.mkdir(color_path)
+
+    theme_obj = None
+    for th in os.listdir(os.path.dirname(themes.__file__)):
+      if th.startswith("Theme") and th.endswith(".py") and th != 'Theme.py':
+        mod = importlib.import_module("epyk.core.css.themes.%s" % th.replace(".py", ""))
+        for _, obj in inspect.getmembers(mod):
+          if inspect.isclass(obj) and obj.name == theme_name:
+            theme_obj = obj
+
+    if theme_obj is None:
+      raise Exception("%s does not exist in the internal themes" % theme_name)
+
+    with open(os.path.join(color_path, "%s.html" % theme_name), "w") as f:
+      css_style = "text-align:center;vertical-align:middle;width:80px;height:30px"
+      for c in theme_obj.charts:
+        f.write("<div style='background:%(color)s;%(css)s'>%(color)s</div>\n" % {'color': c, "css": css_style})
+
 
 class ColorMaker(object):
   """
