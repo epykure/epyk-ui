@@ -95,6 +95,8 @@ class PyOuts(object):
 
     :return:
     """
+    self.excluded_packages = ['bootstrap']
+    return self
 
   def jupyter(self):
     """
@@ -106,6 +108,25 @@ class PyOuts(object):
     """
     self.excluded_packages = ['bootstrap', 'jquery']
     return self
+
+  def w3cTryIt(self, path=None, name=None):
+    """
+    This will produce everything in a single page which can be directly copied to the try editor in w3C website
+
+    Documentation
+    https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic
+
+    """
+    if path is None:
+      path = os.path.join(os.getcwd(), "outs", "w3schools")
+    else:
+      path = os.path.join(path, "w3schools")
+    if not os.path.exists(path):
+      os.makedirs(path, exist_ok=True)
+    if name is None:
+      name = int(time.time())
+    with open(os.path.join(path, "%s.html" % name), "w") as f:
+      f.write(self._repr_html_())
 
   def codepen(self, path=None, name=None):
     """
