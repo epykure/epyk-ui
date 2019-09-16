@@ -116,6 +116,9 @@ class PyOuts(object):
     Documentation
     https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic
 
+    :param path: The path in which the output files will be created
+    :param name: The filename without the extension
+
     """
     if path is None:
       path = os.path.join(os.getcwd(), "outs", "w3schools")
@@ -141,7 +144,7 @@ class PyOuts(object):
 
     TODO Try to add the prefill
     https://blog.codepen.io/documentation/api/prefill/
-    
+
     :return:
     """
     self.jsfiddle(path, name, framework="codepen")
@@ -184,11 +187,25 @@ class PyOuts(object):
       with open(os.path.join(path, "%s.css" % name), "w") as f:
         f.write(results["cssStyle"])
 
-  def html_file(self):
+  def html_file(self, path=None, name=None):
     """
+
+    :param path: The path in which the output files will be created
+    :param name: The filename without the extension
 
     :return:
     """
+    if path is None:
+      path = os.path.join(os.getcwd(), "outs", "html")
+    else:
+      path = os.path.join(path, "html")
+    if not os.path.exists(path):
+      os.makedirs(path, exist_ok=True)
+    if name is None:
+      name = int(time.time())
+    with open(os.path.join(path, "%s.html" % name), "w") as f:
+      results = self.__to_html_obj()
+      f.write(HtmlTmplBase.DATA % results)
 
   def markdown_file(self):
     """
