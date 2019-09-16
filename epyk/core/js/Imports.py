@@ -858,7 +858,7 @@ class ImportManager(object):
           import_resolved.pop(j)
     return import_resolved[::-1]
 
-  def cssResolve(self, css_aliases, local_css=None):
+  def cssResolve(self, css_aliases, local_css=None, excluded=None):
     """
     Return the list of CSS modules to add to the header
 
@@ -868,12 +868,16 @@ class ImportManager(object):
 
     :param css_aliases: An array with the list of aliases for the external packages
     :param local_css: Optional. The file overrides
+    :param excluded: Optional. Packages excluded from the result object (mandatory for some frameworks already emboarding modules)
 
     :return: The string to be added to the header
     """
     css = []
     css_aliases = self.cleanImports(css_aliases, CSS_IMPORTS)
     for css_alias in css_aliases:
+      if excluded is not None and css_alias in excluded:
+        continue
+
       for urlModule in list(self.cssImports[css_alias]['main']):
         css.append('<link rel="stylesheet" href="%s" type="text/css">' % urlModule)
     if local_css is not None:
@@ -881,7 +885,7 @@ class ImportManager(object):
         css.append('<link rel="stylesheet" href="%s/users/%s)" type="text/css">' % (STATIC_PATH.replace("\\", "/"), localCssFile))
     return "\n".join(css)
 
-  def jsResolve(self, js_aliases, local_js=None):
+  def jsResolve(self, js_aliases, local_js=None, excluded=None):
     """
     Return the list of Javascript modules to add to the header
 
@@ -891,12 +895,16 @@ class ImportManager(object):
 
     :param js_aliases: An array with the list of aliases for the external packages
     :param local_js: Optional. The file overrides
+    :param excluded: Optional. Packages excluded from the result object (mandatory for some frameworks already emboarding modules)
 
     :return: The string to be added to the header
     """
     js = []
     js_aliases = self.cleanImports(js_aliases, JS_IMPORTS)
     for js_alias in js_aliases:
+      if excluded is not None and js_alias in excluded:
+        continue
+
       extra_configs = "?%s" % self.moduleConfigs[js_alias] if js_alias in self.moduleConfigs else ""
       for url_module in list(self.jsImports[js_alias]['main']):
         if '/mode/' in url_module:

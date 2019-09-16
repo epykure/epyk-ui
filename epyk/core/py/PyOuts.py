@@ -9,6 +9,9 @@ import time
 from epyk.core.js import Imports
 from epyk.core.js.Imports import requires
 
+from epyk.core.html.templates import HtmlTmplBase
+from epyk.core.html.templates import HtmlTmplJupyter
+
 
 class PyOuts(object):
   class __internal(object):
@@ -16,6 +19,7 @@ class PyOuts(object):
 
   def __init__(self, report=None):
     self._report = report
+    self.excluded_packages = None
 
   def __to_html_obj(self, content_only=False):
     """
@@ -64,13 +68,30 @@ class PyOuts(object):
       'cssStyle': "%s%s" % (self._report._css.toCss(), self._report._cssText),
       'content': "\n".join(htmlParts),
       'jsFrgs': ";".join(onloadParts),
-      'cssImports': importMng.cssResolve(self._report.cssImport, self._report.cssLocalImports),
-      'jsImports': importMng.jsResolve(self._report.jsImports, self._report.jsLocalImports)
+      'cssImports': importMng.cssResolve(self._report.cssImport, self._report.cssLocalImports, excluded=self.excluded_packages),
+      'jsImports': importMng.jsResolve(self._report.jsImports, self._report.jsLocalImports, excluded=self.excluded_packages)
     }
     return results
 
+  def _repr_html_(self):
+    """
+    Standard output for Jupyter Notebooks.
+
+    This is what will use IPython in order to display the results in cells.
+
+    Documentation
+
+    :return:
+    """
+
+    results = self.__to_html_obj(content_only=True)
+    return HtmlTmplJupyter.DATA % results
+
   def jupyterlab(self):
     """
+
+    Documentation
+    https://jupyter.org/
 
     :return:
     """
@@ -78,12 +99,34 @@ class PyOuts(object):
   def jupyter(self):
     """
 
-    :return:
+    Documentation
+    https://jupyter.org/
+
+    :return: The ouput object with the function _repr_html_
+    """
+    self.excluded_packages = ['bootstrap', 'jquery']
+    return self
+
+  def codepen(self, path=None, name=None):
     """
 
-  def jsfiddle(self, path=None, name=None):
+    Example
+
+    Documentation
+    https://codepen.io/
+
+    :param path: The path in which the output files will be created
+    :param name: The filename without the extension
+
+    :return:
+    """
+    self.jsfiddle(path, name, framework="codepen")
+
+  def jsfiddle(self, path=None, name=None, framework="jsfiddle"):
     """
     Produce files which can be copied directly to https://jsfiddle.net in order to test the results and perform changes.
+
+    The output is always in a sub directory jsfiddle
 
     Example
 
@@ -94,7 +137,10 @@ class PyOuts(object):
     :param name: The filename without the extension
     """
     if path is None:
-      path = os.path.join(os.getcwd(), "outs", "jsfiddle")
+      path = os.path.join(os.getcwd(), "outs", framework)
+    else:
+      path = os.path.join(path, framework)
+    if not os.path.exists(path):
       os.makedirs(path, exist_ok=True)
     if os.path.exists(path):
       if name is None:
