@@ -149,7 +149,7 @@ class PyOuts(object):
     TODO Try to add the prefill
     https://blog.codepen.io/documentation/api/prefill/
 
-    :return:
+    :return: The file path
     """
     self.jsfiddle(path, name, framework="codepen")
 
@@ -166,6 +166,8 @@ class PyOuts(object):
 
     :param path: The path in which the output files will be created
     :param name: The filename without the extension
+
+    :return: The file path
     """
     if path is None:
       path = os.path.join(os.getcwd(), "outs", framework)
@@ -190,6 +192,7 @@ class PyOuts(object):
       # For the CSS styles
       with open(os.path.join(path, "%s.css" % name), "w") as f:
         f.write(results["cssStyle"])
+    return path
 
   def html_file(self, path=None, name=None):
     """
@@ -197,7 +200,7 @@ class PyOuts(object):
     :param path: The path in which the output files will be created
     :param name: The filename without the extension
 
-    :return:
+    :return: The file full path
     """
     if path is None:
       path = os.path.join(os.getcwd(), "outs", "html")
@@ -207,9 +210,11 @@ class PyOuts(object):
       os.makedirs(path, exist_ok=True)
     if name is None:
       name = int(time.time())
-    with open(os.path.join(path, "%s.html" % name), "w") as f:
+    file_path = os.path.join(path, "%s.html" % name)
+    with open(file_path, "w") as f:
       results = self.__to_html_obj()
       f.write(HtmlTmplBase.DATA % results)
+    return file_path
 
   def markdown_file(self):
     """

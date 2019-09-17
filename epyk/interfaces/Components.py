@@ -191,7 +191,11 @@ class Components(object):
 
   def register(self, html_comp):
     """
-    Internal function to register a HTML component based on its memory id
+    Internal function to register a HTML component based on its memory id.
+
+    :param html_comp: The html component
+
+    return the html component
     """
     self.rptObj.htmlItems[id(html_comp)] = html_comp
     self.rptObj.content.append(id(html_comp))
@@ -202,9 +206,9 @@ class Components(object):
     Add a content table to the page
 
     :param vals: Optional.
-    :param width: Optional.
-    :param height: Optional.
-    :param profile: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlTextComp.ContentsTable
 
@@ -212,8 +216,19 @@ class Components(object):
     """
     return self.register(html.HtmlTextComp.ContentsTable(self.rptObj, vals, width, height, profile))
 
-  def tags(self, vals=None, title="", icon="", width=100, widthUnit="%", height=None, heightUnit="px", htmlCode=None, debug=None):
-    return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, widthUnit, height, heightUnit, htmlCode))
+  def tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
+    """
+    
+    :param vals: Optional.
+    :param title: Optional.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :return: 
+    """
+    return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile))
 
   def context_menu(self, recordSet=None, width=(None, '%'), height=(None, 'px'), visible=False, profile=None):
     """
@@ -224,11 +239,11 @@ class Components(object):
     menu = rptObj.ui.context_menu([{"text": 'text', 'event': 'alert("ok")'}])
     rptObj.ui.title("Test").attach_menu(menu)
 
-    :param recordSet:
-    :param width:
-    :param height:
-    :param visible:
-    :param profile:
+    :param recordSet: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param visible: Optional.
+    :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlEvent.ContextMenu
 
