@@ -87,7 +87,7 @@ class PyOuts(object):
     """
 
     results = self.__to_html_obj(content_only=True)
-    return HtmlTmplJupyter.DATA % results
+    return HtmlTmplJupyter.DATA.strip() % results
 
   def jupyterlab(self):
     """
@@ -130,8 +130,10 @@ class PyOuts(object):
       os.makedirs(path, exist_ok=True)
     if name is None:
       name = int(time.time())
-    with open(os.path.join(path, "%s.html" % name), "w") as f:
+    file_path = os.path.join(path, "%s.html" % name)
+    with open(file_path, "w") as f:
       f.write(self._repr_html_())
+    return file_path
 
   def codepen(self, path=None, name=None):
     """
