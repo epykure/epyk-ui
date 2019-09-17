@@ -211,7 +211,7 @@ class MarkDown(object):
         content = py_file.read()
         py_file.close()
       self.content = content.split("\n\n")
-    self.loadModules()
+    self.load_modules()
 
   def load_modules(self):
     """
@@ -220,12 +220,17 @@ class MarkDown(object):
     # Store the modules
     from epyk.core import html
     from epyk.core.html import graph
+    from epyk.core.html import tables
 
     self.markDownMappings, self.markDownBlockMappings = [], []
-    for alias, mod in [('html', html), ('graph', graph)]:
+    for alias, mod in [('html', html), ('tables', tables), ('graph', graph)]:
       for script in os.listdir(os.path.dirname(mod.__file__)):
         if script.endswith(".py"):
-          for name, obj in inspect.getmembers(importlib.import_module("epyk.core.%s.%s" % (alias, script.replace(".py", ""))), inspect.isclass):
+          if alias in ['tables', 'graph']:
+             mod_path = "epyk.core.html.%s.%s" % (alias, script.replace(".py", ""))
+          else:
+             mod_path = "epyk.core.html.%s" % script.replace(".py", "")
+          for name, obj in inspect.getmembers(importlib.import_module(mod_path), inspect.isclass):
             try:
               if inspect.isclass(obj):
                 if hasattr(obj, 'matchMarkDown'):
@@ -414,6 +419,10 @@ class MarkDown(object):
 
   def parse_module(self, module, report=None, lang='eng'):
     """
+    Parse the documentation in the module
+
+    Example
+    md = PyMarkdown.MarkDown(report=Ares.Report()).parse_module(Js)
 
     :param module: An imported Python module
     :param report: The report object
@@ -421,6 +430,8 @@ class MarkDown(object):
 
     :return: A python dictionary with the module documentation
     """
+    if report is None:
+      report = self._report
     if report is not None:
       report.ui.title(module.__name__, level=1)
       self.parse(module.__doc__, report=report)
@@ -475,6 +486,7 @@ class MarkDown(object):
 
     :param module_name: The Python Module Name
     :param lang: The code for the language
+
     :return: The docString object
     """
     if hasattr(module_name, 'DSC'):
