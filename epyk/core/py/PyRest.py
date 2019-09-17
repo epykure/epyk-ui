@@ -52,7 +52,7 @@ class PyRest(object):
     if headers is None:
       headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
     request = Request(url, json.dumps(data or {}).encode(encoding=encoding), headers=headers)
-    if headers["Content-Type"] == "application/json":
+    if headers.get("Content-Type") == "application/json":
       return json.loads(urlopen(request).read())
 
     return urlopen(request).read()
@@ -142,7 +142,6 @@ class PyRest(object):
 
     except Exception as err:
       return err
-
 
   def query(self, service_name, function_name="getData", report_name=None, data=None, encoding='utf-8'):
     """
