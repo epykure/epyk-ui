@@ -9,6 +9,8 @@ import time
 from epyk.core.js import Imports
 from epyk.core.js.Imports import requires
 
+from epyk.core.py import PyMarkdown
+
 from epyk.core.html.templates import HtmlTmplBase
 from epyk.core.html.templates import HtmlTmplJupyter
 
