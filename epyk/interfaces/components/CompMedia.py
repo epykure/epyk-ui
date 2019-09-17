@@ -28,7 +28,6 @@ class Media(object):
     :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlMedia.Media
-
     :return:
     """
     return self.context.register(html.HtmlMedia.Media(self.context.rptObj, value, path, width, height, htmlCode, profile))
@@ -54,7 +53,6 @@ class Media(object):
     :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlMedia.Audio
-
     :return:
     """
     return self.context.register(html.HtmlMedia.Audio(self.context.rptObj, value, path, autoplay, width,
@@ -77,7 +75,6 @@ class Media(object):
     :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlMedia.Youtube
-
     :return:
     """
     return self.context.register(html.HtmlMedia.Youtube(self.context.rptObj, link, width, height, htmlCode, profile))
