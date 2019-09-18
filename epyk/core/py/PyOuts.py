@@ -5,8 +5,10 @@ Internal wrapper for all the exports
 
 import os
 import time
+import json
 
 from epyk.core.js import Imports
+from epyk.core.js import Js
 from epyk.core.js.Imports import requires
 
 from epyk.core.py import PyMarkdown
@@ -14,6 +16,38 @@ from epyk.core.py import PyMarkdown
 from epyk.core.html.templates import HtmlTmplBase
 from epyk.core.html.templates import HtmlTmplJupyter
 
+
+class OutBrowsers(object):
+  def __init__(self, context):
+    self._context = context
+
+  def codepen(self, path=None):
+    """
+    Update the Html launcher and send the data to codepen
+
+    TODO: Find a way to solve the <\/script> in codepen
+    :return:
+    """
+    import webbrowser
+
+    results = self._context._to_html_obj(content_only=True)
+    jsObj = Js.JsBase()
+    # problem with the <\/script>  tag
+    results['jsImports'] = results['jsImports'].replace('</script>', "<\/script>").strip()
+    result = {"js": results["jsFrgs"], "html": '''
+      %(cssImports)s
+      %(jsImports)s
+      %(content)s''' % results, "css": results["cssStyle"]}
+    data = jsObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)})
+    if path is None:
+      path = os.path.join(os.getcwd(), "outs")
+    else:
+      path = os.path.join(path)
+    if not os.path.exists(path):
+      os.makedirs(path, exist_ok=True)
+    with open(os.path.join(path, "RunnerCodepen.html"), "w") as f:
+      f.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
+    webbrowser.open(os.path.join(path, "RunnerCodepen.html"))
 
 class PyOuts(object):
   class __internal(object):
@@ -23,7 +57,7 @@ class PyOuts(object):
     self._report = report
     self.excluded_packages = None
 
-  def __to_html_obj(self, content_only=False):
+  def _to_html_obj(self, content_only=False):
     """
     Create the HTML result object from the report definition
 
@@ -86,7 +120,7 @@ class PyOuts(object):
     :return:
     """
 
-    results = self.__to_html_obj(content_only=True)
+    results = self._to_html_obj(content_only=True)
     return HtmlTmplJupyter.DATA.strip() % results
 
   def jupyterlab(self):
@@ -178,7 +212,7 @@ class PyOuts(object):
     if os.path.exists(path):
       if name is None:
         name = int(time.time())
-      results = self.__to_html_obj(content_only=True)
+      results = self._to_html_obj(content_only=True)
       # For the JavaScript builders
       with open(os.path.join(path, "%s.js" % name), "w") as f:
         f.write(results["jsFrgs"])
@@ -212,7 +246,7 @@ class PyOuts(object):
       name = int(time.time())
     file_path = os.path.join(path, "%s.html" % name)
     with open(file_path, "w") as f:
-      results = self.__to_html_obj()
+      results = self._to_html_obj()
       f.write(HtmlTmplBase.DATA % results)
     return file_path
 
@@ -292,3 +326,11 @@ class PyOuts(object):
     :return:
     """
 
+  @property
+  def browser(self):
+    """
+    This module will require the package webbrowser.
+    It will allow outputs to be created directly in the webpages (without using intermediary text files
+
+    """
+    return OutBrowsers(self)

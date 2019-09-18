@@ -18,6 +18,7 @@ rptObj.ui.buttons.switch({"off": 'Python', 'on': 'Javascript'})
 file_path = rptObj.outs.w3cTryIt(path=test_statics.OUTPUT_PATHS, name="button")
 file_path = rptObj.outs.codepen(path=test_statics.OUTPUT_PATHS, name="button")
 
+rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS)
 
 # -------------------------------------------------------------------------------------------------------------------
 # test media components
