@@ -235,3 +235,22 @@ class JsLocation(object):
     js_data = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunction("location.replace(%s)" % js_data)
 
+  def postTo(self, url, data, method="POST"):
+    """
+    This method will create a internal form and submit the response exactly like a post of a form to another page
+
+    Documentation
+    https://www.w3schools.com/jsref/dom_obj_form.asp
+
+    :param url: The target url
+    :param data: A python dictionary
+    :param method: Optional. The method used to send the data. Default POST
+
+    """
+    inputs = []
+    for k, v in data.items():
+      jsVal = JsUtils.jsConvertData(v, None)
+      inputs.append('var input = document.createElement("input"); input.name = "%s"; input.type = "hidden"; input.value = %s; form.appendChild(input);' % (k, jsVal))
+    return ''' 
+      var form = document.createElement("form"); form.method = "%s"; form.target = "_blank"; form.action = "%s"; %s;
+      document.body.appendChild(form); form.submit()''' % (method, url, "".join(inputs))
