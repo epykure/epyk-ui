@@ -229,6 +229,14 @@ class JsFile(object):
     """
     pass
 
+  def toCodePen(self):
+    """
+    Send the piece of Javascript to Codepen for testing
+
+    https://codepen.io/
+    """
+    import webbrowser
+
   def close(self, jsObj=None):
     """
     Write the file and close the buffer
