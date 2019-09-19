@@ -28,8 +28,8 @@ class JsDomEvents(object):
     """
     The stopPropagation() method prevents propagation of the same event from being called.
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_stoppropagation.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_stoppropagation.asp
 
     :return: The Python Dom object
     """
@@ -42,10 +42,11 @@ class JsDomEvents(object):
 
     The event occurs when an element loses focus
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onblur.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onblur.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("blur", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -58,10 +59,11 @@ class JsDomEvents(object):
     Example
     select.label.dom.events.click(rptObj.js.console.log("test"))
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onclick.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onclick.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("click", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -74,10 +76,11 @@ class JsDomEvents(object):
     Example
     select.dom.events.change(rptObj.js.window.alert("test"))
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onchange.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onchange.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("change", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -87,10 +90,11 @@ class JsDomEvents(object):
     """
     The event occurs when the user double-clicks on an element
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_ondblclick.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_ondblclick.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("dblclick", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -100,10 +104,11 @@ class JsDomEvents(object):
     """
     The event occurs when an element gets focus
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onfocusin.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onfocusin.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("focus", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -113,10 +118,11 @@ class JsDomEvents(object):
     """
     The event occurs when an element is about to get focus
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onfocusin.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onfocusin.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("focusin", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -126,10 +132,11 @@ class JsDomEvents(object):
     """
     The event occurs when an element is about to lose focus
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onfocusout.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onfocusout.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("focusin", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -139,10 +146,11 @@ class JsDomEvents(object):
     """
     The event occurs when the user is pressing a key
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onkeydown.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onkeydown.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("keydown", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -152,10 +160,11 @@ class JsDomEvents(object):
     """
     The event occurs when the user presses a key
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onkeypress.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onkeypress.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("keypress", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -165,10 +174,11 @@ class JsDomEvents(object):
     """
     The event occurs when the user releases a key
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onkeyup.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onkeyup.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("keyup", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -178,10 +188,11 @@ class JsDomEvents(object):
     """
     The event occurs when the user presses a mouse button over an element
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onmousedown.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onmousedown.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("mousedown", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -191,10 +202,11 @@ class JsDomEvents(object):
     """
     The event occurs when the pointer is moved onto an element
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onmouseenter.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onmouseenter.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("mousedown", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -207,10 +219,11 @@ class JsDomEvents(object):
     Example
     select.label.dom.events.mouseleave(rptObj.js.console.log("test"))
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onmouseleave.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onmouseleave.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("mouseleave", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -220,10 +233,11 @@ class JsDomEvents(object):
     """
     The event occurs when the pointer is moved onto an element, or onto one of its children
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onmouseover.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onmouseover.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("mouseover", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -233,10 +247,11 @@ class JsDomEvents(object):
     """
     The event occurs when a user releases a mouse button over an element
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onmouseup.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onmouseup.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("mouseover", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -246,10 +261,11 @@ class JsDomEvents(object):
     """
     The event occurs when a user releases a mouse button over an element
 
-    Documentation:
-      - https://www.w3schools.com/jsref/event_onmouseout.asp
+    Documentation
+    https://www.w3schools.com/jsref/event_onmouseout.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+
     :return: The Python Dom object
     """
     self._js.append('addEventListener("mouseout", function(){%s})' % ";".join(JsUtils.jsConvertFncs(jsFncs)))
