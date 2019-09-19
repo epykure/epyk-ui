@@ -230,7 +230,9 @@ class JsFile(object):
 
     :return:
     """
-    pass
+    for k, v in rptObj._src._props.get('js', {}).get('functions', {}).items():
+      sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
+      self.__data.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
 
   def toCodePen(self):
     """
