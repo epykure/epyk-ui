@@ -341,17 +341,17 @@ class JsExtend(object):
   value = '''
     if (Array.isArray(data)){
       if(recKey == undefined){
-        data.forEach(function(rec, i) { 
+        data.forEach(function(rec, i){ 
           var newRec = Object.assign(rec, values.static);
           if (i in values.dynamic) {newRec = Object.assign(newRec, values.dynamic[i])};
           result.push(newRec)})}
       else{
-        data.forEach(function(rec, i) { 
+        data.forEach(function(rec, i){ 
           var newRec = Object.assign(rec, values.static);
           if (i in values.dynamic) {newRec = Object.assign(newRec, values.dynamic[i])};
           result.push(newRec);
           var subValues = rec[recKey]; result[recKey] = [];
-          subValues.forEach(function(row, j) { 
+          subValues.forEach(function(row, j){ 
             var newRec = Object.assign(row, values.static);
             if (i in values.dynamic) {newRec = Object.assign(newRec, values.dynamic[i])};
             result[recKey].push(newRec)})  

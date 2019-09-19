@@ -11,7 +11,7 @@ from epyk.core.js import Imports
 from epyk.core.js.primitives import JsObject
 
 
-#--------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
 #                                                       DECORATORS
 #
 def fromVersion(data):
@@ -40,6 +40,7 @@ def fromVersion(data):
     return decorated
 
   return decorator
+
 
 def untilVersion(data, newFeature):
   """
@@ -71,7 +72,7 @@ def untilVersion(data, newFeature):
   return decorator
 
 
-#--------------------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------
 #                                                       FUNCTIONS
 #
 def jsConvertData(jsData, jsFnc):
@@ -79,6 +80,7 @@ def jsConvertData(jsData, jsFnc):
 
   :param jsData:
   :param jsFnc:
+
   :return:
   """
   if not hasattr(jsData, 'varData') and not hasattr(jsData, 'fncName'):
@@ -149,6 +151,7 @@ def getJsValid(value, fail=True):
 
   :param value: The Javascript variable name
   :param fail: Boolean to raise an exception if the name is not valid on the Javascript side
+
   :return: The input variable name or a suggested one
   """
   regex = re.compile('[^a-zA-Z0-9_]')

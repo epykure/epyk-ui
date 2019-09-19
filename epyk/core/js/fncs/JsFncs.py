@@ -2,6 +2,13 @@
 
 """
 
+from epyk.core.js.fncs import JsFncsRecords
+
+
+FNCS_MAPS = {
+  "row-buckets": JsFncsRecords.JsRowBuckets
+}
+
 
 class JsFunction(object):
   """

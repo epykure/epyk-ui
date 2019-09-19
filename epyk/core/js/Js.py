@@ -404,7 +404,7 @@ class JsBase(object):
     self._src._props.setdefault('js', {}).setdefault('prototypes', {})["%s.prototype.%s" % (pyClass._jsClass, fncName)] = {"content": ";".join(jsData), 'pmts': pmts}
     return self
 
-  def registerFunction(self, fncName, jsFncs, pmts=None):
+  def registerFunction(self, fncName, jsFncs=None, pmts=None):
     """
     Javascript Framework extension
 
@@ -415,11 +415,18 @@ class JsBase(object):
 
 
     :param fncName: The function name
-    :param jsFncs: The Javascript function definition
+    :param jsFncs: Optional. The Javascript function definition
+    :param pmts: Optional
+
     :return: The JsObject
     """
-    jsData = JsUtils.jsConvertFncs(jsFncs)
-    self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
+    if jsFncs is None and fncName in JsFncs.FNCS_MAPS:
+      jsDef = JsFncs.FNCS_MAPS[fncName]
+      self._src._props.setdefault('js', {}).setdefault('functions', {})[jsDef.__name__] = {'content': jsDef.value,
+                                                                                    'pmt': jsDef.params}
+    else:
+      jsData = JsUtils.jsConvertFncs(jsFncs)
+      self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
     return self
 
   def addOnLoad(self, jsFncs):
