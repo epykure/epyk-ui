@@ -225,14 +225,23 @@ class JsFile(object):
 
   def writeReport(self, rptObj):
     """
+    Write the Javascript content of a report to a structure .js file.
+    This could help on the investigation and can be directly used in Codepen for testing
 
-    :param rptObj:
+    :param rptObj: The report object
 
     :return:
     """
     for k, v in rptObj._src._props.get('js', {}).get('functions', {}).items():
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       self.__data.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
+
+    keyboardShortcuts = rptObj._src._props.get('js', {}).get('keyboard', {})
+    if keyboardShortcuts:
+      self.__data.append("document.addEventListener('keydown', function(e){var code = e.keyCode || e.which")
+      for k, v in keyboardShortcuts.items():
+        self.__data.append("if(%s){%s}" % (k, v))
+      self.__data.append("})")
 
   def toCodePen(self):
     """

@@ -398,6 +398,7 @@ class JsBase(object):
     :param fncName: The Javascript function name
     :param jsFncs: The Javascript function definition
     :param pmts: The Javascript function parameters
+
     :return: The JsObject
     """
     jsData = JsUtils.jsConvertFncs(jsFncs)
@@ -436,10 +437,40 @@ class JsBase(object):
     Documentation
 
     :param jsFncs: The Javascript functions to be added to this section
+
     :return:
     """
     self._src._props.setdefault('js', {}).setdefault('builders', []).append(";".join(JsUtils.jsConvertFncs(jsFncs)))
     self._src.jsOnLoadEvtsFnc.add(";".join(JsUtils.jsConvertFncs(jsFncs)))
+    return self
+
+  def addKeyEvent(self, jsFncs, keyCode=None, keyCondition=None):
+    """
+    Add keyboard event to the document
+
+    Either the keyCode or the keyCondition can be None
+
+    Documentation
+    http://gcctech.org/csc/javascript/javascript_keycodes.htm
+
+    :param jsFncs: The Javascript function
+    :param keyCode: Optional. The keycode as an integer
+    :param keyCondition: Optional. A special condition based on the code
+
+    :return:
+    """
+    if keyCode is None and keyCondition is None:
+      raise Exception("keyCode or keyCondition must be defined")
+
+    if keyCode is not None and keyCondition is not None:
+      raise Exception("keyCode or keyCondition cannot be both defined")
+
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+
+    if keyCode is not None:
+      keyCondition = "code == %s" % keyCode
+    self._src._props.setdefault('js', {}).setdefault('keyboard', {})[keyCondition] = ";".join(JsUtils.jsConvertFncs(jsFncs))
     return self
 
   def preload(self, ajaxParams):
@@ -449,10 +480,13 @@ class JsBase(object):
     The success file is only used as an indicator to check if the preload function has to be started. If the file is already present it will not be triggered.
     The status will be based on the return of the service in the query return (true / false
 
-    :category: AJAX
-    :rubric: JS
-    :tip: Put a variable result to your service return in order to change the icon according to the status of your asynchronous call
-    :example: report.preload( [ { 'url': "Test.py", 'success': 'test.csv'} ] )
+    Tip: Put a variable result to your service return in order to change the icon according to the status of your asynchronous call
+
+    Example
+    report.preload([{'url': "Test.py", 'success': 'test.csv'}])
+
+    :param ajaxParams:
+
     :return: The Python object itself
     """
     pass
@@ -472,6 +506,11 @@ class JsBase(object):
   def profile(self, type, htmlId, mark, recordsCount=""):
     """
 
+    :param type:
+    :param htmlId:
+    :param mark:
+    :param recordsCount:
+
     :return:
     """
     return "profileObj.push({type: '%s', htmlId: '%s', mark: '%s', records: %s})" % (type, htmlId, mark, recordsCount)
@@ -486,9 +525,10 @@ class JsBase(object):
     The getElementById() method returns the element that has the ID attribute with the specified value.
 
     Documentation:
-      - https://www.w3schools.com/jsref/met_document_getelementbyid.asp
+    https://www.w3schools.com/jsref/met_document_getelementbyid.asp
 
     :param idName: Required. The ID attribute's value of the element you want to get
+
     :return: An Element Object, representing an element with the specified ID. Returns null if no elements with the specified ID exists
     """
     return "document.getElementById(%s)" % idName
@@ -500,10 +540,12 @@ class JsBase(object):
     The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers. The index starts at 0.
 
     Documentation:
-      - https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp
+    https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp
 
     :param name: Required. The name attribute value of the element you want to access/manipulate
-    :return: A NodeList object, representing a collection of elements with the specified name. The elements in the returned collection are sorted as they appear in the source code.
+
+    :return: A NodeList object, representing a collection of elements with the specified name.
+             The elements in the returned collection are sorted as they appear in the source code.
     """
     return "document.getElementsByName(%s)" % name
 
@@ -517,6 +559,8 @@ class JsBase(object):
     https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
 
     :param tagName: Required. The tagname of the child elements you want to get
+    :param i:
+
     :return:
     """
     return JsNodeDom.JsDoms("document.getElementsByTagName('%s')[%s]" % (tagName, i), varName="%s_%s" % (tagName, i), setVar=True)
@@ -529,6 +573,8 @@ class JsBase(object):
     https://www.w3schools.com/jsref/met_document_createelement.asp
 
     :param tagName: Required. The name of the element you want to create
+    :param varName:
+
     :return:
     """
     return JsNodeDom.JsDoms.new(tagName, varName=varName)
@@ -541,6 +587,7 @@ class JsBase(object):
     https://www.w3schools.com/jsref/met_document_createtextnode.asp
 
     :param jsString: Required. The text of the Text node
+
     :return: A Text Node object with the created Text Node
     """
     return JsObject.JsObject("document.createTextNode(%s)" % JsUtils.jsConvertData(jsString, None), isPyData=False)
@@ -553,6 +600,7 @@ class JsBase(object):
     https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp
 
     :param uri: Required. The URI to be encoded
+
     :return: A String, representing the encoded URI
     """
     return JsObject.JsObject("encodeURIComponent(%s)" % JsUtils.jsConvertData(uri, None))
@@ -565,11 +613,10 @@ class JsBase(object):
     https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
 
     :param url_enc: Required. The URI to be decoded
+
     :return: A String, representing the decoded URI
     """
     return JsObject.JsObject("decodeURIComponent(%s)" % JsUtils.jsConvertData(url_enc, None))
-
-
 
   @property
   def body(self):
@@ -579,13 +626,12 @@ class JsBase(object):
   def data(self):
     return JsData
 
-
   def activeElement(self):
     """
     The activeElement property returns the currently focused element in the document.
 
     Documentation:
-      - https://www.w3schools.com/jsref/prop_document_activeelement.asp
+    https://www.w3schools.com/jsref/prop_document_activeelement.asp
 
     :return: A reference to the element object in the document that has focus
     """
@@ -596,9 +642,10 @@ class JsBase(object):
     The title property sets or returns the title of the current document (the text inside the HTML title element).
 
     Documentation:
-      - https://www.w3schools.com/jsref/prop_doc_title.asp
+    https://www.w3schools.com/jsref/prop_doc_title.asp
 
     :param text: A String, representing the title of the document
+
     :return:
     """
     if text is None:
@@ -611,10 +658,12 @@ class JsBase(object):
     The getElementsByClassName() method returns a collection of all elements in the document with the specified class name, as a NodeList object.
 
     Documentation:
-      - https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
+    https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
 
     :param clsName: Required. The class name of the elements you want to get.
-    :return: A NodeList object, representing a collection of elements with the specified class name. The elements in the returned collection are sorted as they appear in the source code.
+
+    :return: A NodeList object, representing a collection of elements with the specified class name.
+             The elements in the returned collection are sorted as they appear in the source code.
     """
     return "document.getElementsByClassName(%s)" % clsName
 
@@ -623,7 +672,7 @@ class JsBase(object):
     The hasFocus() method returns a Boolean value indicating whether the document (or any element inside the document) has focus.
 
     Documentation:
-      - https://www.w3schools.com/jsref/met_document_hasfocus.asp
+    https://www.w3schools.com/jsref/met_document_hasfocus.asp
 
     :return: A Boolean value, incidating whether the document or any element in the document has focus:
     """
@@ -634,11 +683,12 @@ class JsBase(object):
     The execCommand() method executes the specified command for the selected part of an editable section.
 
     Documentation:
-      - https://www.w3schools.com/jsref/met_document_execcommand.asp
+    https://www.w3schools.com/jsref/met_document_execcommand.asp
 
     :param command:	 Specifies the name of the command to execute on the selected section
     :param showUI: A Boolean, specifies if the UI should be shown or not
     :param value: Some commands need a value to be completed
+
     :return: A Boolean, false if the command is not supported, otherwise true
     """
     return "document.execCommand('%s')" % command
@@ -650,9 +700,10 @@ class JsBase(object):
     The event can be of any legal event type, and must be initialized before use.
 
     Documentation:
-      - https://www.w3schools.com/jsref/event_createevent.asp
+    https://www.w3schools.com/jsref/event_createevent.asp
 
     :param type: Required. A String that specifies the type of the event.
+
     :return: An Event object
     """
     if type not in ['AnimationEvent', 'ClipboardEvent', 'DragEvent', 'FocusEvent', 'HashChangeEvent', 'InputEvent',
@@ -665,9 +716,10 @@ class JsBase(object):
     The createAttribute() method creates an attribute with the specified name, and returns the attribute as an Attr object.
 
     Documentation:
-      - https://www.w3schools.com/jsref/met_document_createattribute.asp
+    https://www.w3schools.com/jsref/met_document_createattribute.asp
 
     :param attributename: Required. The name of the attribute you want to create
+
     :return: A Node object, representing the created attribute
     """
     return JsNodeAttributes.JsAttributes(attributename)
@@ -677,9 +729,11 @@ class JsBase(object):
     The writeln() method is identical to the document.write() method, with the addition of writing a newline character after each statement.
 
     Documentation:
-      - https://www.w3schools.com/jsref/met_doc_writeln.asp
+    https://www.w3schools.com/jsref/met_doc_writeln.asp
 
-    :param jsString: Optional. What to write to the output stream. Multiple arguments can be listed and they will be appended to the document in order of occurrence
+    :param jsString: Optional. What to write to the output stream.
+                     Multiple arguments can be listed and they will be appended to the document in order of occurrence
+
     :return: No return value
     """
     return "document.writeln(%s)" % jsString
@@ -797,10 +851,11 @@ class JsBase(object):
     The parse() method parses a date string and returns the number of milliseconds between the date string and midnight of January 1, 1970.
 
     Documentation:
-      - https://www.w3schools.com/jsref/jsref_parse.asp
+    https://www.w3schools.com/jsref/jsref_parse.asp
 
     :param jsString: Required. A string representing a date
     :return: A Number, representing the number of milliseconds between the specified date-time and midnight January 1, 1970
+
     """
     return JsNumber.JsNumber("Date.parse(%s)" % jsString, isPyData=False)
 
@@ -810,6 +865,7 @@ class JsBase(object):
 
     :param varName: The Variable name
     :param varType: The scope of the variable
+
     :return: Return the piece of script to be added to the Javascript
     """
     if varType == 'var':
@@ -827,6 +883,7 @@ class JsBase(object):
     :param isPyData:
     :param jsFnc:
     :param jsData:
+
     :return:
     """
     jsVal = JsUtils.jsConvert(jsVal, jsDataKey, isPyData, jsFnc)
@@ -836,6 +893,7 @@ class JsBase(object):
     """
 
     :param htmlCode:
+
     :return:
     """
     if not htmlCode in self._context.get('htmlCodes', []):
@@ -847,6 +905,7 @@ class JsBase(object):
     """
 
     :param jsData:
+
     :return:
     """
     return JsFncs.JsTypeOf(JsUtils.jsConvertData(jsData, None))
