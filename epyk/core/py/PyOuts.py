@@ -25,19 +25,19 @@ class OutBrowsers(object):
     """
     Update the Html launcher and send the data to codepen
 
-    TODO: Find a way to solve the <\/script> in codepen
+    Documentation
+    https://www.debuggex.com/cheatsheet/regex/python
+
     :return:
     """
+    import re
     import webbrowser
 
     results = self._context._to_html_obj(content_only=True)
+    js_external = re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
+    css_external = re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', results['cssImports'])
     jsObj = Js.JsBase()
-    # problem with the <\/script>  tag
-    results['jsImports'] = results['jsImports'].replace('</script>', "<\/script>").strip()
-    result = {"js": results["jsFrgs"], "html": '''
-      %(cssImports)s
-      %(jsImports)s
-      %(content)s''' % results, "css": results["cssStyle"]}
+    result = {"js": results["jsFrgs"], "js_external": ";".join(js_external), "css_external": ";".join(css_external), "html": results['content'], "css": results["cssStyle"]}
     data = jsObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)})
     if path is None:
       path = os.path.join(os.getcwd(), "outs")

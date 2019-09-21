@@ -15,8 +15,14 @@ from epyk.core import html
 from epyk.core import js
 from epyk.core.html import graph
 
-from epyk.interfaces.graphs import CompChartsBillboard, CompChartsDc, CompChartsC3, CompChartsChartJs, CompChartsPlotly, \
-  CompChartsNvd3, CompChartsVis
+from epyk.interfaces.graphs import CompChartsBillboard
+from epyk.interfaces.graphs import CompChartsDc
+from epyk.interfaces.graphs import CompChartsC3
+from epyk.interfaces.graphs import CompChartsChartJs
+from epyk.interfaces.graphs import CompChartsPlotly
+from epyk.interfaces.graphs import CompChartsNvd3
+from epyk.interfaces.graphs import CompChartsD3
+from epyk.interfaces.graphs import CompChartsVis
 
 
 class Graphs(object):
@@ -154,7 +160,8 @@ class Graphs(object):
     Display a sparkline component
 
     Example
-    rptObj.ui.charts.sparkline("box", [1,2,3,4,5,4,3,2,1])
+    rptObj.ui.charts.sparkline("box", [1, 2, 3, 4, 5, 4, 3, 2, 1])
+    rptObj.ui.charts.sparkline("bar", [1, 2, 3, 4, 5, 4, 3, 2, 10])
 
     Documentation
     https://omnipotent.net/jquery.sparkline/#s-about
@@ -163,13 +170,15 @@ class Graphs(object):
     :param data: A list of values
     :param options: The chart options
     :param column:
+
     :rtype: graph.GraphSparklines.Sparklines
-    :return:
+    :return: A python Sparkline object
     """
     if column is not None:
-      print("To be implemented !!!")
-    return self.context.register(
-      html.graph.GraphSparklines.Sparklines(self.context.rptObj, data, chart_type, options))
+      if isinstance(data, list):
+        pass
+
+    return self.context.register(html.graph.GraphSparklines.Sparklines(self.context.rptObj, data, chart_type, options))
 
 
   #  ------------------------------------------------------------------------------------------------------------------

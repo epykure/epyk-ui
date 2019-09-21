@@ -1,5 +1,7 @@
 """
+Module in charge of producing Jquery sparklines charts
 
+https://omnipotent.net/jquery.sparkline/#s-docs
 """
 
 from epyk.core.html import Html

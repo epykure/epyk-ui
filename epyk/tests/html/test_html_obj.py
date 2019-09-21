@@ -18,7 +18,7 @@ rptObj.ui.buttons.switch({"off": 'Python', 'on': 'Javascript'})
 file_path = rptObj.outs.w3cTryIt(path=test_statics.OUTPUT_PATHS, name="button")
 file_path = rptObj.outs.codepen(path=test_statics.OUTPUT_PATHS, name="button")
 
-rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS)
+#rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS)
 
 # -------------------------------------------------------------------------------------------------------------------
 # test media components
@@ -36,8 +36,6 @@ file_path = rptObj.outs.w3cTryIt(path=test_statics.OUTPUT_PATHS, name="media")
 rptObj = Report()
 check = rptObj.ui.check(False, label="test")
 file_path = rptObj.outs.w3cTryIt(path=test_statics.OUTPUT_PATHS, name="check")
-
-
 
 
 #test_statics.open_url(test_statics.URL_w3c)
