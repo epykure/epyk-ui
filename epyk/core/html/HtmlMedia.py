@@ -30,13 +30,11 @@ class Media(Html.Html):
   def jqId(self): return "$('#%s video')" % self.htmlId
 
   def onDocumentLoadFnc(self):
-    """ Pure Javascript onDocumentLoad Function """
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''
       htmlObj.empty(); htmlObj.append("<source src=\'" + data.path + "/" + data.video + "\' type='video/mp4'/>")''',
                       'Javascript Object builder')
 
   def __str__(self):
-    """ The html representation of the component """
     return '''<div %s><video style="width:100%%" controls></video></div>''' % self.strAttr(pyClassNames=self.pyStyle)
 
 
@@ -61,7 +59,6 @@ class Audio(Html.Html):
   def jqId(self): return "$('#%s audio')" % self.htmlId
 
   def onDocumentLoadFnc(self):
-    """ Pure Javascript onDocumentLoad Function """
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''
       htmlObj.empty(); htmlObj.append("<source src='" + data.path + "/" + data.audio + "' type='audio/mpeg'>")''', 'Javascript Object builder')
 

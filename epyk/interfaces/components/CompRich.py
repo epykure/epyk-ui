@@ -30,7 +30,7 @@ class Rich(object):
     :rtype: html.HtmlTextComp.TextBubble
     :return:
     """
-    return self.context.register(html.HtmlTextComp.TextBubble(self.context.rptObj, recordSet, width, height,
+    return self.context.register(html.HtmlTextComp.TextBubble(self.context.rptObj, recordSet or {}, width, height,
                                                               color, size, background_color, helper, profile))
 
   def delta(self, recordSet=None, width=(200, 'px'), height=(80, 'px'), size=None, helper=None, profile=None):
@@ -53,7 +53,7 @@ class Rich(object):
     :rtype: html.HtmlTextComp.Delta
     :return:
     """
-    return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, recordSet, width, height, size,
+    return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, recordSet or {}, width, height, size,
                                                          helper, profile))
 
   def vignet(self, recordSet=None, width=(100, '%'), height=(None, 'px'), size=(None, 'px'), color_title=None,

@@ -62,8 +62,6 @@ class TextBubble(Html.Html):
   __pyStyle = ['CssDivChart', 'CssDivBubble']
 
   def __init__(self, report, recordSet, width, height, color, size, background_color, helper, profile):
-    if recordSet is None:
-      recordSet = {}
     super(TextBubble, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
                                      heightUnit=height[1], profile=profile)
     self.add_helper(helper)
@@ -89,16 +87,18 @@ class TextBubble(Html.Html):
       htmlObj.find('div').last().find('a').html(data.title)''' % {"color": self.getColor("colors", -1)})
 
   def __str__(self):
-    items = ['<div %s>' % self.strAttr(pyClassNames=['CssDivChart'])]
-    items.append(
-      '<div %s style="vertical-align:middle;background-color:%s;font-size:%s;color:%s"></div><div class="py_csstitle"><a style="text-decoration:none"></a></div>%s</div>' % (
-        self._report.style.getClsTag(['CssDivBubble']), self.background_color, "%s%s" % (self.size[0], self.size[1]), self.color, self.helper))
-    return "".join(items)
+    return '''
+      <div %(strAttr)s>
+        <div %(clsTag)s style="vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
+        <div class="py_csstitle"><a style="text-decoration:none"></a></div>%(helper)s
+      </div>''' % {"strAttr": self.strAttr(pyClassNames=['CssDivChart']), "clsTag": self._report.style.getClsTag(['CssDivBubble']),
+                   'bgcolor': self.background_color, 'size': "%s%s" % (self.size[0], self.size[1]), 'color': self.color,
+                   'helper': self.helper}
 
 
 class BlockText(Html.Html):
-  __reqCss = ['font-awesome']
-  name, category, callFnc = 'Block text', 'Texts', 'blocktext'
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  name, category, callFnc = 'Block text', 'Rich', 'blocktext'
   __pyStyle = ['CssTitle', 'CssHrefNoDecoration', 'CssButtonBasic', 'CssText', 'CsssDivBoxMargin']
 
   def __init__(self, report, recordSet, color, size, border, width, height, helper, profile):
@@ -141,7 +141,6 @@ class TextWithBorder(Html.Html):
   name, category, callFnc = 'Text with Border and Icon', 'Rich', 'textborder'
 
   def __init__(self, report, recordSet, width, height, size, align, helper, profile):
-
     super(TextWithBorder, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
                                    heightUnit=height[1], profile=profile)
     self.size = size[0]
@@ -151,8 +150,7 @@ class TextWithBorder(Html.Html):
       self.vals['colorTitle'] = self.getColor('colors', 9)
     if not 'color' in self.vals:
       self.vals['color'] = self.getColor('colors', 9)
-    self.css({"border-color": self.vals['colorTitle'], 'margin-top': '20px',
-              'font-size': '%s%s' % (size[0], size[1])})
+    self.css({"border-color": self.vals['colorTitle'], 'margin-top': '20px', 'font-size': '%s%s' % (size[0], size[1])})
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
@@ -176,12 +174,12 @@ class TextWithBorder(Html.Html):
 
 
 class Vignet(Html.Html):
-  name, category, callFnc = 'Vignet', 'Text', 'vignet'
+  name, category, callFnc = 'Vignet', 'Rich', 'vignet'
   __pyStyle = ['CssDivChart', 'CssText', 'CssNumberCenter']
   __reqCss, __reqJs = ['font-awesome', 'jqueryui'], ['font-awesome', 'jquery']
 
-  def __init__(self, report, recordSet, width, height, size, colorTitle, helper, profile):
-    super(Vignet, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
+  def __init__(self, report, records, width, height, size, colorTitle, helper, profile):
+    super(Vignet, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1], profile=profile)
     self.add_helper(helper)
     if not 'color' in self.vals:
@@ -191,14 +189,14 @@ class Vignet(Html.Html):
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      if (data.urlTitle != undefined  || data.urlTitle != null) {  htmlObj.find('div').find('p').first().html('<a href="'+ data.urlTitle +'" style="text-decoration:none;color:%(blackColor)s">' + data.title + '</a>'); }
-      else { htmlObj.find('div').find('p').first().html(data.title) ;}
-      htmlObj.find('div').find('p').eq(2).html(data.value) ;
+      if (data.urlTitle != undefined || data.urlTitle != null) {htmlObj.find('div').find('p').first().html('<a href="'+ data.urlTitle +'" style="text-decoration:none;color:%(blackColor)s">' + data.title + '</a>'); }
+      else {htmlObj.find('div').find('p').first().html(data.title)}
+      htmlObj.find('div').find('p').eq(2).html(data.value);
       if (data.url != undefined || data.url != null) { htmlObj.find('div').find('p').last().html('<a href="'+ data.url +'" style="text-decoration:none;color:%(blackColor)s">' + data.number + '</a>') ; }
-      else { htmlObj.find('div').find('p').last().html(FormatNumber(data.number, 0, ',', ',')) ;}
-      if (data.tooltip != undefined) {htmlObj.find('div').find('p').last().tooltip( ) ;};
-      if (data.text != undefined) {  htmlObj.find('p').last().html(data.text) ;}
-      ''' % {"blackColor": self.getColor('greys', 9) })
+      else { htmlObj.find('div').find('p').last().html(FormatNumber(data.number, 0, ',', ','))}
+      if (data.tooltip != undefined) {htmlObj.find('div').find('p').last().tooltip( )};
+      if (data.text != undefined) {  htmlObj.find('p').last().html(data.text)}
+      ''' % {"blackColor": self.getColor('greys', 9)})
 
   def figureClick(self, jsData='data'):
     """
@@ -213,7 +211,6 @@ class Vignet(Html.Html):
       })""" % {"htmlId": self.htmlId, 'data': jsData})
 
   def __str__(self):
-    """ Return the String representation of a Vignet """
     self.addGlobalFnc("FormatNumber(n, decPlaces, thouSeparator, decSeparator)", '''
       decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
       decSeparator = decSeparator == undefined ? "." : decSeparator,
@@ -240,13 +237,11 @@ class Vignet(Html.Html):
 
 class Delta(Html.Html):
   __pyStyle = ['CssDivNoBorder']
-  __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery']
-  name, category, callFnc = 'Delta Figures', 'Richs', 'delta'
+  __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery', 'bootstrap']
+  name, category, callFnc = 'Delta Figures', 'Rich', 'delta'
 
-  def __init__(self, report, recordSet, width, height, size, helper, profile):
-    if recordSet is None:
-      recordSet = {}
-    super(Delta, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
+  def __init__(self, report, records, width, height, size, helper, profile):
+    super(Delta, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0],
                                 heightUnit=height[1], profile=profile)
     self.add_helper(helper)
     self.size = int(self._report.pyStyleDfl['fontSize'][:-2]) if size is None else size
@@ -309,7 +304,8 @@ class Delta(Html.Html):
 
 
 class DocScript(Html.Html):
-  """ Python Wrapper for a Static view of the scripts
+  """
+  Python Wrapper for a Static view of the scripts
 
   This interface is a bit special in the way it is supposed to interact with the production code.
   Indeed it will:
@@ -321,8 +317,7 @@ class DocScript(Html.Html):
   docTypes = set(['documentation', 'code'])
   __pyStyle = ['CssDivNoBorder']
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery']
-  name, category, callFnc, docCategory = 'Script Documentation', 'Text', 'doc', 'Preformatted'
-  mocks = ''
+  name, category, callFnc = 'Script Documentation', 'Text', 'doc'
 
   def __init__(self, report, title, scriptName, clssName, functionName, docType, color, size):
     if not docType in self.docTypes:
@@ -341,7 +336,6 @@ class DocScript(Html.Html):
       $.post( request, function( data ) { JSON.parse(data).forEach(function(rec) { htmlObj.find('pre').append('<code>' + rec + '</code><br />') ; }) ;}); ''')
 
   def __str__(self):
-    """ Return the String representation of the Script Documentation Standard Component """
     label = "from script <b>%s</b>" % self.vals['scriptName']
     if self.vals['clssName'] != 'NOT_SET':
       label = "%s, class <b>%s</b>" % (label, self.vals['clssName'])
@@ -357,7 +351,7 @@ class DocScript(Html.Html):
 
 class Prism(Html.Html):
   __reqCss, __reqJs = ['prism'], ['prism', 'jqueryui']
-  name, category, callFnc = 'Code Viewer', 'Texts', 'prism'
+  name, category, callFnc = 'Code Viewer', 'Rich', 'prism'
 
   def __init__(self, report, vals, language, size, width, height, isEditable, trimSpaces, align, helper, profile):
     super(Prism, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0],
@@ -397,9 +391,11 @@ class Prism(Html.Html):
         </table>
         <div style="display:inline-block;margin:0;padding:0;width:100%%;text-align:right"><p style="display:inline:block;float:right;width:80px;white-space:nowrap;cursor:pointer" onclick="$('#%(htmlId)s_code').toggle()">[hide / show]</p></div>
       </div>''' % {"strAttr": self.strAttr(), "copy": copy.html(), "isEditable": self.isEditable,
-                   "content": content,
-                   "helper": self.helper, "htmlId": self.htmlId}
+                   "content": content, "helper": self.helper, "htmlId": self.htmlId}
 
+  # -----------------------------------------------------------------------------------------
+  #                                    MARKDOWN SECTION
+  # -----------------------------------------------------------------------------------------
   @staticmethod
   def matchMarkDownBlock(data):
     return re.match("```", data[0])
@@ -419,6 +415,9 @@ class Prism(Html.Html):
   def jsMarkDown(self, vals):
     return ["```", vals, "```"]
 
+  # -----------------------------------------------------------------------------------------
+  #                                    EXPORT OPTIONS
+  # -----------------------------------------------------------------------------------------
   def to_word(self, document):
     from docx.oxml.ns import nsdecls
     from docx.oxml import parse_xml
@@ -427,8 +426,7 @@ class Prism(Html.Html):
     table.style = 'TableGrid'
     hdr_cells = table.rows[0].cells
     hdr_cells[0].text = "\n%s\n" % self.vals
-
-    shading_elm_1 = parse_xml(r'<w:shd %s w:fill="F4F4F4"/>' % (nsdecls('w')) )
+    shading_elm_1 = parse_xml(r'<w:shd %s w:fill="F4F4F4"/>' % (nsdecls('w')))
     hdr_cells[0]._tc.get_or_add_tcPr().append(shading_elm_1)
 
 
@@ -453,6 +451,9 @@ class Formula(Html.Html):
   def __str__(self):
     return '<font %s></font>%s' % (self.strAttr(pyClassNames=self.__pyStyle), self.helper)
 
+  # -----------------------------------------------------------------------------------------
+  #                                    MARKDOWN SECTION
+  # -----------------------------------------------------------------------------------------
   @staticmethod
   def matchMarkDown(val): return True if val.startswith("$$") and val.strip().endswith("$$") else None
 
@@ -467,7 +468,7 @@ class Formula(Html.Html):
 
 
 class TrafficLight(Html.Html):
-  name, category, callFnc = 'Light', 'Text', 'light'
+  name, category, callFnc = 'Light', 'Rich', 'light'
   __pyStyle = ['CsssDivBoxMargin']
 
   def __init__(self, report, color, label, height, tooltip, helper, profile):
@@ -494,6 +495,7 @@ class TrafficLight(Html.Html):
     button.click(l.jsColor("blue"))
 
     :param color: A color code
+
     :return: The javascript string corresponding to the action of changing the color
     """
     return "%s.css('background-color', '%s')" % (self.jqId, color)
@@ -511,7 +513,6 @@ class TrafficLight(Html.Html):
     return "%s.css('background-color')" % self.jqId
 
   def onDocumentLoadFnc(self):
-    """ Pure Javascript onDocumentLoad Function """
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
       if (data === false){htmlObj.css('background-color', jsStyles.red)}
       else if (data === true){htmlObj.css('background-color', jsStyles.green)}
@@ -521,6 +522,9 @@ class TrafficLight(Html.Html):
   def __str__(self):
     return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.__pyStyle), self.helper)
 
+  # -----------------------------------------------------------------------------------------
+  #                                    MARKDOWN SECTION
+  # -----------------------------------------------------------------------------------------
   @staticmethod
   def matchMarkDown(val): return re.match("-\(\((.*)\)\)-", val)
 
@@ -567,6 +571,7 @@ class ContentsTable(Html.Html):
     :param script_name: The underlying script to point to
     :param report_name: The name of the folder
     :param name:
+
     :return:
     """
     self.ext_links[self.entries_count] = {"scriptName": script_name, "folderName": report_name if report_name is not None else self._report.run.report_name}
@@ -576,9 +581,9 @@ class ContentsTable(Html.Html):
     entries = []
     for i, v in enumerate(self.vals):
       try:
-        cssClsName = 'CssHrefContentLevel%(level)s' % v
-        self._report.style.cssCls(cssClsName)
-        v['classname'] = self._report.style.cssName(cssClsName)
+        css_cls_name = 'CssHrefContentLevel%(level)s' % v
+        self._report.style.cssCls(css_cls_name)
+        v['classname'] = self._report.style.cssName(css_cls_name)
       except:
         raise Exception("Missing css class CssHrefContentLevel%(level)s" % v)
 

@@ -23,6 +23,9 @@ class Hr(Html.Html):
     hr = '<hr style="height:%spx;background-color:%s">' % ("%s%s" % (self.size[0], self.size[1]), self.background_color) if self.size is not None else '<hr style="background-color:%s" />' % self.backgroundColor
     return '<div %s>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle), "".join(self.vals * [hr]))
 
+  # -----------------------------------------------------------------------------------------
+  #                                    MARKDOWN SECTION
+  # -----------------------------------------------------------------------------------------
   @staticmethod
   def matchMarkDown(val): return True if val.strip() == '***' else None
 
@@ -43,9 +46,11 @@ class Newline(Html.Html):
   name, category, callFnc = 'New line', 'Layouts', 'new_line'
 
   def html(self):
-    """ Return the String representation of a new line tag """
     return "".join(['<br />'] * self.vals)
 
+  # -----------------------------------------------------------------------------------------
+  #                                    MARKDOWN SECTION
+  # -----------------------------------------------------------------------------------------
   @staticmethod
   def matchMarkDown(val): return True if val.strip() == '' else None
 
@@ -58,6 +63,9 @@ class Newline(Html.Html):
   @classmethod
   def jsMarkDown(self, vals): return ""
 
+  # -----------------------------------------------------------------------------------------
+  #                                    EXPORT OPTIONS
+  # -----------------------------------------------------------------------------------------
   def to_word(self, document):
     document.add_page_break()
 
@@ -102,6 +110,7 @@ class Stars(Html.Html):
     stars.click(rptObj.js.console.log("test").toStr())
 
     :param js_fncs: An array of Js functions or string. Or a string with the Js
+
     :return:
     """
     self.css({"cursor": "pointer"})
@@ -115,7 +124,6 @@ class Stars(Html.Html):
     return super(Stars, self).click(js_fncs)
 
   def onDocumentLoadFnc(self):
-    """ Pure Javascript onDocumentLoad Function """
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
       htmlObj.parent().data('level', data);
       htmlObj.each(function(i){
@@ -132,7 +140,7 @@ class Stars(Html.Html):
 
 class Help(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome', 'jqueryui']
-  name, category, callFnc = 'Info', 'Text', 'help'
+  name, category, callFnc = 'Info', 'Texts', 'help'
 
   def __init__(self, report, val, width, profile):
     super(Help, self).__init__(report, val, width=width[0], widthUnit=width[1], profile=profile)
@@ -147,6 +155,9 @@ class Help(Html.Html):
   def __str__(self):
     return '<i %s></i>' % self.strAttr()
 
+  # -----------------------------------------------------------------------------------------
+  #                                    EXPORT OPTIONS
+  # -----------------------------------------------------------------------------------------
   def to_word(self, document): pass
 
   def to_pdf(self, document): pass
