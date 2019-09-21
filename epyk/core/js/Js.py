@@ -405,6 +405,16 @@ class JsBase(object):
     self._src._props.setdefault('js', {}).setdefault('prototypes', {})["%s.prototype.%s" % (pyClass._jsClass, fncName)] = {"content": ";".join(jsData), 'pmts': pmts}
     return self
 
+  @property
+  def fncs(self):
+    """
+    Property to the predefined Javascript functions
+
+    :rtype: JsFncs.JsRegisteredFunctions
+    :return: The predefined functions
+    """
+    return JsFncs.JsRegisteredFunctions(self._src)
+
   def registerFunction(self, fncName, jsFncs=None, pmts=None):
     """
     Javascript Framework extension

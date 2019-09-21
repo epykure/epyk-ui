@@ -104,7 +104,7 @@ class Texts(object):
     return self.context.register(html.HtmlText.Span(self.context.rptObj, text, size, color, align, width,
                                                     height, htmlCode, tooltip, profile))
 
-  def highlights(self, text=None, title="", icon=None, type="danger", size=(None, "px"), color=None, width=(100, "%"),
+  def highlights(self, text=None, title="", icon=None, type="danger", size=(None, "px"), color=None, width=(None, "%"),
                  height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
 
@@ -118,7 +118,7 @@ class Texts(object):
     :param title:
     :param icon:
     :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
-                dark). Default danger
+                 dark). Default danger
     :param size:
     :param color:
     :param width:
@@ -128,7 +128,6 @@ class Texts(object):
     :param profile:
 
     :rtype: html.HtmlText.Highlights
-
     :return:
     """
     size = self.context._size(size)
@@ -309,10 +308,10 @@ class Texts(object):
 
     Documentation
 
-    :param number:
-    :param label:
-    :param icon:
-    :param size:
+    :param number: Optional. The value to be displayed to the component. Default now
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param size: Optional. The font size in the component. Default 12px
     :param color:
     :param tooltip:
     :param htmlCode:

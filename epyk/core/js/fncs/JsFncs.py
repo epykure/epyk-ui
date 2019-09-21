@@ -2,12 +2,39 @@
 
 """
 
+
 from epyk.core.js.fncs import JsFncsRecords
+from epyk.core.js.fncs import JsFncsUtils
 
 
 FNCS_MAPS = {
-  "row-buckets": JsFncsRecords.JsRowBuckets
+  "row-buckets": JsFncsRecords.JsRowBuckets,
+  'toMarkUp': JsFncsUtils.JsMarkUp,
+  'formatNumber': JsFncsUtils.JsFormatNumber,
 }
+
+
+class JsRegisteredFunctions(object):
+  def __init__(self, src):
+    if not 'js' in src._props:
+      src._props['js'] = {}
+    self._js_src = src._props['js']
+
+  @property
+  def markUp(self):
+    """
+    Javascript function to convert a string to the equivelent Markdown HTML tags
+
+    Documentation
+    https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+    :return: The function name to be used in a Javascript String
+    """
+    fnc_name = JsFncsUtils.JsMarkUp.__name__
+    fnc_pmts = JsFncsUtils.JsMarkUp.params
+    if not fnc_name in self._js_src.get('functions', {}):
+      self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % JsFncsUtils.JsMarkUp.value, 'pmt': fnc_pmts}
+    return fnc_name
 
 
 class JsFunction(object):
