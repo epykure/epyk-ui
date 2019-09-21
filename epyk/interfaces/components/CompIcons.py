@@ -250,6 +250,7 @@ class Icons(object):
   def table(self, position=None, tooltip="Convert to Table", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
     """
+
     Example
     rptObj.ui.icons.table(tooltip="helper")
 
@@ -286,16 +287,4 @@ class Icons(object):
     """
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'fas fa-wrench', size, tooltip, width,
                                                           height, htmlCode, profile))
-
-
-  #
-  # def thumbtack(self, htmlObj, position=None, tooltip=None, width=100, widthUnit='%', height=None, heightUnit='px', htmlCode=None, profile=None):
-  #   return self.context.register(html.HtmlButton.IconThumbtack(self.context.rptObj, htmlObj, position, None, None))
-  #
-  # def lock(self, position=None, tooltip=None, width=100, widthUnit='%', height=None, heightUnit='px', htmlCode=None, profile=None):
-  #   return self.context.register(html.HtmlButton.IconLock(self.context.rptObj, position, None, None))
-  #
-  # def calculator(self, position=None, tooltip=None, width=100, widthUnit='%', height=None, heightUnit='px', htmlCode=None, profile=None):
-  #   return self.context.register(html.HtmlButton.IconSum(self.context.rptObj, position, None, None, width, widthUnit, height, heightUnit, htmlCode, profile))
-
 

@@ -28,5 +28,6 @@ class CssDatePicker(CssStyle.CssCls):
 
 
 class CssDatesTimePicker(CssStyle.CssCls):
+  attrs = {'margin': '0'}
   def customize(self, style, eventsStyles):
     style.update({'color': self.getColor('greys', -1), "background": self.getColor('colors', 0)})
