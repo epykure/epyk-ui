@@ -35,7 +35,7 @@ class Sliders(object):
     Add a Jquery UI slider object to the page
 
     Example
-    rptObj.ui.slider(recordSet=[1, 2, 3,4 ,5, 6, 7])
+    rptObj.ui.slider(recordSet=[1, 2, 3, 4, 5, 6, 7])
 
     Documentation
     https://jqueryui.com/slider/
@@ -56,6 +56,7 @@ class Sliders(object):
     :param color:
     :param helper:
     :param profile:
+
     :rtype: html.HtmlEvent.Slider
     :return:
     """
@@ -99,6 +100,7 @@ class Sliders(object):
     :param attrs:
     :param helper:
     :param profile:
+
     :rtype: html.HtmlEvent.ProgressBar
     :return:
     """

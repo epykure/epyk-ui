@@ -11,4 +11,11 @@ rptObj.ui.rich.vignet({'title': 'Python', 'number': 100, 'text': 'Content', 'col
                        'https://www.python.org/', 'icon': 'fab fa-python', 'tooltip': 'Python Fondation',
                        'urlTitle': 'WebSite'})
 rptObj.ui.rich.light("red", label="label", tooltip="Tooltip", helper="Helper")
+
+
+# Sliders
+rptObj.ui.slider(recordSet=[1, 2, 3, 4, 5, 6, 7])
+rptObj.ui.sliders.progressbar(300)
+
+
 rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS)
