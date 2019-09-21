@@ -30,14 +30,27 @@ class DatePicker(Html.Html):
 
   def selectable(self, dts):
     """
+    Restrict the selection on a list of dates
 
-    :param dts:
-    :return:
+    :param dts: A Python list of dates in the format YYYY-MM-DD
+
+    :return: The Python date object
     """
     self.vals['options']["selectedDts"] = dts
     return self
 
   def add_options(self, opts, isPyData=True):
+    """
+    Add Date Picker options
+
+    Documentation
+    https://api.jqueryui.com/datepicker/
+
+    :param opts: Python dictionary with options
+    :param isPyData: Optional. Flag to convert the values to Javascript. Default True
+
+    :return: The Html Python Date object
+    """
     if isPyData:
       for k, v in opts.items():
         self.vals['options'][k] = json.dumps(v)
@@ -65,12 +78,12 @@ class DatePicker(Html.Html):
 
 class TimePicker(Html.Html):
   __reqCss, __reqJs = ['timepicker'], ['timepicker']
-  name, category, callFnc = 'Time Picker', 'Input', 'date'
+  name, category, callFnc = 'Time Picker', 'Dates', 'date'
   __pyStyle = ['CssDivNoBorder']
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
-    #
+    # Add the internal components (label, icon)
     self.input = self._report.ui.inputs.d_time(value)
     self.input.add_attrs({"class": ['time']})
     self.prepend_child(self.input)
@@ -79,7 +92,6 @@ class TimePicker(Html.Html):
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-
     self.css({"margin-top": '1px', "color": color or 'inherit', "vertical-align": "middle", "font-size": "%s%s" % (size[0], size[1])})
     self.options = options
 
@@ -103,12 +115,36 @@ class TimePicker(Html.Html):
     """
     return self.input.jsGenerate(jsData, jsDataKey, isPyData, jsParse, jsStyles, jsFnc)
 
-  def add_options(self, key, val, isPyData=True):
-    if isPyData:
-      val = json.dumps(val)
-    self.vals['options'][key] = val
+  def add_options(self, key, val=None, isPyData=True):
+    """
+    Add TimePicker options
+
+    Documentation
+    https://timepicker.co/options/
+
+    :param key: A string or a Python dictionary with the options to set
+    :param val: Optional.
+    :param isPyData: Optional
+
+    :return:
+    """
+    if isinstance(key, dict):
+      for k, v in key.items():
+        if isPyData:
+          v = json.dumps(v)
+        self.vals['options'][k] = v
+    else:
+      if isPyData:
+        val = json.dumps(val)
+      self.vals['options'][key] = val
 
   def change(self, jsFnc):
+    """
+
+    :param jsFnc:
+
+    :return:
+    """
     if isinstance(jsFnc, list):
       self.vals['options']['_change'] += jsFnc
     else:
@@ -137,7 +173,6 @@ class CountDownDate(Html.Html):
     return "$('#%s span')" % self.htmlId
 
   def onDocumentLoadFnc(self):
-    """ Pure Javascript onDocumentLoad Function """
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' 
       var splitDt = data.split("-"); var endDate = new Date(splitDt[0], parseInt(splitDt[1])-1, splitDt[2]);
       var now = new Date().getTime(); var distance = endDate.getTime() - now;
@@ -159,7 +194,7 @@ class CountDownDate(Html.Html):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.jsUpdateDataFnc)
 
   def __str__(self):
-    return '<div %s><span></span>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle),self.helper)
+    return '<div %s><span></span>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
 
 
 class LastUpdated(Html.Html):
