@@ -1,5 +1,5 @@
 """
-
+Interface to the rich HTML components
 """
 
 from epyk.core import html
@@ -10,7 +10,7 @@ class Rich(object):
     self.context = context
 
   def textbubble(self, recordSet=None, width=(100, "%"), height=(None, 'px'), color=None, size=(25, "px"),
-                 background_color=None, dataSrc=None, helper=None, profile=None):
+                 background_color=None, helper=None, profile=None):
     """
 
     Example
@@ -19,21 +19,21 @@ class Rich(object):
     Documentation
 
     :param recordSet:
-    :param width:
-    :param height:
-    :param color:
-    :param size:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color: Optional. The font color in the component. Default inherit
+    :param size: Optional, A tuple with a integer for the size and its unit
     :param background_color:
-    :param dataSrc:
-    :param helper:
-    :param profile:
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+
     :rtype: html.HtmlTextComp.TextBubble
     :return:
     """
     return self.context.register(html.HtmlTextComp.TextBubble(self.context.rptObj, recordSet, width, height,
-                                                              color, size, background_color, dataSrc, helper, profile))
+                                                              color, size, background_color, helper, profile))
 
-  def delta(self, recordSet=None, width=(200, 'px'), height=(80, 'px'), size=None, dataSrc=None, helper=None, profile=None):
+  def delta(self, recordSet=None, width=(200, 'px'), height=(80, 'px'), size=None, helper=None, profile=None):
     """
 
     Example
@@ -44,20 +44,20 @@ class Rich(object):
     https://fontawesome.com/icons?d=gallery
 
     :param recordSet:
-    :param width:
-    :param height:
-    :param size:
-    :param dataSrc:
-    :param helper:
-    :param profile:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param size: Optional, A tuple with a integer for the size and its unit
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+
     :rtype: html.HtmlTextComp.Delta
     :return:
     """
-    return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, recordSet, width, height, size, dataSrc,
+    return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, recordSet, width, height, size,
                                                          helper, profile))
 
-  def vignet(self, recordSet=None, width=(100, '%'), height=(None, 'px'), size=(None, 'px'), colorTitle=None,
-             dataSrc=None, helper=None, profile=None):
+  def vignet(self, recordSet=None, width=(100, '%'), height=(None, 'px'), size=(None, 'px'), color_title=None,
+             helper=None, profile=None):
     """
 
     Example
@@ -68,19 +68,19 @@ class Rich(object):
     Documentation
 
     :param recordSet:
-    :param width:
-    :param height:
-    :param size:
-    :param colorTitle:
-    :param dataSrc:
-    :param helper:
-    :param profile:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param size: Optional, A tuple with a integer for the size and its unit
+    :param color_title:
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+
     :rtype: html.HtmlTextComp.Vignet
     :return:
     """
     size = self.context._size(size)
     return self.context.register(html.HtmlTextComp.Vignet(self.context.rptObj, recordSet, width, height,
-             size, colorTitle, dataSrc, helper, profile))
+             size, color_title, helper, profile))
 
   def stars(self, val=None, label=None, color=None, align='left', best=5, htmlCode=None, helper=None, profile=None):
     """
@@ -92,12 +92,12 @@ class Rich(object):
     https://www.w3schools.com/howto/howto_css_star_rating.asp
 
     :param val:
-    :param label:
-    :param color:
+    :param label: Optional. The text of label to be added to the component
+    :param color: Optional. The font color in the component. Default inherit
     :param align:
-    :param best:
-    :param htmlCode:
-    :param profile:
+    :param best: Optional. The max number of stars. Default 5
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlOthers.Stars
 
@@ -116,12 +116,12 @@ class Rich(object):
     Documentation
 
     :param recordSet:
-    :param width:
-    :param height:
-    :param size:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param size: Optional, A tuple with a integer for the size and its unit
     :param align:
-    :param helper:
-    :param profile:
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlTextComp.TextWithBorder
 
@@ -142,13 +142,13 @@ class Rich(object):
     Documentation
 
     :param recordSet:
-    :param color:
-    :param size:
+    :param color: Optional. The font color in the component. Default inherit
+    :param size: Optional. The font size in the component. Default 12px
     :param border:
-    :param width:
-    :param height:
-    :param helper:
-    :param profile:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlTextComp.BlockText
 
@@ -158,24 +158,24 @@ class Rich(object):
     return self.context.register(html.HtmlTextComp.BlockText(self.context.rptObj, recordSet, color, size, border, width,
                                                              height, helper, profile))
 
-  def light(self, color=None, height=(20, 'px'), label=None, tooltip=None, dataSrc=None, helper=None, profile=None):
+  def light(self, color=None, height=(20, 'px'), label=None, tooltip=None, helper=None, profile=None):
     """
 
     Example
     rptObj.ui.rich.light("red", label="label", tooltip="Tooltip", helper="Helper")
 
     :param color:
-    :param height:
-    :param label:
-    :param tooltip:
-    :param dataSrc:
-    :param helper:
-    :param profile:
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param label: Optional. The text of label to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param helper: Optional. The filtering properties for this component
+    :param profile: Optional. A flag to set the component performance storage
+
     :rtype: html.HtmlTextComp.TrafficLight
     :return:
     """
     return self.context.register(html.HtmlTextComp.TrafficLight(self.context.rptObj, color, label, height,
-                                                                tooltip, dataSrc, helper, profile))
+                                                                tooltip, helper, profile))
 
   def prism(self, text=None, language='python', size=(None, 'px'), width=(100, "%"), height=(None, "px"),
             isEditable=False, trimSpaces=True, align=None, helper=None, profile=None):
@@ -188,14 +188,15 @@ class Rich(object):
     https://www.w3schools.com/tags/tag_font.asp
 
     :param text:
-    :param language:
-    :param size:
-    :param width:
-    :param height:
+    :param language: Optional, The language format used. Default Python
+    :param size: Optional, A tuple with a integer for the size and its unit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param isEditable:
     :param trimSpaces:
     :param align:
-    :param profile:
+    :param profile: Optional. A flag to set the component performance storage
+
     :rtype: html.HtmlTextComp.Prism
     :return:
     """

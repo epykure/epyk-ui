@@ -71,6 +71,7 @@ class Buttons(object):
 
     :rtype: html.HtmlButton.Button
     """
+    size = self.context._size(size)
     return self.context.register(
       html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-check-circle', size, width, height, htmlCode=htmlCode,
                              tooltip=tooltip, profile=profile, options=options))
@@ -98,6 +99,7 @@ class Buttons(object):
 
     :rtype: html.HtmlButton.Button
     """
+    size = self.context._size(size)
     return self.context.register(
       html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-trash-alt', size, width, height, htmlCode=htmlCode,
                              tooltip=tooltip, profile=profile, options=options))
@@ -125,6 +127,7 @@ class Buttons(object):
 
     :rtype: html.HtmlButton.Button
     """
+    size = self.context._size(size)
     return self.context.register(
       html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-phone', size, width, height, htmlCode=htmlCode,
                              tooltip=tooltip, profile=profile, options=options))
@@ -152,12 +155,14 @@ class Buttons(object):
 
     :rtype: html.HtmlButton.Button
     """
+    size = self.context._size(size)
     return self.context.register(
       html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-envelope', size, width, height, htmlCode=htmlCode,
                              tooltip=tooltip, profile=profile, options=options))
 
-  def radio(self, recordSet=None, checked=None, htmlCode=None, width=100, width_unit='%', height=None, height_unit="px", radioVisible=False,
-            event=None, withRemoveButton=False, dfColumn=None, align='left', globalFilter=None, tooltip='', allSelected=False,
+
+  def radio(self, recordSet=None, checked=None, htmlCode=None, width=(100, '%'), height=(None, "px"), radioVisible=False,
+            event=None, withRemoveButton=False, dfColumn=None, align='left', filters=None, tooltip='', allSelected=False,
             title='', radioType="row", profile=None):
     """
 
@@ -171,34 +176,34 @@ class Buttons(object):
     :param checked:
     :param htmlCode:
     :param width: Optional. Integer for the component width
-    :param width_unit: Optional. The unit for the with. Default %
     :param height: Optional. Integer for the component height
-    :param height_unit: Optional. The unit for the height. Default px
     :param radioVisible:
     :param event:
     :param withRemoveButton:
     :param dfColumn:
     :param align:
-    :param globalFilter:
+    :param filters:
     :param tooltip:
     :param allSelected:
     :param title:
     :param radioType:
     :param profile:
+
     :rtype: html.HtmlRadio.Radio
     :return:
     """
     if dfColumn is not None:
-      if globalFilter is not None:
-        if globalFilter:
+      if filters is not None:
+        if filters:
           dataId = id(recordSet)
           dataCode = "df_code_%s" % dataId
-          globalFilter = {'jsId': dataCode, 'colName': dfColumn, 'allSelected': allSelected, 'operation': 'in'}
+          filters = {'jsId': dataCode, 'colName': dfColumn, 'allSelected': allSelected, 'operation': 'in'}
           if not dataCode in self.context.rptObj.jsSources:
             self.context.rptObj.jsSources[dataCode] = {'dataId': dataId, 'containers': [], 'data': recordSet}
             self.context.rptObj.jsSources[dataCode]['containers'].append(self)
       recordSet = recordSet[dfColumn].unique().tolist()
-    return self.context.register(html.HtmlRadio.Radio(self.context.rptObj, recordSet, checked, htmlCode, width, width_unit, height, height_unit, radioVisible, event, withRemoveButton, align, globalFilter, tooltip, title, radioType, profile))
+    return self.context.register(html.HtmlRadio.Radio(self.context.rptObj, recordSet, checked, htmlCode, width,
+                                                      height, radioVisible, event, withRemoveButton, align, filters, tooltip, title, radioType, profile))
 
   def switch(self, recordSet=None, label=None, color=None, size=16, width=150, width_unit='%', height=20,
              height_unit='px', htmlCode=None, profile=None):
@@ -220,6 +225,7 @@ class Buttons(object):
     :param height_unit: Optional. The unit for the height. Default px
     :param htmlCode:
     :param profile:
+
     :rtype: html.HtmlRadio.Switch
     :return:
     """
@@ -249,11 +255,8 @@ class Buttons(object):
     :param profile:
 
     :rtype: html.HtmlButton.Checkbox
-
     :return:
     """
-    if options is None:
-      options = {}
     if dfColumn is not None:
       if has_pandas and issubclass(type(records), pd.DataFrame):
         if globalFilter:
@@ -271,7 +274,7 @@ class Buttons(object):
       if not isinstance(records[0], dict):
         records = [{"value": rec} for rec in records]
     return self.context.register(html.HtmlButton.Checkbox(self.context.rptObj, records, title, color, width,
-                                             height, align, htmlCode, globalFilter, tooltip, icon, options, profile))
+                                             height, align, htmlCode, globalFilter, tooltip, icon, options or {}, profile))
 
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None, htmlCode=None,
             profile=None, options=None):
@@ -290,18 +293,18 @@ class Buttons(object):
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param label: Optional. The component label content
-    :param icon:
+    :param icon: Optional. The icon to be used in the check component
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
+
+    :rtype: html.HtmlButton.CheckButton
     :return:
     """
-    if options is None:
-      options = {}
     return self.context.register(html.HtmlButton.CheckButton(self.context.rptObj, flag, tooltip, width, height, icon, label,
-                                                             htmlCode, options, profile))
+                                                             htmlCode, options or {}, profile))
 
-  def zipfile(self, vals, fileName, cssCls=None, cssAttr=None, profile=None):
+  def zipfile(self, text, fileName, css_cls=None, css_attr=None, profile=None):
     """
 
     TODO: Add the memory zip files
@@ -309,11 +312,13 @@ class Buttons(object):
     Documentation
     https://newseasandbeyond.wordpress.com/2014/01/27/creating-in-memory-zip-file-with-python/
 
-    :param vals:
+    :param text:
     :param fileName:
-    :param cssCls:
-    :param cssAttr:
+    :param css_cls:
+    :param css_attr:
     :param profile:
+
+    :rtype: html.HtmlFiles.DownloadMemoryZip
     :return:
     """
-    return self.context.register(html.HtmlFiles.DownloadMemoryZip(self.context.rptObj, vals, fileName, cssCls, cssAttr, profile))
+    return self.context.register(html.HtmlFiles.DownloadMemoryZip(self.context.rptObj, text, fileName, css_cls, css_attr, profile))

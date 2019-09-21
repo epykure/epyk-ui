@@ -79,7 +79,7 @@ class Inputs(object):
     return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height,
                                                       htmlCode, filter, options, attrs, profile))
 
-  def d_time(self, text, placeholder='', width=(140, "px"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_time(self, text, placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
