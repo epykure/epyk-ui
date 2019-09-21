@@ -11,6 +11,9 @@ from epyk.core.js import JsEncoder
 
 factory = None
 
+_REGISTERED_CHARTS = ['ChartJs', 'Plotly', 'Billboard', 'C3', 'Vis', 'DC', 'D3', 'NVD3']
+__CHART_CONFIGS_PATH = 'epyk.core.js.configs.JsConfig'
+
 
 def getConfigs(libraries):
   """
@@ -26,7 +29,7 @@ def getConfigs(libraries):
   if factory is None:
     tmpFactory = {}
     for libConfig in libraries:
-      chartMod = importlib.import_module('epyk.core.js.configs.JsConfig%s' % libConfig)
+      chartMod = importlib.import_module('%s%s' % (__CHART_CONFIGS_PATH, libConfig))
       for name, chartCls in inspect.getmembers(sys.modules[chartMod.__name__]):
         chartAlias = getattr(chartCls, 'alias', None)
         if chartAlias is not None:
@@ -47,12 +50,43 @@ def getConfig(pyCls, chartFam):
 
   The entry point of this function in the framework is in the function report.addChartConfig in the framework
 
+  :param pyCls:
+  :param chartFam:
+
   Example
   report.addChartConfig(JsTestHBar, 'ChartJs')
   """
-  chartMod = importlib.import_module('epyk.core.js.configs.JsConfig%s' % chartFam)
+  chartMod = importlib.import_module('%s%s' % (__CHART_CONFIGS_PATH, chartFam))
 
   return type(pyCls.__name__, (pyCls, chartMod.JsBase), {})
+
+
+def get(alias, chartFam=None, preferred=True):
+  """
+
+  :param alias:
+  :param chartFam:
+  :param preferred:
+
+  :return:
+  """
+  result = {}
+  for libConfig in _REGISTERED_CHARTS:
+    if chartFam is not None and chartFam != libConfig:
+      continue
+
+    chartMod = importlib.import_module('%s%s' % (__CHART_CONFIGS_PATH, libConfig))
+    for name, chartCls in inspect.getmembers(sys.modules[chartMod.__name__]):
+      chartAlias = getattr(chartCls, 'alias', None)
+      if chartAlias is not None and chartAlias == alias:
+        if chartAlias in result.get(libConfig, {}):
+          raise Exception("Duplicated Name - Chart %s in %s cannot be replaced !!!" % (chartAlias, libConfig))
+
+        result.setdefault(libConfig, {})[chartAlias] = chartCls
+        if preferred:
+          return result
+
+  return result
 
 
 class JsConfig(dict):
@@ -63,9 +97,9 @@ class JsConfig(dict):
 
   ## Class Parameters
 
-    - report: The uniq AReS object, shared with all the different objects in the framework
-    - seriesProperties: Dictionary with configuration to be added after the Javascript data transformation to the object
-    - data: The Python data structure which will be added to the data section of the Javascript chart
+  - report: The unique object, shared with all the different objects in the framework
+  - seriesProperties: Dictionary with configuration to be added after the Javascript data transformation to the object
+  - data: The Python data structure which will be added to the data section of the Javascript chart
 
   ## Special static class variables
 
@@ -79,6 +113,7 @@ class JsConfig(dict):
 
   The different Javascript structure are defined by the charting libraries
   """
+  _attrs, _statics = None, None
 
   def __init__(self, report, data, seriesProperties):
     """
@@ -235,3 +270,51 @@ class JsConfig(dict):
           self.seriesProperties['dynamic'].setdefault(i, {})['backgroundColor'] = cList[i]
     else:
       self.seriesProperties['dynamic'].setdefault(index, {})['backgroundColor'] = cList
+
+  @classmethod
+  def resolveList(cls, attrs, curr_results, results):
+    """
+    Convert a list to a string before sending the data to Javascript
+
+    :param attrs:
+    :param curr_results:
+    :param results:
+
+    :return:
+    """
+    for item in curr_results:
+      if isinstance(item, dict):
+        subList = []
+        cls.resolveDict(item, subList)
+        results.append("{ %s }" % (", ".join(subList)))
+      elif isinstance(item, list):
+        subList = []
+        cls.resolveList(curr_results, item, subList)
+        results.append("[%s]" % (",".join(subList)))
+      else:
+        results.append(item)
+
+  @classmethod
+  def resolveDict(cls, attrs, results):
+    """
+    Convert a nested dictionary to a string before sending the data to Javascript
+
+    :param attrs: A dictionary with some attributes (key, value)
+    :param results: A list with resolved attributes
+
+    :return:
+    """
+    for key, item in attrs.items():
+      if isinstance(item, dict):
+        subList = []
+        cls.resolveDict(item, subList)
+        results.append("%s: {%s}" % (key, ", ".join(subList)))
+      elif isinstance(item, list):
+        subList = []
+        cls.resolveList(attrs, item, subList)
+        if key == 'data':
+          results.append("%s: [%s]" % (key, ",".join(map(lambda x: str(x), subList))))
+        else:
+          results.append("%s: [%s]" % (key, ",".join(subList)))
+      else:
+        results.append("%s: %s" % (key, item))

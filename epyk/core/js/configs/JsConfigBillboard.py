@@ -13,6 +13,18 @@ class JsBase(JsConfig.JsConfig):
   listAttributes = []
   jsCls = 'Chart'
 
+  def toJs(self, options=None):
+    """
+    Returns the Javascript String representation
+
+    :param options:
+
+    :return:
+    """
+    ctx = []
+    self.resolveDict(dict([(key, val) for key, val in self.items() if val]), ctx)
+    return ctx
+
 
 # ---------------------------------------------------------------------------------------------------------
 #                                          C3 Configurations
