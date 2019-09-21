@@ -14,7 +14,6 @@ from . import HtmlSideBar
 from . import HtmlText
 from . import HtmlTextComp
 from . import HtmlTextEditor
-from . import HtmlSystem
 from . import HtmlMedia
 from . import Html
 from . import HtmlPopup

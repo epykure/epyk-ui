@@ -1,5 +1,5 @@
 """
-
+HTML Definition for extra layouts and feedbacks components
 """
 
 import json
@@ -123,7 +123,6 @@ class Stars(Html.Html):
         else {$(this).css('color', '')}})''', 'Javascript Object builder')
 
   def __str__(self):
-    """ Return the String representation of a new line tag """
     stars = ["<div %s>" % self.strAttr(pyClassNames=self.pyStyle)]
     for i in range(self.best):
       stars.append('<span data-level="%s" class="fa fa-star"></span>' % (i+1))
@@ -153,3 +152,17 @@ class Help(Html.Html):
   def to_pdf(self, document): pass
 
   def to_xls(self, workbook, worksheet, cursor): pass
+
+
+class Loading(Html.Html):
+  name, category = 'Loading', 'Others'
+  __pyStyle = ['CssDivLoading']
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  inReport = False
+
+  def __str__(self):
+    self.loadStyle()
+    if self.vals is None:
+      return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />Loading...</div>' % (self.strAttr(withId=False, pyClassNames=self.pyStyle))
+
+    return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />%s...</div>' % (self.strAttr(withId=False, pyClassNames=self.pyStyle), self.vals)

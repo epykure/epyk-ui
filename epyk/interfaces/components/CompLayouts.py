@@ -252,7 +252,7 @@ class Layouts(object):
                                                             width, icon, height, editable, align, backgroundColor, padding, htmlCode, tag, helper, profile))
 
   def loading(self, value=None, profile=None):
-    return self.context.register(html.HtmlSystem.Loading(self.context.rptObj, value))
+    return self.context.register(html.HtmlOthers.Loading(self.context.rptObj, value))
 
   def popup(self, htmlObj=None, title=None, color=None, size=(None, 'px'), width=(100, '%'), height=(None, 'px'),
             withBackground=True, draggable=False, margin=10, profile=None):
