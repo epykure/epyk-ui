@@ -23,7 +23,7 @@ class JsBase(JsConfig.JsConfig):
     """
     ctx = []
     self.resolveDict(dict([(key, val) for key, val in self.items() if val]), ctx)
-    return ctx
+    return "{%s}" % ", ".join(ctx)
 
 
 # ---------------------------------------------------------------------------------------------------------

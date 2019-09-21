@@ -286,7 +286,7 @@ class JsConfig(dict):
       if isinstance(item, dict):
         subList = []
         cls.resolveDict(item, subList)
-        results.append("{ %s }" % (", ".join(subList)))
+        results.append("{%s}" % (", ".join(subList)))
       elif isinstance(item, list):
         subList = []
         cls.resolveList(curr_results, item, subList)

@@ -7,9 +7,10 @@ report = Ares.Report()
 
 chart_type = 'hbar'
 configs = JsConfig.get(chart_type, chartFam='Billboard', preferred=False)
+config_chart = configs['Billboard'][chart_type](report, [], {})
+config_chart.addAttr("test", 'function(){alert}', isPyData=False)
 
-
-print(configs['Billboard'][chart_type](report, [], {}).toJs())
+print(config_chart.toJs())
 
 # Billboard
 #
