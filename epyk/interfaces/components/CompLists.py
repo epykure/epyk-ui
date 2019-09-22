@@ -183,7 +183,7 @@ class Lists(object):
     :rtype: html.HtmlList.ListTree
     :return:
     """
-    return self.context.register(html.HtmlList.ListTree(self.context.rptObj, recordSet, width, height, title, htmlCode,
+    return self.context.register(html.HtmlTrees.ListTree(self.context.rptObj, recordSet, width, height, title, htmlCode,
                                                         draggable, dataSrc, expanded, profile))
 
   def listnumbers(self, recordSet=None, level=None, top=(10, 'px'), width=(100, '%'), height=(None, 'px'),

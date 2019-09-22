@@ -20,3 +20,4 @@ from . import HtmlPopup
 from . import HtmlMessaging
 from . import HtmlDates
 from . import templates
+from . import HtmlTrees
