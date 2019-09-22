@@ -49,9 +49,25 @@ class JsRegisteredFunctions(object):
     :return:
     """
     if pmts is None:
-      return JsFunction("(function (){%s})()" % jsFnc)
+      return JsFunction("(function(){%s})()" % jsFnc)
 
-    return JsFunction("(function (%s) {%s})()" % (",".join(pmts), jsFnc))
+    return JsFunction("(function(%s) {%s})()" % (",".join(pmts), jsFnc))
+
+  def inline(self, fnc_name, jsFnc, pmts=None):
+    """
+    Create a name function which can be then called later
+
+    Documentation
+    https://www.w3schools.com/js/js_function_definition.asp
+
+    :param fnc_name:
+    :param jsFnc:
+    :param pmts:
+
+    :return: The function name which can be used in the Javascript
+    """
+    self._js_src.setdefault('functions', {})[fnc_name] = {'content': jsFnc, 'pmt': pmts}
+    return fnc_name
 
 
 class JsFunction(object):
