@@ -55,8 +55,8 @@ class Image(Html.Html):
 class AnimatedImage(Html.Html):
   __pyStyle = ['CssImg', 'CssImgAInfo', 'CssImgMask', 'CssImgH2', 'CssImgParagraph', 'CssContent', 'CssView']
   cssCls = ['view']
-  name, category, callFnc = 'Animated Picture', 'Image', 'animatedimg'
-  __reqCss, __reqJs = [], ['jquery']
+  name, category, callFnc = 'Animated Picture', 'Images', 'animatedimg'
+  __reqJs = ['jquery']
 
   def __init__(self, report, image, text, title, url, path, width, height, serverSettings, profile):
     if path is None:
@@ -66,11 +66,10 @@ class AnimatedImage(Html.Html):
     self.width = width[0]
 
   def onDocumentLoadFnc(self):
-    """ Pure Javascript onDocumentLoad Function """
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' 
       htmlObj.find('img').attr('src', data.path + "/" + data.image);
       htmlObj.find('div').find('h2').html(data.title); htmlObj.find('div').find('p').html(data.text); 
-      if (data.url != null){htmlObj.find('a').attr('href', data.url)}''', 'Javascript Object builder')
+      if (data.url != null){htmlObj.find('a').attr('href', data.url)}''')
 
   def __str__(self):
     return '''
@@ -85,7 +84,7 @@ class AnimatedImage(Html.Html):
 
 class ImgCarrousel(Html.Html):
   __pyStyle = ['CssImgBasic', 'CssCarrouselLi', 'CssCarrouselH2', 'CssDivLabelPoint', 'CssDivBoxCenter']
-  name, category, callFnc = 'Picture Carrousel', 'Image', 'carrousel'
+  name, category, callFnc = 'Picture Carrousel', 'Images', 'carrousel'
 
   def __init__(self, report, images, path, width, height, serverSettings, profile):
     if path is None:
@@ -98,30 +97,30 @@ class ImgCarrousel(Html.Html):
     self.css({'padding-top': '20px', 'display': 'block', 'padding': 0, 'margin': 0})
 
   def onDocumentLoadFnc(self):
-    """ Pure Javascript onDocumentLoad Function """
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''
       var i = 0; var htmlId = htmlObj.attr('id');
       data.forEach(function(rec){
         if (i == 0) {
-          htmlObj.append('<li style="display:inline-block" id="'+ htmlId +'_picture_'+ i +'"><img src="'+ rec.path +'/'+ rec.image +'" /><h2>'+ rec.title +'</h2></li>' ) ;
-          $('#'+ htmlId +'_bullets').append("<label style='background:%(color)s' for='"+ i +"' name='img-selector'></label>" )
+          htmlObj.append('<li style="display:inline-block" id="'+ htmlId +'_picture_'+ i +'"><img src="'+ rec.path +'/'+ rec.image +'" /><h2>'+ rec.title +'</h2></li>');
+          $('#'+ htmlId +'_bullets').append("<label style='background:%(color)s' for='"+ i +"' name='img-selector'></label>")
         } else {  
-          htmlObj.append('<li style="display:none" id="'+ htmlId +'_picture_'+ i +'"><img src="'+ rec.path +'/'+ rec.image +'" /><h2>'+ rec.title +'</h2></li>' ) ;
+          htmlObj.append('<li style="display:none" id="'+ htmlId +'_picture_'+ i +'"><img src="'+ rec.path +'/'+ rec.image +'" /><h2>'+ rec.title +'</h2></li>');
           $('#'+ htmlId +'_bullets').append("<label for='"+ i +"' name='img-selector'></label>")}
-      i = i + 1});''' % {'color': self.getColor('colors', 9)}, 'Javascript Object builder')
+      i = i + 1})''' % {'color': self.getColor('colors', 9)}, 'Javascript Object builder')
 
   def __str__(self):
-    """ String representation of the Carrousel element """
-    items = ['<ul %s></ul>' % self.strAttr(pyClassNames=['CssImgBasic', 'CssCarrouselLi', 'CssCarrouselH2'])]
-    items.append('<div id="%s_bullets" %s></div>' % (self.htmlId, self._report.style.getClsTag(["CssDivBoxCenter", "CssDivLabelPoint"])))
     self._report.jsOnLoadFnc.add('''
       $("label[for][name=img-selector]").click(function(){
         for (var i=0; i < %(count)s; i++) {$('#%(htmlId)s_picture_'+ i ).css('display', 'none')}
         $("label[for][name=img-selector").css('background', '%(grey)s');
-        $('#%(htmlId)s_picture_' + parseInt($(this).attr('for'))).css('display', 'inline-block'); 
-        $("label[for='"+ $(this).attr('for') + "'][name=img-selector").css('background', '%(color)s')})
+        $('#%(htmlId)s_picture_'+ parseInt($(this).attr('for'))).css('display', 'inline-block'); 
+        $("label[for='"+ $(this).attr('for') +"'][name=img-selector").css('background', '%(color)s')})
     ''' % {'htmlId': self.htmlId, 'count': len(self.vals), 'color': self.getColor('colors', 9), 'grey': self.getColor('greys', 2)})
-    return "".join(items)
+    return '''
+      <ul %(strAttr)s></ul>
+      <div id="%(htmlId)s_bullets" %(clsTag)s></div>
+      ''' % {'strAttr': self.strAttr(pyClassNames=['CssImgBasic', 'CssCarrouselLi', 'CssCarrouselH2']),
+             'htmlId': self.htmlId, 'clsTag': self._report.style.getClsTag(["CssDivBoxCenter", "CssDivLabelPoint"])}
 
 
 class Icon(Html.Html):
