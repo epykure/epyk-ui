@@ -58,7 +58,7 @@ class ExternalLink(Html.Html):
   # -----------------------------------------------------------------------------------------
   def to_word(self, document):
     """
-    
+
     :param document:
     :return:
     """

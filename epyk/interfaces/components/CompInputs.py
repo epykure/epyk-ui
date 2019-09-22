@@ -143,7 +143,6 @@ class Inputs(object):
     return self.context.register(html.HtmlInput.InputRange(self.context.rptObj, value, min, max, step, placeholder, width,
                                                            height, htmlCode, filter, options, attrs, profile))
 
-
   def _output(self, value=""):
     """
 
