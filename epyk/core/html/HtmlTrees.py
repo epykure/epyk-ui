@@ -67,35 +67,33 @@ class Tree(Html.Html):
         var li = $('<li name="expandable"></li>').css(jsStyles.style); 
         if (rec.url != undefined) {li.append('<a style="display:inline-block;text-decoration:none" href="'+ rec.url +'" target="_blank">'+ content +'</a>')}
         else {
-          if (rec.dsc === undefined){li.append('<span name="value">'+ content +'</span>')}
-          else{li.append('<span name="value">'+ content +'</span><p style="cursor:default;font-style:italic;display:inline-block;margin:0 0 0 10px;padding:0;color:%(lightColor)s">'+ rec.dsc +'</p>')}
+          var labelDom = $('<span name="value">'+ content +'</span>'); li.append(labelDom);
+          if (rec.dsc !== undefined){li.append('<p style="cursor:default;font-style:italic;display:inline-block;margin:0 0 0 10px;padding:0;color:%(lightColor)s">'+ rec.dsc +'</p>')};
+          if (rec.dblclick !== undefined){labelDom.dblclick(function(){var data = $(this).text(); eval(rec.dblclick)})}
         }; jsStyles.reset = false;
         if (rec.items != undefined) { 
           li.css({'list-style-type':'none', 'list-style-image':'none', 'cursor': 'pointer'});
-          var span = $('<span data-close="'+ jsStyles.icons.close +'" data-open="'+ jsStyles.icons.open +'" class="'+ jsStyles.icons.open +'" style="margin-right:5px"></span>' ) ;
+          var span = $('<span data-close="'+ jsStyles.icons.close +'" data-open="'+ jsStyles.icons.open +'" class="'+ jsStyles.icons.open +'" style="margin-right:5px"></span>');
           span.attr('name', 'section'); li.prepend(span);
           ul.append(li); htmlObj.append(ul);
           %(jsFnc)s(li, rec.items, jsStyles)}
-        else if (rec.selects != undefined) {
+        else if(rec.selects != undefined) {
           li.css({'list-style-type':'none', 'list-style-image':'none', 'cursor': 'pointer'});
-          var span = $('<span data-close="'+ jsStyles.icons.close +'" data-open="'+ jsStyles.icons.open +'" class="'+ jsStyles.icons.open +'" style="margin-right:5px"></span>' ) ;
+          var span = $('<span data-close="'+ jsStyles.icons.close +'" data-open="'+ jsStyles.icons.open +'" class="'+ jsStyles.icons.open +'" style="margin-right:5px"></span>' );
           span.attr('name', 'section'); li.prepend(span);
           var select = $('<select></select>').css({"margin-left": '5px'});
-          rec.selects.forEach(function(s){
-            select.append('<option value="'+ s +'">'+ s +'</option>')});
+          rec.selects.forEach(function(s){select.append('<option value="'+ s +'">'+ s +'</option>')});
           if (typeof rec.event !== "undefined"){
             select.change(function() {var data = {'val': $(this).val()}; var li = $(this).parent().first()[0]; 
               while (li.childNodes.length > 3) {li.removeChild(li.lastChild)}; var result = eval(rec.event); 
-              %(jsFnc)s($(this).parent(), result.new, jsStyles)})
-          };
-          li.append(select);
-          ul.append(li); htmlObj.append(ul);
-        } else {
+              %(jsFnc)s($(this).parent(), result.new, jsStyles)})};
+          li.append(select); ul.append(li); htmlObj.append(ul);
+        } else{
           if (jsStyles.forceSelect != undefined) {
             if (jsStyles.forceSelect == rec.label) {li.find('span').addClass('%(cssSelected)s'); jsStyles.forceSelect = undefined}};
           li.css({'list-style-type':'none', 'list-style-image': 'none'});
           ul.append(li); htmlObj.append(ul)}}); 
-      if (jsStyles.draggable) {
+      if (jsStyles.draggable){
         ul.sortable({placeholder: "ui-state-highlight", dropOnEmpty: true, start: function(event, ui) {},
                     stop: function(event, ui) {}, connectWith: '.list_draggable'}).disableSelection()}
       ''' % {'cssSelected': self.cssSelected, 'jsFnc': self.__class__.__name__, 'blackColor': self.getColor("greys", 9),

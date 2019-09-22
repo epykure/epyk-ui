@@ -4,8 +4,8 @@ from epyk.tests import test_statics
 rptObj = Report()
 
 sub_tree = [
-    {"label": 'sub test 1', 'items': [
-        {"label": 'sub child 2', 'color': 'green'},
+    {"label": 'sub test 1', 'dblclick': 'alert("General")', 'items': [
+        {"label": 'sub child 2', 'dblclick': 'alert("General !!!")', 'color': 'green'},
         {"label": 'sub child 3', 'color': 'green'},
         {"label": 'sub child 4', 'color': 'green'},
     ]}
