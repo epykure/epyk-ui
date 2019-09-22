@@ -10,6 +10,7 @@ from epyk.core.css.styles import CssStyle
 from epyk.core.css import Color
 from epyk.core.css import CssInternal
 from epyk.core.css import Defaults
+from epyk.core.css import Globals
 
 
 class CssDefaults(object):
@@ -39,6 +40,17 @@ class Css(object):
       self.rptObj._props['css'] = {}
     self.cssStyles, self._cssOvr, self._cssEventOvr, self.cssAttrs, self._cssCls = {}, {}, {}, {}, []
     self._colors = None
+
+  @property
+  def globals(self):
+    """
+
+    Documentation
+    https://css-tricks.com/custom-scrollbars-in-webkit/
+
+    :return:
+    """
+    return Globals.CssGlobal(self)
 
   @property
   def colors(self):
@@ -400,8 +412,6 @@ class Css(object):
       for css_id, css_def in cls_obj.getStyles(to_str=to_str).items():
         style[css_id] = css_def
     return style
-
-
 
   def toCss(self, file_name=None, path=None):
     """

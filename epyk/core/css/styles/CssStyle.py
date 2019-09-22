@@ -441,7 +441,8 @@ class CssCls(object):
     color_obj = Color.ColorMaker(self.rptObj, theme=self.theme)
     return color_obj.get(category, index, color)
 
-  def toCss(self, params_css):
+  @classmethod
+  def toCss(cls, params_css):
     """
     Convert a Python CSS Class to a well defined CSS Class
 
