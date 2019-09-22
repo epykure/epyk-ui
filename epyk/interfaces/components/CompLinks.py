@@ -101,7 +101,7 @@ class Links(object):
       options = {}
     return self.context.register(html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, options, profile))
 
-  def data(self, text, width=(100, '%'), height=(None, 'px'), format='txt', profile=None):
+  def data(self, text, value, width=(100, '%'), height=(None, 'px'), format='txt', profile=None):
     """
     Python interface to the Hyperlink to retrieve data
 
@@ -109,6 +109,7 @@ class Links(object):
     rptObj.ui.links.data("test#data")
 
     :param text: The string value to be displayed in the component
+    :param value:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param format: Optional. The downloaded data format
@@ -118,7 +119,7 @@ class Links(object):
 
     :return: The python link object
     """
-    return self.context.register(html.HtmlLinks.DataLink(self.context.rptObj, text, width=width,
+    return self.context.register(html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width,
                                                          height=height, format=format, profile=profile))
 
   def bridge(self, text, script_name, report_name, url, jsData=None, context=None):
