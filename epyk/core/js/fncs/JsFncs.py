@@ -38,7 +38,8 @@ class JsRegisteredFunctions(object):
 
   def anonymous(self, jsFnc, pmts=None):
     """
-    Create a anonymous / lambda function
+    Create a anonymous / lambda function.
+    Those functions are directly called when they are defined.
 
     Documentation
     https://www.w3schools.com/js/js_function_definition.asp
