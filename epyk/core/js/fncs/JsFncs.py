@@ -36,6 +36,23 @@ class JsRegisteredFunctions(object):
       self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % JsFncsUtils.JsMarkUp.value, 'pmt': fnc_pmts}
     return fnc_name
 
+  def anonymous(self, jsFnc, pmts=None):
+    """
+    Create a anonymous / lambda function
+
+    Documentation
+    https://www.w3schools.com/js/js_function_definition.asp
+
+    :param jsFnc:
+    :param pmts:
+
+    :return:
+    """
+    if pmts is None:
+      return JsFunction("(function (){%s})()" % jsFnc)
+
+    return JsFunction("(function (%s) {%s})()" % (",".join(pmts), jsFnc))
+
 
 class JsFunction(object):
   """

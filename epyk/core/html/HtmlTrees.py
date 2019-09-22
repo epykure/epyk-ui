@@ -10,6 +10,7 @@ from epyk.core.html import Html
 class Tree(Html.Html):
   name, category, callFnc = 'List Expandable', 'Lists', 'tree'
   __pyStyle = ['CssBasicListItemsSelected']
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome', 'jquery']
 
   def __init__(self, report, recordSet, width, height, title, htmlCode, draggable, dataSrc, expand, profile):
     self.dataSrc, self.title, self.expand = None, title, expand
@@ -29,9 +30,8 @@ class Tree(Html.Html):
     self._jsStyles = {'style': {"text-decoration": "none", "padding": 0, "margin": 0, "list-style-position": 'inside'}, 'start': True,
                       'icons': {'close': 'fas fa-folder', 'open': 'fas fa-folder-open'}, 'reset': True, 'draggable': draggable}
     self.jsFrg('click', ''' event.stopPropagation(); $('#%(htmlId)s li span[name=value],a').removeClass('%(cssSelected)s');
-        $(event.currentTarget).addClass('%(cssSelected)s'); if ('%(htmlCode)s' != 'None') { 
-        %(breadCrumVar)s['params']['%(htmlCode)s'] = $(event.currentTarget).parent('li').parent('ul').siblings('span[name=value]').text() +'/'+ $(event.currentTarget).text()};
-      ''' % {'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': self.htmlCode, 'htmlId': self.htmlId, 'cssSelected': self.cssSelected})
+        $(event.currentTarget).addClass('%(cssSelected)s')
+      ''' % {'htmlCode': self.htmlCode, 'htmlId': self.htmlId, 'cssSelected': self.cssSelected})
     if dataSrc is not None and dataSrc['type'] in ["script", 'url']:
       # TODO To extend to internal flask calls
       self.jsAction(action='refresh', icon='fas fa-sync-alt', pyCssCls="CssSmallIcon", tooltip="Refresh the tree", url=self.dataSrc.get('script', self.dataSrc.get('url', '')),
@@ -84,7 +84,9 @@ class Tree(Html.Html):
           rec.selects.forEach(function(s){
             select.append('<option value="'+ s +'">'+ s +'</option>')});
           if (typeof rec.event !== "undefined"){
-            select.change(function() {var data = {'tree': li, 'val': $(this).val()}; eval(rec.event)})
+            select.change(function() {var data = {'val': $(this).val()}; var li = $(this).parent().first()[0]; 
+              while (li.childNodes.length > 3) {li.removeChild(li.lastChild)}; var result = eval(rec.event); 
+              %(jsFnc)s($(this).parent(), result.new, jsStyles)})
           };
           li.append(select);
           ul.append(li); htmlObj.append(ul);

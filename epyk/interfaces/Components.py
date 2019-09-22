@@ -45,6 +45,7 @@ class Components(object):
     self.slider = self.sliders.slider
     self.select = self.lists.select
     self.date = self.dates.cob
+    self.tree = self.lists.tree
 
   @property
   def messaging(self):
