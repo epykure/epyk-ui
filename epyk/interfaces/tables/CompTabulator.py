@@ -22,6 +22,21 @@ class Tabulators(object):
     self.parent = context
 
   def table(self, recordSet, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+    """
+
+    :param recordSet:
+    :param cols:
+    :param rows:
+    :param header:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+
+    :rtype: html_tables.HtmlTableTabulator.DataTabulator
+    :return:
+    """
     table_options_dflts = {'selectable': False, 'index': '_row', 'layout': 'fitColumns', 'pagination': 'local',
                            'paginationSize': 25, 'resizableRows': False, 'movableColumns': True}
     if options is not None:
