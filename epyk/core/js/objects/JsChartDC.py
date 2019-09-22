@@ -32,6 +32,19 @@ class JsBase(JsConfig.JsConfig):
 
     return
 
+  def addFilterHandler(self, addFilterHandler):
+    """
+    Set or get the add filter handler. The add filter handler is a function that adds a filter to the chart's filter list.
+    Using a custom add filter handler allows you to change the way filters are added or perform additional work when adding a filter, e.g.
+    when using a filter server other than crossfilter.
+
+    :param addFilterHandler:
+
+    :return:
+    """
+    self._js.append("addFilterHandler(%s)" % addFilterHandler)
+    return self
+
   def chartGroup(self, groupId=None):
     """
     Get or set the chart group to which this chart belongs.
@@ -56,7 +69,6 @@ class JsBase(JsConfig.JsConfig):
     :return:
     """
 
-
   def chartID(self):
     """
     Returns the internal numeric ID of the chart.
@@ -67,17 +79,56 @@ class JsBase(JsConfig.JsConfig):
     :return:
     """
 
-  def x(self):
+  def x(self, xScale):
     """
 
     :return:
     """
+    self._js.append("x(%s)" % xScale)
+    return self
 
-  def xUnits(self):
+  def y(self, yScale):
     """
+    Get or set the y scale. The y scale is typically automatically determined by the chart implementation.
 
     :return:
     """
+    self._js.append("y(%s)" % yScale)
+    return self
+
+  def yAxis(self, yAxis=None):
+    """
+    Set or get the y axis used by the coordinate grid chart instance. This function is most useful when y axis customization is required.
+    Depending on useRightYAxis the y axis in dc.js is an instance of either d3.axisLeft or d3.axisRight; therefore it supports any valid d3 axis manipulation.
+
+    :return:
+    """
+    self._js.append("yAxis(%s)" % yAxis)
+    return self
+
+  def xUnits(self, unit=None):
+    """
+    Set or get the xUnits function.
+    The coordinate grid chart uses the xUnits function to calculate the number of data projections on the x axis such as the number of bars for a bar chart or the number of dots for a line chart.
+
+    :return:
+    """
+    self._js.append("xUnits(%s)" % unit)
+    return self
+
+  def brushOn(self, brushOn=True):
+    """
+    urn on/off the brush-based range filter.
+    When brushing is on then user can drag the mouse across a chart with a quantitative scale to perform range filtering based on the extent of the brush, or click on the bars of an ordinal bar chart or slices of a pie chart to filter and un-filter them.
+
+    Documentation
+    https://dc-js.github.io/dc.js/docs/html/dc.coordinateGridMixin.html
+
+    :param brushOn:
+    :return:
+    """
+    self._js.append("brushOn(%s)")
+    return self
 
   def dimension(self, dimension):
     """
@@ -165,6 +216,17 @@ class JsBase(JsConfig.JsConfig):
 
     :return:
     """
+    self._js.append("height(%s)" % height)
+    return self
+
+  def width(self, width=None):
+    """
+
+    :param width:
+    :return:
+    """
+    self._js.append("width(%s)" % width)
+    return self
 
   def label(self):
     """
@@ -173,6 +235,26 @@ class JsBase(JsConfig.JsConfig):
 
     :return:
     """
+
+  def render(self):
+    """
+    Invoking this method will force the chart to re-render everything from scratch.
+    Generally it should only be used to render the chart for the first time on the page or if you want to make sure everything is redrawn from scratch instead of relying on the default incremental redrawing behaviour.
+
+    :return:
+    """
+    self._js.append("render()")
+    return self
+
+  def toStr(self):
+    """
+    Returns the Javascript String representation
+
+    :return:
+    """
+    ctx = []
+    self.resolveDict(dict([(key, val) for key, val in self.items() if val]), ctx)
+    return "{%s}" % ", ".join(ctx)
 
 
 
@@ -197,6 +279,33 @@ class JsBar(JsBase):
   name = 'Bars'
   jsCls = 'barChart'
   _attrs = {}
+
+
+  def xAxisLabel(self, labelText=None, padding=None):
+    """
+    Set or get the x axis label. If setting the label, you may optionally include additional padding to the margin to make room for the label.
+    By default the padded is set to 12 to accomodate the text height.
+
+    :param labelText:
+    :param padding:
+
+    :return:
+    """
+    self._js.append("xAxisLabel(%s)" % labelText)
+    return self
+
+  def yAxisLabel(self, labelText=None, padding=None):
+    """
+    Set or get the x axis label. If setting the label, you may optionally include additional padding to the margin to make room for the label.
+    By default the padded is set to 12 to accomodate the text height.
+
+    :param labelText:
+    :param padding:
+
+    :return:
+    """
+    self._js.append("xAxisLabel(%s)" % labelText)
+    return self
 
 
 class JsPie(JsBase):

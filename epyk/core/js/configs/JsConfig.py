@@ -130,6 +130,7 @@ class JsConfig(dict):
     self.update(resolvedAttrs)
     self.data = self.transformation(data)
     self.config()
+    self._js = []
 
   def config(self): pass
 

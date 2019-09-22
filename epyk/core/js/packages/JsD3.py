@@ -280,12 +280,70 @@ class D3Pack(object):
     pass
 
 
+class D3Band(object):
+  """
+  https://github.com/d3/d3-scale/blob/master/README.md#band-scales
+  """
+
+  def __init__(self, selector):
+    """
+
+    """
+    self._selector = selector
+    self._js = []
+
+  def domain(self, domain=None):
+    """
+
+    :param domain:
+    :return:
+    """
+    if domain is None:
+      self._js.append("domain()")
+    return self
+
+  def range(self, range=None):
+    """
+
+    :param range:
+    :return:
+    """
+
+  def rangeRound(self, range):
+    """
+
+    :param range:
+    :return:
+    """
+
+  def round(self):
+    """
+
+    :return:
+    """
+
+  def toStr(self):
+    """
+    Javascript representation
+
+    :return: Return the Javascript String
+    """
+    if self._selector is None:
+      raise Exception("Selector not defined, use this() or new() first")
+
+    if len(self._js) == 0:
+      return self._selector
+
+    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
+    self._js = [] # empty the stack
+    return strData
+
 
 class JsD3(object):
   class __internal(object):
-    jqId, _context = '', {}
+    jqId, _context = 'd3', {}
 
-  def __init__(self, src=None):
+  def __init__(self, src=None, d3Id=None):
     """
 
     Documentation:
@@ -294,8 +352,8 @@ class JsD3(object):
     :param src:
     """
     self.src = src if src is not None else self.__internal()
-    self.src._context.setdefault("modules", set()).add('d3')
-    self.selector = self.src.jqId
+    self.src.jsImports.add('d3')
+    self._selector = d3Id or self.src.jqId
     self._js = []
 
   def min(self, dataset, jsFnc):
@@ -312,6 +370,20 @@ class JsD3(object):
 
   def scaleLinear(self, range):
     return D3ScaleLinear(range)
+
+  def scaleBand(self, range=None):
+    """
+    Constructs a new band scale with the specified domain and range, no padding, no rounding and center alignment.
+    If domain is not specified, it defaults to the empty domain. If range is not specified, it defaults to the unit range [0, 1].
+
+    :param range:
+
+    :rtype: D3Band
+    :return:
+    """
+    if range is None:
+      self._js.append("scaleBand()")
+    return D3Band(self.toStr())
 
   def forceSimulation(self, nodes=None):
     return D3ForceSimulation(nodes)
@@ -330,3 +402,20 @@ class JsD3(object):
 
   def drag(self):
     pass
+
+  def toStr(self):
+    """
+    Javascript representation
+
+    :return: Return the Javascript String
+    """
+    if self._selector is None:
+      raise Exception("Selector not defined, use this() or new() first")
+
+    if len(self._js) == 0:
+      return self._selector
+
+    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
+    self._js = [] # empty the stack
+    return strData
+
