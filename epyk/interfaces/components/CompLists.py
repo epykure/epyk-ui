@@ -180,7 +180,7 @@ class Lists(object):
     :param dataSrc:
     :param expanded:
     :param profile:
-    :rtype: html.HtmlList.ListTree
+    :rtype: html.HtmlTrees.Tree
     :return:
     """
     return self.context.register(html.HtmlTrees.Tree(self.context.rptObj, recordSet, width, height, title, htmlCode,

@@ -17,6 +17,12 @@ data = [{"label": 'test', 'items': [
     ]},
         {"label": 'test2'}
         ]
-rptObj.ui.tree(data)
+
+t = rptObj.ui.tree(data)
+t.removeNode()
+
+b = rptObj.ui.button("test")
+
+b.click(t.jsGenerate(sub_tree, jsStyles=t.builder_options({"reset": False}), isPyData=True))
 
 rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS, target="_self")

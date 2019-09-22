@@ -50,6 +50,16 @@ class Tree(Html.Html):
   @property
   def eventId(self): return "$('#%s li span[name=value],a')" % self.htmlId
 
+  def builder_options(self, attrs):
+    """
+
+    :param attrs:
+    :return:
+    """
+    jsStyle = dict(self._jsStyles) if self._jsStyles is not None else {}
+    jsStyle.update(attrs)
+    return jsStyle
+
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' 
       if (jsStyles.start == true && !Array.isArray(data)) {
@@ -117,7 +127,7 @@ class Tree(Html.Html):
   def __str__(self):
     self._report.jsOnLoadFnc.add('''
       $(document).on('click', 'span[name=section]', function(event) {
-        $(this).parent().children().not(":nth-child(0)").not(":nth-child(1)").not(":nth-child(2)").toggle('fast'); 
+        $(this).parent().children().not(":nth-child(0)").not("select").not(":nth-child(1)").not(":nth-child(2)").toggle('fast'); 
         if ($(this).attr('class') == $(this).data('open')){ $(this).attr('class', $(this).data('close'))} 
         else {$(this).attr('class', $(this).data('open'))}});
       $("span[name=section]").trigger("click")''')
@@ -127,10 +137,11 @@ class Tree(Html.Html):
     for action in self._definedActions:
       if action in self._jsActions:
         events.append(self._jsActions[action])
+    print(events)
     return '''
       <div style="width:100%%;margin:5px 0 0 5px">
         <span style='font-weight:bold;font-size:14px'>%(title)s</span>
-        %(events)s
+        <div style="width:100%%">%(events)s</div>
       </div>
       <div %(strAttr)s></div>%(helper)s''' % {'title': self.title, 'strAttr': self.strAttr(pyClassNames=[]), 'helper': self.helper, 'events': "".join(events)}
 
@@ -183,11 +194,11 @@ class Tree(Html.Html):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs] if jsFncs is not None else []
-    jsFncs.append(''' 
+    jsFncs.append(''' console.log($('#%(htmlId)s').find(".%(cssSelected)s").first().parent());
       var selectedItem = $('#%(htmlId)s').find(".%(cssSelected)s").first(); var selectedVal = selectedItem.text();
       var selectedParentVal = selectedItem.parent('li').parent('ul').siblings('span[name=value]').text();
       if (selectedVal != ''){
-        var data = {event_parent: selectedParentVal, event_val: selectedVal, htmlId: '%(htmlId)s'}; selectedItem.remove();
+        var data = {event_parent: selectedParentVal, event_val: selectedVal, htmlId: '%(htmlId)s'}; selectedItem.parent().remove();
       }''' % {'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlId': self.htmlId, 'cssSelected': self.cssSelected})
     return self.jsAction(action='delete', icon='far fa-trash-alt', pyCssCls="CssSmallIconRed", tooltip="Remove selected node", url=url,
                          jsData=jsData, jsFncs=jsFncs, httpCodes=httpCodes)
