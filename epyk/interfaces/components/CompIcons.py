@@ -28,6 +28,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, icon, size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -51,6 +52,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'far fa-edit', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -70,6 +72,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'fas fa-clock', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -89,6 +92,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'fas fa-sync-alt', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -131,6 +135,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'fas fa-plus-square', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -150,6 +155,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'far fa-file-excel', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -169,6 +175,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'fas fa-download', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -188,6 +195,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'far fa-trash-alt', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -206,6 +214,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'fas fa-search-plus', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -225,6 +234,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'far fa-clipboard', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -244,6 +254,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'fas fa-times-circle', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -266,6 +277,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'fas fa-table', size, tooltip, width,
                                                           height, htmlCode, profile))
 
@@ -285,6 +297,7 @@ class Icons(object):
 
     :return: The Html Icon object
     """
+    size = self.context._size(size)
     return self.context.register(html.HtmlButton.IconEdit(self.context.rptObj, position, 'fas fa-wrench', size, tooltip, width,
                                                           height, htmlCode, profile))
 
