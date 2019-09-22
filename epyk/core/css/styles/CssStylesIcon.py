@@ -22,21 +22,21 @@ class CssStdIcon(CssStyle.CssCls):
 
 
 class CssSmallIcon(CssStyle.CssCls):
-  attrs = {'display': 'inline-block', 'margin': '0 15px 0 0', 'font-size': '10px', 'cursor': 'pointer'}
+  attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'font-size': '10px', 'cursor': 'pointer'}
 
   def customize(self, style, eventsStyles):
     eventsStyles['hover'].update({"color": self.getColor('colors', 5)})
 
 
 class CssSmallIconRigth(CssStyle.CssCls):
-  attrs = {'display': 'inline-block', 'margin': '0 0 0 15px', 'font-size': '10px', 'cursor': 'pointer', 'float': 'right'}
+  attrs = {'display': 'inline-block', 'margin': '0 0 0 5px', 'font-size': '10px', 'cursor': 'pointer', 'float': 'right'}
 
   def customize(self, style, eventsStyles):
     eventsStyles['hover'].update({"color": self.getColor('colors', 5)})
 
 
 class CssSmallIconRed(CssStyle.CssCls):
-  attrs = {'display': 'inline-block', 'margin': '0 15px 0 0', 'font-size': '10px', 'cursor': 'pointer'}
+  attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'font-size': '10px', 'cursor': 'pointer'}
 
   def customize(self, style, eventsStyles):
     style.update({"color": self.getColor('danger', 1)})
@@ -47,7 +47,7 @@ class CssOutIcon(CssStyle.CssCls):
   attrs = {'display': 'inline-block', 'margin': '0 0 0 20px', 'font-size': '15px', 'cursor': 'pointer'}
 
   def customize(self, style, eventsStyles):
-    style.update( {"color": self.getColor('danger', 1)})
+    style.update({"color": self.getColor('danger', 1)})
     eventsStyles['hover'].update({"color": self.getColor('danger', 1)})
 
 

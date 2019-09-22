@@ -231,6 +231,16 @@ class Tree(Html.Html):
                          tooltip="Save an empty file on the drive", url=url, jsData=jsData, jsFncs=jsFncs,
                          httpCodes=httpCodes)
 
+  def refresh(self, jsFncs=None, url=None, jsData=None, httpCodes=None):
+    """
+    :return: The python object itself
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs] if jsFncs is not None else []
+    jsFncs.append(self.jsGenerate(None))
+    return self.jsAction(action='refresh_tree', icon='fas fa-sync-alt', pyCssCls="CssSmallIcon",
+                         tooltip="Refresh the tree", url=url, jsData=jsData, jsFncs=jsFncs, httpCodes=httpCodes)
+
   def to_word(self, document):
     pass
 
