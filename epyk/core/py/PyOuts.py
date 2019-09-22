@@ -21,7 +21,7 @@ class OutBrowsers(object):
   def __init__(self, context):
     self._context = context
 
-  def codepen(self, path=None):
+  def codepen(self, path=None, target="_blank"):
     """
     Update the Html launcher and send the data to codepen
 
@@ -38,7 +38,7 @@ class OutBrowsers(object):
     css_external = re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', results['cssImports'])
     jsObj = Js.JsBase()
     result = {"js": results["jsFrgs"], "js_external": ";".join(js_external), "css_external": ";".join(css_external), "html": results['content'], "css": results["cssStyle"]}
-    data = jsObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)})
+    data = jsObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
     if path is None:
       path = os.path.join(os.getcwd(), "outs")
     else:

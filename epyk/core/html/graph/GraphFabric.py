@@ -24,6 +24,7 @@ JS_CHARTS = [
 
 # The main charting factory. This will reuse by the different interface dedicated to the different javascript frameworks
 CHARTS_FACTORY = None
+__CHART_CONFIGS_PATH = 'epyk.core.js.configs.JsConfig'
 
 def loadFactory():
   """
@@ -38,10 +39,10 @@ def loadFactory():
       continue
 
     try:
-      chart_mod = importlib.import_module('epyk.configs.%(chart)s' % jsChart)
+      chart_mod = importlib.import_module(__CHART_CONFIGS_PATH % jsChart)
       for script in os.listdir(os.path.dirname(chart_mod.__file__)):
         if script.startswith(jsChart['chart']) and script.endswith('py'):
-          for name, obj in inspect.getmembers(importlib.import_module("epyk.configs.%s.%s" % (jsChart['chart'], script.replace(".py", ""))), inspect.isclass):
+          for name, obj in inspect.getmembers(importlib.import_module(__CHART_CONFIGS_PATH % (jsChart['chart'], script.replace(".py", ""))), inspect.isclass):
             if getattr(obj, 'chartCall', None) is not None:
               tmp.setdefault(jsChart['chart'], {})[getattr(obj, 'chartCall')] = obj
     except Exception as err:

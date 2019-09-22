@@ -2,7 +2,7 @@
 
 """
 
-from epyk.core.Ares import Report
+from epyk.core.Page import Report
 
 
 rptObj = Report()

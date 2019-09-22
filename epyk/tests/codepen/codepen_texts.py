@@ -1,4 +1,4 @@
-from epyk.core.Ares import Report
+from epyk.core.Page import Report
 from epyk.tests import test_statics
 
 

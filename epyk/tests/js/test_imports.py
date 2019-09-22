@@ -3,7 +3,7 @@
 import collections
 
 from epyk.core.js import Imports
-from epyk.core.Ares import Report
+from epyk.core.Page import Report
 
 #Imports.installed_packages()
 

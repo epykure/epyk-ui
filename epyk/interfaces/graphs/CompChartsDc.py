@@ -2,9 +2,8 @@
 
 """
 
-import sys
-
-from epyk.core.html import graph
+from epyk.core.html.graph import GraphDC
+from epyk.core.js.objects import JsChartDC
 
 
 class DC(object):
@@ -33,11 +32,68 @@ class DC(object):
 
     :return:
 
-    :rtype: graph.GraphChartJs.Chart
+    :rtype: GraphDC.Chart
     """
     if options is None:
       options = {}
-    return self.parent.context.chart(chartType=sys._getframe().f_code.co_name, data=data, seriesNames=seriesNames,
-                                     xAxis=xAxis, otherDims=otherDims, title=title, chartFamily=self.chartFamily,
-                                     filters=filters, profile=profile, xAxisOrder=xAxisOrder, options=options, width=width,
-                                     height=height, htmlCode=htmlCode)
+    chart_obj = JsChartDC.JsLine(self.parent.context.rptObj, data, {'static': {}, 'dynamic': {}})
+    return self.parent.context.register(GraphDC.Chart(self.parent.context.rptObj, chart_obj, width, height, title,
+                                                      options, htmlCode, filters, profile))
+
+  def pie(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
+           xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Documentation
+    https://square.github.io/crossfilter/
+    https://dc-js.github.io/dc.js/
+
+    :param data:
+    :param seriesNames:
+    :param xAxis:
+    :param otherDims:
+    :param title:
+    :param profile:
+    :param xAxisOrder:
+    :param width:
+    :param height:
+    :param htmlCode:
+
+    :return:
+
+    :rtype: GraphDC.Chart
+    """
+    if options is None:
+      options = {}
+    chart_obj = JsChartDC.JsPie(self.parent.context.rptObj, data, {'static': {}, 'dynamic': {}})
+    return self.parent.context.register(GraphDC.Chart(self.parent.context.rptObj, chart_obj, width, height, title,
+                                                      options, htmlCode, filters, profile))
+
+  def bubble(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
+        xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Documentation
+    https://square.github.io/crossfilter/
+    https://dc-js.github.io/dc.js/
+
+    :param data:
+    :param seriesNames:
+    :param xAxis:
+    :param otherDims:
+    :param title:
+    :param profile:
+    :param xAxisOrder:
+    :param width:
+    :param height:
+    :param htmlCode:
+
+    :return:
+
+    :rtype: GraphDC.Chart
+    """
+    if options is None:
+        options = {}
+    chart_obj = JsChartDC.JsBuble(self.parent.context.rptObj, data, {'static': {}, 'dynamic': {}})
+    return self.parent.context.register(GraphDC.Chart(self.parent.context.rptObj, chart_obj, width, height, title,
+                                                      options, htmlCode, filters, profile))

@@ -1,9 +1,9 @@
 
 from epyk.core.js.configs import JsConfig
-from epyk.core import Ares
+from epyk.core import Page
 
 
-report = Ares.Report()
+report = Page.Report()
 
 chart_type = 'hbar'
 configs = JsConfig.get(chart_type, chartFam='Billboard', preferred=False)
