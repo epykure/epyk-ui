@@ -316,6 +316,7 @@ class JsBreadCrumb(object):
 class JsBase(object):
   class __internal(object):
     _props, _context, jsOnLoadEvtsFnc, http = {}, {}, [], []
+    jsImports, cssImport = set([]), set([])
 
   def __init__(self, src=None):
     self._src = src if src else self.__internal() # The underlying source object is not supposed to be touched in the underlying classes
@@ -1031,6 +1032,8 @@ class JsBase(object):
     if cssStyle is None:
       cssStyle = {"position": "fixed", "bottom": 0, "right": 0}
     if icon is not None:
+      self._src.jsImports.add('font-awesome')
+      self._src.cssImport.add('font-awesome')
       return [
         self.createElement("div", varName="popup_info").css(cssStyle).text(jsData),
         self.createElement("i", varName="popup_icon").className(icon),
