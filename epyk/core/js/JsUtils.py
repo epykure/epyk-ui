@@ -234,6 +234,9 @@ class JsFile(object):
 
     :return:
     """
+    # TODO Add the dependancies
+    print(rptObj._src.jsImports)
+    print(rptObj._src.cssImport)
     for k, v in rptObj._src._props.get('js', {}).get('functions', {}).items():
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       self.__data.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
