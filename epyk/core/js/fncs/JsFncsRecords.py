@@ -436,6 +436,7 @@ class JsToUrl(object):
   alias = "dictToUrl"
   value = '''
     var tmpResults = [];
-    for(var k in data){tmpResults.push(k +"="+ data[k])}; 
-    result = tmpResults.join("&")
+    for(var k in data["pmts"]){tmpResults.push(k +"="+ data["pmts"][k])}; 
+    result = tmpResults.join("&");
+    if (typeof data["anchor"] !== 'undefined'){result = result +"#"+ data["anchor"]}
     '''

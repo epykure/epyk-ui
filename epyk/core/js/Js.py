@@ -255,7 +255,8 @@ class JsBreadCrumb(object):
   def __init__(self, src=None):
     self._src = src if src else self.__internal() # The underlying source object is not supposed to be touched in the underlying classes
     self._selector = "breadcrumb"
-    self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = %s" % (self._selector, json.dumps(self._src.http)))
+    self._anchor = None
+    self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = {pmts: %s}" % (self._selector, json.dumps(self._src.http)))
 
   def add(self, key, jsData):
     """
@@ -267,7 +268,7 @@ class JsBreadCrumb(object):
     :return: Nothing
     """
     jsData = JsUtils.jsConvertData(jsData, None)
-    return JsFncs.JsFunction('%s["%s"] = %s' % (self._selector, key, jsData))
+    return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (self._selector, key, jsData))
 
   def get(self, key=None):
     """
@@ -280,7 +281,18 @@ class JsBreadCrumb(object):
     if key is None:
       return JsObject.JsObject("%s" % self._selector)
 
-    return JsObject.JsObject("%s['%s']" % (self._selector, key))
+    return JsObject.JsObject('%s["pmts"]["%s"]' % (self._selector, key))
+
+  def hash(self, jsData):
+    """
+    Add an anchor to the URL after the hash tag
+
+    Documentation
+    https://www.w3schools.com/jsref/prop_loc_hash.asp
+
+    :return:
+    """
+    return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, None)))
 
   @property
   def url(self):
@@ -296,7 +308,7 @@ class JsBreadCrumb(object):
 
   def toStr(self):
     fncToUrl = JsFncs.FncOnRecords(self._src._props['js']).url()
-    return "%s(%s)" % (fncToUrl, self._selector)
+    return '%s(%s)' % (fncToUrl, self._selector)
 
 
 class JsBase(object):
