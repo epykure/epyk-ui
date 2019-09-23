@@ -1,6 +1,7 @@
 
 import json
 
+from epyk.core.js import JsUtils
 from epyk.core.js import Js
 
 
@@ -11,9 +12,10 @@ import webbrowser
 #webbrowser.open(r"K:\test2.html")
 #print(data)
 
+f = JsUtils.JsFile(path=r"../outs")
 js_obj = Js.JsBase()
 breadcrumb = js_obj.breadcrumb
-
 js_obj.addOnLoad(breadcrumb.add("ok", "test"))
-js_obj.addOnLoad(breadcrumb.toClipboard)
-print(breadcrumb._src._props['js'])
+js_obj.addOnLoad(js_obj.console.log(breadcrumb.toClipboard))
+f.codepen(js_obj)
+

@@ -198,12 +198,11 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None):
 
 
 class JsFile(object):
-  def __init__(self, scriptName, path=None):
+  def __init__(self, scriptName=None, path=None):
     self.scriptName, self.path = scriptName, path
-    file_path = os.path.join(path, "js") # all the files will be put in a common directory
-    if not os.path.exists(file_path):
-      os.mkdir(file_path)
-    self.outFile = open(os.path.join(file_path, "%s.js" % scriptName), "w")
+    self.file_path = os.path.join(path, "js") # all the files will be put in a common directory
+    if not os.path.exists(self.file_path):
+      os.mkdir(self.file_path)
     self.__data = []
 
   def writeJs(self, jsFncs):
@@ -236,6 +235,15 @@ class JsFile(object):
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       self.__data.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
 
+    for c, d in rptObj._src._props['js'].get("constructors", {}).items():
+      self.__data.append(d)
+
+    for c, d in rptObj._src._props['js'].get("datasets", {}).items():
+      self.__data.append(d)
+
+    for b in rptObj._src._props['js'].get("builders", []):
+      self.__data.append(b)
+
     keyboardShortcuts = rptObj._src._props.get('js', {}).get('keyboard', {})
     if keyboardShortcuts:
       self.__data.append("document.addEventListener('keydown', function(e){var code = e.keyCode || e.which")
@@ -243,13 +251,27 @@ class JsFile(object):
         self.__data.append("if(%s){%s}" % (k, v))
       self.__data.append("})")
 
-  def toCodePen(self):
+  def codepen(self, rptObj, target='_self'):
     """
     Send the piece of Javascript to Codepen for testing
 
     https://codepen.io/
     """
     import webbrowser
+
+    if hasattr(rptObj, '_to_html_obj'):
+      results = rptObj._to_html_obj(content_only=True)
+      js_external = re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
+      result = {"js": results["jsFrgs"], "js_external": ";".join(js_external)}
+      data = rptObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
+    else:
+      self.writeReport(rptObj)
+      js_external = []
+      result = {"js": ";".join(self.__data), "js_external": ";".join(js_external)}
+      data = rptObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
+    outFile = open(os.path.join(self.file_path, "CodePenJsLauncher.html"), "w")
+    outFile.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
+    webbrowser.open(outFile.name)
 
   def close(self, jsObj=None):
     """
@@ -258,18 +280,19 @@ class JsFile(object):
     :param jsObj: The internal JsObject
 
     """
+    outFile = open(os.path.join(self.file_path, "%s.js" % self.scriptName), "w")
     if jsObj is not None:
-      self.outFile.write("//Javascript Prototype extensions \n\n")
+      outFile.write("//Javascript Prototype extensions \n\n")
       for fnc, details in jsObj._src._props.get('js', {}).get('prototypes', {}).items():
-        self.outFile.write("%s = function(%s){%s};" % (fnc, ",".join(details.get('pmts', [])), details["content"]))
+        outFile.write("%s = function(%s){%s};" % (fnc, ",".join(details.get('pmts', [])), details["content"]))
 
-      self.outFile.write("\n\n//Javascript Global functions \n\n")
+      outFile.write("\n\n//Javascript Global functions \n\n")
       for fnc, details in jsObj._src._props.get('js', {}).get('functions', {}).items():
-        self.outFile.write("%s(%s)" % (fnc, ",".join(details.get('pmt', []))), details["content"])
+        outFile.write("%s(%s)" % (fnc, ",".join(details.get('pmt', []))), details["content"])
 
-    self.outFile.write("\n\n")
-    self.outFile.write("//Javascript functions\n\n")
-    self.outFile.write(";".join(self.__data))
-    self.outFile.close()
+    outFile.write("\n\n")
+    outFile.write("//Javascript functions\n\n")
+    outFile.write(";".join(self.__data))
+    outFile.close()
     with open(r"%s\Launche_%s.html" % (self.path, self.scriptName), "w") as f:
       f.write('<html><head></head><body></body><script src="%s.js"></script></html>' % self.scriptName)

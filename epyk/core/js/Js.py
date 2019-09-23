@@ -255,7 +255,6 @@ class JsBreadCrumb(object):
   def __init__(self, src=None):
     self._src = src if src else self.__internal() # The underlying source object is not supposed to be touched in the underlying classes
     self._selector = "breadcrumb"
-    print("Load breadcrumb")
     self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = %s" % (self._selector, json.dumps(self._src.http)))
 
   def add(self, key, jsData):
@@ -292,7 +291,7 @@ class JsBreadCrumb(object):
     js_location = JsLocation.JsLocation()
     origin = js_location.origin
     pathname = js_location.pathname
-    return JsString.JsString(origin + pathname + JsObject.JsObject(self.toStr()))
+    return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
 
   def toStr(self):
     """
