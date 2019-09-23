@@ -179,6 +179,9 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None):
 
   cnvFncs = []
   for f in jsFncs:
+    if f is None:
+      continue
+
     if hasattr(f, 'toStr'):
       strFnc = f.toStr()
       if jsFncVal is not None:

@@ -500,9 +500,7 @@ class JsDoms(JsObject.JsObject):
     :param jsString: The Javascript String of the text node component
     :return: The main Python Dom Object
     """
-    return self.appendChild("document.createTextNode(%s)" % JsUtils.jsConvertData(jsString, None))
-
-
+    return self.appendChild(JsFncs.JsFunction("document.createTextNode(%s)" % JsUtils.jsConvertData(jsString, None)))
 
   @property
   def childNodes(self):

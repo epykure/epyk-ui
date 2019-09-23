@@ -1027,9 +1027,18 @@ class JsBase(object):
 
     :return:
     """
+
     if cssStyle is None:
       cssStyle = {"position": "fixed", "bottom": 0, "right": 0}
+    if icon is not None:
+      return [
+        self.createElement("div", varName="popup_info").css(cssStyle).text(jsData),
+        self.createElement("i", varName="popup_icon").className(icon),
+        self.objects.dom("popup_info").appendChild(self.objects.dom("popup_icon")),
+        self.body.appendChild(self.objects.dom("popup_info")),
+        self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
+
     return [
-      self.createElement("div", varName="popup_info").css(cssStyle).innerHTML(jsData),
+      self.createElement("div", varName="popup_info").css(cssStyle).text(jsData),
       self.body.appendChild(self.objects.dom("popup_info")),
       self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
