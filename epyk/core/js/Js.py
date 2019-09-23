@@ -294,6 +294,8 @@ class JsBreadCrumb(object):
     """
     return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, None)))
 
+
+
   @property
   def url(self):
     """
@@ -381,7 +383,7 @@ class JsBase(object):
     """
     Javascript return keyword
 
-    :param jsFncs: The Javascript expression
+    :param jsData: The Javascript expression
     :return:
     """
     return JsFncs.JsFunction("return %s" % jsData)
@@ -1013,3 +1015,22 @@ class JsBase(object):
     """
     return JsFncs.JsTypeOf(JsUtils.jsConvertData(jsData, None))
 
+  def info(self, jsData, cssStyle=None, icon=None, time=10000):
+    """
+    Display a message
+    
+    :param jsData:
+    :param cssStyle:
+    :param icon:
+    :param time:
+
+    :return:
+    """
+    return '''
+      var popup = document.createElement('div'); 
+      popup.innerHTML = %s; document.body.appendChild(popup);
+      popup.style.position = "fixed";
+      popup.style.bottom = 0;
+      popup.style.right = "5px";
+      setTimeout(function(){ popup.remove() }, %s);
+      ''' % (JsUtils.jsConvertData(jsData, None), time)
