@@ -14,8 +14,45 @@ FNCS_MAPS = {
 }
 
 
+def cleanFncs(fnc):
+  """
+  Try to remove as much as possible all the characters in order to speed up the javascript
+  Indeed most of the browsers are using minify Javascript to make the page less heavy
+
+  Thus pre stored function code can be written to be easier to read.
+
+  :param fnc: The Javascript String
+
+  :return: Return a cleaned an minify Javascript String
+  """
+  return "".join([r.strip() for r in fnc.strip().split('\n')])
+
+
+class FncOnRecords(object):
+  def __init__(self, js_src):
+    self._js_src = js_src
+
+  def url(self):
+    """
+
+    :return:
+    """
+    fnc_name = JsFncsRecords.JsToUrl.__name__
+    fnc_pmts = ["data"]
+    for p in getattr(JsFncsRecords.JsToUrl, 'params', []):
+      fnc_pmts.append(p)
+    if not fnc_name in self._js_src.get('functions', {}):
+      content = cleanFncs(JsFncsRecords.JsToUrl.value)
+      self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % content, 'pmt': fnc_pmts}
+    return fnc_name
+
+
 class JsRegisteredFunctions(object):
-  def __init__(self, src):
+  class __internal(object):
+    _props = {}
+
+  def __init__(self, src=None):
+    src = src or self.__internal()
     if not 'js' in src._props:
       src._props['js'] = {}
     self._js_src = src._props['js']
@@ -69,6 +106,14 @@ class JsRegisteredFunctions(object):
     """
     self._js_src.setdefault('functions', {})[fnc_name] = {'content': jsFnc, 'pmt': pmts}
     return fnc_name
+
+  @property
+  def records(self):
+    """
+    Javascript pre defined function dedicated to transform a records.
+    Namely a list of dictionaries
+    """
+    return FncOnRecords(self._js_src)
 
 
 class JsFunction(object):

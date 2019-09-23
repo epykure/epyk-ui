@@ -10,3 +10,10 @@ jsObj = Js.JsBase()
 import webbrowser
 #webbrowser.open(r"K:\test2.html")
 #print(data)
+
+js_obj = Js.JsBase()
+breadcrumb = js_obj.breadcrumb
+
+js_obj.addOnLoad(breadcrumb.add("ok", "test"))
+js_obj.addOnLoad(breadcrumb.toClipboard)
+print(breadcrumb._src._props['js'])

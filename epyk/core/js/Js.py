@@ -250,13 +250,13 @@ class JsJson(object):
 
 class JsBreadCrumb(object):
   class __internal(object):
-    _props = {}
+    _props, http = {}, {}
 
   def __init__(self, src=None):
     self._src = src if src else self.__internal() # The underlying source object is not supposed to be touched in the underlying classes
     self._selector = "breadcrumb"
     print("Load breadcrumb")
-    self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = {}" % self._selector)
+    self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = %s" % (self._selector, json.dumps(self._src.http)))
 
   def add(self, key, jsData):
     """
@@ -268,7 +268,7 @@ class JsBreadCrumb(object):
     :return: Nothing
     """
     jsData = JsUtils.jsConvertData(jsData, None)
-    return JsFncs.JsFunction("%s['%s'] = %s" % (self._selector, key, jsData))
+    return JsFncs.JsFunction('%s["%s"] = %s' % (self._selector, key, jsData))
 
   def get(self, key=None):
     """
@@ -283,18 +283,29 @@ class JsBreadCrumb(object):
 
     return JsObject.JsObject("%s['%s']" % (self._selector, key))
 
+  @property
   def toClipboard(self):
     """
-    return
 
     :return:
     """
-    return
+    js_location = JsLocation.JsLocation()
+    origin = js_location.origin
+    pathname = js_location.pathname
+    return JsString.JsString(origin + pathname + JsObject.JsObject(self.toStr()))
+
+  def toStr(self):
+    """
+
+    :return:
+    """
+    fncToUrl = JsFncs.FncOnRecords(self._src._props['js']).url()
+    return "%s(%s)" % (fncToUrl, self._selector)
 
 
 class JsBase(object):
   class __internal(object):
-    _props, _context, jsOnLoadEvtsFnc = {}, {}, []
+    _props, _context, jsOnLoadEvtsFnc, http = {}, {}, [], []
 
   def __init__(self, src=None):
     self._src = src if src else self.__internal() # The underlying source object is not supposed to be touched in the underlying classes
@@ -350,6 +361,7 @@ class JsBase(object):
 
     :param jsCond:
     :param jsFnc:
+
     :return:
     """
     if isinstance(jsCond, list):
@@ -471,7 +483,7 @@ class JsBase(object):
     :return: A Python breadcumb object
     """
     if self._breadcrumb is None:
-      self._breadcrumb = JsBreadCrumb()
+      self._breadcrumb = JsBreadCrumb(self._src)
     return self._breadcrumb
 
   def registerFunction(self, fncName, jsFncs=None, pmts=None):
@@ -510,7 +522,6 @@ class JsBase(object):
     :return:
     """
     self._src._props.setdefault('js', {}).setdefault('builders', []).append(";".join(JsUtils.jsConvertFncs(jsFncs)))
-    self._src.jsOnLoadEvtsFnc.add(";".join(JsUtils.jsConvertFncs(jsFncs)))
     return self
 
   def addKeyEvent(self, jsFncs, keyCode=None, keyCondition=None):
@@ -978,3 +989,4 @@ class JsBase(object):
     :return:
     """
     return JsFncs.JsTypeOf(JsUtils.jsConvertData(jsData, None))
+

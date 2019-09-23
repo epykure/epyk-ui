@@ -430,3 +430,12 @@ class JsIntensity(object):
   @staticmethod
   def extendColumns(jsSchema, params):
     pass
+
+
+class JsToUrl(object):
+  alias = "dictToUrl"
+  value = '''
+    var tmpResults = [];
+    for(var k in data){tmpResults.push(k +"="+ data[k])}; 
+    result = tmpResults.join("&")
+    '''
