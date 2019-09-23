@@ -670,7 +670,7 @@ class JsBase(object):
     """
     return JsNodeDom.JsDoms("document.getElementsByTagName('%s')[%s]" % (tagName, i), varName="%s_%s" % (tagName, i), setVar=True)
 
-  def createElement(self, tagName, varName=None):
+  def createElement(self, tagName, varName=None, setVar=True):
     """
     The createElement() method creates an Element Node with the specified name.
 
@@ -682,7 +682,7 @@ class JsBase(object):
 
     :return:
     """
-    return JsNodeDom.JsDoms.new(tagName, varName=varName)
+    return JsNodeDom.JsDoms.new(tagName, varName=varName, setVar=setVar)
 
   def createTextNode(self, jsString=None):
     """

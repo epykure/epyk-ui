@@ -304,7 +304,7 @@ class JsDomEvents(object):
 
 class JsDoms(JsObject.JsObject):
   @classmethod
-  def new(cls, tagName=None, varName=None, isPyData=True):
+  def new(cls, tagName=None, varName=None, isPyData=True, setVar=True):
     """
     Create a new dom object to be added to the HTML page
 
@@ -316,7 +316,7 @@ class JsDoms(JsObject.JsObject):
     :param isPyData: Optional,
     :return: The Python Javascript Date primitive
     """
-    return cls(data="document.createElement('%s')" % tagName, varName=varName, setVar=True, isPyData=isPyData)
+    return cls(data="document.createElement('%s')" % tagName, varName=varName, setVar=setVar, isPyData=isPyData)
 
   def innerText(self, jsString=None):
     """
