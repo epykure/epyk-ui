@@ -248,6 +248,50 @@ class JsJson(object):
     return JsString.JsString("JSON.stringify(%s, %s, %s)" % (JsUtils.jsConvertData(jsData, jsFnc), json.dumps(replacer), space), isPyData=False)
 
 
+class JsBreadCrumb(object):
+  class __internal(object):
+    _props = {}
+
+  def __init__(self, src=None):
+    self._src = src if src else self.__internal() # The underlying source object is not supposed to be touched in the underlying classes
+    self._selector = "breadcrumb"
+    print("Load breadcrumb")
+    self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = {}" % self._selector)
+
+  def add(self, key, jsData):
+    """
+    Add an entry to the Javascript breadcrumb dictionary
+
+    :param key: The key in the Breadcrumb dictionary
+    :param jsData:
+
+    :return: Nothing
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsFncs.JsFunction("%s['%s'] = %s" % (self._selector, key, jsData))
+
+  def get(self, key=None):
+    """
+    returns the object stored in the breadcrumb dictionary
+
+    :param key: Optinal. The key in the Breadcrumb dictionary
+
+    :return: A Python object
+    """
+    if key is None:
+      return JsObject.JsObject("%s" % self._selector)
+
+    return JsObject.JsObject("%s['%s']" % (self._selector, key))
+
+  def toClipboard(self):
+    """
+    return
+
+    :return:
+    """
+    return
+
+
 class JsBase(object):
   class __internal(object):
     _props, _context, jsOnLoadEvtsFnc = {}, {}, []
@@ -267,6 +311,7 @@ class JsBase(object):
     # shortcut functions
     self.alert = self.window.alert
     self.log = self.console.log
+    self._breadcrumb = None
 
   @property
   def objects(self):
@@ -414,6 +459,20 @@ class JsBase(object):
     :return: The predefined functions
     """
     return JsFncs.JsRegisteredFunctions(self._src)
+
+  @property
+  def breadcrumb(self):
+    """
+    Create a internal Breadcrumb to keep track of the user journey within your page.
+
+    Documentation
+    https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
+
+    :return: A Python breadcumb object
+    """
+    if self._breadcrumb is None:
+      self._breadcrumb = JsBreadCrumb()
+    return self._breadcrumb
 
   def registerFunction(self, fncName, jsFncs=None, pmts=None):
     """
