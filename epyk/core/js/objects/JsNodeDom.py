@@ -548,7 +548,8 @@ class JsDoms(JsObject.JsObject):
     if className is None:
       return JsString.JsString("%s.className" % self.varId, isPyData=False)
 
-    return JsString.JsString("%s.className = %s" % (self.varId, JsUtils.jsConvertData(className, None)), isPyData=False)
+    # TODO fix this properly
+    return JsString.JsString("%s; %s.className = %s" % (self.toStr(), self.varId, JsUtils.jsConvertData(className, None)), isPyData=False)
 
   def cloneNode(self, deep=True):
     """
