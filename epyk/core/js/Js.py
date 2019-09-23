@@ -283,24 +283,16 @@ class JsBreadCrumb(object):
     return JsObject.JsObject("%s['%s']" % (self._selector, key))
 
   @property
-  def toClipboard(self):
+  def url(self):
     """
-    Copy the full URL to rhe clipboard
-
-    Documentation
-    https://isabelcastillo.com/hidden-input-javascript
+    Get the full URL
 
     :return:
     """
     js_location = JsLocation.JsLocation()
     origin = js_location.origin
     pathname = js_location.pathname
-    url = JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
-    return JsFncs.JsFunction('''
-      var elInput = document.createElement('input'); 
-      elInput.setAttribute('type', 'text');
-      elInput.setAttribute('value', %s); document.body.appendChild(elInput);
-      document.execCommand('copy', false, elInput.select()); elInput.remove()''' % url.toStr())
+    return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
 
   def toStr(self):
     fncToUrl = JsFncs.FncOnRecords(self._src._props['js']).url()
@@ -514,6 +506,21 @@ class JsBase(object):
       jsData = JsUtils.jsConvertFncs(jsFncs)
       self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
     return self
+
+  def clipboard(self, jsData):
+    """
+    Copy the full URL to rhe clipboard
+
+    Documentation
+    https://isabelcastillo.com/hidden-input-javascript
+
+    :return:
+    """
+    return JsFncs.JsFunction('''
+        var elInput = document.createElement('input'); 
+        elInput.setAttribute('type', 'text');
+        elInput.setAttribute('value', %s); document.body.appendChild(elInput);
+        document.execCommand('copy', false, elInput.select()); elInput.remove()''' % JsUtils.jsConvertData(jsData, None))
 
   def addOnLoad(self, jsFncs):
     """
