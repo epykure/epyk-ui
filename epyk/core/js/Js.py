@@ -636,7 +636,7 @@ class JsBase(object):
 
     :return: An Element Object, representing an element with the specified ID. Returns null if no elements with the specified ID exists
     """
-    return "document.getElementById(%s)" % idName
+    return JsNodeDom.JsDoms("document.getElementById('%s')" % idName)
 
   def getElementsByName(self, name):
     """
@@ -1015,22 +1015,20 @@ class JsBase(object):
     """
     return JsFncs.JsTypeOf(JsUtils.jsConvertData(jsData, None))
 
-  def info(self, jsData, cssStyle=None, icon=None, time=10000):
+  def info(self, jsData, cssStyle=None, icon=None, seconds=10000):
     """
     Display a message
 
     :param jsData:
     :param cssStyle:
     :param icon:
-    :param time:
+    :param seconds:
 
     :return:
     """
-    return '''
-      var popup = document.createElement('div'); 
-      popup.innerHTML = %s; document.body.appendChild(popup);
-      popup.style.position = "fixed";
-      popup.style.bottom = 0;
-      popup.style.right = "5px";
-      setTimeout(function(){ popup.remove() }, %s);
-      ''' % (JsUtils.jsConvertData(jsData, None), time)
+    if cssStyle is None:
+      cssStyle = {"position": "fixed", "bottom": 0, "right": 0}
+    return [
+      self.createElement("div", varName="popup_info").css(cssStyle).innerHTML(jsData),
+      self.body.appendChild(self.objects.dom("popup_info")),
+      self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
