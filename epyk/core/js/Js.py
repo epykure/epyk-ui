@@ -678,7 +678,8 @@ class JsBase(object):
     https://www.w3schools.com/jsref/met_document_createelement.asp
 
     :param tagName: Required. The name of the element you want to create
-    :param varName:
+    :param varName: Optional. The variable name to be set. Default random name
+    :param setVar: Optional. Create a variable for the new object. Default True
 
     :return:
     """
