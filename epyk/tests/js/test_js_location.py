@@ -16,6 +16,6 @@ f = JsUtils.JsFile(path=r"../outs")
 js_obj = Js.JsBase()
 breadcrumb = js_obj.breadcrumb
 js_obj.addOnLoad(breadcrumb.add("ok", "test"))
-js_obj.addOnLoad(js_obj.console.log(breadcrumb.toClipboard))
+js_obj.addOnLoad(breadcrumb.toClipboard)
 f.codepen(js_obj)
 

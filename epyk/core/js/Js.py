@@ -285,19 +285,24 @@ class JsBreadCrumb(object):
   @property
   def toClipboard(self):
     """
+    Copy the full URL to rhe clipboard
+
+    Documentation
+    https://isabelcastillo.com/hidden-input-javascript
 
     :return:
     """
     js_location = JsLocation.JsLocation()
     origin = js_location.origin
     pathname = js_location.pathname
-    return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
+    url = JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
+    return JsFncs.JsFunction('''
+      var elInput = document.createElement('input'); 
+      elInput.setAttribute('type', 'text');
+      elInput.setAttribute('value', %s); document.body.appendChild(elInput);
+      document.execCommand('copy', false, elInput.select()); elInput.remove()''' % url.toStr())
 
   def toStr(self):
-    """
-
-    :return:
-    """
     fncToUrl = JsFncs.FncOnRecords(self._src._props['js']).url()
     return "%s(%s)" % (fncToUrl, self._selector)
 
