@@ -1018,7 +1018,7 @@ class JsBase(object):
   def info(self, jsData, cssStyle=None, icon=None, time=10000):
     """
     Display a message
-    
+
     :param jsData:
     :param cssStyle:
     :param icon:

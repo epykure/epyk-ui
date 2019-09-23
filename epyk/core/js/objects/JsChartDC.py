@@ -5,6 +5,7 @@ https://dc-js.github.io/dc.js/docs/html/
 
 Example
 https://bl.ocks.org/jun9/raw/5631952/
+https://jsfiddle.net/LouisNicolle/k4h8rpmb/
 
 """
 
