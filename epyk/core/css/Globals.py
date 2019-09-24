@@ -1,5 +1,5 @@
 """
-
+CSS Module in charge of defining the global styles 
 """
 
 from epyk.core.css.styles import CssStyle
@@ -48,3 +48,63 @@ class CssGlobal(object):
   @property
   def overflow(self):
     return Overflow(self._cssObj)
+
+  def style(self, name, attrs):
+    """
+    Add a new CSS Class in the page header
+
+    Documentation
+    https://www.w3schools.com/html/html_css.asp
+
+    :param name: The CSS Style reference as a string
+    :param attrs: The CSS attributes as a dictionary
+
+    :return: The CSS Object
+    """
+    self._cssObj.cssStyles[name] = CssStyle.CssCls.toCss(attrs)
+    return self
+
+  def style_per_id(self, html_id, attrs):
+    """
+    Add a new CSS Class in the page header
+
+    Documentation
+    https://www.w3schools.com/html/html_css.asp
+
+    :param html_id: The HTML object ID
+    :param attrs: The CSS attributes as a dictionary
+
+    :return:
+    """
+    self._cssObj.cssStyles["#%s" % html_id] = CssStyle.CssCls.toCss(attrs)
+    return self
+
+  def style_per_tag(self, html_tag, attrs):
+    """
+    Add a new CSS Class in the page header
+
+    Documentation
+    https://www.w3schools.com/html/html_css.asp
+
+    :param html_tag: The HTML object tag
+    :param attrs: The CSS attributes as a dictionary
+
+    :return:
+    """
+    self._cssObj.cssStyles[html_tag] = CssStyle.CssCls.toCss(attrs)
+    return self
+
+  def new_class(self, clss_nam, attrs):
+    """
+    Add a new CSS Class in the page header
+
+    Documentation
+    https://www.w3schools.com/html/html_css.asp
+
+    :param clss_nam: The CSS class name as a string
+    :param attrs: The CSS attributes as a dictionary
+
+    :return:
+    """
+    self._cssObj.cssStyles[".%s" % clss_nam] = CssStyle.CssCls.toCss(attrs)
+    return self
