@@ -1,5 +1,5 @@
 """
-CSS Module in charge of defining the global styles 
+CSS Module in charge of defining the global styles
 """
 
 from epyk.core.css.styles import CssStyle
