@@ -1017,9 +1017,12 @@ class JsBase(object):
     """
     return JsFncs.JsTypeOf(JsUtils.jsConvertData(jsData, None))
 
-  def info(self, jsData, cssStyle=None, icon=None, seconds=10000):
+  def info(self, jsData, cssStyle=None, icon="fas fa-spinner fa-spin", seconds=10000):
     """
     Display a message
+
+    Documentation
+    https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
 
     :param jsData:
     :param cssStyle:
@@ -1030,14 +1033,14 @@ class JsBase(object):
     """
 
     if cssStyle is None:
-      cssStyle = {"position": "fixed", "bottom": 0, "right": 0}
+      cssStyle = {"position": "fixed", "bottom": "5px", "right": "10px", "padding": '2px 7px', "border": "1px solid black"}
     if icon is not None:
       self._src.jsImports.add('font-awesome')
       self._src.cssImport.add('font-awesome')
       return [
-        self.createElement("div", varName="popup_info").css(cssStyle).text(jsData),
-        self.createElement("i", varName="popup_icon").className(icon),
-        self.objects.dom("popup_info").appendChild(self.objects.dom("popup_icon")),
+        self.createElement("i", varName="popup_icon").setAttribute("aria-hidden", True).css({"display": "inline-block",
+                           "width": "auto", "height": "auto", "margin-right": '5px'}).className(icon),
+        self.createElement("div", varName="popup_info").appendChild(self.objects.dom("popup_icon")).css(cssStyle).text(jsData),
         self.body.appendChild(self.objects.dom("popup_info")),
         self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
 

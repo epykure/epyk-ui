@@ -234,9 +234,6 @@ class JsFile(object):
 
     :return:
     """
-    # TODO Add the dependancies
-    print(rptObj._src.jsImports)
-    print(rptObj._src.cssImport)
     for k, v in rptObj._src._props.get('js', {}).get('functions', {}).items():
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       self.__data.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
@@ -272,8 +269,10 @@ class JsFile(object):
       data = rptObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
     else:
       self.writeReport(rptObj)
-      js_external = []
-      result = {"js": ";".join(self.__data), "js_external": ";".join(js_external)}
+      import_obj = Imports.ImportManager(online=True)
+      css_external = import_obj.cssURLs(import_obj.cssResolve(rptObj._src.cssImport))
+      js_external = import_obj.jsURLs(import_obj.jsResolve(rptObj._src.jsImports))
+      result = {"js": ";".join(self.__data), "js_external": ";".join(js_external), "css_external": ";".join(css_external)}
       data = rptObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
     outFile = open(os.path.join(self.file_path, "CodePenJsLauncher.html"), "w")
     outFile.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))

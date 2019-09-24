@@ -6,7 +6,7 @@ This package will resolve the external Javascript and CSS dependencies.
 It can also help or retrieve external Python packages from the official Python Page Index online repository
 """
 
-
+import re
 import os
 import sys
 import json
@@ -885,6 +885,16 @@ class ImportManager(object):
         css.append('<link rel="stylesheet" href="%s/users/%s)" type="text/css">' % (STATIC_PATH.replace("\\", "/"), localCssFile))
     return "\n".join(css)
 
+  def cssURLs(self, css_str):
+    """
+    Retrieve the list of CSS dependencies URL from a header
+
+    :param css_str: The CSS String in the page
+
+    :return: A Python list with all the CSS external URL to be imported
+    """
+    return re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', css_str)
+
   def jsResolve(self, js_aliases, local_js=None, excluded=None):
     """
     Return the list of Javascript modules to add to the header
@@ -916,6 +926,18 @@ class ImportManager(object):
       for local_js_file in local_js:
         js.append('<script language="javascript" type="text/javascript" src="%s/users/%s%s"></script>' % (STATIC_PATH.replace("\\", "/"), local_js_file, extra_configs))
     return "\n".join(js)
+
+  def jsURLs(self, js_str):
+    """
+    Retrieve the list of Javascript dependencies URL from a header
+
+    :param js_str: The Javascript String in the page
+
+    :return: A Python list with all the Javascript external URL to be imported
+    """
+    return re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', js_str)
+
+
 
   def getFiles(self, cssAlias, jsAlias):
     """

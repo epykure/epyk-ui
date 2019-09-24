@@ -10,6 +10,6 @@ js_obj.addOnLoad(breadcrumb.add("test1", "value1"))
 js_obj.addOnLoad(breadcrumb.add("test2", "value2"))
 js_obj.addOnLoad(breadcrumb.hash("test3"))
 js_obj.addOnLoad(js_obj.clipboard(breadcrumb.url))
-js_obj.addOnLoad(js_obj.info("icon", icon="fas fa-address-book", cssStyle={"color": 'red', "position": 'fixed'}))
+js_obj.addOnLoad(js_obj.info("icon"))
 f.codepen(js_obj)
 

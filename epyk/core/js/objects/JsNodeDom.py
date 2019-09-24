@@ -412,6 +412,9 @@ class JsDoms(JsObject.JsObject):
     """
     if jsObject is None and isinstance(type, dict):
       for k, v in type.items():
+        if "-" in k:
+          splitCss = k.split("-")
+          k = "%s%s" % (splitCss[0], splitCss[1].title())
         self._js.append("%s.style.%s = %s" % (self.varId, k, JsUtils.jsConvertData(v, None)))
     elif jsObject is None:
       return JsObject.JsObject("%s.style.%s" % (self.varId, type))
