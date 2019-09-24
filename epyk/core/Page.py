@@ -350,7 +350,7 @@ class Report(object):
     :param mode:
     :param html_template:
     :param fnc:
-    
+
     :return:
     """
     if html_template is None:
