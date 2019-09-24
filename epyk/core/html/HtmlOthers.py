@@ -172,7 +172,6 @@ class Loading(Html.Html):
   inReport = False
 
   def __str__(self):
-    self.loadStyle()
     if self.vals is None:
       return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />Loading...</div>' % (self.strAttr(withId=False, pyClassNames=self.pyStyle))
 

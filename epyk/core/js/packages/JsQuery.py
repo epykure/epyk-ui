@@ -171,10 +171,12 @@ class JQuery(object):
     """
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_hide_show.asp
+    https://www.w3schools.com/jquery/jquery_hide_show.asp
+    http://api.jquery.com/hide/
 
     :param speed:
-    :param jsCallback:
+    :param callback:
+
     :return:
     """
     if speed is not None:
@@ -193,7 +195,8 @@ class JQuery(object):
     """
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_hide_show.asp
+    https://www.w3schools.com/jquery/jquery_hide_show.asp
+    http://api.jquery.com/show/
 
     :param speed:
     :param jsCallback:
@@ -215,10 +218,11 @@ class JQuery(object):
     """
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_fade.asp
+    https://www.w3schools.com/jquery/jquery_fade.asp
+    http://api.jquery.com/fadein/
 
     :param speed:
-    :param jsCallback:
+    :param callback:
     :return:
     """
     if speed is not None:
@@ -237,10 +241,11 @@ class JQuery(object):
     """
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_fade.asp
+    https://www.w3schools.com/jquery/jquery_fade.asp
+    http://api.jquery.com/fadeout/
 
     :param speed:
-    :param jsCallback:
+    :param callback:
     :return:
     """
     if speed is not None:
@@ -303,10 +308,11 @@ class JQuery(object):
     """
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_slide.asp
+    https://www.w3schools.com/jquery/jquery_slide.asp
 
     :param speed:
-    :param jsCallback:
+    :param callback:
+
     :return:
     """
     if speed is not None:
@@ -350,7 +356,8 @@ class JQuery(object):
       - https://www.w3schools.com/jquery/jquery_slide.asp
 
     :param speed:
-    :param jsCallback:
+    :param callback:
+
     :return:
     """
     if speed is not None:
@@ -368,9 +375,16 @@ class JQuery(object):
   def animate(self, params, speed, callback):
     """
 
+    Example
+    myObj.animate(0.25, "+=50")
+
+    Documentation
+    https://www.w3schools.com/jquery/jquery_animate.asp
+
     :param params:
     :param speed:
     :param callback:
+
     :return:
     """
     self._js.append("animate()")

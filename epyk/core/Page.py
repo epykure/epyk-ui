@@ -67,7 +67,6 @@ class ContextRun(object):
 
 
 class Report(object):
-  # This list should not be changed
   showNavMenu, withContainer = False, False
 
   def __init__(self, run_options=None, appCache=None, sideBar=True, urlsApp=None, theme=None, context=None):
@@ -227,23 +226,6 @@ class Report(object):
     response = urlopen(Request("%s%smessage/%s" % (self.run.url_root, self._urlsApp["index"].replace("/index", "/"), "/".join(urls)),
                     data=urlencode({'data': json.dumps(data)}).encode('utf-8')))
     response.read()
-
-  def add(self, htmlObj, fncName=None):
-    self.htmlItems[id(htmlObj)] = htmlObj
-    self.content.append(id(htmlObj))
-    return htmlObj
-
-  def sidebar(self, links=None, color=None, size=None, dataSrc=None, servers=None, profile=None):
-    return self.add(html.HtmlSideBar.HtmlSideBarBasic(self, links, color, size, dataSrc, servers), sys._getframe().f_code.co_name)
-
-  def nav(self, value=None, color=None, selected=None, size=None, breadcrum=None, logo=None, backgroundColor=None, profile=None):
-    return self.add(html.HtmlNavBar.HtmlNavBar(self, value, color, selected, size, breadcrum, logo, backgroundColor), sys._getframe().f_code.co_name)
-
-  def searchr(self, recordSet, pageNumber=10, width=100, widthUnit="%", height=None, heightUnit="px"): return self.add(html.HtmlText.SearchResult(self, recordSet, pageNumber, width, widthUnit, height, heightUnit), sys._getframe().f_code.co_name)
-  def load(self, jsFncs, delay=None, profile=None): return self.add(html.HtmlEvent.Load(self, jsFncs, delay))
-  def optionsbar(self, recordSet=None, width=100, widthUnit="%", height=100, heightUnit='%', size=18, color=None, profile=None): return self.add(html.HtmlEvent.OptionsBar(self, recordSet, width, widthUnit, height, heightUnit, size, color), sys._getframe().f_code.co_name)
-  def paramsbar(self, htmlRecordSet=None, height=45, logFiles=None, profile=None):
-    return self.add(html.HtmlNavBar.HtmlParamsBar(self, htmlRecordSet, height, logFiles), sys._getframe().f_code.co_name)
 
   def cssCls(self, clsName, cssDict):
     """

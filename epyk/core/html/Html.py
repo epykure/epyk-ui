@@ -1,18 +1,12 @@
 """
-## HTML Components
+Base class for all the HTML components
 
-Lot of HTML components standard and bespoke are already available and attached to the _report.
-They are all coming from the module Html and they have the same set of functions.
-Please have a look at the signature of the _report function and the documentation of you object.
-
-There is also the possibility to create your own HTML component directly copying something from the web.
-Do not hesitate to liaise with your IT team do so and to ensure that your work on the framework is shared. This will benefit the framework and the community.
+HTML components are complex structured mixin Javascript and HTML in order to create valid objects to be added
+to the final page. Page.py will create report objects in charge of collecting all those components
 """
 
 
 import re
-import sys
-import os
 import json
 import importlib
 import collections
@@ -219,8 +213,8 @@ class Html(object):
       self.reqJs = list(getattr(self, '_%s__reqJs' % self.__class__.__name__, []))
     if hasattr(self, '_%s__reqCss' % self.__class__.__name__):
       self.reqCss = list(getattr(self, '_%s__reqCss' % self.__class__.__name__, []))
-    if hasattr(self, '_%s__table_name' % self.__class__.__name__):
-      self.createObjectTables()
+    #if hasattr(self, '_%s__table_name' % self.__class__.__name__):
+    #  self.createObjectTables()
     self.pyCssCls = set()
     if css is not None:
       # we need to do a copy of the CSS style at this stage
@@ -482,8 +476,6 @@ class Html(object):
         self.helper.css(css)
     return self
 
-
-
   @property
   def jqId(self):
     """
@@ -660,7 +652,6 @@ class Html(object):
     self.attr['class'].pop(cssCls)
     return self
 
-  # ok
   def css(self, key, value=None):
     """
     Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function
@@ -670,6 +661,7 @@ class Html(object):
     :param key: The key style in the CSS attributes (Can also be a dictionary)
     :param value: The value corresponding to the key style
     :return: The python object itself
+
     :link CSS Function: http://api.jquery.com/css/
     """
     if value is None and isinstance(key, dict):
@@ -956,9 +948,6 @@ class Html(object):
     self._report.jsOnLoadFnc.add("%(jqDiv)s.addClass('ui-widget-content');%(jqDiv)s.css({'z-index': 10, 'background': 'inherit', color: 'inherit'});%(jqDiv)s.draggable(%(attrs)s)" % {'jqDiv': self.jqDiv, 'attrs': json.dumps(attrs)})
     return self
 
-  def jsTrigger(self, event="click"):
-    return "%(jqId)s.trigger('%(event)s')" % {'jqId': self.eventId, 'event': event}
-
   def jsEvents(self):
     if hasattr(self, 'jsFncFrag'):
       for eventKey, fnc in self.jsFncFrag.items():
@@ -1048,77 +1037,24 @@ class Html(object):
   # ---------------------------------------------------------------------------------------------------------
   #                                          JAVASCRIPT FRAGMENTS
   #
-  def jsAddUrlParam(self, htmlCode=None, data=None, isPyData=True):
-    """
-    Add a parameter to the internal Javascript object with all the object variables.
-    This will then be added to the URL when a new page is called
-
-    """
-    if htmlCode is None and data is None:
-      htmlCode, data = self.htmlId, self.val
-      # No Javascript conversion is done in this case as we are already in the Javascript
-    else:
-      if isPyData:
-        data = json.dumps(data)
-    return '''%(breadCrumVar)s['params']['%(htmlCode)s'] = %(data)s; breadCrumbPushState()
-      ''' % {'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': htmlCode, 'data': data}
-
-  def jsToUrl(self):
-    """
-    Add the value of the existing HTML object to the internal Javascript object with all the variables.
-    This will then be added to the URL when a new page is called.
-    It is the same as jsAddUrlParam without parameters
-
-    :category: Javascript function
-    :rubric: JS
-    """
-    return self.jsAddUrlParam(self.htmlId, self.val, isPyData=False)
-
-  def jsToUrlReset(self):
-    """
-    Get the current URL without any extra parameters added automatically by the Javascript Internal component.
-    This will then refresh a report call to allow a user to start from scratch, without any pre selected parameters
-
-    :category: Javascript function
-    :rubric: JS
-    :return: A String with the URL
-    """
-    return "window.%s['url']" % self._report.jsGlobal.breadCrumVar
-
   def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
     """
     Python function used to build a HTML component based on a common javascript definition
 
-    :category: Javascript features
     :param jsData: The javascript data dictionary (or Python)
     :param jsDataKey: The key in the javascript data dictionary (or Python)
     :param isPyData: A flag to apply a javascript conversion if this is not called from a jsXXX() method
     :param jsParse: A flag to parse the javascript function is it is coming from a json string for some reason
+
     :example: htmlObj.jsGenerate( {"test": True}, jsDataKey="test", isPyData=True)
+
     :return: Javascript String with the different pieces and functions calls used to build the component
     """
-    bCrumb = ''
-    if self.htmlCode is not None:
-      bCrumb = self.jsAddUrlParam(self.htmlCode, self.val, isPyData=False)
-    if self._jsStyles is not None:
-      if jsStyles is None:
-        jsStyles = json.dumps(self._jsStyles)
-      return '''%(fncName)s(%(jsId)s, %(jsData)s, %(jsStyles)s); %(bCrumb)s
-            ''' % {'jsDataKey': json.dumps(jsDataKey), 'fncName': self.__class__.__name__, 'jsId': self.jqId, 'bCrumb': bCrumb,
-                   'jsData': self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc), 'jsStyles': jsStyles}
-
-    return '''
-      %(fncName)s(%(jsId)s, %(jsData)s); %(bCrumb)s
-      ''' % {'jsDataKey': json.dumps(jsDataKey), 'fncName': self.__class__.__name__, 'jsId': self.jqId,
-             'bCrumb': bCrumb,
-             'jsData': self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)}
-
-  def jsRefresh(self):
-    """
-
-    :return:
-    """
-    return self.jsGenerate()
+    if jsStyles is None:
+      jsStyles = json.dumps(self._jsStyles)
+    return '''%(fncName)s(%(jsId)s, %(jsData)s, %(jsStyles)s); %(bCrumb)s
+          ''' % {'jsDataKey': json.dumps(jsDataKey), 'fncName': self.__class__.__name__, 'jsId': self.jqId, 'bCrumb': bCrumb,
+                 'jsData': self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc), 'jsStyles': jsStyles}
 
   def jsUpdate(self, data, isPyData=True):
     """
@@ -1130,75 +1066,6 @@ class Html(object):
     if isPyData:
       data = json.dumps(data)
     return "var %s = %s; %s; " % (self.jsVal, data, self.jsUpdateDataFnc)
-
-  def jsToggleDisplay(self, jsData='data', jsDataKey=None, isPyData=False, jsFnc=None):
-    jsData = self._jsData(jsData, jsDataKey, False, isPyData, jsFnc)
-    return "if(%s){%s} else {%s}" % (jsData, self.jsShow(), self.jsHide())
-
-  def jsToggleAttr(self, type, value1, value2):
-    """
-    Python wrapper to the javascript method to toggle the display of a component from an event
-
-    :category: Javascript function
-    :rubric: JS
-    :example: myObj.jsToggleAttr('class', 'alert-info', 'alert-danger')
-    :return: String representing the Javascript fragment with the event
-    """
-    return '''
-      if ( $('#%(htmlId)s').attr('%(type)s') == '%(value1)s' ) { $('#%(htmlId)s').attr('%(type)s', '%(value2)s') }
-      else { $('#%(htmlId)s').attr('%(type)s', '%(value1)s') }
-      ''' % {'htmlId': self.htmlId, 'type': type, 'value1': value1, 'value2': value2}
-
-  def jsToggle(self, delay=None, type=None):
-    """
-    Python wrapper to the javascript method to change the display of the component using Jquery.
-    The example will change change the display on an event after 3 seconds
-
-    :category: Javascript function
-    :rubric: JS
-    :example: myObj.jsToggle(3000)
-    :link Jquery Documentation: http://api.jquery.com/toggle/
-    :return: String representing the Javascript fragment with the event
-    """
-    if type is None:
-      return "%s%s.toggle()" % (self.jqDiv, '' if delay is None else '.delay(%s)' % delay)
-
-    return "%s%s.toggle('%s')" % (self.jqDiv, '' if delay is None else '.delay(%s)' % delay, type)
-
-  def jsSlideToggle(self, duration=None, delay=None):
-    """
-    Python wrapper to the javascript method to display or hide the matched elements with a sliding motion.
-
-    :category: Javascript function
-    :rubric: JS
-    :example: myObj.jsSlideToggle(5000)
-    :link Jquery Documentation: http://api.jquery.com/slidetoggle/
-    :return: String representing the Javascript fragment with the event
-    """
-    jsDelay = '' if delay is None else '.delay(%s)' % delay
-    if duration is None:
-      return "%s%s.slideToggle()" % (self.jqDiv, jsDelay)
-
-    return "%s%s.slideToggle(%s)" % (self.jqDiv, jsDelay, duration)
-
-  def jsAnimate(self, duration, opacity=None, witdh=None, left=None, height=None, fontSize=None, top=None, delay=None):
-    """
-    Python wrapper to the javascript method to animate the object based on the attributes selected.
-
-    :category: Javascript function
-    :rubric: JS
-    :example: myObj.jsAnimate(0.25, "+=50")
-    :link Animate examples: https://www.w3schools.com/jquery/jquery_animate.asp
-    :return: String representing the Javascript fragment with the event
-    """
-    prop = {}
-    jsDelay = '' if delay is None else '.delay(%s)' % delay
-    for name, attr in [("opacity", opacity), ("witdh", witdh), ("left", left), ("height", height), ("fontSize", fontSize),
-                       ("top", top)]:
-      if attr is not None:
-        prop[name] = attr
-
-    return "%s%s.animate( %s , '%s')" % (self.jqDiv, jsDelay, json.dumps(prop), duration)
 
   def jsHtml(self, jqId, jsData, isPydata=False):
     """
@@ -1215,105 +1082,6 @@ class Html(object):
       jsData = json.dumps(jsData)
     return '''%s.html(%s)''' % (jqId, jsData)
 
-  def jsSlideDown(self, duration=None, delay=None):
-    """
-    Python wrapper to the javascript method to change the display of the component using Jquery
-
-    :category: Javascript function
-    :rubric: JS
-    :example: >>> myObj.jsSlideDown()
-    :return: A string representing the Javascript fragment to be added to the page
-    :link W3C Documentation: https://www.w3schools.com/jquery/eff_slidedown.asp
-    :link JQuery Documentation: http://api.jquery.com/slidedown/
-    """
-    jsDelay = '' if delay is None else '.delay(%s)' % delay
-    if duration is None:
-      return "%s%s.slideDown()" % (self.jqDiv, jsDelay)
-
-    return "%s%s.slideDown(%s)" % (self.jqDiv, jsDelay, duration)
-
-  def jsShow(self, duration=None, delay=None, inNestedStr=False):
-    """
-    Function to show HTML elements with the javascript methods show()
-
-    :category: Javascript function
-    :rubric: JS
-    :example: >>> myObj.jsShow()
-    :return: A string representing the Javascript fragment to be added to the page
-    :link W3C Documentation: https://www.w3schools.com/jquery/jquery_hide_show.asp
-    :link JQuery Documentation: http://api.jquery.com/show/
-    """
-    jsDelay = '' if delay is None else '.delay(%s)' % delay
-    if duration is None:
-      val = "%s%s.show()" % (self.jqDiv, jsDelay)
-    else:
-      val = "%s%s.show(%s)" % (self.jqDiv, jsDelay, duration)
-    if inNestedStr:
-      val = val.replace('\'', '\\\'')
-    return val
-
-  def jsFadeIn(self, duration=None, delay=None):
-    """
-    Function to gradually change the opacity, for selected elements, from hidden to visible
-
-    :category: Javascript function
-    :rubric: JS
-    :example: >>> myObj.jsFadeIn()
-    :return: A string representing the Javascript fragment to be added to the page
-    :link W3C Documentation: https://www.w3schools.com/jquery/eff_fadein.asp
-    :link JQuery Documentation: http://api.jquery.com/fadein/
-    """
-    jsDelay = '' if delay is None else '.delay(%s)' % delay
-    if duration is None:
-      return "%s%s.fadeIn()" % (self.jqDiv, jsDelay)
-
-    return "%s%s.fadeIn(%s)" % (self.jqDiv, jsDelay, duration)
-
-  def jsFadeOut(self, duration=None, delay=None):
-    """
-    Function to gradually change the opacity, for selected elements, from visible to hidden
-
-    :category: Javascript function
-    :rubric: JS
-    :example: >>> myObj.jsFadeOut()
-    :return: A string representing the Javascript fragment to be added to the page
-    :link W3C Documentation: https://www.w3schools.com/jquery/eff_fadeout.asp
-    :link JQuery Documentation: http://api.jquery.com/fadeout/
-    """
-    jsDelay = '' if delay is None else '.delay(%s)' % delay
-    if duration is None:
-      return "%s%s.fadeOut()" % (self.jqDiv, jsDelay)
-
-    return "%s%s.fadeOut(%s)" % (self.jqDiv, jsDelay, duration)
-
-  def jsHide(self, duration=None):
-    """
-    Function to hide HTML elements with the javascript methods hide()
-
-    :category: Javascript function
-    :rubric: JS
-    :example: >>> myObj.jsHide()
-    :return: A string representing the Javascript fragment to be added to the page
-    :link W3C Documentation: https://www.w3schools.com/jquery/jquery_hide_show.asp
-    :link JQuery Documentation: http://api.jquery.com/hide/
-    """
-    if duration is None:
-      return "%s.hide()" % self.jqDiv
-
-    return "%s.hide(%s)" % (self.jqDiv, duration)
-
-  def jsCopyClipboard(self):
-    """
-    Get the element content copied to the clipboard.
-
-    :category: Javascript function
-    :example: >>> _report.jsCopyClipboard()
-    :rubric: JS
-    :return: A string representing the Javascript fragment to be added to the page
-    :link Documentation: https://developer.mozilla.org/fr/docs/Web/API/Document/execCommand
-    """
-    return "document.execCommand('copy'); "
-
   # pas besoin
   def jsFrg(self, typeEvent, jsFnc):
     if typeEvent not in self.jsFncFrag:
@@ -1323,24 +1091,6 @@ class Html(object):
     else:
       self.jsFncFrag[typeEvent].append(jsFnc)
     return self
-
-  # Ok
-  def jsGoTo(self, url=None, isPyData=True):
-    """
-    The href property sets or returns the entire URL of the current page.
-
-    :category: Javascript function
-    :rubric: JS
-    :example: >>> myObj.jsGoTo()
-    :return: A string representing the Javascript fragment to be added to the page to go to another web page
-    :link W3C Documentation: https://www.w3schools.com/jsref/prop_loc_href.asp
-    """
-    if url is not None and isPyData:
-      url = json.dumps(url)
-    if url is None:
-      return '%s location.href=buildBreadCrum() ;' % self.jsToUrl()
-
-    return 'location.href=%s' % url
 
   # ---------------------------------------------------------------------------------------------------------
   #                                             CSS SECTION
