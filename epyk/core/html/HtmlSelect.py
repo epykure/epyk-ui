@@ -128,13 +128,9 @@ class Select(Html.Html):
   name, category, callFnc = 'Select', 'Lists', 'select'
 
   def __init__(self, report, records, htmlCode, label, width, height, filter, profile, multiple, options):
-    if label is not None:
-      self.label = report.ui.texts.label(label)
-      self.label.inReport = False
-    else:
-      self.label = ""
     super(Select, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1], globalFilter=filter, profile=profile)
+    self.add_label(label)
     self._jsStyles = {"liveSearch": options.get("liveSearch", False), "style": "show-menu-arrow class_select", "width": '100px'}
     self._jsStyles.update(options)
     self.css({'display': 'block'})
