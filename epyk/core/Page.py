@@ -142,7 +142,29 @@ class Report(object):
     if self._tags is None:
       self._tags = html.Tags.Tags()
     return self._tags
-  
+
+  @property
+  def symbols(self):
+    """
+    Shortcut to the HTML symbols
+
+    Documentation
+
+    Those can be added in string in order to improve the render of a text.
+    """
+    return html.Symbols
+
+  @property
+  def entities(self):
+    """
+    Shortcut to the HTML Entities
+
+    Documentation
+
+    Those can be added in string in order to improve the render of a text.
+    """
+    return html.Entities
+
   @property
   def ui(self):
     """
