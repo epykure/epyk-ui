@@ -21,3 +21,6 @@ from . import HtmlMessaging
 from . import HtmlDates
 from . import templates
 from . import HtmlTrees
+from . import Tags
+from . import Entities
+from . import Symbols

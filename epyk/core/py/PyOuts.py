@@ -271,6 +271,7 @@ class PyOuts(object):
 
     :return:
     """
+    docName = self.word()
 
   def word(self):
     """

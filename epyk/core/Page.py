@@ -149,6 +149,8 @@ class Report(object):
     Shortcut to the HTML symbols
 
     Documentation
+    https://www.w3schools.com/html/html_symbols.asp
+    https://www.w3schools.com/charsets/ref_utf_math.asp
 
     Those can be added in string in order to improve the render of a text.
     """
@@ -160,6 +162,7 @@ class Report(object):
     Shortcut to the HTML Entities
 
     Documentation
+    https://www.w3schools.com/html/html_entities.asp
 
     Those can be added in string in order to improve the render of a text.
     """
