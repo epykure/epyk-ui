@@ -26,7 +26,6 @@ class Components(object):
   def __init__(self, rptObj):
     self.rptObj = rptObj
 
-    self._tags = None
     # Special shortcut for some components
     self.button = self.buttons.button
     self.input = self.inputs.input
@@ -92,17 +91,6 @@ class Components(object):
     This category will take into account very specific and bespoke components.
     """
     return CompRich.Rich(self)
-
-  @property
-  def tags(self):
-    """
-    Shortcut to the HTML tags
-
-    Those can be added in string in order to improve the render of a text.
-    """
-    if self._tags is None:
-      self._tags = html.Tags.Tags()
-    return self._tags
 
   @property
   def texts(self):

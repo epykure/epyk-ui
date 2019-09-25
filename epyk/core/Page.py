@@ -72,7 +72,7 @@ class Report(object):
   def __init__(self, run_options=None, appCache=None, sideBar=True, urlsApp=None, theme=None, context=None):
     #
     self._css, self._ui, self._js, self._py = None, None, None, None
-    self._props = {}
+    self._props, self._tags = {}, None
 
     self.run = self.run_context(run_options if run_options is not None else {})
     self.useSideBar, self.preferredTheme = sideBar, None
@@ -132,6 +132,17 @@ class Report(object):
       self._css = Css.Css(self)
     return self._css
 
+  @property
+  def tags(self):
+    """
+    Shortcut to the HTML tags
+
+    Those can be added in string in order to improve the render of a text.
+    """
+    if self._tags is None:
+      self._tags = html.Tags.Tags()
+    return self._tags
+  
   @property
   def ui(self):
     """
