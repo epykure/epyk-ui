@@ -43,6 +43,22 @@ class Tags(object):
     """
     return self.__tag(sys._getframe().f_code.co_name, data, css_styles, cls_names, attrs)
 
+  def bdo(self, data, css_styles=None, cls_names=None, attrs=None):
+    """
+    bdo stands for Bi-Directional Override.
+    The <bdo> tag is used to override the current text direction.
+
+    Documentation
+    https://www.w3schools.com/tags/tag_bdo.asp
+
+    :param css_styles: A dictionary with the CSS Styles
+    :param cls_names: A list with the class Names
+    :param attrs: A dictionary with the tag attributes
+
+    :return: A string of the tag
+    """
+    return self.__tag(sys._getframe().f_code.co_name, data, css_styles, cls_names, attrs)
+
   def em(self, data, css_styles=None, cls_names=None, attrs=None):
     """
     The <em> tag is a phrase tag. It renders as emphasized text.
@@ -209,6 +225,55 @@ class Tags(object):
     """
     return self.__tag(sys._getframe().f_code.co_name, data, css_styles, cls_names, attrs)
 
+  def i(self, data, css_styles=None, cls_names=None, attrs=None):
+    """
+    The <i> tag defines a part of text in an alternate voice or mood. The content of the <i> tag is usually displayed in italic.
+
+    Documentation
+    https://www.w3schools.com/tags/tag_i.asp
+
+    :param css_styles: A dictionary with the CSS Styles
+    :param cls_names: A list with the class Names
+    :param attrs: A dictionary with the tag attributes
+
+    :return: A string of the tag
+    """
+    return self.__tag(sys._getframe().f_code.co_name, data, css_styles, cls_names, attrs)
+
+  def q(self, data, css_styles=None, cls_names=None, attrs=None):
+    """
+    The <q> tag defines a short quotation.
+
+    Browsers normally insert quotation marks around the quotation.
+
+    Documentation
+    https://www.w3schools.com/tags/tag_q.asp
+
+    :param css_styles: A dictionary with the CSS Styles
+    :param cls_names: A list with the class Names
+    :param attrs: A dictionary with the tag attributes
+
+    :return: A string of the tag
+    """
+    return self.__tag(sys._getframe().f_code.co_name, data, css_styles, cls_names, attrs)
+
+  def mark(self, data, css_styles=None, cls_names=None, attrs=None):
+    """
+    The <mark> tag defines marked text.
+
+    Use the <mark> tag if you want to highlight parts of your text.
+
+    Documentation
+    https://www.w3schools.com/tags/tag_mark.asp
+
+    :param css_styles: A dictionary with the CSS Styles
+    :param cls_names: A list with the class Names
+    :param attrs: A dictionary with the tag attributes
+
+    :return: A string of the tag
+    """
+    return self.__tag(sys._getframe().f_code.co_name, data, css_styles, cls_names, attrs)
+
   def ins(self, data, css_styles=None, cls_names=None, attrs=None):
     """
     The <ins> tag defines a text that has been inserted into a document.
@@ -260,6 +325,22 @@ class Tags(object):
 
     Documentation
     https://www.w3schools.com/tags/tag_abbr.asp
+
+    :param css_styles: A dictionary with the CSS Styles
+    :param cls_names: A list with the class Names
+    :param attrs: A dictionary with the tag attributes
+
+    :return: A string of the tag
+    """
+    return self.__tag(sys._getframe().f_code.co_name, data, css_styles, cls_names, attrs)
+
+  def meter(self, data, css_styles=None, cls_names=None, attrs=None):
+    """
+    The <meter> tag defines a scalar measurement within a known range, or a fractional value.
+    This is also known as a gauge.
+
+    Documentation
+    https://www.w3schools.com/tags/tag_meter.asp
 
     :param css_styles: A dictionary with the CSS Styles
     :param cls_names: A list with the class Names
