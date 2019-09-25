@@ -214,6 +214,24 @@ class Lists(object):
         selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, dfColumn=dfColumn, globalFilter=globalFilter, dataSrc=dataSrc, profile=profile))
 
   def dropdown(self, recordSet=None, size=(None, 'px'), title='', width=(100, "%"), height=(32, 'px'), htmlCode=None, dataSrc=None, globalFilter=None, profile=None):
+    """
+
+    Documentation
+    http://getbootstrap.com/docs/4.0/components/dropdowns/
+    https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
+    https://codepen.io/svnt/pen/beEgre
+
+    :param recordSet:
+    :param size:
+    :param title:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param dataSrc:
+    :param globalFilter:
+    :param profile:
+    :return:
+    """
     size = self._size(size)
     return self.context.register(html.HtmlSelect.SelectDropDown(self.context.rptObj, title, recordSet, size, width,
         height, htmlCode, dataSrc, globalFilter, profile))
