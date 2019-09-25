@@ -7,5 +7,4 @@ from . import GraphDC
 from . import GraphD3
 from . import GraphPlotly
 from . import GraphFabric
-from . import GraphD3Bespoke
 from . import GraphSparklines
