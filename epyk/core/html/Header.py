@@ -53,6 +53,7 @@ class Header(object):
 
   def __init__(self, report):
     self._report = report
+    self._report._props["header"] = {}
 
   @property
   def title(self, title):
@@ -60,10 +61,10 @@ class Header(object):
     Report title
 
     :param title:
-    
+
     :return:
     """
-    self._report._props["header"] = title
+    self._report._props["header"]['title'] = title
     return self
 
   def base(self, url):
