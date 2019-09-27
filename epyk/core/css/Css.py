@@ -71,7 +71,7 @@ class Css(object):
     '#e8f2ef'
 
     :return: A Python ColorMaker object
-    :rtype: epyk.Lib.css.Color.ColorMaker
+    :rtype: epyk.core.css.Color.ColorMaker
     """
     if self._colors is None:
       self._colors = Color.ColorMaker(self.rptObj)
@@ -180,7 +180,7 @@ class Css(object):
     :param force_reload: Optional, Force the CSS factory to attached this object
 
     :return: The CSS Class
-    :rtype: epyk.Lib.css.styles.CssStyle.CssCls
+    :rtype: epyk.core.css.styles.CssStyle.CssCls
     """
     fCls = CssStyle.getCssObj(clsName, theme=self.colors._themeObj.name)
     derv_cls_name = CssStyle.cssName("%s_%s" % (clsName, htmlId))

@@ -19,6 +19,7 @@ import importlib
 import inspect
 
 
+from epyk.core.css import Colors
 from epyk.core.css import themes
 
 
@@ -88,6 +89,16 @@ class ColorMaker(object):
       self._themeObj = self.rptObj._props
     self._loadThemes()
     self.setTheme(theme)
+
+  @property
+  def defined(self):
+    """
+    Returns the defined colors based on the name
+
+    Documentation
+    https://www.rapidtables.com/web/color/RGB_Color.html
+    """
+    return Colors.DefinedColors()
 
   def _loadThemes(self, reset=False):
     """

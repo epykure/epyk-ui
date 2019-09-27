@@ -238,13 +238,13 @@ class JsFile(object):
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       self.__data.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
 
-    for c, d in rptObj._src._props['js'].get("constructors", {}).items():
+    for c, d in rptObj._src._props.get('js', {}).get("constructors", {}).items():
       self.__data.append(d)
 
-    for c, d in rptObj._src._props['js'].get("datasets", {}).items():
+    for c, d in rptObj._src._props.get('js', {}).get("datasets", {}).items():
       self.__data.append(d)
 
-    for b in rptObj._src._props['js'].get("builders", []):
+    for b in rptObj._src._props.get('js', {}).get("builders", []):
       self.__data.append(b)
 
     keyboardShortcuts = rptObj._src._props.get('js', {}).get('keyboard', {})
@@ -254,7 +254,7 @@ class JsFile(object):
         self.__data.append("if(%s){%s}" % (k, v))
       self.__data.append("})")
 
-  def codepen(self, rptObj, target='_self'):
+  def codepen(self, rptObj, cssObj=None, target='_self'):
     """
     Send the piece of Javascript to Codepen for testing
 
@@ -266,17 +266,18 @@ class JsFile(object):
       results = rptObj._to_html_obj(content_only=True)
       js_external = re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
       result = {"js": results["jsFrgs"], "js_external": ";".join(js_external)}
-      data = rptObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
     else:
       self.writeReport(rptObj)
       import_obj = Imports.ImportManager(online=True)
       css_external = import_obj.cssURLs(import_obj.cssResolve(rptObj._src.cssImport))
       js_external = import_obj.jsURLs(import_obj.jsResolve(rptObj._src.jsImports))
       result = {"js": ";".join(self.__data), "js_external": ";".join(js_external), "css_external": ";".join(css_external)}
-      data = rptObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
+    if cssObj is not None:
+      result["css"] = cssObj.toCss()
+    data = rptObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
     outFile = open(os.path.join(self.file_path, "CodePenJsLauncher.html"), "w")
     outFile.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
-    webbrowser.open(outFile.name)
+    #webbrowser.open(outFile.name)
 
   def close(self, jsObj=None):
     """

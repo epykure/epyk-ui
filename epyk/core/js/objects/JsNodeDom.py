@@ -8,6 +8,7 @@ Documentation
 """
 
 from epyk.core.js.fncs import JsFncs
+from epyk.core.css import Colors
 
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
@@ -422,6 +423,44 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.style.%s = %s" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 
+  def toggle(self):
+    """
+
+    :return:
+    """
+    self._js.append("if(window.getComputedStyle(%(varId)s).display == 'block'){ %(varId)s.style.display = 'none'} else { %(varId)s.style.display = 'block'}" % {"varId": self.varId})
+    return self
+
+  def toggleAttrs(self, pivot_key, pivot_val, attrs_off, attrs_on):
+    """
+    Toggle some CSS attributes
+
+    :param pivot_key:
+    :param pivot_val:
+    :param attrs_on: A python dictionary with CSS attributes
+    :param attrs_off: A python dictionary with CSS attributes
+
+    :return:
+    """
+    if pivot_key in ["color"] and not pivot_val.startswith("rgb"):
+      colors_def = Colors.defined[pivot_val.upper()]
+      pivot_val = "rgb%s" % colors_def['rgb']
+    css_attrs_on = self.css(attrs_on).toStr()
+    css_attrs_off = self.css(attrs_off).toStr()
+    self._js.append("if(window.getComputedStyle(%(varId)s)['%(pivot_key)s'] == '%(pivot_val)s') {%(css_attrs_on)s} else {%(css_attrs_off)s}" % {"pivot_val": pivot_val, "varId": self.varId, "pivot_key": pivot_key, 'css_attrs_on': css_attrs_on, 'css_attrs_off': css_attrs_off})
+    return self
+
+  def toggleClass(self, clsName):
+    """
+    Toggle a class name
+
+    :param clsName: The classname to be toggle
+
+    :return:
+    """
+    self._js.append('%(varId)s.classList.toggle("%(data)s")' % {"varId": self.varId, 'data': clsName})
+    return self
+
   @property
   def firstChild(self):
     """
@@ -633,13 +672,16 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.insertBefore(%s, %s)" % (self.varId, newnode, existingnode))
     return self
 
-  def click(self, jsFnc):
+  def click(self, jsFncs):
     """
+    Trigger a click event.
+    This function will not set the event
 
-    :param jsFnc:
+    :param jsFncs:
+
     :return:
     """
-    self._js.append("%s.click(%s)" % (self.varId, JsUtils.jsConvertFncs(jsFnc)))
+    self._js.append("%s.click(%s)" % (self.varId, ";".join(JsUtils.jsConvertFncs(jsFncs))))
     return self
 
   def onclick(self, jsFncs, autoStyle=True):
@@ -649,13 +691,14 @@ class JsDoms(JsObject.JsObject):
     Documentation
     https://www.w3schools.com/jsref/event_onclick.asp
 
-    :param jsFnc: The Javascript function
+    :param jsFncs: The Javascript function
     :param autoStyle: Some predefined style attributes added to this event (self.css({"cursor": "pointer"}))
+
     :return: The PyDom object
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     if autoStyle:
       self.css({"cursor": "pointer"})
-    self._js.append("%s.onclick = function(){%s}" % (self.varId, ";".join([str(JsUtils.jsConvertData(jsFnc, None)) for jsFnc in jsFncs])))
+    self._js.append("%s.onclick = function(){%s}" % (self.varId, ";".join(JsUtils.jsConvertFncs(jsFncs))))
     return self
