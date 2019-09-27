@@ -16,8 +16,6 @@ class Meta(object):
     """
     return self
 
-
-
   def author(self):
     """
 
@@ -52,17 +50,21 @@ class Meta(object):
 
 
 class Header(object):
-  """
 
-  """
+  def __init__(self, report):
+    self._report = report
 
   @property
   def title(self, title):
     """
+    Report title
 
+    :param title:
+    
     :return:
     """
-    return
+    self._report._props["header"] = title
+    return self
 
   def base(self, url):
     """
