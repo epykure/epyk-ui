@@ -277,7 +277,7 @@ class JsFile(object):
     data = rptObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
     outFile = open(os.path.join(self.file_path, "CodePenJsLauncher.html"), "w")
     outFile.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
-    #webbrowser.open(outFile.name)
+    webbrowser.open(outFile.name)
 
   def close(self, jsObj=None):
     """
