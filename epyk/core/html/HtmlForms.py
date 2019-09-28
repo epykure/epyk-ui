@@ -86,7 +86,7 @@ class Form(Html.Html):
         row.input.add_attrs(attrs)
     return self
 
-  def add_label(self, text, name, css=None, position="after", for_=None, row=None):
+  def add_label(self, text, css=None, position="after", for_=None, row=None):
     """
     Add an elementary label component
 
@@ -96,7 +96,6 @@ class Form(Html.Html):
     https://www.w3schools.com/tags/tag_label.asp
 
     :param text: The label content
-    :param name: The component name in the form (used as ID)
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
     :param for_: Specifies which form element a label is bound to
@@ -118,7 +117,7 @@ class Form(Html.Html):
         row.label.css(css)
     return self
 
-  def add_button(self, text, name, css=None, position="after", row=None, attrs=None):
+  def add_button(self, text, css=None, position="after", row=None, attrs=None):
     """
     Add an elementary label component
 
@@ -128,7 +127,6 @@ class Form(Html.Html):
     https://www.w3schools.com/tags/tag_label.asp
 
     :param text: The label content
-    :param name: The component name in the form (used as ID)
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
     :param row:
@@ -148,14 +146,13 @@ class Form(Html.Html):
         row.button.add_attrs(attrs)
     return self
 
-  def add_title(self, text, name, css=None, position="after", row=None):
+  def add_title(self, text, css=None, position="after", row=None):
     """
     Add an elementary title component
 
     Example
 
     :param text: The title content
-    :param name: The component name in the form (used as ID)
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
     :param row:

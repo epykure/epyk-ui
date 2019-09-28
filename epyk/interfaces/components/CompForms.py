@@ -33,6 +33,6 @@ class Forms(object):
     """
     form = html.HtmlForms.Form(self.context.rptObj, action, method, helper)
     form.add_title(title)
-    form.add_input(value, label)
+    form.add_input(value, 'input', label)
     self.context.register(form)
     return form

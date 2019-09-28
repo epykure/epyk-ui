@@ -12,7 +12,7 @@ form.row(1).input.addAttr("placeholder", "youpi")
 form.add_input("test", "ok")
 form.add_input("test 2", "Super")
 form.add_title("New Title")
-form.add_text("RRRR")
+form.add_text("RRRR", "text")
 
 print(form.rows)
 rpt.outs.browser.codepen(path=test_statics.OUTPUT_PATHS)
