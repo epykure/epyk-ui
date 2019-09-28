@@ -131,8 +131,8 @@ class Lists(object):
                                                         filter, profile, multiple, options))
 
   def list(self, categories=None, icon=None, title='', width=(100, "%"), height=(None, 'px'),
-           draggable=False, draggableGroupId=None, draggableMax=None, dfColumn=None, dataSrc=None, htmlCode=None,
-           searchable=False, selectable=True, showGrid=True, template=None, globalFilter=None, profile=None):
+           draggable=False, draggableGroupId=None, draggableMax=None, column=None, dataSrc=None, htmlCode=None,
+           searchable=False, selectable=True, showGrid=True, template=None, filter=None, profile=None):
     """
 
     Documentation
@@ -147,21 +147,21 @@ class Lists(object):
     :param draggable:
     :param draggableGroupId:
     :param draggableMax:
-    :param dfColumn:
+    :param column:
     :param dataSrc:
     :param htmlCode:
     :param searchable:
     :param selectable:
     :param showGrid:
     :param template:
-    :param globalFilter:
+    :param filter:
     :param profile:
     :return:
     """
     return self.context.register(html.HtmlList.List(self.context.rptObj, categories, icon, title, width,
                                                     height, draggable, draggableGroupId, draggableMax,
-                                                    dfColumn, dataSrc, htmlCode, searchable, selectable, showGrid,
-                                                    template, globalFilter, profile))
+                                                    dataSrc, htmlCode, searchable, selectable, showGrid,
+                                                    template, filter, profile))
 
   def tree(self, recordSet=None, width=(100, "%"), height=(None, 'px'), title='', htmlCode=None,
            draggable=False, dataSrc=None, expanded=False, profile=None):
@@ -187,36 +187,77 @@ class Lists(object):
                                                         draggable, dataSrc, expanded, profile))
 
   def listnumbers(self, recordSet=None, level=None, top=(10, 'px'), width=(100, '%'), height=(None, 'px'),
-                  selectable=None, multiselectable=None, htmlCode=None, dfColumn=None,
-                  globalFilter=None, dataSrc=None, profile=None):
-    return self.context.register(html.HtmlList.NumberList(self.context.rptObj, recordSet, top, level, width,
-                                                          height, selectable=selectable,
-                                                          multiselectable=multiselectable, htmlCode=htmlCode,
-                                                          dfColumn=dfColumn, globalFilter=globalFilter,
-                                                          dataSrc=dataSrc, profile=profile))
+                  selectable=None, multiselectable=None, htmlCode=None, column=None,
+                  filter=None, dataSrc=None, profile=None):
+    """
+
+    Documentation
+    https://www.w3schools.com/html/html_lists.asp
+    https://www.w3.org/wiki/CSS/Properties/list-style-type
+
+    :param recordSet:
+    :param level:
+    :param top:
+    :param width:
+    :param height:
+    :param selectable:
+    :param multiselectable:
+    :param htmlCode:
+    :param column:
+    :param filter:
+    :param dataSrc:
+    :param profile:
+
+    :rtype: html.HtmlList.NumberList
+    :return:
+    """
+    return self.context.register(html.HtmlList.NumberList(self.context.rptObj, recordSet, top, level, width, height,
+                                                          selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode,
+                                                          globalFilter=filter, dataSrc=dataSrc, profile=profile))
 
   def listletter(self, recordSet=None, level=None, top=(10, 'px'), width=(100, "%"), height=(None, 'px'), selectable=None,
-                 multiselectable=None, htmlCode=None, dfColumn=None, globalFilter=None, dataSrc=None, profile=None):
+                 multiselectable=None, htmlCode=None, column=None, filter=None, dataSrc=None, profile=None):
     return self.context.register(html.HtmlList.LetterList(self.context.rptObj, recordSet, top, level, width, height,
-            selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, dfColumn=dfColumn, globalFilter=globalFilter, dataSrc=dataSrc, profile=profile))
+            selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, globalFilter=filter, dataSrc=dataSrc, profile=profile))
 
-  def checklist(self, recordSet=None, width=(100, "%"), height=(None, 'px'), dfColumn=None, globalFilter=None,
+  def checklist(self, recordSet=None, width=(100, "%"), height=(None, 'px'), column=None, filter=None,
                 dataSrc=None, profile=None):
-    return self.context.register(html.HtmlList.CheckList(self.context.rptObj, recordSet, width, height, dfColumn,
-                                                         globalFilter, dataSrc, profile))
+    return self.context.register(html.HtmlList.CheckList(self.context.rptObj, recordSet, width, height,
+                                                         filter, dataSrc, profile))
 
   def points(self, recordSet=None, marginTop=10, level=None, width=(100, "%"), height=(None, 'px'), selectable=None,
-             multiselectable=None, htmlCode=None, dfColumn=None, globalFilter=None, dataSrc=None, profile=None):
+             multiselectable=None, htmlCode=None, column=None, filter=None, dataSrc=None, profile=None):
+    """
+
+    Example
+    rpt.ui.lists.points([{'label': 'Python', 'url': 'https://www.python.org/'}, {'label': 'R'}])
+
+    Documentation
+    https://www.w3schools.com/html/html_lists.asp
+
+    :param recordSet:
+    :param marginTop:
+    :param level:
+    :param width:
+    :param height:
+    :param selectable:
+    :param multiselectable:
+    :param htmlCode:
+    :param filter:
+    :param dataSrc:
+    :param profile:
+    :return:
+    """
     return self.context.register(html.HtmlList.Bullets(self.context.rptObj, recordSet, marginTop, level, width, height,
-        selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, dfColumn=dfColumn, globalFilter=globalFilter, dataSrc=dataSrc, profile=profile))
+        selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, globalFilter=filter, dataSrc=dataSrc, profile=profile))
 
   def squares(self, recordSet=None, marginTop=10, level=None, width=(100, "%"), height=(None, 'px'), selectable=None,
-              multiselectable=None, htmlCode=None, dfColumn=None, globalFilter=None, dataSrc=None, profile=None):
+              multiselectable=None, htmlCode=None, column=None, filter=None, dataSrc=None, profile=None):
     return self.context.register(html.HtmlList.Squares(self.context.rptObj, recordSet, marginTop, level, width, height,
-        selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, dfColumn=dfColumn, globalFilter=globalFilter, dataSrc=dataSrc, profile=profile))
+        selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, globalFilter=filter, dataSrc=dataSrc, profile=profile))
 
   def dropdown(self, recordSet=None, size=(None, 'px'), title='', width=(100, "%"), height=(32, 'px'), htmlCode=None,
-               dataSrc=None, globalFilter=None, profile=None):
+               dataSrc=None, filter=None, profile=None):
     """
 
     Documentation
@@ -237,13 +278,13 @@ class Lists(object):
     """
     size = self._size(size)
     return self.context.register(html.HtmlSelect.SelectDropDown(self.context.rptObj, title, recordSet, size, width,
-        height, htmlCode, dataSrc, globalFilter, profile))
+        height, htmlCode, dataSrc, filter, profile))
 
   def listbadge(self, recordSet=None, color=None, size=(None, 'px'), width=(100, "%"), height=(None, 'px'), draggable=False,
-                draggableGroupId=None, draggableMax=None, dfColumn=None, dataSrc=None, profile=None):
+                draggableGroupId=None, draggableMax=None, column=None, dataSrc=None, profile=None):
     size = self._size(size)
     return self.context.register(html.HtmlList.ListBadge(self.context.rptObj, recordSet, color, size, width, height,
-       draggable, draggableGroupId, draggableMax, dfColumn, dataSrc, profile))
+       draggable, draggableGroupId, draggableMax, dataSrc, profile))
 
   def brackets(self, recordSet=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
