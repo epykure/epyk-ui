@@ -20,6 +20,7 @@ from epyk.interfaces.components import CompSliders
 from epyk.interfaces.components import CompMessaging
 from epyk.interfaces.components import CompDates
 from epyk.interfaces.components import CompDrops
+from epyk.interfaces.components import CompForms
 
 
 class Components(object):
@@ -180,6 +181,16 @@ class Components(object):
     Group all the UI components dedicated to drop data.
     """
     return CompDrops.DropData(self)
+
+  @property
+  def forms(self):
+    """
+    Group all the Forms components dedicated to drop data.
+
+    Documentation
+    https://www.w3schools.com/html/html_forms.asp
+    """
+    return CompForms.Forms(self)
 
   @property
   def charts(self):
