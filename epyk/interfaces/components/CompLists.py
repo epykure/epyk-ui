@@ -195,7 +195,8 @@ class Lists(object):
                                                           dfColumn=dfColumn, globalFilter=globalFilter,
                                                           dataSrc=dataSrc, profile=profile))
 
-  def listletter(self, recordSet=None, level=None, top=(10, 'px'), width=(100, "%"), height=(None, 'px'), selectable=None, multiselectable=None, htmlCode=None, dfColumn=None, globalFilter=None, dataSrc=None, profile=None):
+  def listletter(self, recordSet=None, level=None, top=(10, 'px'), width=(100, "%"), height=(None, 'px'), selectable=None,
+                 multiselectable=None, htmlCode=None, dfColumn=None, globalFilter=None, dataSrc=None, profile=None):
     return self.context.register(html.HtmlList.LetterList(self.context.rptObj, recordSet, top, level, width, height,
             selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, dfColumn=dfColumn, globalFilter=globalFilter, dataSrc=dataSrc, profile=profile))
 
@@ -209,11 +210,13 @@ class Lists(object):
     return self.context.register(html.HtmlList.Bullets(self.context.rptObj, recordSet, marginTop, level, width, height,
         selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, dfColumn=dfColumn, globalFilter=globalFilter, dataSrc=dataSrc, profile=profile))
 
-  def squares(self, recordSet=None, marginTop=10, level=None, width=(100, "%"), height=(None, 'px'), selectable=None, multiselectable=None, htmlCode=None, dfColumn=None, globalFilter=None, dataSrc=None, profile=None):
+  def squares(self, recordSet=None, marginTop=10, level=None, width=(100, "%"), height=(None, 'px'), selectable=None,
+              multiselectable=None, htmlCode=None, dfColumn=None, globalFilter=None, dataSrc=None, profile=None):
     return self.context.register(html.HtmlList.Squares(self.context.rptObj, recordSet, marginTop, level, width, height,
         selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, dfColumn=dfColumn, globalFilter=globalFilter, dataSrc=dataSrc, profile=profile))
 
-  def dropdown(self, recordSet=None, size=(None, 'px'), title='', width=(100, "%"), height=(32, 'px'), htmlCode=None, dataSrc=None, globalFilter=None, profile=None):
+  def dropdown(self, recordSet=None, size=(None, 'px'), title='', width=(100, "%"), height=(32, 'px'), htmlCode=None,
+               dataSrc=None, globalFilter=None, profile=None):
     """
 
     Documentation
@@ -236,7 +239,8 @@ class Lists(object):
     return self.context.register(html.HtmlSelect.SelectDropDown(self.context.rptObj, title, recordSet, size, width,
         height, htmlCode, dataSrc, globalFilter, profile))
 
-  def listbadge(self, recordSet=None, color=None, size=(None, 'px'), width=(100, "%"), height=(None, 'px'), draggable=False, draggableGroupId=None, draggableMax=None, dfColumn=None, dataSrc=None, profile=None):
+  def listbadge(self, recordSet=None, color=None, size=(None, 'px'), width=(100, "%"), height=(None, 'px'), draggable=False,
+                draggableGroupId=None, draggableMax=None, dfColumn=None, dataSrc=None, profile=None):
     size = self._size(size)
     return self.context.register(html.HtmlList.ListBadge(self.context.rptObj, recordSet, color, size, width, height,
        draggable, draggableGroupId, draggableMax, dfColumn, dataSrc, profile))
@@ -250,10 +254,11 @@ class Lists(object):
     :param categories:
     :param color:
     :param width:
-    :param width_unit:
     :param size:
     :param dataSrc:
     :param profile:
+
+    :rtype: html.HtmlList.HtmlListAccordeon
     :return:
     """
     size = self._size(size)
