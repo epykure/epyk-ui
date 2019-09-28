@@ -10,7 +10,6 @@ class Forms(object):
     self.context = context
 
   def date(self, action, method, yyyy_mm_dd=None, helper=None):
-
     form = html.HtmlForms.Form(self.context.rptObj, action, method, helper)
     self.context.register(form)
     return form
