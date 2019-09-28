@@ -294,6 +294,12 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'jquery.min.js', 'version': '3.4.1', 'path': 'jquery/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
+  # QUnit package width CDN links
+  'qunit': {
+    'website': 'https://qunitjs.com',
+    'modules': [
+      {'script': 'qunit.min.js', 'version': '2.9.2', 'path': 'qunit/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+
   # Used to produce sparkline charts in a document and in Tabulator
   'jquery-sparklines': {
     'req': [{'alias': 'jquery'}],
@@ -553,6 +559,12 @@ CSS_IMPORTS = {
       {'script': 'jquery-ui.min.css', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
       {'script': 'jquery-ui.structure.min.css', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
       {'script': 'jquery-ui.theme.min.css', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+
+  # QUnit package width CDN links
+  'qunit': {
+    'website': 'https://qunitjs.com',
+    'modules': [
+      {'script': 'qunit.min.css', 'version': '2.9.2', 'path': 'qunit/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # Jquery-brackets package width CDN links
   'jquery-brackets': {

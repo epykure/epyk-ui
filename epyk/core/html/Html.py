@@ -361,20 +361,26 @@ class Html(object):
         self.icon.css(css)
     return self
 
-  def add_label(self, text, css=None, position="before"):
+  def add_label(self, text, css=None, position="before", for_=None):
     """
     Add an elementary label component
 
     Example
 
+    Documentation
+    https://www.w3schools.com/tags/tag_label.asp
 
     :param text: The label content
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
+    :param for_: Specifies which form element a label is bound to
     """
     self.label = ""
     if text is not None:
       self.label = self._report.ui.texts.label(text)
+      if for_ is not None:
+        # Attach the label to another HTML component based on the ID
+        self.label.attr['for'] = for_
       if position == "before":
         self.prepend_child(self.label)
       else:
