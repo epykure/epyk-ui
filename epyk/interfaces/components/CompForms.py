@@ -17,12 +17,22 @@ class Forms(object):
   def dates(self, yyyy_mm_dd=None, yyyy_mm_dd_Prev=None):
     pass
 
-  def input(self, action, method="GET", value="", label=None, title=None, helper=None):
+  def input(self, action, method="GET", value="", label=None, placeholder="", title=None, helper=None):
+    """
+
+    :param action:
+    :param method:
+    :param value:
+    :param label:
+    :param placeholder:
+    :param title:
+    :param helper:
+
+    :rtype: html.HtmlForms.Form
+    :return:
+    """
     form = html.HtmlForms.Form(self.context.rptObj, action, method, helper)
-    self.context.rptObj.ui.layouts.grid([
-      form.add_input(value, attrs={"id": 'form_input'}),
-      form.add_label(label, for_='form_input')
-    ])
-    form.add_title(title)
+    #form.input(value, placeholder, label)
+    #form.add_title(title)
     self.context.register(form)
     return form

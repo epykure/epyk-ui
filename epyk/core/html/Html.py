@@ -169,7 +169,6 @@ class Html(object):
           self.htmlObj.attr.setdefault('css', {})[k] = v
       return self
 
-
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):
     """ Create an python HTML object """
