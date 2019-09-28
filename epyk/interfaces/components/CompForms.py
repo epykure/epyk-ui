@@ -17,7 +17,7 @@ class Forms(object):
   def dates(self, yyyy_mm_dd=None, yyyy_mm_dd_Prev=None):
     pass
 
-  def input(self, action, method="GET", value="", label=None, placeholder="", title=None, helper=None):
+  def input(self, action, method="GET", value="", label=None, title=None, helper=None):
     """
 
     :param action:
@@ -32,7 +32,7 @@ class Forms(object):
     :return:
     """
     form = html.HtmlForms.Form(self.context.rptObj, action, method, helper)
-    #form.input(value, placeholder, label)
-    #form.add_title(title)
+    form.add_title(title)
+    form.add_input(value, label)
     self.context.register(form)
     return form

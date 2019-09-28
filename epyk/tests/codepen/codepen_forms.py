@@ -6,9 +6,13 @@ rpt = Report()
 
 
 form = rpt.ui.forms.input("youpi", title="Title", label="data")
+form.row(1).input.addAttr("placeholder", "youpi")
+
 #form.add_input("test", "RRR")
 form.add_input("test", "ok")
-form.add_row([])
+form.add_input("test 2", "Super")
+form.add_title("New Title")
+form.add_text("RRRR")
 
-print(form.rows[0].toStr())
+print(form.rows)
 rpt.outs.browser.codepen(path=test_statics.OUTPUT_PATHS)
