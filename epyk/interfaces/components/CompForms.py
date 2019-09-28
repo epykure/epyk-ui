@@ -9,18 +9,21 @@ class Forms(object):
   def __init__(self, context):
     self.context = context
 
-  def date(self, report, action, method, yyyy_mm_dd=None):
+  def date(self, action, method, yyyy_mm_dd=None, helper=None):
 
-    form = html.HtmlForms.Form(report, action, method, helper)
+    form = html.HtmlForms.Form(self.context.rptObj, action, method, helper)
     self.context.register(form)
     return form
 
   def dates(self, yyyy_mm_dd=None, yyyy_mm_dd_Prev=None):
     pass
 
-  def input(self, report, action, method, value=None, title=None, helper=None):
-    form = html.HtmlForms.Form(report, action, method, helper)
+  def input(self, action, method="GET", value="", label=None, title=None, helper=None):
+    form = html.HtmlForms.Form(self.context.rptObj, action, method, helper)
+    self.context.rptObj.ui.layouts.grid([
+      form.add_input(value, attrs={"id": 'form_input'}),
+      form.add_label(label, for_='form_input')
+    ])
     form.add_title(title)
-    form.add_input(value)
     self.context.register(form)
     return form

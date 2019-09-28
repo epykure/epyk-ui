@@ -451,7 +451,7 @@ class Html(object):
     """
     self.input = ""
     if text is not None:
-      self.input = self._report.ui.inputs.input_test(text)
+      self.input = self._report.ui.inputs.input(text)
       if position == "before":
         self.prepend_child(self.input)
       else:

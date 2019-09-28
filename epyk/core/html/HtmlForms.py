@@ -13,7 +13,7 @@ class Form(Html.Html):
   __pyStyle = ['CssDivNoBorder']
 
   def __init__(self, report, action, method, helper):
-    super(Form, self).__init__(report)
+    super(Form, self).__init__(report, None)
     self.attr["action"] = action
     self.attr["method"] = method
     self.add_helper(helper)
