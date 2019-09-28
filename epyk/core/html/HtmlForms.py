@@ -19,4 +19,4 @@ class Form(Html.Html):
     self.add_helper(helper)
 
   def __str__(self):
-    return '<form %s>%s</form>' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<form %s><input type="submit" value="Submit">%s</form>' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
