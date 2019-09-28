@@ -45,9 +45,9 @@ class List(Html.Html):
     if selectable:
       # Add the selection to a click event
       self._report.style.cssCls('CssBasicListItems', {'cursor': 'pointer'})
-      self.jsFrg('click', "%s['params']['%s'] = [$(this).text()]" % (self._report.jsGlobal.breadCrumVar, self.htmlId))
-      self.valFnc = 'GetListDataSelect'
-      self.addGlobalFnc('GetListDataSelect(htmlId)', "return %(breadCrumVar)s['params'][htmlId];" % {"breadCrumVar": self._report.jsGlobal.breadCrumVar})
+      #self.jsFrg('click', "%s['params']['%s'] = [$(this).text()]" % (self._report.jsGlobal.breadCrumVar, self.htmlId))
+      #self.valFnc = 'GetListDataSelect'
+      #self.addGlobalFnc('GetListDataSelect(htmlId)', "return %(breadCrumVar)s['params'][htmlId];" % {"breadCrumVar": self._report.jsGlobal.breadCrumVar})
     self._jsStyles = {'li': {"padding": "2px 5px 2px 15px"}}
     if not grid:
       self._jsStyles['li']['border'] = 'none'
@@ -139,7 +139,7 @@ class List(Html.Html):
           } } ;
          htmlObj.disableSelection() ;
       } ''' % {"blackColor": self.getColor('greys', -1), "url": self._report._urlsApp['report'], 'report_name': self._report.run.report_name,
-               "successColor": self.getColor('success', 1), "itemStyle": self._report.style.cssName('CssBasicListItems')}, 'Javascript Object builder')
+               "successColor": self.getColor('success', 1), "itemStyle": self._report.style.cssName('CssBasicListItems')})
 
   def __add__(self, rec):
     """ Add items to a container """
