@@ -161,9 +161,9 @@ class Buttons(object):
                              tooltip=tooltip, profile=profile, options=options))
 
 
-  def radio(self, recordSet=None, checked=None, htmlCode=None, width=(100, '%'), height=(None, "px"), radioVisible=False,
+  def radio(self, recordSet=None, checked=None, htmlCode=None, label=None, width=(100, '%'), height=(None, "px"), radioVisible=False,
             event=None, withRemoveButton=False, column=None, align='left', filters=None, tooltip='', allSelected=False,
-            title='', radioType="row", profile=None):
+            radioType="row", helper=None, profile=None):
     """
 
     Example
@@ -175,6 +175,7 @@ class Buttons(object):
     :param recordSet:
     :param checked:
     :param htmlCode:
+    :param label:
     :param width: Optional. Integer for the component width
     :param height: Optional. Integer for the component height
     :param radioVisible:
@@ -207,8 +208,9 @@ class Buttons(object):
       tmpVals = [{'value': str(v)} for v in recordSet]
       tmpVals[0]['checked'] = True
       recordSet = tmpVals
-    return self.context.register(html.HtmlRadio.Radio(self.context.rptObj, recordSet, checked, htmlCode, width,
-                                                      height, radioVisible, event, withRemoveButton, align, filters, tooltip, title, radioType, profile))
+    return self.context.register(html.HtmlRadio.Radio(self.context.rptObj, recordSet, checked, htmlCode, label, width,
+                                                      height, radioVisible, event, withRemoveButton, align, filters,
+                                                      tooltip, radioType, helper, profile))
 
   def switch(self, recordSet=None, label=None, color=None, size=16, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
     """
