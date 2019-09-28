@@ -162,7 +162,7 @@ class Buttons(object):
 
 
   def radio(self, recordSet=None, checked=None, htmlCode=None, width=(100, '%'), height=(None, "px"), radioVisible=False,
-            event=None, withRemoveButton=False, dfColumn=None, align='left', filters=None, tooltip='', allSelected=False,
+            event=None, withRemoveButton=False, column=None, align='left', filters=None, tooltip='', allSelected=False,
             title='', radioType="row", profile=None):
     """
 
@@ -180,7 +180,7 @@ class Buttons(object):
     :param radioVisible:
     :param event:
     :param withRemoveButton:
-    :param dfColumn:
+    :param column:
     :param align:
     :param filters:
     :param tooltip:
@@ -192,21 +192,25 @@ class Buttons(object):
     :rtype: html.HtmlRadio.Radio
     :return:
     """
-    if dfColumn is not None:
+    if column is not None:
       if filters is not None:
         if filters:
           dataId = id(recordSet)
           dataCode = "df_code_%s" % dataId
-          filters = {'jsId': dataCode, 'colName': dfColumn, 'allSelected': allSelected, 'operation': 'in'}
+          filters = {'jsId': dataCode, 'colName': column, 'allSelected': allSelected, 'operation': 'in'}
           if not dataCode in self.context.rptObj.jsSources:
             self.context.rptObj.jsSources[dataCode] = {'dataId': dataId, 'containers': [], 'data': recordSet}
             self.context.rptObj.jsSources[dataCode]['containers'].append(self)
-      recordSet = recordSet[dfColumn].unique().tolist()
+      recordSet = recordSet[column].unique().tolist()
+
+    if isinstance(recordSet, list) and not isinstance(recordSet[0], dict):
+      tmpVals = [{'value': str(v)} for v in recordSet]
+      tmpVals[0]['checked'] = True
+      recordSet = tmpVals
     return self.context.register(html.HtmlRadio.Radio(self.context.rptObj, recordSet, checked, htmlCode, width,
                                                       height, radioVisible, event, withRemoveButton, align, filters, tooltip, title, radioType, profile))
 
-  def switch(self, recordSet=None, label=None, color=None, size=16, width=150, width_unit='%', height=20,
-             height_unit='px', htmlCode=None, profile=None):
+  def switch(self, recordSet=None, label=None, color=None, size=16, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
     """
 
     Example
@@ -229,7 +233,7 @@ class Buttons(object):
     :rtype: html.HtmlRadio.Switch
     :return:
     """
-    return self.context.register(html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, size, width, width_unit, height, height_unit, htmlCode, profile))
+    return self.context.register(html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, size, width, height, htmlCode, profile))
 
   def checkbox(self, records=None, title=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
                htmlCode=None, globalFilter=None, tooltip='', dfColumn=None, icon="fas fa-check", options=None, profile=None):

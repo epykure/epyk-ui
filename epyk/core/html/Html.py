@@ -951,7 +951,7 @@ class Html(object):
   def jsEvents(self):
     if hasattr(self, 'jsFncFrag'):
       for eventKey, fnc in self.jsFncFrag.items():
-        self._report._props['js']['builders'].extend(fnc)
+        self._report._props.get('js', {}).get('builders', []).extend(fnc)
         if self.htmlCode is not None:
           fnc.insert(0, self.jsAddUrlParam(self.htmlCode, self.val, isPyData=False))
         if getattr(self._report, 'PROFILE', False):
@@ -970,12 +970,12 @@ class Html(object):
         else:
           self._report.jsOnLoadEvtsFnc.add('''
             %(jqId)s.on('%(eventKey)s', function(event) {
-              %(disableFnc)s; var useAsync = false; var data = %(data)s; var returnVal = undefined; %(jsInfo)s; %(jsFnc)s; 
+              %(disableFnc)s; var useAsync = false; var data = %(data)s; var returnVal = undefined; %(jsFnc)s; 
               data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
               if (!useAsync) {var body_loading_count = parseInt($('#body_loading span').text());
                 $('#body_loading span').html(body_loading_count - 1); if($('#body_loading span').html() == '0') {$('#body_loading').remove()}}
               if (returnVal != undefined) {return returnVal}})''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'disableFnc': self.disableFnc,
-                     'jsFnc': ";".join([f for f in fnc if f is not None]), 'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
+                     'jsFnc': ";".join([f for f in fnc if f is not None])})
 
   def click(self, jsFncs): return self.jsFrg('click', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
   def change(self, jsFncs): return self.jsFrg('change', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)

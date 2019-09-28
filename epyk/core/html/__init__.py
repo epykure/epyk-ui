@@ -10,7 +10,6 @@ from . import HtmlNavBar
 from . import HtmlOthers
 from . import HtmlRadio
 from . import HtmlSelect
-from . import HtmlSideBar
 from . import HtmlText
 from . import HtmlTextComp
 from . import HtmlTextEditor

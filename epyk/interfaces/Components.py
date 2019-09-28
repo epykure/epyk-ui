@@ -217,7 +217,7 @@ class Components(object):
     """
     return self.register(html.HtmlTextComp.ContentsTable(self.rptObj, vals, width, height, profile))
 
-  def tags_test(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
+  def tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
     
     :param vals: Optional.
