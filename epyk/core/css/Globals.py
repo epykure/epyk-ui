@@ -11,6 +11,15 @@ class Overflow(object):
     self._cssObj.cssStyles["::-webkit-scrollbar"] = "{ height: 10px; }"
     self._cssObj.cssStyles["::-webkit-scrollbar-track"] = "{ border-radius: 10px; -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.5); }"
 
+  def button(self):
+    """
+
+    :return:
+    """
+    self._cssObj.cssStyles["::-webkit-scrollbar-button:single-button"] = "{ background-color: #bbbbbb; display: block; border-style: solid; height: 13px; width: 16px; }"
+    self._cssObj.cssStyles["::-webkit-scrollbar-button:single-button:vertical:decrement"] = "{ border-width: 0 8px 8px 8px; border-color: transparent transparent #555555 transparent; }"
+    self._cssObj.cssStyles["::-webkit-scrollbar-button:single-button:vertical:increment"] = "{ border-width: 8px 8px 0 8px; border-color: #555555 transparent transparent transparent; }"
+
   def thumb(self, style=None, css_hover=None, css_active=None):
     """
 
