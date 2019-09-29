@@ -27,7 +27,7 @@ class Radio(Html.Html):
     super(Radio, self).__init__(report, vals, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                 heightUnit=height[1], globalFilter=filters, profile=profile)
     #
-    self.add_label(label)
+    self.add_label(label, css={"height": "20px", "line-height": "20px", "width": "auto"})
     self.add_helper(helper)
 
     self._jsStyles = {'tooltip': tooltip}
