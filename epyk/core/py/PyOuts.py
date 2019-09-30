@@ -11,8 +11,6 @@ from epyk.core.js import Imports
 from epyk.core.js import Js
 from epyk.core.js.Imports import requires
 
-from epyk.core.py import PyMarkdown
-
 from epyk.core.html.templates import HtmlTmplBase
 from epyk.core.html.templates import HtmlTmplJupyter
 
@@ -48,6 +46,7 @@ class OutBrowsers(object):
     with open(os.path.join(path, "RunnerCodepen.html"), "w") as f:
       f.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
     webbrowser.open(os.path.join(path, "RunnerCodepen.html"))
+
 
 class PyOuts(object):
   class __internal(object):
@@ -254,11 +253,32 @@ class PyOuts(object):
       f.write(HtmlTmplBase.DATA % results)
     return file_path
 
-  def markdown_file(self):
+  def markdown_file(self, path=None, name=None):
     """
+    Writes a Markdown file from the report object
 
-    :return:
+    :param path: The path in which the output files will be created
+    :param name: The filename without the extension
+
+    :return: The file path
     """
+    if path is None:
+      path = os.path.join(os.getcwd(), "outs", "markdowns")
+    else:
+      path = os.path.join(path, "markdowns")
+    if not os.path.exists(path):
+      os.makedirs(path, exist_ok=True)
+    if os.path.exists(path):
+      if name is None:
+        name = "md_%s.amd" % int(time.time())
+
+      file_Path = os.path.join(path, name)
+      with open(file_Path, "w") as f:
+        for objId in self._report.content:
+          html_obj = self._report.htmlItems[objId]
+          if hasattr(html_obj, "to_markdown"):
+            f.write("%s\n" % html_obj.to_markdown(html_obj.vals))
+      return file_Path
 
   def str(self):
     """
@@ -271,7 +291,6 @@ class PyOuts(object):
 
     :return:
     """
-    docName = self.word()
 
   def word(self):
     """

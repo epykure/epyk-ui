@@ -273,7 +273,7 @@ class MarkDown(object):
     :return:
     """
     out_file = open(out_file_path, 'w')
-    converted_data = self.convertStr(self.content)
+    converted_data = self.parse(self.content)
     for line in converted_data:
       out_file.write("%s\n" % line)
     for block in self.content:

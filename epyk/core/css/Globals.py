@@ -13,6 +13,7 @@ class Overflow(object):
 
   def button(self):
     """
+    Add the arrows to the scroll bar
 
     :return:
     """

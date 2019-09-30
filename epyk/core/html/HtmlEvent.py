@@ -72,7 +72,7 @@ class ProgressBar(Html.Html):
     return ["report.progressbar(%s)" % regExpResult.group(1)]
 
   @classmethod
-  def jsMarkDown(self, vals):
+  def to_markdown(self, vals):
     return "%%%%" + str(vals) + "%"
 
 
