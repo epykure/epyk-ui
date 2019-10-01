@@ -291,58 +291,76 @@ class PyOuts(object):
 
     :return:
     """
+    self.word()
+    # Then save the file to pdf
 
-  def word(self):
+  def word(self, path=None, name=None):
     """
+    Writes the result to an Word document
+
+    :param path: The path in which the output files will be created
+    :param name: The filename without the extension
 
     :return:
     """
     from docx import Document
     from docx.shared import RGBColor
 
+    if path is None:
+      path = os.path.join(os.getcwd(), "outs", "office")
+    else:
+      path = os.path.join(path, "office")
+    if not os.path.exists(path):
+      os.makedirs(path, exist_ok=True)
     timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
-    docName = '%s_%s.docx' % (self._report.run.script_name, timestamp)
+    name = name or 'word_%s.docx' % timestamp
     document = Document()
-    for objId in self.content:
-      if self.htmlItems[objId].inReport:
+    for objId in self._report.content:
+      if self._report.htmlItems[objId].inReport:
         try:
-          self.htmlItems[objId].to_word(document)
+          self._report.htmlItems[objId].to_word(document)
         except Exception as err:
-          errotTitle = document.add_heading().add_run("Error")
-          errotTitle.font.color.rgb = RGBColor(255, 0, 0)
-          errotTitle.font.italic = True
-          errorParagraph = document.add_paragraph().add_run((str(err)))
-          errorParagraph.font.color.rgb = RGBColor(255, 0, 0)
-          errorParagraph.font.italic = True
-    savedPath = os.path.join(self._report.run.local_path, "saved")
-    if not os.path.exists(savedPath):
-      os.mkdir(savedPath)
-    document.save(os.path.join(self._report.run.local_path, "saved", docName))
-    return docName
+          error_title = document.add_heading().add_run("Error")
+          error_title.font.color.rgb = RGBColor(255, 0, 0)
+          error_title.font.italic = True
+          error_paragraph = document.add_paragraph().add_run((str(err)))
+          error_paragraph.font.color.rgb = RGBColor(255, 0, 0)
+          error_paragraph.font.italic = True
+    document.save(os.path.join(path, name))
+    return name
 
-  def excel(self):
+  def excel(self, path=None, name=None):
     """
+    Writes the result to an Excel document
+
+    :param path: The path in which the output files will be created
+    :param name: The filename without the extension
 
     :return:
     """
     xls = requires("xlsxwriter", reason='Missing Package', install='xlsxwriter', source_script=__file__)
 
+    if path is None:
+      path = os.path.join(os.getcwd(), "outs", "office")
+    else:
+      path = os.path.join(path, "office")
+    if not os.path.exists(path):
+      os.makedirs(path, exist_ok=True)
     timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
-    docName = '%s_%s.xlsx' % (self._report.run.script_name, timestamp)
-    xlsDocument = os.path.join(self._report.run.local_path, "saved", docName)
-    workbook = xls.Workbook(xlsDocument)
+    name = name or '%s_%s.xlsx' % (self._report.run.script_name, timestamp)
+    workbook = xls.Workbook(os.path.join(path, name))
     worksheet = workbook.add_worksheet()
     cursor = {'row': 0, 'col': 0}
-    for objId in self.content:
-      if self.htmlItems[objId].inReport:
+    for objId in self._report.content:
+      if self._report.htmlItems[objId].inReport:
         try:
-          self.htmlItems[objId].to_xls(workbook, worksheet, cursor)
+          self._report.htmlItems[objId].to_xls(workbook, worksheet, cursor)
         except Exception as err:
           cell_format = workbook.add_format({'bold': True, 'font_color': 'red'})
           worksheet.write(cursor['row'], 0, str(err), cell_format)
           cursor['row'] += 2
     workbook.close()
-    return docName
+    return name
 
   def power_point(self):
     """
@@ -355,6 +373,5 @@ class PyOuts(object):
     """
     This module will require the package webbrowser.
     It will allow outputs to be created directly in the webpages (without using intermediary text files
-
     """
     return OutBrowsers(self)
