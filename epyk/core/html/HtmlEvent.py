@@ -311,6 +311,7 @@ class Slider(Html.Html):
 
     return "{ event_val: ui.value, event_code: '%(htmlId)s', event_min: %(min)s, event_max: %(max)s, event_range: '%(range)s' }" % {"htmlId":  self.htmlId, 'min': self.vals['min'], 'max': self.vals['max'], 'range': self.vals.get('range') }
 
+
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
   # -----------------------------------------------------------------------------------------
@@ -500,9 +501,9 @@ class SkillBar(Html.Html):
       os.mkdir(imgsPath)
 
     # Add the picture to the document
-    pkg_matplotlib.savefig( os.path.join(imgsPath, "%s.png" % id(fig)) )
-    document.add_picture( os.path.join(imgsPath, "%s.png" % id(fig)) )
-    os.remove( os.path.join(imgsPath, "%s.png" % id(fig)) )
+    pkg_matplotlib.savefig(os.path.join(imgsPath, "%s.png" % id(fig)))
+    document.add_picture(os.path.join(imgsPath, "%s.png" % id(fig)))
+    os.remove(os.path.join(imgsPath, "%s.png" % id(fig)))
 
 
 class ContextMenu(Html.Html):
@@ -729,19 +730,3 @@ class Filters(Html.Html):
       ''' % {'title': self.label, 'htmlId': "%s_div" % self.htmlId, 'cssAttr': self.strAttr(pyClassNames=[s for s in self.pyStyle if s not in ['CssDivFilterItems']]),
              'click': self.jsClear()}
 
-
-class Load(Html.Html):
-  name, category, callFnc = 'Load Functions', 'Event', 'load'
-
-  def __init__(self, report, jsFncs, delay):
-    self.jsFncs, self.delay = jsFncs, delay
-    super(Load, self).__init__(report, "")
-
-  def __str__(self):
-    if not isinstance(self.jsFncs, list):
-      self.jsFncs = [self.jsFncs]
-    if self.delay is not None:
-      self._report.jsOnLoadFnc.add("setTimeout(function() {%s}, %s )" % (";".join(self.jsFncs), self.delay) )
-    else:
-      self._report.jsOnLoadFnc.add(";".join(self.jsFncs))
-    return ''
