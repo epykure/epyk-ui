@@ -50,9 +50,9 @@ class Dates(object):
 
     """
     if value is None:
-      lastBusDay = datetime.datetime.today()
+      value = datetime.datetime.today()
     size = self.context._size(size)
-    return self.context.register(html.HtmlDates.DatePicker(self.context.rptObj, lastBusDay, label, icon, color, size, htmlCode,
+    return self.context.register(html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, size, htmlCode,
                                                            profile, options or {}, helper))
 
   def cob(self, value=None, label=None, icon="far fa-calendar-alt", color=None, size=(None, 'px'), htmlCode=None,
@@ -83,11 +83,11 @@ class Dates(object):
     :rtype: html.HtmlDates.DatePicker
     """
     if value is None:
-      lastBusDay = datetime.datetime.today()
-      while lastBusDay.weekday() in [5, 6]:
-        lastBusDay = lastBusDay - datetime.timedelta(days=1)
+      value = datetime.datetime.today()
+      while value.weekday() in [5, 6]:
+        value = value - datetime.timedelta(days=1)
     size = self.context._size(size)
-    return self.context.register(html.HtmlDates.DatePicker(self.context.rptObj, lastBusDay, label, icon, color, size, htmlCode,
+    return self.context.register(html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, size, htmlCode,
                                                            profile, options or {}, helper))
 
   def now(self, value=None, label=None, icon="far fa-clock", color=None, size=(None, 'px'), htmlCode=None, profile=None, options=None,

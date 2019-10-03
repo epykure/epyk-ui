@@ -133,7 +133,8 @@ class TextArea(Html.Html):
   def __init__(self, report, text, width, rows, placeholder, background_color, htmlCode, options, profile):
     super(TextArea, self).__init__(report, text, htmlCode=htmlCode, width=width[0], widthUnit=width[1], profile=profile)
     self.width, self.rows, self.backgroundColor = width, rows, background_color
-    self.css({"margin": "5px 0 10px 0"})
+    self.css({"margin": "5px 0 10px 0", "font-size": "%s%s" % (report.style.defaults.font.size, report.style.defaults.font.unit),
+              "font-family": report.style.defaults.font.family})
     if options.get("selectable", False):
       self.attr['onclick'] = "this.blur();this.select()"
       options["readOnly"] = True

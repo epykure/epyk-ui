@@ -48,6 +48,7 @@ class Css(object):
     Documentation
     https://css-tricks.com/custom-scrollbars-in-webkit/
 
+    :rtype: Globals.CssGlobal
     :return:
     """
     return Globals.CssGlobal(self)
@@ -79,6 +80,11 @@ class Css(object):
 
   @property
   def defaults(self):
+    """
+
+    :rtype: CssDefaults
+    :return:
+    """
     return CssDefaults
 
   def append(self, clsNames):

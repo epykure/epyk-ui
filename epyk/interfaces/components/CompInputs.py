@@ -170,7 +170,6 @@ class Inputs(object):
     :param profile:
 
     :rtype: html.HtmlInput.TextArea
-
     :return:
     """
     if options is None:

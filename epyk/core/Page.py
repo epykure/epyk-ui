@@ -126,6 +126,7 @@ class Report(object):
     Documentation
     https://www.w3schools.com/css/default.asp
 
+    :rtype: Css.Css
     :return: A Python CSS Object
     """
     if self._css is None:

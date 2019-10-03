@@ -12,6 +12,7 @@ form.row(1).input.addAttr("placeholder", "youpi")
 form.add_input("test", "ok")
 form.add_input("test 2", "Super")
 form.add_title("New Title")
+form.add_date("New Title")
 form.add_text("RRRR", "text")
 
 print(form.rows)

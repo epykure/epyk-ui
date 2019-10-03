@@ -170,6 +170,30 @@ class Form(Html.Html):
         row.title.css(css)
     return self
 
+  def add_date(self, text, css=None, position="after", row=None):
+    """
+    Add an elementary date component
+
+    Example
+
+    :param text: The title content
+    :param css: Optional. A dictionary with the CSS style to be added to the component
+    :param position:
+    :param row:
+
+    """
+    if row is None:
+      row = self.add_row()
+    if text is not None:
+      row.attr("date", self._report.ui.dates.cob(label=text))
+      if position == "before":
+        self.prepend_child(row.date)
+      else:
+        self.append_child(row.date)
+      if css is not None:
+        row.date.css(css)
+    return self
+
   def add_text(self, text, name, css=None, position="after", row=None):
     """
     Add an elementary textarea component
