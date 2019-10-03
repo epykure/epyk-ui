@@ -263,6 +263,30 @@ class Components(object):
     """
     return self.register(html.HtmlEvent.ContextMenu(self.rptObj, recordSet, width, height, visible, profile))
 
+  def options_bar(self, recordSet=None, color=None, border_color=None, size=(None, "px"), width=(None, 'px'),
+                  height=(None, 'px'), options=None):
+    """
+
+    :param recordSet:
+    :param color:
+    :param border_color:
+    :param size:
+    :param width:
+    :param height:
+    :param options:
+
+    :rtype: html.HtmlEvent.OptionsBar
+    :return:
+    """
+    recordSet = recordSet or []
+    options = options or {}
+    border_color = border_color or self.rptObj.getColor("colors", 1)
+    color = color or self.rptObj.getColor("greys", -1)
+    size = self._size(size)
+    if width[0] is None:
+      width = (len(recordSet) * 35, width[1])
+    return self.register(html.HtmlEvent.OptionsBar(self.rptObj, recordSet, width, height, size, color, border_color, options))
+
 
   #--------------------------------------------------------------------------------------------------------------------
   #

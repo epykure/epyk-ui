@@ -24,7 +24,7 @@ class JsHtml(JsNodeDom.JsDoms):
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
     self.__src = htmlObj
     self._js = []
-    self._jquery = None
+    self._jquery, self._jquery_ui = None, None
 
   def val(self):
     return JsObjects.JsObjects.get("%s.val()" % self.varName)
@@ -48,6 +48,17 @@ class JsHtml(JsNodeDom.JsDoms):
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(self.__src)
     return self._jquery
+
+  @property
+  def jquery_ui(self):
+    """
+
+    :return:
+    :rtype: JsQuery.JQuery
+    """
+    if self._jquery_ui is None:
+      self._jquery_ui = JsQueryUi.JQueryUI(self.__src)
+    return self._jquery_ui
 
   @property
   def objects(self):

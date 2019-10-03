@@ -570,9 +570,12 @@ class OptionsBar(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   __pyStyle = ['CssDivNoBorder', 'CssIcon']
 
-  def __init__(self, report, recordset, width, height, size, color):
+  def __init__(self, report, recordset, width, height, size, color, border_color, options):
     super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
-    self.css({'padding': '5px', 'display': 'block', 'text-align': 'middle'})
+    self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px'})
+    if options.get("draggable", False):
+      self.css({"border": "1px solid %s" % border_color})
+      report.js.addOnLoad(self.dom.jquery_ui.draggable().toStr())
     self.size = size
 
   def __str__(self):
@@ -584,12 +587,8 @@ class OptionsBar(Html.Html):
         rec['jsFnc'] = ";".join(rec['jsFnc'])
       if not 'tooltip' in rec:
         rec['tooltip'] = ''
-      icons.append('<i class="%(icon)s %(cssIcon)s" style="font-size:%(size)spx" title="%(tooltip)s" onclick="var data={event_val:\'%(icon)s\'};%(jsFnc)s"></i>' % rec)
-    return '''
-      <div %(attrs)s>
-        %(icons)s
-      </div>
-      ''' % {'attrs': self.strAttr(pyClassNames=['CssDivNoBorder']), 'icons': "".join(icons)}
+      icons.append('<i class="%(icon)s %(cssIcon)s" style="font-size:%(size)s" title="%(tooltip)s" onclick="var data={event_val:\'%(icon)s\'};%(jsFnc)s"></i>' % rec)
+    return '<div %(attrs)s>%(icons)s</div>' % {'attrs': self.strAttr(pyClassNames=['CssDivNoBorder']), 'icons': "".join(icons)}
 
 
 class SignIn(Html.Html):
