@@ -18,6 +18,6 @@ form.add_text("RRRR", "text")
 rpt.ui.options_bar([
   {"icon": 'fab fa-airbnb', 'jsFnc': ''},
   {"icon": 'fas fa-thumbs-up', 'jsFnc': ''}
-], options={"draggable": True})
+]).draggable({"scroll": True})
 print(form.rows)
 rpt.outs.browser.codepen(path=test_statics.OUTPUT_PATHS)

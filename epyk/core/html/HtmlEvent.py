@@ -574,10 +574,21 @@ class OptionsBar(Html.Html):
   def __init__(self, report, recordset, width, height, size, color, border_color, options):
     super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
     self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px'})
+    self.border_color = border_color
     if options.get("draggable", False):
-      self.css({"border": "1px solid %s" % border_color})
-      report.js.addOnLoad(self.dom.jquery_ui.draggable().toStr())
+      self.draggable()
     self.size = size
+
+  def draggable(self, options=None):
+    """
+
+    :param options:
+
+    :return:
+    """
+    self.css({"border": "1px solid %s" % self.border_color})
+    self._report.js.addOnLoad(self.dom.jquery_ui.draggable(options).toStr())
+    return self
 
   def __str__(self):
     cssIcon = self._report.style.cssName('CssIcon')

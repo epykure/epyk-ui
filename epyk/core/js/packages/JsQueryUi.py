@@ -18,12 +18,15 @@ class JQueryUI(object):
     self.selector = self.src.jqId if hasattr(self.src, 'jqId') else None
     self._js = []
 
-  def draggable(self):
+  def draggable(self, options=None):
     """
 
     :return:
     """
-    self._js.append("draggable()")
+    if options is not None:
+      self._js.append("draggable(%s)" % JsUtils.jsConvertData(options, None))
+    else:
+      self._js.append("draggable()")
     return self
 
   def toStr(self):
