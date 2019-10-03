@@ -73,6 +73,20 @@ class JsRegisteredFunctions(object):
       self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % JsFncsUtils.JsMarkUp.value, 'pmt': fnc_pmts}
     return fnc_name
 
+  @property
+  def cssStyle(self):
+    """
+
+    :return:
+    """
+    self._js_src.setdefault('functions', {})["cssStyle"] = {
+      'content': '''
+        cssParams = [] ;
+        for(var i in params){cssParams.push( i +":"+ params[i])}
+        return cssParams.join(";")''',
+      'pmt': ["params"]}
+    return "cssStyle"
+
   def anonymous(self, jsFnc, pmts=None):
     """
     Create a anonymous / lambda function.
