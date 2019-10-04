@@ -48,7 +48,8 @@ class CssBodyLoading(CssStyle.CssCls):
     style.update({"color": self.getColor('greys', 9)})
 
 
-
-if __name__ == "__main__":
-  print(CssBody().getStyles())
+class CssNotSelect(CssStyle.CssCls):
+  attrs = {"-webkit-touch-callout": 'none', "user-select": 'none',
+           "-webkit-user-select": 'none', "-khtml-user-select": 'none',
+           "-moz-user-select": 'none', "-ms-user-select": 'none'}
 

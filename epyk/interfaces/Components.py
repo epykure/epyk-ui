@@ -268,7 +268,6 @@ class Components(object):
     :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlEvent.ContextMenu
-
     :return:
     """
     return self.register(html.HtmlEvent.ContextMenu(self.rptObj, records, width, height, visible, profile))
