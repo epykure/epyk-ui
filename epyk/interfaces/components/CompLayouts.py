@@ -292,11 +292,12 @@ class Layouts(object):
   def menu(self, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
     return self.context.register(html.HtmlContainer.IconsMenu(self.context.rptObj, width, height, htmlCode, helper, profile))
 
-  def multiFilter(self, items=None, title=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
+  def multiFilter(self, items=None, title=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
 
     :param items:
     :param title:
+    :param size:
     :param width:
     :param height:
     :param htmlCode:
@@ -306,7 +307,8 @@ class Layouts(object):
     :rtype: html.HtmlEvent.Filters
     :return:
     """
+    size = self._size(size)
     items = items or []
-    return self.context.register(html.HtmlEvent.Filters(self.context.rptObj, items, title, width, height, htmlCode, helper, profile))
+    return self.context.register(html.HtmlEvent.Filters(self.context.rptObj, items, title, size, width, height, htmlCode, helper, profile))
 
 

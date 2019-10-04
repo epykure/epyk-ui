@@ -630,9 +630,10 @@ class Filters(Html.Html):
   __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery', 'jquery-scrollbar']
   __pyStyle = ['CssDivFilter']
 
-  def __init__(self, report, items, title, width, height, htmlCode, helper, profile):
+  def __init__(self, report, items, title, size, width, height, htmlCode, helper, profile):
     super(Filters, self).__init__(report, items, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
     self.add_title(title)
+    self.css({"font-size": "%s%s" % (size[0], size[1]), "font-family": report.style.defaults.font.family})
     self._jsStyles = {'items': {'display': 'inline-block', 'padding': '1px 4px',
                                 'color': self.getColor('colors', -1), 'margin': '2px', 'border-radius': '5px', 'background-color': self.getColor('colors', 0)}}
     self.addClass('scroll_content')
