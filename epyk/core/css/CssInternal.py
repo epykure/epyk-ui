@@ -44,6 +44,13 @@ class DefinedDivStyles(object):
     self.defined.component.style.cssCls("CssDivBottomBorder")
     return self
 
+  def mouse_pointer(self):
+    """
+    CSS Class to set a pointer when mouse hover
+    """
+    self.defined.component.style.cssCls("CssDivCursor")
+    return self
+
 
 class DefinedStyles(object):
   def __init__(self, htmlObj):
