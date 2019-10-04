@@ -4,6 +4,7 @@ Wrapper to the Codemirror components
 
 import json
 
+from epyk.core.js import JsUtils
 from epyk.core.html import Html
 
 
@@ -281,41 +282,26 @@ class Tags(Html.Html):
   name, category, callFnc = 'Tags', None, 'tags'
   __pyStyle = ['CssDivNoBorder']
 
-  def __init__(self, report, vals, title, icon, width, height, htmlCode, profile):
+  def __init__(self, report, vals, title, icon, size, width, height, htmlCode, profile):
     super(Tags, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
                                code=htmlCode, profile=profile)
     self.title, self.icon = title, icon
-    self.css({"margin-top": "5px"})
+    self.css({"margin-top": "5px", "font-size": "%s%s" % (size[0], size[1]), "font-family": report.style.defaults.font.family})
 
   @property
   def val(self):
-    """
-    Property to get the jquery value of the HTML object in a python HTML object.
-    This method can be used in any jsFunction to get the value of a component in the browser.
-    This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
-    """
     return "%(breadCrumVar)s['params']['%(htmlId)s']" % {"htmlId": self.htmlId, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
 
   def jsEmpty(self):
     return "%(breadCrumVar)s['params']['%(htmlId)s'] = []; $('#%(htmlId)s_tags').text('')" % {"htmlId": self.htmlId, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
 
-  def jsAdd(self, jsData='data', jsDataKey=None, isPyData=False):
-    if isPyData:
-      jsData = json.dumps(jsData)
-    else:
-      if jsDataKey is not None:
-        jsData = "%s['%s']" % (jsData, jsDataKey)
-    self.addGlobalFnc('RemoveSelection(srcObj, htmlId)', ''' 
-       const index = %(breadCrumVar)s['params'][htmlId].indexOf(srcObj.parent().text());
-       %(breadCrumVar)s['params'][htmlId].splice(index, 1);
-       srcObj.parent().remove(); ''' % {'breadCrumVar': self._report.jsGlobal.breadCrumVar},
+  def jsAdd(self, jsData):
+    jsData = JsUtils.jsConvertData(jsData, None)
+    self.addGlobalFnc('RemoveSelection(srcObj, htmlId)', 'srcObj.parent().remove()',
        fncDsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
     return '''
-      if (%(breadCrumVar)s['params']['%(htmlId)s'] == undefined) {%(breadCrumVar)s['params']['%(htmlId)s'] = [] ;}
-      if (! %(breadCrumVar)s['params']['%(htmlId)s'].includes( %(jsData)s ) ) { %(breadCrumVar)s['params']['%(htmlId)s'].push(%(jsData)s);
-      $('#%(htmlId)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlId)s\\\")' style='margin-left:10px' class='far fa-times-circle'></i></span>");} ;
-      ''' % {"htmlId": self.htmlId, "jsData": jsData, 'breadCrumVar': self._report.jsGlobal.breadCrumVar,
-             'whiteColor': self.getColor('greys', 0), "baseColor": self.getColor("colors", 9)}
+      $('#%(htmlId)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlId)s\\\")' style='margin-left:10px' class='far fa-times-circle'></i></span>")
+      ''' % {"htmlId": self.htmlId, "jsData": jsData, 'whiteColor': self.getColor('greys', 0), "baseColor": self.getColor("colors", 9)}
 
   def __str__(self):
     return '''

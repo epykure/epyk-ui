@@ -228,19 +228,27 @@ class Components(object):
     """
     return self.register(html.HtmlTextComp.ContentsTable(self.rptObj, vals, width, height, profile))
 
-  def tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
+  def tags(self, vals=None, title="", icon="", size=(None, "px"), width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
-    
+
+    Example
+
+    Documentation
+
     :param vals: Optional.
     :param title: Optional.
     :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param size:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
+
+    :rtype: html.HtmlTextEditor.Tags
     :return: 
     """
-    return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile))
+    size = self._size(size)
+    return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, size, width, height, htmlCode, profile))
 
   def context_menu(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, profile=None):
     """
@@ -250,6 +258,8 @@ class Components(object):
     Example
     menu = rptObj.ui.context_menu([{"text": 'text', 'event': 'alert("ok")'}])
     rptObj.ui.title("Test").attach_menu(menu)
+
+    Documentation
 
     :param records: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -266,6 +276,11 @@ class Components(object):
   def options_bar(self, records=None, color=None, border_color=None, size=(None, "px"), width=(None, 'px'),
                   height=(None, 'px'), options=None):
     """
+    Add a bespoke options / actions bar with icons
+
+    Example
+
+    Documentation
 
     :param records:
     :param color:
