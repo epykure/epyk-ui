@@ -18,7 +18,7 @@ class Inputs(object):
   def __init__(self, context):
     self.context = context
 
-  def d_text(self, text, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_text(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
@@ -41,15 +41,17 @@ class Inputs(object):
     return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height,
                                                       htmlCode, filter, options, attrs, profile))
 
-  def d_search(self, text, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
-
+    One of the new types of inputs in HTML5 is search
+    
     Example
     rptObj.ui.inputs.d_search("")
 
     Documentation
     https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search
+    https://css-tricks.com/webkit-html5-search-inputs/
 
     :param text:
     :param placeholder:
@@ -71,7 +73,7 @@ class Inputs(object):
     return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode,
                                                       filter, options, attrs, profile))
 
-  def password(self, text, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     if attrs is None:
       attrs = {}
@@ -79,7 +81,7 @@ class Inputs(object):
     return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height,
                                                       htmlCode, filter, options, attrs, profile))
 
-  def d_time(self, text, placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
@@ -127,7 +129,7 @@ class Inputs(object):
     return self.context.register(html.HtmlInput.InputDate(self.context.rptObj, text, placeholder, width, height,
                                                       htmlCode, filter, options, attrs, profile))
 
-  def d_int(self, value, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     if attrs is None:
       attrs = {}
@@ -151,7 +153,7 @@ class Inputs(object):
     """
     return self.context.register(html.HtmlInput.Output(self.context.rptObj, value))
 
-  def textarea(self, text, width=(100, '%'), rows=5, placeholder=None, background_color=None, htmlCode=None,
+  def textarea(self, text="", width=(100, '%'), rows=5, placeholder=None, background_color=None, htmlCode=None,
                options=None, profile=None):
     """
 
@@ -198,9 +200,6 @@ class Inputs(object):
     :return:
     """
     return self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
-
-
-
 
   def editor(self, text="", title="", size=(None, 'px'), language='python', width=(100, "%"), height=(None, "px"), isEditable=True,
              htmlCode=None, options=None, profile=None):
