@@ -45,7 +45,7 @@ class Inputs(object):
             options=None, attrs=None, profile=None):
     """
     One of the new types of inputs in HTML5 is search
-    
+
     Example
     rptObj.ui.inputs.d_search("")
 
