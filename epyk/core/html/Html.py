@@ -13,6 +13,7 @@ import collections
 import functools
 import logging
 
+from epyk.core.css import CssInternal
 
 from epyk.core.js import Js
 from epyk.core.js import JsEncoder
@@ -85,6 +86,7 @@ class Html(object):
   class _CssStyle(object):
     def __init__(self, htmlObj):
       self.htmlObj = htmlObj
+      self._def_styles = None
 
     def cssClear(self):
       """
@@ -168,6 +170,17 @@ class Html(object):
             v = "%spx" % v
           self.htmlObj.attr.setdefault('css', {})[k] = v
       return self
+
+    @property
+    def defined(self):
+      """
+      Pre defined CSS classes within the Framework.
+
+      The CSS classes are grouped per components
+      """
+      if self._def_styles is None:
+        self._def_styles = CssInternal.DefinedStyles(self.htmlObj)
+      return self._def_styles
 
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):

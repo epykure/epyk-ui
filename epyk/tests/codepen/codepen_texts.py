@@ -9,9 +9,10 @@ text = rptObj.ui.texts.text("Test text").css({"color": 'red'})
 # Add a number component
 rptObj.ui.texts.number(188448228, label="test")
 # Add a table to the page
-title = rptObj.ui.texts.title("title").css({"color": 'green'})
-# Add a predefined class
-title.style.cssCls("CssNotSelect")
+title = rptObj.ui.texts.title("title")#.css({"color": 'green'})
+# Add a predefined CSS class
+title.style.defined.commons.not_selectable()
+
 
 # Add a bootstrap highlight text component
 rptObj.ui.texts.highlights("This is a news", title="Important news")

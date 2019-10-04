@@ -11,3 +11,31 @@ This is a simple and quick hook to apply override and make the environment very 
 import epyk.core.css.themes as themes
 import epyk.core.css.styles as css
 
+
+class DefinedCommonStyles(object):
+
+  def __init__(self, defined_styles):
+    self.defined = defined_styles
+
+  def not_selectable(self):
+    """
+    CSS Class to set the component not selectable
+    """
+    self.defined.component.style.cssCls("CssNotSelect")
+    return self
+
+
+class DefinedStyles(object):
+  def __init__(self, htmlObj):
+    self.component = htmlObj
+    self.__common = None
+
+  @property
+  def commons(self):
+    """
+    All the defined commons styles
+    """
+    if self.__common is None:
+      self.__common = DefinedCommonStyles(self)
+    return self.__common
+
