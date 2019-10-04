@@ -242,7 +242,7 @@ class Components(object):
     """
     return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile))
 
-  def context_menu(self, recordSet=None, width=(None, '%'), height=(None, 'px'), visible=False, profile=None):
+  def context_menu(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, profile=None):
     """
     Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
     This component is generic is need to be added to a component to work
@@ -251,7 +251,7 @@ class Components(object):
     menu = rptObj.ui.context_menu([{"text": 'text', 'event': 'alert("ok")'}])
     rptObj.ui.title("Test").attach_menu(menu)
 
-    :param recordSet: Optional.
+    :param records: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param visible: Optional.
@@ -261,13 +261,13 @@ class Components(object):
 
     :return:
     """
-    return self.register(html.HtmlEvent.ContextMenu(self.rptObj, recordSet, width, height, visible, profile))
+    return self.register(html.HtmlEvent.ContextMenu(self.rptObj, records, width, height, visible, profile))
 
-  def options_bar(self, recordSet=None, color=None, border_color=None, size=(None, "px"), width=(None, 'px'),
+  def options_bar(self, records=None, color=None, border_color=None, size=(None, "px"), width=(None, 'px'),
                   height=(None, 'px'), options=None):
     """
 
-    :param recordSet:
+    :param records:
     :param color:
     :param border_color:
     :param size:
@@ -278,14 +278,14 @@ class Components(object):
     :rtype: html.HtmlEvent.OptionsBar
     :return:
     """
-    recordSet = recordSet or []
+    records = records or []
     options = options or {}
     border_color = border_color or self.rptObj.getColor("colors", 1)
     color = color or self.rptObj.getColor("greys", -1)
     size = self._size(size)
     if width[0] is None:
-      width = (len(recordSet) * 35, width[1])
-    return self.register(html.HtmlEvent.OptionsBar(self.rptObj, recordSet, width, height, size, color, border_color, options))
+      width = (len(records) * 35, width[1])
+    return self.register(html.HtmlEvent.OptionsBar(self.rptObj, records, width, height, size, color, border_color, options))
 
 
   #--------------------------------------------------------------------------------------------------------------------
