@@ -12,7 +12,7 @@ rptObj.ui.texts.number(188448228, label="test")
 title = rptObj.ui.texts.title("title")#.css({"color": 'green'})
 # Add a predefined CSS class
 title.style.defined.commons.not_selectable()
-
+title.style.defined.div.mouse_hover_border_bottom()
 
 # Add a bootstrap highlight text component
 rptObj.ui.texts.highlights("This is a news", title="Important news")
