@@ -52,4 +52,3 @@ class CssNotSelect(CssStyle.CssCls):
   attrs = {"-webkit-touch-callout": 'none', "user-select": 'none',
            "-webkit-user-select": 'none', "-khtml-user-select": 'none',
            "-moz-user-select": 'none', "-ms-user-select": 'none'}
-
