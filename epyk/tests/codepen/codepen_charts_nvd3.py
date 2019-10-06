@@ -12,6 +12,7 @@ data = [
 ]
 
 bar = rptObj.ui.charts.nvd3.pie(data, seriesNames=["y"], xAxis="x")
+bar.chart.version("444444")
 bar.chart.title("Olivier")
 # bar.style.defined.chart.container_border().remove()
 # bar.chart.width(30)

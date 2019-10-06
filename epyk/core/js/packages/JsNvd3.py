@@ -93,6 +93,7 @@ class JsNvd3Utils(object):
 
 class JsNvd3(object):
   chartFnc = "lineChart"
+  lib_alias = 'nvd3'
 
   class __internal(object):
     # By default it will attach eveything to the body
@@ -102,9 +103,21 @@ class JsNvd3(object):
     self.src = src if src is not None else self.__internal()
     self._selector = "nv.models.%s()" % self.chartFnc
     self.varName, self.setVar = varName, setVar
-    self.src.jsImports.add('nvd3')
-    self.src.cssImport.add('nvd3')
+    self.src.jsImports.add(self.lib_alias)
+    self.src.cssImport.add(self.lib_alias)
     self._js, self._xaxis, self._yaxis = [], None, None
+
+  def version(self, ver):
+    """
+    Change the package version number
+
+    Example
+    bar.chart.version("1.11.0")
+
+    :param ver: String. The package versions example 1.11.0
+    """
+    self.src._props.setdefault("packages", {})[self.lib_alias] = ver
+    return self
 
   @property
   def var(self):

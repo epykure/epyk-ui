@@ -763,6 +763,9 @@ class ImportManager(object):
       # Force the version of some external Javascript or CSS packages
       packages = importlib.import_module("%s.__init__" % self._report.run.report_name)
       ovr_version = getattr(packages, 'MODULES', {})
+    if report is not None:
+      # Apply the different reports overrides on the packages versions
+      ovr_version.update(self._report._props.get('packages', {}))
     self.jsImports, self.cssImports, self.moduleConfigs, self.reqVersion = {}, {}, {}, {}
     for folder, import_cict, import_type in [('js', self.jsImports, JS_IMPORTS), ('css', self.cssImports, CSS_IMPORTS)]:
       for alias, definition in import_type.items():
