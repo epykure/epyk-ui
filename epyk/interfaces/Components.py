@@ -301,6 +301,26 @@ class Components(object):
       width = (len(records) * 35, width[1])
     return self.register(html.HtmlEvent.OptionsBar(self.rptObj, records, width, height, size, color, border_color, options))
 
+  def side_bar(self, links=None, color=None, size=(None, "px"), servers=None, position="right"):
+    """
+    Add a side Bar to the report.
+
+    Documentation
+    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav
+
+    :param links:
+    :param color:
+    :param size:
+    :param servers:
+    :param position:
+
+    :return:
+    """
+    size = self._size(size)
+    bar = html.HtmlNavBar.HtmlSideBar(self.rptObj, links or [], color, size, servers)
+    self.register(bar)
+    return bar
+
 
   #--------------------------------------------------------------------------------------------------------------------
   #

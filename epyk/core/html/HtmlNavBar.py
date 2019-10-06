@@ -312,16 +312,15 @@ class HtmlParamsBar(Html.Html):
 
 
 class HtmlSideBar(Html.Html):
-  references = {'W3C Definition': 'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav'}
   name, category, callFnc = 'Side bar', 'Others', 'sidebar'
   __pyStyle = ['CssSideBarFixed']
   __reqCss, __reqJs = ['bootstrap', 'font-awesome', 'jquery-scrollbar'], ['bootstrap', 'font-awesome', 'jquery-scrollbar']
   onMouseOverColor = 'black'
 
-  def __init__(self, report, links, color, size, dataSrc, servers):
+  def __init__(self, report, links, color, size, servers):
     super(HtmlSideBar, self).__init__(report, links)
     self.color = self.getColor('greys', 0) if color is None else color
-    self.size, self.dataSrc, self.servers = "20px" if size is None else "%spx" % size, dataSrc, servers
+    self.size, self.servers = "%s%s" % (size[0], size[1]), servers
     self.css({'color': self.color, 'font-size': self.size, 'z-index': 5, 'margin': 0})
     self._actions = []
 
@@ -349,10 +348,7 @@ class HtmlSideBar(Html.Html):
           if (data.doc) { icons = icons + '<i onclick=\\'GoToReport("%(urlReport)s/dsc/'+ rec.name +'/'+ data.script +'", true, false)\\' style="display:inline-block;margin-right:10px" title="Documentation" class="far fa-file-alt"></i>' ; }
           if (data.inFavorite) {sub.append('<li onclick="event.stopPropagation();"><a href="#" title="'+ data.script + '" style="display:inline-block;margin-right:10px;color:'+ data.color + '" onclick="BreadCrumbClick(this, \\''+ data.url.replace(/\\\\/g, '\\\\\\\\')  +'\\')">'+ data.name +'</a></li>') ; } 
           else { sub.append('<li style="white-space:nowrap; overflow-x: hidden;margin-right:10px" onclick="event.stopPropagation();"><a href="#" title="'+ data.script + '" style="display:inline-block;margin-right:10px;color:'+ data.color + '" onclick="BreadCrumbClick(this, \\''+ data.url.replace(/\\\\/g, '\\\\\\\\')  +'\\')">'+ data.name +'</a><i style="color:%(darkBlue)s;cursor:pointer;font-size:14px;margin-right:10px" onclick="Favorites(this, \\'' + rec.name + '\\', \\'' + data.script + '\\', \\'div\\', true)" title="Add to favorites" class="far fa-heart"></i></li>') ; }});
-
-        /* sub.append('<li><i class="far fa-plus-square" style="margin-right:5px"></i>Add new script</li>') ; */
         li.append(sub); group.append(li); });
-      /* group.append('<li onclick="GetFolder(this);"></li>Add new env'); */
 
       $('#side_bar_explorer').append(group);
       $('#side_bar_explorer').css( {'height': parseInt($('#side_bar_envs').css('height'),10) - 250 + 'px'} ) ;
@@ -373,7 +369,7 @@ class HtmlSideBar(Html.Html):
         $('#side_bar_favorite').append(groupFav)}
       $("#nav_link_title").tooltip()
       ''' % {'reportName': self._report.run.report_name, 'hoverColor': self.onMouseOverColor,
-             'urlReport': self._report._urlsApp['epyk-report'],
+             'urlReport': "",
              'cssLinks': self._report.style.getClsTag(['CssSideBarLinks']), 'darkBlue': self.getColor('colors', 9)})
 
   def addAction(self, icon, url, tooltip='', color=None, isPyData=True):
@@ -394,38 +390,6 @@ class HtmlSideBar(Html.Html):
     return self
 
   def __str__(self):
-    if self.dataSrc is not None:
-      if self.dataSrc['type'] == 'url':
-        self.addGlobalFnc("UpdateSideBar(evt)", '''
-           $(evt).addClass('fa-spin'); $.getJSON( "%(url)s", function( data ) { %(jsVal)s = data ; %(pyCls)s(%(jqId)s, %(jsVal)s) ; $(evt).removeClass('fa-spin'); });
-           ''' % {'pyCls': self.__class__.__name__, 'jsVal': self.jsVal, 'jqId': self.jqId, 'url': self.dataSrc['url']})
-    self.addGlobalFnc("BreadCrumbClick(evt, url)", '''
-          $('#popup_loading').find("div").html("Loading " + url + "...") ;
-          $('#popup_loading_back').show(); $('#popup_loading').show();
-          var params = [] ;
-          for(var key in %(breadCrumVar)s['params']) { params.push(key + "=" + %(breadCrumVar)s['params'][key]) ;  }
-          if (params.length > 0 && window.location.href.startsWith('%(rootUrl)s/%(reportUrl)s')) { breadCrumResult = url + "?" + params.join("&")  ;} else { breadCrumResult = url; };
-          window.location.href = "/" + breadCrumResult;''' % {'breadCrumVar': self._report.jsGlobal.breadCrumVar,
-                                                              'reportUrl': self._report._urlsApp['epyk-report'],
-                                                              'rootUrl': self._report.run.url_root})
-
-    self.addGlobalFnc("GetFolder(evt)", '''
-          if ($(evt).find('#chevron').hasClass('fas fa-folder-open') ) { $(evt).find('#chevron').attr('class', 'fas fa-folder') ; } 
-          else { $(evt).find('#chevron').attr('class', 'fas fa-folder-open') ; }; 
-          $(evt).find('ul').toggle(); 
-          if ( window.sessionStorage.getItem('SIDEBAR_STATE') == null) { window.sessionStorage.setItem('SIDEBAR_STATE', JSON.stringify({})) ; }
-          var sidebarState = JSON.parse(window.sessionStorage.getItem('SIDEBAR_STATE'));
-          sidebarState[$(evt).find('ul').attr('id')] = $(evt).find('ul').css('display');
-          window.sessionStorage.setItem('SIDEBAR_STATE', JSON.stringify(sidebarState))''')
-
-    self.addGlobalFnc("Favorites(src, reportName, scriptName, type, flag)",
-                      '''if (type == 'div' && !flag) { $(src).parent().remove() }; %s ;
-                      ''' % self._report.jsPost(
-                        '"%s/switch_favorites/" + reportName + "/" + scriptName' % self._report._urlsApp['epyk-report'],
-                        None, 'if (data) { $(src).addClass("fas")  } else { $(src).addClass("far")} ', isDynUrl=True))
-
-    self.addGlobalFnc("RunTask(urlParam)", self._report.jsPost("urlParam", None, '', isDynUrl=True))
-
     styleBarBulble, StyleBarMenu = "CssSideBarBubble", "CssSideBarMenu"
     # Add some specific styles for the sidebar items
     self._report.style.cssCls(styleBarBulble)
@@ -471,9 +435,9 @@ class HtmlSideBar(Html.Html):
 
         </div>
       </div>''' % {"strAttr": self.strAttr(pyClassNames=['CssSideBarFixed']),
-                   'report_name': self._report.run.report_name, 'urlReport': self._report._urlsApp['epyk-report'],
+                   'report_name': self._report.run.report_name, 'urlReport': "",
                    'cssDef': self._report.style.cssName(styleBarBulble),
-                   'cssSideBarMenu': self._report.style.cssName(cssSideBarMenu),
+                   'cssSideBarMenu': "",
                    'script_name': self._report.run.script_name,
-                   'urlAdmin': self._report._urlsApp['epyk-admin'], 'lightBlue': self.getColor('colors', 1),
+                   'urlAdmin': "", 'lightBlue': self.getColor('colors', 1),
                    "actions": "".join(self._actions)}
