@@ -106,10 +106,16 @@ class Html(object):
       Function to remove a predefined class attached to an HTML component.
       This will not remove the CSS class from the factory. It will only remove the use in this object.
 
+      TODO: migrate everything to only use self.htmlObj.attr['class']
+
       :param cssNname: The CSS classname (or class reference)
       :return: The Python htmlObj
       """
-      self.htmlObj.pyStyle.remove(cssNname)
+      pyCssName = self.htmlObj._report.style.cssName(cssNname)
+      if pyCssName in self.htmlObj.attr['class']:
+        self.htmlObj.attr['class'].remove(pyCssName)
+      if cssNname in self.htmlObj.pyStyle:
+        self.htmlObj.pyStyle.remove(cssNname)
       return self.htmlObj
 
     def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True):

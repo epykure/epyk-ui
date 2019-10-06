@@ -25,6 +25,29 @@ class DefinedCommonStyles(object):
     return self
 
 
+class DefinedChartStyles(object):
+  def __init__(self, defined_styles):
+    self.defined = defined_styles
+    self._style = None
+
+  def container_border(self):
+    """
+
+    """
+    self.defined.component.style.cssCls("CssDivChart")
+    self._style = "CssDivChart"
+    return self
+
+  def remove(self):
+    """
+    Remove the current CSS class style
+
+    :return:
+    """
+    self.defined.component.style.cssDelCls(self._style)
+    return self
+
+
 class DefinedDivStyles(object):
 
   def __init__(self, defined_styles):
@@ -55,7 +78,7 @@ class DefinedDivStyles(object):
 class DefinedStyles(object):
   def __init__(self, htmlObj):
     self.component = htmlObj
-    self.__common, self.__div = None, None
+    self.__common, self.__div, self.__chart = None, None, None
 
   @property
   def commons(self):
@@ -74,3 +97,12 @@ class DefinedStyles(object):
     if self.__div is None:
       self.__div = DefinedDivStyles(self)
     return self.__div
+
+  @property
+  def chart(self):
+    """
+    All the defined Chart styles
+    """
+    if self.__chart is None:
+      self.__chart = DefinedChartStyles(self)
+    return self.__chart

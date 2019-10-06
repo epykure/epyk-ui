@@ -250,6 +250,7 @@ class Graphs(object):
     Interface to the Javascript NVD3 library
 
     Documentation
+    http://nvd3.org/
 
     :return: A Python NVD3 object
     """

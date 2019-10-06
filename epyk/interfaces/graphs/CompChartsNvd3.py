@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+"""
 
-import sys
+"""
 
 from epyk.core.html import graph
 
@@ -11,33 +10,70 @@ class Nvd3(object):
     self.parent = context
     self.chartFamily = "NVD3"
 
-  def line(self, aresDf=None, seriesNames=None, xAxis=None, otherDims=None, dataFncs=None, title='',
-           globalFilter=None, filterSensitive=True, profile=None, dataSrc=None, xAxisOrder=None, chartOptions=None,
-           width=100, widthUnit="%", height=330, heightUnit="px", htmlCode=None):
+  def line(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
+           xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    :param aresDf:
+    Documentation
+    http://nvd3.org/examples/line.html
+
+    :param data:
     :param seriesNames:
     :param xAxis:
     :param otherDims:
-    :param dataFncs:
     :param title:
-    :param globalFilter:
-    :param filterSensitive:
     :param profile:
-    :param dataSrc:
     :param xAxisOrder:
-    :param chartOptions:
     :param width:
-    :param widthUnit:
     :param height:
-    :param heightUnit:
     :param htmlCode:
-    :return:
-    :rtype: graph.GraphNVD3.Chart
     """
-    return self.parent.context.chart(chartType=sys._getframe().f_code.co_name, aresDf=aresDf, seriesNames=seriesNames,
-                                     xAxis=xAxis, otherDims=otherDims, dataFncs=dataFncs, title=title, chartFamily=self.chartFamily,
-                                     globalFilter=globalFilter, filterSensitive=filterSensitive, profile=profile, dataSrc=dataSrc,
-                                     xAxisOrder=xAxisOrder, chartOptions=chartOptions, width=width, widthUnit=widthUnit,
-                                     height=height, heightUnit=heightUnit, htmlCode=htmlCode)
+    line_chart = graph.GraphNVD3.ChartBar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(line_chart)
+    return line_chart
+
+  def bar(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
+          xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Documentation
+    http://nvd3.org/examples/discreteBar.html
+
+    :param data:
+    :param seriesNames:
+    :param xAxis:
+    :param otherDims:
+    :param title:
+    :param profile:
+    :param xAxisOrder:
+    :param width:
+    :param height:
+    :param htmlCode:
+
+    """
+    bar_chart = graph.GraphNVD3.ChartBar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(bar_chart)
+    return bar_chart
+
+  def pie(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
+          xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Documentation
+    http://nvd3.org/examples/pie.html
+
+    :param data:
+    :param seriesNames:
+    :param xAxis:
+    :param otherDims:
+    :param title:
+    :param profile:
+    :param xAxisOrder:
+    :param width:
+    :param height:
+    :param htmlCode:
+
+    """
+    pie_chart = graph.GraphNVD3.ChartPie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(pie_chart)
+    return pie_chart
