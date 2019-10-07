@@ -4,6 +4,8 @@ Wrapper to the Viz package
 https://visjs.org/
 """
 
+from epyk.core.js import JsUtils
+from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsPackage
 
 
@@ -28,31 +30,104 @@ class VisDataSet(JsPackage):
 
   @property
   def length(self):
-    pass
+    """
+    The number of items in the DataSet.
 
-  def add(self):
-    pass
+    :return:
+    """
+    return JsObjects.JsNumber.JsNumber("%s.length" % self.toStr())
 
-  def clear(self):
-    pass
+  def add(self, jsData):
+    """
+    Add one or multiple items to the DataSet. data can be a single item or an array with items.
 
-  def distinct(self):
-    pass
+    Documentation
+    https://visjs.github.io/vis-data/data/dataset.html
+
+    :param jsData: data can be a single item or an array with items.
+
+    :return: The function returns an array with the ids of the added items. See section Data Manipulation.
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsArray.JsArray("%s.add(%s)" % (self.toStr(), jsData))
+
+  def clear(self, senderId=None):
+    """
+    Clear all data from the DataSet
+
+    Documentation
+    https://visjs.github.io/vis-data/data/dataset.html
+
+    :return: The function returns an array with the ids of the removed items.
+    """
+    return JsObjects.JsArray.JsArray("%s.clear()" % (self.toStr()))
+
+  def distinct(self, field):
+    """
+    Find all distinct values of a specified field
+
+    Documentation
+    https://visjs.github.io/vis-data/data/dataset.html
+
+    :param field:
+
+    :return: Returns an unordered array containing all distinct values. If data items do not contain the specified field are ignored.
+    """
+    field = JsUtils.jsConvertData(field, None)
+    return JsObjects.JsArray.JsArray("%s.distinct(%s)" % (self.toStr(), field))
 
   def flush(self):
-    pass
+    """
+    Flush queued changes. Only available when the DataSet is configured with the option queue, see section Construction.
 
-  def forEach(self):
-    pass
+    Documentation
+    https://visjs.github.io/vis-data/data/dataset.html
+
+    :return:
+    """
+    return JsObjects.JsObject.JsObject("%s.flush()" % self.toStr())
+
+  def forEach(self, callback, options=None):
+    """
+    Execute a callback function for every item in the dataset.
+
+    :param callback:
+    :param options:
+
+    :return:
+    """
+    return JsObjects.JsObject.JsObject("%s.forEach()" % self.toStr())
 
   def map(self):
     pass
 
   def max(self, field):
-    pass
+    """
+    Find the item with maximum value of specified field
+
+    Documentation
+    https://visjs.github.io/vis-data/data/dataset.html
+
+    :param field:
+
+    :return: Returns null if no item is found.
+    """
+    field = JsUtils.jsConvertData(field, None)
+    return JsObjects.JsObject.JsObject("%s.max(%s)" % (self.toStr(), field))
 
   def min(self, field):
-    pass
+    """
+    Find the item with minimum value of specified field
+
+    Documentation
+    https://visjs.github.io/vis-data/data/dataset.html
+
+    :param field:
+
+    :return: Returns null if no item is found.
+    """
+    field = JsUtils.jsConvertData(field, None)
+    return JsObjects.JsObject.JsObject("%s.min(%s)" % (self.toStr(), field))
 
   def update(self):
     pass
@@ -72,8 +147,24 @@ class VisDataSet(JsPackage):
   def get(self):
     pass
 
-  def getIds(self):
-    pass
+  def getIds(self, options=None):
+    """
+    Get ids of all items or of a filtered set of items
+
+    Available options are described in section Data Selection, except that options fields and type are not applicable in case of getIds
+
+    Documentation
+    https://visjs.github.io/vis-data/data/dataset.html
+
+    :param options:
+
+    :return:
+    """
+    if options is not None:
+      options = JsUtils.jsConvertData(options, None)
+      return JsObjects.JsArray.JsArray("%s.getIds(%s)" % (self.toStr(), options))
+
+    return JsObjects.JsArray.JsArray("%s.getIds()" % self.toStr())
 
 
 class VisNetwork(JsPackage):
