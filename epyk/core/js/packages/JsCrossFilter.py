@@ -72,22 +72,6 @@ class CrossFilter(JsPackage):
       self.setVar = False
     return dimOjb
 
-  def toStr(self):
-    """
-    Javascript representation
-
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
-
 
 class Bissect(object):
   def __init__(self, array, value, lo, hi):
