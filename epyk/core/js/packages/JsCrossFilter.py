@@ -9,19 +9,11 @@ https://jsfiddle.net/LouisNicolle/k4h8rpmb/2/
 """
 
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
 
 
-class CrossFilter(object):
-  def __init__(self, records, varName):
-    """
-
-    :param records:
-    """
-    self.__is_set = False
-    self._data, self._selector = records, varName
-    self._js = []
-
+class CrossFilter(JsPackage):
   @staticmethod
   def permute(array, index):
     """
@@ -75,9 +67,9 @@ class CrossFilter(object):
     :return:
     """
     dimOjb = Dimension("%s.dimension(function(d) { return d.%s; })" % (self.toStr(), column))
-    if not self.__is_set:
+    if self.setVar:
       dimOjb._set_var = "var % s = crossfilter(%s)" % (self._selector, self._data)
-      self.__is_set = True
+      self.setVar = False
     return dimOjb
 
   def toStr(self):
