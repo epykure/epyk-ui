@@ -118,6 +118,23 @@ class Html(object):
         self.htmlObj.pyStyle.remove(cssNname)
       return self.htmlObj
 
+    def addCls(self, cssName):
+      """
+      Add a class based on its name.
+
+      Example
+      cls_name = rptObj.style.anonymous_cls({"color": "red"})
+      rptObj.ui.text("test").style.addCls(cls_name)
+
+      :param cssName: The CSS Class name as a string
+
+      :return:
+      """
+      pyCssName = self.htmlObj._report.style.get(cssName)
+      self.htmlObj._report.style.cssStyles[cssName] = pyCssName
+      self.htmlObj.attr['class'].add(cssName)
+      return self
+
     def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True):
       """
       CSS Function

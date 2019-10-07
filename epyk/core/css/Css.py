@@ -39,7 +39,7 @@ class Css(object):
     if not 'css' in self.rptObj._props:
       self.rptObj._props['css'] = {}
     self.cssStyles, self._cssOvr, self._cssEventOvr, self.cssAttrs, self._cssCls = {}, {}, {}, {}, []
-    self._colors = None
+    self._colors, self.__anonymous_id = None, 0
 
   @property
   def globals(self):
@@ -122,6 +122,32 @@ class Css(object):
     :return:
     """
     return CssInternal
+
+  def anonymous_cls(self, attrs=None, event_attrs=None):
+    """
+    Create on the fly an anonymous CSS Class.
+    This class needs then to be used to be added to the page.
+    To add a class in an HTML object the function addCls() can be used
+
+    Example
+    cls_name = rptObj.style.anonymous_cls({"color": "red"})
+
+    :param attrs: The CSS Attributes functions
+    :param event_attrs: The special CSS event attributes
+
+    :return: The anonymous class name as a String
+    """
+    cls_name = "css_anonymous_%s" % self.__anonymous_id
+    cls_virtual = type(cls_name, (CssStyle.CssCls,), {})()
+    cls_virtual.style.update(attrs)
+    cls_virtual.name = cls_name
+    if event_attrs is not None:
+      for k, v in event_attrs.items():
+        cls_virtual.eventsStyles[k] = event_attrs[k]
+    #self.cssStyles[cls_name] = cls_virtual
+    CssStyle.setCssObj(cls_name, cls_virtual, self.rptObj, theme=self.colors._themeObj.selected)
+    self.__anonymous_id += 1
+    return cls_name
 
   def cssCls(self, clsName, attrs=None, event_attrs=None, global_scope=False):
     """

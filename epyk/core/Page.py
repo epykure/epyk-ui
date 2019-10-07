@@ -264,13 +264,6 @@ class Report(object):
                     data=urlencode({'data': json.dumps(data)}).encode('utf-8')))
     response.read()
 
-  def cssCls(self, clsName, cssDict):
-    """
-    Create on the fly a CSS Class from a Python dictionary. The reference of the CSS Class is returned by this function.
-    It is this reference that you should add to your HTML components
-    """
-    return self.style.addCls(clsName, cssDict)
-
   def getCss(self, clsName, ovrData=None):
     """
     Retrieve the CSS Class definition from the Python framework.
