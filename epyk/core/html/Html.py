@@ -88,6 +88,18 @@ class Html(object):
       self.htmlObj = htmlObj
       self._def_styles = None
 
+    @property
+    def list(self):
+      """
+      Return a copy of the CSS class defined for a given component.
+      This will list all the classes which will be attached to the HTML container
+
+      The internal class name is defined using the dynamic prefix py_ in front of the classname
+
+      :return: A list of CSS class Name
+      """
+      return list(self.htmlObj.attr['class'])
+
     def cssClear(self):
       """
       CSS Function
