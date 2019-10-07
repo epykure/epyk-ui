@@ -1,10 +1,13 @@
 """
-Commmon module for all the static data used in the different tests
+Common module for all the static data used in the different tests
 """
-
+import os
 import webbrowser
 
-OUTPUT_PATHS = r"..\outs"
+# Deduce the \outs folder based on this module path
+# the \outs folder is excluded from Git
+TESTS_PATH = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_PATHS = r"%s\outs" % TESTS_PATH
 
 #
 URL_w3c = r"https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic"
