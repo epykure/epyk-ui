@@ -5,6 +5,7 @@ https://github.com/square/crossfilter/wiki/API-Reference
 
 Example
 https://jsfiddle.net/LouisNicolle/k4h8rpmb/2/
+https://gist.github.com/phoebebright/3822981
 
 """
 
@@ -14,6 +15,11 @@ from epyk.core.js.primitives import JsObjects
 
 
 class CrossFilter(JsPackage):
+  lib_alias = "crossfilter"
+
+  def __init__(self, src, varName, data, setVar=True):
+    super(CrossFilter, self).__init__(src=src, varName=varName, selector="crossfilter(%s)" % data)
+
   @staticmethod
   def permute(array, index):
     """
@@ -27,7 +33,7 @@ class CrossFilter(JsPackage):
     :return:
     """
     array = JsUtils.jsConvertData(array, None)
-    return JsObjects.JsArray.JsArray("crossfilter.permute(%s, %s)" % (array, index))
+    return JsObjects.JsArray.JsArray("permute(%s, %s)" % (array, index))
 
   def add(self, records):
     """
@@ -63,14 +69,12 @@ class CrossFilter(JsPackage):
     """
     Constructs a new dimension using the specified value accessor function
 
-    :param value:
+    :param column: The column name on which the dimension will be defined
+
     :return:
     """
-    dimOjb = Dimension("%s.dimension(function(d) { return d.%s; })" % (self.toStr(), column))
-    if self.setVar:
-      dimOjb._set_var = "var % s = crossfilter(%s)" % (self._selector, self._data)
-      self.setVar = False
-    return dimOjb
+    self._js.append("dimension(function(d) { return d.%s })" % column)
+    return Dimension(varName=self.toStr(), setVar=False)
 
 
 class Bissect(object):
@@ -190,11 +194,7 @@ class Quicksort(object):
     """
 
 
-class Dimension(object):
-  def __init__(self, selector):
-    self._selector = selector
-    self._js, self._set_var = [], ""
-
+class Dimension(JsPackage):
   def filter(self, jsData):
     """
     Filters records such that this dimension's value matches value, and returns this dimension.
@@ -202,7 +202,8 @@ class Dimension(object):
     :return:
     """
     jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObject.JsObject("%s.filter(%s)" % (self.toStr(), jsData))
+    self._js.append("filter(%s)" % jsData)
+    return self
 
   def filterExact(value):
     """
@@ -212,13 +213,17 @@ class Dimension(object):
     :return:
     """
 
-  def filterRange(range):
+  def filterRange(self, min, max):
     """
     Filters records such that this dimension's value is greater than or equal to range[0], and less than range[1], returning this dimension.
 
-    :param range:
+    :param min:
+    :param max:
+
     :return:
     """
+    self._js.append("filterRange([%s, %s])" % (min, max))
+    return self
 
   def filterFunction(function):
     """
@@ -233,6 +238,8 @@ class Dimension(object):
 
     :return:
     """
+    self._js.append("filterAll()")
+    return self
 
   def top(self, k):
     """
@@ -243,7 +250,9 @@ class Dimension(object):
 
     :return: An array with the data
     """
-    return JsObjects.JsArray.JsArray("%s.top(%s)" % (self.toStr(), k))
+    k = JsUtils.jsConvertData(k, None)
+    self._js.append("top(%s)" % k)
+    return self
 
   def bottom(self, k):
     """
@@ -273,22 +282,6 @@ class Dimension(object):
     groupObj = Group("%s.group(%s)" % (self.toStr(), jsFnc))
     groupObj._set_var = self._set_var
     return groupObj
-
-  def toStr(self):
-    """
-    Javascript representation
-
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
 
 
 class Group(object):

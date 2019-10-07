@@ -333,7 +333,7 @@ class JsBase(object):
     # shortcut functions
     self.alert = self.window.alert
     self.log = self.console.log
-    self._breadcrumb = None
+    self._breadcrumb, self.__data = None, None
 
   @property
   def objects(self):
@@ -731,7 +731,9 @@ class JsBase(object):
 
   @property
   def data(self):
-    return JsData
+    if self.__data is None:
+      self.__data = JsData.JsData(self._src)
+    return self.__data
 
   def activeElement(self):
     """

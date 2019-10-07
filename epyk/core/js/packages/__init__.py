@@ -14,10 +14,11 @@ class JsPackage(object):
     # By default it will attach eveything to the body
     jqId, jsImports, cssImport = '', set([]), set([])
 
-  def __init__(self, src=None, varName=None, setVar=True):
+  def __init__(self, src=None, varName=None, selector=None, data=None, setVar=True):
     self.src = src if src is not None else self.__internal()
-    self._selector = self.src.jqId
+    self._selector = selector if selector is not None else self.src.jqId
     self.varName, self.setVar = varName, setVar
+    self._data = data
     self._js = []
 
   def version(self, ver):
@@ -62,7 +63,10 @@ class JsPackage(object):
 
     strData = ".".join(self._js)
     if self.setVar:
-      strData = "var %s = %s.%s" % (self.varName, self._selector, strData)
+      if strData:
+        strData = "var %s = %s.%s" % (self.varName, self._selector, strData)
+      else:
+        strData = "var %s = %s" % (self.varName, self._selector)
       self.setVar = False
     else:
       strData = "%s.%s" % (self.varName, strData)
