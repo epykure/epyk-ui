@@ -14,6 +14,8 @@ jsObj = Js.JsBase()
 # Write the results to a Javascript file with a Launcher
 f = JsUtils.JsFile("DataExamples", path=test_statics.OUTPUT_PATHS)
 
+jsObj.data.records([])
+
 # Write the Javascript fragments to the file
 f.writeJs([
 ])
