@@ -287,18 +287,20 @@ class JsFile(object):
 
     """
     outFile = open(os.path.join(self.file_path, "%s.js" % self.scriptName), "w")
+    js_external = ""
     if jsObj is not None:
       outFile.write("//Javascript Prototype extensions \n\n")
       for fnc, details in jsObj._src._props.get('js', {}).get('prototypes', {}).items():
         outFile.write("%s = function(%s){%s};" % (fnc, ",".join(details.get('pmts', [])), details["content"]))
-
       outFile.write("\n\n//Javascript Global functions \n\n")
       for fnc, details in jsObj._src._props.get('js', {}).get('functions', {}).items():
         outFile.write("%s(%s)" % (fnc, ",".join(details.get('pmt', []))), details["content"])
-
+      import_obj = Imports.ImportManager(online=True)
+      js_external = import_obj.jsResolve(jsObj._src.jsImports)
     outFile.write("\n\n")
     outFile.write("//Javascript functions\n\n")
     outFile.write(";".join(self.__data))
     outFile.close()
     with open(r"%s\Launche_%s.html" % (self.path, self.scriptName), "w") as f:
-      f.write('<html><head></head><body></body><script src="%s.js"></script></html>' % self.scriptName)
+      f.write('<html><head></head><body></body>%s<script src="js/%s.js"></script></html>' % (js_external, self.scriptName))
+    return r"%s\Launche_%s.html" % (self.path, self.scriptName)

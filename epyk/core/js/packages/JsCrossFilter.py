@@ -19,6 +19,7 @@ class CrossFilter(JsPackage):
 
   def __init__(self, src, varName, data, setVar=True):
     super(CrossFilter, self).__init__(src=src, varName=varName, selector="crossfilter(%s)" % data)
+    self.src.jsImports.add(self.lib_alias)
 
   @staticmethod
   def permute(array, index):
