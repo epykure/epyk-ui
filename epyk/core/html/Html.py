@@ -87,6 +87,7 @@ class Html(object):
     def __init__(self, htmlObj):
       self.htmlObj = htmlObj
       self._def_styles = None
+      self.__common, self.__div, self.__chart = None, None, None
 
     @property
     def list(self):
@@ -207,15 +208,31 @@ class Html(object):
       return self
 
     @property
-    def defined(self):
+    def commons(self):
       """
-      Pre defined CSS classes within the Framework.
+      All the defined commons styles
+      """
+      if self.__common is None:
+        self.__common = CssInternal.DefinedCommonStyles(self.htmlObj)
+      return self.__common
 
-      The CSS classes are grouped per components
+    @property
+    def div(self):
       """
-      if self._def_styles is None:
-        self._def_styles = CssInternal.DefinedStyles(self.htmlObj)
-      return self._def_styles
+      All the defined Div styles
+      """
+      if self.__div is None:
+        self.__div = CssInternal.DefinedDivStyles(self.htmlObj)
+      return self.__div
+
+    @property
+    def chart(self):
+      """
+      All the defined Chart styles
+      """
+      if self.__chart is None:
+        self.__chart = CssInternal.DefinedChartStyles(self.htmlObj)
+      return self.__chart
 
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):
