@@ -2,7 +2,6 @@
 This module get all the functions related to the transformation of the recordset on the Javascript part.
 Each of those functions are in charge of transforming a recordSet in the front end (which means that this cannot be
 seen on the Python side in the scripting interface). The best way to test those changes is to use a report and set the DEBUG flag.
-
 """
 
 
@@ -77,8 +76,6 @@ class JsRowBuckets(JsRecFunc):
 
 
 class JsRowTotal(JsRecFunc):
-  """
-  """
   @staticmethod
   def extendArgs(category, originParams, newCols):
     originParams[0] += newCols
@@ -238,19 +235,17 @@ class JsCount(JsRecFunc):
       jsSchema['keys'] |= set(params[0])
       jsSchema['values'] |= set(params[1])
 
-  alias = "count"
   params = ("keys", "values")
   value = '''
-    var temp = {};
-    var order = [];
-    data.forEach( function(rec) { 
+    var temp = {}; var order = [];
+    data.forEach(function(rec){ 
       var aggKey = []; keys.forEach(function(k){ aggKey.push( rec[k])}); var newKey = aggKey.join("#"); order.push(newKey);
-      if (!(newKey in temp)) {temp[newKey] = {}};
-      values.forEach(function(v) {if (!(v in temp[newKey])) {temp[newKey][v] = 1} else {temp[newKey][v] += 1}}) ;}); 
-    order.forEach(function(label) {
+      if(!(newKey in temp)){temp[newKey] = {}};
+      values.forEach(function(v){if (!(v in temp[newKey])) {temp[newKey][v] = 1} else {temp[newKey][v] += 1}}) ;}); 
+    order.forEach(function(label){
       var rec = {}; var splitKey = label.split("#");
-      keys.forEach(function(k, i) {rec[k] = splitKey[i];});
-      for(var v in temp[label]) {rec[v] = temp[label][v]};
+      keys.forEach(function(k, i){rec[k] = splitKey[i];});
+      for(var v in temp[label]){rec[v] = temp[label][v]};
       result.push(rec)})'''
 
 
@@ -269,10 +264,10 @@ class JsTop(object):
       if(tmpRec[rec[value]] === undefined){ tmpRec[rec[value]] = [rec] } else {tmpRec[rec[value]].push(rec)}});
     
     var result = []; 
-    Object.keys(tmpRec).sort().forEach(function(key) {
+    Object.keys(tmpRec).sort().forEach(function(key){
       tmpRec[key].forEach(function(rec){result.push(rec)})});
     
-    if (sortType == 'descending'){ result = result.slice(-countItems)}
+    if (sortType == 'desc'){ result = result.slice(-countItems)}
     else {result = result.slice(0, countItems)}
     '''
 
@@ -284,11 +279,10 @@ class JsCountDistinct(object):
 
   :return: A new recordSet with the properties of the requested keys
   """
-  alias = "count(Distinct)"
   params = ("keys", )
   value = '''
-    var temp = {}; var t0 = performance.now(); keys.forEach(function(k){temp[k] = {}});
-    data.forEach(function(rec) {keys.forEach(function(k){temp[k][rec[k]] = 1})}); 
+    var temp = {}; keys.forEach(function(k){temp[k] = {}});
+    data.forEach(function(rec){keys.forEach(function(k){temp[k][rec[k]] = 1})}); 
     for(var col in temp){
       var dCount = Object.keys(temp[col]).length; result.push({'column': col, 'count_distinct': dCount})}'''
 

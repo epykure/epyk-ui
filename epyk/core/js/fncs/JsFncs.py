@@ -1,8 +1,3 @@
-"""
-
-"""
-
-
 from epyk.core.js.fncs import JsFncsRecords
 from epyk.core.js.fncs import JsFncsUtils
 
@@ -29,8 +24,21 @@ def cleanFncs(fnc):
 
 
 class FncOnRecords(object):
-  def __init__(self, js_src):
-    self._js_src = js_src
+  def __init__(self, js_src, data_schema=None):
+    self._js_src, self._data_schema = js_src, data_schema
+
+  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
+    """
+    This function will attach to the report object only the javascript functions used during the report
+
+    :param fnc_name:
+    :param fnc_def:
+
+    :return:
+    """
+    fnc_pmts = ["data"] + (fnc_pmts or [])
+    if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
+      self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': "var result = []; %s;return result" % cleanFncs(fnc_def), 'pmt': fnc_pmts}
 
   def url(self):
     """
@@ -45,6 +53,52 @@ class FncOnRecords(object):
       content = cleanFncs(JsFncsRecords.JsToUrl.value)
       self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % content, 'pmt': fnc_pmts}
     return fnc_name
+
+  def count(self, keys, values):
+    """
+
+    The Javascript function are using the main data as a first parameter
+
+    :param keys:
+    :param values:
+
+    :return: "This" to allow function chains
+    """
+    fnc_name = JsFncsRecords.JsCount.__name__
+    self.__register_records_fnc(fnc_name, JsFncsRecords.JsCount.value, fnc_pmts=list(JsFncsRecords.JsCount.params))
+    self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
+    return self
+
+  def count_distinct(self, keys):
+    """
+
+    :param keys:
+
+    :return: "This" to allow function chains
+    """
+    if not isinstance(keys, list):
+      keys = [keys]
+    fnc_name = JsFncsRecords.JsCountDistinct.__name__
+    self.__register_records_fnc(fnc_name, JsFncsRecords.JsCountDistinct.value, fnc_pmts=list(JsFncsRecords.JsCountDistinct.params))
+    self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, keys))
+    return self
+
+  def top(self, column, n=1, order='desc'):
+    """
+    The Javascript function are using the main data as a first parameter
+
+    Example
+
+    :param column:
+    :param n:
+    :param order:
+
+    :return: "This" to allow function chains
+    """
+    fnc_name = JsFncsRecords.JsTop.__name__
+    self.__register_records_fnc(fnc_name, JsFncsRecords.JsTop.value, fnc_pmts=list(JsFncsRecords.JsTop.params))
+    self._data_schema['fncs'].append("%s(%%s, %s, '%s', '%s')" % (fnc_name, n, column, order))
+    return self
 
 
 class JsRegisteredFunctions(object):

@@ -11,6 +11,7 @@ from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsBoolean
 
 from epyk.core.js.objects import JsNodeDom
+from epyk.core.js.objects import JsData
 
 
 class JsObjects(object):
@@ -196,3 +197,13 @@ class JsObjects(object):
 
     for obj in _PROTO_MAPS.get(fncName, []):
       obj.proto(self._jsObj, fncName)
+
+  def record(self, varName):
+    """
+    Get a record object
+
+    :param varName: A string with of the existing variable name
+
+    :return:
+    """
+    return JsData.RawData.get(self._jsObj, varName)
