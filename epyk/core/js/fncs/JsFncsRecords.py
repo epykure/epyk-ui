@@ -294,16 +294,15 @@ class JsCountAll(object):
 
   :return: A new recordSet with the properties of the requested keys
   """
-  alias = "count(All)"
   params = ("keys", )
   value = '''
-    var temp = {}; var order= []; var t0 = performance.now();
+    var temp = {}; var order= [];
     data.forEach(function(rec){ 
       keys.forEach(function(k){
-        var aggKey = k + "#" + rec[k]; order.push(aggKey); if (!(aggKey in temp)) {temp[aggKey] = 1} else {temp[aggKey] += 1}});}); 
-    order.forEach(function(label){{
+        var aggKey = k +"#"+ rec[k]; if(!(aggKey in temp)){order.push(aggKey); temp[aggKey] = 1} else{temp[aggKey] += 1}})}); 
+    order.forEach(function(label){
       var keys = label.split("#"); var rec = {'column': keys[0], 'value': keys[1], 'count': temp[label]};
-      result.push(rec);})'''
+      result.push(rec)})'''
 
 
 class JsRename(object):
@@ -316,9 +315,8 @@ class JsRename(object):
   alias = "rename"
   params = ("colsWithName", )
   value = '''
-    var t0 = performance.now();
-    data.forEach( function(rec) { 
-      for (var col in colsWithName) {rec[colsWithName[col]] = rec[col]; delete rec[col]; result.push(rec); } })'''
+    data.forEach(function(rec){ 
+      for(var col in colsWithName){rec[colsWithName[col]] = rec[col]; delete rec[col]; result.push(rec)}})'''
 
 
 class JsExtend(object):

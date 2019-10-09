@@ -54,7 +54,7 @@ class FncOnRecords(object):
       self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % content, 'pmt': fnc_pmts}
     return fnc_name
 
-  def count(self, keys, values):
+  def count(self, keys, values=None):
     """
 
     The Javascript function are using the main data as a first parameter
@@ -64,9 +64,17 @@ class FncOnRecords(object):
 
     :return: "This" to allow function chains
     """
-    fnc_name = JsFncsRecords.JsCount.__name__
-    self.__register_records_fnc(fnc_name, JsFncsRecords.JsCount.value, fnc_pmts=list(JsFncsRecords.JsCount.params))
-    self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
+    if not isinstance(keys, list):
+      keys = [keys]
+
+    if values is None:
+      fnc_name = JsFncsRecords.JsCountAll.__name__
+      self.__register_records_fnc(fnc_name, JsFncsRecords.JsCountAll.value, fnc_pmts=list(JsFncsRecords.JsCountAll.params))
+      self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, keys))
+    else:
+      fnc_name = JsFncsRecords.JsCount.__name__
+      self.__register_records_fnc(fnc_name, JsFncsRecords.JsCount.value, fnc_pmts=list(JsFncsRecords.JsCount.params))
+      self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
     return self
 
   def count_distinct(self, keys):
