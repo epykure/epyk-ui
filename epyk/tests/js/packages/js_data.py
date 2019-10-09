@@ -14,8 +14,7 @@ jsObj = Js.JsBase()
 f = JsUtils.JsFile("DataExamples", path=test_statics.OUTPUT_PATHS)
 
 record = jsObj.data.records([{"B": 'RR3', "A": 0}, {"B": 'RR5', "A": 3}, {"B": 'RR3', "A": 2}])
-record.f.count("B")#.top("count_distinct", n=2, order="asc")
-
+record.f.count("B").o.nvd3_bar("count", "column") #.top("count_distinct", n=2, order="asc")
 
 # Write the Javascript fragments to the file
 f.writeJs([

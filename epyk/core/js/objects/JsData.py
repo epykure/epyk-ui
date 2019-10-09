@@ -62,6 +62,10 @@ class ContainerData(object):
   def f(self):
     return JsFncs.FncOnRecords(self._report._props, self._schema)
 
+  @property
+  def o(self):
+    return JsFncs.FncToObject(self._report._props, self._schema)
+
 
 class RawData(object):
   def __init__(self, report, records=None, profile=False):
@@ -123,10 +127,16 @@ class RawData(object):
   def f(self):
     return JsFncs.FncOnRecords(self._report._props, self._schema)
 
+  @property
+  def o(self):
+    return JsFncs.FncToObject(self._report._props, self._schema)
+
   def toStr(self):
     data = "data_%s" % self._data_id
     for fnc in self._schema.get('fncs', []):
       data = fnc % data
+    if self._schema.get('out', None) is not None:
+      data = self._schema['out'] % data
     return data
 
 

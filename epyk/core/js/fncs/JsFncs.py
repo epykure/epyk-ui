@@ -1,5 +1,7 @@
 from epyk.core.js.fncs import JsFncsRecords
 from epyk.core.js.fncs import JsFncsUtils
+from epyk.core.js.objects import JsChartNvd3
+from epyk.core.js import JsUtils
 
 
 FNCS_MAPS = {
@@ -23,9 +25,46 @@ def cleanFncs(fnc):
   return "".join([r.strip() for r in fnc.strip().split('\n')])
 
 
+class FncToObject(object):
+  def __init__(self, js_src, data_schema=None):
+    self._js_src, self._data_schema = js_src, data_schema
+
+  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
+    """
+    This function will attach to the report object only the javascript functions used during the report
+
+    :param fnc_name:
+    :param fnc_def:
+
+    :return:
+    """
+    fnc_pmts = ["data"] + (fnc_pmts or [])
+    if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
+      self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': "var result = []; %s;return result" % cleanFncs(fnc_def), 'pmt': fnc_pmts}
+
+  def nvd3_bar(self, series, x_axis):
+    """
+
+    :param series:
+    :param x_axis:
+
+    :return:
+    """
+    if not isinstance(series, list):
+      series = [series]
+    fnc_name = JsChartNvd3.JsNVD3Bar.__name__
+    x_axis = JsUtils.jsConvertData(x_axis, None)
+    self.__register_records_fnc(fnc_name, JsChartNvd3.JsNVD3Bar.value, fnc_pmts=list(JsChartNvd3.JsNVD3Bar.params))
+    self._data_schema['out'] = "%s(%%s, %s, %s)" % (fnc_name, series, x_axis)
+
+
 class FncOnRecords(object):
   def __init__(self, js_src, data_schema=None):
     self._js_src, self._data_schema = js_src, data_schema
+
+  @property
+  def o(self):
+    return FncToObject(self._js_src, self._data_schema)
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
     """
