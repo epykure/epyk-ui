@@ -590,30 +590,6 @@ class SqlConn(object):
     except StopIteration:
       return None
 
-  def fetch(self, limit=None):
-    """
-    Similar to getData but return an iterator over a list instead of using pandas
-
-    Example
-    rptObj.db().fetch()
-
-    :param limit: The maximum number of data returned in the SQL query
-    :return: An iterator over the result of the query
-    """
-    if self.query is None:
-      yield None
-
-    counter = 0
-    if not limit:
-      limit = -1
-    for row in self.engine.connect().execute(self.query):
-      if limit == -1 or counter < limit:
-        counter += 1
-        yield row
-
-      else:
-        raise StopIteration
-
   @property
   def tables(self):
     """
