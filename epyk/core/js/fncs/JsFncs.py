@@ -1,6 +1,14 @@
 from epyk.core.js.fncs import JsFncsRecords
 from epyk.core.js.fncs import JsFncsUtils
+
 from epyk.core.js.objects import JsChartNvd3
+from epyk.core.js.objects import JsChartsJs
+from epyk.core.js.objects import JsChartD3
+from epyk.core.js.objects import JsChartBillboard
+from epyk.core.js.objects import JsChartDC
+from epyk.core.js.objects import JsChartPlotly
+
+
 from epyk.core.js import JsUtils
 
 
@@ -9,20 +17,6 @@ FNCS_MAPS = {
   'toMarkUp': JsFncsUtils.JsMarkUp,
   'formatNumber': JsFncsUtils.JsFormatNumber,
 }
-
-
-def cleanFncs(fnc):
-  """
-  Try to remove as much as possible all the characters in order to speed up the javascript
-  Indeed most of the browsers are using minify Javascript to make the page less heavy
-
-  Thus pre stored function code can be written to be easier to read.
-
-  :param fnc: The Javascript String
-
-  :return: Return a cleaned an minify Javascript String
-  """
-  return "".join([r.strip() for r in fnc.strip().split('\n')])
 
 
 class FncToObject(object):
@@ -40,44 +34,94 @@ class FncToObject(object):
     """
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
-      self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': "var result = []; %s;return result" % cleanFncs(fnc_def), 'pmt': fnc_pmts}
+      self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def), 'pmt': fnc_pmts}
 
-  def nvd3_bar(self, series, x_axis):
+  @property
+  def chartJs(self):
     """
-
-    :param series:
-    :param x_axis:
-
-    :return:
+    Data transformation to the ChartJs package
     """
-    if not isinstance(series, list):
-      series = [series]
-    fnc_name = JsChartNvd3.JsNVD3Bar.__name__
-    x_axis = JsUtils.jsConvertData(x_axis, None)
-    self.__register_records_fnc(fnc_name, JsChartNvd3.JsNVD3Bar.value, fnc_pmts=list(JsChartNvd3.JsNVD3Bar.params))
-    self._data_schema['out'] = "%s(%%s, %s, %s)" % (fnc_name, series, x_axis)
+    return JsChartsJs.JsChartLinks(self._js_src, self._data_schema)
+
+  @property
+  def nvd3(self):
+    """
+    Data transformation to the NVD3 package
+    """
+    return JsChartNvd3.JsNVD3Links(self._js_src, self._data_schema)
+
+  @property
+  def c3(self):
+    """
+    Data transformation to the C3 package
+    """
+    return JsChartBillboard.JsChartBillboardLinks(self._js_src, self._data_schema)
+
+  @property
+  def billboard(self):
+    """
+    Data transformation to the Billboard package
+    """
+    return JsChartBillboard.JsChartBillboardLinks(self._js_src, self._data_schema)
+
+  @property
+  def d3(self):
+    """
+    Data transformation to the D3 package
+    """
+    return JsChartD3.JsChartD3Links(self._js_src, self._data_schema)
+
+  @property
+  def dc(self):
+    """
+    Data transformation to the DC package
+    """
+    return JsChartDC.JsChartDCLinks(self._js_src, self._data_schema)
+
+  @property
+  def plotly(self):
+    """
+    Data transformation to the Plotly package
+    """
+    return JsChartPlotly.JsChartPlotlyLinks(self._js_src, self._data_schema)
 
 
 class FncOnRecords(object):
-  def __init__(self, js_src, data_schema=None):
+  def __init__(self, js_src, data_schema=None, profile=False):
     self._js_src, self._data_schema = js_src, data_schema
 
   @property
   def o(self):
     return FncToObject(self._js_src, self._data_schema)
 
-  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
+  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
     """
     This function will attach to the report object only the javascript functions used during the report
 
     :param fnc_name:
     :param fnc_def:
+    :param fnc_pmts:
 
     :return:
     """
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
-      self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': "var result = []; %s;return result" % cleanFncs(fnc_def), 'pmt': fnc_pmts}
+      self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def), 'pmt': fnc_pmts}
+
+  def custom(self, fnc_name, fnc_content, fnc_pmts=None, profile=False):
+    """
+
+    The function content should use data and produce an object record
+
+    :param fnc_name: A string for the Javascript function name
+    :param fnc_content: The javascript function content
+    :param fnc_pmts: A String, The Javascript function parameters
+    :param profile: A Boolean flag to activate the profiling
+
+    :return: "This" in order to allow the chains
+    """
+    self.__register_records_fnc(fnc_name, fnc_content, fnc_pmts, profile)
+    return self
 
   def url(self):
     """
@@ -89,11 +133,11 @@ class FncOnRecords(object):
     for p in getattr(JsFncsRecords.JsToUrl, 'params', []):
       fnc_pmts.append(p)
     if not fnc_name in self._js_src.get('functions', {}):
-      content = cleanFncs(JsFncsRecords.JsToUrl.value)
+      content = JsUtils.cleanFncs(JsFncsRecords.JsToUrl.value)
       self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % content, 'pmt': fnc_pmts}
     return fnc_name
 
-  def count(self, keys, values=None):
+  def count(self, keys, values=None, profile=False):
     """
 
     The Javascript function are using the main data as a first parameter
@@ -116,7 +160,7 @@ class FncOnRecords(object):
       self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
     return self
 
-  def count_distinct(self, keys):
+  def count_distinct(self, keys, profile=False):
     """
 
     :param keys:
@@ -130,7 +174,7 @@ class FncOnRecords(object):
     self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, keys))
     return self
 
-  def top(self, column, n=1, order='desc'):
+  def top(self, column, n=1, order='desc', profile=False):
     """
     The Javascript function are using the main data as a first parameter
 

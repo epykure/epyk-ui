@@ -200,6 +200,20 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None):
   return cnvFncs
 
 
+def cleanFncs(fnc):
+  """
+  Try to remove as much as possible all the characters in order to speed up the javascript
+  Indeed most of the browsers are using minify Javascript to make the page less heavy
+
+  Thus pre stored function code can be written to be easier to read.
+
+  :param fnc: The Javascript String
+
+  :return: Return a cleaned an minify Javascript String
+  """
+  return "".join([r.strip() for r in fnc.strip().split('\n')])
+
+
 class JsFile(object):
   def __init__(self, scriptName=None, path=None):
     self.scriptName, self.path = scriptName, path

@@ -2,13 +2,9 @@
 
 """
 
-import json
-
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsNumber
-
-from epyk.core.js.objects import jsText
 
 from epyk.core.js.packages.JsCrossFilter import CrossFilter
 from epyk.core.js.packages.JsVis import VisDataSet
@@ -60,10 +56,16 @@ class ContainerData(object):
 
   @property
   def f(self):
+    """
+    All the predefined transformation functions.
+    """
     return JsFncs.FncOnRecords(self._report._props, self._schema)
 
   @property
   def o(self):
+    """
+    All the possible object transformation to deal with external packages
+    """
     return JsFncs.FncToObject(self._report._props, self._schema)
 
 
@@ -115,13 +117,20 @@ class RawData(object):
     self._data["schema"][self._data_id].setdefault('containers', {})[html_obj.htmlId] = {'fncs': [], 'outs': None, "profile": profile}
     return ContainerData(self._report, self._data["schema"][self._data_id]['containers'][html_obj.htmlId])
 
-  def toTsv(self, process='input'):
+  def toTsv(self, colNames=None, profile=False):
     """
 
     :return: A String with the Javascript function to be used
     """
-    self._report.jsGlobal.fnc("ToTsv(data, colNames)", "%s; return result" % jsText.JsTextTsv().value)
-    return "ToTsv(%s, %s)" % (self.jqId, json.dumps(list(self._schema['keys'] | self._schema['values'])))
+    colNames = colNames or list(self._schema['keys'] | self._schema['values'])
+    jsFncs = self._report._props.setdefault('js', {}).setdefault('functions', {})
+    if "ToTsv" in jsFncs:
+      jsFncs["ToTsv"] = {'content': '''var result = []; var tmp = []; var row = [];
+                colNames.forEach(function(col){row.push(col)}); tmp.push(row.join('\t'));
+                data.forEach(function(rec){
+                  row = []; colNames.forEach(function(col){row.push(rec[col])});
+                  tmp.push(row.join('\t'))}); result = tmp.join('\\n'); return result''', 'pmt': colNames}
+    return "ToTsv(%s, %s)" % (self.jqId, colNames)
 
   @property
   def f(self):
