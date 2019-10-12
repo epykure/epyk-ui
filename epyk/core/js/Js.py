@@ -497,7 +497,7 @@ class JsBase(object):
       self._breadcrumb = JsBreadCrumb(self._src)
     return self._breadcrumb
 
-  def registerFunction(self, fncName, jsFncs=None, pmts=None):
+  def registerFunction(self, fncName, jsFncs, pmts=None):
     """
     Javascript Framework extension
 
@@ -513,13 +513,8 @@ class JsBase(object):
 
     :return: The JsObject
     """
-    if jsFncs is None and fncName in JsFncs.FNCS_MAPS:
-      jsDef = JsFncs.FNCS_MAPS[fncName]
-      self._src._props.setdefault('js', {}).setdefault('functions', {})[jsDef.__name__] = {'content': jsDef.value,
-                                                                                    'pmt': jsDef.params}
-    else:
-      jsData = JsUtils.jsConvertFncs(jsFncs)
-      self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
+    jsData = JsUtils.jsConvertFncs(jsFncs)
+    self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
     return self
 
   def clipboard(self, jsData):
@@ -734,6 +729,10 @@ class JsBase(object):
     if self.__data is None:
       self.__data = JsData.JsData(self._src)
     return self.__data
+
+  # primitive shortcuts
+  def string(self, data, varName=None, setVar=False, isPyData=True):
+    return JsString.JsString(data, varName, setVar, isPyData, report=self._src)
 
   def activeElement(self):
     """

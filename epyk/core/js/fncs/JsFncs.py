@@ -1,5 +1,5 @@
 from epyk.core.js.fncs import JsFncsRecords
-from epyk.core.js.fncs import JsFncsUtils
+from epyk.core.js.fncs import JsFncsAgg
 
 from epyk.core.js.objects import JsChartNvd3
 from epyk.core.js.objects import JsChartsJs
@@ -8,15 +8,7 @@ from epyk.core.js.objects import JsChartBillboard
 from epyk.core.js.objects import JsChartDC
 from epyk.core.js.objects import JsChartPlotly
 
-
 from epyk.core.js import JsUtils
-
-
-FNCS_MAPS = {
-  "row-buckets": JsFncsRecords.JsRowBuckets,
-  'toMarkUp': JsFncsUtils.JsMarkUp,
-  'formatNumber': JsFncsUtils.JsFormatNumber,
-}
 
 
 class FncToObject(object):
@@ -92,7 +84,19 @@ class FncOnRecords(object):
 
   @property
   def o(self):
+    """
+    Property to the data final object.
+    Those items help to the link to external packages
+    """
     return FncToObject(self._js_src, self._data_schema)
+
+  @property
+  def a(self):
+    """
+    Property to the data aggregator functions
+    The aggregators will create a new record with different column names
+    """
+    return
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
     """
@@ -202,33 +206,13 @@ class JsRegisteredFunctions(object):
       src._props['js'] = {}
     self._js_src = src._props['js']
 
-  @property
-  def markUp(self):
-    """
-    Javascript function to convert a string to the equivelent Markdown HTML tags
-
-    Documentation
-    https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-
-    :return: The function name to be used in a Javascript String
-    """
-    fnc_name = JsFncsUtils.JsMarkUp.__name__
-    fnc_pmts = JsFncsUtils.JsMarkUp.params
-    if not fnc_name in self._js_src.get('functions', {}):
-      self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % JsFncsUtils.JsMarkUp.value, 'pmt': fnc_pmts}
-    return fnc_name
-
-  @property
-  def cssStyle(self):
+  def cssStyle(self, params):
     """
 
     :return:
     """
     self._js_src.setdefault('functions', {})["cssStyle"] = {
-      'content': '''
-        cssParams = [] ;
-        for(var i in params){cssParams.push( i +":"+ params[i])}
-        return cssParams.join(";")''',
+      'content': 'cssParams = []; for(var i in params){cssParams.push(i +":"+ params[i])}; return cssParams.join(";")',
       'pmt': ["params"]}
     return "cssStyle"
 
@@ -248,7 +232,7 @@ class JsRegisteredFunctions(object):
     if pmts is None:
       return JsFunction("(function(){%s})()" % jsFnc)
 
-    return JsFunction("(function(%s) {%s})()" % (",".join(pmts), jsFnc))
+    return JsFunction("(function(%s){%s})()" % (",".join(pmts), jsFnc))
 
   def inline(self, fnc_name, jsFnc, pmts=None):
     """

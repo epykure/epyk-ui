@@ -184,20 +184,6 @@ class JsObjects(object):
     """
     return JsBoolean.JsBoolean.get('false')
 
-  def proto(self, fncName):
-    """
-    Add the predefined function to the Javascript primitives
-
-    :param fncName: The function name to be added to the primitive prototype
-    :return:
-    """
-    _PROTO_MAPS = {
-      "formatMoney": [JsNumber.JsNumber]
-    }
-
-    for obj in _PROTO_MAPS.get(fncName, []):
-      obj.proto(self._jsObj, fncName)
-
   def record(self, varName):
     """
     Get a record object

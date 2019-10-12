@@ -27,12 +27,12 @@ from epyk.core.js.primitives import JsObject
 class JsString(JsObject.JsObject):
   _jsClass = "String"
 
-  def __init__(self, data, varName=None, setVar=False, isPyData=True):
+  def __init__(self, data, varName=None, setVar=False, isPyData=True, report=None):
     if not hasattr(data, 'varName') and isPyData:
       isPyData = True
       data = json.dumps(data)
     self.isPyData = isPyData
-    super(JsString, self).__init__(data, varName, setVar, isPyData)
+    super(JsString, self).__init__(data, varName, setVar, isPyData, report=report)
 
   def __add__(self, value):
     return JsString("%s + %s" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)

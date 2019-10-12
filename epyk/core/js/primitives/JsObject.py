@@ -24,7 +24,7 @@ class JsKeyword(object):
 class JsObject(object):
   _jsClass = "Object"
 
-  def __init__(self, data, varName=None, setVar=False, isPyData=False):
+  def __init__(self, data, varName=None, setVar=False, isPyData=False, report=None):
     """
 
     Documentation:
@@ -33,10 +33,13 @@ class JsObject(object):
     :param varName:
     :param data:
     :param setVar:
+    :param isPyData:
+    :param report: The internal report object
+
     """
     global _JSVARS
 
-    self.varName, self.varData, self._js = varName, str(data), []
+    self.varName, self.varData, self._js, self._report = varName, str(data), [], report
     self._frozen, self._sealed = False, False
     if varName is None and setVar:
       _JSVARS += 1
@@ -45,7 +48,7 @@ class JsObject(object):
       self.setVar(self.varName)
 
   @classmethod
-  def new(cls, data=None, varName=None, isPyData=True):
+  def new(cls, data=None, varName=None, isPyData=True, report=None):
     """
     Create a Python Javascript Object
 
@@ -58,16 +61,17 @@ class JsObject(object):
     :param data: Optional, The object data
     :param varName: Optional, The object variable name
     :param isPyData: Optional, Boolean to specify if it is a Python reference and if it should be converted to Json
+    :param report: The internal report object
 
     :return: The Python Javascript Date primitive
     """
     if isPyData:
-      return cls(data=JsUtils.jsConvertData(data, None), varName=varName, setVar=True, isPyData=isPyData)
+      return cls(data=JsUtils.jsConvertData(data, None), varName=varName, setVar=True, isPyData=isPyData, report=report)
 
-    return cls(data=data, varName=varName, setVar=True, isPyData=isPyData)
+    return cls(data=data, varName=varName, setVar=True, isPyData=isPyData, report=report)
 
   @classmethod
-  def this(cls):
+  def this(cls, report=None):
     """
     Get the object this
 
@@ -77,12 +81,14 @@ class JsObject(object):
     Documentation
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
 
+    :param report: The internal report object
+
     :return: The python Javascript object
     """
-    return cls.get("this")
+    return cls.get("this", report=report)
 
   @classmethod
-  def get(cls, varName):
+  def get(cls, varName, report=None):
     """
     Get the Javascript Object by its reference
 
@@ -94,10 +100,11 @@ class JsObject(object):
     https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     :param varName: The Javascript object reference
+    :param report: The internal report object
 
     :return: The python Javascript object
     """
-    return cls(data=None, varName=varName, setVar=False)
+    return cls(data=None, varName=varName, setVar=False, report=report)
 
   @property
   def varId(self):
@@ -514,6 +521,69 @@ class JsObject(object):
       # Add a polyfill to ensure the browser compatibility
       jsObj._addImport("babel-polyfill")
     return "try{Object.assign({}, %s, %s)} catch(err){console.warn('Assign not supported by the browser')}" % (self.varId, dico)
+
+  def toformattedNumber(self, decPlaces=0, thouSeparator=',', decSeparator=',', report=None):
+    """
+
+    :param decPlaces:
+    :param thouSeparator:
+    :param decSeparator:
+    :param report: The internal report object
+
+    :return:
+    """
+    report = report or self._report
+    if report is None:
+      raise Exception("The report object must be defined")
+
+    # Add the javascript internal function used to format numbers
+    # THis function can be used from numbers but also from string
+    if 'toFormatNumber' not in self._report._props.setdefault('js', {}).setdefault('functions', {}):
+      self._report._props.setdefault('js', {}).setdefault('functions', {})["toFormatNumber"] = {
+        'content': JsUtils.cleanFncs('''
+          decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+          decSeparator = decSeparator == undefined ? "." : decSeparator,
+          thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+          sign = n < 0 ? "-" : "",
+          i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+          j = (j = i.length) > 3 ? j % 3 : 0;
+          result = sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+          return result'''), 'pmt': ['n', "decPlaces", "thouSeparator", "decSeparator"]}
+    from epyk.core.js.primitives import JsString
+    return JsString.JsString("toFormatNumber(%s, %s, '%s', '%s')" % (self.varId, decPlaces, thouSeparator, decSeparator), isPyData=False)
+
+  def toStringMarkup(self, report=None):
+    """
+    Convert a markdown string to a markup (HTML) string
+
+    :param report: The internal report object
+
+    :return:
+    """
+    report = report or self._report
+    if report is None:
+      raise Exception("The report object must be defined")
+
+    # Add the Javascript function to convert a markdown to markup
+    if 'toMarkUp' not in self._report._props.setdefault('js', {}).setdefault('functions', {}):
+      self._report._props.setdefault('js', {}).setdefault('functions', {})["toMarkUp"] = {
+        'content': JsUtils.cleanFncs('''var result = []; data = ""+data;
+              data = data.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+              data = data.replace(/\*\*\*(.*?)\*\*\*/g, "<b><i>$1</i></b>");
+              data = data.replace(/\*(.*?)\*/g, "<i>$1</i>");
+              data = data.replace(/__(.*?)__/g, "<u>$1</u>");
+              data = data.replace(/~~(.*?)~~/g, "<i>$1</i>");
+              data = data.replace(/--(.*?)--/g, "<del>$1</del>");
+              data = data.replace(/<<(.*?)>>/g, "<a href='$1'>Link</a>");
+              data = data.replace(/\!\((.*?)\)/g, "<i class='$1'></i>");
+              data = data.replace(/\[(.*?)\]\(https\\\:(.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
+              data = data.replace(/\[(.*?)\]\(http\\\:(.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
+              data = data.replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2'>$1</a>");
+              if ((data == '') || ( data == '__' )){ data = '<br />'};
+              result = data;return result'''), 'pmt': ['data']}
+
+    from epyk.core.js.primitives import JsString
+    return JsString.JsString("toMarkUp(%s)" % self.varId, isPyData=False)
 
   def toString(self, explicit=True):
     """
