@@ -272,6 +272,25 @@ class FncOnRecords(object):
     self._data_schema['fncs'].append("%s(%%s, %s, '%s', '%s')" % (fnc_name, n, column, order))
     return self
 
+  def filter(self, column, val, compare_type="=", all_if_empty=True):
+    """
+
+    :param column:
+    :param val:
+    :param compare_type:
+    :param all_if_empty:
+
+    :return:
+    """
+    fnc_name = JsFncsRecords.JsFilter.__name__
+    self.__register_records_fnc(fnc_name, JsFncsRecords.JsFilter.content, fnc_pmts=list(JsFncsRecords.JsFilter.pmts))
+    filter_data = JsUtils.jsConvertData({"colName": column, "val": val, "op": compare_type, "allIfEmpty": all_if_empty}, None)
+    self._data_schema['fncs'].append("%s(%%s, [%s])" % (fnc_name, filter_data))
+    return self._data
+
+  def filters(self):
+    pass
+
 
 class JsRegisteredFunctions(object):
   class __internal(object):

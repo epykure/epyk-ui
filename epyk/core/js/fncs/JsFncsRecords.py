@@ -378,11 +378,10 @@ class JsFilter(object):
 
   :return: A new JS dictionary with only the selected lines
   """
-  alias = "filter"
-  params = ("filterCols", )
-  value = ''' 
+  pmts = ("filterCols", )
+  content = ''' 
     filters = {};
-    filterCols.forEach(function(rec) {  
+    filterCols.forEach(function(rec){  
       if (filters[rec['colName']] === undefined){
         filters[rec['colName']] = {val: [], op: rec['op'], allIfEmpty: rec['allIfEmpty']}};
       if(Array.isArray(rec['val'])){ filters[rec['colName']].val = filters[rec['colName']].val.concat(rec['val'])}
