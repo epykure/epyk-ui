@@ -11,7 +11,7 @@ class Texts(object):
     self.context = context
 
   def text(self, text="", size=(None, "px"), color=None, align='left', width=(100, "%"), height=(None, "px"),
-           htmlCode=None, tooltip=None, helper=None, profile=None):
+           htmlCode=None, tooltip=None, options=None, helper=None, profile=None):
     """
     Add the HTML text component to the page
 
@@ -29,16 +29,20 @@ class Texts(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
+    :param options: Optional. The component options
     :param helper:
     :param profile: Optional. A flag to set the component performance storage
 
-    :rtype: html.HtmlText.Text
-
     :return: The text HTML object
     """
+    dflt_options = {"reset": True, 'markdown': True}
+    if options is not None:
+      dflt_options.update(options)
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Text(self.context.rptObj, text, size, color, align, width,
-                                                    height, htmlCode, tooltip, helper, profile))
+    text_comp = html.HtmlText.Text(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip,
+                                   dflt_options, helper, profile)
+    self.context.register(text_comp)
+    return text_comp
 
   def label(self, text=None, size=(None, "px"), color=None, align='center', width=(100, "px"), height=(23, "px"), htmlCode=None,
             tooltip='', profile=None):
@@ -158,8 +162,8 @@ class Texts(object):
     size = self.context._size(size)
     return self.context.register(html.HtmlTextComp.Formula(self.context.rptObj, text, size, width, color, helper, profile))
 
-  def code(self, text="", size=(None, 'px'), color=None, width=(90, '%'), height=(None, 'px'), edit=True, htmlCode=None,
-           helper=None, profile=None):
+  def code(self, text="", size=(None, 'px'), color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None,
+           options=None, helper=None, profile=None):
     """
     Python Wrapper to the Bootstrap CODE Tag
 
@@ -174,8 +178,8 @@ class Texts(object):
     :param color:
     :param width:
     :param height:
-    :param edit:
     :param htmlCode:
+    :param options:
     :param helper:
     :param profile:
 
@@ -183,9 +187,14 @@ class Texts(object):
 
     :return:
     """
+    if not isinstance(text, list):
+      text = [text]
+    dflt_options = {"edit": True}
+    if options is not None:
+      dflt_options.update(options)
     size = self.context._size(size)
     return self.context.register(html.HtmlText.Code(self.context.rptObj, text, size, color, width, height,
-                                                    edit, htmlCode, helper, profile))
+                                                    htmlCode, dflt_options, helper, profile))
 
   def paragraph(self, text="", size=(None, 'px'), color=None, background_color=None, border=False, width=(100, "%"),
                 height=(None, 'px'), htmlCode=None, encoding="UTF-8", dataSrc=None, helper=None, profile=None):
@@ -219,7 +228,7 @@ class Texts(object):
                                                          width, height, htmlCode, encoding, dataSrc, helper, profile))
 
   def preformat(self, text=None, size=(None, "px"), color=None, width=(90, '%'), height=(None, 'px'),
-                htmlCode=None, dataSrc=None, helper=None, profile=None):
+                htmlCode=None, dataSrc=None, options=None, helper=None, profile=None):
     """
 
     Example
@@ -235,6 +244,7 @@ class Texts(object):
     :param height:
     :param htmlCode:
     :param dataSrc:
+    :param options:
     :param helper:
     :param profile:
 
@@ -242,9 +252,12 @@ class Texts(object):
 
     :return:
     """
+    dflt_options = {"reset": True, 'markdown': True}
+    if options is not None:
+      dflt_options.update(options)
     size = self.context._size(size)
     return self.context.register(html.HtmlText.Pre(self.context.rptObj, text, size, color, width,
-                                                         height, htmlCode, dataSrc, helper, profile))
+                                                   height, htmlCode, dataSrc, dflt_options, helper, profile))
 
   def blockquote(self, text=None, author=None, size=(None, "px"), color=None, width=(None, '%'), height=(None, 'px'),
                  htmlCode=None, helper=None, profile=None):
@@ -331,7 +344,7 @@ class Texts(object):
                                                        htmlCode, dflt_options, helper, profile))
 
   def title(self, text=None, size=(None, 'px'), level=None, name=None, contents=None, color=None, picture=None, icon=None,
-            marginTop=5, htmlCode=None, width=(100, "%"), height=(None, "px"), align=None, profile=None):
+            marginTop=5, htmlCode=None, width=(100, "%"), height=(None, "px"), align=None, options=None, profile=None):
     """
 
     Example
@@ -354,13 +367,17 @@ class Texts(object):
     :param width:
     :param height:
     :param align:
+    :param options:
     :param profile:
     :rtype: html.HtmlText.Title
     :return:
     """
+    dflt_options = {"reset": True, 'markdown': False}
+    if options is not None:
+      dflt_options.update(options)
     size = self.context._size(size)
     return self.context.register(html.HtmlText.Title(self.context.rptObj, text, size, level, name, contents, color,
-                                                     picture, icon, marginTop, htmlCode, width, height, align, profile))
+                                                     picture, icon, marginTop, htmlCode, width, height, align, dflt_options, profile))
 
   def fieldset(self, legend=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"), helper=None, profile=None):
     """

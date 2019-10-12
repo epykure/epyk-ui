@@ -525,9 +525,9 @@ class JsObject(object):
   def toformattedNumber(self, decPlaces=0, thouSeparator=',', decSeparator='.', report=None):
     """
 
-    :param decPlaces:
-    :param thouSeparator:
-    :param decSeparator:
+    :param decPlaces: Float, the number of decimal to be displayed
+    :param thouSeparator: String. The delimiter used for thousand
+    :param decSeparator: String. The delimiter used for decimals
     :param report: The internal report object
 
     :return:

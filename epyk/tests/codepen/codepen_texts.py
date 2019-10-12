@@ -4,15 +4,22 @@ from epyk.tests import test_statics
 
 rptObj = Report()
 
-# Add a text component
-text = rptObj.ui.texts.text("Test text").css({"color": 'red'})
+# Add a text component (use markup in the text + some external HTML symbols
+text = rptObj.ui.texts.text("**Test** text %s " % rptObj.symbols.SQUARE_ROOT).css({"color": 'red'})
 # Add a number component
 rptObj.ui.texts.number(188448228, label="test")
 # Add a table to the page
-title = rptObj.ui.texts.title("title")#.css({"color": 'green'})
+title = rptObj.ui.texts.title("This is a *title*", options={"markdown": True})#.css({"color": 'green'})
 # Add a predefined CSS class
-title.style.defined.commons.not_selectable()
-title.style.defined.div.mouse_hover_border_bottom().mouse_pointer()
+title.style.commons.not_selectable()
+title.style.div.mouse_hover_border_bottom().mouse_pointer()
+
+# Add a preformatted text with a markup code with an HTML entity
+rptObj.ui.texts.preformat("This is a __preformatted__ text %s" % rptObj.entities.EURO)
+
+#
+rptObj.ui.texts.text("This is a text with a max lenght")
+rptObj.ui.texts.code("This is a code block")
 
 # Add a bootstrap highlight text component
 rptObj.ui.texts.highlights("This is a news", title="Important news")

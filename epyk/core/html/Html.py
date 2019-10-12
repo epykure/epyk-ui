@@ -1122,8 +1122,8 @@ class Html(object):
     """
     if jsStyles is None:
       jsStyles = json.dumps(self._jsStyles)
-    return '''%(fncName)s(%(jsId)s, %(jsData)s, %(jsStyles)s); %(bCrumb)s
-          ''' % {'jsDataKey': json.dumps(jsDataKey), 'fncName': self.__class__.__name__, 'jsId': self.jqId, 'bCrumb': bCrumb,
+    return '''%(fncName)s(%(jsId)s, %(jsData)s, %(jsStyles)s)
+          ''' % {'jsDataKey': json.dumps(jsDataKey), 'fncName': self.__class__.__name__, 'jsId': self.jqId,
                  'jsData': self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc), 'jsStyles': jsStyles}
 
   def jsUpdate(self, data, isPyData=True):
