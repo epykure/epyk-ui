@@ -68,6 +68,14 @@ class ContainerData(object):
     """
     return JsFncs.FncToObject(self._report._props, self._schema)
 
+  @property
+  def a(self):
+    """
+    Property to the data aggregator functions
+    The aggregators will create a new record with different column names
+    """
+    return JsFncs.FncRoAggRec(self._report._props, self._schema)
+
 
 class RawData(object):
   def __init__(self, report, records=None, profile=False):
@@ -134,11 +142,19 @@ class RawData(object):
 
   @property
   def f(self):
-    return JsFncs.FncOnRecords(self._report._props, self._schema)
+    return JsFncs.FncOnRecords(self, self._report._props, self._schema)
 
   @property
   def o(self):
-    return JsFncs.FncToObject(self._report._props, self._schema)
+    return JsFncs.FncToObject(self, self._report._props, self._schema)
+
+  @property
+  def a(self):
+    """
+    Property to the data aggregator functions
+    The aggregators will create a new record with different column names
+    """
+    return JsFncs.FncRoAggRec(self, self._report._props, self._schema)
 
   def toStr(self):
     data = "data_%s" % self._data_id

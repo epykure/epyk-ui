@@ -167,7 +167,7 @@ class JsPercentage(JsRecFunc):
         var rec = {}; var splitKey = label.split("#");
         keys.forEach(function(k, i) {rec[k] = splitKey[i]});
         for(var v in temp[label]) {rec[v] = 100 * (temp[label][v] / sumPerSeries[v])};
-        result.push(rec)})};'''
+        result.push(rec)})}'''
 
 
 class JsOperations(JsRecFunc):

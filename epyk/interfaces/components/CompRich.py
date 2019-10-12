@@ -33,7 +33,7 @@ class Rich(object):
     return self.context.register(html.HtmlTextComp.TextBubble(self.context.rptObj, recordSet or {}, width, height,
                                                               color, size, background_color, helper, profile))
 
-  def delta(self, recordSet=None, width=(200, 'px'), height=(80, 'px'), size=None, options=None, helper=None, profile=None):
+  def delta(self, rec=None, width=(200, 'px'), height=(80, 'px'), size=None, options=None, helper=None, profile=None):
     """
 
     Example
@@ -43,7 +43,7 @@ class Rich(object):
     https://jqueryui.com/progressbar/
     https://fontawesome.com/icons?d=gallery
 
-    :param recordSet:
+    :param rec:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param size: Optional, A tuple with a integer for the size and its unit
@@ -56,7 +56,7 @@ class Rich(object):
     dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
     if options is not None:
       dflt_options.update(options)
-    return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, recordSet or {}, width, height, size,
+    return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, rec or {}, width, height, size,
                                                          dflt_options, helper, profile))
 
   def vignet(self, rec=None, width=(100, '%'), height=(None, 'px'), size=(None, 'px'), color_title=None, options=None,

@@ -23,7 +23,7 @@ class DefinedTagStyles(object):
 
     :return: The CSS Style group object
     """
-    self.defined.component.style.cssCls(cls_name)
+    self.defined.style.cssCls(cls_name)
     self._style = cls_name
     return self
 
@@ -33,7 +33,7 @@ class DefinedTagStyles(object):
 
     :return: The CSS Style group object
     """
-    self.defined.component.style.cssDelCls(self._style)
+    self.defined.style.cssDelCls(self._style)
     return self
 
 
@@ -73,36 +73,3 @@ class DefinedDivStyles(DefinedTagStyles):
     CSS Class to set a pointer when mouse hover
     """
     return self.wrap_style("CssDivCursor")
-
-
-class DefinedStyles(object):
-  def __init__(self, htmlObj):
-    self.component = htmlObj
-    self.__common, self.__div, self.__chart = None, None, None
-
-  @property
-  def commons(self):
-    """
-    All the defined commons styles
-    """
-    if self.__common is None:
-      self.__common = DefinedCommonStyles(self)
-    return self.__common
-
-  @property
-  def div(self):
-    """
-    All the defined Div styles
-    """
-    if self.__div is None:
-      self.__div = DefinedDivStyles(self)
-    return self.__div
-
-  @property
-  def chart(self):
-    """
-    All the defined Chart styles
-    """
-    if self.__chart is None:
-      self.__chart = DefinedChartStyles(self)
-    return self.__chart

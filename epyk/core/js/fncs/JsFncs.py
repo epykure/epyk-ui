@@ -12,8 +12,8 @@ from epyk.core.js import JsUtils
 
 
 class FncToObject(object):
-  def __init__(self, js_src, data_schema=None):
-    self._js_src, self._data_schema = js_src, data_schema
+  def __init__(self, data, js_src, data_schema=None):
+    self._js_src, self._data_schema, self._data = js_src, data_schema, data
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
     """
@@ -78,9 +78,94 @@ class FncToObject(object):
     return JsChartPlotly.JsChartPlotlyLinks(self._js_src, self._data_schema)
 
 
+class FncRoAggRec(object):
+  def __init__(self, data, js_src, data_schema=None):
+    self._js_src, self._data_schema, self._data = js_src, data_schema, data
+
+  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
+    """
+    This function will attach to the report object only the javascript functions used during the report
+
+    :param fnc_name:
+    :param fnc_def:
+
+    :return:
+    """
+    fnc_pmts = ["data"] + (fnc_pmts or [])
+    if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
+      self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def), 'pmt': fnc_pmts}
+
+  def sum(self, column):
+    """
+    Get the result only on the selected column. This function will return a dictionary with the column name and the sum
+
+    :param column: String. The column name in the records
+    :return: The data object
+    """
+    fnc_name = JsFncsAgg.JsAggColStats.__name__
+    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColStats.content, fnc_pmts=list(JsFncsAgg.JsAggColStats.pmts))
+    column = JsUtils.jsConvertData(column, None)
+    self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, column))
+    return self._data
+
+  def sum_with_kpi(self, column):
+    """
+    Return the aggregated value of a defined column with some KPI (count, average, max, min)
+    Get the result only on the selected column. This function will return a dictionary with the column name and the sum
+
+    :param column: String. The column name in the records
+    :return: The data object
+    """
+    fnc_name = JsFncsAgg.JsAggColStats.__name__
+    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColStats.content, fnc_pmts=list(JsFncsAgg.JsAggColStats.pmts))
+    column = JsUtils.jsConvertData(column, None)
+    self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, column))
+    return self._data
+
+  def max(self, column):
+    """
+
+    :param column: String. The column name in the records
+    :return: The data object
+    """
+    fnc_name = JsFncsAgg.JsAggColMax.__name__
+    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColMax.content, fnc_pmts=list(JsFncsAgg.JsAggColMax.pmts))
+    column = JsUtils.jsConvertData(column, None)
+    self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, column))
+    return self._data
+
+  def min(self, column):
+    """
+
+    :param column: String. The column name in the records
+    :return: The data object
+    """
+    fnc_name = JsFncsAgg.JsAggColMin.__name__
+    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColMin.content, fnc_pmts=list(JsFncsAgg.JsAggColMin.pmts))
+    column = JsUtils.jsConvertData(column, None)
+    self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, column))
+    return self._data
+
+  def eq(self, column, val):
+    """
+    Return the last record in the records set matching the condition
+
+    :param column: String. The column name in the records
+    :param val: Object. The corresponding value
+
+    :return: The data object
+    """
+    fnc_name = JsFncsAgg.JsAggColEq.__name__
+    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColEq.content, fnc_pmts=list(JsFncsAgg.JsAggColEq.pmts))
+    column = JsUtils.jsConvertData(column, None)
+    val = JsUtils.jsConvertData(val, None)
+    self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, column, val))
+    return self._data
+
+
 class FncOnRecords(object):
-  def __init__(self, js_src, data_schema=None, profile=False):
-    self._js_src, self._data_schema = js_src, data_schema
+  def __init__(self, data, js_src, data_schema=None, profile=False):
+    self._js_src, self._data_schema, self._data = js_src, data_schema, data
 
   @property
   def o(self):
@@ -89,14 +174,6 @@ class FncOnRecords(object):
     Those items help to the link to external packages
     """
     return FncToObject(self._js_src, self._data_schema)
-
-  @property
-  def a(self):
-    """
-    Property to the data aggregator functions
-    The aggregators will create a new record with different column names
-    """
-    return
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
     """
