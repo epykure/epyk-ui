@@ -300,7 +300,7 @@ class Texts(object):
     return self.context.register(html.HtmlTextComp.UpDown(self.context.rptObj, recordSet, size, color, label, dataSrc, helper, profile))
 
   def number(self, number=None, label=None, icon=None, size=(None, "px"), color=None, tooltip='', htmlCode=None,
-             helper=None, profile=None):
+             options=None, helper=None, profile=None):
     """
 
     Example
@@ -315,6 +315,7 @@ class Texts(object):
     :param color:
     :param tooltip:
     :param htmlCode:
+    :param options:
     :param helper:
     :param profile:
 
@@ -322,9 +323,12 @@ class Texts(object):
 
     :return:
     """
+    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": ','}
+    if options is not None:
+      dflt_options.update(options)
     size = self.context._size(size)
     return self.context.register(html.HtmlText.Numeric(self.context.rptObj, number, label, icon, size, color, tooltip,
-                                                       htmlCode, helper, profile))
+                                                       htmlCode, dflt_options, helper, profile))
 
   def title(self, text=None, size=(None, 'px'), level=None, name=None, contents=None, color=None, picture=None, icon=None,
             marginTop=5, htmlCode=None, width=(100, "%"), height=(None, "px"), align=None, profile=None):

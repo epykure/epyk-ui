@@ -488,7 +488,7 @@ class Title(Html.Html):
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__,
-        "htmlObj.text(data); if(typeof jsStyles !== 'undefined'){htmlObj.parent().css(jsStyles)}", 'Javascript Object builder')
+        "htmlObj.text(data); if(typeof jsStyles !== 'undefined'){htmlObj.parent().css(jsStyles)}")
 
   def __str__(self):
     anchor_name = ' name="%s"' % self._name if self._name is not None else ''
@@ -573,7 +573,7 @@ class Title(Html.Html):
 class Numeric(Html.Html):
   name, category, callFnc = 'Number', 'Number', 'number'
 
-  def __init__(self, report, number, label, icon, size, color, tooltip, htmlCode, helper, profile):
+  def __init__(self, report, number, label, icon, size, color, tooltip, htmlCode, options, helper, profile):
     super(Numeric, self).__init__(report, number, code=htmlCode, profile=profile)
     # Add the components label and icon
     self.add_label(label, css={"float": None, "width": 'none'})
@@ -584,6 +584,7 @@ class Numeric(Html.Html):
     color = self.getColor('colors', -1) if color is None else color
     self.css({"color": color, 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
     self.tooltip(tooltip)
+    self._jsStyles = options
 
   @property
   def jqId(self):
@@ -594,9 +595,11 @@ class Numeric(Html.Html):
     return self.htmlId
 
   def onDocumentLoadFnc(self):
-    self._report.js.registerFunction('formatNumber')  # Add the toMarkUp predefined function
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__,
-                      "%s.html(JsFormatNumber(%s, 0, ',', ','))" % (self.jqId, self.vals))
+                      "%s.html(%s)" % (self.jqId, self.js.string("data", isPyData=False).toformattedNumber(
+                        decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
+                        thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
+                        decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False))))
 
   def __str__(self):
     return "<div %s><font></font>%s</div>" % (self.strAttr(pyClassNames=self.pyStyle), self.helper)

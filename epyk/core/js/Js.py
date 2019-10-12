@@ -730,9 +730,38 @@ class JsBase(object):
       self.__data = JsData.JsData(self._src)
     return self.__data
 
-  # primitive shortcuts
   def string(self, data, varName=None, setVar=False, isPyData=True):
+    """
+    Shortcut to the Javascript String primitives
+
+    :param data:
+    :param varName:
+    :param setVar:
+    :param isPyData:
+    """
     return JsString.JsString(data, varName, setVar, isPyData, report=self._src)
+
+  def number(self, data, varName=None, setVar=False, isPyData=True):
+    """
+    Shortcut to the Javascript Number primitives
+
+    :param data:
+    :param varName:
+    :param setVar:
+    :param isPyData:
+    """
+    return JsNumber.JsNumber(data, varName, setVar, isPyData, report=self._src)
+
+  def object(self, data, varName=None, setVar=False, isPyData=True):
+    """
+    Shortcut to the Javascript Object primitives
+
+    :param data:
+    :param varName:
+    :param setVar:
+    :param isPyData:
+    """
+    return JsObject.JsObject(data, varName, setVar, isPyData, report=self._src)
 
   def activeElement(self):
     """

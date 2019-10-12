@@ -522,7 +522,7 @@ class JsObject(object):
       jsObj._addImport("babel-polyfill")
     return "try{Object.assign({}, %s, %s)} catch(err){console.warn('Assign not supported by the browser')}" % (self.varId, dico)
 
-  def toformattedNumber(self, decPlaces=0, thouSeparator=',', decSeparator=',', report=None):
+  def toformattedNumber(self, decPlaces=0, thouSeparator=',', decSeparator='.', report=None):
     """
 
     :param decPlaces:
@@ -547,10 +547,14 @@ class JsObject(object):
           sign = n < 0 ? "-" : "",
           i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
           j = (j = i.length) > 3 ? j % 3 : 0;
-          result = sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+          result = sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1"+ thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
           return result'''), 'pmt': ['n', "decPlaces", "thouSeparator", "decSeparator"]}
     from epyk.core.js.primitives import JsString
-    return JsString.JsString("toFormatNumber(%s, %s, '%s', '%s')" % (self.varId, decPlaces, thouSeparator, decSeparator), isPyData=False)
+
+    decPlaces = JsUtils.jsConvertData(decPlaces, None)
+    thouSeparator = JsUtils.jsConvertData(thouSeparator, None)
+    decSeparator = JsUtils.jsConvertData(decSeparator, None)
+    return JsString.JsString("toFormatNumber(%s, %s, %s, %s)" % (self.varId, decPlaces, thouSeparator, decSeparator), isPyData=False)
 
   def toStringMarkup(self, report=None):
     """
@@ -580,7 +584,7 @@ class JsObject(object):
               data = data.replace(/\[(.*?)\]\(http\\\:(.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
               data = data.replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2'>$1</a>");
               if ((data == '') || ( data == '__' )){ data = '<br />'};
-              result = data;return result'''), 'pmt': ['data']}
+              result = data; return result'''), 'pmt': ['data']}
 
     from epyk.core.js.primitives import JsString
     return JsString.JsString("toMarkUp(%s)" % self.varId, isPyData=False)
