@@ -21,28 +21,38 @@ class UpDown(Html.Html):
     super(UpDown, self).__init__(report, rec, profile=profile)
     self.add_helper(helper)
     self.vals['color'] = self.getColor('colors', 9) if color is None else color
-    self.size = size[0]
+    self.size, self._jsStyles = size[0], options
     self.css({'font-size': "%s%s" % (size[0], size[1])})
 
   @property
   def val(self): return '$("#%s span").html()' % self.jqId
 
   def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
-      var delta = data.value - data.previous; if(data.previous == 0) {var relMove = 'N/A'} else {var relMove = 100 * ((data.value - data.previous) / data.previous)};
+    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''htmlObj.empty();
+      var delta = data.value - data.previous; 
+      if(data.previous == 0) {var relMove = 'N/A'} else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
       if(data.digits == undefined){data.digits = 0};
       if(data.label != undefined){htmlObj.append("<span style='padding:5px;font-size:%(size)spx'>"+ data.label +"</span>")};
-      if (delta < 0) {
-        htmlObj.append("<span style='padding:5px'>"+ FormatNumber(data.value, data.digits, ',', ',') +"</span>");
-        htmlObj.append("<span style='padding:5px;color:%(redColor)s;font-size:%(size)spx'>("+ FormatNumber(delta, data.digits, ',', ',') +")</span>");
-        htmlObj.append("<span style='padding:5px;color:%(redColor)s;font-size:%(size)spx'>("+ FormatNumber(relMove, 2, ',', ',') +"%%)</span>");
+      if (delta < 0){
+        htmlObj.append("<span style='padding:5px'>"+ %(value)s +"</span>");
+        htmlObj.append("<span style='padding:5px;color:%(redColor)s;font-size:%(size)spx'>("+ %(delta)s +")</span>");
+        htmlObj.append("<span style='padding:5px;color:%(redColor)s;font-size:%(size)spx'>("+ %(relMove)s +"%%)</span>");
         htmlObj.append("<i class='fas fa-arrow-down' aria-hidden='true' style='color:%(redColor)s;font-size:%(size)spx'></i>")}
-      else {
-        htmlObj.append("<span style='padding:5px'>"+ FormatNumber(data.value, data.digits, ',', ',') +"</span>");
-        htmlObj.append("<span style='padding:5px;color:%(greenColor)s;font-size:%(size)spx'>(+"+ FormatNumber(delta, data.digits, ',', ',') +")</span>");
-        htmlObj.append("<span style='padding:5px;color:%(greenColor)s;font-size:%(size)spx'>("+ FormatNumber(relMove, 2, ',', ',') +"%%)</span>");
+      else{
+        htmlObj.append("<span style='padding:5px'>"+ %(value)s +"</span>");
+        htmlObj.append("<span style='padding:5px;color:%(greenColor)s;font-size:%(size)spx'>(+"+ %(delta)s +")</span>");
+        htmlObj.append("<span style='padding:5px;color:%(greenColor)s;font-size:%(size)spx'>("+ %(relMove)s +"%%)</span>");
         htmlObj.append("<i class='fas fa-arrow-up' aria-hidden='true' style='color:%(greenColor)s;font-size:%(size)spx'></i>")}
-      ''' % {"greenColor": self.getColor("success", 1), "redColor": self.getColor("danger", 1), "size": self.size - 2})
+      ''' % {"greenColor": self.getColor("success", 1), "redColor": self.getColor("danger", 1), "size": self.size - 2,
+             'value': self._report.js.number("data.value", isPyData=False).toFormattedNumber(
+              decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
+              thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
+              decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False)),
+             'delta': self._report.js.number("delta", isPyData=False).toFormattedNumber(
+               decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
+               thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
+               decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False)),
+             'relMove': self._report.js.number("relMove", isPyData=False).toFormattedNumber(decPlaces=2)})
 
   def __str__(self):
     return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
@@ -175,19 +185,24 @@ class Vignet(Html.Html):
     self.add_helper(helper)
     if not 'color' in self.vals:
       self.vals['color'] = 'inherit'
-    self.size = size
+    self.size, self._jsStyles = size, options
     self.css({"padding-left": "5px", "color": colorTitle if colorTitle is not None else 'inherit', "margin-top": "20px"})
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      if (data.urlTitle != undefined || data.urlTitle != null){htmlObj.find('div').find('p').first().html('<a href="'+ data.urlTitle +'" style="text-decoration:none;color:%(blackColor)s">'+ data.title +'</a>')}
-      else{htmlObj.find('div').find('p').first().html(data.title)};
+      if (data.urlTitle != undefined || data.urlTitle != null){htmlObj.find('div').find('p').first().html('<a href="'+ data.urlTitle +'" style="text-decoration:none;color:%(blackColor)s">'+ %(title)s +'</a>')}
+      else{htmlObj.find('div').find('p').first().html(%(title)s)};
       htmlObj.find('div').find('p').eq(2).html(data.value);
       if(data.url != undefined || data.url != null){htmlObj.find('div').find('p').last().html('<a href="'+ data.url +'" style="text-decoration:none;color:%(blackColor)s">'+ %(number)s +'</a>')}
       else{htmlObj.find('div').find('p').last().html(%(number)s)};
       if(data.tooltip != undefined){htmlObj.find('div').find('p').last().tooltip()};
-      if(data.text != undefined){htmlObj.find('p').last().html(data.text)}
-      ''' % {"blackColor": self.getColor('greys', 9), 'number': self._report.js.number("data.number", isPyData=False).toFormattedNumber()})
+      if(data.text != undefined){htmlObj.find('p').last().html(%(content)s)}
+      ''' % {"blackColor": self.getColor('greys', 9), 'number': self._report.js.number("data.number", isPyData=False).toFormattedNumber(
+        decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
+        thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
+        decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False)),
+      'content': self._report.js.number("data.text", isPyData=False).toStringMarkup(),
+      'title': self._report.js.number("data.title", isPyData=False).toStringMarkup()})
 
   def figureClick(self, jsData='data'):
     """
@@ -202,16 +217,6 @@ class Vignet(Html.Html):
       })""" % {"htmlId": self.htmlId, 'data': jsData})
 
   def __str__(self):
-    self.addGlobalFnc("FormatNumber(n, decPlaces, thouSeparator, decSeparator)", '''
-      decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-      decSeparator = decSeparator == undefined ? "." : decSeparator,
-      thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-      sign = n < 0 ? "-" : "",
-      i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-      j = (j = i.length) > 3 ? j % 3 : 0;
-      return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
-    ''')
-
     items = ["<div %s>" % (self.strAttr(pyClassNames=['CssDivChart']))]
     tooltip = ' title="%s"' % self.tooltip if self.tooltip is not None else ' '
     if 'icon' in self.vals:
@@ -228,10 +233,10 @@ class Vignet(Html.Html):
 
 class Delta(Html.Html):
   __pyStyle = ['CssDivNoBorder']
-  __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery', 'bootstrap']
+  __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jqueryui', 'bootstrap'] # bootstrap for progressbar
   name, category, callFnc = 'Delta Figures', 'Rich', 'delta'
 
-  def __init__(self, report, records, width, height, size, helper, profile):
+  def __init__(self, report, records, width, height, size, options, helper, profile):
     super(Delta, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0],
                                 heightUnit=height[1], profile=profile)
     self.add_helper(helper)
@@ -243,34 +248,32 @@ class Delta(Html.Html):
     if not 'thresold2' in self.vals:
       self.vals['thresold2'] = 50
     self.css({"color": self.vals['color']})
+    self._jsStyles = options
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
        var htmlId = htmlObj.attr('id');
        var variation = 100 * (data.number - data.prevNumber) / data.prevNumber;
-       var warning = ''; var currVal = FormatNumber(data.number, 0, ',', ','); 
-       if (variation > data.thresold1) { warning = '<i style="color:%(recColod)s;" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;' ;};
-       if (data.url != null) {currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
-       if (data.label != undefined){currVal = data.label +" "+ currVal};
-       $("#"+ htmlId + "_progress").progressbar({value: variation});
-       if (variation > data.thresold1){ $("#"+ htmlId + "_progress").children().css({ 'background': 'Red' }); } 
-       else if (variation > data.thresold2){ $("#"+ htmlId + "_progress").children().css({ 'background': 'Orange' }); } 
-       else{ $("#"+ htmlId + "_progress").children().css({ 'background': 'LightGreen' });}
+       var warning = ''; var currVal = %(number)s; 
+       if(variation > data.thresold1) { warning = '<i style="color:%(recColod)s;" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;' ;};
+       if(data.url != null) {currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
+       if(data.label != undefined){currVal = data.label +" "+ currVal};
+       $("#"+ htmlId +"_progress").progressbar({value: variation});
+       if(variation > data.thresold1){$("#"+ htmlId +"_progress").children().css({'background': 'Red' })} 
+       else if(variation > data.thresold2){ $("#"+ htmlId +"_progress").children().css({'background': 'Orange'})} 
+       else{$("#"+ htmlId +"_progress").children().css({'background': 'LightGreen'})}
        htmlObj.find('div').first().html(warning + currVal);
-       htmlObj.find('div').last().html('Previous number: ' + FormatNumber(data.prevNumber, 0, ',', ','));
-      ''' % {"recColod": self.getColor('danger', 1)})
+       htmlObj.find('div').last().html('Previous number: '+ %(prev_number)s);
+      ''' % {"recColod": self.getColor('danger', 1), 'number': self._report.js.number("data.number", isPyData=False).toFormattedNumber(
+        decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
+        thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
+        decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False)),
+             'prev_number': self._report.js.number("data.prevNumber", isPyData=False).toFormattedNumber(
+        decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
+        thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
+        decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False))})
 
   def __str__(self):
-    self.addGlobalFnc("FormatNumber(n, decPlaces, thouSeparator, decSeparator)", '''
-          decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-          decSeparator = decSeparator == undefined ? "." : decSeparator,
-          thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-          sign = n < 0 ? "-" : "",
-          i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-          j = (j = i.length) > 3 ? j % 3 : 0;
-          return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
-      ''')
-
     return '''<div %(strAttr)s>
       <div style="width:100%%;text-align:right;font-size:%(size)spx;"></div>
       <div id="%(htmlId)s_progress" style="height:10px;color:%(color)s"></div>
@@ -322,9 +325,9 @@ class DocScript(Html.Html):
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''
-      var request = "/reports/doc/"+ data.docType +"/"+ data.scriptName +"/"+ data.clssName +"/" + data.functionName;
-      if ( data.functionName == '') { request = "/reports/doc/"+ data.docType +"/" + data.scriptName + "/" + data.clssName; }
-      $.post( request, function( data ) { JSON.parse(data).forEach(function(rec) { htmlObj.find('pre').append('<code>' + rec + '</code><br />') ; }) ;}); ''')
+      var request = "/reports/doc/"+ data.docType +"/"+ data.scriptName +"/"+ data.clssName +"/"+ data.functionName;
+      if(data.functionName == ''){request = "/reports/doc/"+ data.docType +"/"+ data.scriptName +"/"+ data.clssName};
+      $.post(request, function(data){JSON.parse(data).forEach(function(rec){htmlObj.find('pre').append('<code>'+ rec +'</code><br />')})})''')
 
   def __str__(self):
     label = "from script <b>%s</b>" % self.vals['scriptName']

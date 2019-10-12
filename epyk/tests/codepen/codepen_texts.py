@@ -18,9 +18,11 @@ title.style.div.mouse_hover_border_bottom().mouse_pointer()
 rptObj.ui.texts.preformat("This is a __preformatted__ text %s" % rptObj.entities.EURO)
 
 #
-rptObj.ui.rich.vignet({'title': 'Python', 'number': 10000, 'text': 'Content', 'color': 'green', 'url':
+rptObj.ui.rich.vignet({'title': 'Python', 'number': 10000, 'text': 'This is the **content**', 'color': 'green', 'url':
                        'https://www.python.org/', 'icon': 'fab fa-python', 'tooltip': 'Python Fondation',
-                       'urlTitle': 'WebSite'})
+                       'urlTitle': 'WebSite'}, options={'decPlaces': 3})
+rptObj.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50})
+rptObj.ui.texts.up_down({'previous': 240885, 'value': 240985})
 
 #
 rptObj.ui.texts.text("This is a text with a max lenght")

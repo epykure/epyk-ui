@@ -309,7 +309,7 @@ class Texts(object):
 
     :return:
     """
-    dflt_options = {}
+    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
     if options is not None:
       dflt_options.update(options)
     size = self.context._size(size)
@@ -339,7 +339,7 @@ class Texts(object):
 
     :return:
     """
-    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": ','}
+    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
     if options is not None:
       dflt_options.update(options)
     size = self.context._size(size)

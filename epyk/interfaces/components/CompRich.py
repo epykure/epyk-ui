@@ -33,7 +33,7 @@ class Rich(object):
     return self.context.register(html.HtmlTextComp.TextBubble(self.context.rptObj, recordSet or {}, width, height,
                                                               color, size, background_color, helper, profile))
 
-  def delta(self, recordSet=None, width=(200, 'px'), height=(80, 'px'), size=None, helper=None, profile=None):
+  def delta(self, recordSet=None, width=(200, 'px'), height=(80, 'px'), size=None, options=None, helper=None, profile=None):
     """
 
     Example
@@ -53,8 +53,11 @@ class Rich(object):
     :rtype: html.HtmlTextComp.Delta
     :return:
     """
+    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
+    if options is not None:
+      dflt_options.update(options)
     return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, recordSet or {}, width, height, size,
-                                                         helper, profile))
+                                                         dflt_options, helper, profile))
 
   def vignet(self, rec=None, width=(100, '%'), height=(None, 'px'), size=(None, 'px'), color_title=None, options=None,
              helper=None, profile=None):
@@ -77,7 +80,7 @@ class Rich(object):
 
     :return:
     """
-    dflt_options = {}
+    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.', 'markdown': True}
     if options is not None:
       dflt_options.update(options)
     size = self.context._size(size)
