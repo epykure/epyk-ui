@@ -11,7 +11,7 @@ class JsAggColSum(object):
   content = '''
     var value = 0;
     data.forEach(function(rec){if(rec[column] !== undefined){value += rec[column]}});
-    result = {label: column, value: value}
+    result = [{label: column, value: value}]
     '''
 
 
