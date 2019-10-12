@@ -522,7 +522,7 @@ class JsObject(object):
       jsObj._addImport("babel-polyfill")
     return "try{Object.assign({}, %s, %s)} catch(err){console.warn('Assign not supported by the browser')}" % (self.varId, dico)
 
-  def toformattedNumber(self, decPlaces=0, thouSeparator=',', decSeparator='.', report=None):
+  def toFormattedNumber(self, decPlaces=0, thouSeparator=',', decSeparator='.', report=None):
     """
 
     :param decPlaces: Float, the number of decimal to be displayed

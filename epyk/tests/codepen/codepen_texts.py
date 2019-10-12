@@ -18,6 +18,11 @@ title.style.div.mouse_hover_border_bottom().mouse_pointer()
 rptObj.ui.texts.preformat("This is a __preformatted__ text %s" % rptObj.entities.EURO)
 
 #
+rptObj.ui.rich.vignet({'title': 'Python', 'number': 10000, 'text': 'Content', 'color': 'green', 'url':
+                       'https://www.python.org/', 'icon': 'fab fa-python', 'tooltip': 'Python Fondation',
+                       'urlTitle': 'WebSite'})
+
+#
 rptObj.ui.texts.text("This is a text with a max lenght")
 rptObj.ui.texts.code("This is a code block")
 

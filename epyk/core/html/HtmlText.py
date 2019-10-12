@@ -570,7 +570,7 @@ class Numeric(Html.Html):
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__,
-                      "%s.html(%s)" % (self.jqId, self.js.string("data", isPyData=False).toformattedNumber(
+                      "%s.html(%s)" % (self.jqId, self.js.string("data", isPyData=False).toFormattedNumber(
                         decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
                         thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
                         decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False))))

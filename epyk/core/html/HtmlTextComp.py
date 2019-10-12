@@ -9,16 +9,16 @@ from epyk.core.html import Html
 
 
 class UpDown(Html.Html):
-  name, category, callFnc = 'Up and Down', 'Number', 'updown'
+  name, category, callFnc = 'Up and Down', 'Texts', 'updown'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   __pyStyle = ['CssDivNoBorder']
 
-  def __init__(self, report, recordSet, size, color, label, dataSrc, helper, profile):
-    if recordSet is None:
-      recordSet = {'value': 0, 'previous': 0}
+  def __init__(self, report, rec, size, color, label, options, helper, profile):
+    if rec is None:
+      rec = {'value': 0, 'previous': 0}
     if label is not None:
-      recordSet["label"] = label
-    super(UpDown, self).__init__(report, recordSet, dataSrc=dataSrc, profile=profile)
+      rec["label"] = label
+    super(UpDown, self).__init__(report, rec, profile=profile)
     self.add_helper(helper)
     self.vals['color'] = self.getColor('colors', 9) if color is None else color
     self.size = size[0]
@@ -31,7 +31,7 @@ class UpDown(Html.Html):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
       var delta = data.value - data.previous; if(data.previous == 0) {var relMove = 'N/A'} else {var relMove = 100 * ((data.value - data.previous) / data.previous)};
       if(data.digits == undefined){data.digits = 0};
-      if(data.label != undefined){htmlObj.append("<span style='padding:5px;font-size:%(size)spx'>"+data.label+"</span>")};
+      if(data.label != undefined){htmlObj.append("<span style='padding:5px;font-size:%(size)spx'>"+ data.label +"</span>")};
       if (delta < 0) {
         htmlObj.append("<span style='padding:5px'>"+ FormatNumber(data.value, data.digits, ',', ',') +"</span>");
         htmlObj.append("<span style='padding:5px;color:%(redColor)s;font-size:%(size)spx'>("+ FormatNumber(delta, data.digits, ',', ',') +")</span>");
@@ -45,15 +45,6 @@ class UpDown(Html.Html):
       ''' % {"greenColor": self.getColor("success", 1), "redColor": self.getColor("danger", 1), "size": self.size - 2})
 
   def __str__(self):
-    self.addGlobalFnc("FormatNumber(n, decPlaces, thouSeparator, decSeparator)", '''
-      decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-      decSeparator = decSeparator == undefined ? "." : decSeparator,
-      thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-      sign = n < 0 ? "-" : "",
-      i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-      j = (j = i.length) > 3 ? j % 3 : 0;
-      return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
-    ''')
     return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
 
 
@@ -178,7 +169,7 @@ class Vignet(Html.Html):
   __pyStyle = ['CssDivChart', 'CssText', 'CssNumberCenter']
   __reqCss, __reqJs = ['font-awesome', 'jqueryui'], ['font-awesome', 'jquery']
 
-  def __init__(self, report, records, width, height, size, colorTitle, helper, profile):
+  def __init__(self, report, records, width, height, size, colorTitle, options, helper, profile):
     super(Vignet, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1], profile=profile)
     self.add_helper(helper)
@@ -189,14 +180,14 @@ class Vignet(Html.Html):
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      if (data.urlTitle != undefined || data.urlTitle != null) {htmlObj.find('div').find('p').first().html('<a href="'+ data.urlTitle +'" style="text-decoration:none;color:%(blackColor)s">' + data.title + '</a>'); }
-      else {htmlObj.find('div').find('p').first().html(data.title)}
+      if (data.urlTitle != undefined || data.urlTitle != null){htmlObj.find('div').find('p').first().html('<a href="'+ data.urlTitle +'" style="text-decoration:none;color:%(blackColor)s">'+ data.title +'</a>')}
+      else{htmlObj.find('div').find('p').first().html(data.title)};
       htmlObj.find('div').find('p').eq(2).html(data.value);
-      if (data.url != undefined || data.url != null) { htmlObj.find('div').find('p').last().html('<a href="'+ data.url +'" style="text-decoration:none;color:%(blackColor)s">' + data.number + '</a>') ; }
-      else { htmlObj.find('div').find('p').last().html(FormatNumber(data.number, 0, ',', ','))}
-      if (data.tooltip != undefined) {htmlObj.find('div').find('p').last().tooltip( )};
-      if (data.text != undefined) {  htmlObj.find('p').last().html(data.text)}
-      ''' % {"blackColor": self.getColor('greys', 9)})
+      if(data.url != undefined || data.url != null){htmlObj.find('div').find('p').last().html('<a href="'+ data.url +'" style="text-decoration:none;color:%(blackColor)s">'+ %(number)s +'</a>')}
+      else{htmlObj.find('div').find('p').last().html(%(number)s)};
+      if(data.tooltip != undefined){htmlObj.find('div').find('p').last().tooltip()};
+      if(data.text != undefined){htmlObj.find('p').last().html(data.text)}
+      ''' % {"blackColor": self.getColor('greys', 9), 'number': self._report.js.number("data.number", isPyData=False).toFormattedNumber()})
 
   def figureClick(self, jsData='data'):
     """

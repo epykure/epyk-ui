@@ -287,7 +287,7 @@ class Texts(object):
     return self.context.register(html.HtmlText.BlockQuote(self.context.rptObj, text, author, size, color, width,
                                                           height, htmlCode, helper, profile))
 
-  def up_down(self, recordSet=None, size=(None, "px"), color=None, label=None, dataSrc=None, helper=None, profile=None):
+  def up_down(self, rec=None, size=(None, "px"), color=None, label=None, options=None, helper=None, profile=None):
     """
     Up and down Text component
 
@@ -297,11 +297,11 @@ class Texts(object):
     Documentation
     https://fontawesome.com/
 
-    :param recordSet:
+    :param rec:
     :param size:
     :param color:
     :param label:
-    :param dataSrc:
+    :param options:
     :param helper:
     :param profile:
 
@@ -309,8 +309,11 @@ class Texts(object):
 
     :return:
     """
+    dflt_options = {}
+    if options is not None:
+      dflt_options.update(options)
     size = self.context._size(size)
-    return self.context.register(html.HtmlTextComp.UpDown(self.context.rptObj, recordSet, size, color, label, dataSrc, helper, profile))
+    return self.context.register(html.HtmlTextComp.UpDown(self.context.rptObj, rec, size, color, label, dflt_options, helper, profile))
 
   def number(self, number=None, label=None, icon=None, size=(None, "px"), color=None, tooltip='', htmlCode=None,
              options=None, helper=None, profile=None):

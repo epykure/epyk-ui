@@ -56,7 +56,7 @@ class Rich(object):
     return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, recordSet or {}, width, height, size,
                                                          helper, profile))
 
-  def vignet(self, recordSet=None, width=(100, '%'), height=(None, 'px'), size=(None, 'px'), color_title=None,
+  def vignet(self, rec=None, width=(100, '%'), height=(None, 'px'), size=(None, 'px'), color_title=None, options=None,
              helper=None, profile=None):
     """
 
@@ -67,7 +67,7 @@ class Rich(object):
 
     Documentation
 
-    :param recordSet:
+    :param rec:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param size: Optional, A tuple with a integer for the size and its unit
@@ -75,12 +75,16 @@ class Rich(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
 
-    :rtype: html.HtmlTextComp.Vignet
     :return:
     """
+    dflt_options = {}
+    if options is not None:
+      dflt_options.update(options)
     size = self.context._size(size)
-    return self.context.register(html.HtmlTextComp.Vignet(self.context.rptObj, recordSet, width, height,
-             size, color_title, helper, profile))
+    vignet = html.HtmlTextComp.Vignet(self.context.rptObj, rec, width, height, size, color_title, dflt_options, helper,
+                                      profile)
+    self.context.register(vignet)
+    return vignet
 
   def stars(self, val=None, label=None, color=None, align='left', best=5, htmlCode=None, helper=None, profile=None):
     """
