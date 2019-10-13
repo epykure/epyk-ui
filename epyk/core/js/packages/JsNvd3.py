@@ -321,6 +321,10 @@ class JsNvd3Line(JsNvd3Bar):
   chartFnc = "lineChart"
 
 
+class JsNvd3Histo(JsNvd3Bar):
+  chartFnc = "historicalBarChart"
+
+
 class JsNvd3Pie(JsNvd3):
   chartFnc = "pieChart"
 

@@ -56,6 +56,28 @@ class Nvd3(object):
     bar_chart._data = self.parent.context.rptObj.js.data.records(data).to.nvd3.bar(y_columns, x_axis, profile or False)
     return bar_chart
 
+  def histo(self, data=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+            width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Documentation
+    http://nvd3.org/examples/discreteBar.html
+
+    :param data:
+    :param y_columns:
+    :param x_axis:
+    :param title:
+    :param profile:
+    :param width:
+    :param height:
+    :param htmlCode:
+
+    """
+    bar_chart = graph.GraphNVD3.ChartHisto(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(bar_chart)
+    bar_chart._data = self.parent.context.rptObj.js.data.records(data).to.nvd3.bar(y_columns, x_axis, profile or False)
+    return bar_chart
+
   def pie(self, data=None, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
           width=(100, "%"), height=(330, "px"), htmlCode=None):
     """

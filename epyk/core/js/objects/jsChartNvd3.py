@@ -76,6 +76,13 @@ class JsNVD3Links(object):
     return self._data
 
   def line(self, y_columns, x_axis, profile=False):
+    """
+
+    :param y_columns:
+    :param x_axis:
+    :param profile:
+
+    """
     return self.bar(y_columns, x_axis, profile)
 
   def sunburst(self, y_columns, x_axis, profile=False):
