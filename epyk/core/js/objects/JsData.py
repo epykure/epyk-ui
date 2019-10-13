@@ -2,6 +2,8 @@
 
 """
 
+import json
+
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsNumber
@@ -55,26 +57,33 @@ class ContainerData(object):
     self._report, self._schema = report, schema
 
   @property
-  def f(self):
+  def fnc(self):
     """
     All the predefined transformation functions.
     """
     return JsFncs.FncOnRecords(self._report._props, self._schema)
 
   @property
-  def o(self):
+  def to(self):
     """
     All the possible object transformation to deal with external packages
     """
     return JsFncs.FncToObject(self._report._props, self._schema)
 
   @property
-  def a(self):
+  def agg(self):
     """
     Property to the data aggregator functions
-    The aggregators will create a new record with different column names
+    The aggregator will create a new record with different column names
     """
     return JsFncs.FncRoAggRec(self._report._props, self._schema)
+
+  @property
+  def filter(self):
+    """
+
+    """
+    return JsFncs.FncFiltere(self, self._report._props, self._schema)
 
 
 class RawData(object):
@@ -141,25 +150,44 @@ class RawData(object):
     return "ToTsv(%s, %s)" % (self.jqId, colNames)
 
   @property
-  def f(self):
+  def fnc(self):
+    """
+
+    :return:
+    """
     return JsFncs.FncOnRecords(self, self._report._props, self._schema)
 
   @property
-  def o(self):
+  def filter(self):
+    """
+
+    """
+    return JsFncs.FncFiltere(self, self._report._props, self._schema)
+
+  @property
+  def to(self):
+    """
+
+    """
     return JsFncs.FncToObject(self, self._report._props, self._schema)
 
   @property
-  def a(self):
+  def agg(self):
     """
     Property to the data aggregator functions
-    The aggregators will create a new record with different column names
+    The aggregator will create a new record with different column names
     """
     return JsFncs.FncRoAggRec(self, self._report._props, self._schema)
 
   def toStr(self):
     data = "data_%s" % self._data_id
+    # Add the different javascript transformation functions
     for fnc in self._schema.get('fncs', []):
       data = fnc % data
+    # Add the global filtering rules
+    if len(self._schema.get("filters", [])) > 0:
+      data = "%s(%s, [%s])" % ("JsFilter", data, ",".join(self._schema['filters']))
+    # Add the final output object transformation
     if self._schema.get('out', None) is not None:
       data = self._schema['out'] % data
     return data

@@ -272,24 +272,91 @@ class FncOnRecords(object):
     self._data_schema['fncs'].append("%s(%%s, %s, '%s', '%s')" % (fnc_name, n, column, order))
     return self
 
-  def filter(self, column, val, compare_type="=", all_if_empty=True):
+
+class FncFiltere(object):
+  def __init__(self, data, js_src, data_schema=None, profile=False):
+    self._js_src, self._data_schema, self._data = js_src, data_schema, data
+    fnc_name = JsFncsRecords.JsFilter.__name__
+    fnc_pmts = ["data"] + (list(JsFncsRecords.JsFilter.pmts) or [])
+    if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
+      self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {
+        'content': "var result = []; %s;return result" % JsUtils.cleanFncs(JsFncsRecords.JsFilter.content), 'pmt': fnc_pmts}
+    self._data_schema['filters'] = []
+
+  def custom(self, column, val, compare_type, all_if_empty=True):
+    filter_data = JsUtils.jsConvertData({"colName": column, "val": val, "op": compare_type, "allIfEmpty": all_if_empty}, None)
+    self._data_schema['filters'].append(filter_data.toStr())
+    return self._data
+
+  def not_in_(self):
+    pass
+
+  def not_range_(self, column, val, compare_type="in", all_if_empty=True):
+    pass
+
+  def in_(self, column, val):
     """
 
     :param column:
     :param val:
-    :param compare_type:
-    :param all_if_empty:
-
-    :return:
     """
-    fnc_name = JsFncsRecords.JsFilter.__name__
-    self.__register_records_fnc(fnc_name, JsFncsRecords.JsFilter.content, fnc_pmts=list(JsFncsRecords.JsFilter.pmts))
-    filter_data = JsUtils.jsConvertData({"colName": column, "val": val, "op": compare_type, "allIfEmpty": all_if_empty}, None)
-    self._data_schema['fncs'].append("%s(%%s, [%s])" % (fnc_name, filter_data))
-    return self._data
+    return self.custom(column, val, "in", True)
 
-  def filters(self):
-    pass
+  def range_(self, column, val, strict_left=False, strict_right=False):
+    """
+
+    :param column:
+    :param val:
+    :param strict_left:
+    :param strict_right:
+    """
+    if not strict_left:
+      if not strict_right:
+        return self.custom(column, val, "><=", True)
+
+      return self.custom(column, val, "><", True)
+
+    if not strict_right:
+      if not strict_left:
+        return self.custom(column, val, "=><", True)
+
+      return self.custom(column, val, "><", True)
+
+    return self.custom(column, val, "=><=", True)
+
+  def eq_(self, column, val):
+    """
+
+    :param column:
+    :param val:
+    """
+    return self.custom(column, val, ">", True)
+
+  def sup_(self, column, val, strict=False):
+    """
+    Filter only the data above the value for the given key in the record
+
+    :param column: String. The column name
+    :param val: Object. The value in the dictionary
+    :param strict: Boolean. A flag to specify if the value should be included
+    """
+    if strict:
+      return self.custom(column, val, ">", True)
+
+    return self.custom(column, val, ">=", True)
+
+  def inf_(self, column, val, strict=False):
+    """
+    Filter only the data below the value for the given key in the record
+
+    :param column: String. The column name
+    :param val: Object. The value in the dictionary
+    :param strict: Boolean. A flag to specify if the value should be included
+    """
+    if strict:
+      return self.custom(column, val, "<", True)
+
+    return self.custom(column, val, "<=", True)
 
 
 class JsRegisteredFunctions(object):

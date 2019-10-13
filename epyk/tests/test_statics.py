@@ -1,7 +1,9 @@
 """
 Common module for all the static data used in the different tests
 """
+
 import os
+import json
 import webbrowser
 
 # Deduce the \outs folder based on this module path
@@ -24,3 +26,23 @@ def open_url(url):
 
   """
   webbrowser.open(url)
+
+
+def get_data(name):
+  """
+  Load the static files used to test the different function.
+  Files can be json or txt file (with header and delimited with a ,)
+
+  :param name: THe filename
+
+  :return: A record (A list of dictionaries)
+  """
+  if name.endswith(".json"):
+    return json.load(open(os.path.join(TESTS_PATH, "data", name)))
+
+  records = []
+  with open(os.path.join(TESTS_PATH, "data", name)) as file:
+    header = file.readline().strip().split(",")
+    for line in file:
+      records.append(dict(zip(header, line.strip().split(","))))
+  return records
