@@ -223,8 +223,12 @@ class FncOnRecords(object):
 
     The Javascript function are using the main data as a first parameter
 
-    :param keys:
-    :param values:
+    If values is defined, the Javascript will aggregate the data based on the composite key and the values will be
+    available in the record. Also the count will be displayed.
+    The values will be one in the record and not the sum
+
+    :param keys: A list with the column names
+    :param values: A list with the values to keep in the result record
 
     :return: "This" to allow function chains
     """
@@ -239,7 +243,20 @@ class FncOnRecords(object):
       fnc_name = JsFncsRecords.JsCount.__name__
       self.__register_records_fnc(fnc_name, JsFncsRecords.JsCount.value, fnc_pmts=list(JsFncsRecords.JsCount.params))
       self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
-    return self
+    return self._data
+
+  def count_with_kpi(self, keys, values, profile=False):
+    """
+
+    :param keys:
+    :param values:
+    :param profile:
+    :return:
+    """
+    fnc_name = JsFncsRecords.JsCountSum.__name__
+    self.__register_records_fnc(fnc_name, JsFncsRecords.JsCountSum.value, fnc_pmts=list(JsFncsRecords.JsCountSum.params))
+    self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
+    return self._data
 
   def count_distinct(self, keys, profile=False):
     """
@@ -253,7 +270,7 @@ class FncOnRecords(object):
     fnc_name = JsFncsRecords.JsCountDistinct.__name__
     self.__register_records_fnc(fnc_name, JsFncsRecords.JsCountDistinct.value, fnc_pmts=list(JsFncsRecords.JsCountDistinct.params))
     self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, keys))
-    return self
+    return self._data
 
   def top(self, column, n=1, order='desc', profile=False):
     """

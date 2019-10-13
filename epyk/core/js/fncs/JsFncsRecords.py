@@ -226,25 +226,39 @@ class JsOperations(JsRecFunc):
 
 
 class JsCount(JsRecFunc):
-  """
-  """
-
-  @staticmethod
-  def extendColumns(jsSchema, params):
-    if params[0] is not None and params[1] is not None:
-      jsSchema['keys'] |= set(params[0])
-      jsSchema['values'] |= set(params[1])
-
   params = ("keys", "values")
   value = '''
     var temp = {}; var order = [];
     data.forEach(function(rec){ 
-      var aggKey = []; keys.forEach(function(k){ aggKey.push( rec[k])}); var newKey = aggKey.join("#"); order.push(newKey);
-      if(!(newKey in temp)){temp[newKey] = {}};
-      values.forEach(function(v){if (!(v in temp[newKey])) {temp[newKey][v] = 1} else {temp[newKey][v] += 1}}) ;}); 
+      var aggKey = []; keys.forEach(function(k){aggKey.push(rec[k])}); var newKey = aggKey.join("#"); 
+      if(!(newKey in temp)){order.push(newKey); temp[newKey] = {}};
+      values.forEach(function(v){if (!(v in temp[newKey])){
+        temp[newKey][v] = rec[v]; temp[newKey][v +"_count"] = 1} else{temp[newKey][v +"_count"] += 1}})}); 
     order.forEach(function(label){
       var rec = {}; var splitKey = label.split("#");
-      keys.forEach(function(k, i){rec[k] = splitKey[i];});
+      keys.forEach(function(k, i){rec[k] = splitKey[i]});
+      for(var v in temp[label]){rec[v] = temp[label][v]};
+      result.push(rec)})'''
+
+
+class JsCountSum(JsRecFunc):
+  params = ("keys", "values")
+  value = '''
+    var temp = {}; var order = [];
+    data.forEach(function(rec){ 
+      var aggKey = []; keys.forEach(function(k){aggKey.push(rec[k])}); var newKey = aggKey.join("#"); 
+      if(!(newKey in temp)){order.push(newKey); temp[newKey] = {}};
+      values.forEach(function(v){
+        if (!(v in temp[newKey])){
+          temp[newKey][v] = rec[v]; temp[newKey][v +"_count"] = 1; temp[newKey][v +"_min"] = rec[v]; 
+          temp[newKey][v +"_max"] = rec[v]} 
+        else{
+          if(rec[v] > temp[newKey][v +"_max"]){temp[newKey][v +"_max"] = rec[v]};
+          if(rec[v] < temp[newKey][v +"_min"]){temp[newKey][v +"_min"] = rec[v]};
+          temp[newKey][v] += rec[v];temp[newKey][v +"_count"] += 1}})}); 
+    order.forEach(function(label){
+      var rec = {}; var splitKey = label.split("#");
+      keys.forEach(function(k, i){rec[k] = splitKey[i]});
       for(var v in temp[label]){rec[v] = temp[label][v]};
       result.push(rec)})'''
 
@@ -284,7 +298,8 @@ class JsCountDistinct(object):
     var temp = {}; keys.forEach(function(k){temp[k] = {}});
     data.forEach(function(rec){keys.forEach(function(k){temp[k][rec[k]] = 1})}); 
     for(var col in temp){
-      var dCount = Object.keys(temp[col]).length; result.push({'column': col, 'count_distinct': dCount})}'''
+      var dCount = Object.keys(temp[col]).length; 
+      result.push({'column': col, 'count': dCount, 'distinct': true, 'values': Object.keys(temp[col])})}'''
 
 
 class JsCountAll(object):
@@ -301,7 +316,7 @@ class JsCountAll(object):
       keys.forEach(function(k){
         var aggKey = k +"#"+ rec[k]; if(!(aggKey in temp)){order.push(aggKey); temp[aggKey] = 1} else{temp[aggKey] += 1}})}); 
     order.forEach(function(label){
-      var keys = label.split("#"); var rec = {'column': keys[0], 'value': keys[1], 'count': temp[label]};
+      var keys = label.split("#"); var rec = {'column': keys[0], 'value': keys[1], 'count': temp[label], 'distinct': false};
       result.push(rec)})'''
 
 
