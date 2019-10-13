@@ -92,7 +92,6 @@ class JsNvd3Utils(object):
 
 
 class JsNvd3(object):
-  chartFnc = "lineChart"
   lib_alias = 'nvd3'
 
   class __internal(object):
@@ -316,6 +315,10 @@ class JsNvd3Bar(JsNvd3):
 
   def groupSpacing(self, value):
     pass
+
+
+class JsNvd3Line(JsNvd3Bar):
+  chartFnc = "lineChart"
 
 
 class JsNvd3Pie(JsNvd3):

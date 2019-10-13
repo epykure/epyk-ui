@@ -6,8 +6,8 @@ from epyk.core.js import JsUtils
 
 
 class JsNVD3Links(object):
-  def __init__(self, js_src, data_schema=None, profile=False):
-    self._js_src, self._data_schema, self.profile = js_src, data_schema, profile
+  def __init__(self, data, js_src, data_schema=None, profile=False):
+    self._js_src, self._data_schema, self.profile, self._data = js_src, data_schema, profile, data
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
     """
@@ -49,6 +49,7 @@ class JsNVD3Links(object):
     x_axis = JsUtils.jsConvertData(x_axis, None)
     self.__register_records_fnc(fnc_name, JsNVD3Pie.content, list(JsNVD3Pie.pmts), profile | self.profile)
     self._data_schema['out'] = "%s(%%s, %s, %s)" % (fnc_name, y_columns, x_axis)
+    return self._data
 
   def bar(self, y_columns, x_axis, profile=False):
     """
@@ -72,6 +73,10 @@ class JsNVD3Links(object):
     x_axis = JsUtils.jsConvertData(x_axis, None)
     self.__register_records_fnc(fnc_name, JsNVD3Bar.content, list(JsNVD3Bar.pmts), profile | self.profile)
     self._data_schema['out'] = "%s(%%s, %s, %s)" % (fnc_name, y_columns, x_axis)
+    return self._data
+
+  def line(self, y_columns, x_axis, profile=False):
+    return self.bar(y_columns, x_axis, profile)
 
   def sunburst(self, y_columns, x_axis, profile=False):
     """
