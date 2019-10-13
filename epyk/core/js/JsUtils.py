@@ -248,6 +248,9 @@ class JsFile(object):
 
     :return:
     """
+    for data_id, data in rptObj._src._props.get("data", {}).get('sources', {}).items():
+      self.__data.append("var data_%s = %s" % (data_id, json.dumps(data)))
+
     for k, v in rptObj._src._props.get('js', {}).get('functions', {}).items():
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       self.__data.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
@@ -311,10 +314,6 @@ class JsFile(object):
         outFile.write("function %s(%s){%s}" % (fnc, ",".join(details.get('pmt', [])), details["content"]))
       import_obj = Imports.ImportManager(online=True)
       js_external = import_obj.jsResolve(jsObj._src.jsImports)
-    outFile.write("\n\n")
-    outFile.write("//Javascript Data\n\n")
-    for data_id, data in jsObj._src._props.get("data", {}).get('sources', {}).items():
-      outFile.write("var data_%s = %s" % (data_id, json.dumps(data)))
     outFile.write("\n\n")
     outFile.write("//Javascript functions\n\n")
     outFile.write(";".join(self.__data))

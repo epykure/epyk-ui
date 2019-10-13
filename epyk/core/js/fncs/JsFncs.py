@@ -13,6 +13,11 @@ from epyk.core.js import JsUtils
 
 class FncToObject(object):
   def __init__(self, data, js_src, data_schema=None):
+    """
+    :param data:
+    :param js_src:
+    :param data_schema:
+    """
     self._js_src, self._data_schema, self._data = js_src, data_schema, data
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
@@ -40,7 +45,7 @@ class FncToObject(object):
     """
     Data transformation to the NVD3 package
     """
-    return JsChartNvd3.JsNVD3Links(self._js_src, self._data_schema)
+    return JsChartNvd3.JsNVD3Links(self._data, self._js_src, self._data_schema)
 
   @property
   def c3(self):

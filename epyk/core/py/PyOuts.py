@@ -82,6 +82,9 @@ class PyOuts(object):
         htmlParts.append(self._report.htmlItems[objId].html())
 
     onloadParts = []
+    for data_id, data in self._report._props.get("data", {}).get('sources', {}).items():
+      onloadParts.append("var data_%s = %s" % (data_id, json.dumps(data)))
+
     for k, v in self._report._props.get('js', {}).get('functions', {}).items():
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       onloadParts.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
