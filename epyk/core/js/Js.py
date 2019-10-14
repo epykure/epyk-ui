@@ -666,7 +666,7 @@ class JsBase(object):
     """
     return JsNodeDom.JsDoms("document.getElementsByTagName('%s')[%s]" % (tagName, i), varName="%s_%s" % (tagName, i), setVar=True)
 
-  def createElement(self, tagName, varName=None, setVar=True):
+  def createElement(self, tagName, varName=None, setVar=True, dom_id=None):
     """
     The createElement() method creates an Element Node with the specified name.
 
@@ -676,10 +676,14 @@ class JsBase(object):
     :param tagName: Required. The name of the element you want to create
     :param varName: Optional. The variable name to be set. Default random name
     :param setVar: Optional. Create a variable for the new object. Default True
+    :param dom_id:
 
     :return:
     """
-    return JsNodeDom.JsDoms.new(tagName, varName=varName, setVar=setVar)
+    dom_obj = JsNodeDom.JsDoms.new(tagName, varName=varName, setVar=setVar)
+    if dom_id is not None:
+      dom_obj.attr("id", dom_id)
+    return dom_obj
 
   def createTextNode(self, jsString=None):
     """

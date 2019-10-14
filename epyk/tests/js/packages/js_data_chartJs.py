@@ -19,13 +19,22 @@ data = test_statics.get_data("flights.txt", n=10)
 record = rptObj.js.data.records(data)
 data_fnc = record.fnc.count(["origin", "destination"], ["distance", "delay"])
 
-chart = JsChartJs.ChartJs("test", rptObj, setVar=False)
+chart = JsChartJs.ChartJs("test", rptObj, varName="chart_test")
 
 
 f.writeJs([
   #jsObj.console.log(data_fnc),
+  #rptObj.js.console.log(record.to.chartJs.line(["distance"], "origin")),
+  rptObj.js.createElement(tagName="canvas", varName="test").attr("id", "test"),
+  rptObj.js.body.appendChild(rptObj.js.objects.dom.get("test")),
+  #rptObj.js.console.log(rptObj.js.objects.dom.get("test")),
+  chart,
+])
+
+f.writeJs([
+  #jsObj.console.log(data_fnc),
   rptObj.js.console.log(record.to.chartJs.line(["distance"], "origin")),
-  rptObj.js.console.log(chart)
+  #rptObj.js.console.log(chart)
 ])
 
 # Close the file and print the location of the launcher

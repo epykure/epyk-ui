@@ -74,7 +74,7 @@ class ChartJs(object):
 
   def __init__(self, htmlId, src=None, varName=None, setVar=True):
     self.src = src if src is not None else self.__internal()
-    self._selector = 'new Chart($("%s").get(0).getContext("2d")' % htmlId
+    self._selector = 'new Chart(document.getElementById("%s").getContext("2d"))' % htmlId
     self.varName, self.setVar = varName or self._selector, setVar
     self.src.jsImports.add(self.lib_alias)
     self._js = []
@@ -271,12 +271,19 @@ class ChartJs(object):
     if self._selector is None:
       raise Exception("Selector not defined, use this() or new() first")
 
-    strData = ".".join(self._js)
     if self.setVar:
-      strData = "var %s = %s.%s" % (self.varName, self._selector, strData)
+      if len(self._js) > 0:
+        strData = ".".join(self._js)
+        strData = "var %s = %s.%s" % (self.varName, self._selector, strData)
+      else:
+        strData = "var %s = %s" % (self.varName, self._selector)
       self.setVar = False
     else:
-      strData = "%s.%s" % (self.varName, strData)
+      if len(self._js) > 0:
+        strData = ".".join(self._js)
+        strData = "%s.%s" % (self.varName, strData)
+      else:
+        strData = self.varName
     self._js = [] # empty the stack
     return strData
 
