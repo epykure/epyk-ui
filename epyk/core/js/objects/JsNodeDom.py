@@ -702,3 +702,29 @@ class JsDoms(JsObject.JsObject):
       self.css({"cursor": "pointer"})
     self._js.append("%s.onclick = function(){%s}" % (self.varId, ";".join(JsUtils.jsConvertFncs(jsFncs))))
     return self
+
+  def getContext(self, contextType, contextAttributes=None):
+    """
+    Function dedicated to DOM Canvas types.
+
+    The HTMLCanvasElement.getContext() method returns a drawing context on the canvas, or null if the context identifier is not supported.
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
+
+    :param contextType: Is a DOMString containing the context identifier defining the drawing context associated to the canvas
+    :param contextAttributes: Dictionary with specific context attributes (depending on the type
+
+    TODO: Add a check on the tag
+
+    :return:
+    """
+    types = ["2d", "webgl", "experimental-webgl", "webgl2", "bitmaprenderer"]
+    if contextType not in types:
+      raise Exception("Context type %s not recognised" % contextType)
+
+    if contextAttributes is None:
+      return JsFncs.JsFunction("%s.getContext('%s')" % (self.varId, contextType))
+
+    contextAttributes = JsUtils.jsConvertData(contextAttributes, None)
+    return JsFncs.JsFunction("%s.getContext('%s', %s)" % (self.varId, contextType, contextAttributes))
