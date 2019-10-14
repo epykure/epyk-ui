@@ -6,6 +6,8 @@ https://www.chartjs.org/docs/latest/developers/updates.html
 
 """
 
+import json
+
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
@@ -72,9 +74,9 @@ class ChartJs(object):
   class __internal(object):
     jqId, htmlId, jsImports, cssImport = 'chart', '', set([]), set([])
 
-  def __init__(self, htmlId, src=None, varName=None, setVar=True):
+  def __init__(self, htmlId, config, src=None, varName=None, setVar=True):
     self.src = src if src is not None else self.__internal()
-    self._selector = 'new Chart(document.getElementById("%s").getContext("2d"))' % htmlId
+    self._selector = 'new Chart(document.getElementById("%s").getContext("2d"), %s)' % (htmlId, config.toStr())
     self.varName, self.setVar = varName or self._selector, setVar
     self.src.jsImports.add(self.lib_alias)
     self._js = []
@@ -287,3 +289,127 @@ class ChartJs(object):
     self._js = [] # empty the stack
     return strData
 
+
+class ChartJsOptTicks(object):
+
+  def __init__(self):
+    self.__attrs = {}
+
+  def beginAtZero(self, flag):
+    self.__attrs["beginAtZero"] = JsUtils.jsConvertData(flag, None)
+    return self
+
+  def display(self, flag):
+    self.__attrs["display"] = JsUtils.jsConvertData(flag, None)
+    return self
+
+  def custom(self, name, value, isPyData=False):
+    if isPyData:
+      self.__attrs[name] = json.dumps(value)
+    else:
+      self.__attrs[name] = value
+    return self
+
+  def __str__(self):
+    return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self.__attrs.items()])
+
+
+class ChartJsOptScale(object):
+
+  def __init__(self, options):
+    self._options = options
+
+  def ticks(self):
+    pass
+
+  def gridLines(self):
+    pass
+
+  def stacked(self):
+    pass
+
+
+class ChartJsOptLegend(object):
+
+  def __init__(self, options):
+    self._options = options
+
+  def display(self, flag):
+    self._options["display"] = flag
+
+
+class ChartJsType(object):
+  def __init__(self, type, data):
+    self._type, self._data = type, data
+    self._data_attrs, self._opts_attrs = {}, {}
+
+  def toStr(self):
+    return '{type: "%s", data: %s}' % (self._type, self._data.toStr())
+
+  def backgroundColor(self, colors):
+    """
+    Data attribute to change the background color (the area between the line chart and the x axis)
+
+    :param colors: Array. The list of colors to add to the data definition
+    :return: The ChartJs configuration dictionary for chaining
+    """
+    self._data_attrs["backgroundColor"] = colors
+    return self
+
+  def pointStyle(self, text):
+    self._data_attrs["pointStyle"] = text
+    return self
+
+  def borderColor(self, colors):
+    """
+
+    :param colors:
+    :return:
+    """
+    self._data_attrs["backgroundColor"] = colors
+    return self
+
+  def fill(self, flag):
+    """
+
+    :param flag:
+    :return:
+    """
+    self._data_attrs["fill"] = flag
+    return self
+
+  def steppedLine(self, flag):
+    self._data_attrs["steppedLine"] = flag
+    return self
+
+  def maintainAspectRatio(self, flag):
+    self._opts_attrs["maintainAspectRatio"] = flag
+    return self
+
+  def responsive(self, flag):
+    self._opts_attrs["responsive"] = flag
+    return self
+
+  def scaleShowLabels(self, flag):
+    self._opts_attrs["scaleShowLabels"] = flag
+    return self
+
+  @property
+  def legend(self):
+    return ChartJsOptLegend()
+
+  @property
+  def xAxes(self):
+    self._opts_attrs.setdefault("scales", {})["xAxes"] = []
+    return ChartJsOptScale(self._opts_attrs.setdefault("scales", {})["xAxes"])
+
+  @property
+  def yAxes(self):
+    self._opts_attrs.setdefault("scales", {})["yAxes"] = []
+    return ChartJsOptScale(self._opts_attrs.setdefault("scales", {})["yAxes"])
+
+
+chart_data = ChartJsOptTicks()
+chart_data.beginAtZero(True).custom("test", "function(){}")
+
+print(chart_data)

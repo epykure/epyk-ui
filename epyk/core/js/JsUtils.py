@@ -336,7 +336,6 @@ class JsFile(object):
       outFile.write("var data_%s = %s" % (data_id, json.dumps(data)))
     outFile.write("\n\n")
     outFile.write("//Javascript functions\n\n")
-
     outFile.write("%s;" % jsConvertFncs(src_obj._props.get('js', {}).get('onReady', []), toStr=True))
     outFile.write(";".join(self.__data))
     outFile.close()

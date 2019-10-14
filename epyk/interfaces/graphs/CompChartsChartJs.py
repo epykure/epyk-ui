@@ -14,16 +14,16 @@ class ChartJs(object):
     self.parent = context
     self.chartFamily = "ChartJs"
 
-  def line(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
-           xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def line(self, data=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+           width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
     Documentation
+    http://www.chartjs.org/
 
     :param data:
-    :param seriesNames:
-    :param xAxis:
-    :param otherDims:
+    :param y_columns:
+    :param x_axis:
     :param title:
     :param profile:
     :param xAxisOrder:
@@ -35,12 +35,11 @@ class ChartJs(object):
 
     :rtype: graph.GraphChartJs.Chart
     """
-    if options is None:
-      options = {}
-    return self.parent.context.chart(chartType=sys._getframe().f_code.co_name, data=data, seriesNames=seriesNames,
-                                     xAxis=xAxis, otherDims=otherDims, title=title, chartFamily=self.chartFamily,
-                                     filters=filters, profile=profile, xAxisOrder=xAxisOrder, options=options, width=width,
-                                     height=height, htmlCode=htmlCode)
+    line_chart = graph.GraphChartJs.Chart(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                          filters, profile)
+    self.parent.context.register(line_chart)
+    line_chart._data = self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False)
+    return line_chart
 
   def pie(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
           xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
