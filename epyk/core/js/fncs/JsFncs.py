@@ -38,7 +38,7 @@ class FncToObject(object):
     """
     Data transformation to the ChartJs package
     """
-    return JsChartsJs.JsChartLinks(self._js_src, self._data_schema)
+    return JsChartsJs.JsChartLinks(self._data, self._js_src, self._data_schema)
 
   @property
   def nvd3(self):
@@ -52,35 +52,35 @@ class FncToObject(object):
     """
     Data transformation to the C3 package
     """
-    return JsChartBillboard.JsChartBillboardLinks(self._js_src, self._data_schema)
+    return JsChartBillboard.JsChartBillboardLinks(self._data, self._js_src, self._data_schema)
 
   @property
   def billboard(self):
     """
     Data transformation to the Billboard package
     """
-    return JsChartBillboard.JsChartBillboardLinks(self._js_src, self._data_schema)
+    return JsChartBillboard.JsChartBillboardLinks(self._data, self._js_src, self._data_schema)
 
   @property
   def d3(self):
     """
     Data transformation to the D3 package
     """
-    return JsChartD3.JsChartD3Links(self._js_src, self._data_schema)
+    return JsChartD3.JsChartD3Links(self._data, self._js_src, self._data_schema)
 
   @property
   def dc(self):
     """
     Data transformation to the DC package
     """
-    return JsChartDC.JsChartDCLinks(self._js_src, self._data_schema)
+    return JsChartDC.JsChartDCLinks(self._data, self._js_src, self._data_schema)
 
   @property
   def plotly(self):
     """
     Data transformation to the Plotly package
     """
-    return JsChartPlotly.JsChartPlotlyLinks(self._js_src, self._data_schema)
+    return JsChartPlotly.JsChartPlotlyLinks(self._data, self._js_src, self._data_schema)
 
 
 class FncRoAggRec(object):

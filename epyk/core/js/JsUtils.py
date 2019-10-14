@@ -22,9 +22,9 @@ def fromVersion(data):
   Example
   .fromVersion({'jqueryui': '1.12.0'})
 
-  :param data:
+  :param data: Set the minimum version of a package for a specific function
 
-  :return:
+  :return: The decorated function
   """
   def decorator(func):
     @functools.wraps(func)
@@ -53,10 +53,10 @@ def untilVersion(data, newFeature):
   Example
   .untilVersion({'jqueryui': '1.12.0'}, "new function")
 
-  :param data:
-  :param newFeature:
+  :param data: String. The maximum version number of a package to use this function
+  :param newFeature: String. The new function name
 
-  :return:
+  :return: The decorated function
   """
   def decorator(func):
     @functools.wraps(func)
@@ -77,9 +77,14 @@ def untilVersion(data, newFeature):
 #
 def jsConvertData(jsData, jsFnc):
   """
+  Generic conversion function for any data in the internal framework.
+  This will convert to String any data coming from the Javascript Python interface.
 
-  :param jsData:
-  :param jsFnc:
+  Any pure Python object will be converted using the json function to be then written as a string
+  to the resulting page
+
+  :param jsData: The Python Javascript data
+  :param jsFnc: Optional. The conversion function
 
   :return:
   """
@@ -165,12 +170,14 @@ def getJsValid(value, fail=True):
   return cleanName
 
 
-def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None):
+def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False):
   """
+  Generic conversion function for all the PyJs functions
 
-  :param jsFncs:
-  :param isPyData:
+  :param jsFncs: Array. The PyJs functions
+  :param isPyData: Boolean. A flag to force the Python conversion using json
   :param jsFncVal:
+  :param toStr: Boolean. A flag to specify if the result should be aggregated
 
   :return:
   """
@@ -197,6 +204,9 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None):
         if jsFncVal is not None:
           f = str(f).replace("trans_val", jsFncVal)
         cnvFncs.append(f)
+  if toStr:
+    return ";".join(cnvFncs)
+
   return cnvFncs
 
 
@@ -248,23 +258,24 @@ class JsFile(object):
 
     :return:
     """
-    for data_id, data in rptObj._src._props.get("data", {}).get('sources', {}).items():
+    props = rptObj._src._props if hasattr(rptObj, '_src') else rptObj._props
+    for data_id, data in props.get("data", {}).get('sources', {}).items():
       self.__data.append("var data_%s = %s" % (data_id, json.dumps(data)))
 
-    for k, v in rptObj._src._props.get('js', {}).get('functions', {}).items():
+    for k, v in props.get('js', {}).get('functions', {}).items():
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       self.__data.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
 
-    for c, d in rptObj._src._props.get('js', {}).get("constructors", {}).items():
+    for c, d in props.get('js', {}).get("constructors", {}).items():
       self.__data.append(d)
 
-    for c, d in rptObj._src._props.get('js', {}).get("datasets", {}).items():
+    for c, d in props.get('js', {}).get("datasets", {}).items():
       self.__data.append(d)
 
-    for b in rptObj._src._props.get('js', {}).get("builders", []):
+    for b in props.get('js', {}).get("builders", []):
       self.__data.append(b)
 
-    keyboardShortcuts = rptObj._src._props.get('js', {}).get('keyboard', {})
+    keyboardShortcuts = props.get('js', {}).get('keyboard', {})
     if keyboardShortcuts:
       self.__data.append("document.addEventListener('keydown', function(e){var code = e.keyCode || e.which")
       for k, v in keyboardShortcuts.items():
@@ -275,7 +286,12 @@ class JsFile(object):
     """
     Send the piece of Javascript to Codepen for testing
 
+    Documentation
     https://codepen.io/
+
+    :param rptObj: The report object
+    :param cssObj: The internal CSS object from the page
+    :param target: A string flag to specify the target page in the browser
     """
     import webbrowser
 
@@ -301,19 +317,23 @@ class JsFile(object):
     Write the file and close the buffer
 
     :param jsObj: The internal JsObject
-
     """
+    src_obj = jsObj._src if hasattr(jsObj, '_src') else jsObj
     outFile = open(os.path.join(self.file_path, "%s.js" % self.scriptName), "w")
     js_external = ""
     if jsObj is not None:
       outFile.write("//Javascript Prototype extensions \n\n")
-      for fnc, details in jsObj._src._props.get('js', {}).get('prototypes', {}).items():
+      for fnc, details in src_obj._props.get('js', {}).get('prototypes', {}).items():
         outFile.write("%s = function(%s){%s};" % (fnc, ",".join(details.get('pmts', [])), details["content"]))
       outFile.write("\n\n//Javascript Global functions \n\n")
-      for fnc, details in jsObj._src._props.get('js', {}).get('functions', {}).items():
+      for fnc, details in src_obj._props.get('js', {}).get('functions', {}).items():
         outFile.write("function %s(%s){%s}" % (fnc, ",".join(details.get('pmt', [])), details["content"]))
       import_obj = Imports.ImportManager(online=True)
-      js_external = import_obj.jsResolve(jsObj._src.jsImports)
+      js_external = import_obj.jsResolve(src_obj.jsImports)
+    outFile.write("\n\n")
+    outFile.write("//Javascript Data\n\n")
+    for data_id, data in src_obj._props.get("data", {}).get('sources', {}).items():
+      outFile.write("var data_%s = %s" % (data_id, json.dumps(data)))
     outFile.write("\n\n")
     outFile.write("//Javascript functions\n\n")
     outFile.write(";".join(self.__data))

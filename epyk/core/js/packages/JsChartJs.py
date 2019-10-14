@@ -67,13 +67,16 @@ class CHartJsConfig(object):
 
 
 class ChartJs(object):
+  lib_alias = 'Chart.js'
+
   class __internal(object):
     jqId, htmlId, jsImports, cssImport = 'chart', '', set([]), set([])
 
-  def __init__(self, src=None):
+  def __init__(self, htmlId, src=None, varName=None, setVar=True):
     self.src = src if src is not None else self.__internal()
-    self.selector = self.src.jqId
-    self.src.jsImports.add('Chart.js')
+    self._selector = 'new Chart($("%s").get(0).getContext("2d")' % htmlId
+    self.varName, self.setVar = varName or self._selector, setVar
+    self.src.jsImports.add(self.lib_alias)
     self._js = []
 
   def update(self, config=None):
@@ -265,12 +268,15 @@ class ChartJs(object):
 
     :return: Return the Javascript String
     """
-    if self.selector is None:
+    if self._selector is None:
       raise Exception("Selector not defined, use this() or new() first")
 
-    if len(self._js) == 0:
-      return self.selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
+    strData = ".".join(self._js)
+    if self.setVar:
+      strData = "var %s = %s.%s" % (self.varName, self._selector, strData)
+      self.setVar = False
+    else:
+      strData = "%s.%s" % (self.varName, strData)
     self._js = [] # empty the stack
     return strData
+
