@@ -5,6 +5,7 @@ This class must be extended
 """
 
 from epyk.core.js.primitives import JsString
+from epyk.core.js import JsUtils
 
 
 class JsPackage(object):
@@ -72,3 +73,26 @@ class JsPackage(object):
       strData = "%s.%s" % (self.varName, strData)
     self._js = [] # empty the stack
     return strData
+
+
+class DataAttrs(object):
+  def __init__(self, report, attrs=None, oprions=None):
+    self._report, self.oprions, self._attrs = report, oprions, attrs or {}
+
+  def custom(self, name, value):
+    """
+    Custom function to add a bespoke attribute to a class.
+
+    This entry point will not be able to display any documentation but it is a shortcut to test new features.
+    If the value is a Javascript object, the PyJs object must be used
+
+    :param name: String. The key to be added to the attributes
+    :param value: String or JString. The value of the defined attributes
+
+    :return: The DataAttrs to allow the chains
+    """
+    self._attrs[name] = JsUtils.jsConvertData(value, None)
+    return self
+
+  def __str__(self):
+    return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._attrs.items()])

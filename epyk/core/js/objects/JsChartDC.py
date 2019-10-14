@@ -14,8 +14,8 @@ from epyk.core.js import JsUtils
 
 
 class JsChartDCLinks(object):
-  def __init__(self, js_src, data_schema=None, profile=False):
-    self._js_src, self._data_schema, self.profile = js_src, data_schema, profile
+  def __init__(self, data, js_src, data_schema=None, profile=False):
+    self._js_src, self._data_schema, self.profile, self._data = js_src, data_schema, profile, data
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
     """

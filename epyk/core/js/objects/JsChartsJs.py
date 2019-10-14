@@ -9,8 +9,8 @@ from epyk.core.js import JsUtils
 
 class JsChartLinks(object):
 
-  def __init__(self, js_src, data_schema=None, profile=False):
-    self._js_src, self._data_schema, self.profile = js_src, data_schema, profile
+  def __init__(self, data, js_src, data_schema=None, profile=False):
+    self._js_src, self._data_schema, self.profile, self._data = js_src, data_schema, profile, data
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
     """
@@ -31,7 +31,7 @@ class JsChartLinks(object):
         content = "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def)
       self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': content, 'pmt': fnc_pmts}
 
-  def line(self, y_columns, x_axis, profile=False):
+  def line(self, y_columns, x_axis, colors=None, attrs=None, profile=False):
     """
     Data Conversion to a ChartJs Line chart object.
 
@@ -46,12 +46,17 @@ class JsChartLinks(object):
 
     :return:
     """
+    colors = ["red", "blue"]
+    attrs = attrs or {}
     if not isinstance(y_columns, list):
       y_columns = [y_columns]
     fnc_name = JsChartJsPie.__name__
     x_axis = JsUtils.jsConvertData(x_axis, None)
+    colors = JsUtils.jsConvertData(colors, None)
+    attrs = JsUtils.jsConvertData(attrs, None)
     self.__register_records_fnc(fnc_name, JsChartJs.content, list(JsChartJs.pmts), profile | self.profile)
-    self._data_schema['out'] = "%s(%%s, %s, %s)" % (fnc_name, y_columns, x_axis)
+    self._data_schema['out'] = "%s(%%s, %s, %s, %s, %s)" % (fnc_name, y_columns, x_axis, colors, attrs)
+    return self._data
 
   def pie(self, y_columns, x_axis, profile=False):
     """
@@ -74,6 +79,7 @@ class JsChartLinks(object):
     x_axis = JsUtils.jsConvertData(x_axis, None)
     self.__register_records_fnc(fnc_name, JsChartJsPie.content, list(JsChartJsPie.pmts), profile | self.profile)
     self._data_schema['out'] = "%s(%%s, %s, %s)" % (fnc_name, y_columns, x_axis)
+    return self._data
 
   def polar(self, y_columns, x_axis, profile=False):
     """
@@ -90,7 +96,7 @@ class JsChartLinks(object):
 
     :return:
     """
-    self.pie(y_columns, x_axis, profile)
+    return self.pie(y_columns, x_axis, profile)
 
   def bubble(self, y_columns, x_axis, r_column, profile=False):
     """
@@ -113,6 +119,7 @@ class JsChartLinks(object):
     x_axis = JsUtils.jsConvertData(x_axis, None)
     self.__register_records_fnc(fnc_name, JsChartJsBubble.content, list(JsChartJsBubble.pmts), profile | self.profile)
     self._data_schema['out'] = "%s(%%s, %s, %s, %s)" % (fnc_name, y_columns, x_axis, r_column)
+    return self._data
 
   def scatter(self, y_columns, x_axis, r_column, profile=False):
     """
@@ -135,13 +142,14 @@ class JsChartLinks(object):
     x_axis = JsUtils.jsConvertData(x_axis, None)
     self.__register_records_fnc(fnc_name, JsChartJsScatter.content, list(JsChartJsScatter.pmts), profile | self.profile)
     self._data_schema['out'] = "%s(%%s, %s, %s, %s)" % (fnc_name, y_columns, x_axis, r_column)
+    return self._data
 
 
 # --------------------------------------------------------------------------------------------------------------------
 #                               DATA TRANSFORMATION JAVASCRIPT DEFINITION
 # --------------------------------------------------------------------------------------------------------------------
 class JsChartJs(object):
-  pmts = ("seriesNames", "xAxis")
+  pmts = ("seriesNames", "xAxis", "colors", "attrs")
   content = '''
     var temp = {}; var labels = []; var uniqLabels = {};
     seriesNames.forEach(function(series){temp[series] = {}});
@@ -151,8 +159,9 @@ class JsChartJs(object):
           if (!(rec[xAxis] in uniqLabels)){labels.push(rec[xAxis]); uniqLabels[rec[xAxis]] = true};
           temp[name][rec[xAxis]] = rec[name]}})});
     result = {datasets: [], labels: labels};
-    seriesNames.forEach(function(series){
-      dataSet = {label: series, data: []};
+    seriesNames.forEach(function(series, i){
+      dataSet = {label: series, data: [], backgroundColor: colors[i], borderColor: colors[i]};
+      for(var attr in attrs){dataSet[attr] = attrs[attr]};
       labels.forEach(function(x){
         if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
       }); result.datasets.push(dataSet)})

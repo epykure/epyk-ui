@@ -6,10 +6,9 @@ https://www.chartjs.org/docs/latest/developers/updates.html
 
 """
 
-import json
-
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
+from epyk.core.js.packages import DataAttrs
 
 
 EASING_OPTIONS = ['linear', 'easeInQuad', 'easeOutQuad', 'easeInOutQuad', 'easeInCubic', 'easeOutCubic',
@@ -290,52 +289,250 @@ class ChartJs(object):
     return strData
 
 
-class ChartJsOptTicks(object):
-
-  def __init__(self):
-    self.__attrs = {}
-
+class ChartJsOptTicks(DataAttrs):
   def beginAtZero(self, flag):
-    self.__attrs["beginAtZero"] = JsUtils.jsConvertData(flag, None)
+    self._attrs["beginAtZero"] = JsUtils.jsConvertData(flag, None)
     return self
 
   def display(self, flag):
-    self.__attrs["display"] = JsUtils.jsConvertData(flag, None)
+    self._attrs["display"] = JsUtils.jsConvertData(flag, None)
     return self
 
-  def custom(self, name, value, isPyData=False):
-    if isPyData:
-      self.__attrs[name] = json.dumps(value)
-    else:
-      self.__attrs[name] = value
+
+class ChartJsOptGridLines(DataAttrs):
+
+  def display(self, flag=False):
+    """
+    If false, do not display grid lines for this axis.
+
+    :param flag:
+    :return:
+    """
+    self._attrs["display"] = JsUtils.jsConvertData(flag, None)
     return self
 
-  def __str__(self):
-    return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self.__attrs.items()])
+  def circular(self, flag=False):
+    """
+    If true, gridlines are circular (on radar chart only).
+
+    :param flag:
+    :return:
+    """
+    self._attrs["circular"] = JsUtils.jsConvertData(flag, None)
+    return self
+
+  def color(self, colors=""):
+    """
+    The color of the grid lines.
+    If specified as an array, the first color applies to the first grid line, the second to the second grid line and so on.
+
+    :param colors:
+    :return:
+    """
+    self._attrs["color"] = JsUtils.jsConvertData(colors, None)
+    return self
+
+  def borderDash(self, narray):
+    """
+
+    :param narray:
+    :return:
+    """
+    self._attrs["borderDash"] = JsUtils.jsConvertData(narray, None)
+    return self
+
+  def borderDashOffset(self, n=0.0):
+    """
+    Offset for line dashes
+
+    :param n:
+    :return:
+    """
+    self._attrs["borderDashOffset"] = JsUtils.jsConvertData(n, None)
+    return self
+
+  def lineWidth(self, num):
+    """
+    Stroke width of grid lines.
+
+    :param num:
+    :return:
+    """
+    self._attrs["lineWidth"] = JsUtils.jsConvertData(num, None)
+    return self
+
+  def drawBorder(self, flag=True):
+    """
+    If true, draw border at the edge between the axis and the chart area.
+
+    :param flag:
+    :return:
+    """
+    self._attrs["drawBorder"] = JsUtils.jsConvertData(flag, None)
+    return self
+
+  def drawOnChartArea(self, flag=True):
+    """
+    If true, draw lines on the chart area inside the axis lines.
+    This is useful when there are multiple axes and you need to control which grid lines are drawn.
+
+    :param flag:
+    :return:
+    """
+    self._attrs["drawOnChartArea"] = JsUtils.jsConvertData(flag, None)
+    return self
+
+  def drawTicks(self, flag=True):
+    """
+    If true, draw lines beside the ticks in the axis area beside the chart.
+
+    :param flag:
+    :return:
+    """
+    self._attrs["drawTicks"] = JsUtils.jsConvertData(flag, None)
+    return self
+
+  def tickMarkLength(self, n=10):
+    """
+    Length in pixels that the grid lines will draw into the axis area.
+
+    :param n:
+    :return:
+    """
+    self._attrs["tickMarkLength"] = JsUtils.jsConvertData(n, None)
+    return self
+
+  def zeroLineWidth(self, n=1):
+    """
+    Stroke width of the grid line for the first index (index 0).
+
+    :param n:
+    :return:
+    """
+    self._attrs["zeroLineWidth"] = JsUtils.jsConvertData(n, None)
+    return self
+
+  def zeroLineColor(self, color="rgba(0, 0, 0, 0.25)"):
+    """
+    Stroke color of the grid line for the first index (index 0).
+
+    :param color:
+    :return:
+    """
+    self._attrs["zeroLineColor"] = JsUtils.jsConvertData(color, None)
+    return self
+
+  def zeroLineBorderDash(self, narray):
+    """
+    Length and spacing of dashes of the grid line for the first index (index 0)
+
+    :param narray:
+    :return:
+    """
+    self._attrs["zeroLineBorderDash"] = JsUtils.jsConvertData(narray, None)
+    return self
+
+  def zeroLineBorderDashOffset(self, n=0.0):
+    """
+    Offset for line dashes of the grid line for the first index (index 0).
+
+    :param n:
+    :return:
+    """
+    self._attrs["zeroLineBorderDashOffset"] = JsUtils.jsConvertData(n, None)
+    return self
+
+  def offsetGridLines(self, flag=True):
+    """
+    If true, the bars for a particular data point fall between the grid lines.
+    The grid line will move to the left by one half of the tick interval, which is the space between the grid lines.
+    If false, the grid line will go right down the middle of the bars.
+    This is set to true for a category scale in a bar chart while false for other scales or chart types by default.
+
+    :param flag:
+    :return:
+    """
+    self._attrs["offsetGridLines"] = JsUtils.jsConvertData(flag, None)
+    return self
 
 
-class ChartJsOptScale(object):
-
-  def __init__(self, options):
-    self._options = options
+class ChartJsOptScale(DataAttrs):
 
   def ticks(self):
     pass
 
+  @property
   def gridLines(self):
+    """
+
+    :rtype: ChartJsOptGridLines
+    """
+    if not "gridLines" in self._attrs:
+      self._attrs["gridLines"] = ChartJsOptGridLines(self._report)
+    return self._attrs["gridLines"]
+
+  def stacked(self, flag=False):
     pass
 
-  def stacked(self):
-    pass
+
+class ChartJsOptScaleBar(ChartJsOptScale):
+  def barPercentage(self, n=0.9):
+    """
+    Percent (0-1) of the available width each bar should be within the category width.
+    1.0 will take the whole category width and put the bars right next to each other
+
+    :param n:
+
+    :return:
+    """
+    self._attrs["barPercentage"] = JsUtils.jsConvertData(n, None)
+    return self
+
+  def categoryPercentage(self, n=0.8):
+    """
+    Percent (0-1) of the available width each category should be within the sample width.
+
+    :param n:
+    :return:
+    """
+    self._attrs["categoryPercentage"] = JsUtils.jsConvertData(n, None)
+    return self
+
+  def barThickness(self, width="flex"):
+    """
+    Manually set width of each bar in pixels.
+
+    If set to 'flex', it computes "optimal" sample widths that globally arrange bars side by side.
+    If not set (default), bars are equally sized based on the smallest interval.
+
+    :return:
+    """
+    self._attrs["barThickness"] = JsUtils.jsConvertData(width, None)
+    return self
+
+  def maxBarThickness(self, width):
+    """
+    Set this to ensure that bars are not sized thicker than this.
+
+    :param width: A float
+    :return:
+    """
+    self._attrs["barThickness"] = JsUtils.jsConvertData(width, None)
+    return self
+
+  def minBarLength(self, width):
+    """
+
+    :param width:
+    :return:
+    """
+    self._attrs["minBarLength"] = JsUtils.jsConvertData(width, None)
+    return self
 
 
-class ChartJsOptLegend(object):
-
-  def __init__(self, options):
-    self._options = options
-
+class ChartJsOptLegend(DataAttrs):
   def display(self, flag):
-    self._options["display"] = flag
+    self._attrs["display"] = flag
 
 
 class ChartJsType(object):
@@ -357,11 +554,20 @@ class ChartJsType(object):
     return self
 
   def pointStyle(self, text):
+    """
+
+    Documentation
+
+    :param text:
+    :return:
+    """
     self._data_attrs["pointStyle"] = text
     return self
 
   def borderColor(self, colors):
     """
+
+    Documentation
 
     :param colors:
     :return:
@@ -371,6 +577,8 @@ class ChartJsType(object):
 
   def fill(self, flag):
     """
+
+    Documentation
 
     :param flag:
     :return:
@@ -382,7 +590,32 @@ class ChartJsType(object):
     self._data_attrs["steppedLine"] = flag
     return self
 
+  def customDataAttr(self, name, value):
+    """
+    Add a bespoke attribute to the ChartJs definition
+
+    Example
+
+    Documentation
+
+    :param name: The name of the option
+    :param value: The value of the option
+
+    :return:
+    """
+    self._data_attrs[name] = JsUtils.jsConvertData(value, None)
+    return self
+
   def maintainAspectRatio(self, flag):
+    """
+
+    Example
+
+    Documentation
+
+    :param flag:
+    :return:
+    """
     self._opts_attrs["maintainAspectRatio"] = flag
     return self
 
@@ -392,6 +625,18 @@ class ChartJsType(object):
 
   def scaleShowLabels(self, flag):
     self._opts_attrs["scaleShowLabels"] = flag
+    return self
+
+  def customOption(self, name, value):
+    """
+    Add a bespoke option to the ChartJs definition
+
+    :param name: The name of the option
+    :param value: The value of the option
+
+    :return:
+    """
+    self._opts_attrs[name] = JsUtils.jsConvertData(value, None)
     return self
 
   @property
@@ -409,7 +654,100 @@ class ChartJsType(object):
     return ChartJsOptScale(self._opts_attrs.setdefault("scales", {})["yAxes"])
 
 
-chart_data = ChartJsOptTicks()
-chart_data.beginAtZero(True).custom("test", "function(){}")
+class ChartJsTypeBar(object):
 
-print(chart_data)
+  def __init__(self, type, data):
+    self._type, self._data = type, data
+    self._data_attrs, self._opts_attrs = {}, {}
+
+  def backgroundColor(self, colors='rgba(0, 0, 0, 0.1)'):
+    """
+
+    Documentation
+    https://www.chartjs.org/docs/latest/charts/bar.html
+
+    :param colors:
+    :return:
+    """
+    if not isinstance(colors, list):
+      colors = [colors]
+    self._data_attrs["backgroundColor"] = colors
+    return self
+
+  def borderColor(self, colors='rgba(0, 0, 0, 0.1)'):
+    """
+
+    Documentation
+    https://www.chartjs.org/docs/latest/charts/bar.html
+
+    :param colors:
+    :return:
+    """
+    if not isinstance(colors, list):
+      colors = [colors]
+    self._data_attrs["borderColor"] = colors
+    return self
+
+  def borderSkipped(self, text='bottom'):
+    """
+    This setting is used to avoid drawing the bar stroke at the base of the fill.
+    In general, this does not need to be changed except when creating chart types that derive from a bar chart.
+
+    Documentation
+    https://www.chartjs.org/docs/latest/charts/bar.html#borderskipped
+
+    :param text: A value among ['bottom', 'left', 'top', 'right', False]
+
+    :return:
+    """
+    skipped_pos = ['bottom', 'left', 'top', 'right', False]
+    if not text in skipped_pos:
+      raise Exception("text value should be in %s" % skipped_pos)
+
+    self._data_attrs["borderSkipped"] = JsUtils.jsConvertData(text, None)
+    return self
+
+  def borderWidth(self, n=0):
+    """
+    If this value is a number, it is applied to all sides of the rectangle (left, top, right, bottom), except borderSkipped.
+    If this value is an object, the left property defines the left border width.
+    Similarly the right, top and bottom properties can also be specified. Omitted borders and borderSkipped are skipped.
+
+    Documentation
+    https://www.chartjs.org/docs/latest/charts/bar.html#borderwidth
+
+    :param n:
+    :return:
+    """
+    self._data_attrs["borderWidth"] = n
+    return self
+
+  def hoverBackgroundColor(self, colors):
+    pass
+
+  def hoverBorderColor(self, colors):
+    pass
+
+  def hoverBorderWidth(self, n):
+    pass
+
+  def label(self, text):
+    pass
+
+  def xAxisID(self, axisId):
+    """
+    The ID of the x axis to plot this dataset on.
+
+    Documentation
+    https://www.chartjs.org/docs/latest/charts/bar.html#general
+
+    :param axisId: The ID of the x axis to plot this dataset on.
+
+    """
+
+  def yAxisID(self, axisId):
+    pass
+
+
+if __name__ == '__main__':
+  chart_bar = ChartJsOptScaleBar()

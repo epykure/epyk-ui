@@ -4,14 +4,13 @@ from epyk.tests import test_statics
 
 rptObj = Report()
 
-data = [
-  {"x": 0, "y": 1},
-  {"x": 2, "y": 2},
-  {"x": 4, "y": 2},
-  {"x": 6, "y": 6},
-]
 
-bar = rptObj.ui.charts.nvd3.pie(data, seriesNames=["y"], xAxis="x")
+data = test_statics.get_data("flights.txt", n=10)
+for rec in data:
+  rec["distance"] = float(rec["distance"])
+  rec["delay"] = float(rec["delay"])
+
+bar = rptObj.ui.charts.nvd3.histo(data, y_columns=["delay"], x_axis="distance")
 
 # bar.style.defined.chart.container_border().remove()
 # bar.chart.width(30)
