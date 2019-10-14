@@ -1,8 +1,11 @@
+"""
+Module in charge of the testing of the different CSS features
+"""
 
 from epyk.core.Page import Report
-from epyk.tests import test_statics
 
 
+# Create a basic report object
 rptObj = Report()
 
 # Create a text component on the page
