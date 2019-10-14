@@ -485,6 +485,9 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
     :return:
     """
+    if n > 1:
+      raise Exception("n cannot exceed 1")
+
     self._attrs["barPercentage"] = JsUtils.jsConvertData(n, None)
     return self
 
@@ -530,9 +533,98 @@ class ChartJsOptScaleBar(ChartJsOptScale):
     return self
 
 
+class ChartJsOptTooltip(DataAttrs):
+  pass
+
+
+class ChartJsOptTitle(DataAttrs):
+  pass
+
+
+class ChartJsOptLabels(DataAttrs):
+  pass
+
+
 class ChartJsOptLegend(DataAttrs):
-  def display(self, flag):
-    self._attrs["display"] = flag
+  def display(self, flag=True):
+    """
+    Is the legend shown?
+
+    Documentation
+    https://www.chartjs.org/docs/latest/configuration/legend.html
+
+    :param flag:
+    :return:
+    """
+    self._attrs["display"] = JsUtils.jsConvertData(flag, None)
+    return self
+
+  def position(self, location="top"):
+    """
+    Position of the legend
+
+    :param location:
+    :return:
+    """
+    self._attrs["position"] = JsUtils.jsConvertData(location, None)
+    return self
+
+  def fullWidth(self, flag=True):
+    """
+
+    :param flag:
+    :return:
+    """
+
+  def onClick(self, callback):
+    """
+    A callback that is called when a click event is registered on a label item.
+
+    :param callback:
+    :return:
+    """
+    self._attrs["onClick"] = JsUtils.jsConvertFncs(callback)
+    return self
+
+  def onHover(self, callback):
+    """
+    A callback that is called when a 'mousemove' event is registered on top of a label item.
+
+    :param callback:
+    :return:
+    """
+    self._attrs["onHover"] = JsUtils.jsConvertFncs(callback)
+    return self
+
+  def onLeave(self, callback):
+    """
+
+    :param callback:
+    :return:
+    """
+    self._attrs["onLeave"] = JsUtils.jsConvertFncs(callback)
+    return self
+
+  def reverse(self, flag=False):
+    """
+    Legend will show datasets in reverse order.
+
+    :param flag:
+    :return:
+    """
+    self._attrs["reverse"] = JsUtils.jsConvertFncs(flag)
+    return self
+
+  @property
+  def labels(self):
+    """
+
+    :rtype: ChartJsOptLabels
+    :return:
+    """
+    if not 'labels' in self._attrs:
+      self._attrs["labels"] = ChartJsOptLabels(self._report)
+    return self._attrs["labels"]
 
 
 class ChartJsType(object):
@@ -656,9 +748,10 @@ class ChartJsType(object):
 
 class ChartJsTypeBar(object):
 
-  def __init__(self, type, data):
-    self._type, self._data = type, data
+  def __init__(self, report, type, data):
+    self._report = report
     self._data_attrs, self._opts_attrs = {}, {}
+    self._data_attrs.update({"type": JsUtils.jsConvertData(type, None), "data": data})
 
   def backgroundColor(self, colors='rgba(0, 0, 0, 0.1)'):
     """
@@ -732,7 +825,14 @@ class ChartJsTypeBar(object):
     pass
 
   def label(self, text):
-    pass
+    """
+    The label for the dataset which appears in the legend and tooltips.
+
+    :param text:
+    :return:
+    """
+    self._data_attrs["label"] = JsUtils.jsConvertData(text, None)
+    return self
 
   def xAxisID(self, axisId):
     """
@@ -748,6 +848,23 @@ class ChartJsTypeBar(object):
   def yAxisID(self, axisId):
     pass
 
+  @property
+  def scales(self):
+    """
+
+    :rtype: ChartJsOptScaleBar
+    :return:
+    """
+    if not "scales" in self._data_attrs:
+      self._data_attrs["scales"] = ChartJsOptScaleBar(self._report)
+    return self._data_attrs["scales"]
+
+  def __str__(self):
+    return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._data_attrs.items()])
+
 
 if __name__ == '__main__':
-  chart_bar = ChartJsOptScaleBar()
+  chart_bar = ChartJsTypeBar(None, "bar", []).label("test")
+  chart_bar.scales.barPercentage(0.4).barThickness(3)
+  chart_bar.scales.gridLines.circular(True).color(["red"]).drawTicks()
+  print(chart_bar)
