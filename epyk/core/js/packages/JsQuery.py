@@ -7,7 +7,7 @@ https://jquery.com/
 import json
 
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsObjects
+from epyk.core.js.packages import JsPackage
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
@@ -84,7 +84,7 @@ class Jsjqxhr(object):
     return ".".join(map(lambda x: str(x), reqResult))
 
 
-class JQuery(object):
+class JQuery(JsPackage):
   """
   Jquery wrapper.
   for more details about the different available functions go on the website: https://jquery.com/
@@ -97,17 +97,8 @@ class JQuery(object):
     - https://www.w3schools.com/jquery/jquery_ref_ajax.asp
 
   """
-  class __internal(object):
-    # By default it will attach eveything to the body
-    jqId, jsImports = 'jQuery("body")', set([])
-
-  def __init__(self, src=None, jqId=None):
-    self.src = src if src is not None else self.__internal()
-    if jqId is not None: # Force the identifier
-      self.src.jqId = jqId
-    self.src.jsImports.add('jquery')
-    self.selector = self.src.jqId if hasattr(self.src, 'jqId') else 'jQuery("body")'
-    self._js = []
+  lib_alias = {"js": 'jquery'}
+  lib_selector = 'jQuery("body")'
 
   def this(self, reference=None):
     """
@@ -122,9 +113,9 @@ class JQuery(object):
       raise Exception("Selector can only be changed first")
 
     if reference is None:
-      self.selector = "jQuery(this)"
+      self._selector = "jQuery(this)"
     else:
-      self.selector = "jQuery('%s')" % reference
+      self._selector = "jQuery('%s')" % reference
     return self
 
   def new(self, tag=None, reference=None):
@@ -135,12 +126,12 @@ class JQuery(object):
       raise Exception("Tag or / and Reference must be defined")
 
     if tag is None and reference is not None:
-      self.selector = "jQuery('%s')" % reference
+      self._selector = "jQuery('%s')" % reference
     else:
       if reference is not None:
-        self.selector = "jQuery('<%s id=\\'%s\\'></%s>')" % (tag, reference, tag)
+        self._selector = "jQuery('<%s id=\\'%s\\'></%s>')" % (tag, reference, tag)
       else:
-        self.selector = "jQuery('<%s></%s>')" % (tag, tag)
+        self._selector = "jQuery('<%s></%s>')" % (tag, tag)
     return self
 
   def toggle(self, speed=None, easing=None, jsCallback=None):
@@ -149,23 +140,21 @@ class JQuery(object):
     :param speed:
     :param easing:
     :param jsCallback:
+
     :return:
     """
-    self._js.append("toggle()")
-    return self
+    return self.fnc("toggle()")
 
   def trigger(self, jsData, jsFnc=None):
     """
 
     :param jsData:
-    :param jsDataKey:
-    :param isPyData:
     :param jsFnc:
+
     :return:
     """
     jsData = JsUtils.jsConvertData(jsData, jsFnc)
-    self._js.append("trigger(%(jsData)s)" % {"jsData": jsData})
-    return self
+    return self.fnc("trigger(%(jsData)s)" % {"jsData": jsData})
 
   def hide(self, speed=None, callback=None):
     """
@@ -188,8 +177,7 @@ class JQuery(object):
         jqFnc = "hide(%(speed)s)" % {'speed': speed}
     else:
       jqFnc = "hide()"
-    self._js.append(jqFnc)
-    return self
+    return self.fnc(jqFnc)
 
   def show(self, speed=None, callback=None):
     """
@@ -199,7 +187,8 @@ class JQuery(object):
     http://api.jquery.com/show/
 
     :param speed:
-    :param jsCallback:
+    :param callback:
+
     :return:
     """
     if speed is not None:
@@ -211,8 +200,7 @@ class JQuery(object):
         jqFnc = "show(%(speed)s)" % {'speed': speed}
     else:
       jqFnc = "show()"
-    self._js.append(jqFnc)
-    return self
+    return self.fnc(jqFnc)
 
   def fadeIn(self, speed=None, callback=None):
     """
@@ -223,6 +211,7 @@ class JQuery(object):
 
     :param speed:
     :param callback:
+
     :return:
     """
     if speed is not None:
@@ -234,8 +223,7 @@ class JQuery(object):
         jqFnc = "fadeIn(%(speed)s)" % {'speed': speed}
     else:
       jqFnc = "fadeIn()"
-    self._js.append(jqFnc)
-    return self
+    return self.fnc(jqFnc)
 
   def fadeOut(self, speed=None, callback=None):
     """
@@ -257,8 +245,7 @@ class JQuery(object):
         jqFnc = "fadeOut(%(speed)s)" % {'speed': speed}
     else:
       jqFnc = "fadeOut()"
-    self._js.append(jqFnc)
-    return self
+    return self.fnc(jqFnc)
 
   def fadeToggle(self, speed=None, callback=None):
     """
@@ -267,7 +254,8 @@ class JQuery(object):
       - https://www.w3schools.com/jquery/jquery_fade.asp
 
     :param speed:
-    :param jsCallback:
+    :param callback:
+
     :return:
     """
     if speed is not None:
@@ -279,8 +267,7 @@ class JQuery(object):
         jqFnc = "fadeToggle(%(speed)s)" % {'speed': speed}
     else:
       jqFnc = "fadeToggle()"
-    self._js.append(jqFnc)
-    return self
+    return self.fnc(jqFnc)
 
   def fadeTo(self, speed=None, callback=None):
     """
@@ -301,8 +288,7 @@ class JQuery(object):
         jqFnc = "fadeTo(%(speed)s)" % {'speed': speed}
     else:
       jqFnc = "fadeTo()"
-    self._js.append(jqFnc)
-    return self
+    return self.fnc(jqFnc)
 
   def slideDown(self, speed=None, callback=None):
     """
@@ -324,8 +310,7 @@ class JQuery(object):
         jqFnc = "slideDown(%(speed)s)" % {'speed': speed}
     else:
       jqFnc = "slideDown()"
-    self._js.append(jqFnc)
-    return self
+    return self.fnc(jqFnc)
 
   def slideUp(self, speed=None, callback=None):
     """
@@ -334,7 +319,8 @@ class JQuery(object):
       - https://www.w3schools.com/jquery/jquery_slide.asp
 
     :param speed:
-    :param jsCallback:
+    :param callback:
+
     :return:
     """
     if speed is not None:
@@ -346,8 +332,7 @@ class JQuery(object):
         jqFnc = "slideUp(%(speed)s)" % {'speed': speed}
     else:
       jqFnc = "slideUp()"
-    self._js.append(jqFnc)
-    return self
+    return self.fnc(jqFnc)
 
   def slideToggle(self, speed=None, callback=None):
     """
@@ -369,8 +354,7 @@ class JQuery(object):
         jqFnc = "slideToggle(%(speed)s)" % {'speed': speed}
     else:
       jqFnc = "slideToggle()"
-    self._js.append(jqFnc)
-    return self
+    return self.fnc(jqFnc)
 
   def animate(self, params, speed, callback):
     """
@@ -387,8 +371,7 @@ class JQuery(object):
 
     :return:
     """
-    self._js.append("animate()")
-    return self
+    return self.fnc("animate()")
 
   def stop(self, stopAll='false', goToEnd='false'):
     """
@@ -397,10 +380,10 @@ class JQuery(object):
 
     :param stopAll: Javascript.
     :param goToEnd: Javascript.
+
     :return:
     """
-    self._js.append("stop(%(stopAll)s, %(goToEnd)s)" % {'stopAll': stopAll, 'goToEnd': goToEnd})
-    return self
+    return self.fnc("stop(%(stopAll)s, %(goToEnd)s)" % {'stopAll': stopAll, 'goToEnd': goToEnd})
 
   def remove(self):
     """
@@ -410,8 +393,7 @@ class JQuery(object):
 
     :return:
     """
-    self._js.append("remove()")
-    return self
+    return self.fnc("remove()")
 
   def empty(self):
     """
@@ -421,8 +403,7 @@ class JQuery(object):
 
     :return:
     """
-    self._js.append("empty()")
-    return self
+    return self.fnc("empty()")
 
   def siblings(self, tag):
     """
@@ -432,8 +413,7 @@ class JQuery(object):
 
     :return:
     """
-    self._js.append("siblings()")
-    return self
+    return self.fnc("siblings()")
 
   def next(self):
     """
@@ -443,8 +423,7 @@ class JQuery(object):
 
     :return:
     """
-    self._js.append("next()")
-    return self
+    return self.fnc("next()")
 
   def prev(self):
     """
@@ -454,8 +433,7 @@ class JQuery(object):
 
     :return:
     """
-    self._js.append("prev()")
-    return self
+    return self.fnc("prev()")
 
   def first(self):
     """
@@ -466,8 +444,7 @@ class JQuery(object):
 
     :return:
     """
-    self._js.append("first()")
-    return self
+    return self.fnc("first()")
 
   def children(self, filter=None):
     """
@@ -480,10 +457,9 @@ class JQuery(object):
     :return:
     """
     if filter is None:
-      self._js.append("children()")
-    else:
-      self._js.append("children(%s)" % filter)
-    return self
+      return self.fnc("children()")
+
+    return self.fnc("children(%s)" % filter)
 
   def last(self):
     """
@@ -494,35 +470,40 @@ class JQuery(object):
 
     :return:
     """
-    self._js.append("last()")
-    return self
+    return self.fnc("last()")
 
   def appendTo(self, dstJqId, jsFnc=None):
     """
 
+    :param dstJqId:
+    :param jsFnc:
+
     :rtype: str
+
     :return:
     """
-    self._js.append("appendTo(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, jsFnc)})
-    return self
+    return self.fnc("appendTo(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, jsFnc)})
 
   def append(self, dstJqId, jsFnc=None):
     """
 
+    :param dstJqId:
+    :param jsFnc:
     :rtype: str
+
     :return:
     """
-    self._js.append("append(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, jsFnc)})
-    return self
+    return self.fnc("append(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, jsFnc)})
 
   def prepend(self, jsData, jsFnc=None):
     """
 
-    :param strData:
+    :param jsData:
+    :param jsFnc:
+
     :return:
     """
-    self._js.append("prepend(%(data)s)" % {"data": JsUtils.jsConvertData(jsData, jsFnc)})
-    return self
+    return self.fnc("prepend(%(data)s)" % {"data": JsUtils.jsConvertData(jsData, jsFnc)})
 
   def eq(self, i):
     """
@@ -534,8 +515,7 @@ class JQuery(object):
     :param i: The index numbers start at 0, so the first element will have the index number 0 and not 1
     :return:
     """
-    self._js.append("eq(%(index)s)" % {'index': i})
-    return self
+    return self.fnc("eq(%(index)s)" % {'index': i})
 
   def filter(self):
     """
@@ -554,24 +534,24 @@ class JQuery(object):
 
     :return:
     """
-    self._js.append("find('%s')" % criteria)
-    return self
+    return self.fnc("find('%s')" % criteria)
 
   def each(self, jsFncs):
     """
 
-    :param jsFnc:
+    :param jsFncs:
+
     :return:
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    self._js.append("each(function(index, data){%s})" % ";".join(jsFncs))
-    return self
+    return self.fnc("each(function(index, data){%s})" % ";".join(jsFncs))
 
   def css(self, key, value=None):
     """
 
     :param key:
     :param value:
+
     :return:
     """
     self.src.style.css(key, value)
@@ -581,7 +561,8 @@ class JQuery(object):
     """
 
     :param key:
-    :param val:
+    :param value:
+
     :return:
     """
     if key.lower() in ["style", 'class']:
@@ -594,57 +575,48 @@ class JQuery(object):
     """
 
     :param jsData:
-    :param jsDataKey:
-    :param isPyData:
     :param jsFnc:
     :return:
     """
     if jsData is None:
-      self._js.append("val()")
-    else:
-      self._js.append("val(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
-    return self
+      self.fnc("val()")
+
+    return self.fnc("val(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
 
   def text(self, jsData, jsFnc=None):
     """
 
     :param jsData:
-    :param jsDataKey:
-    :param isPyData:
     :param jsFnc:
+
     :return:
     """
     if jsData is None:
-      self._js.append("text()")
-    else:
-      jsData = JsUtils.jsConvertData(jsData, jsFnc)
-      self._js.append("text(%s)" % jsData)
-    return self
+      return self.fnc("text()")
+
+    jsData = JsUtils.jsConvertData(jsData, jsFnc)
+    return self._js.append("text(%s)" % jsData)
 
   def html(self, jsData=None, jsFnc=None):
     """
 
     :param jsData:
-    :param jsDataKey:
-    :param isPyData:
     :param jsFnc:
+
     :return:
     """
     if jsData is None:
-      self._js.append("html()")
-    else:
-      self._js.append("html(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
-    return self
+      return self.fnc("html()")
+
+    return self.fnc("html(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
 
   def toggleClass(self, clsName):
     """
 
-
     :rtype: str
     :return:
     """
-    self._js.append('toggleClass("%(data)s")' % {'data': clsName})
-    return self
+    return self.fnc('toggleClass("%(data)s")' % {'data': clsName})
 
   def addClass(self, clsName, attrs=None, eventAttrs=None):
     """
@@ -785,8 +757,6 @@ class JQuery(object):
     jsFncs = JsUtils.jsConvertFncs(jsFncs)
     return "jQuery(document).ajaxSuccess(function(event, xhr, settings) {%s})" % ";".join(jsFncs)
 
-
-
   def ajaxSend(self, jsFncs):
     """
 
@@ -872,20 +842,4 @@ class JQuery(object):
       raise Exception("Method %s not recognised" % url)
 
     return Jsjqxhr("jQuery.ajax(%s)" % self.getParams(url, data, successFncs, errorFncs, options, timeout, props))
-
-  def toStr(self):
-    """
-    Javascript representation
-
-    :return: Return the Javascript String
-    """
-    if self.selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self.selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
 

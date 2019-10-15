@@ -9,7 +9,7 @@ from epyk.core.js import JsUtils
 
 
 class JsPackage(object):
-  lib_alias = None
+  lib_alias, lib_selector = None, None
 
   class __internal(object):
     # By default it will attach eveything to the body
@@ -17,7 +17,7 @@ class JsPackage(object):
 
   def __init__(self, src=None, varName=None, selector=None, data=None, setVar=True):
     self.src = src if src is not None else self.__internal()
-    self._selector = selector if selector is not None else self.src.jqId
+    self._selector = selector if selector is not None else self.lib_selector
     self.varName, self.setVar = varName, setVar
     self._data = data
     self._js = [[]] # a list of list of object definition
