@@ -4,6 +4,8 @@ https://nvd3-community.github.io/nvd3/examples/documentation.html
 """
 
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsPackage
+
 from epyk.core.js.primitives import JsString
 
 
@@ -91,8 +93,8 @@ class JsNvd3Utils(object):
     return "nv.utils.windowResize(%s)" % jsFnc
 
 
-class JsNvd3(object):
-  lib_alias = 'nvd3'
+class JsNvd3(JsPackage):
+  lib_alias = {'js': 'nvd3', 'css': 'nvd3'}
 
   class __internal(object):
     # By default it will attach eveything to the body
@@ -117,10 +119,6 @@ class JsNvd3(object):
     """
     self.src._props.setdefault("packages", {})[self.lib_alias] = ver
     return self
-
-  @property
-  def var(self):
-    return JsString.JsString(self.varName, isPyData=False)
 
   def set_var(self, flag):
     self.setVar = flag

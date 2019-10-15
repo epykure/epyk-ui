@@ -680,7 +680,7 @@ class JsBase(object):
 
     :return:
     """
-    dom_obj = JsNodeDom.JsDoms.new(tagName, varName=varName, setVar=setVar)
+    dom_obj = JsNodeDom.JsDoms.new(tagName, varName=varName, setVar=setVar, report=self._src)
     if dom_id is not None:
       dom_obj.attr("id", dom_id)
     return dom_obj

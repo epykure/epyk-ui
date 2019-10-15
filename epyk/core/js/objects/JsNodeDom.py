@@ -304,8 +304,10 @@ class JsDomEvents(object):
 
 
 class JsDoms(JsObject.JsObject):
+  _id = None
+
   @classmethod
-  def new(cls, tagName=None, varName=None, isPyData=True, setVar=True):
+  def new(cls, tagName=None, varName=None, isPyData=True, setVar=True, report=None):
     """
     Create a new dom object to be added to the HTML page
 
@@ -317,7 +319,23 @@ class JsDoms(JsObject.JsObject):
     :param isPyData: Optional,
     :return: The Python Javascript Date primitive
     """
-    return cls(data="document.createElement('%s')" % tagName, varName=varName, setVar=setVar, isPyData=isPyData)
+    return cls(data="document.createElement('%s')" % tagName, varName=varName, setVar=setVar, isPyData=isPyData, report=report)
+
+  @property
+  def jquery(self):
+    """
+    Link to the Jquery package
+
+    THe id attribute must be defined
+    """
+    from epyk.core.js.packages import JsQuery
+
+    if self._id is None:
+      raise Exception("Id must be defined to attach Jquery features to this object")
+
+    if getattr(self, '_jq', None) is None:
+      self._jq = JsQuery.JQuery(self._report, selector="jQuery('#%s')" % self._id, setVar=False)
+    return self._jq
 
   def innerText(self, jsString=None):
     """
@@ -375,8 +393,12 @@ class JsDoms(JsObject.JsObject):
     """
     if jsObject is None and isinstance(type, dict):
       for k, v in type.items():
+        if k == "id":
+          self._id = v
         self._js.append("%s.setAttribute('%s', %s)" % (self.varId, k, JsUtils.jsConvertData(v, None)))
     else:
+      if type == "id":
+        self._id = jsObject
       self._js.append("%s.setAttribute('%s', %s)" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 
