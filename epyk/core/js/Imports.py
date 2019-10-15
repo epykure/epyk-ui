@@ -274,6 +274,12 @@ JS_IMPORTS = {
     'modules': [
       {'reqAlias': 'pivot', 'script': 'pivot.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
+  # require.js
+  'require.js': {
+    'website': 'https://requirejs.org/',
+    'modules': [
+      {'script': 'require.min.js', 'version': '2.3.6', 'path': 'require.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+
   # Pivot Table SubTotal
   'pivot-sub-total': {
     'req': [{'alias': 'pivot'}],

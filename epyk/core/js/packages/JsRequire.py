@@ -1,25 +1,15 @@
 """
+Wrapper to the Javascript require package
+This module will replace the Python Import module if specified
 
+Documentation
+https://requirejs.org/docs/api.html#mechanics
 """
 
-from epyk.core.js import Imports
+from epyk.core.js.packages import JsPackage
 
 
-class JsRequire(object):
-  """
-
-  Documentation
-    - https://requirejs.org/docs/api.html#mechanics
-
-  """
-
-  def __init__(self, requireJs=False):
-    """
-
-    :param requireJs:
-    """
-    self. requireJs = requireJs
-
+class JsRequire(JsPackage):
   def resolveImports(self, modules, moduleStack, level, modulesBase):
     """
 

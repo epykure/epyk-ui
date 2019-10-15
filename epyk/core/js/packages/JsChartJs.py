@@ -9,6 +9,7 @@ https://www.chartjs.org/docs/latest/developers/updates.html
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import DataAttrs
+from epyk.core.js.packages import JsPackage
 
 
 EASING_OPTIONS = ['linear', 'easeInQuad', 'easeOutQuad', 'easeInOutQuad', 'easeInCubic', 'easeOutCubic',
@@ -68,7 +69,7 @@ class CHartJsConfig(object):
 
 
 class ChartJs(object):
-  lib_alias = 'Chart.js'
+  lib_alias = {'js': 'Chart.js'}
 
   class __internal(object):
     jqId, htmlId, jsImports, cssImport = 'chart', '', set([]), set([])

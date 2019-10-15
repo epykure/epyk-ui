@@ -4,10 +4,10 @@ Wrapper to D3 package
 https://d3js.org/
 """
 
-import json
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsNumber
+from epyk.core.js.packages import JsPackage
 
 
 class D3ScaleLinear(object):

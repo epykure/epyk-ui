@@ -20,7 +20,19 @@ class JsPackage(object):
     self._selector = selector if selector is not None else self.src.jqId
     self.varName, self.setVar = varName, setVar
     self._data = data
-    self._js = []
+    self._js = [[]] # a list of list of object definition
+    if self.lib_alias is not None:
+      if 'css' in self.lib_alias:
+        self.src.cssImport.add(self.lib_alias['css'])
+      if 'js' in self.lib_alias:
+        self.src.jsImports.add(self.lib_alias['js'])
+
+  @property
+  def varId(self):
+    """
+    The Javascript and Python reference ID
+    """
+    return self._selector if self.varName is None else self.varName
 
   def version(self, ver):
     """
@@ -34,12 +46,43 @@ class JsPackage(object):
     self.src._props.setdefault("packages", {})[self.lib_alias] = ver
     return self
 
+  def fnc(self, fnc_str):
+    """
+    Base function to allow the object chain.
+    THis will add the elements to the current section in the object structure
+    All the items at the same level wil be chained
+
+    :param fnc_str: THe Javascript fragment to be added
+
+    :return: "Self" to allow the chains
+    """
+    self._js[-1].append(fnc_str)
+    return self
+
+  def fnc_closure(self, fnc_str):
+    """
+    Add the function string to the existing object definition but create a new entry point for the next ones.
+    This structure will allow the chain on the Javascript side but also on the Python side.
+
+    Thanks to this Python can always keep the same structure and produce the correct Javascript definition
+    There will be no chain in the Javascript side
+
+    Example
+
+    :param fnc_str: String. The Javascript fragment to be added
+
+    :return: The "self" to allow the chains
+    """
+    self._js[-1].append(fnc_str)
+    self._js.append([])
+    return self
+
   @property
   def var(self):
     """
     Property to return the variable name as a valid pyJs object
     """
-    return JsString.JsString(self.varName, isPyData=False)
+    return JsString.JsString(self.varId, isPyData=False)
 
   def set_var(self, flag):
     """
@@ -62,17 +105,26 @@ class JsPackage(object):
     if self._selector is None:
       raise Exception("Selector not defined, use this() or new() first")
 
-    strData = ".".join(self._js)
-    if self.setVar:
-      if strData:
-        strData = "var %s = %s.%s" % (self.varName, self._selector, strData)
+    obj_content = []
+    for js in self._js:
+      if len(js) == 0:
+        continue
+
+      str_fnc = ".".join(js)
+      if self.setVar:
+        if str_fnc:
+          str_fnc = "var %s = %s.%s" % (self.varId, self._selector, str_fnc)
+        else:
+          str_fnc = "var %s = %s" % (self.varId, self._selector)
+        self.setVar = False
       else:
-        strData = "var %s = %s" % (self.varName, self._selector)
-      self.setVar = False
-    else:
-      strData = "%s.%s" % (self.varName, strData)
-    self._js = [] # empty the stack
-    return strData
+        if str_fnc:
+          str_fnc = "%s.%s" % (self.varId, str_fnc)
+        else:
+          str_fnc = self.varId
+      obj_content.append(str_fnc)
+    self._js = [[]] # empty the stack
+    return "; ".join(obj_content)
 
 
 class DataAttrs(object):
@@ -94,5 +146,20 @@ class DataAttrs(object):
     self._attrs[name] = JsUtils.jsConvertData(value, None)
     return self
 
+  def attr(self, name, value):
+    """
+    Add an attribute to the Javascript underlying dictionary
+
+    :param name: String. The attribute name
+    :param value: Object. The attribute value
+
+    :return: "Self" to allow the chains on the Python side
+    """
+    self._attrs[name] = value
+    return self
+
   def __str__(self):
+    """
+    Produce the resulting string to be added to the Javascript section of the web page
+    """
     return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._attrs.items()])

@@ -9,14 +9,10 @@ TODO: Add tree event on RowComponent
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObjects
-from epyk.core.js.packages import JsQuery
+from epyk.core.js.packages import JsPackage
 
 
-class Navigation(object):
-  def __init__(self, cellSelector):
-    self._selector = cellSelector
-    self._js = []
-
+class Navigation(JsPackage):
   def prev(self):
     """
     next editable cell on the left, if none available move to the right most editable cell on the row above
@@ -83,11 +79,7 @@ class Navigation(object):
     return JsObjects.JsObject.JsObject.get(strData)
 
 
-class CellComponent(object):
-  def __init__(self, cellSelector):
-    self._selector = cellSelector
-    self._js = []
-
+class CellComponent(JsPackage):
   def getElement(self):
     """
     The getElement function returns the DOM node for the cell.
@@ -229,28 +221,8 @@ class CellComponent(object):
     """
     return Navigation("%s.nav()" % self.toStr())
 
-  def toStr(self):
-    """
-    Javascript representation
 
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
-
-
-class GroupComponent(object):
-  def __init__(self, grpSelector):
-    self._selector = grpSelector
-    self._js = []
-
+class GroupComponent(JsPackage):
   def getElement(self):
     """
     The getElement function returns the DOM node for the group header.
@@ -342,28 +314,8 @@ class GroupComponent(object):
     """
     return GroupComponent("%s.getParentGroup()" % self.toStr())
 
-  def toStr(self):
-    """
-    Javascript representation
 
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
-
-
-class ColumnComponent(object):
-  def __init__(self, colSelector):
-    self._selector = colSelector
-    self._js = []
-
+class ColumnComponent(JsPackage):
   def getElement(self):
     """
     The getElement function returns the DOM node for the column.
@@ -520,28 +472,8 @@ class ColumnComponent(object):
     """
     return JsObjects.JsObject.JsObject("%s.reloadHeaderFilter()" % self.toStr())
 
-  def toStr(self):
-    """
-    Javascript representation
 
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
-
-
-class RowComponent(object):
-  def __init__(self, rowSelector):
-    self._selector = rowSelector
-    self._js = []
-
+class RowComponent(JsPackage):
   def update(self, jsData):
     """
     You can update the data in the row using the update function. You should pass an object to the function containing any fields you wish to update
@@ -724,34 +656,9 @@ class RowComponent(object):
     """
     return JsObjects.JsObject.JsObject("%s.unfreeze()" % self.toStr())
 
-  def toStr(self):
-    """
-    Javascript representation
 
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
-
-
-class Tabulator(object):
-
-  class __internal(object):
-    jsTableId, _context, jsImports, cssImport = 'table', {}, set([]), set([])
-
-  def __init__(self, src=None):
-    self.src = src if src is not None else self.__internal()
-    self.src.jsImports.add('tabulator')
-    self.src.cssImport.add('tabulator')
-    self._selector = self.src.jsTableId
-    self._js = []
+class Tabulator(JsPackage):
+  lib_alias = {"js": "tabulator", 'css': "tabulator"}
 
   def setGroupBy(self):
     pass
@@ -877,18 +784,7 @@ class Tabulator(object):
     """
     return JsObjects.JsObject.JsObject("%s.getData()" % self.toStr())
 
-  def toStr(self):
-    """
-    Javascript representation
 
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
+if __name__ == '__main__':
+  tab = Tabulator(selector="table", setVar=False)
+  print(tab.toStr())

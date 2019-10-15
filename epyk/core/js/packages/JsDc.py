@@ -5,58 +5,42 @@ http://dc-js.github.io/dc.js/docs/html/
 """
 
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsObjects
+from epyk.core.js.packages import JsPackage
 
 
-class DC(object):
-  class __internal(object):
-    jqId, htmlId, jsImports, cssImport = '', 'chart', set([]), set([])
+class DC(JsPackage):
+  lib_alias = {'css': 'dc', 'js': 'dc'}
 
-  def __init__(self, src=None):
-    self.src = src if src is not None else self.__internal()
-    self.selector = "dc.seriesChart('#%s')" % self.src.htmlId
-    self.src.jsImports.add('dc')
-    self.src.cssImport.add('dc')
-    self._js = []
-
-  def width(self, size):
+  def width(self, n):
     """
 
-    :param size:
+    :param n:
+
+    :return: Return 'self' to allow the cnains on the Python side
+    """
+    n = JsUtils.jsConvertData(n, None)
+    return self.fnc_closure("width(%s)" % n)
+
+  def height(self, n):
+    """
+
+    :param n:
     :return:
     """
-    self._js.append("%s.width(%s)" % (self.toStr(), size))
-    return self
-
-  def height(self, size):
-    """
-
-    :param size:
-    :return:
-    """
-    self._js.append("%s.height(%s)" % (self.toStr(), size))
-    return self
+    n = JsUtils.jsConvertData(n, None)
+    return self.fnc_closure("height(%s)" % n)
 
   def yAxisLabel(self, val):
     """
 
+    :param val:
+
     :return:
     """
-    self._js.append("%s.yAxisLabel(%s)" % (self.toStr(), val))
-    return self
+    val = JsUtils.jsConvertData(val, None)
+    return self.fnc_closure("yAxisLabel(%s)" % val)
 
-  def toStr(self):
-    """
-    Javascript representation
 
-    :return: Return the Javascript String
-    """
-    if self.selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self.selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
+if __name__ == "__main__":
+  dc = DC(selector="Ok", setVar=False).yAxisLabel("test").height(20).width(30)
+  print(dc.toStr())
