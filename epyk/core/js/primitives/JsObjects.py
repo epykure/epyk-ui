@@ -27,6 +27,16 @@ class JsObjects(object):
     """
     return JsObject.JsObject.get("this")
 
+  @property
+  def jqThis(self):
+    """
+    Interface to the Javascript Object primitive
+
+    :return: The Javascript "this" object
+    """
+    from epyk.core.js.packages import JsQuery
+    return JsQuery.JQuery(self._jsObj._src, selector="jQuery(this)", setVar=False)
+
   @classmethod
   def get(cls, varName):
     """

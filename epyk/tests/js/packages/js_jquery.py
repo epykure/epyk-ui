@@ -1,5 +1,5 @@
 """
-
+Create a HTML page only from JavaScript functions
 """
 
 from epyk.core.js import Js
@@ -16,9 +16,13 @@ f = JsUtils.JsFile("TestJquery", path=test_statics.OUTPUT_PATHS)
 
 # Write the Javascript fragments to the file
 f.writeJs([
-  dom,
+  dom.attr("id", "jq"),
   jsObj.body.appendChild(dom),
-  dom.text("youpi")
+  # Use Jquery from the new dom object
+  dom.jquery.text("test").css("color", "red").html("<b>test</b>test"),
+  dom.jquery.click(jsObj.console.log(
+    jsObj.objects.jqThis.html()
+  ))
 ])
 
 # Close the file and print the location of the launcher

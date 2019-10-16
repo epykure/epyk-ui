@@ -554,8 +554,15 @@ class JQuery(JsPackage):
 
     :return:
     """
-    self.src.style.css(key, value)
-    return self.src
+    if hasattr(self.src, "style"):
+      self.src.style.css(key, value)
+      return self
+
+    else:
+      if value is None:
+        return self.fnc("css(%s)" % JsUtils.jsConvertData(key, None))
+
+      return self.fnc("css('%s', %s)" % (key, JsUtils.jsConvertData(value, None)))
 
   def attr(self, key, value):
     """
@@ -579,7 +586,7 @@ class JQuery(JsPackage):
     :return:
     """
     if jsData is None:
-      self.fnc("val()")
+      return self.fnc("val()")
 
     return self.fnc("val(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
 
@@ -595,7 +602,7 @@ class JQuery(JsPackage):
       return self.fnc("text()")
 
     jsData = JsUtils.jsConvertData(jsData, jsFnc)
-    return self._js.append("text(%s)" % jsData)
+    return self.fnc("text(%s)" % jsData)
 
   def html(self, jsData=None, jsFnc=None):
     """
@@ -843,3 +850,12 @@ class JQuery(JsPackage):
 
     return Jsjqxhr("jQuery.ajax(%s)" % self.getParams(url, data, successFncs, errorFncs, options, timeout, props))
 
+  def click(self, jsFnc):
+    """
+
+    :param jsFnc:
+
+    :return:
+    """
+    self.css("cursor", "pointer")
+    return self.fnc("click(function(){%s})" % JsUtils.jsConvertFncs(jsFnc, toStr=True))
