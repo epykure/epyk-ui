@@ -704,7 +704,9 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    return JsObjects.JsArray.JsArray.get("%s.data()" % self.getStr())
+    obj = JsObjects.JsArray.JsArray.get("data()")
+    self.fnc_closure(obj)
+    return obj
 
   def destroy(self):
     """
@@ -716,7 +718,7 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    return "%s.destroy()"
+    return self.fnc_closure("destroy()")
 
   def draw(self, target=None):
     """
@@ -728,12 +730,11 @@ class DatatableAPI(JsPackage):
     :return:
     """
     if target is not None:
-      self._js.append("draw(%s)" % JsUtils.jsConvertData(target, None))
-    else:
-      self._js.append("draw()")
-    return self
+      return self.fnc_closure("draw(%s)" % JsUtils.jsConvertData(target, None))
 
-  def order(self, jsData=None):
+    return self.fnc_closure("draw()")
+
+  def order(self, data=None):
     """
 
     Example
@@ -744,7 +745,11 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    return self
+    if data is not None:
+      data = JsUtils.jsConvertData(data, None)
+      return self.fnc("order(%s)" % data)
+
+    return self.fnc("order()")
 
   def page(self, action):
     """

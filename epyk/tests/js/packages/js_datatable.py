@@ -17,7 +17,7 @@ tab = JsDatatable.DatatableAPI(selector="table", setVar=False)
 
 
 f.writeJs([
-  tab.data()
+  tab.order().draw().destroy().data().length,
 ])
 
 # Close the file and print the location of the launcher
