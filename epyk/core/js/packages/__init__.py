@@ -96,6 +96,20 @@ class JsPackage(object):
     self.setVar = flag
     return self
 
+  def getStr(self, emptyStack=True):
+    """
+    Get the current string representation for the object and remove the stack
+    """
+    if not emptyStack:
+      js_stack = list(self._js)
+    content = self.toStr()
+    if not emptyStack:
+      self._js = js_stack
+    if not content:
+      return self.varId
+
+    return content
+
   def toStr(self):
     """
     Javascript representation

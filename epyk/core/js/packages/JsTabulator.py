@@ -879,11 +879,13 @@ class Tabulator(JsPackage):
     columns = JsUtils.jsConvertData(columns, None)
     return self.fnc_closure("showColumn(%s)" % columns)
 
-  def setData(self, jsData):
+  def setData(self, data):
     """
 
     :return:
     """
+    data = JsUtils.jsConvertData(data, None)
+    return self.fnc_closure("setData(%s)" % data)
 
   def replaceData(self, jsData=None):
     """

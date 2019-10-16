@@ -7,6 +7,7 @@ https://datatables.net/reference/api/
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsQuery
+from epyk.core.js.packages import JsPackage
 
 
 class SelectAPI(object):
@@ -612,8 +613,9 @@ class RowAPI(object):
     return strData
 
 
-class DatatableAPI(object):
+class DatatableAPI(JsPackage):
   lib_alias = {'js': "datatables", 'css': 'datatables'}
+  lib_selector = 'datatable'
 
   def body(self):
     """
@@ -695,14 +697,14 @@ class DatatableAPI(object):
 
   def data(self):
     """
-    Get the data for the whole table.
+    Retrieve the data for the whole table, in row index order.
 
     Documentation
     https://datatables.net/reference/api/data()
 
     :return:
     """
-    return JsObjects.JsObject.JsObject.get("%s.data()" % self.toStr())
+    return JsObjects.JsArray.JsArray.get("%s.data()" % self.getStr())
 
   def destroy(self):
     """
