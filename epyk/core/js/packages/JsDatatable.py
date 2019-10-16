@@ -667,8 +667,7 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    self._js.append("nodes()")
-    return self
+    return self.fnc("nodes()")
 
   def jquery_node(self):
     """
@@ -679,9 +678,7 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    self.nodes()
-    self._js.append("to$()")
-    return JsQuery.JQuery(jqId=self.toStr())
+    return JsQuery.JQuery(selector="%s.nodes().to$()" % self.varId, setVar=False)
 
   def clear(self):
     """
@@ -703,9 +700,7 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    obj = JsObjects.JsArray.JsArray.get("data()")
-    self.fnc_closure(obj)
-    return obj
+    return JsObjects.JsArray.JsArray.get("%s.data()" % self.varId)
 
   def destroy(self):
     """
