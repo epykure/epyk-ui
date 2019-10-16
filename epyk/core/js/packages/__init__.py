@@ -15,10 +15,10 @@ class JsPackage(object):
     # By default it will attach eveything to the body
     jqId, jsImports, cssImport = '', set([]), set([])
 
-  def __init__(self, src=None, varName=None, selector=None, data=None, setVar=True):
+  def __init__(self, src=None, varName=None, selector=None, data=None, setVar=True, parent=None):
     self.src = src if src is not None else self.__internal()
     self._selector = selector if selector is not None else self.lib_selector
-    self.varName, self.setVar = varName, setVar
+    self.varName, self.setVar, self._parent = varName, setVar, parent
     self._data = data
     self._js = [[]] # a list of list of object definition
     if self.lib_alias is not None:
@@ -46,20 +46,20 @@ class JsPackage(object):
     self.src._props.setdefault("packages", {})[self.lib_alias] = ver
     return self
 
-  def fnc(self, fnc_str):
+  def fnc(self, data):
     """
     Base function to allow the object chain.
     THis will add the elements to the current section in the object structure
     All the items at the same level wil be chained
 
-    :param fnc_str: THe Javascript fragment to be added
+    :param data: THe Javascript fragment to be added
 
     :return: "Self" to allow the chains
     """
-    self._js[-1].append(fnc_str)
+    self._js[-1].append(data)
     return self
 
-  def fnc_closure(self, fnc_str):
+  def fnc_closure(self, data):
     """
     Add the function string to the existing object definition but create a new entry point for the next ones.
     This structure will allow the chain on the Javascript side but also on the Python side.
@@ -69,11 +69,11 @@ class JsPackage(object):
 
     Example
 
-    :param fnc_str: String. The Javascript fragment to be added
+    :param data: String. The Javascript fragment to be added
 
     :return: The "self" to allow the chains
     """
-    self._js[-1].append(fnc_str)
+    self._js[-1].append(data)
     self._js.append([])
     return self
 
@@ -110,7 +110,7 @@ class JsPackage(object):
       if len(js) == 0:
         continue
 
-      str_fnc = ".".join(js)
+      str_fnc = ".".join([d.toStr() if hasattr(d, "toStr") else d for d in js])
       if self.setVar:
         if str_fnc:
           str_fnc = "var %s = %s.%s" % (self.varId, self._selector, str_fnc)

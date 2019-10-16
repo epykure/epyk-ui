@@ -316,6 +316,9 @@ class GroupComponent(JsPackage):
 
 
 class ColumnComponent(JsPackage):
+  lib_alias = {"js": "tabulator", 'css': "tabulator"}
+  lib_selector = "column"
+
   def getElement(self):
     """
     The getElement function returns the DOM node for the column.
@@ -410,7 +413,7 @@ class ColumnComponent(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.delete()" % self.toStr())
+    return self.fnc_closure("delete()")
 
   def scrollTo(self):
     """
@@ -471,6 +474,22 @@ class ColumnComponent(JsPackage):
     :return:
     """
     return JsObjects.JsObject.JsObject("%s.reloadHeaderFilter()" % self.toStr())
+
+
+class ColumnComponents(JsPackage):
+
+  def forEach(self, jsFnc):
+    """
+
+    :param jsFnc:
+    :return:
+    """
+    return self.fnc_closure("forEach(function(column){%s})" % JsUtils.jsConvertFncs(jsFnc, toStr=True))
+
+  @property
+  def table(self):
+    self._parent._js.append([])
+    return self._parent
 
 
 class RowComponent(JsPackage):
@@ -550,9 +569,12 @@ class RowComponent(JsPackage):
     """
     The delete function deletes the row, removing its data from the table
 
+    Documentation
+    http://www.tabulator.info/docs/4.0/update
+
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.delete()" % self.toStr())
+    return self.fnc_closure("delete()")
 
   def scrollTo(self):
     """
@@ -586,6 +608,9 @@ class RowComponent(JsPackage):
     """
     You can update the data in the row using the update function.
     You should pass an object to the function containing any fields you wish to update.
+
+    Documentation
+    http://www.tabulator.info/docs/4.0/update
 
     :return:
     """
@@ -660,29 +685,113 @@ class RowComponent(JsPackage):
 class Tabulator(JsPackage):
   lib_alias = {"js": "tabulator", 'css': "tabulator"}
 
-  def setGroupBy(self):
-    pass
-
-  def setGroupStartOpen(self):
-    pass
-
-  def deleteRow(self):
-    pass
-
-  def addRow(self):
+  def setGroupBy(self, column):
     """
+    You can use the setGroupBy function to change the fields that rows are grouped by.
+    This function has one argument and takes the same values as passed to the groupBy setup option.
+
+    Documentation
+    http://www.tabulator.info/docs/4.1/group
+
+    :param column:
+
+    :return:
+    """
+    return self.fnc_closure("setGroupBy(%s)" % JsUtils.jsConvertData(column, None))
+
+  def setGroupStartOpen(self, flag):
+    """
+    You can use the setGroupStartOpen function to change the default open state of groups.
+    This function has one argument and takes the same values as passed to the groupStartOpen setup option.
+
+    Documentation
+    http://www.tabulator.info/docs/4.1/group
+
+    :param flag:
+
+    :return:
+    """
+    return self.fnc_closure("setGroupStartOpen(%s)" % JsUtils.jsConvertData(flag, None))
+
+  def setGroupHeader(self, jsFnc):
+    """
+    You can use the setGroupHeader function to change the header generation function for each group.
+    This function has one argument and takes the same values as passed to the groupHeader setup option.
+
+    Documentation
+    http://www.tabulator.info/docs/4.1/group
+
+    :param jsFnc:
+
+    :return:
+    """
+    return self.fnc_closure("setGroupHeader(function(value, count, data, group){%s})" % JsUtils.jsConvertFncs(jsFnc, toStr=True))
+
+  def deleteRow(self, n):
+    """
+    You can delete any row in the table using the deleteRow function.
+    The first argument is the row you want to delete, it will take any of the standard row component look up options.
+
+    documentation
+    http://www.tabulator.info/docs/4.0/update
+
+    :param n:
+
+    :return:
+    """
+    return self.fnc_closure("deleteRow(%s)" % n)
+
+  def addRow(self, data, flag=False):
+    """
+    You can add a row to the table using the addRow function.
+
+    The first argument should be a row data object. If you do not pass data for a column, it will be left empty.
+    To create a blank row (ie for a user to fill in), pass an empty object to the function.
+
+    The second argument is optional and determines whether the row is added to the top or bottom of the table.
+    A value of true will add the row to the top of the table, a value of false will add the row to the bottom of the table.
+    If the parameter is not set the row will be placed according to the addRowPos global option.
 
     Documentation
     http://tabulator.info/docs/4.3/update#addrow
 
+    :param data:
+    :param flag:
+
     :return:
     """
+    data = JsUtils.jsConvertData(data, None)
+    flag = JsUtils.jsConvertData(flag, None)
+    return self.fnc_closure("addRow(%s, %s)" % (data, flag))
 
-  def updateRow(self):
-    pass
+  def updateRow(self, id, data):
+    """
+    The updateRow and row.updatemethods return a promise, this can be used to run any other commands that have to be run after the data has been loaded into the table.
 
-  def updateOrAddRow(self):
-    pass
+    Documentation
+    http://www.tabulator.info/docs/4.0/update
+
+    :param id:
+    :param data:
+
+    :return:
+    """
+    return self.fnc_closure("updateRow(%s, %s)" % (id, JsUtils.jsConvertData(data, None)))
+
+  def updateOrAddRow(self, id, data):
+    """
+    If you don't know whether a row already exists you can use the updateOrAddRow function.
+    This will check if a row with a matching index exists, if it does it will update it, if not it will add a new row with that data
+
+    Documentation
+    http://www.tabulator.info/docs/4.0/update
+
+    :param id:
+    :param data:
+
+    :return:
+    """
+    return self.fnc_closure("updateOrAddRow(%s, %s)" % (id, JsUtils.jsConvertData(data, None)))
 
   def getRow(self, jsIndex):
     """
@@ -720,8 +829,15 @@ class Tabulator(JsPackage):
   def hideColumn(self):
     pass
 
+  @property
   def getColumns(self):
-    pass
+    """
+
+    :return:
+    """
+    columns = ColumnComponents(self.src, selector="getColumns()", setVar=False, parent=self)
+    self.fnc(columns)
+    return columns
 
   def addColumn(self):
     return ""
@@ -745,7 +861,11 @@ class Tabulator(JsPackage):
     pass
 
   def clearData(self):
-    pass
+    """
+
+    :return:
+    """
+    return self.fnc_closure("clearData()")
 
   def showColumn(self, columns):
     """
@@ -783,8 +903,3 @@ class Tabulator(JsPackage):
     :return:
     """
     return JsObjects.JsObject.JsObject("%s.getData()" % self.toStr())
-
-
-if __name__ == '__main__':
-  tab = Tabulator(selector="table", setVar=False)
-  print(tab.toStr())

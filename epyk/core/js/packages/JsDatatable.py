@@ -475,8 +475,6 @@ class RowAPI(object):
     self._js.append("scrollTo()")
     return self
 
-
-
   def cache(self):
     """
     Get the DataTables cached data for the selected row.
@@ -615,15 +613,7 @@ class RowAPI(object):
 
 
 class DatatableAPI(object):
-  class __internal(object):
-    jqId, htmlId, jsImports, cssImport = 'table', '', set([]), set([])
-
-  def __init__(self, src=None):
-    self.src = src if src is not None else self.__internal()
-    self.selector = self.src.jqId
-    self.src.jsImports.add('datatables')
-    self.src.cssImport.add('datatables')
-    self._js = []
+  lib_alias = {'js': "datatables", 'css': 'datatables'}
 
   def body(self):
     """
@@ -690,8 +680,6 @@ class DatatableAPI(object):
     self.nodes()
     self._js.append("to$()")
     return JsQuery.JQuery(jqId=self.toStr())
-
-
 
   def clear(self):
     """
@@ -820,24 +808,6 @@ class DatatableAPI(object):
       selector = "%s.cell()" % self.toStr()
     return CellAPI(selector)
 
-  def cell(self, cellSelector=None, rowColSelector=None):
-    """
-    Select cells found by both row and column selectors
-
-    Documentation
-    https://datatables.net/reference/api/cells()
-    https://datatables.net/reference/api/cell()
-
-    :return:
-    """
-    if cellSelector is not None:
-      selector = "%s.cell(%s)" % self.toStr()
-    elif rowColSelector is not None:
-      selector = "%s.cell(%s, %s)" % (self.toStr(), rowColSelector[0], rowColSelector[1])
-    else:
-      selector = "%s.cell()" % self.toStr()
-    return CellAPI(selector)
-
   def column(self, colSelector):
     """
 
@@ -874,19 +844,3 @@ class DatatableAPI(object):
     """
     self._js.append("select()")
     return SelectAPI(self.toStr())
-
-  def toStr(self):
-    """
-    Javascript representation
-
-    :return: Return the Javascript String
-    """
-    if self.selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self.selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
