@@ -80,6 +80,9 @@ class Navigation(JsPackage):
 
 
 class CellComponent(JsPackage):
+  lib_alias = {"js": "tabulator", 'css': "tabulator"}
+  lib_selector = "cell"
+
   def getElement(self):
     """
     The getElement function returns the DOM node for the cell.
@@ -477,6 +480,7 @@ class ColumnComponent(JsPackage):
 
 
 class ColumnComponents(JsPackage):
+  lib_selector = "column"
 
   def forEach(self, jsFnc):
     """
@@ -484,7 +488,7 @@ class ColumnComponents(JsPackage):
     :param jsFnc:
     :return:
     """
-    return self.fnc_closure("forEach(function(column){%s})" % JsUtils.jsConvertFncs(jsFnc, toStr=True))
+    return self.fnc_closure("forEach(function(rec){%s})" % JsUtils.jsConvertFncs(jsFnc, toStr=True))
 
   @property
   def table(self):
@@ -496,6 +500,8 @@ class ColumnComponents(JsPackage):
 
 
 class RowComponent(JsPackage):
+  lib_selector = "row"
+
   def update(self, data):
     """
     You can update the data in the row using the update function.
@@ -870,8 +876,8 @@ class Tabulator(JsPackage):
     :param columns:
     :return:
     """
-
-    pass
+    columns = JsUtils.jsConvertData(columns, None)
+    return self.fnc_closure("showColumn(%s)" % columns)
 
   def setData(self, jsData):
     """
