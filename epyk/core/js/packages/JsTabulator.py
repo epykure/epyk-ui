@@ -764,21 +764,22 @@ class Tabulator(JsPackage):
     flag = JsUtils.jsConvertData(flag, None)
     return self.fnc_closure("addRow(%s, %s)" % (data, flag))
 
-  def updateRow(self, id, data):
+  def updateRow(self, rowId, data):
     """
-    The updateRow and row.updatemethods return a promise, this can be used to run any other commands that have to be run after the data has been loaded into the table.
+    The updateRow and row.updatemethods return a promise,
+    this can be used to run any other commands that have to be run after the data has been loaded into the table.
 
     Documentation
     http://www.tabulator.info/docs/4.0/update
 
-    :param id:
+    :param rowId:
     :param data:
 
     :return:
     """
-    return self.fnc_closure("updateRow(%s, %s)" % (id, JsUtils.jsConvertData(data, None)))
+    return self.fnc_closure("updateRow(%s, %s)" % (rowId, JsUtils.jsConvertData(data, None)))
 
-  def updateOrAddRow(self, id, data):
+  def updateOrAddRow(self, rowId, data):
     """
     If you don't know whether a row already exists you can use the updateOrAddRow function.
     This will check if a row with a matching index exists, if it does it will update it, if not it will add a new row with that data
@@ -786,12 +787,12 @@ class Tabulator(JsPackage):
     Documentation
     http://www.tabulator.info/docs/4.0/update
 
-    :param id:
+    :param rowId:
     :param data:
 
     :return:
     """
-    return self.fnc_closure("updateOrAddRow(%s, %s)" % (id, JsUtils.jsConvertData(data, None)))
+    return self.fnc_closure("updateOrAddRow(%s, %s)" % (rowId, JsUtils.jsConvertData(data, None)))
 
   def getRow(self, jsIndex):
     """
