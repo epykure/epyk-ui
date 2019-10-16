@@ -10,14 +10,10 @@ from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsPackage
 
 
-class SelectAPI(object):
+class SelectAPI(JsPackage):
   """
 
   """
-
-  def __init__(self, cellSelector):
-    self._selector = cellSelector
-    self._js = []
 
   def blurable(self):
     """
@@ -78,32 +74,11 @@ class SelectAPI(object):
     """
     return JsObjects.JsString.JsString("%s.style()" % self._selector)
 
-  def toStr(self):
-    """
-    Javascript representation
 
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
-
-
-class CellAPI(object):
+class CellAPI(JsPackage):
   """
 
   """
-
-  def __init__(self, cellSelector):
-    self.selector = cellSelector
-    self._js = []
-
   def deselect(self):
     """
 
@@ -114,8 +89,6 @@ class CellAPI(object):
     """
     self._js.append("deselect()")
     return self
-
-
 
   def select(self):
     """
@@ -128,8 +101,6 @@ class CellAPI(object):
     self._js.append("select()")
     return self
 
-
-
   def render(self):
     """
     Get rendered data for a cell
@@ -139,8 +110,6 @@ class CellAPI(object):
 
     :return:
     """
-
-
 
   def nodes(self):
     """
@@ -175,8 +144,6 @@ class CellAPI(object):
     :return:
     """
 
-
-
   def index(self):
     """
 
@@ -185,8 +152,6 @@ class CellAPI(object):
 
     :return:
     """
-
-
 
   def cache(self):
     """
@@ -197,8 +162,6 @@ class CellAPI(object):
 
     :return:
     """
-
-
 
   def data(self):
     """
@@ -236,31 +199,11 @@ class CellAPI(object):
     self._js.append("blur()")
     return self
 
-  def toStr(self):
-    """
-    Javascript representation
 
-    :return: Return the Javascript String
-    """
-    if self.selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self.selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
-
-
-class ColumnAPI(object):
+class ColumnAPI(JsPackage):
   """
 
   """
-  def __init__(self, colSelector):
-    self.selector = colSelector
-    self._js = []
-
   def deselect(self):
     """
 
@@ -415,32 +358,11 @@ class ColumnAPI(object):
       self._js.append("draw()")
     return self
 
-  def toStr(self):
-    """
-    Javascript representation
 
-    :return: Return the Javascript String
-    """
-    if self.selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self.selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
-
-
-class RowAPI(object):
+class RowAPI(JsPackage):
   """
 
   """
-
-  def __init__(self, colSelector):
-    self.selector = colSelector
-    self._js = []
-
   def deselect(self):
     """
 
@@ -595,22 +517,6 @@ class RowAPI(object):
     else:
       self._js.append("draw()")
     return self
-
-  def toStr(self):
-    """
-    Javascript representation
-
-    :return: Return the Javascript String
-    """
-    if self.selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self.selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
 
 
 class DatatableAPI(JsPackage):
@@ -778,7 +684,7 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    return "%s.settings()"
+    return self.fnc("settings()")
 
   def state(self):
     """
@@ -789,7 +695,7 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject.get("%s.state()" % self.toStr())
+    return JsObjects.JsObject.JsObject.get("%s.state()" % self.varId)
 
   def cell(self, cellSelector=None, rowColSelector=None):
     """
@@ -828,9 +734,9 @@ class DatatableAPI(JsPackage):
     :return:
     """
     if colSelector is not None:
-      selector = "%s.column(%s)" % (self.toStr(), JsUtils.jsConvertData(colSelector, None))
+      selector = "%s.column(%s)" % (self.varId, JsUtils.jsConvertData(colSelector, None))
     else:
-      selector = "%s.column()" % self.toStr()
+      selector = "%s.column()" % self.varId
     return ColumnAPI(selector)
 
   def select(self):
@@ -843,5 +749,4 @@ class DatatableAPI(JsPackage):
     TODO add the select true
     :return:
     """
-    self._js.append("select()")
-    return SelectAPI(self.toStr())
+    return SelectAPI(selector="%s.select()", setVar=False)
