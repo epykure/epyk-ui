@@ -488,19 +488,28 @@ class ColumnComponents(JsPackage):
 
   @property
   def table(self):
+    """
+    Return to the parent table
+    """
     self._parent._js.append([])
     return self._parent
 
 
 class RowComponent(JsPackage):
-  def update(self, jsData):
+  def update(self, data):
     """
-    You can update the data in the row using the update function. You should pass an object to the function containing any fields you wish to update
+    You can update the data in the row using the update function.
+    You should pass an object to the function containing any fields you wish to update
+
+    Documentation
+    http://www.tabulator.info/docs/4.0/update
+
+    :param data: Dictionary with the data to override
 
     :return:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObject.JsObject("%s.update(%s)" % (self.toStr(), jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return self.fnc_closure("update(%s)" % data)
 
   def getData(self):
     """
@@ -582,7 +591,7 @@ class RowComponent(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.scrollTo()" % self.toStr())
+    return self.fnc_closure("scrollTo()")
 
   def pageTo(self):
     """
@@ -590,7 +599,7 @@ class RowComponent(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.pageTo()" % self.toStr())
+    return self.fnc_closure("pageTo()")
 
   def move(self, jsIndex, jsBoolean=True):
     """
@@ -602,20 +611,7 @@ class RowComponent(JsPackage):
     """
     jsIndex = JsUtils.jsConvertData(jsIndex, None)
     jsBoolean = JsUtils.jsConvertData(jsBoolean, None)
-    return JsObjects.JsObject.JsObject("%s.move(%s, %s)" % (self.toStr(), jsIndex, jsBoolean))
-
-  def update(self, jsData):
-    """
-    You can update the data in the row using the update function.
-    You should pass an object to the function containing any fields you wish to update.
-
-    Documentation
-    http://www.tabulator.info/docs/4.0/update
-
-    :return:
-    """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObject.JsObject("%s.update(%s)" % (self.toStr(), jsData))
+    return self.fnc_closure("move(%s, %s)" % (jsIndex, jsBoolean))
 
   def select(self):
     """
@@ -623,7 +619,7 @@ class RowComponent(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.select()" % self.toStr())
+    return self.fnc_closure("select()")
 
   def deselect(self):
     """
@@ -631,7 +627,7 @@ class RowComponent(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.deselect()" % self.toStr())
+    return self.fnc_closure("deselect()")
 
   def toggleSelect(self):
     """
@@ -639,7 +635,7 @@ class RowComponent(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.toggleSelect()" % self.toStr())
+    return self.fnc_closure("toggleSelect()")
 
   def isSelected(self):
     """
@@ -663,7 +659,7 @@ class RowComponent(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.reformat()" % self.toStr())
+    return self.fnc_closure("reformat()")
 
   def freeze(self):
     """
@@ -671,7 +667,7 @@ class RowComponent(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.freeze()" % self.toStr())
+    return self.fnc_closure("freeze()")
 
   def unfreeze(self):
     """
@@ -679,7 +675,7 @@ class RowComponent(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.unfreeze()" % self.toStr())
+    return self.fnc_closure("unfreeze()")
 
 
 class Tabulator(JsPackage):
@@ -796,10 +792,11 @@ class Tabulator(JsPackage):
 
   def getRow(self, jsIndex):
     """
-
-    :return:
+    Get the Row component
     """
-    return RowComponent("%s.getRow(%s)" % (self.toStr(), jsIndex))
+    row = RowComponent(self.src, selector="getRow(%s)" % jsIndex, setVar=False, parent=self)
+    self.fnc(row)
+    return row
 
   def getSelectedRows(self):
     """
@@ -810,7 +807,7 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return JsObjects.JsArray.JsArray("%s.getSelectedRows()" % self.src.jsTableId)
+    return JsObjects.JsArray.JsArray("%s.getSelectedRows()" % self.toStr())
 
   def getRows(self):
     pass
@@ -833,8 +830,7 @@ class Tabulator(JsPackage):
   @property
   def getColumns(self):
     """
-
-    :return:
+    Get the table columns
     """
     columns = ColumnComponents(self.src, selector="getColumns()", setVar=False, parent=self)
     self.fnc(columns)
