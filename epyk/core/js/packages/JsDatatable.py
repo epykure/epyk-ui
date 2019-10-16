@@ -692,8 +692,7 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    self._js.append("clear()")
-    return self
+    return self.fnc("clear()")
 
   def data(self):
     """
