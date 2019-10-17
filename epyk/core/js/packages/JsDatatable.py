@@ -365,25 +365,25 @@ class RowAPI(JsPackage):
   """
   def deselect(self):
     """
+    This method simply deselects a single row that has been found by the row() selector method.
 
     Documentation
     https://datatables.net/reference/api/row().deselect()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
-    self._js.append("deselect()")
-    return self
+    return self.fnc("deselect()")
 
   def select(self):
     """
+    This method simply selects a single row that has been found by the row() selector method.
 
     Documentation
     https://datatables.net/reference/api/row().select()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
-    self._js.append("select()")
-    return self
+    return self.fnc("select()")
 
   def scrollTo(self, animate=True):
     """
@@ -393,50 +393,68 @@ class RowAPI(JsPackage):
     https://datatables.net/reference/api/row().scrollTo()
 
     :param animate: Animate the scroll (true) or not (false).
-    :return:
-    """
-    self._js.append("scrollTo()")
-    return self
 
-  def cache(self):
+    :return: DataTables API instance for chaining
+    """
+    return self.fnc("scrollTo()")
+
+  def cache(self, dtype):
     """
     Get the DataTables cached data for the selected row.
 
     Documentation
     https://datatables.net/reference/api/row().cache()
 
-    :return:
-    """
+    :param dtype: Specify which cache the data should be read from. Can take one of two values: search or order.
+                  Defaults to order if no value is given.
 
-  def child(self):
+    :return: DataTables API instance for chaining
+    """
+    if dtype not in ("search", "order"):
+      raise Exception("dtype %s not recognised" % dtype)
+
+    dtype = JsUtils.jsConvertData(dtype, None)
+    return self.fnc("scrollTo(%s)" % dtype)
+
+  def child(self, showRemove):
     """
     Row child method namespace.
 
     Documentation
     https://datatables.net/reference/api/row().child
 
-    :return:
+    :param showRemove: This parameter can be given as true or false:
+
+    :return: DataTables API instance for chaining
     """
+    showRemove = JsUtils.jsConvertData(showRemove, None)
+    return self.fnc("child(%s)" % showRemove)
 
   def data(self):
     """
-    Get / set the data for the selected row.
+    Retrieve the data for the whole table, in row index order.
 
     Documentation
     https://datatables.net/reference/api/row().data()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
+    return self.fnc("data()")
 
-  def id(self):
+  def id(self, hash=True):
     """
-    Get the id of the selected row.
+    This method can be used to get a row's id, as specified by the row's data and the rowId option.
+    Optionally it can also prepend a hash (#) to the row id allowing it to then easily be used as a selector.
 
     Documentation
     https://datatables.net/reference/api/row().id()
 
+    :param hash: Append a hash (#) to the start of the row id. This can be useful for then using the id as a selector
+
     :return:
     """
+    hash = JsUtils.jsConvertData(hash, None)
+    return self.fnc("id(%s)" % hash)
 
   def index(self):
     """
@@ -445,18 +463,22 @@ class RowAPI(JsPackage):
     Documentation
     https://datatables.net/reference/api/row().index()
 
-    :return:
+    :return: Row index
     """
+    return JsObjects.JsNumber.JsNumber("%s.index()" % self.getStr())
 
-  def invalidate(self):
+  def invalidate(self, source=None):
     """
     Invalidate the data held in DataTables for the selected row.
 
     Documentation
     https://datatables.net/reference/api/row().invalidate()
 
+    :param source:
+
     :return:
     """
+    return self.fnc("invalidate(%s)")
 
   def node(self):
     """
@@ -467,8 +489,7 @@ class RowAPI(JsPackage):
 
     :return:
     """
-    self._js.append("node()")
-    return self
+    return self.fnc("node()")
 
   def jquery_node(self):
     """
@@ -492,6 +513,7 @@ class RowAPI(JsPackage):
 
     :return:
     """
+    return self.fnc("remove()")
 
   def add(self, jsData):
     """
@@ -500,8 +522,12 @@ class RowAPI(JsPackage):
     Documentation
     https://datatables.net/reference/api/row.add()
 
+    :param jsData:
+
     :return:
     """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return self.fnc("add(%s)" % jsData)
 
   def draw(self, target=None):
     """
@@ -513,10 +539,9 @@ class RowAPI(JsPackage):
     :return:
     """
     if target is not None:
-      self._js.append("draw(%s)" % JsUtils.jsConvertData(target, None))
-    else:
-      self._js.append("draw()")
-    return self
+      return self.fnc("draw(%s)" % JsUtils.jsConvertData(target, None))
+
+    return self.fnc("draw()")
 
 
 class DatatableAPI(JsPackage):

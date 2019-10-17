@@ -464,7 +464,7 @@ class VisDataView(JsPackage):
     """
     return VisDataOptions(self.src)
 
-  
+
 class VisDataGroups(DataAttrs):
   def className(self, value):
     """
