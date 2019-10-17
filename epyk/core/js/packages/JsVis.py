@@ -79,7 +79,7 @@ class VisDataSet(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.forEach()" % self.getStr())
 
-  def map(self):
+  def map(self, callback):
     pass
 
   def max(self, field):
@@ -119,8 +119,20 @@ class VisDataSet(JsPackage):
   def off(self, event, callback):
     pass
 
-  def remove(self):
-    pass
+  def remove(self, ids, senderId=None):
+    """
+    Remove a data item or an array with items
+
+    Documentation
+    https://visjs.github.io/vis-data/data/dataset.html
+
+    :param ids:
+    :param senderId:
+
+    :return:
+    """
+    ids = JsUtils.jsConvertData(ids, None)
+    return JsObjects.JsArray.JsArray("%s.remove(%s)" % (self.getStr(), ids))
 
   def setOptions(self, options):
     """
