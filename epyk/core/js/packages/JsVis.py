@@ -458,7 +458,13 @@ class VisDataView(JsPackage):
     data = JsUtils.jsConvertData(data, None)
     return self.fnc("setData(%s)" % data)
 
+  def options(self):
+    """
+    Create a new option object on the Python side for DataViz
+    """
+    return VisDataOptions(self.src)
 
+  
 class VisDataGroups(DataAttrs):
   def className(self, value):
     """
