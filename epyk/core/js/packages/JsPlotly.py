@@ -11,8 +11,6 @@ from epyk.core.js.packages import JsPackage
 
 
 class JsPlotly(JsPackage):
-
-
   def newPlot(self):
     """
 
