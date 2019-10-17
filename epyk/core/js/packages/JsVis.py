@@ -220,10 +220,14 @@ class VisDataOptions(DataAttrs):
   def clickToUse(self, flag):
     """
 
+    Example
+    https://visjs.github.io/vis-timeline/examples/timeline/interaction/clickToUse.html
+
     :param flag:
 
     :return:
     """
+    return self.attr("clickToUse", JsUtils.jsConvertData(flag, None))
 
   def configure(self, flag):
     """
@@ -232,6 +236,7 @@ class VisDataOptions(DataAttrs):
 
     :return:
     """
+    return self.attr("configure", JsUtils.jsConvertData(flag, None))
 
   def dataAttributes(self, strings):
     """
@@ -240,6 +245,7 @@ class VisDataOptions(DataAttrs):
 
     :return:
     """
+    return self.attr("dataAttributes", JsUtils.jsConvertData(strings, None))
 
   @property
   def editable(self):
@@ -251,6 +257,7 @@ class VisDataOptions(DataAttrs):
     :param object:
     :return:
     """
+    return self.attr("end", JsUtils.jsConvertData(object, None))
 
   def format(self, object):
     """
@@ -258,6 +265,7 @@ class VisDataOptions(DataAttrs):
     :param object:
     :return:
     """
+    return self.attr("format", JsUtils.jsConvertData(object, None))
 
   @property
   def groupEditable(self):
@@ -269,6 +277,7 @@ class VisDataOptions(DataAttrs):
     :param text:
     :return:
     """
+    return self.attr("groupHeightMode", JsUtils.jsConvertData(text, None))
 
   def groupOrder(self, text):
     """
@@ -276,6 +285,7 @@ class VisDataOptions(DataAttrs):
     :param text:
     :return:
     """
+    return self.attr("groupOrder", JsUtils.jsConvertData(text, None))
 
   def groupOrderSwap(self, fnc):
     """
@@ -312,6 +322,7 @@ class VisDataOptions(DataAttrs):
     :param flag:
     :return:
     """
+    return self.attr("horizontalScroll", JsUtils.jsConvertData(flag, None))
 
 
 class VisDataView(JsPackage):
