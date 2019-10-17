@@ -11,15 +11,14 @@ from epyk.core.js.packages import JsPackage, DataAttrs
 
 class VisDataSet(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
+  lib_selector = "dataSet"
 
   @property
   def length(self):
     """
     The number of items in the DataSet.
-
-    :return:
     """
-    return JsObjects.JsNumber.JsNumber("%s.length" % self.toStr())
+    return JsObjects.JsNumber.JsNumber("%s.length" % self.getStr())
 
   def add(self, jsData):
     """
@@ -33,7 +32,7 @@ class VisDataSet(JsPackage):
     :return: The function returns an array with the ids of the added items. See section Data Manipulation.
     """
     jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsArray.JsArray("%s.add(%s)" % (self.toStr(), jsData))
+    return JsObjects.JsArray.JsArray("%s.add(%s)" % (self.getStr(), jsData))
 
   def clear(self, senderId=None):
     """
@@ -44,7 +43,7 @@ class VisDataSet(JsPackage):
 
     :return: The function returns an array with the ids of the removed items.
     """
-    return JsObjects.JsArray.JsArray("%s.clear()" % (self.toStr()))
+    return JsObjects.JsArray.JsArray("%s.clear()" % (self.getStr()))
 
   def distinct(self, field):
     """
@@ -58,7 +57,7 @@ class VisDataSet(JsPackage):
     :return: Returns an unordered array containing all distinct values. If data items do not contain the specified field are ignored.
     """
     field = JsUtils.jsConvertData(field, None)
-    return JsObjects.JsArray.JsArray("%s.distinct(%s)" % (self.toStr(), field))
+    return JsObjects.JsArray.JsArray("%s.distinct(%s)" % (self.getStr(), field))
 
   def flush(self):
     """
@@ -66,10 +65,8 @@ class VisDataSet(JsPackage):
 
     Documentation
     https://visjs.github.io/vis-data/data/dataset.html
-
-    :return:
     """
-    return JsObjects.JsObject.JsObject("%s.flush()" % self.toStr())
+    return JsObjects.JsObject.JsObject("%s.flush()" % self.getStr())
 
   def forEach(self, callback, options=None):
     """
@@ -80,7 +77,7 @@ class VisDataSet(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.forEach()" % self.toStr())
+    return JsObjects.JsObject.JsObject("%s.forEach()" % self.getStr())
 
   def map(self):
     pass
@@ -97,7 +94,7 @@ class VisDataSet(JsPackage):
     :return: Returns null if no item is found.
     """
     field = JsUtils.jsConvertData(field, None)
-    return JsObjects.JsObject.JsObject("%s.max(%s)" % (self.toStr(), field))
+    return JsObjects.JsObject.JsObject("%s.max(%s)" % (self.getStr(), field))
 
   def min(self, field):
     """
@@ -111,7 +108,7 @@ class VisDataSet(JsPackage):
     :return: Returns null if no item is found.
     """
     field = JsUtils.jsConvertData(field, None)
-    return JsObjects.JsObject.JsObject("%s.min(%s)" % (self.toStr(), field))
+    return JsObjects.JsObject.JsObject("%s.min(%s)" % (self.getStr(), field))
 
   def update(self):
     pass
@@ -125,8 +122,18 @@ class VisDataSet(JsPackage):
   def remove(self):
     pass
 
-  def setOptions(self):
-    pass
+  def setOptions(self, options):
+    """
+    Set options for the DataSet.
+
+    Documentation
+    https://visjs.github.io/vis-data/data/dataset.html
+
+    :param options:
+
+    :return:
+    """
+    return self.fnc_closure("setOptions(%s)" % options)
 
   def get(self):
     pass
@@ -146,9 +153,15 @@ class VisDataSet(JsPackage):
     """
     if options is not None:
       options = JsUtils.jsConvertData(options, None)
-      return JsObjects.JsArray.JsArray("%s.getIds(%s)" % (self.toStr(), options))
+      return JsObjects.JsArray.JsArray("%s.getIds(%s)" % (self.getStr(), options))
 
-    return JsObjects.JsArray.JsArray("%s.getIds()" % self.toStr())
+    return JsObjects.JsArray.JsArray("%s.getIds()" % self.getStr())
+
+  def options(self):
+    """
+    Create a new option object on the Python side for DataViz
+    """
+    return VisDataOptions(self.src)
 
 
 class VisDataOptions(DataAttrs):
@@ -160,6 +173,29 @@ class VisDataOptions(DataAttrs):
     """
     return self.attr("align", JsUtils.jsConvertData(position, None))
 
+  def queue_delay(self, n=None):
+    """
+    The queue will be flushed automatically after an inactivity of this delay in milliseconds. Default value is null
+
+    :param n:
+    :return:
+    """
+    if n is None:
+      n = self._report.js.data.null
+    return self.attr("delay", JsUtils.jsConvertData(n, None))
+
+  def queue_max(self, n=None):
+    """
+    When the queue exceeds the given maximum number of entries, the queue is flushed automatically. Default value is
+
+    :param n:
+
+    :return:
+    """
+    if n is None:
+      n = self._report.js.number.POSITIVE_INFINITY
+    return self.attr("max", JsUtils.jsConvertData(n, None))
+
   def autoResize(self, flag):
     """
 
@@ -167,6 +203,7 @@ class VisDataOptions(DataAttrs):
 
     :return:
     """
+    return self.attr("autoResize", JsUtils.jsConvertData(flag, None))
 
   def clickToUse(self, flag):
     """
@@ -248,6 +285,7 @@ class VisDataOptions(DataAttrs):
     :param n:
     :return:
     """
+    return self.attr("height", JsUtils.jsConvertData(n, None))
 
   def hiddenDates(self, object):
     """
@@ -266,10 +304,14 @@ class VisDataOptions(DataAttrs):
 
 class VisDataView(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
+  lib_selector = "dataView"
 
   @property
   def length(self):
-    return
+    """
+    The number of items in the DataSet.
+    """
+    return JsObjects.JsNumber.JsNumber("%s.length" % self.getStr())
 
   def get(self, options=None, data=None):
     """
@@ -280,6 +322,16 @@ class VisDataView(JsPackage):
 
     :return:
     """
+    if data is None:
+      if options is None:
+        return JsObjects.JsObject.JsObject("%s.get()" % (self.getStr()))
+
+      options = JsUtils.jsConvertData(options, None)
+      return JsObjects.JsObject.JsObject("%s.get(%s)" % (self.getStr(), options))
+
+    options = JsUtils.jsConvertData(options, None)
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObject.JsObject("%s.get(%s, %s)" % (self.getStr(), options, data))
 
   def getByIds(self, ids, options=None, data=None):
     """
@@ -293,6 +345,17 @@ class VisDataView(JsPackage):
     :param data:
     :return:
     """
+    ids = JsUtils.jsConvertData(ids, None)
+    if data is None:
+      if options is None:
+        return JsObjects.JsObject.JsObject("%s.get(%s)" % (self.getStr(), ids))
+
+      options = JsUtils.jsConvertData(options, None)
+      return JsObjects.JsObject.JsObject("%s.get(%s, %s)" % (self.getStr(), ids, options))
+
+    options = JsUtils.jsConvertData(options, None)
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObject.JsObject("%s.get(%s, %s, %s)" % (self.getStr(), ids, options, data))
 
   def getDataSet(self):
     """
@@ -303,8 +366,9 @@ class VisDataView(JsPackage):
 
     :return:
     """
+    return VisDataSet(src=self.src, selector="%s.getDataSet()" % self.getStr())
 
-  def getIds(self, options):
+  def getIds(self, options=None):
     """
     Get ids of all items or of a filtered set of items.
     Available options are described in section Data Selection, except that options fields and type are not applicable in case of getIds.
@@ -313,8 +377,14 @@ class VisDataView(JsPackage):
     https://visjs.github.io/vis-data/data/dataview.html
 
     :param options:
+
     :return:
     """
+    if options is not None:
+      options = JsUtils.jsConvertData(options, None)
+      return JsObjects.JsArray.JsArray("%s.getIds(%s)" % (self.getStr(), options))
+
+    return JsObjects.JsArray.JsArray("%s.getIds()" % self.getStr())
 
   def off(self, event, callback):
     """
@@ -339,6 +409,7 @@ class VisDataView(JsPackage):
 
     :param event:
     :param callback:
+
     :return:
     """
 
@@ -351,14 +422,18 @@ class VisDataView(JsPackage):
 
     :return:
     """
+    return self.fnc_closure("refresh()")
 
   def setData(self, data):
     """
     Replace the DataSet of the DataView. Parameter data can be a DataSet or a DataView.
 
     :param data:
+
     :return:
     """
+    data = JsUtils.jsConvertData(data, None)
+    return self.fnc("setData(%s)" % data)
 
 
 class VisDataGroups(DataAttrs):
@@ -571,7 +646,3 @@ class VisGraph3D(JsPackage):
     :return:
     """
     return self.fnc_closure("on('cameraPositionChange', %s)" % jsFnc)
-
-
-if __name__ == "__main__":
-  VisDataSet(None)

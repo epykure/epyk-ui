@@ -9,7 +9,7 @@ from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsNumber
 
 from epyk.core.js.packages.JsCrossFilter import CrossFilter
-from epyk.core.js.packages.JsVis import VisDataSet
+from epyk.core.js.packages.JsVis import VisDataSet, VisDataView
 
 from epyk.core.js.fncs import JsFncs
 
@@ -219,14 +219,35 @@ class JsData(object):
     """
     return CrossFilter(self._src, varName=var_name, data=data)
 
-  def dataset(self, data):
+  def dataset(self, data, var_name=None):
     """
+    One of the starting points of the visualizations of vis.js is that they can deal with dynamic data, and allow manipulation of the data.
+    To enable this, vis.js includes a flexible key/value based DataSet and DataView to handle unstructured JSON data.
+
+    Documentation
+    https://visjs.github.io/vis-data/data/index.html
 
     :param data:
 
     :return:
     """
-    return VisDataSet(self._src, data)
+    return VisDataSet(self._src, data=data, varName=var_name)
+
+  def dataview(self, data, var_name=None):
+    """
+    A DataView offers a filtered and/or formatted view on a DataSet.
+    One can subscribe to changes in a DataView, and easily get filtered or formatted data without having to specify filters and field types all the time.
+
+    Viz.Js module
+
+    DOcumentation
+    https://visjs.github.io/vis-data/data/dataview.html
+
+    :param data:
+    :param var_name:
+
+    """
+    return VisDataView(self._src, data=data, varName=var_name)
 
   def records(self, data):
     """
@@ -236,3 +257,10 @@ class JsData(object):
     :return:
     """
     return RawData(self._src, data)
+
+  @property
+  def null(self):
+    """
+    Javascript null reference
+    """
+    return JsObject.JsObject("null", isPyData=False)
