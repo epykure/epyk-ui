@@ -344,7 +344,7 @@ class Html(object):
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtml(self)
+      self._dom = JsHtml.JsHtml(self, report=self._report)
     return self._dom
 
   @property

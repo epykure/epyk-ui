@@ -76,30 +76,31 @@ class SelectAPI(JsPackage):
 
 
 class CellAPI(JsPackage):
-  """
+  lib_alias = {'js': "datatables", 'css': 'datatables'}
+  lib_selector = 'cell'
+  lib_set_var = False
 
-  """
   def deselect(self):
     """
+    Deselect a single cell
 
     Documentation
     https://datatables.net/reference/api/column().deselect()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
-    self._js.append("deselect()")
-    return self
+    return self.fnc("deselect()")
 
   def select(self):
     """
+    Select a single cell
 
     Documentation
     https://datatables.net/reference/api/cell().select()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
-    self._js.append("select()")
-    return self
+    return self.fnc("select()")
 
   def render(self):
     """
@@ -108,19 +109,20 @@ class CellAPI(JsPackage):
     Documentation
     https://datatables.net/reference/api/cell().render()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
+    return self.fnc("render()")
 
-  def nodes(self):
+  def node(self):
     """
+    Get the DOM element for the selected cell
 
     Documentation
     https://datatables.net/reference/api/cell().node()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
-    self._js.append("nodes()")
-    return self
+    self.fnc("node()")
 
   def jquery_nodes(self):
     """
@@ -137,21 +139,25 @@ class CellAPI(JsPackage):
 
   def invalidate(self):
     """
+    Invalidate the data held in DataTables for the selected cells
 
     Documentation
     https://datatables.net/reference/api/cell().invalidate()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
+    return self.fnc("invalidate()")
 
   def index(self):
     """
+    Get index information about the selected cell
 
     Documentation
     https://datatables.net/reference/api/cell().index()
 
     :return:
     """
+    return JsObjects.JsNumber.JsNumber("%s.index()" % self.getStr())
 
   def cache(self):
     """
@@ -172,8 +178,7 @@ class CellAPI(JsPackage):
 
     :return:
     """
-    self._js.append("data()")
-    return self
+    return self.fnc("data()")
 
   def focus(self):
     """
@@ -184,8 +189,7 @@ class CellAPI(JsPackage):
 
     :return:
     """
-    self._js.append("focus()")
-    return self
+    return self.fnc("focus()")
 
   def blur(self):
     """
@@ -196,35 +200,35 @@ class CellAPI(JsPackage):
 
     :return:
     """
-    self._js.append("blur()")
-    return self
+    return self.fnc("blur()")
 
 
 class ColumnAPI(JsPackage):
-  """
+  lib_alias = {'js': "datatables", 'css': 'datatables'}
+  lib_selector = 'column'
+  lib_set_var = False
 
-  """
   def deselect(self):
     """
+    Deselect a single column
 
     Documentation
     https://datatables.net/reference/api/column().deselect()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
-    self._js.append("deselect()")
-    return self
+    return self.fnc("deselect()")
 
   def select(self):
     """
+    Select a single column
 
     Documentation
     https://datatables.net/reference/api/column().select()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
-    self._js.append("select()")
-    return self
+    self.fnc("select()")
 
   def cache(self):
     """
@@ -245,6 +249,7 @@ class ColumnAPI(JsPackage):
 
     :return:
     """
+    return self.fnc("data()")
 
   def dataSrc(self):
     """
@@ -285,6 +290,7 @@ class ColumnAPI(JsPackage):
 
     :return:
     """
+    return JsObjects.JsNumber.JsNumber("%s.index()" % self.getStr())
 
   def nodes(self):
     """
@@ -330,8 +336,7 @@ class ColumnAPI(JsPackage):
 
     :return:
     """
-    self._js.append("search(%s)" % JsUtils.jsConvertData(jsData, None))
-    return self
+    return self.fnc("search(%s)" % JsUtils.jsConvertData(jsData, None))
 
   def visible(self):
     """
@@ -340,8 +345,9 @@ class ColumnAPI(JsPackage):
     Documentation
     https://datatables.net/reference/api/column().visible()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
+    return self.fnc("visible()")
 
   def draw(self, target=None):
     """
@@ -350,19 +356,39 @@ class ColumnAPI(JsPackage):
     Documentation
     https://datatables.net/reference/api/draw()
 
-    :return:
+    :return: DataTables API instance for chaining
     """
     if target is not None:
-      self._js.append("draw(%s)" % JsUtils.jsConvertData(target, None))
-    else:
-      self._js.append("draw()")
-    return self
+      return self.fnc("draw(%s)" % JsUtils.jsConvertData(target, None))
+
+    return self.fnc("draw()")
+
+
+class RowChildAPI(JsPackage):
+  lib_selector = 'child'
+  lib_set_var = False
+
+  def hide(self):
+    pass
+
+  def remove(self):
+    pass
+
+  def show(self):
+    pass
+
+  def hide(self):
+    pass
+
+  def isShown(self):
+    pass
 
 
 class RowAPI(JsPackage):
-  """
+  lib_alias = {'js': "datatables", 'css': 'datatables'}
+  lib_selector = 'row'
+  lib_set_var = False
 
-  """
   def deselect(self):
     """
     This method simply deselects a single row that has been found by the row() selector method.
@@ -543,6 +569,13 @@ class RowAPI(JsPackage):
 
     return self.fnc("draw()")
 
+  @property
+  def child(self):
+    """
+
+    """
+    return RowChildAPI(self.src, selector="%s.child()" % self.getStr())
+
 
 class DatatableAPI(JsPackage):
   lib_alias = {'js': "datatables", 'css': 'datatables'}
@@ -611,15 +644,20 @@ class DatatableAPI(JsPackage):
     """
     return JsQuery.JQuery(selector="%s.nodes().to$()" % self.varId, setVar=False)
 
-  def clear(self):
+  def clear(self, update=False):
     """
     Clear the table of all data:
 
     Documentation
     https://datatables.net/reference/api/clear()
 
+    :param update: Boolean
     :return:
     """
+    if update:
+      self.fnc("clear()")
+      return self.draw()
+
     return self.fnc("clear()")
 
   def data(self):
@@ -633,7 +671,7 @@ class DatatableAPI(JsPackage):
     """
     return JsObjects.JsArray.JsArray.get("%s.data()" % self.varId)
 
-  def destroy(self):
+  def destroy(self, remove=False, checkUndefined=False):
     """
     Restore the tables in the current context to its original state in the DOM by removing all of DataTables enhancements,
     alterations to the DOM structure of the table and event listeners.
@@ -641,9 +679,12 @@ class DatatableAPI(JsPackage):
     Documentation
     https://datatables.net/reference/api/destroy()
 
+    :param remove: Boolean, Completely remove the table from the DOM (true) or leave it in the DOM in its original plain un-enhanced HTML state (default, false).
+    :param checkUndefined: Boolean
+
     :return:
     """
-    return self.fnc_closure("destroy()")
+    return self.fnc_closure("destroy(%s)" % JsUtils.jsConvertData(remove, None), checkUndefined=checkUndefined)
 
   def draw(self, target=None):
     """

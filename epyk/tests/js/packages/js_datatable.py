@@ -14,11 +14,12 @@ jsObj = Js.JsBase()
 f = JsUtils.JsFile("TestDatatable", path=test_statics.OUTPUT_PATHS)
 
 tab = JsDatatable.DatatableAPI(selector="table", setVar=False)
-
+cell = JsDatatable.CellAPI()
 
 f.writeJs([
   tab.order().draw().destroy(),
   tab.data().length,
+  cell.select().deselect(),
   tab.jquery_node().text("")
 ])
 

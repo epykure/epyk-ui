@@ -9,18 +9,18 @@ from epyk.core.js import JsUtils
 
 
 class JsPackage(object):
-  lib_alias, lib_selector = None, None
+  lib_alias, lib_selector, lib_set_var = None, None, True
 
   class __internal(object):
     # By default it will attach eveything to the body
     jqId, jsImports, cssImport = '', set([]), set([])
 
-  def __init__(self, src=None, varName=None, selector=None, data=None, setVar=True, parent=None):
+  def __init__(self, src=None, varName=None, selector=None, data=None, setVar=None, parent=None):
     self.src = src if src is not None else self.__internal()
     self._selector = selector if selector is not None else self.lib_selector
-    self.varName, self.setVar, self._parent = varName, setVar, parent
+    self.varName, self.setVar, self._parent = varName, self.lib_set_var if setVar is None else setVar, parent
     self._data = data
-    self._js = [[]] # a list of list of object definition
+    self._js, self._u = [[]], {} # a list of list of object definition
     if self.lib_alias is not None:
       if 'css' in self.lib_alias:
         self.src.cssImport.add(self.lib_alias['css'])
@@ -59,7 +59,7 @@ class JsPackage(object):
     self._js[-1].append(data)
     return self
 
-  def fnc_closure(self, data):
+  def fnc_closure(self, data, checkUndefined=False):
     """
     Add the function string to the existing object definition but create a new entry point for the next ones.
     This structure will allow the chain on the Javascript side but also on the Python side.
@@ -70,10 +70,13 @@ class JsPackage(object):
     Example
 
     :param data: String. The Javascript fragment to be added
+    :param checkUndefined: Boolean. Add a check on the variable definition
 
     :return: The "self" to allow the chains
     """
     self._js[-1].append(data)
+    if checkUndefined:
+      self._u[len(self._js) - 1] = checkUndefined
     self._js.append([])
     return self
 
@@ -100,6 +103,7 @@ class JsPackage(object):
     """
     Get the current string representation for the object and remove the stack
     """
+    js_stack = None
     if not emptyStack:
       js_stack = list(self._js)
     content = self.toStr()
@@ -120,7 +124,7 @@ class JsPackage(object):
       raise Exception("Selector not defined, use this() or new() first")
 
     obj_content = []
-    for js in self._js:
+    for i, js in enumerate(self._js):
       if len(js) == 0:
         continue
 
@@ -133,7 +137,11 @@ class JsPackage(object):
         self.setVar = False
       else:
         if str_fnc:
-          str_fnc = "%s.%s" % (self.varId, str_fnc)
+          if i in self._u:
+            # to avoid raising an error when the variable is not defined
+            str_fnc = "if(%s !== undefined){%s.%s}" % (self.varId, self.varId, str_fnc)
+          else:
+            str_fnc = "%s.%s" % (self.varId, str_fnc)
         else:
           str_fnc = self.varId
       obj_content.append(str_fnc)

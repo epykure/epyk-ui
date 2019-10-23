@@ -19,14 +19,18 @@ class OutBrowsers(object):
   def __init__(self, context):
     self._context = context
 
-  def codepen(self, path=None, target="_blank"):
+  def codepen(self, path=None, target="_blank", open_browser=True):
     """
     Update the Html launcher and send the data to codepen
 
     Documentation
     https://www.debuggex.com/cheatsheet/regex/python
 
-    :return:
+    :param path: Output path in which the static files will be generated
+    :param target:
+    :param open_browser: Boolean. Flag to open the browser automatically
+
+    :return: The output launcher full file name
     """
     import re
     import webbrowser
@@ -45,7 +49,10 @@ class OutBrowsers(object):
       os.makedirs(path, exist_ok=True)
     with open(os.path.join(path, "RunnerCodepen.html"), "w") as f:
       f.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
-    webbrowser.open(os.path.join(path, "RunnerCodepen.html"))
+    launcher_file = os.path.join(path, "RunnerCodepen.html")
+    if open_browser:
+      webbrowser.open(launcher_file)
+    return launcher_file
 
 
 class PyOuts(object):
@@ -98,14 +105,17 @@ class PyOuts(object):
     for b in self._report._props['js'].get("builders", []):
       onloadParts.append(b)
 
-    #for jsFnc in self._report.jsOnLoadFnc:
-    #  onloadParts.append(str(jsFnc))
-    #for jsFnc in self._report.jsFnc:
-    #  onloadParts.append(str(jsFnc))
-    #onloadParts.append(str(self._report.jsGlobal))
+    # Add the component on ready functions
+    for objId in self._report.content:
+      obj_id = self._report.htmlItems[objId].dom.varId
+      if obj_id in self._report._props.get('js', {}).get('onCompReady', {}):
+        onloadParts.append(self._report._props['js']['onCompReady'][obj_id])
+
+    # Add the page on document ready functions
+    for on_ready_frg in self._report._props.get('js', {}).get('onReady', []):
+      onloadParts.append(on_ready_frg)
 
     importMng = Imports.ImportManager(online=True, report=self._report)
-
     results = {
       'cssStyle': "%s%s" % (self._report._css.toCss(), self._report._cssText),
       'content': "\n".join(htmlParts),

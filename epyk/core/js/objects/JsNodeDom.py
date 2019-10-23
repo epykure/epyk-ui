@@ -337,6 +337,17 @@ class JsDoms(JsObject.JsObject):
       self._jq = JsQuery.JQuery(self._report, selector="jQuery('#%s')" % self._id, setVar=False)
     return self._jq
 
+  def addOnReady(self, jsFncs):
+    """
+    The ready event occurs when the DOM (document object model) has been loaded.
+
+    Documentation
+    https://www.w3schools.com/jquery/event_ready.asp
+
+    :param jsFncs: The Javascript functions to be added to this section
+    """
+    self._report._props.setdefault('js', {}).setdefault('onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(jsFncs))
+
   def innerText(self, jsString=None):
     """
     The innerText property sets or returns the text content of the specified node, and all its descendants.

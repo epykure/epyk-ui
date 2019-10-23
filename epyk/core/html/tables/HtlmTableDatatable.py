@@ -27,38 +27,43 @@ extensions = {
 }
 
 
-
 class DataTable(Html.Html):
   name, category, callFnc = 'Table', 'Tables', 'table'
   __reqCss, __reqJs = ['datatables', 'datatables-export'], ['datatables', 'datatables-export']
   __pyStyle = ['CssDivNoBorder', 'CssDivLoading', 'CssDataTableHeader', 'CssDataTableEven', 'CssDataTableOdd',
                'CssDataTable', 'CssDataTableFooter']
 
-  def __init__(self, report, recordSet, cols, rows, header, width, height, htmlCode, options, profile):
+  def __init__(self, report, records, cols, rows, header, width, height, htmlCode, options, profile):
     data, columns = [], []
     self.header = rows + cols
     for h in self.header:
       _head = {"title": h}
       _head.update(header.get(h, {}))
       columns.append(_head)
-    for rec in recordSet:
+    for rec in records:
       data.append([rec[c] for c in self.header])
-    super(DataTable, self).__init__(report, {"data": data, "columns": columns}, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                  heightUnit=height[1], profile=profile)
+    super(DataTable, self).__init__(report, {"data": data, "columns": columns}, code=htmlCode, width=width[0],
+                                    widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
+
+  @property
+  def tableId(self):
+    """
+    Return the Javascript variable of the datatable
+    """
+    return "window['%s_table']" % self.htmlId
 
   @property
   def js(self):
     """
-
-    :return: A Javascript object
     :rtype: JsDatatable.DatatableAPI
     """
     if self._js is None:
-      self._js = JsDatatable.DatatableAPI(self._report)
+      self._js = JsDatatable.DatatableAPI(self._report, selector=self.tableId, setVar=False)
     return self._js
 
   def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, "htmlObj.DataTable(data)")
+    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__,
+                      "window[htmlObj.attr('id') +'_table'] = htmlObj.DataTable(data)")
 
   def add_options(self, key, val=None):
     """

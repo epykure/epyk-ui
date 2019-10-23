@@ -17,12 +17,11 @@ from epyk.core.js.packages import JsTabulator
 from epyk.core.js.packages import JsCrossFilter
 
 
-
 class JsHtml(JsNodeDom.JsDoms):
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True):
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
     self.htmlId = varName if varName is not None else htmlObj.htmlId
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
-    self.__src = htmlObj
+    self.__src, self._report = htmlObj, report
     self._js = []
     self._jquery, self._jquery_ui = None, None
 

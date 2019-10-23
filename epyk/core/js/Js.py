@@ -594,7 +594,7 @@ class JsBase(object):
 
   def addOnReady(self, jsFncs):
     """
-    The ready event occurs when the DOM (document object model) has been loaded.
+    The ready event occurs when the body DOM (document object model) has been loaded.
 
     Documentation
     https://www.w3schools.com/jquery/event_ready.asp

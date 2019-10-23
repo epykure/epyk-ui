@@ -19,10 +19,10 @@ class Datatables(object):
   def __init__(self, context):
     self.parent = context
 
-  def table(self, recordSet, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+  def table(self, records, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
 
-    :param recordSet:
+    :param records:
     :param cols:
     :param rows:
     :param width:
@@ -31,15 +31,12 @@ class Datatables(object):
     :param options:
     :param profile:
 
-    :rtype: html_tables.HtlmTableDatatable.DataTableNew
-
     :return:
     """
-    if header is None:
-      header = {}
-    return self.parent.context.register(
-      html_tables.HtlmTableDatatable.DataTable(self.parent.context.rptObj, recordSet, cols, rows, header, width, height,
-                                                  htmlCode, options, profile))
+    table = html_tables.HtlmTableDatatable.DataTable(self.parent.context.rptObj, records, cols, rows, header or {},
+                                                     width, height, htmlCode, options, profile)
+    self.parent.context.register(table)
+    return table
 
   def heatmap(self):
     pass
