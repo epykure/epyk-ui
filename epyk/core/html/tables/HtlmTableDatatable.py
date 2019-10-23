@@ -58,7 +58,7 @@ class DataTable(Html.Html):
     :rtype: JsDatatable.DatatableAPI
     """
     if self._js is None:
-      self._js = JsDatatable.DatatableAPI(self._report, selector=self.tableId, setVar=False)
+      self._js = JsDatatable.DatatableAPI(self._report, selector=self.tableId, setVar=False, parent=self)
     return self._js
 
   def onDocumentLoadFnc(self):

@@ -541,17 +541,26 @@ class RowAPI(JsPackage):
     """
     return self.fnc("remove()")
 
-  def add(self, jsData):
+  def add(self, jsData, toArray=False):
     """
     Add a new row to the table.
 
     Documentation
     https://datatables.net/reference/api/row.add()
 
-    :param jsData:
+    :param jsData: The input data
+    :param toArray: Boolean. Convert a python dictionary to a list
 
     :return:
     """
+    if toArray:
+      if isinstance(jsData, list):
+        rows = []
+        for r in jsData:
+          rows.append([r.get(h["title"], '') for h in self._parent.vals['columns']])
+        jsData = rows
+      else:
+        jsData = [jsData.get(h["title"], '') for h in self._parent.vals['columns']]
     jsData = JsUtils.jsConvertData(jsData, None)
     return self.fnc("add(%s)" % jsData)
 
@@ -591,6 +600,14 @@ class DatatableAPI(JsPackage):
     :return:
     """
     return
+
+  @property
+  def row(self):
+    return RowAPI(self.src, selector="%s.row" % self.varId, setVar=False, parent=self._parent)
+
+  @property
+  def rows(self):
+    return RowAPI(self.src, selector="%s.rows" % self.varId, setVar=False, parent=self._parent)
 
   def container(self):
     """
