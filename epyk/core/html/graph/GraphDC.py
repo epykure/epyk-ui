@@ -24,14 +24,13 @@ class Chart(Html.Html):
     #self.chart.data.attach(self)
 
   @property
-  def dc(self):
+  def js(self):
     """
-    Return the underlying chart object
-
     :rtype: JsChartDC.JsBase
-    :return:
     """
-    return self.chart
+    if self._js is None:
+      self._js = self.chart
+    return self._js
 
   # -----------------------------------------------------------------------------------------
   #                                STANDARD HTML METHODS
