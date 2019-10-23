@@ -632,7 +632,7 @@ class JQuery(JsPackage):
     :return:
     """
     self.src.style.cssCls(clsName, attrs, eventAttrs, False)
-    return self.src
+    return self
 
   def getJSON(self, url, jsData, success, dataType='json', jsDataKey=None, isPyData=True, jsFnc=None):
     """

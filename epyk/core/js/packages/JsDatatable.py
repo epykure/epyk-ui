@@ -663,6 +663,7 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
+    return JsQuery.JQuery(self.src, selector="%s.container()" % self.varId, setVar=False, parent=self._parent)
 
   def footer(self):
     """
