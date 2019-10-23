@@ -389,6 +389,21 @@ class RowAPI(JsPackage):
   lib_selector = 'row'
   lib_set_var = False
 
+  def _mapVarId(self, strFnc, varId):
+    """
+    Change the varIs for row.add.
+    This is done at class level and not object level on the Javascript side
+
+    :param strFnc: The function string
+    :param varId: The object reference for the Javascript side
+
+    :return: The object reference on the Javascript side
+    """
+    if strFnc.startswith("add("):
+      return varId[:-2]
+
+    return varId
+
   def deselect(self):
     """
     This method simply deselects a single row that has been found by the row() selector method.
@@ -441,20 +456,6 @@ class RowAPI(JsPackage):
 
     dtype = JsUtils.jsConvertData(dtype, None)
     return self.fnc("scrollTo(%s)" % dtype)
-
-  def child(self, showRemove):
-    """
-    Row child method namespace.
-
-    Documentation
-    https://datatables.net/reference/api/row().child
-
-    :param showRemove: This parameter can be given as true or false:
-
-    :return: DataTables API instance for chaining
-    """
-    showRemove = JsUtils.jsConvertData(showRemove, None)
-    return self.fnc("child(%s)" % showRemove)
 
   def data(self):
     """
@@ -530,18 +531,24 @@ class RowAPI(JsPackage):
     self._js.append("to$()")
     return JsQuery.JQuery(jqId=self.toStr())
 
-  def remove(self):
+  def remove(self, update=False):
     """
     Delete the selected row from the DataTable.
 
     Documentation
     https://datatables.net/reference/api/row().remove()
 
+    :param update:
+
     :return:
     """
+    if update:
+      self.fnc("remove()")
+      return self.draw()
+
     return self.fnc("remove()")
 
-  def add(self, jsData, toArray=False):
+  def add(self, jsData, toArray=False, update=False):
     """
     Add a new row to the table.
 
@@ -550,6 +557,7 @@ class RowAPI(JsPackage):
 
     :param jsData: The input data
     :param toArray: Boolean. Convert a python dictionary to a list
+    :param update:
 
     :return:
     """
@@ -562,7 +570,14 @@ class RowAPI(JsPackage):
       else:
         jsData = [jsData.get(h["title"], '') for h in self._parent.vals['columns']]
     jsData = JsUtils.jsConvertData(jsData, None)
-    return self.fnc("add(%s)" % jsData)
+    self.fnc("add(%s)" % jsData)
+    if update:
+      self.draw()
+      self._js.append([])
+      return self
+
+    self._js.append([])
+    return self
 
   def draw(self, target=None):
     """
@@ -603,11 +618,23 @@ class DatatableAPI(JsPackage):
 
   @property
   def row(self):
-    return RowAPI(self.src, selector="%s.row" % self.varId, setVar=False, parent=self._parent)
+    """
+    Link to the single row API
+
+    Documentation
+    https://datatables.net/reference/api/row()
+    """
+    return RowAPI(self.src, selector="%s.row()" % self.varId, setVar=False, parent=self._parent)
 
   @property
   def rows(self):
-    return RowAPI(self.src, selector="%s.rows" % self.varId, setVar=False, parent=self._parent)
+    """
+    Link to the rows API
+
+    Documentation
+    https://datatables.net/reference/api/rows()
+    """
+    return RowAPI(self.src, selector="%s.rows()" % self.varId, setVar=False, parent=self._parent)
 
   def container(self):
     """

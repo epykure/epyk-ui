@@ -114,6 +114,18 @@ class JsPackage(object):
 
     return content
 
+  def _mapVarId(self, strFnc, varId):
+    """
+    Special function used for some external packages used to fix the problem of function override.
+    Indeed in Datatable row.add is used as a class method compare to the other functions used at object level
+
+    :param strFnc: The function string
+    :param varId: The object reference
+
+    :return: The converted object reference
+    """
+    return varId
+
   def toStr(self):
     """
     Javascript representation
@@ -141,7 +153,8 @@ class JsPackage(object):
             # to avoid raising an error when the variable is not defined
             str_fnc = "if(%s !== undefined){%s.%s}" % (self.varId, self.varId, str_fnc)
           else:
-            str_fnc = "%s.%s" % (self.varId, str_fnc)
+            varId = self._mapVarId(str_fnc, self.varId)
+            str_fnc = "%s.%s" % (varId, str_fnc)
         else:
           str_fnc = self.varId
       obj_content.append(str_fnc)

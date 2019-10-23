@@ -14,12 +14,12 @@ datatable.dom.addOnReady([
     [
       {"A": "A", "B": 5454},
       {"A": "B", "C": 5454},
-    ], toArray=True).draw()
+    ], toArray=True).draw().remove(),
 ])
 
 rptObj.js.addOnReady(
   [
-    rptObj.js.window.alert("Test")
+    rptObj.js.window.alert(datatable.js.rows.data())
   ]
 )
 rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS, open_browser=True)
