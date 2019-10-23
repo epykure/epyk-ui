@@ -368,9 +368,6 @@ class RowChildAPI(JsPackage):
   lib_selector = 'child'
   lib_set_var = False
 
-  def hide(self):
-    pass
-
   def remove(self):
     pass
 
@@ -378,7 +375,15 @@ class RowChildAPI(JsPackage):
     pass
 
   def hide(self):
-    pass
+    """
+    Hide the child row(s) of a parent row.
+
+    Documentation
+    https://datatables.net/reference/api/row().child.hide()
+
+    :return:
+    """
+    return self.fnc("hide()")
 
   def isShown(self):
     pass
@@ -598,12 +603,20 @@ class RowAPI(JsPackage):
 
     return self.fnc("draw()")
 
-  @property
-  def child(self):
+  def child(self, namespace=True):
     """
+    Row child method
+    Get / set the child rows of the selected main table row
+    
+    Documentation
+    https://datatables.net/reference/api/row().child
 
+    :param namespace: Boolean to set the level of this method, selected rows or namespace
     """
-    return RowChildAPI(self.src, selector="%s.child()" % self.getStr())
+    if namespace:
+      return RowChildAPI(self.src, selector="%s.child" % self.getStr(), setVar=False, parent=self._parent)
+
+    return RowChildAPI(self.src, selector="%s.child()" % self.getStr(), setVar=False, parent=self._parent)
 
 
 class DatatableAPI(JsPackage):

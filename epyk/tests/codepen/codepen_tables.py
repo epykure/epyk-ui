@@ -15,6 +15,7 @@ datatable.dom.addOnReady([
       {"A": "A", "B": 5454},
       {"A": "B", "C": 5454},
     ], toArray=True).draw().remove(),
+  datatable.js.row.child().hide()
 ])
 
 rptObj.js.addOnReady(
