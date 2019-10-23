@@ -17,13 +17,13 @@ class DataTabulator(Html.Html):
                'CssTabulatorHeader', 'CssTabulatorColContent', 'CssTabulatorSelected', 'CssTabulatorTreeControl',
                'CssTabulatorTreeControlExpand', 'CssTabulatorCell']
 
-  def __init__(self, report, recordSet, cols, rows, header, width, height, htmlCode, options, profile):
+  def __init__(self, report, records, cols, rows, header, width, height, htmlCode, options, profile):
     self.header, columns = rows + cols, []
     for h in self.header:
       _head = {"title": h, "field": h}
       _head.update(header.get(h, {}))
       columns.append(_head)
-    self._ctx = {"data": recordSet, "columns": columns}
+    self._ctx = {"data": records, "columns": columns}
     self._ctx.update(options)
     super(DataTabulator, self).__init__(report, self._ctx, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
