@@ -394,6 +394,11 @@ class RowAPI(JsPackage):
     Change the varIs for row.add.
     This is done at class level and not object level on the Javascript side
 
+    This mapping is done according to the Package API definition
+
+    Documentation
+    https://datatables.net/reference/api/
+
     :param strFnc: The function string
     :param varId: The object reference for the Javascript side
 
