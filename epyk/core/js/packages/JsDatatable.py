@@ -607,7 +607,7 @@ class RowAPI(JsPackage):
     """
     Row child method
     Get / set the child rows of the selected main table row
-    
+
     Documentation
     https://datatables.net/reference/api/row().child
 

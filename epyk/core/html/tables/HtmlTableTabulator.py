@@ -29,14 +29,22 @@ class DataTabulator(Html.Html):
                                   heightUnit=height[1], profile=profile)
 
   @property
+  def tableId(self):
+    """
+    Return the Javascript variable of the tabulator object
+    """
+    return "window['%s_table']" % self.htmlId
+
+  @property
   def js(self):
     """
+    Return the Javascript internal object
 
     :return: A Javascript object
     :rtype: JsTabulator.Tabulator
     """
     if self._js is None:
-      self._js = JsTabulator.Tabulator(self._report)
+      self._js = JsTabulator.Tabulator(self._report, selector=self.tableId, setVar=False, parent=self)
     return self._js
 
   def add_options(self, key, val=None):
@@ -62,7 +70,8 @@ class DataTabulator(Html.Html):
     return self
 
   def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, " new Tabulator('#%s', data)" % (self.htmlId))
+    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__,
+                      "window[htmlObj.attr('id') +'_table'] = new Tabulator('#%s', data)" % (self.htmlId))
 
   def __str__(self):
     return "<div %s></div>" % (self.strAttr(pyClassNames=self.pyStyle))
