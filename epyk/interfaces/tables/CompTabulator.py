@@ -19,10 +19,10 @@ class Tabulators(object):
   def __init__(self, context):
     self.parent = context
 
-  def table(self, recordSet, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+  def table(self, records, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
 
-    :param recordSet:
+    :param records:
     :param cols:
     :param rows:
     :param header:
@@ -40,7 +40,7 @@ class Tabulators(object):
     if options is not None:
       table_options_dflts.update(options)
     return self.parent.context.register(
-      html_tables.HtmlTableTabulator.DataTabulator(self.parent.context.rptObj, recordSet, cols, rows, header or {}, width, height,
+      html_tables.HtmlTableTabulator.DataTabulator(self.parent.context.rptObj, records, cols, rows, header or {}, width, height,
                                                       htmlCode, table_options_dflts, profile))
 
   def heatmap(self):
