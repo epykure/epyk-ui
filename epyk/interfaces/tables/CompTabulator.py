@@ -12,8 +12,6 @@ except:
   has_pandas = False
 
 
-import sys
-
 from epyk.core.html import tables as html_tables
 
 
