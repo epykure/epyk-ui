@@ -280,14 +280,14 @@ class Tables(object):
     return self.context.register(
       html_tables.HtmlTableConfig.ConfigTable(self.context.rptObj, htmlCode, visible, profile))
 
-  def basic(self, recordSet, cols, rows, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+  def basic(self, records, cols, rows, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
 
     Example
     simple_table = rptObj.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
     simple_table.add_row({"COL1": "Value"})
 
-    :param recordSet:
+    :param records:
     :param cols:
     :param rows:
     :param width:
@@ -295,7 +295,9 @@ class Tables(object):
     :param htmlCode:
     :param options:
     :param profile:
+
     :return:
     """
-    return self.context.register(
-      html_tables.HtmlTable.Bespoke(self.context.rptObj, recordSet, cols, rows, width, height, htmlCode, options, profile))
+    table = html_tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
+    self.context.register(table)
+    return table

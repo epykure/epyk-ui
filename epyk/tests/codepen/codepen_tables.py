@@ -8,6 +8,7 @@ rptObj.ui.tables.tabulators.table(data, cols=["A"], rows=["B"])
 
 datatable = rptObj.ui.tables.datatables.table(data, cols=["A"], rows=["B"])
 
+# print( rptObj.ui.tables.basic([], [], []).tableId )
 datatable.dom.addOnReady([
   datatable.js.clear(update=True),
   datatable.js.rows.add(

@@ -56,6 +56,13 @@ class Bespoke(Html.Html):
     self.css({"text-align": 'center', 'border-collapse': 'collapse'})
     self._style = {"rows": {"padding": '5px 0'}, "header": {"padding": '5px 0'}}
 
+  @property
+  def tableId(self):
+    """
+    Return the Javascript variable of the bespoke
+    """
+    return self.dom.varId
+
   def row_style(self, css, row_id=None):
     """
     Change the style of a particular row in the table
@@ -141,6 +148,13 @@ class Excel(Html.Html):
     self._jsStyles = {'header': rows + cols, 'cellwidth': cellwidth}
     self.css({'display': 'inline-block', 'overflow': 'auto', 'padding': 0, 'vertical-align': 'top'})
     self.add_title(title)
+
+  @property
+  def tableId(self):
+    """
+    Return the Javascript variable of the bespoke
+    """
+    return self.dom.varId
 
   @property
   def val(self):
