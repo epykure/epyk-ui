@@ -1,5 +1,5 @@
 """
-
+Common interface for the tables components
 """
 
 # Check if pandas is available in the current environment
