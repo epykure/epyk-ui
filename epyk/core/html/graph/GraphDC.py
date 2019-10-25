@@ -31,13 +31,12 @@ class Chart(Html.Html):
     return "chart_%s" % self.htmlId
 
   @property
-  def js(self):
-    """
-    :rtype: JsChartDC.JsBase
-    """
-    if self._js is None:
-      self._js = self.chart
-    return self._js
+  def chart(self):
+    return self._chart
+
+  @chart.setter
+  def chart(self, js_chart):
+    self._chart = js_chart
 
   # -----------------------------------------------------------------------------------------
   #                                STANDARD HTML METHODS

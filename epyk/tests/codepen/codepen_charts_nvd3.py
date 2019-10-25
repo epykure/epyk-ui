@@ -10,8 +10,8 @@ for rec in data:
   rec["distance"] = float(rec["distance"])
   rec["delay"] = float(rec["delay"])
 
-bar = rptObj.ui.charts.nvd3.histo(data, y_columns=["delay"], x_axis="distance")
-
+bar = rptObj.ui.charts.nvd3.line(data, y_columns=["delay"], x_axis="distance")
+bar.chart
 # bar.style.defined.chart.container_border().remove()
 # bar.chart.width(30)
 # bar.chart.xAxis.axisLabel("test").tickFormat(12)
