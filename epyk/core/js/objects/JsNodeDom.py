@@ -430,6 +430,34 @@ class JsDoms(JsObject.JsObject):
     self._js.append("%s.setAttribute('%s', %s)" % (self.varId, attributename, JsUtils.jsConvertData(attributevalue, None)))
     return self
 
+  def addClass(self, clsName, attrs=None, eventAttrs=None, extend=True):
+    """
+    Adds the specified class(es) to each element in the set of matched elements.
+
+    This function can either use an existing class or create one if the attrs or eventAttrs are defined
+
+    Example
+    table.dom.addClass("red", {"border": "1px solid green"}, extend=False)
+
+    Documentation
+    https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+    :param clsName: The Css classname
+    :param attrs: A python dictionary with the css attributes
+    :param eventAttrs: A nested python dictionary with the css attributes for each events
+    :param extend: Boolean. To set if the class should replace the existing style definition
+
+    :return:
+    """
+    if attrs is not None or eventAttrs is not None:
+      clsName = self._report.style.cssName(clsName)
+      self._report.style.cssCls(clsName, attrs, eventAttrs, False)
+    if extend:
+      self._js.append('%s.setAttribute("class", %s.getAttribute("class") + " %s")' % (self.varId, self.varId, clsName))
+    else:
+      self._js.append('%s.setAttribute("class", "%s")' % (self.varId, clsName))
+    return self
+
   def css(self, type, jsObject=None):
     """
     Replicate in plain Js the Jquery CSS function
