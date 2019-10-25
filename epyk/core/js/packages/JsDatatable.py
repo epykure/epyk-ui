@@ -6,6 +6,7 @@ https://datatables.net/reference/api/
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
+from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsPackage
 
@@ -654,7 +655,7 @@ class DatatableAPI(JsPackage):
     """
     return RowAPI(self.src, selector="%s.rows()" % self.varId, setVar=False, parent=self._parent)
 
-  def container(self):
+  def container_jquery(self):
     """
     Get the div container node for the table in the API's context.
 
@@ -663,7 +664,18 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    return JsQuery.JQuery(self.src, selector="%s.container()" % self.varId, setVar=False, parent=self._parent)
+    return JsQuery.JQuery(self.src, selector="jQuery(%s.table().container())" % self.varId, setVar=False, parent=self._parent)
+
+  def container_dom(self):
+    """
+    Get the div container node for the table in the API's context.
+
+    Documentation
+    https://datatables.net/reference/api/table().container()
+
+    :return:
+    """
+    return JsNodeDom.JsDoms(None, report=self.src, varName="%s.table().container()" % self.varId, setVar=False)
 
   def footer(self):
     """

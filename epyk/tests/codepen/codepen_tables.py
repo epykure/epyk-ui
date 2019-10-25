@@ -17,7 +17,8 @@ datatable.dom.addOnReady([
       {"A": "B", "C": 5454},
     ], toArray=True).draw().remove(),
   datatable.js.row.child().hide(),
-  datatable.js.container().addClass("test")
+  datatable.js.container_dom().addClass("test", {"border": "1px solid pink", "color": "pink"})
+  #datatable.js.container_dom().css({"border": "1px solid green"})
 ])
 
 rptObj.js.addOnReady(
@@ -25,4 +26,6 @@ rptObj.js.addOnReady(
     rptObj.js.window.alert(datatable.js.rows.data())
   ]
 )
-rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS, open_browser=True)
+
+rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS,
+                            open_browser=True)

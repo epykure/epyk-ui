@@ -627,12 +627,20 @@ class JQuery(JsPackage):
 
   def addClass(self, clsName, attrs=None, eventAttrs=None):
     """
+    Adds the specified class(es) to each element in the set of matched elements.
 
-    :param clsName:
+    This function can either use an existing class or create one if the attrs or eventAttrs are defined
+
+    :param clsName: The Css classname
+    :param attrs: A python dictionary with the css attributes
+    :param eventAttrs: A nested python dictionary with the css attributes for each events
+
     :return:
     """
-    self.src.style.cssCls(clsName, attrs, eventAttrs, False)
-    return self
+    if attrs is not None or eventAttrs is not None:
+      clsName = self.src.style.cssName(clsName)
+      self.src.style.cssCls(clsName, attrs, eventAttrs, False)
+    return self.fnc('addClass("%s")' % clsName)
 
   def getJSON(self, url, jsData, success, dataType='json', jsDataKey=None, isPyData=True, jsFnc=None):
     """
