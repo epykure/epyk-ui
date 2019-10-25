@@ -104,8 +104,8 @@ class JsNvd3(JsPackage):
     self.src = src if src is not None else self.__internal()
     self._selector = "nv.models.%s()" % self.chartFnc
     self.varName, self.setVar = varName, setVar
-    self.src.jsImports.add(self.lib_alias)
-    self.src.cssImport.add(self.lib_alias)
+    self.src.jsImports.add(self.lib_alias['js'])
+    self.src.cssImport.add(self.lib_alias['css'])
     self._js, self._xaxis, self._yaxis = [], None, None
 
   def version(self, ver):

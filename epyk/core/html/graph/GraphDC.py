@@ -24,6 +24,13 @@ class Chart(Html.Html):
     #self.chart.data.attach(self)
 
   @property
+  def chartId(self):
+    """
+    Return the Javascript variable of the chart
+    """
+    return "chart_%s" % self.htmlId
+
+  @property
   def js(self):
     """
     :rtype: JsChartDC.JsBase
