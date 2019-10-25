@@ -4,7 +4,7 @@ from epyk.tests import test_statics
 rptObj = Report()
 
 data = [{"A": 1, "B": 2}]
-table = rptObj.ui.tables.basic(data, cols=["A"], rows=["B"])
+table = rptObj.ui.tables.datatables.table(data, cols=["A"], rows=["B"])
 
 table.dom.addOnReady(
   [
