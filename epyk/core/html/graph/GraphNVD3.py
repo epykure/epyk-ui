@@ -112,8 +112,6 @@ class Chart(Html.Html):
 
 
 class ChartLine(Chart):
-  __pyStyle = ['CssDivChart']
-
   @property
   def chart(self):
     """
@@ -128,7 +126,7 @@ class ChartBar(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsNvd3.JsNvd3Line
+    :rtype: JsNvd3.JsNvd3Bar
     """
     if self._chart is None:
       self._chart = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
