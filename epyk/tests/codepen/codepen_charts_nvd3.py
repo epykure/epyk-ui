@@ -13,8 +13,11 @@ for rec in data:
 bar = rptObj.ui.charts.nvd3.area(data, y_columns=["delay"], x_axis="distance")
 bar.chart.rightAlignYAxis(False).showControls(False).showLegend(False)
 bar.defined.add('CssNVD3Axis')
-bar.defined.remove(["CssDivChart", 'CssNVD3HideGrid'])
-bar.defined.clear()
+
+bar.defined.CssDivChart.delete(bar).CssNVD3HideGrid.delete(bar)
+
+#bar.defined.remove(["CssDivChart", 'CssNVD3HideGrid'])
+#bar.defined.clear()
 
 # bar.style.defined.chart.container_border().remove()
 # bar.chart.width(30)

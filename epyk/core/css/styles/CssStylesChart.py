@@ -7,6 +7,9 @@ from epyk.core.css.styles import CssStyle
 
 
 class CssDivChart(CssStyle.CssCls):
+  """
+  CSS class for the Chart container
+  """
   attrs = {'margin': '0 0 5px 0', 'padding': '5px', 'outline': 'none'}
 
   def customize(self, style, eventsStyles):

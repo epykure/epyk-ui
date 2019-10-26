@@ -468,3 +468,13 @@ class CssCls(object):
     cls_virtual = type(name, (self.__class__,), {})
     cls_virtual.name = name
     return cls_virtual
+
+  @classmethod
+  def delete(self, html_obj):
+    """
+    Remove the css class from the component defined list of classes
+
+    Return: html_obj.defined to allow the chains
+    """
+    html_obj.defined.remove([self.__name__])
+    return html_obj.defined
