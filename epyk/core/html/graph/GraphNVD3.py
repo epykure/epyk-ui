@@ -54,31 +54,14 @@ CHART_ATTRS = {
 
 class Chart(Html.Html):
   name, category, callFnc = 'NVD3', 'Charts', 'nvd3.chart'
-  __pyStyle = ['CssDivChart']
 
-  class CssClassDef(object):
+  class CssClassDef(Html.Html.CssClassDef):
     CssDivChart = CssStylesChart.CssDivChart
     CssNVD3HideGrid = CssStylesChart.CssNVD3HideGrid
     CssNVD3Axis = CssStylesChart.CssNVD3Axis
     CssNVD3AxisLabel = CssStylesChart.CssNVD3AxisLabel
     CssNVD3AxisLegend = CssStylesChart.CssNVD3AxisLegend
-
-    def __init__(self):
-      self.clsMap = set(["CssDivChart", "CssNVD3HideGrid", 'CssNVD3Axis', 'CssNVD3AxisLabel', 'CssNVD3AxisLegend'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssDivChart, CssNVD3HideGrid, CssNVD3Axis, CssNVD3AxisLabel, CssNVD3AxisLegend
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ["CssDivChart", "CssNVD3HideGrid", 'CssNVD3Axis', 'CssNVD3AxisLabel', 'CssNVD3AxisLegend'], []
 
   def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
@@ -142,8 +125,6 @@ class ChartLine(Chart):
 
 
 class ChartBar(Chart):
-  __pyStyle = ['CssDivChart']
-
   @property
   def chart(self):
     """
@@ -155,8 +136,6 @@ class ChartBar(Chart):
 
 
 class ChartPie(Chart):
-  __pyStyle = ['CssDivChart']
-
   @property
   def chart(self):
     """
@@ -168,8 +147,6 @@ class ChartPie(Chart):
 
 
 class ChartArea(Chart):
-  __pyStyle = ['CssDivChart']
-
   @property
   def chart(self):
     """

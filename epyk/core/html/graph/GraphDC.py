@@ -17,30 +17,13 @@ class Chart(Html.Html):
 
   class CssClassDef(object):
     CssDivChart = CssStylesChart.CssDivChart
+    __map, __alt_map = ["CssDivChart"], []
 
-    def __init__(self):
-      self.clsMap = set(["CssDivChart"])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssDivChart
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
-
-  def __init__(self,  report, chart_obj, width, height, title, options, htmlCode, filters, profile):
+  def __init__(self,  report, width, height, title, options, htmlCode, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
     super(Chart, self).__init__(report, [], code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                 heightUnit=height[1], profile=profile)
-    self.chart = chart_obj # GraphFabric.CHARTS_FACTORY[self.name][chartType](report, data, self.seriesProperties)
-    resolvedOptions = {}
+    resolvedOptions, self._chart = {}, None
     self.chart.rAttr(options, resolvedOptions)
     self.chart.update(resolvedOptions)
     #self.chart.data.attach(self)
@@ -100,3 +83,16 @@ class Chart(Html.Html):
   def __str__(self):
     strChart = '<div id="%s" style="height:%spx;width:100%%"></div>' % (self.htmlId, self.height-30)
     return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.defined), strChart)
+
+
+class ChartLine(Chart):
+  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsNvd3.JsNvd3Line
+    """
+    if self._chart is None:
+      self._chart = JsChartDC.JsLine(self._report, [], {'static': {}, 'dynamic': {}})
+    return self._chart
