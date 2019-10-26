@@ -108,7 +108,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     strChart = '<svg id="%s"></svg>' % self.htmlId
-    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.pyStyle), strChart)
+    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.defined), strChart)
 
 
 class ChartLine(Chart):

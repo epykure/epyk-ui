@@ -16,23 +16,7 @@ class Sparklines(Html.Html):
 
   class CssClassDef(object):
     CssSparklines = CssStylesChart.CssSparklines
-
-    def __init__(self):
-      self.clsMap = set(['CssSparklines'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssSparklines
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ['CssSparklines'], []
 
   def __init__(self, report, data, chart_type, options):
     super(Sparklines, self).__init__(report, data)
