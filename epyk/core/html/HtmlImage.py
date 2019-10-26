@@ -133,6 +133,15 @@ class ImgCarrousel(Html.Html):
                                        heightUnit=height[1], profile=profile)
     self.css({'padding-top': '20px', 'display': 'block', 'padding': 0, 'margin': 0})
 
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
+
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''
       var i = 0; var htmlId = htmlObj.attr('id');
