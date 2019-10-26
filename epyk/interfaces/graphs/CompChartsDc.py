@@ -34,9 +34,10 @@ class DC(object):
 
     :rtype: GraphDC.Chart
     """
-    chart_obj = JsChartDC.JsLine(self.parent.context.rptObj, data, {'static': {}, 'dynamic': {}})
-    return self.parent.context.register(GraphDC.Chart(self.parent.context.rptObj, chart_obj, width, height, title,
-                                                      options or {}, htmlCode, filters, profile))
+    line_chart = GraphDC.ChartLine(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    line_chart._data = data
+    self.parent.context.register(line_chart)
+    return line_chart
 
   def pie(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
            xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):

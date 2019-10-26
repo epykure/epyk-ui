@@ -7,11 +7,35 @@ import time
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.styles import CssStylesDates
+
 
 class DatePicker(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Date Picker', 'Dates', 'date'
-  __pyStyle = ['CssDivNoBorder', 'CssDatePicker']
+
+  class CssClassDef(object):
+    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
+    CssDatePicker = CssStylesDates.CssDatePicker
+
+    def __init__(self):
+      self.clsMap = set(['CssDivNoBorder', 'CssDatePicker'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssDivNoBorder, CssDatePicker
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     dfltOptions = {'dateFormat': 'yy-mm-dd'}
@@ -66,6 +90,15 @@ class DatePicker(Html.Html):
   def jqId(self):
     return "$('#%s input')" % self.htmlId
 
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
+
   def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
     """
     Propagate the update event
@@ -79,7 +112,26 @@ class DatePicker(Html.Html):
 class TimePicker(Html.Html):
   __reqCss, __reqJs = ['timepicker'], ['timepicker']
   name, category, callFnc = 'Time Picker', 'Dates', 'date'
-  __pyStyle = ['CssDivNoBorder']
+
+  class CssClassDef(object):
+    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
+
+    def __init__(self):
+      self.clsMap = set(['CssDivNoBorder'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssDivNoBorder
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
@@ -108,6 +160,15 @@ class TimePicker(Html.Html):
       return "{event_val: %(jqId)s.val(), event_code: '%(jqId)s', %(htmlCode)s: %(jqId)s.val()}" % {'jqId': self.jqId, 'htmlCode': self.htmlCode}
 
     return "{event_val: %(jqId)s.val(), event_code: '%(jqId)s'}" % {'jqId': self.jqId}
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
     """

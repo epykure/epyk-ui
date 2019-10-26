@@ -11,11 +11,36 @@ import json
 from epyk.core.html import Html
 from epyk.core.js.Imports import requires
 
+# The list of CSS classes
+from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.styles import CssStylesTable
+from epyk.core.css.styles import CssStylesText
+from epyk.core.css.styles import CssStylesIcon
+
 
 class ProgressBar(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
   name, category, callFnc = 'Progress Bar', 'Sliders', 'progressbar'
-  __pyStyle= ['CssDivNoBorder']
+
+  class CssClassDef(object):
+    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
+
+    def __init__(self):
+      self.clsMap = set(['CssDivNoBorder'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssDivNoBorder
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, number, width, height, attrs, helper, profile):
     super(ProgressBar, self).__init__(report, number, width=width[0], widthUnit=width[1], height=height[0],
@@ -41,6 +66,15 @@ class ProgressBar(Html.Html):
     """
     return '%s.progressbar("value")' % self.jqId
 
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
+
   def addAttr(self, key, val):
     """
 
@@ -56,7 +90,7 @@ class ProgressBar(Html.Html):
 
     :returns: The String HTML Container of the object
     """
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -336,7 +370,27 @@ class Slider(Html.Html):
 
 class SkillBar(Html.Html):
   name, category, callFnc = 'Skill Bars', 'Chart', 'skillbars'
-  __pyStyle = ['CssTableBasic', 'CssText']
+
+  class CssClassDef(object):
+    CssTableBasic = CssStylesTable.CssTableBasic
+    CssText = CssStylesText.CssText
+
+    def __init__(self):
+      self.clsMap = set(['CssTableBasic', 'CssText'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssTableBasic, CssText
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, data, title, width, height, color, htmlCode, colUrl, colTooltip, filters, profile):
     super(SkillBar, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
@@ -344,6 +398,7 @@ class SkillBar(Html.Html):
     self.add_title(title)
     self.data = data
     self.data.attach(self)
+    self.css({"margin": '5px 0'})
     self._jsStyles = {'val': list(self.data._schema['values'])[0], 'label': list(self.data._schema['keys'])[0],
                       'color': self.getColor('colors', 7), 'fontColor': self.getColor('greys', 0), 'colUrl': colUrl, 'colTooltip': colTooltip}
     if self.htmlCode is not None:
@@ -379,6 +434,15 @@ class SkillBar(Html.Html):
   def jqId(self):
     return "$('#%s table')" % self.htmlId
 
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
+
   def jsEvents(self):
     if hasattr(self, 'jsFncFrag'):
       for eventKey, fnc in self.jsFncFrag.items():
@@ -408,12 +472,7 @@ class SkillBar(Html.Html):
 
   def __str__(self):
     """ String representation of the HTML element """
-    cssMod = self._report.style.get("CssDivWithBorder")
-    self._report.style.cssCls("CssDivWithBorder")
-    return '''
-      <div %s class="%s" style="margin:5px 0">
-        <table></table>
-      </div> ''' % (self.strAttr(pyClassNames=self.pyStyle), cssMod.classname)
+    return '<div %s><table></table></div>' % (self.strAttr(pyClassNames=self.defined))
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -509,7 +568,26 @@ class SkillBar(Html.Html):
 class ContextMenu(Html.Html):
   name, category, callFnc = 'Context Menu', None, 'contextmenu'
   source = None # The container
-  __pyStyle = ["CssTextItem"]
+
+  class CssClassDef(object):
+    CssTextItem = CssStylesText.CssTextItem
+
+    def __init__(self):
+      self.clsMap = set(['CssTextItem'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssTextItem
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, recordSet, width, height, visible, profile):
     for rec in recordSet:
@@ -526,6 +604,15 @@ class ContextMenu(Html.Html):
         self._report.cssImport.add("font-awesome")
     self.addGlobalVar("CONTEXT_MENU_VAL", "{}")
     self._jsStyles = {'liStyles': ""}
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     """ Pure Javascript onDocumentLoad Function """
@@ -569,7 +656,28 @@ class ContextMenu(Html.Html):
 class OptionsBar(Html.Html):
   name, category, callFnc = 'Options', 'Event', 'optionsbar'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  __pyStyle = ['CssDivNoBorder', 'CssIcon']
+
+  class CssClassDef(object):
+    CssIcon = CssStylesIcon.CssIcon
+    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
+
+    def __init__(self):
+      self.clsMap = set(['CssDivNoBorder'])
+      self.clsAltMap = set(['CssIcon'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssDivNoBorder, CssIcon
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, recordset, width, height, size, color, border_color, options):
     super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
@@ -578,6 +686,15 @@ class OptionsBar(Html.Html):
     if options.get("draggable", False):
       self.draggable()
     self.size = size
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def draggable(self, options=None):
     """
@@ -600,7 +717,7 @@ class OptionsBar(Html.Html):
       if not 'tooltip' in rec:
         rec['tooltip'] = ''
       icons.append('<i class="%(icon)s %(cssIcon)s" style="font-size:%(size)s" title="%(tooltip)s" onclick="var data={event_val:\'%(icon)s\'};%(jsFnc)s"></i>' % rec)
-    return '<div %(attrs)s>%(icons)s</div>' % {'attrs': self.strAttr(pyClassNames=['CssDivNoBorder']), 'icons': "".join(icons)}
+    return '<div %(attrs)s>%(icons)s</div>' % {'attrs': self.strAttr(pyClassNames=self.defined), 'icons': "".join(icons)}
 
 
 class SignIn(Html.Html):
@@ -628,7 +745,26 @@ class SignIn(Html.Html):
 class Filters(Html.Html):
   name, category, callFnc = 'Multi Filter', 'Event', 'multiFilter'
   __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery', 'jquery-scrollbar']
-  __pyStyle = ['CssDivFilter']
+
+  class CssClassDef(object):
+    CssDivFilter = CssStylesDiv.CssDivFilter
+
+    def __init__(self):
+      self.clsMap = set(['CssDivFilter'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssDivFilter
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, items, title, size, width, height, htmlCode, helper, profile):
     super(Filters, self).__init__(report, items, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
@@ -650,6 +786,15 @@ class Filters(Html.Html):
           if ($(this).find('span').length > 0){existingItems[$(this).find('span').text()] = $(this).find('div').text()}
           else {existingItems[$(this).text()] = $(this).text()}}); 
         return existingItems}()''' % {'jqId': self.jqId}
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''htmlObj.empty();
@@ -735,6 +880,6 @@ class Filters(Html.Html):
         <div id='%(htmlId)s'></div>
       </div>
       <div style='font-size:9px;margin:0 0 5px auto;width:40px;font-style:italic;cursor:pointer' onclick="%(click)s"><i class="fas fa-times-circle" style="font-size:9px;margin-right:2px"></i>clear</div>
-      ''' % {'htmlId': "%s_div" % self.htmlId, 'cssAttr': self.strAttr(pyClassNames=[s for s in self.pyStyle if s not in ['CssDivFilterItems']]),
+      ''' % {'htmlId': "%s_div" % self.htmlId, 'cssAttr': self.strAttr(pyClassNames=[s for s in self.defined if s not in ['CssDivFilterItems']]),
              'click': self.jsClear()}
 

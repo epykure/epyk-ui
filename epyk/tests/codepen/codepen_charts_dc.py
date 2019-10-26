@@ -11,7 +11,7 @@ rptObj = Report()
 # Add a line return
 rptObj.ui.layouts.new_line()
 # Add another sparkline with as a bar type
-rptObj.ui.charts.dc.pie([{"name": "test", "count": 34}])
+rptObj.ui.charts.dc.line([{"name": "test", "count": 34}])
 
 # Transpile to Javascriot and create a report in codepen (python will automatically open the default browser)
 rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS)

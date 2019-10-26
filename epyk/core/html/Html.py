@@ -85,7 +85,8 @@ class Html(object):
 
   class CssClassDef(object):
     def __init__(self):
-      self.clsMap = set([])
+      self.clsMap = set([]) # Main CSS Classes loaded and added to the container
+      self.clsAltMap = set([]) # Alternate CSS classes not loaded automatically at component level
 
     def add(self, clsName): self.clsMap.add(clsName)
 
