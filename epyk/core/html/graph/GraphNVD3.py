@@ -84,7 +84,7 @@ class Chart(Html.Html):
 
   @property
   def chart(self):
-    raise Exception("")
+    raise Exception("Chart object should be defined in the configuration")
 
   @property
   def defined(self):

@@ -31,13 +31,12 @@ class ChartJs(object):
     :param htmlCode:
 
     :return:
-
-    :rtype: graph.GraphChartJs.Chart
     """
-    line_chart = graph.GraphChartJs.Chart(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                          filters, profile)
+    line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                              filters, profile)
+    line_chart.chart._data_attrs["data"] = self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False).toStr()
+    print(self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False).toStr())
     self.parent.context.register(line_chart)
-    line_chart._data = self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False)
     return line_chart
 
   def pie(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,

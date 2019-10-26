@@ -746,8 +746,11 @@ class ChartJsType(object):
     self._opts_attrs.setdefault("scales", {})["yAxes"] = []
     return ChartJsOptScale(self._opts_attrs.setdefault("scales", {})["yAxes"])
 
+  def build(self, htmlId, varName):
+    return "var %s = new Chart(document.getElementById('%s'), %s)" % (varName, htmlId, self)
 
-class ChartJsTypeBar(object):
+
+class ChartJsTypeBar(ChartJsType):
 
   def __init__(self, report, data, type='bar'):
     self._report = report
@@ -868,4 +871,4 @@ if __name__ == '__main__':
   chart_bar = ChartJsTypeBar(None, []).label("test")
   chart_bar.scales.barPercentage(0.4).barThickness(3)
   chart_bar.scales.gridLines.circular(True).color(["red"]).drawTicks()
-  print(chart_bar)
+  print(chart_bar.build("A", "toto"))

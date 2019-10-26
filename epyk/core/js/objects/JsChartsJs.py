@@ -50,11 +50,11 @@ class JsChartLinks(object):
     attrs = attrs or {}
     if not isinstance(y_columns, list):
       y_columns = [y_columns]
-    fnc_name = JsChartJsPie.__name__
+    fnc_name = JsChartJsScatter.__name__
     x_axis = JsUtils.jsConvertData(x_axis, None)
     colors = JsUtils.jsConvertData(colors, None)
     attrs = JsUtils.jsConvertData(attrs, None)
-    self.__register_records_fnc(fnc_name, JsChartJs.content, list(JsChartJs.pmts), profile | self.profile)
+    self.__register_records_fnc(fnc_name, JsChartJsScatter.content, list(JsChartJsScatter.pmts), profile | self.profile)
     self._data_schema['out'] = "%s(%%s, %s, %s, %s, %s)" % (fnc_name, y_columns, x_axis, colors, attrs)
     return self._data
 

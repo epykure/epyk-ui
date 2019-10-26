@@ -6,6 +6,8 @@ rptObj = Report()
 
 data = test_statics.get_data("flights.txt", n=10)
 
-rptObj.ui.charts.chartJs.line(data, y_columns=["delay"], x_axis="distance")
+line = rptObj.ui.charts.chartJs.line(data, y_columns=["delay"], x_axis="distance")
+line.chart
+
 
 rptObj.outs.browser.codepen(path=test_statics.OUTPUT_PATHS)
