@@ -24,23 +24,7 @@ class ProgressBar(Html.Html):
 
   class CssClassDef(object):
     CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-
-    def __init__(self):
-      self.clsMap = set(['CssDivNoBorder'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssDivNoBorder
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ['CssDivNoBorder'], []
 
   def __init__(self, report, number, width, height, attrs, helper, profile):
     super(ProgressBar, self).__init__(report, number, width=width[0], widthUnit=width[1], height=height[0],
@@ -374,23 +358,7 @@ class SkillBar(Html.Html):
   class CssClassDef(object):
     CssTableBasic = CssStylesTable.CssTableBasic
     CssText = CssStylesText.CssText
-
-    def __init__(self):
-      self.clsMap = set(['CssTableBasic', 'CssText'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssTableBasic, CssText
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ['CssTableBasic', 'CssText'], []
 
   def __init__(self, report, data, title, width, height, color, htmlCode, colUrl, colTooltip, filters, profile):
     super(SkillBar, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
@@ -571,23 +539,7 @@ class ContextMenu(Html.Html):
 
   class CssClassDef(object):
     CssTextItem = CssStylesText.CssTextItem
-
-    def __init__(self):
-      self.clsMap = set(['CssTextItem'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssTextItem
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ['CssTextItem'], []
 
   def __init__(self, report, recordSet, width, height, visible, profile):
     for rec in recordSet:
@@ -660,24 +612,7 @@ class OptionsBar(Html.Html):
   class CssClassDef(object):
     CssIcon = CssStylesIcon.CssIcon
     CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-
-    def __init__(self):
-      self.clsMap = set(['CssDivNoBorder'])
-      self.clsAltMap = set(['CssIcon'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssDivNoBorder, CssIcon
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ['CssDivNoBorder'], ['CssIcon']
 
   def __init__(self, report, recordset, width, height, size, color, border_color, options):
     super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
@@ -748,23 +683,7 @@ class Filters(Html.Html):
 
   class CssClassDef(object):
     CssDivFilter = CssStylesDiv.CssDivFilter
-
-    def __init__(self):
-      self.clsMap = set(['CssDivFilter'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssDivFilter
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ['CssDivFilter'], []
 
   def __init__(self, report, items, title, size, width, height, htmlCode, helper, profile):
     super(Filters, self).__init__(report, items, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)

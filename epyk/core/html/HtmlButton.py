@@ -20,17 +20,7 @@ class Button(Html.Html):
 
   class CssClassDef(object):
     CssButtonBasic = CssStylesButton.CssButtonBasic
-
-    def __init__(self):
-      self.clsMap = set(['CssButtonBasic'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ["CssButtonBasic"], []
 
   def __init__(self, report, text, icon, size, width, height, htmlCode, tooltip, profile, options):
     if options is None:
@@ -222,18 +212,8 @@ class Checkbox(Html.Html):
     CssLabelCheckMarkHover = CssStylesLabel.CssLabelCheckMarkHover
     CssDivNoBorder = CssStylesDiv.CssDivNoBorder
     CssCheckMark = CssStylesText.CssCheckMark
-
-    def __init__(self):
-      self.clsMap = set(['CssButtonBasic', 'CssLabelCheckMarkHover', 'CssDivNoBorder', 'CssCheckMark',
-                         'CssLabelContainerDisabled'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ['CssButtonBasic', 'CssLabelCheckMarkHover', 'CssDivNoBorder', 'CssCheckMark',
+                        'CssLabelContainerDisabled'], []
 
   def __init__(self, rptObj, records, title, color, width, height, align, htmlCode, filters, tooltip, icon, options, profile):
     if rptObj.http.get(htmlCode) is not None:
@@ -455,17 +435,7 @@ class CheckButton(Html.Html):
 
   class CssClassDef(object):
     CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-
-    def __init__(self):
-      self.clsMap = set(['CssDivNoBorder'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ["CssDivNoBorder"], []
 
   def __init__(self, report, flag, tooltip, width, height, icon, label, htmlCode, options, profile):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],

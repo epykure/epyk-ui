@@ -19,23 +19,7 @@ class DatePicker(Html.Html):
   class CssClassDef(object):
     CssDivNoBorder = CssStylesDiv.CssDivNoBorder
     CssDatePicker = CssStylesDates.CssDatePicker
-
-    def __init__(self):
-      self.clsMap = set(['CssDivNoBorder', 'CssDatePicker'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssDivNoBorder, CssDatePicker
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ['CssDivNoBorder', 'CssDatePicker'], []
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     dfltOptions = {'dateFormat': 'yy-mm-dd'}
@@ -115,23 +99,7 @@ class TimePicker(Html.Html):
 
   class CssClassDef(object):
     CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-
-    def __init__(self):
-      self.clsMap = set(['CssDivNoBorder'])
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      """
-      Remove a defined class from the list:
-      CssDivNoBorder
-
-      :param clsName: A string with the classname
-      """
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
+    __map, __alt_map = ['CssDivNoBorder'], []
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)

@@ -84,9 +84,14 @@ class Html(object):
   dashboards = [] # Static definition of useful dashboards to get more example of an component
 
   class CssClassDef(object):
+    __map, __alt_map = [], []
+
     def __init__(self):
-      self.clsMap = set([]) # Main CSS Classes loaded and added to the container
-      self.clsAltMap = set([]) # Alternate CSS classes not loaded automatically at component level
+      self.clsMap = set(self.__map) # Main CSS Classes loaded and added to the container
+      self.clsAltMap = set(self.__alt_map) # Alternate CSS classes not loaded automatically at component level
+
+    def __contains__(self, key):
+      return key in self.clsMap
 
     def add(self, clsName): self.clsMap.add(clsName)
 
@@ -95,6 +100,11 @@ class Html(object):
         clsName = [clsName]
       for c in clsName:
         self.clsMap.remove(c)
+
+    def clear(self, all=True):
+      self.clsMap = set([])
+      if all:
+        self.clsAltMap = set([])
 
   class _CssStyle(object):
     def __init__(self, htmlObj):
@@ -122,7 +132,7 @@ class Html(object):
 
       :return: The Python htmlObj
       """
-      self.htmlObj.pyStyle.clsMap = set([])
+      self.htmlObj.defined.clsMap = set([])
       return self.htmlObj
 
     def cssDelCls(self, cssNname):
@@ -140,8 +150,8 @@ class Html(object):
       pyCssName = self.htmlObj._report.style.cssName(cssNname)
       if pyCssName in self.htmlObj.attr['class']:
         self.htmlObj.attr['class'].remove(pyCssName)
-      if cssNname in self.htmlObj.pyStyle:
-        self.htmlObj.pyStyle.remove(cssNname)
+      if cssNname in self.htmlObj.defined:
+        self.htmlObj.defined.remove(cssNname)
       return self.htmlObj
 
     def addCls(self, cssName):
@@ -185,10 +195,10 @@ class Html(object):
         self.htmlObj.attr['class'].add(cssNname)
       else:
         if cssNname in self.htmlObj.pyStyle:
-          self.htmlObj.pyStyle.remove(cssNname)
+          self.htmlObj.defined.remove(cssNname)
         dervfCls = self.htmlObj._report.style.cssDerivCls(self.htmlObj.htmlId, cssNname, attrs, eventAttrs=eventAttrs, forceReload=True)
         self.htmlObj._report.style.add(dervfCls.classname)
-        self.htmlObj.pyStyle.add(dervfCls.classname)
+        self.htmlObj.defined.add(dervfCls.classname)
       return self.htmlObj
 
     def css(self, key, value=None):
