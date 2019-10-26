@@ -5,7 +5,6 @@ https://nvd3-community.github.io/nvd3/examples/documentation.html
 
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
-
 from epyk.core.js.primitives import JsString
 
 
@@ -106,7 +105,7 @@ class JsNvd3(JsPackage):
     self.varName, self.setVar = varName, setVar
     self.src.jsImports.add(self.lib_alias['js'])
     self.src.cssImport.add(self.lib_alias['css'])
-    self._js, self._xaxis, self._yaxis = [], None, None
+    self._js, self._xaxis, self._yaxis = [[]], None, None
 
   def version(self, ver):
     """
@@ -182,13 +181,32 @@ class JsNvd3(JsPackage):
     return self
 
   def useInteractiveGuideline(self, flag):
-    pass
+    """
+    Tooltips which show all data points.
+
+    :param flag:
+    :return:
+    """
+    flag = JsUtils.jsConvertData(flag, None)
+    return self.fnc("useInteractiveGuideline(%s)" % flag)
 
   def transitionDuration(self, time):
-    pass
+    """
+
+    :param time:
+    :return:
+    """
+    time = JsUtils.jsConvertData(time, None)
+    return self.fnc("transitionDuration(%s)" % time)
 
   def showLegend(self, flag):
-    pass
+    """
+
+    :param flag:
+    :return:
+    """
+    flag = JsUtils.jsConvertData(flag, None)
+    return self.fnc("showLegend(%s)" % flag)
 
   @property
   def xAxis(self):
@@ -220,7 +238,14 @@ class JsNvd3(JsPackage):
     pass
 
   def showControls(self, flag):
-    pass
+    """
+    Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
+
+    :param flag:
+    :return:
+    """
+    flag = JsUtils.jsConvertData(flag, None)
+    return self.fnc("showControls(%s)" % flag)
 
   def color(self, d3ColorScale):
     pass
@@ -228,31 +253,29 @@ class JsNvd3(JsPackage):
   def noData(self):
     pass
 
-  def toStr(self):
-    """
-    Javascript representation
-
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    strData = ".".join(self._js)
-    if self.setVar:
-      strData = "var %s = %s.%s" % (self.varName, self._selector, strData)
-      self.setVar = False
-    else:
-      strData = "%s.%s" % (self.varName, strData)
-    self._js = [] # empty the stack
-    return strData
-
 
 class JsNvd3Area(JsNvd3):
-  def x(self, jsFnc):
-    pass
+  chartFnc = "stackedAreaChart"
 
-  def y(self, jsFnc):
-    pass
+  def x(self, column=None, jsFnc=None):
+    if column is not None:
+      return self.fnc("x(function(d){return d.%s})" % column)
+
+    elif jsFnc is not None:
+      jsFnc = JsUtils.jsConvertFncs(jsFnc)
+      return self.fnc("x(%s)" % jsFnc)
+
+    return self
+
+  def y(self, column=None, jsFnc=None):
+    if column is not None:
+      return self.fnc("y(function(d){return d.%s})" % column)
+
+    elif jsFnc is not None:
+      jsFnc = JsUtils.jsConvertFncs(jsFnc)
+      return self.fnc("y(%s)" % jsFnc)
+
+    return self
 
   def rotateLabels(self, value):
     pass
@@ -261,10 +284,23 @@ class JsNvd3Area(JsNvd3):
     pass
 
   def rightAlignYAxis(self, flag):
-    pass
+    """
+    Move the y-axis to the right side
+
+    :param flag:
+    :return:
+    """
+    flag = JsUtils.jsConvertData(flag, None)
+    return self.fnc("rightAlignYAxis(%s)" % flag)
 
   def clipEdge(self, flag):
-    pass
+    """
+
+    :param flag:
+    :return:
+    """
+    flag = JsUtils.jsConvertData(flag, None)
+    return self.fnc("clipEdge(%s)" % flag)
 
 
 class JsNvd3Bar(JsNvd3):

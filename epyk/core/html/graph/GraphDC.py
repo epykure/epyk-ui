@@ -7,11 +7,33 @@ from epyk.core.html import Html
 from epyk.core.html.graph import GraphFabric
 from epyk.core.js.objects import JsChartDC
 
+# The list of CSS classes
+from epyk.core.css.styles import CssStylesChart
+
 
 class Chart(Html.Html):
   name, category, callFnc = 'DC', 'Charts', 'dc'
   __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
-  __pyStyle = ['CssDivChart']
+
+  class CssClassDef(object):
+    CssDivChart = CssStylesChart.CssDivChart
+
+    def __init__(self):
+      self.clsMap = set(["CssDivChart"])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssDivChart
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self,  report, chart_obj, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
@@ -38,6 +60,15 @@ class Chart(Html.Html):
   def chart(self, js_chart):
     self._chart = js_chart
 
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
+
   # -----------------------------------------------------------------------------------------
   #                                STANDARD HTML METHODS
   # -----------------------------------------------------------------------------------------
@@ -59,15 +90,13 @@ class Chart(Html.Html):
       
       window['%(htmlId)s_chart'] = dc.%(jsCls)s('#%(htmlId)s')
         .x(d3.scaleBand()).xUnits(dc.units.ordinal)
-        .keyAccessor(function (p) { return p.key;
-        })
-        .valueAccessor(function (p) { return p.value;
-        })
+        .keyAccessor(function (p) {return p.key })
+        .valueAccessor(function (p) { return p.value })
         .radiusValueAccessor(function (p) { return 1 })
         .dimension(runDimension).group(speedSumGroup);
-      window['%(htmlId)s_chart'].render();
+      window['%(htmlId)s_chart'].render()
       ''' % {'htmlId': self.htmlId, 'jsCls': self.chart.jsCls, 'data': self.chart.data}
 
   def __str__(self):
     strChart = '<div id="%s" style="height:%spx;width:100%%"></div>' % (self.htmlId, self.height-30)
-    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.pyStyle), strChart)
+    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.defined), strChart)

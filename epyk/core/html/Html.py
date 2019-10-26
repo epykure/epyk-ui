@@ -83,6 +83,18 @@ class Html(object):
   hidden, inReport, isLoadFnc = False, True, True
   dashboards = [] # Static definition of useful dashboards to get more example of an component
 
+  class CssClassDef(object):
+    def __init__(self):
+      self.clsMap = set([])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
+
   class _CssStyle(object):
     def __init__(self, htmlObj):
       self.htmlObj = htmlObj
@@ -109,7 +121,7 @@ class Html(object):
 
       :return: The Python htmlObj
       """
-      self.htmlObj.pyStyle = []
+      self.htmlObj.pyStyle.clsMap = set([])
       return self.htmlObj
 
     def cssDelCls(self, cssNname):
@@ -175,7 +187,7 @@ class Html(object):
           self.htmlObj.pyStyle.remove(cssNname)
         dervfCls = self.htmlObj._report.style.cssDerivCls(self.htmlObj.htmlId, cssNname, attrs, eventAttrs=eventAttrs, forceReload=True)
         self.htmlObj._report.style.add(dervfCls.classname)
-        self.htmlObj.pyStyle.append(dervfCls.classname)
+        self.htmlObj.pyStyle.add(dervfCls.classname)
       return self.htmlObj
 
     def css(self, key, value=None):
@@ -272,7 +284,7 @@ class Html(object):
         self.vals = self._report.http[htmlCode]
 
     css = getattr(self, '_%s__css' % self.__class__.__name__, None)
-    self.pyStyle = list(getattr(self, '_%s__pyStyle' % self.__class__.__name__, []))
+    self.pyStyle = None #list(getattr(self, '_%s__pyStyle' % self.__class__.__name__, []))
     if hasattr(self, '_%s__reqJs' % self.__class__.__name__):
       self.reqJs = list(getattr(self, '_%s__reqJs' % self.__class__.__name__, []))
     if hasattr(self, '_%s__reqCss' % self.__class__.__name__):
@@ -597,6 +609,15 @@ class Html(object):
     return self._styleObj
 
   @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
+
+  @property
   def contextVal(self):
     """
     Set the javascript data defined when the context menu is created
@@ -883,12 +904,12 @@ class Html(object):
         # Need to merge in the class attribute some static classes coming from external CSS Styles sheets
         # and the static python classes defined on demand in the header of your report
         # self._report.cssObj.getClsTag(pyClassNames)[:-1] to remove the ' generated in the module automatically
-        cssClass = self._report.style.getClsTag(pyClassNames).replace('class="', 'class="%s ')
+        cssClass = self._report.style.getClsTag(pyClassNames.clsMap).replace('class="', 'class="%s ')
         cssClass %= classData
       else:
         cssClass = 'class="%s"' % classData
     elif pyClassNames is not None:
-      cssClass = self._report.style.getClsTag(pyClassNames)
+      cssClass = self._report.style.getClsTag(pyClassNames.clsMap)
     if withId:
       return 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val) for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
 
@@ -1174,10 +1195,9 @@ class Html(object):
     :category: CSS function
     :rubric: CSS
     """
-    if getattr(self, 'pyStyle', []) != []:
-      for cssStyle in self.pyStyle:
-        # Remove the . or # corresponding to the type of CSS reference
-        self.pyCssCls.add(self._report.style.add(cssStyle).classname)
+    for cssStyle in self.defined.clsMap:
+      # Remove the . or # corresponding to the type of CSS reference
+      self.pyCssCls.add(self._report.style.add(cssStyle).classname)
 
   def getColor(self, typeChart, i):
     """

@@ -7,11 +7,30 @@ import json
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.styles import CssStylesButton
+from epyk.core.css.styles import CssStylesLabel
+from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.styles import CssStylesText
+
 
 class Button(Html.Html):
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'bootstrap', 'jquery']
   name, category, callFnc = 'Button', 'buttons', 'button'
-  __pyStyle = ['CssButtonBasic']
+
+  class CssClassDef(object):
+    CssButtonBasic = CssStylesButton.CssButtonBasic
+
+    def __init__(self):
+      self.clsMap = set(['CssButtonBasic'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, text, icon, size, width, height, htmlCode, tooltip, profile, options):
     if options is None:
@@ -50,6 +69,15 @@ class Button(Html.Html):
       return "{event_val: $(this).html(), %s: $(this).html(), event_groupId: '%s', event_count_click: $(this).data('count')+1}" % (self._code, self.groupId)
 
     return "{event_val: $(this).html(), event_groupId: '%s', event_count_click: $(this).data('count')+1}" % self.groupId
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def disable(self, background_color=None, color=None):
     """
@@ -185,9 +213,27 @@ class Button(Html.Html):
 
 
 class Checkbox(Html.Html):
-  __pyStyle = ['CssLabelContainer', 'CssDivNoBorder', 'CssCheckMark', 'CssLabelCheckMarkHover', 'CssLabelContainerDisabled']
   name, category, callFnc = 'Check Box', 'Buttons', 'checkbox'
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'bootstrap', 'jquery']
+
+  class CssClassDef(object):
+    CssButtonBasic = CssStylesLabel.CssLabelContainer
+    CssLabelContainerDisabled = CssStylesLabel.CssLabelContainerDisabled
+    CssLabelCheckMarkHover = CssStylesLabel.CssLabelCheckMarkHover
+    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
+    CssCheckMark = CssStylesText.CssCheckMark
+
+    def __init__(self):
+      self.clsMap = set(['CssButtonBasic', 'CssLabelCheckMarkHover', 'CssDivNoBorder', 'CssCheckMark',
+                         'CssLabelContainerDisabled'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, rptObj, records, title, color, width, height, align, htmlCode, filters, tooltip, icon, options, profile):
     if rptObj.http.get(htmlCode) is not None:
@@ -221,6 +267,15 @@ class Checkbox(Html.Html):
       return "{event_label: $(this).text(), %s: %s, event_type: $(this).find('span').data('content'), event_val: isChecked, event_code: '%s'}" % (self.htmlCode, self.val, self.htmlId)
 
     return "{event_label: $(this).text(), event_type: $(this).find('span').data('content'), event_val: isChecked, event_code: '%s'}" % self.htmlId
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def jsDisable(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None, reset=True):
     jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
@@ -397,7 +452,20 @@ class Checkbox(Html.Html):
 
 class CheckButton(Html.Html):
   name, category, callFnc = 'Check Button', 'Button', 'check'
-  __pyStyle = ['CssDivNoBorder']
+
+  class CssClassDef(object):
+    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
+
+    def __init__(self):
+      self.clsMap = set(['CssDivNoBorder'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, flag, tooltip, width, height, icon, label, htmlCode, options, profile):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
@@ -423,6 +491,15 @@ class CheckButton(Html.Html):
   @property
   def jqId(self):
     return "$('#%s div[name=\"check_box\"]')" % self.htmlId
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' htmlObj.empty();

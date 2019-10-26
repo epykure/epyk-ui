@@ -15,6 +15,9 @@ from epyk.core.html.graph import GraphFabric
 from epyk.core.js.packages import JsNvd3
 from epyk.core.js.packages import JsD3
 
+# The list of CSS classes
+from epyk.core.css.styles import CssStylesChart
+
 
 # Define a set of common standard properties cross charting libraries.
 # The below mapping will ensure the correct definition is applied
@@ -53,6 +56,30 @@ class Chart(Html.Html):
   name, category, callFnc = 'NVD3', 'Charts', 'nvd3.chart'
   __pyStyle = ['CssDivChart']
 
+  class CssClassDef(object):
+    CssDivChart = CssStylesChart.CssDivChart
+    CssNVD3HideGrid = CssStylesChart.CssNVD3HideGrid
+    CssNVD3Axis = CssStylesChart.CssNVD3Axis
+    CssNVD3AxisLabel = CssStylesChart.CssNVD3AxisLabel
+    CssNVD3AxisLegend = CssStylesChart.CssNVD3AxisLegend
+
+    def __init__(self):
+      self.clsMap = set(["CssDivChart", "CssNVD3HideGrid", 'CssNVD3Axis', 'CssNVD3AxisLabel', 'CssNVD3AxisLegend'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssDivChart, CssNVD3HideGrid, CssNVD3Axis, CssNVD3AxisLabel, CssNVD3AxisLegend
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
+
   def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
     super(Chart, self).__init__(report, [], code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
@@ -74,11 +101,16 @@ class Chart(Html.Html):
 
   @property
   def chart(self):
-    return self._chart
+    raise Exception("")
 
-  @chart.setter
-  def chart(self, js_chart):
-    self._chart = js_chart
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def onDocumentLoadVar(self): pass # Data should be registered externally
   def onDocumentLoadFnc(self): return True
@@ -94,6 +126,58 @@ class Chart(Html.Html):
   def __str__(self):
     strChart = '<svg id="%s"></svg>' % self.htmlId
     return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.pyStyle), strChart)
+
+
+class ChartLine(Chart):
+  __pyStyle = ['CssDivChart']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsNvd3.JsNvd3Line
+    """
+    if self._chart is None:
+      self._chart = JsNvd3.JsNvd3Line(self._report, varName=self.chartId)
+    return self._chart
+
+
+class ChartBar(Chart):
+  __pyStyle = ['CssDivChart']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsNvd3.JsNvd3Line
+    """
+    if self._chart is None:
+      self._chart = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
+    return self._chart
+
+
+class ChartPie(Chart):
+  __pyStyle = ['CssDivChart']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsNvd3.JsNvd3Pie
+    """
+    if self._chart is None:
+      self._chart = JsNvd3.JsNvd3Pie(self._report, varName=self.chartId)
+    return self._chart
+
+
+class ChartArea(Chart):
+  __pyStyle = ['CssDivChart']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsNvd3.JsNvd3Area
+    """
+    if self._chart is None:
+      self._chart = JsNvd3.JsNvd3Area(self._report, varName=self.chartId)
+    return self._chart
 
 
 class Chart_old(Html.Html):

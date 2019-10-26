@@ -34,11 +34,9 @@ class DC(object):
 
     :rtype: GraphDC.Chart
     """
-    if options is None:
-      options = {}
     chart_obj = JsChartDC.JsLine(self.parent.context.rptObj, data, {'static': {}, 'dynamic': {}})
     return self.parent.context.register(GraphDC.Chart(self.parent.context.rptObj, chart_obj, width, height, title,
-                                                      options, htmlCode, filters, profile))
+                                                      options or {}, htmlCode, filters, profile))
 
   def pie(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
            xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -63,11 +61,9 @@ class DC(object):
 
     :rtype: GraphDC.Chart
     """
-    if options is None:
-      options = {}
     chart_obj = JsChartDC.JsPie(self.parent.context.rptObj, data, {'static': {}, 'dynamic': {}})
     return self.parent.context.register(GraphDC.Chart(self.parent.context.rptObj, chart_obj, width, height, title,
-                                                      options, htmlCode, filters, profile))
+                                                      options or {}, htmlCode, filters, profile))
 
   def bubble(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
         xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -92,8 +88,6 @@ class DC(object):
 
     :rtype: GraphDC.Chart
     """
-    if options is None:
-        options = {}
     chart_obj = JsChartDC.JsBuble(self.parent.context.rptObj, data, {'static': {}, 'dynamic': {}})
     return self.parent.context.register(GraphDC.Chart(self.parent.context.rptObj, chart_obj, width, height, title,
-                                                      options, htmlCode, filters, profile))
+                                                      options or {}, htmlCode, filters, profile))

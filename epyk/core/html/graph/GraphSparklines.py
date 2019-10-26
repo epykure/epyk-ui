@@ -6,11 +6,33 @@ https://omnipotent.net/jquery.sparkline/#s-docs
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.styles import CssStylesChart
+
 
 class Sparklines(Html.Html):
   __reqJs = ['jquery-sparklines']
   name, category, callFnc = 'sparkline', 'Charts', 'sparkline'
-  __pyStyle = ["CssSparklines"]
+
+  class CssClassDef(object):
+    CssSparklines = CssStylesChart.CssSparklines
+
+    def __init__(self):
+      self.clsMap = set(['CssSparklines'])
+
+    def add(self, clsName): self.clsMap.add(clsName)
+
+    def remove(self, clsName):
+      """
+      Remove a defined class from the list:
+      CssSparklines
+
+      :param clsName: A string with the classname
+      """
+      if not isinstance(clsName, list):
+        clsName = [clsName]
+      for c in clsName:
+        self.clsMap.remove(c)
 
   def __init__(self, report, data, chart_type, options):
     super(Sparklines, self).__init__(report, data)
@@ -38,5 +60,14 @@ class Sparklines(Html.Html):
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, 'htmlObj.sparkline(data, jsStyles)')
 
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
+
   def __str__(self):
-    return "<span %s></span>" % self.strAttr(pyClassNames=["CssSparklines"])
+    return "<span %s></span>" % self.strAttr(pyClassNames=self.defined)

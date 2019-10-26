@@ -10,8 +10,11 @@ for rec in data:
   rec["distance"] = float(rec["distance"])
   rec["delay"] = float(rec["delay"])
 
-bar = rptObj.ui.charts.nvd3.line(data, y_columns=["delay"], x_axis="distance")
-bar.chart
+bar = rptObj.ui.charts.nvd3.area(data, y_columns=["delay"], x_axis="distance")
+bar.chart.rightAlignYAxis(False).showControls(False).showLegend(False)
+bar.defined.add('CssNVD3Axis')
+bar.defined.remove(["CssDivChart", 'CssNVD3HideGrid'])
+
 # bar.style.defined.chart.container_border().remove()
 # bar.chart.width(30)
 # bar.chart.xAxis.axisLabel("test").tickFormat(12)
