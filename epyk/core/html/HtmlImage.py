@@ -6,10 +6,17 @@ import re
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.styles import CssStylesImg
+from epyk.core.css.styles import CssStylesDiv
+
 
 class Image(Html.Html):
-  __pyStyle = ['CssImgBasic']
   name, category, callFnc = 'Picture', 'Image', 'img'
+
+  class CssClassDef(object):
+    CssImgBasic = CssStylesImg.CssImgBasic
+    __map, __alt_map = ['CssImgBasic'], []
 
   def __init__(self, report, image, path, align, htmlCode, width, height, serverSettings, profile):
     if path is None:
@@ -20,6 +27,15 @@ class Image(Html.Html):
     self._jsStyles = {}
     if align is not None:
       self.css({"text-align": align})
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
@@ -34,7 +50,7 @@ class Image(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   @staticmethod
   def matchMarkDown(val): return re.findall("!\[([a-zA-Z 0-9]*)\]\(([:a-zA-Z \-\"/.0-9]*)\)", val)
@@ -53,10 +69,18 @@ class Image(Html.Html):
 
 
 class AnimatedImage(Html.Html):
-  __pyStyle = ['CssImg', 'CssImgAInfo', 'CssImgMask', 'CssImgH2', 'CssImgParagraph', 'CssContent', 'CssView']
-  cssCls = ['view']
   name, category, callFnc = 'Animated Picture', 'Images', 'animatedimg'
-  __reqJs = ['jquery']
+  __reqJs, cssCls = ['jquery'], ['view']
+
+  class CssClassDef(object):
+    CssImg = CssStylesImg.CssImg
+    CssImgAInfo = CssStylesImg.CssImgAInfo
+    CssImgMask = CssStylesImg.CssImgMask
+    CssImgH2 = CssStylesImg.CssImgH2
+    CssImgParagraph = CssStylesImg.CssImgParagraph
+    CssContent = CssStylesImg.CssContent
+    CssView = CssStylesImg.CssView
+    __map, __alt_map = ['CssImg', 'CssImgAInfo', 'CssImgMask', 'CssImgH2', 'CssImgParagraph', 'CssContent', 'CssView'], []
 
   def __init__(self, report, image, text, title, url, path, width, height, serverSettings, profile):
     if path is None:
@@ -64,6 +88,15 @@ class AnimatedImage(Html.Html):
     super(AnimatedImage, self).__init__(report, {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
                                         width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
     self.width = width[0]
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' 
@@ -75,16 +108,20 @@ class AnimatedImage(Html.Html):
     return '''
       <div %s>
         <img />
-        <div class="mask">
-          <h2></h2><p></p>
-          <a class="info" style="cursor:pointer">Enter</a>
-        </div>
-      </div>''' % self.strAttr(pyClassNames=self.pyStyle)
+        <div class="mask"><h2></h2><p></p><a class="info" style="cursor:pointer">Enter</a></div>
+      </div>''' % self.strAttr(pyClassNames=self.defined)
 
 
 class ImgCarrousel(Html.Html):
-  __pyStyle = ['CssImgBasic', 'CssCarrouselLi', 'CssCarrouselH2', 'CssDivLabelPoint', 'CssDivBoxCenter']
   name, category, callFnc = 'Picture Carrousel', 'Images', 'carrousel'
+
+  class CssClassDef(object):
+    CssImg = CssStylesImg.CssImgBasic
+    CssCarrouselLi = CssStylesImg.CssCarrouselLi
+    CssCarrouselH2 = CssStylesImg.CssCarrouselH2
+    CssDivLabelPoint = CssStylesDiv.CssDivLabelPoint
+    CssDivBoxCenter = CssStylesDiv.CssDivBoxCenter
+    __map, __alt_map = ['CssImgBasic', 'CssCarrouselLi', 'CssCarrouselH2'], ['CssDivLabelPoint', 'CssDivBoxCenter']
 
   def __init__(self, report, images, path, width, height, serverSettings, profile):
     if path is None:
@@ -119,8 +156,8 @@ class ImgCarrousel(Html.Html):
     return '''
       <ul %(strAttr)s></ul>
       <div id="%(htmlId)s_bullets" %(clsTag)s></div>
-      ''' % {'strAttr': self.strAttr(pyClassNames=['CssImgBasic', 'CssCarrouselLi', 'CssCarrouselH2']),
-             'htmlId': self.htmlId, 'clsTag': self._report.style.getClsTag(["CssDivBoxCenter", "CssDivLabelPoint"])}
+      ''' % {'strAttr': self.strAttr(pyClassNames=self.defined),
+             'htmlId': self.htmlId, 'clsTag': self._report.style.getClsTag(self.defined.clsAltMap)}
 
 
 class Icon(Html.Html):
