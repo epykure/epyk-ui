@@ -749,7 +749,7 @@ class ChartJsType(object):
 
 class ChartJsTypeBar(object):
 
-  def __init__(self, report, type, data):
+  def __init__(self, report, data, type='bar'):
     self._report = report
     self._data_attrs, self._opts_attrs = {}, {}
     self._data_attrs.update({"type": JsUtils.jsConvertData(type, None), "data": data})
@@ -865,7 +865,7 @@ class ChartJsTypeBar(object):
 
 
 if __name__ == '__main__':
-  chart_bar = ChartJsTypeBar(None, "bar", []).label("test")
+  chart_bar = ChartJsTypeBar(None, []).label("test")
   chart_bar.scales.barPercentage(0.4).barThickness(3)
   chart_bar.scales.gridLines.circular(True).color(["red"]).drawTicks()
   print(chart_bar)

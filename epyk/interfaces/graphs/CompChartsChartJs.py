@@ -26,7 +26,6 @@ class ChartJs(object):
     :param x_axis:
     :param title:
     :param profile:
-    :param xAxisOrder:
     :param width:
     :param height:
     :param htmlCode:
