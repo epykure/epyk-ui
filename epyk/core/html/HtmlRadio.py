@@ -6,11 +6,14 @@ import json
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.groups import CssGrpClsRadio
+
 
 class Radio(Html.Html):
   __reqJs = ['jquery']
   name, category, callFnc = 'Radio Buttons', 'Buttons', 'radio'
-  __pyStyle = ['CssDivNoBorder']
 
   def __init__(self, report, vals, checked, htmlCode, label, width, height, radioVisible, event,
                withRemoveButton, align, filters, tooltip, radioType, helper, profile):
@@ -91,6 +94,15 @@ class Radio(Html.Html):
 
   @property
   def val(self): return "$('input[name=input_%s]:checked').val()" % self.htmlId
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
+    return self.pyStyle
 
   def click(self, jsFnc, radioVal=None):
     if isinstance(jsFnc, list):
@@ -218,7 +230,6 @@ class Radio(Html.Html):
 class Switch(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
   name, category, callFnc = 'Switch Buttons', 'Buttons', 'switch'
-  __pyStyle = ['CssRadioSwitch', 'CssRadioSwitchLabel', 'CssRadioSwitchChecked']
 
   def __init__(self, report, recordSet, label, color, size, width, height, htmlCode, profile):
     self.width, self.jsChange, self.size = width[0], '', size
@@ -235,6 +246,15 @@ class Switch(Html.Html):
 
   @property
   def val(self): return "$('#%(htmlId)s p').html()" % {'htmlId': self.htmlId}
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = CssGrpClsRadio.CssClassSwitch(self)
+    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''var htmlId = htmlObj.attr('id'); 

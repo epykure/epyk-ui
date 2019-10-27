@@ -7,6 +7,9 @@ https://www.w3schools.com/html/html_forms.asp
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpCls
+
 
 class Row(object):
   input, button, label = None, None, None
@@ -34,7 +37,6 @@ class Row(object):
 
 class Form(Html.Html):
   name, category, callFnc = 'Generic Form', 'Forms', 'form'
-  __pyStyle = ['CssDivNoBorder']
 
   def __init__(self, report, action, method, helper):
     super(Form, self).__init__(report, None)
@@ -42,6 +44,15 @@ class Form(Html.Html):
     self.css({"padding": '5px'})
     self.attr.update({"action": action, "method": method})
     self.add_helper(helper)
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
+    return self.pyStyle
 
   def row(self, i=None):
     """
@@ -228,4 +239,4 @@ class Form(Html.Html):
 
   def __str__(self):
     self.add_button("Run", css={"margin": 0}, attrs={"type": 'submit', "value": "Submit"})
-    return '<form %s></form>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<form %s></form>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)

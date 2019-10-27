@@ -1,5 +1,5 @@
 """
-
+Module for the HTML Selects components
 """
 
 import json

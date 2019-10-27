@@ -9,17 +9,14 @@ from epyk.core.html import Html
 from epyk.core.js.Imports import requires
 from epyk.core.js import JsUtils
 
+
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesDiv
-from epyk.core.css.styles import CssStylesHref
+from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.groups import CssGrpClsText
 
 
 class ExternalLink(Html.Html):
   name, category, callFnc = 'External link', 'Links', 'externallink'
-
-  class CssClassDef(object):
-    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-    __map, __alt_map = ['CssDivNoBorder'], []
 
   def __init__(self, report, text, url, icon, helper, height, decoration, options, profile):
     super(ExternalLink, self).__init__(report, {"text": text, "url": url}, height=height[0], heightUnit=height[1], profile=profile)
@@ -38,7 +35,7 @@ class ExternalLink(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
     return self.pyStyle
 
   def onDocumentLoadFnc(self):
@@ -46,7 +43,7 @@ class ExternalLink(Html.Html):
       htmlObj.append(data.text); htmlObj.attr('href', data.url)''', 'Javascript Object builder')
 
   def __str__(self):
-    return '<a %s></a>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<a %s></a>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -98,11 +95,6 @@ class ExternalLink(Html.Html):
 class DataLink(Html.Html):
   name, category, callFnc = 'Data link', 'Links', 'linkdata'
 
-  class CssClassDef(object):
-    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-    CssHrefNoDecoration = CssStylesHref.CssHrefNoDecoration
-    __map, __alt_map = ['CssDivNoBorder', 'CssHrefNoDecoration'], []
-
   def __init__(self, report, recordSet, value, width, height, format, profile):
     super(DataLink, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
                                    heightUnit=height[1], profile=profile)
@@ -115,7 +107,7 @@ class DataLink(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpClsText.CssClassHref(self)
     return self.pyStyle
 
   @property
@@ -133,16 +125,12 @@ class DataLink(Html.Html):
     return super(DataLink, self).click(self.dom.onclick('var csv = %s; var data = new Blob([csv]); this.href = URL.createObjectURL(data)' % data).toStr())
 
   def __str__(self):
-    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.strAttr(pyClassNames=self.pyStyle), 'val': self.vals, 'format': self.format}
+    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.strAttr(pyClassNames=self.defined), 'val': self.vals, 'format': self.format}
 
 
 class Bridge(Html.Html):
   reqCss, reqJs = [], ['jquery']
   name, category, callFnc = 'Node Bridge', 'Links', 'bridge'
-
-  class CssClassDef(object):
-    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-    __map, __alt_map = ['CssDivNoBorder'], []
 
   def __init__(self, report, text, script_name, report_name, url, jsData, context):
     super(Bridge, self).__init__(report, text)
@@ -176,13 +164,13 @@ class Bridge(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
     return self.pyStyle
 
   def __str__(self):
     if self._report.user != "anonymous":
       return "<a %(attr)s onclick='NodeBridge(\"%(scriptName)s\", \"%(reportName)s\", \"%(url)s\", {%(pmts)s})' href='#'>%(vals)s</a>" % {
-        'attr': self.strAttr(pyClassNames=self.pyStyle), 'scriptName': self.scriptName, 'reportName': self.reportName,
+        'attr': self.strAttr(pyClassNames=self.defined), 'scriptName': self.scriptName, 'reportName': self.reportName,
         'url': self.url, 'pmts': ",".join(self.pmts), 'vals': self.vals}
 
     return ""

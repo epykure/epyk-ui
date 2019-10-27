@@ -14,6 +14,7 @@ import functools
 import logging
 
 from epyk.core.css import CssInternal
+from epyk.core.css.groups import CssGrpCls
 
 from epyk.core.js import Js
 from epyk.core.js import JsEncoder
@@ -82,29 +83,6 @@ class Html(object):
   references, htmlCode, dataSrc, _code = None, None, None, None
   hidden, inReport, isLoadFnc = False, True, True
   dashboards = [] # Static definition of useful dashboards to get more example of an component
-
-  class CssClassDef(object):
-    __map, __alt_map = [], []
-
-    def __init__(self):
-      self.clsMap = set(self.__map) # Main CSS Classes loaded and added to the container
-      self.clsAltMap = set(self.__alt_map) # Alternate CSS classes not loaded automatically at component level
-
-    def __contains__(self, key):
-      return key in self.clsMap
-
-    def add(self, clsName): self.clsMap.add(clsName)
-
-    def remove(self, clsName):
-      if not isinstance(clsName, list):
-        clsName = [clsName]
-      for c in clsName:
-        self.clsMap.remove(c)
-
-    def clear(self, all=True):
-      self.clsMap = set([])
-      if all:
-        self.clsAltMap = set([])
 
   class _CssStyle(object):
     def __init__(self, htmlObj):
@@ -625,7 +603,7 @@ class Html(object):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpCls.CssGrpClass(self)
     return self.pyStyle
 
   @property

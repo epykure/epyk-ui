@@ -14,7 +14,7 @@ from epyk.core.html.graph import GraphFabric
 from epyk.core.js.packages import JsChartJs
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesChart
+from epyk.core.css.groups import CssGrpClsCharts
 
 
 # Define a set of common standard properties cross charting libraries.
@@ -65,10 +65,6 @@ class Chart(Html.Html):
     'Repository': 'https://github.com/chartjs/Chart.js'}
   __reqJs = ['Chart.js']
 
-  class CssClassDef(Html.Html.CssClassDef):
-    CssDivChart = CssStylesChart.CssDivChart
-    __map, __alt_map = ["CssDivChart"], []
-
   def __init__(self, report, width, height, title, options, htmlCode, filters, profile):
     digits = 0
     if 'digits' in options:
@@ -99,6 +95,15 @@ class Chart(Html.Html):
   @property
   def chart(self):
     raise Exception("Chart object should be defined in the configuration")
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = CssGrpClsCharts.CssClassCharts(self)
+    return self.pyStyle
 
   def filter(self, jsId, colName, allSelected=True, filterGrp=None, operation="=", itemType="string"):
     """

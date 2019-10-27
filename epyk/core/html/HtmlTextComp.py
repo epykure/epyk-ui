@@ -7,11 +7,20 @@ import json
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.groups import CssGrpClsText
+
+from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.styles import CssStylesText
+from epyk.core.css.styles import CssStylesChart
+from epyk.core.css.styles import CssStylesHref
+from epyk.core.css.styles import CssStylesButton
+
 
 class UpDown(Html.Html):
   name, category, callFnc = 'Up and Down', 'Texts', 'updown'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  __pyStyle = ['CssDivNoBorder']
 
   def __init__(self, report, rec, size, color, label, options, helper, profile):
     if rec is None:
@@ -26,6 +35,15 @@ class UpDown(Html.Html):
 
   @property
   def val(self): return '$("#%s span").html()' % self.jqId
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
+    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''htmlObj.empty();
@@ -55,12 +73,11 @@ class UpDown(Html.Html):
              'relMove': self._report.js.number("relMove", isPyData=False).toFormattedNumber(decPlaces=2)})
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
 
 class TextBubble(Html.Html):
   name, category, callFnc = 'Bubble text', 'Rich', 'textbubble'
-  __pyStyle = ['CssDivChart', 'CssDivBubble']
 
   def __init__(self, report, recordSet, width, height, color, size, background_color, helper, profile):
     super(TextBubble, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
@@ -70,6 +87,15 @@ class TextBubble(Html.Html):
     self.background_color = self.getColor('success', 1) if background_color is None else background_color
     self.size = size
     self.css({'text-align': 'center', 'background-color': self.getColor('greys', 0)})
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = CssGrpClsText.CssClassTextBubble(self)
+    return self.pyStyle
 
   @property
   def val(self):
@@ -92,7 +118,7 @@ class TextBubble(Html.Html):
       <div %(strAttr)s>
         <div %(clsTag)s style="vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
         <div class="py_csstitle"><a style="text-decoration:none"></a></div>%(helper)s
-      </div>''' % {"strAttr": self.strAttr(pyClassNames=['CssDivChart']), "clsTag": self._report.style.getClsTag(['CssDivBubble']),
+      </div>''' % {"strAttr": self.strAttr(pyClassNames=self.defined), "clsTag": self._report.style.getClsTag(self.defined.clsAltMap),
                    'bgcolor': self.background_color, 'size': "%s%s" % (self.size[0], self.size[1]), 'color': self.color,
                    'helper': self.helper}
 
@@ -100,7 +126,6 @@ class TextBubble(Html.Html):
 class BlockText(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Block text', 'Rich', 'blocktext'
-  __pyStyle = ['CssTitle', 'CssHrefNoDecoration', 'CssButtonBasic', 'CssText', 'CsssDivBoxMargin']
 
   def __init__(self, report, recordSet, color, size, border, width, height, helper, profile):
     super(BlockText, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
@@ -112,6 +137,15 @@ class BlockText(Html.Html):
     self.css({'color': self.color, 'padding': '5px'})
     if border != 'auto':
       self.css('border', str(border))
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = CssGrpClsText.CssClassTextBlock(self)
+    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
@@ -126,8 +160,7 @@ class BlockText(Html.Html):
       ''' % {"markUp": self._report.js.fncs.markUp})
 
   def __str__(self):
-    pyStyles = [style for style in self.pyStyle if not style in ['CssTitle', 'CssText', 'CssHrefNoDecoration', 'CssButtonBasic']]
-    items = ['<div %s>' % self.strAttr(pyClassNames=pyStyles)]
+    items = ['<div %s>' % self.strAttr(pyClassNames=self.defined)]
     items.append('<div id="%s_title" %s style="font-size:%spx;text-align:left"><a class="anchorjs-link"></a></div>' % (self.htmlId, self._report.style.getClsTag(['CssTitle']), self.size+3))
     items.append('<div id="%s_p" %s style="color:%s:font-size:%spx;width:100%%;text-justify:inter-word;text-align:justify;"></div>' % (self.htmlId, self._report.style.getClsTag(['CssText']), self.color, self.size))
     if self.vals.get('button') is not None:
@@ -137,7 +170,6 @@ class BlockText(Html.Html):
 
 
 class TextWithBorder(Html.Html):
-  __pyStyle = ['CssTextWithBorder']
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Text with Border and Icon', 'Rich', 'textborder'
 
@@ -153,6 +185,15 @@ class TextWithBorder(Html.Html):
       self.vals['color'] = self.getColor('colors', 9)
     self.css({"border-color": self.vals['colorTitle'], 'margin-top': '20px', 'font-size': '%s%s' % (size[0], size[1])})
 
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
+    return self.pyStyle
+
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
       htmlObj.find('legend').html(data.title); htmlObj.find('span').html(data.value)''')
@@ -161,7 +202,7 @@ class TextWithBorder(Html.Html):
   def jqId(self): return "$('#%s fieldset')" % self.htmlId
 
   def __str__(self):
-    item = ['<div %s>' % self.strAttr(pyClassNames=['CssTextWithBorder'])]
+    item = ['<div %s>' % self.strAttr(pyClassNames=self.defined)]
     item.append('<fieldset style="color:%s">' % self.vals['color'])
     if 'icon' in self.vals:
       self.vals['align'] = self.align

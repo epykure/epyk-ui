@@ -8,23 +8,15 @@ import json
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesButton
-from epyk.core.css.styles import CssStylesLabel
-from epyk.core.css.styles import CssStylesDiv
-from epyk.core.css.styles import CssStylesText
+from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.groups import CssGrpClsButton
 
 
 class Button(Html.Html):
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'bootstrap', 'jquery']
   name, category, callFnc = 'Button', 'buttons', 'button'
 
-  class CssClassDef(object):
-    CssButtonBasic = CssStylesButton.CssButtonBasic
-    __map, __alt_map = ["CssButtonBasic"], []
-
   def __init__(self, report, text, icon, size, width, height, htmlCode, tooltip, profile, options):
-    if options is None:
-      options = {}
     super(Button, self).__init__(report, text, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1], profile=profile)
     # Add the component icon
@@ -66,7 +58,7 @@ class Button(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpClsButton.CssClassButton(self)
     return self.pyStyle
 
   def disable(self, background_color=None, color=None):
@@ -177,7 +169,7 @@ class Button(Html.Html):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, 'htmlObj.empty(); htmlObj.append(data)', 'Javascript Object builder')
 
   def __str__(self):
-    return '<button data-count=0 %s></button>' % (self.strAttr(pyClassNames=self.pyStyle))
+    return '<button data-count=0 %s></button>' % (self.strAttr(pyClassNames=self.defined))
 
 
   @staticmethod
@@ -205,15 +197,6 @@ class Button(Html.Html):
 class Checkbox(Html.Html):
   name, category, callFnc = 'Check Box', 'Buttons', 'checkbox'
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'bootstrap', 'jquery']
-
-  class CssClassDef(object):
-    CssButtonBasic = CssStylesLabel.CssLabelContainer
-    CssLabelContainerDisabled = CssStylesLabel.CssLabelContainerDisabled
-    CssLabelCheckMarkHover = CssStylesLabel.CssLabelCheckMarkHover
-    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-    CssCheckMark = CssStylesText.CssCheckMark
-    __map, __alt_map = ['CssButtonBasic', 'CssLabelCheckMarkHover', 'CssDivNoBorder', 'CssCheckMark',
-                        'CssLabelContainerDisabled'], []
 
   def __init__(self, rptObj, records, title, color, width, height, align, htmlCode, filters, tooltip, icon, options, profile):
     if rptObj.http.get(htmlCode) is not None:
@@ -254,7 +237,7 @@ class Checkbox(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpClsButton.CssClassButtonCheckBox(self)
     return self.pyStyle
 
   def jsDisable(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None, reset=True):
@@ -433,10 +416,6 @@ class Checkbox(Html.Html):
 class CheckButton(Html.Html):
   name, category, callFnc = 'Check Button', 'Button', 'check'
 
-  class CssClassDef(object):
-    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-    __map, __alt_map = ["CssDivNoBorder"], []
-
   def __init__(self, report, flag, tooltip, width, height, icon, label, htmlCode, options, profile):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                           heightUnit=height[1], profile=profile)
@@ -468,7 +447,7 @@ class CheckButton(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
     return self.pyStyle
 
   def onDocumentLoadFnc(self):
@@ -518,7 +497,7 @@ class CheckButton(Html.Html):
     return '''
       <div %s>
         <div name="check_box" style="display:inline-block;vertical-align:bottom;margin-right:5px;float:left;width:16px;height:16px"></div>
-      </div>''' % (self.strAttr(pyClassNames=self.pyStyle))
+      </div>''' % (self.strAttr(pyClassNames=self.defined))
 
 
 class IconEdit(Html.Html):
@@ -557,7 +536,7 @@ class IconEdit(Html.Html):
     self.icon.addAttr("onmouseout", "this.style.color='%s'" % color_out)
     return self
 
-  def __str__(self): return "<div %s></div>" % (self.strAttr(pyClassNames=self.pyStyle))
+  def __str__(self): return "<div %s></div>" % (self.strAttr(pyClassNames=self.defined))
 
 
 # class IconThumbtack(IconEdit):

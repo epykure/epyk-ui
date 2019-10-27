@@ -8,18 +8,13 @@ import time
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesDiv
-from epyk.core.css.styles import CssStylesDates
+from epyk.core.css.groups import CssGrpClsInput
+from epyk.core.css.groups import CssGrpCls
 
 
 class DatePicker(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Date Picker', 'Dates', 'date'
-
-  class CssClassDef(object):
-    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-    CssDatePicker = CssStylesDates.CssDatePicker
-    __map, __alt_map = ['CssDivNoBorder', 'CssDatePicker'], []
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     dfltOptions = {'dateFormat': 'yy-mm-dd'}
@@ -80,7 +75,7 @@ class DatePicker(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpClsInput.CssClassDatePicker(self)
     return self.pyStyle
 
   def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
@@ -96,10 +91,6 @@ class DatePicker(Html.Html):
 class TimePicker(Html.Html):
   __reqCss, __reqJs = ['timepicker'], ['timepicker']
   name, category, callFnc = 'Time Picker', 'Dates', 'date'
-
-  class CssClassDef(object):
-    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-    __map, __alt_map = ['CssDivNoBorder'], []
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
@@ -135,7 +126,7 @@ class TimePicker(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpCls.CssGrpClassBaseCursor(self)
     return self.pyStyle
 
   def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
@@ -181,7 +172,7 @@ class TimePicker(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.strAttr(pyClassNames=['CssDivNoBorder', 'CssDivCursor']), 'helper': self.helper}
+    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.strAttr(pyClassNames=self.defined), 'helper': self.helper}
 
 
 class CountDownDate(Html.Html):

@@ -16,7 +16,7 @@ from epyk.core.js.packages import JsNvd3
 from epyk.core.js.packages import JsD3
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesChart
+from epyk.core.css.groups import CssGrpClsCharts
 
 
 # Define a set of common standard properties cross charting libraries.
@@ -55,14 +55,6 @@ CHART_ATTRS = {
 class Chart(Html.Html):
   name, category, callFnc = 'NVD3', 'Charts', 'nvd3.chart'
 
-  class CssClassDef(Html.Html.CssClassDef):
-    CssDivChart = CssStylesChart.CssDivChart
-    CssNVD3HideGrid = CssStylesChart.CssNVD3HideGrid
-    CssNVD3Axis = CssStylesChart.CssNVD3Axis
-    CssNVD3AxisLabel = CssStylesChart.CssNVD3AxisLabel
-    CssNVD3AxisLegend = CssStylesChart.CssNVD3AxisLegend
-    __map, __alt_map = ["CssDivChart", "CssNVD3HideGrid", 'CssNVD3Axis', 'CssNVD3AxisLabel', 'CssNVD3AxisLegend'], []
-
   def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
     super(Chart, self).__init__(report, [], code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
@@ -92,7 +84,7 @@ class Chart(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpClsCharts.CssClassChartsNvd3(self)
     return self.pyStyle
 
   def onDocumentLoadVar(self): pass # Data should be registered externally

@@ -11,7 +11,7 @@ This is a simple and quick hook to apply override and make the environment very 
 
 class DefinedTagStyles(object):
   def __init__(self, defined_styles):
-    self.defined = defined_styles
+    self._defined = defined_styles
     self._style = None
 
   def wrap_style(self, cls_name):
@@ -23,7 +23,7 @@ class DefinedTagStyles(object):
 
     :return: The CSS Style group object
     """
-    self.defined.style.cssCls(cls_name)
+    self._defined.style.cssCls(cls_name)
     self._style = cls_name
     return self
 
@@ -33,7 +33,7 @@ class DefinedTagStyles(object):
 
     :return: The CSS Style group object
     """
-    self.defined.style.cssDelCls(self._style)
+    self._defined.style.cssDelCls(self._style)
     return self
 
 

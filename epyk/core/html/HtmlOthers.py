@@ -6,10 +6,17 @@ import json
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.styles import CssStylesHr
+from epyk.core.css.styles import CssStylesDiv
+
 
 class Hr(Html.Html):
   name, category, callFnc = 'Line delimiter', 'Layouts', 'hr'
-  __pyStyle = ['CssHr']
+
+  class CssClassDef(object):
+    CssHr = CssStylesHr.CssHr
+    __map, __alt_map = ['CssHr'], []
 
   def __init__(self, report, color, count, size, background_color, height, align, profile):
     super(Hr, self).__init__(report, count, height=height[0], heightUnit=height[1], profile=profile)
@@ -19,9 +26,18 @@ class Hr(Html.Html):
       self.css('margin', "auto")
     self.size, self.background_color = size, background_color if background_color is not None else self._report.getColor('greys', 2)
 
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
+
   def __str__(self):
     hr = '<hr style="height:%spx;background-color:%s">' % ("%s%s" % (self.size[0], self.size[1]), self.background_color) if self.size is not None else '<hr style="background-color:%s" />' % self.backgroundColor
-    return '<div %s>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle), "".join(self.vals * [hr]))
+    return '<div %s>%s</div>' % (self.strAttr(pyClassNames=self.defined), "".join(self.vals * [hr]))
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -131,7 +147,7 @@ class Stars(Html.Html):
         else {$(this).css('color', '')}})''', 'Javascript Object builder')
 
   def __str__(self):
-    stars = ["<div %s>" % self.strAttr(pyClassNames=self.pyStyle)]
+    stars = ["<div %s>" % self.strAttr(pyClassNames=self.defined)]
     for i in range(self.best):
       stars.append('<span data-level="%s" class="fa fa-star"></span>' % (i+1))
     stars.append("%s</div>" % self.helper)
@@ -171,8 +187,21 @@ class Loading(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   inReport = False
 
+  class CssClassDef(object):
+    CssDivLoading = CssStylesDiv.CssDivLoading
+    __map, __alt_map = ['CssDivLoading'], []
+
+  @property
+  def defined(self):
+    """
+    Return the static CSS style definition of this component
+    """
+    if self.pyStyle is None:
+      self.pyStyle = self.CssClassDef()
+    return self.pyStyle
+
   def __str__(self):
     if self.vals is None:
-      return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />Loading...</div>' % (self.strAttr(withId=False, pyClassNames=self.pyStyle))
+      return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />Loading...</div>' % (self.strAttr(withId=False, pyClassNames=self.defined))
 
-    return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />%s...</div>' % (self.strAttr(withId=False, pyClassNames=self.pyStyle), self.vals)
+    return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />%s...</div>' % (self.strAttr(withId=False, pyClassNames=self.defined), self.vals)

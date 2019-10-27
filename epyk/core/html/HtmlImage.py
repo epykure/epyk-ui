@@ -7,16 +7,11 @@ import re
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesImg
-from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.groups import CssGrpClsImage
 
 
 class Image(Html.Html):
   name, category, callFnc = 'Picture', 'Image', 'img'
-
-  class CssClassDef(object):
-    CssImgBasic = CssStylesImg.CssImgBasic
-    __map, __alt_map = ['CssImgBasic'], []
 
   def __init__(self, report, image, path, align, htmlCode, width, height, serverSettings, profile):
     if path is None:
@@ -34,7 +29,7 @@ class Image(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpClsImage.CssClassImage(self)
     return self.pyStyle
 
   def onDocumentLoadFnc(self):
@@ -72,16 +67,6 @@ class AnimatedImage(Html.Html):
   name, category, callFnc = 'Animated Picture', 'Images', 'animatedimg'
   __reqJs, cssCls = ['jquery'], ['view']
 
-  class CssClassDef(object):
-    CssImg = CssStylesImg.CssImg
-    CssImgAInfo = CssStylesImg.CssImgAInfo
-    CssImgMask = CssStylesImg.CssImgMask
-    CssImgH2 = CssStylesImg.CssImgH2
-    CssImgParagraph = CssStylesImg.CssImgParagraph
-    CssContent = CssStylesImg.CssContent
-    CssView = CssStylesImg.CssView
-    __map, __alt_map = ['CssImg', 'CssImgAInfo', 'CssImgMask', 'CssImgH2', 'CssImgParagraph', 'CssContent', 'CssView'], []
-
   def __init__(self, report, image, text, title, url, path, width, height, serverSettings, profile):
     if path is None:
       path = "/img"
@@ -95,7 +80,7 @@ class AnimatedImage(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpClsImage.CssClassImageAnimated(self)
     return self.pyStyle
 
   def onDocumentLoadFnc(self):
@@ -115,14 +100,6 @@ class AnimatedImage(Html.Html):
 class ImgCarrousel(Html.Html):
   name, category, callFnc = 'Picture Carrousel', 'Images', 'carrousel'
 
-  class CssClassDef(object):
-    CssImg = CssStylesImg.CssImgBasic
-    CssCarrouselLi = CssStylesImg.CssCarrouselLi
-    CssCarrouselH2 = CssStylesImg.CssCarrouselH2
-    CssDivLabelPoint = CssStylesDiv.CssDivLabelPoint
-    CssDivBoxCenter = CssStylesDiv.CssDivBoxCenter
-    __map, __alt_map = ['CssImgBasic', 'CssCarrouselLi', 'CssCarrouselH2'], ['CssDivLabelPoint', 'CssDivBoxCenter']
-
   def __init__(self, report, images, path, width, height, serverSettings, profile):
     if path is None:
       path = "/img"
@@ -139,7 +116,7 @@ class ImgCarrousel(Html.Html):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
+      self.pyStyle = CssGrpClsImage.CssClassImageCarrousel(self)
     return self.pyStyle
 
   def onDocumentLoadFnc(self):
