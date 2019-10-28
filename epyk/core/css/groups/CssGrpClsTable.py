@@ -1,5 +1,5 @@
 """
-Group CSS class for all the Charts components
+Group CSS class for all the Table components
 """
 
 from epyk.core.css.groups import CssGrpCls
