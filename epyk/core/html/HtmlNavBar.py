@@ -10,6 +10,9 @@ import logging
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpCls
+
 
 class HtmlNavBar(Html.Html):
   __reqCss, __reqJs = ['bootstrap', 'font-awesome'], ['bootstrap', 'font-awesome']
@@ -207,7 +210,7 @@ class HtmlNavBar(Html.Html):
 
 class HtmlParamsBar(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
-  __pyStyle = ['CssDivNoBorder']
+  _grpCls = CssGrpCls.CssGrpClassBase
   allowedComponents = ['date', 'input', 'radio', 'button', 'select', 'title', 'slider', 'switch',
                        'selectmulti', 'delimiter', 'check', 'checkbox', 'inputRange', 'slider', 'inputInt']
   name, category = 'Parameters Bar', 'System'
@@ -313,9 +316,9 @@ class HtmlParamsBar(Html.Html):
 
 class HtmlSideBar(Html.Html):
   name, category, callFnc = 'Side bar', 'Others', 'sidebar'
-  __pyStyle = ['CssSideBarFixed']
   __reqCss, __reqJs = ['bootstrap', 'font-awesome', 'jquery-scrollbar'], ['bootstrap', 'font-awesome', 'jquery-scrollbar']
   onMouseOverColor = 'black'
+  _grpCls = CssGrpCls.CssClassSideBarFixed
 
   def __init__(self, report, links, color, size, servers):
     super(HtmlSideBar, self).__init__(report, links)
@@ -434,7 +437,7 @@ class HtmlSideBar(Html.Html):
           </div>
 
         </div>
-      </div>''' % {"strAttr": self.strAttr(pyClassNames=['CssSideBarFixed']),
+      </div>''' % {"strAttr": self.strAttr(pyClassNames=self.defined),
                    'report_name': self._report.run.report_name, 'urlReport': "",
                    'cssDef': self._report.style.cssName(styleBarBulble),
                    'cssSideBarMenu': "",

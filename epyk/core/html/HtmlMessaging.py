@@ -7,12 +7,14 @@ This can definition be configured but by default it is using the ones of the ser
 """
 
 import json
+import datetime
 
 from epyk.core.html import Html
 
-import datetime
-from epyk.core.js.Imports import requires
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpClsText
 
+from epyk.core.js.Imports import requires
 sqlalchemy = requires("sqlalchemy", reason='Missing Package', install='sqlalchemy', source_script=__file__)
 
 
@@ -61,11 +63,10 @@ def system_user_comments():
     sqlalchemy.Column('lst_mod_dt', sqlalchemy.DateTime, default=datetime.datetime.utcnow(), nullable=True)]
 
 
-
 class Comments(Html.Html):
   name, category, callFnc = 'Comment', 'Text', 'comments'
-  __pyStyle = ['CssCommHeader', 'CssCommInput']
   __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery-scrollbar']
+  _grpCls = CssGrpClsText.CssClassComment
 
   def __init__(self, report, htmlCode, recordset, title, pmts, db_service, width, height, httpCodes, readonly, profile):
     if httpCodes is None:
@@ -196,7 +197,7 @@ class Comments(Html.Html):
           <div id="%(htmlId)s_comms"></div>
         </div>
       </div>
-      ''' % {'attr': self.strAttr(pyClassNames=['CssCommHeader', 'CssCommInput']), 'htmlId': self.htmlId, 'height': self._height,
+      ''' % {'attr': self.strAttr(pyClassNames=self.defined), 'htmlId': self.htmlId, 'height': self._height,
              'inputTag': inputTag}
 
   # -----------------------------------------------------------------------------------------
@@ -209,8 +210,8 @@ class Comments(Html.Html):
 
 class Chat(Html.Html):
   name, category, callFnc = 'Chat', 'Messaging', 'chat'
-  __pyStyle = ['CssCommHeader', 'CssCommInput']
   __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery-scrollbar']
+  _grpCls = CssGrpClsText.CssClassComment
 
   def __init__(self, report, htmlCode, title, pmts, dbService, width, height, httpCodes, readonly, profile, chatOptions):
     self.readonly, self._height = readonly, "%s%s" % (height[0], height[1])
@@ -279,7 +280,7 @@ class Chat(Html.Html):
           <div id="%(htmlId)s_comms"></div>
         </div>
       </div>
-      ''' % {'attr': self.strAttr(pyClassNames=['CssCommHeader', 'CssCommInput']), 'htmlId': self.htmlId, 'height': self._height,
+      ''' % {'attr': self.strAttr(pyClassNames=self.defined), 'htmlId': self.htmlId, 'height': self._height,
              'inputTag': inputTag}
 
   # -----------------------------------------------------------------------------------------

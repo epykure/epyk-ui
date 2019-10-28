@@ -163,7 +163,7 @@ class CssDivPagination(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
     style.update({'color': self.getColor('greys', 9)})
-    eventsStyles['hover'].update( {"background-color": self.getColor('greys', 3)} )
+    eventsStyles['hover'].update({"background-color": self.getColor('greys', 3)} )
 
 
 class CssDivEditor(CssStyle.CssCls):
@@ -171,7 +171,7 @@ class CssDivEditor(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
     style.update({'border': "1px solid %s" % self.getColor('greys', 3), 'background-color': self.getColor('greys', 2)})
-    eventsStyles['focus'].update( {'background-color': self.getColor('greys', 0), 'border': "2px solid %s" % self.getColor('colors', 5)})
+    eventsStyles['focus'].update({'background-color': self.getColor('greys', 0), 'border': "2px solid %s" % self.getColor('colors', 5)})
 
 
 class CssDivRow(CssStyle.CssCls):

@@ -7,10 +7,14 @@ import json
 from epyk.core.js import JsUtils
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.groups import CssGrpClsText
+
 
 class Editor(Html.Html):
   name, category, callFnc = 'Code Editor', 'Text', 'editor'
-  __pyStyle = ['CssDivEditor']
+  _grpCls = CssGrpClsText.CssClassEditor
   __reqCss, __reqJs = ['codemirror', 'font-awesome'], ['codemirror', 'font-awesome']
   cssTitle = "CssTitle4"
 
@@ -173,7 +177,7 @@ class Editor(Html.Html):
         </span>
       </div>
       <textarea %(attr)s>%(vals)s</textarea>
-    ''' % {'attr': self.strAttr(pyClassNames=self.__pyStyle), "vals": self.vals, 'htmlId': self.htmlId,
+    ''' % {'attr': self.strAttr(pyClassNames=self.defined), "vals": self.vals, 'htmlId': self.htmlId,
            "cssStyle": self._report.style.cssName("CssSmallIcon"),
            'strTime': self.strTime, 'events': "".join(events), "title": self.title, "title4": title4}
 
@@ -280,7 +284,7 @@ class Console(Html.Html):
 
 class Tags(Html.Html):
   name, category, callFnc = 'Tags', None, 'tags'
-  __pyStyle = ['CssDivNoBorder']
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, vals, title, icon, size, width, height, htmlCode, profile):
     super(Tags, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
@@ -309,5 +313,5 @@ class Tags(Html.Html):
         <div style='margin:0;display:inline-block;vertical-align:middle;width:90px;float:left;padding:2px 5px 0 5px;height:30px;border:1px solid %(greyColor)s'>
           <i class="%(icon)s" style="margin-right:10px"></i>%(title)s</div>
         <div id='%(htmlId)s_tags' style='padding:2px 5px 0 5px;border:1px solid %(greyColor)s;height:30px'></div>
-      </div>''' % {"attr": self.strAttr(pyClassNames=self.pyStyle), "title": self.title, 'icon': self.icon,
+      </div>''' % {"attr": self.strAttr(pyClassNames=self.defined), "title": self.title, 'icon': self.icon,
                    'htmlId': self.htmlId, 'greyColor': self.getColor("greys", 2)}

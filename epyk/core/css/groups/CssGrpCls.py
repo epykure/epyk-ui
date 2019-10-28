@@ -4,6 +4,7 @@ Group CSS class for all the Layouts components
 
 # The list of CSS classes
 from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.styles import CssStylesDivMenuBars
 from epyk.core.css.styles import CssStylesHr
 
 
@@ -66,3 +67,8 @@ class CssClassHr(CssGrpClass):
 class CssClassLoading(CssGrpClass):
   CssDivLoading = CssStylesDiv.CssDivLoading
   __map, __alt_map = ['CssDivLoading'], []
+
+
+class CssClassSideBarFixed(CssGrpClass):
+  CssSideBarFixed = CssStylesDivMenuBars.CssSideBarFixed
+  __map, __alt_map = ['CssSideBarFixed'], []

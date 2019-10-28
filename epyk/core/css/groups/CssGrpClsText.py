@@ -6,6 +6,7 @@ from epyk.core.css.groups import CssGrpCls
 
 # The list of CSS classes
 from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.styles import CssStylesDivComms
 from epyk.core.css.styles import CssStylesHref
 from epyk.core.css.styles import CssStylesChart
 from epyk.core.css.styles import CssStylesText
@@ -49,3 +50,14 @@ class CssClassTextBlock(CssGrpCls.CssGrpClass):
   CssHrefNoDecoration = CssStylesHref.CssHrefNoDecoration
   CssButtonBasic = CssStylesButton.CssButtonBasic
   __map, __alt_map = ['CsssDivBoxMargin'], ['CssTitle', 'CssHrefNoDecoration', 'CssButtonBasic', 'CssText']
+
+
+class CssClassComment(CssGrpCls.CssGrpClass):
+  CssCommHeader = CssStylesDivComms.CssCommHeader
+  CssCommInput = CssStylesDivComms.CssCommInput
+  __map, __alt_map = ['CssCommHeader', 'CssCommInput'], []
+
+
+class CssClassEditor(CssGrpCls.CssGrpClass):
+  CssDivEditor = CssStylesDiv.CssDivEditor
+  __map, __alt_map = ['CssDivEditor'], []
