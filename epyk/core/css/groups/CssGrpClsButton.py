@@ -1,8 +1,10 @@
 """
-
+Group CSS class for all the buttons components
 """
 
 from epyk.core.css.groups import CssGrpCls
+
+# The list of CSS classes
 from epyk.core.css.styles import CssStylesButton
 from epyk.core.css.styles import CssStylesLabel
 from epyk.core.css.styles import CssStylesDiv

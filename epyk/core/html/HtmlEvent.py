@@ -12,19 +12,13 @@ from epyk.core.html import Html
 from epyk.core.js.Imports import requires
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesDiv
-from epyk.core.css.styles import CssStylesTable
-from epyk.core.css.styles import CssStylesText
-from epyk.core.css.styles import CssStylesIcon
+from epyk.core.css.groups import CssGrpCls
 
 
 class ProgressBar(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
   name, category, callFnc = 'Progress Bar', 'Sliders', 'progressbar'
-
-  class CssClassDef(object):
-    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-    __map, __alt_map = ['CssDivNoBorder'], []
+  _grpCls = CssGrpCls.CssGrpClassBaseCursor
 
   def __init__(self, report, number, width, height, attrs, helper, profile):
     super(ProgressBar, self).__init__(report, number, width=width[0], widthUnit=width[1], height=height[0],
@@ -49,15 +43,6 @@ class ProgressBar(Html.Html):
     :returns: Javascript string with the function to get the current value of the component
     """
     return '%s.progressbar("value")' % self.jqId
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
 
   def addAttr(self, key, val):
     """

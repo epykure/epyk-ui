@@ -12,6 +12,7 @@ from epyk.core.css.groups import CssGrpClsImage
 
 class Image(Html.Html):
   name, category, callFnc = 'Picture', 'Image', 'img'
+  _grpCls = CssGrpClsImage.CssClassImage
 
   def __init__(self, report, image, path, align, htmlCode, width, height, serverSettings, profile):
     if path is None:
@@ -22,15 +23,6 @@ class Image(Html.Html):
     self._jsStyles = {}
     if align is not None:
       self.css({"text-align": align})
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpClsImage.CssClassImage(self)
-    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
@@ -66,6 +58,7 @@ class Image(Html.Html):
 class AnimatedImage(Html.Html):
   name, category, callFnc = 'Animated Picture', 'Images', 'animatedimg'
   __reqJs, cssCls = ['jquery'], ['view']
+  _grpCls = CssGrpClsImage.CssClassImageAnimated
 
   def __init__(self, report, image, text, title, url, path, width, height, serverSettings, profile):
     if path is None:
@@ -73,15 +66,6 @@ class AnimatedImage(Html.Html):
     super(AnimatedImage, self).__init__(report, {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
                                         width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
     self.width = width[0]
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpClsImage.CssClassImageAnimated(self)
-    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' 
@@ -99,6 +83,7 @@ class AnimatedImage(Html.Html):
 
 class ImgCarrousel(Html.Html):
   name, category, callFnc = 'Picture Carrousel', 'Images', 'carrousel'
+  _grpCls = CssGrpClsImage.CssClassImageCarrousel
 
   def __init__(self, report, images, path, width, height, serverSettings, profile):
     if path is None:
@@ -109,15 +94,6 @@ class ImgCarrousel(Html.Html):
     super(ImgCarrousel, self).__init__(report, images, width=width[0], widthUnit=width[1], height=height[0],
                                        heightUnit=height[1], profile=profile)
     self.css({'padding-top': '20px', 'display': 'block', 'padding': 0, 'margin': 0})
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpClsImage.CssClassImageCarrousel(self)
-    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''

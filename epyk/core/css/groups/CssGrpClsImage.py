@@ -1,8 +1,10 @@
 """
-
+Group CSS class for all the Image components
 """
 
 from epyk.core.css.groups import CssGrpCls
+
+# The list of CSS classes
 from epyk.core.css.styles import CssStylesImg
 from epyk.core.css.styles import CssStylesDiv
 

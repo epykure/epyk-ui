@@ -37,6 +37,7 @@ class Row(object):
 
 class Form(Html.Html):
   name, category, callFnc = 'Generic Form', 'Forms', 'form'
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, action, method, helper):
     super(Form, self).__init__(report, None)
@@ -44,15 +45,6 @@ class Form(Html.Html):
     self.css({"padding": '5px'})
     self.attr.update({"action": action, "method": method})
     self.add_helper(helper)
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
-    return self.pyStyle
 
   def row(self, i=None):
     """

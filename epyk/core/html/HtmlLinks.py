@@ -17,6 +17,7 @@ from epyk.core.css.groups import CssGrpClsText
 
 class ExternalLink(Html.Html):
   name, category, callFnc = 'External link', 'Links', 'externallink'
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, text, url, icon, helper, height, decoration, options, profile):
     super(ExternalLink, self).__init__(report, {"text": text, "url": url}, height=height[0], heightUnit=height[1], profile=profile)
@@ -28,15 +29,6 @@ class ExternalLink(Html.Html):
     if 'target' in options:
       self.addAttr("target", options['target'])
     self.decoration, self.options, self.__url = decoration, options, {}
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
-    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' 
@@ -94,21 +86,13 @@ class ExternalLink(Html.Html):
 
 class DataLink(Html.Html):
   name, category, callFnc = 'Data link', 'Links', 'linkdata'
+  _grpCls = CssGrpClsText.CssClassHref
 
   def __init__(self, report, recordSet, value, width, height, format, profile):
     super(DataLink, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
                                    heightUnit=height[1], profile=profile)
     self.format = format
     self.click(value)
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpClsText.CssClassHref(self)
-    return self.pyStyle
 
   @property
   def jsQueryData(self): return "{}"
@@ -131,6 +115,7 @@ class DataLink(Html.Html):
 class Bridge(Html.Html):
   reqCss, reqJs = [], ['jquery']
   name, category, callFnc = 'Node Bridge', 'Links', 'bridge'
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, text, script_name, report_name, url, jsData, context):
     super(Bridge, self).__init__(report, text)
@@ -157,15 +142,6 @@ class Bridge(Html.Html):
           var pmt = []; for (k in pmts){pmt.push(k +"="+ pmts[k])};
           if (pmt.length > 0){var url = res['url'] +"?"+ pmt.join("&"); window.open(url, '_blank')}
           else{window.open(res['url'], '_blank')}}}) ''' % self._report._urlsApp['epyk-admin'])
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
-    return self.pyStyle
 
   def __str__(self):
     if self._report.user != "anonymous":

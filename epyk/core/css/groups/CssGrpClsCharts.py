@@ -1,8 +1,10 @@
 """
-
+Group CSS class for all the Charts components
 """
 
 from epyk.core.css.groups import CssGrpCls
+
+# The list of CSS classes
 from epyk.core.css.styles import CssStylesChart
 
 
@@ -18,3 +20,4 @@ class CssClassChartsNvd3(CssGrpCls.CssGrpClass):
 class CssClassCharts(CssGrpCls.CssGrpClass):
   CssDivChart = CssStylesChart.CssDivChart
   __map, __alt_map = ["CssDivChart"], []
+

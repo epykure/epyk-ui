@@ -12,6 +12,7 @@ from epyk.core.css.groups import CssGrpCls
 
 class Media(Html.Html):
   name, category, callFnc = 'Video', 'Media', 'video'
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, video, path, width, height, htmlCode, profile):
     if path is None:
@@ -29,15 +30,6 @@ class Media(Html.Html):
                                 height=height[0], heightUnit=height[1], profile=profile)
 
   @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
-    return self.pyStyle
-
-  @property
   def jqId(self): return "$('#%s video')" % self.htmlId
 
   def onDocumentLoadFnc(self):
@@ -51,6 +43,7 @@ class Media(Html.Html):
 
 class Audio(Html.Html):
   name, category, callFnc = 'Video', 'Media', 'audio'
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, audio, path, autoplay, width, height, htmlCode, profile):
     if path is None:
@@ -68,15 +61,6 @@ class Audio(Html.Html):
   @property
   def jqId(self): return "$('#%s audio')" % self.htmlId
 
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
-    return self.pyStyle
-
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''
       htmlObj.empty(); htmlObj.append("<source src='" + data.path + "/" + data.audio + "' type='audio/mpeg'>")''', 'Javascript Object builder')
@@ -90,19 +74,11 @@ class Audio(Html.Html):
 
 class Youtube(Html.Html):
   name, category, callFnc = 'Youtube Video', 'Media', 'youtube'
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, link, width, height, htmlCode, profile):
     super(Youtube, self).__init__(report, link, width=width[0], widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], code=htmlCode, profile=profile)
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
-    return self.pyStyle
 
   def __str__(self):
     return '''

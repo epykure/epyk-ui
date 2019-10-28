@@ -10,6 +10,10 @@ from epyk.core.html import Html
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js import JsUtils
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.groups import CssGrpClsText
+
 
 class Label(Html.Html):
   name, category, callFnc = 'Label', 'Text', 'label'
@@ -130,7 +134,7 @@ class Span(Html.Html):
 
 
 class Text(Html.Html):
-  __pyStyle = ['CssText']
+  _grpCls = CssGrpClsText.CssClassText
   name, category, callFnc = 'Text', 'Texts', 'text'
 
   def __init__(self, report, text, size, color, align, width, height, htmlCode, tooltip, options, helper, profile):
@@ -192,7 +196,7 @@ class Text(Html.Html):
     return str(self)
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -205,7 +209,7 @@ class Text(Html.Html):
 
 
 class Code(Html.Html):
-  __pyStyle = ['CssDivNoBorder']
+  _grpCls = CssGrpCls.CssGrpClassBase
   name, category, callFnc = 'Code', 'Text', 'code'
   editable, scriptTitle = None, ''
 
@@ -247,7 +251,7 @@ class Code(Html.Html):
             $.post("/%(url)s", {content: content.slice(4, content.length), title: '%(title)s'}, function(data){location.reload()})});   
           })''' % {'jqId': self.jqId, "url": self.editable, 'htmlId': self.htmlId, 'backGroundColor': self.getColor('colors', 5),
                    'whiteColor': self.getColor('greys', 0), 'title': self.scriptTitle})
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
 
 class Pre(Html.Html):
@@ -276,11 +280,11 @@ class Pre(Html.Html):
         htmlObj.empty(); if(jsStyles.markdown){htmlObj.html(%(markdown)s)} else{htmlObj.html(data)}''' % {"markdown": markdown})
 
   def __str__(self):
-    return '<pre %s></pre>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<pre %s></pre>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
 
 class Paragraph(Html.Html):
-  __pyStyle = ['CssText', 'CssDivNoBorder']
+  _grpCls = CssGrpClsText.CssClassTextNoBorder
   name, category, callFnc = 'Paragraph', 'Texts', 'paragraph'
 
   def __init__(self, report, text, size, color, background_color, border, width, height, htmlCode, encoding, dataSrc,
@@ -335,7 +339,7 @@ class Paragraph(Html.Html):
         var p = $("<p></p>").css(jsStyles.style[i]).html(JsMarkUp(line)); htmlObj.append(p)})''')
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -360,7 +364,7 @@ class Paragraph(Html.Html):
 
 
 class BlockQuote(Html.Html):
-  __pyStyle = ['CssDivNoBorder']
+  _grpCls = CssGrpCls.CssGrpClassBase
   name, category, callFnc = 'Block quotation', 'Texts', 'blockquote'
 
   def __init__(self, report, text, author, size, color, width, height, htmlCode, helper, profile):
@@ -387,7 +391,7 @@ class BlockQuote(Html.Html):
       <blockquote %s>
           <div style="padding:5px;border-left:4px solid %s"></div>
           <div style="text-align:right"></div>
-      </blockquote>%s''' % (self.strAttr(pyClassNames=self.pyStyle), self.getColor('colors', 9), self.helper)
+      </blockquote>%s''' % (self.strAttr(pyClassNames=self.defined), self.getColor('colors', 9), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -476,7 +480,7 @@ class Title(Html.Html):
 
       return '<div %s><img src="%s/%s" />&nbsp;<a%s class="anchorjs-link"></a>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle), path, self.picture, anchor_name, self.helper)
 
-    return '<div %s><a%s class="anchorjs-link">%s</a></div>' % (self.strAttr(pyClassNames=self.pyStyle), anchor_name, self.helper)
+    return '<div %s><a%s class="anchorjs-link">%s</a></div>' % (self.strAttr(pyClassNames=self.defined), anchor_name, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -576,7 +580,7 @@ class Numeric(Html.Html):
                         decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False))))
 
   def __str__(self):
-    return "<div %s><font></font>%s</div>" % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return "<div %s><font></font>%s</div>" % (self.strAttr(pyClassNames=self.defined), self.helper)
 
 
 class Highlights(Html.Html):
@@ -666,7 +670,7 @@ class SearchResult(Html.Html):
 
   def __str__(self):
     self._report.style.cssCls('CssDivPagination')
-    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.strAttr(pyClassNames=self.pyStyle)
+    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.strAttr(pyClassNames=self.defined)
 
 
 class Fieldset(Html.Html):
@@ -680,4 +684,4 @@ class Fieldset(Html.Html):
               'margin': '5px 0', 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
 
   def __str__(self):
-    return '<fieldset %s><legend style="font-size:inherit">%s</legend>%s</fieldset>' % (self.strAttr(pyClassNames=self.pyStyle), self.vals, self.helper)
+    return '<fieldset %s><legend style="font-size:inherit">%s</legend>%s</fieldset>' % (self.strAttr(pyClassNames=self.defined), self.vals, self.helper)

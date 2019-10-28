@@ -6,6 +6,9 @@ import datetime
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpClsInput
+
 
 class Output(Html.Html):
   name, category, callFnc = 'Output', 'Inputs', '_output'
@@ -15,8 +18,8 @@ class Output(Html.Html):
 
 
 class Input(Html.Html):
-  __pyStyle = ['CssDivNoBorder', 'CssInput']
   name, category, callFnc = 'Input', 'Inputs', 'input'
+  _grpCls = CssGrpClsInput.CssClassInput
 
   def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(Input, self).__init__(report, text, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
@@ -55,8 +58,8 @@ class Input(Html.Html):
 
 
 class InputTime(Input):
-  __pyStyle = ['CssDivNoBorder', 'CssInput', 'CssDatesTimePicker']
   name, callFnc = 'Input Time', 'input'
+  _grpCls = CssGrpClsInput.CssClassTimePicker
 
   def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     if text is None:
@@ -81,9 +84,9 @@ class InputTime(Input):
 
 class InputDate(Input):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
-  __pyStyle = ['CssDivNoBorder', 'CssInput', 'CssDatePicker', 'CssDatePickerUI']
   name, callFnc = 'Input Time', 'input'
   cssCls = ["datepicker"]
+  _grpCls = CssGrpClsInput.CssClassDatePicker
 
   def __init__(self, report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile)
@@ -104,7 +107,7 @@ class InputDate(Input):
 
 
 class InputInteger(Input):
-  __pyStyle = ['CssDivNoBorder', 'CssInput', 'CssInputInteger']
+  _grpCls = CssGrpClsInput.CssClassInputInteger
   name, callFnc = 'Input Number', 'input'
 
   def quantity(self):
@@ -116,8 +119,8 @@ class InputInteger(Input):
 
 
 class InputRange(Input):
-  __pyStyle = ['CssDivNoBorder', 'CssInput', 'CssInputInteger', 'CssInputRange', 'CssInputRangeThumb']
   name, callFnc = 'Input Range', 'input'
+  _grpCls = CssGrpClsInput.CssClassInputRange
 
   def __init__(self, report, text, min, max, step, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options,
@@ -128,7 +131,7 @@ class InputRange(Input):
 
 class TextArea(Html.Html):
   name, category, callFnc = 'Text Area', 'Inputs', 'textArea'
-  __pyStyle = ['CssInputTextArea']
+  _grpCls = CssGrpClsInput.CssClassTextArea
 
   def __init__(self, report, text, width, rows, placeholder, background_color, htmlCode, options, profile):
     super(TextArea, self).__init__(report, text, htmlCode=htmlCode, width=width[0], widthUnit=width[1], profile=profile)
@@ -156,7 +159,7 @@ class TextArea(Html.Html):
 
 class Search(Html.Html):
   name, category, callFnc = 'Search', 'Inputs', 'search'
-  __pyStyle = ['CssSearchButton']
+  _grpCls = CssGrpClsInput.CssClassInputSearch
 
   def __init__(self, report, text, placeholder, color, size, height, htmlCode, tooltip, extensible, profile):
     self.placeholder, self.extensible = placeholder, extensible

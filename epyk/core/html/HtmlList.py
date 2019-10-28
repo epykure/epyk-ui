@@ -13,11 +13,15 @@ import json
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.groups import CssGrpClsList
+
 
 class List(Html.Html):
   cssClsLi = "list-group-item"
   name, category, callFnc = 'Simple List', 'List', 'list'
-  __pyStyle = ['CssBasicList', 'CssBasicListItems', 'CssBasicListItemsDisabled']
+  _grpCls = CssGrpClsList.CssClassList
   __reqCss, __reqJs = ['bootstrap'], ['jquery', 'bootstrap']
   dashboards = ['DashBoardList']
   cssTitle = "CssTitle4"
@@ -511,22 +515,10 @@ class List(Html.Html):
 
 
 class ListBadge(Html.Html):
-  """ Python wrapper to the bootStrap List badge HTML component
-
-  :example
-  report.listbadge( [{'label': 'windows', 'url': 'google', 'value': 12}, {'label': 'Mac', 'value': 4}])
-  report.listbadge([{"value": "132", "label": " Write markdown text in this textarea."}, {"value": "4.92", "label": " Click 'HTML Preview' button."}])
-  """
   cssCls, cssClsLi = ['list-group'], "list-group-item"
-  references = {'List W3C': 'https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp',
-                'List Bootstrap': 'https://v4-alpha.getbootstrap.com/components/list-group/'}
-  __pyStyle = ['CssDivNoBorder']
+  _grpCls = CssGrpCls.CssGrpClassBase
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
-  name, category, callFnc, docCategory = 'List Badges', 'Container', 'listbadge', 'Advanced'
-  mocks = [
-    {'label': 'Python', 'url': 'https://www.python.org/', 'value': 100, 'color': 'red'},
-    {'label': 'R', 'value': 90},
-  ]
+  name, category, callFnc = 'List Badges', 'Container', 'listbadge'
 
   def __init__(self, report, recordSet, color, size, width, height, draggable, draggableGroupId,
                draggableMax, dataSrc, profile):

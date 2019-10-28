@@ -84,6 +84,8 @@ class Html(object):
   hidden, inReport, isLoadFnc = False, True, True
   dashboards = [] # Static definition of useful dashboards to get more example of an component
 
+  _grpCls = CssGrpCls.CssGrpClass
+
   class _CssStyle(object):
     def __init__(self, htmlObj):
       self.htmlObj = htmlObj
@@ -603,7 +605,7 @@ class Html(object):
     Return the static CSS style definition of this component
     """
     if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClass(self)
+      self.pyStyle = self._grpCls(self)
     return self.pyStyle
 
   @property

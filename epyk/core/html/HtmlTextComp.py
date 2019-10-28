@@ -10,17 +10,13 @@ from epyk.core.html import Html
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsText
-
-from epyk.core.css.styles import CssStylesDiv
-from epyk.core.css.styles import CssStylesText
-from epyk.core.css.styles import CssStylesChart
-from epyk.core.css.styles import CssStylesHref
-from epyk.core.css.styles import CssStylesButton
+from epyk.core.css.groups import CssGrpClsTable
 
 
 class UpDown(Html.Html):
   name, category, callFnc = 'Up and Down', 'Texts', 'updown'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, rec, size, color, label, options, helper, profile):
     if rec is None:
@@ -35,15 +31,6 @@ class UpDown(Html.Html):
 
   @property
   def val(self): return '$("#%s span").html()' % self.jqId
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
-    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''htmlObj.empty();
@@ -78,6 +65,7 @@ class UpDown(Html.Html):
 
 class TextBubble(Html.Html):
   name, category, callFnc = 'Bubble text', 'Rich', 'textbubble'
+  _grpCls = CssGrpClsText.CssClassTextBubble
 
   def __init__(self, report, recordSet, width, height, color, size, background_color, helper, profile):
     super(TextBubble, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
@@ -87,15 +75,6 @@ class TextBubble(Html.Html):
     self.background_color = self.getColor('success', 1) if background_color is None else background_color
     self.size = size
     self.css({'text-align': 'center', 'background-color': self.getColor('greys', 0)})
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpClsText.CssClassTextBubble(self)
-    return self.pyStyle
 
   @property
   def val(self):
@@ -126,6 +105,7 @@ class TextBubble(Html.Html):
 class BlockText(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Block text', 'Rich', 'blocktext'
+  _grpCls = CssGrpClsText.CssClassTextBlock
 
   def __init__(self, report, recordSet, color, size, border, width, height, helper, profile):
     super(BlockText, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
@@ -137,15 +117,6 @@ class BlockText(Html.Html):
     self.css({'color': self.color, 'padding': '5px'})
     if border != 'auto':
       self.css('border', str(border))
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpClsText.CssClassTextBlock(self)
-    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
@@ -172,6 +143,7 @@ class BlockText(Html.Html):
 class TextWithBorder(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Text with Border and Icon', 'Rich', 'textborder'
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, recordSet, width, height, size, align, helper, profile):
     super(TextWithBorder, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
@@ -184,15 +156,6 @@ class TextWithBorder(Html.Html):
     if not 'color' in self.vals:
       self.vals['color'] = self.getColor('colors', 9)
     self.css({"border-color": self.vals['colorTitle'], 'margin-top': '20px', 'font-size': '%s%s' % (size[0], size[1])})
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClassBase(self)
-    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
@@ -217,7 +180,7 @@ class TextWithBorder(Html.Html):
 
 class Vignet(Html.Html):
   name, category, callFnc = 'Vignet', 'Rich', 'vignet'
-  __pyStyle = ['CssDivChart', 'CssText', 'CssNumberCenter']
+  _grpCls = CssGrpClsText.CssClassTextVignet
   __reqCss, __reqJs = ['font-awesome', 'jqueryui'], ['font-awesome', 'jquery']
 
   def __init__(self, report, records, width, height, size, colorTitle, options, helper, profile):
@@ -258,7 +221,7 @@ class Vignet(Html.Html):
       })""" % {"htmlId": self.htmlId, 'data': jsData})
 
   def __str__(self):
-    items = ["<div %s>" % (self.strAttr(pyClassNames=['CssDivChart']))]
+    items = ["<div %s>" % (self.strAttr(pyClassNames=self.defined))]
     tooltip = ' title="%s"' % self.tooltip if self.tooltip is not None else ' '
     if 'icon' in self.vals:
       items.append('<div style="position:relative;float:left;font-size:3em"><i class="%(icon)s"></i></div>' % self.vals)
@@ -273,7 +236,7 @@ class Vignet(Html.Html):
 
 
 class Delta(Html.Html):
-  __pyStyle = ['CssDivNoBorder']
+  _grpCls = CssGrpCls.CssGrpClassBase
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jqueryui', 'bootstrap'] # bootstrap for progressbar
   name, category, callFnc = 'Delta Figures', 'Rich', 'delta'
 
@@ -320,7 +283,7 @@ class Delta(Html.Html):
       <div id="%(htmlId)s_progress" style="height:10px;color:%(color)s"></div>
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
-      </div>''' % {"strAttr": self.strAttr(pyClassNames=self.pyStyle), "size": self.size+12, 'htmlId': self.htmlId, "color": self.vals['color'],
+      </div>''' % {"strAttr": self.strAttr(pyClassNames=self.defined), "size": self.size+12, 'htmlId': self.htmlId, "color": self.vals['color'],
                    "greyColor": self.getColor("greys", 6), "helper": self.helper}
 
   @staticmethod
@@ -350,7 +313,7 @@ class DocScript(Html.Html):
   Security checks are done in the script to ensure they are TAGS as open
   """
   docTypes = set(['documentation', 'code'])
-  __pyStyle = ['CssDivNoBorder']
+  _grpCls = CssGrpCls.CssGrpClassBase
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery']
   name, category, callFnc = 'Script Documentation', 'Text', 'doc'
 
@@ -381,7 +344,7 @@ class DocScript(Html.Html):
         <div style="color:%s;font-size:%s;font-weight:bold;">%s</div>
         <pre style="padding:5px"></pre>
         <span style="font-style:italic;width:100%%;text-align:right;display:block;margin-top:-15px">%s</span>
-      </div> ''' % (self.strAttr(pyClassNames=self.pyStyle), self.color, self.size, self.vals['title'], label)
+      </div> ''' % (self.strAttr(pyClassNames=self.defined), self.color, self.size, self.vals['title'], label)
 
 
 class Prism(Html.Html):
@@ -466,8 +429,9 @@ class Prism(Html.Html):
 
 
 class Formula(Html.Html):
-  __pyStyle, __reqJs = ['CssText'], ['mathjs']
+  __reqJs = ['mathjs']
   name, category, callFnc = 'Latex Formula', 'Texts', 'formula'
+  _grpCls = CssGrpClsText.CssClassText
 
   def __init__(self, report, text, size, width, color, helper, profile):
     super(Formula, self).__init__(report, text, width=width[0], widthUnit=width[1], profile=profile)
@@ -484,7 +448,7 @@ class Formula(Html.Html):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''htmlObj.html(data)''')
 
   def __str__(self):
-    return '<font %s></font>%s' % (self.strAttr(pyClassNames=self.__pyStyle), self.helper)
+    return '<font %s></font>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -504,7 +468,7 @@ class Formula(Html.Html):
 
 class TrafficLight(Html.Html):
   name, category, callFnc = 'Light', 'Rich', 'light'
-  __pyStyle = ['CsssDivBoxMargin']
+  _grpCls = CssGrpCls.CssGrpClassBox
 
   def __init__(self, report, color, label, height, tooltip, helper, profile):
     # Small change to allow the direct use of boolean and none to define the color
@@ -555,7 +519,7 @@ class TrafficLight(Html.Html):
       else {htmlObj.css('background-color', data)}''')
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.__pyStyle), self.helper)
+    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -576,7 +540,7 @@ class TrafficLight(Html.Html):
 
 class ContentsTable(Html.Html):
   name, category, callFnc = 'Contents Table', None, 'contents'
-  __pyStyle = ['CssDivTableContent']
+  _grpCls = CssGrpClsTable.CssClassTableContent
 
   def __init__(self, report, recordSet, width, height, profile):
     recordSet = [] if recordSet is None else recordSet
@@ -636,4 +600,4 @@ class ContentsTable(Html.Html):
       <div %(attr)s>
         <div id='contents_title_%(htmlId)s' style="text-align:center;margin-bottom:10px;font-size:16px;font-weight:bold">Contents [<a href='#' onclick='ChangeContents(this, "%(htmlId)s")' >hide</a>] </div>
         <div id='contents_vals_%(htmlId)s'>%(contents)s</div>
-      </div> ''' % {'attr': self.strAttr(pyClassNames=self.__pyStyle), 'contents': "<br />".join(entries), 'htmlId': self.htmlId}
+      </div> ''' % {'attr': self.strAttr(pyClassNames=self.defined), 'contents': "<br />".join(entries), 'htmlId': self.htmlId}

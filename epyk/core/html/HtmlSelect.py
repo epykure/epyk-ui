@@ -5,15 +5,16 @@ Module for the HTML Selects components
 import json
 
 from epyk.core.html import Html
-
 from epyk.core.js.objects import JsNodeDom
+
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpClsList
 
 
 class SelectDropDown(Html.Html):
   alias, cssCls = 'dropdown', ['btn', 'dropdown-toggle']
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
-  __pyStyle = ['CssDivNoBorder', 'CssDropDownSubMenu', 'CssDropDownMenu', 'CssDropDownAfterMenu', 'CssDropDownMenuAAfter', 'CssDropDownMenuHoverAAfter',
-               'CssDropDownSubMenuPullLeft', 'CssDropDownSubMenuPullLeftMenu']
+  _grpCls = CssGrpClsList.CssClassListDropDown
   name, category, callFnc = 'DropDown Select', 'Lists', 'dropdown'
 
   def __init__(self, report, title, recordSet, size, width, height, htmlCode, dataSrc, globalFilter, profile):
@@ -123,8 +124,7 @@ class SelectDropDown(Html.Html):
 
 class Select(Html.Html):
   __reqCss, __reqJs = ['select'], ['select', 'jquery']
-  __pyStyle = ['CssDivNoBorder', 'CssSelectButton', 'CssSelectFilterOption', 'CssSelectOption', 'CssSelectOptionHover',
-               'CssSelectOptionActive', 'CssSelectStyle']
+  _grpCls = CssGrpClsList.CssClassListSelect
   name, category, callFnc = 'Select', 'Lists', 'select'
 
   def __init__(self, report, records, htmlCode, label, width, height, filter, profile, multiple, options):

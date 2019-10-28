@@ -7,16 +7,13 @@ import json
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesList
+from epyk.core.css.groups import CssGrpClsList
 
 
 class Tree(Html.Html):
   name, category, callFnc = 'List Expandable', 'Lists', 'tree'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome', 'jquery']
-
-  class CssClassDef(object):
-    CssBasicListItemsSelected = CssStylesList.CssBasicListItemsSelected
-    __map, __alt_map = ['CssBasicListItemsSelected'], []
+  _grpCls = CssGrpClsList.CssClassListTree
 
   def __init__(self, report, recordSet, width, height, title, htmlCode, draggable, dataSrc, expand, profile):
     self.dataSrc, self.title, self.expand = None, title, expand
@@ -55,15 +52,6 @@ class Tree(Html.Html):
 
   @property
   def eventId(self): return "$('#%s li span[name=value],a')" % self.htmlId
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
 
   def builder_options(self, attrs):
     """

@@ -8,6 +8,9 @@ import zipfile
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpClsFile
+
 
 class DownloadMemoryZip(Html.Html):
   """
@@ -53,8 +56,8 @@ class DownloadMemoryZip(Html.Html):
 
 class DropFile(Html.Html):
   __reqCss, __reqJs = ['bootstrap', 'font-awesome'], ['bootstrap']
-  __pyStyle = ['CssDropFile']
   name, category, inputType, callFnc = 'Drop File Area', 'Input', "file", 'dropfile'
+  _grpCls = CssGrpClsFile.CssStylesDrop
 
   def __init__(self, report, vals, tooltip, report_name, file_type, profile):
     super(DropFile, self).__init__(report, vals, profile=profile)
@@ -105,7 +108,7 @@ class DropFile(Html.Html):
 
 class DropConfiguration(Html.Html):
   __reqCss, __reqJs = ['bootstrap', 'font-awesome'], ['bootstrap']
-  __pyStyle = ['CssDropFile']
+  _grpCls = CssGrpClsFile.CssStylesDrop
   name, category, inputType, callFnc = 'Drop Configuration Area', 'Input', "file", 'config'
 
   def __init__(self, report, vals, htmlCode, url, tablename):

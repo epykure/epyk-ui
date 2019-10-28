@@ -46,7 +46,7 @@ class Buttons(object):
     """
     size = self.context._size(size)
     return self.context.register(html.HtmlButton.Button(self.context.rptObj, text, icon, size, width, height, htmlCode=htmlCode,
-                                                        tooltip=tooltip, profile=profile, options=options))
+                                                        tooltip=tooltip, profile=profile, options=options or {}))
 
   def validate(self, text=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'), htmlCode=None,
                tooltip=None, profile=None, options=None):

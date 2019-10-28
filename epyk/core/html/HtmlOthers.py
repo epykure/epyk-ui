@@ -7,16 +7,12 @@ import json
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesHr
-from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.groups import CssGrpCls
 
 
 class Hr(Html.Html):
   name, category, callFnc = 'Line delimiter', 'Layouts', 'hr'
-
-  class CssClassDef(object):
-    CssHr = CssStylesHr.CssHr
-    __map, __alt_map = ['CssHr'], []
+  _grpCls = CssGrpCls.CssClassHr
 
   def __init__(self, report, color, count, size, background_color, height, align, profile):
     super(Hr, self).__init__(report, count, height=height[0], heightUnit=height[1], profile=profile)
@@ -25,15 +21,6 @@ class Hr(Html.Html):
     if align == "center":
       self.css('margin', "auto")
     self.size, self.background_color = size, background_color if background_color is not None else self._report.getColor('greys', 2)
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
 
   def __str__(self):
     hr = '<hr style="height:%spx;background-color:%s">' % ("%s%s" % (self.size[0], self.size[1]), self.background_color) if self.size is not None else '<hr style="background-color:%s" />' % self.backgroundColor
@@ -183,22 +170,9 @@ class Help(Html.Html):
 
 class Loading(Html.Html):
   name, category = 'Loading', 'Others'
-  __pyStyle = ['CssDivLoading']
+  _grpCls = CssGrpCls.CssClassLoading
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   inReport = False
-
-  class CssClassDef(object):
-    CssDivLoading = CssStylesDiv.CssDivLoading
-    __map, __alt_map = ['CssDivLoading'], []
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
 
   def __str__(self):
     if self.vals is None:

@@ -1,9 +1,10 @@
 """
-
+Group CSS class for all the Layouts components
 """
 
 # The list of CSS classes
 from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.styles import CssStylesHr
 
 
 class CssGrpClass(object):
@@ -41,6 +42,11 @@ class CssGrpClassBase(CssGrpClass):
   __map, __alt_map = ['CssDivNoBorder'], []
 
 
+class CssGrpClassBox(CssGrpClass):
+  CsssDivBoxMargin = CssStylesDiv.CsssDivBoxMargin
+  __map, __alt_map = ['CsssDivBoxMargin'], []
+
+
 class CssGrpClassBaseCursor(CssGrpClass):
   """
   Default style for most of the components.
@@ -50,3 +56,13 @@ class CssGrpClassBaseCursor(CssGrpClass):
   CssDivNoBorder = CssStylesDiv.CssDivNoBorder
   CssDivCursor = CssStylesDiv.CssDivCursor
   __map, __alt_map = ['CssDivNoBorder', 'CssDivCursor'], []
+
+
+class CssClassHr(CssGrpClass):
+  CssHr = CssStylesHr.CssHr
+  __map, __alt_map = ['CssHr'], []
+
+
+class CssClassLoading(CssGrpClass):
+  CssDivLoading = CssStylesDiv.CssDivLoading
+  __map, __alt_map = ['CssDivLoading'], []

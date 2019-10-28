@@ -8,10 +8,15 @@ import json
 from epyk.core.html import Html
 from epyk.core.html import HtmlSelect
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpCls
+
 
 class Panel(Html.Html):
-  __pyStyle = ['CssDivNoBorder']
   name, category, callFnc = 'Multi Panel', 'Layouts', 'panel'
+
+  # CSS Class
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, htmlObjs, width, height, helper, profile):
     super(Panel, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
@@ -71,7 +76,6 @@ class Panel(Html.Html):
 class PanelSplit(Html.Html):
   __reqJs, __reqCss = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Panel Split', 'Layouts', 'panelsplit'
-  mocks = []
 
   def __init__(self, report, width, height, leftWidth, leftObj, rightObj, resizable, helper, profile):
     super(PanelSplit, self).__init__(report, None, width=width[0], widthUnit=width[1], height=height[0],
@@ -187,9 +191,11 @@ class PanelDisplay(Html.Html):
 
 
 class Div(Html.Html):
-  __pyStyle = ['CssDivNoBorder']
   __reqCss, __reqJs = ['bootstrap'], ['jquery']
   name, category, callFnc = 'Simple Container', 'Layouts', 'div'
+
+  # CSS Class
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, htmlObj, label, color, size, width, icon, height, editable, align, padding, htmlCode, tag,
                helper, profile):
@@ -318,7 +324,6 @@ class DragDiv(Div):
 
 
 class Row(Html.Html):
-  __cssCls = []
   name, category, callFnc = 'Row', 'Layouts', 'row'
 
   def __init__(self, report, htmlObjs, width, height, data, align, valign, colsWith, closable, resizable, titles, helper, profile):
@@ -443,7 +448,7 @@ class Col(Html.Html):
 
 
 class Grid(Html.Html):
-  references, cssCls = {}, ['container-fluid']
+  cssCls = ['container-fluid']
   name, category, callFnc = 'Grid', 'Layouts', 'grid'
 
   def __init__(self, report, htmlObjs, width, height, colsDim, colsAlign, noGlutters, align, helper, profile):
@@ -814,7 +819,9 @@ class Pills(Tabs):
 class IFrame(Html.Html):
   name, category, callFnc = 'IFrame', 'Container', 'iframe'
   __reqCss = ['bootstrap']
-  __pyStyle = ['CssDivNoBorder']
+
+  # CSS Class
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, url, width, height, helper, profile):
     super(IFrame, self).__init__(report, url, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],

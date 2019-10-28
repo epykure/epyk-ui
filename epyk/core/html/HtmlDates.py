@@ -15,6 +15,7 @@ from epyk.core.css.groups import CssGrpCls
 class DatePicker(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Date Picker', 'Dates', 'date'
+  _grpCls = CssGrpClsInput.CssClassDatePicker
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     dfltOptions = {'dateFormat': 'yy-mm-dd'}
@@ -69,15 +70,6 @@ class DatePicker(Html.Html):
   def jqId(self):
     return "$('#%s input')" % self.htmlId
 
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpClsInput.CssClassDatePicker(self)
-    return self.pyStyle
-
   def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
     """
     Propagate the update event
@@ -91,6 +83,7 @@ class DatePicker(Html.Html):
 class TimePicker(Html.Html):
   __reqCss, __reqJs = ['timepicker'], ['timepicker']
   name, category, callFnc = 'Time Picker', 'Dates', 'date'
+  _grpCls = CssGrpCls.CssGrpClassBaseCursor
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
@@ -119,15 +112,6 @@ class TimePicker(Html.Html):
       return "{event_val: %(jqId)s.val(), event_code: '%(jqId)s', %(htmlCode)s: %(jqId)s.val()}" % {'jqId': self.jqId, 'htmlCode': self.htmlCode}
 
     return "{event_val: %(jqId)s.val(), event_code: '%(jqId)s'}" % {'jqId': self.jqId}
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpCls.CssGrpClassBaseCursor(self)
-    return self.pyStyle
 
   def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
     """

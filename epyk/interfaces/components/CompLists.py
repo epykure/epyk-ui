@@ -282,6 +282,25 @@ class Lists(object):
 
   def listbadge(self, recordSet=None, color=None, size=(None, 'px'), width=(100, "%"), height=(None, 'px'), draggable=False,
                 draggableGroupId=None, draggableMax=None, column=None, dataSrc=None, profile=None):
+    """
+
+    Documentation
+    https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+    https://v4-alpha.getbootstrap.com/components/list-group/
+
+    :param recordSet:
+    :param color:
+    :param size:
+    :param width:
+    :param height:
+    :param draggable:
+    :param draggableGroupId:
+    :param draggableMax:
+    :param column:
+    :param dataSrc:
+    :param profile:
+    :return:
+    """
     size = self._size(size)
     return self.context.register(html.HtmlList.ListBadge(self.context.rptObj, recordSet, color, size, width, height,
        draggable, draggableGroupId, draggableMax, dataSrc, profile))
