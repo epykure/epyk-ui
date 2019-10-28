@@ -7,16 +7,13 @@ https://omnipotent.net/jquery.sparkline/#s-docs
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesChart
+from epyk.core.css.groups import CssGrpClsCharts
 
 
 class Sparklines(Html.Html):
   __reqJs = ['jquery-sparklines']
   name, category, callFnc = 'sparkline', 'Charts', 'sparkline'
-
-  class CssClassDef(object):
-    CssSparklines = CssStylesChart.CssSparklines
-    __map, __alt_map = ['CssSparklines'], []
+  _grpCls = CssGrpClsCharts.CssClassChartsSparkline
 
   def __init__(self, report, data, chart_type, options):
     super(Sparklines, self).__init__(report, data)
@@ -43,15 +40,6 @@ class Sparklines(Html.Html):
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, 'htmlObj.sparkline(data, jsStyles)')
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
 
   def __str__(self):
     return "<span %s></span>" % self.strAttr(pyClassNames=self.defined)

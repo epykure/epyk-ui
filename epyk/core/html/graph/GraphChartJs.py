@@ -64,6 +64,7 @@ class Chart(Html.Html):
     'examples': 'http://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/#10-bubble-chart',
     'Repository': 'https://github.com/chartjs/Chart.js'}
   __reqJs = ['Chart.js']
+  _grpCls = CssGrpClsCharts.CssClassCharts
 
   def __init__(self, report, width, height, title, options, htmlCode, filters, profile):
     digits = 0
@@ -95,15 +96,6 @@ class Chart(Html.Html):
   @property
   def chart(self):
     raise Exception("Chart object should be defined in the configuration")
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpClsCharts.CssClassCharts(self)
-    return self.pyStyle
 
   def filter(self, jsId, colName, allSelected=True, filterGrp=None, operation="=", itemType="string"):
     """

@@ -17,7 +17,22 @@ class CssClassChartsNvd3(CssGrpCls.CssGrpClass):
   __map, __alt_map = ["CssDivChart", "CssNVD3HideGrid", 'CssNVD3Axis', 'CssNVD3AxisLabel', 'CssNVD3AxisLegend'], []
 
 
+class CssClassChartsC3(CssGrpCls.CssGrpClass):
+  CssDivChart = CssStylesChart.CssDivChart
+  CssC3Title = CssStylesChart.CssC3Title
+  CssC3Legend = CssStylesChart.CssC3Legend
+  CssC3Axis = CssStylesChart.CssC3Axis
+  CssC3XAxis = CssStylesChart.CssC3XAxis
+  CssC3YAxis = CssStylesChart.CssC3YAxis
+  __map, __alt_map = ['CssDivChart', 'CssC3Title', 'CssC3Legend', 'CssC3Axis', 'CssC3XAxis', 'CssC3YAxis'], []
+
+
 class CssClassCharts(CssGrpCls.CssGrpClass):
   CssDivChart = CssStylesChart.CssDivChart
   __map, __alt_map = ["CssDivChart"], []
+
+
+class CssClassChartsSparkline(CssGrpCls.CssGrpClass):
+  CssSparklines = CssStylesChart.CssSparklines
+  __map, __alt_map = ["CssSparklines"], []
 

@@ -8,16 +8,13 @@ from epyk.core.html.graph import GraphFabric
 from epyk.core.js.objects import JsChartDC
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStylesChart
+from epyk.core.css.groups import CssGrpClsCharts
 
 
 class Chart(Html.Html):
   name, category, callFnc = 'DC', 'Charts', 'dc'
   __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
-
-  class CssClassDef(object):
-    CssDivChart = CssStylesChart.CssDivChart
-    __map, __alt_map = ["CssDivChart"], []
+  _grpCls = CssGrpClsCharts.CssClassCharts
 
   def __init__(self,  report, width, height, title, options, htmlCode, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
@@ -42,15 +39,6 @@ class Chart(Html.Html):
   @chart.setter
   def chart(self, js_chart):
     self._chart = js_chart
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
 
   # -----------------------------------------------------------------------------------------
   #                                STANDARD HTML METHODS

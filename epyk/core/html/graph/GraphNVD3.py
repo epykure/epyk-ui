@@ -54,6 +54,7 @@ CHART_ATTRS = {
 
 class Chart(Html.Html):
   name, category, callFnc = 'NVD3', 'Charts', 'nvd3.chart'
+  _grpCls = CssGrpClsCharts.CssClassChartsNvd3
 
   def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
@@ -77,15 +78,6 @@ class Chart(Html.Html):
   @property
   def chart(self):
     raise Exception("Chart object should be defined in the configuration")
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = CssGrpClsCharts.CssClassChartsNvd3(self)
-    return self.pyStyle
 
   def onDocumentLoadVar(self): pass # Data should be registered externally
   def onDocumentLoadFnc(self): return True
