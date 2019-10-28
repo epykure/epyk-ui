@@ -8,14 +8,14 @@ from epyk.core.html import Html
 
 from epyk.core.js.packages import JsTabulator
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpClsTable
+
 
 class DataTabulator(Html.Html):
   name, category, callFnc = 'Tabulator', 'Table', 'tabulator'
   __reqCss, __reqJs = ['tabulator'], ['tabulator']
-  __pyStyle = ['CssTabulator', 'CssTabulatorHeaders', 'CssTabulatorCol', 'CssTabulatorEvenRow', 'CssTabulatorRow',
-               'CssTabulatorOddRow', 'CssTabulatorGroups', 'CssTabulatorFooter', 'CssTabulatorFooterPagination',
-               'CssTabulatorHeader', 'CssTabulatorColContent', 'CssTabulatorSelected', 'CssTabulatorTreeControl',
-               'CssTabulatorTreeControlExpand', 'CssTabulatorCell']
+  _grpCls = CssGrpClsTable.CssClassTabulator
 
   def __init__(self, report, records, cols, rows, header, width, height, htmlCode, options, profile):
     self.header, columns = rows + cols, []
@@ -74,4 +74,4 @@ class DataTabulator(Html.Html):
                       "window[htmlObj.attr('id') +'_table'] = new Tabulator('#%s', data)" % (self.htmlId))
 
   def __str__(self):
-    return "<div %s></div>" % (self.strAttr(pyClassNames=self.pyStyle))
+    return "<div %s></div>" % (self.strAttr(pyClassNames=self.defined))

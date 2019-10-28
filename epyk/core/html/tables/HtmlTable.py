@@ -6,6 +6,9 @@ import json
 
 from epyk.core.html import Html
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpClsTable
+
 
 class Row(Html.Html):
 
@@ -44,7 +47,7 @@ class Cell(Html.Html):
 
 class Bespoke(Html.Html):
   name, category, callFnc = 'Basic', 'Tables', 'basic'
-  __pyStyle = ['CssDataTable', 'CssDataTableHeader', 'CssDataTableEven', 'CssDataTableOdd']
+  _grpCls = CssGrpClsTable.CssClassTableBespoke
 
   def __init__(self, report, recordSet, cols, rows, width, height, htmlCode, options, profile):
     data = []
@@ -135,12 +138,12 @@ class Bespoke(Html.Html):
         css_row.update(self._style['row'][i])
       _data.append(Row.to_html(_row, css=css_row, css_cols=self._style.get('cols', {})))
     _data.append("</tbody>")
-    return "<table %s>%s</table>" % (self.strAttr(pyClassNames=self.pyStyle), "".join(_data))
+    return "<table %s>%s</table>" % (self.strAttr(pyClassNames=self.defined), "".join(_data))
 
 
 class Excel(Html.Html):
   name, category, callFnc = 'Excel', 'Tables', 'excel'
-  __pyStyle = ['CssTableExcel', 'CssTableExcelHeaderCell', 'CssTableExcelTd']
+  _grpCls = CssGrpClsTable.CssClassTableExcel
 
   def __init__(self, report, recordSet, cols, rows, title, width, height, cellwidth, delimiter, htmlCode):
     self.recordSet, self.delimiter = recordSet, delimiter
@@ -208,4 +211,4 @@ class Excel(Html.Html):
       delimiter = '<input id="%s_delimiter" type="text" value="%s" style="display:none" placeholder="Line delimiter"/>' % (
           self.htmlId, self.delimiter)
     return '<div %(strAttr)s>%(delimiter)s<table style="width:100%%"></table></div>' % {
-      'strAttr': self.strAttr(pyClassNames=self.pyStyle), 'delimiter': delimiter}
+      'strAttr': self.strAttr(pyClassNames=self.defined), 'delimiter': delimiter}

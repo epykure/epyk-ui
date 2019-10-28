@@ -9,6 +9,9 @@ import json
 from epyk.core.html import Html
 from epyk.core.js.objects import JsPivotFncs
 
+# The list of CSS classes
+from epyk.core.css.groups import CssGrpClsTable
+
 extensions = {
   'sub-total': {'jsImports': ['pivot-sub-total']},
   'c3': {'jsImports': ['pivot-c3']},
@@ -18,8 +21,7 @@ extensions = {
 class PivotTable(Html.Html):
   __reqJs, __reqCss = ["pivot"], ["pivot"]
   name, category, callFnc = 'Pivot Table', 'Tables', 'pivot'
-  __pyStyle = ['CssPivotHead', 'CssPivotCells', 'CssPivotFilterBox', 'CssPivotAxis', 'CssPivotFilterVals',
-               'CssPivotFilterBoxPopUp']
+  _grpCls = CssGrpClsTable.CssStylesPivot
 
   def __init__(self, report, recordSet, rows, cols, valCol, title, tableOptions, width, height, aggOptions, rendererName,
                htmlCode, dataSrc, helper, profile):
@@ -35,7 +37,7 @@ class PivotTable(Html.Html):
     self.__aggFncs = dict(JsPivotFncs.getAggFnc())
     self.data = recordSet
     self.data.attach(self)
-    self.css({"overflow": 'auto', 'margin': '0 auto',})
+    self.css({"overflow": 'auto', 'margin': '0 auto'})
     self.addGlobalFnc("numberWithCommas(x)", 'return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")')
     if not self.tableOptions.get("editable", True):
       self.addinOptions.append("window['options_%s'].showUI = false" % self.htmlId)
@@ -143,8 +145,7 @@ class PivotTable(Html.Html):
     return self
 
   def __str__(self):
-    styles = [s for s in self.pyStyle if not s.startswith('CssPivot')]
-    return '<div %(strAttr)s><div></div></div>%(helper)s' % {'strAttr': self.strAttr(pyClassNames=styles), "helper": self.helper}
+    return '<div %(strAttr)s><div></div></div>%(helper)s' % {'strAttr': self.strAttr(pyClassNames=self.defined), "helper": self.helper}
 
 
   # -----------------------------------------------------------------------------------------
