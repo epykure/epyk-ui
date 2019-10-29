@@ -4,28 +4,26 @@ import sys
 import argparse
 import pkg_resources
 
-arg_parser = argparse.ArgumentParser(prog='epyk')
 
 def main():
   """"""
-  init_parsers()
-  args = arg_parser.parse_args(sys.argv[1:])
-  return args.func(args)
-
-def init_parsers():
-   """"""
-   parser_map = { 'env':          (create_env_parser,         '''Create new environment'''),
-                  'deploy':       (create_deploy_parser,      '''Deploy latest changes'''),
+  parser_map = { 'env':           (create_env_parser,         '''Create new environment'''),
+                 'deploy':        (create_deploy_parser,      '''Deploy latest changes'''),
                   'db':           (create_db_parser,          '''Performs operation on local DB (Sqlite)'''),
                   'get_packages': (create_import_pkg_parser,  '''Downloads Javascript and CSS packages to allow offline development'''),
                   'version':      (create_version_parser,     '''Informs on current package version'''),
                   'notebooks':    (create_notebook_parser,    '''Donwloads or Upload Jupyter notebooks online''')
                 }
-   arg_parser.add_argument('command', help='''Choose one command from the following: %s''' % ', '.join(parser_map.keys()))
-   for func, parser_init in parser_map.items():
-     print(func)
-     new_parser = argparse.ArgumentParser(parents=[arg_parser], usage=parser_init[1])
-     parser_init[0](new_parser)
+  arg_parser = argparse.ArgumentParser(prog='epyk')
+  subparser = arg_parser.add_subparsers(title='Commands')
+  subparser.required = True
+  subparser.dest = 'command'
+  for func, parser_init in parser_map.items():
+    new_parser = subparser.add_parser(func, parents=[arg_parser], add_help=False, help=parser_init[1])
+    parser_init[0](new_parser)
+  args = arg_parser.parse_args(sys.argv[1:])
+  return args.func(args)
+
 
 def create_env_parser(subparser):
   """"""
@@ -45,10 +43,6 @@ def create_db_parser(subparser):
   subparser.set_defaults(func=db)
   subparser.add_argument('-p', '--path', required=True, help='''The path where the new environment will be created: -p /foo/bar''')
   subparser.add_argument('-m', '--migrate', help='''The path where the new environment will be created: -p /foo/bar''')
-  subparser.add_argument('-p', '--path', required=True, help='''The path where the new environment will be created: -p /foo/bar''')
-  subparser.add_argument('-p', '--path', required=True, help='''The path where the new environment will be created: -p /foo/bar''')
-  subparser.add_argument('-p', '--path', required=True, help='''The path where the new environment will be created: -p /foo/bar''')
-  subparser.add_argument('-p', '--path', required=True, help='''The path where the new environment will be created: -p /foo/bar''')
 
 def create_import_pkg_parser(subparser):
   """"""
