@@ -7,11 +7,18 @@ from epyk.core.css.groups import CssGrpCls
 # The list of CSS classes
 from epyk.core.css.styles import CssStylesImg
 from epyk.core.css.styles import CssStylesDiv
+from epyk.core.css.styles import CssStylesIcon
 
 
 class CssClassImage(CssGrpCls.CssGrpClass):
   CssImgBasic = CssStylesImg.CssImgBasic
   __map, __alt_map = ['CssImgBasic'], []
+
+
+class CssClassIcon(CssGrpCls.CssGrpClass):
+  CssIcon = CssStylesIcon.CssIcon
+  CssDivNoBorder = CssStylesDiv.CssDivNoBorder
+  __map, __alt_map = ['CssDivNoBorder'], ['CssIcon']
 
 
 class CssClassImageAnimated(CssGrpCls.CssGrpClass):

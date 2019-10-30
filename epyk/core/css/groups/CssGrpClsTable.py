@@ -7,9 +7,16 @@ from epyk.core.css.groups import CssGrpCls
 # The list of CSS classes
 from epyk.core.css.styles import CssStylesDiv
 from epyk.core.css.styles import CssStylesTable
+from epyk.core.css.styles import CssStylesText
 from epyk.core.css.styles import CssStylesPivot
 from epyk.core.css.styles import CssStylesTabulator
 from epyk.core.css.styles import CssStylesTableExcel
+
+
+class CssClassTable(CssGrpCls.CssGrpClass):
+  CssTableBasic = CssStylesTable.CssTableBasic
+  CssText = CssStylesText.CssText
+  __map, __alt_map = ["CssTableBasic", 'CssText'], []
 
 
 class CssClassTableContent(CssGrpCls.CssGrpClass):

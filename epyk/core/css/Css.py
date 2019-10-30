@@ -369,7 +369,7 @@ class Css(object):
     """
     return CssStyle.cssName(name)
 
-  def getClsTag(self, clsNames=None):
+  def getClsTag(self, clsNames=None, loadCls=False):
     """
     HTML tags
 
@@ -384,12 +384,16 @@ class Css(object):
     'class="py_class1"'
 
     :param clsNames: Optional. A list of classNames
+    :param loadCls: Optional. Default False
 
     :return: A string with the HTML Class information to add to the element
     """
     if len(self.cssAttrs) > 0 and clsNames is None:
       return 'style="%s"' % ";".join(["%s:%s" % (k, v) for k, v in self.cssAttrs.items()])
 
+    if loadCls:
+      for clsName in clsNames:
+        self.add(clsName)
     return 'class="%s"' % " ".join([CssStyle.cssName(clsName) for clsName in clsNames])
 
   def toHtml(self, clsNames=None):

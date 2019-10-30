@@ -18,6 +18,11 @@ class CssClassText(CssGrpCls.CssGrpClass):
   __map, __alt_map = ['CssText'], []
 
 
+class CssClassTextItem(CssGrpCls.CssGrpClass):
+  CssTextItem = CssStylesText.CssTextItem
+  __map, __alt_map = ['CssTextItem'], []
+
+
 class CssClassTextNoBorder(CssGrpCls.CssGrpClass):
   CssText = CssStylesText.CssText
   CssDivNoBorder = CssStylesDiv.CssDivNoBorder

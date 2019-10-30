@@ -13,6 +13,10 @@ from epyk.core.js.Imports import requires
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.groups import CssGrpClsText
+from epyk.core.css.groups import CssGrpClsImage
+from epyk.core.css.groups import CssGrpClsList
+from epyk.core.css.groups import CssGrpClsTable
 
 
 class ProgressBar(Html.Html):
@@ -339,11 +343,7 @@ class Slider(Html.Html):
 
 class SkillBar(Html.Html):
   name, category, callFnc = 'Skill Bars', 'Chart', 'skillbars'
-
-  class CssClassDef(object):
-    CssTableBasic = CssStylesTable.CssTableBasic
-    CssText = CssStylesText.CssText
-    __map, __alt_map = ['CssTableBasic', 'CssText'], []
+  _grpCls = CssGrpClsTable.CssClassTable
 
   def __init__(self, report, data, title, width, height, color, htmlCode, colUrl, colTooltip, filters, profile):
     super(SkillBar, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
@@ -386,15 +386,6 @@ class SkillBar(Html.Html):
   @property
   def jqId(self):
     return "$('#%s table')" % self.htmlId
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
 
   def jsEvents(self):
     if hasattr(self, 'jsFncFrag'):
@@ -521,10 +512,7 @@ class SkillBar(Html.Html):
 class ContextMenu(Html.Html):
   name, category, callFnc = 'Context Menu', None, 'contextmenu'
   source = None # The container
-
-  class CssClassDef(object):
-    CssTextItem = CssStylesText.CssTextItem
-    __map, __alt_map = ['CssTextItem'], []
+  _grpCls = CssGrpClsText.CssClassTextItem
 
   def __init__(self, report, recordSet, width, height, visible, profile):
     for rec in recordSet:
@@ -593,11 +581,7 @@ class ContextMenu(Html.Html):
 class OptionsBar(Html.Html):
   name, category, callFnc = 'Options', 'Event', 'optionsbar'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-
-  class CssClassDef(object):
-    CssIcon = CssStylesIcon.CssIcon
-    CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-    __map, __alt_map = ['CssDivNoBorder'], ['CssIcon']
+  _grpCls = CssGrpClsImage.CssClassIcon
 
   def __init__(self, report, recordset, width, height, size, color, border_color, options):
     super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
@@ -607,22 +591,7 @@ class OptionsBar(Html.Html):
       self.draggable()
     self.size = size
 
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
-
   def draggable(self, options=None):
-    """
-
-    :param options:
-
-    :return:
-    """
     self.css({"border": "1px solid %s" % self.border_color})
     self._report.js.addOnLoad(self.dom.jquery_ui.draggable(options).toStr())
     return self
@@ -665,10 +634,7 @@ class SignIn(Html.Html):
 class Filters(Html.Html):
   name, category, callFnc = 'Multi Filter', 'Event', 'multiFilter'
   __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery', 'jquery-scrollbar']
-
-  class CssClassDef(object):
-    CssDivFilter = CssStylesDiv.CssDivFilter
-    __map, __alt_map = ['CssDivFilter'], []
+  _grpCls = CssGrpClsList.CssClassListFilters
 
   def __init__(self, report, items, title, size, width, height, htmlCode, helper, profile):
     super(Filters, self).__init__(report, items, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
