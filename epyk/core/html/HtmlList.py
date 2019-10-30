@@ -683,8 +683,8 @@ class Bullets(Html.Html):
             if (!useAsync) {
               var body_loading_count = parseInt($('#body_loading span').text()); $('#body_loading span').html(body_loading_count - 1);
               if ($('#body_loading span').html() == '0') { $('#body_loading').remove()} }
-          }) ;''' % {'eventId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'jsFnc': ";".join([f for f in fnc if f is not None]),
-                     'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
+          })''' % {'eventId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'jsFnc': ";".join([f for f in fnc if f is not None]),
+                   'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
@@ -696,14 +696,9 @@ class Bullets(Html.Html):
 
   def click(self, jsFncs):
     """
-    :category: Javascript features
-    :example: myObj.click( report.jsConsole() )
-    :dsc:
-      This will create a Jquery click event and the data passed as parameter will be the ones defined in the function jsQueryData.
-      Most of those parameters are common accross all component and they can be used directly in services done in Python or other languages
-      By default all the js Python function will use as data the dictionary from jsQueryData
-    :link Jquery Documentation: https://api.jquery.com/click/
-    :return: self
+    This will create a Jquery click event and the data passed as parameter will be the ones defined in the function jsQueryData.
+    Most of those parameters are common accross all component and they can be used directly in services done in Python or other languages
+    By default all the js Python function will use as data the dictionary from jsQueryData
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -761,13 +756,13 @@ class CheckList(Html.Html):
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty() ;
-        var cat = htmlObj.attr('id') + "_cat" ;
+        var cat = htmlObj.attr('id') +"_cat" ;
         data.forEach(function(rec){
           if (rec.isChecked == undefined) { 
             if (rec.disabled != undefined) { htmlObj.append('display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" disabled value="' + rec.value + '">' + rec.value + '</label><br />') ; }
-            else { htmlObj.append('<label style="display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" value="' + rec.value + '">' + rec.value + '</label><br />')} } 
-          else { htmlObj.append('<label style="display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" value="' + rec.value + ' " checked>'+ rec.value + '</label><br>')}
-        }); ''', 'Javascript Object builder')
+            else {htmlObj.append('<label style="display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" value="' + rec.value + '">' + rec.value + '</label><br />')} } 
+          else {htmlObj.append('<label style="display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" value="' + rec.value + ' " checked>'+ rec.value + '</label><br>')}
+        })''', 'Javascript Object builder')
 
   def __str__(self):
     return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
@@ -1049,11 +1044,11 @@ class ListTournaments(Html.Html):
   name, category, callFnc = 'Brackets', 'Container', 'brackets'
   __reqCss, __reqJs = ['jquery-brackets'], ['jquery-brackets']
 
-  def __init__(self, report, recordSet, width, height, options, profile):
+  def __init__(self, report, records, width, height, options, profile):
     self.options = {} if options is None else options
-    super(ListTournaments, self).__init__(report, {'vals': recordSet, 'save': 'null', 'edit': 'null', 'render': 'null',
-                                                    'options': self.options}, width=width[0], widthUnit=width[1],
-                                          height=height[0], heightUnit=height[1], profile=profile)
+    super(ListTournaments, self).__init__(report, {'vals': records, 'save': 'null', 'edit': 'null', 'render': 'null',
+                                                   'options': self.options}, width=width[0], widthUnit=width[1],
+                                                   height=height[0], heightUnit=height[1], profile=profile)
     self.css({'overflow': 'auto', "padding": "auto", "margin": "auto"})
 
   def addFnc(self, fncName, jsFncs):
