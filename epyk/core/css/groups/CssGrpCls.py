@@ -39,36 +39,46 @@ class CssGrpClassBase(CssGrpClass):
 
   This will remove the border and the different margin and padding of the container.
   """
-  CssDivNoBorder = CssStylesDiv.CssDivNoBorder
+  css_div_no_border = CssStylesDiv.CssDivNoBorder
   __map, __alt_map = ['CssDivNoBorder'], []
 
 
 class CssGrpClassBox(CssGrpClass):
-  CsssDivBoxMargin = CssStylesDiv.CsssDivBoxMargin
+  """
+
+  """
+  css_div_box_margin = CssStylesDiv.CsssDivBoxMargin
   __map, __alt_map = ['CsssDivBoxMargin'], []
 
 
 class CssGrpClassBaseCursor(CssGrpClass):
   """
-  Default style for most of the components.
 
-  This will remove the border and the different margin and padding of the container.
   """
-  CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-  CssDivCursor = CssStylesDiv.CssDivCursor
+  css_div_no_border = CssStylesDiv.CssDivNoBorder
+  css_div_cursor = CssStylesDiv.CssDivCursor
   __map, __alt_map = ['CssDivNoBorder', 'CssDivCursor'], []
 
 
 class CssClassHr(CssGrpClass):
-  CssHr = CssStylesHr.CssHr
+  """
+
+  """
+  css_hr = CssStylesHr.CssHr
   __map, __alt_map = ['CssHr'], []
 
 
 class CssClassLoading(CssGrpClass):
-  CssDivLoading = CssStylesDiv.CssDivLoading
+  """
+
+  """
+  css_div_loading = CssStylesDiv.CssDivLoading
   __map, __alt_map = ['CssDivLoading'], []
 
 
 class CssClassSideBarFixed(CssGrpClass):
-  CssSideBarFixed = CssStylesDivMenuBars.CssSideBarFixed
+  """
+
+  """
+  css_side_bar_fixed = CssStylesDivMenuBars.CssSideBarFixed
   __map, __alt_map = ['CssSideBarFixed'], []

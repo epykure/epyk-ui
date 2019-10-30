@@ -9,5 +9,8 @@ from epyk.core.css.styles import CssStylesDrop
 
 
 class CssClassButton(CssGrpCls.CssGrpClass):
-  CssButtonBasic = CssStylesDrop.CssDropFile
+  """
+
+  """
+  css_button_basic = CssStylesDrop.CssDropFile
   __map, __alt_map = ["CssDropFile"], []

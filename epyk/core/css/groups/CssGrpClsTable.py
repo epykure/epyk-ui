@@ -14,32 +14,41 @@ from epyk.core.css.styles import CssStylesTableExcel
 
 
 class CssClassTable(CssGrpCls.CssGrpClass):
-  CssTableBasic = CssStylesTable.CssTableBasic
-  CssText = CssStylesText.CssText
+  """
+
+  """
+  css_table_basic = CssStylesTable.CssTableBasic
+  css_text = CssStylesText.CssText
   __map, __alt_map = ["CssTableBasic", 'CssText'], []
 
 
 class CssClassTableContent(CssGrpCls.CssGrpClass):
-  CssDivTableContent = CssStylesDiv.CssDivTableContent
+  """
+
+  """
+  css_div_table_content = CssStylesDiv.CssDivTableContent
   __map, __alt_map = ["CssDivTableContent"], []
 
 
 class CssClassTabulator(CssGrpCls.CssGrpClass):
-  CssTabulator = CssStylesTabulator.CssTabulator
-  CssTabulatorHeaders = CssStylesTabulator.CssTabulatorHeaders
-  CssTabulatorCol = CssStylesTabulator.CssTabulatorCol
-  CssTabulatorEvenRow = CssStylesTabulator.CssTabulatorEvenRow
-  CssTabulatorRow = CssStylesTabulator.CssTabulatorRow
-  CssTabulatorOddRow = CssStylesTabulator.CssTabulatorOddRow
-  CssTabulatorGroups = CssStylesTabulator.CssTabulatorGroups
-  CssTabulatorFooter = CssStylesTabulator.CssTabulatorFooter
-  CssTabulatorFooterPagination = CssStylesTabulator.CssTabulatorFooterPagination
-  CssTabulatorHeader = CssStylesTabulator.CssTabulatorHeader
-  CssTabulatorColContent = CssStylesTabulator.CssTabulatorColContent
-  CssTabulatorSelected = CssStylesTabulator.CssTabulatorSelected
-  CssTabulatorTreeControl = CssStylesTabulator.CssTabulatorTreeControl
-  CssTabulatorTreeControlExpand = CssStylesTabulator.CssTabulatorTreeControlExpand
-  CssTabulatorCell = CssStylesTabulator.CssTabulatorCell
+  """
+
+  """
+  css_tabulator = CssStylesTabulator.CssTabulator
+  css_tabulator_headers = CssStylesTabulator.CssTabulatorHeaders
+  css_tabulator_col = CssStylesTabulator.CssTabulatorCol
+  css_tabulator_even_row = CssStylesTabulator.CssTabulatorEvenRow
+  css_tabulator_row = CssStylesTabulator.CssTabulatorRow
+  css_tabulator_odd_row = CssStylesTabulator.CssTabulatorOddRow
+  css_tabulator_groups = CssStylesTabulator.CssTabulatorGroups
+  css_tabulator_footer = CssStylesTabulator.CssTabulatorFooter
+  css_tabulator_footer_pagination = CssStylesTabulator.CssTabulatorFooterPagination
+  css_tabulator_header = CssStylesTabulator.CssTabulatorHeader
+  css_tabulator_col_content = CssStylesTabulator.CssTabulatorColContent
+  css_tabulator_selected = CssStylesTabulator.CssTabulatorSelected
+  css_tabulator_tree_control = CssStylesTabulator.CssTabulatorTreeControl
+  css_tabulator_tree_control_expand = CssStylesTabulator.CssTabulatorTreeControlExpand
+  css_tabulator_cell = CssStylesTabulator.CssTabulatorCell
   __map, __alt_map = ['CssTabulator', 'CssTabulatorHeaders', 'CssTabulatorCol', 'CssTabulatorEvenRow', 'CssTabulatorRow',
                       'CssTabulatorOddRow', 'CssTabulatorGroups', 'CssTabulatorFooter', 'CssTabulatorFooterPagination',
                       'CssTabulatorHeader', 'CssTabulatorColContent', 'CssTabulatorSelected', 'CssTabulatorTreeControl',
@@ -47,38 +56,50 @@ class CssClassTabulator(CssGrpCls.CssGrpClass):
 
 
 class CssClassDataTable(CssGrpCls.CssGrpClass):
-  CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-  CssDivLoading = CssStylesDiv.CssDivLoading
-  CssDataTableHeader = CssStylesTable.CssDataTableHeader
-  CssDataTableEven = CssStylesTable.CssDataTableEven
-  CssDataTableOdd = CssStylesTable.CssDataTableOdd
-  CssDataTable = CssStylesTable.CssDataTable
-  CssDataTableFooter = CssStylesTable.CssDataTableFooter
+  """
+
+  """
+  css_div_no_border = CssStylesDiv.CssDivNoBorder
+  css_div_loading = CssStylesDiv.CssDivLoading
+  css_data_table_header = CssStylesTable.CssDataTableHeader
+  css_data_table_even = CssStylesTable.CssDataTableEven
+  css_data_table_odd = CssStylesTable.CssDataTableOdd
+  css_data_table = CssStylesTable.CssDataTable
+  css_data_table_footer = CssStylesTable.CssDataTableFooter
   __map, __alt_map = ['CssDivNoBorder', 'CssDivLoading', 'CssDataTableHeader', 'CssDataTableEven', 'CssDataTableOdd',
                       'CssDataTable', 'CssDataTableFooter'], []
 
 
 class CssClassTablePivot(CssGrpCls.CssGrpClass):
-  CssDataTable = CssStylesPivot.CssPivotHead
-  CssPivotCells = CssStylesPivot.CssPivotCells
-  CssPivotFilterBox = CssStylesPivot.CssPivotFilterBox
-  CssPivotAxis = CssStylesPivot.CssPivotAxis
-  CssPivotFilterVals = CssStylesPivot.CssPivotFilterVals
-  CssPivotFilterBoxPopUp = CssStylesPivot.CssPivotFilterBoxPopUp
+  """
+
+  """
+  css_data_table = CssStylesPivot.CssPivotHead
+  css_pivot_cells = CssStylesPivot.CssPivotCells
+  css_pivot_filter_box = CssStylesPivot.CssPivotFilterBox
+  css_pivot_axis = CssStylesPivot.CssPivotAxis
+  css_pivot_filter_vals = CssStylesPivot.CssPivotFilterVals
+  css_pivot_filter_box_pop_up = CssStylesPivot.CssPivotFilterBoxPopUp
   __map, __alt_map = ['CssPivotHead', 'CssPivotCells', 'CssPivotFilterBox', 'CssPivotAxis', 'CssPivotFilterVals',
                       'CssPivotFilterBoxPopUp'], []
 
 
 class CssClassTableBespoke(CssGrpCls.CssGrpClass):
-  CssDataTable = CssStylesTable.CssDataTable
-  CssDataTableHeader = CssStylesTable.CssDataTableHeader
-  CssDataTableEven = CssStylesTable.CssDataTableEven
-  CssDataTableOdd = CssStylesTable.CssDataTableOdd
+  """
+
+  """
+  css_data_table = CssStylesTable.CssDataTable
+  css_data_table_header = CssStylesTable.CssDataTableHeader
+  css_data_table_even = CssStylesTable.CssDataTableEven
+  css_data_table_odd = CssStylesTable.CssDataTableOdd
   __map, __alt_map = ['CssDataTable', 'CssDataTableHeader', 'CssDataTableEven', 'CssDataTableOdd'], []
 
 
 class CssClassTableExcel(CssGrpCls.CssGrpClass):
-  CssTableExcel = CssStylesTableExcel.CssTableExcel
-  CssTableExcelHeaderCell = CssStylesTableExcel.CssTableExcelHeaderCell
-  CssTableExcelTd = CssStylesTableExcel.CssTableExcelTd
+  """
+
+  """
+  css_table_excel = CssStylesTableExcel.CssTableExcel
+  css_table_excel_header_cell = CssStylesTableExcel.CssTableExcelHeaderCell
+  css_table_excel_td = CssStylesTableExcel.CssTableExcelTd
   __map, __alt_map = ['CssTableExcel', 'CssTableExcelHeaderCell', 'CssTableExcelTd'], []

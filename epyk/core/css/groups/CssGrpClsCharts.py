@@ -9,30 +9,42 @@ from epyk.core.css.styles import CssStylesChart
 
 
 class CssClassChartsNvd3(CssGrpCls.CssGrpClass):
-  CssDivChart = CssStylesChart.CssDivChart
-  CssNVD3HideGrid = CssStylesChart.CssNVD3HideGrid
-  CssNVD3Axis = CssStylesChart.CssNVD3Axis
-  CssNVD3AxisLabel = CssStylesChart.CssNVD3AxisLabel
-  CssNVD3AxisLegend = CssStylesChart.CssNVD3AxisLegend
+  """
+
+  """
+  css_div_chart = CssStylesChart.CssDivChart
+  css_NVD3_hide_grid = CssStylesChart.CssNVD3HideGrid
+  css_NVD3_axis = CssStylesChart.CssNVD3Axis
+  css_NVD3_axis_label = CssStylesChart.CssNVD3AxisLabel
+  css_NVD3_axis_legend = CssStylesChart.CssNVD3AxisLegend
   __map, __alt_map = ["CssDivChart", "CssNVD3HideGrid", 'CssNVD3Axis', 'CssNVD3AxisLabel', 'CssNVD3AxisLegend'], []
 
 
 class CssClassChartsC3(CssGrpCls.CssGrpClass):
-  CssDivChart = CssStylesChart.CssDivChart
-  CssC3Title = CssStylesChart.CssC3Title
-  CssC3Legend = CssStylesChart.CssC3Legend
-  CssC3Axis = CssStylesChart.CssC3Axis
-  CssC3XAxis = CssStylesChart.CssC3XAxis
-  CssC3YAxis = CssStylesChart.CssC3YAxis
+  """
+
+  """
+  css_div_chart = CssStylesChart.CssDivChart
+  css_C3_title = CssStylesChart.CssC3Title
+  css_C3_legend = CssStylesChart.CssC3Legend
+  css_C3_axis = CssStylesChart.CssC3Axis
+  css_C3X_axis = CssStylesChart.CssC3XAxis
+  css_C3Y_axis = CssStylesChart.CssC3YAxis
   __map, __alt_map = ['CssDivChart', 'CssC3Title', 'CssC3Legend', 'CssC3Axis', 'CssC3XAxis', 'CssC3YAxis'], []
 
 
 class CssClassCharts(CssGrpCls.CssGrpClass):
-  CssDivChart = CssStylesChart.CssDivChart
+  """
+
+  """
+  css_div_chart = CssStylesChart.CssDivChart
   __map, __alt_map = ["CssDivChart"], []
 
 
 class CssClassChartsSparkline(CssGrpCls.CssGrpClass):
-  CssSparklines = CssStylesChart.CssSparklines
+  """
+
+  """
+  css_sparklines = CssStylesChart.CssSparklines
   __map, __alt_map = ["CssSparklines"], []
 

@@ -384,7 +384,7 @@ class Css(object):
     'class="py_class1"'
 
     :param clsNames: Optional. A list of classNames
-    :param loadCls: Optional. Default False
+    :param loadCls: Optional. Default False. Load the class and attach the definition to rptObj
 
     :return: A string with the HTML Class information to add to the element
     """
