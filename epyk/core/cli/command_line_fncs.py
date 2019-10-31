@@ -3,7 +3,10 @@
 import sys
 import argparse
 import pkg_resources
-
+#to delete
+import os
+sys.path.append(os.getcwd())
+from epyk.core.js import Imports
 
 def main():
   """"""
@@ -91,4 +94,6 @@ def notebooks(args):
   pass
 
 if __name__ == '__main__':
+  import os
+  print(os.getcwd())
   main()
