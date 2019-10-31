@@ -35,6 +35,7 @@ class Button(Html.Html):
 
     if tooltip is not None:
       self.tooltip(tooltip)
+    self.attr_data("count", 0)
 
   @property
   def id_container(self):
@@ -163,8 +164,7 @@ class Button(Html.Html):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, 'htmlObj.empty(); htmlObj.append(data)', 'Javascript Object builder')
 
   def __str__(self):
-    return '<button data-count=0 %s></button>' % (self.strAttr(pyClassNames=self.defined))
-
+    return '<button %s></button>' % (self.strAttr(pyClassNames=self.defined))
 
   @staticmethod
   def matchMarkDown(val):

@@ -12,8 +12,9 @@ class CssGrpClass(object):
   __map, __alt_map = [], []
 
   def __init__(self, htmlObj):
-    self.clsMap = set(self.__map) # Main CSS Classes loaded and added to the container
-    self.clsAltMap = set(self.__alt_map) # Alternate CSS classes not loaded automatically at component level
+    # TODO: Rwmove those __ list
+    self.clsMap = set(getattr(self, "_%s__map" % self.__class__.__name__)) # Main CSS Classes loaded and added to the container
+    self.clsAltMap = set(getattr(self, "_%s__alt_map" % self.__class__.__name__)) # Alternate CSS classes not loaded automatically at component level
     self.src = htmlObj
 
   def __contains__(self, key):

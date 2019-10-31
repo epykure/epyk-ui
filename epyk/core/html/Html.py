@@ -850,6 +850,19 @@ class Html(object):
         self.addAttr(k, v)
     return self
 
+  def attr_data(self, name, value):
+    """
+    Add data attributes to the HTML containers
+
+    Example
+    html_obj.attr_data("count", 0)
+
+    :param name: The attribute name
+    :param value: The attribute value
+    """
+    self.attr["data-%s" % name] = value
+    return self
+
   # ok
   def addAttr(self, name, value, isPyData=False):
     """
@@ -890,7 +903,7 @@ class Html(object):
     if 'css' in self.attr:
       cssStyle = 'style="%s"' % ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
     classData = self.getClass()
-    if 'class' in self.attr and classData:
+    if 'class' in self.attr and len(self.attr['class']) > 0 and classData:
       if pyClassNames is not None:
         # Need to merge in the class attribute some static classes coming from external CSS Styles sheets
         # and the static python classes defined on demand in the header of your report
