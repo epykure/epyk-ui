@@ -122,10 +122,16 @@ class Meta(object):
 
 class Header(object):
   def __init__(self, report=None):
-    self._headers, self._links, self._styles, self._scripts, self._base = {}, [], [], [], None
+    self._headers, self._links, self._styles, self._scripts, self._base, self.__meta = {}, [], [], [], None, None
     if report is not None:
       self._report = report
       self._report._props["header"] = self._headers
+
+  @property
+  def meta(self):
+    if self.__meta is None:
+      self.__meta = Meta()
+    return self.__meta
 
   @property
   def title(self):
@@ -155,6 +161,12 @@ class Header(object):
 
     <link rel="shortcut icon" href="http://example.com/myicon.ico" />
     <link rel="icon" type="image/png" href="http://example.com/image.png" />
+
+    <link rel='shortcut icon' type='image/vnd.microsoft.icon' href='/favicon.ico'> <!-- IE -->
+    <link rel='apple-touch-icon' type='image/png' href='/icon.57.png'> <!-- iPhone -->
+    <link rel='apple-touch-icon' type='image/png' sizes='72x72' href='/icon.72.png'> <!-- iPad -->
+    <link rel='apple-touch-icon' type='image/png' sizes='114x114' href='/icon.114.png'> <!-- iPhone4 -->
+    <link rel='icon' type='image/png' href='/icon.114.png'> <!-- Opera Speed Dial, at least 144×114 px -->
     :return:
     """
 
@@ -163,10 +175,11 @@ class Header(object):
 
     :return:
     """
+    return str(self.meta)
 
 
 if __name__ == "__main__":
   header = Header()
   header.title = "test"
-  print(Meta())
+  print(header)
 
