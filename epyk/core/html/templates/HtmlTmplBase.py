@@ -1,5 +1,28 @@
 # <span class="fas fa-spinner fa-spin" style="padding:auto;margin:auto;font-size:65px;"></span>
 
+STATIC_PAGE = '''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+%(header)s
+%(jsImports)s
+%(cssImports)s
+<style>
+%(cssStyle)s
+</style>
+</head>
+
+<body>
+  %(content)s
+</body>
+
+<script>
+%(jsFrgs)s
+</script>
+
+</html>
+'''
+
 DATA = '''
 <!DOCTYPE html>
 <html lang="en">
@@ -51,12 +74,12 @@ $(window).on('beforeunload', function(){
 </div>
 <br />
 <footer class="footer" style="bottom:0;display:block;margin:0;padding:0" id="footer">
-  <div style="width:100%;margin:0;padding:0">
+  <div style="width:100%%;margin:0;padding:0">
     <span style="float:left"></span>
     <span style="float:right"><a class='py_cssstandardlinks' onclick="window['NO_UNLOAD'] = true; " href="mailto:{{mailTo|safe}}">Contact Us</a></span>
   </div>
   <div>
-      <span style="display:inline-block;text-align:justify;width:100%;margin-bottom:15px;margin-top:20px"></span>
+      <span style="display:inline-block;text-align:justify;width:100%%;margin-bottom:15px;margin-top:20px"></span>
   </div>
 </footer>
 </body>
