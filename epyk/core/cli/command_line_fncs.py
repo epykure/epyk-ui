@@ -81,7 +81,6 @@ def db(args):
 
 def get_packages(args):
   """"""
-  print(args)
   static_path = args.path
   try:
     shutil.copytree(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', '..', 'static'),
@@ -107,6 +106,4 @@ def notebooks(args):
   pass
 
 if __name__ == '__main__':
-  import os
-  print(os.getcwd())
   main()
