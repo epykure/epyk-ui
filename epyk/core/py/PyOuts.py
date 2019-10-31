@@ -12,7 +12,6 @@ from epyk.core.js import Js
 from epyk.core.js.Imports import requires
 
 from epyk.core.html.templates import HtmlTmplBase
-from epyk.core.html.templates import HtmlTmplJupyter
 
 
 class OutBrowsers(object):
@@ -138,7 +137,7 @@ class PyOuts(object):
     """
 
     results = self._to_html_obj(content_only=True)
-    return HtmlTmplJupyter.DATA.strip() % results
+    return HtmlTmplBase.JUPYTER.strip() % results
 
   def jupyterlab(self):
     """
