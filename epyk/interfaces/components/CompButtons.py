@@ -214,7 +214,7 @@ class Buttons(object):
     :param profile:
     """
     html_obj = html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, size, width, height, htmlCode, profile)
-    self.context.register(html.HtmlRadio.Switch(html_obj)
+    self.context.register(html_obj)
     return html_obj
 
   def checkbox(self, records=None, title=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
@@ -239,9 +239,6 @@ class Buttons(object):
     :param dfColumn:
     :param icon:
     :param profile:
-
-    :rtype: html.HtmlButton.Checkbox
-    :return:
     """
     if dfColumn is not None:
       if has_pandas and issubclass(type(records), pd.DataFrame):
@@ -259,8 +256,10 @@ class Buttons(object):
     elif isinstance(records, list) and len(records) > 0:
       if not isinstance(records[0], dict):
         records = [{"value": rec} for rec in records]
-    return self.context.register(html.HtmlButton.Checkbox(self.context.rptObj, records, title, color, width,
-                                             height, align, htmlCode, globalFilter, tooltip, icon, options or {}, profile))
+    html_obj = html.HtmlButton.Checkbox(self.context.rptObj, records, title, color, width, height, align, htmlCode,
+                                        globalFilter, tooltip, icon, options or {}, profile)
+    self.context.register(html_obj)
+    return html_obj
 
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None, htmlCode=None,
             profile=None, options=None):
