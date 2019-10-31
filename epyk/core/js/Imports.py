@@ -12,6 +12,7 @@ import sys
 import json
 import importlib
 import collections
+PyRest = None
 
 
 # To fully disable the automatic pip install request when a package is missing
@@ -1003,7 +1004,7 @@ class ImportManager(object):
     """
     Function in charge of downloading the different external CSS and JS packages locally.
     This will guarantee the install without having to get any extra features saved on a repository.
-    Saved copies of the modules can be done in order to guarantee a off line mode
+    Saved copies of the modules can be done in order to guarantee an offline mode
 
     Example
     Imports.ImportManager(report=Report()).getPackage('jqueryui')
@@ -1015,11 +1016,9 @@ class ImportManager(object):
     :param reload: Optional. Flag to force the package reloading if the folder already exists. Default Yes
 
     """
-    if not hasattr(self._report, "py"):
-      raise Exception("Cannot be used without a valid report object")
-
-    if not static_path.endswith("static"):
-      static_path = os.path.join(static_path, "static")
+    # if not hasattr(self._report, "py"):
+    #   raise Exception("Cannot be used without a valid report object")
+    global PyRest
     packages = {}
     _static_path = os.path.join(os.path.dirname(__file__), '..', '..', 'static') if static_path is None else static_path
     if not _static_path.endswith("static"):
@@ -1043,7 +1042,9 @@ class ImportManager(object):
           reloadModule = False
 
         if reloadModule:
-          page = self._report.py.requests.webscrapping("%s/%s" % (mod['cdnjs'], script))
+          if PyRest is None:
+            from epyk.core.py import PyRest
+          page = PyRest.PyRest.request("%s/%s" % (mod['cdnjs'], script), method='GET', headers={'User-Agent': 'Mozilla/5.0'})
           if hasattr(page, 'code') and page.code == 404:
             print(" # Error - %s: Script %s/%s not found " % (alias, mod['cdnjs'], script))
             continue
@@ -1063,6 +1064,7 @@ class ImportManager(object):
       print("")
       print("Downloading %s packages, this might take few minutes" % len(packages))
       for pckg, folder in packages.items():
+        print(pckg)
         self.getFullPackage(pckg, version=version, static_path=static_path, reload=reload)
 
   def getFullPackage(self, alias, version=None, static_path=None, reload=False):
@@ -1084,9 +1086,10 @@ class ImportManager(object):
     import shutil
     import io
     import os
+    global PyRest
 
-    if not hasattr(self._report, "py"):
-      raise Exception("Cannot be used without a valid report object")
+    # if not hasattr(self._report, "py"):
+    #   raise Exception("Cannot be used without a valid report object")
 
     if 'package' in JS_IMPORTS[alias]:
       versionDict = {'version': JS_IMPORTS[alias]['modules'][0]['version'] if version is None else version}
@@ -1108,7 +1111,9 @@ class ImportManager(object):
 
       if vReloadPath:
         print("  > Downloading package %s" % packagePath)
-        r = self._report.py.requests.webscrapping(packagePath)
+        if PyRest is None:
+          from epyk.core.py import PyRest
+        r = PyRest.PyRest.request(packagePath, method='GET', headers={'User-Agent': 'Mozilla/5.0'})
         z = zipfile.ZipFile(io.BytesIO(r))
         #z = zipfile.ZipFile(io.BytesIO(r))
         z.extractall(static_path)
@@ -1205,7 +1210,7 @@ class ImportManager(object):
       JS_IMPORTS.setdefault(alias, {}).update(mod_entry['js'])
     return self
 
-  def setPackages(self, static_path=None, reload=False):
+  def getPackages(self, static_path=None, reload=False, exclude=None):
     """
     Download all the CSS and Js packages from the official CDNJS configured in the configuration.
     It is possible to get the configuration settings by calling the function getPackageInfo(aliasName) attached to the report
@@ -1215,9 +1220,11 @@ class ImportManager(object):
 
     :return: The Python Import manager
     """
+    if not exclude:
+      exclude = []
     if not static_path.endswith("static"):
       static_path = os.path.join(static_path, "static")
-    aliases = list(set(list(CSS_IMPORTS.keys()) + list(JS_IMPORTS.keys())))
+    aliases = [x for x in set(list(CSS_IMPORTS.keys()) + list(JS_IMPORTS.keys())) if x not in exclude]
     for alias in aliases:
       self.getPackage(alias, static_path=static_path, reload=reload)
     return self

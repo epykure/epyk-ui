@@ -90,7 +90,8 @@ class PyRest(object):
 
     return urlopen(request).read()
 
-  def request(self, url, data=None, method=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
+  @staticmethod
+  def request(url, data=None, method=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
     """
     Run a external REST call using a specific method (PUT, DELETE, OPTIONS, HEAD, PUT, PATCH...).
 
