@@ -24,3 +24,4 @@ from . import Tags
 from . import Entities
 from . import Symbols
 from . import HtmlForms
+from . import Header

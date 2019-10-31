@@ -74,7 +74,7 @@ class Buttons(object):
     size = self.context._size(size)
     return self.context.register(
       html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-check-circle', size, width, height, htmlCode=htmlCode,
-                             tooltip=tooltip, profile=profile, options=options))
+                             tooltip=tooltip, profile=profile, options=options or {}))
 
   def remove(self, text=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'), htmlCode=None,
             tooltip=None, profile=None, options=None):
@@ -158,12 +158,12 @@ class Buttons(object):
     size = self.context._size(size)
     return self.context.register(
       html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-envelope', size, width, height, htmlCode=htmlCode,
-                             tooltip=tooltip, profile=profile, options=options))
+                             tooltip=tooltip, profile=profile, options=options or {}))
 
 
-  def radio(self, recordSet=None, checked=None, htmlCode=None, label=None, width=(100, '%'), height=(None, "px"), radioVisible=False,
-            event=None, withRemoveButton=False, column=None, align='left', filters=None, tooltip='', allSelected=False,
-            radioType="row", helper=None, profile=None):
+  def radio(self, recordSet=None, checked=None, htmlCode=None, label=None, width=(100, '%'), height=(None, "px"),
+            radioVisible=False, event=None, withRemoveButton=False, column=None, align='left', filters=None,
+            tooltip='', allSelected=False, radioType="row", helper=None, profile=None):
     """
 
     Example

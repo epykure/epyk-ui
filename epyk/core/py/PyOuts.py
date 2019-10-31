@@ -263,7 +263,9 @@ class PyOuts(object):
     file_path = os.path.join(path, "%s.html" % name)
     with open(file_path, "w") as f:
       results = self._to_html_obj()
-      f.write(HtmlTmplBase.DATA % results)
+      results['header'] = self._report.headers
+      print(results['jsFrgs'])
+      f.write(HtmlTmplBase.STATIC_PAGE % results)
     return file_path
 
   def markdown_file(self, path=None, name=None):

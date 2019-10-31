@@ -72,7 +72,7 @@ class Report(object):
   def __init__(self, run_options=None, appCache=None, sideBar=True, urlsApp=None, theme=None, context=None):
     #
     self._css, self._ui, self._js, self._py = None, None, None, None
-    self._props, self._tags = {}, None
+    self._props, self._tags, self._header_obj = {}, None, None
 
     self.run = self.run_context(run_options if run_options is not None else {})
     self.useSideBar, self.preferredTheme = sideBar, None
@@ -354,6 +354,11 @@ class Report(object):
     """
     return py.PyOuts.PyOuts(self)
 
+  @property
+  def headers(self):
+    if self._header_obj is None:
+      self._header_obj = html.Header.Header(self)
+    return self._header_obj
 
   def to_html(self, online=False, mode=None, html_template=None, fnc=None):
     """
