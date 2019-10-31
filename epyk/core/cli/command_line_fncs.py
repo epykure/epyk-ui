@@ -3,6 +3,7 @@
 import sys
 import argparse
 import pkg_resources
+import shutil
 #to delete
 import os
 sys.path.append(os.getcwd())
@@ -18,11 +19,10 @@ def main():
                   'notebooks':    (create_notebook_parser,    '''Donwloads or Upload Jupyter notebooks online''')
                 }
   arg_parser = argparse.ArgumentParser(prog='epyk')
-  subparser = arg_parser.add_subparsers(title='Commands')
+  subparser = arg_parser.add_subparsers(title='Commands', dest='command')
   subparser.required = True
-  subparser.dest = 'command'
   for func, parser_init in parser_map.items():
-    new_parser = subparser.add_parser(func, parents=[arg_parser], add_help=False, help=parser_init[1])
+    new_parser = subparser.add_parser(func, help=parser_init[1])
     parser_init[0](new_parser)
   args = arg_parser.parse_args(sys.argv[1:])
   return args.func(args)
@@ -51,7 +51,7 @@ def create_import_pkg_parser(subparser):
   """"""
   subparser.set_defaults(func=get_packages)
   subparser.add_argument('-p', '--path', required=True, help='''The path of the project where the package will be download: -p /foo/bar''')
-  subparser.add_argument('-n', '--name', default='all', help='''The name of the package to be downloaded (by default we will download all packages): -n d3.min.js''')
+  subparser.add_argument('-o', '--only', nargs='+', default=['all'], help='''The name of the package to be downloaded (by default we will download all packages): -n d3.min.js''')
   subparser.add_argument('-x', '--exclude', help='''packages to be excluded: -x d3.min.js''')
 
 
@@ -81,7 +81,19 @@ def db(args):
 
 def get_packages(args):
   """"""
+  static_path = args.path
+  try:
+    shutil.copytree(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', '..', 'static'),
+                      os.path.join(static_path, 'static'))
+  except FileExistsError:
+    pass
 
+  if 'all' in args.only:
+    exclude = args.exclude if args.exclude else None
+    Imports.ImportManager().getPackages(static_path=static_path, exclude=exclude)
+  else:
+    for package in args.only:
+      Imports.ImportManager().getPackage(package, reload=True, static_path=static_path)
 
 def version(args):
   """
@@ -94,6 +106,4 @@ def notebooks(args):
   pass
 
 if __name__ == '__main__':
-  import os
-  print(os.getcwd())
   main()
