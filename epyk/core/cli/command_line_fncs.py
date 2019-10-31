@@ -47,6 +47,10 @@ def create_db_parser(subparser):
 def create_import_pkg_parser(subparser):
   """"""
   subparser.set_defaults(func=get_packages)
+  subparser.add_argument('-p', '--path', required=True, help='''The path of the project where the package will be download: -p /foo/bar''')
+  subparser.add_argument('-n', '--name', default='all', help='''The name of the package to be downloaded (by default we will download all packages): -n d3.min.js''')
+  subparser.add_argument('-x', '--exclude', help='''packages to be excluded: -x d3.min.js''')
+
 
 def create_version_parser(subparser):
   """"""
@@ -74,7 +78,7 @@ def db(args):
 
 def get_packages(args):
   """"""
-  pass
+
 
 def version(args):
   """
