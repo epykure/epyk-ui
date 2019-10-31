@@ -48,6 +48,12 @@ class Components(object):
     self.date = self.dates.cob
     self.tree = self.lists.tree
 
+  def css(self, cssAttrs):
+    """
+    Change the CSS Style of the main container in the page
+    """
+    self.rptObj._props.setdefault("css", {})["container"] = cssAttrs
+
   @property
   def messaging(self):
     """

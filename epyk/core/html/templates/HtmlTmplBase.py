@@ -13,7 +13,9 @@ STATIC_PAGE = '''
 </head>
 
 <body>
+  <div id="page_content" style="%(cssContainer)s">
   %(content)s
+  </div>
 </body>
 
 <script>

@@ -118,6 +118,7 @@ class PyOuts(object):
     importMng = Imports.ImportManager(online=True, report=self._report)
     results = {
       'cssStyle': "%s%s" % (self._report._css.toCss(), self._report._cssText),
+      'cssContainer': ";".join(["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
       'content': "\n".join(htmlParts),
       'jsFrgs': ";".join(onloadParts),
       'cssImports': importMng.cssResolve(self._report.cssImport, self._report.cssLocalImports, excluded=self.excluded_packages),
@@ -264,7 +265,6 @@ class PyOuts(object):
     with open(file_path, "w") as f:
       results = self._to_html_obj()
       results['header'] = self._report.headers
-      print(results['jsFrgs'])
       f.write(HtmlTmplBase.STATIC_PAGE % results)
     return file_path
 
