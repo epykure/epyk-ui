@@ -225,7 +225,7 @@ class Lists(object):
     return self.context.register(html.HtmlList.CheckList(self.context.rptObj, recordSet, width, height,
                                                          filter, dataSrc, profile))
 
-  def points(self, recordSet=None, marginTop=10, level=None, width=(100, "%"), height=(None, 'px'), selectable=None,
+  def points(self, recordSet=None, marginTop=(10, 'px'), level=None, width=(100, "%"), height=(None, 'px'), selectable=None,
              multiselectable=None, htmlCode=None, column=None, filter=None, dataSrc=None, profile=None):
     """
 
@@ -248,8 +248,11 @@ class Lists(object):
     :param profile:
     :return:
     """
-    return self.context.register(html.HtmlList.Bullets(self.context.rptObj, recordSet, marginTop, level, width, height,
-        selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, globalFilter=filter, dataSrc=dataSrc, profile=profile))
+    html_obj = html.HtmlList.Bullets(self.context.rptObj, recordSet, marginTop, level, width, height,
+                                     selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode,
+                                     globalFilter=filter, dataSrc=dataSrc, profile=profile)
+    self.context.register(html_obj)
+    return html_obj
 
   def squares(self, recordSet=None, marginTop=10, level=None, width=(100, "%"), height=(None, 'px'), selectable=None,
               multiselectable=None, htmlCode=None, column=None, filter=None, dataSrc=None, profile=None):
@@ -280,9 +283,12 @@ class Lists(object):
     return self.context.register(html.HtmlSelect.SelectDropDown(self.context.rptObj, title, recordSet, size, width,
         height, htmlCode, dataSrc, filter, profile))
 
-  def listbadge(self, recordSet=None, color=None, size=(None, 'px'), width=(100, "%"), height=(None, 'px'), draggable=False,
+  def badges(self, recordSet=None, color=None, size=(None, 'px'), width=(100, "%"), height=(None, 'px'), draggable=False,
                 draggableGroupId=None, draggableMax=None, column=None, dataSrc=None, profile=None):
     """
+
+    Example
+    rpt.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Documentation
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
@@ -299,28 +305,39 @@ class Lists(object):
     :param column:
     :param dataSrc:
     :param profile:
-    :return:
     """
     size = self._size(size)
-    return self.context.register(html.HtmlList.ListBadge(self.context.rptObj, recordSet, color, size, width, height,
-       draggable, draggableGroupId, draggableMax, dataSrc, profile))
+    html_obj = html.HtmlList.ListBadge(self.context.rptObj, recordSet, color, size, width, height,
+                                       draggable, draggableGroupId, draggableMax, dataSrc, profile)
+
+    self.context.register(html_obj)
+    return html_obj
 
   def brackets(self, recordSet=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
 
-  def accordeon(self, categories=None, color=None, width=(150, 'px'), size=(None, "px"), dataSrc=None, profile=None):
+  def accordeon(self, records=None, color=None, width=(150, 'px'), size=(None, "px"), dataSrc=None, profile=None):
     """
 
-    :param categories:
+    Example
+    rpt.ui.lists.accordeon([{'value': 'super', 'url': "google", 'category': 'Test', 'icon': 'fas fa-heart'},
+                     {'value': 'super2', 'url': "google", 'category': 'Youpi', 'icon': 'fab fa-google'},
+                     {'value': 'super3', 'url': "google", 'category': 'Youpi'}])
+
+    Documentation
+    http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
+    http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
+
+    :param records:
     :param color:
     :param width:
     :param size:
     :param dataSrc:
     :param profile:
 
-    :rtype: html.HtmlList.HtmlListAccordeon
     :return:
     """
     size = self._size(size)
-    return self.context.register(html.HtmlList.HtmlListAccordeon(self.context.rptObj, categories, color, width,
-                                                                 size, dataSrc, profile))
+    html_obj = html.HtmlList.HtmlListAccordeon(self.context.rptObj, records or [], color, width, size, dataSrc, profile)
+    self.context.register(html_obj)
+    return html_obj

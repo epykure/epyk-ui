@@ -309,7 +309,7 @@ class List(Html.Html):
         %(searchableStr)s
         %(dsc)s
         <ul id="%(htmlId)s" class="list-group"></ul>
-      </div>%(helper)s''' % {'searchableStr': searchableStr, 'htmlId': self.htmlId, "attr": self.strAttr(pyClassNames=[], withId=False), 'blackColor': self.getColor('greys', 9),
+      </div>%(helper)s''' % {'searchableStr': searchableStr, 'htmlId': self.htmlId, "attr": self.strAttr(pyClassNames=self.defined, withId=False), 'blackColor': self.getColor('greys', 9),
                              "icon": icon, "title": self.title, "helper": self.helper, "events": "".join(events),
                              "title4": title4, "dsc": self.dsc}
 
@@ -528,6 +528,7 @@ class ListBadge(Html.Html):
     super(ListBadge, self).__init__(report, {'vals': recordSet, 'options': {'draggable': draggable, 'groupId': draggableGroupId, 'max': draggableMax}},
                                     width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], dataSrc=dataSrc, profile=profile)
     self.size = "%s%s" % (size[0], size[1])
+    self.css({"font-size": self.size})
     self.vals['color'] = self.getColor('success', 1) if color is None else color
 
   def onDocumentLoadFnc(self):
@@ -563,7 +564,7 @@ class ListBadge(Html.Html):
       var res = []; $('#'+ htmlId + ' li').each(function(item){
       if ($(this).children().length == 1) { res.push($( this ).find('a').html()) ;} else { res.push($( this ).html()) ;}}); return res;''',
       'Returns the HTML text of all the items in the object')
-    return '<div %s><ul></ul></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s><ul></ul></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   @staticmethod
   def matchMarkDownBlock(data): return re.match(">>>Badge", data[0])
@@ -589,68 +590,51 @@ class ListBadge(Html.Html):
 
 
 class HtmlListAccordeon(Html.Html):
-  """ Python wrapper for the accordeon list
-
-  :example
-  report.accordeon([{'value': 'super', 'url': "google", 'category': 'Test', 'icon': 'fas fa-heart'},
-                     {'value': 'super2', 'url': "google", 'category': 'Youpi', 'icon': 'fab fa-google'},
-                     {'value': 'super3', 'url': "google", 'category': 'Youpi'}])
-  """
-  references = {'Accordean W3C': 'http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/',
-                'Example Jquery': 'http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3'}
-  __pyStyle = ['CssHreftMenu', 'CssHrefSubMenu', 'CssListNoDecoration', 'CssListLiSubItem', 'CssDivNoBorder', 'CssListLiUlContainer']
-  name, category, callFnc, docCategory = 'Vertical expendable list', 'List', 'accordeon', 'Advanced'
+  name, category, callFnc = 'Vertical expendable list', 'List', 'accordeon'
   __reqCss, __reqJs = ['bootstrap', 'font-awesome'], ['bootstrap', 'font-awesome']
+  _grpCls = CssGrpClsList.CssClassListAccordeon
 
   def __init__(self, report, recordSet, color, width, size, dataSrc, profile):
-    if recordSet is None:
-      recordSet = []
     super(HtmlListAccordeon, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], dataSrc=dataSrc, profile=profile)
     size = "%s%s" % (size[0], size[1])
     self.css({'color': color if color is not None else 'inherit', 'font-size': size})
 
   def onDocumentLoadFnc(self):
-    """ Pure Javascript onDocumentLoad Function """
-    self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' htmlObj.empty() ;
+    self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''htmlObj.empty();
       var categories = {}; var cats = []; var catsIcons = {};  
       data.forEach(function(rec){
-        if (rec.icon != undefined) {catsIcons[rec.category] = '<i class="'+ rec.icon +'"></i>&nbsp;'};
-        if (rec.category in categories) {categories[rec.category].push(rec)} 
-        else {categories[rec.category] = [rec]; cats.push(rec.category)}});
-      htmlId = htmlObj.attr('id');
-      var countItems = 0;   
+        if(rec.icon != undefined){catsIcons[rec.category] = '<i class="'+ rec.icon +'"></i>&nbsp;'};
+        if(rec.category in categories){categories[rec.category].push(rec)} 
+        else{categories[rec.category] = [rec]; cats.push(rec.category)}});
+      htmlId = htmlObj.attr('id'); var countItems = 0;   
       cats.forEach(function(cat){
         if(cat in catsIcons){var liItem = $('<li %(cssLi)s name="'+ htmlId +'_menu" id="'+ htmlId +'_menu_'+ countItems +'"><a href="#">'+ catsIcons[cat] + cat +'</a></li>')}
         else {var liItem = $('<li %(cssLi)s name="'+ htmlId +'_menu" id="'+ htmlId +'_menu_'+ countItems +'"><a href="#'+ htmlId +'_menu_'+ countItems +'">'+ cat +'</a></li>')}
-        countItems = countItems + 1;
-        var ulItem = $('<ul></ul>');
+        countItems = countItems + 1; var ulItem = $('<ul></ul>');
         categories[cat].forEach(function(rec){
-          if (rec.color != undefined){var content = 'style="color:'+ rec.color +'"'} else {var content = ''};
-          ulItem.append('<li %(cssItems)s '+ content +'><a href="'+ rec.url +'">'+ rec.value +'</a></li>');
-        }); liItem.append(ulItem); htmlObj.append(liItem);
-      })''' % {'cssLi': self._report.style.getClsTag(['CssListNoDecoration', 'CssHreftMenu', 'CssListLiUlContainer']),
-               'cssItems': self._report.style.getClsTag(['CssListNoDecoration', 'CssHrefSubMenu', 'CssListLiSubItem'])}, 'Javascript Object builder')
+          if(rec.color != undefined){var content = 'style="color:'+ rec.color +'"'} else{var content = ''};
+          ulItem.append('<li %(cssItems)s '+ content +'><a href="'+ rec.url +'">'+ rec.value +'</a></li>')
+        }); liItem.append(ulItem); htmlObj.append(liItem)
+      })''' % {'cssLi': self._report.style.getClsTag(['CssListNoDecoration', 'CssHreftMenu', 'CssListLiUlContainer'], loadCls=True),
+               'cssItems': self._report.style.getClsTag(['CssListNoDecoration', 'CssHrefSubMenu', 'CssListLiSubItem'], loadCls=True)}, 'Javascript Object builder')
 
   def __str__(self):
-    """ HTML representation of the accordeon list """
-    self._report.jsOnLoadFnc.add("$('li[name=%(htmlId)s_menu]').click(function() {$('#' + this.id + ' ul').toggle()});" % {'htmlId': self.htmlId})
-    return '<div %s></div>' % self.strAttr(pyClassNames=['CsssDivBoxMargin'])
+    self._report.jsOnLoadFnc.add("$('li[name=%(htmlId)s_menu]').click(function(){$('#'+ this.id +' ul').toggle()})" % {'htmlId': self.htmlId})
+    return '<div %s></div>' % self.strAttr(pyClassNames=self.defined)
 
 
 class Bullets(Html.Html):
   name, category, callFnc = 'Bullet points', 'Lists', 'points'
-  __pyStyle = ['CssDivNoBorder']
+  _grpCls = CssGrpCls.CssGrpClassBase
   puce = "circle"
 
-  def __init__(self, report, recordSet, top, level, width, height, selectable, multiselectable, htmlCode, globalFilter, dataSrc, profile):
-    if recordSet is not None and len(recordSet) > 0:
-      if not isinstance(recordSet[0], dict):
-        tmpRecordSet = []
-        for rec in recordSet:
-          tmpRecordSet.append({'value': rec})
-        recordSet = tmpRecordSet
-    super(Bullets, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], htmlCode=htmlCode, dataSrc=dataSrc, profile=profile)
-    self.listVal = "%(breadcrumb)s['params']['%(htmlId)s']" % {"breadcrumb": self._report.jsGlobal.breadCrumVar, "htmlId": self.htmlId}
+  def __init__(self, report, records, top, level, width, height, selectable, multiselectable, htmlCode, globalFilter, dataSrc, profile):
+    if records is not None and len(records) > 0:
+      if not isinstance(records[0], dict):
+        records = [{'value': rec} for rec in records]
+    super(Bullets, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0],
+                                  heightUnit=height[1], htmlCode=htmlCode, dataSrc=dataSrc, profile=profile)
+    self.listVal = ""
     if level is not None:
       self._report.style.cssCls("CssTitle%s" % level)
       self.css("margin-left", "-20px")
@@ -665,13 +649,13 @@ class Bullets(Html.Html):
                  self._report.jsGlobal.breadCrumVar, self.htmlId))
     if multiselectable:
       # Add the selection to a click event
-      self.css( {'cursor': 'pointer'})
+      self.css({'cursor': 'pointer'})
       self.jsFrg('click', '''
-        if ( data['event_val'] == undefined) { data['event_val'] = {} } ;
-        if ( $(this).hasClass('text-primary') ) { delete data['event_val'][$(this).index()]} 
-        else { data['event_val'][$(this).index()] = $(this).text() ; } ;
+        if (data['event_val'] == undefined) {data['event_val'] = {}};
+        if ($(this).hasClass('text-primary')){delete data['event_val'][$(this).index()]} 
+        else {data['event_val'][$(this).index()] = $(this).text()};
         %(breadcrumb)s['params']['%(htmlId)s'] = data['event_val'];
-        $(this).toggleClass( 'text-primary' ); ''' % {"breadcrumb": self._report.jsGlobal.breadCrumVar, "htmlId": self.htmlId})
+        $(this).toggleClass( 'text-primary' )''' % {"breadcrumb": self._report.jsGlobal.breadCrumVar, "htmlId": self.htmlId})
 
   @property
   def jqId(self): return "$('#%s ul')" % self.htmlId
@@ -681,17 +665,10 @@ class Bullets(Html.Html):
 
   @property
   def val(self):
-    """ Property to get the jquery value of the HTML objec in a python HTML object """
     return self.listVal
 
   @property
   def jsQueryData(self):
-    """
-    :category: Javascript features
-    :dsc: Python function to define the Javascript object to be passed in case of Ajax call internally or via external REST service with other languages
-    :return: Javascript String of the data to be used in a jQuery call
-    :link ajax call: http://api.jquery.com/jquery.ajax/
-    """
     return "{event_val: %s, event_code: '%s'}" % (self.listVal, self.htmlId)
 
   def jsEvents(self):
@@ -706,8 +683,8 @@ class Bullets(Html.Html):
             if (!useAsync) {
               var body_loading_count = parseInt($('#body_loading span').text()); $('#body_loading span').html(body_loading_count - 1);
               if ($('#body_loading span').html() == '0') { $('#body_loading').remove()} }
-          }) ;''' % {'eventId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'jsFnc': ";".join([f for f in fnc if f is not None]),
-                     'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
+          })''' % {'eventId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'jsFnc': ";".join([f for f in fnc if f is not None]),
+                   'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
@@ -719,21 +696,16 @@ class Bullets(Html.Html):
 
   def click(self, jsFncs):
     """
-    :category: Javascript features
-    :example: myObj.click( report.jsConsole() )
-    :dsc:
-      This will create a Jquery click event and the data passed as parameter will be the ones defined in the function jsQueryData.
-      Most of those parameters are common accross all component and they can be used directly in services done in Python or other languages
-      By default all the js Python function will use as data the dictionary from jsQueryData
-    :link Jquery Documentation: https://api.jquery.com/click/
-    :return: self
+    This will create a Jquery click event and the data passed as parameter will be the ones defined in the function jsQueryData.
+    Most of those parameters are common accross all component and they can be used directly in services done in Python or other languages
+    By default all the js Python function will use as data the dictionary from jsQueryData
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     return self.jsFrg('click', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
 
   def __str__(self):
-    return '<div %s><ul style="text-align:left;vertical-align:middle;margin-bottom:0"></ul>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s><ul style="text-align:left;vertical-align:middle;margin-bottom:0"></ul>%s</div>' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   @classmethod
   def matchMarkDownBlock(cls, data): return re.match(">>>%s" % cls.callFnc, data[0])
@@ -755,29 +727,22 @@ class Bullets(Html.Html):
 
 class Squares(Bullets):
   name, category, callFnc = 'Bullet squares', 'List', 'squares'
-  __pyStyle, __reqJs, __reqCss = ['CssSquareList'], ['font-awesome'], ['font-awesome']
+  __reqJs, __reqCss = ['font-awesome'], ['font-awesome']
   puce = "none"
+  _grpCls = CssGrpClsList.CssClassListSquare
 
 
 class NumberList(Bullets):
-  """
-
-  """
   puce, name, callFnc = "decimal", 'List Numbers', 'listnumbers'
-  __pyStyle = ['CssDivNoBorder']
 
 
 class LetterList(Bullets):
-  """
-
-  """
   puce, name, callFnc = "lower-alpha", 'List letter', 'listletter'
-  __pyStyle = ['CssDivNoBorder']
 
 
 class CheckList(Html.Html):
   name, category, callFnc = 'List Checked', 'List', 'checklist'
-  __pyStyle = ['CssDivNoBorder']
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, recordSet, width, height, globalFilter, dataSrc, profile):
     if isinstance(recordSet[0], str):
@@ -791,16 +756,16 @@ class CheckList(Html.Html):
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty() ;
-        var cat = htmlObj.attr('id') + "_cat" ;
+        var cat = htmlObj.attr('id') +"_cat" ;
         data.forEach(function(rec){
           if (rec.isChecked == undefined) { 
             if (rec.disabled != undefined) { htmlObj.append('display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" disabled value="' + rec.value + '">' + rec.value + '</label><br />') ; }
-            else { htmlObj.append('<label style="display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" value="' + rec.value + '">' + rec.value + '</label><br />')} } 
-          else { htmlObj.append('<label style="display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" value="' + rec.value + ' " checked>'+ rec.value + '</label><br>')}
-        }); ''', 'Javascript Object builder')
+            else {htmlObj.append('<label style="display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" value="' + rec.value + '">' + rec.value + '</label><br />')} } 
+          else {htmlObj.append('<label style="display:inline-flex;align-items:center"><input style="margin-right:5px" type="radio" name="'+ cat + '" value="' + rec.value + ' " checked>'+ rec.value + '</label><br>')}
+        })''', 'Javascript Object builder')
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
 
   @classmethod
   def matchMarkDownBlock(cls, data): return re.match(">>>%s" % cls.callFnc, data[0])
@@ -834,7 +799,7 @@ class CheckList(Html.Html):
 
 class ListTree(Html.Html):
   name, category, callFnc = 'List Expandable', 'List', 'tree'
-  __pyStyle = ['CssBasicListItemsSelected']
+  _grpCls = CssGrpClsList.CssClassListTree
 
   def __init__(self, report, recordSet, width, height, title, htmlCode, draggable, dataSrc, expand, profile):
     self.dataSrc, self.title, self.expand = None, title, expand
@@ -967,7 +932,7 @@ class ListTree(Html.Html):
         <span style='font-weight:bold;font-size:14px'>%(title)s</span>
         %(events)s
       </div>
-      <div %(strAttr)s></div>%(helper)s''' % {'title': self.title, 'strAttr': self.strAttr(pyClassNames=[]), 'helper': self.helper, 'events': "".join(events)}
+      <div %(strAttr)s></div>%(helper)s''' % {'title': self.title, 'strAttr': self.strAttr(pyClassNames=self.defined), 'helper': self.helper, 'events': "".join(events)}
 
   def setSelected(self, value):
     self._jsStyles["forceSelect"] = value
@@ -1079,11 +1044,11 @@ class ListTournaments(Html.Html):
   name, category, callFnc = 'Brackets', 'Container', 'brackets'
   __reqCss, __reqJs = ['jquery-brackets'], ['jquery-brackets']
 
-  def __init__(self, report, recordSet, width, height, options, profile):
+  def __init__(self, report, records, width, height, options, profile):
     self.options = {} if options is None else options
-    super(ListTournaments, self).__init__(report, {'vals': recordSet, 'save': 'null', 'edit': 'null', 'render': 'null',
-                                                    'options': self.options}, width=width[0], widthUnit=width[1],
-                                          height=height[0], heightUnit=height[1], profile=profile)
+    super(ListTournaments, self).__init__(report, {'vals': records, 'save': 'null', 'edit': 'null', 'render': 'null',
+                                                   'options': self.options}, width=width[0], widthUnit=width[1],
+                                                   height=height[0], heightUnit=height[1], profile=profile)
     self.css({'overflow': 'auto', "padding": "auto", "margin": "auto"})
 
   def addFnc(self, fncName, jsFncs):
@@ -1094,17 +1059,16 @@ class ListTournaments(Html.Html):
   def onDocumentLoadFnc(self):
     # , disableToolbar: true, disableTeamEdit: false
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' htmlObj.empty() ;
-      parameters = { centerConnectors: true, init: data.vals }; 
-      if (data.save != "null") { parameters['save'] = new Function('rec', 'userData', 'var data = {challenge: JSON.stringify(rec), userProno: JSON.stringify(userData) } ;' + data.save) };
-      if (data.render != "null") { parameters['decorator'] = {render: new Function('rec', 'userData', data.save), edit: function(container, data, doneCb) { } } };
-      if (data.edit != "null") { 
+      parameters = {centerConnectors: true, init: data.vals }; 
+      if (data.save != "null"){parameters['save'] = new Function('rec', 'userData', 'var data = {challenge: JSON.stringify(rec), userProno: JSON.stringify(userData) } ;' + data.save) };
+      if (data.render != "null"){parameters['decorator'] = {render: new Function('rec', 'userData', data.save), edit: function(container, data, doneCb) { } } };
+      if (data.edit != "null"){ 
         if ( data.render == "null" ) { parameters['decorator']['render'] = function(rec, userData) {} } ;
         parameters['decorator']['edit'] = new Function('container', 'data', 'doneCb', data.edit); };
       for (var k in data.options) { parameters[k] = data.options[k] ;};
-      htmlObj.bracket( parameters ) ;
-      ''', 'Javascript Object builder')
+      htmlObj.bracket( parameters )''', 'Javascript Object builder')
 
   def __str__(self):
-    return "<div %s></div>" % self.strAttr(pyClassNames=self.pyStyle)
+    return "<div %s></div>" % self.strAttr(pyClassNames=self.defined)
 
 

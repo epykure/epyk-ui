@@ -13,52 +13,76 @@ from epyk.core.css.styles import CssStylesDates
 
 
 class CssClassDatePicker(CssGrpCls.CssGrpClass):
-  CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-  CssInput = CssStylesInput.CssInput
-  CssDatePicker = CssStylesDates.CssDatePicker
-  CssDatePickerUI = CssStylesDates.CssDatePickerUI
+  """
+
+  """
+  css_div_no_border = CssStylesDiv.CssDivNoBorder
+  Css_input = CssStylesInput.CssInput
+  Css_date_picker = CssStylesDates.CssDatePicker
+  Css_date_picker_ui = CssStylesDates.CssDatePickerUI
   __map, __alt_map = ['CssDivNoBorder', 'CssInput', 'CssDatePicker', 'CssDatePickerUI'], []
 
 
 class CssClassTimePicker(CssGrpCls.CssGrpClass):
-  CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-  CssInput = CssStylesInput.CssInput
-  CssDatesTimePicker = CssStylesDates.CssDatesTimePicker
+  """
+
+  """
+  css_div_no_border = CssStylesDiv.CssDivNoBorder
+  Css_input = CssStylesInput.CssInput
+  Css_dates_time_picker = CssStylesDates.CssDatesTimePicker
   __map, __alt_map = ['CssDivNoBorder', 'CssInput', 'CssDatesTimePicker'], []
 
 
 class CssClassInput(CssGrpCls.CssGrpClass):
-  CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-  CssDatePicker = CssStylesDates.CssDatePicker
+  """
+
+  """
+  css_div_no_border = CssStylesDiv.CssDivNoBorder
+  css_date_picker = CssStylesDates.CssDatePicker
   __map, __alt_map = ['CssDivNoBorder', 'CssInput'], []
 
 
 class CssClassTextArea(CssGrpCls.CssGrpClass):
-  CssInputTextArea = CssStylesInput.CssInputTextArea
+  """
+
+  """
+  css_input_text_area = CssStylesInput.CssInputTextArea
   __map, __alt_map = ['CssInputTextArea'], []
 
 
 class CssClassInputSearch(CssGrpCls.CssGrpClass):
-  CssSearchButton = CssStylesSearch.CssSearchButton
+  """
+
+  """
+  css_search_button = CssStylesSearch.CssSearchButton
   __map, __alt_map = ['CssSearchButton'], []
 
 
 class CssClassInputInteger(CssGrpCls.CssGrpClass):
-  CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-  CssInput = CssStylesInput.CssInput
-  CssInputInteger = CssStylesInput.CssInputInteger
+  """
+
+  """
+  css_div_no_border = CssStylesDiv.CssDivNoBorder
+  css_input = CssStylesInput.CssInput
+  css_input_integer = CssStylesInput.CssInputInteger
   __map, __alt_map = ['CssSearchButton'], []
 
 
 class CssClassInputRange(CssGrpCls.CssGrpClass):
-  CssDivNoBorder = CssStylesDiv.CssDivNoBorder
-  CssInput = CssStylesInput.CssInput
-  CssInputInteger = CssStylesInput.CssInputInteger
-  CssInputRange = CssStylesInput.CssInputRange
-  CssInputRangeThumb = CssStylesInput.CssInputRangeThumb
+  """
+
+  """
+  css_div_no_border = CssStylesDiv.CssDivNoBorder
+  css_input = CssStylesInput.CssInput
+  css_input_integer = CssStylesInput.CssInputInteger
+  css_input_range = CssStylesInput.CssInputRange
+  css_input_range_thumb = CssStylesInput.CssInputRangeThumb
   __map, __alt_map = ['CssDivNoBorder', 'CssInput', 'CssInputInteger', 'CssInputRange', 'CssInputRangeThumb'], []
 
 
 class CssClassPopup(CssGrpCls.CssGrpClass):
-  CssPopupTable = CssStylesPopup.CssPopupTable
+  """
+
+  """
+  css_popup_table = CssStylesPopup.CssPopupTable
   __map, __alt_map = ['CssPopupTable'], []
