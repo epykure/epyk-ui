@@ -434,8 +434,6 @@ class Title(Html.Html):
     if level is not None:
       self.style.cssCls("CssTitle%s" % level)
       self.css({'color': color, 'margin': '%spx 0 5px 0' % marginTop})
-      if size is not None:
-        self.css('font-size', "%s%s" % (size[0], size[1]))
     else:
       self.style.cssCls('CssTitle')
       self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': "%s%s" % (size[0], size[1])})
