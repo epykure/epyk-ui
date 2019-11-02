@@ -52,6 +52,9 @@ class CssGrpClass(object):
     if all:
       self.clsAltMap = set([])
 
+  def __str__(self):
+    return str({"clsMap": self.clsMap, "clsAltMap": self.clsAltMap})
+
 
 class CssGrpClassBase(CssGrpClass):
   """
