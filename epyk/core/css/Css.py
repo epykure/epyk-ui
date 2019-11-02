@@ -196,7 +196,7 @@ class Css(object):
       self.add(clsName.__name__)
     return self
 
-  def cssDerivCls(self, htmlId, clsName, attrs=None, event_attrs=None, force_reload=False, is_media=False):
+  def cssDerivCls(self, htmlId, clsName, attrs=None, event_attrs=None, force_reload=False, is_media=False, all_important=False):
     """
     CSS Functions
 
@@ -210,6 +210,7 @@ class Css(object):
     :param attrs: Optional, The CSS attributes
     :param event_attrs: Optional, The event CSS attributes
     :param force_reload: Optional, Force the CSS factory to attached this object
+    :param all_important: Optional, Change all the attributes to an important one
 
     :return: The CSS Class
     :rtype: epyk.core.css.styles.CssStyle.CssCls
@@ -222,16 +223,21 @@ class Css(object):
       dervfCls = type(derv_cls_name, (CssStyle.CssCls,), {})
     drvClsObj = dervfCls(theme=self.colors._themeObj.name)
     drvClsObj._is_media = is_media
+    if all_important:
+      attrs = CssStyle.CssCls.important(attrs)
     drvClsObj.style.update(attrs)
     if fCls is not None:
       for k, v in fCls.eventsStyles.items():
         drvClsObj.eventsStyles[k] = dict(fCls.eventsStyles[k])
     if event_attrs is not None:
       for k, v in event_attrs.items():
+        evt_attrs = event_attrs[k]
+        if all_important:
+          evt_attrs = CssStyle.CssCls.important(evt_attrs)
         if k in drvClsObj.eventsStyles:
-          drvClsObj.eventsStyles[k].update(event_attrs[k])
+          drvClsObj.eventsStyles[k].update(evt_attrs)
         else:
-          drvClsObj.eventsStyles[k] = event_attrs[k]
+          drvClsObj.eventsStyles[k] = evt_attrs
     CssStyle.setCssObj(derv_cls_name, drvClsObj, self.rptObj, theme=self.colors._themeObj.selected, force_reload=force_reload)
     return drvClsObj
 

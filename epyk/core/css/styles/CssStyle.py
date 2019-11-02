@@ -219,7 +219,6 @@ class CssCls(object):
       css_event[state] = self.toCss(cssRecord)
     return css_event
 
-
   # -------------------------------------------------------------------------------
   #                                    CSS ID SYNTHAX
   #
@@ -473,6 +472,17 @@ class CssCls(object):
     """
     color_obj = Color.ColorMaker(self.rptObj, theme=self.theme)
     return color_obj.get(category, index, color)
+
+  @classmethod
+  def important(cls, params_css):
+    """
+    Add the !IMPORTANT flag to all the CSS attributes
+
+    :param params_css: A python dictionary with the CSS attributes
+
+    :return: The CSS attributes with the !IMPORTANT flag
+    """
+    return dict([(k, "%s !IMPORTANT" % v)for k, v in params_css.items()])
 
   @classmethod
   def toCss(cls, params_css):

@@ -112,12 +112,12 @@ class Html(object):
 
       :param all: Boolean. Default False. Remove all the class and the CSS style if true
 
-      :return: The Python htmlObj
+      :return: The Python Style attribute of the htmlObj to allow the chains
       """
       if all:
         self.htmlObj.attr['css'] = {}
       self.htmlObj.defined.clsMap = set([])
-      return self.htmlObj
+      return self
 
     def delete(self, cssNname):
       """
@@ -155,7 +155,7 @@ class Html(object):
       self.htmlObj.attr['class'].add(cssName)
       return self
 
-    def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True, isMedia=False):
+    def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True, isMedia=False, allImportantAttrs=True):
       """
       CSS Function
 
@@ -169,6 +169,8 @@ class Html(object):
       :param attrs: A dictionary with the main CSS attributes for the class
       :param eventAttrs: A dictionary with the CSS Style for the events
       :param formatClsName: Flag to change the classname to the internal convention for CSS classes in the framework
+      :param allImportantAttrs: Boolean. Default True. Change all the attributes to an important one
+
       :return: The Python htmlObj
       """
       if attrs is None and eventAttrs is None:
@@ -181,7 +183,7 @@ class Html(object):
         if cssNname in self.htmlObj.defined:
           self.htmlObj.defined.remove(cssNname)
         dervfCls = self.htmlObj._report.style.cssDerivCls(self.htmlObj.htmlId, cssNname, attrs, event_attrs=eventAttrs,
-                                                          force_reload=True, is_media=isMedia)
+                                                          force_reload=True, is_media=isMedia, all_important=allImportantAttrs)
         self.htmlObj._report.style.add(dervfCls.classname)
         self.htmlObj.defined.add(dervfCls.classname)
       return self.htmlObj
