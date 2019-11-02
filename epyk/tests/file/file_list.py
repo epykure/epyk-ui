@@ -11,7 +11,9 @@ rptObj = Report()
 
 button = rptObj.ui.button("test")
 # button.style.clear()
-button.style.cssCls("test", {"background-color": 'yellow !IMPORTANT'}, isMedia=True)
+
+# Create a new CSS class on the fly dedicated to the small devices
+button.style.cssCls("test", {"background-color": 'yellow'}, isMedia=True)
 # Derive from an existing CSS class
 button.defined.ovr("CssButtonBasic", eventAttrs={'hover': {"cursor": "cell"}})
 button.click(rptObj.js.window.alert("test"))
