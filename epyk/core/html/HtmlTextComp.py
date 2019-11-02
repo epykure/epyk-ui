@@ -132,7 +132,7 @@ class BlockText(Html.Html):
 
   def __str__(self):
     items = ['<div %s>' % self.strAttr(pyClassNames=self.defined)]
-    items.append('<div id="%s_title" %s style="font-size:%spx;text-align:left"><a class="anchorjs-link"></a></div>' % (self.htmlId, self._report.style.getClsTag(['CssTitle']), self.size+3))
+    items.append('<div id="%s_title" %s style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlId, self._report.style.getClsTag(['CssTitle']), self.size+3))
     items.append('<div id="%s_p" %s style="color:%s:font-size:%spx;width:100%%;text-justify:inter-word;text-align:justify;"></div>' % (self.htmlId, self._report.style.getClsTag(['CssText']), self.color, self.size))
     if self.vals.get('button') is not None:
       items.append('<a href="#" %s><i></i></a>' % (self._report.style.getClsTag(['CssHrefNoDecoration', 'CssButtonBasic'])))

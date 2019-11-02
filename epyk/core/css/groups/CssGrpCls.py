@@ -28,6 +28,25 @@ class CssGrpClass(object):
     for c in clsName:
       self.clsMap.remove(c)
 
+  def ovr(self, clsName, attrs=None, eventAttrs=None, all_important=True):
+    """
+    Create a derived CSS Class from the base one predefined within the framework
+
+    Example
+    button.defined.ovr("CssButtonBasic", eventAttrs={'hover': {"cursor": "cell"}})
+
+    :param clsName: The existing CSS Python Class Name
+    :param attrs: Optional. A python dictionary with the attributes to be updated
+    :param eventAttrs: Optional. A nested Python dictionary with the attributes to be updated
+    :param all_important: Optional. A boolean flag to set the attributes to important
+    """
+    if clsName in self:
+      self.remove(clsName)
+    dervfCls = self.src._report.style.cssDerivCls(self.src.htmlId, clsName, attrs, event_attrs=eventAttrs,
+                                                  force_reload=True, all_important=all_important)
+    self.src._report.style.add(dervfCls.classname)
+    self.add(dervfCls.classname)
+
   def clear(self, all=True):
     self.clsMap = set([])
     if all:

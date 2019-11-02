@@ -66,6 +66,14 @@ class CssClassTextVignet(CssGrpCls.CssGrpClass):
   __map, __alt_map = ['CssDivChart'], ['CssText', 'CssNumberCenter']
 
 
+class CssClassTitle(CssGrpCls.CssGrpClass):
+  """
+
+  """
+  css_href_no_decoration = CssStylesHref.CssHrefNoDecoration
+  __map, __alt_map = ['CssHrefNoDecoration'], []
+
+
 class CssClassTextBlock(CssGrpCls.CssGrpClass):
   """
 

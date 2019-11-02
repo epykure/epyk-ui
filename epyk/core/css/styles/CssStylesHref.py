@@ -9,7 +9,7 @@ from epyk.core.css.styles import CssStylesList
 
 
 class CssHrefNoDecoration(CssStyle.CssCls):
-  attrs = {'text-decoration': 'none'}
+  attrs = {'text-decoration': 'none', 'color': 'inherit'}
   cssId = {'direct': 'a'}
 
 

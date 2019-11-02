@@ -414,6 +414,7 @@ class BlockQuote(Html.Html):
 
 class Title(Html.Html):
   name, category, callFnc = 'Title', 'texts', 'title'
+  _grpCls = CssGrpClsText.CssClassTitle
 
   def __init__(self, report, text, size, level, name, contents, color, picture, icon, marginTop, htmlCode, width,
                height, align, dflt_options, profile):
@@ -476,9 +477,9 @@ class Title(Html.Html):
       if not os.path.exists(filePath):
         raise Exception("Missing file %s in %s" % (self.picture, os.path.join(self._report.run.local_path, "static")))
 
-      return '<div %s><img src="%s/%s" />&nbsp;<a%s class="anchorjs-link"></a>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle), path, self.picture, anchor_name, self.helper)
+      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle), path, self.picture, anchor_name, self.helper)
 
-    return '<div %s><a%s class="anchorjs-link">%s</a></div>' % (self.strAttr(pyClassNames=self.defined), anchor_name, self.helper)
+    return '<div %s><a%s>%s</a></div>' % (self.strAttr(pyClassNames=self.defined), anchor_name, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
