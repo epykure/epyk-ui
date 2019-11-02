@@ -223,9 +223,10 @@ class Css(object):
       dervfCls = type(derv_cls_name, (CssStyle.CssCls,), {})
     drvClsObj = dervfCls(theme=self.colors._themeObj.name)
     drvClsObj._is_media = is_media
-    if all_important:
-      attrs = CssStyle.CssCls.important(attrs)
-    drvClsObj.style.update(attrs)
+    if attrs is not None:
+      if all_important:
+        attrs = CssStyle.CssCls.important(attrs)
+      drvClsObj.style.update(attrs)
     if fCls is not None:
       for k, v in fCls.eventsStyles.items():
         drvClsObj.eventsStyles[k] = dict(fCls.eventsStyles[k])
