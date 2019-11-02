@@ -104,18 +104,22 @@ class Html(object):
       """
       return list(self.htmlObj.attr['class'])
 
-    def cssClear(self):
+    def clear(self, all=False):
       """
-      CSS Function
+      CSS Function to clear the pre defined styles
 
-      Clear all the CSS classes definition for this component.
+      Clear all the CSS classes definition for this component (mainly the container).
+
+      :param all: Boolean. Default False. Remove all the class and the CSS style if true
 
       :return: The Python htmlObj
       """
+      if all:
+        self.htmlObj.attr['css'] = {}
       self.htmlObj.defined.clsMap = set([])
       return self.htmlObj
 
-    def cssDelCls(self, cssNname):
+    def delete(self, cssNname):
       """
       CSS Function
 
@@ -170,9 +174,9 @@ class Html(object):
       if attrs is None and eventAttrs is None:
         if self.htmlObj._report.style.get(cssNname) is not None:
           self.htmlObj._report.style.add(cssNname)
+          self.htmlObj.defined.add(cssNname)
         if formatClsName:
           cssNname = self.htmlObj._report.style.cssName(cssNname)
-        self.htmlObj.attr['class'].add(cssNname)
       else:
         if cssNname in self.htmlObj.defined:
           self.htmlObj.defined.remove(cssNname)
