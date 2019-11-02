@@ -196,7 +196,7 @@ class Css(object):
       self.add(clsName.__name__)
     return self
 
-  def cssDerivCls(self, htmlId, clsName, attrs=None, event_attrs=None, force_reload=False):
+  def cssDerivCls(self, htmlId, clsName, attrs=None, event_attrs=None, force_reload=False, is_media=False):
     """
     CSS Functions
 
@@ -221,6 +221,7 @@ class Css(object):
     else:
       dervfCls = type(derv_cls_name, (CssStyle.CssCls,), {})
     drvClsObj = dervfCls(theme=self.colors._themeObj.name)
+    drvClsObj._is_media = is_media
     drvClsObj.style.update(attrs)
     if fCls is not None:
       for k, v in fCls.eventsStyles.items():
@@ -463,7 +464,7 @@ class Css(object):
 
     :return: The String with all the CSS classes and definition
     """
-    css_str = []
+    css_str, css_media_str = [], []
     for clsName, cls_obj in self.cssStyles.items():
       if not hasattr(cls_obj, "classname"):
         css_str.append("%s %s" % (clsName, cls_obj))
@@ -471,9 +472,19 @@ class Css(object):
 
       if cls_obj.__class__.__name__ in self._cssOvr:
         cls_obj.css(self._cssOvr[cls_obj.__class__.__name__], event_attrs=self._cssEventOvr.get(cls_obj.__class__.__name__, {}))
-      for css_id, css_def in cls_obj.getStyles().items():
-        css_str.append("%s %s" % (css_id, css_def))
-
+      if not cls_obj._is_media:
+        for css_id, css_def in cls_obj.getStyles().items():
+          css_str.append("%s %s" % (css_id, css_def))
+        for css_id, css_def in cls_obj.getStyles(media=True).items():
+          css_media_str.append("%s %s" % (css_id, css_def))
+      else:
+        for css_id, css_def in cls_obj.getStyles().items():
+          css_media_str.append("%s %s" % (css_id, css_def))
+    if len(css_media_str) > 0:
+      # Media CSS category for all the smaller screens (tablets and smartphones)
+      css_str.append("@media only screen and (max-width: %spx){" % Defaults.MEDIA)
+      css_str.extend(css_media_str)
+      css_str.append("}")
     if file_name is not None and path is not None:
       filename = os.path.join(path, "%s.css" % file_name)
       if not os.path.exists(path):

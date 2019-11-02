@@ -151,7 +151,7 @@ class Html(object):
       self.htmlObj.attr['class'].add(cssName)
       return self
 
-    def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True):
+    def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True, isMedia=False):
       """
       CSS Function
 
@@ -174,9 +174,10 @@ class Html(object):
           cssNname = self.htmlObj._report.style.cssName(cssNname)
         self.htmlObj.attr['class'].add(cssNname)
       else:
-        if cssNname in self.htmlObj.pyStyle:
+        if cssNname in self.htmlObj.defined:
           self.htmlObj.defined.remove(cssNname)
-        dervfCls = self.htmlObj._report.style.cssDerivCls(self.htmlObj.htmlId, cssNname, attrs, eventAttrs=eventAttrs, forceReload=True)
+        dervfCls = self.htmlObj._report.style.cssDerivCls(self.htmlObj.htmlId, cssNname, attrs, event_attrs=eventAttrs,
+                                                          force_reload=True, is_media=isMedia)
         self.htmlObj._report.style.add(dervfCls.classname)
         self.htmlObj.defined.add(dervfCls.classname)
       return self.htmlObj

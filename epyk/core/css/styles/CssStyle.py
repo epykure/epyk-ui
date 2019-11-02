@@ -143,7 +143,7 @@ class CssCls(object):
   attrs, reqCssCls, cssId, name = None, None, None, None
 
   preceedTag, parentTag, childrenTag, directChildrenTag, htmlTag = None, None, None, None, None
-  childKinds = None
+  childKinds, _is_media = None, False
 
   # Default values for the style in the web portal
   fontSize, headerFontSize, fontFamily = '12px', '14px', 'Calibri'
@@ -176,6 +176,24 @@ class CssCls(object):
 
     :param style: A dictionary with the CSS attributes used to define the class
     :param events_styles: A dictionary of dictionary with all the CSS special attributes
+    """
+    pass
+
+  def media(self, style, events_styles):
+    """
+    CSS style specific for the smaller screens like tablets and smartphones
+
+    Example:
+    def media(self, style, eventsStyles):
+      return {
+        'attrs': {'border': "1px solid green"},
+        'hover': {"background-color": 'yellow'}
+      }
+
+    :param style: A python dictionary. The CSS Styles
+    :param events_styles: A nested python dictionary. The event CSS Styles
+
+    :return: A dictionary with the specific styles
     """
     pass
 
@@ -257,7 +275,7 @@ class CssCls(object):
     self.cssId = ''.join(css_id_parts)
     return self.cssId
 
-  def getStyles(self, to_str=True):
+  def getStyles(self, media=False, to_str=True):
     """
     CSS Style Builder.
 
@@ -272,26 +290,41 @@ class CssCls(object):
 
     Function to process the Static CSS Python configuration and to convert it to String fragments following the CSS Web standard.
 
+    :param media: Optional. Boolean
     :param to_str: Optional. Flag to convert the CSS style to a valid CSS string object. Default True
 
     :return: A Python dictionary with all the different styles and selector to be written to the page for a given Python CSS Class
     """
     res = {}
-    if self.childrenTag is not None:
-      res["%s %s" % (self.cssId, self.childrenTag)] = self.toCss(self.style)
-      for key, val in self.events().items():
-        skey = "::" if "::" in ['before', 'after'] else ":"
-        res["%s %s%s%s" % (self.cssId, self.childrenTag, skey, key)] = val
-    elif self.directChildrenTag is not None:
-      res["%s > %s" % (self.cssId, self.directChildrenTag)] = self.toCss(self.style)
-      for key, val in self.events().items():
-        skey = "::" if "::" in ['before', 'after'] else ":"
-        res["%s > %s%s%s" % (self.cssId, self.directChildrenTag, skey, key)] = val
+    if media:
+      media_event_styles = {}
+      for evt, val in self.eventsStyles.items():
+        media_event_styles[evt] = dict(val)
+      media_styles = self.media(dict(self.style), media_event_styles)
+      if media_styles is not None:
+        if 'attrs' in media_styles:
+          res[self.cssId] = self.toCss(media_styles['attrs'])
+          del media_styles['attrs']
+
+        for key, val in media_styles.items():
+          skey = "::" if "::" in ['before', 'after'] else ":"
+          res["%s%s%s" % (self.cssId, skey, key)] = self.toCss(val)
     else:
-      res[self.cssId] = self.toCss(self.style) if to_str else self.style
-      for key, val in self.events().items():
-        skey = "::" if "::" in ['before', 'after'] else ":"
-        res["%s%s%s" % (self.cssId, skey, key)] = val
+      if self.childrenTag is not None:
+        res["%s %s" % (self.cssId, self.childrenTag)] = self.toCss(self.style)
+        for key, val in self.events().items():
+          skey = "::" if "::" in ['before', 'after'] else ":"
+          res["%s %s%s%s" % (self.cssId, self.childrenTag, skey, key)] = val
+      elif self.directChildrenTag is not None:
+        res["%s > %s" % (self.cssId, self.directChildrenTag)] = self.toCss(self.style)
+        for key, val in self.events().items():
+          skey = "::" if "::" in ['before', 'after'] else ":"
+          res["%s > %s%s%s" % (self.cssId, self.directChildrenTag, skey, key)] = val
+      else:
+        res[self.cssId] = self.toCss(self.style) if to_str else self.style
+        for key, val in self.events().items():
+          skey = "::" if "::" in ['before', 'after'] else ":"
+          res["%s%s%s" % (self.cssId, skey, key)] = val
     return res
 
   def getStyleId(self, html_reference):
