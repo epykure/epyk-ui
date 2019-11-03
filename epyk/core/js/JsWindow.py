@@ -80,7 +80,7 @@ class JsLocalStorage(object):
     """
     key = JsUtils.jsConvertData(key, None)
     data = JsUtils.jsConvertData(data, None)
-    return JsObject.JsObject("localStorage.setItem('%s', %s)" % (key, data))
+    return JsObject.JsObject("localStorage.setItem(%s, %s)" % (key, data))
 
   def getItem(self, key):
     """

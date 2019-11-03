@@ -419,6 +419,18 @@ class JsRegisteredFunctions(object):
 
     return JsFunction("(function(%s){%s})()" % (",".join(pmts), jsFnc))
 
+  def get(self, fnc_name, *args):
+    """
+    Call a bespoke functions on the Javascript side
+
+    :param fnc_name: The function name
+    :param args: The different arguments in the function definition
+    
+    :return: The Javascript sting
+    """
+    pmts = [str(JsUtils.jsConvertData(p, None)) for p in args]
+    return "%s(%s)" % (fnc_name, ", ".join(pmts))
+
   def inline(self, fnc_name, jsFnc, pmts=None):
     """
     Create a name function which can be then called later
@@ -432,7 +444,7 @@ class JsRegisteredFunctions(object):
 
     :return: The function name which can be used in the Javascript
     """
-    self._js_src.setdefault('functions', {})[fnc_name] = {'content': jsFnc, 'pmt': pmts}
+    self._js_src.setdefault('functions', {})[fnc_name] = {'content': JsUtils.jsConvertFncs(jsFnc, toStr=True), 'pmt': pmts}
     return fnc_name
 
   @property

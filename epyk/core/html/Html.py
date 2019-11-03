@@ -167,7 +167,7 @@ class Html(object):
 
       Documentation
       https://www.w3schools.com/css/css_rwd_mediaqueries.asp
-      
+
       :param cssNname: The CSS classname (or class reference)
       :param attrs: A dictionary with the main CSS attributes for the class
       :param eventAttrs: A dictionary with the CSS Style for the events

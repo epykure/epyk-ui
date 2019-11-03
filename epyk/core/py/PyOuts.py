@@ -95,13 +95,13 @@ class PyOuts(object):
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       onloadParts.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
 
-    for c, d in self._report._props['js'].get("constructors", {}).items():
+    for c, d in self._report._props.get('js', {}).get("constructors", {}).items():
       onloadParts.append(d)
 
-    for c, d in self._report._props['js'].get("datasets", {}).items():
+    for c, d in self._report._props.get('js', {}).get("datasets", {}).items():
       onloadParts.append(d)
 
-    for b in self._report._props['js'].get("builders", []):
+    for b in self._report._props.get('js', {}).get("builders", []):
       onloadParts.append(b)
 
     # Add the component on ready functions
