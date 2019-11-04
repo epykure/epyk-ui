@@ -13,7 +13,6 @@ import json
 import importlib
 import collections
 
-
 # To fully disable the automatic pip install request when a package is missing
 AUTOLOAD = False
 PROXY = ''
@@ -1003,7 +1002,7 @@ class ImportManager(object):
     """
     Function in charge of downloading the different external CSS and JS packages locally.
     This will guarantee the install without having to get any extra features saved on a repository.
-    Saved copies of the modules can be done in order to guarantee a off line mode
+    Saved copies of the modules can be done in order to guarantee a offline mode
 
     Example
     Imports.ImportManager(report=Report()).getPackage('jqueryui')
@@ -1016,7 +1015,10 @@ class ImportManager(object):
 
     """
     if not hasattr(self._report, "py"):
-      raise Exception("Cannot be used without a valid report object")
+      from epyk.core.py.PyRest import PyRest
+      webscrapper = PyRest().webscrapping
+    else:
+      webscrapper = self._report.py.requests.webscrapping
 
     if not static_path.endswith("static"):
       static_path = os.path.join(static_path, "static")
@@ -1043,7 +1045,7 @@ class ImportManager(object):
           reloadModule = False
 
         if reloadModule:
-          page = self._report.py.requests.webscrapping("%s/%s" % (mod['cdnjs'], script))
+          page = webscrapper("%s/%s" % (mod['cdnjs'], script))
           if hasattr(page, 'code') and page.code == 404:
             print(" # Error - %s: Script %s/%s not found " % (alias, mod['cdnjs'], script))
             continue
@@ -1086,7 +1088,10 @@ class ImportManager(object):
     import os
 
     if not hasattr(self._report, "py"):
-      raise Exception("Cannot be used without a valid report object")
+      from epyk.core.py.PyRest import PyRest
+      webscrapper = PyRest().webscrapping
+    else:
+      webscrapper = self._report.py.requests.webscrapping
 
     if 'package' in JS_IMPORTS[alias]:
       versionDict = {'version': JS_IMPORTS[alias]['modules'][0]['version'] if version is None else version}
@@ -1108,7 +1113,7 @@ class ImportManager(object):
 
       if vReloadPath:
         print("  > Downloading package %s" % packagePath)
-        r = self._report.py.requests.webscrapping(packagePath)
+        r = webscrapper(packagePath)
         z = zipfile.ZipFile(io.BytesIO(r))
         #z = zipfile.ZipFile(io.BytesIO(r))
         z.extractall(static_path)
@@ -1205,7 +1210,7 @@ class ImportManager(object):
       JS_IMPORTS.setdefault(alias, {}).update(mod_entry['js'])
     return self
 
-  def setPackages(self, static_path=None, reload=False):
+  def getPackages(self, static_path=None, reload=False, exclude=None):
     """
     Download all the CSS and Js packages from the official CDNJS configured in the configuration.
     It is possible to get the configuration settings by calling the function getPackageInfo(aliasName) attached to the report
@@ -1215,6 +1220,8 @@ class ImportManager(object):
 
     :return: The Python Import manager
     """
+    if exclude is None:
+      exclude = []
     if not static_path.endswith("static"):
       static_path = os.path.join(static_path, "static")
     aliases = list(set(list(CSS_IMPORTS.keys()) + list(JS_IMPORTS.keys())))
