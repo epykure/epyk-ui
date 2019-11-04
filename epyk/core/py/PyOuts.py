@@ -9,6 +9,7 @@ import json
 
 from epyk.core.js import Imports
 from epyk.core.js import Js
+from epyk.core.js import JsUtils
 from epyk.core.js.Imports import requires
 
 from epyk.core.html.templates import HtmlTmplBase
@@ -109,6 +110,9 @@ class PyOuts(object):
       obj_id = self._report.htmlItems[objId].dom.varId
       if obj_id in self._report._props.get('js', {}).get('onCompReady', {}):
         onloadParts.append(self._report._props['js']['onCompReady'][obj_id])
+      for event, fncs in self._report.htmlItems[objId]._events['doc_ready'].items():
+        str_fncs = JsUtils.jsConvertFncs(fncs, toStr=True)
+        onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (obj_id, event, str_fncs))
 
     # Add the page on document ready functions
     for on_ready_frg in self._report._props.get('js', {}).get('onReady', []):
