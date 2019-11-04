@@ -111,7 +111,9 @@ class PyOuts(object):
       if obj_id in self._report._props.get('js', {}).get('onCompReady', {}):
         onloadParts.append(self._report._props['js']['onCompReady'][obj_id])
       for event, fncs in self._report.htmlItems[objId]._events['doc_ready'].items():
-        str_fncs = JsUtils.jsConvertFncs(fncs, toStr=True)
+        profile_var = self._report.js.performance.add_profiling(fncs['content'])
+        fncs['content'].append(self._report.js.console.log(self._report.js.objects.get(profile_var)))
+        str_fncs = JsUtils.jsConvertFncs(fncs['content'], toStr=True)
         onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (obj_id, event, str_fncs))
 
     # Add the page on document ready functions

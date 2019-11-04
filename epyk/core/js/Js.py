@@ -323,7 +323,7 @@ class JsBase(object):
     self.console = JsConsole()
     self.localStorage = JsWindow.JsLocalStorage()
     self.window = JsWindow.JsWindow(self)
-    self.performance = JsPerformance.JsPerformance()
+    self.performance = JsPerformance.JsPerformance(self)
     self.sessionStorage = JsWindow.JsSessionStorage()
     self.location = JsLocation.JsLocation()
     self.json = JsJson()

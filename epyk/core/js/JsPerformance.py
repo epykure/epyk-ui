@@ -18,8 +18,32 @@ from epyk.core.js.primitives import JsArray
 
 
 class JsPerformance(object):
-  def __init__(self):
+  def __init__(self, src=None):
+    self.__src = src
     self.__marks = set([])
+    self.__count = 0
+
+  def add_profiling(self, jsFnc):
+    """
+    Wrap the Javascript functions with function to asset on the execution time.
+
+    Example
+    self._report.js.performance.add_profiling(fncs['content'])
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+
+    :param jsFnc: The Javascript functions
+
+    :return: The profile variable name
+    """
+    profile_var = "profile_%s" % self.__count
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    jsFnc.insert(0, "var %s_start = %s" % (profile_var, self.now))
+    jsFnc.append("var %s = %s - %s_start" % (profile_var, self.now, profile_var))
+    self.__count += 1
+    return profile_var
 
   def clearMarks(self, name=None):
     """

@@ -727,7 +727,7 @@ class Html(object):
         self.attr['css'][key] = value
     return self
 
-  def on(self, event, jsFncs):
+  def on(self, event, jsFncs, profile=False):
     """
     Add an event to the document ready function.
     This is to mimic the Jquery on function.
@@ -739,12 +739,14 @@ class Html(object):
 
     :param event: A string with the Javascript event type from the dom_obj_event.asp
     :param jsFncs: A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console
 
     :return: self to allow the chains
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._events['doc_ready'].setdefault(event, []).extend(jsFncs)
+    self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(jsFncs)
+    self._events['doc_ready'][event]['profile'] = profile
     return self
 
   def tooltip(self, value, location='top'):
