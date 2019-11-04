@@ -23,7 +23,7 @@ class DatePicker(Html.Html):
     super(DatePicker, self).__init__(report, {"value": value, "options": dfltOptions}, htmlCode=htmlCode, profile=profile)
     # Add all the internal components input, label, icon and helper
     self.input = self._report.ui.inputs.d_date(self.vals)
-    self.input.add_attrs({"class": ['time']})
+    self.input.attributes({"class": ['time']})
     self.prepend_child(self.input)
     self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)})
     if self.icon is not None:
@@ -77,7 +77,7 @@ class DatePicker(Html.Html):
     return self.input.jsGenerate(jsData, jsDataKey, isPyData, jsParse, jsStyles, jsFnc)
 
   def __str__(self):
-    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.strAttr(pyClassNames=['CssDivNoBorder', 'CssDivCursor']), 'helper': self.helper}
+    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=['CssDivNoBorder', 'CssDivCursor']), 'helper': self.helper}
 
 
 class TimePicker(Html.Html):
@@ -89,7 +89,7 @@ class TimePicker(Html.Html):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
     # Add the internal components (label, icon)
     self.input = self._report.ui.inputs.d_time(value)
-    self.input.add_attrs({"class": ['time']})
+    self.input.attributes({"class": ['time']})
     self.prepend_child(self.input)
     self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)})
     if self.icon is not None:
@@ -156,7 +156,7 @@ class TimePicker(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.strAttr(pyClassNames=self.defined), 'helper': self.helper}
+    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'helper': self.helper}
 
 
 class CountDownDate(Html.Html):
@@ -198,7 +198,7 @@ class CountDownDate(Html.Html):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.jsUpdateDataFnc)
 
   def __str__(self):
-    return '<div %s><span></span>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return '<div %s><span></span>%s</div>' % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
 
 
 class LastUpdated(Html.Html):
@@ -214,4 +214,4 @@ class LastUpdated(Html.Html):
       self.css("font-size", "%s%s" % (size[0], size[1]))
 
   def __str__(self):
-    return '<div %(strAttr)s>%(content)s</div>' % {'strAttr': self.strAttr(pyClassNames=['CssDivNoBorder']), 'content': self.vals}
+    return '<div %(strAttr)s>%(content)s</div>' % {'strAttr': self.get_attrs(pyClassNames=['CssDivNoBorder']), 'content': self.vals}

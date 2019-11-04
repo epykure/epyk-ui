@@ -14,7 +14,7 @@ class Output(Html.Html):
   name, category, callFnc = 'Output', 'Inputs', '_output'
 
   def __str__(self):
-    return '<output %(strAttr)s>%(val)s</output>' % {'strAttr': self.strAttr(pyClassNames=self.pyStyle), 'val': self.vals}
+    return '<output %(strAttr)s>%(val)s</output>' % {'strAttr': self.get_attrs(pyClassNames=self.pyStyle), 'val': self.vals}
 
 
 class Input(Html.Html):
@@ -24,8 +24,8 @@ class Input(Html.Html):
   def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(Input, self).__init__(report, text, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                 heightUnit=height[1], globalFilter=filter, profile=profile, options=options)
-    self.add_attrs({"placeholder": placeholder, "type": "text", "value": text, "spellcheck": False})
-    self.add_attrs(attrs)
+    self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": text, "spellcheck": False})
+    self.set_attrs(attrs=attrs)
 
   def empty(self): return 'document.getElementById("%s").value = ""' % self.htmlId
 
@@ -54,7 +54,7 @@ class Input(Html.Html):
     return self
 
   def __str__(self):
-    return '<input %(strAttr)s />' % {'strAttr': self.strAttr(pyClassNames=self.pyStyle)}
+    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.pyStyle)}
 
 
 class InputTime(Input):
@@ -126,7 +126,7 @@ class InputRange(Input):
     super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options,
                                      attrs, profile)
     self.output = self._report.ui.inputs._output(text)
-    self.add_attrs({"min": min, "max": max, "step": step, "oninput": "%s.value=this.value" % self.output.htmlId})
+    self.set_attrs(attrs={"min": min, "max": max, "step": step, "oninput": "%s.value=this.value" % self.output.htmlId})
 
 
 class TextArea(Html.Html):
@@ -144,7 +144,7 @@ class TextArea(Html.Html):
       del options["selectable"]
 
     options.update({"rows": rows, "placeholder": placeholder or ""})
-    self.add_attrs(options)
+    self.set_attrs(attrs=options)
 
   def jsAppend(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
     return "%s.append(%s+ '\\r\\n')" % (self.jqId, self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc))
@@ -154,7 +154,7 @@ class TextArea(Html.Html):
   def empty(self): return 'document.getElementById("%s").value = ""' % self.htmlId
 
   def __str__(self):
-    return '<textarea %(strAttr)s></textarea>' % {"strAttr": self.strAttr(pyClassNames=['CssInputTextArea'])}
+    return '<textarea %(strAttr)s></textarea>' % {"strAttr": self.get_attrs(pyClassNames=['CssInputTextArea'])}
 
 
 class Search(Html.Html):
@@ -221,7 +221,7 @@ class Search(Html.Html):
       <div %(attr)s>
           <input class="%(pyCssCls)s" type="text" name="search" placeholder="%(placeholder)s" spellcheck="false">
           <span id="%(htmlId)s_button" class="fas fa-search"></span>
-      </div>''' % {"attr": self.strAttr(pyClassNames=self.__pyStyle), "pyCssCls": pyCssCls, "placeholder": self.placeholder,
+      </div>''' % {"attr": self.get_attrs(pyClassNames=self.__pyStyle), "pyCssCls": pyCssCls, "placeholder": self.placeholder,
                    'htmlId': self.htmlId}
 
 

@@ -101,9 +101,9 @@ class SelectDropDown(Html.Html):
   def __str__(self):
     return ''' 
       <div class="dropdown" %(cssAttr)s>
-        <button id="%(htmlId)s_button" class="%(class)s" style="font-size:%(size)s;width:100%%;height:100%%;background-color:%(darkBlue)s;color:%(color)s" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">%(title)s<span class="caret"></span></button>
+        <button id="%(htmlId)s_button" style="font-size:%(size)s;width:100%%;height:100%%;background-color:%(darkBlue)s;color:%(color)s" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">%(title)s<span class="caret"></span></button>
         <ul class="dropdown-menu" id="%(htmlId)s" aria-labelledby="dropdownMenu"></ul>
-      </div> ''' % {'cssAttr': self.strAttr(withId=False, pyClassNames=[s for s in self.__pyStyle if not s.startswith("CssDropDown")]), 'class': self.getClass(), 'title': self.title, 'htmlId': self.htmlId,
+      </div> ''' % {'cssAttr': self.get_attrs(withId=False, pyClassNames=[s for s in self.defined if not s.startswith("CssDropDown")]), 'title': self.title, 'htmlId': self.htmlId,
                     'darkBlue': self.getColor('colors', 7), 'color': self.getColor('greys', 0), 'size': self.size}
 
   def to_word(self, document):
@@ -239,9 +239,9 @@ class Select(Html.Html):
     if self.label != "":
       self.label.html()
     if self.multiple:
-      return '''<div %(strAttr)s>%(label)s<select multiple></select></div>''' % {"strAttr": self.strAttr(pyClassNames=self.__pyStyle), "label": self.label}
+      return '''<div %(strAttr)s>%(label)s<select multiple></select></div>''' % {"strAttr": self.get_attrs(pyClassNames=self.__pyStyle), "label": self.label}
 
-    return '''<div %(strAttr)s>%(label)s<select></select></div>''' % {"strAttr": self.strAttr(pyClassNames=self.__pyStyle), "label": self.label}
+    return '''<div %(strAttr)s>%(label)s<select></select></div>''' % {"strAttr": self.get_attrs(pyClassNames=self.__pyStyle), "label": self.label}
 
   def to_xls(self, workbook, worksheet, cursor):
     if self.htmlId in self._report.http:

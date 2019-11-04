@@ -37,7 +37,7 @@ class Image(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   @staticmethod
   def matchMarkDown(val): return re.findall("!\[([a-zA-Z 0-9]*)\]\(([:a-zA-Z \-\"/.0-9]*)\)", val)
@@ -78,7 +78,7 @@ class AnimatedImage(Html.Html):
       <div %s>
         <img />
         <div class="mask"><h2></h2><p></p><a class="info" style="cursor:pointer">Enter</a></div>
-      </div>''' % self.strAttr(pyClassNames=self.defined)
+      </div>''' % self.get_attrs(pyClassNames=self.defined)
 
 
 class ImgCarrousel(Html.Html):
@@ -118,7 +118,7 @@ class ImgCarrousel(Html.Html):
     return '''
       <ul %(strAttr)s></ul>
       <div id="%(htmlId)s_bullets" %(clsTag)s></div>
-      ''' % {'strAttr': self.strAttr(pyClassNames=self.defined),
+      ''' % {'strAttr': self.get_attrs(pyClassNames=self.defined),
              'htmlId': self.htmlId, 'clsTag': self._report.style.getClsTag(self.defined.clsAltMap)}
 
 
@@ -133,7 +133,7 @@ class Icon(Html.Html):
               "font-size": "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
     self.attr['class'].add(value)
     if tooltip is not None:
-      self.addAttr("title", tooltip)
+      self.set_attrs(name="title", value=tooltip)
 
   @property
   def val(self):
@@ -158,7 +158,7 @@ class Icon(Html.Html):
   def onDocumentLoadFnc(self): return True
 
   def __str__(self):
-    return '<i aria-hidden="true" %s></i>' % (self.strAttr(pyClassNames=self.pyStyle))
+    return '<i aria-hidden="true" %s></i>' % (self.get_attrs(pyClassNames=self.pyStyle))
 
 
 """
@@ -211,4 +211,4 @@ class Badge(Html.Html):
     return self.dom
 
   def __str__(self):
-    return '<span %s>%s</span>' % (self.strAttr(), self.vals)
+    return '<span %s>%s</span>' % (self.get_attrs(), self.vals)

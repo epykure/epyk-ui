@@ -6,7 +6,7 @@ rpt = Report()
 
 
 form = rpt.ui.forms.input("youpi", title="Title", label="data")
-form.row(1).input.addAttr("placeholder", "youpi")
+form.row(1).input.set_attrs(name="placeholder", value="youpi")
 
 #form.add_input("test", "RRR")
 form.add_input("test", "ok")

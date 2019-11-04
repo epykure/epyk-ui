@@ -51,7 +51,7 @@ class DownloadMemoryZip(Html.Html):
             $.ajax({url: %(url)s, type: "POST", contentType: attr("enctype", "multipart/form-data"),
                     data: %(archive)s, success: success})
         })''' % {'htmlId': self.htmlId, 'url': "", 'archive': self.zf})
-    return '<button %s>%s</button>' % (self.strAttr(), self.vals)
+    return '<button %s>%s</button>' % (self.get_attrs(), self.vals)
 
 
 class DropFile(Html.Html):
@@ -103,7 +103,7 @@ class DropFile(Html.Html):
     return '''
       <div %(strAttr)s><b><i class="fas fa-cloud-upload-alt" style="font-size:20px"></i>&nbsp;&nbsp;%(vals)s</b></div>
       <input id="%(htmlId)s_report" style="display:none;" value="%(envs)s"/>
-      ''' % {'htmlId': self.htmlId, 'strAttr': self.strAttr(pyClassNames=self.__pyStyle), 'vals': self.vals, 'envs': self.report_name}
+      ''' % {'htmlId': self.htmlId, 'strAttr': self.get_attrs(pyClassNames=self.__pyStyle), 'vals': self.vals, 'envs': self.report_name}
 
 
 class DropConfiguration(Html.Html):
@@ -134,4 +134,4 @@ class DropConfiguration(Html.Html):
     return '''
       <div %(strAttr)s><b><i class="fas fa-cloud-upload-alt" style="font-size:20px"></i>&nbsp;&nbsp;%(vals)s</b></div>
       <input id="%(htmlId)s_report" style="display:none;" value="%(envs)s"/>
-      ''' % {'htmlId': self.htmlId, 'strAttr': self.strAttr(pyClassNames=self.__pyStyle), 'vals': self.vals, 'envs': self._report.run.report_name}
+      ''' % {'htmlId': self.htmlId, 'strAttr': self.get_attrs(pyClassNames=self.__pyStyle), 'vals': self.vals, 'envs': self._report.run.report_name}

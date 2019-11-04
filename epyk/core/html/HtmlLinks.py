@@ -27,7 +27,7 @@ class ExternalLink(Html.Html):
     if not 'url' in self.vals:
       self.vals['url'] = self.vals['text']
     if 'target' in options:
-      self.addAttr("target", options['target'])
+      self.set_attrs(name="target", value=options['target'])
     self.decoration, self.options, self.__url = decoration, options, {}
 
   def onDocumentLoadFnc(self):
@@ -35,7 +35,7 @@ class ExternalLink(Html.Html):
       htmlObj.append(data.text); htmlObj.attr('href', data.url)''', 'Javascript Object builder')
 
   def __str__(self):
-    return '<a %s></a>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<a %s></a>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -109,7 +109,7 @@ class DataLink(Html.Html):
     return super(DataLink, self).click(self.dom.onclick('var csv = %s; var data = new Blob([csv]); this.href = URL.createObjectURL(data)' % data).toStr())
 
   def __str__(self):
-    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.strAttr(pyClassNames=self.defined), 'val': self.vals, 'format': self.format}
+    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'val': self.vals, 'format': self.format}
 
 
 class Bridge(Html.Html):
@@ -146,7 +146,7 @@ class Bridge(Html.Html):
   def __str__(self):
     if self._report.user != "anonymous":
       return "<a %(attr)s onclick='NodeBridge(\"%(scriptName)s\", \"%(reportName)s\", \"%(url)s\", {%(pmts)s})' href='#'>%(vals)s</a>" % {
-        'attr': self.strAttr(pyClassNames=self.defined), 'scriptName': self.scriptName, 'reportName': self.reportName,
+        'attr': self.get_attrs(pyClassNames=self.defined), 'scriptName': self.scriptName, 'reportName': self.reportName,
         'url': self.url, 'pmts': ",".join(self.pmts), 'vals': self.vals}
 
     return ""

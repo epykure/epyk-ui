@@ -35,7 +35,7 @@ class Button(Html.Html):
 
     if tooltip is not None:
       self.tooltip(tooltip)
-    self.attr_data("count", 0)
+    self.set_attrs("data-count", 0)
 
   @property
   def id_container(self):
@@ -156,15 +156,15 @@ class Button(Html.Html):
     Change the color of the button background when the mouse is hover
     """
     self.css({"border": "1px solid %s" % color})
-    self.addAttr("onmouseover", "this.style.backgroundColor='%s';this.style.color='white'" % color)
-    self.addAttr("onmouseout", "this.style.backgroundColor=\'white\';this.style.color=\'%s\';" % color)
+    self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)
+    self.set_attrs(name="onmouseout", value="this.style.backgroundColor=\'white\';this.style.color=\'%s\';" % color)
     return self
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, 'htmlObj.empty(); htmlObj.append(data)', 'Javascript Object builder')
 
   def __str__(self):
-    return '<button %s></button>' % (self.strAttr(pyClassNames=self.defined))
+    return '<button %s></button>' % (self.get_attrs(pyClassNames=self.defined))
 
   @staticmethod
   def matchMarkDown(val):
@@ -356,7 +356,7 @@ class Checkbox(Html.Html):
           <label style='cursor:inherit;margin:0;padding:0;font-style:italic;color:%(color)s;white-space:nowrap'>Select All</label>
         </div>''' % {"color": self.getColor("colors", 5), 'htmlId': self.htmlId}
 
-    return '<div %(strAttr)s><div name="checks"></div></div>' % {'strAttr': self.strAttr(pyClassNames=['CssDivNoBorder'])}
+    return '<div %(strAttr)s><div name="checks"></div></div>' % {'strAttr': self.get_attrs(pyClassNames=['CssDivNoBorder'])}
 
   def to_word(self, document):
     from docx.shared import RGBColor
@@ -479,7 +479,7 @@ class CheckButton(Html.Html):
     return '''
       <div %s>
         <div name="check_box" style="display:inline-block;vertical-align:bottom;margin-right:5px;float:left;width:16px;height:16px"></div>
-      </div>''' % (self.strAttr(pyClassNames=self.defined))
+      </div>''' % (self.get_attrs(pyClassNames=self.defined))
 
 
 class IconEdit(Html.Html):
@@ -514,11 +514,11 @@ class IconEdit(Html.Html):
       color_out = self.getColor('success', 1)
     else:
       self.icon.css({"color": color_out})
-    self.icon.addAttr("onmouseover", "this.style.color='%s'" % color_hover)
-    self.icon.addAttr("onmouseout", "this.style.color='%s'" % color_out)
+    self.icon.set_attrs(name="onmouseover", value="this.style.color='%s'" % color_hover)
+    self.icon.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
     return self
 
-  def __str__(self): return "<div %s></div>" % (self.strAttr(pyClassNames=self.defined))
+  def __str__(self): return "<div %s></div>" % (self.get_attrs(pyClassNames=self.defined))
 
 
 # class IconThumbtack(IconEdit):

@@ -60,7 +60,7 @@ class UpDown(Html.Html):
              'relMove': self._report.js.number("relMove", isPyData=False).toFormattedNumber(decPlaces=2)})
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
 
 class TextBubble(Html.Html):
@@ -97,7 +97,7 @@ class TextBubble(Html.Html):
       <div %(strAttr)s>
         <div %(clsTag)s style="vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
         <div class="py_csstitle"><a style="text-decoration:none"></a></div>%(helper)s
-      </div>''' % {"strAttr": self.strAttr(pyClassNames=self.defined), "clsTag": self._report.style.getClsTag(self.defined.clsAltMap),
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "clsTag": self._report.style.getClsTag(self.defined.clsAltMap),
                    'bgcolor': self.background_color, 'size': "%s%s" % (self.size[0], self.size[1]), 'color': self.color,
                    'helper': self.helper}
 
@@ -131,7 +131,7 @@ class BlockText(Html.Html):
       ''' % {"markUp": self._report.js.fncs.markUp})
 
   def __str__(self):
-    items = ['<div %s>' % self.strAttr(pyClassNames=self.defined)]
+    items = ['<div %s>' % self.get_attrs(pyClassNames=self.defined)]
     items.append('<div id="%s_title" %s style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlId, self._report.style.getClsTag(['CssTitle']), self.size+3))
     items.append('<div id="%s_p" %s style="color:%s:font-size:%spx;width:100%%;text-justify:inter-word;text-align:justify;"></div>' % (self.htmlId, self._report.style.getClsTag(['CssText']), self.color, self.size))
     if self.vals.get('button') is not None:
@@ -165,7 +165,7 @@ class TextWithBorder(Html.Html):
   def jqId(self): return "$('#%s fieldset')" % self.htmlId
 
   def __str__(self):
-    item = ['<div %s>' % self.strAttr(pyClassNames=self.defined)]
+    item = ['<div %s>' % self.get_attrs(pyClassNames=self.defined)]
     item.append('<fieldset style="color:%s">' % self.vals['color'])
     if 'icon' in self.vals:
       self.vals['align'] = self.align
@@ -221,7 +221,7 @@ class Vignet(Html.Html):
       })""" % {"htmlId": self.htmlId, 'data': jsData})
 
   def __str__(self):
-    items = ["<div %s>" % (self.strAttr(pyClassNames=self.defined))]
+    items = ["<div %s>" % (self.get_attrs(pyClassNames=self.defined))]
     tooltip = ' title="%s"' % self.tooltip if self.tooltip is not None else ' '
     if 'icon' in self.vals:
       items.append('<div style="position:relative;float:left;font-size:3em"><i class="%(icon)s"></i></div>' % self.vals)
@@ -283,7 +283,7 @@ class Delta(Html.Html):
       <div id="%(htmlId)s_progress" style="height:10px;color:%(color)s"></div>
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
-      </div>''' % {"strAttr": self.strAttr(pyClassNames=self.defined), "size": self.size+12, 'htmlId': self.htmlId, "color": self.vals['color'],
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "size": self.size + 12, 'htmlId': self.htmlId, "color": self.vals['color'],
                    "greyColor": self.getColor("greys", 6), "helper": self.helper}
 
   @staticmethod
@@ -344,7 +344,7 @@ class DocScript(Html.Html):
         <div style="color:%s;font-size:%s;font-weight:bold;">%s</div>
         <pre style="padding:5px"></pre>
         <span style="font-style:italic;width:100%%;text-align:right;display:block;margin-top:-15px">%s</span>
-      </div> ''' % (self.strAttr(pyClassNames=self.defined), self.color, self.size, self.vals['title'], label)
+      </div> ''' % (self.get_attrs(pyClassNames=self.defined), self.color, self.size, self.vals['title'], label)
 
 
 class Prism(Html.Html):
@@ -357,7 +357,7 @@ class Prism(Html.Html):
     self.isEditable = isEditable
     self.trimSpaces = trimSpaces
     self.css({'font-size': "%s%s" % (size[0], size[1])})
-    self.addClass('language-%s' % language)
+    self.style.addCls('language-%s' % language)
     if align == 'center':
       self.css('margin', 'auto')
 
@@ -388,7 +388,7 @@ class Prism(Html.Html):
           </tr>
         </table>
         <div style="display:inline-block;margin:0;padding:0;width:100%%;text-align:right"><p style="display:inline:block;float:right;width:80px;white-space:nowrap;cursor:pointer" onclick="$('#%(htmlId)s_code').toggle()">[hide / show]</p></div>
-      </div>''' % {"strAttr": self.strAttr(), "copy": copy.html(), "isEditable": self.isEditable,
+      </div>''' % {"strAttr": self.get_attrs(), "copy": copy.html(), "isEditable": self.isEditable,
                    "content": content, "helper": self.helper, "htmlId": self.htmlId}
 
   # -----------------------------------------------------------------------------------------
@@ -448,7 +448,7 @@ class Formula(Html.Html):
     self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''htmlObj.html(data)''')
 
   def __str__(self):
-    return '<font %s></font>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<font %s></font>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -478,7 +478,7 @@ class TrafficLight(Html.Html):
     self.add_helper(helper)
     self.add_label(label, css={"width": 'auto', 'height': 'auto', "margin-left": "%s%s" % (height[0], height[1])})
     self.css({'border-radius': '50px', 'background-color': self.vals, 'display': 'block'})
-    self.addAttr("title", tooltip)
+    self.set_attrs(name="title", value=tooltip)
     self._jsStyles = {'red': self.getColor('danger', 1), 'green': self.getColor('success', 1), 'orange': self.getColor('warning', 1)}
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -519,7 +519,7 @@ class TrafficLight(Html.Html):
       else {htmlObj.css('background-color', data)}''')
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -600,4 +600,4 @@ class ContentsTable(Html.Html):
       <div %(attr)s>
         <div id='contents_title_%(htmlId)s' style="text-align:center;margin-bottom:10px;font-size:16px;font-weight:bold">Contents [<a href='#' onclick='ChangeContents(this, "%(htmlId)s")' >hide</a>] </div>
         <div id='contents_vals_%(htmlId)s'>%(contents)s</div>
-      </div> ''' % {'attr': self.strAttr(pyClassNames=self.defined), 'contents': "<br />".join(entries), 'htmlId': self.htmlId}
+      </div> ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'contents': "<br />".join(entries), 'htmlId': self.htmlId}

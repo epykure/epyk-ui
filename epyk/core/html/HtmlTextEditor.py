@@ -177,7 +177,7 @@ class Editor(Html.Html):
         </span>
       </div>
       <textarea %(attr)s>%(vals)s</textarea>
-    ''' % {'attr': self.strAttr(pyClassNames=self.defined), "vals": self.vals, 'htmlId': self.htmlId,
+    ''' % {'attr': self.get_attrs(pyClassNames=self.defined), "vals": self.vals, 'htmlId': self.htmlId,
            "cssStyle": self._report.style.cssName("CssSmallIcon"),
            'strTime': self.strTime, 'events': "".join(events), "title": self.title, "title4": title4}
 
@@ -277,7 +277,7 @@ class Console(Html.Html):
           </td>
         </tr>
       </table>
-      ''' % {'attr': self.strAttr(), 'htmlId': self.htmlId, 'runButton': runButton, 'tdRunCss': self._report.style.cssName('CssTdEditor'), 'saveButton': saveButton,
+      ''' % {'attr': self.get_attrs(), 'htmlId': self.htmlId, 'runButton': runButton, 'tdRunCss': self._report.style.cssName('CssTdEditor'), 'saveButton': saveButton,
              'blackColor': self.getColor('greys', 9), 'whiteColor': self.getColor('greys', 0),
              'redColor': self.getColor('danger', 1), 'blueColor': self.getColor('colors', 6)}
 
@@ -313,5 +313,5 @@ class Tags(Html.Html):
         <div style='margin:0;display:inline-block;vertical-align:middle;width:90px;float:left;padding:2px 5px 0 5px;height:30px;border:1px solid %(greyColor)s'>
           <i class="%(icon)s" style="margin-right:10px"></i>%(title)s</div>
         <div id='%(htmlId)s_tags' style='padding:2px 5px 0 5px;border:1px solid %(greyColor)s;height:30px'></div>
-      </div>''' % {"attr": self.strAttr(pyClassNames=self.defined), "title": self.title, 'icon': self.icon,
+      </div>''' % {"attr": self.get_attrs(pyClassNames=self.defined), "title": self.title, 'icon': self.icon,
                    'htmlId': self.htmlId, 'greyColor': self.getColor("greys", 2)}

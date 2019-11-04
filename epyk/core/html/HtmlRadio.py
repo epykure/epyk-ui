@@ -198,7 +198,7 @@ class Radio(Html.Html):
       })''' % {'jsData': jsData, 'jsStyles': self._jsStyles, 'htmlId': self.htmlId}
 
   def __str__(self):
-    return '''<div %(strAttr)s><div></div>%(helper)s</div>''' % {"htmlId": self.htmlId, 'strAttr': self.strAttr(pyClassNames=['CssDivNoBorder']), "helper": self.helper}
+    return '''<div %(strAttr)s><div></div>%(helper)s</div>''' % {"htmlId": self.htmlId, 'strAttr': self.get_attrs(pyClassNames=['CssDivNoBorder']), "helper": self.helper}
 
 
   # -----------------------------------------------------------------------------------------
@@ -269,11 +269,11 @@ class Switch(Html.Html):
           <input type="checkbox"/>
           <label style="width:50px;display:inline-block" for="switch">&nbdp;</label>
           <p style="display:inline-block;margin-left:3px;font-weight:bold" title="%s">%s</p>
-        </div>''' % (self.strAttr(pyClassNames=self.pyStyle), self.vals['text'], self.vals['off'])
+        </div>''' % (self.get_attrs(pyClassNames=self.pyStyle), self.vals['text'], self.vals['off'])
 
     return '''
       <div %s>
         <input type="checkbox" />
         <label style="%s" for="switch">&nbdp;</label>
-      </div>''' % (self.strAttr(pyClassNames=self.pyStyle), ";".join(["%s: %s" % (k, v) for k, v in self.inputAttrs.items()]))
+      </div>''' % (self.get_attrs(pyClassNames=self.pyStyle), ";".join(["%s: %s" % (k, v) for k, v in self.inputAttrs.items()]))
 

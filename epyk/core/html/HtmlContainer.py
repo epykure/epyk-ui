@@ -52,7 +52,7 @@ class Panel(Html.Html):
     """ Return the onload, the HTML object and the javascript events """
     # No string method for a container, it will add its data in the html directly
     # The below part is the string representation
-    items = ['<div %s>' % self.strAttr(pyClassNames=self.pyStyle)]
+    items = ['<div %s>' % self.get_attrs(pyClassNames=self.pyStyle)]
     items.append('<div class="form-group py_csssdivboxmargin"><select class="form-control" id="%s_select"></select></div>' % (self.htmlId))
     for name in self.__htmlOrder:
       obj = self.__htmlRef[name].html()
@@ -107,7 +107,7 @@ class PanelSplit(Html.Html):
     # Update the HTML element with the values defined in the function call in the report
     if hasattr(self, 'jsUpdateFnc'):
       self.__addUpdtMethod(self.pyToJsData(self.vals))
-    items = ['<div %s>' % self.strAttr(pyClassNames=self.pyStyle)]
+    items = ['<div %s>' % self.get_attrs(pyClassNames=self.pyStyle)]
     items.append('<div style="%s" id="%s_left" class="panel-left">%s</div>' % ( ";".join(["%s:%s" % (k, v) for k, v in self.cssLeft.items()]), self.htmlId, self.htmlLeft.html()))
     items.append('<div style="%(style)s" id="%(htmlId)s_right" class="panel-right">%(right)s</div>' % {'style': ";".join(["%s:%s" % (k, v) for k, v in self.cssRight.items()]), 'htmlId': self.htmlId, 'right': self.htmlRight.html()})
     items.append('</div>')
@@ -160,7 +160,7 @@ class PanelDisplay(Html.Html):
   def jsState(self): return "$('#%s_toggle').is(':visible')" % self.htmlId
 
   def __str__(self):
-    items = ['<div %s>' % self.strAttr(pyClassNames=[self.pyStyle[0]])]
+    items = ['<div %s>' % self.get_attrs(pyClassNames=[self.pyStyle[0]])]
     visible, arrow = ("show", 'down') if self.showPanel else ('none', 'up')
     if self.__panelOptions.get("arrow", True):
       items.append('''
@@ -218,7 +218,7 @@ class Div(Html.Html):
     if padding is not None:
       self.css('padding', '%s' % padding)
     if editable:
-      self.addAttr('contenteditable', "true")
+      self.set_attrs(name='contenteditable', value="true")
       self.css('overflow', 'auto')
 
   def __add__(self, htmlObj):
@@ -239,7 +239,7 @@ class Div(Html.Html):
   def jsQueryData(self): return "{event_val: '', event_code: '%s'}" % self.htmlId
 
   def __str__(self):
-    return "<div %s></div>%s" % (self.strAttr(pyClassNames=self.pyStyle), self.helper)
+    return "<div %s></div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -319,7 +319,7 @@ class DragDiv(Div):
         <div id="%(htmlId)s_content" autocorrect="off" spellcheck="false" contenteditable=true style="float:left;margin-left:5px;margin-right:10px;">%(content)s</div>
         %(options)s  
       </div>
-      ''' % {'attr': self.strAttr(pyClassNames=self.pyStyle), 'icon': icon,
+      ''' % {'attr': self.get_attrs(pyClassNames=self.pyStyle), 'icon': icon,
              'content': val, 'htmlId': self.htmlId, 'options': "".join([str(delete), str(save),str(edit)])}
 
 
@@ -360,7 +360,7 @@ class Row(Html.Html):
     """ Return the HTML display of a split container"""
     self.loadStyle()
     self.jsEvents()
-    items = ['<div style="width:100%%;display:block;"><table %s><tr>' % self.strAttr(pyClassNames=self.pyStyle)]
+    items = ['<div style="width:100%%;display:block;"><table %s><tr>' % self.get_attrs(pyClassNames=self.pyStyle)]
     widths = {}
     if self.colsWith:
       for i, _ in enumerate(self.vals):
@@ -428,7 +428,7 @@ class Col(Html.Html):
     elif self.position == 'middle':
       divStyle = ' style="margin:auto"'
     self.css({"justify-content": self.position})
-    return '<div %s><div%s>%s</div></div>' % (self.strAttr(), divStyle, "".join([htmlObj.html() for htmlObj in self.vals]))
+    return '<div %s><div%s>%s</div></div>' % (self.get_attrs(), divStyle, "".join([htmlObj.html() for htmlObj in self.vals]))
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -514,7 +514,7 @@ class Grid(Html.Html):
   def html(self):
     self.loadStyle()
     self.jsEvents()
-    items = ['<div %s>' % self.strAttr(pyClassNames=self.pyStyle)]
+    items = ['<div %s>' % self.get_attrs(pyClassNames=self.pyStyle)]
     items.append('<div class="row%s">' % (' no-gutters' if self.noGlutters else ''))
     dimRow, rowIndex, colPerObj = 0, 1, {}
     for i, htmlObj in enumerate(self.vals):
@@ -783,7 +783,7 @@ class Tabs(Html.Html):
     self.jsEvents()
     self.addGlobalVar("%s_MAP_COMPONENTS" % self.htmlId, json.dumps(self.htmlMaps))
     self.addGlobalVar("%s_TAB_LOAD" % self.htmlId, json.dumps({}))
-    items, tabs = ['<ul %s>' % self.strAttr(pyClassNames=[self.pyStyle[0]])], []
+    items, tabs = ['<ul %s>' % self.get_attrs(pyClassNames=[self.pyStyle[0]])], []
     selectCss, tabCss = self._report.style.cssName(self.pyStyle[2]), self._report.style.cssName(self.pyStyle[1])
     for i, htmlObj in enumerate(self.vals):
       if self.tabNames[i] == self.selectedTab:
@@ -829,7 +829,7 @@ class IFrame(Html.Html):
     self.css({"overflow-x": 'hidden'})
 
   def __str__(self):
-    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>" % (self.vals, self.strAttr(pyClassNames=self.pyStyle))
+    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>" % (self.vals, self.get_attrs(pyClassNames=self.pyStyle))
 
 
 class Dialog(Html.Html):
@@ -859,7 +859,7 @@ class Dialog(Html.Html):
     ''' % {'title': title, 'htmlId': self.htmlId}
 
   def __str__(self):
-    return "<div %s></div>" % self.strAttr()
+    return "<div %s></div>" % self.get_attrs()
 
 
 class IconsMenu(Html.Html):
@@ -902,4 +902,4 @@ class IconsMenu(Html.Html):
     htmlIcons = []
     for action, htmlDef in self._jsActions.items():
       htmlIcons.append(htmlDef)
-    return "<div %s>%s</div>" % (self.strAttr(), "".join(htmlIcons))
+    return "<div %s>%s</div>" % (self.get_attrs(), "".join(htmlIcons))

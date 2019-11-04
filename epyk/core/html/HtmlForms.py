@@ -86,7 +86,7 @@ class Form(Html.Html):
       if css is not None:
         row.input.css(css)
       if attrs is not None:
-        row.input.add_attrs(attrs)
+        row.input.set_attrs(attrs=attrs)
     return self
 
   def add_label(self, text, css=None, position="after", for_=None, row=None):
@@ -146,7 +146,7 @@ class Form(Html.Html):
       if css is not None:
         row.button.css(css)
       if attrs is not None:
-        row.button.add_attrs(attrs)
+        row.button.set_attrs(attrs=attrs)
     return self
 
   def add_title(self, text, css=None, position="after", row=None):
@@ -231,4 +231,4 @@ class Form(Html.Html):
 
   def __str__(self):
     self.add_button("Run", css={"margin": 0}, attrs={"type": 'submit', "value": "Submit"})
-    return '<form %s></form>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<form %s></form>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)

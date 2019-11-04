@@ -309,7 +309,7 @@ class List(Html.Html):
         %(searchableStr)s
         %(dsc)s
         <ul id="%(htmlId)s" class="list-group"></ul>
-      </div>%(helper)s''' % {'searchableStr': searchableStr, 'htmlId': self.htmlId, "attr": self.strAttr(pyClassNames=self.defined, withId=False), 'blackColor': self.getColor('greys', 9),
+      </div>%(helper)s''' % {'searchableStr': searchableStr, 'htmlId': self.htmlId, "attr": self.get_attrs(pyClassNames=self.defined, withId=False), 'blackColor': self.getColor('greys', 9),
                              "icon": icon, "title": self.title, "helper": self.helper, "events": "".join(events),
                              "title4": title4, "dsc": self.dsc}
 
@@ -564,7 +564,7 @@ class ListBadge(Html.Html):
       var res = []; $('#'+ htmlId + ' li').each(function(item){
       if ($(this).children().length == 1) { res.push($( this ).find('a').html()) ;} else { res.push($( this ).html()) ;}}); return res;''',
       'Returns the HTML text of all the items in the object')
-    return '<div %s><ul></ul></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s><ul></ul></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   @staticmethod
   def matchMarkDownBlock(data): return re.match(">>>Badge", data[0])
@@ -620,7 +620,7 @@ class HtmlListAccordeon(Html.Html):
 
   def __str__(self):
     self._report.jsOnLoadFnc.add("$('li[name=%(htmlId)s_menu]').click(function(){$('#'+ this.id +' ul').toggle()})" % {'htmlId': self.htmlId})
-    return '<div %s></div>' % self.strAttr(pyClassNames=self.defined)
+    return '<div %s></div>' % self.get_attrs(pyClassNames=self.defined)
 
 
 class Bullets(Html.Html):
@@ -705,7 +705,7 @@ class Bullets(Html.Html):
     return self.jsFrg('click', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
 
   def __str__(self):
-    return '<div %s><ul style="text-align:left;vertical-align:middle;margin-bottom:0"></ul>%s</div>' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s><ul style="text-align:left;vertical-align:middle;margin-bottom:0"></ul>%s</div>' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   @classmethod
   def matchMarkDownBlock(cls, data): return re.match(">>>%s" % cls.callFnc, data[0])
@@ -765,7 +765,7 @@ class CheckList(Html.Html):
         })''', 'Javascript Object builder')
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   @classmethod
   def matchMarkDownBlock(cls, data): return re.match(">>>%s" % cls.callFnc, data[0])
@@ -932,7 +932,7 @@ class ListTree(Html.Html):
         <span style='font-weight:bold;font-size:14px'>%(title)s</span>
         %(events)s
       </div>
-      <div %(strAttr)s></div>%(helper)s''' % {'title': self.title, 'strAttr': self.strAttr(pyClassNames=self.defined), 'helper': self.helper, 'events': "".join(events)}
+      <div %(strAttr)s></div>%(helper)s''' % {'title': self.title, 'strAttr': self.get_attrs(pyClassNames=self.defined), 'helper': self.helper, 'events': "".join(events)}
 
   def setSelected(self, value):
     self._jsStyles["forceSelect"] = value
@@ -1069,6 +1069,6 @@ class ListTournaments(Html.Html):
       htmlObj.bracket( parameters )''', 'Javascript Object builder')
 
   def __str__(self):
-    return "<div %s></div>" % self.strAttr(pyClassNames=self.defined)
+    return "<div %s></div>" % self.get_attrs(pyClassNames=self.defined)
 
 

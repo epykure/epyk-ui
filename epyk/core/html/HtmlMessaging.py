@@ -197,7 +197,7 @@ class Comments(Html.Html):
           <div id="%(htmlId)s_comms"></div>
         </div>
       </div>
-      ''' % {'attr': self.strAttr(pyClassNames=self.defined), 'htmlId': self.htmlId, 'height': self._height,
+      ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'htmlId': self.htmlId, 'height': self._height,
              'inputTag': inputTag}
 
   # -----------------------------------------------------------------------------------------
@@ -280,7 +280,7 @@ class Chat(Html.Html):
           <div id="%(htmlId)s_comms"></div>
         </div>
       </div>
-      ''' % {'attr': self.strAttr(pyClassNames=self.defined), 'htmlId': self.htmlId, 'height': self._height,
+      ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'htmlId': self.htmlId, 'height': self._height,
              'inputTag': inputTag}
 
   # -----------------------------------------------------------------------------------------
@@ -332,7 +332,7 @@ class Bot(Html.Html):
           </p>
           <div id="content_bot" style="clear:both;display:block"></div>
        </div>   
-    ''' % {'attr': self.strAttr(), "name": self.name, "height": self.height[0] - 55}
+    ''' % {'attr': self.get_attrs(), "name": self.name, "height": self.height[0] - 55}
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -365,7 +365,7 @@ class Alert(Html.Html):
     self.css(self._jsStyles["css"])
     if self.close_button:
       self._jsStyles['class'] += ['alert-dismissable']
-      self.addClass(['alert-dismissable'])
+      self.style.addCls('alert-dismissable')
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' 
@@ -375,7 +375,7 @@ class Alert(Html.Html):
       htmlObj.append('<strong>'+ data.title +'!</strong>&nbsp;'+ data.value)''')
 
   def __str__(self):
-    return "<div %s></div>" % self.strAttr(pyClassNames=self.pyStyle)
+    return "<div %s></div>" % self.get_attrs(pyClassNames=self.pyStyle)
 
 
 class News(Html.Html):
@@ -400,4 +400,4 @@ class News(Html.Html):
     return "%(js_data)s;%(jqId)s.show().delay(1000);%(jqId)s.fadeOut(1000)" % {"js_data": js_data, "jqId": self.jqId}
 
   def __str__(self):
-    return "<div %s><p id='content'></p></div>" % self.strAttr(pyClassNames=self.pyStyle)
+    return "<div %s><p id='content'></p></div>" % self.get_attrs(pyClassNames=self.pyStyle)

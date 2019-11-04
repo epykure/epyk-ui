@@ -42,4 +42,4 @@ class Sparklines(Html.Html):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, 'htmlObj.sparkline(data, jsStyles)')
 
   def __str__(self):
-    return "<span %s></span>" % self.strAttr(pyClassNames=self.defined)
+    return "<span %s></span>" % self.get_attrs(pyClassNames=self.defined)

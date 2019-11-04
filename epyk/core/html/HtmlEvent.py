@@ -63,7 +63,7 @@ class ProgressBar(Html.Html):
 
     :returns: The String HTML Container of the object
     """
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -226,7 +226,7 @@ class Slider(Html.Html):
           <span style="float:right;display:inline-block">%(max)s</span>
         </div>
         <div id="%(htmlId)s"></div>
-      </div>%(helper)s''' % {"strAttr": self.strAttr(withId=False), "min": self.vals['min'], "htmlId": self.htmlId,
+      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.vals['min'], "htmlId": self.htmlId,
                      "max": self.vals['max'], "helper": self.helper}
 
   def click(self, jsFnc):
@@ -416,7 +416,7 @@ class SkillBar(Html.Html):
 
   def __str__(self):
     """ String representation of the HTML element """
-    return '<div %s><table></table></div>' % (self.strAttr(pyClassNames=self.defined))
+    return '<div %s><table></table></div>' % (self.get_attrs(pyClassNames=self.defined))
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -575,7 +575,7 @@ class ContextMenu(Html.Html):
     return '''
       <nav %(attr)s name='context_menus'>
         <ul style='list-style:none;padding:0px;margin:0'></ul>
-      </nav>''' % {'attr': self.strAttr(pyClassNames=self.pyStyle)}
+      </nav>''' % {'attr': self.get_attrs(pyClassNames=self.pyStyle)}
 
 
 class OptionsBar(Html.Html):
@@ -606,7 +606,7 @@ class OptionsBar(Html.Html):
       if not 'tooltip' in rec:
         rec['tooltip'] = ''
       icons.append('<i class="%(icon)s %(cssIcon)s" style="font-size:%(size)s" title="%(tooltip)s" onclick="var data={event_val:\'%(icon)s\'};%(jsFnc)s"></i>' % rec)
-    return '<div %(attrs)s>%(icons)s</div>' % {'attrs': self.strAttr(pyClassNames=self.defined), 'icons': "".join(icons)}
+    return '<div %(attrs)s>%(icons)s</div>' % {'attrs': self.get_attrs(pyClassNames=self.defined), 'icons': "".join(icons)}
 
 
 class SignIn(Html.Html):
@@ -622,13 +622,13 @@ class SignIn(Html.Html):
   def __str__(self):
     self._report.user = "o"
     if self._report.user == 'local':
-      self.addClass(self.icon)
-      return '<i title="Guest Mode" %(attrs)s></i>' % {'size': self.size, 'attrs': self.strAttr(pyClassNames=self.pyStyle)}
+      self.style.addCls(self.icon)
+      return '<i title="Guest Mode" %(attrs)s></i>' % {'size': self.size, 'attrs': self.get_attrs(pyClassNames=self.pyStyle)}
 
     return '''
       <div title="%(user)s" %(attrs)s>
         <p style="margin:auto">%(letter)s</p>
-      </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self._report.user, 'attrs': self.strAttr(pyClassNames=self.pyStyle)}
+      </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self._report.user, 'attrs': self.get_attrs(pyClassNames=self.pyStyle)}
 
 
 class Filters(Html.Html):
@@ -642,7 +642,7 @@ class Filters(Html.Html):
     self.css({"font-size": "%s%s" % (size[0], size[1]), "font-family": report.style.defaults.font.family})
     self._jsStyles = {'items': {'display': 'inline-block', 'padding': '1px 4px',
                                 'color': self.getColor('colors', -1), 'margin': '2px', 'border-radius': '5px', 'background-color': self.getColor('colors', 0)}}
-    self.addClass('scroll_content')
+    self.style.addCls('scroll_content')
 
   @property
   def jqId(self): return "$('#%s_div')" % self.htmlId
@@ -750,6 +750,6 @@ class Filters(Html.Html):
         <div id='%(htmlId)s'></div>
       </div>
       <div style='font-size:9px;margin:0 0 5px auto;width:40px;font-style:italic;cursor:pointer' onclick="%(click)s"><i class="fas fa-times-circle" style="font-size:9px;margin-right:2px"></i>clear</div>
-      ''' % {'htmlId': "%s_div" % self.htmlId, 'cssAttr': self.strAttr(pyClassNames=[s for s in self.defined if s not in ['CssDivFilterItems']]),
+      ''' % {'htmlId': "%s_div" % self.htmlId, 'cssAttr': self.get_attrs(pyClassNames=[s for s in self.defined if s not in ['CssDivFilterItems']]),
              'click': self.jsClear()}
 

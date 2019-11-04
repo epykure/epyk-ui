@@ -46,7 +46,7 @@ class Popup(Html.Html):
         self._report.jsImports.add('jqueryui')
         self._report.cssImport.add('jqueryui')
         self._report.jsOnLoadFnc.add("%s.draggable()" % self.jqId)
-    self.addAttr("name", "report_popup")
+    self.set_attrs(name="name", value="report_popup")
     self._report.keyboard(27, "$('div[name=report_popup]').hide()")
 
   @property
@@ -160,7 +160,7 @@ class Popup(Html.Html):
     self._report.jsOnLoadFnc.add(''' 
       $('#%(htmlId)s').on('click', function(e) {if(e.target == this) {$('#%(htmlId)s').hide()}});
       $('.scroll_content').mCustomScrollbar()''' % {"htmlId": self.htmlId})
-    return '''<div %s>%s</div>''' % (self.strAttr(pyClassNames=self.pyStyle), content)
+    return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.pyStyle), content)
 
   @property
   def val(self):

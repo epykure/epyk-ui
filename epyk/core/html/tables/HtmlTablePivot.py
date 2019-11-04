@@ -145,7 +145,7 @@ class PivotTable(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %(strAttr)s><div></div></div>%(helper)s' % {'strAttr': self.strAttr(pyClassNames=self.defined), "helper": self.helper}
+    return '<div %(strAttr)s><div></div></div>%(helper)s' % {'strAttr': self.get_attrs(pyClassNames=self.defined), "helper": self.helper}
 
 
   # -----------------------------------------------------------------------------------------

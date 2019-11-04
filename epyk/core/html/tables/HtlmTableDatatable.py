@@ -126,5 +126,5 @@ class DataTable(Html.Html):
     return self
 
   def __str__(self):
-    return "<table %s></table>" % (self.strAttr(pyClassNames=self.defined))
+    return "<table %s></table>" % (self.get_attrs(pyClassNames=self.defined))
 

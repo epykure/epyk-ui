@@ -28,7 +28,7 @@ class Row(Html.Html):
     return "<tr>%s</tr>" % "".join(_row)
 
   def __str__(self):
-    return "<tr %s></tr>" % (self.strAttr(pyClassNames=self.pyStyle))
+    return "<tr %s></tr>" % (self.get_attrs(pyClassNames=self.pyStyle))
 
 
 class Cell(Html.Html):
@@ -42,7 +42,7 @@ class Cell(Html.Html):
     return "<td style='%s'>%s</td>" % (";".join(style), cell)
 
   def __str__(self):
-    return "<td %s></td>" % (self.strAttr(pyClassNames=self.pyStyle))
+    return "<td %s></td>" % (self.get_attrs(pyClassNames=self.pyStyle))
 
 
 class Bespoke(Html.Html):
@@ -138,7 +138,7 @@ class Bespoke(Html.Html):
         css_row.update(self._style['row'][i])
       _data.append(Row.to_html(_row, css=css_row, css_cols=self._style.get('cols', {})))
     _data.append("</tbody>")
-    return "<table %s>%s</table>" % (self.strAttr(pyClassNames=self.defined), "".join(_data))
+    return "<table %s>%s</table>" % (self.get_attrs(pyClassNames=self.defined), "".join(_data))
 
 
 class Excel(Html.Html):
@@ -211,4 +211,4 @@ class Excel(Html.Html):
       delimiter = '<input id="%s_delimiter" type="text" value="%s" style="display:none" placeholder="Line delimiter"/>' % (
           self.htmlId, self.delimiter)
     return '<div %(strAttr)s>%(delimiter)s<table style="width:100%%"></table></div>' % {
-      'strAttr': self.strAttr(pyClassNames=self.defined), 'delimiter': delimiter}
+      'strAttr': self.get_attrs(pyClassNames=self.defined), 'delimiter': delimiter}

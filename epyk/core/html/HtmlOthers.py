@@ -24,7 +24,7 @@ class Hr(Html.Html):
 
   def __str__(self):
     hr = '<hr style="height:%spx;background-color:%s">' % ("%s%s" % (self.size[0], self.size[1]), self.background_color) if self.size is not None else '<hr style="background-color:%s" />' % self.backgroundColor
-    return '<div %s>%s</div>' % (self.strAttr(pyClassNames=self.defined), "".join(self.vals * [hr]))
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), "".join(self.vals * [hr]))
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -134,7 +134,7 @@ class Stars(Html.Html):
         else {$(this).css('color', '')}})''', 'Javascript Object builder')
 
   def __str__(self):
-    stars = ["<div %s>" % self.strAttr(pyClassNames=self.defined)]
+    stars = ["<div %s>" % self.get_attrs(pyClassNames=self.defined)]
     for i in range(self.best):
       stars.append('<span data-level="%s" class="fa fa-star"></span>' % (i+1))
     stars.append("%s</div>" % self.helper)
@@ -156,7 +156,7 @@ class Help(Html.Html):
   def onDocumentLoadFnc(self): return True
 
   def __str__(self):
-    return '<i %s></i>' % self.strAttr()
+    return '<i %s></i>' % self.get_attrs()
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -176,6 +176,6 @@ class Loading(Html.Html):
 
   def __str__(self):
     if self.vals is None:
-      return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />Loading...</div>' % (self.strAttr(withId=False, pyClassNames=self.defined))
+      return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />Loading...</div>' % (self.get_attrs(withId=False, pyClassNames=self.defined))
 
-    return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />%s...</div>' % (self.strAttr(withId=False, pyClassNames=self.defined), self.vals)
+    return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />%s...</div>' % (self.get_attrs(withId=False, pyClassNames=self.defined), self.vals)

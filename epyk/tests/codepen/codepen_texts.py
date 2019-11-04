@@ -33,7 +33,7 @@ rptObj.ui.texts.highlights("This is a news", title="Important news")
 
 # Add a context menu to the title
 menu = rptObj.ui.context_menu([{"text": 'text', 'event': 'alert("ok")'}])
-title.attach_menu(menu)
+title.add_menu(menu)
 
 # Add a button with an alert when clicked
 button = rptObj.ui.button("click me")

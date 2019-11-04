@@ -311,7 +311,7 @@ class HtmlParamsBar(Html.Html):
       <div id="param_bar" class="%(clsParamBar)s" style="bottom:%(bottom)spx;border-bottom:1px solid %(border)s;z-index:30">
         <i class="fas fa-play" onclick="BreadCrumbClick(%(url)s)" style="margin-right:30px;cursor:pointer"></i><div %(strAttr)s></div>
       </div> ''' % {'bottom': 0, 'clsParamBar': self._report.style.cssName("CssParamsBar"),
-                    'strAttr': self.strAttr(pyClassNames=['CssBasicList']), "border": self.getColor("greys", 5), "url": self.jsToUrlReset()}
+                    'strAttr': self.get_attrs(pyClassNames=['CssBasicList']), "border": self.getColor("greys", 5), "url": self.jsToUrlReset()}
 
 
 class HtmlSideBar(Html.Html):
@@ -437,7 +437,7 @@ class HtmlSideBar(Html.Html):
           </div>
 
         </div>
-      </div>''' % {"strAttr": self.strAttr(pyClassNames=self.defined),
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined),
                    'report_name': self._report.run.report_name, 'urlReport': "",
                    'cssDef': self._report.style.cssName(styleBarBulble),
                    'cssSideBarMenu': "",

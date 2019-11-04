@@ -38,7 +38,7 @@ class Media(Html.Html):
                       'Javascript Object builder')
 
   def __str__(self):
-    return '''<div %s><video style="width:100%%" controls></video></div>''' % self.strAttr(pyClassNames=self.defined)
+    return '''<div %s><video style="width:100%%" controls></video></div>''' % self.get_attrs(pyClassNames=self.defined)
 
 
 class Audio(Html.Html):
@@ -69,7 +69,7 @@ class Audio(Html.Html):
     options = ["controls"]
     if self.autoplay:
       options.append("autoplay")
-    return '''<div %(attrs)s><audio style="width:100%%" %(options)s></audio></div>''' % {'attrs': self.strAttr(pyClassNames=self.defined), "options": " ".join(options)}
+    return '''<div %(attrs)s><audio style="width:100%%" %(options)s></audio></div>''' % {'attrs': self.get_attrs(pyClassNames=self.defined), "options": " ".join(options)}
 
 
 class Youtube(Html.Html):
@@ -83,4 +83,4 @@ class Youtube(Html.Html):
   def __str__(self):
     return '''
       <div %(attrs)s><iframe width="420" height="315" type="text/html" src="%(link)s"> </iframe></div>
-      ''' % {'attrs': self.strAttr(pyClassNames=self.defined), 'link': self.vals}
+      ''' % {'attrs': self.get_attrs(pyClassNames=self.defined), 'link': self.vals}

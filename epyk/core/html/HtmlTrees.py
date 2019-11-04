@@ -146,7 +146,7 @@ class Tree(Html.Html):
         <span style='font-weight:bold;font-size:14px'>%(title)s</span>
         <div style="width:100%%">%(events)s</div>
       </div>
-      <div %(strAttr)s></div>%(helper)s''' % {'title': self.title, 'strAttr': self.strAttr(pyClassNames=[]), 'helper': self.helper, 'events': "".join(events)}
+      <div %(strAttr)s></div>%(helper)s''' % {'title': self.title, 'strAttr': self.get_attrs(pyClassNames=[]), 'helper': self.helper, 'events': "".join(events)}
 
   def setSelected(self, value):
     self._jsStyles["forceSelect"] = value

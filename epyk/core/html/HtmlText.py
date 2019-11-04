@@ -25,7 +25,7 @@ class Label(Html.Html):
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]) if size[0] is not None else 'inherit', 'text-align': align})
     self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block'})
     if tooltip:
-      self.addAttr('title', tooltip)
+      self.set_attrs(name='title', value=tooltip)
 
   @property
   def id_container(self):
@@ -71,7 +71,7 @@ class Label(Html.Html):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, "htmlObj.html(data)")
     
   def __str__(self):
-    return '<label %s>%s</label>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.vals, self.helper)
+    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.vals, self.helper)
 
 
 class Span(Html.Html):
@@ -130,7 +130,7 @@ class Span(Html.Html):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, "htmlObj.html(data)")
 
   def __str__(self):
-    return '<span %s>%s</span>%s' % (self.strAttr(pyClassNames=self.pyStyle), self.vals, self.helper)
+    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.vals, self.helper)
 
 
 class Text(Html.Html):
@@ -196,7 +196,7 @@ class Text(Html.Html):
     return str(self)
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -251,7 +251,7 @@ class Code(Html.Html):
             $.post("/%(url)s", {content: content.slice(4, content.length), title: '%(title)s'}, function(data){location.reload()})});   
           })''' % {'jqId': self.jqId, "url": self.editable, 'htmlId': self.htmlId, 'backGroundColor': self.getColor('colors', 5),
                    'whiteColor': self.getColor('greys', 0), 'title': self.scriptTitle})
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
 
 class Pre(Html.Html):
@@ -280,7 +280,7 @@ class Pre(Html.Html):
         htmlObj.empty(); if(jsStyles.markdown){htmlObj.html(%(markdown)s)} else{htmlObj.html(data)}''' % {"markdown": markdown})
 
   def __str__(self):
-    return '<pre %s></pre>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<pre %s></pre>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
 
 class Paragraph(Html.Html):
@@ -339,7 +339,7 @@ class Paragraph(Html.Html):
         var p = $("<p></p>").css(jsStyles.style[i]).html(JsMarkUp(line)); htmlObj.append(p)})''')
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -391,7 +391,7 @@ class BlockQuote(Html.Html):
       <blockquote %s>
           <div style="padding:5px;border-left:4px solid %s"></div>
           <div style="text-align:right"></div>
-      </blockquote>%s''' % (self.strAttr(pyClassNames=self.defined), self.getColor('colors', 9), self.helper)
+      </blockquote>%s''' % (self.get_attrs(pyClassNames=self.defined), self.getColor('colors', 9), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -477,9 +477,9 @@ class Title(Html.Html):
       if not os.path.exists(filePath):
         raise Exception("Missing file %s in %s" % (self.picture, os.path.join(self._report.run.local_path, "static")))
 
-      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s</div>' % (self.strAttr(pyClassNames=self.pyStyle), path, self.picture, anchor_name, self.helper)
+      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s</div>' % (self.get_attrs(pyClassNames=self.pyStyle), path, self.picture, anchor_name, self.helper)
 
-    return '<div %s><a%s>%s</a></div>' % (self.strAttr(pyClassNames=self.defined), anchor_name, self.helper)
+    return '<div %s><a%s>%s</a></div>' % (self.get_attrs(pyClassNames=self.defined), anchor_name, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -579,7 +579,7 @@ class Numeric(Html.Html):
                         decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False))))
 
   def __str__(self):
-    return "<div %s><font></font>%s</div>" % (self.strAttr(pyClassNames=self.defined), self.helper)
+    return "<div %s><font></font>%s</div>" % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
 
 class Highlights(Html.Html):
@@ -596,15 +596,15 @@ class Highlights(Html.Html):
     self.add_icon(icon, {"float": "left"})
     # Change the style of the component
     self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit', "margin": "5px"})
-    self.addClass('alert alert-%s' % type)
-    self.addAttr('role', "alert")
+    self.style.addCls('alert alert-%s' % type)
+    self.set_attrs(name='role', value="alert")
 
   @property
   def container(self):
     return self.dom
 
   def __str__(self):
-    return "<div %s><div>%s</div></div>%s" % (self.strAttr(), self.vals, self.helper)
+    return "<div %s><div>%s</div></div>%s" % (self.get_attrs(), self.vals, self.helper)
 
 
 class SearchResult(Html.Html):
@@ -669,7 +669,7 @@ class SearchResult(Html.Html):
 
   def __str__(self):
     self._report.style.cssCls('CssDivPagination')
-    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.strAttr(pyClassNames=self.defined)
+    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(pyClassNames=self.defined)
 
 
 class Fieldset(Html.Html):
@@ -683,4 +683,4 @@ class Fieldset(Html.Html):
               'margin': '5px 0', 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
 
   def __str__(self):
-    return '<fieldset %s><legend style="font-size:inherit">%s</legend>%s</fieldset>' % (self.strAttr(pyClassNames=self.defined), self.vals, self.helper)
+    return '<fieldset %s><legend style="font-size:inherit">%s</legend>%s</fieldset>' % (self.get_attrs(pyClassNames=self.defined), self.vals, self.helper)

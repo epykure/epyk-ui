@@ -425,7 +425,7 @@ class JsRegisteredFunctions(object):
 
     :param fnc_name: The function name
     :param args: The different arguments in the function definition
-    
+
     :return: The Javascript sting
     """
     pmts = [str(JsUtils.jsConvertData(p, None)) for p in args]

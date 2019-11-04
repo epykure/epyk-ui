@@ -331,6 +331,28 @@ class Html(object):
     return "%s_%s" % (self.__class__.__name__.lower(), id(self))
 
   @property
+  def eventId(self):
+    return self.jqId
+
+  @property
+  def jqId(self):
+    """
+    Python property to get a unique Jquery ID function for a given Object
+
+    :return: Javascript String of the variable used to defined the Jquery object in Javascript
+    """
+    return "$('#%s')" % self.htmlId
+
+  @property
+  def jqDiv(self):
+    """
+    Python property to get a unique Jquery ID function for a given Object (the div as the jqId might refer to the content)
+
+    :return: Javascript String of the variable used to defined the Jquery object in Javascript
+    """
+    return "$('#%s')" % self.htmlId
+
+  @property
   def js(self):
     """
     Javascript base function
@@ -536,7 +558,7 @@ class Html(object):
       if css is not None:
         self.input.css(css)
       if attrs is not None:
-        self.input.add_attrs(attrs)
+        self.input.set_attrs(attrs=attrs)
     return self
 
   def add_helper(self, text, css=None):
@@ -558,28 +580,6 @@ class Html(object):
       if css is not None:
         self.helper.css(css)
     return self
-
-  @property
-  def jqId(self):
-    """
-    Python property to get a unique Jquery ID function for a given Object
-
-    :return: Javascript String of the variable used to defined the Jquery object in Javascript
-    """
-    return "$('#%s')" % self.htmlId
-
-  @property
-  def jqDiv(self):
-    """
-    Python property to get a unique Jquery ID function for a given Object (the div as the jqId might refer to the content)
-
-    :return: Javascript String of the variable used to defined the Jquery object in Javascript
-    """
-    return "$('#%s')" % self.htmlId
-
-  @property
-  def eventId(self):
-    return self.jqId
 
   @property
   def val(self):
@@ -617,6 +617,8 @@ class Html(object):
     if self.pyStyle is None:
       self.pyStyle = self._grpCls(self)
     return self.pyStyle
+
+
 
   @property
   def contextVal(self):
@@ -675,7 +677,7 @@ class Html(object):
     return self._report.jsPost(self.dataSrc['script'], jsData=self.dataSrc.get('jsData'), jsFnc=fncs,
                                context=self.dataSrc.get('context'), httpCodes=self.dataSrc.get('httpCodes'), profile=self.profile)
 
-  def attach_menu(self, context_menu):
+  def add_menu(self, context_menu):
     """
     Attach a context menu to an existing component. A context menu must have a component attached to otherwise
     the report will not be triggered
@@ -698,70 +700,24 @@ class Html(object):
       jsData = "%s(%s)" % (jsFnc, jsData)
     return jsData
 
-  def addClass(self, cssCls):
-    """
-    Add class to the Html object. This function is used to add an existing CSS class to a component.
-    Existing CSS class means that the definition is defined in one of the CSS external module used in the framework
-
-    Example
-    myObj.addClass('btn-default')
-
-    Documentation
-    https://www.w3schools.com/bootstrap/bootstrap_ref_all_classes.asp
-
-    :return: The Python object itself
-    """
-    if not isinstance(cssCls, list):
-      cssCls = [cssCls]
-    for css in cssCls:
-      if hasattr(css, 'classname'):
-        css = css.classname
-      self.attr['class'].add(css)
-    return self
-
-  def getClass(self):
-    """
-    Returns a string with the CSS classes to be added to the HTML attribute. This will return all the HTML classes added to the component
-    it can be Python Class generated from the CSS or internal CSS class coming from external modules
-
-    :category: CSS function
-    :rubric: CSS
-    :type: Configuration
-    :example: myObj.getClass()
-    :link HTML Classes: https://www.w3schools.com/html/html_classes.asp
-    """
-    return " ".join(self.attr['class'])
-
-  def delClass(self, cssCls):
-    """
-    Remove a class from the list of CSS classes
-
-    :category: CSS function
-    :rubric: CSS
-    :type: Configuration
-    :example: myObj.delClass( 'btn-default' )
-    """
-    self.attr['class'].pop(cssCls)
-    return self
-
   def css(self, key, value=None):
     """
     Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function
 
-    :category: Javascript function
-    :rubric: JS
+    Documentation
+    http://api.jquery.com/css/
+
     :param key: The key style in the CSS attributes (Can also be a dictionary)
     :param value: The value corresponding to the key style
-    :return: The python object itself
 
-    :link CSS Function: http://api.jquery.com/css/
+    :return: The python object itself
     """
     if value is None and isinstance(key, dict):
       # Do not add None value to the CSS otherwise it will break the page on the front end side
-      cssVals = key if isinstance(key, dict) else {}
+      css_vals = key if isinstance(key, dict) else {}
     else:
-      cssVals = {key: value}
-    for key, value in cssVals.items():
+      css_vals = {key: value}
+    for key, value in css_vals.items():
       if not 'css' in self.attr:
         # Convert the variable to something to be dump to javascript / CSS
         if isinstance(value, str):
@@ -777,142 +733,73 @@ class Html(object):
     Add the Tooltip feature when the mouse is over the component.
     This tooltip version is coming from Bootstrap
 
-    :category: Javascript function
-    :rubric: JS
-    :type: Property
-    :example: htmlObj.tooltip("My tooltip", location="bottom")
-    :link Bootstrap: https://getbootstrap.com/docs/4.1/components/tooltips/
+    Example
+    htmlObj.tooltip("My tooltip", location="bottom")
+
+    Documentation
+    https://getbootstrap.com/docs/4.1/components/tooltips/
+
+    :param value:
+    :param location:
+
     :return: The Python object self
     """
     self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-placement': location})
     self._report.jsFnc.add("%s.tooltip()" % self.jqId)
     return self
 
-  # ok
-  def uitooltip(self, value, attrs=None, jsFncs=None, url=None, jsData=None, httpCodes=None, context=None, isHtml=False):
-    """
-    Add the Tooltip feature when the mouse is over the component.
-    This tooltip version is coming for Jquery UI.
-    $.widget.bridge('uitooltip', $.ui.tooltip);
-
-    :category: Javascript function
-    :rubric: JS
-    :type: Property
-    :example: htmlObj.uitooltip(value)
-    :example: t.uitooltip("Youpi", attrs={"position": { "my": "left+15 top", "at": "right center" }, "tooltipClass":'preview-tip'}, jsFncs=["alert() "])
-    :example: t.uitooltip("Youpi", attrs={"position": { "my": "left+15 top", "at": "right center" }, "tooltipClass":'preview-tip'}, url="service.py")
-    :example: t.uitooltip("Youpi", attrs={"track": True} )
-    :example: t.uitooltip('', attrs={"content": "function(){return 'bgjg<br />hihh'}"})
-    :link Jquery: https://jqueryui.com/tooltip/#custom-content
-    :link Ajax Jquery: https://stackoverflow.com/questions/13175268/ajax-content-in-a-jquery-ui-tooltip-widget
-    :link Tooltip conflicts: https://stackoverflow.com/questions/13731400/jqueryui-tooltips-are-competing-with-twitter-bootstrap
-    :return: The Python object self
-    """
-    self._report.jsImports.add('jqueryui')
-    self._report.cssImport.add('jqueryui')
-    self._report.jsGlobal.addJs("$.widget.bridge('uitooltip', $.ui.tooltip);")
-    if attrs is None:
-      attrs = {}
-    if isHtml:
-      if not "return" in value:
-        raise Exception("Value should return an HTML string and can use the variable htmlObj")
-
-      attrs['content'] = "function(){var htmlObj = $(this); var value = htmlObj.text(); %s}" % value
-      value = ''
-    self.attr.update({'title': value})
-    if jsFncs is not None:
-      rec = ["k: %s" % json.dumps(v) for k, v in attrs.items()]
-      rec.append("content: function(callback) {%s}" % ";".join(jsFncs))
-      jsAttr = '{%s}' % ", ".join(rec)
-    elif url is not None:
-      jsFncs = self._report.jsPost(url, jsData, jsFnc="callback(data)", httpCodes=httpCodes, context=context)
-      rec = ["k: %s" % json.dumps(v) for k, v in attrs.items()]
-      rec.append("content: function(callback) {%s}" % jsFncs)
-      jsAttr = '{%s}' % ", ".join(rec)
-    else:
-      # TODO: add recursivity
-      lAttrs = []
-      for k, v in attrs.items():
-        if isinstance(v, dict):
-          sAttrs = []
-          for sk, sv in v.items():
-            if sv.startswith("function"):
-              sAttrs.append("%s: %s" % (sk, sv))
-            else:
-              sAttrs.append("%s: %s" % (sk, json.dumps(sv)))
-          lAttrs.append("%s: {%s}" % (k, ",".join(sAttrs)))
-        elif v.startswith("function"):
-          lAttrs.append("%s: %s" % (k, v))
-        else:
-          lAttrs.append("%s: %s" % (k, json.dumps(v)))
-      jsAttr = "{%s}" % ",".join(lAttrs)
-    self._report.jsFnc.add("%s.uitooltip(%s);" % (self.jqId, jsAttr ))
-    return self
-
-  def add_attrs(self, attrs):
-    """
-
-    :param attrs:
-    :return:
-    """
-    if attrs is not None:
-      for k, v in attrs.items():
-        self.addAttr(k, v)
-    return self
-
-  def attr_data(self, name, value):
-    """
-    Add data attributes to the HTML containers
-
-    Example
-    html_obj.attr_data("count", 0)
-
-    :param name: The attribute name
-    :param value: The attribute value
-    """
-    self.attr["data-%s" % name] = value
-    return self
-
-  # ok
-  def addAttr(self, name, value, isPyData=False):
+  def set_attrs(self, attrs=None, name=None, value=None):
     """
     Function to update the internal dictionary of object attributes. Those attributes will be used when the HTML component will be defined.
     Basically all sort of attributes can be defined here: CSS attributes, but also data, name...
+    Either the attrs or the tuple (name, value) can be used to add information to the dom object.
+
+    All the attributes should be Python object which are ready to use on the Javascript side.
+    For example True should be written 'true'
+
+    Tips: It is possible to use the data- attributes to store any kind of information in the dom.
 
     Documentation
-    https://www.w3schools.com/tags/ref_attributes.asp
 
-    Example
-    htmlObj.addAttr("css', {'background-color': 'red'})
-    htmlObj.addAttr("title", tooltip)
+    :param attrs: A python dictionary with the attributes
+    :param name: A python string with the name of the attribute
+    :param value: A python string with the value of the attribute
 
-    :return: The python object itself
+    :return:
     """
-    if isPyData:
-      value = json.dumps(value)
-    if name == 'css':
-      # Section for the Style attributes
-      if not 'css' in self.attr:
-        self.attr['css'] = dict(value)
+    if attrs is None and name is None:
+      raise Exception("Either the attrs or the name should be specified")
+
+    if attrs is None:
+      attrs = {name: value}
+    for k, v in attrs.items():
+      if k == 'css':
+        # Section for the Style attributes
+        if not 'css' in self.attr:
+          self.attr['css'] = dict(v)
+        else:
+          self.attr['css'].update(v)
       else:
-        self.attr['css'].update(value)
-    else:
-      # Section for all the other attributes
-      self.attr[name] = value
+        # Section for all the other attributes
+        self.attr[k] = v
     return self
 
-  # ok
-  def strAttr(self, withId=True, pyClassNames=None):
+  def get_attrs(self, withId=True, pyClassNames=None):
     """
     Return the string line with all the attributes
 
     All the attributes in the div should use double quote and not simple quote to be consistent everywhere in the framework
     and also in the javascript. If there is an inconsistency, the aggregation of the string fragments will not work
+
+    :param withId:
+    :param pyClassNames:
+
+    :return: A string with the dom attributes
     """
     cssStyle, cssClass = '', ''
     if 'css' in self.attr:
       cssStyle = 'style="%s"' % ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
-    classData = self.getClass()
+    classData = " ".join(self.attr['class'])
     if 'class' in self.attr and len(self.attr['class']) > 0 and classData:
       if pyClassNames is not None:
         # Need to merge in the class attribute some static classes coming from external CSS Styles sheets
@@ -1009,9 +896,9 @@ class Html(object):
         $('#popup').css({'padding': '0', 'width': '200px'});
         $('#popup').show()''' % {'color': self.getColor('colors', 9)})
 
-  def notSelectable(self):
-    """ Change the html Object to not be selectable """
-    self._report.jsOnLoadFnc.add("%s.disableSelection()" % self.jqId)
+  # def notSelectable(self):
+  #   """ Change the html Object to not be selectable """
+  #   self._report.jsOnLoadFnc.add("%s.disableSelection()" % self.jqId)
 
   def onInit(self, htmlCode, dataSrc):
     if dataSrc['type'] == 'script':
@@ -1081,6 +968,12 @@ class Html(object):
                 $('#body_loading span').html(body_loading_count - 1); if($('#body_loading span').html() == '0') {$('#body_loading').remove()}}
               if (returnVal != undefined) {return returnVal}})''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'disableFnc': self.disableFnc,
                      'jsFnc': ";".join([f for f in fnc if f is not None])})
+
+  def on(self, event, jsFncs):
+    """
+
+    :return:
+    """
 
   def click(self, jsFncs): return self.jsFrg('click', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
   def change(self, jsFncs): return self.jsFrg('change', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
@@ -1171,21 +1064,6 @@ class Html(object):
     if isPyData:
       data = json.dumps(data)
     return "var %s = %s; %s; " % (self.jsVal, data, self.jsUpdateDataFnc)
-
-  def jsHtml(self, jqId, jsData, isPydata=False):
-    """
-    Function to set on the Javascript side (during an event) the content of a component.
-    With this function HTML content is possible and it will be correctly displayed
-
-    :category: Javascript function
-    :rubric: JS
-    :example: >>> myObj.html("<b>My Test</b>")
-    :link W3C Documentation: https://www.w3schools.com/jquery/html_html.asp
-    :return: String with the html function to set the HTML content of an element
-    """
-    if isPydata:
-      jsData = json.dumps(jsData)
-    return '''%s.html(%s)''' % (jqId, jsData)
 
   # pas besoin
   def jsFrg(self, typeEvent, jsFnc):
@@ -1332,5 +1210,5 @@ class Html(object):
     if self._triggerEvents:
       self._report.jsOnLoadEvtsFnc.add(";".join(self._triggerEvents))
     if self.hidden == True:
-      self.addAttr('css', {'display': 'none'})
+      self.set_attrs(name='css', value={'display': 'none'})
     return str(self)
