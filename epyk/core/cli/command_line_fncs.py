@@ -4,10 +4,9 @@ import sys
 import argparse
 import pkg_resources
 import shutil
-#to delete
 import os
-sys.path.append(os.getcwd())
-from epyk.core.js import Imports
+
+
 
 def main():
   """"""
@@ -81,6 +80,11 @@ def db(args):
 
 def get_packages(args):
   """"""
+  try:
+    from epyk.core.js.Imports import ImportManager
+  except (ImportError, ModuleNotFoundError) as e:
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..')))
+    from epyk.core.js.Imports import ImportManager
   static_path = args.path
   try:
     shutil.copytree(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', '..', 'static'),
@@ -90,10 +94,10 @@ def get_packages(args):
 
   if 'all' in args.only:
     exclude = args.exclude if args.exclude else None
-    Imports.ImportManager().getPackages(static_path=static_path, exclude=exclude)
+    ImportManager().getPackages(static_path=static_path, exclude=exclude)
   else:
     for package in args.only:
-      Imports.ImportManager().getPackage(package, reload=True, static_path=static_path)
+      ImportManager().getPackage(package, reload=True, static_path=static_path)
 
 def version(args):
   """
