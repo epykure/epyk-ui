@@ -10,12 +10,12 @@ import os
 
 def main():
   """"""
-  parser_map = { 'env':           (create_env_parser,         '''Create new environment'''),
-                 'deploy':        (create_deploy_parser,      '''Deploy latest changes'''),
-                  'db':           (create_db_parser,          '''Performs operation on local DB (Sqlite)'''),
-                  'get_packages': (create_import_pkg_parser,  '''Downloads Javascript and CSS packages to allow offline development'''),
-                  'version':      (create_version_parser,     '''Informs on current package version'''),
-                  'notebooks':    (create_notebook_parser,    '''Donwloads or Upload Jupyter notebooks online''')
+  parser_map = {'env':           (create_env_parser,         '''Create new environment'''),
+                'deploy':        (create_deploy_parser,      '''Deploy latest changes'''),
+                'db':           (create_db_parser,          '''Performs operation on local DB (Sqlite)'''),
+                'get_packages': (create_import_pkg_parser,  '''Downloads Javascript and CSS packages to allow offline development'''),
+                'version':      (create_version_parser,     '''Informs on current package version'''),
+                'notebooks':    (create_notebook_parser,    '''Donwloads or Upload Jupyter notebooks online''')
                 }
   arg_parser = argparse.ArgumentParser(prog='epyk')
   subparser = arg_parser.add_subparsers(title='Commands', dest='command')
@@ -66,7 +66,19 @@ def env(args):
   """
    Creates a new epyk environment on disk
   """
-  pass
+  folder_lst = ['data', 'model', os.path.join('model', 'sqlite'), os.path.join('model', 'sqlite', 'local'), 'static']
+  env_path = os.path.join(args.path, args.name)
+  if os.path.exists(env_path):
+    raise argparse.ArgumentTypeError('An environment with this name already exists at this location: {}'.format(env_path))
+
+  os.makedirs(env_path)
+  open(os.path.join(env_path, '__init__.py'), 'w').close()
+  for folder in folder_lst:
+    cur_folder = os.path.join(env_path, folder)
+    os.makedirs(cur_folder)
+    if 'model' in cur_folder:
+      open(os.path.join(cur_folder, '__init__.py'), 'w').close()
+  print('Environment created!')
 
 def deploy(args):
   """
