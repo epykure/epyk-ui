@@ -90,3 +90,9 @@ class CssTextItem(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
     eventsStyles['hover'].update({"color": self.getColor('greys', -1), "background": self.getColor('colors', 2)})
+
+
+class CssTextNotSelectable(CssStyle.CssCls):
+  attrs = {'-moz-user-select': '-moz-none', "user-select": 'none', '-khtml-user-select': 'none',
+           '-webkit-user-select': 'none', '-ms-user-select': 'none'}
+
