@@ -1009,6 +1009,7 @@ class Html(object):
   def hover(self, jsFncs): return self.jsFrg('hover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
   def mouseover(self, jsFncs): return self.jsFrg('mouseover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
   def mouseout(self, jsFncs): return self.jsFrg('mouseout', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  def input(self, jsFnc): self._report.jsOnLoadFnc.add("%(jqId)s.on('input', function(event) { %(jsFnc)s }) ; " % {'jqId': self.jqId, 'jsFnc': jsFnc})
 
   def callPy(self, script_name, jsData=None, success="", cacheObj=None, isPyData=True, isDynUrl=False, httpCodes=None,
              datatype='json', context=None, profile=False, loadings=None, report_name=None, before=None, jsFnc=''):
@@ -1034,8 +1035,6 @@ class Html(object):
             data = event.originalEvent.clipboardData.getData('text/plain')} 
         %(jsFnc)s 
       })''' % {'jqId': self.jqId, 'jsFnc': jsFnc})
-
-  def input(self, jsFnc): self._report.jsOnLoadFnc.add("%(jqId)s.on('input', function(event) { %(jsFnc)s }) ; " % {'jqId': self.jqId, 'jsFnc': jsFnc})
 
   def filter(self, jsId, colName, allSelected=True, filterGrp=None, operation="=", itemType="string"):
     """
