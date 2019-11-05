@@ -45,7 +45,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
-      self._jquery = JsQuery.JQuery(self.__src)
+      self._jquery = JsQuery.JQuery(src=self.__src, selector=JsQuery.decorate_var("#%s" % self.__src.htmlId))
     return self._jquery
 
   @property

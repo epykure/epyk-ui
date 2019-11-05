@@ -13,6 +13,17 @@ from epyk.core.js.packages import JsPackage
 from epyk.core.js.fncs import JsFncs
 
 
+def decorate_var(var_name):
+  """
+  Return the String Jquery variable reference for a given component id
+  
+  :param var_name: String. The variable name
+
+  :return: The decorated Jquery reference
+  """
+  return 'jQuery(%s)' % JsUtils.jsConvertData(var_name, None)
+
+
 class Jsjqxhr(object):
   def __init__(self, ajax):
     self.__ajax = {'request': ajax}
