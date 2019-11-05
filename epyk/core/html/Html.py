@@ -256,7 +256,7 @@ class Html(object):
     self.jsImports = report.jsImports
     self.cssImport = report.cssImport
     self.attr = {'class': set([])} if self.cssCls is None else {'class': set(self.cssCls)} # default HTML attributes
-    self.jsFncFrag, self._code, self._jsStyles = {}, code, None
+    self.jsFncFrag, self._code, self._jsStyles, self._events = {}, code, None, {"comp_ready": {}, 'doc_ready': {}}
     if code is not None:
       # Control to ensure the Javascript problem due to multiple references is highlighted during the report generation
       if code in self._report.htmlRefs:
@@ -432,6 +432,17 @@ class Html(object):
     """
     self._sub_htmls.append(htmlObj)
     self._report.js.addOnLoad([self.container.appendChild(htmlObj.dom)])
+    return self
+
+  def add_menu(self, context_menu):
+    """
+    Attach a context menu to an existing component. A context menu must have a component attached to otherwise
+    the report will not be triggered
+
+    :param context_menu: A Python context menu object
+    """
+    context_menu.source = self
+    self._report._contextMenu[self.jqDiv] = context_menu
     return self
 
   def add_icon(self, text, css=None, position="before"):
@@ -618,8 +629,6 @@ class Html(object):
       self.pyStyle = self._grpCls(self)
     return self.pyStyle
 
-
-
   @property
   def contextVal(self):
     """
@@ -677,16 +686,6 @@ class Html(object):
     return self._report.jsPost(self.dataSrc['script'], jsData=self.dataSrc.get('jsData'), jsFnc=fncs,
                                context=self.dataSrc.get('context'), httpCodes=self.dataSrc.get('httpCodes'), profile=self.profile)
 
-  def add_menu(self, context_menu):
-    """
-    Attach a context menu to an existing component. A context menu must have a component attached to otherwise
-    the report will not be triggered
-
-    """
-    context_menu.source = self
-    self._report._contextMenu[self.jqDiv] = context_menu
-    return self
-
   def _jsData(self, jsData, jsDataKey, jsParse, isPyData, jsFnc=None):
     if isPyData:
       return json.dumps(jsData)
@@ -726,6 +725,28 @@ class Html(object):
           self.attr['css'] = {key: json.dumps(value)}
       else:
         self.attr['css'][key] = value
+    return self
+
+  def on(self, event, jsFncs, profile=False):
+    """
+    Add an event to the document ready function.
+    This is to mimic the Jquery on function.
+
+    Documentation
+    https://www.w3schools.com/jquery/event_on.asp
+    https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+    https://www.w3schools.com/jsref/dom_obj_event.asp
+
+    :param event: A string with the Javascript event type from the dom_obj_event.asp
+    :param jsFncs: A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console
+
+    :return: self to allow the chains
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(jsFncs)
+    self._events['doc_ready'][event]['profile'] = profile
     return self
 
   def tooltip(self, value, location='top'):
@@ -815,6 +836,9 @@ class Html(object):
       return 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val) for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
 
     return '%s %s %s' % (" ".join(['%s="%s"' % (key, val) for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+
+
+
 
   def addGlobalVar(self, varName, jsDefinition=None, varDependencies=None, isPyData=None):
     data = self._report._props.setdefault("js", {}).setdefault("datasets", {})
@@ -969,12 +993,6 @@ class Html(object):
               if (returnVal != undefined) {return returnVal}})''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'disableFnc': self.disableFnc,
                      'jsFnc': ";".join([f for f in fnc if f is not None])})
 
-  def on(self, event, jsFncs):
-    """
-
-    :return:
-    """
-
   def click(self, jsFncs): return self.jsFrg('click', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
   def change(self, jsFncs): return self.jsFrg('change', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
   def drop(self, jsFncs): return self.jsFrg('drop', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
@@ -991,6 +1009,7 @@ class Html(object):
   def hover(self, jsFncs): return self.jsFrg('hover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
   def mouseover(self, jsFncs): return self.jsFrg('mouseover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
   def mouseout(self, jsFncs): return self.jsFrg('mouseout', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  def input(self, jsFnc): self._report.jsOnLoadFnc.add("%(jqId)s.on('input', function(event) { %(jsFnc)s }) ; " % {'jqId': self.jqId, 'jsFnc': jsFnc})
 
   def callPy(self, script_name, jsData=None, success="", cacheObj=None, isPyData=True, isDynUrl=False, httpCodes=None,
              datatype='json', context=None, profile=False, loadings=None, report_name=None, before=None, jsFnc=''):
@@ -1016,8 +1035,6 @@ class Html(object):
             data = event.originalEvent.clipboardData.getData('text/plain')} 
         %(jsFnc)s 
       })''' % {'jqId': self.jqId, 'jsFnc': jsFnc})
-
-  def input(self, jsFnc): self._report.jsOnLoadFnc.add("%(jqId)s.on('input', function(event) { %(jsFnc)s }) ; " % {'jqId': self.jqId, 'jsFnc': jsFnc})
 
   def filter(self, jsId, colName, allSelected=True, filterGrp=None, operation="=", itemType="string"):
     """
