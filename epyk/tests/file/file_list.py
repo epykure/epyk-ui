@@ -75,7 +75,11 @@ span.on("mouseleave", span.dom.css("color", "blue"))
 
 
 pre = rptObj.ui.texts.preformat("Super").notSelectable()
-pre.click(rptObj.js.console.log(pre.dom.val))
+
+pre.click([
+  rptObj.js.console.log(pre.dom.val),
+  rptObj.js.console.log(span.dom.val),
+])
 
 from datetime import datetime
 

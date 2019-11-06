@@ -7,8 +7,11 @@ import os
 import json
 
 from epyk.core.html import Html
+
+# The list of Javascript classes
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js import JsUtils
+from epyk.core.js import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -26,14 +29,6 @@ class Label(Html.Html):
     self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block'})
     if tooltip:
       self.set_attrs(name='title', value=tooltip)
-
-  @property
-  def id_container(self):
-    return self.htmlId
-
-  @property
-  def id_jquery(self):
-    return JsNodeDom.JsDoms.get("$('#%s')" % self.htmlId)
 
   @property
   def id_html(self):
@@ -67,15 +62,16 @@ class Label(Html.Html):
     self._report.js.addOnLoad([self.dom.onclick(jsFncs)])
     return self
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, "htmlObj.html(data)")
+  @property
+  def _js__builder__(self):
+    return "htmlObj.value = data"
     
   def __str__(self):
-    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.vals, self.helper)
+    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.val, self.helper)
 
 
 class Span(Html.Html):
-  name, category, callFnc = 'Label', 'Text', 'label'
+  name, category, callFnc = 'Span', 'Texts', 'span'
 
   def __init__(self, report, text, size, color, align, width, height, htmlCode, tooltip, profile):
     super(Span, self).__init__(report, text, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
@@ -105,6 +101,22 @@ class Span(Html.Html):
     """
     return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlId)
 
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
+
   def click(self, jsFncs):
     """
     Add a click event for a component
@@ -123,14 +135,15 @@ class Span(Html.Html):
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    self._report.js.addOnLoad([self.dom.onclick(jsFncs)])
+    self.on("click", jsFncs)
     return self
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, "htmlObj.html(data)")
+  @property
+  def _js__builder__(self):
+    return "htmlObj.innerHTML  = data"
 
   def __str__(self):
-    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.vals, self.helper)
+    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.val, self.helper)
 
 
 class Text(Html.Html):
@@ -211,13 +224,13 @@ class Text(Html.Html):
 class Code(Html.Html):
   _grpCls = CssGrpCls.CssGrpClassBase
   name, category, callFnc = 'Code', 'Text', 'code'
-  editable, scriptTitle = None, ''
+  scriptTitle = ''
 
   def __init__(self, report, vals, size, color, width, height, htmlCode, options, helper, profile):
     super(Code, self).__init__(report, vals, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                heightUnit=height[1], profile=profile)
     self.add_helper(helper)
-    self._jsStyles = options
+    self._jsStyles, self.__editable = options, None
     self.color = color if color is not None else self.getColor("greys", 9)
     self.css({'color': self.color, 'display': 'block', 'font-size': "%s%s" % (size[0], size[1]), 'margin': '5px 0'})
 
@@ -225,19 +238,20 @@ class Code(Html.Html):
   def val(self):
     return '%s.html()' % self.jqId
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
+  @property
+  def _js__builder__(self):
+    return ''' htmlObj.empty();
       if(jsStyles.edit){
         htmlObj.append('<div style="position:relative;float:right;padding:2px 5px 2px 5px;cursor:pointer;background-color:%(blackColor)s;color:%(whiteColor)s">Edit</div>')}
       data.forEach(function(rec){htmlObj.append('<code>'+ rec +'</code><br />')})
-      ''' % {"blackColor": self.getColor("greys", 9), "whiteColor": self.getColor("greys", 0)})
+      ''' % {"blackColor": self.getColor("greys", 9), "whiteColor": self.getColor("greys", 0)}
 
   def editable(self, urlPost, title=None):
-    self.editable = urlPost
+    self.__editable = urlPost
     self.scriptTitle = title
 
   def __str__(self):
-    if self.editable is not None:
+    if self.__editable is not None:
       self._report.jsOnLoadFnc.add(
         '''
         $('#%(htmlId)s div').on('click', function(event){
@@ -271,13 +285,29 @@ class Pre(Html.Html):
     self.js.append = append
 
   @property
-  def val(self):
-    return '%s.html()' % self.jqId
+  def dom(self):
+    """
+    Javascript Functions
 
-  def onDocumentLoadFnc(self):
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
+
+  def notSelectable(self):
+    self.style.addCls("CssTextNotSelectable")
+    return self
+
+  @property
+  def _js__builder__(self):
     markdown = self._report.js.string("data", isPyData=False).toStringMarkup()
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-        htmlObj.empty(); if(jsStyles.markdown){htmlObj.html(%(markdown)s)} else{htmlObj.html(data)}''' % {"markdown": markdown})
+    return '''if(options.markdown){htmlObj.innerHTML = %(markdown)s} else{htmlObj.innerHTML = data}''' % {"markdown": markdown}
 
   def __str__(self):
     return '<pre %s></pre>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)

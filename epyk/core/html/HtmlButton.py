@@ -35,15 +35,7 @@ class Button(Html.Html):
 
     if tooltip is not None:
       self.tooltip(tooltip)
-    self.set_attrs("data-count", 0)
-
-  @property
-  def id_container(self):
-    return self.htmlId
-
-  @property
-  def jqId(self):
-    return "$('#%s label')" % self.htmlId
+    self.set_attrs(name="data-count", value=0)
 
   @property
   def jsQueryData(self):
@@ -54,7 +46,11 @@ class Button(Html.Html):
     if self._code is not None:
       return "{event_val: $(this).html(), %s: $(this).html(), event_groupId: '%s', event_count_click: $(this).data('count')+1}" % (self._code, self.groupId)
 
-    return "{event_val: $(this).html(), event_groupId: '%s', event_count_click: $(this).data('count')+1}" % self.groupId
+    return "{event_val: this.innerHTML, event_groupId: '%s', event_count_click: $(this).data('count')+1}" % self.groupId
+
+  @property
+  def _js__builder__(self):
+    return "htmlObj.innerHTML = data"
 
   def disable(self, background_color=None, color=None):
     """
@@ -74,15 +70,12 @@ class Button(Html.Html):
     return self
 
   def click(self, js_fnc):
-    """
+    self.on("click", js_fnc)
+    return self
 
-    :param js_fnc:
-
-    :return:
-    """
-    if not isinstance(js_fnc, list):
-      js_fnc = [js_fnc]
-    return super(Button, self).click(self.dom.onclick(js_fnc).toStr())
+    #if not isinstance(js_fnc, list):
+    #  js_fnc = [js_fnc]
+    #return super(Button, self).click(self.dom.onclick(js_fnc).toStr())
 
     # if self.groupId:
     #   js_fnc.append('''
@@ -93,42 +86,6 @@ class Button(Html.Html):
     #   js_fnc.append("var count = $(this).data('count')+1; $(this).data('count', count)")
     # return super(Button, self).click(js_fnc)
 
-  # def jsDisable(self, bool=None, jsDataKey=None, isPyData=True, jsParse=False, jsFnc=None):
-  #   """
-  #   :category: Javascript features
-  #   :example: myObj.jsDisable(True)
-  #   :return: A string defining / setting the disable of the button on the javascript side
-  #   :dsc:
-  #     Python function to write the piece of code in charge of defining or changing the disable state of a button.
-  #     This can be set in the Python but also used in any jsEvent function
-  #   """
-  #   if bool is None:
-  #     return "%s.disabled;" % self.jqId
-  #
-  #   bool = self._jsData(bool, jsDataKey, jsParse, isPyData, jsFnc)
-  #   return '''
-  #     if(!%(bool)s) {%(jqId)s.css({"cursor": "pointer"})}
-  #     else {%(jqId)s.css({"cursor": "not-allowed"})};
-  #     %(jqId)s.attr("disabled", %(bool)s);
-  #     ''' % {'jqId': self.jqId, 'bool': bool}
-
-  # def isDisable(self, bool=True):
-  #   self.css({"cursor": "not-allowed"})
-  #   self.disable = True
-  #   return self
-  #
-  # def addAttr(self, key, val=None, isPyData=True):
-  #   if val is None and issubclass(key, Html.Html):
-  #     self.__battr[key.htmlCode] = key.val
-  #     self.isJs = True
-  #   else:
-  #     if isPyData:
-  #       val = json.dumps(val)
-  #     else:
-  #       self.isJs = True
-  #     self.__battr[key] = val
-  #   return self
-
   def unClick(self, jsFncs):
     if not 'click' in self.jsFncFrag:
       raise Exception("click event should be fully defined first")
@@ -136,20 +93,6 @@ class Button(Html.Html):
     clickFncs = ";".join(self.jsFncFrag['click'] + ["$(this).data('isChecked', true); $(this).css({'color': '%s', 'background': '%s'})" % (self.getColor('colors', 0), self.color)])
     self.jsFncFrag['click'] = ["if(!$(this).data('isChecked') || ($(this).data('isChecked') === undefined)){%s} else {$(this).css({'color': '%s', 'background': 'inherit'}); $(this).data('isChecked', false); %s}" % (clickFncs, self.color, ";".join(jsFncs))]
     return self
-
-  # def addStyles(self, cssAttrIcon=None, cssAttr=None):
-  #   """
-  #   :category: Javascript Builder function
-  #   :rubric: JS
-  #   :dsc:
-  #     Add style properties to be used in the definition of the component in the Javascript layer
-  #   :return: The object itself
-  #   """
-  #   if cssAttrIcon is not None:
-  #     self._jsStyles.setdefault('styleIcon', {}).update(cssAttrIcon)
-  #   if cssAttr is not None:
-  #     self._jsStyles.setdefault('styles', {}).update(cssAttr)
-  #   return self
 
   def color(self, color):
     """
@@ -159,9 +102,6 @@ class Button(Html.Html):
     self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)
     self.set_attrs(name="onmouseout", value="this.style.backgroundColor=\'white\';this.style.color=\'%s\';" % color)
     return self
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, 'htmlObj.empty(); htmlObj.append(data)', 'Javascript Object builder')
 
   def __str__(self):
     return '<button %s></button>' % (self.get_attrs(pyClassNames=self.defined))
@@ -602,3 +542,39 @@ class IconEdit(Html.Html):
 #       })''' % {'jqId': self.jqId, 'color': self.getColor('border', 0)})
 #     return "<div %s></div>" % (self.strAttr(pyClassNames=self.pyStyle))
 
+"""
+  # def jsDisable(self, bool=None, jsDataKey=None, isPyData=True, jsParse=False, jsFnc=None):
+  #   if bool is None:
+  #     return "%s.disabled;" % self.jqId
+  #
+  #   bool = self._jsData(bool, jsDataKey, jsParse, isPyData, jsFnc)
+  #   return '''
+  #     if(!%(bool)s) {%(jqId)s.css({"cursor": "pointer"})}
+  #     else {%(jqId)s.css({"cursor": "not-allowed"})};
+  #     %(jqId)s.attr("disabled", %(bool)s);
+  #     ''' % {'jqId': self.jqId, 'bool': bool}
+
+  # def isDisable(self, bool=True):
+  #   self.css({"cursor": "not-allowed"})
+  #   self.disable = True
+  #   return self
+  #
+  # def addAttr(self, key, val=None, isPyData=True):
+  #   if val is None and issubclass(key, Html.Html):
+  #     self.__battr[key.htmlCode] = key.val
+  #     self.isJs = True
+  #   else:
+  #     if isPyData:
+  #       val = json.dumps(val)
+  #     else:
+  #       self.isJs = True
+  #     self.__battr[key] = val
+  #   return self
+
+# def addStyles(self, cssAttrIcon=None, cssAttr=None):
+  #   if cssAttrIcon is not None:
+  #     self._jsStyles.setdefault('styleIcon', {}).update(cssAttrIcon)
+  #   if cssAttr is not None:
+  #     self._jsStyles.setdefault('styles', {}).update(cssAttr)
+  #   return self
+"""

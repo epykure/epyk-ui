@@ -16,7 +16,7 @@ from epyk.core.js.fncs import JsFncs
 def decorate_var(var_name):
   """
   Return the String Jquery variable reference for a given component id
-  
+
   :param var_name: String. The variable name
 
   :return: The decorated Jquery reference

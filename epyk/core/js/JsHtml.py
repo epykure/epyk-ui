@@ -25,8 +25,13 @@ class JsHtml(JsNodeDom.JsDoms):
     self._js = []
     self._jquery, self._jquery_ui = None, None
 
+  @property
   def val(self):
-    return JsObjects.JsObjects.get("%s.val()" % self.varName)
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get("{%s: {value: %s.value, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.varName))
 
   @property
   def events(self):
@@ -160,6 +165,18 @@ class JsHtml(JsNodeDom.JsDoms):
     :return:
     """
     return JsIf.JsIf(self.css(attr) == jsVal2, [self.css(attr, jsVal1)]).else_([self.css(attr, jsVal2)])
+
+
+class JsHtmlRich(JsHtml):
+  @property
+  def val(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (
+      self.htmlId, self.varName))
 
 
 class JsHtmlDatePicker(JsNodeDom.JsDoms):

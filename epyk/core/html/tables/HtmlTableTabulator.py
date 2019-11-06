@@ -41,6 +41,7 @@ class DataTabulator(Html.Html):
     Return the Javascript internal object
 
     :return: A Javascript object
+
     :rtype: JsTabulator.Tabulator
     """
     if self._js is None:
@@ -69,9 +70,9 @@ class DataTabulator(Html.Html):
       self.vals[key] = val
     return self
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__,
-                      "window[htmlObj.attr('id') +'_table'] = new Tabulator('#%s', data)" % (self.htmlId))
+  @property
+  def _js__builder__(self):
+    return "window[htmlObj.getAttribute('id') +'_table'] = new Tabulator('#'+ htmlObj.getAttribute('id'), data)"
 
   def __str__(self):
     return "<div %s></div>" % (self.get_attrs(pyClassNames=self.defined))

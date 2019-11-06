@@ -13,6 +13,7 @@ from epyk.core.css.groups import CssGrpCls
 class Hr(Html.Html):
   name, category, callFnc = 'Line delimiter', 'Layouts', 'hr'
   _grpCls = CssGrpCls.CssClassHr
+  builder_name = False
 
   def __init__(self, report, color, count, size, background_color, height, align, profile):
     super(Hr, self).__init__(report, count, height=height[0], heightUnit=height[1], profile=profile)
@@ -47,8 +48,9 @@ class Hr(Html.Html):
 
 class Newline(Html.Html):
   name, category, callFnc = 'New line', 'Layouts', 'new_line'
+  builder_name = False
 
-  def html(self):
+  def __str__(self):
     return "".join(['<br />'] * self.vals)
 
   # -----------------------------------------------------------------------------------------
@@ -126,12 +128,13 @@ class Stars(Html.Html):
     self.dblclick(array)
     return super(Stars, self).click(js_fncs)
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
+  @property
+  def _js__builder__(self):
+    return '''
       htmlObj.parent().data('level', data);
       htmlObj.each(function(i){
         if (i < data){$(this).css('color', jsStyles.color)}
-        else {$(this).css('color', '')}})''', 'Javascript Object builder')
+        else {$(this).css('color', '')}})'''
 
   def __str__(self):
     stars = ["<div %s>" % self.get_attrs(pyClassNames=self.defined)]
@@ -143,7 +146,8 @@ class Stars(Html.Html):
 
 class Help(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome', 'jqueryui']
-  name, category, callFnc = 'Info', 'Texts', 'help'
+  name, category, callFnc = 'Info', 'Rich', 'info'
+  builder_name = False
 
   def __init__(self, report, val, width, profile):
     super(Help, self).__init__(report, val, width=width[0], widthUnit=width[1], profile=profile)

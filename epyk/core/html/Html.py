@@ -8,7 +8,6 @@ to the final page. Page.py will create report objects in charge of collecting al
 
 import re
 import json
-import importlib
 import collections
 import functools
 import logging
@@ -16,8 +15,8 @@ import logging
 from epyk.core.css import CssInternal
 from epyk.core.css.groups import CssGrpCls
 
+from epyk.core.js import JsUtils
 from epyk.core.js import Js
-from epyk.core.js import JsEncoder
 from epyk.core.js import JsHtml
 
 try:  # For python 3
@@ -74,15 +73,12 @@ class Html(object):
   Parent class for all the HTML components. All the function defined here are available in the children classes.
   Child class can from time to time re implement the logic but the function will always get the same meaning (namely the same signature and return)
   """
-  alias, jsEvent, cssCls, __css = None, None, None, None
-  incIndent, helper, jsVal, jsUpdateDataFnc = 0, '', '', ''
+  cssCls = None
   # Those variables should not be used anymore and should be replaced by the __ ones
   # This is done in order to avoid having users to change them. Thanks to the name
   # mangling technique Python will make the change more difficult and easier to see
-  reqJs, reqCss = ['jquery'], [] # Jquery is already needed
-  references, htmlCode, dataSrc, _code = None, None, None, None
-  hidden, inReport, isLoadFnc = False, True, True
-  dashboards = [] # Static definition of useful dashboards to get more example of an component
+  reqJs, reqCss = [], []
+  htmlCode, dataSrc, _code, inReport, builder_name = None, None, None, True, None
 
   _grpCls = CssGrpCls.CssGrpClass
 
@@ -153,6 +149,7 @@ class Html(object):
       pyCssName = self.htmlObj._report.style.get(cssName)
       self.htmlObj._report.style.cssStyles[cssName] = pyCssName
       self.htmlObj.attr['class'].add(cssName)
+      self.htmlObj.defined.add(cssName)
       return self
 
     def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True, isMedia=False, allImportantAttrs=True):
@@ -284,7 +281,7 @@ class Html(object):
       if htmlCode in self._report.http:
         self.vals = self._report.http[htmlCode]
 
-    css = getattr(self, '_%s__css' % self.__class__.__name__, None)
+    #css = None
     self.pyStyle = None #list(getattr(self, '_%s__pyStyle' % self.__class__.__name__, []))
     if hasattr(self, '_%s__reqJs' % self.__class__.__name__):
       self.reqJs = list(getattr(self, '_%s__reqJs' % self.__class__.__name__, []))
@@ -293,11 +290,11 @@ class Html(object):
     #if hasattr(self, '_%s__table_name' % self.__class__.__name__):
     #  self.createObjectTables()
     self.pyCssCls = set()
-    if css is not None:
+    #if css is not None:
       # we need to do a copy of the CSS style at this stage
-      self.attr['css'] = dict(css)
+    #  self.attr['css'] = dict(css)
     self.jsOnLoad, self.jsEvent, self.jsEventFnc = set(), {}, collections.defaultdict(set)
-    self.vals = vals
+    self._vals = vals
     self.jsVal = "%s_data" % self.htmlId
     if self._report is not None:
        # Some components are not using _report because they are directly used for the display
@@ -317,6 +314,11 @@ class Html(object):
       self.filter(**globalFilter)
     if dataSrc is not None:
       self.dataSrc = dataSrc
+    #
+    self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
+    if self.builder_name:
+      constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+      constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (self.builder_name, self._js__builder__)
 
   @property
   def htmlId(self):
@@ -329,28 +331,6 @@ class Html(object):
       return self.htmlCode
 
     return "%s_%s" % (self.__class__.__name__.lower(), id(self))
-
-  @property
-  def eventId(self):
-    return self.jqId
-
-  @property
-  def jqId(self):
-    """
-    Python property to get a unique Jquery ID function for a given Object
-
-    :return: Javascript String of the variable used to defined the Jquery object in Javascript
-    """
-    return "$('#%s')" % self.htmlId
-
-  @property
-  def jqDiv(self):
-    """
-    Python property to get a unique Jquery ID function for a given Object (the div as the jqId might refer to the content)
-
-    :return: Javascript String of the variable used to defined the Jquery object in Javascript
-    """
-    return "$('#%s')" % self.htmlId
 
   @property
   def js(self):
@@ -376,6 +356,7 @@ class Html(object):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
@@ -601,7 +582,7 @@ class Html(object):
 
     :returns: Javascript string with the function to get the current value of the component
     """
-    return '%s.val()' % self.jqId
+    return self._vals
 
   @property
   def style(self):
@@ -628,76 +609,6 @@ class Html(object):
     if self.pyStyle is None:
       self.pyStyle = self._grpCls(self)
     return self.pyStyle
-
-  @property
-  def contextVal(self):
-    """
-    Set the javascript data defined when the context menu is created
-
-    :return: Javascript String with the value attached to the context menu
-    """
-    return "{val: $(event.target).html()}"
-
-  @property
-  def jsQueryData(self):
-    """
-    Python function to define the Javascript object to be passed in case of Ajax call internally or via external REST service with other languages
-
-    Documentation
-    http://api.jquery.com/jquery.ajax/
-    """
-    if self.htmlCode is not None:
-      return "{event_val: %s, event_code: '%s', %s: %s}" % (self.jsVal, self.htmlId, self.htmlCode, self.jsVal)
-
-    return "{event_val: %s, event_code: '%s'}" % (self.jsVal, self.htmlId)
-
-  @classmethod
-  def jsMarkDown(cls, vals): return None
-
-  @property
-  def disableFnc(self): return ''
-
-  def source(self, dataSrc):
-    if dataSrc.get('type') == 'script':
-      if dataSrc.get('frequency') is not None:
-        self.dataSrc['intervalId'] = self._report.jsInterval(self.refresh(), dataSrc['frequency'] * 1000)
-      else:
-        if dataSrc.get('on_init', True):
-          self._report.jsOnLoadFnc.add(self.refresh())
-    elif dataSrc.get('type') == 'socket':
-      self._report.jsImports.add('socket.io')
-      self._report.jsOnLoadFnc.add("var socket = io.connect('%s')" % self._report.run.url_root)
-      if dataSrc.get("append", False) and hasattr(self, 'jsAppend'):
-        self._report.jsOnLoadFnc.add("socket.on('message_%s_%s_%s', function(data) {%s})" % (self._report.run.report_name, self._report.run.script_name, self.htmlId, self.jsAppend()))
-      else:
-        self._report.jsOnLoadFnc.add("socket.on('message_%s_%s_%s', function(data) {%s})" % (self._report.run.report_name, self._report.run.script_name, self.htmlId, self.jsGenerate()))
-
-  def refresh(self):
-    if self.dataSrc is None:
-      raise Exception("Cannot use refresh() without dataSrc defined")
-
-    if not self.dataSrc['script'].endswith(".py"):
-      self.dataSrc['script'] = "%s.py" % self.dataSrc['script']
-    fncs = [self.jsGenerate(jsDataKey=self.dataSrc.get('jsDataKey'))]
-    if 'jsFnc' in self.dataSrc:
-      if not isinstance(self.dataSrc['jsFnc'], list):
-        self.dataSrc['jsFnc'] = [self.dataSrc['jsFnc']]
-      fncs.extend(self.dataSrc['jsFnc'])
-    return self._report.jsPost(self.dataSrc['script'], jsData=self.dataSrc.get('jsData'), jsFnc=fncs,
-                               context=self.dataSrc.get('context'), httpCodes=self.dataSrc.get('httpCodes'), profile=self.profile)
-
-  def _jsData(self, jsData, jsDataKey, jsParse, isPyData, jsFnc=None):
-    if isPyData:
-      return json.dumps(jsData)
-
-    if jsDataKey is not None:
-      jsData = "%s['%s']" % (jsData, jsDataKey)
-    if jsParse:
-      print("jsParse deprecated - Should be using jsFnc instead")
-      jsData = "JSON.parse(%s)" % jsData
-    if jsFnc is not None:
-      jsData = "%s(%s)" % (jsFnc, jsData)
-    return jsData
 
   def css(self, key, value=None):
     """
@@ -745,9 +656,15 @@ class Html(object):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(jsFncs)
+    # JsUtils.jsConvertFncs needs to be applied in order to freeze the function
+    # span.on("mouseover", span.dom.css("color", "red"))
+    # span.on("mouseleave", span.dom.css("color", "blue"))
+    self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
     self._events['doc_ready'][event]['profile'] = profile
     return self
+
+  def click(self, jsFncs, profile=False):
+    return self.on("click", jsFncs, profile)
 
   def tooltip(self, value, location='top'):
     """
@@ -837,72 +754,22 @@ class Html(object):
 
     return '%s %s %s' % (" ".join(['%s="%s"' % (key, val) for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
 
+  @property
+  def _js__builder__(self):
+    raise Exception("Constructor must be defined in %s" % self.__class__.__name__)
 
+  def build(self, data=None, options=None, profile=False):
+    if not self.builder_name:
+      raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
 
+    js_data = JsUtils.jsConvertData(data, None)
+    js_options = JsUtils.jsConvertData(options, None)
+    return "%s(%s, %s, %s)" % (self.builder_name, self.dom.varId, js_data, js_options)
 
-  def addGlobalVar(self, varName, jsDefinition=None, varDependencies=None, isPyData=None):
-    data = self._report._props.setdefault("js", {}).setdefault("datasets", {})
-    data[varName] = "var %s = %s" % (varName, jsDefinition)
-
-  def addGlobalFnc(self, fncName, fncDef, fncDsc=''):
-    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[fncName.split('(')[0]] = "function %s{%s}" % (fncName, fncDef)
-
-  def onDocumentReady(self):
-    """ Return the javascript calls to be returned to update the component """
-    if self._jsStyles is not None:
-      self.jsUpdateDataFnc = '''%(pyCls)s(%(jqId)s, %(htmlId)s_data, %(jsStyles)s)
-            ''' % {'pyCls': self.__class__.__name__, 'jqId': self.jqId, 'htmlId': self.htmlId, 'htmlCode': json.dumps(self.htmlCode),
-                   'jsVal': self.val, 'jsStyles': json.dumps(self._jsStyles)}
-    else:
-      self.jsUpdateDataFnc = '''%(pyCls)s(%(jqId)s, %(htmlId)s_data) 
-        ''' % {'pyCls': self.__class__.__name__, 'jqId': self.jqId, 'htmlId': self.htmlId, 'htmlCode': json.dumps(self.htmlCode),
-               'jsVal': self.val}
-
-    profile = self.profile if self.profile is not None else getattr(self._report, 'PROFILE', False)
-    if profile:
-      fncContentTemplate = ["var t0 = performance.now()", self.jsUpdateDataFnc,
-                            "console.log('|%s|%s|'+ (performance.now()-t0))" % (self.__class__.__name__, self.htmlId)]
-    else:
-      fncContentTemplate = [self.jsUpdateDataFnc]
-    if self.dataSrc is None or self.dataSrc.get('type') != 'url':
-      builder, optBuilder = fncContentTemplate[0].strip(), []
-      for l in builder.split("\n"):
-        optBuilder.append(l.strip())
-      self._report._props.setdefault('js', {}).setdefault("builders", []).append("".join(optBuilder))
-      self._report.jsOnLoadFnc.add(";".join(fncContentTemplate))
-
-  def onDocumentLoadVar(self):
-    """ Return the variable to store in the global section of the javacript part """
-    self.addGlobalVar(self.jsVal, json.dumps(self.vals, cls=JsEncoder.Encoder))
-    if self.dataSrc is not None and self.dataSrc.get('type') == 'url':
-      if 'time_out' in self.dataSrc:
-        if self.dataSrc['time_out'] < 60:
-          self._report.notification('WARNING', 'Server Load',  'Process configured to run every %s seconds' % self.dataSrc['time_out'])
-
-        self._report.jsOnLoadFnc.add('''
-          setInterval(function(){ 
-            var params = {} ; for(var key in %(htmlCodes)s) { params[key] = %(breadCrumVar)s['params'][key] ;  }
-            $.getJSON( "%(url)s", params, function( data ) { %(jsVal)s = data ; %(pyCls)s(%(jqId)s, %(htmlId)s_data) ; });
-          }, %(time_out)s);
-          ''' % {'pyCls': self.__class__.__name__, 'jqId': self.jqId, 'htmlId': self.htmlId, 'jsVal': self.jsVal,
-                 'jsUpdateDataFnc': self.jsUpdateDataFnc, 'url': self.dataSrc['url'],
-                 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'time_out': self.dataSrc['time_out'] * 1000,
-                 'htmlCodes': json.dumps(self.dataSrc.get('htmlCodes', []))})
-      else:
-        self._report.jsOnLoadFnc.add('''
-          var params = {} ; for(var key in %(htmlCodes)s) { params[key] = %(breadCrumVar)s['params'][key] ;  }
-          $.post( "%(url)s", params, function( data ) { %(jsVal)s = JSON.parse(data) ; %(pyCls)s(%(jqId)s, %(jsVal)s, %(jsStyles)s ) ; });
-          ''' % {'pyCls': self.__class__.__name__, 'jqId': self.jqId, 'htmlId': self.htmlId, 'jsVal': self.jsVal,
-                 'jsUpdateDataFnc': self.jsUpdateDataFnc, 'url': self.dataSrc['url'], 'jsStyles': json.dumps(self._jsStyles),
-                 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCodes': json.dumps(self.dataSrc.get('htmlCodes', [])) } )
-
-  def onDocumentLoadFnc(self):
-    """ Flag set to True by default to check if this function is overriden """
-    self.isLoadFnc = False
+  def refresh(self):
+    return self.build(self.val, self._jsStyles)
 
   def onDocumentLoadContextmenu(self):
-    """ Generic Javascript function to define a Contenxt Menu """
     self._report.jsGlobal.fnc("ContextMenu(htmlObj, data, markdownFnc)",
         '''
         $('#popup').empty(); $('#popup').append('<ul style="width:100%%;height:100%%;margin:0;padding:0"></ul>');
@@ -920,111 +787,6 @@ class Html(object):
         $('#popup').css({'padding': '0', 'width': '200px'});
         $('#popup').show()''' % {'color': self.getColor('colors', 9)})
 
-  # def notSelectable(self):
-  #   """ Change the html Object to not be selectable """
-  #   self._report.jsOnLoadFnc.add("%s.disableSelection()" % self.jqId)
-
-  def onInit(self, htmlCode, dataSrc):
-    if dataSrc['type'] == 'script':
-      mod = importlib.import_module('%s.sources.%s' % (self._report.run.report_name, dataSrc['script'].replace('.py', '')))
-      httpParams = dict([(param, self._report.http.get(param, '')) for param in dataSrc.get('htmlCodes', [])])
-      recordSet = mod.getData(self._report, httpParams)
-      if 'jsDataKey' in dataSrc:
-        recordSet = recordSet[dataSrc['jsDataKey']]
-      return recordSet
-
-    elif dataSrc['type'] == 'flask':
-      if 'fncName' in dataSrc:
-        mod = importlib.import_module('epyk.%s' % dataSrc['module'])
-        return json.loads(getattr(mod, dataSrc['fncName'])(*dataSrc.get('pmts', [])))
-      else:
-        return json.loads(dataSrc['fnc'](*dataSrc.get('pmts', [])))
-
-    elif dataSrc['type'] == 'url':
-      # To think about the security here
-      data = {'user_name': self._report.user, 'report_name': self._report.run.report_name, 'script_name': self._report.run.script_name, 'host_name': self._report.run.host_name}
-      data.update( self._report._run )
-      response = urllib2.urlopen("%s%s" % (self._report.run.url_root, dataSrc['url']), parse.urlencode(data).encode("utf-8"))
-      if dataSrc.get('jsDataKey') is not None:
-        return json.loads(response.read().decode('utf_8'))['jsDataKey']
-      try:
-        return json.loads(response.read().decode('utf_8'))
-      except Exception as err:
-        self._report.log("[%s] urlopen:%s%s" % (str(err), self._report.run.url_root, dataSrc['url']), type='WARNING')
-        return ""
-
-  # ---------------------------------------------------------------------------------------------------------
-  #                                          JAVASCRIPT STANDARD EVENTS
-  #
-  def draggable(self, attrs=None):
-    if attrs is None:
-      attrs = {}
-    self._report.jsImports.add('jqueryui')
-    self._report.cssImport.add('jqueryui')
-    self._report.jsOnLoadFnc.add("%(jqDiv)s.addClass('ui-widget-content');%(jqDiv)s.css({'z-index': 10, 'background': 'inherit', color: 'inherit'});%(jqDiv)s.draggable(%(attrs)s)" % {'jqDiv': self.jqDiv, 'attrs': json.dumps(attrs)})
-    return self
-
-  def jsEvents(self):
-    if hasattr(self, 'jsFncFrag'):
-      for eventKey, fnc in self.jsFncFrag.items():
-        self._report._props.get('js', {}).get('builders', []).extend(fnc)
-        if self.htmlCode is not None:
-          fnc.insert(0, self.jsAddUrlParam(self.htmlCode, self.val, isPyData=False))
-        if getattr(self._report, 'PROFILE', False):
-          self._report.jsOnLoadEvtsFnc.add('''
-                    %(jqId)s.on('%(eventKey)s', function(event) {var t0_event = performance.now(); 
-                      %(disableFnc)s; var useAsync = false; var data = %(data)s; var returnVal = undefined; %(jsInfo)s; %(jsFnc)s; 
-                      data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
-                      if (!useAsync) {var body_loading_count = parseInt($('#body_loading span').text());
-                        $('#body_loading span').html(body_loading_count - 1);
-                        if($('#body_loading span').html() == '0') {$('#body_loading').remove()}};
-                      console.log('|%(pyClass)s|%(eventKey)s(%(htmlId)s)|'+ (performance.now()-t0_event));
-                      if (returnVal != undefined) {return returnVal}})
-            ''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'disableFnc': self.disableFnc, 'htmlId': self.htmlId,
-                   'pyClass': self.__class__.__name__, 'jsFnc': ";".join([f for f in fnc if f is not None]),
-                   'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
-        else:
-          self._report.jsOnLoadEvtsFnc.add('''
-            %(jqId)s.on('%(eventKey)s', function(event) {
-              %(disableFnc)s; var useAsync = false; var data = %(data)s; var returnVal = undefined; %(jsFnc)s; 
-              data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
-              if (!useAsync) {var body_loading_count = parseInt($('#body_loading span').text());
-                $('#body_loading span').html(body_loading_count - 1); if($('#body_loading span').html() == '0') {$('#body_loading').remove()}}
-              if (returnVal != undefined) {return returnVal}})''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'disableFnc': self.disableFnc,
-                     'jsFnc': ";".join([f for f in fnc if f is not None])})
-
-  def click(self, jsFncs): return self.jsFrg('click', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def change(self, jsFncs): return self.jsFrg('change', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def drop(self, jsFncs): return self.jsFrg('drop', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def dragover(self, jsFncs): return self.jsFrg('dragover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def dragleave(self, jsFncs): return self.jsFrg('dragleave', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def dragenter(self, jsFncs): return self.jsFrg('dragenter', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def dblclick(self, jsFncs): return self.jsFrg('dblclick', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def mouseup(self, jsFncs): return self.jsFrg('mouseup', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def blur(self, jsFncs): return self.jsFrg('blur', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def focusout(self, jsFncs): return self.jsFrg('focusout', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def keydown(self, jsFncs): return self.jsFrg('keydown', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def keypress(self, jsFncs): return self.jsFrg('keypress', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def keyup(self, jsFncs): return self.jsFrg('keyup', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def hover(self, jsFncs): return self.jsFrg('hover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def mouseover(self, jsFncs): return self.jsFrg('mouseover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def mouseout(self, jsFncs): return self.jsFrg('mouseout', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-  def input(self, jsFnc): self._report.jsOnLoadFnc.add("%(jqId)s.on('input', function(event) { %(jsFnc)s }) ; " % {'jqId': self.jqId, 'jsFnc': jsFnc})
-
-  def callPy(self, script_name, jsData=None, success="", cacheObj=None, isPyData=True, isDynUrl=False, httpCodes=None,
-             datatype='json', context=None, profile=False, loadings=None, report_name=None, before=None, jsFnc=''):
-    if not script_name.endswith(".py"):
-      script_name = "%s.py" % script_name
-    if success != "":
-      jsFnc = success
-    if before is not None:
-      if not isinstance(before, list):
-        before = [before]
-    else:
-      before = []
-    return self.click(before + [self._report.jsPost(script_name, jsData, jsFnc, cacheObj, isPyData, isDynUrl, httpCodes,
-                                          datatype, context, profile, loadings, report_name)])
-
   def paste(self, jsFnc):
     """ Generic click function """
     self._report.jsOnLoadFnc.add('''%(jqId)s.on('paste', function(event) { 
@@ -1037,76 +799,9 @@ class Html(object):
       })''' % {'jqId': self.jqId, 'jsFnc': jsFnc})
 
   def filter(self, jsId, colName, allSelected=True, filterGrp=None, operation="=", itemType="string"):
-    """
-    :category: Data Transformation
-    :rubric: JS
-    :type: Filter
-    :dsc:
-      Link the data to the filtering function. The record will be filtered based on the composant value
-    :return: The Python Html Object
-    """
     filterObj = {"operation": operation, 'itemType': itemType, 'allIfEmpty': allSelected, 'colName': colName, 'val': self.val, 'typeVal': 'js'}
     self._report.jsSources.setdefault(jsId, {}).setdefault('_filters', {})[self.htmlCode] = filterObj
     return self
-
-  # ---------------------------------------------------------------------------------------------------------
-  #                                          JAVASCRIPT FRAGMENTS
-  #
-  def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
-    """
-    Python function used to build a HTML component based on a common javascript definition
-
-    :param jsData: The javascript data dictionary (or Python)
-    :param jsDataKey: The key in the javascript data dictionary (or Python)
-    :param isPyData: A flag to apply a javascript conversion if this is not called from a jsXXX() method
-    :param jsParse: A flag to parse the javascript function is it is coming from a json string for some reason
-
-    :example: htmlObj.jsGenerate( {"test": True}, jsDataKey="test", isPyData=True)
-
-    :return: Javascript String with the different pieces and functions calls used to build the component
-    """
-    if jsStyles is None:
-      jsStyles = json.dumps(self._jsStyles)
-    return '''%(fncName)s(%(jsId)s, %(jsData)s, %(jsStyles)s)
-          ''' % {'jsDataKey': json.dumps(jsDataKey), 'fncName': self.__class__.__name__, 'jsId': self.jqId,
-                 'jsData': self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc), 'jsStyles': jsStyles}
-
-  def jsUpdate(self, data, isPyData=True):
-    """
-    Javascript function to update a component with a new val
-
-    """
-    self.onDocumentReady()
-    self.onDocumentLoadVar()
-    if isPyData:
-      data = json.dumps(data)
-    return "var %s = %s; %s; " % (self.jsVal, data, self.jsUpdateDataFnc)
-
-  # pas besoin
-  def jsFrg(self, typeEvent, jsFnc):
-    if typeEvent not in self.jsFncFrag:
-      self.jsFncFrag[typeEvent] = []
-    if isinstance(jsFnc, list):
-      self.jsFncFrag[typeEvent].extend(jsFnc)
-    else:
-      self.jsFncFrag[typeEvent].append(jsFnc)
-    return self
-
-  # ---------------------------------------------------------------------------------------------------------
-  #                                             CSS SECTION
-  #
-
-  # ok
-  def loadStyle(self):
-    """
-    Internal function in charge of loading the different CSS Python Styles attached to a component
-
-    :category: CSS function
-    :rubric: CSS
-    """
-    for cssStyle in self.defined.clsMap:
-      # Remove the . or # corresponding to the type of CSS reference
-      self.pyCssCls.add(self._report.style.add(cssStyle).classname)
 
   def getColor(self, typeChart, i):
     """
@@ -1147,9 +842,6 @@ class Html(object):
     """
     Apply the corresponding function to build the HTML result.
     This function is very specific and it has to be defined in each class.
-
-    :category: Output function
-    :rubric: PY
     """
     raise NotImplementedError('subclasses must override __str__()!')
 
@@ -1158,9 +850,8 @@ class Html(object):
     Apply the corresponding function to produce the same result in a word document.
     This function is very specific and it has to be defined in each class.
 
-    :category: Output function
-    :rubric: PY
-    :link Python Module Documentation: http://python-docx.readthedocs.io/en/latest/
+    Documentation:
+    http://python-docx.readthedocs.io/en/latest/
     """
     raise NotImplementedError('''
       subclasses must override to_word(), %s !
@@ -1172,9 +863,8 @@ class Html(object):
     Apply the corresponding function to produce the same result in a word document.
     This function is very specific and it has to be defined in each class.
 
-    :category: Output function
-    :rubric: PY
-    :link Python Module Documentation: https://xlsxwriter.readthedocs.io/
+    Documentation:
+    https://xlsxwriter.readthedocs.io/
     """
     raise NotImplementedError('''
       subclasses must override to_xls(), %s !
@@ -1182,50 +872,336 @@ class Html(object):
     ''' % self.__class__.__name__)
 
   def html(self):
-    """
-    Return the onload, the HTML object and the javascript events
-
-    """
     for htmlObj in self._sub_htmls:
       htmlObj.html()
     if self.helper != "":
       self.helper.html()
-    self.loadStyle()
-    self.jsEvents()
+    if self.builder_name:
+      self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    for cssStyle in self.defined.clsMap:
+      # Remove the . or # corresponding to the type of CSS reference
+      self.pyCssCls.add(self._report.style.add(cssStyle).classname)
+    return str(self)
+
+
+
+
+
+"""
+    def addGlobalVar(self, varName, jsDefinition=None, varDependencies=None, isPyData=None):
+    data = self._report._props.setdefault("js", {}).setdefault("datasets", {})
+    data[varName] = "var %s = %s" % (varName, jsDefinition)
+
+  def addGlobalFnc(self, fncName, fncDef, fncDsc=''):
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors[fncName.split('(')[0]] = "function %s{%s}" % (fncName, fncDef)
+
+
+    def callPy(self, script_name, jsData=None, success="", cacheObj=None, isPyData=True, isDynUrl=False, httpCodes=None,
+             datatype='json', context=None, profile=False, loadings=None, report_name=None, before=None, jsFnc=''):
+    if not script_name.endswith(".py"):
+      script_name = "%s.py" % script_name
+    if success != "":
+      jsFnc = success
+    if before is not None:
+      if not isinstance(before, list):
+        before = [before]
+    else:
+      before = []
+    return self.click(before + [self._report.jsPost(script_name, jsData, jsFnc, cacheObj, isPyData, isDynUrl, httpCodes,
+                                          datatype, context, profile, loadings, report_name)])
+
+
+    def onDocumentReady(self):
+    self.jsUpdateDataFnc = '''%(pyCls)s(%(jqId)s, %(htmlId)s_data) 
+      ''' % {'pyCls': self.__class__.__name__, 'jqId': self.dom.jquery.varId, 'htmlId': self.htmlId, 'htmlCode': json.dumps(self.htmlCode),
+             'jsVal': self.val}
+    profile = self.profile if self.profile is not None else getattr(self._report, 'PROFILE', False)
+    if profile:
+      fncContentTemplate = ["var t0 = performance.now()", self.jsUpdateDataFnc,
+                            "console.log('|%s|%s|'+ (performance.now()-t0))" % (self.__class__.__name__, self.htmlId)]
+    else:
+      fncContentTemplate = [self.jsUpdateDataFnc]
+    if self.dataSrc is None or self.dataSrc.get('type') != 'url':
+      builder, optBuilder = fncContentTemplate[0].strip(), []
+      for l in builder.split("\n"):
+        optBuilder.append(l.strip())
+      self._report._props.setdefault('js', {}).setdefault("builders", []).append("".join(optBuilder))
+      self._report.jsOnLoadFnc.add(";".join(fncContentTemplate))
+
+  def onDocumentLoadVar(self):
+    self.addGlobalVar(self.jsVal, json.dumps(self.vals, cls=JsEncoder.Encoder))
+    if self.dataSrc is not None and self.dataSrc.get('type') == 'url':
+      if 'time_out' in self.dataSrc:
+        if self.dataSrc['time_out'] < 60:
+          self._report.notification('WARNING', 'Server Load',  'Process configured to run every %s seconds' % self.dataSrc['time_out'])
+
+        self._report.jsOnLoadFnc.add('''
+          setInterval(function(){ 
+            var params = {} ; for(var key in %(htmlCodes)s) { params[key] = %(breadCrumVar)s['params'][key] ;  }
+            $.getJSON( "%(url)s", params, function( data ) { %(jsVal)s = data ; %(pyCls)s(%(jqId)s, %(htmlId)s_data) ; });
+          }, %(time_out)s);
+          ''' % {'pyCls': self.__class__.__name__, 'jqId': self.jqId, 'htmlId': self.htmlId, 'jsVal': self.jsVal,
+                 'jsUpdateDataFnc': self.jsUpdateDataFnc, 'url': self.dataSrc['url'],
+                 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'time_out': self.dataSrc['time_out'] * 1000,
+                 'htmlCodes': json.dumps(self.dataSrc.get('htmlCodes', []))})
+      else:
+        self._report.jsOnLoadFnc.add('''
+          var params = {} ; for(var key in %(htmlCodes)s) { params[key] = %(breadCrumVar)s['params'][key] ;  }
+          $.post( "%(url)s", params, function( data ) { %(jsVal)s = JSON.parse(data) ; %(pyCls)s(%(jqId)s, %(jsVal)s, %(jsStyles)s ) ; });
+          ''' % {'pyCls': self.__class__.__name__, 'jqId': self.jqId, 'htmlId': self.htmlId, 'jsVal': self.jsVal,
+                 'jsUpdateDataFnc': self.jsUpdateDataFnc, 'url': self.dataSrc['url'], 'jsStyles': json.dumps(self._jsStyles),
+                 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCodes': json.dumps(self.dataSrc.get('htmlCodes', [])) } )
+
+
+  # def onDocumentLoadFnc(self):
+  #   self.isLoadFnc = False
+
+  # def notSelectable(self):
+  #   self._report.jsOnLoadFnc.add("%s.disableSelection()" % self.jqId)
+
+
+  # ---------------------------------------------------------------------------------------------------------
+  #                                          JAVASCRIPT STANDARD EVENTS
+  #
+  # def draggable(self, attrs=None):
+  #   if attrs is None:
+  #     attrs = {}
+  #   self._report.jsImports.add('jqueryui')
+  #   self._report.cssImport.add('jqueryui')
+  #   self._report.jsOnLoadFnc.add("%(jqDiv)s.addClass('ui-widget-content');%(jqDiv)s.css({'z-index': 10, 'background': 'inherit', color: 'inherit'});%(jqDiv)s.draggable(%(attrs)s)" % {'jqDiv': self.jqDiv, 'attrs': json.dumps(attrs)})
+  #   return self
+
+  # def jsEvents(self):
+  #   if hasattr(self, 'jsFncFrag'):
+  #     for eventKey, fnc in self.jsFncFrag.items():
+  #       self._report._props.get('js', {}).get('builders', []).extend(fnc)
+  #       if self.htmlCode is not None:
+  #         fnc.insert(0, self.jsAddUrlParam(self.htmlCode, self.val, isPyData=False))
+  #       if getattr(self._report, 'PROFILE', False):
+  #         self._report.jsOnLoadEvtsFnc.add('''
+  #                   %(jqId)s.on('%(eventKey)s', function(event) {var t0_event = performance.now();
+  #                     %(disableFnc)s; var useAsync = false; var data = %(data)s; var returnVal = undefined; %(jsInfo)s; %(jsFnc)s;
+  #                     data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
+  #                     if (!useAsync) {var body_loading_count = parseInt($('#body_loading span').text());
+  #                       $('#body_loading span').html(body_loading_count - 1);
+  #                       if($('#body_loading span').html() == '0') {$('#body_loading').remove()}};
+  #                     console.log('|%(pyClass)s|%(eventKey)s(%(htmlId)s)|'+ (performance.now()-t0_event));
+  #                     if (returnVal != undefined) {return returnVal}})
+  #           ''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'disableFnc': self.disableFnc, 'htmlId': self.htmlId,
+  #                  'pyClass': self.__class__.__name__, 'jsFnc': ";".join([f for f in fnc if f is not None]),
+  #                  'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
+  #       else:
+  #         self._report.jsOnLoadEvtsFnc.add('''
+  #           %(jqId)s.on('%(eventKey)s', function(event) {
+  #             %(disableFnc)s; var useAsync = false; var data = %(data)s; var returnVal = undefined; %(jsFnc)s;
+  #             data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
+  #             if (!useAsync) {var body_loading_count = parseInt($('#body_loading span').text());
+  #               $('#body_loading span').html(body_loading_count - 1); if($('#body_loading span').html() == '0') {$('#body_loading').remove()}}
+  #             if (returnVal != undefined) {return returnVal}})''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'disableFnc': self.disableFnc,
+  #                    'jsFnc': ";".join([f for f in fnc if f is not None])})
+
+  # def click(self, jsFncs): return self.jsFrg('click', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def change(self, jsFncs): return self.jsFrg('change', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def drop(self, jsFncs): return self.jsFrg('drop', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def dragover(self, jsFncs): return self.jsFrg('dragover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def dragleave(self, jsFncs): return self.jsFrg('dragleave', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def dragenter(self, jsFncs): return self.jsFrg('dragenter', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def dblclick(self, jsFncs): return self.jsFrg('dblclick', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def mouseup(self, jsFncs): return self.jsFrg('mouseup', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def blur(self, jsFncs): return self.jsFrg('blur', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def focusout(self, jsFncs): return self.jsFrg('focusout', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def keydown(self, jsFncs): return self.jsFrg('keydown', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def keypress(self, jsFncs): return self.jsFrg('keypress', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def keyup(self, jsFncs): return self.jsFrg('keyup', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def hover(self, jsFncs): return self.jsFrg('hover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def mouseover(self, jsFncs): return self.jsFrg('mouseover', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def mouseout(self, jsFncs): return self.jsFrg('mouseout', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
+  # def input(self, jsFnc): self._report.jsOnLoadFnc.add("%(jqId)s.on('input', function(event) { %(jsFnc)s }) ; " % {'jqId': self.jqId, 'jsFnc': jsFnc})
+
+  # def jsUpdate(self, data, isPyData=True):
+  #   Javascript function to update a component with a new val
+  #
+  #   self.onDocumentReady()
+  #   self.onDocumentLoadVar()
+  #   if isPyData:
+  #     data = json.dumps(data)
+  #   return "var %s = %s; %s; " % (self.jsVal, data, self.jsUpdateDataFnc)
+
+  # pas besoin
+  # def jsFrg(self, typeEvent, jsFnc):
+  #   if typeEvent not in self.jsFncFrag:
+  #     self.jsFncFrag[typeEvent] = []
+  #   if isinstance(jsFnc, list):
+  #     self.jsFncFrag[typeEvent].extend(jsFnc)
+  #   else:
+  #     self.jsFncFrag[typeEvent].append(jsFnc)
+  #   return self
+
+  # ---------------------------------------------------------------------------------------------------------
+  #                                             CSS SECTION
+  #
+
+  # ok
+  # def loadStyle(self):
+  #   for cssStyle in self.defined.clsMap:
+  #     # Remove the . or # corresponding to the type of CSS reference
+  #     self.pyCssCls.add(self._report.style.add(cssStyle).classname)
+
+
+  # def build(self, data, options, profile=False):
+  #   fncContentTemplate = '%(pyCls)s(%(jqId)s, %(htmlId)s_data, %(htmlId)s_options)' % {'pyCls': self.__class__.__name__,
+  #                                                                                       'jqId': self.dom.jquery.varId,
+  #                                                                                       'htmlId': self.htmlId}
+  #   self._report._props.setdefault('js', {}).setdefault("builders", []).append(fncContentTemplate)
+  #   self._report.jsOnLoadFnc.add(";".join(fncContentTemplate))
+
+    def refresh(self):
+    if self.dataSrc is None:
+      raise Exception("Cannot use refresh() without dataSrc defined")
+
+    if not self.dataSrc['script'].endswith(".py"):
+      self.dataSrc['script'] = "%s.py" % self.dataSrc['script']
+    fncs = [self.jsGenerate(jsDataKey=self.dataSrc.get('jsDataKey'))]
+    if 'jsFnc' in self.dataSrc:
+      if not isinstance(self.dataSrc['jsFnc'], list):
+        self.dataSrc['jsFnc'] = [self.dataSrc['jsFnc']]
+      fncs.extend(self.dataSrc['jsFnc'])
+    return self._report.jsPost(self.dataSrc['script'], jsData=self.dataSrc.get('jsData'), jsFnc=fncs,
+                               context=self.dataSrc.get('context'), httpCodes=self.dataSrc.get('httpCodes'), profile=self.profile)
+
+
+  # @property
+  # def eventId(self):
+  #   return self.jqId
+
+  # @property
+  # def jqId(self):
+  #   return "$('#%s')" % self.htmlId
+
+  # @property
+  # def contextVal(self):
+  #   return "{val: $(event.target).html()}"
+
+  # @property
+  # def jsQueryData(self):
+  #   if self.htmlCode is not None:
+  #     return "{event_val: %s, event_code: '%s', %s: %s}" % (self.jsVal, self.htmlId, self.htmlCode, self.jsVal)
+  #
+  #   return "{event_val: %s, event_code: '%s'}" % (self.jsVal, self.htmlId)
+
+  # @classmethod
+  # def jsMarkDown(cls, vals): return None
+
+  # @property
+  # def disableFnc(self): return ''
+
+  def source(self, dataSrc):
+    if dataSrc.get('type') == 'script':
+      if dataSrc.get('frequency') is not None:
+        self.dataSrc['intervalId'] = self._report.jsInterval(self.refresh(), dataSrc['frequency'] * 1000)
+      else:
+        if dataSrc.get('on_init', True):
+          self._report.jsOnLoadFnc.add(self.refresh())
+    elif dataSrc.get('type') == 'socket':
+      self._report.jsImports.add('socket.io')
+      self._report.jsOnLoadFnc.add("var socket = io.connect('%s')" % self._report.run.url_root)
+      if dataSrc.get("append", False) and hasattr(self, 'jsAppend'):
+        self._report.jsOnLoadFnc.add("socket.on('message_%s_%s_%s', function(data) {%s})" % (self._report.run.report_name, self._report.run.script_name, self.htmlId, self.jsAppend()))
+      else:
+        self._report.jsOnLoadFnc.add("socket.on('message_%s_%s_%s', function(data) {%s})" % (self._report.run.report_name, self._report.run.script_name, self.htmlId, self.jsGenerate()))
+
+  def _jsData(self, jsData, jsDataKey, jsParse, isPyData, jsFnc=None):
+    if isPyData:
+      return json.dumps(jsData)
+
+    if jsDataKey is not None:
+      jsData = "%s['%s']" % (jsData, jsDataKey)
+    if jsParse:
+      print("jsParse deprecated - Should be using jsFnc instead")
+      jsData = "JSON.parse(%s)" % jsData
+    if jsFnc is not None:
+      jsData = "%s(%s)" % (jsFnc, jsData)
+    return jsData
+  
+    def html(self):
+    for htmlObj in self._sub_htmls:
+      htmlObj.html()
+    if self.helper != "":
+      self.helper.html()
+
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.build(self.vals, None))
+
+    for cssStyle in self.defined.clsMap:
+      # Remove the . or # corresponding to the type of CSS reference
+      self.pyCssCls.add(self._report.style.add(cssStyle).classname)
+    #self.jsEvents()
     # Update the HTML element with the values defined in the function call in the report
-    self.onDocumentLoadFnc()
-    if self.isLoadFnc:
-      self.onDocumentLoadVar()
-      self.onDocumentReady()
+    #self.onDocumentLoadFnc()
+    #if self.isLoadFnc:
+    #  self.onDocumentLoadVar()
+    #  self.onDocumentReady()
     if self.dataSrc is not None:
       self.source(self.dataSrc)
-    contextlinks = []
-    if self.references is not None:
-      contextlinks.append({'title': 'Useful Links'})
-      for label, url in self.references.items():
-        contextlinks.append({"label": label, "url": url})
+
+    # contextlinks = []
+    # if self.references is not None:
+    #   contextlinks.append({'title': 'Useful Links'})
+    #   for label, url in self.references.items():
+    #     contextlinks.append({"label": label, "url": url})
 
     # This is not needed in the pages by default
-    markDown = None # self.jsMarkDown()
-    if markDown is not None:
-      self.addGlobalVar("%s_markDownFnc" % self.htmlId, json.dumps(markDown))
-
-      self._report.jsGlobal.fnc("CopyMarkDown(jsMarkDown)",
-          ''' 
-          var textArea = $('<textarea />') ;
-          $('body').append(textArea) ;
-          textArea.text(jsMarkDown.split('&&').join('\\n')) ;
-          $('body').append(textArea) ;
-          textArea.select();
-          document.execCommand('copy');
-          textArea.remove(); 
-          ''')
-    else:
-      self.addGlobalVar("%s_markDownFnc" % self.htmlId, json.dumps(False))
+    # markDown = None # self.jsMarkDown()
+    # if markDown is not None:
+    #   self.addGlobalVar("%s_markDownFnc" % self.htmlId, json.dumps(markDown))
+    #
+    #   self._report.jsGlobal.fnc("CopyMarkDown(jsMarkDown)",
+    #       '''
+    #       var textArea = $('<textarea />') ;
+    #       $('body').append(textArea) ;
+    #       textArea.text(jsMarkDown.split('&&').join('\\n')) ;
+    #       $('body').append(textArea) ;
+    #       textArea.select();
+    #       document.execCommand('copy');
+    #       textArea.remove();
+    #       ''')
+    # else:
+    #   self.addGlobalVar("%s_markDownFnc" % self.htmlId, json.dumps(False))
 
     #self.contextMenu(contextlinks)
-    if self._triggerEvents:
-      self._report.jsOnLoadEvtsFnc.add(";".join(self._triggerEvents))
-    if self.hidden == True:
-      self.set_attrs(name='css', value={'display': 'none'})
+    # if self._triggerEvents:
+    #   self._report.jsOnLoadEvtsFnc.add(";".join(self._triggerEvents))
+    # if self.hidden == True:
+    #   self.set_attrs(name='css', value={'display': 'none'})
     return str(self)
+    
+    def onInit(self, htmlCode, dataSrc):
+    if dataSrc['type'] == 'script':
+      mod = importlib.import_module('%s.sources.%s' % (self._report.run.report_name, dataSrc['script'].replace('.py', '')))
+      httpParams = dict([(param, self._report.http.get(param, '')) for param in dataSrc.get('htmlCodes', [])])
+      recordSet = mod.getData(self._report, httpParams)
+      if 'jsDataKey' in dataSrc:
+        recordSet = recordSet[dataSrc['jsDataKey']]
+      return recordSet
+
+    elif dataSrc['type'] == 'flask':
+      if 'fncName' in dataSrc:
+        mod = importlib.import_module('epyk.%s' % dataSrc['module'])
+        return json.loads(getattr(mod, dataSrc['fncName'])(*dataSrc.get('pmts', [])))
+      else:
+        return json.loads(dataSrc['fnc'](*dataSrc.get('pmts', [])))
+
+    elif dataSrc['type'] == 'url':
+      # To think about the security here
+      data = {'user_name': self._report.user, 'report_name': self._report.run.report_name, 'script_name': self._report.run.script_name, 'host_name': self._report.run.host_name}
+      data.update( self._report._run )
+      response = urllib2.urlopen("%s%s" % (self._report.run.url_root, dataSrc['url']), parse.urlencode(data).encode("utf-8"))
+      if dataSrc.get('jsDataKey') is not None:
+        return json.loads(response.read().decode('utf_8'))['jsDataKey']
+      try:
+        return json.loads(response.read().decode('utf_8'))
+      except Exception as err:
+        self._report.log("[%s] urlopen:%s%s" % (str(err), self._report.run.url_root, dataSrc['url']), type='WARNING')
+        return ""
+
+"""
