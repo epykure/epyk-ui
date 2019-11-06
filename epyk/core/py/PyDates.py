@@ -256,7 +256,24 @@ class PyDates(object):
         dates.append(dt.strftime('%Y-%m-%d'))
     return dates
 
-  def to_server_time(self, timestamp, offset, reference=60):
+  def from_timestamp(self, timestamp, offset=0, reference=60, factor=1000):
+    """
+    The default value will be given considering the GMT time
+
+    Example
+    timestamp_s = rptObj.py.dates.from_timestamp(1573074335010, 0)
+
+    :param timestamp: Integer. The timestamp in miliseconds
+    :param offset: Integer. The time zone
+    :param reference: Integer. The reference shift in minutes
+
+    :return: The server timestamp string
+    """
+    date = datetime.datetime.fromtimestamp(timestamp / factor)
+    date = date + datetime.timedelta(minutes=(int(offset) + reference))
+    return date.strftime('%Y-%m-%d %H:%M:%S')
+
+  def to_server_time(self, timestamp, offset=0, reference=60):
     """
     Return the converted timestamp to be stored in the database.
     This conversion will be based on the offset coming from the UI to convert to common time
