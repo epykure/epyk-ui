@@ -5,6 +5,7 @@ to create the weels: python.exe setup.py sdist bdist_wheel --universal
 """
 
 import setuptools
+import os
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -23,6 +24,8 @@ setuptools.setup(
     url="https://github.com/epykure/epyk-ui",
     packages=setuptools.find_packages(),
     install_requires=install_required(),
+    package_data={'epyk': [os.path.join('static', 'images', '*'), os.path.join('static', 'images', 'logo', '*')]},
+    entry_points={"console_scripts": ["epyk = epyk.core.cli.command_line_fncs:main"]},
     python_requires=">=2.7",
     classifiers=[
         "Programming Language :: Python :: 3",

@@ -42,3 +42,8 @@ Thumbs.db
 
 # Ignore test outs results
 */tests/outs/*
+
+# Ignore build results
+dist/*
+build/*
+*egg-info*
