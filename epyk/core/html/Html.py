@@ -638,34 +638,6 @@ class Html(object):
         self.attr['css'][key] = value
     return self
 
-  def on(self, event, jsFncs, profile=False):
-    """
-    Add an event to the document ready function.
-    This is to mimic the Jquery on function.
-
-    Documentation
-    https://www.w3schools.com/jquery/event_on.asp
-    https://www.w3schools.com/js/js_htmldom_eventlistener.asp
-    https://www.w3schools.com/jsref/dom_obj_event.asp
-
-    :param event: A string with the Javascript event type from the dom_obj_event.asp
-    :param jsFncs: A Javascript Python function
-    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console
-
-    :return: self to allow the chains
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    # JsUtils.jsConvertFncs needs to be applied in order to freeze the function
-    # span.on("mouseover", span.dom.css("color", "red"))
-    # span.on("mouseleave", span.dom.css("color", "blue"))
-    self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
-    self._events['doc_ready'][event]['profile'] = profile
-    return self
-
-  def click(self, jsFncs, profile=False):
-    return self.on("click", jsFncs, profile)
-
   def tooltip(self, value, location='top'):
     """
     Add the Tooltip feature when the mouse is over the component.
@@ -754,6 +726,66 @@ class Html(object):
 
     return '%s %s %s' % (" ".join(['%s="%s"' % (key, val) for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
 
+  # -------------------------------------------------------------
+  # Javascript Event wrappers
+  #
+  def on(self, event, jsFncs, profile=False):
+    """
+    Add an event to the document ready function.
+    This is to mimic the Jquery on function.
+
+    Documentation
+    https://www.w3schools.com/jquery/event_on.asp
+    https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+    https://www.w3schools.com/jsref/dom_obj_event.asp
+
+    :param event: A string with the Javascript event type from the dom_obj_event.asp
+    :param jsFncs: A Javascript Python function
+    :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console
+
+    :return: self to allow the chains
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    # JsUtils.jsConvertFncs needs to be applied in order to freeze the function
+    # span.on("mouseover", span.dom.css("color", "red"))
+    # span.on("mouseleave", span.dom.css("color", "blue"))
+    self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
+    self._events['doc_ready'][event]['profile'] = profile
+    return self
+
+  def click(self, jsFncs, profile=False):
+    return self.on("click", jsFncs, profile)
+
+  def mouse(self, on_fncs=None, out_fncs=None):
+    """
+    Wrapper function fot the mouse event.
+    This function will cover the on mouse hover event and mouse out.
+
+    More specific events are possible using the generic out function
+
+    Example
+      span.mouse([
+        span.dom.css("color", "red"),
+        span.dom.css("cursor", "pointer").r],
+        span.dom.css("color", "blue").r)
+
+    Documentation
+
+    :param on_fncs: Array or String of Javascript events
+    :param out_fncs: Array or String of Javascript events
+
+    :return: self to allow the chains
+    """
+    if on_fncs is not None:
+      self.on("mouseover", on_fncs)
+    if out_fncs is not None:
+      self.on("mouseleave", out_fncs)
+    return self
+
+  # -------------------------------------------------------------
+  # Builder functions
+  #
   @property
   def _js__builder__(self):
     raise Exception("Constructor must be defined in %s" % self.__class__.__name__)
@@ -768,6 +800,7 @@ class Html(object):
 
   def refresh(self):
     return self.build(self.val, self._jsStyles)
+
 
   def onDocumentLoadContextmenu(self):
     self._report.jsGlobal.fnc("ContextMenu(htmlObj, data, markdownFnc)",

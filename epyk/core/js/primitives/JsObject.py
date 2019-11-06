@@ -651,6 +651,14 @@ class JsObject(object):
 
     return self.varData if self.varName is None else self.varName
 
+  @property
+  def r(self):
+    """
+    Return the String representation of the Js object.
+    This will produce the chain, empty the internal buffer and produce the string
+    """
+    return self.toStr()
+
   def __str__(self):
     """
     The str() method return the variable Javascript reference of the variable.

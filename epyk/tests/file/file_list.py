@@ -70,15 +70,22 @@ table.on("dblclick", rptObj.js.alert("test"), profile=False)
 rptObj.ui.button("Test").click(rptObj.js.alert("test"))
 rptObj.ui.rich.info("info")
 span = rptObj.ui.texts.span("youpi")
-span.on("mouseover", span.dom.css("color", "red"))
-span.on("mouseleave", span.dom.css("color", "blue"))
+span.mouse([
+  span.dom.css("color", "red"),
+  span.dom.css("cursor", "pointer").r],
+  span.dom.css("color", "blue").r)
 
+#span.on("mouseover", span.dom.css("color", "red"))
+#span.on("mouseleave", span.dom.css("color", "blue"))
+
+label = rptObj.ui.texts.label("label")
 
 pre = rptObj.ui.texts.preformat("Super").notSelectable()
 
 pre.click([
   rptObj.js.console.log(pre.dom.val),
   rptObj.js.console.log(span.dom.val),
+  rptObj.js.console.log(label.dom.val),
 ])
 
 from datetime import datetime
