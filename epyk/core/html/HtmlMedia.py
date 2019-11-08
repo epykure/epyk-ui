@@ -106,12 +106,16 @@ class Audio(Html.Html):
 class Youtube(Html.Html):
   name, category, callFnc = 'Youtube Video', 'Media', 'youtube'
   _grpCls = CssGrpCls.CssGrpClassBase
+  builder_name = False
 
-  def __init__(self, report, link, width, height, htmlCode, profile):
+  def __init__(self, report, link, width, height, htmlCode, profile, options):
     super(Youtube, self).__init__(report, link, width=width[0], widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], code=htmlCode, profile=profile)
+    self._jsStyles = options
+    self._jsStyles['src'] = link
 
   def __str__(self):
+    opts = ["%s='%s'" % (k, v) for k, v in self._jsStyles.items()]
     return '''
-      <div %(attrs)s><iframe width="420" height="315" type="text/html" src="%(link)s"></iframe></div>
-      ''' % {'attrs': self.get_attrs(pyClassNames=self.defined), 'link': self.vals}
+      <div %(attrs)s><iframe %(options)s></iframe></div>
+      ''' % {'attrs': self.get_attrs(pyClassNames=self.defined), 'link': self.val, 'options': " ".join(opts)}

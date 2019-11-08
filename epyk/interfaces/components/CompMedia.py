@@ -62,7 +62,7 @@ class Media(object):
     self.context.register(html_audio)
     return html_audio
 
-  def youtube(self, link, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None):
+  def youtube(self, link, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
     """
     This will add a youtube video using the shared line to embedded to a website.
 
@@ -77,9 +77,12 @@ class Media(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlMedia.Youtube
-    :return:
+    :param options:
     """
-    return self.context.register(html.HtmlMedia.Youtube(self.context.rptObj, link, width, height, htmlCode, profile))
+    dflt_options = {"width": "420", "height": "315", "type": "text/html"}
+    if options is not None:
+      dflt_options.update(options)
+    html_youtube = html.HtmlMedia.Youtube(self.context.rptObj, link, width, height, htmlCode, profile, dflt_options)
+    self.context.register(html_youtube)
+    return html_youtube
 
