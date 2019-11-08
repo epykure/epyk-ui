@@ -21,7 +21,7 @@ class JsHtml(JsNodeDom.JsDoms):
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
     self.htmlId = varName if varName is not None else htmlObj.htmlId
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
-    self.__src, self._report = htmlObj, report
+    self._src, self._report = htmlObj, report
     self._js = []
     self._jquery, self._jquery_ui = None, None
 
@@ -40,7 +40,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsNodeDom.JsDomEvents
     :return:
     """
-    return JsNodeDom.JsDomEvents(self.__src)
+    return JsNodeDom.JsDomEvents(self._src)
 
   @property
   def jquery(self):
@@ -50,7 +50,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
-      self._jquery = JsQuery.JQuery(src=self.__src, selector=JsQuery.decorate_var("#%s" % self.__src.htmlId))
+      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId))
     return self._jquery
 
   @property
@@ -61,7 +61,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery_ui is None:
-      self._jquery_ui = JsQueryUi.JQueryUI(self.__src)
+      self._jquery_ui = JsQueryUi.JQueryUI(self._src)
     return self._jquery_ui
 
   @property
@@ -121,7 +121,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :return: The JsObject
     """
     jsData = JsUtils.jsConvertFncs(jsFncs)
-    self.__src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
+    self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
     return self
 
   def hide(self):
@@ -192,8 +192,29 @@ class JsHtmlDatePicker(JsNodeDom.JsDoms):
     :rtype: JsQueryUi.JQueryUiDatePicker
     """
     if self._jqueryui is None:
-      self._jqueryui = JsQueryUi.JQueryUiDatePicker(self.__src)
+      self._jqueryui = JsQueryUi.JQueryUiDatePicker(self._src)
     return self._jqueryui
+
+
+class JsHtmlProgressBar(JsHtml):
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    super(JsHtmlProgressBar, self).__init__(htmlObj)
+    self._jqueryui = None
+
+  @property
+  def jqueryui(self):
+    """
+
+    :return:
+    :rtype: JsQueryUi.JsHtmlProgressBar
+    """
+    if self._jqueryui is None:
+      self._jqueryui = JsQueryUi.JQueryUiProgressBar(self._src)
+    return self._jqueryui
+
+  @property
+  def val(self):
+    return '%s.progressbar("value")' % self._src.dom.jquery.varId
 
 
 class JsHtmlTimePicker(JsNodeDom.JsDoms):
@@ -215,5 +236,5 @@ class JsHtmlTabulator(JsNodeDom.JsDoms):
     :rtype: JsTabulator.Tabulator
     """
     if self._tabulator is None:
-      self._tabulator = JsTabulator.Tabulator(self.__src)
+      self._tabulator = JsTabulator.Tabulator(self._src)
     return self._tabulator

@@ -9,7 +9,7 @@ class Media(object):
   def __init__(self, context):
     self.context = context
 
-  def video(self, value, path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None):
+  def video(self, value, path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
     """
     Add a video from the server to the page.
     The format for the video must be MP4
@@ -26,14 +26,17 @@ class Media(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlMedia.Media
-    :return:
+    :param options:
     """
-    return self.context.register(html.HtmlMedia.Media(self.context.rptObj, value, path, width, height, htmlCode, profile))
+    dft_options = {"autoplay": True}
+    if options is not None:
+      dft_options.update(options)
+    html_media = html.HtmlMedia.Media(self.context.rptObj, value, path, width, height, htmlCode, profile, dft_options)
+    self.context.register(html_media)
+    return html_media
 
-  def audio(self, value, path=None, autoplay=True, width=(100, '%'), height=(None, 'px'),
-            htmlCode=None, profile=None):
+  def audio(self, value, path=None, width=(100, '%'), height=(None, 'px'),
+            htmlCode=None, profile=None, options=None):
     """
     Add a audio track from the server to the page.
     The format for the video must be mpeg
@@ -46,17 +49,18 @@ class Media(object):
 
     :param value: The name of the audio object
     :param path: Optional. THe path to the audio object
-    :param autoplay: Optional. Start the audio when the page is loaded
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlMedia.Audio
-    :return:
+    :param options:
     """
-    return self.context.register(html.HtmlMedia.Audio(self.context.rptObj, value, path, autoplay, width,
-                                                      height, htmlCode, profile))
+    dft_options = {"autoplay": True}
+    if options is not None:
+      dft_options.update(options)
+    html_audio = html.HtmlMedia.Audio(self.context.rptObj, value, path, width, height, htmlCode, profile, dft_options)
+    self.context.register(html_audio)
+    return html_audio
 
   def youtube(self, link, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None):
     """

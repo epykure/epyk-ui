@@ -9,6 +9,7 @@ import re
 import json
 
 from epyk.core.html import Html
+from epyk.core.js import JsHtml
 from epyk.core.js.Imports import requires
 
 # The list of CSS classes
@@ -30,39 +31,27 @@ class ProgressBar(Html.Html):
     self.add_helper(helper)
     self._jsStyles = {"background": self.getColor('colors', 7)}
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__,
-      ''' htmlObj.progressbar({value: parseFloat(data)}).find('div').css(jsStyles)''')
+  @property
+  def _js__builder__(self):
+    return "jQuery(htmlObj).progressbar({value: parseFloat(data)}).find('div').css(options)"
 
   @property
-  def val(self):
+  def dom(self):
     """
-    Property to get the jquery value of the HTML object in a python HTML object.
-    This method can be used in any jsFunction to get the value of a component in the browser.
-    This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
+    Javascript Functions
 
-    Example
-    htmlObj.val
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
 
-    :returns: Javascript string with the function to get the current value of the component
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlProgressBar
     """
-    return '%s.progressbar("value")' % self.jqId
-
-  def addAttr(self, key, val):
-    """
-
-    :param key:
-    :param val:
-    :return:
-    """
-    self._jsStyles[key] = val
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlProgressBar(self, report=self._report)
+    return self._dom
 
   def __str__(self):
-    """
-    The String HTML Container of the object
-
-    :returns: The String HTML Container of the object
-    """
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
@@ -178,7 +167,8 @@ class Slider(Html.Html):
                      'jsFnc': ";".join([f for f in fnc if f is not None]), 'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
 
   # data.slide: function( event, ui ) {  $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] ); }
-  def onDocumentLoadFnc(self): self.addGlobalFnc("%s(htmlObj, data, jsStyle)" % self.__class__.__name__, '''
+  def onDocumentLoadFnc(self):
+    self.addGlobalFnc("%s(htmlObj, data, jsStyle)" % self.__class__.__name__, '''
     if (jsStyle.type == 'date') {
       data.step = data.step * 86400000; data.min = DateToTimeStamp(data.min); data.max = DateToTimeStamp(data.max);
       if (data.values != undefined) {data.values = [DateToTimeStamp(data.values[0]), DateToTimeStamp(data.values[1])]}
@@ -370,23 +360,6 @@ class SkillBar(Html.Html):
   def val(self):
     return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {"htmlCode": self.htmlId, 'breadCrumVar': self._report.jsGlobal.breadCrumVar}
 
-  @property
-  def jsQueryData(self):
-    """
-    :category: Javascript features
-    :dsc: Python function to define the Javascript object to be passed in case of Ajax call internally or via external REST service with other languages
-    :return: Javascript String of the data to be used in a jQuery call
-    :link ajax call: http://api.jquery.com/jquery.ajax/
-    """
-    if self.htmlCode is not None:
-      return "{event_val: $(this).text(), %s: $(this).text(), event_code: '%s'}" % (self.htmlCode, self.htmlId)
-
-    return "{event_val: $(this).text(), event_code: '%s'}" % self.htmlId
-
-  @property
-  def jqId(self):
-    return "$('#%s table')" % self.htmlId
-
   def jsEvents(self):
     if hasattr(self, 'jsFncFrag'):
       for eventKey, fnc in self.jsFncFrag.items():
@@ -400,22 +373,18 @@ class SkillBar(Html.Html):
           })''' % {'eventId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'jsFnc': ";".join([f for f in fnc if f is not None]),
                    'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
 
-  def onDocumentLoadVar(self): pass #.getJs(
-
-  def onDocumentReady(self):
-    self._report.jsOnLoadFnc.add("%s(%s, %s, %s)" % (self.__class__.__name__, self.jqId, self.data.getJs(), json.dumps(self._jsStyles)))
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
+  def _js__builder__(self):
+    return '''
+      htmlObj.empty();
       data.forEach(function(rec, i){
-          if (jsStyles.colTooltip != undefined) {var tooltip = 'title="'+ rec[jsStyles.colTooltip] +'"'} else {var tooltip = ''};
-          if (jsStyles.colUrl != undefined) {var content = '<a href="'+ rec[jsStyles.colUrl] +'" style="color:white">'+ valPerc.toFixed(2) +'%</a>'} 
-          else {var content = rec[jsStyles.val].toFixed( 2 ) +"%"};
-          htmlObj.append('<tr '+ tooltip +'><td style="width:100px;"><p style="margin:2px;text-align:center;word-wrap:break-word;cursor:pointer">'+ rec[jsStyles.label] +'</p></td><td style="width:100%"><div style="margin:2px;display:block;height:100%;padding-bottom:5px;padding:2px 0 2px 5px;width:'+ parseInt( rec[jsStyles.val] ) +'%;background-color:'+ jsStyles.color +';color:'+ jsStyles.fontColor +'">' + content + '</div></td></tr>');
-          htmlObj.find('tr').tooltip()})''', 'Javascript Object builder')
+        if (jsStyles.colTooltip != undefined) {var tooltip = 'title="'+ rec[jsStyles.colTooltip] +'"'} else {var tooltip = ''};
+        if (jsStyles.colUrl != undefined) {var content = '<a href="'+ rec[jsStyles.colUrl] +'" style="color:white">'+ valPerc.toFixed(2) +'%</a>'} 
+        else {var content = rec[jsStyles.val].toFixed( 2 ) +"%"};
+        htmlObj.append('<tr '+ tooltip +'><td style="width:100px;"><p style="margin:2px;text-align:center;word-wrap:break-word;cursor:pointer">'+ rec[jsStyles.label] +'</p></td><td style="width:100%"><div style="margin:2px;display:block;height:100%;padding-bottom:5px;padding:2px 0 2px 5px;width:'+ parseInt( rec[jsStyles.val] ) +'%;background-color:'+ jsStyles.color +';color:'+ jsStyles.fontColor +'">' + content + '</div></td></tr>');
+        htmlObj.find('tr').tooltip()})
+      '''
 
   def __str__(self):
-    """ String representation of the HTML element """
     return '<div %s><table></table></div>' % (self.get_attrs(pyClassNames=self.defined))
 
   # -----------------------------------------------------------------------------------------

@@ -658,6 +658,26 @@ class Html(object):
     self._report.jsFnc.add("%s.tooltip()" % self.jqId)
     return self
 
+  def add_options(self, options=None, name=None, value=None):
+    """
+    Change the Javascript options of the component.
+    This will change the options sent to the Javascript
+
+    :param options: Dictionary with the options
+    :param name: String. The key
+    :param value: String. The value
+
+    :return: self to allow the chains
+    """
+    if options is None and name is None:
+      raise Exception("Either the attrs or the name should be specified")
+
+    if options is None:
+      options = {name: value}
+    for k, v in options.items():
+      self._jsStyles[k] = v
+    return self
+
   def set_attrs(self, attrs=None, name=None, value=None):
     """
     Function to update the internal dictionary of object attributes. Those attributes will be used when the HTML component will be defined.
@@ -722,9 +742,9 @@ class Html(object):
     elif pyClassNames is not None:
       cssClass = self._report.style.getClsTag(pyClassNames.clsMap)
     if withId:
-      return 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val) for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+      return 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
 
-    return '%s %s %s' % (" ".join(['%s="%s"' % (key, val) for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+    return '%s %s %s' % (" ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
 
   # -------------------------------------------------------------
   # Javascript Event wrappers
