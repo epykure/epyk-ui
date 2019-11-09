@@ -10,7 +10,7 @@ class CssDivChart(CssStyle.CssCls):
   """
   CSS class for the Chart container
   """
-  attrs = {'margin': '0 0 5px 0', 'padding': '5px', 'outline': 'none'}
+  attrs = {'margin': '0 0 5px 0', 'outline': 'none'}
 
   def customize(self, style, eventsStyles):
     style.update({'border': "1px solid %s" % self.getColor('greys', 3)})

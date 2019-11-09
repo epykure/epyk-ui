@@ -51,9 +51,10 @@ class CssClassTextBubble(CssGrpCls.CssGrpClass):
   """
 
   """
+  css_title = CssStylesText.CssTitle
   css_div_chart = CssStylesChart.CssDivChart
   css_div_bubble = CssStylesDiv.CssDivBubble
-  __map, __alt_map = ['CssDivChart'], ['CssDivBubble']
+  __map, __alt_map = ['CssDivChart'], ['CssDivBubble', 'CssTitle']
 
 
 class CssClassTextVignet(CssGrpCls.CssGrpClass):

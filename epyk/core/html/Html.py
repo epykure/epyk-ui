@@ -659,7 +659,7 @@ class Html(object):
     :return: The Python object self
     """
     self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-placement': location})
-    self._report.jsFnc.add("%s.tooltip()" % self.jqId)
+    self._report.jsFnc.add("%s.tooltip()" % self.dom.varId)
     return self
 
   def add_options(self, options=None, name=None, value=None):

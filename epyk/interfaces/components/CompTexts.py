@@ -153,13 +153,11 @@ class Texts(object):
     :param color: Optional. The color of the text
     :param helper:
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlTextComp.Formula
-
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlTextComp.Formula(self.context.rptObj, text, size, width, color, helper, profile))
+    html_formula = html.HtmlTextComp.Formula(self.context.rptObj, text, size, width, color, helper, profile)
+    self.context.register(html_formula)
+    return html_formula
 
   def code(self, text="", size=(None, 'px'), color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None,
            options=None, helper=None, profile=None):
@@ -301,16 +299,14 @@ class Texts(object):
     :param options:
     :param helper:
     :param profile:
-
-    :rtype: html.HtmlTextComp.UpDown
-
-    :return:
     """
     dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
     if options is not None:
       dflt_options.update(options)
     size = self.context._size(size)
-    return self.context.register(html.HtmlTextComp.UpDown(self.context.rptObj, rec, size, color, label, dflt_options, helper, profile))
+    html_up_down = html.HtmlTextComp.UpDown(self.context.rptObj, rec, size, color, label, dflt_options, helper, profile)
+    self.context.register(html_up_down)
+    return html_up_down
 
   def number(self, number=None, label=None, icon=None, size=(None, "px"), color=None, tooltip='', htmlCode=None,
              options=None, helper=None, profile=None):

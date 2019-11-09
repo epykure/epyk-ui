@@ -9,7 +9,7 @@ class Rich(object):
   def __init__(self, context):
     self.context = context
 
-  def textbubble(self, recordSet=None, width=(100, "%"), height=(None, 'px'), color=None, size=(25, "px"),
+  def textbubble(self, recordSet=None, width=(100, "%"), height=(80, 'px'), color=None, size=(25, "px"),
                  background_color=None, helper=None, profile=None):
     """
 
@@ -26,12 +26,11 @@ class Rich(object):
     :param background_color:
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlTextComp.TextBubble
-    :return:
     """
-    return self.context.register(html.HtmlTextComp.TextBubble(self.context.rptObj, recordSet or {}, width, height,
-                                                              color, size, background_color, helper, profile))
+    html_bubble = html.HtmlTextComp.TextBubble(self.context.rptObj, recordSet or {}, width, height, color, size,
+                                               background_color, helper, profile)
+    self.context.register(html_bubble)
+    return html_bubble
 
   def delta(self, rec=None, width=(200, 'px'), height=(80, 'px'), size=None, options=None, helper=None, profile=None):
     """
@@ -77,8 +76,6 @@ class Rich(object):
     :param color_title:
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
-
-    :return:
     """
     dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.', 'markdown': True}
     if options is not None:
@@ -129,12 +126,9 @@ class Rich(object):
     :param align:
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlTextComp.TextWithBorder
-
-    :return:
     """
     size = self.context._size(size)
+
     return self.context.register(html.HtmlTextComp.TextWithBorder(self.context.rptObj, recordSet, width,
                                                                   height, size, align, helper, profile))
 
@@ -156,14 +150,11 @@ class Rich(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlTextComp.BlockText
-
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlTextComp.BlockText(self.context.rptObj, recordSet, color, size, border, width,
-                                                             height, helper, profile))
+    html_blocktext = html.HtmlTextComp.BlockText(self.context.rptObj, recordSet, color, size, border, width, height, helper, profile)
+    self.context.register(html_blocktext)
+    return html_blocktext
 
   def light(self, color=None, height=(20, 'px'), label=None, tooltip=None, helper=None, profile=None):
     """
@@ -177,12 +168,10 @@ class Rich(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param helper: Optional. The filtering properties for this component
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlTextComp.TrafficLight
-    :return:
     """
-    return self.context.register(html.HtmlTextComp.TrafficLight(self.context.rptObj, color, label, height,
-                                                                tooltip, helper, profile))
+    html_traffic = html.HtmlTextComp.TrafficLight(self.context.rptObj, color, label, height, tooltip, helper, profile)
+    self.context.register(html_traffic)
+    return html_traffic
 
   def prism(self, text=None, language='python', size=(None, 'px'), width=(100, "%"), height=(None, "px"),
             isEditable=False, trimSpaces=True, align=None, helper=None, profile=None):

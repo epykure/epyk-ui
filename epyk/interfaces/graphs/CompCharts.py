@@ -29,7 +29,7 @@ class Graphs(object):
   def __init__(self, context):
     self.context = context
 
-  def skillbars(self, recordSet=None, seriesName=None, axis=None, title=None, color=None, width=(100, '%'),
+  def skillbars(self, records=None, y_column=None, x_axis=None, title=None, color=None, width=(100, '%'),
                 height=(None, 'px'), htmlCode=None, colUrl=None, colTooltip=None, filters=None, profile=False):
     """
     Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS
@@ -37,9 +37,9 @@ class Graphs(object):
     Documentation
     https://www.w3schools.com/howto/howto_css_skill_bar.asp
 
-    :param recordSet:
-    :param seriesName:
-    :param axis:
+    :param records:
+    :param y_column:
+    :param x_axis:
     :param title:
     :param color:
     :param width:
@@ -49,17 +49,15 @@ class Graphs(object):
     :param colTooltip:
     :param filters:
     :param profile:
-
-    :rtype: html.HtmlEvent.SkillBar
-
-    :return:
     """
-    if seriesName is None or axis is None:
+    if y_column is None or x_axis is None:
       raise Exception("seriesName and axis must be defined")
 
-    jsDataObj = js.AresJs.Js(self.context.rptObj, recordSet, profile=profile).fncs([('percentage', [axis], [seriesName])])
-    return self.context.register(html.HtmlEvent.SkillBar(self.context.rptObj, jsDataObj, title, width, height,
-                                                         color, htmlCode, colUrl, colTooltip, filters, profile))
+    jsDataObj = js.AresJs.Js(self.context.rptObj, records, profile=profile).fncs([('percentage', [x_axis], [y_column])])
+    html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, jsDataObj, title, width, height, color, htmlCode,
+                                            colUrl, colTooltip, filters, profile)
+    self.context.register(html_skillbar)
+    return html_skillbar
 
   def _data(self, data, seriesNames, xAxis, otherDims, dataFncs, xAxisOrder, chartFam, chartType, profile):
     """
