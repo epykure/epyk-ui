@@ -58,9 +58,10 @@ class CssInputText(CssStyle.CssCls):
 
 
 class CssInputTextArea(CssStyle.CssCls):
-  attrs = {'resize': 'none', 'margin-bottom': '10px'}
+  attrs = {'resize': 'none', 'margin-bottom': '5px'}
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('colors', 0), "color": self.getColor('greys', -1), 'border': '1px solid %s' % self.getColor('greys', 3)})
+    style.update({"background-color": self.getColor('colors', 0), "color": self.getColor('greys', -1),
+                  'border': '1px solid %s' % self.getColor('greys', 3)})
     eventsStyles['hover'].update({'color': self.getColor('greys', -1), 'border': '1px solid %s' % self.getColor('success', 1)})
