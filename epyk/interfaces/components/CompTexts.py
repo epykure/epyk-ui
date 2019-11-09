@@ -130,13 +130,12 @@ class Texts(object):
     :param htmlCode:
     :param helper:
     :param profile:
-
-    :rtype: html.HtmlText.Highlights
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, size, color, width,
-                                                          height, htmlCode, helper, profile))
+    html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, size, color, width,
+                                          height, htmlCode, helper, profile)
+    self.context.register(html_light)
+    return html_light
 
   def formula(self, text=None, size=(None, "px"), width=(100, "%"), color=None, helper=None, profile=None):
     """
@@ -218,14 +217,12 @@ class Texts(object):
     :param encoding:
     :param dataSrc:
     :param profile:
-
-    :rtype: html.HtmlText.Paragraph
-
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Paragraph(self.context.rptObj, text, size, color, background_color, border,
-                                                         width, height, htmlCode, encoding, dataSrc, helper, profile))
+    html_paragraph = html.HtmlText.Paragraph(self.context.rptObj, text, size, color, background_color, border,
+                                                         width, height, htmlCode, encoding, dataSrc, helper, profile)
+    self.context.register(html_paragraph)
+    return html_paragraph
 
   def preformat(self, text=None, size=(None, "px"), color=None, width=(90, '%'), height=(None, 'px'),
                 htmlCode=None, dataSrc=None, options=None, helper=None, profile=None):
@@ -382,7 +379,7 @@ class Texts(object):
     return self.context.register(html.HtmlText.Title(self.context.rptObj, text, size, level, name, contents, color,
                                                      picture, icon, marginTop, htmlCode, width, height, align, dflt_options, profile))
 
-  def fieldset(self, legend=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"), helper=None, profile=None):
+  def fieldset(self, legend="", size=(None, 'px'), width=(100, "%"), height=(None, "px"), helper=None, profile=None):
     """
 
     Example
@@ -397,8 +394,9 @@ class Texts(object):
     :param width:
     :param height:
     :param profile:
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Fieldset(self.context.rptObj, legend, size, width=width, height=height,
-                                                        helper=helper, profile=profile))
+    html_fieldset = html.HtmlText.Fieldset(self.context.rptObj, legend, size, width=width, height=height, helper=helper,
+                                           profile=profile)
+    self.context.register(html_fieldset)
+    return html_fieldset

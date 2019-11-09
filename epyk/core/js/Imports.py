@@ -531,13 +531,6 @@ JS_IMPORTS = {
     #'url': 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/',
     'config': "config=TeX-AMS-MML_HTMLorMML"},
 
-  # jquery emoji
-  'emoji': {
-    'website': 'https://mervick.github.io/emojionearea/',
-    'req': [{'alias': 'jquery'}],
-    'modules': [
-      {'reqAlias': 'emoji', 'script': 'emojionearea.min.js', 'version': '3.4.1', 'path': 'emojionearea/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
-
   # Socket IO
   'socket.io': {
     'website': 'https://github.com/socketio/socket.io',
@@ -727,13 +720,6 @@ CSS_IMPORTS = {
     'website': 'https://prismjs.com/',
     'modules': [
       {'script': 'prism.css', 'version': '1.11.0', 'path': 'prism/%(version)s/themes/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
-
-  # jquery emoji
-  # https://github.com/mervick/emojionearea
-  'emoji': {
-    'website': 'https://mervick.github.io/emojionearea/',
-    'modules': [
-      {'script': 'emojionearea.min.css', 'version': '3.4.1', 'path': 'emojionearea/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # Code mirror
   'codemirror': {

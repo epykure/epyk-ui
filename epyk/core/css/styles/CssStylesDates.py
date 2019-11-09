@@ -18,7 +18,7 @@ class CssDatePickerUI(CssStyle.CssCls):
 
 
 class CssDatePicker(CssStyle.CssCls):
-  attrs = {'font-size': '12px', 'font-family': 'Calibri', 'border': 'none', 'cursor': 'pointer', 'margin': '0',
+  attrs = {'font-family': 'Calibri', 'border': 'none', 'cursor': 'pointer', 'margin': '0',
            'padding': '2px', 'display': 'inline', 'border-radius': '5px', 'text-align': 'center'}
   focus = {'outline': 0}
 

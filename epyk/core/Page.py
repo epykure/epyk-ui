@@ -25,6 +25,9 @@ from epyk.core import js
 from epyk.core import py
 from epyk.core import data
 
+from epyk.core.html import symboles
+from epyk.core.html import entities
+
 
 class OrderedSet(list):
   def __init__(self):
@@ -155,7 +158,7 @@ class Report(object):
 
     Those can be added in string in order to improve the render of a text.
     """
-    return html.Symbols
+    return symboles.Symboles()
 
   @property
   def entities(self):
@@ -167,7 +170,7 @@ class Report(object):
 
     Those can be added in string in order to improve the render of a text.
     """
-    return html.Entities
+    return entities.Entities()
 
   @property
   def ui(self):

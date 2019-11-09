@@ -147,9 +147,10 @@ class Html(object):
       :return:
       """
       pyCssName = self.htmlObj._report.style.get(cssName)
-      self.htmlObj._report.style.cssStyles[cssName] = pyCssName
       self.htmlObj.attr['class'].add(cssName)
-      self.htmlObj.defined.add(cssName)
+      if pyCssName is not None:
+        self.htmlObj._report.style.cssStyles[cssName] = pyCssName
+        self.htmlObj.defined.add(cssName)
       return self
 
     def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True, isMedia=False, allImportantAttrs=True):
@@ -610,7 +611,7 @@ class Html(object):
       self.pyStyle = self._grpCls(self)
     return self.pyStyle
 
-  def css(self, key, value=None):
+  def css(self, key, value=None, reset=False):
     """
     Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function
 
@@ -619,9 +620,12 @@ class Html(object):
 
     :param key: The key style in the CSS attributes (Can also be a dictionary)
     :param value: The value corresponding to the key style
+    :param reset: Boolean
 
     :return: The python object itself
     """
+    if reset:
+      self.attr['css'] = {}
     if value is None and isinstance(key, dict):
       # Do not add None value to the CSS otherwise it will break the page on the front end side
       css_vals = key if isinstance(key, dict) else {}
@@ -814,9 +818,20 @@ class Html(object):
     if not self.builder_name:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
 
-    js_data = JsUtils.jsConvertData(data, None)
-    js_options = JsUtils.jsConvertData(options, None)
-    return "%s(%s, %s, %s)" % (self.builder_name, self.dom.varId, js_data, js_options)
+    if isinstance(data, dict):
+      # check if there is no nested HTML components in the data
+      tmp_data = ["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      js_data = "{%s}" % ",".join(tmp_data)
+    else:
+      js_data = JsUtils.jsConvertData(data, None)
+    options, js_options = options or {}, []
+    for k, v in options.items():
+      if isinstance(v, dict):
+        row = ["%s: %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("%s: {%s}" % (k, ", ".join(row)))
+      else:
+        js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    return "%s(%s, %s, %s)" % (self.builder_name, self.dom.varId, js_data, "{%s}" % ",".join(js_options))
 
   def refresh(self):
     return self.build(self.val, self._jsStyles)

@@ -10,10 +10,11 @@ class Images(object):
     self.context = context
 
   def img(self, text=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
-          serverSettings=None, profile=None):
+          profile=None, options=None):
     """
 
     Example
+
 
     Documentation
     https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
@@ -25,15 +26,12 @@ class Images(object):
     :param height:
     :param align:
     :param htmlCode:
-    :param serverSettings:
     :param profile:
-
-    :rtype: html.HtmlImage.Image
-
-    :return:
+    :param options:
     """
-    return self.context.register(html.HtmlImage.Image(self.context.rptObj, text, path, align, htmlCode, width,
-                                                      height, serverSettings, profile))
+    html_image = html.HtmlImage.Image(self.context.rptObj, text, path, align, htmlCode, width, height, profile, options or {})
+    self.context.register(html_image)
+    return html_image
 
   def img_animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
                    serverSettings=None, profile=None):
@@ -83,23 +81,24 @@ class Images(object):
     return self.context.register(html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, width, height,
                                                              serverSettings, profile))
 
-  def emoji(self, text=None, top=(20, 'px'), profile=None):
+  def emoji(self, symbole=None, size=(None, 'px'), top=(20, 'px'), profile=None):
     """
 
     Example
+    rptObj.ui.images.emoji(rptObj.symbols.smileys.DISAPPOINTED_FACE)
 
     Documentation
     https://github.com/wedgies/jquery-emoji-picker
 
-    :param text:
+    :param symbole:
+    :param size:
     :param top:
     :param profile:
-
-    :rtype: html.HtmlImage.Emoji
-
-    :return:
     """
-    return self.context.register(html.HtmlImage.Emoji(self.context.rptObj, text, top, profile))
+    size = self.context._size(size)
+    html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbole, size, top, profile)
+    self.context.register(html_emoji)
+    return html_emoji
 
   def icon(self, text=None, size=(None, "px"), width=(None, 'px'), height=(None, "px"), tooltip=None, profile=None):
     """
@@ -113,16 +112,14 @@ class Images(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param tooltip:
     :param profile:
-
-    :rtype: html.HtmlImage.Icon
-
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlImage.Icon(self.context.rptObj, text, size=size, width=width,
-                                                     height=height, tooltip=tooltip, profile=profile))
+    html_icon = html.HtmlImage.Icon(self.context.rptObj, text, size=size, width=width, height=height, tooltip=tooltip,
+                                    profile=profile)
+    self.context.register(html_icon)
+    return html_icon
 
-  def badge(self, text=None, label=None, size=None, icon=None, background_color=None, color=None, tooltip=None, profile=None):
+  def badge(self, text=None, label=None, size=(None, 'px'), icon=None, background_color=None, color=None, tooltip=None, profile=None):
     """
     Display a badge component using Bootstrap
 
@@ -140,10 +137,10 @@ class Images(object):
     :param color: Optional, The text color of the badge
     :param tooltip: Optional, The text to display in the tooltip
     :param profile: Optional, A boolean to store the performances for each components
-
-    :rtype: html.HtmlImage.Badge
-
-    :return:
     """
-    return self.context.register(html.HtmlImage.Badge(self.context.rptObj, text, label, icon, size, background_color,
-                                                      color, tooltip, profile))
+    tmp_size = self.context._size(size)
+    if size[0] is None:
+      size = (tmp_size[0] - 2, tmp_size[1])
+    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, size, background_color, color, tooltip, profile)
+    self.context.register(html_badge)
+    return html_badge

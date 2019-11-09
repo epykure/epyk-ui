@@ -34,6 +34,12 @@ class JsHtml(JsNodeDom.JsDoms):
     return JsObjects.JsObjects.get("{%s: {value: %s.value, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.varName))
 
   @property
+  def content(self):
+    return JsObjects.JsObjects.get("%s.value" % self.varName)
+
+  def empty(self): return '%s.value = ""' % self.varName
+
+  @property
   def events(self):
     """
 
@@ -175,8 +181,24 @@ class JsHtmlRich(JsHtml):
     :return:
     """
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s.innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (
-      self.htmlId, self.varName))
+      "{%s: {value: %s.innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlId, self.varName))
+
+  def empty(self): return '%s.innerHTML = ""' % self.varName
+
+
+class JsHtmlIcon(JsHtml):
+  @property
+  def val(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self._src.dom.getAttribute("class")))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get(self._src.dom.getAttribute("class"))
 
 
 class JsHtmlDatePicker(JsNodeDom.JsDoms):

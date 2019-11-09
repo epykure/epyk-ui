@@ -18,7 +18,7 @@ class Inputs(object):
   def __init__(self, context):
     self.context = context
 
-  def d_text(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_text(self, text="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
@@ -31,17 +31,14 @@ class Inputs(object):
     :param options:
     :param attrs:
     :param profile:
-
-    :rtype: html.HtmlInput.Input
-
-    :return:
     """
-    if attrs is None:
-      attrs = {}
-    return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height,
-                                                      htmlCode, filter, options, attrs, profile))
+    size = self.context._size(size)
+    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, size, width, height, htmlCode, filter,
+                                      options or {}, attrs or {}, profile)
+    self.context.register(html_input)
+    return html_input
 
-  def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_search(self, text="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
     One of the new types of inputs in HTML5 is search
@@ -69,9 +66,11 @@ class Inputs(object):
     """
     if attrs is None:
       attrs = {}
+    html_search = html.HtmlInput.Input(self.context.rptObj, text, placeholder, size, width, height, htmlCode, filter,
+                                       options, attrs, profile)
     attrs.update({"type": 'search'})
-    return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode,
-                                                      filter, options, attrs, profile))
+    self.context.register(html_search)
+    return html_search
 
   def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
@@ -145,13 +144,20 @@ class Inputs(object):
     return self.context.register(html.HtmlInput.InputRange(self.context.rptObj, value, min, max, step, placeholder, width,
                                                            height, htmlCode, filter, options, attrs, profile))
 
-  def _output(self, value=""):
+  def _output(self, value="", options=None, profile=False):
     """
+    Create a HTML output object
+
+    Example
+    rptObj.ui.inputs._output("test output")
 
     :param value:
-    :return:
+    :param options:
+    :param profile:
     """
-    return self.context.register(html.HtmlInput.Output(self.context.rptObj, value))
+    html_output = html.HtmlInput.Output(self.context.rptObj, value)
+    self.context.register(html_output)
+    return html_output
 
   def textarea(self, text="", width=(100, '%'), rows=5, placeholder=None, background_color=None, htmlCode=None,
                options=None, profile=None):
@@ -181,12 +187,13 @@ class Inputs(object):
     return self.context.register(html.HtmlInput.TextArea(self.context.rptObj, text, width, rows, placeholder, background_color,
                                                          htmlCode, dfltOptions, profile))
 
-  def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def input(self, text="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
     :param text:
     :param placeholder:
+    :param size:
     :param width:
     :param height:
     :param htmlCode:
@@ -196,10 +203,9 @@ class Inputs(object):
     :param profile:
 
     :rtype: html.HtmlInput.Input
-
     :return:
     """
-    return self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    return self.d_text(text, placeholder, size, width, height, htmlCode, filter, options, attrs, profile)
 
   def editor(self, text="", title="", size=(None, 'px'), language='python', width=(100, "%"), height=(None, "px"), isEditable=True,
              htmlCode=None, options=None, profile=None):
