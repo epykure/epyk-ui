@@ -364,19 +364,19 @@ class Html(object):
       self._dom = JsHtml.JsHtml(self, report=self._report)
     return self._dom
 
-  @property
-  def container(self):
-    """
-
-    :rtype: JsHtml.JsHtml
-    :return:
-    """
-    if self._container is None:
-      if hasattr(self, "id_container"):
-        self._container = JsHtml.JsHtml(self, self.id_container)
-      else:
-        self._container = JsHtml.JsHtml(self, self.htmlId)
-    return self._container
+  # @property
+  # def container(self):
+  #   """
+  #
+  #   :rtype: JsHtml.JsHtml
+  #   :return:
+  #   """
+  #   if self._container is None:
+  #     if hasattr(self, "id_container"):
+  #       self._container = JsHtml.JsHtml(self, self.id_container)
+  #     else:
+  #       self._container = JsHtml.JsHtml(self, self.htmlId)
+  #   return self._container
 
   def prepend_child(self, htmlObj):
     """
@@ -394,7 +394,7 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
-    self._report.js.addOnLoad([self.container.insertBefore(htmlObj.dom)])
+    self._report.js.addOnLoad([self.dom.insertBefore(htmlObj.dom)])
     return self
 
   def append_child(self, htmlObj):
@@ -413,7 +413,7 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
-    self._report.js.addOnLoad([self.container.appendChild(htmlObj.dom)])
+    self._report.js.addOnLoad([self.dom.appendChild(htmlObj.dom)])
     return self
 
   def add_menu(self, context_menu):
@@ -479,6 +479,32 @@ class Html(object):
         self.append_child(self.label)
       if css is not None:
         self.label.css(css)
+    return self
+
+  def add_span(self, text, css=None, position="before"):
+    """
+    Add an elementary span component
+
+    Example
+
+    Documentation
+    https://fontawesome.com/how-to-use/on-the-web/styling/layering
+
+    :param text: The Span content
+    :param css: Optional. A dictionary with the CSS style to be added to the component
+    :param position:
+    """
+    self.span = ""
+    if text is not None:
+      self.span = self._report.ui.texts.span(text)
+      if position == "before":
+        self.prepend_child(self.span)
+      else:
+        self.append_child(self.span)
+      if css == False:
+        self.span.attr['css'] = {}
+      elif css is not None:
+        self.span.css(css)
     return self
 
   def add_link(self, script_name, report_name=None, name=None, icon=None, css=None, position="before"):
@@ -596,6 +622,7 @@ class Html(object):
     Example:
     textObj.style.cssCls("CssText", {"background-color": 'yellow'})
 
+    :rtype: Html._CssStyle
     :return: The Internal CSS Style Object
     """
     if self._styleObj is None:

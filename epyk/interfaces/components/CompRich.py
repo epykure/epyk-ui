@@ -192,13 +192,12 @@ class Rich(object):
     :param trimSpaces:
     :param align:
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlTextComp.Prism
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlTextComp.Prism(self.context.rptObj, text, language, size, width,
-                                                         height, isEditable, trimSpaces, align, helper, profile))
+    html_prism = html.HtmlTextComp.Prism(self.context.rptObj, text, language, size, width,
+                                                         height, isEditable, trimSpaces, align, helper, profile)
+    self.context.register(html_prism)
+    return html_prism
 
   def info(self, text=None, profile=None):
     """
