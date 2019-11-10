@@ -47,6 +47,7 @@ class Components(object):
     self.select = self.lists.select
     self.date = self.dates.cob
     self.tree = self.lists.tree
+    self.info = self.rich.info
 
   def css(self, cssAttrs):
     """
@@ -319,14 +320,29 @@ class Components(object):
     :param size:
     :param servers:
     :param position:
-
-    :return:
     """
     size = self._size(size)
     bar = html.HtmlNavBar.HtmlSideBar(self.rptObj, links or [], color, size, servers)
     self.register(bar)
     return bar
 
+  def loading(self, text="Loading", size=(None, "px"), color=None, options=None):
+    """
+    Entry point to the loading component
+
+    This component will create a
+      - label component for the text
+      - icon component for the loading icon
+
+    :param text:
+    :param size:
+    :param color:
+    :param options:
+    """
+    size = self._size(size)
+    html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, size, options or {})
+    self.register(html_loading)
+    return html_loading
 
   #--------------------------------------------------------------------------------------------------------------------
   #

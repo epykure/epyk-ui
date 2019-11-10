@@ -88,9 +88,13 @@ class Rich(object):
 
   def stars(self, val=None, label=None, color=None, align='left', best=5, htmlCode=None, helper=None, profile=None):
     """
+    Entry point for the Stars component
 
     Example
     rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
+
+    stars = rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
+    stars.click()
 
     Documentation
     https://www.w3schools.com/howto/howto_css_star_rating.asp
@@ -102,12 +106,10 @@ class Rich(object):
     :param best: Optional. The max number of stars. Default 5
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlOthers.Stars
-
-    :return:
     """
-    return self.context.register(html.HtmlOthers.Stars(self.context.rptObj, val, label, color, align, best, htmlCode, helper, profile))
+    html_star = html.HtmlOthers.Stars(self.context.rptObj, val, label, color, align, best, htmlCode, helper, profile)
+    self.context.register(html_star)
+    return html_star
 
   def textborder(self, recordSet=None, width=(None, '%'), height=(None, "px"), size=(None, 'px'), align='center',
                  helper=None, profile=None):
@@ -199,7 +201,7 @@ class Rich(object):
     self.context.register(html_prism)
     return html_prism
 
-  def info(self, text=None, profile=None):
+  def info(self, text=None, options=None, profile=None):
     """
     Display a info icon with a tooltip
 
@@ -212,9 +214,7 @@ class Rich(object):
 
     :param text: The content of the tooltip
     :param profile: Optional, A boolean to store the performances for each components
-
-    :rtype: html.HtmlOthers.Help
-
-    :return:
     """
-    return self.context.register(html.HtmlOthers.Help(self.context.rptObj, text, width=(10, "px"), profile=profile))
+    html_help = html.HtmlOthers.Help(self.context.rptObj, text, width=(10, "px"), profile=profile, options=options or {})
+    self.context.register(html_help)
+    return html_help

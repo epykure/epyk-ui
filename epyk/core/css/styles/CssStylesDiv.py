@@ -136,10 +136,7 @@ class CssDivComms(CssStyle.CssCls):
 
 
 class CssDivLoading(CssStyle.CssCls):
-  attrs = {'opacity': 0.5, 'filter': 'alpha(opacity=50)', 'width': '100%', 'height': '90%', 'text-align': 'center', 'padding-top': '10%'}
-
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', 9)})
+  attrs = {'opacity': 0.5, 'filter': 'alpha(opacity=50)', 'padding': '5px', 'text-align': 'center'}
 
 
 class CssDivHidden(CssStyle.CssCls):

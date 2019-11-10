@@ -2,9 +2,9 @@
 HTML Definition for extra layouts and feedbacks components
 """
 
-import json
-
 from epyk.core.html import Html
+
+from epyk.core.js.primitives import JsObjects
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -51,7 +51,7 @@ class Newline(Html.Html):
   builder_name = False
 
   def __str__(self):
-    return "".join(['<br />'] * self.vals)
+    return "".join(['<br />'] * self.val)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -82,31 +82,20 @@ class Stars(Html.Html):
   def __init__(self, report, val, label, color, align, best, htmlCode, helper, profile):
     super(Stars, self).__init__(report, val, htmlCode=htmlCode, profile=profile)
     # Add the HTML components
-    self.add_label(label, {"margin-left": "5px", "text-align": "left",  "display": "inline-block", 'float': 'None'}, position="after")
-    self.add_helper(helper)
-    self.best = best
-    self.css({'text-align': align})
+    self._spans = []
+    for i in range(best):
+      self.add_span("", position="after", css=False)
+      self._sub_htmls[-1].style.addCls("fa fa-star")
+      self._sub_htmls[-1].css({"margin": '0', "padding": 0})
+      self._sub_htmls[-1].set_attrs(name="data-level", value=i)
+      self._spans.append(self._sub_htmls[-1])
+    self.add_label(label, {"margin": "0 0 0 5px", 'height': 'none', "text-align": "left", "display": "inline-block",
+                           'float': 'None'}, position="after")
+    self.add_helper(helper).helper.css({"margin": '1px 4px'})
+    self.css({'text-align': align, "display": 'block'})
     self._jsStyles = {'color':  self.getColor("success", 1) if color is None else color}
 
-  @property
-  def id_container(self):
-    return self.htmlId
-
-  @property
-  def val(self):
-    return "%s.parent().data('level')" % self.jqId
-
-  @property
-  def jqId(self): return "$('#%s span')" % self.htmlId
-
-  @property
-  def jsQueryData(self):
-    if self.htmlCode is not None:
-      return "{%s: $(this).data('level'), event_val: $(this).data('level'), event_code: '%s'}" % (self.htmlCode, self.htmlId)
-
-    return "{event_val: $(this).data('level'), event_code: '%s'}" % self.htmlId
-
-  def click(self, js_fncs):
+  def click(self, js_fncs=None, profile=False):
     """
     Add the event click and double click to the starts item
 
@@ -115,49 +104,49 @@ class Stars(Html.Html):
     stars.click(rptObj.js.console.log("test").toStr())
 
     :param js_fncs: An array of Js functions or string. Or a string with the Js
+    :param profile:
 
-    :return:
+    :return: self to allow the chains
     """
     self.css({"cursor": "pointer"})
-    if not isinstance(js_fncs, list):
-      js_fncs = [js_fncs]
-    array = list(js_fncs)
-    js_fncs.append("%s(%s, data.event_val, %s)" % (self.__class__.__name__, self.jqId, json.dumps(self._jsStyles)))
-    # Add the double click to remove all the stars
-    array.append("%s(%s, 0, %s)" % (self.__class__.__name__, self.jqId, json.dumps(self._jsStyles)))
-    self.dblclick(array)
-    return super(Stars, self).click(js_fncs)
+    if js_fncs is None:
+      js_fncs = []
+    else:
+      if not isinstance(js_fncs, list):
+        js_fncs = [js_fncs]
+    js_fncs = ["var data = parseInt(event.target.dataset.level)+1"] + js_fncs
+    js_fncs.append(self.build(data=JsObjects.JsObjects.get("data"), options=self._jsStyles))
+    for span in self._spans:
+      span.click(js_fncs, profile)
+    return self
 
   @property
   def _js__builder__(self):
     return '''
-      htmlObj.parent().data('level', data);
-      htmlObj.each(function(i){
-        if (i < data){$(this).css('color', jsStyles.color)}
-        else {$(this).css('color', '')}})'''
+      htmlObj.dataset.level = data;
+      htmlObj.querySelectorAll("span").forEach(function(span, i){
+        if (i < data){span.style.color = options.color; console.log(options.color)}
+        else {span.style.color = ''}})'''
 
   def __str__(self):
-    stars = ["<div %s>" % self.get_attrs(pyClassNames=self.defined)]
-    for i in range(self.best):
-      stars.append('<span data-level="%s" class="fa fa-star"></span>' % (i+1))
-    stars.append("%s</div>" % self.helper)
-    return "".join(stars)
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
 
 class Help(Html.Html):
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome', 'jqueryui']
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Info', 'Rich', 'info'
-  builder_name = False
 
-  def __init__(self, report, val, width, profile):
+  def __init__(self, report, val, width, profile, options):
     super(Help, self).__init__(report, val, width=width[0], widthUnit=width[1], profile=profile)
-    self.css({"cursor": "pointer", "float": "right"})
+    self.css({"cursor": "pointer", "float": "right", 'margin': '1px 4px'})
     self.attr['class'].add("fas fa-question-circle")
+    self._jsStyles = options
 
-  def onDocumentReady(self):
-    self._report.jsOnLoadFnc.add('%(jqId)s.attr("title", %(jsVal)s); %(jqId)s.tooltip()' % {"jqId": self.jqId, "jsVal": self.jsVal})
-
-  def onDocumentLoadFnc(self): return True
+  @property
+  def _js__builder__(self):
+    return '''
+      htmlObj.setAttribute("title", data);
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
     return '<i %s></i>' % self.get_attrs()
@@ -174,12 +163,42 @@ class Help(Html.Html):
 
 class Loading(Html.Html):
   name, category = 'Loading', 'Others'
-  _grpCls = CssGrpCls.CssClassLoading
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  inReport = False
+  _grpCls = CssGrpCls.CssClassLoading
+  builder_name = False
+
+  def __init__(self, report, text, color, size, options):
+    super(Loading, self).__init__(report, text)
+    self.color = self.getColor('greys', -1) if color is None else color
+    self.size = size[0]
+    self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'z-index': 5, 'margin': 0})
+    self.add_icon("fas fa-spinner fa-spin", css={"font-size": "%spx" % (self.size+8)})
+    if options.get('fixed', False):
+      self.icon.css({"margin-right": '5px', "font-size": 'inherit'})
+      self.css({"position": 'fixed', 'bottom': '0px', 'right': '5px'})
+      self.add_span("%s..." % text, position="after", css={"width": 'auto'})
+    else:
+      self.add_span("%s..." % text, position="after", css={"width": '100%', "margin": "5px"})
+
+  def fixed(self, css=None, icon_css=None):
+    """
+    Set css attributes of the loading div to be fixed
+    This can be done directly in options in the component constructor options={"fixed": True}
+
+    :param css: Dictionary with the css attributes
+    :param icon_css: Dictionary with the CSS attributes
+
+    :return: self to allow the chains
+    """
+    dflt_css = {"position": 'fixed', 'bottom': '5px', 'right': '5px'}
+    if css is not None:
+      dflt_css.update(css)
+    dflt_css_icon = {"margin-right": '5px', "font-size": 'inherit'}
+    if dflt_css_icon is not None:
+      dflt_css_icon.update(icon_css)
+    self.icon.css(dflt_css_icon)
+    self.css(dflt_css)
+    return self
 
   def __str__(self):
-    if self.vals is None:
-      return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />Loading...</div>' % (self.get_attrs(withId=False, pyClassNames=self.defined))
-
-    return '<div %s><i style="margin:auto;font-size:20px" class="fas fa-spinner fa-spin"></i><br />%s...</div>' % (self.get_attrs(withId=False, pyClassNames=self.defined), self.vals)
+    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.defined))
