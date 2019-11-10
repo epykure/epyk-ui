@@ -2,7 +2,6 @@
 Javascript Dom element for the HTML Components
 """
 
-
 import json
 
 from epyk.core.js import JsUtils
@@ -13,7 +12,6 @@ from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsQueryUi
-from epyk.core.js.packages import JsTabulator
 from epyk.core.js.packages import JsCrossFilter
 
 
@@ -201,62 +199,5 @@ class JsHtmlIcon(JsHtml):
     return JsObjects.JsObjects.get(self._src.dom.getAttribute("class"))
 
 
-class JsHtmlDatePicker(JsNodeDom.JsDoms):
-  def __init__(self, htmlObj):
-    super(JsHtmlDatePicker, self).__init__(htmlObj)
-    self._jqueryui = None
-
-  @property
-  def jqueryui(self):
-    """
-
-    :return:
-    :rtype: JsQueryUi.JQueryUiDatePicker
-    """
-    if self._jqueryui is None:
-      self._jqueryui = JsQueryUi.JQueryUiDatePicker(self._src)
-    return self._jqueryui
 
 
-class JsHtmlProgressBar(JsHtml):
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    super(JsHtmlProgressBar, self).__init__(htmlObj)
-    self._jqueryui = None
-
-  @property
-  def jqueryui(self):
-    """
-
-    :return:
-    :rtype: JsQueryUi.JsHtmlProgressBar
-    """
-    if self._jqueryui is None:
-      self._jqueryui = JsQueryUi.JQueryUiProgressBar(self._src)
-    return self._jqueryui
-
-  @property
-  def val(self):
-    return '%s.progressbar("value")' % self._src.dom.jquery.varId
-
-
-class JsHtmlTimePicker(JsNodeDom.JsDoms):
-  def __init__(self, htmlObj):
-    super(JsHtmlTimePicker, self).__init__(htmlObj)
-    self._jqueryui = None
-
-
-class JsHtmlTabulator(JsNodeDom.JsDoms):
-  def __init__(self, htmlObj):
-    super(JsHtmlTabulator, self).__init__(htmlObj)
-    self._tabulator = None
-
-  @property
-  def tabulator(self):
-    """
-
-    :return:
-    :rtype: JsTabulator.Tabulator
-    """
-    if self._tabulator is None:
-      self._tabulator = JsTabulator.Tabulator(self._src)
-    return self._tabulator
