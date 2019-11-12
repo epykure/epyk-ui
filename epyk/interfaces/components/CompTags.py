@@ -12,7 +12,7 @@ class Tags(object):
   def __init__(self, context):
     self.context = context
 
-  def bdi(self, text, size=(None, "px"), width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
+  def bdi(self, text, size=(None, "px"), width=(100, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
     BDI stands for Bi-Directional Isolation.
     The <bdi> tag is new in HTML5.
