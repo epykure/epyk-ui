@@ -105,7 +105,8 @@ class Links(object):
     Python interface to the Hyperlink to retrieve data
 
     Example
-    rptObj.ui.links.data("test#data")
+    data_link = rptObj.ui.links.data("link", "test#data")
+    data_link.build({"text": 'new link Name', 'data': "new content"}),
 
     :param text: The string value to be displayed in the component
     :param value:
@@ -113,13 +114,10 @@ class Links(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param format: Optional. The downloaded data format
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlLinks.DataLink
-
-    :return: The python link object
     """
-    return self.context.register(html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width,
-                                                         height=height, format=format, profile=profile))
+    html_data = html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width, height=height, format=format, profile=profile)
+    self.context.register(html_data)
+    return html_data
 
   def bridge(self, text, script_name, report_name, url, jsData=None, context=None):
     """

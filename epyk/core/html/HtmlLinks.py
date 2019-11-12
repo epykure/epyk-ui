@@ -9,6 +9,7 @@ from epyk.core.html import Html
 from epyk.core.js.Imports import requires
 from epyk.core.js import JsUtils
 
+from epyk.core.js.objects import JsNodeDom
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -24,15 +25,22 @@ class ExternalLink(Html.Html):
     # Add the internal components icon and helper
     self.add_icon(icon)
     self.add_helper(helper)
-    if not 'url' in self.vals:
-      self.vals['url'] = self.vals['text']
+    if not 'url' in self.val:
+      self.val['url'] = self.val['text']
     if 'target' in options:
       self.set_attrs(name="target", value=options['target'])
     self.decoration, self.options, self.__url = decoration, options, {}
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' 
-      htmlObj.append(data.text); htmlObj.attr('href', data.url)''', 'Javascript Object builder')
+  @property
+  def _js__builder__(self):
+    return 'htmlObj.innerHTML = data.text; htmlObj.href = data.url'
+
+  def build(self, data=None, options=None, profile=False):
+    if not isinstance(data, dict):
+      data = {"text": data}
+    if "url" not in data:
+      data["url"] = self.val["url"]
+    return super(ExternalLink, self).build(data, options, profile)
 
   def __str__(self):
     return '<a %s></a>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
@@ -88,34 +96,26 @@ class DataLink(Html.Html):
   name, category, callFnc = 'Data link', 'Links', 'linkdata'
   _grpCls = CssGrpClsText.CssClassHref
 
-  def __init__(self, report, recordSet, value, width, height, format, profile):
-    super(DataLink, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
+  def __init__(self, report, text, value, width, height, format, profile):
+    super(DataLink, self).__init__(report, {"text": text, 'value': value}, width=width[0], widthUnit=width[1], height=height[0],
                                    heightUnit=height[1], profile=profile)
     self.format = format
-    self.click(value)
 
   @property
-  def jsQueryData(self): return "{}"
-
-  def click(self, data):
-    """
-    Override the click event in order to download some Javascript data instead
-
-    :param data: The data (Python or JsPy Objects
-
-    :return: The link object
-    """
-    data = JsUtils.jsConvertData(data, None)
-    return super(DataLink, self).click(self.dom.onclick('var csv = %s; var data = new Blob([csv]); this.href = URL.createObjectURL(data)' % data).toStr())
+  def _js__builder__(self):
+    return '''
+      var b = new Blob([data.value]); htmlObj.href = URL.createObjectURL(b);
+      htmlObj.innerHTML = data.text'''
 
   def __str__(self):
-    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'val': self.vals, 'format': self.format}
+    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'val': self.val['text'], 'format': self.format}
 
 
 class Bridge(Html.Html):
   reqCss, reqJs = [], ['jquery']
   name, category, callFnc = 'Node Bridge', 'Links', 'bridge'
   _grpCls = CssGrpCls.CssGrpClassBase
+  builder_name = False
 
   def __init__(self, report, text, script_name, report_name, url, jsData, context):
     super(Bridge, self).__init__(report, text)
