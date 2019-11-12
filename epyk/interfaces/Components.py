@@ -21,6 +21,7 @@ from epyk.interfaces.components import CompMessaging
 from epyk.interfaces.components import CompDates
 from epyk.interfaces.components import CompDrops
 from epyk.interfaces.components import CompForms
+from epyk.interfaces.components import CompTags
 
 
 class Components(object):
@@ -208,6 +209,15 @@ class Components(object):
     """
     return CompCharts.Graphs(self)
 
+  @property
+  def tags(self):
+    """
+    Group all the other tags available in HTML.
+
+    Those tags can be considered as normal HTML component, which means Js and CSS features are also available
+    """
+    return CompTags.Tags(self)
+
   def register(self, html_comp):
     """
     Internal function to register a HTML component based on its memory id.
@@ -220,7 +230,7 @@ class Components(object):
     self.rptObj.content.append(id(html_comp))
     return html_comp
 
-  def contents(self, vals=None, width=(None, "%"), height=(None, "px"), profile=None):
+  def contents(self, vals=None, size=(None, "px"), width=(None, "%"), height=(None, "px"), profile=None):
     """
     Add a content table to the page
 
@@ -228,14 +238,13 @@ class Components(object):
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlTextComp.ContentsTable
-
-    :return: The python HTML component
     """
-    return self.register(html.HtmlTextComp.ContentsTable(self.rptObj, vals, width, height, profile))
+    size = self._size(size)
+    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, vals or [], size, width, height, profile)
+    self.register(html_contents)
+    return html_contents
 
-  def tags(self, vals=None, title="", icon="", size=(None, "px"), width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
+  def _tags(self, vals=None, title="", icon="", size=(None, "px"), width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
 
     Example

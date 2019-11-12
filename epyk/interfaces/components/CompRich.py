@@ -52,39 +52,12 @@ class Rich(object):
     :rtype: html.HtmlTextComp.Delta
     :return:
     """
-    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
+    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.',
+                    'colors': {'green': 'green', 'red': 'red', 'orange': 'orange'}}
     if options is not None:
       dflt_options.update(options)
     return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, rec or {}, width, height, size,
                                                          dflt_options, helper, profile))
-
-  def vignet(self, rec=None, width=(100, '%'), height=(None, 'px'), size=(None, 'px'), color_title=None, options=None,
-             helper=None, profile=None):
-    """
-
-    Example
-    rptObj.ui.rich.vignet({'title': 'Python', 'number': 100, 'text': 'Content', 'color': 'green', 'url':
-                           'https://www.python.org/', 'icon': 'fab fa-python', 'tooltip': 'Python Fondation',
-                           'urlTitle': 'WebSite'})
-
-    Documentation
-
-    :param rec:
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param size: Optional, A tuple with a integer for the size and its unit
-    :param color_title:
-    :param helper: Optional. A tooltip helper
-    :param profile: Optional. A flag to set the component performance storage
-    """
-    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.', 'markdown': True}
-    if options is not None:
-      dflt_options.update(options)
-    size = self.context._size(size)
-    vignet = html.HtmlTextComp.Vignet(self.context.rptObj, rec, width, height, size, color_title, dflt_options, helper,
-                                      profile)
-    self.context.register(vignet)
-    return vignet
 
   def stars(self, val=None, label=None, color=None, align='left', best=5, htmlCode=None, helper=None, profile=None):
     """
@@ -218,3 +191,46 @@ class Rich(object):
     html_help = html.HtmlOthers.Help(self.context.rptObj, text, width=(10, "px"), profile=profile, options=options or {})
     self.context.register(html_help)
     return html_help
+
+  def script(self, title, scriptName, clssName=None, functionName=None, docType='documentation',
+             width=(100, "%"), height=(None, "px"),  color=None, size=(None, 'px'), profile=None):
+    """
+    Entry point to the source code component.
+
+    Example
+    rptObj.ui.rich.script("Documentation", "test.py")
+
+    :param title:
+    :param scriptName:
+    :param clssName:
+    :param functionName:
+    :param docType:
+    :param color:
+    :param size:
+    :param profile:
+    """
+    size = self.context._size(size)
+    html_script = html.HtmlTextComp.DocScript(self.context.rptObj, title, scriptName, clssName, functionName,
+                                            docType, width, height, color, size, profile)
+    self.context.register(html_script)
+    return html_script
+
+  def number(self, number, label="", size=(None, 'px'), width=(100, "px"), height=(None, "px"), profile=None, options=None):
+    """
+
+    Example
+    number = rptObj.ui.rich.number(500, "Test")
+    number_2 = rptObj.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
+    number.span.add_icon(rptObj.ui.icons.get.ICON_ENVELOPE)
+
+    :param number:
+    :param label:
+    :param size:
+    :param width:
+    :param height:
+    :param profile:
+    """
+    size = self.context._size(size)
+    html_number = html.HtmlTextComp.Number(self.context.rptObj, number, label, size, width, height, profile, options or {})
+    self.context.register(html_number)
+    return html_number

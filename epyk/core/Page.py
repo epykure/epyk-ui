@@ -137,17 +137,6 @@ class Report(object):
     return self._css
 
   @property
-  def tags(self):
-    """
-    Shortcut to the HTML tags
-
-    Those can be added in string in order to improve the render of a text.
-    """
-    if self._tags is None:
-      self._tags = html.Tags.Tags()
-    return self._tags
-
-  @property
   def symbols(self):
     """
     Shortcut to the HTML symbols

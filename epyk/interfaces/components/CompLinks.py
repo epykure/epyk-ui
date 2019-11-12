@@ -28,17 +28,16 @@ class Links(object):
     :param decoration:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlLinks.ExternalLink
-
-    :return: The python link object
     """
-    if options is None:
-      options = {}
+    dft_options = {"target": '_blank'}
+    if options is not None:
+      dft_options.update(options)
 
-    if url.startswith("http"):
-      url = "/%s" % url
-    return self.context.register(html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, options, profile))
+    #if url.startswith("http"):
+    #  url = "/%s" % url
+    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, dft_options, profile)
+    self.context.register(html_link)
+    return html_link
 
   def script(self, script_name, report_name=None, icon="fab fa-python", options=None, profile=None):
     """

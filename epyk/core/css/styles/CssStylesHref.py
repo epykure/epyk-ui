@@ -23,7 +23,7 @@ class CssLabelDates(CssStyle.CssCls):
 
 class CssHreftMenu(CssStyle.CssCls):
   reqCssCls = [CssStylesDiv.CssDivNoBorder, CssStylesList.CssListNoDecoration, CssHrefNoDecoration]
-  attrs = {'display': 'block', 'position': 'relative', 'font-size': '14px', 'height': '32px'}
+  attrs = {'display': 'block', 'position': 'relative', 'height': '32px'}
 
   hover = []
   directChildrenTag = "a"
@@ -50,19 +50,19 @@ class CssSideBarLinks(CssStyle.CssCls):
 
 
 class CssHrefContentLevel1(CssStyle.CssCls):
-  attrs = {'padding': '0', 'display': 'inline-block', 'margin': '5px 0 0 0', 'font-size': '14px'}
+  attrs = {'padding': '0', 'display': 'inline-block', 'margin': '0'}
 
 
 class CssHrefContentLevel2(CssStyle.CssCls):
-  attrs = {'padding': '0', 'font-size': '14px', 'display': 'inline-block', 'margin-left': '20px'}
+  attrs = {'padding': '0', 'display': 'inline-block', 'margin-left': '20px'}
 
 
 class CssHrefContentLevel3(CssStyle.CssCls):
-  attrs = {'padding': '0', 'display': 'inline-block', 'font-size': '14px', 'margin-left': '40px'}
+  attrs = {'padding': '0', 'display': 'inline-block', 'margin-left': '40px'}
 
 
 class CssHrefContentLevel4(CssStyle.CssCls):
-  attrs = {'padding': '0', 'display': 'inline-block', 'font-size': '14px', 'margin-left': '60px'}
+  attrs = {'padding': '0', 'display': 'inline-block', 'margin-left': '60px'}
 
 
 class CssFeedbackLink(CssStyle.CssCls):

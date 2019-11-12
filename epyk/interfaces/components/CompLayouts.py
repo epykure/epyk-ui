@@ -91,6 +91,11 @@ class Layouts(object):
   def panelsplit(self, width=(100, '%'), height=(None, 'px'), leftWidth=50, left=None, right=None, resizable=True, helper=None, profile=None):
     """
 
+    Example
+    number = rptObj.ui.rich.number(500, "Test", height=(150, 'px'))
+    number_2 = rptObj.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
+    div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)
+
     Documentation
     https://codepen.io/rstrahl/pen/eJZQej
 
@@ -124,9 +129,10 @@ class Layouts(object):
     :param align:
     :param helper:
     :param profile:
-    :return:
     """
-    return self.context.register(html.HtmlContainer.Col(self.context.rptObj, htmlObjs, position, width, height, align, helper, profile))
+    html_col = html.HtmlContainer.Col(self.context.rptObj, htmlObjs, position, width, height, align, helper, profile)
+    self.context.register(html_col)
+    return html_col
 
   def row(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), aresData=None, align='left',
           valign='top', colsWith=None, closable=False, resizable=False, titles=None, helper=None, profile=None):
@@ -145,15 +151,33 @@ class Layouts(object):
     :param titles:
     :param helper:
     :param profile:
-    :return:
     """
-    return self.context.register(html.HtmlContainer.Row(self.context.rptObj, htmlObjs, width, height, aresData, align,
-                                                        valign, colsWith, closable, resizable, titles, helper, profile))
+    html_row = html.HtmlContainer.Row(self.context.rptObj, htmlObjs, width, height, aresData, align, valign, colsWith,
+                                      closable, resizable, titles, helper, profile)
+    self.context.register(html_row)
+    return html_row
 
   def grid(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), colsDim=None, colsAlign=None,
            noGlutters=False, align=None, helper=None, profile=None):
-    return self.context.register(html.HtmlContainer.Grid(self.context.rptObj, htmlObjs, width, height, colsDim,
-                                                         colsAlign, noGlutters, align, helper, profile))
+    """
+
+    Example
+    div = rptObj.ui.layouts.grid([number, number_3, number_2, number_4])
+
+    :param htmlObjs:
+    :param width:
+    :param height:
+    :param colsDim:
+    :param colsAlign:
+    :param noGlutters:
+    :param align:
+    :param helper:
+    :param profile:
+    """
+    html_grid = html.HtmlContainer.Grid(self.context.rptObj, htmlObjs, width, height, colsDim, colsAlign, noGlutters,
+                                        align, helper, profile)
+    self.context.register(html_grid)
+    return html_grid
 
   def tabs(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), tabNames=None, rowsCss=None, colsCss=None,
            closable=False, selectedTab=None, htmlCode=None, alwaysReload=False, encoding="UTF-8", helper=None, profile=None):
@@ -210,6 +234,9 @@ class Layouts(object):
   def div(self, htmlObjs=None, label=None, color=None, size=(None, "px"), width=(100, "%"), icon=None, height=(None, "px"), editable=False,
           align='left', padding=None, htmlCode=None, tag='div', helper=None, profile=None):
     """
+    Example
+    div = rptObj.ui.div([html])
+    div += html_2
 
     Documentation
     https://www.w3schools.com/tags/tag_div.asp
@@ -227,16 +254,14 @@ class Layouts(object):
     :param htmlCode:
     :param tag:
     :param profile:
-
-    :rtype: html.HtmlContainer.Div
-
-    :return:
     """
     size = self._size(size)
-    return self.context.register(html.HtmlContainer.Div(self.context.rptObj, htmlObjs, label, color, size, width, icon,
-                                                        height, editable, align, padding, htmlCode, tag, helper, profile))
+    html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs, label, color, size, width, icon, height, editable,
+                                     align, padding, htmlCode, tag, helper, profile)
+    self.context.register(html_div)
+    return html_div
 
-  def fixeddiv(self, text=None, top=100, left=None, right=None, color=None, size=(None, "px"), width=(None, "px"), icon=None,
+  def fixed(self, text=None, top=100, left=None, right=None, color=None, size=(None, "px"), width=(None, "px"), icon=None,
                height=(None, "px"), editable=False, align='left', backgroundColor='white', zindex=None, padding=None,
                htmlCode=None, tag='div', helper=None, profile=None):
     size = self._size(size)
@@ -244,15 +269,12 @@ class Layouts(object):
                                                              width, icon, height, editable, align, backgroundColor, zindex,
                                                              padding, htmlCode, tag, helper, profile))
 
-  def dragdiv(self, text=None, top=100, left=None, right=None, color=None, size=(None, "px"), width=(None, "px"), icon=None,
+  def drag(self, text=None, top=100, left=None, right=None, color=None, size=(None, "px"), width=(None, "px"), icon=None,
               height=(None, "px"), editable=False, align='left', backgroundColor='white', padding=None, htmlCode=None,
               tag='div', helper=None, profile=None):
     size = self._size(size)
     return self.context.register(html.HtmlContainer.DragDiv(self.context.rptObj, text, top, left, right, color, size,
                                                             width, icon, height, editable, align, backgroundColor, padding, htmlCode, tag, helper, profile))
-
-  def loading(self, value=None, profile=None):
-    return self.context.register(html.HtmlOthers.Loading(self.context.rptObj, value))
 
   def popup(self, htmlObj=None, title=None, color=None, size=(None, 'px'), width=(100, '%'), height=(None, 'px'),
             withBackground=True, draggable=False, margin=10, profile=None):
@@ -284,7 +306,17 @@ class Layouts(object):
                                                       withBackground, draggable, margin, profile))
 
   def iframe(self, url, width=(100, "%"), height=(100, "%"), helper=None, profile=None):
-    return self.context.register(html.HtmlContainer.IFrame(self.context.rptObj, url, width, height, helper, profile))
+    """
+
+    :param url:
+    :param width:
+    :param height:
+    :param helper:
+    :param profile:
+    """
+    html_frame = html.HtmlContainer.IFrame(self.context.rptObj, url, width, height, helper, profile)
+    self.context.register(html_frame)
+    return html_frame
 
   def dialogs(self, recordSet=None, width=(100, "%"), height=(500, "px"), helper=None, profile=None):
     return self.context.register(html.HtmlContainer.Dialog(self.context.rptObj, recordSet, width, height, helper, profile))

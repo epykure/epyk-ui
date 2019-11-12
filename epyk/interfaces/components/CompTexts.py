@@ -45,7 +45,7 @@ class Texts(object):
     return text_comp
 
   def label(self, text=None, size=(None, "px"), color=None, align='center', width=(100, "px"), height=(23, "px"), htmlCode=None,
-            tooltip='', profile=None):
+            tooltip='', profile=None, options=None):
     """
     The <label> tag defines a label for a <button>, <input>, <meter>, <output>, <progress>, <select>, or <textarea> element...
 
@@ -67,13 +67,15 @@ class Texts(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
-
-    :return: The text HTML object
-
-    :rtype: html.HtmlText.Label
     """
+    dflt_options = {"markdown": True}
+    if options is not None:
+      dflt_options.update(options)
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Label(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip, profile))
+    html_label = html.HtmlText.Label(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip,
+                                     profile, dflt_options)
+    self.context.register(html_label)
+    return html_label
 
   def span(self, text=None, size=(None, "px"), color=None, align='center', width=(100, 'px'), height=("23", 'px'), htmlCode=None,
            tooltip=None, profile=None):
@@ -99,14 +101,11 @@ class Texts(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
-
-    :return:
-
-    :rtype: html.HtmlText.Label
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Span(self.context.rptObj, text, size, color, align, width,
-                                                    height, htmlCode, tooltip, profile))
+    html_label = html.HtmlText.Span(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip, profile)
+    self.context.register(html_label)
+    return html_label
 
   def highlights(self, text=None, title="", icon=None, type="danger", size=(None, "px"), color=None, width=(None, "%"),
                  height=(None, "px"), htmlCode=None, helper=None, profile=None):
@@ -242,17 +241,14 @@ class Texts(object):
     :param options:
     :param helper:
     :param profile:
-
-    :rtype: html.HtmlText.Preformat
-
-    :return:
     """
     dflt_options = {"reset": True, 'markdown': True}
     if options is not None:
       dflt_options.update(options)
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Pre(self.context.rptObj, text, size, color, width,
-                                                   height, htmlCode, dataSrc, dflt_options, helper, profile))
+    html_pre = html.HtmlText.Pre(self.context.rptObj, text, size, color, width, height, htmlCode, dataSrc, dflt_options, helper, profile)
+    self.context.register(html_pre)
+    return html_pre
 
   def blockquote(self, text=None, author=None, size=(None, "px"), color=None, width=(None, '%'), height=(None, 'px'),
                  htmlCode=None, helper=None, profile=None):
@@ -327,17 +323,14 @@ class Texts(object):
     :param options:
     :param helper:
     :param profile:
-
-    :rtype: html.HtmlText.Numeric
-
-    :return:
     """
     dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
     if options is not None:
       dflt_options.update(options)
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Numeric(self.context.rptObj, number, label, icon, size, color, tooltip,
-                                                       htmlCode, dflt_options, helper, profile))
+    html_number = html.HtmlText.Numeric(self.context.rptObj, number, label, icon, size, color, tooltip, htmlCode, dflt_options, helper, profile)
+    self.context.register(html_number)
+    return html_number
 
   def title(self, text=None, size=(None, 'px'), level=None, name=None, contents=None, color=None, picture=None, icon=None,
             marginTop=5, htmlCode=None, width=(100, "%"), height=(None, "px"), align=None, options=None, profile=None):
@@ -365,15 +358,15 @@ class Texts(object):
     :param align:
     :param options:
     :param profile:
-    :rtype: html.HtmlText.Title
-    :return:
     """
     dflt_options = {"reset": True, 'markdown': False}
     if options is not None:
       dflt_options.update(options)
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Title(self.context.rptObj, text, size, level, name, contents, color,
-                                                     picture, icon, marginTop, htmlCode, width, height, align, dflt_options, profile))
+    html_title = html.HtmlText.Title(self.context.rptObj, text, size, level, name, contents, color, picture, icon,
+                                     marginTop, htmlCode, width, height, align, dflt_options, profile)
+    self.context.register(html_title)
+    return html_title
 
   def fieldset(self, legend="", size=(None, 'px'), width=(100, "%"), height=(None, "px"), helper=None, profile=None):
     """
