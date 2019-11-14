@@ -38,7 +38,7 @@ class CssClassInput(CssGrpCls.CssGrpClass):
   CSS Basic group for all the Input components
   """
   css_div_no_border = CssStylesDiv.CssDivNoBorder
-  css_date_picker = CssStylesDates.CssDatePicker
+  css_date_picker = CssStylesInput.CssInput
   __map, __alt_map = ['CssDivNoBorder', 'CssInput'], []
 
 

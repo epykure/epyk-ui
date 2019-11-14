@@ -44,7 +44,7 @@ class Texts(object):
     self.context.register(text_comp)
     return text_comp
 
-  def label(self, text=None, size=(None, "px"), color=None, align='center', width=(100, "px"), height=(23, "px"), htmlCode=None,
+  def label(self, text=None, size=(None, "px"), color=None, align='center', width=(100, "px"), height=('auto', ""), htmlCode=None,
             tooltip='', profile=None, options=None):
     """
     The <label> tag defines a label for a <button>, <input>, <meter>, <output>, <progress>, <select>, or <textarea> element...

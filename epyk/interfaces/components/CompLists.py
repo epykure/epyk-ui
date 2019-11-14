@@ -22,16 +22,6 @@ class Lists(object):
   def __init__(self, context):
     self.context = context
 
-  def _size(self, size):
-    """
-
-    :param size:
-    :return:
-    """
-    if size[0] is None and size[1] == "px" and hasattr(self.context.rptObj, "style"):
-      size = (self.context.rptObj.style.defaults.font.size, self.context.rptObj.style.defaults.font.unit)
-    return size
-
   def _filter(self, recordSet, column, options=None):
     """
 
@@ -130,38 +120,121 @@ class Lists(object):
     return self.context.register(html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, label, width, height,
                                                         filter, profile, multiple, options))
 
-  def list(self, categories=None, icon=None, title='', width=(100, "%"), height=(None, 'px'),
-           draggable=False, draggableGroupId=None, draggableMax=None, column=None, dataSrc=None, htmlCode=None,
-           searchable=False, selectable=True, showGrid=True, template=None, filter=None, profile=None):
+  def list(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+           htmlCode=None, helper=None, profile=None):
     """
 
     Documentation
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
-
-    :param categories:
-    :param icon:
-    :param title:
-    :param width:
-    :param height:
-    :param draggable:
-    :param draggableGroupId:
-    :param draggableMax:
-    :param column:
-    :param dataSrc:
-    :param htmlCode:
-    :param searchable:
-    :param selectable:
-    :param showGrid:
-    :param template:
-    :param filter:
-    :param profile:
-    :return:
     """
-    return self.context.register(html.HtmlList.List(self.context.rptObj, categories, icon, title, width,
-                                                    height, draggable, draggableGroupId, draggableMax,
-                                                    dataSrc, htmlCode, searchable, selectable, showGrid,
-                                                    template, filter, profile))
+    size = self.context._size(size)
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                   helper, profile)
+    self.context.register(html_list)
+    html_list.css({"list-style": 'none'})
+    return html_list
+
+  def numbers(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+                  htmlCode=None, helper=None, profile=None):
+    """
+
+    Documentation
+    https://www.w3schools.com/html/html_lists.asp
+    https://www.w3.org/wiki/CSS/Properties/list-style-type
+    """
+    size = self.context._size(size)
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                   helper, profile)
+    self.context.register(html_list)
+    html_list.css({"list-style-type": 'decimal'})
+    return html_list
+
+  def alpha(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+                  htmlCode=None, helper=None, profile=None):
+
+    size = self.context._size(size)
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                   helper, profile)
+    self.context.register(html_list)
+    html_list.css({"list-style-type": 'lower-alpha'})
+    return html_list
+
+  def roman(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+                  htmlCode=None, helper=None, profile=None):
+
+    size = self.context._size(size)
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                   helper, profile)
+    self.context.register(html_list)
+    html_list.css({"list-style-type": 'lower-roman'})
+    return html_list
+
+  def points(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+             htmlCode=None, helper=None, profile=None):
+    """
+
+    Documentation
+    https://www.w3schools.com/html/html_lists.asp
+    """
+    size = self.context._size(size)
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                   helper, profile)
+    self.context.register(html_list)
+    html_list.css({"list-style-type": 'circle'})
+    return html_list
+
+  def disc(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+             htmlCode=None, helper=None, profile=None):
+    """
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_list-style-type.asp
+    """
+    size = self.context._size(size)
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                   helper, profile)
+    self.context.register(html_list)
+    html_list.css({"list-style-type": 'disc'})
+    return html_list
+
+  def squares(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+             htmlCode=None, helper=None, profile=None):
+    """
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_list-style-type.asp
+    """
+    size = self.context._size(size)
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                   helper, profile)
+    self.context.register(html_list)
+    html_list.css({"list-style-type": 'square'})
+    return html_list
+
+  def groups(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+             htmlCode=None, helper=None, profile=None):
+    """
+
+    Example
+    rpt.ui.lists.accordeon([{'value': 'super', 'url': "google", 'category': 'Test', 'icon': 'fas fa-heart'},
+                     {'value': 'super2', 'url': "google", 'category': 'Youpi', 'icon': 'fab fa-google'},
+                     {'value': 'super3', 'url': "google", 'category': 'Youpi'}])
+
+    Documentation
+    http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
+    http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
+    """
+    size = self.context._size(size)
+    html_obj = html.HtmlList.Groups(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                    helper, profile)
+    self.context.register(html_obj)
+    return html_obj
+
+  def checklist(self, recordSet=None, width=(100, "%"), height=(None, 'px'), column=None, filter=None,
+                dataSrc=None, profile=None):
+    return self.context.register(html.HtmlList.CheckList(self.context.rptObj, recordSet, width, height,
+                                                         filter, dataSrc, profile))
 
   def tree(self, recordSet=None, width=(100, "%"), height=(None, 'px'), title='', htmlCode=None,
            draggable=False, dataSrc=None, expanded=False, profile=None):
@@ -186,79 +259,6 @@ class Lists(object):
     return self.context.register(html.HtmlTrees.Tree(self.context.rptObj, recordSet, width, height, title, htmlCode,
                                                         draggable, dataSrc, expanded, profile))
 
-  def listnumbers(self, recordSet=None, level=None, top=(10, 'px'), width=(100, '%'), height=(None, 'px'),
-                  selectable=None, multiselectable=None, htmlCode=None, column=None,
-                  filter=None, dataSrc=None, profile=None):
-    """
-
-    Documentation
-    https://www.w3schools.com/html/html_lists.asp
-    https://www.w3.org/wiki/CSS/Properties/list-style-type
-
-    :param recordSet:
-    :param level:
-    :param top:
-    :param width:
-    :param height:
-    :param selectable:
-    :param multiselectable:
-    :param htmlCode:
-    :param column:
-    :param filter:
-    :param dataSrc:
-    :param profile:
-
-    :rtype: html.HtmlList.NumberList
-    :return:
-    """
-    return self.context.register(html.HtmlList.NumberList(self.context.rptObj, recordSet, top, level, width, height,
-                                                          selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode,
-                                                          globalFilter=filter, dataSrc=dataSrc, profile=profile))
-
-  def listletter(self, recordSet=None, level=None, top=(10, 'px'), width=(100, "%"), height=(None, 'px'), selectable=None,
-                 multiselectable=None, htmlCode=None, column=None, filter=None, dataSrc=None, profile=None):
-    return self.context.register(html.HtmlList.LetterList(self.context.rptObj, recordSet, top, level, width, height,
-            selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, globalFilter=filter, dataSrc=dataSrc, profile=profile))
-
-  def checklist(self, recordSet=None, width=(100, "%"), height=(None, 'px'), column=None, filter=None,
-                dataSrc=None, profile=None):
-    return self.context.register(html.HtmlList.CheckList(self.context.rptObj, recordSet, width, height,
-                                                         filter, dataSrc, profile))
-
-  def points(self, recordSet=None, marginTop=(10, 'px'), level=None, width=(100, "%"), height=(None, 'px'), selectable=None,
-             multiselectable=None, htmlCode=None, column=None, filter=None, dataSrc=None, profile=None):
-    """
-
-    Example
-    rpt.ui.lists.points([{'label': 'Python', 'url': 'https://www.python.org/'}, {'label': 'R'}])
-
-    Documentation
-    https://www.w3schools.com/html/html_lists.asp
-
-    :param recordSet:
-    :param marginTop:
-    :param level:
-    :param width:
-    :param height:
-    :param selectable:
-    :param multiselectable:
-    :param htmlCode:
-    :param filter:
-    :param dataSrc:
-    :param profile:
-    :return:
-    """
-    html_obj = html.HtmlList.Bullets(self.context.rptObj, recordSet, marginTop, level, width, height,
-                                     selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode,
-                                     globalFilter=filter, dataSrc=dataSrc, profile=profile)
-    self.context.register(html_obj)
-    return html_obj
-
-  def squares(self, recordSet=None, marginTop=10, level=None, width=(100, "%"), height=(None, 'px'), selectable=None,
-              multiselectable=None, htmlCode=None, column=None, filter=None, dataSrc=None, profile=None):
-    return self.context.register(html.HtmlList.Squares(self.context.rptObj, recordSet, marginTop, level, width, height,
-        selectable=selectable, multiselectable=multiselectable, htmlCode=htmlCode, globalFilter=filter, dataSrc=dataSrc, profile=profile))
-
   def dropdown(self, recordSet=None, size=(None, 'px'), title='', width=(100, "%"), height=(32, 'px'), htmlCode=None,
                dataSrc=None, filter=None, profile=None):
     """
@@ -279,7 +279,7 @@ class Lists(object):
     :param profile:
     :return:
     """
-    size = self._size(size)
+    size = self.context._size(size)
     return self.context.register(html.HtmlSelect.SelectDropDown(self.context.rptObj, title, recordSet, size, width,
         height, htmlCode, dataSrc, filter, profile))
 
@@ -306,7 +306,7 @@ class Lists(object):
     :param dataSrc:
     :param profile:
     """
-    size = self._size(size)
+    size = self.context._size(size)
     html_obj = html.HtmlList.ListBadge(self.context.rptObj, recordSet, color, size, width, height,
                                        draggable, draggableGroupId, draggableMax, dataSrc, profile)
 
@@ -315,29 +315,3 @@ class Lists(object):
 
   def brackets(self, recordSet=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
-
-  def accordeon(self, records=None, color=None, width=(150, 'px'), size=(None, "px"), dataSrc=None, profile=None):
-    """
-
-    Example
-    rpt.ui.lists.accordeon([{'value': 'super', 'url': "google", 'category': 'Test', 'icon': 'fas fa-heart'},
-                     {'value': 'super2', 'url': "google", 'category': 'Youpi', 'icon': 'fab fa-google'},
-                     {'value': 'super3', 'url': "google", 'category': 'Youpi'}])
-
-    Documentation
-    http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
-    http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
-
-    :param records:
-    :param color:
-    :param width:
-    :param size:
-    :param dataSrc:
-    :param profile:
-
-    :return:
-    """
-    size = self._size(size)
-    html_obj = html.HtmlList.HtmlListAccordeon(self.context.rptObj, records or [], color, width, size, dataSrc, profile)
-    self.context.register(html_obj)
-    return html_obj

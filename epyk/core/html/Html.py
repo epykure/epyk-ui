@@ -17,7 +17,7 @@ from epyk.core.css.groups import CssGrpCls
 
 from epyk.core.js import JsUtils
 from epyk.core.js import Js
-from epyk.core.js import JsHtml
+from epyk.core.js.html import JsHtml
 
 try:  # For python 3
   import urllib.request as urllib2
@@ -87,6 +87,17 @@ class Html(object):
       self.htmlObj = htmlObj
       self._def_styles = None
       self.__common, self.__div, self.__chart = None, None, None
+
+    def get(self, css_attr=None):
+      """
+      Return the corresponding CSS Style
+
+      :param css_attr: Optional
+      """
+      if css_attr is None:
+        return self.htmlObj.attr['css']
+
+      return self.htmlObj.attr['css'].get(css_attr)
 
     @property
     def list(self):
@@ -254,7 +265,7 @@ class Html(object):
     self.jsImports = report.jsImports
     self.cssImport = report.cssImport
     self.attr = {'class': set([])} if self.cssCls is None else {'class': set(self.cssCls)} # default HTML attributes
-    self.jsFncFrag, self._code, self._jsStyles, self._events = {}, code, None, {"comp_ready": {}, 'doc_ready': {}}
+    self.jsFncFrag, self._code, self._jsStyles, self._events = {}, code, {}, {"comp_ready": {}, 'doc_ready': {}}
     if code is not None:
       # Control to ensure the Javascript problem due to multiple references is highlighted during the report generation
       if code in self._report.htmlRefs:
@@ -364,20 +375,6 @@ class Html(object):
       self._dom = JsHtml.JsHtml(self, report=self._report)
     return self._dom
 
-  # @property
-  # def container(self):
-  #   """
-  #
-  #   :rtype: JsHtml.JsHtml
-  #   :return:
-  #   """
-  #   if self._container is None:
-  #     if hasattr(self, "id_container"):
-  #       self._container = JsHtml.JsHtml(self, self.id_container)
-  #     else:
-  #       self._container = JsHtml.JsHtml(self, self.htmlId)
-  #   return self._container
-
   def prepend_child(self, htmlObj):
     """
     Wrapper to the Javascript method insertChild to add an HTML component
@@ -394,6 +391,10 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
+    htmlObj.inReport = False
+    # add a flag to propagate on the Javascript the fact that some child nodes will be added
+    # in this case innerHYML cannot be used anymore
+    self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
     self._report.js.addOnLoad([self.dom.insertBefore(htmlObj.dom)])
     return self
 
@@ -413,6 +414,10 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
+    htmlObj.inReport = False
+    # add a flag to propagate on the Javascript the fact that some child nodes will be added
+    # in this case innerHYML cannot be used anymore
+    self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
     self._report.js.addOnLoad([self.dom.appendChild(htmlObj.dom)])
     return self
 
@@ -477,11 +482,13 @@ class Html(object):
         self.prepend_child(self.label)
       else:
         self.append_child(self.label)
-      if css is not None:
+      if css == False:
+        self.label.attr['css'] = {}
+      elif css is not None:
         self.label.css(css)
     return self
 
-  def add_span(self, text, css=None, position="before"):
+  def add_span(self, text, css=None, position="before", i=None):
     """
     Add an elementary span component
 
@@ -493,21 +500,27 @@ class Html(object):
     :param text: The Span content
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
+    :param i:
     """
-    self.span = ""
+    if i is not None:
+      key_attr = 'span_%s' % i
+    else:
+      key_attr = 'span'
+    setattr(self, key_attr, '')
     if text is not None:
-      self.span = self._report.ui.texts.span(text)
+      setattr(self, key_attr, self._report.ui.texts.span(text))
+      span = getattr(self, key_attr)
       if position == "before":
-        self.prepend_child(self.span)
+        self.prepend_child(span)
       else:
-        self.append_child(self.span)
+        self.append_child(span)
       if css == False:
-        self.span.attr['css'] = {}
+        span.attr['css'] = {}
       elif css is not None:
-        self.span.css(css)
+        span.css(css)
     return self
 
-  def add_link(self, script_name, report_name=None, name=None, icon=None, css=None, position="before"):
+  def add_link(self, text, url=None, script_name=None, report_name=None, name=None, icon=None, css=None, position="before"):
     """
     Add an elementary label component
 
@@ -515,6 +528,8 @@ class Html(object):
     div = rptObj.ui.div()
     div.add_link("test.py", name="Click to go to the test report")
 
+    :param text:
+    :param url:
     :param script_name:
     :param report_name:
     :param name:
@@ -523,9 +538,12 @@ class Html(object):
     :param position:
     """
     self.link = ""
-    if script_name is not None:
+    if url is not None or script_name is not None:
       options = {"name": name} if name is not None else {}
-      self.link = self._report.ui.links.script(script_name, report_name, icon=icon, options=options)
+      if url is not None:
+        self.link = self._report.ui.links.external(text, url)
+      else:
+        self.link = self._report.ui.links.script(text, script_name, report_name, icon=icon, options=options)
       if position == "before":
         self.prepend_child(self.link)
       else:
@@ -552,7 +570,9 @@ class Html(object):
       else:
         self.append_child(self.title)
       #self.title.inReport = False
-      if css is not None:
+      if css == False:
+        self.title.attr['css'] = {}
+      elif css is not None:
         self.title.css(css)
     return self
 
@@ -578,6 +598,30 @@ class Html(object):
         self.input.css(css)
       if attrs is not None:
         self.input.set_attrs(attrs=attrs)
+    return self
+
+  def add_checkbox(self, flag, css=None, attrs=None, position="before"):
+    """
+    Add an elementary checkbox component
+
+    Example
+
+    :param flag: Boolean. The state of the checkbox component
+    :param css: Optional. A dictionary with the CSS style to be added to the component
+    :param attrs: Optional
+    :param position:
+    """
+    self.checkbox = ""
+    if flag is not None:
+      self.checkbox = self._report.ui.inputs.checkbox(flag)
+      if position == "before":
+        self.prepend_child(self.checkbox)
+      else:
+        self.append_child(self.checkbox)
+      if css is not None:
+        self.checkbox.css(css)
+      if attrs is not None:
+        self.checkbox.set_attrs(attrs=attrs)
     return self
 
   def add_helper(self, text, css=None):
@@ -863,7 +907,6 @@ class Html(object):
   def refresh(self):
     return self.build(self.val, self._jsStyles)
 
-
   def onDocumentLoadContextmenu(self):
     self._report.jsGlobal.fnc("ContextMenu(htmlObj, data, markdownFnc)",
         '''
@@ -967,8 +1010,9 @@ class Html(object):
     ''' % self.__class__.__name__)
 
   def html(self):
+    str_result = []
     for htmlObj in self._sub_htmls:
-      htmlObj.html()
+      str_result.append(htmlObj.html())
     if self.helper != "":
       self.helper.html()
     if self.builder_name:
@@ -976,7 +1020,8 @@ class Html(object):
     for cssStyle in self.defined.clsMap:
       # Remove the . or # corresponding to the type of CSS reference
       self.pyCssCls.add(self._report.style.add(cssStyle).classname)
-    return str(self)
+    str_result.append(str(self))
+    return "".join(str_result)
 
 
 

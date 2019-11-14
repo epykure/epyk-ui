@@ -219,6 +219,26 @@ class Inputs(object):
     """
     return self.d_text(text, placeholder, size, width, height, htmlCode, filter, options, attrs, profile)
 
+  def checkbox(self, flag, size=(None, 'px'), width=(None, "%"), height=(None, "px"), htmlCode=None, filter=None,
+               options=None, attrs=None, profile=None):
+    """
+
+    :param flag:
+    :param size:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param filter:
+    :param options:
+    :param attrs:
+    :param profile:
+    """
+    size = self.context._size(size)
+    html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, size, width, height, htmlCode, filter,
+                                         options or {}, attrs or {}, profile)
+    self.context.register(html_coech)
+    return html_coech
+
   def editor(self, text="", title="", size=(None, 'px'), language='python', width=(100, "%"), height=(None, "px"), isEditable=True,
              htmlCode=None, options=None, profile=None):
     """
