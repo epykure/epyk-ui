@@ -16,6 +16,17 @@ from epyk.core.css import Defaults
 factory = None
 
 
+def get_style(css_attrs):
+  """
+  Return the CSS String to be added to the tag of an HTML component
+
+  :param css_attrs: A python dictionary with the CSS attributes
+
+  :return: The css style string
+  """
+  return "; ".join(["%s:%s" % (k, v) for k, v in css_attrs.items()])
+
+
 def cssName(cssRef):
   """
   CSS Framework
@@ -496,7 +507,7 @@ class CssCls(object):
 
     :return: the Python String in a CSS format
     """
-    return "{ %s; }" % "; ".join(["%s: %s" % (k, v) for k, v in params_css.items()])
+    return "{ %s; }" % get_style(params_css)
 
   def clone(self, name):
     """

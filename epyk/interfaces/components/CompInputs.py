@@ -219,8 +219,8 @@ class Inputs(object):
     """
     return self.d_text(text, placeholder, size, width, height, htmlCode, filter, options, attrs, profile)
 
-  def checkbox(self, flag, size=(None, 'px'), width=(None, "%"), height=(None, "px"), htmlCode=None, filter=None,
-               options=None, attrs=None, profile=None):
+  def checkbox(self, flag, label=None, group_name=None, size=(None, 'px'), width=(None, "%"), height=(None, "px"),
+               htmlCode=None, filter=None, options=None, attrs=None, profile=None):
     """
 
     :param flag:
@@ -234,7 +234,33 @@ class Inputs(object):
     :param profile:
     """
     size = self.context._size(size)
-    html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, size, width, height, htmlCode, filter,
+    html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, label, group_name, size, width, height, htmlCode,
+                                         filter, options or {}, attrs or {}, profile)
+    self.context.register(html_coech)
+    return html_coech
+
+  def radio(self, flag, label=None, group_name=None, size=(None, 'px'), width=(None, "%"), height=(None, "px"),
+            htmlCode=None, filter=None, options=None, attrs=None, profile=None):
+    """
+
+    Documentation
+    https://www.w3schools.com/tags/att_input_type_radio.asp
+
+    :param flag:
+    :param label:
+    :param group_name:
+    :param size:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param filter:
+    :param options:
+    :param attrs:
+    :param profile:
+    :return:
+    """
+    size = self.context._size(size)
+    html_coech = html.HtmlInput.Radio(self.context.rptObj, flag, label, group_name, size, width, height, htmlCode, filter,
                                          options or {}, attrs or {}, profile)
     self.context.register(html_coech)
     return html_coech

@@ -154,6 +154,9 @@ class Buttons(object):
     Example
     rptObj.ui.buttons.radio(df, dfColumn="A", htmlCode="test")
 
+    radio = rptObj.ui.radio(["A", "B", "C"], checked="B")
+    radio + "G"
+
     Documentation
     https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp
 
@@ -187,10 +190,11 @@ class Buttons(object):
       recordSet = recordSet[column].unique().tolist()
 
     if isinstance(recordSet, list) and not isinstance(recordSet[0], dict):
-      tmpVals = [{'value': str(v)} for v in recordSet]
-      tmpVals[0]['checked'] = True
+      tmpVals = [{'value': str(v), 'checked': v == checked} for v in recordSet]
+      if checked is None:
+        tmpVals[0]['checked'] = True
       recordSet = tmpVals
-    html_obj = html.HtmlRadio.Radio(self.context.rptObj, recordSet, checked, htmlCode, label, width, height, radioVisible,
+    html_obj = html.HtmlRadio.Radio(self.context.rptObj, recordSet, htmlCode, label, width, height, radioVisible,
                                     event, withRemoveButton, align, filters, tooltip, radioType, helper, profile)
     self.context.register(html_obj)
     return html_obj

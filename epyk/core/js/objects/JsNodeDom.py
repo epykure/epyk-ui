@@ -13,6 +13,7 @@ from epyk.core.css import Colors
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsBoolean
+from epyk.core.js.primitives import JsArray
 
 from epyk.core.js import JsUtils
 
@@ -475,14 +476,40 @@ class JsDoms(JsObject.JsObject):
     if jsObject is None and isinstance(type, dict):
       for k, v in type.items():
         if "-" in k:
-          splitCss = k.split("-")
-          k = "%s%s" % (splitCss[0], splitCss[1].title())
+          split_css = k.split("-")
+          k = "%s%s" % (split_css[0], split_css[1].title())
         self._js.append("%s.style.%s = %s" % (self.varId, k, JsUtils.jsConvertData(v, None)))
     elif jsObject is None:
       return JsObject.JsObject("%s.style.%s" % (self.varId, type))
     else:
       self._js.append("%s.style.%s = %s" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
+
+  def hide(self):
+    """
+
+    Example
+    input.js.hide()
+
+    Documentation
+    https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+
+    :return:
+    """
+    return self.css("display", "none")
+
+  def show(self):
+    """
+
+    Example
+    input.js.hide()
+
+    Documentation
+    https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+
+    :return:
+    """
+    return self.css("display", "block")
 
   def toggle(self):
     """
@@ -789,3 +816,18 @@ class JsDoms(JsObject.JsObject):
 
     contextAttributes = JsUtils.jsConvertData(contextAttributes, None)
     return JsFncs.JsFunction("%s.getContext('%s', %s)" % (self.varId, contextType, contextAttributes))
+
+
+class JsDomsList(JsArray.JsArray):
+
+  def all(self, jsFncs):
+    """
+
+    :param jsFncs:
+    """
+    self._js.append("%s.forEach(function(elt, index){%s})" % (self.varId, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self
+
+  @property
+  def first(self):
+    return JsDoms.get("%s[0]" % self.toStr())

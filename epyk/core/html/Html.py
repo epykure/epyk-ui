@@ -289,7 +289,7 @@ class Html(object):
       except: pass
 
       self.htmlCode = htmlCode
-      self._report.jsGlobal.reportHtmlCode.add(htmlCode)
+      # self._report.jsGlobal.reportHtmlCode.add(htmlCode)
       if htmlCode in self._report.http:
         self.vals = self._report.http[htmlCode]
 

@@ -58,35 +58,8 @@ class Layouts(object):
     :param profile: Optional. A flag to set the component performance storage
     :return:
     """
-    size = self._size(size)
+    size = self.context._size(size)
     return self.context.register(html.HtmlOthers.Hr(self.context.rptObj, color, count, size, background_color, height, align, profile))
-
-  def panel(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), helper=None, profile=None):
-    """
-    Add Html Component by using + to this object and you will be able to switch between them.
-
-    :param htmlObjs:
-    :param width:
-    :param height:
-    :param helper:
-    :param profile:
-    :return:
-    """
-    return self.context.register(html.HtmlContainer.Panel(self.context.rptObj, htmlObjs, width, height, helper, profile))
-
-  def paneldisplay(self, htmlObjs=None, title='', width=(100, '%'), height=(None, 'px'), panelOptions=None, helper=None, profile=None):
-    """
-
-    :param htmlObjs:
-    :param title:
-    :param width:
-    :param height:
-    :param panelOptions:
-    :param helper:
-    :param profile:
-    :return:
-    """
-    return self.context.register(html.HtmlContainer.PanelDisplay(self.context.rptObj, htmlObjs, title, width, height, panelOptions, helper, profile))
 
   def panelsplit(self, width=(100, '%'), height=(None, 'px'), leftWidth=50, left=None, right=None, resizable=True, helper=None, profile=None):
     """
@@ -107,9 +80,10 @@ class Layouts(object):
     :param resizable:
     :param helper:
     :param profile:
-    :return:
     """
-    return self.context.register(html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, leftWidth, left, right, resizable, helper, profile))
+    html_split = html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, leftWidth, left, right, resizable, helper, profile)
+    self.context.register(html_split)
+    return html_split
 
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
     """
@@ -179,57 +153,80 @@ class Layouts(object):
     self.context.register(html_grid)
     return html_grid
 
-  def tabs(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), tabNames=None, rowsCss=None, colsCss=None,
-           closable=False, selectedTab=None, htmlCode=None, alwaysReload=False, encoding="UTF-8", helper=None, profile=None):
+  def tabs(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
+           css_tab=None, profile=False):
     """
     Python wrapper for a multi Tabs component
 
     Documentation
     https://getbootstrap.com/docs/4.0/components/navs/
 
-    :param htmlObjs:
-    :param width:
-    :param height:
-    :param tabNames:
-    :param rowsCss:
-    :param colsCss:
-    :param closable:
-    :param selectedTab:
-    :param htmlCode:
-    :param alwaysReload:
-    :param encoding:
-    :param helper:
-    :param profile:
-    :return:
     """
-    return self.context.register(html.HtmlContainer.Tabs(self.context.rptObj, htmlObjs, width, height, tabNames, rowsCss,
-                                                         colsCss, closable, selectedTab, htmlCode, alwaysReload, encoding, helper, profile))
+    size = self.context._size(size)
+    if css_tab is None:
+      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
+                 "border-bottom": "1px solid white", "font-size": '%s%s' % (size[0]+2, size[1])}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab, profile)
+    self.context.register(html_tabs)
+    return html_tabs
 
-  def pills(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), colsDim=None, rowsCss=None, colsCss=None,
-            closable=False, selectedTab=None, htmlCode=None, alwaysReload=False, encoding="UTF-8", helper=None, profile=None):
+  def menu(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
+            css_tab=None, profile=False):
     """
     Python wrapper to the Bootstrap Pills interface
 
     Documentation
     https://getbootstrap.com/docs/4.0/components/navs/
-
-    :param htmlObjs:
-    :param width:
-    :param height:
-    :param colsDim:
-    :param rowsCss:
-    :param colsCss:
-    :param closable:
-    :param selectedTab:
-    :param htmlCode:
-    :param alwaysReload:
-    :param encoding:
-    :param helper:
-    :param profile:
-    :return:
     """
-    return self.context.register(html.HtmlContainer.Pills(self.context.rptObj, htmlObjs, width, height, colsDim, rowsCss,
-                                                          colsCss, closable, selectedTab, htmlCode, alwaysReload, encoding, helper, profile))
+    size = self.context._size(size)
+    if css_tab is None:
+      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
+                 'border-radius': '10px 10px 0 0', "font-size": '%s%s' % (size[0] + 2, size[1])}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab, profile)
+    html_tabs.css_tab["color"] = html_tabs.getColor("greys", -1)
+    html_tabs.css_tab["background"] = html_tabs.getColor("greys", 0)
+    html_tabs.css_tab_clicked_dflt = {'color': html_tabs.getColor("greys", 0), 'background': html_tabs.getColor("success", 1)}
+    html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs.getColor("success", 1)})
+
+    self.context.register(html_tabs)
+    return html_tabs
+
+  def pills(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
+            css_tab=None, profile=False):
+    """
+    Python wrapper to the Bootstrap Pills interface
+
+    Documentation
+    https://getbootstrap.com/docs/4.0/components/navs/
+    """
+    size = self.context._size(size)
+    if css_tab is None:
+      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
+                 'border-radius': '5px', "font-size": '%s%s' % (size[0] + 2, size[1])}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab, profile)
+    html_tabs.css_tab["color"] = html_tabs.getColor("greys", -1)
+    html_tabs.css_tab["background"] = html_tabs.getColor("greys", 0)
+    html_tabs.css_tab_clicked_dflt = {'color': html_tabs.getColor("greys", 0), 'background': html_tabs.getColor("success", 1)}
+    self.context.register(html_tabs)
+    return html_tabs
+
+  def panel(self, htmlObjs=None, title=None, color=None, size=(None, "px"), width=(100, "%"), height=(None, "px"),
+            htmlCode=None, helper=None, profile=False):
+    size = self.context._size(size)
+    if htmlObjs is not None and not isinstance(htmlObjs, list):
+      htmlObjs = [htmlObjs]
+    html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs, title, color, size, width, height, htmlCode, helper, profile)
+    self.context.register(html_panel)
+    return html_panel
+
+  def slide(self, htmlObjs, title, color=None, size=(None, "px"), width=(100, "%"), height=(None, "px"),
+            htmlCode=None, helper=None, profile=False):
+    size = self.context._size(size)
+    if htmlObjs is not None and not isinstance(htmlObjs, list):
+      htmlObjs = [htmlObjs]
+    html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, size, width, height, htmlCode, helper, profile)
+    self.context.register(html_slide)
+    return html_slide
 
   def div(self, htmlObjs=None, label=None, color=None, size=(None, "px"), width=(100, "%"), icon=None, height=(None, "px"), editable=False,
           align='left', padding=None, htmlCode=None, tag='div', helper=None, profile=None):
@@ -255,26 +252,13 @@ class Layouts(object):
     :param tag:
     :param profile:
     """
-    size = self._size(size)
+    size = self.context._size(size)
+    if htmlObjs is not None and not isinstance(htmlObjs, list):
+      htmlObjs = [htmlObjs]
     html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs, label, color, size, width, icon, height, editable,
                                      align, padding, htmlCode, tag, helper, profile)
     self.context.register(html_div)
     return html_div
-
-  def fixed(self, text=None, top=100, left=None, right=None, color=None, size=(None, "px"), width=(None, "px"), icon=None,
-               height=(None, "px"), editable=False, align='left', backgroundColor='white', zindex=None, padding=None,
-               htmlCode=None, tag='div', helper=None, profile=None):
-    size = self._size(size)
-    return self.context.register(html.HtmlContainer.DivFixed(self.context.rptObj, text, top, left, right, color, size,
-                                                             width, icon, height, editable, align, backgroundColor, zindex,
-                                                             padding, htmlCode, tag, helper, profile))
-
-  def drag(self, text=None, top=100, left=None, right=None, color=None, size=(None, "px"), width=(None, "px"), icon=None,
-              height=(None, "px"), editable=False, align='left', backgroundColor='white', padding=None, htmlCode=None,
-              tag='div', helper=None, profile=None):
-    size = self._size(size)
-    return self.context.register(html.HtmlContainer.DragDiv(self.context.rptObj, text, top, left, right, color, size,
-                                                            width, icon, height, editable, align, backgroundColor, padding, htmlCode, tag, helper, profile))
 
   def popup(self, htmlObj=None, title=None, color=None, size=(None, 'px'), width=(100, '%'), height=(None, 'px'),
             withBackground=True, draggable=False, margin=10, profile=None):
@@ -301,7 +285,7 @@ class Layouts(object):
     :rtype: html.HtmlPopup.Popup
     :return:
     """
-    size = self._size(size)
+    size = self.context._size(size)
     return self.context.register(html.HtmlPopup.Popup(self.context.rptObj, htmlObj, title, color, size, width, height,
                                                       withBackground, draggable, margin, profile))
 
@@ -321,7 +305,7 @@ class Layouts(object):
   def dialogs(self, recordSet=None, width=(100, "%"), height=(500, "px"), helper=None, profile=None):
     return self.context.register(html.HtmlContainer.Dialog(self.context.rptObj, recordSet, width, height, helper, profile))
 
-  def menu(self, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
+  def icons(self, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
     return self.context.register(html.HtmlContainer.IconsMenu(self.context.rptObj, width, height, htmlCode, helper, profile))
 
   def multiFilter(self, items=None, title=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
@@ -339,7 +323,7 @@ class Layouts(object):
     :rtype: html.HtmlEvent.Filters
     :return:
     """
-    size = self._size(size)
+    size = self.context._size(size)
     items = items or []
     return self.context.register(html.HtmlEvent.Filters(self.context.rptObj, items, title, size, width, height, htmlCode, helper, profile))
 

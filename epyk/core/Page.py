@@ -225,6 +225,8 @@ class Report(object):
     """
 
     :param htmlCode:
+
+    :rtype: html.Html.Html
     :return:
     """
     return self.htmlCodes[htmlCode]

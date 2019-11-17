@@ -648,7 +648,7 @@ class JsBase(object):
     :return: A NodeList object, representing a collection of elements with the specified name.
              The elements in the returned collection are sorted as they appear in the source code.
     """
-    return "document.getElementsByName(%s)" % name
+    return JsNodeDom.JsDomsList.get(varName="document.getElementsByName(%s)" % JsUtils.jsConvertData(name, None))
 
   def getElementsByTagName(self, tagName, i=0):
     """

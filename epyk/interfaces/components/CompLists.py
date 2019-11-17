@@ -280,8 +280,10 @@ class Lists(object):
     :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlSelect.SelectDropDown(self.context.rptObj, title, recordSet, size, width,
-        height, htmlCode, dataSrc, filter, profile))
+    html_d = html.HtmlSelect.SelectDropDown(self.context.rptObj, title, recordSet, size, width,
+                                            height, htmlCode, dataSrc, filter, profile)
+    self.context.register(html_d)
+    return html_d
 
   def badges(self, recordSet=None, color=None, size=(None, 'px'), width=(100, "%"), height=(None, 'px'), draggable=False,
                 draggableGroupId=None, draggableMax=None, column=None, dataSrc=None, profile=None):

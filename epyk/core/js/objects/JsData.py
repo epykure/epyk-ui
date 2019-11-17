@@ -8,6 +8,8 @@ from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsNumber
 
+from epyk.core.js.objects import JsNodeDom
+
 from epyk.core.js.packages.JsCrossFilter import CrossFilter
 from epyk.core.js.packages.JsVis import VisDataSet, VisDataView
 
@@ -50,6 +52,16 @@ class DataEach(object):
   data  : element
   """
   index, data = JsNumber.JsNumber("index", isPyData=False), JsObject.JsObject("data", isPyData=False)
+
+
+class DataAll(object):
+  """
+  Data Class for the Jquery each loop
+
+  index : index
+  data  : elt
+  """
+  index, element = JsNumber.JsNumber("index", isPyData=False), JsNodeDom.JsDoms.get(varName="elt")
 
 
 class ContainerData(object):
@@ -209,6 +221,10 @@ class JsData(object):
 
   def each(self):
     return DataEach()
+
+  @property
+  def all(self):
+    return DataAll()
 
   def crossfilter(self, data, var_name):
     """

@@ -122,7 +122,6 @@ class JsObjects(object):
 
     Documentation
 
-    :rtype: epyk.Lib.js.objects.JsNodeDom.JsDoms
     :return: A Python Document
     """
     return JsNodeDom.JsDoms

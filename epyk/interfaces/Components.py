@@ -49,6 +49,7 @@ class Components(object):
     self.date = self.dates.cob
     self.tree = self.lists.tree
     self.info = self.rich.info
+    self.radio = self.buttons.radio
 
   def css(self, cssAttrs):
     """
