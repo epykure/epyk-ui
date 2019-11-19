@@ -10,6 +10,10 @@ from epyk.core.js.objects import JsNodeDom
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpClsList
 
+#
+from epyk.core.js.packages import JsQuery
+from epyk.core.js.packages import JsSelect
+
 
 class SelectDropDown(Html.Html):
   alias, cssCls = 'dropdown', ['btn', 'dropdown-toggle']
@@ -31,12 +35,12 @@ class SelectDropDown(Html.Html):
       'a_dropdown_item': {'text-decoration': 'none', "color": 'inherit', 'font-size': self._report.pyStyleDfl['fontSize']}, # {"width": "100%", 'font-size': '12px', 'text-decoration': 'none', 'padding-left': "10px"},
       "li_dropdown_item": {"text-align": "left", 'font-size': self._report.pyStyleDfl['fontSize']}}
     self.css({"margin-top": "5px", "display": "inline-block"})
-    for evts in ['click', 'change']:
-      # Add the source to the different events
-      self.jsFrg(evts, '''
-        event.stopPropagation(); $("#%(htmlId)s_button").html(data.event_val);
-        if ('%(htmlCode)s' != 'None') {%(breadCrumVar)s['params']['%(htmlCode)s'] = %(jsEventVal)s; breadCrumbPushState()}
-        ''' % {'htmlId': self.htmlId, 'htmlCode': self.htmlCode, 'jsEventVal': self.jsEventVal, 'breadCrumVar': self._report.jsGlobal.breadCrumVar})
+    # for evts in ['click', 'change']:
+    #   # Add the source to the different events
+    #   self.jsFrg(evts, '''
+    #     event.stopPropagation(); $("#%(htmlId)s_button").html(data.event_val);
+    #     if ('%(htmlCode)s' != 'None') {%(breadCrumVar)s['params']['%(htmlCode)s'] = %(jsEventVal)s; breadCrumbPushState()}
+    #     ''' % {'htmlId': self.htmlId, 'htmlCode': self.htmlCode, 'jsEventVal': self.jsEventVal, 'breadCrumVar': self._report.jsGlobal.breadCrumVar})
 
   @property
   def jsQueryData(self):
@@ -77,8 +81,9 @@ class SelectDropDown(Html.Html):
   @property
   def eventId(self): return "$('#%s li')" % self.htmlId
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' 
+  @property
+  def _js__builder__(self):
+    return ''' 
         if (jsStyles.clearDropDown) {htmlObj.empty()};
         data.forEach(function(rec){
           if (rec._children != undefined) {
@@ -93,17 +98,17 @@ class SelectDropDown(Html.Html):
               else {var a = $('<a href="'+ rec.url +'">'+ rec.value +'</a>')}
               a.css(jsStyles.a_dropdown_item);
               var li = $('<li class="dropdown-item"></li>').css(jsStyles.dropdown_submenu);
-              li.append(a); htmlObj.append(li)
-            }
+              li.append(a); htmlObj.append(li)}
           }
-        })''' % {"pyCls": self.__class__.__name__})
+        })''' % {"pyCls": self.__class__.__name__}
 
   def __str__(self):
+    # [s for s in self.defined if not s.startswith("CssDropDown")]
     return ''' 
       <div class="dropdown" %(cssAttr)s>
         <button id="%(htmlId)s_button" style="font-size:%(size)s;width:100%%;height:100%%;background-color:%(darkBlue)s;color:%(color)s" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">%(title)s<span class="caret"></span></button>
         <ul class="dropdown-menu" id="%(htmlId)s" aria-labelledby="dropdownMenu"></ul>
-      </div> ''' % {'cssAttr': self.get_attrs(withId=False, pyClassNames=[s for s in self.defined if not s.startswith("CssDropDown")]), 'title': self.title, 'htmlId': self.htmlId,
+      </div> ''' % {'cssAttr': self.get_attrs(withId=False, pyClassNames=self.defined), 'title': self.title, 'htmlId': self.htmlId,
                     'darkBlue': self.getColor('colors', 7), 'color': self.getColor('greys', 0), 'size': self.size}
 
   def to_word(self, document):
@@ -122,13 +127,89 @@ class SelectDropDown(Html.Html):
       cursor['row'] += 2
 
 
+class Option(Html.Html):
+  name, category, callFnc = 'Select Option', 'Lists', None
+  builder_name = False
+
+  def __init__(self, report, value, text, icon, selected):
+    super(Option, self).__init__(report, text)
+    self.set_attrs(name="value", value=value)
+    if selected:
+      self.set_attrs(name="selected", value=selected)
+    if icon is not None:
+      self.set_attrs(name="data-icon", value=icon)
+
+  def __str__(self):
+    return "<option %s>%s</option>" % (self.get_attrs(pyClassNames=self.defined), self.val)
+
+
+class Optgroup(Html.Html):
+  name, category, callFnc = 'Select Option', 'Lists', None
+  builder_name = False
+
+  def __init__(self, report, data, label):
+    super(Optgroup, self).__init__(report, data)
+    self.set_attrs(name="label", value=label)
+
+  def __str__(self):
+    val = "".join([v.html() for v in self.val])
+    return "<optgroup %s>%s</optgroup>" % (self.get_attrs(pyClassNames=self.defined), val)
+
+
 class Select(Html.Html):
+  __reqCss, __reqJs = ['select'], ['select']
+  name, category, callFnc = 'Select', 'Lists', 'select'
+
+  def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
+    super(Select, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1],
+                                 height=height[0],  heightUnit=height[1], globalFilter=filter, profile=profile)
+    self.selected = None
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsSelect.JSelect(self, report=self._report)
+    return self._dom
+
+
+  @property
+  def _js__builder__(self):
+    return ''' %s.selectpicker(options).selectpicker('refresh') ''' % JsQuery.decorate_var("htmlObj")
+
+  def change(self, jsFncs, profile=False):
+    return self.on("change", jsFncs, profile)
+
+  def __str__(self):
+    options, opt_groups = [], []
+    for val in self.val:
+      opt = Option(self._report, val['value'], val['name'], None, self.selected is not None and self.selected == val['value'])
+      opt.inReport = False
+      options.append(opt)
+    #
+    opt_rp = Optgroup(self._report, options, "test Group")
+    opt_rp.inReport = False
+    opt_groups.append(opt_rp.html())
+
+    return "<select %s>%s</select>" % (self.get_attrs(pyClassNames=self.defined), "".join(opt_groups))
+
+
+class SelectOld(Html.Html):
   __reqCss, __reqJs = ['select'], ['select', 'jquery']
   _grpCls = CssGrpClsList.CssClassListSelect
   name, category, callFnc = 'Select', 'Lists', 'select'
 
   def __init__(self, report, records, htmlCode, label, width, height, filter, profile, multiple, options):
-    super(Select, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
+    super(SelectOld, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1], globalFilter=filter, profile=profile)
     self.add_label(label)
     self._jsStyles = {"liveSearch": options.get("liveSearch", False), "style": "show-menu-arrow class_select", "width": '100px'}
@@ -239,10 +320,13 @@ class Select(Html.Html):
     if self.label != "":
       self.label.html()
     if self.multiple:
-      return '''<div %(strAttr)s>%(label)s<select multiple></select></div>''' % {"strAttr": self.get_attrs(pyClassNames=self.__pyStyle), "label": self.label}
+      return '''<div %(strAttr)s>%(label)s<select multiple></select></div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "label": self.label}
 
-    return '''<div %(strAttr)s>%(label)s<select></select></div>''' % {"strAttr": self.get_attrs(pyClassNames=self.__pyStyle), "label": self.label}
+    return '''<div %(strAttr)s>%(label)s<select></select></div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "label": self.label}
 
+  # -----------------------------------------------------------------------------------------
+  #                                    EXPORT OPTIONS
+  # -----------------------------------------------------------------------------------------
   def to_xls(self, workbook, worksheet, cursor):
     if self.htmlId in self._report.http:
       cell_title = self._jsStyles["title"] if self._jsStyles.get("title") is not None else 'Input'

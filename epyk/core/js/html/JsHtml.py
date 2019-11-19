@@ -65,7 +65,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery_ui is None:
-      self._jquery_ui = JsQueryUi.JQueryUI(self._src)
+      self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId))
     return self._jquery_ui
 
   @property

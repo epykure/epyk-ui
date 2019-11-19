@@ -18,7 +18,110 @@ from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsList
 
 
+class Li(Html.Html):
+  name, category, callFnc = 'Entries', 'Lists', 'list_entries'
+  builder_name = False
+
+  def __init__(self, report, text, size, color, width, height):
+    super(Li, self).__init__(report, text, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
+    self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit', 'color': color,
+              'margin': "1px 5px", 'padding': 0})
+
+  def __str__(self):
+    return "<li %s>%s</li>" % (self.get_attrs(pyClassNames=self.defined), self.val)
+
+
 class List(Html.Html):
+  name, category, callFnc = 'List', 'Lists', 'list'
+  builder_name = False
+  # The CSS Group attached to this component
+  #_grpCls = CssGrpClsList.CssClassList
+
+  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
+    super(List, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
+                               heightUnit=height[1], code=htmlCode, profile=profile)
+    self.add_helper(helper)
+    self.color = color if color is not None else self.getColor("greys", 9)
+    self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
+              'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
+    self.builder_name, self.items = False, None
+    if len(data) > 0:
+      self.set_items()
+
+  def __getitem__(self, i):
+    return self.items[i]
+
+  def set_items(self, size=('inherit', ''), color='inherit', width=(None, 'px'), height=(None, 'px'), data=None, css_attrs=None):
+    if data is None:
+      data = self.val
+    self.items = []
+    for d in data:
+      li_obj = Li(self._report, d, size, color, width, height)
+      if css_attrs is not None:
+        li_obj.css(css_attrs)
+      self.items.append(li_obj)
+    return self
+
+  def __str__(self):
+    self._vals = "".join([i.html() for i in self.items])
+    self.builder_name = self.__class__.__name__
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return "<ul %s>%s</ul>" % (self.get_attrs(pyClassNames=self.defined), self._vals)
+
+
+class Groups(Html.Html):
+  name, category, callFnc = 'Groups', 'Lists', 'groups'
+  builder_name = False
+
+  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
+    super(Groups, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
+                                 heightUnit=height[1], code=htmlCode, profile=profile)
+    self.add_helper(helper)
+    self.color = color if color is not None else self.getColor("greys", 9)
+    self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
+              'padding': 0, 'margin': "1px", 'border': '1px solid black'})
+    self.builder_name, self._lists__map, self._lists__map_index = False, {}, []
+
+  def __getitem__(self, i):
+    return self.val[i]
+
+  def add_list(self, category, data, size=('inherit', ''), color='inherit', width=(None, 'px'), height=(None, 'px'),
+               htmlCode=None, helper=None, profile=False):
+    """
+
+    :param category:
+    :param data:
+    :param size:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param profile:
+    """
+    self._lists__map[category] = len(self.val)
+    html_li = List(self._report, data, size, color, width, height, htmlCode, helper, profile)
+    self.val.append(html_li)
+    self._lists__map_index.append(category)
+    return self
+
+  def __str__(self):
+    self._vals = "".join(['''
+      <a onclick='this.nextElementSibling.querySelectorAll("li").forEach(
+        function(evt){
+          evt.style.display = evt.style.display === "none" ? "" : "none";
+        }
+      )'>%s</a>%s
+      ''' % (self._lists__map_index[i], l.html()) for i, l in enumerate(self.val)])
+    self.builder_name = self.__class__.__name__
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.defined), self._vals)
+
+
+
+
+
+
+class ListOld(Html.Html):
   cssClsLi = "list-group-item"
   name, category, callFnc = 'Simple List', 'List', 'list'
   _grpCls = CssGrpClsList.CssClassList
@@ -621,123 +724,6 @@ class HtmlListAccordeon(Html.Html):
   def __str__(self):
     self._report.jsOnLoadFnc.add("$('li[name=%(htmlId)s_menu]').click(function(){$('#'+ this.id +' ul').toggle()})" % {'htmlId': self.htmlId})
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.defined)
-
-
-class Bullets(Html.Html):
-  name, category, callFnc = 'Bullet points', 'Lists', 'points'
-  _grpCls = CssGrpCls.CssGrpClassBase
-  puce = "circle"
-
-  def __init__(self, report, records, top, level, width, height, selectable, multiselectable, htmlCode, globalFilter, dataSrc, profile):
-    if records is not None and len(records) > 0:
-      if not isinstance(records[0], dict):
-        records = [{'value': rec} for rec in records]
-    super(Bullets, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0],
-                                  heightUnit=height[1], htmlCode=htmlCode, dataSrc=dataSrc, profile=profile)
-    self.listVal = ""
-    if level is not None:
-      self._report.style.cssCls("CssTitle%s" % level)
-      self.css("margin-left", "-20px")
-    else:
-      self.css("font-size", "%spx" % self._report.pyStyleDfl['fontSize'])
-    if top is not None:
-      self.css("margin-top", "%s%s" % (top[0], top[1]))
-    if selectable:
-      # Add the selection to a click event
-      self.css({'cursor': 'pointer'})
-      self.jsFrg('click', "$(this).parent().children().removeClass( 'text-primary' ); $(this).addClass( 'text-primary' ); %s['params']['%s'] = [$(this).text()];" % (
-                 self._report.jsGlobal.breadCrumVar, self.htmlId))
-    if multiselectable:
-      # Add the selection to a click event
-      self.css({'cursor': 'pointer'})
-      self.jsFrg('click', '''
-        if (data['event_val'] == undefined) {data['event_val'] = {}};
-        if ($(this).hasClass('text-primary')){delete data['event_val'][$(this).index()]} 
-        else {data['event_val'][$(this).index()] = $(this).text()};
-        %(breadcrumb)s['params']['%(htmlId)s'] = data['event_val'];
-        $(this).toggleClass( 'text-primary' )''' % {"breadcrumb": self._report.jsGlobal.breadCrumVar, "htmlId": self.htmlId})
-
-  @property
-  def jqId(self): return "$('#%s ul')" % self.htmlId
-
-  @property
-  def eventId(self): return "#%s li" % self.htmlId
-
-  @property
-  def val(self):
-    return self.listVal
-
-  @property
-  def jsQueryData(self):
-    return "{event_val: %s, event_code: '%s'}" % (self.listVal, self.htmlId)
-
-  def jsEvents(self):
-    if hasattr(self, 'jsFncFrag'):
-      for eventKey, fnc in self.jsFncFrag.items():
-        if self.htmlCode is not None:
-          fnc.insert(0, self.jsAddUrlParam(self.htmlCode, self.val, isPyData=False))
-        self._report.jsOnLoadEvtsFnc.add('''
-          $( document ).on('%(eventKey)s', '%(eventId)s', function(event) {
-            var useAsync = false; var data = %(data)s ;
-            %(jsInfo)s; %(jsFnc)s ; 
-            if (!useAsync) {
-              var body_loading_count = parseInt($('#body_loading span').text()); $('#body_loading span').html(body_loading_count - 1);
-              if ($('#body_loading span').html() == '0') { $('#body_loading').remove()} }
-          })''' % {'eventId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'jsFnc': ";".join([f for f in fnc if f is not None]),
-                   'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
-      data.forEach(function(rec){
-        if(rec.label === undefined){rec.label = rec.value};
-        if(rec.url != undefined) {htmlObj.append('<li><a href="'+ rec.url +'">'+ toMarkup(rec.label +'') +'</a></li>')} 
-        else {htmlObj.append('<li>'+ toMarkup(rec.label +'') +'</li>')}}); 
-        htmlObj.css('list-style-type', '%s') ''' % self.puce, 'Javascript Object builder')
-
-  def click(self, jsFncs):
-    """
-    This will create a Jquery click event and the data passed as parameter will be the ones defined in the function jsQueryData.
-    Most of those parameters are common accross all component and they can be used directly in services done in Python or other languages
-    By default all the js Python function will use as data the dictionary from jsQueryData
-    """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    return self.jsFrg('click', ";".join(jsFncs) if isinstance(jsFncs, list) else jsFncs)
-
-  def __str__(self):
-    return '<div %s><ul style="text-align:left;vertical-align:middle;margin-bottom:0"></ul>%s</div>' % (self.get_attrs(pyClassNames=self.defined), self.helper)
-
-  @classmethod
-  def matchMarkDownBlock(cls, data): return re.match(">>>%s" % cls.callFnc, data[0])
-
-  @staticmethod
-  def matchEndBlock(data): return data.endswith("<<<")
-
-  @classmethod
-  def convertMarkDownBlock(cls, data, report=None):
-    recordSet = [{"label":  val} for val in data[1:-1]]
-    if report is not None:
-      getattr(report, cls.callFnc)(recordSet)
-    return ["report.%s(%s)" % (cls.callFnc, json.dumps(recordSet)) ]
-
-  @classmethod
-  def jsMarkDown(cls, vals):
-    return [">>>%s" % cls.callFnc, [rec['label'] for rec in vals], "<<<"]
-
-
-class Squares(Bullets):
-  name, category, callFnc = 'Bullet squares', 'List', 'squares'
-  __reqJs, __reqCss = ['font-awesome'], ['font-awesome']
-  puce = "none"
-  _grpCls = CssGrpClsList.CssClassListSquare
-
-
-class NumberList(Bullets):
-  puce, name, callFnc = "decimal", 'List Numbers', 'listnumbers'
-
-
-class LetterList(Bullets):
-  puce, name, callFnc = "lower-alpha", 'List letter', 'listletter'
 
 
 class CheckList(Html.Html):

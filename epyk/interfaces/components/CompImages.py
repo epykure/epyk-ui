@@ -1,5 +1,5 @@
 """
-
+Module dedicated to produce Images components
 """
 
 from epyk.core import html
@@ -33,11 +33,12 @@ class Images(object):
     self.context.register(html_image)
     return html_image
 
-  def img_animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
-                   serverSettings=None, profile=None):
+  def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
+               profile=None):
     """
 
     Example
+    rptObj.ui.images.animated("philo.PNG")
 
     Documentation
     https://tympanus.net/Tutorials/OriginalHoverEffects/
@@ -49,20 +50,18 @@ class Images(object):
     :param path:
     :param width:
     :param height:
-    :param serverSettings:
     :param profile:
-
-    :rtype: html.HtmlImage.AnimatedImage
-
-    :return:
     """
-    return self.context.register(html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width,
-                                                              height, serverSettings, profile))
+    html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, profile)
+    self.context.register(html_id)
+    return html_id
 
-  def carrousel(self, images, path=None, width=(100, "%"), height=(None, "px"), serverSettings=None, profile=None):
+  def carrousel(self, images, path=None, width=(100, "%"), height=('auto', ""), profile=None):
     """
 
     Example
+    Defaults.SERVER_PATH = r"XXXXX"
+    rptObj.ui.images.carrousel(["Capture.PNG", "philo.PNG"])
 
     Documentation
     https://www.cssscript.com/basic-pure-css-slideshow-carousel/
@@ -71,15 +70,11 @@ class Images(object):
     :param path:
     :param width:
     :param height:
-    :param serverSettings:
     :param profile:
-
-    :rtype: html.HtmlImage.ImgCarrousel
-
-    :return:
     """
-    return self.context.register(html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, width, height,
-                                                             serverSettings, profile))
+    html_i = html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, width, height, profile)
+    self.context.register(html_i)
+    return html_i
 
   def emoji(self, symbole=None, size=(None, 'px'), top=(20, 'px'), profile=None):
     """

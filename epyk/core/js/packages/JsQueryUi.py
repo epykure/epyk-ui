@@ -7,18 +7,13 @@ https://api.jqueryui.com/
 import json
 
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsPackage
 
 
-class JQueryUI(object):
-  class __internal(object):
-    jqId, htmlId, jsImports, cssImport = '', '', set([]), set([])
-
-  def __init__(self, src=None):
-    self.src = src if src is not None else self.__internal()
-    self.src.jsImports.add('jqueryui')
-    self.src.cssImport.add('jqueryui')
-    self.selector = self.src.jqId if hasattr(self.src, 'jqId') else None
-    self._js = []
+class JQueryUI(JsPackage):
+  lib_alias = {"js": 'jqueryui', 'css': 'jqueryui'}
+  lib_selector = 'jQuery("body")'
+  lib_set_var = False
 
   def labels(self):
     """
@@ -76,10 +71,9 @@ class JQueryUI(object):
     :param options:
     """
     if options is not None:
-      self._js.append("draggable(%s)" % JsUtils.jsConvertData(options, None))
-    else:
-      self._js.append("draggable()")
-    return self
+      return self.fnc("draggable(%s)" % JsUtils.jsConvertData(options, None))
+
+    return self.fnc("draggable()")
 
   def droppable(self, options=None):
     """
@@ -298,22 +292,6 @@ class JQueryUI(object):
     self._js.append("animate(%s, %s)" % (JsUtils.jsConvertData(css, None), delay))
     return self
 
-  def toStr(self):
-    """
-    Javascript representation
-
-    :return: Return the Javascript String
-    """
-    if self.selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self.selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self.selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
-
 
 class JQueryUiDatePicker(JQueryUI):
 
@@ -383,3 +361,9 @@ class JQueryUiSlider(JQueryUI):
 
   def instance(self):
     pass
+
+
+class JQueryUiProgressBar(JQueryUI):
+  """
+
+  """

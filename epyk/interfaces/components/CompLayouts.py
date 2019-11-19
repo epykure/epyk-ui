@@ -9,16 +9,6 @@ class Layouts(object):
   def __init__(self, context):
     self.context = context
 
-  def _size(self, size):
-    """
-
-    :param size:
-    :return:
-    """
-    if size[0] is None and size[1] == "px" and hasattr(self.context.rptObj, "style"):
-      size = (self.context.rptObj.style.defaults.font.size, self.context.rptObj.style.defaults.font.unit)
-    return size
-
   def new_line(self, count=1, profile=None):
     """
     Wrapper around the Br html tag.
@@ -292,6 +282,9 @@ class Layouts(object):
   def iframe(self, url, width=(100, "%"), height=(100, "%"), helper=None, profile=None):
     """
 
+    Example
+    rptObj.ui.layouts.iframe("http://www.google.com")
+
     :param url:
     :param width:
     :param height:
@@ -302,11 +295,28 @@ class Layouts(object):
     self.context.register(html_frame)
     return html_frame
 
-  def dialogs(self, recordSet=None, width=(100, "%"), height=(500, "px"), helper=None, profile=None):
-    return self.context.register(html.HtmlContainer.Dialog(self.context.rptObj, recordSet, width, height, helper, profile))
+  def dialogs(self, recordSet=None, width=(100, "%"), height=(200, "px"), helper=None, profile=None):
+
+    html_dialog = html.HtmlContainer.Dialog(self.context.rptObj, recordSet, width, height, helper, profile)
+    self.context.register(html_dialog)
+    return html_dialog
 
   def icons(self, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
-    return self.context.register(html.HtmlContainer.IconsMenu(self.context.rptObj, width, height, htmlCode, helper, profile))
+    """
+
+    Example
+    menu = rptObj.ui.layouts.icons()
+    menu.icon.click([menu.icon.dom.css({"color": 'red'})])
+
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param profile:
+    """
+    html_icon = html.HtmlContainer.IconsMenu(self.context.rptObj, width, height, htmlCode, helper, profile)
+    self.context.register(html_icon)
+    return html_icon
 
   def multiFilter(self, items=None, title=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """

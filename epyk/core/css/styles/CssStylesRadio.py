@@ -22,13 +22,13 @@ class CssRadioButtonSelected(CssStyle.CssCls):
 
 class CssRadioSwitch(CssStyle.CssCls):
   attrs = {'height': '0', 'width': '0', 'visibility': 'hidden'}
-  cssId = {'tag': 'input'}
+  cssId = {'child': 'input'}
 
 
 class CssRadioSwitchLabel(CssStyle.CssCls):
   attrs = {'cursor': 'pointer', 'margin': '2px', 'text-indent': '-9999px', 'display': 'block', 'border-radius': '100px', 'position': 'relative'}
   after = {'content': "''", 'position': 'absolute', 'left': '5px', 'width': '20px', 'height': '100%', 'border-radius': '20px', 'transition': '0.3s'}
-  cssId = {'tag': 'label'}
+  cssId = {'child': 'label'}
 
   def customize(self, style, eventsStyles):
     style.update({'background': self.getColor('greys', 3)})
@@ -37,5 +37,5 @@ class CssRadioSwitchLabel(CssStyle.CssCls):
 
 class CssRadioSwitchChecked(CssStyle.CssCls):
   after = {'left': 'calc(100% - 5px)', 'transform': 'translateX(-100%)'}
-  cssId = {'tag': 'input:checked + label'}
+  cssId = {'child': 'input:checked + label'}
 

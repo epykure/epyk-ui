@@ -69,9 +69,8 @@ class Button(Html.Html):
     self.attr['disabled'] = True
     return self
 
-  def click(self, js_fnc):
-    self.on("click", js_fnc)
-    return self
+  def click(self, jsFncs, profile=False):
+    return self.on("click", jsFncs, profile)
 
     #if not isinstance(js_fnc, list):
     #  js_fnc = [js_fnc]
@@ -358,29 +357,30 @@ class CheckButton(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
+  # @property
+  # def jsQueryData(self):
+  #   if self.htmlCode is not None:
+  #     return "{event_label: '%(label)s', event_val: $(this).data('isChecked'), event_code: '%(htmlCode)s', %(htmlCode)s: $(this).data('isChecked')}" % {'label': self.label, 'htmlCode': self.htmlCode}
+  #
+  #   return "{event_label: '%(label)s', event_val: $(this).data('isChecked'), event_code: '%(htmlCode)s'}" % {'label': self.label, 'htmlCode': self.htmlCode}
+  #
+  # @property
+  # def val(self): return "%s.data('isChecked')" % self.jqId
+  #
+  # @property
+  # def jqId(self):
+  #   return "$('#%s div[name=\"check_box\"]')" % self.htmlId
+
   @property
-  def jsQueryData(self):
-    if self.htmlCode is not None:
-      return "{event_label: '%(label)s', event_val: $(this).data('isChecked'), event_code: '%(htmlCode)s', %(htmlCode)s: $(this).data('isChecked')}" % {'label': self.label, 'htmlCode': self.htmlCode}
-
-    return "{event_label: '%(label)s', event_val: $(this).data('isChecked'), event_code: '%(htmlCode)s'}" % {'label': self.label, 'htmlCode': self.htmlCode}
-
-  @property
-  def val(self): return "%s.data('isChecked')" % self.jqId
-
-  @property
-  def jqId(self):
-    return "$('#%s div[name=\"check_box\"]')" % self.htmlId
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' htmlObj.empty();
+  def _js__builder__(self):
+    return ''' htmlObj.empty();
       if (data === true || data == 'Y'){
         htmlObj.append('<i class="fas fa-check" style="color:%(green)s;margin-bottom:2px;margin-left:2px"></i>');
         htmlObj.parent().data('isChecked', true)} 
       else {
         htmlObj.append('<i class="fas fa-times" style="font-size:14px;margin-top:2px;margin-left:5px;color:%(red)s"></i>');
         htmlObj.parent().data('isChecked', false)
-      }''' % {'green': self.getColor('success', 1), 'red': self.getColor('danger', 1)}, 'Javascript Object builder')
+      }''' % {'green': self.getColor('success', 1), 'red': self.getColor('danger', 1)}
 
   def click(self, jsFncs, allevents=True, isChecked=None):
     if allevents:
@@ -401,21 +401,21 @@ class CheckButton(Html.Html):
     return self
 
   def __str__(self):
-    if not self.isDisable:
-      self._report.jsOnLoadFnc.add('''
-        %(jqId)s.parent().on('click', function(event){
-          if (!$(this).data('isChecked')){ 
-            $(this).data('isChecked', true);
-            var data = %(jsQueryData)s; %(isChecked)s; data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
-            $(this).find('div[name="check_box"]').html('<i class="fas fa-check" style="margin-bottom:2px;margin-left:2px;color:%(green)s"></i>')}
-          else {
-            $(this).data('isChecked', false);
-            var data = %(jsQueryData)s; %(isNotChecked)s; data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
-            $(this).find('div[name="check_box"]').html('<i class="fas fa-times" style="font-size:14px;margin-top:2px;margin-left:5px;color:%(red)s"></i>')}
-          if ('%(htmlCode)s' != 'None') {%(breadCrumVar)s['params']['%(htmlCode)s'] = $(this).data('isChecked'); breadCrumbPushState()};
-        })''' % {'jqId': self.jqId, 'htmlCode': self.htmlCode, 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'jsQueryData': self.jsQueryData,
-                 'isChecked': ";".join(self.clickEvent['Y']), 'isNotChecked': ";".join(self.clickEvent['N']),
-                 'lightGrey': self.getColor('greys', 2), 'green': self.getColor('success', 1), 'red': self.getColor('danger', 1)})
+    # if not self.isDisable:
+    #   self._report.jsOnLoadFnc.add('''
+    #     %(jqId)s.parent().on('click', function(event){
+    #       if (!$(this).data('isChecked')){
+    #         $(this).data('isChecked', true);
+    #         var data = %(jsQueryData)s; %(isChecked)s; data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
+    #         $(this).find('div[name="check_box"]').html('<i class="fas fa-check" style="margin-bottom:2px;margin-left:2px;color:%(green)s"></i>')}
+    #       else {
+    #         $(this).data('isChecked', false);
+    #         var data = %(jsQueryData)s; %(isNotChecked)s; data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
+    #         $(this).find('div[name="check_box"]').html('<i class="fas fa-times" style="font-size:14px;margin-top:2px;margin-left:5px;color:%(red)s"></i>')}
+    #       if ('%(htmlCode)s' != 'None') {%(breadCrumVar)s['params']['%(htmlCode)s'] = $(this).data('isChecked'); breadCrumbPushState()};
+    #     })''' % {'jqId': self.dom.jquery.varId, 'htmlCode': self.htmlCode, 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'jsQueryData': "",
+    #              'isChecked': ";".join(self.clickEvent['Y']), 'isNotChecked': ";".join(self.clickEvent['N']),
+    #              'lightGrey': self.getColor('greys', 2), 'green': self.getColor('success', 1), 'red': self.getColor('danger', 1)})
     return '''
       <div %s>
         <div name="check_box" style="display:inline-block;vertical-align:bottom;margin-right:5px;float:left;width:16px;height:16px"></div>
@@ -424,8 +424,10 @@ class CheckButton(Html.Html):
 
 class IconEdit(Html.Html):
   name, category, callFnc = 'Icon', 'Icons', 'iconEdit'
+  builder_name = False
+  cssCls = ["fa-layers", "fa-fw"]
 
-  def __init__(self, report, position, icon, size, tooltip, width, height, htmlCode, profile):
+  def __init__(self, report, position, icon, text, size, tooltip, width, height, htmlCode, profile):
     if position is None:
       position = 'left'
     super(IconEdit, self).__init__(report, '', code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
@@ -433,13 +435,39 @@ class IconEdit(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
     # Add the internal components icons and helper
+    self.add_span(text, css=False)
+    if text is not None:
+      self.span.css({"float": 'right'})
     self.add_icon(icon, {"color": self.getColor('success', 1), "margin": "2px", 'font-size': '%s%s' % (size[0], size[1])})
     self.css({"margin": "5px 0", "float": position, 'cursor': 'pointer'})
 
-  @property
-  def jsQueryData(self): return "{}"
+  def icon_on(self, event, jsFncs, profile=False):
+    """
 
-  def color(self, color_hover, color_out=None):
+    Example
+    edit = rptObj.ui.icons.edit()
+    edit.on('click', rptObj.js.console.log('test'))
+
+    :param event:
+    :param jsFncs:
+    :param profile:
+
+    :return:
+    """
+    return self.icon.on(event, jsFncs, profile)
+
+  def icon_css(self, key, value=None, reset=False):
+    """
+
+    :param key:
+    :param value:
+    :param reset:
+
+    :return:
+    """
+    return self.icon.css(key, value, reset)
+
+  def icon_colors(self, color_hover, color_out=None):
     """
     Change the color of the button background when the mouse is hover
 
@@ -458,7 +486,7 @@ class IconEdit(Html.Html):
     self.icon.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
     return self
 
-  def __str__(self): return "<div %s></div>" % (self.get_attrs(pyClassNames=self.defined))
+  def __str__(self): return "<span %s></span>" % (self.get_attrs(pyClassNames=self.defined))
 
 
 # class IconThumbtack(IconEdit):

@@ -140,7 +140,6 @@ class Tree(Html.Html):
     for action in self._definedActions:
       if action in self._jsActions:
         events.append(self._jsActions[action])
-    print(events)
     return '''
       <div style="width:100%%;margin:5px 0 0 5px">
         <span style='font-weight:bold;font-size:14px'>%(title)s</span>

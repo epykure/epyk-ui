@@ -224,3 +224,13 @@ class Icons(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     return self.awesome('fas fa-wrench', text, position, tooltip, size, width, height, htmlCode, profile)
+
+  def signin(self, text, size=(None, "px"), icon=None):
+    """
+
+    :return:
+    """
+    size = self.context._size(size)
+    bar = html.HtmlEvent.SignIn(self.context.rptObj, text, size, icon)
+    self.context.register(bar)
+    return bar

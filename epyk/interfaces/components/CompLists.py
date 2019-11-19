@@ -68,6 +68,8 @@ class Lists(object):
     Example
     rptObj.ui.select(["A", "B", "C"], label="label", selected="C", multiple=True,
                      options={"title": "ttle", 'showTick': True, 'maxOptions': 2})
+    s.selected = "B"
+    s.change(rptObj.js.console.log(s.dom.val))
 
     Documentation
     https://silviomoreto.github.io/bootstrap-select/examples/
@@ -111,13 +113,13 @@ class Lists(object):
           if rec["value"] in selected:
             rec["selected"] = True
       return self.context.register(
-        html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, label, width, height, filter, profile, multiple, options))
+        html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height, filter, profile, multiple, options))
 
     if selected is not None:
       for rec in records:
         if rec["value"] == selected:
           rec["selected"] = True
-    return self.context.register(html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, label, width, height,
+    return self.context.register(html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height,
                                                         filter, profile, multiple, options))
 
   def list(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),

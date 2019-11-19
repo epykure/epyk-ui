@@ -11,7 +11,7 @@ from epyk.core.html import Html
 # The list of Javascript classes
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js import JsUtils
-from epyk.core.js import JsHtml
+from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -21,12 +21,14 @@ from epyk.core.css.groups import CssGrpClsText
 class Label(Html.Html):
   name, category, callFnc = 'Label', 'Text', 'label'
 
-  def __init__(self, report, text, size, color, align, width, height, htmlCode, tooltip, profile):
+  def __init__(self, report, text, size, color, align, width, height, htmlCode, tooltip, profile, dflt_options):
     super(Label, self).__init__(report, text, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
                                 code=htmlCode, profile=profile)
     self.color = color if color is not None else 'inherit'
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]) if size[0] is not None else 'inherit', 'text-align': align})
-    self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block'})
+    self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block', 'line-height': '23px',
+              'vertical-align': 'middle'})
+    self._jsStyles = dflt_options
     if tooltip:
       self.set_attrs(name='title', value=tooltip)
 
@@ -41,7 +43,7 @@ class Label(Html.Html):
     """
     return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlId)
 
-  def click(self, jsFncs):
+  def click(self, jsFncs, profile=False):
     """
     Add a click event for a component
 
@@ -56,18 +58,36 @@ class Label(Html.Html):
     https://www.w3schools.com/jsref/event_onload.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+    :param profile:
+
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    self._report.js.addOnLoad([self.dom.onclick(jsFncs)])
+    self.on("click", jsFncs)
+    return self
+
+  def not_selectable(self):
+    """
+    Make the label component not selectable.
+
+    This will be done by adding the class CssTextNotSelectable to the component
+
+    :return: self to allow the chains
+    """
+    self.style.addCls("CssTextNotSelectable")
     return self
 
   @property
   def _js__builder__(self):
-    return "htmlObj.value = data"
+    mark_up = self._report.js.string("data", isPyData=False).toStringMarkup()
+    return '''
+      var content = options.markdown > 0 ? %(markUp)s : data
+      if(options._children > 0){htmlObj.insertAdjacentHTML('beforeend', '<div style="display:inline-block;vertical-align:middle">'+ content +'</div>')}
+      else{htmlObj.innerHTML = content};
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}''' % {"markUp": mark_up}
     
   def __str__(self):
-    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.val, self.helper)
+    return '<label %s></label>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
 
 
 class Span(Html.Html):
@@ -117,7 +137,7 @@ class Span(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  def click(self, jsFncs):
+  def click(self, jsFncs, profile=False):
     """
     Add a click event for a component
 
@@ -132,18 +152,23 @@ class Span(Html.Html):
     https://www.w3schools.com/jsref/event_onload.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
+    :param profile:
+
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    self.on("click", jsFncs)
+    self.on("click", jsFncs, profile)
     return self
 
   @property
   def _js__builder__(self):
-    return "htmlObj.innerHTML  = data"
+    return ''' 
+      if(options._children > 0){htmlObj.appendChild(document.createTextNode(data))}
+      else{htmlObj.innerHTML = data}
+      '''
 
   def __str__(self):
-    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.val, self.helper)
+    return '<span %s></span>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
 
 
 class Text(Html.Html):
@@ -161,52 +186,18 @@ class Text(Html.Html):
       self.tooltip(tooltip)
 
   @property
-  def val(self):
-    """
-    Property to get the jquery value of the HTML object in a python HTML object.
-    This method can be used in any jsFunction to get the value of a component in the browser.
-    This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
-
-    Example
-    myObj.val
-
-    :return: Javascript string with the function to get the current value of the component
-    """
-    return '%s.html()' % self.jqId
-
-  def addStyles(self, reset=None, maxlength=None):
-    """
-    Add style properties to be used in the definition of the component in the Javascript layer
-
-    :return: The object itself
-    """
-    if reset is not None:
-      self._jsStyles['reset'] = reset
-    if maxlength is not None:
-      self._jsStyles['maxlength'] = maxlength
-    return self
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
+  def _js__builder__(self):
+    mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
+    return '''
       var content = data;
-      if(jsStyles.reset){htmlObj.html("")}; 
+      if(options.reset){htmlObj.innerHTML = ""}; 
       if(data != ''){ 
-        if((jsStyles.maxlength != undefined) && (data.length > jsStyles.maxlength)){
-          content = data.slice(0, jsStyles.maxlength); 
-          var div = $("<div title='"+ data +"' data-html='true'>"+ %(markUp)s +"...</div>");
-          htmlObj.append(div)} 
-        else{
-          var div = $("<div>"+ %(markUp)s +"</div>"); 
-          htmlObj.append(div)}}''' % {"markUp": self._report.js.string("content", isPyData=False).toStringMarkup()})
-
-  def toHtml(self):
-    """
-    Mandatory function for any child class of Html.
-    Return the String representation of a Text HTML tag
-
-    :returns: A String representing the HTML object
-    """
-    return str(self)
+        if((options.maxlength != undefined) && (data.length > options.maxlength)){
+          content = data.slice(0, options.maxlength); 
+          htmlObj.innerHTML = %(markUp)s +"..."; htmlObj.title = data} 
+        else{htmlObj.innerHTML = %(markUp)s}};
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
+      ''' % {"markUp": mark_up}
 
   def __str__(self):
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
@@ -233,10 +224,6 @@ class Code(Html.Html):
     self._jsStyles, self.__editable = options, None
     self.color = color if color is not None else self.getColor("greys", 9)
     self.css({'color': self.color, 'display': 'block', 'font-size': "%s%s" % (size[0], size[1]), 'margin': '5px 0'})
-
-  @property
-  def val(self):
-    return '%s.html()' % self.jqId
 
   @property
   def _js__builder__(self):
@@ -280,7 +267,7 @@ class Pre(Html.Html):
     self.add_helper(helper)
 
     def append(text):
-      return ";".join(JsUtils.jsConvertFncs("%s.append(%s)" % (self.jqId, JsUtils.jsConvertData(text, None))))
+      return ";".join(JsUtils.jsConvertFncs("%s.append(%s)" % (self.dom.varId, JsUtils.jsConvertData(text, None))))
 
     self.js.append = append
 
@@ -300,7 +287,7 @@ class Pre(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  def notSelectable(self):
+  def not_selectable(self):
     self.style.addCls("CssTextNotSelectable")
     return self
 
@@ -319,7 +306,7 @@ class Paragraph(Html.Html):
 
   def __init__(self, report, text, size, color, background_color, border, width, height, htmlCode, encoding, dataSrc,
                helper, profile):
-    jsStyles, tmpText = {"reset": True, 'markdown': True, "style": []}, []
+    jsStyles, tmpText = {"reset": True, 'markdown': True, "styles": []}, []
     if not isinstance(text, list):
       content = []
       for line in text.strip().split("\n"):
@@ -339,7 +326,7 @@ class Paragraph(Html.Html):
           tmpText.append(t.decode(encoding))
         else:
           tmpText.append(t)
-      jsStyles["style"].append(jsAttr)
+      jsStyles["styles"].append(jsAttr)
     super(Paragraph, self).__init__(report, tmpText, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                     heightUnit=height[1], dataSrc=dataSrc, profile=profile)
     self.add_helper(helper)
@@ -352,21 +339,25 @@ class Paragraph(Html.Html):
     self.css({"background-color": background_color, 'text-align': 'justify', 'color': color,
               'font-size': '%s%s' % (size[0], size[1]), 'margin-top': '3px', "text-justify": 'distribute'})
 
-  @property
-  def val(self):
-    self._report.jsOnLoadFnc.add('''
-      function paraGrapVal(htmlId){
-        var result = []; $('#'+ htmlId).find('p').each(function(){result.push($(this).html())});
-        return result.join('\\n');}''')
-    return "paraGrapVal('%s') " % self.htmlId
+  # @property
+  # def val(self):
+  #   self._report.jsOnLoadFnc.add('''
+  #     function paraGrapVal(htmlId){
+  #       var result = []; $('#'+ htmlId).find('p').each(function(){result.push($(this).html())});
+  #       return result.join('\\n');}''')
+  #   return "paraGrapVal('%s') " % self.htmlId
 
-  def onDocumentLoadFnc(self):
-    self._report.js.registerFunction('toMarkUp') # Add the toMarkUp predefined function
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      if (typeof jsStyles.reset === 'undefined' || jsStyles.reset){htmlObj.empty()};
-      if (typeof data === 'string' || data instanceof String){data = data.split("\n")}; 
+  @property
+  def _js__builder__(self):
+    markdown = self._report.js.string("line", isPyData=False).toStringMarkup()
+    return '''
+      if (typeof options.reset === 'undefined' || options.reset){htmlObj.innerHTML = ''};
+      if (typeof data === 'string' || data instanceof String){data = data.split('\\n')}; 
       data.forEach(function(line, i){
-        var p = $("<p></p>").css(jsStyles.style[i]).html(JsMarkUp(line)); htmlObj.append(p)})''')
+        var p = document.createElement('p'); p.innerHTML = %(markdown)s;
+        htmlObj.appendChild(p)});
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
+      ''' % {"markdown": markdown}
 
   def __str__(self):
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
@@ -480,22 +471,27 @@ class Title(Html.Html):
       self.css({'display': 'inline-block'})
 
   @property
-  def jqId(self):
-    return "$('#%s a')" % self.htmlId
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
 
   @property
-  def id_container(self):
-    return self.htmlId
-
-  @property
-  def val(self):
-    return "%s.html()" % self.jqId
-
-  def onDocumentLoadFnc(self):
+  def _js__builder__(self):
     markdown = self._report.js.string("data", isPyData=False).toStringMarkup()
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      if(jsStyles.markdown){htmlObj.html(%(markdown)s)} else{htmlObj.html(data)};
-      if(typeof jsStyles.css !== 'undefined'){htmlObj.parent().css(jsStyles.css)}''' % {"markdown": markdown})
+    return '''
+      if(options.markdown){htmlObj.innerHTML = %(markdown)s} else{htmlObj.innerHTML = data};
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}''' % {"markdown": markdown}
 
   def __str__(self):
     anchor_name = ' name="%s"' % self._name if self._name is not None else ''
@@ -593,14 +589,6 @@ class Numeric(Html.Html):
     self.tooltip(tooltip)
     self._jsStyles = options
 
-  @property
-  def jqId(self):
-    return "$('#%s font')" % self.htmlId
-
-  @property
-  def id_container(self):
-    return self.htmlId
-
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__,
                       "%s.html(%s)" % (self.jqId, self.js.string("data", isPyData=False).toFormattedNumber(
@@ -615,6 +603,7 @@ class Numeric(Html.Html):
 class Highlights(Html.Html):
   name, category, callFnc = 'Highlights', 'Texts', 'highlights'
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
+  builder_name = False
 
   def __init__(self, report, text, title, icon, type, size, color, width, height, htmlCode, helper, profile):
     super(Highlights, self).__init__(report, text, width=width[0], widthUnit=width[1], height=height[0],
@@ -629,12 +618,8 @@ class Highlights(Html.Html):
     self.style.addCls('alert alert-%s' % type)
     self.set_attrs(name='role', value="alert")
 
-  @property
-  def container(self):
-    return self.dom
-
   def __str__(self):
-    return "<div %s><div>%s</div></div>%s" % (self.get_attrs(), self.vals, self.helper)
+    return "<div %s><div>%s</div></div>%s" % (self.get_attrs(pyClassNames=self.defined), self.val, self.helper)
 
 
 class SearchResult(Html.Html):
@@ -705,12 +690,26 @@ class SearchResult(Html.Html):
 class Fieldset(Html.Html):
   name, category, callFnc = 'Fieldset', 'Texts', 'fieldset'
 
-  def __init__(self, report, text, size, width, height, helper, profile):
-    super(Fieldset, self).__init__(report, text, width=width[0], widthUnit=width[1], height=height[0],
+  def __init__(self, report, legend, size, width, height, helper, profile):
+    super(Fieldset, self).__init__(report, legend, width=width[0], widthUnit=width[1], height=height[0],
                                    heightUnit=height[1], profile=profile)
     self.add_helper(helper)
     self.css({'padding': '5px', 'border': '1px groove %s' % self.getColor("greys", 3), 'display': 'block',
               'margin': '5px 0', 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
 
+  @property
+  def _js__builder__(self):
+    return '''
+      htmlObj.firstChild.remove();
+      var eltLegend = document.createElement('legend');
+      eltLegend.style.fontSize = 'inherit'; eltLegend.innerHTML = data; htmlObj.prepend(eltLegend);
+      if(typeof options.css !== 'undefined'){for(var k in options.css){firstChild.style[k] = options.css[k]}}'''
+
+  def add_label(self, text, css=None, position="after", for_=None):
+    return super(Fieldset, self).add_label(text, css, position, for_)
+
+  def add_title(self, text, css=None, position="after"):
+    return super(Fieldset, self).add_title(text, css, position)
+
   def __str__(self):
-    return '<fieldset %s><legend style="font-size:inherit">%s</legend>%s</fieldset>' % (self.get_attrs(pyClassNames=self.defined), self.vals, self.helper)
+    return '<fieldset %s>%s</fieldset>%s' % (self.get_attrs(pyClassNames=self.defined), self.val, self.helper)

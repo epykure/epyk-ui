@@ -29,8 +29,8 @@ class CssClassTimePicker(CssGrpCls.CssGrpClass):
   """
   css_div_no_border = CssStylesDiv.CssDivNoBorder
   Css_input = CssStylesInput.CssInput
-  Css_dates_time_picker = CssStylesDates.CssDatesTimePicker
-  __map, __alt_map = ['CssDivNoBorder', 'CssInput', 'CssDatesTimePicker'], []
+  Css_dates_time_picker = CssStylesDates.CssDatePicker
+  __map, __alt_map = ['CssDivNoBorder', 'CssInput', 'CssDatePicker'], []
 
 
 class CssClassInput(CssGrpCls.CssGrpClass):
@@ -38,7 +38,7 @@ class CssClassInput(CssGrpCls.CssGrpClass):
   CSS Basic group for all the Input components
   """
   css_div_no_border = CssStylesDiv.CssDivNoBorder
-  css_date_picker = CssStylesInput.CssInput
+  css_date_picker = CssStylesDates.CssDatePicker
   __map, __alt_map = ['CssDivNoBorder', 'CssInput'], []
 
 

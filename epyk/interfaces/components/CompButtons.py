@@ -201,8 +201,10 @@ class Buttons(object):
 
   def switch(self, recordSet=None, label=None, color=None, size=16, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
     """
+    Python wrapper to the HTML switch elements
 
     Example
+    rptObj.ui.buttons.switch()
 
     Documentation
     http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
@@ -217,7 +219,7 @@ class Buttons(object):
     :param htmlCode:
     :param profile:
     """
-    html_obj = html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, size, width, height, htmlCode, profile)
+    html_obj = html.HtmlRadio.Switch(self.context.rptObj, recordSet or {'off': 'off', 'on': 'on'}, label, color, size, width, height, htmlCode, profile)
     self.context.register(html_obj)
     return html_obj
 
@@ -305,9 +307,6 @@ class Buttons(object):
     :param css_cls:
     :param css_attr:
     :param profile:
-
-    :rtype: html.HtmlFiles.DownloadMemoryZip
-    :return:
     """
     html_obj = html.HtmlFiles.DownloadMemoryZip(self.context.rptObj, text, fileName, css_cls, css_attr, profile)
     self.context.register(html_obj)

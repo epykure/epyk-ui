@@ -2,35 +2,35 @@
 Module in charge of the structured date objects
 """
 
-import json
 import time
 
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsInput
 from epyk.core.css.groups import CssGrpCls
 
 
 class DatePicker(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
+  cssCls = ["datepicker"]
   name, category, callFnc = 'Date Picker', 'Dates', 'date'
-  _grpCls = CssGrpClsInput.CssClassDatePicker
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     dfltOptions = {'dateFormat': 'yy-mm-dd'}
     dfltOptions.update(options)
     super(DatePicker, self).__init__(report, {"value": value, "options": dfltOptions}, htmlCode=htmlCode, profile=profile)
     # Add all the internal components input, label, icon and helper
-    self.input = self._report.ui.inputs.d_date(self.vals)
-    self.input.attributes({"class": ['time']})
+    self.input = self._report.ui.inputs.d_date(self.val)
+    #self.input.attributes({"class": ['time']})
     self.prepend_child(self.input)
     self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)})
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-    self.css({"color": color or 'inherit', "vertical-align": "middle", "font-size": "%s%s" % (size[0], size[1])})
+    self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto',
+              "font-size": "%s%s" % (size[0], size[1])})
 
   def selectable(self, dts):
     """
@@ -40,56 +40,59 @@ class DatePicker(Html.Html):
 
     :return: The Python date object
     """
-    self.vals['options']["selectedDts"] = dts
+    self._vals['options']["selectedDts"] = dts
     return self
 
-  def add_options(self, opts, isPyData=True):
+  def add_options(self, options=None, name=None, value=None):
     """
-    Add Date Picker options
+    Add TimePicker options
 
     Documentation
-    https://api.jqueryui.com/datepicker/
+    https://timepicker.co/options/
 
-    :param opts: Python dictionary with options
-    :param isPyData: Optional. Flag to convert the values to Javascript. Default True
+    :param key: A string or a Python dictionary with the options to set
+    :param val: Optional.
 
-    :return: The Html Python Date object
+    :return:
     """
-    if isPyData:
-      for k, v in opts.items():
-        self.vals['options'][k] = json.dumps(v)
-    else:
-      for k, v in opts.items():
-        self.vals['options'][k] = v
+    if options is None and name is None:
+      raise Exception("Either the attrs or the name should be specified")
+
+    if options is None:
+      options = {name: value}
+    for k, v in options.items():
+      self.vals['options'][k] = v
     return self
 
   @property
-  def val(self): return '%s.val()' % self.jqId
-
-  @property
-  def jqId(self):
-    return "$('#%s input')" % self.htmlId
-
-  def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
-    """
-    Propagate the update event
-    """
-    return self.input.jsGenerate(jsData, jsDataKey, isPyData, jsParse, jsStyles, jsFnc)
+  def _js__builder__(self):
+    return '''
+        if ((typeof data.options.selectedDts !== "undefined") && (data.options.selectedDts.length > 0)){
+          var selectedDt = {};
+          data.options.selectedDts.forEach(function(dt){var jsDt = new Date(dt); selectedDt[jsDt.toISOString().split('T')[0]] = jsDt}) ;
+          if (data.options.excludeDts === true){ 
+            function renderCalendarCallbackExc(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [false, '', '']} else {return [true, '', '']}}; 
+            data.options.beforeShowDay = renderCalendarCallbackExc;
+          } else{ 
+            function renderCalendarCallback(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [true, "%s", '']} else {return [false, '', '']}};
+            data.options.beforeShowDay = renderCalendarCallback;};
+          delete data.options.selectedDts};
+        jQuery(htmlObj.querySelector("input")).datepicker(data.options).datepicker('setDate', data.value)'''
 
   def __str__(self):
-    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=['CssDivNoBorder', 'CssDivCursor']), 'helper': self.helper}
+    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'helper': self.helper}
 
 
 class TimePicker(Html.Html):
   __reqCss, __reqJs = ['timepicker'], ['timepicker']
   name, category, callFnc = 'Time Picker', 'Dates', 'date'
-  _grpCls = CssGrpCls.CssGrpClassBaseCursor
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
     # Add the internal components (label, icon)
     self.input = self._report.ui.inputs.d_time(value)
-    self.input.attributes({"class": ['time']})
+    self.input.set_attrs(name="class", value='time')
     self.prepend_child(self.input)
     self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)})
     if self.icon is not None:
@@ -100,26 +103,17 @@ class TimePicker(Html.Html):
     self.options = options
 
   @property
-  def val(self): return '%s.val()' % self.jqId
+  def _js__builder__(self):
+    return '''
+      if (typeof data == "string"){jQuery(htmlObj).timepicker('setTime', data)
+      } else {
+        if (data.time == ''){data.time = new Date()};
+        if (data.options._change.length > 0) {data.options.change = function(time){
+            let data = {event_val: time.getHours() +':'+ time.getMinutes() +':'+ time.getSeconds(), event_code: htmlId}; 
+            eval(data.options._change.join(";"))}};
+        jQuery(htmlObj).timepicker(data.options); jQuery(htmlObj).timepicker('setTime', data.time)}'''
 
-  @property
-  def jqId(self):
-    return "$('#%s input')" % self.htmlId
-
-  @property
-  def jsQueryData(self):
-    if self.htmlCode is not None:
-      return "{event_val: %(jqId)s.val(), event_code: '%(jqId)s', %(htmlCode)s: %(jqId)s.val()}" % {'jqId': self.jqId, 'htmlCode': self.htmlCode}
-
-    return "{event_val: %(jqId)s.val(), event_code: '%(jqId)s'}" % {'jqId': self.jqId}
-
-  def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
-    """
-    Propagate the update event
-    """
-    return self.input.jsGenerate(jsData, jsDataKey, isPyData, jsParse, jsStyles, jsFnc)
-
-  def add_options(self, key, val=None, isPyData=True):
+  def add_options(self, options=None, name=None, value=None):
     """
     Add TimePicker options
 
@@ -128,19 +122,17 @@ class TimePicker(Html.Html):
 
     :param key: A string or a Python dictionary with the options to set
     :param val: Optional.
-    :param isPyData: Optional
 
     :return:
     """
-    if isinstance(key, dict):
-      for k, v in key.items():
-        if isPyData:
-          v = json.dumps(v)
-        self.vals['options'][k] = v
-    else:
-      if isPyData:
-        val = json.dumps(val)
-      self.vals['options'][key] = val
+    if options is None and name is None:
+      raise Exception("Either the attrs or the name should be specified")
+
+    if options is None:
+      options = {name: value}
+    for k, v in options.items():
+      self.vals['options'][k] = v
+    return self
 
   def change(self, jsFnc):
     """
@@ -161,23 +153,26 @@ class TimePicker(Html.Html):
 
 class CountDownDate(Html.Html):
   name, category, callFnc = 'Countdown', 'Dates', 'countdown'
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile):
     super(CountDownDate, self).__init__(report, yyyy_mm_dd, code=htmlCode, width=width[0], widthUnit=width[1],
                                         height=height[0], heightUnit=height[1], profile=profile)
     self._jsStyles = {"delete": True}
     self.timeInMilliSeconds = timeInMilliSeconds
-    #
+    # Add the underlying components
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_icon(icon)
     self.add_helper(helper)
+    self.css({"margin": '2px 0'})
 
   @property
   def jqId(self):
     return "$('#%s span')" % self.htmlId
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' 
+  @property
+  def _js__builder__(self):
+    return ''' 
       var splitDt = data.split("-"); var endDate = new Date(splitDt[0], parseInt(splitDt[1])-1, splitDt[2]);
       var now = new Date().getTime(); var distance = endDate.getTime() - now;
 
@@ -186,23 +181,20 @@ class CountDownDate(Html.Html):
       var minutes = Math.floor((distance %% (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance %% (1000 * 60)) / 1000);
 
-      htmlObj.html("<b>"+ days +"d "+ hours +"h "+ minutes + "m "+ seconds +"s </b>"); 
-      if ((distance < 0) && (jsStyles.delete)){clearInterval(htmlObj.attr('id') +"_interval")
-      }''' % {"report_name": self._report.run.report_name, "script_name": self._report.run.script_name}, '')
-
-  def onDocumentReady(self):
-    self.jsUpdateDataFnc = '''var %(htmlId)s_interval = setInterval(function(){%(pyCls)s(%(jqId)s, %(htmlId)s_data, %(jsStyles)s)}, 
-            %(timeInMilliSeconds)s)''' % {'htmlId': self.htmlId, 'pyCls': self.__class__.__name__, 'jqId': self.jqId,
-                                          "jsStyles": json.dumps(self._jsStyles),
-                                          'timeInMilliSeconds': self.timeInMilliSeconds}
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.jsUpdateDataFnc)
+      htmlObj.innerHTML = "<b>"+ days +"d "+ hours +"h "+ minutes + "m "+ seconds +"s </b>"; 
+      if ((distance < 0) && (jsStyles.delete)){clearInterval(htmlObj.id +"_interval")
+      }''' % {"report_name": self._report.run.report_name, "script_name": self._report.run.script_name}
 
   def __str__(self):
-    return '<div %s><span></span>%s</div>' % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
+    self.jsUpdateDataFnc = '''var %(htmlId)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)
+              ''' % {'htmlId': self.htmlId, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds}
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.jsUpdateDataFnc)
+    return '<div %s><span></span>%s</div>' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
 
 class LastUpdated(Html.Html):
   name, category, callFnc = 'Last Update', 'Text', 'update'
+  builder_name = False
 
   def __init__(self, report, label, size, color, width, height, htmlCode, profile):
     super(LastUpdated, self).__init__(report, "%s %s" % (label or "Last update", time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
@@ -214,4 +206,4 @@ class LastUpdated(Html.Html):
       self.css("font-size", "%s%s" % (size[0], size[1]))
 
   def __str__(self):
-    return '<div %(strAttr)s>%(content)s</div>' % {'strAttr': self.get_attrs(pyClassNames=['CssDivNoBorder']), 'content': self.vals}
+    return '<div %(strAttr)s>%(content)s</div>' % {'strAttr': self.get_attrs(pyClassNames=self.defined), 'content': self.val}

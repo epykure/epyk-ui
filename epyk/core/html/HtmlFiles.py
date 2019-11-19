@@ -10,6 +10,7 @@ from epyk.core.html import Html
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpClsFile
+from epyk.core.css.groups import CssGrpClsButton
 
 
 class DownloadMemoryZip(Html.Html):
@@ -17,12 +18,13 @@ class DownloadMemoryZip(Html.Html):
 
   TODO Find a way to send the in memory file form a report: data: %(archive)s,
   """
-  alias, cssCls = 'anchorFMemory', ['btn', 'btn-success']
-  reqCss = ['bootstrap', 'font-awesome']
-  file_location = 'data'
+  alias, cssCls, __reqCss = 'anchorFMemory', ['btn', 'btn-success'], ['font-awesome', 'bootstrap']
   name, category = 'Memory Files', 'System'
+  builder_name = False
+  # CSS Classes
+  _grpCls = CssGrpClsButton.CssClassButton
 
-  def __init__(self, report, vals, fileName, cssCls=None, cssAttr=None, profile=None):
+  def __init__(self, report, vals, fileName, cssCls, cssAttr, profile):
     super(DownloadMemoryZip, self).__init__(report, vals,  cssCls, cssAttr, profile=profile)
     self.fileName = fileName
     self.memory_file = io.BytesIO()
@@ -46,12 +48,10 @@ class DownloadMemoryZip(Html.Html):
     return self.zf.namelist()
 
   def __str__(self):
-    self._report.jsOnLoadFnc.add('''
-        $('#%(htmlId)s').click(function(){
-            $.ajax({url: %(url)s, type: "POST", contentType: attr("enctype", "multipart/form-data"),
-                    data: %(archive)s, success: success})
-        })''' % {'htmlId': self.htmlId, 'url': "", 'archive': self.zf})
-    return '<button %s>%s</button>' % (self.get_attrs(), self.vals)
+    self.click('''
+        $.ajax({url: %(url)s, type: "POST", contentType: attr("enctype", "multipart/form-data"), data: %(archive)s, success: success})
+        ''' % {'htmlId': self.htmlId, 'url': "''", 'archive': self.zf})
+    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.defined), self.val)
 
 
 class DropFile(Html.Html):

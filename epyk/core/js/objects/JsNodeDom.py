@@ -322,6 +322,14 @@ class JsDoms(JsObject.JsObject):
     """
     return cls(data="document.createElement('%s')" % tagName, varName=varName, setVar=setVar, isPyData=isPyData, report=report)
 
+  def querySelector(self, tag):
+    """
+
+    :param tag:
+    :return:
+    """
+    return JsDoms("%s.querySelector('%s')" % (self.toStr(), tag))
+
   @property
   def jquery(self):
     """

@@ -17,9 +17,9 @@ class CssDatePickerUI(CssStyle.CssCls):
     return '.ui-datepicker'
 
 
-class CssDatePicker(CssStyle.CssCls):
-  attrs = {'font-family': 'Calibri', 'border': 'none', 'cursor': 'pointer', 'margin': '0',
-           'padding': '2px', 'display': 'inline', 'border-radius': '5px', 'text-align': 'center'}
+class CssDatePicker(CssStyle.CssCls): # Calibri
+  attrs = {'font-family': 'inherit', 'border': 'none', 'cursor': 'pointer', 'margin': '0', 'line-height': '23px',
+           'padding': '2px', 'display': 'inline-block', 'border-radius': '5px', 'text-align': 'center'}
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
@@ -29,5 +29,6 @@ class CssDatePicker(CssStyle.CssCls):
 
 class CssDatesTimePicker(CssStyle.CssCls):
   attrs = {'margin': '0'}
+
   def customize(self, style, eventsStyles):
     style.update({'color': self.getColor('greys', -1), "background": self.getColor('colors', 0)})

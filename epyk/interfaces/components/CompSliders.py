@@ -100,15 +100,10 @@ class Sliders(object):
     :param attrs:
     :param helper:
     :param profile:
-
-    :rtype: html.HtmlEvent.ProgressBar
-    :return:
     """
-    if attrs is None:
-      attrs = {}
-
     if htmlCode is not None:
       attrs.update({"htmlCode": htmlCode, "changeUrl": False})
 
-    return self.context.register(html.HtmlEvent.ProgressBar(self.context.rptObj, number, width, height,
-                                                            attrs, helper, profile))
+    html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, width, height,  attrs or {}, helper, profile)
+    self.context.register(html_pr)
+    return html_pr

@@ -9,7 +9,8 @@ import re
 import json
 
 from epyk.core.html import Html
-from epyk.core.js import JsHtml
+from epyk.core.js.html import JsHtml
+from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.Imports import requires
 
 # The list of CSS classes
@@ -44,11 +45,10 @@ class ProgressBar(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
     :rtype: JsHtml.JsHtmlProgressBar
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlProgressBar(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self._report)
     return self._dom
 
   def __str__(self):
@@ -73,7 +73,7 @@ class ProgressBar(Html.Html):
 
 
 class Slider(Html.Html):
-  __reqCss, __reqJs = ['bootstrap', 'jqueryui'], ['bootstrap', 'jqueryui']
+  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Slider', 'Sliders', 'slider'
 
   def __init__(self, report, value, typeObj, range, animate, step, min, max, width, height,
@@ -167,9 +167,10 @@ class Slider(Html.Html):
                      'jsFnc': ";".join([f for f in fnc if f is not None]), 'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
 
   # data.slide: function( event, ui ) {  $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] ); }
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyle)" % self.__class__.__name__, '''
-    if (jsStyle.type == 'date') {
+  @property
+  def _js__builder__(self):
+    return '''
+    if (jsStyle.type == 'date'){
       data.step = data.step * 86400000; data.min = DateToTimeStamp(data.min); data.max = DateToTimeStamp(data.max);
       if (data.values != undefined) {data.values = [DateToTimeStamp(data.values[0]), DateToTimeStamp(data.values[1])]}
       else if(data.value != 0) {data.value = DateToTimeStamp(data.value)}};
@@ -179,7 +180,7 @@ class Slider(Html.Html):
     $('#'+ htmlObj.attr('id') +' .ui-slider-handle').css({"outline": 0, "white-space": "nowrap"});
     $('#'+ htmlObj.attr('id') +' .ui-slider-handle').css("color", jsStyle.backgroundColor);
     $('#'+ htmlObj.attr('id') +' .ui-state-default, .ui-widget-content .ui-state-default' ).css("background-color", jsStyle.backgroundDotColor)
-    ''', 'Javascript Object builder')
+    '''
 
   def addAttr(self, key, val):
     """
@@ -340,39 +341,11 @@ class SkillBar(Html.Html):
                                    htmlCode=htmlCode, globalFilter=filters, profile=profile)
     self.add_title(title)
     self.data = data
-    self.data.attach(self)
     self.css({"margin": '5px 0'})
     self._jsStyles = {'val': list(self.data._schema['values'])[0], 'label': list(self.data._schema['keys'])[0],
                       'color': self.getColor('colors', 7), 'fontColor': self.getColor('greys', 0), 'colUrl': colUrl, 'colTooltip': colTooltip}
-    if self.htmlCode is not None:
-      self.jsFrg('click', ''' 
-        $('#%(htmlCode)s').find('p').css('color', '%(font)s'); 
-        if ('%(htmlCode)s' != 'None') { 
-          if ( %(breadCrumVar)s['params']['%(htmlCode)s'] === data['event_val'] ) { %(breadCrumVar)s['params']['%(htmlCode)s'] = ''}
-          else { %(breadCrumVar)s['params']['%(htmlCode)s'] = data['event_val']; $(this).css('color', '%(selectedColor)s')} 
-        } ''' % {"htmlCode": self.htmlCode, 'selectedColor': self.getColor('colors', 5), 'font': self.getColor('greys', 10),
-                 "breadCrumVar": self._report.jsGlobal.breadCrumVar})
 
   @property
-  def eventId(self): return "#%s tr td p" % self.htmlId
-
-  @property
-  def val(self):
-    return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {"htmlCode": self.htmlId, 'breadCrumVar': self._report.jsGlobal.breadCrumVar}
-
-  def jsEvents(self):
-    if hasattr(self, 'jsFncFrag'):
-      for eventKey, fnc in self.jsFncFrag.items():
-        self._report.jsOnLoadEvtsFnc.add('''
-          $( document ).on('%(eventKey)s', '%(eventId)s', function(event) {
-            var useAsync = false; var data = %(data)s;
-            %(jsInfo)s; %(jsFnc)s; 
-            if (!useAsync) {
-              var body_loading_count = parseInt($('#body_loading span').text()); $('#body_loading span').html( body_loading_count - 1);
-              if ($('#body_loading span').html() == '0') { $('#body_loading').remove()} }
-          })''' % {'eventId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'jsFnc': ";".join([f for f in fnc if f is not None]),
-                   'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
-
   def _js__builder__(self):
     return '''
       htmlObj.empty();
@@ -385,7 +358,7 @@ class SkillBar(Html.Html):
       '''
 
   def __str__(self):
-    return '<div %s><table></table></div>' % (self.get_attrs(pyClassNames=self.defined))
+    return '<table %s></table>' % (self.get_attrs(pyClassNames=self.defined))
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -551,10 +524,12 @@ class OptionsBar(Html.Html):
   name, category, callFnc = 'Options', 'Event', 'optionsbar'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   _grpCls = CssGrpClsImage.CssClassIcon
+  builder_name = False
 
   def __init__(self, report, recordset, width, height, size, color, border_color, options):
     super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
-    self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px'})
+    self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
+              'background': self.getColor("greys", 0)})
     self.border_color = border_color
     if options.get("draggable", False):
       self.draggable()
@@ -562,16 +537,17 @@ class OptionsBar(Html.Html):
 
   def draggable(self, options=None):
     self.css({"border": "1px solid %s" % self.border_color})
-    self._report.js.addOnLoad(self.dom.jquery_ui.draggable(options).toStr())
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable(options).toStr())
+    #self._report.js.addOnLoad(self.dom.jquery_ui.draggable(options).toStr())
     return self
 
   def __str__(self):
     cssIcon = self._report.style.cssName('CssIcon')
     icons = []
-    for rec in self.vals:
+    for rec in self.val:
       rec.update({'cssIcon': cssIcon, 'size': "%s%s" % (self.size[0], self.size[1])})
-      if isinstance(rec['jsFnc'], list):
-        rec['jsFnc'] = ";".join(rec['jsFnc'])
+      if isinstance(rec.get('jsFnc', []), list):
+        rec['jsFnc'] = ";".join(rec.get('jsFnc', []))
       if not 'tooltip' in rec:
         rec['tooltip'] = ''
       icons.append('<i class="%(icon)s %(cssIcon)s" style="font-size:%(size)s" title="%(tooltip)s" onclick="var data={event_val:\'%(icon)s\'};%(jsFnc)s"></i>' % rec)
@@ -581,12 +557,13 @@ class OptionsBar(Html.Html):
 class SignIn(Html.Html):
   name, category, callFnc = 'SignIn', 'Event', 'signin'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  builder_name = False
 
   def __init__(self, report, text, size, icon):
     super(SignIn, self).__init__(report, text, width=size, widthUnit="px", height=size, heightUnit="px")
     self.size, self.icon = size, icon
-    self.css({"text-align": "center", "font-size": "%spx" % size, "padding": "5px", 'color': self.getColor('colors', 3),
-              "margin": 0, "border-radius": "%spx" % size, "border": "1px solid %s" % self.getColor('colors', 3), 'cursor': 'pointer'})
+    self.css({"text-align": "center", "font-size": "%s%s" % (size[0], size[1]), "padding": "5px", 'color': self.getColor('colors', 3),
+              "margin": 0, "border-radius": "%s%s" % (size[0], size[1]), "border": "1px solid %s" % self.getColor('colors', 3), 'cursor': 'pointer'})
 
   def __str__(self):
     self._report.user = "o"
@@ -627,20 +604,12 @@ class Filters(Html.Html):
         return existingItems}()''' % {'jqId': self.jqId}
 
   @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''htmlObj.empty();
+  def _js__builder__(self):
+    return '''htmlObj.empty();
       var col = null;
       if (Array.isArray(data)){data.forEach(function(rec){%(jsAddItem)s})}
       else {for (var col in data){var rec = data[col]; %(jsAddItem)s}} 
-      ''' % {"jsAddItem": self.jsAddItem('rec', jsColumn="col")})
+      ''' % {"jsAddItem": self.jsAddItem('rec', jsColumn="col")}
 
   def _jsCloseItem(self, jsFnc=None):
     if jsFnc is None:

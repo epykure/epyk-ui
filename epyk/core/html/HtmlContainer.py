@@ -8,191 +8,116 @@ import json
 from epyk.core.html import Html
 from epyk.core.html import HtmlSelect
 
+#
+from epyk.core.js import JsUtils
+
 # The list of CSS classes
+from epyk.core.css.styles import CssStyle
 from epyk.core.css.groups import CssGrpCls
 
 
 class Panel(Html.Html):
-  name, category, callFnc = 'Multi Panel', 'Layouts', 'panel'
+  name, category, callFnc = 'Panel', 'Layouts', 'panel'
+  builder_name = False
 
-  # CSS Class
-  _grpCls = CssGrpCls.CssGrpClassBase
-
-  def __init__(self, report, htmlObjs, width, height, helper, profile):
-    super(Panel, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
-    self.__htmlOrder, self.__htmlRef, self.htmlMaps = [], {}, {}
-    for htmlObj in htmlObjs:
-      self.__add__(htmlObj)
-    self.css({"padding": "5px"})
+  def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, profile):
+    if isinstance(htmlObj, list) and htmlObj:
+      for obj in htmlObj:
+        if hasattr(obj, 'inReport'):
+          obj.inReport = False
+    elif htmlObj is not None and hasattr(htmlObj, 'inReport'):
+      htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    component = []
+    if title is not None:
+      self.title = report.ui.title(title)
+      self.title.inReport = False
+      component.append(self.title)
+    container = report.ui.div(htmlObj)
+    container.inReport = False
+    component.append(container)
+    super(Panel, self).__init__(report, component, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
+                               heightUnit=height[1], profile=profile)
+    container.set_attrs(name="name", value="panel_%s" % self.htmlId)
 
   def __add__(self, htmlObj):
-    """ Add an Html Object to this object"""
-    htmlObj.inReport = False
-    self.__htmlRef[htmlObj.htmlId] = htmlObj
-    self.__htmlOrder.append(htmlObj.htmlId)
-    self._addToContainerMap(htmlObj)
-
-  @property
-  def jqId(self):
-    """ Refer to the internal select item """
-    return "$('#%s_select')" % self.htmlId
-
-  def onDocumentLoadVar(self):
-    """ Return the variable to store in the global section of the javacript part """
-    self.jsVal = "%s_data" % self.htmlId
-    self.addGlobalVar(self.jsVal, json.dumps(self.__htmlOrder))
-
-  def onDocumentLoadFnc(self):
-    """ Pure Javascript onDocumentLoad Function """
-    self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' htmlObj.empty() ;
-     data.forEach(function(item){
-        htmlObj.append('<option value="' + item + '">' + item + '</option>') ; }) ; ''', 'Javascript Object builder')
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.val[1] += htmlObj
+    return self
 
   def __str__(self):
-    """ Return the onload, the HTML object and the javascript events """
-    # No string method for a container, it will add its data in the html directly
-    # The below part is the string representation
-    items = ['<div %s>' % self.get_attrs(pyClassNames=self.pyStyle)]
-    items.append('<div class="form-group py_csssdivboxmargin"><select class="form-control" id="%s_select"></select></div>' % (self.htmlId))
-    for name in self.__htmlOrder:
-      obj = self.__htmlRef[name].html()
-      items.append('<div style="display:none" id="%s" >%s</div>' % (name, obj))
-    items.append('</div>')
-
-    # The function to change the display according to the item name selected
-    self._report.jsOnLoadFnc.add('''
-        $('#%(htmlId)s_select').on('change', function (event){ 
-          DisplayItem( $('#%(htmlId)s_select option:checked').val(), %(htmlItems)s ) }); 
-      ''' % {'htmlId': self.htmlId, 'htmlItems': json.dumps(self.__htmlOrder)})
-
-    # The global function to hide and show components based on a list
-    # This is global as some other components might want to use it and there is no need to rewrite it every time
-    self.addGlobalFnc('DisplayItem(htmlIdToDisplay, idListToHidde)', '''
-        idListToHidde.forEach(function(htmlId) { $('#' + htmlId).hide() ; }); $('#' + htmlIdToDisplay).show() ; ''',
-                      'The global function to hide and show components based on a list. This is global as some other components might want to use it and there is no need to rewrite it every time')
-    return "".join(items)
+    return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.val[0].html(), self.val[1].html(), self.helper)
 
 
 class PanelSplit(Html.Html):
   __reqJs, __reqCss = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Panel Split', 'Layouts', 'panelsplit'
+  builder_name = False
 
-  def __init__(self, report, width, height, leftWidth, leftObj, rightObj, resizable, helper, profile):
+  def __init__(self, report, width, height, left_width, left_obj, right_obj, resizable, helper, profile):
     super(PanelSplit, self).__init__(report, None, width=width[0], widthUnit=width[1], height=height[0],
                                      heightUnit=height[1], profile=profile)
-    self.leftWidth, self.htmlMaps, self.resizable = leftWidth, {}, resizable
-    if leftObj is not None:
-      self.left(leftObj)
-    if rightObj is not None:
-      self.right(rightObj)
-    self.cssLeft = {'flex':'0 0 auto', 'padding': '5px', 'min-width': '100px', 'width': self.leftWidth, 'white-space': 'nowrap'}
-    self.cssRight = {'flex': '0 1 auto', 'padding': '5px', 'width': '100%', 'background': self.getColor('greys', 0),
+    self.left_width, self.htmlMaps, self.resizable = left_width, {}, resizable
+    if left_obj is not None:
+      self.left(left_obj)
+    if right_obj is not None:
+      self.right(right_obj)
+    self.css_left = {'flex': '0 0 auto', 'padding': '5px', 'min-width': '100px', 'width': self.left_width, 'white-space': 'nowrap'}
+    self.css_right = {'flex': '0 1 auto', 'padding': '5px', 'width': '100%', 'background': self.getColor('greys', 0),
                      'border-left': '3px solid %s' % self.getColor("success", 1)}
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
 
-  def left(self, htmlObj):
-    """ Add the left component to the panel """
-    htmlObj.inReport = False
-    self.htmlLeft = htmlObj
-    self._addToContainerMap(htmlObj)
+  def left(self, html_obj):
+    """
+    Add the left component to the panel
 
-  def right(self, htmlObj):
-    """ Add the right component to the panel """
-    htmlObj.inReport = False
-    self.htmlRight = htmlObj
-    self._addToContainerMap(htmlObj)
+    :param html_obj:
+    """
+    html_obj.inReport = False
+    self.html_left = html_obj
+    return self
 
-  def html(self):
-    """ Return the onload, the HTML object and the javascript events """
-    # Update the HTML element with the values defined in the function call in the report
-    if hasattr(self, 'jsUpdateFnc'):
-      self.__addUpdtMethod(self.pyToJsData(self.vals))
-    items = ['<div %s>' % self.get_attrs(pyClassNames=self.pyStyle)]
-    items.append('<div style="%s" id="%s_left" class="panel-left">%s</div>' % ( ";".join(["%s:%s" % (k, v) for k, v in self.cssLeft.items()]), self.htmlId, self.htmlLeft.html()))
-    items.append('<div style="%(style)s" id="%(htmlId)s_right" class="panel-right">%(right)s</div>' % {'style': ";".join(["%s:%s" % (k, v) for k, v in self.cssRight.items()]), 'htmlId': self.htmlId, 'right': self.htmlRight.html()})
-    items.append('</div>')
-    if self.resizable:
-      self._report.jsOnLoadFnc.add('''
-         $("#%(htmlId)s_left").resizable({handleSelector: ".splitter", resizeHeight: false});
-         $("#%(htmlId)s_right").resizable({handleSelector: ".splitter-horizontal", resizeWidth: true});
-        ''' % {'htmlId': self.htmlId})
-    return "".join(items)
+  def right(self, html_obj):
+    """
+    Add the right component to the panel
 
-
-class PanelDisplay(Html.Html):
-  __pyStyle = ['CssDivNoBorder', 'CssPanelTitle']
-  name, category, callFnc = 'Display Panel', 'Layouts', 'paneldisplay'
-
-  def __init__(self, report, htmlObjs, title, width, height, panelOptions, helper, profile):
-    if not isinstance(htmlObjs, list):
-      htmlObjs = [htmlObjs]
-    self.__panelOptions = panelOptions if panelOptions is not None else {}
-    super(PanelDisplay, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
-    self.__htmlOrder, self.__htmlRef, self.htmlMaps, self.title, self.showPanel = [], {}, {}, title, self.__panelOptions.get("visible", True)
-    for htmlObj in htmlObjs:
-      self.__add__(htmlObj)
-    self.addGlobalVar("panel_show_%s" % self.htmlId, len(self.vals))
-    self.css({"margin-bottom": "5px"})
-
-  @property
-  def jqId(self): return "$('#%s_icon')" % self.htmlId
-
-  @property
-  def jsQueryData(self): return "{}"
-
-  def __add__(self, htmlObj):
-    """ Add an Html Object to this object"""
-    htmlObj.inReport = False
-    self.__htmlRef[htmlObj.htmlId] = htmlObj
-    self.__htmlOrder.append(htmlObj.htmlId)
-    self._addToContainerMap(htmlObj)
-
-  def getObj(self, i):
-    return self.__htmlRef[self.__htmlOrder[i]]
-
-  # -----------------------------------------------------------------------------------------
-  #                                STANDARD DATATABLE JAVASCRIPT
-  # -----------------------------------------------------------------------------------------
-  def jsClose(self): return "$('#%s_toggle').hide()" % self.htmlId
-
-  def jsExpand(self): return "$('#%s_toggle').show()" % self.htmlId
-
-  def jsState(self): return "$('#%s_toggle').is(':visible')" % self.htmlId
+    :param html_obj:
+    """
+    html_obj.inReport = False
+    self.html_right = html_obj
+    return self
 
   def __str__(self):
-    items = ['<div %s>' % self.get_attrs(pyClassNames=[self.pyStyle[0]])]
-    visible, arrow = ("show", 'down') if self.showPanel else ('none', 'up')
-    if self.__panelOptions.get("arrow", True):
-      items.append('''
-        <div onselectstart="return false" class="%(cssCls)s">
-          %(title)s<i id="%(htmlId)s_icon" onclick="PanelDisplay(this, \'%(htmlId)s\')" style="cursor:pointer;margin:5px 0 5px 5px;float:right" class="fas fa-chevron-circle-%(arrow)s"></i>
-        </div>''' % {'cssCls': self._report.style.cssName("CssPanelTitle"), 'title': self.title, 'htmlId': self.htmlId, 'arrow': arrow})
-      self.addGlobalFnc("PanelDisplay(srcObj, htmlId)", '''
-            $('#'+ htmlId + '_toggle').toggle();
-            if ($('#'+ htmlId +'_toggle').css('display') == 'block') {$(srcObj).attr('class', 'fa fa-chevron-circle-down fa-w-16')}
-            else {$(srcObj).attr('class', 'fa fa-chevron-circle-up fa-w-16')}
-            var resizeEvent = window.document.createEvent('UIEvents');
-            resizeEvent.initUIEvent('resize', true, false, window, 0);
-            window.dispatchEvent(resizeEvent);
-            ''', 'Javascript function to monitor the display of the sliding panel.')
-    else:
-      items.append('''<div onselectstart="return false" class="%(cssCls)s" style="cursor:pointer" onclick="PanelDisplayNoArrow(this, \'%(htmlId)s\')">%(title)s
-        </div>''' % {'cssCls': self._report.style.cssName("CssPanelTitle"), 'title': self.title, 'htmlId': self.htmlId, 'arrow': arrow})
-      self.addGlobalFnc("PanelDisplayNoArrow(srcObj, htmlId)", '''
-        $('#'+ htmlId + '_toggle').toggle();
-        var resizeEvent = window.document.createEvent('UIEvents');
-        resizeEvent.initUIEvent('resize', true, false, window, 0);
-        window.dispatchEvent(resizeEvent)''', '')
-    items.append("<div id='%s_toggle' style='display:%s'>" % (self.htmlId, visible))
-    for name in self.__htmlOrder:
-      items.append('<div id="%s_container">%s</div>' % (name, self.__htmlRef[name].html()))
-    items.append("</div></div>")
-    return "".join(items)
+    self._report._props.setdefault('js', {}).setdefault("builders", []).extend([
+      '$("#%(htmlId)s_left").resizable({handleSelector: ".splitter", resizeHeight: false});' % {'htmlId': self.htmlId},
+      '$("#%(htmlId)s_right").resizable({handleSelector: ".splitter-horizontal", resizeWidth: true})' % {
+        'htmlId': self.htmlId}])
+    return '''
+      <div %(attrs)s>
+        <div style="%(css_left)s" id="%(htmlId)s_left" class="panel-left">%(left)s</div>
+        <div style="%(css_right)s" id="%(htmlId)s_right" class="panel-right">%(right)s</div>
+      </div>
+      ''' % {"attrs": self.get_attrs(pyClassNames=self.defined), "htmlId": self.htmlId, 'left': self.html_left.html(),
+             'right': self.html_right.html(), 'css_left': CssStyle.get_style(self.css_left), 'css_right': CssStyle.get_style(self.css_right)}
+
+
+class PanelSlide(Panel):
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  name, category, callFnc = 'Slide Panel', 'Layouts', 'slide'
+
+  def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, profile):
+    super(PanelSlide, self).__init__(report, htmlObj, title, color, size, width, height, htmlCode, helper, profile)
+    self.title._vals += " <i style='float:right' name='icon_%s' class='far fa-caret-square-down'></i>" % self.htmlId
+    self.title.click([
+      report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
+      report.js.getElementsByName("icon_%s" % self.htmlId).first.toggleClass("fa-caret-square-up")])
+    self.title.css({"cursor": 'pointer'})
 
 
 class Div(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['jquery']
   name, category, callFnc = 'Simple Container', 'Layouts', 'div'
+  builder_name = False
 
   # CSS Class
   _grpCls = CssGrpCls.CssGrpClassBase
@@ -224,22 +149,30 @@ class Div(Html.Html):
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    if not isinstance(self.vals, list):
-      self.vals = [self.vals]
-    self.vals.append(htmlObj)
-    self._addToContainerMap(htmlObj)
+    if not isinstance(self.val, list):
+      self.val = [self.val]
+    self.val.append(htmlObj)
     return self
 
-  @property
-  def val(self):
-    """ Return the Javascript Value """
-    return '$("#%s").html()' % self.htmlId
-
-  @property
-  def jsQueryData(self): return "{event_val: '', event_code: '%s'}" % self.htmlId
+  def build(self, data=None, options=None, profile=False):
+    if isinstance(data, dict):
+      # check if there is no nested HTML components in the data
+      tmp_data = ["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      js_data = "{%s}" % ",".join(tmp_data)
+    else:
+      js_data = JsUtils.jsConvertData(data, None)
+    options, js_options = options or {}, []
+    for k, v in options.items():
+      if isinstance(v, dict):
+        row = ["%s: %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("%s: {%s}" % (k, ", ".join(row)))
+      else:
+        js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    return "%s.innerHTML = %s" % (self.dom.varId, js_data) #, "{%s}" % ",".join(js_options))
 
   def __str__(self):
-    return "<div %s></div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
+    str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
+    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), str_div, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -254,79 +187,12 @@ class Div(Html.Html):
         self.vals.to_word(document)
 
 
-class DivFixed(Div):
-  name, category, callFnc = 'Fixed Div', 'Layouts', 'fixeddiv'
-
-  def __init__(self, report, text, top, left, right, color, size, width, icon, height, editable,
-               align, backgroundColor, zindex, padding, htmlCode, tag, helper, profile):
-    super(DivFixed, self).__init__(report, [], color, size, width[0], width[1], icon, height[0], height[1], editable, align,
-                                   padding, htmlCode, tag, profile)
-    self.css({'position': 'fixed', 'top': "%spx" % top, ' white-space': 'nowrap'})
-    if zindex is not None:
-      self.css('z-index', zindex)
-    if isinstance(text, list):
-      for subTxt in text:
-        self + self._report.text(subTxt, size=size)
-    else:
-      self + self._report.text(text, size=size)
-    if left is not None:
-      self.css('left', "%spx" % left)
-    elif right is not None:
-      self.css('right', "%spx" % right)
-    if backgroundColor is not None:
-      self.css('background-color', backgroundColor)
-
-
-class DragDiv(Div):
-  __reqJs = ['jqueryui']
-  name, category, callFnc = 'Drag Div', 'Layouts', 'dragdiv'
-
-  def __init__(self, report, text, top, left, right, color, size, width, icon, height, editable,
-               align, backgroundColor, padding, htmlCode, tag, helper, profile):
-    super(DragDiv, self).__init__(report, [], color, size, width[0], width[1], icon, height[0], height[1], editable, align, padding,
-                                  htmlCode, tag, profile)
-    self.css({'position': 'absolute', 'top': "%spx" % top, 'border-radius': '10px'})
-    self.size = 10 if size is None else size
-    self + self._report.text(text, size=self.size)
-    if left is not None:
-      self.css('left', "%spx" % left)
-    elif right is not None:
-      self.css('right', "%spx" % right)
-    if backgroundColor is not None:
-      self.css('background-color', backgroundColor)
-
-  def jsFocus(self):
-    return '$("#%s_content").focus()' % self.htmlId
-
-  def html(self):
-    """ Return the HTML display of a split container"""
-    self.loadStyle()
-    self.jsEvents()
-    icon = ''
-    self._report.jsOnLoadFnc.add("%s.draggable()" % self.jqId)
-    self._report.jsOnLoadFnc.add("%s.bind('dragstop', function(){  } )" % self.jqId)
-    if self.icon is not None:
-      icon = '<i class="%s"></i>&nbsp;' % self.icon
-    val = "".join([v.html() if hasattr(v, 'inReport') else v for v in self.vals])
-    edit = self._report.edit()
-    edit.click([self.jsFocus()])
-    save = self._report.lock()
-    save.click(["%s.draggable( 'disable' );" % self.jqId], ["%s.draggable('enable');" % self.jqId])
-    delete = self._report.delete()
-    delete.click([self.jsRemove()])
-    return '''
-      <div %(attr)s>%(icon)s
-        <div id="%(htmlId)s_content" autocorrect="off" spellcheck="false" contenteditable=true style="float:left;margin-left:5px;margin-right:10px;">%(content)s</div>
-        %(options)s  
-      </div>
-      ''' % {'attr': self.get_attrs(pyClassNames=self.pyStyle), 'icon': icon,
-             'content': val, 'htmlId': self.htmlId, 'options': "".join([str(delete), str(save),str(edit)])}
-
-
 class Row(Html.Html):
   name, category, callFnc = 'Row', 'Layouts', 'row'
+  builder_name = False
 
-  def __init__(self, report, htmlObjs, width, height, data, align, valign, colsWith, closable, resizable, titles, helper, profile):
+  def __init__(self, report, htmlObjs, width, height, data, align, valign, colsWith, closable, resizable, titles,
+               helper, profile):
     if data is not None:
       # Load the different HTML components from a static list
       # This mode will automatically add the inReport to the new components
@@ -337,35 +203,35 @@ class Row(Html.Html):
         del parameters['htmlComponent']
 
         htmlObjs.append(fnc(**parameters))
-    self.colsWith = [] if colsWith is None else colsWith
-    self.htmlMaps = {}
+    self.colsWith, self.htmlMaps = [] if colsWith is None else colsWith, {}
     super(Row, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
     for htmlObj in htmlObjs:
       self.__add__(htmlObj)
     self.align, self.valign, self.closable, self.resizable, self.titles = align, valign, closable, resizable, titles
-    self.css({"padding": "5px 0 5px 0", "border-collapse": "collapse", 'table-layout': 'fixed' })
+    self.css({"margin-top": '5px', "padding": "5px 0 5px 0", "border-collapse": "collapse", 'table-layout': 'fixed'})
 
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    self.vals.append(htmlObj)
-    self._addToContainerMap(htmlObj)
+    self.val.append(htmlObj)
+    self.htmlMaps[htmlObj.htmlId] = htmlObj
     return self
 
   def get(self, htmlCode):
-    """ Return the Html component in the parameter bar """
-    return self.__components[htmlCode]
+    """
+    Return the Html component in the parameter bar
 
-  def html(self):
+    :param htmlCode: The htmlCode for the component as a String
+    """
+    return self.htmlMaps[htmlCode]
+
+  def __str__(self):
     """ Return the HTML display of a split container"""
-    self.loadStyle()
-    self.jsEvents()
     items = ['<div style="width:100%%;display:block;"><table %s><tr>' % self.get_attrs(pyClassNames=self.pyStyle)]
     widths = {}
     if self.colsWith:
       for i, _ in enumerate(self.vals):
         widths[i] = 'width:%s' % self.colsWith[i]
-
     if self.closable:
       if self.titles:
         for i, htmlObj in enumerate(self.vals):
@@ -383,8 +249,8 @@ class Row(Html.Html):
          if ( styleDisplay == 'block') { $(htmlId).parent().width($(htmlId).parent().data('size')) ; }
          else { $(htmlId).parent().width(10) ; } ''')
 
-    for i, htmlObj in enumerate(self.vals):
-      extraStyle = 'padding:0 0 0 5px' if i != 0 else 'padding:0'
+    for i, htmlObj in enumerate(self.val):
+      extraStyle = 'padding:0 0 0 10px' if i != 0 else 'padding:0'
       items.append( '<td id="col_%s_%s" style="font-size:inherit;line-height:inherit;vertical-align:%s;text-align:%s;%s;%s">%s</td>' % (self.htmlId, i, self.valign, self.align, widths.get(i, ''), extraStyle, htmlObj.html()))
     items.append('</tr></table></div>')
     if self.resizable:
@@ -395,9 +261,10 @@ class Row(Html.Html):
 
 class Col(Html.Html):
   name, category, callFnc = 'Column', 'Layouts', 'col'
+  builder_name = False
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
-    self.position, self.htmlMaps = position, {}
+    self.position, self.htmlMaps, self.rows_css, self.row_css_dflt = position, {}, {}, {}
     super(Col, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
@@ -410,25 +277,40 @@ class Col(Html.Html):
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    self.vals.append(htmlObj)
-    self._addToContainerMap(htmlObj)
+    self.val.append(htmlObj)
+    self.htmlMaps[htmlObj.htmlId] = htmlObj
     return self
 
-  def content(self):
-    return self.html()
+  def get(self, htmlCode):
+    """
+    Return the Html component in the parameter bar
 
-  def html(self):
-    """ Return the HTML display of a split container"""
-    self.loadStyle()
-    self.jsEvents()
-    divStyle = ''
-    if self.position == 'bottom':
-      self.position = 'center'
-      divStyle = ' style="margin:auto"'
-    elif self.position == 'middle':
-      divStyle = ' style="margin:auto"'
+    :param htmlCode: The htmlCode for the component as a String
+    """
+    return self.htmlMaps[htmlCode]
+
+  def set_css_row(self, css_attrs, row_id=None):
+    """
+    Set the CSS attributes for the row container
+
+    :param css_attrs: The CSS attributes
+    :param row_id: The row id for the special styles. None if it should be applied to all the rows
+
+    :return: self to allow the chains
+    """
+    if row_id is None:
+      self.row_css_dflt = css_attrs
+    self.rows_css[row_id] = dict(self.row_css_dflt)
+    self.rows_css[row_id].update(css_attrs)
+    return self
+
+  def __str__(self):
     self.css({"justify-content": self.position})
-    return '<div %s><div%s>%s</div></div>' % (self.get_attrs(), divStyle, "".join([htmlObj.html() for htmlObj in self.vals]))
+    rows = []
+    for i, htmlObj in enumerate(self.val):
+      css_style = "style='%s'" % ";".join(["%s:%s" % (k, v) for k, v in self.rows_css.get(i, self.row_css_dflt).items()])
+      rows.append("<div %s>%s</div>" % (css_style, htmlObj.html()))
+    return '<div %s>%s</div>' % (self.get_attrs(), "".join(rows))
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -450,6 +332,8 @@ class Col(Html.Html):
 class Grid(Html.Html):
   cssCls = ['container-fluid']
   name, category, callFnc = 'Grid', 'Layouts', 'grid'
+  builder_name = False
+  __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
 
   def __init__(self, report, htmlObjs, width, height, colsDim, colsAlign, noGlutters, align, helper, profile):
     super(Grid, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
@@ -457,15 +341,15 @@ class Grid(Html.Html):
     self.rowsStyle, self.colsStyle, self.noGlutters = {}, {}, noGlutters
     if align == 'center':
       self.css({'margin': 'auto'})
-    self.colsDim, self.htmlMaps, self.colsAlign  = [], {}, []
+    self.colsDim, self.htmlMaps, self.colsAlign = [], {}, []
     if colsDim is None:
       colsDim, currDim = [], 0
       for h in range(0, len(htmlObjs)-1):
         currDim += int(12 / len(htmlObjs))
-        colsDim.append(int(12 /len(htmlObjs)))
+        colsDim.append(int(12 / len(htmlObjs)))
       colsDim.append(12 - currDim)
     for i, htmlObj in enumerate(htmlObjs):
-      self.__add__( (htmlObj, colsDim[i]))
+      self.__add__((htmlObj, colsDim[i]))
     if colsAlign is not None:
       self.colsAlign = colsAlign
 
@@ -475,12 +359,20 @@ class Grid(Html.Html):
       htmlObj, dim = htmlObjWithDim
     else:
       htmlObj, dim = htmlObjWithDim, 1
-    self._addToContainerMap(htmlObj)
+    self.htmlMaps[htmlObj.htmlId] = htmlObj
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    self.vals.append(htmlObj)
+    self.val.append(htmlObj)
     self.colsDim.append(dim)
     self.colsAlign.append("left")
     return self
+
+  def get(self, htmlCode):
+    """
+    Return the Html component in the parameter bar
+
+    :param htmlCode: The htmlCode for the component as a String
+    """
+    return self.htmlMaps[htmlCode]
 
   def jsTogglePanel(self, i):
     if i == 1:
@@ -497,28 +389,23 @@ class Grid(Html.Html):
     # TODO: Fix this part
     return "$(%(jqId)s.find('div:nth-child(%(index)s)')).toggle()" % {'jqId': self.jqId, 'index': i}
 
-  def get(self, id):
-    """ Return the Html component in the parameter bar """
-    return self.vals[id]
-
   def resize(self):
     """
-    Automatically rezise the space for the containers.
+    For the resizing of the space for the containers.
 
     This will rescale based on the number of items and the fact that the max per row is 12
     It will update the colsDim list
     """
     max_size = int(12 / len(self.colsDim))
     self.colsDim = [max_size] * len(self.colsDim)
+    return self
 
-  def html(self):
-    self.loadStyle()
-    self.jsEvents()
+  def __str__(self):
     items = ['<div %s>' % self.get_attrs(pyClassNames=self.pyStyle)]
     items.append('<div class="row%s">' % (' no-gutters' if self.noGlutters else ''))
-    dimRow, rowIndex, colPerObj = 0, 1, {}
-    for i, htmlObj in enumerate(self.vals):
-      if dimRow == 12:
+    dim_row, row_index, col_per_obj = 0, 1, {}
+    for i, htmlObj in enumerate(self.val):
+      if dim_row == 12:
         items.append('</div><div class="row%s">' % (' no-gutters' if self.noGlutters else ''))
         dimRow = 0
 
@@ -526,12 +413,12 @@ class Grid(Html.Html):
         htmlObj.container = "#%s" % self.htmlId # The container should be defined in this case to be visible
       htmlContent = htmlObj.content() if isinstance(htmlObj, Col) else htmlObj.html()
       items.append('<div class="col col-md-%s text-%s">%s</div>' % (self.colsDim[i], self.colsAlign[i], htmlContent))
-      dimRow += 1 if self.colsDim[i] == 'auto' else self.colsDim[i]
-      colPerObj[i] = self.colsDim[i]
-      rowIndex += 1
-      if dimRow > 12:
+      dim_row += 1 if self.colsDim[i] == 'auto' else self.colsDim[i]
+      col_per_obj[i] = self.colsDim[i]
+      row_index += 1
+      if dim_row > 12:
         raise Exception("BootStrap allow a max of 12 columns per Row")
-    self._report.js.getVar("panel_dims_%s" % self.htmlId, colPerObj)
+    self._report.js.getVar("panel_dims_%s" % self.htmlId, col_per_obj)
     items.append('</div></div>')
     return "".join(items)
 
@@ -579,246 +466,95 @@ class Grid(Html.Html):
 
 class Tabs(Html.Html):
   name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
-  __reqCss = ['bootstrap']
-  cssCls = ['nav', 'nav-pills']
-  __pyStyle = ['CssDivNoBorder', 'CssBorderTab', 'CssBorderTabSelected']
-  htmlObj = None
+  builder_name = False
 
-  def __init__(self, report, htmlObjs, width, height, tabNames, rowsCss, colsCss, closable,
-               selectedTab, htmlCode, alwaysReload, encoding, helper, profile):
-    super(Tabs, self).__init__(report, [], htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
+  def __init__(self, report, color, size, width, height, htmlCode, helper, css_tab, profile):
+    super(Tabs, self).__init__(report, "", code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                heightUnit=height[1], profile=profile)
-    self.rowsStyle, self.colsStyle, self.selectedTab = {}, {}, selectedTab
-    self.tabNames, self.htmlMaps, self.bespokeTabEvents = [], {}, set()
-    if tabNames is None:
-      tabNames = list(range(1, len(htmlObjs)+1))
-    for i, htmlObj in enumerate(htmlObjs):
-      if isinstance(htmlObj, dict):
-        if hasattr(htmlObj['value'], 'inReport'):
-          self.__add__((htmlObj['value'], htmlObj['name']))
-          continue
+    self.__panels, self.__panel_objs = [], {}
+    self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
+    self.css_tab = css_tab
+    self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self.getColor("success", 1)}
+    self.tabs_container = self._report.ui.div([])
+    self.tabs_container.inReport = False
 
-        tanValue = htmlObj.get('name', htmlObj['value'])
-        if hasattr(tanValue, 'decode'):
-          tanValue = tanValue.decode(encoding)
-        self.__add__((self._report.paragraph(htmlObj['value']), tanValue))
-        if htmlObj.get('isActive', False):
-          self.selectedTab = tanValue
+  def __getitem__(self, name):
+    return self.__panel_objs[name]
+
+  def panel(self, name):
+    """
+
+    :param name:
+
+    :rtype: Div
+    :return:
+    """
+    return self[name]["content"]
+
+  def tab(self, name):
+    """
+
+    :param name:
+
+    :rtype: Div
+    :return:
+    """
+    return self[name]["tab"]
+
+  def add_panel(self, name, div, selected=False, css_tab=None, css_tab_clicked=None):
+    """
+
+    :param name:
+    :param div:
+    :param selected:
+    :param css_tab:
+
+    :return:
+    """
+    div.css({"display": 'none'})
+    div.inReport = False
+    div.set_attrs(name="name", value=self.panels_name)
+    self.__panels.append(name)
+    tab = self._report.ui.div(name, width=("100", "px"))
+    css_tab = dict(self.css_tab)
+    dflt_css_clicked, css_not_clicked = dict(self.css_tab_clicked_dflt), {}
+    if css_tab is not None:
+      css_tab.update(css_tab)
+    if css_tab_clicked is not None:
+      dflt_css_clicked = css_tab_clicked
+    for key, val in dflt_css_clicked.items():
+      if key in css_tab:
+        css_not_clicked[key] = css_tab[key]
       else:
-        self.__add__((htmlObj, tabNames[i]))
-    self.css({'overflow-y': 'hidden', 'overflow-x': 'hidden', 'margin-top': '5px'})
-    self.addGlobalVar("tabs_counts_%s" % self.htmlId, len(self.vals))
-    for evts in ['click', 'change']:
-      # Add the source to the different events
-      self.jsFrg(evts, ''' 
-        $('#%(htmlId)s li div').removeClass('%(selectedTab)s');
-        $(this).find('div').addClass('%(selectedTab)s');
-        $('div[name="panel_%(htmlId)s"]').hide(); var tabIndex = $(this).data('index'); var data = %(jsQueryData)s;
-        if ('%(htmlCode)s' != 'None') {
-          %(windowState)s; %(breadCrumVar)s['params']['%(htmlCode)s'] = data.event_val}
-        ''' % {'jsQueryData': self.jsQueryData, 'htmlId': self.htmlId, 'htmlCode': self.htmlCode,
-               'selectedTab': self._report.style.cssName(self.pyStyle[2]), 'breadCrumVar': self._report.jsGlobal.breadCrumVar,
-               'windowState': self._report.jsChangeUrl("{'%s': data.event_val}" % self.htmlCode)})
-    if self.htmlCode is not None:
-      if self.htmlCode in self._report.http:
-        self.selectedTab = self._report.http[self.htmlCode]
-      if self.selectedTab is not None:
-        self._report.jsOnLoadFnc.add("%(breadCrumVar)s['params']['%(htmlCode)s'] = '%(selectedTab)s'" % {'selectedTab': self.selectedTab, 'breadCrumVar': self._report.jsGlobal.breadCrumVar,
-                                                                                                         'htmlCode': self.htmlCode})
-    # Check the tab reloading
-    self.alwaysReload = alwaysReload
-    self.addGlobalVar("reload_%s" % self.htmlId)
-
-  def jsRefreshTab(self, jsTabName=None, isPyData=True):
-    if jsTabName is not None:
-      if isPyData:
-        jsTabName = json.dumps(jsTabName)
-      return 'delete %(htmlId)s_TAB_LOAD[%(jsTabName)s]' % {'htmlId': self.htmlId, 'jsTabName': jsTabName}
-
-    return '%(htmlId)s_TAB_LOAD = {}' % {'htmlId': self.htmlId}
-
-  def jsEvents(self):
-    if hasattr(self, 'jsFncFrag'):
-      for eventKey, fnc in self.jsFncFrag.items():
-        if self.htmlCode is not None:
-          fnc.insert(0, self.jsAddUrlParam(self.htmlCode, self.val, isPyData=False))
-        jsFnc = self.jsLoading(fnc)
-        if getattr(self._report, 'PROFILE', False):
-          self._report.jsOnLoadEvtsFnc.add(
-            "$('#%(htmlId)s').delegate('li.tab_comp', '%(eventKey)s', function(event){var t0 = performance.now(); %(jsFnc)s; console.log('|Tabs|%(eventKey)s(%(htmlId)s)|'+ (performance.now()-t0))})" % {
-              'htmlId': self.htmlId, 'eventKey': eventKey, 'jsFnc': jsFnc})
-        else:
-          self._report.jsOnLoadEvtsFnc.add("$('#%(htmlId)s').delegate('li.tab_comp', '%(eventKey)s', function(event){%(jsFnc)s})" % {'htmlId': self.htmlId, 'eventKey': eventKey, 'jsFnc': jsFnc})
-
-  def jsShowPanel(self, panelIndex='tabIndex', jsData='data'):
-    return "$('#%(htmlId)s_panel_'+ %(panelIndex)s).show() ; " % {'panelIndex': panelIndex, 'htmlId': self.htmlId}
-
-  def jsUpdatePanel(self, panelIndex='tabIndex', jsData='data', unLockOthers=False):
-    return '''
-          if (typeof %(panelIndex)s === 'undefined') {
-              var dummy = $('<div/>'); $(dummy).css('color', "%(whiteColor)s");
-              $('#%(htmlId)s').children('li').each(function () {
-                  if ($(this).find("div").css("background-color") != dummy.css("color")) { 
-                      %(panelIndex)s = $(this).data('index') ; }}) } ;
-                      
-          for (var key in %(jsData)s) {
-            if( %(htmlId)s_MAP_COMPONENTS[key] != undefined) {
-              var htmlObj;
-              if (%(htmlId)s_MAP_COMPONENTS[key][1].startsWith('$') ) { htmlObj = eval(%(htmlId)s_MAP_COMPONENTS[key][1]) ; }
-              else {htmlObj = window[%(htmlId)s_MAP_COMPONENTS[key][1]] ; }
-              window[%(htmlId)s_MAP_COMPONENTS[key][0]]( htmlObj, data[key] ) ; } }
-          
-          if ( %(unLockOthers)s ) {%(htmlId)s_TAB_LOAD = {}}
-          $('#%(htmlId)s_panel_' + %(panelIndex)s ).show() ; %(panelIndex)s = undefined ;    
-      ''' % {'panelIndex': panelIndex, 'htmlId': self.htmlId, 'jsData': jsData, 'whiteColor': self.getColor('greys', 0),
-             'unLockOthers': json.dumps(unLockOthers)}
-
-  @property
-  def jqId(self): return "$('#%s li.tab_comp')" % self.htmlId
-
-  @property
-  def jsQueryData(self):
-    # return the tab name and not the content of the tab
-    return "{event_val: $(this).find('div').text(), event_code: '%s'}" % self.htmlId
-
-  @property
-  def val(self):
-    # return the tab name and not the content of the tab
-    return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': self.htmlCode}
-
-  def jsAddTab(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):
-    jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
-    return '''
-      if (%(tabName)s != ''){
-        tabs_counts_%(htmlId)s ++;
-        $('#%(htmlId)s').append('<li class="nav-item tab_comp" style="padding:0" data-index=tabs_counts_%(htmlId)s><div class="nav-link" style="cursor:pointer;font-variant:small-caps;font-weight:bold;padding:2px 15px">'+ %(tabName)s +'</div></li>') ;
-      }''' % {'tabName': jsData, 'htmlId': self.htmlId}
-
-  def jsDelTab(self, tabName):
-    return '''
-      var pos = -1;
-      $('#%(htmlId)s li').each(function( index ) {
-         if( $( this ).text() == '%(tabName)s') { pos = index ;} });
-      if (pos != -1) { $('#%(htmlId)s li')[pos].remove(); }
-      '''  % {'tabName': tabName, 'htmlId': self.htmlId, 'tabName': tabName}
-
-  def jsSelectNextTab(self, forward=True):
-    if self.htmlCode is None:
-      raise Exception("The HtmlCode should be defined to use this feature")
-
-    return '''
-      var tabNames = %(tabNames)s; var selectedTab = %(breadCrumVar)s['params']['%(htmlId)s'];
-      var indexTab = tabNames.indexOf(selectedTab);
-      if(%(forward)s){indexTab++} else if(indexTab > 0){indexTab--};
-      $('#%(htmlId)s li:eq('+ indexTab +')').trigger('click');
-      ''' % {"htmlId": self.htmlId, 'tabNames': self.tabNames, 'breadCrumVar': self._report.jsGlobal.breadCrumVar,
-             'forward': json.dumps(forward)}
-
-  def keyboardShortcut(self):
-    self._report.keyboard('33', self.jsSelectNextTab()) # pageUp
-    self._report.keyboard('34', self.jsSelectNextTab(False))  # pageDown
+        css_not_clicked[key] = 'none'
+    tab.css(css_tab)
+    tab.set_attrs(name="name", value=self.tabs_name)
+    tab.click([
+      self._report.js.getElementsByName(self.panels_name).all([
+        self._report.js.getElementsByName(self.tabs_name).all([
+          self._report.js.data.all.element.css(css_not_clicked)]),
+        tab.dom.css(dflt_css_clicked),
+        self._report.js.data.all.element.hide(),
+        div.dom.show()
+      ])
+    ])
+    tab.inReport = False
+    self.__panel_objs[name] = {"tab": tab, "content": div}
+    if selected:
+      # simulate a click on the tab
+      pass
     return self
 
-  def __add__(self, htmlObjWithDim):
-    """ Add items to a container """
-    if isinstance(htmlObjWithDim, tuple):
-      htmlObj, name = htmlObjWithDim
-    else:
-      htmlObj, name = htmlObjWithDim, 1
-    self._addToContainerMap(htmlObj)
-    if hasattr(htmlObj, 'inReport'):
-      htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    self.vals.append(htmlObj)
-    self.tabNames.append(name)
-    return self
-
-  def jsLoading(self, jsFnc):
-    return " var loading = $('#%(htmlId)s_panel_loading'); loading.show() ; %(jsFnc)s " % {'jsFnc': ";".join(jsFnc), 'htmlId': self.htmlId}
-
-  def click(self, jsFncs, tabName=None, refresh=False, excTabs=None):
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    if not refresh:
-      refresh = self.alwaysReload
-    if tabName is not None:
-      self.bespokeTabEvents.add(tabName)
-      self.jsFrg('click', '''
-        if (data['event_val'] == %(tabName)s) {
-          if((%(htmlId)s_TAB_LOAD[data['event_val']] == undefined) || %(refresh)s) { 
-            %(htmlId)s_TAB_LOAD[data['event_val']] = 1; %(jsFnc)s; $('#%(htmlId)s_panel_'+ tabIndex).show(); loading.hide()} 
-          else {$('#%(htmlId)s_panel_'+ tabIndex).show(); loading.hide()} 
-          var resizeEvent = window.document.createEvent('UIEvents');
-          resizeEvent.initUIEvent('resize', true, false, window, 0);
-          window.dispatchEvent(resizeEvent);
-        }''' % {'refresh': json.dumps(refresh), "tabName": json.dumps(tabName), 'jsFnc': ";".join(jsFncs), 'htmlId': self.htmlId})
-    elif excTabs is not None:
-      self.bespokeTabEvents.add(tabName)
-      self.jsFrg('click', '''
-        if (!%(excTabs)s.includes(data['event_val'])) {
-          if((%(htmlId)s_TAB_LOAD[data['event_val']] == undefined) || %(refresh)s) { 
-            %(htmlId)s_TAB_LOAD[data['event_val']] = 1; %(jsFnc)s; $('#%(htmlId)s_panel_'+ tabIndex).show(); loading.hide()} 
-          else {$('#%(htmlId)s_panel_'+ tabIndex).show(); loading.hide()} 
-          var resizeEvent = window.document.createEvent('UIEvents');
-          resizeEvent.initUIEvent('resize', true, false, window, 0);
-          window.dispatchEvent(resizeEvent);
-        }''' % {'refresh': json.dumps(refresh), "excTabs": json.dumps(excTabs), 'jsFnc': ";".join(jsFncs), 'htmlId': self.htmlId})
-    else:
-      self.jsFrg('click', ''' 
-       if((%(htmlId)s_TAB_LOAD[data['event_val']] == undefined) || %(alwaysReload)s) {
-          %(htmlId)s_TAB_LOAD[data['event_val']] = 1; %(jsFnc)s; $('#%(htmlId)s_panel_'+ tabIndex).show(); loading.hide()} 
-       else {$('#%(htmlId)s_panel_'+ tabIndex).show(); loading.hide()}  
-       var resizeEvent = window.document.createEvent('UIEvents');
-       resizeEvent.initUIEvent('resize', true, false, window, 0);
-       window.dispatchEvent(resizeEvent);
-       ''' % {'alwaysReload': json.dumps(refresh), 'htmlId': self.htmlId, 'jsFnc': ";".join(jsFncs)})
-    return self
-
-  def html(self):
-    """ Return the HTML representation of a Tabular object """
-    self.loadStyle()
-    if len(self.bespokeTabEvents) == 0:
-      self.click(' ') # Because otherwise the display will not work
-    else:
-      self.click(' ', excTabs=list(self.bespokeTabEvents))
-    self.jsEvents()
-    self.addGlobalVar("%s_MAP_COMPONENTS" % self.htmlId, json.dumps(self.htmlMaps))
-    self.addGlobalVar("%s_TAB_LOAD" % self.htmlId, json.dumps({}))
-    items, tabs = ['<ul %s>' % self.get_attrs(pyClassNames=[self.pyStyle[0]])], []
-    selectCss, tabCss = self._report.style.cssName(self.pyStyle[2]), self._report.style.cssName(self.pyStyle[1])
-    for i, htmlObj in enumerate(self.vals):
-      if self.tabNames[i] == self.selectedTab:
-        items.append(''' 
-            <li id="tab_%(htmlId)s_selected" class="nav-item tab_comp" data-index=%(i)s>
-              <div class="%(tabCssCls)s" style="font-size:%(size)s;cursor:pointer;font-variant:small-caps;font-weight:bold;padding:2px 15px">%(tabNames)s</div>
-            </li>''' % {'htmlId': self.htmlId, "i": i, 'tabNames': self.tabNames[i], 'tabCssCls': "%s %s" % (tabCss, selectCss), 'size': self._report.pyStyleDfl['headerFontSize']})
-        self._report.jsOnLoadEvtsFnc.add("$('#tab_%s_selected').trigger('click')" % self.htmlId)
-      else:
-        items.append('''
-            <li class="nav-item tab_comp" style="padding:0" data-index=%(index)s>
-              <div class="%(tabCssCls)s" style="font-size:%(size)s;cursor:pointer;font-variant:small-caps;font-weight:bold;padding:2px 15px">%(name)s</div>
-            </li>''' % {'tabCssCls': tabCss, 'index': i, 'name': self.tabNames[i], 'size': self._report.pyStyleDfl['headerFontSize']})
-      tabs.append(htmlObj)
-    items.append('</ul>')
-    self._report.jsOnLoadFnc.add("$('#%(htmlId)s').delegate('span', 'click', function(event) {event.stopPropagation()})" % {'htmlId': self.htmlId})
-    for i, tab in enumerate(tabs):
-      if self.tabNames[i] == self.selectedTab:
-        items.append('<div id="%(htmlId)s_panel_%(index)s" name="panel_%(htmlId)s" style="text-align:center;padding:10px">%(obj)s</div>' % {'htmlId': self.htmlId, 'index': i, 'obj': tab.html() if hasattr(tab, 'html') else tab})
-      else:
-        items.append('<div id="%(htmlId)s_panel_%(index)s" name="panel_%(htmlId)s" style="text-align:center;display:none;padding:10px">%(obj)s</div>' % {'htmlId': self.htmlId, 'index': i, 'obj': tab.html() if hasattr(tab, 'html') else tab})
-    items.append('<div id="%(htmlId)s_panel_loading" style="text-align:center;display:none;border:1px solid %(lightColor)s;padding:10px"><i class="fas fa-spinner fa-spin"></i><br />Loading...</div>' % {'lightColor': self.getColor('greys', 3), 'htmlId': self.htmlId})
-    return "".join(items)
-
-
-class Pills(Tabs):
-  cssCls = ['nav', 'nav-pills']
-  name, category, callFnc = 'Pills', 'Layouts', 'pills'
-  __reqCss = ['bootstrap']
-  __pyStyle = ['CssDivNoBorder']
+  def __str__(self):
+    content = []
+    for p in self.__panels:
+      self.tabs_container += self.__panel_objs[p]["tab"]
+      content.append(self.__panel_objs[p]["content"].html())
+    return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.tabs_container.html(), "".join(content), self.helper)
 
 
 class IFrame(Html.Html):
   name, category, callFnc = 'IFrame', 'Container', 'iframe'
-  __reqCss = ['bootstrap']
 
   # CSS Class
   _grpCls = CssGrpCls.CssGrpClassBase
@@ -828,78 +564,99 @@ class IFrame(Html.Html):
                                  profile=profile)
     self.css({"overflow-x": 'hidden'})
 
+  @property
+  def _js__builder__(self):
+    return 'htmlObj.src = data'
+
   def __str__(self):
-    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>" % (self.vals, self.get_attrs(pyClassNames=self.pyStyle))
+    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>" % (self.val, self.get_attrs(pyClassNames=self.defined))
 
 
 class Dialog(Html.Html):
   name, category, callFnc = 'DialogMenu', 'Layouts', 'dialogs'
-  __reqCss, __reqJs = ['jqueryui', 'datatables', 'datatables-export'], ['jquery', 'datatables', 'datatables-export']
+  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
 
-  def __init__(self, report, recordSet, width, widthUnit, height, heightUnit, helper, profile):
-    super(Dialog, self).__init__(report, recordSet, width=width, widthUnit=widthUnit, height=height, heightUnit=heightUnit,
+  def __init__(self, report, recordSet, width, height, helper, profile):
+    super(Dialog, self).__init__(report, recordSet,
                                  profile=profile)
-    self.css({"border": '2px solid #F4F4F4'})
+    self.css({"border": '2px solid %s' % self.getColor("greys", 3), "display": "block", "position": "absolute",
+              "background": self.getColor("greys", 0)})
+    # self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable().toStr())
 
-  def jsAdd(self, title='data.event_val', isPyData=False):
-    if isPyData:
-      title = json.loads(title)
+  @property
+  def _js__builder__(self):
+    return '''
+      var div = jQuery("<div>")
+      jQuery(htmlObj).append(div);
+      div.dialog({modal: false, title: "rrrr"})'''
 
-    return ''' 
-    var dialogWindow = $("<div>");
-    var table = $("table");
-    dialogWindow.append(table);
-    dialogWindow.append('<input type="text">');
-    var d = dialogWindow.dialog( { modal: false, title: %(title)s, show: 'puff', fluid: true,
-        close: function () {$(this).remove()}, appendTo: "#%(htmlId)s", resizable: false,
-        buttons: [{text: "Close", click: function() { $( this ).dialog("close")} } ]
-    });
-    d.parent().draggable({containment: '#%(htmlId)s'}); 
-    event.preventDefault();
-    ''' % {'title': title, 'htmlId': self.htmlId}
+  # def jsAdd(self, title='data.event_val', isPyData=False):
+  #   if isPyData:
+  #     title = json.loads(title)
+  #
+  #   return '''
+  #   var dialogWindow = $("<div>");
+  #   var table = $("table");
+  #   dialogWindow.append(table);
+  #   dialogWindow.append('<input type="text">');
+  #   var d = dialogWindow.dialog( { modal: false, title: %(title)s, show: 'puff', fluid: true,
+  #       close: function () {$(this).remove()}, appendTo: "#%(htmlId)s", resizable: false,
+  #       buttons: [{text: "Close", click: function() { $( this ).dialog("close")} } ]
+  #   });
+  #   d.parent().draggable({containment: '#%(htmlId)s'});
+  #   event.preventDefault()''' % {'title': title, 'htmlId': self.htmlId}
 
   def __str__(self):
-    return "<div %s></div>" % self.get_attrs()
+    return "<div %s></div>" % self.get_attrs(pyClassNames=self.defined)
 
 
 class IconsMenu(Html.Html):
   name, category, callFnc = 'Icons Menu', 'Layouts', 'menu'
-  __reqCss, __reqJs = ['jqueryui', 'datatables', 'datatables-export', 'jquery-scrollbar'], ['jquery', 'datatables', 'datatables-export', 'jquery-scrollbar']
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  builder_name = False
 
   def __init__(self, report, width, height, htmlCode, helper, profile):
     super(IconsMenu, self).__init__(report, None, width=width, widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode,
                                     profile=profile)
     self._jsActions, self._definedActions = {}, []
-    self.css( {"margin": "5px 0"})
-    self.addGlobalVar("%s_items" % self.htmlId, "{}")
+    self._icons, self.icon = [], None
+    self.css({"margin": "5px 0"})
 
-  @property
-  def val(self):
-    return "%s_items" % self.htmlId
+  def __getitem__(self, i):
+    return self._icons[i]
 
-  def jsAction(self, action, icon, tooltip, pyCssCls="CssBigIcon", url=None, jsData=None, jsFncs=None, httpCodes=None):
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs] if jsFncs is not None else []
+  def add_icon(self, text, css=None, position="after"):
+    """
+    Add an icon to the HTML object
 
-    # Add this to an ajax POST call if an URL is defined
-    fnc = self._report.jsPost(url=url, jsData=jsData, jsFnc=jsFncs, httpCodes=httpCodes) if url is not None else ";".join(jsFncs)
-    self._jsActions[action] = "<span id='%(htmlId)s_%(action)s' title='%(tooltip)s' class='%(cssStyle)s %(icon)s'></span>" % {
-      "icon": icon, "cssStyle": self._report.style.cssCls(pyCssCls), "htmlId": self.htmlId, 'tooltip': tooltip, 'action': action}
-    self._report.jsOnLoadFnc.add("$('#%(htmlId)s_%(action)s').on('click', function(event) { %(jsFncs)s; %(htmlId)s_items['%(action)s'] = true; })" % {"htmlId": self.htmlId, "jsFncs": fnc, 'action': action})
-    if action not in self._definedActions:
-      self._definedActions.append(action)
+    Example
+    checks.title.add_icon("fas fa-align-center")
+
+    Documentation
+
+    :param text: The icon reference from font awsome website
+    :param css: Optional. A dictionary with the CSS style to be added to the component
+    :param position:
+    :return: The Html object
+    """
+    if text is not None:
+      self._icons.append(self._report.ui.images.icon(text).css({"margin-right": '5px'}))
+      self.icon = self._icons[-1]
+      if position == "before":
+        self.prepend_child(self.icon)
+      else:
+        self.append_child(self.icon)
+      #elf.icon.inReport = False
+      if css is not None:
+        self.icon.css(css)
     return self
 
-  def addSelect(self, action, data, width=150):
-    options = []
-    for d in data:
-      options.append("<option>%s</option>" % d)
+  def add_select(self, action, data, width=150):
+    options = ["<option>%s</option>" % d for d in data]
     self._jsActions[action] = '<select id="inputState" class="form-control" style="width:%spx;display:inline-block">%s</select>' % (width, "".join(options))
     self._definedActions.append(action)
     return self
 
   def __str__(self):
-    htmlIcons = []
-    for action, htmlDef in self._jsActions.items():
-      htmlIcons.append(htmlDef)
-    return "<div %s>%s</div>" % (self.get_attrs(), "".join(htmlIcons))
+    htmlIcons = [htmlDef for action, htmlDef in self._jsActions.items()]
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.defined), "".join(htmlIcons))

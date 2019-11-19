@@ -8,9 +8,12 @@ from epyk.core.js.packages import JsQueryUi
 
 
 class JsHtmlDatePicker(JsNodeDom.JsDoms):
-  def __init__(self, htmlObj):
-    super(JsHtmlDatePicker, self).__init__(htmlObj)
-    self._jqueryui = None
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    self.htmlId = varName if varName is not None else htmlObj.htmlId
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
+    self._src, self._report = htmlObj, report
+    self._js = []
+    self._jquery, self._jquery_ui = None, None
 
   @property
   def jqueryui(self):
@@ -19,15 +22,18 @@ class JsHtmlDatePicker(JsNodeDom.JsDoms):
     :return:
     :rtype: JsQueryUi.JQueryUiDatePicker
     """
-    if self._jqueryui is None:
-      self._jqueryui = JsQueryUi.JQueryUiDatePicker(self._src)
-    return self._jqueryui
+    if self._jquery_ui is None:
+      self._jquery_ui = JsQueryUi.JQueryUiDatePicker(self._src)
+    return self._jquery_ui
 
 
-class JsHtmlProgressBar(JsHtml):
+class JsHtmlProgressBar(JsNodeDom.JsDoms):
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    super(JsHtmlProgressBar, self).__init__(htmlObj)
-    self._jqueryui = None
+    self.htmlId = varName if varName is not None else htmlObj.htmlId
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
+    self._src, self._report = htmlObj, report
+    self._js = []
+    self._jquery, self._jquery_ui = None, None
 
   @property
   def jqueryui(self):

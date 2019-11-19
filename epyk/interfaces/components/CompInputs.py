@@ -100,10 +100,8 @@ class Inputs(object):
     :param profile:
     """
     size = self.context._size(size)
-    if attrs is None:
-      attrs = {}
     html_input_t = html.HtmlInput.InputTime(self.context.rptObj, text, placeholder, size, width, height, htmlCode, filter,
-                                            options, attrs, profile)
+                                            options, attrs or {}, profile)
     self.context.register(html_input_t)
     return html_input_t
 

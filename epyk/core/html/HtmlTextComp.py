@@ -23,41 +23,52 @@ class UpDown(Html.Html):
       rec = {'value': 0, 'previous': 0}
     if label is not None:
       rec["label"] = label
+    self.size = size[0]
     super(UpDown, self).__init__(report, rec, profile=profile)
     self.add_helper(helper)
-    self.vals['color'] = self.getColor('colors', 9) if color is None else color
-    self.size, self._jsStyles = size[0], options
+    self.val['color'] = self.getColor('colors', 9) if color is None else color
+    self._jsStyles = options
     self.css({'font-size': "%s%s" % (size[0], size[1])})
 
   @property
-  def val(self): return '$("#%s span").html()' % self.jqId
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''htmlObj.empty();
+  def _js__builder__(self):
+    return '''
       var delta = data.value - data.previous; 
       if(data.previous == 0) {var relMove = 'N/A'} else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
       if(data.digits == undefined){data.digits = 0};
       if(data.label != undefined){htmlObj.append("<span style='padding:5px;font-size:%(size)spx'>"+ data.label +"</span>")};
+      var valueElt = document.createElement('span');
+      valueElt.setAttribute('style', 'padding:5px')
+      valueElt.innerHTML = %(value)s;
+      htmlObj.appendChild(valueElt);
+      var deltaElt = document.createElement('span');
+      var relMoveElt = document.createElement('span');
+      var icon = document.createElement('i');
       if (delta < 0){
-        htmlObj.append("<span style='padding:5px'>"+ %(value)s +"</span>");
-        htmlObj.append("<span style='padding:5px;color:%(redColor)s;font-size:%(size)spx'>("+ %(delta)s +")</span>");
-        htmlObj.append("<span style='padding:5px;color:%(redColor)s;font-size:%(size)spx'>("+ %(relMove)s +"%%)</span>");
-        htmlObj.append("<i class='fas fa-arrow-down' aria-hidden='true' style='color:%(redColor)s;font-size:%(size)spx'></i>")}
-      else{
-        htmlObj.append("<span style='padding:5px'>"+ %(value)s +"</span>");
-        htmlObj.append("<span style='padding:5px;color:%(greenColor)s;font-size:%(size)spx'>(+"+ %(delta)s +")</span>");
-        htmlObj.append("<span style='padding:5px;color:%(greenColor)s;font-size:%(size)spx'>("+ %(relMove)s +"%%)</span>");
-        htmlObj.append("<i class='fas fa-arrow-up' aria-hidden='true' style='color:%(greenColor)s;font-size:%(size)spx'></i>")}
+        deltaElt.setAttribute('style', 'padding:5px;color:%(redColor)s;font-size:%(size)spx');
+        deltaElt.innerHTML = "(+"+ %(delta)s +")";
+        relMoveElt.setAttribute('style', 'padding:5px;color:%(redColor)s;font-size:%(size)spx')
+        relMoveElt.innerHTML = "("+ %(relMove)s +"%%)";
+        icon.className = 'fas fa-arrow-down';
+        icon.setAttribute('style', 'color:%(redColor)s;font-size:%(size)spx')}
+      else{  
+        deltaElt.setAttribute('style', 'padding:5px;color:%(greenColor)s;font-size:%(size)spx');
+        deltaElt.innerHTML = "(+"+ %(delta)s +")";
+        relMoveElt.setAttribute('style', 'padding:5px;color:%(greenColor)s;font-size:%(size)spx')
+        relMoveElt.innerHTML = "("+ %(relMove)s +"%%)";
+        icon.className = 'fas fa-arrow-up';
+        icon.setAttribute('style', 'color:%(greenColor)s;font-size:%(size)spx')};
+      htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
       ''' % {"greenColor": self.getColor("success", 1), "redColor": self.getColor("danger", 1), "size": self.size - 2,
              'value': self._report.js.number("data.value", isPyData=False).toFormattedNumber(
-              decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
-              thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
-              decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False)),
+              decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
+              thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
+              decSeparator=self._report.js.number("options.decSeparator", isPyData=False)),
              'delta': self._report.js.number("delta", isPyData=False).toFormattedNumber(
-               decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
-               thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
-               decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False)),
-             'relMove': self._report.js.number("relMove", isPyData=False).toFormattedNumber(decPlaces=2)})
+               decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
+               thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
+               decSeparator=self._report.js.number("options.decSeparator", isPyData=False)),
+             'relMove': self._report.js.number("relMove", isPyData=False).toFormattedNumber(decPlaces=2)}
 
   def __str__(self):
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
@@ -73,33 +84,31 @@ class TextBubble(Html.Html):
     self.add_helper(helper)
     self.color = self.getColor('greys', 0) if color is None else color
     self.background_color = self.getColor('success', 1) if background_color is None else background_color
-    self.size = size
+    self.size, self.height = size, height[0]
     self.css({'text-align': 'center', 'background-color': self.getColor('greys', 0)})
 
   @property
-  def val(self):
-    if 'url' in self.vals is None:
-      return '$("#%s > div").first().find("div").html()' % self.htmlId
-
-    return '$("#%s > div").first().find("a").html()' % self.htmlId
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      htmlObj.find('div').first().empty(); htmlObj.find('div').first().append(data.value); 
-      if (data.url != undefined){htmlObj.find('div').last().find('a').attr('href', data.url)} 
-      else {htmlObj.find('div').last().find('a').attr('href', '#')};
-      if (data.color != undefined) {htmlObj.find('div').last().find('a').css('color', data.color)}
-      else {htmlObj.find('div').last().find('a').css('color', '%(color)s')}
-      htmlObj.find('div').last().find('a').html(data.title)''' % {"color": self.getColor("colors", -1)})
+  def _js__builder__(self):
+    return '''
+      htmlObj.querySelectorAll('div')[0].innerHTML = data.value;
+      var div_elements = htmlObj.querySelectorAll('div');  
+      if (data.url != undefined){div_elements[div_elements.length - 1].querySelectorAll('a')[0].href = data.url} 
+      else {div_elements[div_elements.length - 1].querySelectorAll('a')[0].href = '#'};
+      if (data.color != undefined) {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = data.color}
+      else {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = '%(color)s'}
+      div_elements[div_elements.length - 1].querySelectorAll('a')[0].innerHTML = data.title''' % {"color": self.getColor("colors", -1)}
 
   def __str__(self):
+    bubble_height = self.height - 40
+    bubble_width = self.height - 20
     return '''
       <div %(strAttr)s>
-        <div %(clsTag)s style="vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
-        <div class="py_csstitle"><a style="text-decoration:none"></a></div>%(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "clsTag": self._report.style.getClsTag(self.defined.clsAltMap),
+        <div %(clsTag)s style="width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
+        <div "%(clsTitle)s"><a style="text-decoration:none"></a></div>%(helper)s
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "clsTag": self._report.style.getClsTag(['CssDivBubble'], loadCls=True),
+                   'clsTitle': self._report.style.getClsTag(['CssTitle'], loadCls=True),
                    'bgcolor': self.background_color, 'size': "%s%s" % (self.size[0], self.size[1]), 'color': self.color,
-                   'helper': self.helper}
+                   'helper': self.helper, 'height': bubble_height, 'width': bubble_width}
 
 
 class BlockText(Html.Html):
@@ -118,23 +127,25 @@ class BlockText(Html.Html):
     if border != 'auto':
       self.css('border', str(border))
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
+  @property
+  def _js__builder__(self):
+    mark_up = self._report.js.string("data.text", isPyData=False).toStringMarkup()
+    return '''
       htmlObj.find('div').first().html(data.title); htmlObj.find('div').last().empty(); var content;
       if (typeof data.text === 'string' || data.text instanceof String) {content = data.text.split("\\n")}
       else {content = data.text}
       content.forEach(function(line){htmlObj.find('div').last().append('<p class="py_csstext">'+ line +'</a>')});
-      htmlObj.find('div').last().html(%(markUp)s(data.text));
+      htmlObj.find('div').last().html(%(markUp)s);
       if (data.color != undefined) {htmlObj.find('div').last().css('color', data.color)};
       if(typeof data.button != 'undefined'){
         htmlObj.find("a").html(data.button.text); htmlObj.find("a").attr('href', data.button.url)}
-      ''' % {"markUp": self._report.js.fncs.markUp})
+      ''' % {"markUp": mark_up}
 
   def __str__(self):
     items = ['<div %s>' % self.get_attrs(pyClassNames=self.defined)]
     items.append('<div id="%s_title" %s style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlId, self._report.style.getClsTag(['CssTitle']), self.size+3))
     items.append('<div id="%s_p" %s style="color:%s:font-size:%spx;width:100%%;text-justify:inter-word;text-align:justify;"></div>' % (self.htmlId, self._report.style.getClsTag(['CssText']), self.color, self.size))
-    if self.vals.get('button') is not None:
+    if self.val.get('button') is not None:
       items.append('<a href="#" %s><i></i></a>' % (self._report.style.getClsTag(['CssHrefNoDecoration', 'CssButtonBasic'])))
     items.append('</div>')
     return ''.join(items)
@@ -151,93 +162,56 @@ class TextWithBorder(Html.Html):
     self.size = size[0]
     self.add_helper(helper)
     self.align = align
-    if not 'colorTitle' in self.vals:
-      self.vals['colorTitle'] = self.getColor('colors', 9)
-    if not 'color' in self.vals:
-      self.vals['color'] = self.getColor('colors', 9)
-    self.css({"border-color": self.vals['colorTitle'], 'margin-top': '20px', 'font-size': '%s%s' % (size[0], size[1])})
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      htmlObj.find('legend').html(data.title); htmlObj.find('span').html(data.value)''')
+    if not 'colorTitle' in self.val:
+      self.val['colorTitle'] = self.getColor('colors', 9)
+    if not 'color' in self.val:
+      self.val['color'] = self.getColor('colors', 9)
+    self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px', 'font-size': '%s%s' % (size[0], size[1])})
 
   @property
-  def jqId(self): return "$('#%s fieldset')" % self.htmlId
+  def _js__builder__(self):
+    return '''
+      var legendElt = htmlObj.querySelector('legend'); legendElt.innerHTML = data.title; 
+      htmlObj.querySelector('span').innerHTML = data.value'''
 
   def __str__(self):
-    item = ['<div %s>' % self.get_attrs(pyClassNames=self.defined)]
-    item.append('<fieldset style="color:%s">' % self.vals['color'])
-    if 'icon' in self.vals:
-      self.vals['align'] = self.align
-      item.append('<i class="%(icon)s fa-5x" style="width:100%%;text-align:%(align)s;margin:2px 0 10px 0;color:%(color)s"></i>' % self.vals)
-    if 'url' in self.vals:
-      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span><br><a style="float:right" href="%s">+ more details</a></fieldset>' % (self.size + 10, self.vals['colorTitle'], self.vals['url']) )
+    item = ['<fieldset %s>' % self.get_attrs(pyClassNames=self.defined)]
+    if 'icon' in self.val:
+      self.val['align'] = self.align
+      item.append('<i class="%(icon)s fa-5x" style="width:100%%;text-align:%(align)s;margin:2px 0 10px 0;color:%(color)s"></i>' % self.val)
+    if 'url' in self.val:
+      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span><br><a style="float:right" href="%s">+ more details</a></fieldset>' % (self.size + 10, self.val['colorTitle'], self.val['url']))
     else:
-      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span></fieldset>' % (self.size + 10, self.vals['colorTitle']))
-    item.append('%s</div>' % self.helper)
+      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span></fieldset>' % (self.size + 10, self.val['colorTitle']))
+    item.append(self.helper)
     return "".join(item)
 
 
-class Vignet(Html.Html):
-  name, category, callFnc = 'Vignet', 'Rich', 'vignet'
-  _grpCls = CssGrpClsText.CssClassTextVignet
-  __reqCss, __reqJs = ['font-awesome', 'jqueryui'], ['font-awesome', 'jquery']
+class Number(Html.Html):
+  name, category, callFnc = 'Number', 'Rich', 'number'
+  __reqCss, __reqJs = [], []
+  builder_name = False
 
-  def __init__(self, report, records, width, height, size, colorTitle, options, helper, profile):
-    super(Vignet, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0],
+  def __init__(self, report, number, label, size, width, height, profile, options):
+    super(Number, self).__init__(report, number, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1], profile=profile)
-    self.add_helper(helper)
-    if not 'color' in self.vals:
-      self.vals['color'] = 'inherit'
-    self.size, self._jsStyles = size, options
-    self.css({"padding-left": "5px", "color": colorTitle if colorTitle is not None else 'inherit', "margin-top": "20px"})
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      if (data.urlTitle != undefined || data.urlTitle != null){htmlObj.find('div').find('p').first().html('<a href="'+ data.urlTitle +'" style="text-decoration:none;color:%(blackColor)s">'+ %(title)s +'</a>')}
-      else{htmlObj.find('div').find('p').first().html(%(title)s)};
-      htmlObj.find('div').find('p').eq(2).html(data.value);
-      if(data.url != undefined || data.url != null){htmlObj.find('div').find('p').last().html('<a href="'+ data.url +'" style="text-decoration:none;color:%(blackColor)s">'+ %(number)s +'</a>')}
-      else{htmlObj.find('div').find('p').last().html(%(number)s)};
-      if(data.tooltip != undefined){htmlObj.find('div').find('p').last().tooltip()};
-      if(data.text != undefined){htmlObj.find('p').last().html(%(content)s)}
-      ''' % {"blackColor": self.getColor('greys', 9), 'number': self._report.js.number("data.number", isPyData=False).toFormattedNumber(
-        decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
-        thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
-        decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False)),
-      'content': self._report.js.number("data.text", isPyData=False).toStringMarkup(),
-      'title': self._report.js.number("data.title", isPyData=False).toStringMarkup()})
-
-  def figureClick(self, jsData='data'):
-    """
-    Add on click function to update the number variable if need be
-
-    :return:
-    """
-    self._report.jsOnLoadFnc.add("""
-      $('#%(htmlId)s').find('div').find('p').last().on('click', function (event){
-        var data = %(htmlId)s_data;
-        if (data.url != undefined) {data.number++; $(this).html('<a href="'+ data.url +'">'+ data.number +'</a>')}              
-      })""" % {"htmlId": self.htmlId, 'data': jsData})
+    if options.get('url', None) is not None:
+      self.add_link(number, url=options['url'], css={"font-size": "%s%s" % (size[0] + 10, size[1]),
+                      "width": "100%", 'text-decoration': 'none', 'display': 'block', "text-align": 'center',
+                      'margin': '0', 'color': 'inherit'})
+      self.span = self.link
+    else:
+      self.add_span(number, css={"font-size": "%s%s" % (size[0] + 10, size[1]), "width": "100%", 'margin': '0'})
+    self.add_label(label, css={"font-size": "%s%s" % (size[0], size[1]), "width": "100%", "margin": 0})
+    self.css({"display": "inline-block", 'padding': '2px 0'})
 
   def __str__(self):
-    items = ["<div %s>" % (self.get_attrs(pyClassNames=self.defined))]
-    tooltip = ' title="%s"' % self.tooltip if self.tooltip is not None else ' '
-    if 'icon' in self.vals:
-      items.append('<div style="position:relative;float:left;font-size:3em"><i class="%(icon)s"></i></div>' % self.vals)
-      items.append('<div ><p style="font-size:%spx;margin-left:50px;font-weight:bold"></p>' % (self.size[0] + 6))
-      items.append('<p %s %s data-placement="bottom" style="color:%s;font-size:%spx;margin-left:50px;text-align:center;margin-top:-20px;"></p></div>' % (self._report.style.getClsTag(['CssText']), self.vals.get('tooltip', ''),
-                                                                                                     self.vals['color'], self.size[0] + 30))
-    else:
-      items.append('<div ><p %s style="font-size:%spx;margin-left:50px;font-weight:bold"></p>' % (self._report.style.getClsTag(['CssSubTitle']), self.size + 6))
-      items.append('<p %s style="color:%s;font-size:%spx;margin-left:50px;text-align:center;margin-top:-20px;"></p></div>' % (self._report.style.getClsTag(['CssText']), self.vals['color'], self.size[0] + 30))
-    items.append('<p %s style="font-size:%spx;margin-top:-10px;"></p>%s</div>' % (tooltip, "%s%s" % (self.size[0], self.size[1]), self.helper))
-    return "".join(items)
+    return "<div %s></div>" % self.get_attrs(pyClassNames=self.defined)
 
 
 class Delta(Html.Html):
   _grpCls = CssGrpCls.CssGrpClassBase
-  __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jqueryui', 'bootstrap'] # bootstrap for progressbar
+  __reqCss, __reqJs = ['jqueryui'], ['jqueryui'] # bootstrap for progressbar
   name, category, callFnc = 'Delta Figures', 'Rich', 'delta'
 
   def __init__(self, report, records, width, height, size, options, helper, profile):
@@ -245,47 +219,51 @@ class Delta(Html.Html):
                                 heightUnit=height[1], profile=profile)
     self.add_helper(helper)
     self.size = int(self._report.pyStyleDfl['fontSize'][:-2]) if size is None else size
-    if not 'color' in self.vals:
-      self.vals['color'] = self.getColor('colors', 9)
-    if not 'thresold1' in self.vals:
-      self.vals['thresold1'] = 100
-    if not 'thresold2' in self.vals:
-      self.vals['thresold2'] = 50
-    self.css({"color": self.vals['color']})
+    if not 'color' in self.val:
+      self.val['color'] = self.getColor('colors', 9)
+    if not 'thresold1' in self.val:
+      self.val['thresold1'] = 100
+    if not 'thresold2' in self.val:
+      self.val['thresold2'] = 50
+    self.css({"color": self.val['color']})
     self._jsStyles = options
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-       var htmlId = htmlObj.attr('id');
-       var variation = 100 * (data.number - data.prevNumber) / data.prevNumber;
-       var warning = ''; var currVal = %(number)s; 
-       if(variation > data.thresold1) { warning = '<i style="color:%(recColod)s;" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;' ;};
-       if(data.url != null) {currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
+  @property
+  def _js__builder__(self):
+    return '''
+       jHtmlObj = jQuery(htmlObj);
+       var variation = 100 * (data.number - data.prevNumber) / data.prevNumber; var warning = ''; var currVal = %(number)s; 
+       if(variation > data.thresold1){warning = '<i style="color:%(recColod)s;" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;'};
+       if(data.url != null){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
        if(data.label != undefined){currVal = data.label +" "+ currVal};
-       $("#"+ htmlId +"_progress").progressbar({value: variation});
-       if(variation > data.thresold1){$("#"+ htmlId +"_progress").children().css({'background': 'Red' })} 
-       else if(variation > data.thresold2){ $("#"+ htmlId +"_progress").children().css({'background': 'Orange'})} 
-       else{$("#"+ htmlId +"_progress").children().css({'background': 'LightGreen'})}
-       htmlObj.find('div').first().html(warning + currVal);
-       htmlObj.find('div').last().html('Previous number: '+ %(prev_number)s);
+       var progressElt = jHtmlObj.find('#progress');
+       progressElt.progressbar({value: variation});
+       if(variation > data.thresold1){progressElt.children().css({'background': options.colors.red})} 
+       else if(variation > data.thresold2){progressElt.children().css({'background': options.colors.orange})} 
+       else{progressElt.children().css({'background': options.colors.green})}
+       jHtmlObj.find('div').first().html(warning + currVal);
+       jHtmlObj.find('div').last().html('Previous number: '+ %(prev_number)s);
       ''' % {"recColod": self.getColor('danger', 1), 'number': self._report.js.number("data.number", isPyData=False).toFormattedNumber(
-        decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
-        thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
-        decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False)),
+        decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
+        thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
+        decSeparator=self._report.js.number("options.decSeparator", isPyData=False)),
              'prev_number': self._report.js.number("data.prevNumber", isPyData=False).toFormattedNumber(
-        decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
-        thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
-        decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False))})
+        decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
+        thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
+        decSeparator=self._report.js.number("options.decSeparator", isPyData=False))}
 
   def __str__(self):
     return '''<div %(strAttr)s>
       <div style="width:100%%;text-align:right;font-size:%(size)spx;"></div>
-      <div id="%(htmlId)s_progress" style="height:10px;color:%(color)s"></div>
+      <div id="progress" style="height:10px;color:%(color)s;border:1px solid %(greyColor)s"></div>
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "size": self.size + 12, 'htmlId': self.htmlId, "color": self.vals['color'],
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "size": self.size + 12, 'htmlId': self.htmlId, "color": self.val['color'],
                    "greyColor": self.getColor("greys", 6), "helper": self.helper}
 
+  # -----------------------------------------------------------------------------------------
+  #                                    MARKDOWN SECTION
+  # -----------------------------------------------------------------------------------------
   @staticmethod
   def matchMarkDown(val):
     return True if val.startswith("@delta ") else None
@@ -317,39 +295,43 @@ class DocScript(Html.Html):
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery']
   name, category, callFnc = 'Script Documentation', 'Text', 'doc'
 
-  def __init__(self, report, title, scriptName, clssName, functionName, docType, color, size):
+  def __init__(self, report, title, scriptName, clssName, functionName, docType, width, height, color, size, profile):
     if not docType in self.docTypes:
       raise Exception('The docType %s does not exist' % docType)
 
     clssName = clssName if clssName is not None else 'NOT_SET'
     super(DocScript, self).__init__(report, {'title': title, 'clssName': clssName, 'functionName': functionName,
-                                             'docType': docType, 'scriptName': scriptName.replace('.py', '')})
-    self.size = self._report.pyStyleDfl['fontSize'] if size is None else "%spx" % size
+                                             'docType': docType, 'scriptName': scriptName.replace('.py', '')},
+                                width=width[0], widthUnit=width[1], height=height[0],
+                                heightUnit=height[1], profile=profile)
+    self.size = "%s%s" % (size[0], size[1])
     self.color = self.getColor('colors', -1) if color is None else color
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''
+  @property
+  def _js__builder__(self):
+    return '''
       var request = "/reports/doc/"+ data.docType +"/"+ data.scriptName +"/"+ data.clssName +"/"+ data.functionName;
       if(data.functionName == ''){request = "/reports/doc/"+ data.docType +"/"+ data.scriptName +"/"+ data.clssName};
-      $.post(request, function(data){JSON.parse(data).forEach(function(rec){htmlObj.find('pre').append('<code>'+ rec +'</code><br />')})})''')
+      $.post(request, function(data){JSON.parse(data).forEach(function(rec){htmlObj.querySelector('pre').append('<code>'+ rec +'</code><br />')})})'''
 
   def __str__(self):
-    label = "from script <b>%s</b>" % self.vals['scriptName']
-    if self.vals['clssName'] != 'NOT_SET':
-      label = "%s, class <b>%s</b>" % (label, self.vals['clssName'])
-    if self.vals['functionName'] != '':
-      label = "%s, function <b>%s</b>" % (label, self.vals['functionName'])
+    label = "from script <b>%s</b>" % self.val['scriptName']
+    if self.val['clssName'] != 'NOT_SET':
+      label = "%s, class <b>%s</b>" % (label, self.val['clssName'])
+    if self.val['functionName'] != '':
+      label = "%s, function <b>%s</b>" % (label, self.val['functionName'])
     return '''
       <div %s>
         <div style="color:%s;font-size:%s;font-weight:bold;">%s</div>
         <pre style="padding:5px"></pre>
         <span style="font-style:italic;width:100%%;text-align:right;display:block;margin-top:-15px">%s</span>
-      </div> ''' % (self.get_attrs(pyClassNames=self.defined), self.color, self.size, self.vals['title'], label)
+      </div> ''' % (self.get_attrs(pyClassNames=self.defined), self.color, self.size, self.val['title'], label)
 
 
 class Prism(Html.Html):
   __reqCss, __reqJs = ['prism'], ['prism', 'jqueryui']
   name, category, callFnc = 'Code Viewer', 'Rich', 'prism'
+  builder_name = False
 
   def __init__(self, report, vals, language, size, width, height, isEditable, trimSpaces, align, helper, profile):
     super(Prism, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0],
@@ -370,12 +352,12 @@ class Prism(Html.Html):
             document.execCommand("copy"); $temp.remove()};         
           $('body').append("<div id='info' style='position:fixed;left:50;bottom:10px;z-index:100;background:#293846;padding:10px;color:%(whiteColor)s'>Data copied to clipboard</div>"); 
           $('#info').fadeOut(6000, function() { $('#info').remove()}) 
-          ''' % {"vals": json.dumps(self.vals), 'whiteColor': self.getColor("greys", 0)})
+          ''' % {"vals": json.dumps(self.val), 'whiteColor': self.getColor("greys", 0)})
     copy.html()
     if self.trimSpaces:
-      content = "".join(['<code style="width:100%%;">%s</code><br />' % line.strip() for line in self.vals.split("\n")])
+      content = "".join(['<code style="width:100%%;">%s</code><br />' % line.strip() for line in self.val.split("\n")])
     else:
-      content = "".join(['<code style="width:100%%;">%s</code><br />' % line for line in self.vals.split("\n")])
+      content = "".join(['<code style="width:100%%;">%s</code><br />' % line for line in self.val.split("\n")])
     return '''
       <div %(strAttr)s> 
         <table style="table-layout: fixed;width:100%%" id="%(htmlId)s_code">
@@ -388,8 +370,8 @@ class Prism(Html.Html):
           </tr>
         </table>
         <div style="display:inline-block;margin:0;padding:0;width:100%%;text-align:right"><p style="display:inline:block;float:right;width:80px;white-space:nowrap;cursor:pointer" onclick="$('#%(htmlId)s_code').toggle()">[hide / show]</p></div>
-      </div>''' % {"strAttr": self.get_attrs(), "copy": copy.html(), "isEditable": self.isEditable,
-                   "content": content, "helper": self.helper, "htmlId": self.htmlId}
+      </div>''' % {"strAttr": self.get_attrs(self.get_attrs(pyClassNames=self.defined)), "copy": copy.html(),
+                   "isEditable": self.isEditable, "content": content, "helper": self.helper, "htmlId": self.htmlId}
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -441,11 +423,8 @@ class Formula(Html.Html):
     #self._report.jsGlobal.addJs("MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}})")
 
   @property
-  def val(self):
-    return '%s.html()' % self.jqId
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, '''htmlObj.html(data)''')
+  def _js__builder__(self):
+    return 'htmlObj.innerHTML = data'
 
   def __str__(self):
     return '<font %s></font>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
@@ -476,47 +455,39 @@ class TrafficLight(Html.Html):
     super(TrafficLight, self).__init__(report, color, width=height[0], widthUnit=height[1], height=height[0],
                                        heightUnit=height[1], profile=profile)
     self.add_helper(helper)
-    self.add_label(label, css={"width": 'auto', 'height': 'auto', "margin-left": "%s%s" % (height[0], height[1])})
-    self.css({'border-radius': '50px', 'background-color': self.vals, 'display': 'block'})
+    self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
+                               "margin": '5px 5px 5px %s%s' % (height[0] + 5, height[1])})
+    self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'block'})
     self.set_attrs(name="title", value=tooltip)
     self._jsStyles = {'red': self.getColor('danger', 1), 'green': self.getColor('success', 1), 'orange': self.getColor('warning', 1)}
     if tooltip is not None:
       self.tooltip(tooltip)
 
-  def jsColor(self, color):
+  def colors(self, green=None, red=None, neutral=None):
     """
-    Function to change the color of the component from an event
+    Set the 3 colors of the traffic light
 
-    This should be used in a Javascript event
+    :param green: The color used in case of result true
+    :param error: The color used in case of result false
+    :param neutral: The color used in case of null
 
-    Example
-    l = rptObj.ui.rich.light("red")
-    button.click(l.jsColor("blue"))
-
-    :param color: A color code
-
-    :return: The javascript string corresponding to the action of changing the color
+    :return: self to allow the chains
     """
-    return "%s.css('background-color', '%s')" % (self.jqId, color)
+    if neutral is not None:
+      self._jsStyles['orange'] = neutral
+    if green is not None:
+      self._jsStyles['green'] = green
+    if red is not None:
+      self._jsStyles['red'] = red
+    return self
 
   @property
-  def val(self):
-    """
-    Function to return the value of the component
-
-    Example
-    myObj.val
-
-    :return: The javascript string to get the component value
-    """
-    return "%s.css('background-color')" % self.jqId
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      if (data === false){htmlObj.css('background-color', jsStyles.red)}
-      else if (data === true){htmlObj.css('background-color', jsStyles.green)}
-      else if (data === null){htmlObj.css('background-color', jsStyles.orange)}
-      else {htmlObj.css('background-color', data)}''')
+  def _js__builder__(self):
+    return '''
+      if(data === false){htmlObj.style.backgroundColor = options.red}
+      else if (data === true){htmlObj.style.backgroundColor = options.green}
+      else if (data === null){htmlObj.style.backgroundColor = options.orange}
+      else {htmlObj.style.backgroundColor =data}'''
 
   def __str__(self):
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
@@ -541,44 +512,39 @@ class TrafficLight(Html.Html):
 class ContentsTable(Html.Html):
   name, category, callFnc = 'Contents Table', None, 'contents'
   _grpCls = CssGrpClsTable.CssClassTableContent
+  builder_name = False
 
-  def __init__(self, report, recordSet, width, height, profile):
-    recordSet = [] if recordSet is None else recordSet
+  def __init__(self, report, recordSet, size, width, height, profile):
     self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
-    super(ContentsTable, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
-                                        profile=profile)
+    super(ContentsTable, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
+                                        heightUnit=height[1], profile=profile)
+    self.css({"font-size": "%s%s" % (size[0], size[1])})
 
-  def add(self, text, level, name=None):
+  def add(self, text, level, name=None, script_name=None, report_name=None):
+    """
+
+    :param text:
+    :param level:
+    :param name:
+    :param script_name:
+    :param report_name:
+    """
+    if script_name is not None:
+      self.ext_links[self.entries_count] = {"scriptName": script_name,
+                     "folderName": report_name if report_name is not None else self._report.run.report_name}
     if self.first_level is None:
       self.first_level = level
     adjLevel = level - self.first_level + 1
-    self.indices.append( adjLevel)
+    self.indices.append(adjLevel)
     if name is None:
       name = self.entries_count
-    self.vals.append({'text': text, 'level': adjLevel, 'name': name})
+    self.val.append({'text': text, 'level': adjLevel, 'name': name})
     self.entries_count += 1
     return name
 
-  def add_link(self, text, level, script_name, report_name=None, name=None):
-    """
-    Add an external link in the content table
-
-    Example
-
-    :param text: THe text of the line
-    :param level: The level of the link in the contents table
-    :param script_name: The underlying script to point to
-    :param report_name: The name of the folder
-    :param name:
-
-    :return:
-    """
-    self.ext_links[self.entries_count] = {"scriptName": script_name, "folderName": report_name if report_name is not None else self._report.run.report_name}
-    self.add(text, level, name)
-
   def __str__(self):
     entries = []
-    for i, v in enumerate(self.vals):
+    for i, v in enumerate(self.val):
       try:
         css_cls_name = 'CssHrefContentLevel%(level)s' % v
         self._report.style.cssCls(css_cls_name)
@@ -591,13 +557,15 @@ class ContentsTable(Html.Html):
         entries.append("<a href='/reports/run/%(folderName)s/%(scriptName)s' target='_blank' class='%(classname)s'>%(text)s</a>" % v)
       else:
         entries.append("<a href='#%(name)s' class='%(classname)s'>%(text)s</a>" % v)
-    self.addGlobalFnc("ChangeContents(src, htmlId)", '''
-        $("#contents_vals_"+ htmlId).toggle() ;
-        if( $("#contents_vals_"+ htmlId).css('display') == 'none'){
-          $(src).text("Show"); $("#contents_title_"+ htmlId).css( "text-align", 'left')}
-        else{$(src).text("Hide") ;$("#contents_title_"+ htmlId).css( "text-align", 'center')}''')
+    # self.addGlobalFnc("ChangeContents(src, htmlId)", '''
+    #     $("#contents_vals_"+ htmlId).toggle() ;
+    #     if( $("#contents_vals_"+ htmlId).css('display') == 'none'){
+    #       $(src).text("Show"); $("#contents_title_"+ htmlId).css( "text-align", 'left')}
+    #     else{$(src).text("Hide") ;$("#contents_title_"+ htmlId).css( "text-align", 'center')}''')
+    size = int(self.style.get("font-size").replace("px", ""))
     return '''
       <div %(attr)s>
-        <div id='contents_title_%(htmlId)s' style="text-align:center;margin-bottom:10px;font-size:16px;font-weight:bold">Contents [<a href='#' onclick='ChangeContents(this, "%(htmlId)s")' >hide</a>] </div>
-        <div id='contents_vals_%(htmlId)s'>%(contents)s</div>
-      </div> ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'contents': "<br />".join(entries), 'htmlId': self.htmlId}
+        <div id='contents_title_%(htmlId)s' style="text-align:center;font-size:%(size)spx;font-weight:bold">Contents [<a href='#' onclick='ChangeContents(this, "%(htmlId)s")' >hide</a>] </div>
+        <div id='contents_vals_%(htmlId)s' style="margin:0;padding:0">%(contents)s</div>
+      </div> ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'contents': "<br />".join(entries),
+                    'size': size+4, 'htmlId': self.htmlId}

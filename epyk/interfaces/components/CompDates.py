@@ -43,17 +43,13 @@ class Dates(object):
     :param options: Optional. Specific Python options available for this component
     :param filters: Optional. The filtering properties for this component
     :param helper: Optional. A tooltip helper
-
-    :return:
-
-    :rtype: html.HtmlDates.DatePicker
-
     """
     if value is None:
       value = datetime.datetime.today()
     size = self.context._size(size)
-    return self.context.register(html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, size, htmlCode,
-                                                           profile, options or {}, helper))
+    html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, size, htmlCode, profile, options or {}, helper)
+    self.context.register(html_dt)
+    return html_dt
 
   def cob(self, value=None, label=None, icon="far fa-calendar-alt", color=None, size=(None, 'px'), htmlCode=None,
           profile=None, options=None, filters=None, helper=None):
@@ -77,21 +73,16 @@ class Dates(object):
     :param options: Optional. Specific Python options available for this component
     :param filters: Optional. The filtering properties for this component
     :param helper: Optional. A tooltip helper
-
-    :return:
-
-    :rtype: html.HtmlDates.DatePicker
     """
     if value is None:
-      value = datetime.datetime.today()
-      while value.weekday() in [5, 6]:
-        value = value - datetime.timedelta(days=1)
+      value = self.context.rptObj.py.dates.cob
     size = self.context._size(size)
-    return self.context.register(html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, size, htmlCode,
-                                                           profile, options or {}, helper))
+    html_cob = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, size, htmlCode, profile, options or {}, helper)
+    self.context.register(html_cob)
+    return html_cob
 
-  def now(self, value=None, label=None, icon="far fa-clock", color=None, size=(None, 'px'), htmlCode=None, profile=None, options=None,
-          filters=None, helper=None):
+  def now(self, value=None, label=None, icon="far fa-clock", color=None, size=(None, 'px'), htmlCode=None, profile=None,
+          options=None, filters=None, helper=None):
     """
 
     This component is based on the Jquery Time Picker object.
@@ -112,17 +103,14 @@ class Dates(object):
     :param options: Optional. Specific Python options available for this component
     :param filters: Optional. The filtering properties for this component
     :param helper: Optional. A tooltip helper
-
-    :rtype: html.HtmlDates.TimePicker
-
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlDates.TimePicker(self.context.rptObj, value, label, icon, color, size, htmlCode,
-                                                           profile, options or {}, helper))
+    html_dt = html.HtmlDates.TimePicker(self.context.rptObj, value or "", label, icon, color, size, htmlCode, profile, options or {}, helper)
+    self.context.register(html_dt)
+    return html_dt
 
   def countdown(self, yyyy_mm_dd, label=None, icon="fas fa-stopwatch", timeInMilliSeconds=1000, width=(100, '%'), height=(None, 'px'),
-                htmlCode=None, helper=None, profile=None):
+                htmlCode=None, size=(None, 'px'), helper=None, profile=None):
     """
     Add a countdown to the page and remove the content if the page has expired.
 
@@ -143,13 +131,11 @@ class Dates(object):
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlDates.CountDownDate
-
-    :return:
     """
-    return self.context.register(html.HtmlDates.CountDownDate(self.context.rptObj, yyyy_mm_dd, label, icon, timeInMilliSeconds,
-                                                               width, height, htmlCode, helper, profile))
+    size = self.context._size(size)
+    html_cd = html.HtmlDates.CountDownDate(self.context.rptObj, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile)
+    self.context.register(html_cd)
+    return html_cd
 
   def update(self, label=None, size=(None, 'px'), color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
@@ -165,11 +151,8 @@ class Dates(object):
     :param height: Optional. Integer for the component height
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlDates.LastUpdated
-
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlDates.LastUpdated(self.context.rptObj, label, size, color, width, height,
-                                                            htmlCode, profile))
+    html_dt = html.HtmlDates.LastUpdated(self.context.rptObj, label, size, color, width, height, htmlCode, profile)
+    self.context.register(html_dt)
+    return html_dt

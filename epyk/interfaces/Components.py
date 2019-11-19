@@ -305,9 +305,6 @@ class Components(object):
     :param width:
     :param height:
     :param options:
-
-    :rtype: html.HtmlEvent.OptionsBar
-    :return:
     """
     records = records or []
     options = options or {}
@@ -316,7 +313,9 @@ class Components(object):
     size = self._size(size)
     if width[0] is None:
       width = (len(records) * 35, width[1])
-    return self.register(html.HtmlEvent.OptionsBar(self.rptObj, records, width, height, size, color, border_color, options))
+    html_opts = html.HtmlEvent.OptionsBar(self.rptObj, records, width, height, size, color, border_color, options)
+    self.register(html_opts)
+    return html_opts
 
   def side_bar(self, links=None, color=None, size=(None, "px"), servers=None, position="right"):
     """
