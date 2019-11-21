@@ -35,7 +35,7 @@ class List(Html.Html):
   name, category, callFnc = 'List', 'Lists', 'list'
   builder_name = False
   # The CSS Group attached to this component
-  #_grpCls = CssGrpClsList.CssClassList
+  grpCls = CssGrpClsList.CssClassList
 
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
     super(List, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
@@ -49,9 +49,45 @@ class List(Html.Html):
       self.set_items()
 
   def __getitem__(self, i):
+    """
+
+    :param i:
+
+    :rtype: Html.Html
+    :return:
+    """
     return self.items[i]
 
+  def set_items_format(self, icon=None, title=None, css_attrs=None):
+    """
+
+    :param icon:
+    :param title:
+    :param css_attrs:
+
+    :return:
+    """
+    for i in self.items:
+      if icon is not None:
+        i.add_icon(icon)
+      if title is not None:
+        i.add_title(title)
+        i.title.css({"color": 'inherit'})
+      if css_attrs is not None:
+        i.css(css_attrs)
+    return self
+
   def set_items(self, size=('inherit', ''), color='inherit', width=(None, 'px'), height=(None, 'px'), data=None, css_attrs=None):
+    """
+
+    :param size:
+    :param color:
+    :param width:
+    :param height:
+    :param data:
+    :param css_attrs:
+    :return:
+    """
     if data is None:
       data = self.val
     self.items = []
@@ -63,7 +99,7 @@ class List(Html.Html):
     return self
 
   def __str__(self):
-    self._vals = "".join([i.html() for i in self.items])
+    self._vals = "".join([i.html() for i in self.items]) if self.items is not None else ""
     self.builder_name = self.__class__.__name__
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return "<ul %s>%s</ul>" % (self.get_attrs(pyClassNames=self.defined), self._vals)
@@ -106,13 +142,14 @@ class Groups(Html.Html):
     return self
 
   def __str__(self):
+    print(self._lists__map_index)
     self._vals = "".join(['''
       <a onclick='this.nextElementSibling.querySelectorAll("li").forEach(
         function(evt){
           evt.style.display = evt.style.display === "none" ? "" : "none";
         }
       )'>%s</a>%s
-      ''' % (self._lists__map_index[i], l.html()) for i, l in enumerate(self.val)])
+      ''' % (self._lists__map_index[i] if len(self._lists__map_index) > i else "Category %s" % i, l.html()) for i, l in enumerate(self.val)])
     self.builder_name = self.__class__.__name__
     return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.defined), self._vals)
 

@@ -125,6 +125,8 @@ class Lists(object):
   def list(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, profile=None):
     """
+    Example
+    l = rptObj.ui.lists.list(["A", "B"])
 
     Documentation
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
@@ -140,6 +142,8 @@ class Lists(object):
   def numbers(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
                   htmlCode=None, helper=None, profile=None):
     """
+    Example
+    rptObj.ui.lists.numbers(["A", "B"])
 
     Documentation
     https://www.w3schools.com/html/html_lists.asp

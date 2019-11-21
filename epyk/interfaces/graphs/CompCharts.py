@@ -93,7 +93,6 @@ class Graphs(object):
     params = (seriesNames, xAxis) if otherDims is None else tuple([seriesNames, xAxis] + list(otherDims))
     return js.AresJs.Js(self.context.rptObj, data, profile=profile).fncs(dataFncs).output(chartFam, chartType, params)
 
-
   def chart(self, chartType=None, data=None, seriesNames=None, xAxis=None, otherDims=None, dataFncs=None, title=None,
             chartFamily=None, filters=None, profile=None, xAxisOrder=None, options=None,
             width=(100, "%"), height=(330, 'px'),  htmlCode=None):
