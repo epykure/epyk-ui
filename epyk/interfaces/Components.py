@@ -353,10 +353,33 @@ class Components(object):
     self.register(html_loading)
     return html_loading
 
+  def workflow(self, records, size=(None, "px"), width=(None, '%'), height=(40, 'px'), color=None, options=None):
+    """
+    Entry point for the workflow object
+
+    Example
+    rptObj.ui.workflow([
+      {"value": 'test 1', "status": 'success', 'label': 'test'},
+      {"value": 'test 2', "status": 'error'},
+      {"value": 'test 3', "status": 'pending'}])
+
+    :param records: A list with the different steps defined in the workflow
+    :param size: Optional.
+    :param width: Optional.
+    :param height: Optional.
+    :param color: Optional.
+    :param options: Optional.
+    """
+    size = self._size(size)
+    html_wf = html.HtmlOthers.Workflow(self.rptObj, records, width, height, color, size, options or {})
+    self.register(html_wf)
+    return html_wf
+
   #--------------------------------------------------------------------------------------------------------------------
   #
   #                                                 COMMON FUNCTIONS
   #
+
   def _size(self, size):
     """
     Used to get the font-size in the framework.

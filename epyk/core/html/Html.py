@@ -326,11 +326,7 @@ class Html(object):
       self.filter(**globalFilter)
     if dataSrc is not None:
       self.dataSrc = dataSrc
-    #
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
-    if self.builder_name:
-      constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-      constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (self.builder_name, self._js__builder__)
 
   @property
   def htmlId(self):
@@ -552,7 +548,7 @@ class Html(object):
         self.link.css(css)
     return self
 
-  def add_title(self, text, css=None, position="before"):
+  def add_title(self, text, level=None, css=None, position="before"):
     """
     Add an elementary title component
 
@@ -564,7 +560,7 @@ class Html(object):
     """
     self.title = ""
     if text is not None:
-      self.title = self._report.ui.texts.title(text)
+      self.title = self._report.ui.texts.title(text, level=level)
       if position == "before":
         self.prepend_child(self.title)
       else:
@@ -889,6 +885,10 @@ class Html(object):
     if not self.builder_name:
       raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
 
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors[self.builder_name] = "function %s(htmlObj, data, options){%s}" % (
+    self.builder_name, self._js__builder__)
+
     if isinstance(data, dict):
       # check if there is no nested HTML components in the data
       tmp_data = ["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()]
@@ -898,13 +898,14 @@ class Html(object):
     options, js_options = options or {}, []
     for k, v in options.items():
       if isinstance(v, dict):
-        row = ["%s: %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
-        js_options.append("%s: {%s}" % (k, ", ".join(row)))
+        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
       else:
         js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
     return "%s(%s, %s, %s)" % (self.builder_name, self.dom.varId, js_data, "{%s}" % ",".join(js_options))
 
   def refresh(self):
+    # self._report._props.setdefault('js', {}).setdefault("builders", []).append(refresh_js)
     return self.build(self.val, self._jsStyles)
 
   def onDocumentLoadContextmenu(self):
@@ -1015,8 +1016,8 @@ class Html(object):
       str_result.append(htmlObj.html())
     if self.helper != "":
       self.helper.html()
-    if self.builder_name:
-      self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    #if self.builder_name:
+    #  self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     for cssStyle in self.defined.clsMap:
       # Remove the . or # corresponding to the type of CSS reference
       self.pyCssCls.add(self._report.style.add(cssStyle).classname)

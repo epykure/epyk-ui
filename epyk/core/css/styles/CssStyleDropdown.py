@@ -25,7 +25,7 @@ class CssDropDownMenu(CssStyle.CssCls):
 
 
 class CssDropDownAfterMenu(CssStyle.CssCls):
-  attrs = {'display': 'block'}
+  attrs = {'display': 'inherit'}
 
   @property
   def classname(self):
@@ -58,6 +58,14 @@ class CssDropDownSubMenuPullLeft(CssStyle.CssCls):
   @property
   def classname(self):
     return "dropdown-submenu.pull-left"
+
+
+class CssDropDownSubMenuRight(CssStyle.CssCls):
+  attrs = {'margin-left': 0, 'right': 'inherit !important', 'left': 'auto'}
+
+  @property
+  def classname(self):
+    return "dropdown-menu-right"
 
 
 class CssDropDownSubMenuPullLeftMenu(CssStyle.CssCls):

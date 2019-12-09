@@ -43,7 +43,8 @@ class ExternalLink(Html.Html):
     return super(ExternalLink, self).build(data, options, profile)
 
   def __str__(self):
-    return '<a %s></a>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    self.set_attrs(name="href", value=self.val['url'])
+    return '<a %s>%s</a>%s' % (self.get_attrs(pyClassNames=self.defined), self.val['text'], self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION

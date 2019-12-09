@@ -23,6 +23,7 @@ from epyk.interfaces.graphs import CompChartsPlotly
 from epyk.interfaces.graphs import CompChartsNvd3
 from epyk.interfaces.graphs import CompChartsD3
 from epyk.interfaces.graphs import CompChartsVis
+from epyk.interfaces.graphs import CompChartsSvg
 
 
 class Graphs(object):
@@ -264,3 +265,13 @@ class Graphs(object):
     """
     """
     return CompChartsD3.D3(self)
+
+  @property
+  def svg(self):
+    """
+    SVG defines vector-based graphics in XML format
+
+    Documentation
+    https://www.w3schools.com/graphics/svg_intro.asp
+    """
+    return CompChartsSvg.SVG(self)

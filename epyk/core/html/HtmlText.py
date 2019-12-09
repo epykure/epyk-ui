@@ -87,7 +87,7 @@ class Label(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}''' % {"markUp": mark_up}
     
   def __str__(self):
-    return '<label %s></label>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
+    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.val, self.helper)
 
 
 class Span(Html.Html):
@@ -503,9 +503,9 @@ class Title(Html.Html):
       if not os.path.exists(filePath):
         raise Exception("Missing file %s in %s" % (self.picture, os.path.join(self._report.run.local_path, "static")))
 
-      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s</div>' % (self.get_attrs(pyClassNames=self.pyStyle), path, self.picture, anchor_name, self.helper)
+      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.pyStyle), path, self.picture, anchor_name, self.val, self.helper)
 
-    return '<div %s><a%s>%s</a></div>' % (self.get_attrs(pyClassNames=self.defined), anchor_name, self.helper)
+    return '<div %s><a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.defined), anchor_name, self.val, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -576,16 +576,18 @@ class Title(Html.Html):
 class Numeric(Html.Html):
   name, category, callFnc = 'Number', 'Number', 'number'
 
-  def __init__(self, report, number, label, icon, size, color, tooltip, htmlCode, options, helper, profile):
-    super(Numeric, self).__init__(report, number, code=htmlCode, profile=profile)
+  def __init__(self, report, number, title, label, icon, size, color, tooltip, htmlCode, options, helper, width, profile):
+    super(Numeric, self).__init__(report, number, code=htmlCode, profile=profile, width=width[0], widthUnit=width[1])
     # Add the components label and icon
     self.add_label(label, css={"float": None, "width": 'none'})
     self.add_icon(icon)
     self.add_helper(helper)
+    self.add_title(title, level=4, css={"margin-bottom": 0})
 
     # Update the CSS Style of the component
     color = self.getColor('colors', -1) if color is None else color
-    self.css({"color": color, 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
+    self.css({"color": color, 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
+              'text-align': 'center', 'display': 'inline-block'})
     self.tooltip(tooltip)
     self._jsStyles = options
 
@@ -597,7 +599,7 @@ class Numeric(Html.Html):
                         decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False))))
 
   def __str__(self):
-    return "<div %s><font></font>%s</div>" % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return "<div %s><font style='padding:0;margin:0'>%s</font>%s</div>" % (self.get_attrs(pyClassNames=self.defined), self.val, self.helper)
 
 
 class Highlights(Html.Html):

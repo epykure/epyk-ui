@@ -218,21 +218,28 @@ class Lists(object):
     html_list.css({"list-style-type": 'square'})
     return html_list
 
-  def groups(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def groups(self, data=None, categories=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, profile=None):
     """
 
     Example
-    rpt.ui.lists.accordeon([{'value': 'super', 'url': "google", 'category': 'Test', 'icon': 'fas fa-heart'},
-                     {'value': 'super2', 'url': "google", 'category': 'Youpi', 'icon': 'fab fa-google'},
-                     {'value': 'super3', 'url': "google", 'category': 'Youpi'}])
+    l = rptObj.ui.lists.groups(["AWW", "B"])
+    l.add_list(["D", "E"], category="Test")
 
     Documentation
     http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
     http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
     """
     size = self.context._size(size)
-    html_obj = html.HtmlList.Groups(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+    data = data or []
+    categories = categories or [""]
+    if len(data) > 0:
+      if isinstance(data[0], list):
+        categories = [""] * len(data)
+      else:
+        # This object is expecting a list of lists
+        data = [data]
+    html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, size, color, width, height, htmlCode,
                                     helper, profile)
     self.context.register(html_obj)
     return html_obj
