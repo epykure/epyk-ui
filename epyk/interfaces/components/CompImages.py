@@ -114,7 +114,8 @@ class Images(object):
     self.context.register(html_icon)
     return html_icon
 
-  def badge(self, text=None, label=None, size=(None, 'px'), icon=None, background_color=None, color=None, tooltip=None, profile=None):
+  def badge(self, text=None, label=None, size=(None, 'px'), icon=None, background_color=None, color=None, url=None,
+            tooltip=None, profile=None):
     """
     Display a badge component using Bootstrap
 
@@ -130,12 +131,13 @@ class Images(object):
     :param icon: Optional, A String with the icon to display from font-awesome
     :param background_color: Optional, The background color of the badge
     :param color: Optional, The text color of the badge
+    :param url:
     :param tooltip: Optional, The text to display in the tooltip
     :param profile: Optional, A boolean to store the performances for each components
     """
     tmp_size = self.context._size(size)
     if size[0] is None:
       size = (tmp_size[0] - 2, tmp_size[1])
-    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, size, background_color, color, tooltip, profile)
+    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, size, background_color, color, url, tooltip, profile)
     self.context.register(html_badge)
     return html_badge

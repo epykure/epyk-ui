@@ -213,18 +213,28 @@ class Badge(Html.Html):
   __reqCss = ['bootstrap', 'font-awesome']
   builder_name = False
 
-  def __init__(self, report, text, label, icon, size, background_color, color, tooltip, profile):
+  def __init__(self, report, text, label, icon, size, background_color, color, url, tooltip, profile):
     super(Badge, self).__init__(report, text, profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     self.add_icon(icon, css={"float": 'left'})
+    self.link = None
+    if url is not None:
+      self.link = self._report.ui.links.external(text, url).css({"color": 'white', 'display': 'inline-block',
+          "background": report.getColor("danger", 1), "padding": "2px", "margin-top": "1px",
+          "border-radius": "2px", "width": "10px", "height": "14px"})
+      self.link.inReport = False
     # Update the CSS Style of the component
     color = 'inherit' if color is None else color
     background_color = self.getColor("success", 1) if background_color is None else background_color
-    self.css({'background-color': background_color, 'color': color, 'padding': "1px 3px", 'margin': '0px 2px',
-              'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
+    self.css({'background-color': background_color,
+              'color': color, 'padding': "1px 3px", 'margin': '1px 1px 1px 2px',
+              "vertical-align": "bottom", 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
     self.attr['class'].add("badge") # From bootstrap
     if tooltip is not None:
       self.tooltip(tooltip)
 
   def __str__(self):
+    if self.link is not None:
+      return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.defined), self.link)
+
     return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.defined), self.val)
