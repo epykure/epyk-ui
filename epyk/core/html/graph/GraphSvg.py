@@ -8,6 +8,29 @@ https://www.w3schools.com/graphics/svg_intro.asp
 from epyk.core.html import Html
 
 
+class SVG(Html.Html):
+  def __init__(self, report, height, width):
+    super(SVG, self).__init__(report, "", width=width[0], widthUnit=width[1],
+                               height=height[0], heightUnit=height[1])
+    self.css({"display": 'inline-block'})
+    self.html_objs = []
+
+  def add_text(self, text, x, y, options):
+    """
+
+    :param text:
+    :param x:
+    :param y:
+    :param options:
+    :return:
+    """
+    vals = ["%s='%s'" % (k, v) for k, v in options.items()]
+    self.html_objs.append("<text x='%s' y='%s' %s>%s</text>" % (x, y, " ".join(vals), text))
+
+  def __str__(self):
+    return "<svg %s>%s</svg>" % (self.get_attrs(pyClassNames=self.defined), "".join(self.html_objs))
+
+
 class Line(Html.Html):
   def __init__(self, report, x1, y1, x2, y2, height, width, options):
     super(Line, self).__init__(report, {"x1": x1, "y1": y1, "x2": x2, "y2": y2}, width=width[0], widthUnit=width[1],

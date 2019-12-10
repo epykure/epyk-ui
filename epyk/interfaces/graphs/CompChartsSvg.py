@@ -8,6 +8,19 @@ class SVG(object):
   def __init__(self, context):
     self.parent = context
 
+  def new(self, height=(100, "%"), width=(30, "px")):
+    """
+
+    :param height:
+    :param width:
+    :return:
+    """
+    if not isinstance(width, tuple):
+      width = (width, "px")
+    html_svg = graph.GraphSvg.SVG(self.parent.context.rptObj, height, width)
+    self.parent.context.register(html_svg)
+    return html_svg
+
   def line(self, x1=0, y1=None, x2=None, y2=None, height=(100, "%"), width=(30, "px"), options=None):
     """
     Entry point to the basic line definition in a SVG HTML Tag
