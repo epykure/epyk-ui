@@ -128,6 +128,7 @@ class Div(Html.Html):
       for obj in htmlObj:
         if hasattr(obj, 'inReport'):
           obj.inReport = False
+          obj.css({"display": 'inline-block'})
     elif htmlObj is not None and hasattr(htmlObj, 'inReport'):
       htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     super(Div, self).__init__(report, htmlObj, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],

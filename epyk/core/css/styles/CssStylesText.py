@@ -40,7 +40,7 @@ class CssTitle3(CssStyle.CssCls):
 
 class CssTitle4(CssStyle.CssCls):
   attrs = {'padding': 0, 'font-size': '14px', 'margin': '5px 0 0 0', 'font-weight': 'bold', 'width': '100%',
-           'display': 'block', 'white-space': 'pre-wrap'}
+           'white-space': 'pre-wrap'}
 
   def customize(self, style, eventsStyles):
     style.update({"color": self.getColor('greys', 5)})

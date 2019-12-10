@@ -335,7 +335,7 @@ class Texts(object):
     return html_number
 
   def title(self, text=None, size=(None, 'px'), level=None, name=None, contents=None, color=None, picture=None, icon=None,
-            marginTop=5, htmlCode=None, width=(100, "%"), height=(None, "px"), align=None, options=None, profile=None):
+            marginTop=5, htmlCode=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
 
     Example

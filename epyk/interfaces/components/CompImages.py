@@ -137,7 +137,7 @@ class Images(object):
     """
     tmp_size = self.context._size(size)
     if size[0] is None:
-      size = (tmp_size[0] - 4, tmp_size[1])
+      size = (tmp_size[0] - 2, tmp_size[1])
     html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, size, background_color, color, url, tooltip, profile)
     self.context.register(html_badge)
     return html_badge

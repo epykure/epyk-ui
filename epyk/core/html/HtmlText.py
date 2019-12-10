@@ -468,7 +468,7 @@ class Title(Html.Html):
     elif align is not None:
       self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': align})
     else:
-      self.css({'display': 'inline-block'})
+      self.css({'display': 'block', "margin-right": "10px"})
 
   @property
   def dom(self):

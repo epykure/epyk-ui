@@ -153,7 +153,7 @@ class Graphs(object):
     return self.context.register(getattr(graph, 'GraphD3Bespoke').Chart(self.context.rptObj, script, data,
                                                                         width, widthUnit, height, heightUnit, title, chartOptions, htmlCode, globalFilter, filterSensitive, dataSrc, profile, url, d3Version))
 
-  def sparkline(self, chart_type, data, options=None, column=None):
+  def sparkline(self, chart_type, data, title=None, options=None, column=None):
     """
     Display a sparkline component
 
@@ -176,7 +176,9 @@ class Graphs(object):
       if isinstance(data, list):
         pass
 
-    return self.context.register(html.graph.GraphSparklines.Sparklines(self.context.rptObj, data, chart_type, options))
+    html_chart = html.graph.GraphSparklines.Sparklines(self.context.rptObj, data, chart_type, title, options)
+    self.context.register(html_chart)
+    return html_chart
 
 
   #  ------------------------------------------------------------------------------------------------------------------

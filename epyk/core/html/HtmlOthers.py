@@ -212,7 +212,7 @@ class Workflow(Html.Html):
     super(Workflow, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
     self.color = self.getColor('greys', -1) if color is None else color
     self.size = size[0]
-    self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1])})
+    self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), "display": "inline-block", "margin": '5px'})
     self.status_colors = {
       "success": {"border": self.getColor("success", 1), "background": self.getColor("success", 0), "stroke-width": 2, "stroke": self.getColor("greys", -1)},
       "error": {"border": self.getColor("danger", 1), "background": self.getColor("danger", 0), "stroke-width": 2, "stroke": self.getColor("greys", -1)},

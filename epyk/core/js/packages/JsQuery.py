@@ -13,14 +13,18 @@ from epyk.core.js.packages import JsPackage
 from epyk.core.js.fncs import JsFncs
 
 
-def decorate_var(var_name):
+def decorate_var(var_name, convert_var=True):
   """
   Return the String Jquery variable reference for a given component id
 
   :param var_name: String. The variable name
+  :param convert_var: Boolean.
 
   :return: The decorated Jquery reference
   """
+  if not convert_var:
+    return 'jQuery(%s)' % var_name
+
   return 'jQuery(%s)' % JsUtils.jsConvertData(var_name, None)
 
 
