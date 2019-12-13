@@ -76,6 +76,16 @@ class JSelect(JsPackage):
     """
     Process the raw data returned from a request. The following arguments are passed to this callback:
 
+    Documentation
+    https://github.com/truckingsim/Ajax-Bootstrap-Select
+    
+    Example
+    s.dom.ajaxSelectPicker({"values": "a, b, c", "ajax": {
+    "url": 'https://jsonplaceholder.typicode.com/posts', "type": "POST", "dataType": "json",
+    "data": {"q": "{{{q}}}"}}, 'preserveSelected': False, 'log': 2, 'preprocessData':
+        'function(data) {return [{text: "C", value: "C"}, {text: "D", value: "D"}]}', "locale": {
+    "emptyTitle": "Select and Begin Typing"}})])
+
     :param options:
     :return:
     """
