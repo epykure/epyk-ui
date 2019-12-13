@@ -456,8 +456,9 @@ class TrafficLight(Html.Html):
                                        heightUnit=height[1], profile=profile)
     self.add_helper(helper)
     self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
-                               "margin": '5px 5px 5px %s%s' % (height[0] + 5, height[1])})
-    self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'block'})
+                               "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'})
+    self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
+              'vertical-align': 'middle'})
     self.set_attrs(name="title", value=tooltip)
     self._jsStyles = {'red': self.getColor('danger', 1), 'green': self.getColor('success', 1), 'orange': self.getColor('warning', 1)}
     if tooltip is not None:
@@ -468,7 +469,7 @@ class TrafficLight(Html.Html):
     Set the 3 colors of the traffic light
 
     :param green: The color used in case of result true
-    :param error: The color used in case of result false
+    :param red: The color used in case of result false
     :param neutral: The color used in case of null
 
     :return: self to allow the chains
@@ -484,13 +485,13 @@ class TrafficLight(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      if(data === false){htmlObj.style.backgroundColor = options.red}
-      else if (data === true){htmlObj.style.backgroundColor = options.green}
-      else if (data === null){htmlObj.style.backgroundColor = options.orange}
+      if(data === false){htmlObj.querySelector('div').style.backgroundColor = options.red}
+      else if (data === true){htmlObj.querySelector('div').style.backgroundColor = options.green}
+      else if (data === null){htmlObj.querySelector('div').style.backgroundColor = options.orange}
       else {htmlObj.style.backgroundColor =data}'''
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return '<div id="%s"><div %s></div></div>%s' % (self.htmlId, self.get_attrs(pyClassNames=self.defined, withId=False), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION

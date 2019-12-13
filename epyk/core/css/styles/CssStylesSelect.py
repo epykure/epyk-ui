@@ -7,14 +7,12 @@ from epyk.core.css.styles import CssStyle
 
 
 class CssSelectStyle(CssStyle.CssCls):
-  cssId = {'reference': '.class_select'}
-  attrs = {'font-size': '12px', 'font-family': 'Calibri', 'height': '23px', 'padding-top': '2px', 'display': 'inline-block !IMPORTANT',
-           'margin': '0 !IMPORTANT'}
+  attrs = {'font-size': '12px', 'font-family': 'Calibri', 'height': '23px', 'padding-top': '2px',
+           'display': 'inline-block !IMPORTANT', 'margin': '0 !IMPORTANT', 'min-width': '140px'}
   focus = {'outline': '0 !IMPORTANT'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('colors', 0), "color": self.getColor('greys', -1)})
-    eventsStyles['hover'].update({'color': self.getColor('success', 1)})
+    style.update({"background": self.getColor('greys', 0), "color": self.getColor('greys', -1)})
 
 
 class CssSelectButton(CssStyle.CssCls):

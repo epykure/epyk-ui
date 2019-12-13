@@ -32,7 +32,7 @@ class CssRadioSwitchLabel(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
     style.update({'background': self.getColor('greys', 3)})
-    eventsStyles['after'].update({'background-color': self.getColor('colors', 5)})
+    eventsStyles['after'].update({'background-color': self.getColor('success', 1)})
 
 
 class CssRadioSwitchChecked(CssStyle.CssCls):

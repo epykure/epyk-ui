@@ -573,6 +573,16 @@ class JsDoms(JsObject.JsObject):
     """
     return JsDoms("%s.firstChild" % self.varId)
 
+  @property
+  def nextSibling(self):
+    """
+    The nextSibling property returns the node immediately following the specified node, in the same tree level.
+
+    Documentation
+    https://www.w3schools.com/jsref/prop_node_nextsibling.asp
+    """
+    return JsDoms("%s.nextSibling" % self.varId)
+
   def contains(self, node):
     """
     The contains() method returns a Boolean value indicating whether a node is a descendant of a specified node.

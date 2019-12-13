@@ -11,6 +11,11 @@ class SVG(object):
   def new(self, height=(100, "%"), width=(30, "px")):
     """
 
+    Example
+    svg = rptObj.ui.charts.svg.new(width=200)
+    svg.add_text("I love SVG!", x=0, y=15, options={"fill": 'red'})
+
+
     :param height:
     :param width:
     :return:

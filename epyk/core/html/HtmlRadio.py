@@ -13,7 +13,6 @@ from epyk.core.js import JsUtils
 
 class Radio(Html.Html):
   name, category, callFnc = 'Radio Buttons', 'Buttons', 'radio'
-  builder_name = False
 
   def __init__(self, report, vals, htmlCode, label, width, height, radioVisible, event,
                withRemoveButton, align, filters, tooltip, radioType, helper, profile):
@@ -59,10 +58,10 @@ class Radio(Html.Html):
     return self
 
   def __str__(self):
-    row = self._report.ui.layouts.row(self.val)
+    row = self._report.ui.layouts.grid(self.val)
     row.css({"width": 'none'})
     row.inReport = False
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), row.html(), self.helper)
+    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.defined), row.html(), self.helper)
 
 
 class Switch(Html.Html):
@@ -104,5 +103,5 @@ class Switch(Html.Html):
       <div %s>
         <input type="checkbox"/>
         <label style="width:50px;display:inline-block" for="switch">&nbsp;</label>
-        <p style="display:inline-block;margin-left:3px;font-weight:bold" title="%s">RR%s</p>
+        <p style="display:inline-block;margin-left:3px;font-weight:bold" title="%s">%s</p>
       </div>''' % (self.get_attrs(pyClassNames=self.defined), self.val.get('text', ''), self.val['off'])

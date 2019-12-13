@@ -21,16 +21,16 @@ class DatePicker(Html.Html):
     dfltOptions.update(options)
     super(DatePicker, self).__init__(report, {"value": value, "options": dfltOptions}, htmlCode=htmlCode, profile=profile)
     # Add all the internal components input, label, icon and helper
-    self.input = self._report.ui.inputs.d_date(self.val)
+    self.input = self._report.ui.inputs.d_date(self.val).css({"padding": 0})
     #self.input.attributes({"class": ['time']})
     self.prepend_child(self.input)
-    self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)})
+    self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)}, position="after")
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto',
-              "font-size": "%s%s" % (size[0], size[1])})
+              "font-size": "%s%s" % (size[0], size[1]), 'margin-top': '2px'})
 
   def selectable(self, dts):
     """
@@ -92,14 +92,15 @@ class TimePicker(Html.Html):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
     # Add the internal components (label, icon)
     self.input = self._report.ui.inputs.d_time(value)
-    self.input.set_attrs(name="class", value='time')
+    self.input.set_attrs(name="class", value='time').css({"padding": 0})
     self.prepend_child(self.input)
-    self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)})
+    self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)}, position="after")
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-    self.css({"margin-top": '1px', "color": color or 'inherit', "vertical-align": "middle", "font-size": "%s%s" % (size[0], size[1])})
+    self.css({"color": color or 'inherit', "vertical-align": "middle", "font-size": "%s%s" % (size[0], size[1]),
+              'margin-top': '2px'})
     self.options = options
 
   @property
@@ -182,7 +183,7 @@ class CountDownDate(Html.Html):
       var seconds = Math.floor((distance %% (1000 * 60)) / 1000);
 
       htmlObj.innerHTML = "<b>"+ days +"d "+ hours +"h "+ minutes + "m "+ seconds +"s </b>"; 
-      if ((distance < 0) && (jsStyles.delete)){clearInterval(htmlObj.id +"_interval")
+      if ((distance < 0) && (options.delete)){clearInterval(htmlObj.id +"_interval")
       }''' % {"report_name": self._report.run.report_name, "script_name": self._report.run.script_name}
 
   def __str__(self):

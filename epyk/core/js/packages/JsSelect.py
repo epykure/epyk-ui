@@ -71,3 +71,13 @@ class JSelect(JsPackage):
     if self._jquery_ui is None:
       self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId))
     return self._jquery_ui
+
+  def __str__(self):
+    """
+    The str() method return the variable Javascript reference of the variable.
+
+    According to the variable definition it can be either its name or its value
+
+    :return: A Javascript reference
+    """
+    return self.htmlId

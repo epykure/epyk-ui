@@ -412,7 +412,7 @@ class Grid(Html.Html):
 
       if isinstance(htmlObj, HtmlSelect.Select):
         htmlObj.container = "#%s" % self.htmlId # The container should be defined in this case to be visible
-      htmlContent = htmlObj.content() if isinstance(htmlObj, Col) else htmlObj.html()
+      htmlContent = htmlObj.html() # htmlObj.content() if isinstance(htmlObj, Col) else htmlObj.html()
       items.append('<div class="col col-md-%s text-%s">%s</div>' % (self.colsDim[i], self.colsAlign[i], htmlContent))
       dim_row += 1 if self.colsDim[i] == 'auto' else self.colsDim[i]
       col_per_obj[i] = self.colsDim[i]

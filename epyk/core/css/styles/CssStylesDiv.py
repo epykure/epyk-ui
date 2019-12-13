@@ -42,7 +42,7 @@ class CsssDivBoxMargin(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
     style.update({"border": '1px solid %s' % self.getColor('greys', 0)})
-    eventsStyles['hover'].update({'border': "1px solid %s" % self.getColor('colors', 9)})
+    eventsStyles['hover'].update({'border': "1px solid %s" % self.getColor('greys', 5)})
 
 
 class CssDivBoxCenter(CssStyle.CssCls):

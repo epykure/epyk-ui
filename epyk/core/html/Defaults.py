@@ -8,3 +8,6 @@ SERVER_PATH = "/img"
 
 #
 ENTITIES_ADD_ON = ""
+
+# Constant for all the input components
+LINE_HEIGHT = 23

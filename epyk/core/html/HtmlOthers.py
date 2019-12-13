@@ -141,6 +141,7 @@ class Help(Html.Html):
     super(Help, self).__init__(report, val, width=width[0], widthUnit=width[1], profile=profile)
     self.css({"cursor": "pointer", "float": "right", 'margin': '1px 4px'})
     self.attr['class'].add("fas fa-question-circle")
+    self.attr['title'] = val
     self._jsStyles = options
 
   @property

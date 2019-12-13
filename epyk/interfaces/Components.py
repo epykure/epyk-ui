@@ -18,10 +18,10 @@ from epyk.interfaces.components import CompImages
 from epyk.interfaces.components import CompLinks
 from epyk.interfaces.components import CompSliders
 from epyk.interfaces.components import CompMessaging
-from epyk.interfaces.components import CompDates
 from epyk.interfaces.components import CompDrops
 from epyk.interfaces.components import CompForms
 from epyk.interfaces.components import CompTags
+from epyk.interfaces.components import CompFields
 
 
 class Components(object):
@@ -46,7 +46,7 @@ class Components(object):
     self.check = self.buttons.check
     self.slider = self.sliders.slider
     self.select = self.lists.select
-    self.date = self.dates.cob
+    self.date = self.fields.cob
     self.tree = self.lists.tree
     self.info = self.rich.info
     self.radio = self.buttons.radio
@@ -83,15 +83,6 @@ class Components(object):
     Group all the UI components dedicated to produce links to another page or website.
     """
     return CompLinks.Links(self)
-
-  @property
-  def dates(self):
-    """
-    Group all the UI components dedicated to produce dates components.
-
-    Those components are mainly relying on Jquery and JqueryUi
-    """
-    return CompDates.Dates(self)
 
   @property
   def rich(self):
@@ -163,6 +154,16 @@ class Components(object):
     This category will take into account textarea, input text...
     """
     return CompInputs.Inputs(self)
+
+  @property
+  def fields(self):
+    """
+    Group all the UI components dedicated to produce input items.
+
+    Those components are editable items which need to be updated by the user of the dashboard.
+    This category will take into account textarea, input text...
+    """
+    return CompFields.Fields(self)
 
   @property
   def icons(self):

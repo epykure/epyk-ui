@@ -8,7 +8,7 @@ from epyk.core.css.styles import CssStyle
 
 class CssInput(CssStyle.CssCls):
   attrs = {'font-size': '12px', 'font-family': 'Calibri', 'border': 'none', 'text-align': 'center', 'cursor': 'text',
-           'margin': '0', 'border-radius': '5px'}
+           'margin': '0', 'border-radius': '5px', 'min-width': '140px', 'line-height': '23px'}
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):

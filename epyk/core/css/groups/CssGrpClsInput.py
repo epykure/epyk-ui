@@ -38,7 +38,7 @@ class CssClassInput(CssGrpCls.CssGrpClass):
   CSS Basic group for all the Input components
   """
   css_div_no_border = CssStylesDiv.CssDivNoBorder
-  css_date_picker = CssStylesDates.CssDatePicker
+  Css_input = CssStylesInput.CssInput
   __map, __alt_map = ['CssDivNoBorder', 'CssInput'], []
 
 
@@ -65,7 +65,7 @@ class CssClassInputInteger(CssGrpCls.CssGrpClass):
   css_div_no_border = CssStylesDiv.CssDivNoBorder
   css_input = CssStylesInput.CssInput
   css_input_integer = CssStylesInput.CssInputInteger
-  __map, __alt_map = ['CssSearchButton'], []
+  __map, __alt_map = ['CssDivNoBorder', 'CssInput', 'CssInputInteger'], []
 
 
 class CssClassInputRange(CssGrpCls.CssGrpClass):
