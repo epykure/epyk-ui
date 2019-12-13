@@ -12,6 +12,7 @@ except:
   has_pandas = False
 
 from epyk.core import html
+from epyk.core.html import Defaults
 
 
 class Buttons(object):
@@ -199,7 +200,7 @@ class Buttons(object):
     self.context.register(html_obj)
     return html_obj
 
-  def switch(self, recordSet=None, label=None, color=None, size=16, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
+  def switch(self, recordSet=None, label=None, color=None, size=(None, 'px'), width=(150, '%'), height=(Defaults.LINE_HEIGHT, 'px'), htmlCode=None, profile=None):
     """
     Python wrapper to the HTML switch elements
 
@@ -219,6 +220,7 @@ class Buttons(object):
     :param htmlCode:
     :param profile:
     """
+    size = self.context._size(size)
     html_obj = html.HtmlRadio.Switch(self.context.rptObj, recordSet or {'off': 'off', 'on': 'on'}, label, color, size, width, height, htmlCode, profile)
     self.context.register(html_obj)
     return html_obj
@@ -267,7 +269,7 @@ class Buttons(object):
     self.context.register(html_obj)
     return html_obj
 
-  def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None, htmlCode=None,
+  def check(self, flag=False, tooltip=None, width=(None, "px"), height=(Defaults.BUTTONS_CHECK_HEIGHT, "px"), label=None, icon=None, htmlCode=None,
             profile=None, options=None):
     """
     Wrapper to the check box button object

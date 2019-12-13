@@ -295,7 +295,7 @@ class Checkbox(Html.Html):
           <label style='cursor:inherit;margin:0;padding:0;font-style:italic;color:%(color)s;white-space:nowrap'>Select All</label>
         </div>''' % {"color": self.getColor("colors", 5), 'htmlId': self.htmlId}
 
-    return '<div %(strAttr)s><div name="checks"></div></div>' % {'strAttr': self.get_attrs(pyClassNames=['CssDivNoBorder'])}
+    return '<div %(strAttr)s><div name="checks"></div></div>' % {'strAttr': self.get_attrs(pyClassNames=self.defined)}
 
   def to_word(self, document):
     from docx.shared import RGBColor

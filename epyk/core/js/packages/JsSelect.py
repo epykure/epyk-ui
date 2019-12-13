@@ -72,6 +72,23 @@ class JSelect(JsPackage):
       self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId))
     return self._jquery_ui
 
+  def ajaxSelectPicker(self, options):
+    """
+    Process the raw data returned from a request. The following arguments are passed to this callback:
+
+    :param options:
+    :return:
+    """
+    self._src.cssImport.add('select-ajax')
+    self._src.jsImports.add('select-ajax')
+    opts = []
+    for k, v in options.items():
+      if not isinstance(v, (dict, int)) and v.startswith("function"):
+        opts.append("%s: %s" % (k, v))
+      else:
+        opts.append("%s: %s" % (k, json.dumps(v)))
+    return "%s.selectpicker().ajaxSelectPicker({%s})" % (self.jquery.varId, ", ".join(opts))
+
   def __str__(self):
     """
     The str() method return the variable Javascript reference of the variable.

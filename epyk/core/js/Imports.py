@@ -502,8 +502,20 @@ JS_IMPORTS = {
       {'alias': 'jquery'},
       {'alias': 'bootstrap'}],
     'modules': [
-      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'version': '1.13.9', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'version': '1.13.9', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+    ]},
 
+  'select-ajax': {
+    'website': 'https://github.com/truckingsim/Ajax-Bootstrap-Select',
+    'req': [
+      {"alias": 'select'}
+    ], 'modules': [
+          {'reqAlias': 'selectAjax', 'script': 'ajax-bootstrap-select.min.js', 'version': '1.4.5',
+           'path': 'ajax-bootstrap-select/%(version)s/js/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
+    ]
+  },
+
+  # https://cdnjs.cloudflare.com/ajax/libs/ajax-bootstrap-select/1.4.5/js/ajax-bootstrap-select.min.js
   # javascript package for the Venn chart
   # 'venn': {'req': ['d3'], 'modules': ['venn.js'], 'website': '', 'version': '',},
 
@@ -701,7 +713,18 @@ CSS_IMPORTS = {
       {'alias': 'jqueryui'},
       {'alias': 'bootstrap'}],
     'modules': [
-      {'script': 'bootstrap-select.min.css', 'version': '1.13.6', 'path': 'bootstrap-select/%(version)s/css/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'bootstrap-select.min.css', 'version': '1.13.6', 'path': 'bootstrap-select/%(version)s/css/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
+    ]},
+
+  'select-ajax': {
+    'website': 'https://github.com/truckingsim/Ajax-Bootstrap-Select',
+    'req': [
+      {"alias": 'select'}
+    ], 'modules': [
+          {'reqAlias': 'selectAjax', 'script': 'ajax-bootstrap-select.min.css', 'version': '1.4.5',
+           'path': 'ajax-bootstrap-select/%(version)s/css/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
+    ]
+  },
 
   # Pivot table style with CDN Links
   'pivot': {

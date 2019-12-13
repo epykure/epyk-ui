@@ -249,7 +249,6 @@ class Inputs(object):
     :param height:
     :param htmlCode:
     :param profile:
-    :return:
     """
     size = self.context._size(size)
     html_coech = html.HtmlInput.Radio(self.context.rptObj, flag, label, group_name, icon, size, width, height, htmlCode,

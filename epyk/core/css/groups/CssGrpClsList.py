@@ -32,9 +32,11 @@ class CssClassListDropDown(CssGrpCls.CssGrpClass):
   css_dropdown_menu_a_after = CssStyleDropdown.CssDropDownMenuAAfter
   css_dropdown_menu_hover_a_after = CssStyleDropdown.CssDropDownMenuHoverAAfter
   css_dropdown_sub_menu_pull_left = CssStyleDropdown.CssDropDownSubMenuPullLeft
+  css_dropdown_sub_menu_right = CssStyleDropdown.CssDropDownSubMenuRight
   css_dropdown_sub_menu_pull_left_menu = CssStyleDropdown.CssDropDownSubMenuPullLeftMenu
   __map, __alt_map = ['CssDivNoBorder', 'CssDropDownSubMenu', 'CssDropDownAfterMenu', 'CssDropDownMenuAAfter',
-                      'CssDropDownMenuHoverAAfter', 'CssDropDownSubMenuPullLeft', 'CssDropDownSubMenuPullLeftMenu'], []
+                      'CssDropDownMenuHoverAAfter', 'CssDropDownSubMenuPullLeft', 'CssDropDownSubMenuPullLeftMenu',
+                      'CssDropDownSubMenuRight'], []
 
 
 class CssClassList(CssGrpCls.CssGrpClass):
@@ -61,6 +63,14 @@ class CssClassListSelect(CssGrpCls.CssGrpClass):
   css_select_style = CssStylesSelect.CssSelectStyle
   __map, __alt_map = ['CssDivNoBorder', 'CssSelectButton', 'CssSelectFilterOption', 'CssSelectOption',
                       'CssSelectOptionHover', 'CssSelectOptionActive', 'CssSelectStyle'], []
+
+
+class CssClassListSelectMin(CssGrpCls.CssGrpClass):
+  """
+
+  """
+  css_select_style = CssStylesSelect.CssSelectStyle
+  __map, __alt_map = ['CssSelectStyle'], []
 
 
 class CssClassSwitch(CssGrpCls.CssGrpClass):

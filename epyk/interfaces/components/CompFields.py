@@ -131,7 +131,10 @@ class Fields(object):
             height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
 
-    :param text:
+    :param value:
+    :param label:
+    :param placeholder:
+    :param icon:
     :param size:
     :param width:
     :param height:
@@ -151,7 +154,10 @@ class Fields(object):
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
 
-    :param text:
+    :param value:
+    :param label:
+    :param placeholder:
+    :param icon:
     :param size:
     :param width:
     :param height:
@@ -170,7 +176,10 @@ class Fields(object):
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
 
-    :param text:
+    :param value:
+    :param label:
+    :param placeholder:
+    :param icon:
     :param size:
     :param width:
     :param height:
@@ -186,7 +195,10 @@ class Fields(object):
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
 
-    :param text:
+    :param value:
+    :param label:
+    :param placeholder:
+    :param icon:
     :param size:
     :param width:
     :param height:
@@ -198,13 +210,16 @@ class Fields(object):
     self.context.register(html_input)
     return html_input
 
-  def checkbox(self, value=False, label=None, icon=None, size=(None, 'px'), width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, profile=None):
+  def checkbox(self, value=False, label=None, icon=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"),
+               htmlCode=None, helper=None, profile=None):
     """
+
     Example
     rptObj.ui.fields.checkbox(True, label="Check")
 
-    :param text:
+    :param value:
+    :param label:
+    :param icon:
     :param size:
     :param width:
     :param height:
@@ -219,10 +234,14 @@ class Fields(object):
   def radio(self, value=False, label=None, group_name=None, icon=None, size=(None, 'px'), width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+
     Example
     rptObj.ui.fields.checkbox(True, label="Check")
 
-    :param text:
+    :param value:
+    :param label:
+    :param group_name:
+    :param icon:
     :param size:
     :param width:
     :param height:
@@ -261,7 +280,9 @@ class Fields(object):
     Example
     rptObj.ui.fields.select(["a", "b"], label="Check")
 
-    :param text:
+    :param value:
+    :param label:
+    :param icon:
     :param size:
     :param width:
     :param height:

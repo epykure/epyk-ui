@@ -5,6 +5,7 @@ Javascript Dom element for the HTML Components
 import json
 
 from epyk.core.js import JsUtils
+from epyk.core.html import Defaults
 from epyk.core.js.statements import JsIf
 from epyk.core.js.fncs import JsFncs
 
@@ -169,6 +170,39 @@ class JsHtml(JsNodeDom.JsDoms):
     :return:
     """
     return JsIf.JsIf(self.css(attr) == jsVal2, [self.css(attr, jsVal1)]).else_([self.css(attr, jsVal2)])
+
+  def highlight(self, css_attrs=None, time_event=1000):
+    """
+
+    Example
+    s.dom.highlight()
+    s.dom.highlight(css_attrs={"background": "red"}),
+
+    :param css_attrs: A dictionary with the CSS attributes
+    :param time_event: Integer. The time of the event
+    """
+    if css_attrs is None:
+      css_attrs, css_attrs_origin = {}, {}
+      for k, v in Defaults.HTML_HIGHLIGHT.items():
+        if isinstance(v, dict):
+          dyn_attrs, dyn_attrs_orign = {}, {}
+          if 'color' in v:
+            dyn_attrs['color'] = self._report.getColor(*v['color'])
+            dyn_attrs_orign['color'] = self._report.getColor("greys", 0)
+          css_attrs[k] = v['attr'] % dyn_attrs
+          css_attrs_origin[k] = self._src.attr[k] if k in self._src.attr else v['attr'] % dyn_attrs_orign
+        else:
+          css_attrs[k] = v
+          css_attrs_origin[k] = self._src.attr[k] if k in self._src.attr else "none"
+    else:
+      css_attrs_origin = {}
+      for k in css_attrs.keys():
+        if k in self._src.attr:
+          css_attrs_origin[k] = self._src.attr[k]
+        else:
+          css_attrs_origin[k] = "none"
+    return '''%s; setTimeout(function(){%s}, %s)
+      ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
 
 class JsHtmlRich(JsHtml):

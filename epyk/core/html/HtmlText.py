@@ -168,7 +168,7 @@ class Span(Html.Html):
       '''
 
   def __str__(self):
-    return '<span %s></span>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
+    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.pyStyle), self.val, self.helper)
 
 
 class Text(Html.Html):

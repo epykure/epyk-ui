@@ -3,6 +3,7 @@ Module in charge of all the Text components
 """
 
 from epyk.core import html
+from epyk.core.html import Defaults
 
 
 class Texts(object):
@@ -77,7 +78,7 @@ class Texts(object):
     self.context.register(html_label)
     return html_label
 
-  def span(self, text=None, size=(None, "px"), color=None, align='center', width=(100, 'px'), height=("23", 'px'), htmlCode=None,
+  def span(self, text=None, size=(None, "px"), color=None, align='center', width=None, height=None, htmlCode=None,
            tooltip=None, profile=None):
     """
     The <span> tag is used to group inline-elements in a document.
@@ -102,6 +103,10 @@ class Texts(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     """
+    if width is None:
+      width = (Defaults.TEXTS_SPAN_WIDTH, 'px')
+    if height is None:
+      height = ("23", 'px')
     size = self.context._size(size)
     html_label = html.HtmlText.Span(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip, profile)
     self.context.register(html_label)
