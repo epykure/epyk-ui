@@ -119,8 +119,9 @@ class Lists(object):
       for rec in records:
         if rec["value"] == selected:
           rec["selected"] = True
-    return self.context.register(html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height,
-                                                        filter, profile, multiple, options))
+    html_select = html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height, filter, profile, multiple, options)
+    self.context.register(html_select)
+    return html_select
 
   def list(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, profile=None):

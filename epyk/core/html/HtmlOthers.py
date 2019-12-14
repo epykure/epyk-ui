@@ -14,7 +14,6 @@ from epyk.core.css.groups import CssGrpCls
 class Hr(Html.Html):
   name, category, callFnc = 'Line delimiter', 'Layouts', 'hr'
   _grpCls = CssGrpCls.CssClassHr
-  builder_name = False
 
   def __init__(self, report, color, count, size, background_color, height, align, profile):
     super(Hr, self).__init__(report, count, height=height[0], heightUnit=height[1], profile=profile)
@@ -49,7 +48,6 @@ class Hr(Html.Html):
 
 class Newline(Html.Html):
   name, category, callFnc = 'New line', 'Layouts', 'new_line'
-  builder_name = False
 
   def __str__(self):
     return "".join(['<br />'] * self.val)
@@ -84,17 +82,19 @@ class Stars(Html.Html):
     super(Stars, self).__init__(report, val, htmlCode=htmlCode, profile=profile)
     # Add the HTML components
     self._spans = []
+    self._jsStyles = {'color': self.getColor("success", 1) if color is None else color}
     for i in range(best):
       self.add_span("", position="after", css=False)
       self._sub_htmls[-1].style.addCls("fa fa-star")
       self._sub_htmls[-1].css({"margin": '0', "padding": 0})
       self._sub_htmls[-1].set_attrs(name="data-level", value=i)
+      if i < val:
+        self._sub_htmls[-1].css({"color": self._jsStyles['color']})
       self._spans.append(self._sub_htmls[-1])
     self.add_label(label, {"margin": "0 0 0 5px", 'height': 'none', "text-align": "left", "display": "inline-block",
                            'float': 'None'}, position="after")
     self.add_helper(helper).helper.css({"margin": '1px 4px'})
     self.css({'text-align': align, "display": 'block'})
-    self._jsStyles = {'color':  self.getColor("success", 1) if color is None else color}
 
   def click(self, js_fncs=None, profile=False):
     """
@@ -126,7 +126,7 @@ class Stars(Html.Html):
     return '''
       htmlObj.dataset.level = data;
       htmlObj.querySelectorAll("span").forEach(function(span, i){
-        if (i < data){span.style.color = options.color; console.log(options.color)}
+        if (i < data){span.style.color = options.color}
         else {span.style.color = ''}})'''
 
   def __str__(self):

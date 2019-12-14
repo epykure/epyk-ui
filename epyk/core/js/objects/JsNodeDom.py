@@ -557,6 +557,21 @@ class JsDoms(JsObject.JsObject):
     self._js.append('%(varId)s.classList.toggle("%(data)s")' % {"varId": self.varId, 'data': clsName})
     return self
 
+  def switchClass(self, clsName1, clsName2):
+    """
+    Switch from one CSS class to another.
+
+    Example
+    l2[-1].icon.dom.switchClass("fa-folder", "fa-folder-open")
+
+    :param clsName1:
+    :param clsName2:
+    :return:
+    """
+    self.toggleClass(clsName1)
+    self.toggleClass(clsName2)
+    return self
+
   @property
   def firstChild(self):
     """

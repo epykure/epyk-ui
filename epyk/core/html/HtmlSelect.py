@@ -20,14 +20,13 @@ class SelectDropDown(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
   _grpCls = CssGrpClsList.CssClassListDropDown
   name, category, callFnc = 'DropDown Select', 'Lists', 'dropdown'
+  builder_name = False
 
   def __init__(self, report, title, recordSet, size, width, height, htmlCode, dataSrc, globalFilter, profile):
     super(SelectDropDown, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
                                          heightUnit=height[1], htmlCode=htmlCode, globalFilter=globalFilter, dataSrc=dataSrc, profile=profile)
-    if dataSrc is not None and dataSrc.get('on_init', False):
-      self.vals = self.onInit(htmlCode, dataSrc)
-    if htmlCode is not None and htmlCode in self._report.http:
-      self.initVal(self._report.http[htmlCode])
+    # if htmlCode is not None and htmlCode in self._report.http:
+    #   self.initVal(self._report.http[htmlCode])
     self.title, self.size = title, "%s%s" % (size[0], size[1])
     # To replace non alphanumeric characters https://stackoverflow.com/questions/20864893/javascript-replace-all-non-alpha-numeric-characters-new-lines-and-multiple-whi
     #self.jsFrg = ["%s = CleanText($(this).text()) ;" % self.htmlId]
@@ -42,74 +41,102 @@ class SelectDropDown(Html.Html):
     #     if ('%(htmlCode)s' != 'None') {%(breadCrumVar)s['params']['%(htmlCode)s'] = %(jsEventVal)s; breadCrumbPushState()}
     #     ''' % {'htmlId': self.htmlId, 'htmlCode': self.htmlCode, 'jsEventVal': self.jsEventVal, 'breadCrumVar': self._report.jsGlobal.breadCrumVar})
 
-  @property
-  def jsQueryData(self):
-    if self.htmlCode:
-      return "{event_val: %(val)s, event_code: '%(htmlId)s', %(htmlCode)s: %(val)s}" % {'val': self.jsEventVal, 'htmlId': self.htmlId, 'htmlCode': self.htmlCode}
+  # @property
+  # def jsQueryData(self):
+  #   if self.htmlCode:
+  #     return "{event_val: %(val)s, event_code: '%(htmlId)s', %(htmlCode)s: %(val)s}" % {'val': self.jsEventVal, 'htmlId': self.htmlId, 'htmlCode': self.htmlCode}
+  #
+  #   return "{event_val: %s, event_code: '%s'}" % (self.jsEventVal, self.htmlId)
+  #
+  # @property
+  # def jsEventVal(self): return "$(this).contents()[0].text"
 
-    return "{event_val: %s, event_code: '%s'}" % (self.jsEventVal, self.htmlId)
+  # def initVal(self, val, isPyData=True):
+  #   """
+  #   This function will set the initial value selected by the SelectDropDown component.
+  #
+  #   Example
+  #   myObj.initVal('Test')
+  #   """
+  #   if isPyData:
+  #     val = json.dumps(val)
+  #   self._report.jsOnLoadFnc.add('$("#%(htmlId)s_button").html(%(jsVal)s)' % {"htmlId": self.htmlId, "jsVal": val})
 
-  @property
-  def jsEventVal(self): return "$(this).contents()[0].text"
+  # def setDefault(self, value, isPyData=True):
+  #   """
+  #   Set the default value selected to the dropdown box
+  #
+  #   Example
+  #   myObj.setDefault( 'btn-default' )
+  #   """
+  #   if isPyData:
+  #     value = json.dumps(value)
+  #   self._report.jsGlobal.add("%s = %s;" % (self.htmlId, value))
 
-  def initVal(self, val, isPyData=True):
-    """
-    This function will set the initial value selected by the SelectDropDown component.
+  #@property
+  #def val(self):
+  #  return '$("#%s_button").html()' % self.htmlId
 
-    Example
-    myObj.initVal('Test')
-    """
-    if isPyData:
-      val = json.dumps(val)
-    self._report.jsOnLoadFnc.add('$("#%(htmlId)s_button").html(%(jsVal)s)' % {"htmlId": self.htmlId, "jsVal": val})
-
-  def setDefault(self, value, isPyData=True):
-    """
-    Set the default value selected to the dropdown box
-
-    Example
-    myObj.setDefault( 'btn-default' )
-    """
-    if isPyData:
-      value = json.dumps(value)
-    self._report.jsGlobal.add("%s = %s;" % (self.htmlId, value))
-
-  @property
-  def val(self):
-    return '$("#%s_button").html()' % self.htmlId
-
-  @property
-  def eventId(self): return "$('#%s li')" % self.htmlId
+  #@property
+  #def eventId(self): return "$('#%s li')" % self.htmlId
 
   @property
   def _js__builder__(self):
     return ''' 
-        if (jsStyles.clearDropDown) {htmlObj.empty()};
+        var jqHtmlObj = jQuery(htmlObj);
+        if (options.clearDropDown) {jqHtmlObj.empty()};
         data.forEach(function(rec){
           if (rec._children != undefined) {
-            var li = $('<li class="dropdown-submenu"></li>').css(jsStyles.dropdown_submenu);
-            var a = $('<a class="dropdown-item" tabindex="-1" href="#" style="display:inline-block"><span style="display:inline-block;float:left">'+ rec.value +'</span></a>').css(jsStyles.a_dropdown_item);
-            li.append(a); var ul = $('<ul class="dropdown-menu"></ul>'); li.append(ul); jsStyles.clearDropDown = false;
-            htmlObj.append(li); %(pyCls)s(ul, rec._children, jsStyles)
+            var li = $('<li class="dropdown-submenu dropdown-menu-right"></li>').css(options.dropdown_submenu);
+            var a = $('<a class="dropdown-item" tabindex="-1" href="#" style="display:inline-block"><span style="display:inline-block;float:left">'+ rec.value +'</span></a>').css(options.a_dropdown_item);
+            li.append(a); var ul = $('<ul class="dropdown-menu"></ul>'); li.append(ul); options.clearDropDown = false;
+            jqHtmlObj.append(li); %(pyCls)s(ul, rec._children, options)
           } else {
-            if (rec.disable == true) {htmlObj.append('<li class="disabled"><a href="#">'+ rec.value +'</a></li>')}
+            if (rec.disable == true){jqHtmlObj.append('<li class="disabled"><a href="#">'+ rec.value +'</a></li>')}
             else {
-              if (rec.url == undefined) {var a = $('<a href="#">'+ rec.value +'</a>')}
+              if (rec.url == undefined){var a = $('<a href="#">'+ rec.value +'</a>')}
               else {var a = $('<a href="'+ rec.url +'">'+ rec.value +'</a>')}
-              a.css(jsStyles.a_dropdown_item);
-              var li = $('<li class="dropdown-item"></li>').css(jsStyles.dropdown_submenu);
-              li.append(a); htmlObj.append(li)}
-          }
+              a.css(options.a_dropdown_item);
+              var li = $('<li class="dropdown-item"></li>').css(options.dropdown_submenu);
+              li.append(a); jqHtmlObj.append(li)}}
         })''' % {"pyCls": self.__class__.__name__}
+
+  def _py_builder(self):
+    """
+
+    :return:
+    """
 
   def __str__(self):
     # [s for s in self.defined if not s.startswith("CssDropDown")]
+    items, children = [], []
+    l = self._report.ui.list([])
+    l.inReport = False
+    for v in self.val:
+      if '_children' in v:
+        self._py_builder()
+        sub_l = self._report.ui.list([])
+        sub_l.inReport = False
+        a = self._report.ui.link("test 2", url="#").set_attrs({"class": ["dropdown-item"], 'tabindex': -1})
+        a.inReport = False
+        for i in v['_children']:
+          sub_l.add_item(i["value"], attrs={"class": ["dropdown-submenu", 'dropdown-menu-right']})
+        sub_l.set_attrs(attrs={"class": ["dropdown-menu"]})
+        children.append("<a class='dropdown-item' tabindex='-1' href='#'>%s</a> %s" % (v['value'], sub_l))
+        #children.append(str(self._report.ui.link(child['value'], url="#")))
+        #children.append(child['value'])
+      else:
+        children.append(v['value'])
+    l.set_items(data=children, attrs={"class": ['dropdown-submenu', 'dropdown-menu-right']})
+    l.set_attrs(attrs={"class": ["dropdown-menu"], 'id': self.htmlId, 'aria-labelledby': 'dropdownMenu'})
+    items.append(l)
     return ''' 
       <div class="dropdown" %(cssAttr)s>
         <button id="%(htmlId)s_button" style="font-size:%(size)s;width:100%%;height:100%%;background-color:%(darkBlue)s;color:%(color)s" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">%(title)s<span class="caret"></span></button>
-        <ul class="dropdown-menu" id="%(htmlId)s" aria-labelledby="dropdownMenu"></ul>
+        %(val)s
       </div> ''' % {'cssAttr': self.get_attrs(withId=False, pyClassNames=self.defined), 'title': self.title, 'htmlId': self.htmlId,
-                    'darkBlue': self.getColor('colors', 7), 'color': self.getColor('greys', 0), 'size': self.size}
+                    'darkBlue': self.getColor('colors', 7), 'color': self.getColor('greys', 0), 'size': self.size,
+                    'val': "".join([str(l) for l in items])}
 
   def to_word(self, document):
     p = document.add_paragraph()
@@ -159,11 +186,13 @@ class Optgroup(Html.Html):
 class Select(Html.Html):
   __reqCss, __reqJs = ['select'], ['select']
   name, category, callFnc = 'Select', 'Lists', 'select'
+  _grpCls = CssGrpClsList.CssClassListSelectMin
 
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
     super(Select, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1],
                                  height=height[0],  heightUnit=height[1], globalFilter=filter, profile=profile)
     self.selected = None
+    self._jsStyles = options
 
   @property
   def dom(self):
@@ -174,33 +203,35 @@ class Select(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
       self._dom = JsSelect.JSelect(self, report=self._report)
     return self._dom
 
-
   @property
   def _js__builder__(self):
-    return ''' %s.selectpicker(options).selectpicker('refresh') ''' % JsQuery.decorate_var("htmlObj")
+    return '''%s.selectpicker(options).selectpicker('refresh')''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def change(self, jsFncs, profile=False):
     return self.on("change", jsFncs, profile)
 
   def __str__(self):
-    options, opt_groups = [], []
+    options, opt_groups = [], {}
     for val in self.val:
       opt = Option(self._report, val['value'], val['name'], None, self.selected is not None and self.selected == val['value'])
       opt.inReport = False
-      options.append(opt)
-    #
-    opt_rp = Optgroup(self._report, options, "test Group")
-    opt_rp.inReport = False
-    opt_groups.append(opt_rp.html())
-
-    return "<select %s>%s</select>" % (self.get_attrs(pyClassNames=self.defined), "".join(opt_groups))
+      if 'group' in val:
+        opt_groups.setdefault(val['group'], []).append(opt)
+      else:
+        options.append(opt.html())
+    data = options
+    for k in sorted(opt_groups):
+      opt_rp = Optgroup(self._report, opt_groups[k], k)
+      opt_rp.inReport = False
+      data.append(opt_rp.html())
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return "<select %s>%s</select>" % (self.get_attrs(pyClassNames=self.defined), "".join(data))
 
 
 class SelectOld(Html.Html):

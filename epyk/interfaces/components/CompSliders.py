@@ -83,7 +83,7 @@ class Sliders(object):
     return self.context.register(html.HtmlEvent.Slider(self.context.rptObj, value, type, range, animate, step, min,
         max, width, height, globalFilter, recordSet, color, attrs, helper, profile))
 
-  def progressbar(self, number=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None, helper=None, profile=None):
+  def progressbar(self, number=None, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None, helper=None, profile=None):
     """
     Add a progress bar component to the page
 
@@ -93,7 +93,8 @@ class Sliders(object):
     Documentation
     https://jqueryui.com/progressbar/
 
-    :param number: A number between 0 and 100
+    :param number: A number (by default between 0 and 100)
+    :param total: A number
     :param width: Optional. Integer for the component width
     :param height: Optional. Integer for the component height
     :param htmlCode:
@@ -104,6 +105,6 @@ class Sliders(object):
     if htmlCode is not None:
       attrs.update({"htmlCode": htmlCode, "changeUrl": False})
 
-    html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, width, height,  attrs or {}, helper, profile)
+    html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper, profile)
     self.context.register(html_pr)
     return html_pr

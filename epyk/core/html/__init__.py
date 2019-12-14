@@ -23,3 +23,6 @@ from . import HtmlTrees
 from . import HtmlForms
 from . import HtmlTags
 from . import Header
+
+from . import tables
+from . import graph

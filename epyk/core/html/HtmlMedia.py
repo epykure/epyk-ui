@@ -55,6 +55,7 @@ class Media(Html.Html):
   def __str__(self):
     if 'autoplay' in self._jsStyles:
       self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
+    self.set_attrs(name="src", value=os.path.join(self.val['path'], self.val['video']))
     return '<video %s></video>' % self.get_attrs(pyClassNames=self.defined)
 
 
@@ -100,6 +101,7 @@ class Audio(Html.Html):
   def __str__(self):
     if 'autoplay' in self._jsStyles:
       self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self._jsStyles["autoplay"], None))
+    self.set_attrs(name="src", value=os.path.join(self.val['path'], self.val['audio']))
     return '<audio %(attrs)s></audio>' % {'attrs': self.get_attrs(pyClassNames=self.defined)}
 
 

@@ -24,13 +24,15 @@ from epyk.core.css.groups import CssGrpClsTable
 class ProgressBar(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
   name, category, callFnc = 'Progress Bar', 'Sliders', 'progressbar'
-  _grpCls = CssGrpCls.CssGrpClassBaseCursor
+  _grpCls = CssGrpCls.CssGrpClassBase
 
-  def __init__(self, report, number, width, height, attrs, helper, profile):
-    super(ProgressBar, self).__init__(report, number, width=width[0], widthUnit=width[1], height=height[0],
+  def __init__(self, report, number, total, width, height, attrs, helper, profile):
+    value = number / total * 100
+    super(ProgressBar, self).__init__(report, value, width=width[0], widthUnit=width[1], height=height[0],
                                       heightUnit=height[1], profile=profile)
     self.add_helper(helper)
-    self._jsStyles = {"background": self.getColor('colors', 7)}
+    self._jsStyles = {"background": self.getColor('success', 1)}
+    self.attr["title"] = "%.2f%% (%s / %s)" % (value, number, total)
 
   @property
   def _js__builder__(self):
@@ -52,6 +54,7 @@ class ProgressBar(Html.Html):
     return self._dom
 
   def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
@@ -350,10 +353,10 @@ class SkillBar(Html.Html):
     return '''
       htmlObj.empty();
       data.forEach(function(rec, i){
-        if (jsStyles.colTooltip != undefined) {var tooltip = 'title="'+ rec[jsStyles.colTooltip] +'"'} else {var tooltip = ''};
-        if (jsStyles.colUrl != undefined) {var content = '<a href="'+ rec[jsStyles.colUrl] +'" style="color:white">'+ valPerc.toFixed(2) +'%</a>'} 
-        else {var content = rec[jsStyles.val].toFixed( 2 ) +"%"};
-        htmlObj.append('<tr '+ tooltip +'><td style="width:100px;"><p style="margin:2px;text-align:center;word-wrap:break-word;cursor:pointer">'+ rec[jsStyles.label] +'</p></td><td style="width:100%"><div style="margin:2px;display:block;height:100%;padding-bottom:5px;padding:2px 0 2px 5px;width:'+ parseInt( rec[jsStyles.val] ) +'%;background-color:'+ jsStyles.color +';color:'+ jsStyles.fontColor +'">' + content + '</div></td></tr>');
+        if (options.colTooltip != undefined) {var tooltip = 'title="'+ rec[options.colTooltip] +'"'} else {var tooltip = ''};
+        if (options.colUrl != undefined) {var content = '<a href="'+ rec[options.colUrl] +'" style="color:white">'+ valPerc.toFixed(2) +'%</a>'} 
+        else {var content = rec[options.val].toFixed( 2 ) +"%"};
+        htmlObj.append('<tr '+ tooltip +'><td style="width:100px;"><p style="margin:2px;text-align:center;word-wrap:break-word;cursor:pointer">'+ rec[options.label] +'</p></td><td style="width:100%"><div style="margin:2px;display:block;height:100%;padding-bottom:5px;padding:2px 0 2px 5px;width:'+ parseInt( rec[options.val] ) +'%;background-color:'+ jsStyles.color +';color:'+ options.fontColor +'">' + content + '</div></td></tr>');
         htmlObj.find('tr').tooltip()})
       '''
 
@@ -517,14 +520,13 @@ class ContextMenu(Html.Html):
     return '''
       <nav %(attr)s name='context_menus'>
         <ul style='list-style:none;padding:0px;margin:0'></ul>
-      </nav>''' % {'attr': self.get_attrs(pyClassNames=self.pyStyle)}
+      </nav>''' % {'attr': self.get_attrs(pyClassNames=self.defined)}
 
 
 class OptionsBar(Html.Html):
   name, category, callFnc = 'Options', 'Event', 'optionsbar'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   _grpCls = CssGrpClsImage.CssClassIcon
-  builder_name = False
 
   def __init__(self, report, recordset, width, height, size, color, border_color, options):
     super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])

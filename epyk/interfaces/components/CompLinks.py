@@ -106,7 +106,7 @@ class Links(object):
 
     Example
     data_link = rptObj.ui.links.data("link", "test#data")
-    data_link.build({"text": 'new link Name', 'data': "new content"}),
+    data_link.build({"text": 'new link Name', 'data': "new content"})
 
     :param text: The string value to be displayed in the component
     :param value:

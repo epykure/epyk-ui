@@ -78,7 +78,7 @@ class JSelect(JsPackage):
 
     Documentation
     https://github.com/truckingsim/Ajax-Bootstrap-Select
-    
+
     Example
     s.dom.ajaxSelectPicker({"values": "a, b, c", "ajax": {
     "url": 'https://jsonplaceholder.typicode.com/posts', "type": "POST", "dataType": "json",

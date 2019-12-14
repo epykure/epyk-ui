@@ -7,9 +7,6 @@ import re
 
 from epyk.core.html import Html
 from epyk.core.js.Imports import requires
-from epyk.core.js import JsUtils
-
-from epyk.core.js.objects import JsNodeDom
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -109,6 +106,7 @@ class DataLink(Html.Html):
       htmlObj.innerHTML = data.text'''
 
   def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'val': self.val['text'], 'format': self.format}
 
 

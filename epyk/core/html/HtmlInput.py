@@ -411,5 +411,3 @@ class Search(Html.Html):
           <span id="%(htmlId)s_button" class="fas fa-search"></span>
       </div>''' % {"attr": self.get_attrs(pyClassNames=self.defined), "pyCssCls": pyCssCls, "placeholder": self.placeholder,
                    'htmlId': self.htmlId}
-
-
