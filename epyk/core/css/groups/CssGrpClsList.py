@@ -70,7 +70,17 @@ class CssClassListSelectMin(CssGrpCls.CssGrpClass):
 
   """
   css_select_style = CssStylesSelect.CssSelectStyle
-  __map, __alt_map = ['CssSelectStyle'], []
+  css_select_button = CssStylesSelect.CssSelectButton
+  css_select_filter_option = CssStylesSelect.CssSelectFilterOption
+  css_select_option = CssStylesSelect.CssSelectOption
+  css_select_option_hover = CssStylesSelect.CssSelectOptionHover
+  css_select_option_active = CssStylesSelect.CssSelectOptionActive
+  css_select_search_box = CssStylesSelect.CssSelectSearchBox
+  css_select_outline = CssStylesSelect.CssSelectOutline
+  css_select_search_box_input = CssStylesSelect.CssSelectSearchBoxInput
+  __map, __alt_map = ['CssSelectStyle'], ['CssSelectButton', 'CssSelectOption', 'CssSelectOptionHover', 'CssSelectOutline',
+                                          'CssSelectOptionActive', 'CssSelectFilterOption', 'CssSelectSearchBox',
+                                          'CssSelectSearchBoxInput']
 
 
 class CssClassSwitch(CssGrpCls.CssGrpClass):

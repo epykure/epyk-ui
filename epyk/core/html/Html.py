@@ -145,7 +145,7 @@ class Html(object):
         self.htmlObj.defined.remove(cssNname)
       return self.htmlObj
 
-    def addCls(self, cssName):
+    def addCls(self, cssNames):
       """
       Add a class based on its name.
 
@@ -157,11 +157,14 @@ class Html(object):
 
       :return:
       """
-      pyCssName = self.htmlObj._report.style.get(cssName)
-      self.htmlObj.attr['class'].add(cssName)
-      if pyCssName is not None:
-        self.htmlObj._report.style.cssStyles[cssName] = pyCssName
-        self.htmlObj.defined.add(cssName)
+      if not isinstance(cssNames, (list, set)):
+        cssNames = [cssNames]
+      for cssName in cssNames:
+        pyCssName = self.htmlObj._report.style.get(cssName)
+        self.htmlObj.attr['class'].add(cssName)
+        if pyCssName is not None:
+          self.htmlObj._report.style.cssStyles[pyCssName.classname] = pyCssName
+          self.htmlObj.defined.add(cssName)
       return self
 
     def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True, isMedia=False, allImportantAttrs=True):

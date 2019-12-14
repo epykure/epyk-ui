@@ -192,6 +192,9 @@ class Select(Html.Html):
     super(Select, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1],
                                  height=height[0],  heightUnit=height[1], globalFilter=filter, profile=profile)
     self.selected = None
+    self.style.addCls(self.defined.clsAltMap)
+    #self.style.addCls("CssSelectButton")
+    #self.style.addCls("CssSelectOption")
     self._jsStyles = options
 
   @property

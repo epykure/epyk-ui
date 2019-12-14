@@ -79,7 +79,6 @@ class PyOuts(object):
     self._report.style.add('CssStandardLinks')
     self._report.style.add('CssTextSelection', cssRef='::selection')
     self._report.style.add('CssTextSelection', cssRef='::-moz-selection')
-
     htmlParts = []
     for objId in self._report.content:
       if content_only and self._report.htmlItems[objId].name == "Nav Bar":
