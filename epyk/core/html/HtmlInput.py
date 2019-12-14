@@ -376,16 +376,17 @@ class Search(Html.Html):
     self.size = "%s%s" % (size[0], size[1])
     super(Search, self).__init__(report, "", htmlCode=htmlCode, height=height[0], heightUnit=height[1], profile=profile)
     self.color = self.getColor('colors', -1) if color is None else color
-    self.css({"width": "100%", "display": "inline-block", "margin-bottom": '2px'})
+    self.css({"display": "inline-block", "margin-bottom": '2px'})
     #
     if not extensible:
       self._report.style.cssCls('CssSearch')
       pyCssCls = self._report.style.cssName('CssSearch')
+      self.css({"width": "100%"})
     else:
       self._report.style.cssCls('CssSearchExt')
       pyCssCls = self._report.style.cssName('CssSearchExt')
     self.add_input(text).input.set_attrs({"class": [pyCssCls], "placeholder": placeholder, "spellcheck": False})
-    self.input.css({"text-align": 'left', 'padding-left': '23px'})
+    self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
     self.add_icon("fas fa-search").icon.attr['id'] = "%s_button" % self.htmlId
     self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute'})
     if tooltip != '':
@@ -401,15 +402,7 @@ class Search(Html.Html):
   def _js__builder__(self):
     return '''htmlObj.find('input').val(data)'''
 
-  # @property
-  # def eventId(self): return '$("#%s input")' % self.htmlId
-
   def click(self, jsFncs, profile=False):
-    # if not isinstance(jsFncs, list):
-    #   jsFncs = [jsFncs]
-    # self._report.jsOnLoadEvtsFnc.add('''
-    #   $('#%(htmlId)s_button').on('click', function(event) {
-    #     var data = %(data)s; %(jsFncs)s})''' % {'htmlId': self.htmlId, 'jsFncs': ";".join(jsFncs), 'data': self.jsQueryData})
     return self.icon.click(jsFncs, profile)
 
   def enter(self, jsFncs, profile=False):
@@ -425,7 +418,7 @@ class Search(Html.Html):
     self.click(jsFncs)
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s } " % {"jsFnc": JsUtils.jsConvertFncs(jsFncs, toStr=True)}])
+    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s } " % {"jsFnc": JsUtils.jsConvertFncs(jsFncs, toStr=True)}], profile=profile)
 
   def __str__(self):
     return '<div %(attr)s></div>' % {"attr": self.get_attrs(pyClassNames=self.defined)}
