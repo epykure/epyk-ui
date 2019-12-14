@@ -2,34 +2,29 @@
 CSS Style module for the Input components
 """
 
+from epyk.core.html import Defaults as Defaults_html
+from epyk.core.css import Defaults as Defaults_css
 
 from epyk.core.css.styles import CssStyle
 
 
 class CssInput(CssStyle.CssCls):
   """
-
+  CSS Base style for the input components
   """
-  attrs = {'font-size': '12px', 'font-family': 'Calibri', 'border': 'none', 'text-align': 'center', 'cursor': 'text',
-           'margin': '0', 'border-radius': '5px', 'min-width': '140px', 'line-height': '23px'}
+  attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': '0', 'border-radius': '5px'}
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('colors', 0), "color": self.getColor('greys', -1), 'border': '1px solid %s' % self.getColor('colors', 0)})
+    style.update({"background": self.getColor('colors', 0), "color": self.getColor('greys', -1), 'font-family': Defaults_css.Font.family,
+                  'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
+                  'border': '1px solid %s' % self.getColor('colors', 0), 'font-size': '%spx' % Defaults_css.Font.size})
     eventsStyles['hover'].update({'color': self.getColor('success', 1)})
-
-
-class CssInputInteger(CssStyle.CssCls):
-  """
-
-  """
-  cssId = {'reference': 'input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button'}
-  attrs = {"-webkit-appearance": 'none', "margin": 0}
 
 
 class CssInputRange(CssStyle.CssCls):
   """
-
+  CSS Style for the input range component
   """
   attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'outline': 'none', 'opacity': 0.7,
            '-webkit-transition': '.2s', 'transition': 'opacity .2s', 'cursor': 'pointer'}
@@ -41,14 +36,14 @@ class CssInputRange(CssStyle.CssCls):
 
 class CssInputRangeThumb(CssStyle.CssCls):
   """
-
+  CSS Style for the thumb of the input range component
   """
   cssId = {'reference': 'input[type=range]::-webkit-slider-thumb'}
-  attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer',
-           'width': '10px', 'height': '10px'}
+  attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('success', 1)})
+    style.update({"background": self.getColor('success', 1), 'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
+                  'height': '%spx' % Defaults_html.INPUTS_RANGE_THUMB})
 
   @property
   def classname(self):
@@ -57,22 +52,33 @@ class CssInputRangeThumb(CssStyle.CssCls):
 
 class CssInputLabel(CssStyle.CssCls):
   """
+  CSS Style for the label attached to an input component
+  """
+  attrs = {'line-height': '1.5', 'margin-left': '10px'}
+  cssId = {'child': 'label'}
+
+  def customize(self, style, eventsStyles):
+    style.update({'font-family': Defaults_css.Font.family, 'font-size': '%spx' % Defaults_css.Font.size})
+
+
+class CssInputInteger(CssStyle.CssCls):
+  """
 
   """
-  attrs = {'font-size': '12px', 'line-height': '1.5', 'margin-left': '10px'}
-  cssId = {'child': 'label'}
+  cssId = {'reference': 'input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button'}
+  attrs = {"-webkit-appearance": 'none', "margin": 0}
 
 
 class CssInputInt(CssStyle.CssCls):
   """
-
+  CSS Style for the input integer component
   """
   cssId = {'child': 'input'}
 
 
 class CssInputText(CssStyle.CssCls):
   """
-
+  CSS Style for the input text component (within a field object)
   """
   attrs = {'margin-left': '10px'}
   cssId = {'child': 'input'}
@@ -80,12 +86,12 @@ class CssInputText(CssStyle.CssCls):
 
 class CssInputTextArea(CssStyle.CssCls):
   """
-
+  CSS Style for the textarea component.
   """
   attrs = {'resize': 'none', 'margin-bottom': '5px'}
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
     style.update({"background-color": self.getColor('colors', 0), "color": self.getColor('greys', -1),
-                  'border': '1px solid %s' % self.getColor('greys', 3)})
-    eventsStyles['hover'].update({'color': self.getColor('greys', -1), 'border': '1px solid %s' % self.getColor('success', 1)})
+                  'border': '1px solid %s' % self.getColor('colors', 1)})
+    eventsStyles['hover'].update({'color': self.getColor('greys', -1)})

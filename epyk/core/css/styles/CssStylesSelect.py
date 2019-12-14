@@ -2,17 +2,19 @@
 CSS Styles for all the select components
 """
 
-
 from epyk.core.css.styles import CssStyle
+from epyk.core.html import Defaults as Defaults_html
+from epyk.core.css import Defaults as Defaults_css
 
 
 class CssSelectStyle(CssStyle.CssCls):
-  attrs = {'font-size': '12px', 'font-family': 'Calibri', 'height': '23px', 'padding-top': '2px',
-           'display': 'inline-block !IMPORTANT', 'margin': '0 !IMPORTANT', 'min-width': '140px'}
+  attrs = {'padding-top': '2px', 'display': 'inline-block !IMPORTANT', 'margin': '0 !IMPORTANT'}
   focus = {'outline': 0, 'border': 'none', 'box-shadow': 'none'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('greys', 0), "color": self.getColor('greys', -1)})
+    style.update({"background": self.getColor('greys', 0), "color": self.getColor('greys', -1),
+                  'font-family': Defaults_css.Font.family, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
+                  'font-size': '%spx' % Defaults_css.Font.size, 'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH})
 
 
 class CssSelectButton(CssStyle.CssCls):
@@ -27,21 +29,20 @@ class CssSelectSearchBox(CssStyle.CssCls):
 
 
 class CssSelectSearchBoxInput(CssStyle.CssCls):
-  attrs = {"height": "23px", "outline": 0, "margin-bottom": "10px"}
+  attrs = {"outline": 0, "margin-bottom": "10px"}
   cssId = {'reference': ".bs-searchbox input.form-control"}
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
-    style.update({"border-color": self.getColor('colors', 0)})
+    style.update({"border-color": self.getColor('colors', 0), "height": "%spx" % Defaults_html.LINE_HEIGHT})
     eventsStyles['focus'].update({"box-shadow": "0 0 0 0.2em %s" % self.getColor('colors', 0)})
 
 
 class CssSelectOption(CssStyle.CssCls):
   cssId = {'reference': ".dropdown-menu"}
-  attrs = {'font-size': '12px !IMPORTANT'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('greys', 0)})
+    style.update({"background": self.getColor('greys', 0), 'font-size': '%spx' % Defaults_css.Font.size})
 
 
 class CssSelectOptionHover(CssStyle.CssCls):

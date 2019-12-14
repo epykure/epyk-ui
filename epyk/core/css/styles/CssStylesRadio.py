@@ -5,19 +5,22 @@ CSS Style module for the Radio components
 
 from epyk.core.css.styles import CssStyle
 
+from epyk.core.css import Defaults as Defaults_css
+
 
 class CssRadioButton(CssStyle.CssCls):
-  attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle', 'font-size': '12px'}
+  attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor("colors", 3)})
+    style.update({'border': '1px solid %s' % self.getColor("colors", 3), 'font-size': '%spx' % Defaults_css.Font.size})
 
 
 class CssRadioButtonSelected(CssStyle.CssCls):
-  attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle', 'font-size': '12px'}
+  attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor("success", 1), 'color': self.getColor('success', 1)})
+    style.update({'border': '1px solid %s' % self.getColor("success", 1), 'color': self.getColor('success', 1),
+                  'font-size': '%spx' % Defaults_css.Font.size})
 
 
 class CssRadioSwitch(CssStyle.CssCls):
@@ -26,8 +29,10 @@ class CssRadioSwitch(CssStyle.CssCls):
 
 
 class CssRadioSwitchLabel(CssStyle.CssCls):
-  attrs = {'cursor': 'pointer', 'margin': '2px', 'text-indent': '-9999px', 'display': 'block', 'border-radius': '100px', 'position': 'relative'}
-  after = {'content': "''", 'position': 'absolute', 'left': '5px', 'width': '20px', 'height': '100%', 'border-radius': '20px', 'transition': '0.3s'}
+  attrs = {'cursor': 'pointer', 'margin': '2px', 'text-indent': '-9999px', 'display': 'block', 'border-radius': '100px',
+           'position': 'relative'}
+  after = {'content': "''", 'position': 'absolute', 'left': '5px', 'width': '20px', 'height': '100%',
+           'border-radius': '20px', 'transition': '0.3s'}
   cssId = {'child': 'label'}
 
   def customize(self, style, eventsStyles):

@@ -5,22 +5,24 @@ CSS Style module for the Div components
 
 from epyk.core.css.styles import CssStyle
 
+from epyk.core.css import Defaults as Defaults_css
+
 
 class CssDivNoBorder(CssStyle.CssCls):
-  attrs = {'margin': '0', 'font-family': 'Calibri', 'clear': 'both', 'padding': '0', 'border': '0'}
+  attrs = {'margin': '0', 'clear': 'both', 'padding': '0', 'border': '0'}
 
 
 class CssDivBottomBorder(CssStyle.CssCls):
   def customize(self, style, eventsStyles):
-    style.update({"border-bottom": '2px solid %s' % self.getColor("colors", 0)})
+    style.update({"border-bottom": '2px solid %s' % self.getColor("colors", 0), 'font-family': Defaults_css.Font.family})
     eventsStyles['hover'].update({"border-bottom": '2px solid %s' % self.getColor("success", -1)})
 
 
 class CssDivWithBorder(CssStyle.CssCls):
-  attrs = {'margin': '0 0 5px 0', 'font-family': 'Calibri', 'padding': '5px', 'outline': 'none'}
+  attrs = {'margin': '0 0 5px 0', 'padding': '5px', 'outline': 'none'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': "1px solid %s" % self.getColor('colors', 0)})
+    style.update({'border': "1px solid %s" % self.getColor('colors', 0), 'font-family': Defaults_css.Font.family})
 
 
 class CssDivConsole(CssStyle.CssCls):
@@ -38,10 +40,10 @@ class CssDivCursor(CssStyle.CssCls):
 
 
 class CsssDivBoxMargin(CssStyle.CssCls):
-  attrs = {'margin': '0', 'padding': '0 2px 0 2px', 'font-family': 'arial', 'white-space': 'pre-wrap'}
+  attrs = {'margin': '0', 'padding': '0 2px 0 2px', 'white-space': 'pre-wrap'}
 
   def customize(self, style, eventsStyles):
-    style.update({"border": '1px solid %s' % self.getColor('greys', 0)})
+    style.update({"border": '1px solid %s' % self.getColor('greys', 0), 'font-family': Defaults_css.Font.family})
     eventsStyles['hover'].update({'border': "1px solid %s" % self.getColor('greys', 5)})
 
 
@@ -160,11 +162,12 @@ class CssDivPagination(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
     style.update({'color': self.getColor('greys', 9)})
-    eventsStyles['hover'].update({"background-color": self.getColor('greys', 3)} )
+    eventsStyles['hover'].update({"background-color": self.getColor('greys', 3)})
 
 
 class CssDivEditor(CssStyle.CssCls):
-  attrs = {'overflow': 'hidden', 'white-space': 'pre', 'display': 'block', 'padding': '30px 10px 10px 10px', 'margin-top': '5px', 'text-align': 'left'}
+  attrs = {'overflow': 'hidden', 'white-space': 'pre', 'display': 'block', 'padding': '30px 10px 10px 10px',
+           'margin-top': '5px', 'text-align': 'left'}
 
   def customize(self, style, eventsStyles):
     style.update({'border': "1px solid %s" % self.getColor('greys', 3), 'background-color': self.getColor('greys', 2)})
@@ -178,10 +181,11 @@ class CssDivRow(CssStyle.CssCls):
 
 
 class CssPanelTitle(CssStyle.CssCls):
-  attrs = {'padding': '1px 0', 'margin': '0 5px 5px 5px', 'font-family': 'Calibri', 'font-weight': 'bold'}
+  attrs = {'padding': '1px 0', 'margin': '0 5px 5px 5px', 'font-weight': 'bold'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border-bottom': "1px solid %s" % self.getColor('success', 1), "font-size": self.headerFontSize})
+    style.update({'border-bottom': "1px solid %s" % self.getColor('success', 1), "font-size": self.headerFontSize,
+                  'font-family': Defaults_css.Font.family})
 
 
 class CssDivFilter(CssStyle.CssCls):
@@ -196,8 +200,3 @@ class CssDivFilterItems(CssStyle.CssCls):
   def customize(self, style, eventsStyles):
     style.update({'border': '1px solid %s' % self.getColor('colors', 2)})
     eventsStyles['hover'].update({'border': '1px solid %s' % self.getColor('success', 1)})
-
-
-
-if __name__ == "__main__":
-  CssStyle.convert(CssPanelTitle)

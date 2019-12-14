@@ -5,6 +5,8 @@ CSS Style module for the common Menu Bar components
 
 from epyk.core.css.styles import CssStyle
 
+from epyk.core.css import Defaults as Defaults_css
+
 
 class CssSideBarMenu(CssStyle.CssCls):
   attrs = {'display': 'block', 'width': '100%'}
@@ -23,11 +25,12 @@ class CssSideBarFixed(CssStyle.CssCls):
 
 
 class CssSideBarBubble(CssStyle.CssCls):
-  attrs = {'position': 'fixed', 'display': 'none', 'overflow-x': 'hidden', 'text-align': 'left', 'font-size': '12px',
+  attrs = {'position': 'fixed', 'display': 'none', 'overflow-x': 'hidden', 'text-align': 'left',
            'height': '100%', 'min-width': '200px', 'padding': '10px', 'color': 'black'}
 
   def customize(self, style, eventsStyles):
-    style.update({'background-color': self.getColor('colors', 9), 'font-size': self.fontSize})
+    style.update({'background-color': self.getColor('colors', 9), 'font-family': Defaults_css.Font.family,
+                  'font-size': '%spx' % Defaults_css.Font.size})
 
 
 class CssSideBar(CssStyle.CssCls):

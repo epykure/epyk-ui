@@ -37,7 +37,7 @@ class CssBodyLoadingBack(CssStyle.CssCls):
            'z-index': '295', 'position': 'fixed', 'opacity': '0.5', 'filter': 'alpha(opacity=50)'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 5)} )
+    style.update({"background-color": self.getColor('greys', 5)})
 
 
 class CssBodyLoading(CssStyle.CssCls):

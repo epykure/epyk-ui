@@ -17,5 +17,7 @@ HTML_HIGHLIGHT = {"border": {'attr': "1px solid %(color)s", 'color': ("success",
 
 # Component defaults
 BUTTONS_CHECK_HEIGHT = 20
+INPUTS_MIN_WIDTH = 140
+INPUTS_RANGE_THUMB = 10
 TEXTS_SPAN_WIDTH = 100
 TEXTS_SPAN_HEIGHT = 100

@@ -5,6 +5,8 @@ CSS Style module for the Text components
 
 from epyk.core.css.styles import CssStyle
 
+from epyk.core.css import Defaults as Defaults_css
+
 
 class CssTextBold(CssStyle.CssCls):
   attrs = {'font-weight': 'bold'}
