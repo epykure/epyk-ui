@@ -28,8 +28,8 @@ class CssSearch(CssStyle.CssCls):
 
 
 class CssSearchButton(CssStyle.CssCls):
-  attrs = {'margin-top': '-20px', 'margin-left': '10px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute'}
-  cssId = {'child': 'span'}
+  attrs = {'margin-top': '10px', 'margin-left': '10px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute'}
+  cssId = {'child': 'i'}
 
   def customize(self, style, eventsStyles):
     style.update({"color": self.getColor("greys", 5)})

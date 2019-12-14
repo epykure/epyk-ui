@@ -10,6 +10,8 @@ from epyk.core.html import Defaults
 
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtmlField
+from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpClsInput
@@ -214,6 +216,22 @@ class Field(Html.Html):
     self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self.getColor("success", 1)})
     self.css({"margin-top": '2px'})
 
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtmlField.JsHtmlFields(self, report=self._report)
+    return self._dom
+
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
     return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.pyStyle), str_div, self.helper)
@@ -352,37 +370,49 @@ class TextArea(Html.Html):
 
 class Search(Html.Html):
   name, category, callFnc = 'Search', 'Inputs', 'search'
-  _grpCls = CssGrpClsInput.CssClassInputSearch
+  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, text, placeholder, color, size, height, htmlCode, tooltip, extensible, profile):
-    self.placeholder, self.extensible = placeholder, extensible
     self.size = "%s%s" % (size[0], size[1])
-    super(Search, self).__init__(report, text, htmlCode=htmlCode, height=height[0], heightUnit=height[1], profile=profile)
+    super(Search, self).__init__(report, "", htmlCode=htmlCode, height=height[0], heightUnit=height[1], profile=profile)
     self.color = self.getColor('colors', -1) if color is None else color
-    self.css({"width": "100%", "display": "block", "margin-bottom": '2px'})
+    self.css({"width": "100%", "display": "inline-block", "margin-bottom": '2px'})
+    #
+    if not extensible:
+      self._report.style.cssCls('CssSearch')
+      pyCssCls = self._report.style.cssName('CssSearch')
+    else:
+      self._report.style.cssCls('CssSearchExt')
+      pyCssCls = self._report.style.cssName('CssSearchExt')
+    self.add_input(text).input.set_attrs({"class": [pyCssCls], "placeholder": placeholder, "spellcheck": False})
+    self.input.css({"text-align": 'left', 'padding-left': '23px'})
+    self.add_icon("fas fa-search").icon.attr['id'] = "%s_button" % self.htmlId
+    self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute'})
     if tooltip != '':
       self.tooltip(tooltip)
 
   @property
-  def val(self): return '$("#%s input").val()' % self.htmlId
+  def dom(self):
+    if self._dom is None:
+      self._dom = JsHtmlField.JsHtmlFields(self, report=self._report)
+    return self._dom
 
   @property
-  def jsQueryData(self): return "{event_val: $(this).parent().find('input').val()}"
+  def _js__builder__(self):
+    return '''htmlObj.find('input').val(data)'''
 
-  def onDocumentLoadFnc(self): self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, "htmlObj.find('input').val(data);", 'Javascript Object builder')
+  # @property
+  # def eventId(self): return '$("#%s input")' % self.htmlId
 
-  @property
-  def eventId(self): return '$("#%s input")' % self.htmlId
+  def click(self, jsFncs, profile=False):
+    # if not isinstance(jsFncs, list):
+    #   jsFncs = [jsFncs]
+    # self._report.jsOnLoadEvtsFnc.add('''
+    #   $('#%(htmlId)s_button').on('click', function(event) {
+    #     var data = %(data)s; %(jsFncs)s})''' % {'htmlId': self.htmlId, 'jsFncs': ";".join(jsFncs), 'data': self.jsQueryData})
+    return self.icon.click(jsFncs, profile)
 
-  def click(self, jsFncs):
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._report.jsOnLoadEvtsFnc.add('''
-      $('#%(htmlId)s_button').on('click', function(event) {
-        var data = %(data)s; %(jsFncs)s})''' % {'htmlId': self.htmlId, 'jsFncs': ";".join(jsFncs), 'data': self.jsQueryData})
-    return self
-
-  def enter(self, jsFncs):
+  def enter(self, jsFncs, profile=False):
     """
     Add an javascript action when the key enter is pressed on the keyboard
 
@@ -395,19 +425,7 @@ class Search(Html.Html):
     self.click(jsFncs)
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self.keydown(["if (event.keyCode  == 13) {var data = %(data)s; event.preventDefault(); %(jsFnc)s } " % {"jsFnc": ";".join(jsFncs), 'data': self.jsQueryData}])
-    return self
+    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s } " % {"jsFnc": JsUtils.jsConvertFncs(jsFncs, toStr=True)}])
 
   def __str__(self):
-    if not self.extensible:
-      self._report.style.cssCls('CssSearch')
-      pyCssCls = self._report.style.cssName('CssSearch')
-    else:
-      self._report.style.cssCls('CssSearchExt')
-      pyCssCls = self._report.style.cssName('CssSearchExt')
-    return '''
-      <div %(attr)s>
-          <input class="%(pyCssCls)s" type="text" name="search" placeholder="%(placeholder)s" spellcheck="false">
-          <span id="%(htmlId)s_button" class="fas fa-search"></span>
-      </div>''' % {"attr": self.get_attrs(pyClassNames=self.defined), "pyCssCls": pyCssCls, "placeholder": self.placeholder,
-                   'htmlId': self.htmlId}
+    return '<div %(attr)s></div>' % {"attr": self.get_attrs(pyClassNames=self.defined)}

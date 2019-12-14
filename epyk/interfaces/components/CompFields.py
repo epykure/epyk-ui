@@ -11,7 +11,6 @@ try:
 except:
   has_pandas = False
 
-import datetime
 
 from epyk.core import html
 
@@ -44,7 +43,7 @@ class Fields(object):
     :param helper: Optional. A tooltip helper
     """
     if value is None:
-      value = datetime.datetime.today()
+      value = self.context.rptObj.py.dates.today
     size = self.context._size(size)
     html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, size, htmlCode, profile, options or {}, helper)
     self.context.register(html_dt)
@@ -277,6 +276,7 @@ class Fields(object):
   def select(self, value=False, label=None, icon=None, size=(None, 'px'), width=(100, "%"),
              height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+
     Example
     rptObj.ui.fields.select(["a", "b"], label="Check")
 

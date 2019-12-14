@@ -193,8 +193,6 @@ class Select(Html.Html):
                                  height=height[0],  heightUnit=height[1], globalFilter=filter, profile=profile)
     self.selected = None
     self.style.addCls(self.defined.clsAltMap)
-    #self.style.addCls("CssSelectButton")
-    #self.style.addCls("CssSelectOption")
     self._jsStyles = options
 
   @property
