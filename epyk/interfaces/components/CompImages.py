@@ -98,6 +98,9 @@ class Images(object):
   def icon(self, text=None, size=(None, "px"), width=(None, 'px'), height=(None, "px"), tooltip=None, profile=None):
     """
 
+    Example
+    rptObj.ui.images.icon("fab fa-angellist")
+    
     Documentation
     https://fontawesome.com/icons?m=free
 
@@ -121,6 +124,7 @@ class Images(object):
 
     Example
     rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
+    rptObj.ui.images.badge("This is a badge", background_color="red", color="white")
 
     Documentation
     https://getbootstrap.com/docs/4.0/components/badge/

@@ -20,6 +20,10 @@ rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-
 rptObj.ui.title("Test")
 rptObj.ui.title("Test", level=2)
 rptObj.ui.texts.fieldset("legend")
+rptObj.ui.layouts.hr(3)
+rptObj.ui.images.badge("This is a badge", background_color="red", color="white")
+rptObj.ui.layouts.new_line()
+rptObj.ui.images.icon("fab fa-angellist")
 
 
 #rptObj.ui.texts.blockquote("This is a code")
