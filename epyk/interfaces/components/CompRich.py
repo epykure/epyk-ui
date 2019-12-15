@@ -3,6 +3,7 @@ Interface to the rich HTML components
 """
 
 from epyk.core import html
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Rich(object):
@@ -131,7 +132,7 @@ class Rich(object):
     self.context.register(html_blocktext)
     return html_blocktext
 
-  def light(self, color=None, height=(20, 'px'), label=None, tooltip=None, helper=None, profile=None):
+  def light(self, color=None, height=(None, 'px'), label=None, tooltip=None, helper=None, profile=None):
     """
 
     Example
@@ -145,6 +146,8 @@ class Rich(object):
     :param helper: Optional. The filtering properties for this component
     :param profile: Optional. A flag to set the component performance storage
     """
+    if height is None or height[0] is None:
+      height = (Defaults_css.Font.header_size, "px")
     if isinstance(color, bool):
       color = self.context.rptObj.getColor("success", 1) if color else self.context.rptObj.getColor("danger", 1)
     html_traffic = html.HtmlTextComp.TrafficLight(self.context.rptObj, color, label, height, tooltip, helper, profile)

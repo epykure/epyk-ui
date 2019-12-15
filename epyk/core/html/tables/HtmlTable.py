@@ -11,38 +11,45 @@ from epyk.core.css.groups import CssGrpClsTable
 
 
 class Row(Html.Html):
+  name, category, callFnc = 'Row', 'Tables', None
 
-  @staticmethod
-  def to_html(row, css=None, css_cols=None, header=False):
-    _row = []
-    css_cols = css_cols or {}
-    for i, _cell in enumerate(row):
-      css_cell = dict(css)
-      if i in css_cols:
-        css_cell.update(css_cols[i])
-      _row.append(Cell.to_html(_cell, css=css_cell, header=header))
-    if css is not None:
-      style = ["%s:%s" % (k, v) for k, v in css.items()]
-      return "<tr style='%s'>%s</tr>" % (";".join(style), "".join(_row))
+  def __init__(self, report, cells):
+    super(Row, self).__init__(report, cells)
 
-    return "<tr>%s</tr>" % "".join(_row)
+  def __getitem__(self, i):
+    return self.val[i]
+
+  def cell(self, i):
+    return self[i]
 
   def __str__(self):
-    return "<tr %s></tr>" % (self.get_attrs(pyClassNames=self.pyStyle))
+    data = [v.html() for v in self.val]
+    return "<tr %s>%s</tr>" % (self.get_attrs(pyClassNames=self.pyStyle), "".join(data))
 
 
 class Cell(Html.Html):
+  name, category, callFnc = 'Cell', 'Tables', None
 
-  @staticmethod
-  def to_html(cell, css=None, header=False):
-    style = ["%s:%s" % (k, v) for k, v in css.items()] if css is not None else []
-    if header:
-      return "<th style='%s'>%s</th>" % (";".join(style), cell)
+  def __init__(self, report, text, is_header):
+    super(Cell, self).__init__(report, text)
+    self.is_header = is_header
 
-    return "<td style='%s'>%s</td>" % (";".join(style), cell)
+  def set_html_content(self, htmlObj):
+    """
+    Set the cell content to be an HTML object
+
+    :param htmlObj: Python HTML object
+    :return: self, the cell object to allow the chaining
+    """
+    htmlObj.inReport = False
+    self.innerPyHTML = htmlObj
+    return self
 
   def __str__(self):
-    return "<td %s></td>" % (self.get_attrs(pyClassNames=self.pyStyle))
+    if self.is_header:
+      return "<th %s>%s</th>" % (self.get_attrs(pyClassNames=self.defined), self.content)
+
+    return "<td %s>%s</td>" % (self.get_attrs(pyClassNames=self.defined), self.content)
 
 
 class Bespoke(Html.Html):
@@ -51,13 +58,15 @@ class Bespoke(Html.Html):
 
   def __init__(self, report, recordSet, cols, rows, width, height, htmlCode, options, profile):
     data = []
-    self.header = rows + cols
+    self._fields = rows + cols
     for rec in recordSet:
-      data.append([rec[c] for c in self.header])
+      data.append([rec[c] for c in self._fields])
     super(Bespoke, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
+    self.items = None
     self.css({"text-align": 'center', 'border-collapse': 'collapse'})
     self._style = {"rows": {"padding": '5px 0'}, "header": {"padding": '5px 0'}}
+    self.set_items()
 
   @property
   def tableId(self):
@@ -66,53 +75,58 @@ class Bespoke(Html.Html):
     """
     return self.dom.varId
 
-  def row_style(self, css, row_id=None):
+  @property
+  def header(self):
     """
-    Change the style of a particular row in the table
-
-    Example
-    simple_table.row_style({"color": 'red'}, row_id=3)
-
-    :param css: A dictionary with the CSS Style
-    :param row_id: Optional. The row id
-
-    :return: The python table object
+    Get the header row. Returns none if missing
     """
-    if row_id is None:
-      self._style["rows"] = css
-    else:
-      self._style.setdefault("row", {})[row_id] = css
+    return self._header
+
+  def set_items(self):
+    if self.items is None:
+      self.items = []
+    if self._fields is not None:
+      self._header = Row(self._report, [Cell(self._report, d, is_header=True) for d in self._fields])
+      self.items.append(self._header)
+    for rec in self.val:
+      self.items.append(Row(self._report, [Cell(self._report, r, is_header=False) for r in rec]))
     return self
 
-  def column_style(self, css, column_name=None):
+  def __getitem__(self, i):
     """
-    Change the style of a particular column in the table
-
-    Example
-    simple_table.column_style({"color": 'pink'}, column_name="A")
-
-    :param css: A dictionary with the CSS styles
-    :param column_name: Optional. The column name
-
-    :return: The python table object
+    Get the table rows
     """
-    if column_name is None:
-      self._style["cols"] = css
-    else:
-      col_index = self.header.index(column_name)
-      self._style.setdefault("cols", {})[col_index] = css
-    return self
+    return self.items[i]
 
-  def column_format(self, fnc, column_name):
+  def row(self, i, inc_header=False):
     """
+    Get the table rows
 
-    :param fnc:
-    :param column_name:
+    :param i: Integer. The column number
+    :param inc_header: Boolean. Default False
+
     :return:
     """
+    if not inc_header and self._fields is not None:
+      return self[i+1]
+
+    return self[i]
+
+  def col(self, header=None, i=None):
+    """
+    Get the table column cells as a generator
+
+    :param header: String.
+    :param i: Integer
+    """
+    for v in self.items:
+      if header is not None:
+        i = self._fields.index(header)
+      yield v[i]
+
     return self
 
-  def row_add(self, data, missing=""):
+  def add(self, row, missing="", is_header=False):
     """
     Add a row to the table
 
@@ -124,21 +138,18 @@ class Bespoke(Html.Html):
 
     :return: The python table
     """
-    if isinstance(data, dict):
-      self.vals.append([data.get(h, missing) for h in self.header])
+
+    if isinstance(row, dict):
+      data = [row.get(h, missing) for h in self._fields]
     else:
-      self.vals.append(data)
+      data = row
+    self.val.append(data)
+    self.items.append(Row(self._report, [Cell(self._report, d, is_header=is_header) for d in data]))
     return self
 
   def __str__(self):
-    _data = ["<thead>%s</thead><tbody>" % Row.to_html(self.header, css=self._style["header"], header=True)]
-    for i, _row in enumerate(self.vals):
-      css_row = dict(self._style["rows"])
-      if i in self._style.get('row', []):
-        css_row.update(self._style['row'][i])
-      _data.append(Row.to_html(_row, css=css_row, css_cols=self._style.get('cols', {})))
-    _data.append("</tbody>")
-    return "<table %s>%s</table>" % (self.get_attrs(pyClassNames=self.defined), "".join(_data))
+    str_rows = [r.html() for r in self.items]
+    return "<table %s>%s</table>" % (self.get_attrs(pyClassNames=self.defined), "".join(str_rows))
 
 
 class Excel(Html.Html):

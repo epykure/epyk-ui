@@ -9,7 +9,8 @@ import re
 import json
 
 from epyk.core.html import Html
-from epyk.core.js.html import JsHtml
+from epyk.core.html.entities import EntHtml4
+
 from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.Imports import requires
 
@@ -339,14 +340,19 @@ class SkillBar(Html.Html):
   name, category, callFnc = 'Skill Bars', 'Chart', 'skillbars'
   _grpCls = CssGrpClsTable.CssClassTable
 
-  def __init__(self, report, data, title, width, height, color, htmlCode, colUrl, colTooltip, filters, profile):
-    super(SkillBar, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
+  def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, colUrl, colTooltip, filters, profile):
+    super(SkillBar, self).__init__(report, "", width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
                                    htmlCode=htmlCode, globalFilter=filters, profile=profile)
     self.add_title(title)
-    self.data = data
+    self.innerPyHTML = report.ui.layouts.table(data, y_column, x_axis)
+    self.innerPyHTML.inReport = False
+    for c in self.innerPyHTML.col(i=1):
+      if c.val not in y_column:
+        c.set_html_content(report.ui.div(EntHtml4.NO_BREAK_SPACE).css({"width": '%spx' % c.val, "background": 'red'}))
+    self.innerPyHTML.style.clear()
     self.css({"margin": '5px 0'})
-    self._jsStyles = {'val': list(self.data._schema['values'])[0], 'label': list(self.data._schema['keys'])[0],
-                      'color': self.getColor('colors', 7), 'fontColor': self.getColor('greys', 0), 'colUrl': colUrl, 'colTooltip': colTooltip}
+    #self._jsStyles = {'val': list(self.data._schema['values'])[0], 'label': list(self.data._schema['keys'])[0],
+    #                  'color': self.getColor('colors', 7), 'fontColor': self.getColor('greys', 0), 'colUrl': colUrl, 'colTooltip': colTooltip}
 
   @property
   def _js__builder__(self):
@@ -361,7 +367,7 @@ class SkillBar(Html.Html):
       '''
 
   def __str__(self):
-    return '<table %s></table>' % (self.get_attrs(pyClassNames=self.defined))
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), self.content)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION

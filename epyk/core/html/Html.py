@@ -269,6 +269,7 @@ class Html(object):
     self.cssImport = report.cssImport
     self.attr = {'class': set([])} if self.cssCls is None else {'class': set(self.cssCls)} # default HTML attributes
     self.jsFncFrag, self._code, self._jsStyles, self._events = {}, code, {}, {"comp_ready": {}, 'doc_ready': {}}
+    self.innerPyHTML = None
     if code is not None:
       # Control to ensure the Javascript problem due to multiple references is highlighted during the report generation
       if code in self._report.htmlRefs:
@@ -655,6 +656,10 @@ class Html(object):
     return self._vals
 
   @property
+  def content(self):
+    return self.val if self.innerPyHTML is None else self.innerPyHTML.html()
+
+  @property
   def style(self):
     """
     CSS Functions
@@ -810,15 +815,18 @@ class Html(object):
         # and the static python classes defined on demand in the header of your report
         # self._report.cssObj.getClsTag(pyClassNames)[:-1] to remove the ' generated in the module automatically
         cssClass = self._report.style.getClsTag(pyClassNames.clsMap).replace('class="', 'class="%s ')
-        cssClass %= classData
+        if cssClass:
+          cssClass %= classData
       else:
         cssClass = 'class="%s"' % classData
     elif pyClassNames is not None:
       cssClass = self._report.style.getClsTag(pyClassNames.clsMap)
     if withId:
-      return 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+      str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+      return str_tag.strip()
 
-    return '%s %s %s' % (" ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+    str_tag = '%s %s %s' % (" ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+    return str_tag.strip()
 
   # -------------------------------------------------------------
   # Javascript Event wrappers

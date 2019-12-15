@@ -402,7 +402,10 @@ class Css(object):
     if loadCls:
       for clsName in clsNames:
         self.add(clsName)
-    return 'class="%s"' % " ".join([CssStyle.cssName(clsName) for clsName in clsNames])
+    if len(clsNames) > 0:
+      return 'class="%s"' % " ".join([CssStyle.cssName(clsName) for clsName in clsNames])
+
+    return ""
 
   def toHtml(self, clsNames=None):
     """

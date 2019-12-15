@@ -337,4 +337,33 @@ class Layouts(object):
     items = items or []
     return self.context.register(html.HtmlEvent.Filters(self.context.rptObj, items, title, size, width, height, htmlCode, helper, profile))
 
+  def table(self, records, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+    """
 
+    Example
+    simple_table = rptObj.ui.layouts.table(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
+    simple_table.add_row({"COL1": "Value"})
+
+    :param records:
+    :param cols:
+    :param rows:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
+    if len(records) > 0:
+      if isinstance(records[0], list):
+        header = records[0]
+        tmp_records = [dict(zip(header, rec)) for rec in records[1:]]
+        if rows is None:
+          rows = [header[0]]
+        if cols is None:
+          cols = header[1:]
+        records = tmp_records
+    if width is None:
+      width = (None, "px")
+    table = html.tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
+    self.context.register(table)
+    return table

@@ -30,10 +30,17 @@ class Graphs(object):
   def __init__(self, context):
     self.context = context
 
-  def skillbars(self, records=None, y_column=None, x_axis=None, title=None, color=None, width=(100, '%'),
+  def skillbars(self, records=None, y_column=None, x_axis=None, title=None, width=(100, '%'),
                 height=(None, 'px'), htmlCode=None, colUrl=None, colTooltip=None, filters=None, profile=False):
     """
     Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS
+
+    Example
+    records = [
+      {"label": 'python', 'value': 12},
+      {"label": 'Java', 'value': 5},
+      {"label": 'Javascript', 'value': 80}]
+    rptObj.ui.charts.skillbars(records, y_column=['value'], x_axis=['label']).css({"width": '100px'})
 
     Documentation
     https://www.w3schools.com/howto/howto_css_skill_bar.asp
@@ -42,7 +49,6 @@ class Graphs(object):
     :param y_column:
     :param x_axis:
     :param title:
-    :param color:
     :param width:
     :param height:
     :param htmlCode:
@@ -54,8 +60,9 @@ class Graphs(object):
     if y_column is None or x_axis is None:
       raise Exception("seriesName and axis must be defined")
 
-    jsDataObj = js.AresJs.Js(self.context.rptObj, records, profile=profile).fncs([('percentage', [x_axis], [y_column])])
-    html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, jsDataObj, title, width, height, color, htmlCode,
+    #data = self.context.rptObj.js.data.records(records)
+    #jsDataObj = js.AresJs.Js(self.context.rptObj, records, profile=profile).fncs([('percentage', [x_axis], [y_column])])
+    html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, records, y_column, x_axis, title, width, height, htmlCode,
                                             colUrl, colTooltip, filters, profile)
     self.context.register(html_skillbar)
     return html_skillbar
