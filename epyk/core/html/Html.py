@@ -817,6 +817,8 @@ class Html(object):
         cssClass = self._report.style.getClsTag(pyClassNames.clsMap).replace('class="', 'class="%s ')
         if cssClass:
           cssClass %= classData
+        else:
+          cssClass = 'class="%s"' % classData
       else:
         cssClass = 'class="%s"' % classData
     elif pyClassNames is not None:

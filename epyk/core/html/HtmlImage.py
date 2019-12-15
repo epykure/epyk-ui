@@ -143,6 +143,7 @@ class Icon(Html.Html):
     self.css({'vertical-align': 'middle', "display": 'inline-block', "margin": "auto 0", "padding": "auto 0",
               "font-size": "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
     self.attr['class'].add(value)
+    self.attr['aria-hidden'] = 'true'
     if tooltip is not None:
       self.set_attrs(name="title", value=tooltip)
 
@@ -172,7 +173,7 @@ class Icon(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<i aria-hidden="true" %s></i>' % (self.get_attrs(pyClassNames=self.defined))
+    return '<i %s></i>' % (self.get_attrs(pyClassNames=self.defined))
 
 
 class Emoji(Html.Html):

@@ -106,7 +106,7 @@ class Texts(object):
     if width is None:
       width = (Defaults.TEXTS_SPAN_WIDTH, 'px')
     if height is None:
-      height = ("23", 'px')
+      height = (Defaults.LINE_HEIGHT, 'px')
     size = self.context._size(size)
     html_label = html.HtmlText.Span(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip, profile)
     self.context.register(html_label)
@@ -183,10 +183,6 @@ class Texts(object):
     :param options:
     :param helper:
     :param profile:
-
-    :rtype: html.HtmlText.Code
-
-    :return:
     """
     if not isinstance(text, list):
       text = [text]
@@ -194,8 +190,10 @@ class Texts(object):
     if options is not None:
       dflt_options.update(options)
     size = self.context._size(size)
-    return self.context.register(html.HtmlText.Code(self.context.rptObj, text, size, color, width, height,
-                                                    htmlCode, dflt_options, helper, profile))
+    html_code = html.HtmlText.Code(self.context.rptObj, text, size, color, width, height, htmlCode, dflt_options,
+                                   helper, profile)
+    self.context.register(html_code)
+    return html_code
 
   def paragraph(self, text="", size=(None, 'px'), color=None, background_color=None, border=False, width=(100, "%"),
                 height=(None, 'px'), htmlCode=None, encoding="UTF-8", dataSrc=None, helper=None, profile=None):

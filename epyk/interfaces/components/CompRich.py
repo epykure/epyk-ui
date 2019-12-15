@@ -49,16 +49,14 @@ class Rich(object):
     :param size: Optional, A tuple with a integer for the size and its unit
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlTextComp.Delta
-    :return:
     """
     dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.',
                     'colors': {'green': 'green', 'red': 'red', 'orange': 'orange'}}
     if options is not None:
       dflt_options.update(options)
-    return self.context.register(html.HtmlTextComp.Delta(self.context.rptObj, rec or {}, width, height, size,
-                                                         dflt_options, helper, profile))
+    html_delta = html.HtmlTextComp.Delta(self.context.rptObj, rec or {}, width, height, size, dflt_options, helper, profile)
+    self.context.register(html_delta)
+    return html_delta
 
   def stars(self, val=None, label=None, color=None, align='left', best=5, htmlCode=None, helper=None, profile=None):
     """
@@ -104,9 +102,9 @@ class Rich(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     size = self.context._size(size)
-
-    return self.context.register(html.HtmlTextComp.TextWithBorder(self.context.rptObj, recordSet, width,
-                                                                  height, size, align, helper, profile))
+    html_text = html.HtmlTextComp.TextWithBorder(self.context.rptObj, recordSet, width, height, size, align, helper, profile)
+    self.context.register(html_text)
+    return html_text
 
   def blocktext(self, recordSet=None, color=None, size=(None, 'px'), border='auto', width=(300, 'px'), height=(None, 'px'),
                 helper=None, profile=None):

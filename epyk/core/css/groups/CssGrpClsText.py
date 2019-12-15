@@ -21,6 +21,15 @@ class CssClassText(CssGrpCls.CssGrpClass):
   __map, __alt_map = ['CssText'], []
 
 
+class CssClassFormulas(CssGrpCls.CssGrpClass):
+  """
+
+  """
+  css_text = CssStylesText.CssText
+  css_formulas = CssStylesText.CssFormula
+  __map, __alt_map = ['CssText', 'CssFormula'], []
+
+
 class CssClassTextItem(CssGrpCls.CssGrpClass):
   """
 

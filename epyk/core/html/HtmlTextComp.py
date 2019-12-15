@@ -71,6 +71,7 @@ class UpDown(Html.Html):
              'relMove': self._report.js.number("relMove", isPyData=False).toFormattedNumber(decPlaces=2)}
 
   def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
 
@@ -101,6 +102,7 @@ class TextBubble(Html.Html):
   def __str__(self):
     bubble_height = self.height - 40
     bubble_width = self.height - 20
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '''
       <div %(strAttr)s>
         <div %(clsTag)s style="width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
@@ -148,6 +150,7 @@ class BlockText(Html.Html):
     if self.val.get('button') is not None:
       items.append('<a href="#" %s><i></i></a>' % (self._report.style.getClsTag(['CssHrefNoDecoration', 'CssButtonBasic'])))
     items.append('</div>')
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return ''.join(items)
 
 
@@ -184,6 +187,7 @@ class TextWithBorder(Html.Html):
     else:
       item.append('<legend style="font-size:%spx;color:%s"></legend><span></span></fieldset>' % (self.size + 10, self.val['colorTitle']))
     item.append(self.helper)
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return "".join(item)
 
 
@@ -253,6 +257,7 @@ class Delta(Html.Html):
         decSeparator=self._report.js.number("options.decSeparator", isPyData=False))}
 
   def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '''<div %(strAttr)s>
       <div style="width:100%%;text-align:right;font-size:%(size)spx;"></div>
       <div id="progress" style="height:10px;color:%(color)s;border:1px solid %(greyColor)s"></div>
@@ -331,7 +336,6 @@ class DocScript(Html.Html):
 class Prism(Html.Html):
   __reqCss, __reqJs = ['prism'], ['prism', 'jqueryui']
   name, category, callFnc = 'Code Viewer', 'Rich', 'prism'
-  builder_name = False
 
   def __init__(self, report, vals, language, size, width, height, isEditable, trimSpaces, align, helper, profile):
     super(Prism, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0],
@@ -413,7 +417,7 @@ class Prism(Html.Html):
 class Formula(Html.Html):
   __reqJs = ['mathjs']
   name, category, callFnc = 'Latex Formula', 'Texts', 'formula'
-  _grpCls = CssGrpClsText.CssClassText
+  _grpCls = CssGrpClsText.CssClassFormulas
 
   def __init__(self, report, text, size, width, color, helper, profile):
     super(Formula, self).__init__(report, text, width=width[0], widthUnit=width[1], profile=profile)
@@ -427,7 +431,7 @@ class Formula(Html.Html):
     return 'htmlObj.innerHTML = data'
 
   def __str__(self):
-    return '<font %s></font>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return '<font %s>%s</font>%s' % (self.get_attrs(pyClassNames=self.defined), self.content, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -570,3 +574,68 @@ class ContentsTable(Html.Html):
         <div id='contents_vals_%(htmlId)s' style="margin:0;padding:0">%(contents)s</div>
       </div> ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'contents': "<br />".join(entries),
                     'size': size+4, 'htmlId': self.htmlId}
+
+
+class SearchResult(Html.Html):
+  name, category, callFnc = 'Search Result', 'Text', 'searchr'
+
+  def __init__(self, report, recordSet, pageNumber, width, width_unit, height, height_unit):
+    super(SearchResult, self).__init__(report, recordSet, width=width, widthUnit=width_unit, height=height, heightUnit=height_unit)
+    self._jsStyles = {'title': {'color': self.getColor("colors", 7), 'font-size': '18px'}, 'dsc': {'color': self.getColor('greys', 6)},
+                      'url': {'color': self.getColor("success", 1), 'font-size': '14px'}, 'visited': {'color': self.getColor('greys', 5)},
+                      'link': {'color': self.getColor("colors", 7), 'cursor': 'pointer'}, 'pageNumber': pageNumber}
+
+  def onDocumentLoadFnc(self):
+    self.addGlobalFnc("%s(htmlObj, data, jsStyles, currPage)" % self.__class__.__name__, ''' htmlObj.empty() ; 
+      if (typeof currPage == 'undefined'){currPage = 0};
+      var pageNumber = jsStyles.pageNumber;
+      data.slice(currPage * pageNumber).forEach( function(rec){
+        var newItem = $('<div style="margin:5px 10px 5px 10px;"></div>') ; 
+        var title = $('<div>'+ rec['title'] + '</div>').css( jsStyles.title );
+        if (rec['urlTitle'] != undefined){
+          title.css({'cursor': 'pointer'});
+          title.click(function(e){GoToReport(rec['urlTitle'], true, false)})}
+        newItem.append(title);
+        if (rec.icon != undefined){
+          var item = $('<div></div>').css( jsStyles.url);
+          item.append( $('<i class="'+ rec['icon'] +'" style="margin-right:5px"></i>')).append(rec['url']);
+          newItem.append(item)} 
+        else {newItem.append($('<div>'+ rec['url'] +'</div>').css(jsStyles.url))}
+        newItem.append( $('<div>'+ rec['dsc'] +'</div>').css(jsStyles.dsc));
+        if(rec.visited != undefined){newItem.append($('<div>'+ rec.visited +'</div>').css(jsStyles.visited))}
+        if(rec.links != undefined){
+          rec.links.forEach(function(link){ 
+            if (link.url == undefined) {link.url = link.val};
+            newItem.append($('<a href='+ link.url +' target="_blank">'+ link.val +'</a><br>').css(jsStyles.link))})};
+        htmlObj.append(newItem);
+      }); 
+      if( data.length > 0) {
+        var reste = data.length/ pageNumber; var currIndex = currPage+1;
+        var roundRest = Math.trunc(reste);
+        if (roundRest > reste) {reste ++};
+        var paginate = $('<div style="display:inline-block;height:35px;padding:0;width:100%%;text-align:center;margin-top:10px" class="py_cssdivpagination"></div>');
+        if (currIndex > 1){
+          var href = $('<a href="#">&laquo;</a>');
+          href.click({page: currPage-1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
+          paginate.append(href)};
+        for (var i = 0; i < reste; i++){
+          var indexPage = i + 1;
+          if (currPage == i) { 
+            var href = $('<a href="#" style="background-color:%(greyColor)s;color:%(whiteColor)s">'+ indexPage +'</a>');
+            href.click({page: i, rec: data}, function(e) { %(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
+            paginate.append(href)}
+          else{
+            var href = $('<a href="#">'+ indexPage +'</a>') ;
+            href.click({page: i, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
+            paginate.append(href)}}
+        if(currIndex < reste){
+          var href = $('<a href="#">&raquo;</a>');
+          href.click({page: currPage+1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
+          paginate.append(href)};
+        htmlObj.append(paginate)
+      } ''' % {"breadCrumb": self._report.jsGlobal.breadCrumVar, "class": self.__class__.__name__,
+               "greyColor": self.getColor("colors", 9), "whiteColor": self.getColor("greys", 0)})
+
+  def __str__(self):
+    self._report.style.cssCls('CssDivPagination')
+    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(pyClassNames=self.defined)

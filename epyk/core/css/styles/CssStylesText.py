@@ -16,6 +16,15 @@ class CssText(CssStyle.CssCls):
   attrs = {'padding': 0, 'margin': 0}
 
 
+class CssFormula(CssStyle.CssCls):
+  """
+  CSS Style for the formulas component
+  """
+  attrs = {'padding': 0, 'margin': 0}
+  focus = {'outline': 0, 'border': 'none', 'box-shadow': 'none'}
+  cssId = {'reference': ".math"}
+
+
 class CssTitle1(CssStyle.CssCls):
   attrs = {'padding': '0 0 5px 0', 'font-size': '24px', 'font-weight': 'bold', 'text-transform': 'uppercase',
            'white-space': 'pre-wrap', 'border-bottom': '1px dashed black', 'border-width': '2px', 'margin-bottom': '5px'}

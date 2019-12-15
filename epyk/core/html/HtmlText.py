@@ -8,6 +8,8 @@ import json
 
 from epyk.core.html import Html
 
+from epyk.core.html import Defaults as Default_html
+
 # The list of Javascript classes
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js import JsUtils
@@ -98,7 +100,7 @@ class Span(Html.Html):
                                code=htmlCode, profile=profile)
     self.color = color if color is not None else 'inherit'
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit', 'text-align': align})
-    self.css({'margin': '0 5px', 'display': 'inline-block'})
+    self.css({'line-height': '%spx' % Default_html.LINE_HEIGHT, 'margin': '0 5px', 'display': 'inline-block', 'vertical-align': 'middle'})
     if tooltip is not None:
       self.tooltip(tooltip)
 
@@ -200,7 +202,7 @@ class Text(Html.Html):
       ''' % {"markUp": mark_up}
 
   def __str__(self):
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), self.content, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -360,6 +362,7 @@ class Paragraph(Html.Html):
       ''' % {"markdown": markdown}
 
   def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
@@ -622,71 +625,6 @@ class Highlights(Html.Html):
 
   def __str__(self):
     return "<div %s><div>%s</div></div>%s" % (self.get_attrs(pyClassNames=self.defined), self.val, self.helper)
-
-
-class SearchResult(Html.Html):
-  name, category, callFnc = 'Search Result', 'Text', 'searchr'
-
-  def __init__(self, report, recordSet, pageNumber, width, width_unit, height, height_unit):
-    super(SearchResult, self).__init__(report, recordSet, width=width, widthUnit=width_unit, height=height, heightUnit=height_unit)
-    self._jsStyles = {'title': {'color': self.getColor("colors", 7), 'font-size': '18px'}, 'dsc': {'color': self.getColor('greys', 6)},
-                      'url': {'color': self.getColor("success", 1), 'font-size': '14px'}, 'visited': {'color': self.getColor('greys', 5)},
-                      'link': {'color': self.getColor("colors", 7), 'cursor': 'pointer'}, 'pageNumber': pageNumber}
-
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles, currPage)" % self.__class__.__name__, ''' htmlObj.empty() ; 
-      if (typeof currPage == 'undefined'){currPage = 0};
-      var pageNumber = jsStyles.pageNumber;
-      data.slice(currPage * pageNumber).forEach( function(rec){
-        var newItem = $('<div style="margin:5px 10px 5px 10px;"></div>') ; 
-        var title = $('<div>'+ rec['title'] + '</div>').css( jsStyles.title );
-        if (rec['urlTitle'] != undefined){
-          title.css({'cursor': 'pointer'});
-          title.click(function(e){GoToReport(rec['urlTitle'], true, false)})}
-        newItem.append(title);
-        if (rec.icon != undefined){
-          var item = $('<div></div>').css( jsStyles.url);
-          item.append( $('<i class="'+ rec['icon'] +'" style="margin-right:5px"></i>')).append(rec['url']);
-          newItem.append(item)} 
-        else {newItem.append($('<div>'+ rec['url'] +'</div>').css(jsStyles.url))}
-        newItem.append( $('<div>'+ rec['dsc'] +'</div>').css(jsStyles.dsc));
-        if(rec.visited != undefined){newItem.append($('<div>'+ rec.visited +'</div>').css(jsStyles.visited))}
-        if(rec.links != undefined){
-          rec.links.forEach(function(link){ 
-            if (link.url == undefined) {link.url = link.val};
-            newItem.append($('<a href='+ link.url +' target="_blank">'+ link.val +'</a><br>').css(jsStyles.link))})};
-        htmlObj.append(newItem);
-      }); 
-      if( data.length > 0) {
-        var reste = data.length/ pageNumber; var currIndex = currPage+1;
-        var roundRest = Math.trunc(reste);
-        if (roundRest > reste) {reste ++};
-        var paginate = $('<div style="display:inline-block;height:35px;padding:0;width:100%%;text-align:center;margin-top:10px" class="py_cssdivpagination"></div>');
-        if (currIndex > 1){
-          var href = $('<a href="#">&laquo;</a>');
-          href.click({page: currPage-1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
-          paginate.append(href)};
-        for (var i = 0; i < reste; i++){
-          var indexPage = i + 1;
-          if (currPage == i) { 
-            var href = $('<a href="#" style="background-color:%(greyColor)s;color:%(whiteColor)s">'+ indexPage +'</a>');
-            href.click({page: i, rec: data}, function(e) { %(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
-            paginate.append(href)}
-          else{
-            var href = $('<a href="#">'+ indexPage +'</a>') ;
-            href.click({page: i, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
-            paginate.append(href)}}
-        if(currIndex < reste){
-          var href = $('<a href="#">&raquo;</a>');
-          href.click({page: currPage+1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
-          paginate.append(href)};
-        htmlObj.append(paginate)
-      } ''' % {"breadCrumb": self._report.jsGlobal.breadCrumVar, "class": self.__class__.__name__,
-               "greyColor": self.getColor("colors", 9), "whiteColor": self.getColor("greys", 0)})
-
-  def __str__(self):
-    self._report.style.cssCls('CssDivPagination')
-    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(pyClassNames=self.defined)
 
 
 class Fieldset(Html.Html):
