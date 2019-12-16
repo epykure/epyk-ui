@@ -304,7 +304,7 @@ class Lists(object):
     """
 
     Example
-    rpt.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
+    rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Documentation
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp

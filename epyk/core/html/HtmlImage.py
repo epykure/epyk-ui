@@ -220,9 +220,8 @@ class Badge(Html.Html):
     self.add_icon(icon, css={"float": 'left', "font-size": '%s%s' % (size[0] + 8, size[1])})
     self.link = None
     if url is not None:
-      self.link = self._report.ui.links.external(text, url).css({"color": 'white', 'display': 'inline-block',
-          "background": report.getColor("danger", 1), "padding": "2px", "margin-top": "1px",
-          "border-radius": "2px", "width": "10px", "height": "%spx" % (size[0] + 4)})
+      self.link = self._report.ui.links.external(text, url).css({"color": 'inherit', 'display': 'inline-block',
+          "padding": "1px", "margin-top": "1px", "border-radius": "2px", "width": "10px", "height": "%spx" % (size[0] + 4)})
       self.link.inReport = False
     # Update the CSS Style of the component
     color = 'inherit' if color is None else color
