@@ -161,7 +161,7 @@ class Slider(Html.Html):
         #fnc.insert(0, self.jsAddUrlParam(self.htmlId, self.val, isPyData=False))
         self._report.jsOnLoadEvtsFnc.add(''' 
             %(jqId)s.on('%(eventKey)s', function(event, ui) {
-              var useAsync = false; var data = %(data)s; console.log("test");
+              var useAsync = false; var data = %(data)s;
               %(jsInfo)s; %(jsFnc)s; %(urlUpdate)s;
               if(!useAsync) {
                 var body_loading_count = parseInt($('#body_loading span').text()); $('#body_loading span').html(body_loading_count - 1);

@@ -103,7 +103,7 @@ class Button(Html.Html):
     return self
 
   def __str__(self):
-    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.defined), self.val)
+    return '<button %s></button>' % (self.get_attrs(pyClassNames=self.defined))
 
   @staticmethod
   def matchMarkDown(val):

@@ -5,6 +5,8 @@ Module in charge of the structured date objects
 import time
 
 from epyk.core.html import Html
+from epyk.core.js.html import JsHtmlJqueryUI
+from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -77,7 +79,8 @@ class DatePicker(Html.Html):
             function renderCalendarCallback(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [true, "%s", '']} else {return [false, '', '']}};
             data.options.beforeShowDay = renderCalendarCallback;};
           delete data.options.selectedDts};
-        jQuery(htmlObj.querySelector("input")).datepicker(data.options).datepicker('setDate', data.value)'''
+        %s.datepicker(data.options).datepicker('setDate', data.value)
+      ''' % JsQuery.decorate_var("htmlObj.querySelector('input')", convert_var=False)
 
   def __str__(self):
     return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'helper': self.helper}
@@ -112,7 +115,8 @@ class TimePicker(Html.Html):
         if (data.options._change.length > 0) {data.options.change = function(time){
             let data = {event_val: time.getHours() +':'+ time.getMinutes() +':'+ time.getSeconds(), event_code: htmlId}; 
             eval(data.options._change.join(";"))}};
-        jQuery(htmlObj).timepicker(data.options); jQuery(htmlObj).timepicker('setTime', data.time)}'''
+        %(jqId)s.timepicker(data.options); %(jqId)s.timepicker('setTime', data.time)}
+      ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
 
   def add_options(self, options=None, name=None, value=None):
     """

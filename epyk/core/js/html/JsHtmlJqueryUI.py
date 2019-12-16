@@ -2,18 +2,22 @@
 
 """
 
-from epyk.core.js.objects import JsNodeDom
+from epyk.core.js.html import JsHtml
 
 from epyk.core.js.packages import JsQueryUi
+from epyk.core.js.primitives import JsObjects
 
 
-class JsHtmlDatePicker(JsNodeDom.JsDoms):
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlId = varName if varName is not None else htmlObj.htmlId
-    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
-    self._src, self._report = htmlObj, report
-    self._js = []
-    self._jquery, self._jquery_ui = None, None
+class JsHtmlDatePicker(JsHtml.JsHtml):
+  @property
+  def val(self):
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+      self.htmlId, self._src.dom.jquery.varId))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get('%s.val()' % self._src.dom.jquery.varId)
 
   @property
   def jqueryui(self):
@@ -27,14 +31,7 @@ class JsHtmlDatePicker(JsNodeDom.JsDoms):
     return self._jquery_ui
 
 
-class JsHtmlProgressBar(JsNodeDom.JsDoms):
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlId = varName if varName is not None else htmlObj.htmlId
-    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
-    self._src, self._report = htmlObj, report
-    self._js = []
-    self._jquery, self._jquery_ui = None, None
-
+class JsHtmlProgressBar(JsHtml.JsHtml):
   @property
   def jqueryui(self):
     """
@@ -48,4 +45,22 @@ class JsHtmlProgressBar(JsNodeDom.JsDoms):
 
   @property
   def val(self):
-    return '%s.progressbar("value")' % self._src.dom.jquery.varId
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.progressbar('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlId, self._src.dom.jquery.varId))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get('%s.progressbar("value")' % self._src.dom.jquery.varId)
+
+
+class JsHtmlTimePicker(JsHtml.JsHtml):
+  @property
+  def val(self):
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlId, self._src.dom.jquery.varId))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get('%s.val()' % self._src.dom.jquery.varId)

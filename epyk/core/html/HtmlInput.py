@@ -11,6 +11,7 @@ from epyk.core.html import Defaults
 #
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlField
+from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
@@ -119,6 +120,17 @@ class InputTime(Input):
     super(InputTime, self).__init__(report, text, placeholder, size, width, height, htmlCode, filter, options, attrs, profile)
 
   @property
+  def dom(self):
+    """
+    The Javascript Dom object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlTimePicker
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlTimePicker(self, report=self._report)
+    return self._dom
+
+  @property
   def _js__builder__(self):
     return '''
       if (typeof data == "string"){jQuery(htmlObj).timepicker('setTime', data)
@@ -143,6 +155,17 @@ class InputDate(Input):
 
   def __init__(self, report, records, placeholder, size, width, height, htmlCode, filter, options, attrs, profile):
     super(InputDate, self).__init__(report, records, placeholder, size, width, height, htmlCode, filter, options, attrs, profile)
+
+  @property
+  def dom(self):
+    """
+    The Javascript Dom object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlDatePicker
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, report=self._report)
+    return self._dom
 
   @property
   def _js__builder__(self):
