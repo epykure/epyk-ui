@@ -64,3 +64,15 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
   @property
   def content(self):
     return JsObjects.JsObjects.get('%s.val()' % self._src.dom.jquery.varId)
+
+
+class JsHtmlSlider(JsHtml.JsHtml):
+  @property
+  def val(self):
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.slider('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlId, self._src.dom.jquery.varId))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get('%s.slider("value")' % self._src.dom.jquery.varId)

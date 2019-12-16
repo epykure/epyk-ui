@@ -56,9 +56,6 @@ class Sliders(object):
     :param color:
     :param helper:
     :param profile:
-
-    :rtype: html.HtmlEvent.Slider
-    :return:
     """
     if recordSet is not None:
       is_converted = False
@@ -74,14 +71,13 @@ class Sliders(object):
             result.add(rec[column])
           recordSet = sorted(list(result))
 
-    if attrs is None:
-      attrs = {}
-
+    attrs = {} if attrs is None else attrs
     if htmlCode is not None:
       attrs.update({"htmlCode": htmlCode, "changeUrl": False})
-
-    return self.context.register(html.HtmlEvent.Slider(self.context.rptObj, value, type, range, animate, step, min,
-        max, width, height, globalFilter, recordSet, color, attrs, helper, profile))
+    html_slider = html.HtmlEvent.Slider(self.context.rptObj, value, type, range, animate, step, min,
+                                        max, width, height, globalFilter, recordSet, color, attrs, helper, profile)
+    self.context.register(html_slider)
+    return html_slider
 
   def progressbar(self, number=None, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None, helper=None, profile=None):
     """

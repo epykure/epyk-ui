@@ -13,6 +13,7 @@ from epyk.core.html.entities import EntHtml4
 
 from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.Imports import requires
+from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -82,6 +83,56 @@ class Slider(Html.Html):
 
   def __init__(self, report, value, typeObj, range, animate, step, min, max, width, height,
                globalFilter, recordSet, color, attrs, helper, profile):
+    data = {'animate': animate, 'min': min, 'max': max, 'step': step}
+    super(Slider, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
+                                 heightUnit=height[1],
+                                 globalFilter=globalFilter, profile=profile)
+
+  @property
+  def dom(self):
+    """
+    The Javascript Dom object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlSlider
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, report=self._report)
+    return self._dom
+
+  @property
+  def _js__builder__(self):
+    return '''
+      if (options.type == 'date'){
+        data.step = data.step * 86400000; data.min = DateToTimeStamp(data.min); data.max = DateToTimeStamp(data.max);
+        if (data.values != undefined) {data.values = [DateToTimeStamp(data.values[0]), DateToTimeStamp(data.values[1])]}
+        else if(data.value != 0) {data.value = DateToTimeStamp(data.value)}};
+      if(!isNaN(data)){data = {value: data}};
+      %(jqId)s.slider(data);
+      $('#'+ %(jqId)s.attr('id') +' .ui-slider-range').css("background-color", options.backgroundColor);
+      $('#'+ %(jqId)s.attr('id') +' .ui-slider-handle').css({"outline": 0, "white-space": "nowrap"});
+      $('#'+ %(jqId)s.attr('id') +' .ui-slider-handle').css("color", options.backgroundColor);
+      $('#'+ %(jqId)s.attr('id') +' .ui-state-default, .ui-widget-content .ui-state-default' ).css("background-color", options.backgroundDotColor)
+      ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '''
+      <div %(strAttr)s>
+        <div style="width:100%%;height:20px">
+          <span style="float:left;display:inline-block">%(min)s</span>
+          <span style="float:right;display:inline-block">%(max)s</span>
+        </div>
+        <div id="%(htmlId)s"></div>
+      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.val['min'], "htmlId": self.htmlId,
+                             "max": self.val['max'], "helper": self.helper}
+
+
+class SliderOld(Html.Html):
+  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
+  name, category, callFnc = 'Slider', 'Sliders', 'slider'
+
+  def __init__(self, report, value, typeObj, range, animate, step, min, max, width, height,
+               globalFilter, recordSet, color, attrs, helper, profile):
     if recordSet is not None:
       series = recordSet
       if range is None and min == True:
@@ -110,7 +161,7 @@ class Slider(Html.Html):
       val['values'] = value
     else:
       val['value'] = value
-    super(Slider, self).__init__(report, val, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
+    super(SliderOld, self).__init__(report, val, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
                                  globalFilter=globalFilter, profile=profile)
     self._jsStyles = {'type': typeObj}
     #
@@ -131,15 +182,15 @@ class Slider(Html.Html):
         else:
           self.jsFrg('slidechange', self.jsAddUrlParam(self.htmlCode, "ui.value", isPyData=False))
 
-    if typeObj == 'date':
-      self.change('''var value = new Date(ui.value); 
-        if(ui.handleIndex == 0) { $(ui.handle).html("<div style='margin-top:12px'>" + FormatDate(value) + "</div>" )}
-        else {$(ui.handle).html("<div style='margin-top:-17px'>" + FormatDate(value) + "</div>")}''')
-    else:
-      self.js.objects.proto("formatMoney")
-      self.change('''
-        if(ui.handleIndex == 0) {$(ui.handle).html("<div style='margin-top:12px'>"+ ui.value.formatMoney(0, ",", ".") +"</div>")}
-        else {$(ui.handle).html("<div style='margin-top:-17px'>"+ ui.value.formatMoney(0, ",", ".") +"</div>")}''')
+    # if typeObj == 'date':
+    #   self.change('''var value = new Date(ui.value);
+    #     if(ui.handleIndex == 0) { $(ui.handle).html("<div style='margin-top:12px'>" + FormatDate(value) + "</div>" )}
+    #     else {$(ui.handle).html("<div style='margin-top:-17px'>" + FormatDate(value) + "</div>")}''')
+    # else:
+    #   self.js.objects.proto("formatMoney")
+    #   self.change('''
+    #     if(ui.handleIndex == 0) {$(ui.handle).html("<div style='margin-top:12px'>"+ ui.value.formatMoney(0, ",", ".") +"</div>")}
+    #     else {$(ui.handle).html("<div style='margin-top:-17px'>"+ ui.value.formatMoney(0, ",", ".") +"</div>")}''')
     if typeObj == 'date':
       self.addGlobalFnc('DateToTimeStamp(date)', '''
         var splitDt = date.split("-") ; var dateTime = new Date(splitDt[0], parseInt(splitDt[1])-1, splitDt[2]);
@@ -150,6 +201,17 @@ class Slider(Html.Html):
         if (day.length < 2) day = '0' + day;
         return [year, month, day].join('-'); ''', 'Javascript function to convert a Js timestamp to a string date YYYY-MM-DD')
     #self.change("var data = {event_val: ui.value, event_code:'%(htmlId)s'}; $('#%(htmlId)s_val').html(data.event_val);" % {'htmlId': self.htmlId } )
+
+  @property
+  def dom(self):
+    """
+    The Javascript Dom object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlSlider
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, report=self._report)
+    return self._dom
 
   @property
   def id_container(self):
@@ -174,16 +236,16 @@ class Slider(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-    if (jsStyle.type == 'date'){
+    if (options.type == 'date'){
       data.step = data.step * 86400000; data.min = DateToTimeStamp(data.min); data.max = DateToTimeStamp(data.max);
       if (data.values != undefined) {data.values = [DateToTimeStamp(data.values[0]), DateToTimeStamp(data.values[1])]}
       else if(data.value != 0) {data.value = DateToTimeStamp(data.value)}};
     if(!isNaN(data)){data = {value: data}};
     htmlObj.slider(data);
-    $('#'+ htmlObj.attr('id') +' .ui-slider-range').css("background-color", jsStyle.backgroundColor);
+    $('#'+ htmlObj.attr('id') +' .ui-slider-range').css("background-color", options.backgroundColor);
     $('#'+ htmlObj.attr('id') +' .ui-slider-handle').css({"outline": 0, "white-space": "nowrap"});
-    $('#'+ htmlObj.attr('id') +' .ui-slider-handle').css("color", jsStyle.backgroundColor);
-    $('#'+ htmlObj.attr('id') +' .ui-state-default, .ui-widget-content .ui-state-default' ).css("background-color", jsStyle.backgroundDotColor)
+    $('#'+ htmlObj.attr('id') +' .ui-slider-handle').css("color", options.backgroundColor);
+    $('#'+ htmlObj.attr('id') +' .ui-state-default, .ui-widget-content .ui-state-default' ).css("background-color", options.backgroundDotColor)
     '''
 
   def addAttr(self, key, val):
@@ -221,8 +283,8 @@ class Slider(Html.Html):
           <span style="float:right;display:inline-block">%(max)s</span>
         </div>
         <div id="%(htmlId)s"></div>
-      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.vals['min'], "htmlId": self.htmlId,
-                     "max": self.vals['max'], "helper": self.helper}
+      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.val['min'], "htmlId": self.htmlId,
+                     "max": self.val['max'], "helper": self.helper}
 
   def click(self, jsFnc):
     return self.change(jsFnc)
@@ -268,28 +330,28 @@ class Slider(Html.Html):
     else:
       return "%s.slider('value', %s); " % (self.jqId, jsData)
 
-  @property
-  def val(self):
-    """
-    :category: Javascript function
-    :rubric: JS
-    :example: myObj.val
-    :returns: Javascript string with the function to get the current value of the component
-    :dsc:
-      Property to get the jquery value of the HTML object in a python HTML object.
-      This method can be used in any jsFunction to get the value of a component in the browser.
-      This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
-    """
-    if 'values' in self.vals or self.vals.get('range', False) == True:
-      if self.type == 'date':
-        return '[FormatDate(%(jqId)s.slider("values")[0]), FormatDate( %(jqId)s.slider("values")[1] )]' % {'jqId': self.jqId}
-
-      return self.js.objects.get('%(jqId)s.slider("values")' % {'jqId': self.jqId})
-
-    if self.type == 'date':
-      return 'FormatDate(%(jqId)s.slider("value"))' % {'jqId': self.jqId}
-
-    return self.js.objects.get('%(jqId)s.slider("value")' % {'jqId': self.jqId})
+  # @property
+  # def val(self):
+  #   """
+  #   :category: Javascript function
+  #   :rubric: JS
+  #   :example: myObj.val
+  #   :returns: Javascript string with the function to get the current value of the component
+  #   :dsc:
+  #     Property to get the jquery value of the HTML object in a python HTML object.
+  #     This method can be used in any jsFunction to get the value of a component in the browser.
+  #     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
+  #   """
+  #   if 'values' in self.val or self.val.get('range', False) == True:
+  #     if self.type == 'date':
+  #       return '[FormatDate(%(jqId)s.slider("values")[0]), FormatDate( %(jqId)s.slider("values")[1] )]' % {'jqId': self.jqId}
+  #
+  #     return self.js.objects.get('%(jqId)s.slider("values")' % {'jqId': self.jqId})
+  #
+  #   if self.type == 'date':
+  #     return 'FormatDate(%(jqId)s.slider("value"))' % {'jqId': self.jqId}
+  #
+  #   return self.js.objects.get('%(jqId)s.slider("value")' % {'jqId': self.jqId})
 
   @property
   def jsQueryData(self):
@@ -698,4 +760,3 @@ class Filters(Html.Html):
       <div style='font-size:9px;margin:0 0 5px auto;width:40px;font-style:italic;cursor:pointer' onclick="%(click)s"><i class="fas fa-times-circle" style="font-size:9px;margin-right:2px"></i>clear</div>
       ''' % {'htmlId': "%s_div" % self.htmlId, 'cssAttr': self.get_attrs(pyClassNames=[s for s in self.defined if s not in ['CssDivFilterItems']]),
              'click': self.jsClear()}
-

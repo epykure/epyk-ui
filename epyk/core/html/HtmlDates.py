@@ -5,7 +5,6 @@ Module in charge of the structured date objects
 import time
 
 from epyk.core.html import Html
-from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
