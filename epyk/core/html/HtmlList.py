@@ -72,6 +72,12 @@ class Li(Html.Html):
     self.innerPyHTML = htmlObj
     return self
 
+  def click(self, jsFncs, profile=False):
+    if self.innerPyHTML is not None:
+      return self.innerPyHTML.click(jsFncs, profile)
+
+    return super(Li, self).click(jsFncs, profile)
+
   def __str__(self):
     return "<li %s>%s</li>" % (self.get_attrs(pyClassNames=self.defined), self.content)
 
@@ -187,7 +193,7 @@ class Groups(Html.Html):
 
 class Badges(List):
   _grpCls = CssGrpCls.CssGrpClassBase
-  name, category, callFnc = 'List Badges', 'Container', 'listbadge'
+  name, category, callFnc = 'List Badges', 'Lists', 'Badges'
 
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
     super(Badges, self).__init__(report, data, size, color, width, height, htmlCode, helper, profile)
@@ -198,8 +204,19 @@ class Badges(List):
       ])).no_decoration
 
 
+class Buttons(List):
+  _grpCls = CssGrpCls.CssGrpClassBase
+  name, category, callFnc = 'List Buttons', 'Lists', 'buttons'
+
+  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
+    super(Buttons, self).__init__(report, data, size, color, width, height, htmlCode, helper, profile)
+    for l in self.items:
+      l.set_html_content(
+        report.ui.buttons.button(l.val, width=width).css({"text-align": 'center'})).no_decoration
+
+
 class Checks(List):
-  name, category, callFnc = 'List Checked', 'List', 'checklist'
+  name, category, callFnc = 'List Checked', 'Lists', 'checklist'
   _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):

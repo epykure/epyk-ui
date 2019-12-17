@@ -337,5 +337,29 @@ class Lists(object):
     self.context.register(html_obj)
     return html_obj
 
+  def buttons(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+              htmlCode=None, helper=None, profile=None):
+    """
+
+    Example
+    rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
+
+    Documentation
+    https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+    https://v4-alpha.getbootstrap.com/components/list-group/
+
+    :param data:
+    :param size:
+    :param color:
+    :param width:
+    :param height:
+    :param profile:
+    """
+    size = self.context._size(size)
+    html_obj = html.HtmlList.Buttons(self.context.rptObj, data or [], size, color, width, height, htmlCode, helper, profile)
+
+    self.context.register(html_obj)
+    return html_obj
+
   def brackets(self, recordSet=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))

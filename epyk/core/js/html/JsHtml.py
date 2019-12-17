@@ -222,6 +222,23 @@ class JsHtmlRich(JsHtml):
   def empty(self): return '%s.innerHTML = ""' % self.varName
 
 
+class JsHtmlButton(JsHtml):
+  @property
+  def val(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.querySelector('label').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlId, self.varName))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get("%s.querySelector('label').innerHTML" % self.varName)
+
+  def empty(self): return '%s.innerHTML = ""' % self.varName
+
+
 class JsHtmlIcon(JsHtml):
   @property
   def val(self):

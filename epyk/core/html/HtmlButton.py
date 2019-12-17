@@ -6,6 +6,7 @@ import re
 import json
 
 from epyk.core.html import Html
+from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -24,7 +25,7 @@ class Button(Html.Html):
                                  heightUnit=height[1], profile=profile)
     # Add the component icon
     self.add_icon(icon, css={"font-size": '10px'})
-    self.add_label(text, css={'margin': '1px auto', "float": 'right', 'cursor': 'inherit', 'width': 'auto', 'height': 'auto'})
+    self.add_label(text, css={'margin': '1px auto', 'cursor': 'inherit', 'width': '100%', 'height': 'auto'})
 
     #
     self.css({"cursor": 'pointer', 'font-size': "%s%s" % (size[0], size[1])})
@@ -38,15 +39,15 @@ class Button(Html.Html):
     self.set_attrs(name="data-count", value=0)
 
   @property
-  def jsQueryData(self):
+  def dom(self):
     """
-     Python function used in the javascript side to get an object with all the information of the component during an event.
-     Basically this function will allow to get all the mandatory detail for an Ajax call
-    """
-    if self._code is not None:
-      return "{event_val: $(this).html(), %s: $(this).html(), event_groupId: '%s', event_count_click: $(this).data('count')+1}" % (self._code, self.groupId)
+    HTML Dom object
 
-    return "{event_val: this.innerHTML, event_groupId: '%s', event_count_click: $(this).data('count')+1}" % self.groupId
+    :rtype: JsHtml.JsHtmlButton
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlButton(self, report=self._report)
+    return self._dom
 
   @property
   def _js__builder__(self):
@@ -425,6 +426,17 @@ class IconEdit(Html.Html):
 
   def __str__(self):
     return "<span %s></span>" % (self.get_attrs(pyClassNames=self.defined))
+
+
+class Row(Html.Html):
+
+  def __init__(self, report, records, width, height, htmlCode, tooltip, profile, options):
+    super(Row, self).__init__(report, records, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
+                              heightUnit=height[1], profile=profile)
+
+  def __str__(self):
+    str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), str_div)
 
 
 # class IconThumbtack(IconEdit):
