@@ -15,6 +15,8 @@ class HtmlGeneric(Html.Html):
     super(HtmlGeneric, self).__init__(report, text, htmlCode=htmlCode, width=width[0], widthUnit=width[1],
                                       height=height[0], heightUnit=height[1], profile=profile)
     self.css({"font-size": '%s%s' % (size[0], size[1]), "display": 'inline-block'})
+    if tooltip:
+      self.tooltip(tooltip)
 
   def __str__(self):
     return '<%s %s>%s</%s>%s' % (self.tag, self.get_attrs(pyClassNames=self.pyStyle), self.val, self.tag, self.helper)

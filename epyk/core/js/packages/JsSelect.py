@@ -6,8 +6,6 @@ https://api.jqueryui.com/
 
 import json
 
-from epyk.core.js import JsUtils
-
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
@@ -34,19 +32,43 @@ class JSelect(JsPackage):
     :return:
     """
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s.value, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-      self.htmlId, self.varName))
+      "{%s: {value: %s, name: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+      self.htmlId, self.content, self.name))
 
   @property
   def content(self):
+    """
+    Get the selected content from the Select component
+
+    Example
+    b.click([rptObj.js.console.log(s.dom.content)])
+    """
     return JsObjects.JsObjects.get("%s.value" % self.varName)
+
+  @property
+  def name(self):
+    """
+    Get the selected name / label from the Select component
+
+    Example
+    b.click([rptObj.js.console.log(s.dom.name)])
+    """
+    return JsObjects.JsObjects.get("%s[%s].innerHTML" % (self.varName, self.index))
+
+  @property
+  def index(self):
+    """
+    Get the selected index from the Select component
+
+    Example
+    b.click([rptObj.js.console.log(s.dom.index)])
+    """
+    return JsObjects.JsNumber.JsNumber.get("%s.selectedIndex" % self.varName)
 
   @property
   def events(self):
     """
 
-    :rtype: JsNodeDom.JsDomEvents
-    :return:
     """
     return JsNodeDom.JsDomEvents(self._src)
 
@@ -54,7 +76,6 @@ class JSelect(JsPackage):
   def jquery(self):
     """
 
-    :return:
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
@@ -65,8 +86,7 @@ class JSelect(JsPackage):
   def jquery_ui(self):
     """
 
-    :return:
-    :rtype: JsQuery.JQuery
+    :rtype: JsQueryUi.JQueryUI
     """
     if self._jquery_ui is None:
       self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId))

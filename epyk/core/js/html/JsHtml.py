@@ -234,7 +234,7 @@ class JsHtmlIcon(JsHtml):
 
   @property
   def content(self):
-    return JsObjects.JsObjects.get(self._src.dom.getAttribute("class"))
+    return self._src.dom.getAttribute("class")
 
 
 

@@ -348,28 +348,16 @@ class CheckButton(Html.Html):
 
   def __init__(self, report, flag, tooltip, width, height, icon, label, htmlCode, options, profile):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                          heightUnit=height[1], profile=profile)
+                                      heightUnit=height[1], profile=profile)
+    self.input = report.ui.images.icon("fas fa-check" if flag else "fas fa-times").css({"width": "12px"})
+    self.input.inReport = False
     self.isDisable = options.get("disable", False)
-    self.add_label(label, {"width": "auto"}, position="after")
+    self.add_label(label, {"width": "none", "float": "none"}, position="after")
     self.add_icon(icon, {"float": 'none'}, position="after")
     self.css({'cursor': 'pointer', 'display': 'inline-block', 'margin-right': '10px'})
     self.clickEvent = {'Y': [], 'N': []}
     if tooltip is not None:
       self.tooltip(tooltip)
-
-  # @property
-  # def jsQueryData(self):
-  #   if self.htmlCode is not None:
-  #     return "{event_label: '%(label)s', event_val: $(this).data('isChecked'), event_code: '%(htmlCode)s', %(htmlCode)s: $(this).data('isChecked')}" % {'label': self.label, 'htmlCode': self.htmlCode}
-  #
-  #   return "{event_label: '%(label)s', event_val: $(this).data('isChecked'), event_code: '%(htmlCode)s'}" % {'label': self.label, 'htmlCode': self.htmlCode}
-  #
-  # @property
-  # def val(self): return "%s.data('isChecked')" % self.jqId
-  #
-  # @property
-  # def jqId(self):
-  #   return "$('#%s div[name=\"check_box\"]')" % self.htmlId
 
   @property
   def _js__builder__(self):
@@ -382,23 +370,23 @@ class CheckButton(Html.Html):
         htmlObj.parent().data('isChecked', false)
       }''' % {'green': self.getColor('success', 1), 'red': self.getColor('danger', 1)}
 
-  def click(self, jsFncs, allevents=True, isChecked=None):
-    if allevents:
-      jsFncs = [jsFncs] if not isinstance(jsFncs, list) else jsFncs
-      self.clickEvent = {"Y": jsFncs, "N": jsFncs}
-    else:
-      if isinstance(jsFncs, list):
-        for jsFnc in jsFncs:
-          if isChecked:
-            self.clickEvent['Y'].append(jsFnc)
-          else:
-            self.clickEvent['N'].append(jsFnc)
-      else:
-        if isChecked:
-          self.clickEvent['Y'].append(jsFncs)
-        else:
-          self.clickEvent['N'].append(jsFncs)
-    return self
+  # def click(self, jsFncs, allevents=True, isChecked=None):
+  #   if allevents:
+  #     jsFncs = [jsFncs] if not isinstance(jsFncs, list) else jsFncs
+  #     self.clickEvent = {"Y": jsFncs, "N": jsFncs}
+  #   else:
+  #     if isinstance(jsFncs, list):
+  #       for jsFnc in jsFncs:
+  #         if isChecked:
+  #           self.clickEvent['Y'].append(jsFnc)
+  #         else:
+  #           self.clickEvent['N'].append(jsFnc)
+  #     else:
+  #       if isChecked:
+  #         self.clickEvent['Y'].append(jsFncs)
+  #       else:
+  #         self.clickEvent['N'].append(jsFncs)
+  #   return self
 
   def __str__(self):
     # if not self.isDisable:
@@ -416,20 +404,14 @@ class CheckButton(Html.Html):
     #     })''' % {'jqId': self.dom.jquery.varId, 'htmlCode': self.htmlCode, 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'jsQueryData': "",
     #              'isChecked': ";".join(self.clickEvent['Y']), 'isNotChecked': ";".join(self.clickEvent['N']),
     #              'lightGrey': self.getColor('greys', 2), 'green': self.getColor('success', 1), 'red': self.getColor('danger', 1)})
-    return '''
-      <div %s>
-        <div name="check_box" style="display:inline-block;vertical-align:bottom;margin-right:5px;float:left;width:16px;height:16px"></div>
-      </div>''' % (self.get_attrs(pyClassNames=self.defined))
+    return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.defined), self.input.html())
 
 
 class IconEdit(Html.Html):
   name, category, callFnc = 'Icon', 'Icons', 'iconEdit'
-  builder_name = False
   cssCls = ["fa-layers", "fa-fw"]
 
   def __init__(self, report, position, icon, text, size, tooltip, width, height, htmlCode, profile):
-    if position is None:
-      position = 'left'
     super(IconEdit, self).__init__(report, '', code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                    heightUnit=height[1], profile=profile)
     if tooltip is not None:
@@ -437,56 +419,12 @@ class IconEdit(Html.Html):
     # Add the internal components icons and helper
     self.add_span(text, css=False)
     if text is not None:
-      self.span.css({"float": 'right'})
+      report.ui.texts.span.css({"float": 'right'})
     self.add_icon(icon, {"color": self.getColor('success', 1), "margin": "2px", 'font-size': '%s%s' % (size[0], size[1])})
-    self.css({"margin": "5px 0", "float": position, 'cursor': 'pointer'})
+    self.css({"margin": "5px 0", "float": position or 'left', 'cursor': 'pointer'})
 
-  def icon_on(self, event, jsFncs, profile=False):
-    """
-
-    Example
-    edit = rptObj.ui.icons.edit()
-    edit.on('click', rptObj.js.console.log('test'))
-
-    :param event:
-    :param jsFncs:
-    :param profile:
-
-    :return:
-    """
-    return self.icon.on(event, jsFncs, profile)
-
-  def icon_css(self, key, value=None, reset=False):
-    """
-
-    :param key:
-    :param value:
-    :param reset:
-
-    :return:
-    """
-    return self.icon.css(key, value, reset)
-
-  def icon_colors(self, color_hover, color_out=None):
-    """
-    Change the color of the button background when the mouse is hover
-
-    Example
-    rptObj.ui.icons.capture().color("red", "yellow")
-
-    :param color_hover: The color of the icon when mouse hover
-    :param color_out: Optional. The color of the icon when mouse out
-
-    """
-    if color_out is None:
-      color_out = self.getColor('success', 1)
-    else:
-      self.icon.css({"color": color_out})
-    self.icon.set_attrs(name="onmouseover", value="this.style.color='%s'" % color_hover)
-    self.icon.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
-    return self
-
-  def __str__(self): return "<span %s></span>" % (self.get_attrs(pyClassNames=self.defined))
+  def __str__(self):
+    return "<span %s></span>" % (self.get_attrs(pyClassNames=self.defined))
 
 
 # class IconThumbtack(IconEdit):

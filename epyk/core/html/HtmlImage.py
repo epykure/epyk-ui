@@ -163,6 +163,25 @@ class Icon(Html.Html):
       self._dom = JsHtml.JsHtmlIcon(self, report=self._report)
     return self._dom
 
+  def hover_colors(self, color_hover, color_out=None):
+    """
+    Change the color of the button background when the mouse is hover
+
+    Example
+    rptObj.ui.icons.capture().icon.hover_colors("red", "yellow")
+
+    :param color_hover: The color of the icon when mouse hover
+    :param color_out: Optional. The color of the icon when mouse out
+
+    """
+    if color_out is None:
+      color_out = self.getColor('success', 1)
+    else:
+      self.css({"color": color_out})
+    self.set_attrs(name="onmouseover", value="this.style.color='%s'" % color_hover)
+    self.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
+    return self
+
   def click(self, jsFncs, profile=False):
     self.css({"cursor": 'pointer'})
     return super(Icon, self).click(jsFncs, profile)

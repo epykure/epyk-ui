@@ -200,7 +200,8 @@ class Buttons(object):
     self.context.register(html_obj)
     return html_obj
 
-  def switch(self, recordSet=None, label=None, color=None, size=(None, 'px'), width=(150, '%'), height=(Defaults.LINE_HEIGHT, 'px'), htmlCode=None, profile=None):
+  def switch(self, recordSet=None, label=None, color=None, size=(None, 'px'), width=(150, '%'),
+             height=(Defaults.LINE_HEIGHT, 'px'), htmlCode=None, profile=None):
     """
     Python wrapper to the HTML switch elements
 
@@ -269,8 +270,8 @@ class Buttons(object):
     self.context.register(html_obj)
     return html_obj
 
-  def check(self, flag=False, tooltip=None, width=(None, "px"), height=(Defaults.BUTTONS_CHECK_HEIGHT, "px"), label=None, icon=None, htmlCode=None,
-            profile=None, options=None):
+  def check(self, flag=False, tooltip=None, width=(None, "px"), height=(Defaults.BUTTONS_CHECK_HEIGHT, "px"),
+            label=None, icon=None, htmlCode=None, profile=None, options=None):
     """
     Wrapper to the check box button object
 

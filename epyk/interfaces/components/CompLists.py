@@ -67,7 +67,7 @@ class Lists(object):
 
     Example
     rptObj.ui.select(["A", "B", "C"], label="label", selected="C", multiple=True,
-                     options={"title": "ttle", 'showTick': True, 'maxOptions': 2})
+                      options={"title": "ttle", 'showTick': True, 'maxOptions': 2})
     s.selected = "B"
     s.change(rptObj.js.console.log(s.dom.val))
 
@@ -81,9 +81,7 @@ class Lists(object):
     :param label: Optional. The HTML label attached to the component
     :param selected: The selected values
     :param width: Optional. Integer for the component width
-    :param width_unit: Optional. The unit for the with. Default %
     :param height: Optional. Integer for the component height
-    :param height_unit: Optional. The unit for the height. Default px
     :param column:
     :param filter:
     :param profile: Optional. A flag to set the component performance storage
@@ -92,8 +90,7 @@ class Lists(object):
     :rtype: html.HtmlSelect.Select
     :return:
     """
-    if options is None:
-      options = {}
+    options = {} if options is None else options
     all_selected = options.get("allSelected", False)
     if column is not None:
       if filter is not None:
@@ -104,7 +101,6 @@ class Lists(object):
       records = [{'name': rec, 'value': rec} for rec in records]
     if all_selected:
       records = [{'name': 'All', 'value': ''}] + records
-
     if multiple:
       if not isinstance(multiple, dict):
         multiple = {"max": 2}
@@ -245,10 +241,27 @@ class Lists(object):
     self.context.register(html_obj)
     return html_obj
 
-  def checklist(self, recordSet=None, width=(100, "%"), height=(None, 'px'), column=None, filter=None,
-                dataSrc=None, profile=None):
-    return self.context.register(html.HtmlList.CheckList(self.context.rptObj, recordSet, width, height,
-                                                         filter, dataSrc, profile))
+  def checklist(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+                htmlCode=None, helper=None, profile=None):
+    """
+
+    Example
+    data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
+    checks = rptObj.ui.lists.checklist(data)
+
+    :param data:
+    :param size:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param profile:
+    """
+    html_obj = html.HtmlList.Checks(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                       helper, profile)
+    self.context.register(html_obj)
+    return html_obj
 
   def tree(self, recordSet=None, width=(100, "%"), height=(None, 'px'), title='', htmlCode=None,
            draggable=False, dataSrc=None, expanded=False, profile=None):
@@ -299,8 +312,8 @@ class Lists(object):
     self.context.register(html_d)
     return html_d
 
-  def badges(self, recordSet=None, color=None, size=(None, 'px'), width=(100, "%"), height=(None, 'px'), draggable=False,
-                draggableGroupId=None, draggableMax=None, column=None, dataSrc=None, profile=None):
+  def badges(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+             htmlCode=None, helper=None, profile=None):
     """
 
     Example
@@ -310,21 +323,16 @@ class Lists(object):
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     https://v4-alpha.getbootstrap.com/components/list-group/
 
-    :param recordSet:
-    :param color:
+    :param data:
     :param size:
+    :param color:
     :param width:
     :param height:
-    :param draggable:
-    :param draggableGroupId:
-    :param draggableMax:
-    :param column:
-    :param dataSrc:
     :param profile:
     """
     size = self.context._size(size)
-    html_obj = html.HtmlList.ListBadge(self.context.rptObj, recordSet, color, size, width, height,
-                                       draggable, draggableGroupId, draggableMax, dataSrc, profile)
+    html_obj = html.HtmlList.Badges(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+                                       helper, profile)
 
     self.context.register(html_obj)
     return html_obj
