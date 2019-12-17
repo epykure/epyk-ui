@@ -428,14 +428,20 @@ class IconEdit(Html.Html):
     return "<span %s></span>" % (self.get_attrs(pyClassNames=self.defined))
 
 
-class Row(Html.Html):
+class Buttons(Html.Html):
 
-  def __init__(self, report, records, width, height, htmlCode, tooltip, profile, options):
-    super(Row, self).__init__(report, records, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                              heightUnit=height[1], profile=profile)
+  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
+    super(Buttons, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
+                                  heightUnit=height[1], profile=profile)
+    self.row = report.ui.grid([])
+    for b in data:
+      self.row += report.ui.button(b)
+
+  def __getitem__(self, i):
+    return self.row[i]
 
   def __str__(self):
-    str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
+    str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.row])
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), str_div)
 
 

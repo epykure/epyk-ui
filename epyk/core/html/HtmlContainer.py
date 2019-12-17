@@ -367,6 +367,9 @@ class Grid(Html.Html):
     self.colsAlign.append("left")
     return self
 
+  def __getitem__(self, i):
+    return self.val[i]
+
   def get(self, htmlCode):
     """
     Return the Html component in the parameter bar
