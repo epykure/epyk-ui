@@ -263,28 +263,24 @@ class Lists(object):
     self.context.register(html_obj)
     return html_obj
 
-  def tree(self, recordSet=None, width=(100, "%"), height=(None, 'px'), title='', htmlCode=None,
-           draggable=False, dataSrc=None, expanded=False, profile=None):
+  def tree(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+           htmlCode=None, helper=None, profile=None):
     """
 
     Example
     data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
     rptObj.ui.lists.tree(data)
 
-    :param recordSet:
+    :param data:
     :param width:
     :param height:
-    :param title:
     :param htmlCode:
-    :param draggable:
-    :param dataSrc:
-    :param expanded:
+    :param options:
     :param profile:
-    :rtype: html.HtmlTrees.Tree
-    :return:
     """
-    return self.context.register(html.HtmlTrees.Tree(self.context.rptObj, recordSet, width, height, title, htmlCode,
-                                                        draggable, dataSrc, expanded, profile))
+    html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], size, color, width, height, htmlCode, helper, profile)
+    self.context.register(html_tree)
+    return html_tree
 
   def dropdown(self, recordSet=None, size=(None, 'px'), title='', width=(100, "%"), height=(32, 'px'), htmlCode=None,
                dataSrc=None, filter=None, profile=None):

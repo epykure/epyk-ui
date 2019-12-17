@@ -17,7 +17,6 @@ from epyk.core.css.groups import CssGrpClsList
 
 class Li(Html.Html):
   name, category, callFnc = 'Entries', 'Lists', 'list_entries'
-  builder_name = False
 
   def __init__(self, report, text):
     super(Li, self).__init__(report, text)

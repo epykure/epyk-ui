@@ -5,12 +5,47 @@ Wrapper to the HTML tree components
 import json
 
 from epyk.core.html import Html
+from epyk.core.html import HtmlList
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpClsList
 
 
-class Tree(Html.Html):
+class Tree(HtmlList.List):
+  name, category, callFnc = 'List Expandable', 'Lists', 'tree'
+  #_grpCls = CssGrpClsList.CssClassListTree
+
+  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
+    super(Tree, self).__init__(report, [], size, color, width, height, htmlCode, helper, profile)
+    self.options = {"expand": True, "icon_open": "fas fa-folder-open", "icon_close": "fas fa-folder"}
+    self.set(self, data)
+
+  def set(self, ul, data):
+    """
+
+    :param ul:
+    :param data:
+    """
+    for l in data:
+      if l.get('items') is not None:
+        sub_l = self._report.ui.list()
+        sub_l.inReport = False
+        ul.add_item(sub_l)[-1].no_decoration
+        ul[-1].add_label(l['label'], css={"color": l.get('color', 'none')})
+        ul[-1].add_icon(self.options["icon_open"] if self.options.get("expand", True) else self.options["icon_close"])
+        if not self.options.get("expand", True):
+          sub_l.css({"display": 'none'})
+        ul[-1].icon.click([
+          ul[-1].val.dom.toggle(),
+          ul[-1].icon.dom.switchClass(self.options["icon_close"].split(" ")[-1], self.options["icon_open"].split(" ")[-1])])
+        self.set(sub_l, l.get('items'))
+      else:
+        ul.add_item(l['label'])[-1].no_decoration
+        ul[-1].css({"color": l.get('color', 'none')})
+    return self
+
+
+class TreeOld(Html.Html):
   name, category, callFnc = 'List Expandable', 'Lists', 'tree'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome', 'jquery']
   _grpCls = CssGrpClsList.CssClassListTree
@@ -25,16 +60,16 @@ class Tree(Html.Html):
         self.report, self.dataSrc = report, dataSrc
         if dataSrc.get('on_init', False):
           recordSet = self.onInit(None, dataSrc)
-    super(Tree, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
+    super(TreeOld, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
                                    htmlCode=htmlCode, dataSrc=dataSrc, profile=profile)
     self.css({"padding-left": "5px"})
     self.cssSelected = self._report.style.cssName("CssBasicListItemsSelected")
     # The flag start in _jsStyles is only used in the javascript recursion
     self._jsStyles = {'style': {"text-decoration": "none", "padding": 0, "margin": 0, "list-style-position": 'inside'}, 'start': True,
                       'icons': {'close': 'fas fa-folder', 'open': 'fas fa-folder-open'}, 'reset': True, 'draggable': draggable}
-    self.jsFrg('click', ''' event.stopPropagation(); $('#%(htmlId)s li span[name=value],a').removeClass('%(cssSelected)s');
-        $(event.currentTarget).addClass('%(cssSelected)s')
-      ''' % {'htmlCode': self.htmlCode, 'htmlId': self.htmlId, 'cssSelected': self.cssSelected})
+    #self.jsFrg('click', ''' event.stopPropagation(); $('#%(htmlId)s li span[name=value],a').removeClass('%(cssSelected)s');
+    #    $(event.currentTarget).addClass('%(cssSelected)s')
+    #  ''' % {'htmlCode': self.htmlCode, 'htmlId': self.htmlId, 'cssSelected': self.cssSelected})
     if dataSrc is not None and dataSrc['type'] in ["script", 'url']:
       # TODO To extend to internal flask calls
       self.jsAction(action='refresh', icon='fas fa-sync-alt', pyCssCls="CssSmallIcon", tooltip="Refresh the tree", url=self.dataSrc.get('script', self.dataSrc.get('url', '')),
@@ -145,7 +180,7 @@ class Tree(Html.Html):
         <span style='font-weight:bold;font-size:14px'>%(title)s</span>
         <div style="width:100%%">%(events)s</div>
       </div>
-      <div %(strAttr)s></div>%(helper)s''' % {'title': self.title, 'strAttr': self.get_attrs(pyClassNames=[]), 'helper': self.helper, 'events': "".join(events)}
+      <div %(strAttr)s></div>%(helper)s''' % {'title': self.title, 'strAttr': self.get_attrs(pyClassNames=self.defined), 'helper': self.helper, 'events': "".join(events)}
 
   def setSelected(self, value):
     self._jsStyles["forceSelect"] = value
