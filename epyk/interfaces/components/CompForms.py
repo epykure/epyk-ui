@@ -10,7 +10,7 @@ class Forms(object):
     self.context = context
 
   def date(self, objs, action, method, yyyy_mm_dd=None, helper=None):
-    form = html.HtmlForms.Form(self.context.rptObj, objs, action, method, helper)
+    form = html.HtmlContainer.Form(self.context.rptObj, objs, action, method, helper)
     self.context.register(form)
     return form
 
@@ -24,7 +24,7 @@ class Forms(object):
     :param title:
     :param helper:
     """
-    form = html.HtmlForms.Form(self.context.rptObj, action, method, helper)
+    form = html.HtmlContainer.Form(self.context.rptObj, action, method, helper)
     form.add_title(title)
     form.add_input(value, 'input', label)
     self.context.register(form)

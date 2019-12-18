@@ -20,7 +20,6 @@ from . import HtmlMessaging
 from . import HtmlDates
 from . import templates
 from . import HtmlTrees
-from . import HtmlForms
 from . import HtmlTags
 from . import Header
 

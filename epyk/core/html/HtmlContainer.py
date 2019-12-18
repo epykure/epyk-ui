@@ -664,3 +664,28 @@ class IconsMenu(Html.Html):
   def __str__(self):
     htmlIcons = [htmlDef for action, htmlDef in self._jsActions.items()]
     return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.defined), "".join(htmlIcons))
+
+
+class Form(Html.Html):
+  name, category, callFnc = 'Generic Form', 'Forms', 'form'
+  _grpCls = CssGrpCls.CssGrpClassBase
+
+  def __init__(self, report, htmlObjs, action, method, helper):
+    super(Form, self).__init__(report, [])
+    self.css({"padding": '5px'})
+    self.attr.update({"action": action, "method": method})
+    self.add_helper(helper)
+    for i, htmlObj in enumerate(htmlObjs):
+      self.__add__(htmlObj)
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.val.append(htmlObj)
+    return self
+
+  def __str__(self):
+    s = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
+    self.__add__(s)
+    str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
+    return '<form %s>%s</form>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
