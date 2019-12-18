@@ -24,12 +24,8 @@ class Forms(object):
     :param method:
     :param value:
     :param label:
-    :param placeholder:
     :param title:
     :param helper:
-
-    :rtype: html.HtmlForms.Form
-    :return:
     """
     form = html.HtmlForms.Form(self.context.rptObj, action, method, helper)
     form.add_title(title)

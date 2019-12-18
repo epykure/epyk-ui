@@ -2,9 +2,6 @@
 Wrapper to the HTML tree components
 """
 
-import json
-
-from epyk.core.html import Html
 from epyk.core.html import HtmlList
 
 # The list of CSS classes

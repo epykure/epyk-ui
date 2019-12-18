@@ -61,8 +61,8 @@ class Popup(Html.Html):
     htmlObj.inReport = False # Has to be defined here otherwise it is set too late
     htmlObj.container = "#%s_content" % self.htmlId
     if htmlObj.category in ['Input']:
-      self.inputs.append( (htmlObj.jqId, htmlObj.placeholder, htmlObj.val, htmlObj.__class__.__name__) )
-    self.vals.append(htmlObj)
+      self.inputs.append((htmlObj.jqId, htmlObj.placeholder, htmlObj.val, htmlObj.__class__.__name__) )
+    self.val.append(htmlObj)
     return self
 
   def jsSetInputVals(self, jsData):
