@@ -9,13 +9,10 @@ class Forms(object):
   def __init__(self, context):
     self.context = context
 
-  def date(self, action, method, yyyy_mm_dd=None, helper=None):
-    form = html.HtmlForms.Form(self.context.rptObj, action, method, helper)
+  def date(self, objs, action, method, yyyy_mm_dd=None, helper=None):
+    form = html.HtmlForms.Form(self.context.rptObj, objs, action, method, helper)
     self.context.register(form)
     return form
-
-  def dates(self, yyyy_mm_dd=None, yyyy_mm_dd_Prev=None):
-    pass
 
   def input(self, action, method="GET", value="", label=None, title=None, helper=None):
     """
