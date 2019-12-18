@@ -275,15 +275,14 @@ class Lists(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param options:
     :param profile:
     """
     html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], size, color, width, height, htmlCode, helper, profile)
     self.context.register(html_tree)
     return html_tree
 
-  def dropdown(self, recordSet=None, size=(None, 'px'), title='', width=(100, "%"), height=(32, 'px'), htmlCode=None,
-               dataSrc=None, filter=None, profile=None):
+  def dropdown(self, recordSet=None, size=(None, "px"), color=None, width=(100, "%"), height=(32, 'px'), htmlCode=None,
+               helper=None, profile=None):
     """
 
     Documentation
@@ -293,18 +292,14 @@ class Lists(object):
 
     :param recordSet:
     :param size:
-    :param title:
     :param width:
     :param height:
     :param htmlCode:
-    :param dataSrc:
-    :param globalFilter:
     :param profile:
     :return:
     """
     size = self.context._size(size)
-    html_d = html.HtmlSelect.SelectDropDown(self.context.rptObj, title, recordSet, size, width,
-                                            height, htmlCode, dataSrc, filter, profile)
+    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, size, color, width, height, htmlCode, helper, profile)
     self.context.register(html_d)
     return html_d
 

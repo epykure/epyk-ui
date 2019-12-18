@@ -32,6 +32,14 @@ class ExternalLink(Html.Html):
   def _js__builder__(self):
     return 'htmlObj.innerHTML = data.text; htmlObj.href = data.url'
 
+  @property
+  def no_decoration(self):
+    """
+    Property to remove the list default style
+    """
+    self.css({"text-decoration": "none", "list-style-type": 'none'})
+    return self
+
   def build(self, data=None, options=None, profile=False):
     if not isinstance(data, dict):
       data = {"text": data}
@@ -98,6 +106,14 @@ class DataLink(Html.Html):
     super(DataLink, self).__init__(report, {"text": text, 'value': value}, width=width[0], widthUnit=width[1], height=height[0],
                                    heightUnit=height[1], profile=profile)
     self.format = format
+
+  @property
+  def no_decoration(self):
+    """
+    Property to remove the list default style
+    """
+    self.css({"text-decoration": "none", "list-style-type": 'none'})
+    return self
 
   @property
   def _js__builder__(self):
