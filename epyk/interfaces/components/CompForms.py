@@ -10,6 +10,17 @@ class Forms(object):
     self.context = context
 
   def date(self, action, method, htmlCode="Current", helper=None):
+    """
+
+    Example
+    rptObj.ui.forms.date("http://127.0.0.1:5000", "POST")
+
+    :param action:
+    :param method:
+    :param htmlCode:
+    :param helper:
+    :return:
+    """
     col = self.context.rptObj.ui.col([self.context.rptObj.ui.fields.today(label=htmlCode).set_attrs({"name": htmlCode.upper()})])
     col.css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
                                    "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
@@ -19,6 +30,18 @@ class Forms(object):
     return form
 
   def dates(self, action, method, htmlCode1="current", htmlCode2="Previous",  helper=None):
+    """
+
+    Example
+    rptObj.ui.forms.dates("http://127.0.0.1:5000", "POST")
+
+    :param action:
+    :param method:
+    :param htmlCode1:
+    :param htmlCode2:
+    :param helper:
+    :return:
+    """
     col = self.context.rptObj.ui.col([
       self.context.rptObj.ui.fields.today(label=htmlCode1).set_attrs({"name": htmlCode1.upper()}),
       self.context.rptObj.ui.fields.today(label=htmlCode2).set_attrs({"name": htmlCode2.upper()}),
@@ -44,6 +67,19 @@ class Forms(object):
     return form
 
   def inputs(self, records, action, method, helper=None):
+    """
+    Example
+    rptObj.ui.forms.inputs([
+      {"label": "name", "htmlCode": "input"},
+      {"label": "name 2", "htmlCode": "input2"},
+    ], "http://127.0.0.1:5000", "POST")
+
+    :param records:
+    :param action:
+    :param method:
+    :param helper:
+    :return:
+    """
     html_objs = []
     for rec in records:
       inp = self.context.rptObj.ui.fields.input(label=rec["label"])

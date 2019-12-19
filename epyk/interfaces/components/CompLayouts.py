@@ -367,3 +367,16 @@ class Layouts(object):
     table = html.tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
     self.context.register(table)
     return table
+
+  def form(self, action, method, htmlObj=None, helper=None):
+    """
+
+    :param action:
+    :param method:
+    :param htmlObj:
+    :param helper:
+    :return:
+    """
+    form = html.HtmlContainer.Form(self.context.rptObj, htmlObj, action, method, helper)
+    self.context.register(form)
+    return form
