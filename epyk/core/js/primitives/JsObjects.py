@@ -30,7 +30,12 @@ class JsObjects(object):
 
   @property
   def mouseEvent(self):
-    """"""
+    """
+    Interface to the JavaScript MouseEvents
+
+    Documentation
+    https://www.w3schools.com/jsref/obj_mouseevent.asp
+    """
     return JsEvents.MouseEvent()
 
   @property
