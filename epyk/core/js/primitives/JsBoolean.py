@@ -12,11 +12,11 @@ from epyk.core.js.primitives import JsObject
 class JsBoolean(JsObject.JsObject):
   _jsClass = "Boolean"
 
-  def __init__(self, data, varName=None, setVar=False, isPyData=True):
+  def __init__(self, data, varName=None, setVar=False, isPyData=True, report=None):
     if not hasattr(data, 'varName') and isPyData:
       isPyData = True
       data = json.dumps(data)
-    super(JsBoolean, self).__init__(data, varName, setVar, isPyData)
+    super(JsBoolean, self).__init__(data, varName, setVar, isPyData, report)
 
   @property
   def not_(self):

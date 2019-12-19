@@ -12,6 +12,7 @@ from epyk.core.js.primitives import JsBoolean
 
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.objects import JsData
+from epyk.core.js.objects import JsEvents
 
 
 class JsObjects(object):
@@ -26,6 +27,11 @@ class JsObjects(object):
     :return: The Javascript "this" object
     """
     return JsObject.JsObject.get("this")
+
+  @property
+  def mouseEvent(self):
+    """"""
+    return JsEvents.MouseEvent()
 
   @property
   def jqThis(self):
