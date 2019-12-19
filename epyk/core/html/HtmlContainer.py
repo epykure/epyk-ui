@@ -675,6 +675,8 @@ class Form(Html.Html):
     self.css({"padding": '5px'})
     self.attr.update({"action": action, "method": method})
     self.add_helper(helper)
+    self.b = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
+    self.b.inReport = False
     for i, htmlObj in enumerate(htmlObjs):
       self.__add__(htmlObj)
 
@@ -685,7 +687,6 @@ class Form(Html.Html):
     return self
 
   def __str__(self):
-    s = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
-    self.__add__(self._report.ui.div(s).css({"text-align": 'center'}))
+    self.__add__(self._report.ui.div(self.b))
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
     return '<form %s>%s</form>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
