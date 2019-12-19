@@ -34,6 +34,9 @@ class Forms(object):
       inp = self.context.rptObj.ui.fields.input(label=rec["label"])
       inp.input.set_attrs({"name": rec["htmlCode"]})
       html_objs.append(inp)
-    form = html.HtmlContainer.Form(self.context.rptObj, html_objs, action, method, helper)
+    col = self.context.rptObj.ui.col(html_objs).css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
+                                   "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
+    form = html.HtmlContainer.Form(self.context.rptObj, [col], action, method, helper)
+    col += form.submit
     self.context.register(form)
     return form
