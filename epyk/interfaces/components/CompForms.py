@@ -9,23 +9,31 @@ class Forms(object):
   def __init__(self, context):
     self.context = context
 
-  def date(self, objs, action, method, yyyy_mm_dd=None, helper=None):
-    form = html.HtmlContainer.Form(self.context.rptObj, objs, action, method, helper)
+  def date(self, action, method, helper=None):
+    today = self.context.rptObj.ui.fields.today().set_attrs({"name": 'date'})
+    form = html.HtmlContainer.Form(self.context.rptObj, [today], action, method, helper)
     self.context.register(form)
     return form
 
-  def input(self, action, method="GET", value="", label=None, title=None, helper=None):
+  def input(self, htmlCode, action, method, helper=None):
     """
 
     :param action:
     :param method:
-    :param value:
-    :param label:
-    :param title:
     :param helper:
     """
-    form = html.HtmlContainer.Form(self.context.rptObj, action, method, helper)
-    form.add_title(title)
-    form.add_input(value, 'input', label)
+    inp = self.context.rptObj.ui.fields.input()
+    inp.input.set_attrs({"name": htmlCode})
+    form = html.HtmlContainer.Form(self.context.rptObj, [inp], action, method, helper)
+    self.context.register(form)
+    return form
+
+  def inputs(self, records, action, method, helper=None):
+    html_objs = []
+    for rec in records:
+      inp = self.context.rptObj.ui.fields.input(label=rec["label"])
+      inp.input.set_attrs({"name": rec["htmlCode"]})
+      html_objs.append(inp)
+    form = html.HtmlContainer.Form(self.context.rptObj, html_objs, action, method, helper)
     self.context.register(form)
     return form

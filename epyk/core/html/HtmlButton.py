@@ -25,7 +25,6 @@ class Button(Html.Html):
                                  heightUnit=height[1], profile=profile)
     # Add the component icon
     self.add_icon(icon, css={"font-size": '10px'})
-    self.add_label(text, css={'margin': '1px auto', 'cursor': 'inherit', 'width': '100%', 'height': 'auto'})
 
     #
     self.css({"cursor": 'pointer', 'font-size': "%s%s" % (size[0], size[1])})
@@ -104,7 +103,7 @@ class Button(Html.Html):
     return self
 
   def __str__(self):
-    return '<button %s></button>' % (self.get_attrs(pyClassNames=self.defined))
+    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.defined), self.val)
 
   @staticmethod
   def matchMarkDown(val):

@@ -29,7 +29,7 @@ class PyRest(object):
   def __init__(self, src=None):
     self.__src = src if src else self.__internal()
 
-  def server(self, port=5000, service_name=""):
+  def http_server(self, port=5000, service_name=""):
     """
     Start a local server for all the services.
     This should be at the end of the script in order to allow the services debug
@@ -38,20 +38,31 @@ class PyRest(object):
     :param service_name:
     :return:
     """
-    import socket
+    import http.server
+    import socketserver
+    import io
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_address = ('', port)
-    sock.bind(server_address)
-    sock.listen(1)
-    while True:
-      print("Server started")
-      connection, client_address = sock.accept()
-      try:
-        while True:
-          data = connection.recv(4096)
-      finally:
-        connection.close()
+    class GetHandler(http.server.SimpleHTTPRequestHandler):
+
+      def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        http.server.SimpleHTTPRequestHandler.do_GET(self)
+
+      def do_POST(self):
+        content_length = int(self.headers['Content-Length'])
+        body = self.rfile.read(content_length)
+        self.send_response(200)
+        self.end_headers()
+        response = io.BytesIO()
+        response.write(b'This is POST request. ')
+        response.write(b'Received: ')
+        response.write(body)
+        self.wfile.write(response.getvalue())
+
+    Handler = GetHandler
+    httpd = socketserver.TCPServer(("", port), Handler)
+    httpd.serve_forever()
 
   def post(self, url, data=None, encoding='utf-8', headers=None, proxy=None):
     """
