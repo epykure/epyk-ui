@@ -10,6 +10,7 @@ Modules wrapped as part of this script
 """
 
 import json
+import socket
 
 try:
     from urllib.parse import urlparse, urlencode
@@ -27,6 +28,30 @@ class PyRest(object):
 
   def __init__(self, src=None):
     self.__src = src if src else self.__internal()
+
+  def server(self, port=5000, service_name=""):
+    """
+    Start a local server for all the services.
+    This should be at the end of the script in order to allow the services debug
+
+    :param port:
+    :param service_name:
+    :return:
+    """
+    import socket
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_address = ('', port)
+    sock.bind(server_address)
+    sock.listen(1)
+    while True:
+      print("Server started")
+      connection, client_address = sock.accept()
+      try:
+        while True:
+          data = connection.recv(4096)
+      finally:
+        connection.close()
 
   def post(self, url, data=None, encoding='utf-8', headers=None, proxy=None):
     """
