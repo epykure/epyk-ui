@@ -8,7 +8,6 @@ from epyk.core.js.primitives import JsNumber
 
 
 class MouseEvent(object):
-
   @property
   def isTrusted(self):
     """
