@@ -114,6 +114,33 @@ class Tree(HtmlList.List):
     pass
 
 
+class TreeInput(Tree):
+  def set(self, ul, data):
+    """
+
+    :param ul:
+    :param data:
+    """
+    for l in data:
+      if l.get('items') is not None:
+        sub_l = self._report.ui.list()
+        sub_l.inReport = False
+        ul.add_item(sub_l)[-1].no_decoration
+        ul[-1].add_label(l['label'], css={"color": l.get('color', 'none')})
+        ul[-1].add_icon(self.options.icon_open if self.options.expanded else self.options.icon_close)
+        if not self.options.expanded:
+          sub_l.css({"display": 'none'})
+        ul[-1].icon.click([
+          ul[-1].val.dom.toggle(),
+          ul[-1].icon.dom.switchClass(self.options.icon_close.split(" ")[-1], self.options.icon_open.split(" ")[-1])])
+        self.set(sub_l, l.get('items'))
+      else:
+        #ul.add_item(l['label'])[-1].no_decoration
+        ul.add_item(self._report.ui.input(l['label']).css({"width": '50px', 'min-width': 'none'}))[-1].no_decoration
+        ul[-1].css({"color": l.get('color', 'none')})
+    return self
+
+
 class DropDown(HtmlList.List):
   alias, cssCls = 'dropdown', ['btn', 'dropdown-toggle']
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']

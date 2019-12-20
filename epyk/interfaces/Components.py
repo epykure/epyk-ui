@@ -22,6 +22,7 @@ from epyk.interfaces.components import CompDrops
 from epyk.interfaces.components import CompForms
 from epyk.interfaces.components import CompTags
 from epyk.interfaces.components import CompFields
+from epyk.interfaces.components import CompTrees
 
 
 class Components(object):
@@ -118,6 +119,14 @@ class Components(object):
     Simple list, trees or dropdown boxes will be part of this category of items
     """
     return CompLists.Lists(self)
+
+  @property
+  def trees(self):
+    """
+    Group all the UI components dedicated to produce Trees or selection items.
+
+    """
+    return CompTrees.Trees(self)
 
   @property
   def buttons(self):
