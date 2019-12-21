@@ -187,6 +187,19 @@ class Text(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
+  def editable(self):
+    """
+    Change the componenet properties to be editable if double clicked
+
+    Example
+    rptObj.ui.text("This is a text").editable()
+
+    :return: Self to allow the chaining
+    """
+    self.set_attrs({"contenteditable": "false", "ondblclick": "this.contentEditable=true;this.className='inEdit'",
+                    "onblur": "this.contentEditable=false;this.className=''"})
+    return self
+
   @property
   def _js__builder__(self):
     mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()

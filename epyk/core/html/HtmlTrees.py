@@ -135,8 +135,7 @@ class TreeInput(Tree):
           ul[-1].icon.dom.switchClass(self.options.icon_close.split(" ")[-1], self.options.icon_open.split(" ")[-1])])
         self.set(sub_l, l.get('items'))
       else:
-        #ul.add_item(l['label'])[-1].no_decoration
-        ul.add_item(self._report.ui.input(l['label']).css({"width": '50px', 'min-width': 'none'}))[-1].no_decoration
+        ul.add_item(self._report.ui.text(l['label']).editable().css({"width": 'none', 'min-width': 'none'}))[-1].no_decoration
         ul[-1].css({"color": l.get('color', 'none')})
     return self
 

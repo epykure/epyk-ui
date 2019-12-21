@@ -695,6 +695,18 @@ class JsDoms(JsObject.JsObject):
     """
     return JsString.JsString("%s.tagName" % self.varId, isPyData=False)
 
+  def contentEditable(self, bool):
+    """
+    Set content editable
+
+    Example
+    rptObj.ui.text("This is a text").dom.contentEditable(True)
+
+    :param bool: Boolean. Set the content editable flag to the Dom object
+    :return: Return a JsBoolean object
+    """
+    return JsBoolean.JsBoolean.get("%s.contentEditable = %s" % (self.varId, JsUtils.jsConvertData(bool, None)))
+
   def className(self, className=None):
     """
     The className property sets or returns the class name of an element (the value of an element's class attribute).

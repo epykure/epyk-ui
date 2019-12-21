@@ -9,6 +9,7 @@ from epyk.core.html import Html
 from epyk.core.css.groups import CssGrpClsList
 
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtml
 
 
 class Radio(Html.Html):

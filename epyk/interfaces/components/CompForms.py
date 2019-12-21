@@ -21,7 +21,9 @@ class Forms(object):
     :param helper:
     :return:
     """
-    col = self.context.rptObj.ui.col([self.context.rptObj.ui.fields.today(label=htmlCode).set_attrs({"name": htmlCode.upper()})])
+    date = self.context.rptObj.ui.fields.today(label=htmlCode)
+    date.input.set_attrs({"name": htmlCode.upper()})
+    col = self.context.rptObj.ui.col([date])
     col.css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
                                    "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
     form = html.HtmlContainer.Form(self.context.rptObj, [col], action, method, helper)
@@ -40,14 +42,15 @@ class Forms(object):
     :param htmlCode1:
     :param htmlCode2:
     :param helper:
-    :return:
     """
-    col = self.context.rptObj.ui.col([
-      self.context.rptObj.ui.fields.today(label=htmlCode1).set_attrs({"name": htmlCode1.upper()}),
-      self.context.rptObj.ui.fields.today(label=htmlCode2).set_attrs({"name": htmlCode2.upper()}),
-    ])
+    date1 = self.context.rptObj.ui.fields.today(label=htmlCode1)
+    date1.input.set_attrs({"name": htmlCode1.upper()})
+    date2 = self.context.rptObj.ui.fields.today(label=htmlCode1)
+    date2.input.set_attrs({"name": htmlCode1.upper()})
+
+    col = self.context.rptObj.ui.col([date1, date2])
     col.css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
-                                   "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
+             "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
     form = html.HtmlContainer.Form(self.context.rptObj, [col], action, method, helper)
     col += form.submit
     self.context.register(form)
