@@ -23,6 +23,7 @@ from epyk.interfaces.components import CompForms
 from epyk.interfaces.components import CompTags
 from epyk.interfaces.components import CompFields
 from epyk.interfaces.components import CompTrees
+from epyk.interfaces.components import CompVignets
 
 
 class Components(object):
@@ -93,6 +94,15 @@ class Components(object):
     This category will take into account very specific and bespoke components.
     """
     return CompRich.Rich(self)
+
+  @property
+  def vignets(self):
+    """
+    Group all the UI components dedicated to produce rich HTML Components.
+
+    This category will take into account very specific and bespoke components.
+    """
+    return CompVignets.Vignet(self)
 
   @property
   def texts(self):

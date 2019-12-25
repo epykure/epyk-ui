@@ -657,7 +657,10 @@ class Html(object):
 
   @property
   def content(self):
-    return self.val if self.innerPyHTML is None else self.innerPyHTML.html()
+    if self.innerPyHTML is not None:
+      return self.innerPyHTML.html()
+
+    return self.val if not hasattr(self.val, "html") else self.val.html()
 
   @property
   def style(self):

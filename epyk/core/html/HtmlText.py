@@ -16,6 +16,8 @@ from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
+from epyk.core.css.styles.CssStylesDivComms import CssContentEditable
+
 from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsText
 
@@ -196,6 +198,7 @@ class Text(Html.Html):
 
     :return: Self to allow the chaining
     """
+    self.defined.add(CssContentEditable.__name__, toMain=False)
     self.set_attrs({"contenteditable": "false", "ondblclick": "this.contentEditable=true;this.className='inEdit'",
                     "onblur": "this.contentEditable=false;this.className=''"})
     return self

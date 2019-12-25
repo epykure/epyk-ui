@@ -26,3 +26,14 @@ class CssCommInput(CssStyle.CssCls):
     style.update({'color': self.getColor("greys", -1), 'background-color': self.getColor("greys", 0),
                   'border-bottom': '1px solid %s' % self.getColor("success", 1), 'font-family': Defaults_css.Font.family,
                   'font-size': '%spx' % Defaults_css.Font.size})
+
+
+class CssContentEditable(CssStyle.CssCls):
+  """
+
+  """
+  focus = {}
+  cssId = {'reference': '[contenteditable]'}
+
+  def customize(self, style, eventsStyles):
+    eventsStyles['focus'].update({'outline': "1px solid %s" % self.getColor("success", 1)})

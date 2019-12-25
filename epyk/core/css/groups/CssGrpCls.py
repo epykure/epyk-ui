@@ -20,7 +20,21 @@ class CssGrpClass(object):
   def __contains__(self, key):
     return key in self.clsMap
 
-  def add(self, clsName): self.clsMap.add(clsName)
+  def add(self, clsName, toMain=True):
+    """
+    Add a CSS Style to the main HTML component
+
+    :param clsName: String. The CSS classname to be added to the CSS Style
+    :param toMain: Boolean. Add the CSS class to the corresponding group category
+
+    :return: self to allow the chaining
+    """
+    if toMain:
+      self.clsMap.add(clsName)
+    else:
+      self.clsAltMap.add(clsName)
+      self.src._report.style.add(clsName)
+    return self
 
   def remove(self, clsName):
     if not isinstance(clsName, list):
