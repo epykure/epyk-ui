@@ -7,6 +7,7 @@ import json
 
 from epyk.core.html import Html
 from epyk.core.js.html import JsHtml
+from epyk.core.js import JsUtils
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -84,6 +85,29 @@ class Button(Html.Html):
     # else:
     #   js_fnc.append("var count = $(this).data('count')+1; $(this).data('count', count)")
     # return super(Button, self).click(js_fnc)
+
+  def press(self, jsPressFncs=None, jsReleaseFncs=None, profile=False):
+    """
+
+    :param jsPressFncs:
+    :param jsReleaseFncs:
+    :param profile:
+    """
+    str_fnc = ""
+    if jsPressFncs is not None:
+      if not isinstance(jsPressFncs, list):
+        jsPressFncs = [jsPressFncs]
+      jsPressFncs.append(self.dom.disable(lock=jsReleaseFncs is None))
+      str_fnc = "if(%s == 'pointer'){%s}" % (self.dom.css('cursor'), JsUtils.jsConvertFncs(jsPressFncs, toStr=True))
+    if jsReleaseFncs is not None:
+      if jsPressFncs is None:
+        raise Exception("Press Event must be defined")
+
+      if not isinstance(jsReleaseFncs, list):
+        jsReleaseFncs = [jsReleaseFncs]
+      jsReleaseFncs.append(self.dom.release())
+      str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(jsReleaseFncs, toStr=True))
+    return self.on("click", str_fnc, profile)
 
   def unClick(self, jsFncs):
     if not 'click' in self.jsFncFrag:

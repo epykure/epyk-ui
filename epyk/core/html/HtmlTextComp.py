@@ -75,7 +75,7 @@ class UpDown(Html.Html):
 
 
 class TextBubble(Html.Html):
-  name, category, callFnc = 'Bubble text', 'Rich', 'textbubble'
+  name, category, callFnc = 'Bubble text', 'Vignets', 'bubble'
   _grpCls = CssGrpClsText.CssClassTextBubble
 
   def __init__(self, report, recordSet, width, height, color, size, background_color, helper, profile):
@@ -96,15 +96,16 @@ class TextBubble(Html.Html):
       else {div_elements[div_elements.length - 1].querySelectorAll('a')[0].href = '#'};
       if (data.color != undefined) {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = data.color}
       else {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = '%(color)s'}
-      div_elements[div_elements.length - 1].querySelectorAll('a')[0].innerHTML = data.title''' % {"color": self.getColor("colors", -1)}
+      div_elements[div_elements.length - 1].querySelectorAll('a')[0].innerHTML = data.title
+      ''' % {"color": self.getColor("colors", -1)}
 
   def __str__(self):
-    bubble_height = self.height - 40
+    bubble_height = self.height - 20
     bubble_width = self.height - 20
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '''
       <div %(strAttr)s>
-        <div %(clsTag)s style="width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
+        <div %(clsTag)s style="padding-top:10px;width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
         <div "%(clsTitle)s"><a style="text-decoration:none"></a></div>%(helper)s
       </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "clsTag": self._report.style.getClsTag(['CssDivBubble'], loadCls=True),
                    'clsTitle': self._report.style.getClsTag(['CssTitle'], loadCls=True),

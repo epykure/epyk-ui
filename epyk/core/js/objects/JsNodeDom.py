@@ -488,8 +488,14 @@ class JsDoms(JsObject.JsObject):
           k = "%s%s" % (split_css[0], split_css[1].title())
         self._js.append("%s.style.%s = %s" % (self.varId, k, JsUtils.jsConvertData(v, None)))
     elif jsObject is None:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
       return JsObject.JsObject("%s.style.%s" % (self.varId, type))
     else:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
       self._js.append("%s.style.%s = %s" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 
@@ -623,7 +629,7 @@ class JsDoms(JsObject.JsObject):
     :param attributename: Required. The name of the attribute you want to get the value from
     :return: A String, representing the specified attribute's value.
     """
-    return JsString.JsString("%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attributename, None)), isPyData=False)
+    return JsObject.JsObject("%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attributename, None)), isPyData=False)
 
   def getAttributeNode(self, attributename):
     """
@@ -636,6 +642,19 @@ class JsDoms(JsObject.JsObject):
     :return: An Attr object, representing the specified attribute node.
     """
     return JsString.JsString("%s.getAttributeNode('%s')" % (self.varId, attributename), isPyData=False)
+
+  def getComputedStyle(self, attributename=None):
+    """
+
+    :param attributename:
+    """
+    if attributename is None:
+      return JsString.JsString("getComputedStyle(%s)" % self.varId, isPyData=False)
+
+    if "-" in attributename:
+      split_css = attributename.split("-")
+      attributename = "%s%s" % (split_css[0], split_css[1].title())
+    return JsString.JsString("getComputedStyle(%s).%s" % (self.varId, attributename), isPyData=False)
 
   @property
   def hasChildNodes(self):

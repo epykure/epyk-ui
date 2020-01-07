@@ -229,12 +229,34 @@ class JsHtmlButton(JsHtml):
 
     :return:
     """
-    return JsObjects.JsObjects.get(
-      "{%s: {value: %s.querySelector('label').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlId, self.varName))
+    return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
+      offset: new Date().getTimezoneOffset(), locked: %s === 'true'}}''' % (self.htmlId, self.varName, self.getAttribute('data-locked')))
 
   @property
   def content(self):
-    return JsObjects.JsObjects.get("%s.querySelector('label').innerHTML" % self.varName)
+    return JsObjects.JsObjects.get("%s.innerHTML" % self.varName)
+
+  def release(self):
+    fncs = JsFncs.JsFunctions(self.css("color", ''))
+    fncs.append(self.css("background-color", ''))
+    fncs.append(self.css("cursor", "pointer"))
+    fncs.append(self.attr('data-locked', False))
+    return fncs
+
+  def disable(self, lock=True):
+    """
+
+    :param lock:
+    """
+    fncs = JsFncs.JsFunctions(self.css("color", self.getComputedStyle('color')))
+    fncs.append(self.css("background-color", self.getComputedStyle('background-color')))
+    if lock:
+      fncs.append(self.css("cursor", "not-allowed"))
+      fncs.append(self.attr('data-locked', True))
+    else:
+      fncs.append(self.css("cursor", "default"))
+      fncs.append(self.attr('data-locked', True))
+    return fncs
 
   def empty(self): return '%s.innerHTML = ""' % self.varName
 

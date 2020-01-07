@@ -42,6 +42,8 @@ class Buttons(object):
     :param options: Optional. Specific Python options available for this component
     """
     size = self.context._size(size)
+    if isinstance(width, int):
+      width = (width, "%")
     html_obj = html.HtmlButton.Button(self.context.rptObj, text, icon, size, width, height, htmlCode=htmlCode,
                                       tooltip=tooltip, profile=profile, options=options or {})
     self.context.register(html_obj)
