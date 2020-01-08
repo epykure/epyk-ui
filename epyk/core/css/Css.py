@@ -297,11 +297,12 @@ class Css(object):
     :return:
     """
     clsObj = self.get(className)
-    if cssRef is not None:
-      clsObj.setId({'reference': cssRef})
-    elif htmlId is not None:
-      clsObj.setId({'reference': "#%s" % htmlId})
-    self.cssStyles[clsObj.classname] = clsObj
+    if clsObj is not None:
+      if cssRef is not None:
+        clsObj.setId({'reference': cssRef})
+      elif htmlId is not None:
+        clsObj.setId({'reference': "#%s" % htmlId})
+      self.cssStyles[clsObj.classname] = clsObj
     return clsObj
 
   def css(self, key, value=None):

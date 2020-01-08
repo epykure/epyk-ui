@@ -189,9 +189,10 @@ class Html(object):
       :return: The Python htmlObj
       """
       if attrs is None and eventAttrs is None:
-        if self.htmlObj._report.style.get(cssNname) is not None:
-          self.htmlObj._report.style.add(cssNname)
-          self.htmlObj.defined.add(cssNname)
+        if self.htmlObj._report.style.cssStyles.get(cssNname) is not None:
+          cssObj = self.htmlObj._report.style.cssStyles[cssNname]
+          self.htmlObj._report.style.add(cssObj.classname)
+          self.htmlObj.defined.add(cssObj.classname)
         if formatClsName:
           cssNname = self.htmlObj._report.style.cssName(cssNname)
       else:
@@ -1036,7 +1037,9 @@ class Html(object):
     #  self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     for cssStyle in self.defined.clsMap:
       # Remove the . or # corresponding to the type of CSS reference
-      self.pyCssCls.add(self._report.style.add(cssStyle).classname)
+      cssStyleObj = self._report.style.add(cssStyle)
+      if cssStyleObj is not None:
+        self.pyCssCls.add(cssStyleObj.classname)
     str_result.append(str(self))
     return "".join(str_result)
 

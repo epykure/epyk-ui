@@ -37,6 +37,13 @@ b8 = rptObj.ui.button("test 8")
 b8.style.clear() # Remove all CSS styles
 b8.css({"background-color": 'blue', 'color': 'white', 'border': 'None'})
 
+rptObj.ui.layouts.hr()
+# Create a CSS class
+b8_bis = rptObj.ui.button("test CSS Class")
+b8_bis.style.clear()
+css_cls = rptObj.style.cssCls("test_css", {"color": "orange"}, {"hover": {"color": 'red'}})
+b8_bis.style.cssCls("test_css")
+
 rptObj.ui.layouts.new_line(1)
 # Change button hover CSS style
 b9 = rptObj.ui.button("test 9")
