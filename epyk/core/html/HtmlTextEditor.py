@@ -12,12 +12,29 @@ from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsText
 
 
+class OptionsConsole(object):
+  def __init__(self, src, options):
+    self.src = src
+    self._timestamp = options.get('timestamp', False)
+
+  @property
+  def timestamp(self):
+    """
+    """
+    return self._timestamp
+
+  @timestamp.setter
+  def timestamp(self, bool):
+    self._timestamp = bool
+
+
 class Console(Html.Html):
   name, category = 'Console', 'Rich'
 
-  def __init__(self, report, data, color, size, width, height, htmlCode, helper, profile):
+  def __init__(self, report, data, color, size, width, height, htmlCode, helper, options, profile):
     super(Console, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
+    self.options = OptionsConsole(self, options)
 
   def build(self, data=None, options=None, profile=False):
     """
@@ -30,7 +47,7 @@ class Console(Html.Html):
     mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
     return "var content = %s; %s.innerHTML = %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
 
-  def write(self, data, timestamp=False, profile=False):
+  def write(self, data, timestamp=None, profile=False):
     """
 
     :param data:
@@ -39,7 +56,7 @@ class Console(Html.Html):
     """
     mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
     js_data = JsUtils.jsConvertData(data, None)
-    if timestamp:
+    if timestamp or (self.options.timestamp and timestamp != False):
       return "var content = %s; %s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
 
     return "var content = %s; %s.innerHTML += ' > '+ %s +'<br/>'" % (js_data, self.dom.varId, mark_up)

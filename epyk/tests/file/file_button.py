@@ -11,11 +11,11 @@ from epyk.tests import test_statics
 rptObj = Report()
 
 # Console component
-c = rptObj.ui.rich.console("* This is a log section for all the events in the different buttons *")
+c = rptObj.ui.rich.console("* This is a log section for all the events in the different buttons *", options={"timestamp": True})
 
 # Simple button
 b = rptObj.ui.button("test")
-b.click([c.write(" **ok**, this is a test", timestamp=True)])
+b.click([c.write(" **ok**, this is a test")])
 
 # Press Button
 b2 = rptObj.ui.button("test 2", width=100)
@@ -24,8 +24,8 @@ b2.press(rptObj.js.alert("test"))
 # Press Button and unlock
 b3 = rptObj.ui.button("test 3", width=100)
 b3.press(
-  rptObj.js.console.log("test"),
-  [rptObj.js.console.log("unlock")])
+  c.write("Button 3 locked"),
+  c.write("Button 3 unlocked"))
 
 # Create a group of buttons
 b5 = rptObj.ui.button("test 5")
