@@ -1,5 +1,5 @@
 """
-Wrapper to the Codemirror components
+Wrapper to the HTML Editor components
 """
 
 import json
