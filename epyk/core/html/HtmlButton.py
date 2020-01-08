@@ -109,17 +109,11 @@ class Button(Html.Html):
       str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(jsReleaseFncs, toStr=True))
     return self.on("click", str_fnc, profile)
 
-  def unClick(self, jsFncs):
-    if not 'click' in self.jsFncFrag:
-      raise Exception("click event should be fully defined first")
-
-    clickFncs = ";".join(self.jsFncFrag['click'] + ["$(this).data('isChecked', true); $(this).css({'color': '%s', 'background': '%s'})" % (self.getColor('colors', 0), self.color)])
-    self.jsFncFrag['click'] = ["if(!$(this).data('isChecked') || ($(this).data('isChecked') === undefined)){%s} else {$(this).css({'color': '%s', 'background': 'inherit'}); $(this).data('isChecked', false); %s}" % (clickFncs, self.color, ";".join(jsFncs))]
-    return self
-
   def color(self, color):
     """
     Change the color of the button background when the mouse is hover
+
+    :param color:
     """
     self.css({"border": "1px solid %s" % color})
     self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)
@@ -456,9 +450,11 @@ class Buttons(Html.Html):
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
     super(Buttons, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
-    self.row = report.ui.grid([])
+    self.row = []
     for b in data:
-      self.row += report.ui.button(b)
+      bt = report.ui.button(b, options={"group": "group_%s" % self.htmlId}).css({"margin-right": '5px'})
+      bt.inReport = False
+      self.row.append(bt)
 
   def __getitem__(self, i):
     return self.row[i]

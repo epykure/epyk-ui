@@ -230,7 +230,8 @@ class JsHtmlButton(JsHtml):
     :return:
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
-      offset: new Date().getTimezoneOffset(), locked: %s === 'true'}}''' % (self.htmlId, self.varName, self.getAttribute('data-locked')))
+      offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s}}
+      ''' % (self.htmlId, self.varName, self.getAttribute('data-locked'), self.getAttribute('name')))
 
   @property
   def content(self):
