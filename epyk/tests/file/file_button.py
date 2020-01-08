@@ -95,4 +95,10 @@ b12[0].click([
   b12[0].dom.css("color", "green")
 ])
 
+# go to another page
+
+# run a service
+
+# add attributes to the url
+
 print(rptObj.outs.html_file(path=test_statics.OUTPUT_PATHS, name="report_buttons"))
