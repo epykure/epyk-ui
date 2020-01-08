@@ -19,7 +19,7 @@ b.click([c.write(" **ok**, this is a test")])
 
 # Press Button
 b2 = rptObj.ui.button("test 2", width=100)
-b2.press(rptObj.js.alert("test"))
+b2.press(c.write(b2.dom.content + "' is locked'"))
 
 # Press Button and unlock
 b3 = rptObj.ui.button("test 3", width=100)
