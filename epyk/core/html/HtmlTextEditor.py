@@ -30,14 +30,18 @@ class Console(Html.Html):
     mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
     return "var content = %s; %s.innerHTML = %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
 
-  def write(self, data, profile=False):
+  def write(self, data, timestamp=False, profile=False):
     """
 
     :param data:
+    :param timestamp:
     :param profile:
     """
     mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
     js_data = JsUtils.jsConvertData(data, None)
+    if timestamp:
+      return "var content = %s; %s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
+
     return "var content = %s; %s.innerHTML += ' > '+ %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
 
   def clear(self):

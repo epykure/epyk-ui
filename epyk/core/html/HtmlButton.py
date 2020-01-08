@@ -1,5 +1,5 @@
 """
-
+Wrapper to define HTML Button components
 """
 
 import re
@@ -21,6 +21,10 @@ class OptionsButton(object):
 
   @property
   def multiple(self):
+    """
+    Property to define if multiple buttons can be selected at the same time
+    Default value is false
+    """
     return self._multiple
 
   @multiple.setter
@@ -29,6 +33,9 @@ class OptionsButton(object):
 
   @property
   def group(self):
+    """
+    Property to set the group name of a button
+    """
     return self.src.attr['name']
 
   @group.setter
@@ -476,122 +483,3 @@ class Buttons(Html.Html):
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.row])
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), str_div)
-
-
-# class IconThumbtack(IconEdit):
-#   name, category, callFnc = 'Icon Thumbtack', 'Button', 'thumbtack'
-#   mocks, icon, title = "Comment", 'fas fa-thumbtack', 'Add comment'
-#
-#   def __init__(self, report, parentJqId, position, icon, tooltip, width, widthUnit, height, heightUnit, htmlCode, profile):
-#     if position is None:
-#       position = 'right'
-#     super(IconEdit, self).__init__(report, '', icon, tooltip, width, widthUnit, height, heightUnit, htmlCode, profile)
-#     self.css({"margin-top": "5px", "margin-bottom": "5px", "float": position, "margin-left": "4px", "margin-right": "4px",
-#                "color": "%s" % self.getColor('border', 0), 'font-size': '18px', 'cursor': 'pointer'})
-#     self.attr.update({'class': set([self.icon]), 'data-original-title': self.title, 'name': "tooltip", 'data-toggle': 'tooltip', 'data-placement': 'top'})
-#     # Add the different mouse event in the Html definition
-#     self.addAttr("onmouseover", "this.style.color='%s'" % self.getColor('border', 1))
-#     self.addAttr("onmouseout", "this.style.color='%s'" % self.getColor('border', 0))
-#     self.parentJqId = parentJqId
-#     self.addGlobalVar('thumbtack_counter', 0)
-#
-#   def __str__(self):
-#     self._report.jsOnLoadFnc.add('''
-#       %(jqId)s.on('click', function(event) {
-#           var posX = $(this).offset().left; var posY = $(this).offset().top;
-#           var comment = $('<div name="thumbtack" id="'+ thumbtack_counter +'"></div>');
-#           comment.append('<div autocorrect="off" spellcheck="false" placeholder="comment" contenteditable=true style="float:left;margin-left:5px;margin-right:10px;">Comment</div>') ;
-#           comment.append('<span style="color:%(color)s;margin-left:4px" onmouseover="this.style.color=\\\'grey\\\'" onmouseout="this.style.color=\\\'%(color)s\\\'"  class="far fa-edit" onclick="$(this).prev().focus()"></span>');
-#           comment.append('<span id="lock_' + thumbtack_counter + '" onclick="$(this).parent().draggable(\\\'disable\\\'); $(this).remove() ;" style="color:%(color)s;margin-left:4px" onmouseover="this.style.color=\\\'grey\\\'" onmouseout="this.style.color=\\\'%(color)s\\\'" class="fas fa-lock"></span>');
-#           comment.append('<span style="color:%(color)s;margin-left:4px" onmouseover="this.style.color=\\\'red\\\'" onmouseout="this.style.color=\\\'%(color)s\\\'"  class="far fa-trash-alt" onclick="$(this).parent().remove()"></span>');
-#           %(parent)s.append(comment) ;
-#           comment.css({'position': 'absolute', 'top':  event.pageY - posY+10, 'right': event.pageX - posX + 10}) ;
-#           comment.draggable()})''' % {'jqId': self.jqId, 'parent': self.parentJqId, 'color': self.getColor('colors', 9)})
-#     # self._report.jsOnLoadFnc.add(''' %(jqId)s.on('click', function(event) { $('#%(htmlId)s_content').focus() ; }) ''' % {"jqId": self.jqId, 'htmlId': self.htmlId})
-#     return "<div %s></div>" % (self.strAttr(pyClassNames=self.pyStyle))
-#
-#
-# class IconLock(IconEdit):
-#   name, category, callFnc = 'Icon Lock', 'Button', 'lock'
-#   mocks, icon, iconLock, title = "Lock", 'fas fa-unlock', 'fas fa-lock', 'Lock Comment'
-#
-#   def click(self, jsListFncLock, jsListFncUnLock):
-#     self._report.jsOnLoadFnc.add('''
-#       %(jqId)s.on('click', function(event) {
-#         if ($(this).hasClass('fa-unlock') == true) {%(jsFncLock)s; $(this).addClass('fa-lock'); $(this).removeClass('fa-unlock'); }
-#         else { %(jsFncUnLock)s; $(this).removeClass('fa-lock'); $(this).addClass('fa-unlock'); } ;
-#       })''' % {"jqId": self.jqId, "jsFncLock": ";".join(jsListFncLock), "jsFncUnLock": ";".join(jsListFncUnLock)})
-#
-#
-# class IconSum(IconEdit):
-#   name, category, callFnc = 'Icon Sum', 'Button', 'calculator'
-#   mocks, icon, title = "Sum", 'fas fa-calculator', 'Simple Calculator'
-#
-#   def __init__(self, report, parentJqId, icon, tooltip, width, widthUnit, height, heightUnit, htmlCode, profile):
-#     self.parentJqId = parentJqId
-#     super(IconSum, self).__init__(report, '', icon, tooltip, width, widthUnit, height, heightUnit, htmlCode, profile)
-#
-#   def __str__(self):
-#     self._report.jsOnLoadFnc.add('''
-#       %(jqId)s.on('click', function(event) {
-#          if($("#icon_sum").length == 0) {
-#           $('table[name="Table"] td').bind( "click", function( event ) {
-#               var sum = parseFloat($("#icon_sum").find('#floating_sum').text().replace(',', '') ) + parseFloat( $(this).text().replace(',', '') );
-#               var count = parseFloat($("#icon_sum").find('#floating_count').text().replace(',', '') ) + 1 ;
-#               var average = sum / count ;
-#               var absSum = parseFloat($("#icon_sum").find('#floating_abs_sum').text().replace(',', '') ) + Math.abs( parseFloat( $(this).text().replace(',', '')) ) ;
-#
-#               $("#icon_sum").find('#floating_sum').text(sum.formatMoney(2, ',', '.'));
-#               $("#icon_sum").find('#floating_count').text(count.formatMoney(0, ',', '.'));
-#               $("#icon_sum").find('#floating_average').text(average.formatMoney(2, ',', '.'));
-#               $("#icon_sum").find('#floating_abs_sum').text(absSum.formatMoney(2, ',', '.'));
-#
-#            } ) ;
-#           var comment = $('<div id="icon_sum" class="ui-widget-content" style="z-index:100;width:150px;border-radius:5px 5px 0 0;padding:5px"></div>');
-#           comment.append("<div style='float:left;font-weight:bold'>Sum:</div><div style='width:100%%;text-align:center;font-size:14px' id='floating_sum'>0</div>") ;
-#           comment.append("<div style='float:left;font-weight:bold'>Count:</div><div style='width:100%%;text-align:center;font-size:14px' id='floating_count'>0</div>") ;
-#           comment.append("<div style='float:left;font-weight:bold'>Average:</div><div style='width:100%%;text-align:center;font-size:14px' id='floating_average'>0</div>") ;
-#           comment.append("<div style='float:left;font-weight:bold'>Abs Sum:</div><div style='width:100%%;text-align:center;font-size:14px' id='floating_abs_sum'>0</div>") ;
-#           $('body').append(comment) ;
-#           comment.css( {'position': 'fixed', 'left': 200, 'top': 90} ) ; comment.draggable() ;
-#         } else {
-#           $("#icon_sum").remove() ; $('table[name="Table"] td').unbind( "click" ) ;}
-#       })''' % {'jqId': self.jqId, 'color': self.getColor('border', 0)})
-#     return "<div %s></div>" % (self.strAttr(pyClassNames=self.pyStyle))
-
-"""
-  # def jsDisable(self, bool=None, jsDataKey=None, isPyData=True, jsParse=False, jsFnc=None):
-  #   if bool is None:
-  #     return "%s.disabled;" % self.jqId
-  #
-  #   bool = self._jsData(bool, jsDataKey, jsParse, isPyData, jsFnc)
-  #   return '''
-  #     if(!%(bool)s) {%(jqId)s.css({"cursor": "pointer"})}
-  #     else {%(jqId)s.css({"cursor": "not-allowed"})};
-  #     %(jqId)s.attr("disabled", %(bool)s);
-  #     ''' % {'jqId': self.jqId, 'bool': bool}
-
-  # def isDisable(self, bool=True):
-  #   self.css({"cursor": "not-allowed"})
-  #   self.disable = True
-  #   return self
-  #
-  # def addAttr(self, key, val=None, isPyData=True):
-  #   if val is None and issubclass(key, Html.Html):
-  #     self.__battr[key.htmlCode] = key.val
-  #     self.isJs = True
-  #   else:
-  #     if isPyData:
-  #       val = json.dumps(val)
-  #     else:
-  #       self.isJs = True
-  #     self.__battr[key] = val
-  #   return self
-
-# def addStyles(self, cssAttrIcon=None, cssAttr=None):
-  #   if cssAttrIcon is not None:
-  #     self._jsStyles.setdefault('styleIcon', {}).update(cssAttrIcon)
-  #   if cssAttr is not None:
-  #     self._jsStyles.setdefault('styles', {}).update(cssAttr)
-  #   return self
-"""
