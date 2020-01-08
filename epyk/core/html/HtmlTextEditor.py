@@ -34,6 +34,7 @@ class Console(Html.Html):
   def __init__(self, report, data, color, size, width, height, htmlCode, helper, options, profile):
     super(Console, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
+    self.css({"overflow": 'auto'})
     self.options = OptionsConsole(self, options)
 
   def build(self, data=None, options=None, profile=False):
