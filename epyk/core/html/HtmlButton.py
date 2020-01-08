@@ -465,6 +465,12 @@ class Buttons(Html.Html):
       self.row.append(bt)
 
   def __getitem__(self, i):
+    """
+    Get a button in this component
+
+    :param i: Integer. The button index
+    :rtype: Button
+    """
     return self.row[i]
 
   def __str__(self):

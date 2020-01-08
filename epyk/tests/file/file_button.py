@@ -90,4 +90,9 @@ b4.click([
 
 # Events
 
+# Change a CSS Style
+b12[0].click([
+  b12[0].dom.css("color", "green")
+])
+
 print(rptObj.outs.html_file(path=test_statics.OUTPUT_PATHS, name="report_buttons"))
