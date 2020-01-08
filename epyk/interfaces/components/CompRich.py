@@ -196,3 +196,10 @@ class Rich(object):
     html_dt = html.HtmlDates.LastUpdated(self.context.rptObj, label, size, color, width, height, htmlCode, profile)
     self.context.register(html_dt)
     return html_dt
+
+  def console(self, label="", size=(None, 'px'), color=None, width=(100, "%"), height=(200, "px"), htmlCode=None, profile=None):
+    size = self.context._size(size)
+    html_div = html.HtmlTextEditor.Console(self.context.rptObj, label, color, size, width, height, htmlCode, None, profile)
+    html_div.css({"border": "1px solid %s" % html_div.getColor("greys", 4), "background": html_div.getColor("greys", 2)})
+    self.context.register(html_div)
+    return html_div

@@ -33,6 +33,17 @@ class JsHtml(JsNodeDom.JsDoms):
     return JsObjects.JsObjects.get("{%s: {value: %s.value, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.varName))
 
   @property
+  def by_name(self):
+    """
+
+    :return:
+    """
+    if self._src.attr.get('name') is not None:
+      return JsNodeDom.JsDomByName(None, "document.getElementsByName('%s')" % self._src.attr.get('name'), report=self._report)
+
+    return self
+
+  @property
   def content(self):
     return JsObjects.JsObjects.get("%s.value" % self.varName)
 
@@ -237,11 +248,22 @@ class JsHtmlButton(JsHtml):
   def content(self):
     return JsObjects.JsObjects.get("%s.innerHTML" % self.varName)
 
-  def release(self):
-    fncs = JsFncs.JsFunctions(self.css("color", ''))
-    fncs.append(self.css("background-color", ''))
-    fncs.append(self.css("cursor", "pointer"))
-    fncs.append(self.attr('data-locked', False))
+  def release(self, by_name=False):
+    """
+
+    :param by_name:
+    :return:
+    """
+    if by_name:
+      fncs = JsFncs.JsFunctions(self.by_name.css("color", ''))
+      fncs.append(self.by_name.css("background-color", ''))
+      fncs.append(self.by_name.css("cursor", "pointer"))
+      fncs.append(self.by_name.attr('data-locked', False))
+    else:
+      fncs = JsFncs.JsFunctions(self.css("color", ''))
+      fncs.append(self.css("background-color", ''))
+      fncs.append(self.css("cursor", "pointer"))
+      fncs.append(self.attr('data-locked', False))
     return fncs
 
   def disable(self, lock=True):

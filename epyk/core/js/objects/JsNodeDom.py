@@ -304,6 +304,66 @@ class JsDomEvents(object):
     return strData
 
 
+class JsDomByName(JsObject.JsObject):
+  def css(self, type, jsObject=None):
+    """
+    Replicate in plain Js the Jquery CSS function
+
+    Example
+    select.label.dom.css({"color": "red"})
+
+    Documentation:
+    https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+    :param type: A String with the type of parameter or a python dictionary
+    :param jsObject: A JsObj with the value to be set
+    :return: A JsObj
+    """
+    if jsObject is None and isinstance(type, dict):
+      for k, v in type.items():
+        if "-" in k:
+          split_css = k.split("-")
+          k = "%s%s" % (split_css[0], split_css[1].title())
+        self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+    elif jsObject is None:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
+      return JsObject.JsObject("for(let e of %s){ e.style.%s }" % (self.varId, type))
+    else:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
+      self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+    return self
+
+  def attr(self, type, jsObject=None):
+    """
+    The attr() method adds the specified attribute to an element, and gives it the specified value.
+    It will use the underlying setAttribute() method
+
+    Example
+    select.label.dom.attr("title", "Tooltip")
+    select.label.dom.attr({"title": "Tooltip"})
+
+    Documentation:
+    https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+    :param type: A String with the type of parameter or a python dictionary
+    :param jsObject: A JsObj with the value to be set
+    :return: A JsObj
+    """
+    if jsObject is None and isinstance(type, dict):
+      for k, v in type.items():
+        if k == "id":
+          self._id = v
+        self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+    else:
+      if type == "id":
+        self._id = jsObject
+      self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+    return self
+
 class JsDoms(JsObject.JsObject):
   _id = None
 

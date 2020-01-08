@@ -14,6 +14,28 @@ from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsButton
 
 
+class OptionsButton(object):
+  def __init__(self, src, options):
+    self.src = src
+    self._multiple, self.src.attr['name'] = options.get('multiple', False), options.get('group', None)
+
+  @property
+  def multiple(self):
+    return self._multiple
+
+  @multiple.setter
+  def multiple(self, bool):
+    self._multiple = bool
+
+  @property
+  def group(self):
+    return self.src.attr['name']
+
+  @group.setter
+  def group(self, val):
+    self.src.attr['name'] = val
+
+
 class Button(Html.Html):
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'bootstrap', 'jquery']
   name, category, callFnc = 'Button', 'buttons', 'button'
@@ -29,10 +51,7 @@ class Button(Html.Html):
 
     #
     self.css({"cursor": 'pointer', 'font-size': "%s%s" % (size[0], size[1])})
-    self.__battr, self.groupId = {}, options.get("group")
-
-    if self.groupId is not None:
-      self.attr['name'] = self.groupId
+    self.options = OptionsButton(self, options)
 
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -73,19 +92,6 @@ class Button(Html.Html):
   def click(self, jsFncs, profile=False):
     return self.on("click", jsFncs, profile)
 
-    #if not isinstance(js_fnc, list):
-    #  js_fnc = [js_fnc]
-    #return super(Button, self).click(self.dom.onclick(js_fnc).toStr())
-
-    # if self.groupId:
-    #   js_fnc.append('''
-    #     var count = $(this).data('count')+1; $(this).data('count', count);
-    #     $("button[name='%(groupId)s']").css({'background-color': 'white', 'color': '%(color)s'});
-    #     $(this).css({'background-color': '%(color)s', 'color': 'white'})''' % {"color": self.color, 'groupId': self.groupId})
-    # else:
-    #   js_fnc.append("var count = $(this).data('count')+1; $(this).data('count', count)")
-    # return super(Button, self).click(js_fnc)
-
   def press(self, jsPressFncs=None, jsReleaseFncs=None, profile=False):
     """
 
@@ -97,6 +103,8 @@ class Button(Html.Html):
     if jsPressFncs is not None:
       if not isinstance(jsPressFncs, list):
         jsPressFncs = [jsPressFncs]
+      if self.options.group is not None and not self.options.multiple:
+        jsPressFncs.append(self.dom.release(by_name=True))
       jsPressFncs.append(self.dom.disable(lock=jsReleaseFncs is None))
       str_fnc = "if(%s == 'pointer'){%s}" % (self.dom.css('cursor'), JsUtils.jsConvertFncs(jsPressFncs, toStr=True))
     if jsReleaseFncs is not None:
