@@ -20,15 +20,21 @@ class Console(Html.Html):
                                   heightUnit=height[1], profile=profile)
 
   def build(self, data=None, options=None, profile=False):
+    """
+
+    :param data:
+    :param options:
+    :param profile:
+    """
     js_data = JsUtils.jsConvertData(data, None)
-    return "%s.innerHTML = %s" % (self.dom.varId, js_data)
+    mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
+    return "var content = %s; %s.innerHTML = %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
 
   def write(self, data, profile=False):
     """
 
     :param data:
     :param profile:
-    :return:
     """
     mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
     js_data = JsUtils.jsConvertData(data, None)
@@ -38,7 +44,8 @@ class Console(Html.Html):
     return "%s.innerHTML = ''" % self.dom.varId
 
   def __str__(self):
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.val, self.helper)
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return "<div %s></div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
 
 
 class Editor(Html.Html):

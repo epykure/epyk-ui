@@ -197,9 +197,20 @@ class Rich(object):
     self.context.register(html_dt)
     return html_dt
 
-  def console(self, label="", size=(None, 'px'), color=None, width=(100, "%"), height=(200, "px"), htmlCode=None, profile=None):
+  def console(self, content="", size=(None, 'px'), color=None, width=(100, "%"), height=(200, "px"), htmlCode=None, profile=None):
+    """
+
+    :param content:
+    :param size:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
     size = self.context._size(size)
-    html_div = html.HtmlTextEditor.Console(self.context.rptObj, label, color, size, width, height, htmlCode, None, profile)
-    html_div.css({"border": "1px solid %s" % html_div.getColor("greys", 4), "background": html_div.getColor("greys", 2)})
+    html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, color, size, width, height, htmlCode, None, profile)
+    html_div.css({"border": "1px solid %s" % html_div.getColor("greys", 4), "background": html_div.getColor("greys", 2),
+                  'padding': '5px'})
     self.context.register(html_div)
     return html_div
