@@ -15,7 +15,12 @@ c = rptObj.ui.rich.console("* This is a log section for all the events in the di
 
 # Simple button
 b = rptObj.ui.button("test")
-b.click([c.write(" **ok**, this is a test")])
+b.click([
+  rptObj.js.jquery.ajax("POST", 'https://jsonplaceholder.typicode.com/posts/1',
+                        successFncs=[
+                          rptObj.js.alert(rptObj.js.objects.result["title"]),
+                          "console.log(result)"]),
+  c.write(" **ok**, this is a test")])
 
 # Press Button
 b2 = rptObj.ui.button("test 2", width=100)

@@ -29,6 +29,15 @@ class JsObjects(object):
     return JsObject.JsObject.get("this")
 
   @property
+  def result(self):
+    """
+    Interface to the Javascript Object primitive
+
+    :return: The Javascript result object from a post or any other AJAX calls
+    """
+    return JsObject.JsObject.get("result")
+
+  @property
   def mouseEvent(self):
     """
     Interface to the JavaScript MouseEvents
