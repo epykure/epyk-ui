@@ -364,6 +364,7 @@ class JsDomByName(JsObject.JsObject):
       self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 
+
 class JsDoms(JsObject.JsObject):
   _id = None
 

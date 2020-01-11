@@ -690,6 +690,14 @@ class Html(object):
       self.pyStyle = self._grpCls(self)
     return self.pyStyle
 
+  def move(self):
+    """
+    Move the component to this position in the page
+    """
+    comp_id = id(self)
+    self._report.content.remove(comp_id)
+    self._report.content.append(comp_id)
+
   def css(self, key, value=None, reset=False):
     """
     Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function

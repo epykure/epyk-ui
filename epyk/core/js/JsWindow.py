@@ -555,6 +555,18 @@ class JsWindow(object):
     """
     return JsFncs.JsFunction("%s.scroll(%s, %s)" % (windowId, x, y))
 
+  def scrollTo(self, x=None, y=None, windowId="window"):
+    """
+    The window.scrollTo() go to a particular point
+
+    :param x:
+    :param y:
+    :param windowId:
+    """
+    y = y or "document.body.scrollHeight"
+    x = x or "document.body.scrollWidth"
+    return JsFncs.JsFunction("%s.scrollTo(%s, %s)" % (windowId, x, y))
+
   def print(self, windowId="window"):
     """
     Prints the content of the current window

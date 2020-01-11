@@ -328,7 +328,6 @@ class JsBase(object):
     self.location = JsLocation.JsLocation()
     self.json = JsJson()
     self.math = JsMaths.JsMaths()
-    #self.jquery = JsQuery.JQuery(src)
 
     # shortcut functions
     self.alert = self.window.alert
@@ -345,6 +344,16 @@ class JsBase(object):
     :return:
     """
     return JsObjects.JsObjects(self)
+
+  @property
+  def jquery(self):
+    """
+
+    :return:
+    """
+    from epyk.core.js.packages import JsQuery
+
+    return JsQuery.JQuery(None)
 
   def not_(self, data):
     """
