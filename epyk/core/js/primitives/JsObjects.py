@@ -48,6 +48,16 @@ class JsObjects(object):
     return JsEvents.MouseEvent()
 
   @property
+  def event(self):
+    """
+    Interface to the JavaScript Events
+
+    Documentation
+    https://www.w3schools.com/jsref/obj_event.asp
+    """
+    return JsEvents.Event()
+
+  @property
   def jqThis(self):
     """
     Interface to the Javascript Object primitive
