@@ -617,14 +617,15 @@ class Dialog(Html.Html):
 class IconsMenu(Html.Html):
   name, category, callFnc = 'Icons Menu', 'Layouts', 'menu'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  builder_name = False
 
-  def __init__(self, report, width, height, htmlCode, helper, profile):
+  def __init__(self, icon_names, report, width, height, htmlCode, helper, profile):
     super(IconsMenu, self).__init__(report, None, width=width, widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode,
                                     profile=profile)
     self._jsActions, self._definedActions = {}, []
     self._icons, self.icon = [], None
     self.css({"margin": "5px 0"})
+    for i in icon_names:
+      self.add_icon(i)
 
   def __getitem__(self, i):
     return self._icons[i]
@@ -644,7 +645,7 @@ class IconsMenu(Html.Html):
     :return: The Html object
     """
     if text is not None:
-      self._icons.append(self._report.ui.images.icon(text).css({"margin-right": '5px'}))
+      self._icons.append(self._report.ui.images.icon(text).css({"margin-right": '5px', 'cursor': "pointer"}))
       self.icon = self._icons[-1]
       if position == "before":
         self.prepend_child(self.icon)

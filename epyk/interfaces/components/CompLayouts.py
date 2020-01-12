@@ -301,20 +301,24 @@ class Layouts(object):
     self.context.register(html_dialog)
     return html_dialog
 
-  def icons(self, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
+  def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
 
     Example
     menu = rptObj.ui.layouts.icons()
     menu.icon.click([menu.icon.dom.css({"color": 'red'})])
 
+    :param icon_names:
     :param width:
     :param height:
     :param htmlCode:
     :param helper:
     :param profile:
     """
-    html_icon = html.HtmlContainer.IconsMenu(self.context.rptObj, width, height, htmlCode, helper, profile)
+    icon_names = icon_names or None
+    if not isinstance(icon_names, list):
+      icon_names = [icon_names]
+    html_icon = html.HtmlContainer.IconsMenu(icon_names, self.context.rptObj, width, height, htmlCode, helper, profile)
     self.context.register(html_icon)
     return html_icon
 
