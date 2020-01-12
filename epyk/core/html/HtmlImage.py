@@ -14,6 +14,22 @@ from epyk.core.js.html import JsHtml
 from epyk.core.css.groups import CssGrpClsImage
 
 
+class OptionsBadge(object):
+  def __init__(self, src, options):
+    self.src = src
+    self._badge_css = options.get('badge_css', {})
+
+  @property
+  def badge_css(self):
+    """
+    """
+    return self._badge_css
+
+  @badge_css.setter
+  def badge_css(self, css):
+    self._badge_css = css
+
+
 class Image(Html.Html):
   name, category, callFnc = 'Picture', 'Image', 'img'
   _grpCls = CssGrpClsImage.CssClassImage
@@ -238,14 +254,15 @@ class Badge(Html.Html):
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     self.add_icon(icon, css={"float": 'left', "font-size": '%s%s' % (size[0] + 8, size[1])})
     self.link = None
+    self.options = OptionsBadge(self, options)
     if url is not None:
       self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
           "padding": "1px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
       self.link.inReport = False
     else:
       self.link = self._report.ui.text(text, size=size).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
-    self.link.css(options.get("badge_css", {}))
+          "padding": "1px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
+    self.link.css(self.options.badge_css)
     self.link.inReport = False
     # Update the CSS Style of the component
     color = 'inherit' if color is None else color
