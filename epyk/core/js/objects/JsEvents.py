@@ -7,9 +7,10 @@ from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsNumber
 
+from epyk.core.js.objects.JsData import JsDataTransfer
+
 
 class Event(object):
-
   def cancelBubble(self):
     """
     The cancelBubble() method prevents the event-flow from bubbling up to parent elements.
@@ -33,6 +34,23 @@ class Event(object):
     return JsString.JsString("event.target")
 
   @property
+  def dataTransfer(self):
+    """
+    The DataTransfer object is used to hold the data that is being dragged during a drag and drop operation.
+    It may hold one or more data items, each of one or more data types. For more information about drag and drop, see HTML Drag and Drop API.
+
+    This object is available from the dataTransfer property of all drag events.
+
+    Example
+
+    Documentation
+    https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
+
+    :return:
+    """
+    return JsDataTransfer("event.dataTransfer")
+
+  @property
   def timeStamp(self):
     """
     Returns the time (in milliseconds relative to the epoch) at which the event was created
@@ -42,7 +60,7 @@ class Event(object):
 
     :return:
     """
-    return JsString.JsString("event.timeStamp")
+    return JsString.JsString("event.timeStamp", isPyData=False)
 
   @property
   def defaultPrevented(self):
@@ -54,7 +72,7 @@ class Event(object):
 
     :return:
     """
-    return JsString.JsString("event.defaultPrevented")
+    return JsString.JsString("event.defaultPrevented", isPyData=False)
 
   def preventDefault(self):
     """
@@ -65,14 +83,14 @@ class Event(object):
 
     :return:
     """
-    return JsString.JsString("event.preventDefault()")
+    return JsString.JsString("event.preventDefault()", isPyData=False)
 
   def stopImmediatePropagation(self):
     """
 
     :return:
     """
-    return JsString.JsString("event.stopImmediatePropagation()")
+    return JsString.JsString("event.stopImmediatePropagation()", isPyData=False)
 
   def stopPropagation(self):
     """
@@ -80,7 +98,7 @@ class Event(object):
 
     :return:
     """
-    return JsString.JsString("event.stopPropagation()")
+    return JsString.JsString("event.stopPropagation()", isPyData=False)
 
 
 class MouseEvent(object):

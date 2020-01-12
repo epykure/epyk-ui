@@ -139,7 +139,7 @@ class JsObject(object):
         else:
           self._js.append("%s %s = %s" % (varType, varName, self.varName))
       else:
-        self._js.append("%s %s = %s" % (varType, varName, self.varName))
+        self._js.append("%s %s = %s" % (varType, varName, self.varName or self.varData))
     else:
       self._js.append("%s %s = %s" % (varType, varName, self.varData))
     return self
@@ -650,6 +650,30 @@ class JsObject(object):
       return ";".join(JsUtils.jsConvertFncs(result))
 
     return self.varData if self.varName is None else self.varName
+
+  def toRecord(self, header, varName):
+    """
+
+    Example
+    d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
+
+    :param header:
+    :param varName:
+
+    :return:
+    """
+    from epyk.core.js.primitives import JsArray
+    from epyk.core.js.objects import JsData
+    from epyk.core.js.fncs.JsFncs import JsFunctions
+
+    fncs = JsFunctions([
+      self.toString().split("\\n").setVar("rows"), JsArray.JsArray.set(varName),
+      JsArray.JsArray.get("rows").forEach([
+        JsArray.JsArray.get(JsData.JsData(self._report).loop().val.toString().split("\t")).toDict(header).setVar("row").r,
+        JsArray.JsArray.get(varName).push(JsObject.get("row"))])])
+    record = JsObject.get(varName)
+    record._js = [fncs.toStr()] + record._js
+    return record
 
   @property
   def r(self):
