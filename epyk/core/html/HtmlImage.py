@@ -27,6 +27,7 @@ class OptionsBadge(object):
 
   @badge_css.setter
   def badge_css(self, css):
+    self.src.link.css(css)
     self._badge_css = css
 
 
