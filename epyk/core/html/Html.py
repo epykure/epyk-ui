@@ -836,10 +836,10 @@ class Html(object):
     elif pyClassNames is not None:
       cssClass = self._report.style.getClsTag(pyClassNames.clsMap)
     if withId:
-      str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+      str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val.replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
       return str_tag.strip()
 
-    str_tag = '%s %s %s' % (" ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+    str_tag = '%s %s %s' % (" ".join(['%s="%s"' % (key, val.replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
     return str_tag.strip()
 
   # -------------------------------------------------------------
@@ -868,6 +868,30 @@ class Html(object):
     # span.on("mouseleave", span.dom.css("color", "blue"))
     self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
     self._events['doc_ready'][event]['profile'] = profile
+    return self
+
+  def drop(self, jsFncs, preventDefault=True, profile=False):
+    """
+    Add a drag and drop property to the element
+
+    Example
+    d = rptObj.ui.div()
+    d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
+
+    :param jsFncs:
+    :param preventDefault: Boolean.
+    :param profile:
+
+    :return: Return self to allow the chaining
+    """
+    dft_fnc = ""
+    if preventDefault:
+      dft_fnc = self.js.objects.event.preventDefault()
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self.js.objects.event.dataTransfer.text] + jsFncs, toStr=True)
+    self.attr["ondrop"] = "(function(event){%s; %s; return false})(event)" % (dft_fnc, str_fncs)
+    self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     return self
 
   def click(self, jsFncs, profile=False):

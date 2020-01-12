@@ -655,6 +655,7 @@ class JsObject(object):
     """
 
     Example
+    d = rptObj.ui.div()
     d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
     :param header:
