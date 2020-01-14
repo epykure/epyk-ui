@@ -613,7 +613,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("if(window.getComputedStyle(%(varId)s)['%(pivot_key)s'] == '%(pivot_val)s') {%(css_attrs_on)s} else {%(css_attrs_off)s}" % {"pivot_val": pivot_val, "varId": self.varId, "pivot_key": pivot_key, 'css_attrs_on': css_attrs_on, 'css_attrs_off': css_attrs_off})
     return self
 
-  def toggleClass(self, clsName):
+  def toggleClass(self, clsName, propagate=False):
     """
     Toggle a class name
 
@@ -621,6 +621,8 @@ class JsDoms(JsObject.JsObject):
 
     :return:
     """
+    if propagate:
+      self._js.append('%(varId)s.parentNode.childNodes.forEach(function(e){e.classList.remove("%(data)s")})' % {"varId": self.varId, 'data': clsName})
     self._js.append('%(varId)s.classList.toggle("%(data)s")' % {"varId": self.varId, 'data': clsName})
     return self
 

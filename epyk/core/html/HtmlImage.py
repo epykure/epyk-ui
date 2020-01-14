@@ -17,7 +17,14 @@ from epyk.core.css.groups import CssGrpClsImage
 class OptionsBadge(object):
   def __init__(self, src, options):
     self.src = src
-    self._badge_css = options.get('badge_css', {})
+    self._badge_prop = options.get('badge_position', "left")
+    if self._badge_prop == 'left':
+      self._badge_css = {"border-radius": "20px", "position": 'relative', "bottom": "-5px", "background": 'white',
+                         "right": "-6px"}
+    else:
+      self._badge_css = {"border-radius": "20px", "position": 'relative', "top": "-4px", "right": "11px",
+                         "background": 'white'}
+    self._badge_css.update(options.get('badge_css', {}))
 
   @property
   def badge_css(self):
@@ -29,6 +36,23 @@ class OptionsBadge(object):
   def badge_css(self, css):
     self.src.link.css(css)
     self._badge_css = css
+
+  @property
+  def badge_position(self):
+    """
+
+    :return:
+    """
+    return self._badge_prop
+
+  @badge_position.setter
+  def badge_position(self, position):
+    """
+
+    :param position:
+    :return:
+    """
+    self._badge_prop = position
 
 
 class Image(Html.Html):
@@ -253,16 +277,19 @@ class Badge(Html.Html):
   def __init__(self, report, text, label, icon, size, background_color, color, url, tooltip, options, profile):
     super(Badge, self).__init__(report, None, profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
-    self.add_icon(icon, css={"float": 'left', "font-size": '%s%s' % (size[0] + 8, size[1])})
-    self.link = None
     self.options = OptionsBadge(self, options)
+    if self.options.badge_position == 'left':
+      self.add_icon(icon, css={"float": 'None', "font-size": '%s%s' % (size[0] + 8, size[1])}, position="after")
+    else:
+      self.add_icon(icon, css={"float": 'left', "font-size": '%s%s' % (size[0] + 8, size[1])})
+    self.link = None
     if url is not None:
       self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "1px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
+          "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
       self.link.inReport = False
     else:
       self.link = self._report.ui.text(text, size=size).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "1px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
+          "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
     self.link.css(self.options.badge_css)
     self.link.inReport = False
     # Update the CSS Style of the component

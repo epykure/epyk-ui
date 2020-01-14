@@ -125,6 +125,7 @@ class Images(object):
     Example
     rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
     rptObj.ui.images.badge("This is a badge", background_color="red", color="white")
+    rptObj.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
 
     b = rptObj.ui.images.badge(7688, icon="fab fa-python", options={'badge_css': {'color': 'white', "background": 'red'}})
     b.options.badge_css = {"background": 'green'}

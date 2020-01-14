@@ -24,6 +24,8 @@ from epyk.interfaces.components import CompTags
 from epyk.interfaces.components import CompFields
 from epyk.interfaces.components import CompTrees
 from epyk.interfaces.components import CompVignets
+from epyk.interfaces.components import CompMenus
+from epyk.interfaces.components import CompPanels
 
 
 class Components(object):
@@ -192,6 +194,18 @@ class Components(object):
     This category of component will rely on the font-awesome library for the final display.
     """
     return CompIcons.Icons(self)
+
+  @property
+  def menus(self):
+    """
+    """
+    return CompMenus.Menus(self)
+
+  @property
+  def panels(self):
+    """
+    """
+    return CompPanels.Panels(self)
 
   @property
   def layouts(self):

@@ -10,4 +10,7 @@ class Font(object):
   family = "Calibri"
 
 
+# Default CSS Styles
+BODY_CONTAINER = None # The body CSS dictionary
+BACKGROUND = ('greys', 0)
 MEDIA = 600

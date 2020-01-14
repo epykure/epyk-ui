@@ -632,12 +632,14 @@ class JQuery(JsPackage):
 
     return self.fnc("html(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
 
-  def toggleClass(self, clsName):
+  def toggleClass(self, clsName, propagate=False):
     """
 
     :rtype: str
     :return:
     """
+    if propagate:
+      self.fnc_closure('parentNode.childNodes.forEach(function(e){e.classList.remove("%(data)s")})' % {'data': clsName})
     return self.fnc('toggleClass("%(data)s")' % {'data': clsName})
 
   def addClass(self, clsName, attrs=None, eventAttrs=None):

@@ -836,10 +836,10 @@ class Html(object):
     elif pyClassNames is not None:
       cssClass = self._report.style.getClsTag(pyClassNames.clsMap)
     if withId:
-      str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val.replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+      str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
       return str_tag.strip()
 
-    str_tag = '%s %s %s' % (" ".join(['%s="%s"' % (key, val.replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+    str_tag = '%s %s %s' % (" ".join(['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
     return str_tag.strip()
 
   # -------------------------------------------------------------
