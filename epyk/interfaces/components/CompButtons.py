@@ -50,7 +50,7 @@ class Buttons(object):
     return html_obj
 
   def buttons(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-              htmlCode=None, helper=None, profile=None):
+              htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Example
@@ -71,7 +71,7 @@ class Buttons(object):
     """
     size = self.context._size(size)
     html_obj = html.HtmlButton.Buttons(self.context.rptObj, data or [], size, color, width, height, htmlCode, helper,
-                                       profile)
+                                       options or {}, profile)
 
     self.context.register(html_obj)
     return html_obj

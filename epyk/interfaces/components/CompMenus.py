@@ -16,7 +16,7 @@ class Menus(object):
     pass
 
   def buttons(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-              htmlCode=None, helper=None, profile=None):
+              htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Example
@@ -35,9 +35,12 @@ class Menus(object):
     :param profile:
     :return:
     """
+    dfl_button_css = {"button_css": {"border-radius": 0, "border": "0px solid black"}}
+    options = options or {}
+    dfl_button_css.update(options)
     size = self.context._size(size)
     html_obj = html.HtmlButton.Buttons(self.context.rptObj, data or [], size, color, width, height, htmlCode, helper,
-                                       profile)
+                                       dfl_button_css, profile)
     html_obj.css({"border": "1px solid %s" % html_obj.getColor("greys", 4), "padding": "2px"})
     self.context.register(html_obj)
     return html_obj

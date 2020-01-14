@@ -462,12 +462,13 @@ class IconEdit(Html.Html):
 
 class Buttons(Html.Html):
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
+  def __init__(self, report, data, size, color, width, height, htmlCode, helper, options, profile):
     super(Buttons, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
     self.row = []
     for b in data:
       bt = report.ui.button(b, options={"group": "group_%s" % self.htmlId}).css({"margin-right": '5px'})
+      bt.css(options.get("button_css", {}))
       bt.inReport = False
       self.row.append(bt)
 
