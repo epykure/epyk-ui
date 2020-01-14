@@ -69,7 +69,7 @@ class Panels(object):
     return html_tabs
 
   def arrows_down(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-                css_tab=None, options=None, profile=False):
+                  css_tab=None, options=None, profile=False):
     """
     Python wrapper for a multi Tabs component
 
@@ -90,7 +90,7 @@ class Panels(object):
     return html_tabs
 
   def menu(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-            css_tab=None, options=None, profile=False):
+           css_tab=None, options=None, profile=False):
     """
     Python wrapper to the Bootstrap Pills interface
 
@@ -110,3 +110,51 @@ class Panels(object):
 
     self.context.register(html_tabs)
     return html_tabs
+
+  def sliding(self, htmlObjs, title, color=None, size=(None, "px"), width=(100, "%"), height=(None, "px"),
+            htmlCode=None, helper=None, profile=False):
+    """
+
+    :param htmlObjs:
+    :param title:
+    :param color:
+    :param size:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param profile:
+    :return:
+    """
+    size = self.context._size(size)
+    if htmlObjs is not None and not isinstance(htmlObjs, list):
+      htmlObjs = [htmlObjs]
+    html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, size, width, height,
+                                               htmlCode, helper, profile)
+    self.context.register(html_slide)
+    return html_slide
+
+  def split(self, width=(100, '%'), height=(None, 'px'), leftWidth=50, left=None, right=None, resizable=True,
+            helper=None, profile=None):
+    """
+
+    Example
+    number = rptObj.ui.rich.number(500, "Test", height=(150, 'px'))
+    number_2 = rptObj.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
+    div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)
+
+    Documentation
+    https://codepen.io/rstrahl/pen/eJZQej
+
+    :param width:
+    :param height:
+    :param leftWidth:
+    :param left:
+    :param right:
+    :param resizable:
+    :param helper:
+    :param profile:
+    """
+    html_split = html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, leftWidth, left, right, resizable, helper, profile)
+    self.context.register(html_split)
+    return html_split

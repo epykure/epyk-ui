@@ -51,30 +51,6 @@ class Layouts(object):
     size = self.context._size(size)
     return self.context.register(html.HtmlOthers.Hr(self.context.rptObj, color, count, size, background_color, height, align, profile))
 
-  def panelsplit(self, width=(100, '%'), height=(None, 'px'), leftWidth=50, left=None, right=None, resizable=True, helper=None, profile=None):
-    """
-
-    Example
-    number = rptObj.ui.rich.number(500, "Test", height=(150, 'px'))
-    number_2 = rptObj.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
-    div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)
-
-    Documentation
-    https://codepen.io/rstrahl/pen/eJZQej
-
-    :param width:
-    :param height:
-    :param leftWidth:
-    :param left:
-    :param right:
-    :param resizable:
-    :param helper:
-    :param profile:
-    """
-    html_split = html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, leftWidth, left, right, resizable, helper, profile)
-    self.context.register(html_split)
-    return html_split
-
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
     """
     Python wrapper for a column of HTML elements from Bootstrap
@@ -151,15 +127,6 @@ class Layouts(object):
     html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs, title, color, size, width, height, htmlCode, helper, profile)
     self.context.register(html_panel)
     return html_panel
-
-  def slide(self, htmlObjs, title, color=None, size=(None, "px"), width=(100, "%"), height=(None, "px"),
-            htmlCode=None, helper=None, profile=False):
-    size = self.context._size(size)
-    if htmlObjs is not None and not isinstance(htmlObjs, list):
-      htmlObjs = [htmlObjs]
-    html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, size, width, height, htmlCode, helper, profile)
-    self.context.register(html_slide)
-    return html_slide
 
   def div(self, htmlObjs=None, label=None, color=None, size=(None, "px"), width=(100, "%"), icon=None, height=(None, "px"), editable=False,
           align='left', padding=None, htmlCode=None, tag='div', helper=None, profile=None):

@@ -26,4 +26,13 @@ tabs.add_panel("tab 1, this is something", rptObj.ui.col([rptObj.ui.text("test 1
 tabs.add_panel("tab 2", rptObj.ui.col([rptObj.ui.text("test 2")]))
 tabs.add_panel("tab 3", rptObj.ui.col([rptObj.ui.text("test 3")]))
 
+
+rptObj.ui.panels.sliding([
+  rptObj.ui.col([rptObj.ui.text("test 2")])
+], title="Sliding Panel")
+
+
+rptObj.ui.panels.split(left=rptObj.ui.col([rptObj.ui.text("Left")]), right=rptObj.ui.col([rptObj.ui.text("Right")]))
+
+
 print(rptObj.outs.html_file(path=test_statics.OUTPUT_PATHS, name="report_panel"))
