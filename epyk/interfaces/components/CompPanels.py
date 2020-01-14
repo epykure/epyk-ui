@@ -107,7 +107,6 @@ class Panels(object):
     html_tabs.css_tab["background"] = html_tabs.getColor("greys", 0)
     html_tabs.css_tab_clicked_dflt = {'color': html_tabs.getColor("greys", 0), 'background': html_tabs.getColor("success", 1)}
     html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs.getColor("success", 1)})
-
     self.context.register(html_tabs)
     return html_tabs
 

@@ -6,7 +6,7 @@ from . import HtmlLinks
 from . import HtmlImage
 from . import HtmlInput
 from . import HtmlList
-from . import HtmlNavBar
+from . import HtmlMenu
 from . import HtmlOthers
 from . import HtmlRadio
 from . import HtmlSelect

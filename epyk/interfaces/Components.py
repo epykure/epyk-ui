@@ -365,7 +365,7 @@ class Components(object):
     :param position:
     """
     size = self._size(size)
-    bar = html.HtmlNavBar.HtmlSideBar(self.rptObj, links or [], color, size, servers)
+    bar = html.HtmlMenu.HtmlSideBar(self.rptObj, links or [], color, size, servers)
     self.register(bar)
     return bar
 
