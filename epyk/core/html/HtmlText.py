@@ -471,12 +471,11 @@ class Title(Html.Html):
     self.add_icon(icon)
     if contents is not None:
       self._name = contents.add(text, level or 1, name)
-
     if level is not None:
-      self.style.cssCls("CssTitle%s" % level)
+      self.style.addCls("CssTitle%s" % level)
       self.css({'color': color, 'margin': '%spx 0 5px 0' % marginTop})
     else:
-      self.style.cssCls('CssTitle')
+      self.style.addCls('CssTitle')
       self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': "%s%s" % (size[0], size[1])})
       if size[0] > 21 and color is None:
         self.css('color', self.getColor('colors', 9))

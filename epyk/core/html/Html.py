@@ -260,6 +260,27 @@ class Html(object):
         self.__chart = CssInternal.DefinedChartStyles(self.htmlObj)
       return self.__chart
 
+    # CSS Attributes
+    @property
+    def display(self):
+      """
+
+      :return:
+      """
+      return self.htmlObj.css("display")
+
+    @display.setter
+    def display(self, val):
+      """
+
+      :param val:
+      :return:
+      """
+      if val is None:
+        self.htmlObj.css({"display": 'None'})
+      else:
+        self.htmlObj.css({"display": val})
+
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):
     """ Create an python HTML object """
@@ -716,6 +737,9 @@ class Html(object):
     if value is None and isinstance(key, dict):
       # Do not add None value to the CSS otherwise it will break the page on the front end side
       css_vals = key if isinstance(key, dict) else {}
+    elif value is None and key in self.attr['css']:
+      return self.attr['css'][key]
+
     else:
       css_vals = {key: value}
     for key, value in css_vals.items():
