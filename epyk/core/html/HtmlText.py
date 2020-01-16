@@ -522,7 +522,7 @@ class Title(Html.Html):
       if not os.path.exists(filePath):
         raise Exception("Missing file %s in %s" % (self.picture, os.path.join(self._report.run.local_path, "static")))
 
-      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.pyStyle), path, self.picture, anchor_name, self.val, self.helper)
+      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.defined), path, self.picture, anchor_name, self.val, self.helper)
 
     return '<div %s><a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.defined), anchor_name, self.val, self.helper)
 
