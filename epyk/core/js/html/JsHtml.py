@@ -299,5 +299,19 @@ class JsHtmlIcon(JsHtml):
     return self._src.dom.getAttribute("class")
 
 
+class JsHtmlList(JsHtml):
+  @property
+  def val(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.varName))
+
+  @property
+  def content(self):
+    return self._src.dom.getAttribute("class")
+
 
 

@@ -8,11 +8,42 @@ List are standard and very popular HTML objects, please have a look at the below
 import re
 import json
 
+from epyk.core.js import JsUtils
 from epyk.core.html import Html
+
+# The list of Javascript classes
+from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsList
+
+
+class OptionsLi(object):
+  def __init__(self, src, options):
+    self.src = src
+    self._li_css = options.get("li_css", {})
+    self.li_class = options.get("li_class", [])
+
+  @property
+  def li_css(self):
+    """
+    """
+    return self._li_css
+
+  @li_css.setter
+  def li_css(self, css):
+    self._li_css = css
+
+  @property
+  def li_class(self):
+    """
+    """
+    return self._li_class
+
+  @li_class.setter
+  def li_class(self, cls_names):
+    self._li_class = cls_names
 
 
 class Li(Html.Html):
@@ -86,9 +117,10 @@ class List(Html.Html):
   # The CSS Group attached to this component
   grpCls = CssGrpClsList.CssClassList
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
+  def __init__(self, report, data, size, color, width, height, htmlCode, helper, options, profile):
     super(List, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
                                heightUnit=height[1], code=htmlCode, profile=profile)
+    self.options = OptionsLi(self, options)
     self.add_helper(helper)
     self.color = color if color is not None else self.getColor("greys", 9)
     self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
@@ -96,6 +128,17 @@ class List(Html.Html):
     self.items = None
     if len(data) > 0:
       self.set_items()
+
+  @property
+  def dom(self):
+    """
+
+    :rtype: JsHtml.JsHtmlIcon
+    :return:
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlList(self, report=self._report)
+    return self._dom
 
   def __getitem__(self, i):
     """
@@ -126,13 +169,33 @@ class List(Html.Html):
       self.items = []
     for d in self.val:
       li_obj = Li(self._report, d)
+      li_obj.inReport = False
+      self._report.ui.register(li_obj)
+      li_obj.css(self.options.li_css)
+      li_obj.style.addCls(self.options.li_class)
       self.items.append(li_obj)
     return self
 
-  @property
-  def _js__builder__(self):
-    return ''' 
-      '''
+  def on_items(self, event, jsFncs, profile=False):
+    """
+
+    :return:
+    """
+    for i in self.items:
+      i.on(event, jsFncs, profile)
+    return self
+
+  def click_items(self, jsFncs, profile=False):
+    """
+
+    :param jsFncs:
+    :param profile:
+    :return:
+    """
+    jsFncs = JsUtils.jsConvertFncs(jsFncs)
+    for i in self.items:
+      i.click(jsFncs, profile)
+    return self
 
   def __str__(self):
     self._vals = "".join([i.html() for i in self.items]) if self.items is not None else ""
@@ -160,7 +223,7 @@ class Groups(Html.Html):
     return self.val[i]
 
   def add_list(self, data, category="", size=('inherit', ''), color='inherit', width=(None, 'px'), height=(None, 'px'),
-               htmlCode=None, helper=None, profile=False):
+               htmlCode=None, helper=None, options=None, profile=False):
     """
 
     :param data:
@@ -171,10 +234,11 @@ class Groups(Html.Html):
     :param height:
     :param htmlCode:
     :param helper:
+    :param options:
     :param profile:
     """
     self._lists__map[category] = len(self.val)
-    html_li = List(self._report, data, size, color, width, height, htmlCode, helper, profile)
+    html_li = List(self._report, data, size, color, width, height, htmlCode, helper, options, profile)
     html_li.inReport = False
     html_li.css({"margin-bottom": '5px'})
     self.val.append(html_li)
