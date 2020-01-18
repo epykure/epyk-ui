@@ -198,6 +198,56 @@ class DocString(dict):
     return "\n".join(self.get(dsc, ['']))
 
 
+class Convertor(object):
+  def __init__(self, src=None):
+    self.__src = src
+
+  def bold(self, val):
+    """
+    Add the bold HTML tags to a string is ** markdown
+
+    :param val: String. The text
+    :return: String. The converted text
+    """
+    res = str(val).split("**")
+    if len(res) > 1:
+      tmp = []
+      for i, r in enumerate(res):
+        if i % 2 == 1:
+          b = self.__src.ui.tags.b(r)
+          tmp.append(b.html())
+        else:
+          tmp.append(r)
+      return "".join(tmp)
+
+    return val
+
+  def italic(self, val):
+    """
+    Add the Italic HTML tags to a string is * markdown
+
+    :param val: String. The text
+    :return: String. The converted text
+    """
+    res = str(val).split("*")
+    if len(res) > 1:
+      tmp = []
+      for i, r in enumerate(res):
+        if i % 2:
+          i = self.__src.ui.tags.i(r)
+          tmp.append(i.html())
+        else:
+          tmp.append(r)
+      return "".join(tmp)
+
+    return val
+
+  def all(self, val):
+    val = self.bold(val)
+    val = self.italic(val)
+    return val
+
+
 class MarkDown(object):
   markDownMappings, markDownBlockMappings = None, None
 

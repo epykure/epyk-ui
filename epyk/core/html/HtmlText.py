@@ -22,6 +22,66 @@ from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsText
 
 
+class OptionsText(object):
+  def __init__(self, src, options):
+    self.src = src
+    self.__reset = options.get("reset", True)
+    self.__limit_char = options.get("limit_char", False)
+    self.__markdown = options.get("markdown", True)
+
+  @property
+  def reset(self):
+    """
+
+    :return:
+    """
+    return self.__reset
+
+  @reset.setter
+  def reset(self, bool):
+    """
+
+    :return:
+    """
+    self.src._jsStyles["reset"] = bool
+    self.__reset = bool
+
+  @property
+  def markdown(self):
+    """
+
+    :return:
+    """
+    return self.__markdown
+
+  @markdown.setter
+  def markdown(self, bool):
+    """
+
+    :return:
+    """
+    self.src._jsStyles["markdown"] = bool
+    self.__markdown = bool
+
+  @property
+  def limit_char(self):
+    """
+
+    :return:
+    """
+    return self.__limit_char
+
+  @limit_char.setter
+  def limit_char(self, value):
+    """
+
+    :param value:
+    :return:
+    """
+    self.src._jsStyles["maxlength"] = value
+    self.__limit_char = value
+
+
 class Label(Html.Html):
   name, category, callFnc = 'Label', 'Text', 'label'
 
@@ -184,7 +244,8 @@ class Text(Html.Html):
                                code=htmlCode, profile=profile)
     self.color = color if color is not None else 'inherit'
     self.add_helper(helper)
-    self._jsStyles = options
+    self.options = OptionsText(self, options)
+    self._jsStyles = {"reset": self.options.reset, "markdown": self.options.markdown, "maxlength": self.options.limit_char}
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'text-align': align})
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -212,12 +273,24 @@ class Text(Html.Html):
       if(data != ''){ 
         if((options.maxlength != undefined) && (data.length > options.maxlength)){
           content = data.slice(0, options.maxlength); 
-          htmlObj.innerHTML = %(markUp)s +"..."; htmlObj.title = data} 
-        else{htmlObj.innerHTML = %(markUp)s}};
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
+          if(options.markdown){htmlObj.innerHTML = %(markUp)s +"..."} else {htmlObj.innerHTML = content +"..."}; 
+          htmlObj.title = data} 
+        else{
+          if(options.markdown){htmlObj.innerHTML = %(markUp)s} else {htmlObj.innerHTML = content}}};
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}};
       ''' % {"markUp": mark_up}
 
   def __str__(self):
+    if self.options.limit_char and len(self.content) > self.options.limit_char:
+      self.set_attrs(name="title", value=self.content)
+      if self.options.markdown:
+        self._vals = self._report.py.markdown.all(self.content[:self.options.limit_char])
+      else:
+        self._vals = self.content[:self.options.limit_char]
+      return '<div %s>%s...</div>%s' % (self.get_attrs(pyClassNames=self.defined), self.content, self.helper)
+
+    if self.options.markdown:
+      self._vals = self._report.py.markdown.all(self.content)
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), self.content, self.helper)
 
   # -----------------------------------------------------------------------------------------

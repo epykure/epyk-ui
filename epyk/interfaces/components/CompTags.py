@@ -12,6 +12,28 @@ class Tags(object):
   def __init__(self, context):
     self.context = context
 
+  def b(self, text, size=(None, "px"), width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
+    """
+    The <b> tag specifies bold text without any extra importance.
+
+    Documentation
+    https://www.w3schools.com/tags/tag_b.asp
+
+    :param text: String with the content to be added to the component
+    :param size: Tuple with the size value and its unit
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    size = self.context._size(size)
+    html_b = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, size, width,
+                                       height, htmlCode, tooltip, profile)
+    html_b.style.clear()
+    self.context.register(html_b)
+    return html_b
+
   def bdi(self, text, size=(None, "px"), width=(100, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
     BDI stands for Bi-Directional Isolation.
@@ -293,7 +315,7 @@ class Tags(object):
     self.context.register(html_s)
     return html_s
 
-  def i(self, text, size=(None, "px"), width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
+  def i(self, text, size=(None, "px"), width=(None, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
     The <i> tag defines a part of text in an alternate voice or mood. The content of the <i> tag is usually displayed in italic.
 

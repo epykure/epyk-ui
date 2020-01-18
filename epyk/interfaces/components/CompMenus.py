@@ -111,26 +111,19 @@ class Menus(object):
         for item in menu_items[i]:
           grid + self.context.rptObj.ui.col([m, *item], width=(None, "px")).css({"color": "white", "padding": "0 5px",
                         "display": 'inline-block', "vertical-align": 'top', "margin": '2px 0'})
-
         html_div = self.context.rptObj.ui.div(grid).css({"vertical-align": 'None'})
         html_div.attr["name"] = "divs_%s" % (html_list.htmlId)
         html_div.style.display = None
       else:
         html_div = self.context.rptObj.ui.div(
           self.context.rptObj.ui.grid([
-            self.context.rptObj.ui.col([
-              m, *menu_items[i]]).css({"color": "white", "padding": "0 5px"})
-          ])
-        )
+            self.context.rptObj.ui.col([m, *menu_items[i]]).css({"color": "white", "padding": "0 5px"})]))
         html_div.attr["name"] = "divs_%s" % (html_list.htmlId)
         html_div.style.display = None
       menu_divs.append(html_div)
     html_list.click_items(
       [self.context.rptObj.js.getElementById(l.htmlId).setAttribute("data-select", "false") for l in html_list]
-      + [
-      self.context.rptObj.js.objects.dom("this").setAttribute("data-select", "true"),
-      self.context.rptObj.js.console.log(html_list.dom.val),
-    ])
+      + [self.context.rptObj.js.objects.dom("this").setAttribute("data-select", "true")])
     col = self.context.rptObj.ui.col([html_list, *menu_divs])
     col.css({"background-color": "#333", "margin": 0, "color": 'white'})
     return col
