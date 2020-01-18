@@ -180,7 +180,7 @@ JS_IMPORTS = {
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                 'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
     'modules': [
-      {'reqAlias': 'fontawesome', 'script': 'fontawesome.js', 'version': '5.9.0', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
+      {'reqAlias': 'fontawesome', 'script': 'fontawesome.js', 'version': '5.11.2', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
     'website': 'https://fontawesome.com/'},
 
   # Javascript packages to handle DataTables
@@ -609,7 +609,7 @@ CSS_IMPORTS = {
     'website': 'http://tabulator.info',
     'modules': [
       # '4.1.5'
-      {'script': 'tabulator.min.css', 'version': '4.4.1', 'path': 'tabulator/%(version)s/css/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
+      {'script': 'tabulator.min.css', 'version': '4.4.3', 'path': 'tabulator/%(version)s/css/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
     ]
   },
 
@@ -678,7 +678,7 @@ CSS_IMPORTS = {
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                     'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
     'modules': [
-      {'script': 'all.css', 'version': '5.9.0', 'path': 'releases/v%(version)s/css/', 'cdnjs': 'https://use.fontawesome.com'}]},
+      {'script': 'all.css', 'version': '5.11.2', 'path': 'releases/v%(version)s/css/', 'cdnjs': 'https://use.fontawesome.com'}]},
 
   # NVD3 Components width CDN links
   'nvd3': {
