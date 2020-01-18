@@ -10,6 +10,7 @@ import json
 
 from epyk.core.js import JsUtils
 from epyk.core.html import Html
+from epyk.core.html import Options
 
 # The list of Javascript classes
 from epyk.core.js.html import JsHtml
@@ -17,33 +18,6 @@ from epyk.core.js.html import JsHtml
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsList
-
-
-class OptionsLi(object):
-  def __init__(self, src, options):
-    self.src = src
-    self._li_css = options.get("li_css", {})
-    self.li_class = options.get("li_class", [])
-
-  @property
-  def li_css(self):
-    """
-    """
-    return self._li_css
-
-  @li_css.setter
-  def li_css(self, css):
-    self._li_css = css
-
-  @property
-  def li_class(self):
-    """
-    """
-    return self._li_class
-
-  @li_class.setter
-  def li_class(self, cls_names):
-    self._li_class = cls_names
 
 
 class Li(Html.Html):
@@ -120,7 +94,7 @@ class List(Html.Html):
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, options, profile):
     super(List, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
                                heightUnit=height[1], code=htmlCode, profile=profile)
-    self.options = OptionsLi(self, options)
+    self.options = Options.OptionsLi(self, options)
     self.add_helper(helper)
     self.color = color if color is not None else self.getColor("greys", 9)
     self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',

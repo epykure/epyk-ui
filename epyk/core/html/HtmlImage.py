@@ -5,6 +5,7 @@ Wrapper to the HTML Image components
 import re
 
 from epyk.core.html import Html
+from epyk.core.html import Options
 from epyk.core.html import Defaults
 
 # The list of Javascript classes
@@ -12,47 +13,6 @@ from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpClsImage
-
-
-class OptionsBadge(object):
-  def __init__(self, src, options):
-    self.src = src
-    self._badge_prop = options.get('badge_position', "left")
-    if self._badge_prop == 'left':
-      self._badge_css = {"border-radius": "20px", "position": 'relative', "bottom": "-5px", "background": 'white',
-                         "right": "-6px"}
-    else:
-      self._badge_css = {"border-radius": "20px", "position": 'relative', "top": "-4px", "right": "11px",
-                         "background": 'white'}
-    self._badge_css.update(options.get('badge_css', {}))
-
-  @property
-  def badge_css(self):
-    """
-    """
-    return self._badge_css
-
-  @badge_css.setter
-  def badge_css(self, css):
-    self.src.link.css(css)
-    self._badge_css = css
-
-  @property
-  def badge_position(self):
-    """
-
-    :return:
-    """
-    return self._badge_prop
-
-  @badge_position.setter
-  def badge_position(self, position):
-    """
-
-    :param position:
-    :return:
-    """
-    self._badge_prop = position
 
 
 class Image(Html.Html):
@@ -277,7 +237,7 @@ class Badge(Html.Html):
   def __init__(self, report, text, label, icon, size, background_color, color, url, tooltip, options, profile):
     super(Badge, self).__init__(report, None, profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
-    self.options = OptionsBadge(self, options)
+    self.options = Options.OptionsBadge(self, options)
     if self.options.badge_position == 'left':
       self.add_icon(icon, css={"float": 'None', "font-size": '%s%s' % (size[0] + 8, size[1])}, position="after")
     else:

@@ -7,6 +7,7 @@ import os
 import json
 
 from epyk.core.html import Html
+from epyk.core.html import Options
 
 from epyk.core.html import Defaults as Default_html
 
@@ -20,66 +21,6 @@ from epyk.core.css.styles.CssStylesDivComms import CssContentEditable
 
 from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsText
-
-
-class OptionsText(object):
-  def __init__(self, src, options):
-    self.src = src
-    self.__reset = options.get("reset", True)
-    self.__limit_char = options.get("limit_char", False)
-    self.__markdown = options.get("markdown", True)
-
-  @property
-  def reset(self):
-    """
-
-    :return:
-    """
-    return self.__reset
-
-  @reset.setter
-  def reset(self, bool):
-    """
-
-    :return:
-    """
-    self.src._jsStyles["reset"] = bool
-    self.__reset = bool
-
-  @property
-  def markdown(self):
-    """
-
-    :return:
-    """
-    return self.__markdown
-
-  @markdown.setter
-  def markdown(self, bool):
-    """
-
-    :return:
-    """
-    self.src._jsStyles["markdown"] = bool
-    self.__markdown = bool
-
-  @property
-  def limit_char(self):
-    """
-
-    :return:
-    """
-    return self.__limit_char
-
-  @limit_char.setter
-  def limit_char(self, value):
-    """
-
-    :param value:
-    :return:
-    """
-    self.src._jsStyles["maxlength"] = value
-    self.__limit_char = value
 
 
 class Label(Html.Html):
@@ -244,7 +185,7 @@ class Text(Html.Html):
                                code=htmlCode, profile=profile)
     self.color = color if color is not None else 'inherit'
     self.add_helper(helper)
-    self.options = OptionsText(self, options)
+    self.options = Options.OptionsText(self, options)
     self._jsStyles = {"reset": self.options.reset, "markdown": self.options.markdown, "maxlength": self.options.limit_char}
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'text-align': align})
     if tooltip is not None:

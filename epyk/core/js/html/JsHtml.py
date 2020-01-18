@@ -153,7 +153,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     return self.css("display", "none")
 
-  def show(self):
+  def show(self, inline=True):
     """
     Example
     input.js.show()
@@ -161,11 +161,12 @@ class JsHtml(JsNodeDom.JsDoms):
     Documentation
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
+    :param inline: String
     :return:
     """
-    return JsUtils.jsConvertData(self.css("display", "block"), None)
+    return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else 'block'), None)
 
-  def toggle(self, attr="display", jsVal1="block", jsVal2="none"):
+  def toggle(self, attr="display", jsVal1="inline-block", jsVal2="none"):
     """
 
     Example

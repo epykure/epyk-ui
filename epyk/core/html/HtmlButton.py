@@ -6,41 +6,14 @@ import re
 import json
 
 from epyk.core.html import Html
+from epyk.core.html import Options
+
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsButton
-
-
-class OptionsButton(object):
-  def __init__(self, src, options):
-    self.src = src
-    self._multiple, self.src.attr['name'] = options.get('multiple', False), options.get('group', None)
-
-  @property
-  def multiple(self):
-    """
-    Property to define if multiple buttons can be selected at the same time
-    Default value is false
-    """
-    return self._multiple
-
-  @multiple.setter
-  def multiple(self, bool):
-    self._multiple = bool
-
-  @property
-  def group(self):
-    """
-    Property to set the group name of a button
-    """
-    return self.src.attr['name']
-
-  @group.setter
-  def group(self, val):
-    self.src.attr['name'] = val
 
 
 class Button(Html.Html):
@@ -58,7 +31,7 @@ class Button(Html.Html):
 
     #
     self.css({"cursor": 'pointer', 'font-size': "%s%s" % (size[0], size[1])})
-    self.options = OptionsButton(self, options)
+    self.options = Options.OptionsButton(self, options)
 
     if tooltip is not None:
       self.tooltip(tooltip)

@@ -2,10 +2,8 @@
 Module for the HTML Selects components
 """
 
-import json
-
 from epyk.core.html import Html
-from epyk.core.js.objects import JsNodeDom
+from epyk.core.html import Options
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpClsList
@@ -13,11 +11,6 @@ from epyk.core.css.groups import CssGrpClsList
 #
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsSelect
-
-
-class OptionsSelect(object):
-  def __init__(self, src):
-    self.src = src
 
 
 class Option(Html.Html):

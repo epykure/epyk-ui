@@ -13,6 +13,7 @@ import functools
 import logging
 
 from epyk.core.css import CssInternal
+from epyk.core.css import Properties
 from epyk.core.css.groups import CssGrpCls
 
 from epyk.core.js import JsUtils
@@ -82,7 +83,7 @@ class Html(object):
 
   _grpCls = CssGrpCls.CssGrpClass
 
-  class _CssStyle(object):
+  class _CssStyle(Properties.CssMixin):
     def __init__(self, htmlObj):
       self.htmlObj = htmlObj
       self._def_styles = None
@@ -261,25 +262,7 @@ class Html(object):
       return self.__chart
 
     # CSS Attributes
-    @property
-    def display(self):
-      """
 
-      :return:
-      """
-      return self.htmlObj.css("display")
-
-    @display.setter
-    def display(self, val):
-      """
-
-      :param val:
-      :return:
-      """
-      if val is None:
-        self.htmlObj.css({"display": 'None'})
-      else:
-        self.htmlObj.css({"display": val})
 
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):
