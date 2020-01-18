@@ -94,7 +94,7 @@ class Menus(object):
     http://astronautweb.co/snippet/font-awesome/
     """
     size = self.context._size(size)
-    menu_li, menu_title, menu_items = [], [], []
+    menu_li, menu_title, menu_items, menu_divs = [], [], [], []
     for k in data:
       menu_li.append(k["value"])
       title_text = k.get("title")
@@ -105,23 +105,33 @@ class Menus(object):
       menu_items.append(k.get("children", []))
     html_list = self.context.rptObj.ui.list(menu_li, size, color, width, height, htmlCode, helper, options or {}, profile)
     html_list.css({"list-style": 'none'})
-    html_div = self.context.rptObj.ui.div(
-      self.context.rptObj.ui.grid([
-        self.context.rptObj.ui.col([
-          menu_title[0], *menu_items[0]]).css({"color": "white", "padding": "0 5px"})
-      ])
-    )
-    html_div.style.display = None
+    for i, m in enumerate(menu_title):
+      if isinstance(menu_items[i][0], list):
+        grid = self.context.rptObj.ui.div([])
+        for item in menu_items[i]:
+          grid + self.context.rptObj.ui.col([m, *item], width=(None, "px")).css({"color": "white", "padding": "0 5px",
+                        "display": 'inline-block', "vertical-align": 'top', "margin": '2px 0'})
 
+        html_div = self.context.rptObj.ui.div(grid).css({"vertical-align": 'None'})
+        html_div.attr["name"] = "divs_%s" % (html_list.htmlId)
+        html_div.style.display = None
+      else:
+        html_div = self.context.rptObj.ui.div(
+          self.context.rptObj.ui.grid([
+            self.context.rptObj.ui.col([
+              m, *menu_items[i]]).css({"color": "white", "padding": "0 5px"})
+          ])
+        )
+        html_div.attr["name"] = "divs_%s" % (html_list.htmlId)
+        html_div.style.display = None
+      menu_divs.append(html_div)
     html_list.click_items(
-      [self.context.rptObj.js.getElementById(l.htmlId).setAttribute("data-select", "toto") for l in html_list]
+      [self.context.rptObj.js.getElementById(l.htmlId).setAttribute("data-select", "false") for l in html_list]
       + [
       self.context.rptObj.js.objects.dom("this").setAttribute("data-select", "true"),
       self.context.rptObj.js.console.log(html_list.dom.val),
-      html_div.dom.toggle()
     ])
-
-    col = self.context.rptObj.ui.col([html_list, html_div])
+    col = self.context.rptObj.ui.col([html_list, *menu_divs])
     col.css({"background-color": "#333", "margin": 0, "color": 'white'})
     return col
 

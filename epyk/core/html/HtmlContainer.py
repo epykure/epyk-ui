@@ -10,6 +10,7 @@ from epyk.core.html import HtmlSelect
 
 #
 from epyk.core.js import JsUtils
+from epyk.core.css import Defaults
 
 # The list of CSS classes
 from epyk.core.css.styles import CssStyle
@@ -511,7 +512,7 @@ class Tabs(Html.Html):
     """
     return self[name]["tab"]
 
-  def add_panel(self, name, div, selected=False, css_tab=None, css_tab_clicked=None):
+  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
     """
 
     :param name:
@@ -525,7 +526,13 @@ class Tabs(Html.Html):
     div.inReport = False
     div.set_attrs(name="name", value=self.panels_name)
     self.__panels.append(name)
-    tab = self._report.ui.div(name, width=("100", "px"))
+    if icon is not None:
+      tab = self._report.ui.div([
+        self._report.ui.icon(icon).css({"display": 'block', "width": '100%',
+                                        "font-size": '%spx' % (Defaults.Font.header_size + 4)}),
+        name], width=("100", "px"))
+    else:
+      tab = self._report.ui.div(name, width=("100", "px"))
     css_tab = dict(self.css_tab)
     dflt_css_clicked, css_not_clicked = dict(self.css_tab_clicked_dflt), {}
     if css_tab is not None:
@@ -537,7 +544,7 @@ class Tabs(Html.Html):
         css_not_clicked[key] = css_tab[key]
       else:
         css_not_clicked[key] = 'none'
-    tab.css(css_tab)
+    tab.css(css_tab).css({"padding": '5px 0'})
     tab.set_attrs(name="name", value=self.tabs_name)
     tab_container = self._report.ui.div(tab, width=("100", "px"))
     tab_container.inReport = False

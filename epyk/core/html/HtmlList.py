@@ -193,8 +193,11 @@ class List(Html.Html):
     :return:
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    for i in self.items:
-      i.click(jsFncs, profile)
+    for i, item in enumerate(self.items):
+      fnc = JsUtils.jsConvertFncs([
+        self._report.js.getElementsByName("divs_%s" % self.htmlId).all(self._report.js.objects.dom("elt").hide().r),
+        self._report.js.getElementsByName("divs_%s" % self.htmlId)[i].toggle().r])
+      item.click(fnc + jsFncs, profile)
     return self
 
   def __str__(self):

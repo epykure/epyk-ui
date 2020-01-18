@@ -958,3 +958,11 @@ class JsDomsList(JsArray.JsArray):
   @property
   def first(self):
     return JsDoms.get("%s[0]" % self.toStr())
+
+  def __getitem__(self, index):
+    """
+
+    :param index:
+    :return:
+    """
+    return JsDoms.get("%s[%s]" % (self.toStr(), index))
