@@ -583,7 +583,7 @@ class JsObject(object):
               data = data.replace(/\[(.*?)\]\(https\\\:(.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
               data = data.replace(/\[(.*?)\]\(http\\\:(.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
               data = data.replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2'>$1</a>");
-              if ((data == '') || ( data == '__' )){ data = '<br />'};
+              if ((data == '') || (data == '__')){data = '<br />'};
               result = data; return result'''), 'pmt': ['data']}
 
     from epyk.core.js.primitives import JsString

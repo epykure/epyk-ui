@@ -202,6 +202,38 @@ class Convertor(object):
   def __init__(self, src=None):
     self.__src = src
 
+  def icon(self, val):
+    """
+
+    :param val:
+    :return:
+    """
+    pattern = re.compile("!\((.*)\)")
+    res = pattern.search(val)
+    if res is not None:
+      for grp in res.groups():
+        i = self.__src.ui.tags.i("")
+        i.attr["class"] = [grp]
+        val = val.replace("!(%s)" % grp, i.html())
+    return val
+
+  def link(self, val):
+    """
+
+    :param val:
+    :return:
+    """
+    pattern = re.compile("\[(.*)\]\((.*)\)")
+    res = pattern.search(val)
+    if res is not None:
+      results = res.groups()
+      for i in range(len(results)//2):
+        text = results[2*i]
+        url = results[2*i + 1]
+        l = self.__src.ui.link(text, url)
+        val = val.replace("[%s](%s)" % (text, url), l.html())
+    return val
+
   def bold(self, val):
     """
     Add the bold HTML tags to a string is ** markdown
@@ -229,7 +261,7 @@ class Convertor(object):
     :param val: String. The text
     :return: String. The converted text
     """
-    res = str(val).split("*")
+    res = val.split("*")
     if len(res) > 1:
       tmp = []
       for i, r in enumerate(res):
@@ -242,8 +274,57 @@ class Convertor(object):
 
     return val
 
+  def highlighted(self, val):
+    """
+    Add the u HTML tags to a string is __ markdown
+
+    :param val: String. The text
+    :return: String. The converted text
+    """
+    res = str(val).split("__")
+    if len(res) > 1:
+      tmp = []
+      for i, r in enumerate(res):
+        if i % 2:
+          u = self.__src.ui.tags.u(r)
+          tmp.append(u.html())
+        else:
+          tmp.append(r)
+      return "".join(tmp)
+
+    return val
+
+  def deleted(self, val):
+    """
+    Add the deleted HTML tags to a string is -- markdown
+
+    :param val: String. The text
+    :return: String. The converted text
+    """
+    res = str(val).split("--")
+    if len(res) > 1:
+      tmp = []
+      for i, r in enumerate(res):
+        if i % 2:
+          i = self.__src.ui.tags.delete(r)
+          tmp.append(i.html())
+        else:
+          tmp.append(r)
+      return "".join(tmp)
+
+    return val
+
   def all(self, val):
-    val = self.bold(val)
+    """
+
+    :param val:
+    :return:
+    """
+    val = self.bold(str(val))
+    val = self.highlighted(val)
+    val = self.deleted(val)
+    val = self.icon(val)
+    val = self.link(val)
     val = self.italic(val)
     return val
 

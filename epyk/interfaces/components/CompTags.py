@@ -34,6 +34,40 @@ class Tags(object):
     self.context.register(html_b)
     return html_b
 
+  def delete(self, text, size=(None, "px"), width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
+    """
+    :param text: String with the content to be added to the component
+    :param size: Tuple with the size value and its unit
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    size = self.context._size(size)
+    html_d = html.HtmlTags.HtmlGeneric(self.context.rptObj, 'del', text, size, width,
+                                       height, htmlCode, tooltip, profile)
+    html_d.style.clear()
+    self.context.register(html_d)
+    return html_d
+
+  def u(self, text, size=(None, "px"), width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
+    """
+    :param text: String with the content to be added to the component
+    :param size: Tuple with the size value and its unit
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    size = self.context._size(size)
+    html_u = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, size, width,
+                                       height, htmlCode, tooltip, profile)
+    html_u.style.clear()
+    self.context.register(html_u)
+    return html_u
+
   def bdi(self, text, size=(None, "px"), width=(100, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
     BDI stands for Bi-Directional Isolation.
