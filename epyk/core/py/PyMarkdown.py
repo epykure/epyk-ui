@@ -213,6 +213,7 @@ class Convertor(object):
     if res is not None:
       for grp in res.groups():
         i = self.__src.ui.tags.i("")
+        i.inReport = False
         i.attr["class"] = [grp]
         val = val.replace("!(%s)" % grp, i.html())
     return val
@@ -231,6 +232,7 @@ class Convertor(object):
         text = results[2*i]
         url = results[2*i + 1]
         l = self.__src.ui.link(text, url)
+        l.inReport = False
         val = val.replace("[%s](%s)" % (text, url), l.html())
     return val
 
@@ -247,6 +249,7 @@ class Convertor(object):
       for i, r in enumerate(res):
         if i % 2 == 1:
           b = self.__src.ui.tags.b(r)
+          b.inReport = False
           tmp.append(b.html())
         else:
           tmp.append(r)
@@ -267,6 +270,7 @@ class Convertor(object):
       for i, r in enumerate(res):
         if i % 2:
           i = self.__src.ui.tags.i(r)
+          i.inReport = False
           tmp.append(i.html())
         else:
           tmp.append(r)
@@ -287,6 +291,7 @@ class Convertor(object):
       for i, r in enumerate(res):
         if i % 2:
           u = self.__src.ui.tags.u(r)
+          u.inReport = False
           tmp.append(u.html())
         else:
           tmp.append(r)
@@ -307,6 +312,7 @@ class Convertor(object):
       for i, r in enumerate(res):
         if i % 2:
           i = self.__src.ui.tags.delete(r)
+          i.inReport = False
           tmp.append(i.html())
         else:
           tmp.append(r)
