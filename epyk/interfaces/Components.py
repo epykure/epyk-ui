@@ -236,6 +236,15 @@ class Components(object):
     return CompForms.Forms(self)
 
   @property
+  def modal(self):
+    """
+
+    :return:
+    """
+    pass
+
+
+  @property
   def charts(self):
     """
     Group all the UI components dedicated to produce charts.
