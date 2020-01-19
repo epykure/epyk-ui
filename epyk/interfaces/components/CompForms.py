@@ -45,8 +45,8 @@ class Forms(object):
     """
     date1 = self.context.rptObj.ui.fields.today(label=htmlCode1)
     date1.input.set_attrs({"name": htmlCode1.upper()})
-    date2 = self.context.rptObj.ui.fields.today(label=htmlCode1)
-    date2.input.set_attrs({"name": htmlCode1.upper()})
+    date2 = self.context.rptObj.ui.fields.today(label=htmlCode2)
+    date2.input.set_attrs({"name": htmlCode2.upper()})
 
     col = self.context.rptObj.ui.col([date1, date2])
     col.css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),

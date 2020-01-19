@@ -14,7 +14,7 @@ from epyk.core.css import Defaults
 
 # The list of CSS classes
 from epyk.core.css.styles import CssStyle
-from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.groups import CssGrpCls, CssGrpContainers
 
 
 class Panel(Html.Html):
@@ -706,10 +706,36 @@ class Form(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.inReport = False # Has to be defined here otherwise it is set too late
     self.val.append(htmlObj)
     return self
 
   def __str__(self):
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
     return '<form %s>%s</form>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
+
+
+class Modal(Html.Html):
+  name, category, callFnc = 'Modal Popup',  'Container', 'modal'
+  _grpCls = CssGrpContainers.CssGrpClassModal
+
+  def __init__(self, report, htmlObjs, helper):
+    super(Form, self).__init__(report, [])
+    self.add_helper(helper)
+    for htmlObj in htmlObjs:
+      self.__add__(htmlObj)
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set too late
+    self.val.append(htmlObj)
+    return self
+
+  def __str__(self):
+    s = self._report.ui.texts.span('&times;')
+    self.__add__(self._report.ui.div(s).css({"text-align": 'center'}))
+    str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
+
+
+
