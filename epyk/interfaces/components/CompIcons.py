@@ -31,6 +31,7 @@ class Icons(object):
     """
     size = self.context._size(size)
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, size, tooltip, width, height, htmlCode, profile)
+    html_edit.css({"display": "inline-block", "float": position})
     self.context.register(html_edit)
     return html_edit
 

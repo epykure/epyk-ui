@@ -118,13 +118,17 @@ class Images(object):
     return html_icon
 
   def badge(self, text=None, label=None, size=(None, 'px'), icon=None, background_color=None, color=None, url=None,
-            tooltip=None, profile=None):
+            tooltip=None, options=None, profile=None):
     """
     Display a badge component using Bootstrap
 
     Example
     rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
     rptObj.ui.images.badge("This is a badge", background_color="red", color="white")
+    rptObj.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
+
+    b = rptObj.ui.images.badge(7688, icon="fab fa-python", options={'badge_css': {'color': 'white', "background": 'red'}})
+    b.options.badge_css = {"background": 'green'}
 
     Documentation
     https://getbootstrap.com/docs/4.0/components/badge/
@@ -137,11 +141,13 @@ class Images(object):
     :param color: Optional, The text color of the badge
     :param url:
     :param tooltip: Optional, The text to display in the tooltip
+    :param options:
     :param profile: Optional, A boolean to store the performances for each components
     """
     tmp_size = self.context._size(size)
     if size[0] is None:
-      size = (tmp_size[0] - 2, tmp_size[1])
-    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, size, background_color, color, url, tooltip, profile)
+      size = (tmp_size[0] - 3, tmp_size[1])
+    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, size, background_color, color, url,
+                                      tooltip, options or {}, profile)
     self.context.register(html_badge)
     return html_badge

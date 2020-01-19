@@ -632,12 +632,14 @@ class JQuery(JsPackage):
 
     return self.fnc("html(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
 
-  def toggleClass(self, clsName):
+  def toggleClass(self, clsName, propagate=False):
     """
 
     :rtype: str
     :return:
     """
+    if propagate:
+      self.fnc_closure('parentNode.childNodes.forEach(function(e){e.classList.remove("%(data)s")})' % {'data': clsName})
     return self.fnc('toggleClass("%(data)s")' % {'data': clsName})
 
   def addClass(self, clsName, attrs=None, eventAttrs=None):
@@ -844,11 +846,10 @@ class JQuery(JsPackage):
     :rtype: Jsjqxhr
     :return:
     """
-    if data is None:
-      data = {}
+    data = data or {}
     return Jsjqxhr("jQuery.post(%s)" % self.getParams(url, data, successFncs, None, options, timeout, props))
 
-  def ajax(self, type, url, data, successFncs=None, errorFncs=None, options=None, timeout=None, props=None):
+  def ajax(self, type, url, data=None, successFncs=None, errorFncs=None, options=None, timeout=None, props=None):
     """
     The ajax() method is used to perform an AJAX (asynchronous HTTP) request.
 
@@ -871,6 +872,7 @@ class JQuery(JsPackage):
     if type.upper() not in ['POST', 'GET']:
       raise Exception("Method %s not recognised" % url)
 
+    data = data or {}
     return Jsjqxhr("jQuery.ajax(%s)" % self.getParams(url, data, successFncs, errorFncs, options, timeout, props))
 
   def click(self, jsFnc):

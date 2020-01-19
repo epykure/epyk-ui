@@ -5,6 +5,7 @@ Wrapper to the HTML Image components
 import re
 
 from epyk.core.html import Html
+from epyk.core.html import Options
 from epyk.core.html import Defaults
 
 # The list of Javascript classes
@@ -233,15 +234,24 @@ class Badge(Html.Html):
   __reqCss = ['bootstrap', 'font-awesome']
   builder_name = False
 
-  def __init__(self, report, text, label, icon, size, background_color, color, url, tooltip, profile):
-    super(Badge, self).__init__(report, text, profile=profile)
+  def __init__(self, report, text, label, icon, size, background_color, color, url, tooltip, options, profile):
+    super(Badge, self).__init__(report, None, profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
-    self.add_icon(icon, css={"float": 'left', "font-size": '%s%s' % (size[0] + 8, size[1])})
+    self.options = Options.OptionsBadge(self, options)
+    if self.options.badge_position == 'left':
+      self.add_icon(icon, css={"float": 'None', "font-size": '%s%s' % (size[0] + 8, size[1])}, position="after")
+    else:
+      self.add_icon(icon, css={"float": 'left', "font-size": '%s%s' % (size[0] + 8, size[1])})
     self.link = None
     if url is not None:
-      self.link = self._report.ui.links.external(text, url).css({"color": 'inherit', 'display': 'inline-block',
-          "padding": "1px", "margin-top": "1px", "border-radius": "2px", "width": "10px", "height": "%spx" % (size[0] + 4)})
+      self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
+          "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
       self.link.inReport = False
+    else:
+      self.link = self._report.ui.text(text, size=size).css({"color": "inherit", 'display': 'inline-block',
+          "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
+    self.link.css(self.options.badge_css)
+    self.link.inReport = False
     # Update the CSS Style of the component
     color = 'inherit' if color is None else color
     if background_color is not None:
@@ -256,4 +266,4 @@ class Badge(Html.Html):
     if self.link is not None:
       return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.defined), self.link)
 
-    return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.defined), self.val)
+    return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.defined), self.link)

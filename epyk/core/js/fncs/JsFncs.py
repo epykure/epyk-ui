@@ -472,6 +472,25 @@ class JsFunction(object):
     return self.__strFnc
 
 
+class JsFunctions(list):
+  """
+
+  """
+  def __init__(self, strFnc):
+    if not isinstance(strFnc, list):
+      strFnc = [strFnc]
+    self.__strFncs = strFnc
+
+  def append(self, strFnc):
+    self.__strFncs.append(strFnc)
+
+  def extend(self, strFncs):
+    self.__strFncs.extend(strFncs)
+
+  def toStr(self):
+    return "; ".join([s.toStr() for s in self.__strFncs])
+
+
 _JSFNCS = 0
 
 

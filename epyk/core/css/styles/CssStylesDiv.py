@@ -60,7 +60,7 @@ class CssDivBoxWithDotBorder(CssStyle.CssCls):
 
 class CssDivBubble(CssStyle.CssCls):
   attrs = {'margin-left': 'auto', 'margin-right': 'auto', 'border-radius': '50%',
-           'padding-top': '20px', 'text-align': 'center'}
+           'text-align': 'center'}
 
   def customize(self, style, eventsStyles):
     style.update({"border": '1px solid %s' % self.getColor('greys', 5)})

@@ -6,7 +6,9 @@ import json
 
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsObject
+from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsNumber
+from epyk.core.js.primitives import JsString
 
 from epyk.core.js.objects import JsNodeDom
 
@@ -14,6 +16,7 @@ from epyk.core.js.packages.JsCrossFilter import CrossFilter
 from epyk.core.js.packages.JsVis import VisDataSet, VisDataView
 
 from epyk.core.js.fncs import JsFncs
+from epyk.core.js import JsUtils
 
 
 class DataLoop(object):
@@ -280,3 +283,116 @@ class JsData(object):
     Javascript null reference
     """
     return JsObject.JsObject("null", isPyData=False)
+
+
+class JsDataTransfer(object):
+
+  def __init__(self, varName):
+    self.varId = varName
+
+  @property
+  def text(self):
+    """
+    Example
+
+    Documentation
+
+    :return:
+    """
+    return JsString.JsString("%s.getData('text')" % self.varId, isPyData=False)
+
+  @property
+  def files(self):
+    """
+    The DataTransfer.files property is a list of the files in the drag operation. If the operation includes no files, the list is empty.
+
+    This feature can be used to drag files from a user's desktop to the browser.
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/files
+
+    :return:
+    """
+    return JsArray.JsArray.get("%s.files" % self.varId)
+
+  @property
+  def dropEffect(self, flag=False):
+    """
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/dropEffect
+
+    :return:
+    """
+    if flag == False:
+      return JsBoolean.JsBoolean("%s.dropEffect" % self.varId)
+
+    if flag not in [None, 'move', 'link', 'copy']:
+      raise Exception("")
+
+    flag = JsUtils.jsConvertData(flag, None)
+    return JsFncs.JsFunction("%s.dropEffect = %s" % (self.varId, flag))
+
+  @property
+  def effectAllowed(self, flag=False):
+    """
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/effectAllowed
+
+    :return:
+    """
+    if flag == False:
+      return JsBoolean.JsBoolean("%s.effectAllowed" % self.varId)
+
+    if flag not in [None, 'move', 'link', 'copy']:
+      raise Exception("")
+
+    flag = JsUtils.jsConvertData(flag, None)
+    return JsFncs.JsFunction("%s.effectAllowed = %s" % (self.varId, flag))
+
+  def clearData(self, format=None):
+    """
+    Remove the data associated with a given type. The type argument is optional.
+    If the type is empty or not specified, the data associated with all types is removed.
+    If data for the specified type does not exist, or the data transfer contains no data, this method will have no effect.
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/clearData
+
+    :return:
+    """
+    if format is None:
+      return JsFncs.JsFunction("%s.clearData()" % self.varId)
+
+    format = JsUtils.jsConvertData(format, None)
+    return JsFncs.JsFunction("%s.clearData(%s)" % (self.varId, format))
+
+  def setDragImage(self):
+    """
+
+    :return:
+    """
+
+  def setData(self, data, format='text'):
+    """
+
+    :param data:
+    :param format:
+    :return:
+    """
+    format = JsUtils.jsConvertData(format, None)
+    data = JsUtils.jsConvertData(data, None)
+    return JsFncs.JsFunction("%s.setData(%s, %s)" % (self.varId, format, data))
+
+  def getData(self, format="text"):
+    """
+
+    Example
+
+    Documentation
+
+    :param format:
+    :return:
+    """
+    return JsString.JsString("%s.getData(%s)" % (self.varId, format), isPyData=False)

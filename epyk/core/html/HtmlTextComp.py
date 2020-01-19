@@ -16,7 +16,6 @@ from epyk.core.css.groups import CssGrpClsTable
 class UpDown(Html.Html):
   name, category, callFnc = 'Up and Down', 'Texts', 'updown'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  _grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, rec, size, color, label, options, helper, profile):
     if rec is None:
@@ -76,7 +75,7 @@ class UpDown(Html.Html):
 
 
 class TextBubble(Html.Html):
-  name, category, callFnc = 'Bubble text', 'Rich', 'textbubble'
+  name, category, callFnc = 'Bubble text', 'Vignets', 'bubble'
   _grpCls = CssGrpClsText.CssClassTextBubble
 
   def __init__(self, report, recordSet, width, height, color, size, background_color, helper, profile):
@@ -97,15 +96,16 @@ class TextBubble(Html.Html):
       else {div_elements[div_elements.length - 1].querySelectorAll('a')[0].href = '#'};
       if (data.color != undefined) {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = data.color}
       else {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = '%(color)s'}
-      div_elements[div_elements.length - 1].querySelectorAll('a')[0].innerHTML = data.title''' % {"color": self.getColor("colors", -1)}
+      div_elements[div_elements.length - 1].querySelectorAll('a')[0].innerHTML = data.title
+      ''' % {"color": self.getColor("colors", -1)}
 
   def __str__(self):
-    bubble_height = self.height - 40
+    bubble_height = self.height - 20
     bubble_width = self.height - 20
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '''
       <div %(strAttr)s>
-        <div %(clsTag)s style="width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
+        <div %(clsTag)s style="padding-top:10px;width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
         <div "%(clsTitle)s"><a style="text-decoration:none"></a></div>%(helper)s
       </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "clsTag": self._report.style.getClsTag(['CssDivBubble'], loadCls=True),
                    'clsTitle': self._report.style.getClsTag(['CssTitle'], loadCls=True),
@@ -193,29 +193,32 @@ class TextWithBorder(Html.Html):
 
 class Number(Html.Html):
   name, category, callFnc = 'Number', 'Rich', 'number'
-  __reqCss, __reqJs = [], []
-  builder_name = False
 
   def __init__(self, report, number, label, size, width, height, profile, options):
     super(Number, self).__init__(report, number, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1], profile=profile)
     if options.get('url', None) is not None:
       self.add_link(number, url=options['url'], css={"font-size": "%s%s" % (size[0] + 10, size[1]),
-                      "width": "100%", 'text-decoration': 'none', 'display': 'block', "text-align": 'center',
-                      'margin': '0', 'color': 'inherit'})
+                      "width": "100%", 'text-decoration': 'none', 'display': 'inline-block', "text-align": 'center',
+                      'margin': 0, 'color': 'inherit', 'padding': 0})
       self.span = self.link
     else:
-      self.add_span(number, css={"font-size": "%s%s" % (size[0] + 10, size[1]), "width": "100%", 'margin': '0'})
-    self.add_label(label, css={"font-size": "%s%s" % (size[0], size[1]), "width": "100%", "margin": 0})
-    self.css({"display": "inline-block", 'padding': '2px 0'})
+      self.add_link(number, url="#", css={"font-size": "%s%s" % (size[0] + 10, size[1]),
+                     "width": "100%", 'text-decoration': 'none', 'cursor': 'default',
+                     'display': 'inline-block', "text-align": 'center', 'margin': 0, 'color': 'inherit', 'padding': 0})
+      self.link.attr['target'] = '_self'
+      self.span = self.link
+
+      # self.add_span(number, css={'height': 'auto', "font-size": "%s%s" % (size[0] + 10, size[1]), "width": "100%", 'margin': 0})
+    self.add_label(label, css={'float': 'none', "font-size": "%s%s" % (size[0], size[1]), "width": "100%", "margin": 0})
+    self.css({"display": "inline-block", 'padding': '2px 0', 'clear': 'both', 'margin': '2px'})
 
   def __str__(self):
     return "<div %s></div>" % self.get_attrs(pyClassNames=self.defined)
 
 
 class Delta(Html.Html):
-  _grpCls = CssGrpCls.CssGrpClassBase
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui'] # bootstrap for progressbar
+  __reqCss, __reqJs = ['jqueryui'], ['jqueryui'] # jquery ui for progressbar
   name, category, callFnc = 'Delta Figures', 'Rich', 'delta'
 
   def __init__(self, report, records, width, height, size, options, helper, profile):

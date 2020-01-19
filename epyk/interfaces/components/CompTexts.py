@@ -36,12 +36,9 @@ class Texts(object):
 
     :return: The text HTML object
     """
-    dflt_options = {"reset": True, 'markdown': True}
-    if options is not None:
-      dflt_options.update(options)
     size = self.context._size(size)
     text_comp = html.HtmlText.Text(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip,
-                                   dflt_options, helper, profile)
+                                   options or {}, helper, profile)
     self.context.register(text_comp)
     return text_comp
 

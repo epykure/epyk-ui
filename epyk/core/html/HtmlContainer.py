@@ -10,6 +10,7 @@ from epyk.core.html import HtmlSelect
 
 #
 from epyk.core.js import JsUtils
+from epyk.core.css import Defaults
 
 # The list of CSS classes
 from epyk.core.css.styles import CssStyle
@@ -103,15 +104,16 @@ class PanelSplit(Html.Html):
 
 class PanelSlide(Panel):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  name, category, callFnc = 'Slide Panel', 'Layouts', 'slide'
+  name, category, callFnc = 'Slide Panel', 'Panels', 'slide'
 
   def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, profile):
     super(PanelSlide, self).__init__(report, htmlObj, title, color, size, width, height, htmlCode, helper, profile)
-    self.title._vals += " <i style='float:right' name='icon_%s' class='far fa-caret-square-down'></i>" % self.htmlId
+    self.title._vals += " <i style='float:right;margin:4px 2px 0 0' name='icon_%s' class='far fa-caret-square-down'></i>" % self.htmlId
     self.title.click([
       report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
       report.js.getElementsByName("icon_%s" % self.htmlId).first.toggleClass("fa-caret-square-up")])
-    self.title.css({"cursor": 'pointer'})
+    self.title.css({"cursor": 'pointer', "font-size": "%s%s" % (size[0]+2, size[1]), "padding": "0 2px 0 0",
+                    "border-bottom": "1px solid black"})
 
 
 class Div(Html.Html):
@@ -128,7 +130,8 @@ class Div(Html.Html):
       for obj in htmlObj:
         if hasattr(obj, 'inReport'):
           obj.inReport = False
-          obj.css({"display": 'inline-block'})
+          if obj.css("display") != 'None':
+            obj.css({"display": 'inline-block'})
     elif htmlObj is not None and hasattr(htmlObj, 'inReport'):
       htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     super(Div, self).__init__(report, htmlObj, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
@@ -139,7 +142,7 @@ class Div(Html.Html):
     self.add_label(label)
     self.add_helper(helper)
 
-    self.css({"color": color or self.getColor("greys", -1), "font-size": "%s%s" % (size[0], size[1]) if size[0] is not None else 'inherit',
+    self.css({"color": color or "inherit", "font-size": "%s%s" % (size[0], size[1]) if size[0] is not None else 'inherit',
               'text-align': align, "vertical-align": 'middle'})
     if padding is not None:
       self.css('padding', '%s' % padding)
@@ -277,6 +280,11 @@ class Col(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
+    if not hasattr(htmlObj, 'inReport'):
+      # Add a text HTML internal object by default
+      # todo: add options to this component to remove hard coded Css
+      htmlObj = self._report.ui.div(htmlObj)
+      htmlObj.style.addCls("CssDivOnHover")
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     self.htmlMaps[htmlObj.htmlId] = htmlObj
@@ -470,14 +478,14 @@ class Grid(Html.Html):
 
 class Tabs(Html.Html):
   name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
-  builder_name = False
 
-  def __init__(self, report, color, size, width, height, htmlCode, helper, css_tab, profile):
+  def __init__(self, report, color, size, width, height, htmlCode, helper, css_tab, options, profile):
     super(Tabs, self).__init__(report, "", code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                heightUnit=height[1], profile=profile)
     self.__panels, self.__panel_objs = [], {}
     self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
     self.css_tab = css_tab
+    self.options = options
     self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self.getColor("success", 1)}
     self.tabs_container = self._report.ui.div([])
     self.tabs_container.inReport = False
@@ -505,7 +513,7 @@ class Tabs(Html.Html):
     """
     return self[name]["tab"]
 
-  def add_panel(self, name, div, selected=False, css_tab=None, css_tab_clicked=None):
+  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
     """
 
     :param name:
@@ -519,7 +527,13 @@ class Tabs(Html.Html):
     div.inReport = False
     div.set_attrs(name="name", value=self.panels_name)
     self.__panels.append(name)
-    tab = self._report.ui.div(name, width=("100", "px"))
+    if icon is not None:
+      tab = self._report.ui.div([
+        self._report.ui.icon(icon).css({"display": 'block', "width": '100%',
+                                        "font-size": '%spx' % (Defaults.Font.header_size + 4)}),
+        name], width=("100", "px"))
+    else:
+      tab = self._report.ui.div(name, width=("100", "px"))
     css_tab = dict(self.css_tab)
     dflt_css_clicked, css_not_clicked = dict(self.css_tab_clicked_dflt), {}
     if css_tab is not None:
@@ -531,19 +545,28 @@ class Tabs(Html.Html):
         css_not_clicked[key] = css_tab[key]
       else:
         css_not_clicked[key] = 'none'
-    tab.css(css_tab)
+    tab.css(css_tab).css({"padding": '5px 0'})
     tab.set_attrs(name="name", value=self.tabs_name)
+    tab_container = self._report.ui.div(tab, width=("100", "px"))
+    tab_container.inReport = False
+    tab_container.css({'display': 'inline-block'})
+    css_cls_name = None
+    if self.options.get("tab_class") is not None:
+      tab_container.defined.add(self.options.get("tab_class"), toMain=False)
+      css_cls_name = CssStyle.cssName(self.options.get("tab_class"))
     tab.click([
       self._report.js.getElementsByName(self.panels_name).all([
         self._report.js.getElementsByName(self.tabs_name).all([
           self._report.js.data.all.element.css(css_not_clicked)]),
         tab.dom.css(dflt_css_clicked),
         self._report.js.data.all.element.hide(),
+        tab_container.dom.toggleClass(css_cls_name, propagate=True) if css_cls_name is not None else "",
         div.dom.show()
       ])
     ])
     tab.inReport = False
-    self.__panel_objs[name] = {"tab": tab, "content": div}
+
+    self.__panel_objs[name] = {"tab": tab_container, "content": div}
     if selected:
       # simulate a click on the tab
       pass
@@ -554,7 +577,7 @@ class Tabs(Html.Html):
     for p in self.__panels:
       self.tabs_container += self.__panel_objs[p]["tab"]
       content.append(self.__panel_objs[p]["content"].html())
-    return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.tabs_container.html(), "".join(content), self.helper)
+    return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.defined), self.tabs_container.html(), "".join(content), self.helper)
 
 
 class IFrame(Html.Html):
@@ -617,14 +640,15 @@ class Dialog(Html.Html):
 class IconsMenu(Html.Html):
   name, category, callFnc = 'Icons Menu', 'Layouts', 'menu'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  builder_name = False
 
-  def __init__(self, report, width, height, htmlCode, helper, profile):
+  def __init__(self, icon_names, report, width, height, htmlCode, helper, profile):
     super(IconsMenu, self).__init__(report, None, width=width, widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode,
                                     profile=profile)
     self._jsActions, self._definedActions = {}, []
     self._icons, self.icon = [], None
     self.css({"margin": "5px 0"})
+    for i in icon_names:
+      self.add_icon(i)
 
   def __getitem__(self, i):
     return self._icons[i]
@@ -644,7 +668,7 @@ class IconsMenu(Html.Html):
     :return: The Html object
     """
     if text is not None:
-      self._icons.append(self._report.ui.images.icon(text).css({"margin-right": '5px'}))
+      self._icons.append(self._report.ui.images.icon(text).css({"margin-right": '5px', 'cursor': "pointer"}))
       self.icon = self._icons[-1]
       if position == "before":
         self.prepend_child(self.icon)
@@ -675,6 +699,8 @@ class Form(Html.Html):
     self.css({"padding": '5px'})
     self.attr.update({"action": action, "method": method})
     self.add_helper(helper)
+    self.submit = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
+    self.submit.inReport = False
     for i, htmlObj in enumerate(htmlObjs):
       self.__add__(htmlObj)
 
@@ -685,8 +711,6 @@ class Form(Html.Html):
     return self
 
   def __str__(self):
-    s = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
-    self.__add__(self._report.ui.div(s).css({"text-align": 'center'}))
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
     return '<form %s>%s</form>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
 

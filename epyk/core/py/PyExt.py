@@ -9,6 +9,7 @@ from epyk.core.py import PyCrypto
 from epyk.core.py import PyHash
 from epyk.core.py import PyRest
 from epyk.core.py import PyDates
+from epyk.core.py import PyMarkdown
 from epyk.core.js.Imports import requires
 
 
@@ -61,6 +62,11 @@ class PyExt(object):
     :return:
     """
     return PyCrypto.PyCrypto(self._report)
+
+  @property
+  def markdown(self):
+    """ Property to the Markdown String conversion """
+    return PyMarkdown.Convertor(self._report)
 
   def import_lib(self, lib_name, folder="libs", report_name=None, path=None):
     """

@@ -51,30 +51,6 @@ class Layouts(object):
     size = self.context._size(size)
     return self.context.register(html.HtmlOthers.Hr(self.context.rptObj, color, count, size, background_color, height, align, profile))
 
-  def panelsplit(self, width=(100, '%'), height=(None, 'px'), leftWidth=50, left=None, right=None, resizable=True, helper=None, profile=None):
-    """
-
-    Example
-    number = rptObj.ui.rich.number(500, "Test", height=(150, 'px'))
-    number_2 = rptObj.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
-    div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)
-
-    Documentation
-    https://codepen.io/rstrahl/pen/eJZQej
-
-    :param width:
-    :param height:
-    :param leftWidth:
-    :param left:
-    :param right:
-    :param resizable:
-    :param helper:
-    :param profile:
-    """
-    html_split = html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, leftWidth, left, right, resizable, helper, profile)
-    self.context.register(html_split)
-    return html_split
-
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
     """
     Python wrapper for a column of HTML elements from Bootstrap
@@ -143,63 +119,6 @@ class Layouts(object):
     self.context.register(html_grid)
     return html_grid
 
-  def tabs(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-           css_tab=None, profile=False):
-    """
-    Python wrapper for a multi Tabs component
-
-    Documentation
-    https://getbootstrap.com/docs/4.0/components/navs/
-
-    """
-    size = self.context._size(size)
-    if css_tab is None:
-      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
-                 "border-bottom": "1px solid white", "font-size": '%s%s' % (size[0]+2, size[1])}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab, profile)
-    self.context.register(html_tabs)
-    return html_tabs
-
-  def menu(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-            css_tab=None, profile=False):
-    """
-    Python wrapper to the Bootstrap Pills interface
-
-    Documentation
-    https://getbootstrap.com/docs/4.0/components/navs/
-    """
-    size = self.context._size(size)
-    if css_tab is None:
-      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 'border-radius': '10px 10px 0 0', "font-size": '%s%s' % (size[0] + 2, size[1])}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab, profile)
-    html_tabs.css_tab["color"] = html_tabs.getColor("greys", -1)
-    html_tabs.css_tab["background"] = html_tabs.getColor("greys", 0)
-    html_tabs.css_tab_clicked_dflt = {'color': html_tabs.getColor("greys", 0), 'background': html_tabs.getColor("success", 1)}
-    html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs.getColor("success", 1)})
-
-    self.context.register(html_tabs)
-    return html_tabs
-
-  def pills(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-            css_tab=None, profile=False):
-    """
-    Python wrapper to the Bootstrap Pills interface
-
-    Documentation
-    https://getbootstrap.com/docs/4.0/components/navs/
-    """
-    size = self.context._size(size)
-    if css_tab is None:
-      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 'border-radius': '5px', "font-size": '%s%s' % (size[0] + 2, size[1])}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab, profile)
-    html_tabs.css_tab["color"] = html_tabs.getColor("greys", -1)
-    html_tabs.css_tab["background"] = html_tabs.getColor("greys", 0)
-    html_tabs.css_tab_clicked_dflt = {'color': html_tabs.getColor("greys", 0), 'background': html_tabs.getColor("success", 1)}
-    self.context.register(html_tabs)
-    return html_tabs
-
   def panel(self, htmlObjs=None, title=None, color=None, size=(None, "px"), width=(100, "%"), height=(None, "px"),
             htmlCode=None, helper=None, profile=False):
     size = self.context._size(size)
@@ -208,15 +127,6 @@ class Layouts(object):
     html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs, title, color, size, width, height, htmlCode, helper, profile)
     self.context.register(html_panel)
     return html_panel
-
-  def slide(self, htmlObjs, title, color=None, size=(None, "px"), width=(100, "%"), height=(None, "px"),
-            htmlCode=None, helper=None, profile=False):
-    size = self.context._size(size)
-    if htmlObjs is not None and not isinstance(htmlObjs, list):
-      htmlObjs = [htmlObjs]
-    html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, size, width, height, htmlCode, helper, profile)
-    self.context.register(html_slide)
-    return html_slide
 
   def div(self, htmlObjs=None, label=None, color=None, size=(None, "px"), width=(100, "%"), icon=None, height=(None, "px"), editable=False,
           align='left', padding=None, htmlCode=None, tag='div', helper=None, profile=None):
@@ -245,8 +155,8 @@ class Layouts(object):
     size = self.context._size(size)
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
-    html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs, label, color, size, width, icon, height, editable,
-                                     align, padding, htmlCode, tag, helper, profile)
+    html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs or [], label, color, size, width, icon, height,
+                                      editable, align, padding, htmlCode, tag, helper, profile)
     self.context.register(html_div)
     return html_div
 
@@ -301,20 +211,24 @@ class Layouts(object):
     self.context.register(html_dialog)
     return html_dialog
 
-  def icons(self, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
+  def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
 
     Example
     menu = rptObj.ui.layouts.icons()
     menu.icon.click([menu.icon.dom.css({"color": 'red'})])
 
+    :param icon_names:
     :param width:
     :param height:
     :param htmlCode:
     :param helper:
     :param profile:
     """
-    html_icon = html.HtmlContainer.IconsMenu(self.context.rptObj, width, height, htmlCode, helper, profile)
+    icon_names = icon_names or None
+    if not isinstance(icon_names, list):
+      icon_names = [icon_names]
+    html_icon = html.HtmlContainer.IconsMenu(icon_names, self.context.rptObj, width, height, htmlCode, helper, profile)
     self.context.register(html_icon)
     return html_icon
 
@@ -367,3 +281,16 @@ class Layouts(object):
     table = html.tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
     self.context.register(table)
     return table
+
+  def form(self, action, method, htmlObj=None, helper=None):
+    """
+
+    :param action:
+    :param method:
+    :param htmlObj:
+    :param helper:
+    :return:
+    """
+    form = html.HtmlContainer.Form(self.context.rptObj, htmlObj, action, method, helper)
+    self.context.register(form)
+    return form

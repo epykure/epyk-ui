@@ -331,7 +331,9 @@ class CssCls(object):
           skey = "::" if "::" in ['before', 'after'] else ":"
           res["%s > %s%s%s" % (self.cssId, self.directChildrenTag, skey, key)] = val
       else:
-        res[self.cssId] = self.toCss(self.style) if to_str else self.style
+        if len(self.style) > 0:
+          # Remove the CSS Python classes without main CSS definition (e.g: [contenteditable])
+          res[self.cssId] = self.toCss(self.style) if to_str else self.style
         for key, val in self.events().items():
           skey = "::" if "::" in ['before', 'after'] else ":"
           res["%s%s%s" % (self.cssId, skey, key)] = val

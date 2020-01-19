@@ -10,6 +10,7 @@ from epyk.core.css.styles import CssStylesHref
 from epyk.core.css.styles import CssStylesText
 from epyk.core.css.styles import CssStyleDropdown
 from epyk.core.css.styles import CssStylesList
+from epyk.core.css.styles import CssStylesDivComms
 from epyk.core.css.styles import CssStylesSelect
 from epyk.core.css.styles import CssStylesRadio
 

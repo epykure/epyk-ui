@@ -26,6 +26,19 @@ class JsArray(JsObject.JsObject):
     from epyk.core.js.primitives import JsNumber
     return JsNumber.JsNumber("%s.length" % self.varId, isPyData=False)
 
+  @classmethod
+  def set(cls, varName, data=None, report=None):
+    """
+    Define an array. Set an empty array by default
+
+    :param varName:
+    :param data:
+    :param report:
+    """
+    if data is None:
+      data = []
+    return cls(data=data, varName=varName, setVar=True, report=report)
+
 
   # ------------------------------------------------------------------
   #                     ARRAY TRANSFORMATION FUNCTIONS
@@ -501,4 +514,15 @@ class JsArray(JsObject.JsObject):
     return JsBoolean.JsBoolean("%s.contains(%s)" % (self.varId, JsUtils.jsConvertData(data, None)), isPyData=False)
 
   def toArgs(self):
+    """
+
+    :return:
+    """
     return JsObject.JsObject("...%s" % self.varId)
+
+  def toDict(self, header):
+    """
+
+    :param header:
+    """
+    return JsObject.JsObject("(function(r, h){var rec = {}; h.forEach(function(c, i){rec[c] = r[i]}); return rec})(%s, %s)" % (self.varId, header))

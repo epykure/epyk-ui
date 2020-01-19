@@ -1,12 +1,15 @@
 """
-
+Wrapper to define HTML Button components
 """
 
 import re
 import json
 
 from epyk.core.html import Html
+from epyk.core.html import Options
+
 from epyk.core.js.html import JsHtml
+from epyk.core.js import JsUtils
 
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
@@ -28,10 +31,7 @@ class Button(Html.Html):
 
     #
     self.css({"cursor": 'pointer', 'font-size': "%s%s" % (size[0], size[1])})
-    self.__battr, self.groupId = {}, options.get("group")
-
-    if self.groupId is not None:
-      self.attr['name'] = self.groupId
+    self.options = Options.OptionsButton(self, options)
 
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -72,30 +72,36 @@ class Button(Html.Html):
   def click(self, jsFncs, profile=False):
     return self.on("click", jsFncs, profile)
 
-    #if not isinstance(js_fnc, list):
-    #  js_fnc = [js_fnc]
-    #return super(Button, self).click(self.dom.onclick(js_fnc).toStr())
+  def press(self, jsPressFncs=None, jsReleaseFncs=None, profile=False):
+    """
 
-    # if self.groupId:
-    #   js_fnc.append('''
-    #     var count = $(this).data('count')+1; $(this).data('count', count);
-    #     $("button[name='%(groupId)s']").css({'background-color': 'white', 'color': '%(color)s'});
-    #     $(this).css({'background-color': '%(color)s', 'color': 'white'})''' % {"color": self.color, 'groupId': self.groupId})
-    # else:
-    #   js_fnc.append("var count = $(this).data('count')+1; $(this).data('count', count)")
-    # return super(Button, self).click(js_fnc)
+    :param jsPressFncs:
+    :param jsReleaseFncs:
+    :param profile:
+    """
+    str_fnc = ""
+    if jsPressFncs is not None:
+      if not isinstance(jsPressFncs, list):
+        jsPressFncs = [jsPressFncs]
+      if self.options.group is not None and not self.options.multiple:
+        jsPressFncs.append(self.dom.release(by_name=True))
+      jsPressFncs.append(self.dom.disable(lock=jsReleaseFncs is None))
+      str_fnc = "if(%s == 'pointer'){%s}" % (self.dom.css('cursor'), JsUtils.jsConvertFncs(jsPressFncs, toStr=True))
+    if jsReleaseFncs is not None:
+      if jsPressFncs is None:
+        raise Exception("Press Event must be defined")
 
-  def unClick(self, jsFncs):
-    if not 'click' in self.jsFncFrag:
-      raise Exception("click event should be fully defined first")
-
-    clickFncs = ";".join(self.jsFncFrag['click'] + ["$(this).data('isChecked', true); $(this).css({'color': '%s', 'background': '%s'})" % (self.getColor('colors', 0), self.color)])
-    self.jsFncFrag['click'] = ["if(!$(this).data('isChecked') || ($(this).data('isChecked') === undefined)){%s} else {$(this).css({'color': '%s', 'background': 'inherit'}); $(this).data('isChecked', false); %s}" % (clickFncs, self.color, ";".join(jsFncs))]
-    return self
+      if not isinstance(jsReleaseFncs, list):
+        jsReleaseFncs = [jsReleaseFncs]
+      jsReleaseFncs.append(self.dom.release())
+      str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(jsReleaseFncs, toStr=True))
+    return self.on("click", str_fnc, profile)
 
   def color(self, color):
     """
     Change the color of the button background when the mouse is hover
+
+    :param color:
     """
     self.css({"border": "1px solid %s" % color})
     self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)
@@ -429,135 +435,25 @@ class IconEdit(Html.Html):
 
 class Buttons(Html.Html):
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
+  def __init__(self, report, data, size, color, width, height, htmlCode, helper, options, profile):
     super(Buttons, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
-    self.row = report.ui.grid([])
+    self.row = []
     for b in data:
-      self.row += report.ui.button(b)
+      bt = report.ui.button(b, options={"group": "group_%s" % self.htmlId}).css({"margin-right": '5px'})
+      bt.css(options.get("button_css", {}))
+      bt.inReport = False
+      self.row.append(bt)
 
   def __getitem__(self, i):
+    """
+    Get a button in this component
+
+    :param i: Integer. The button index
+    :rtype: Button
+    """
     return self.row[i]
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.row])
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), str_div)
-
-
-# class IconThumbtack(IconEdit):
-#   name, category, callFnc = 'Icon Thumbtack', 'Button', 'thumbtack'
-#   mocks, icon, title = "Comment", 'fas fa-thumbtack', 'Add comment'
-#
-#   def __init__(self, report, parentJqId, position, icon, tooltip, width, widthUnit, height, heightUnit, htmlCode, profile):
-#     if position is None:
-#       position = 'right'
-#     super(IconEdit, self).__init__(report, '', icon, tooltip, width, widthUnit, height, heightUnit, htmlCode, profile)
-#     self.css({"margin-top": "5px", "margin-bottom": "5px", "float": position, "margin-left": "4px", "margin-right": "4px",
-#                "color": "%s" % self.getColor('border', 0), 'font-size': '18px', 'cursor': 'pointer'})
-#     self.attr.update({'class': set([self.icon]), 'data-original-title': self.title, 'name': "tooltip", 'data-toggle': 'tooltip', 'data-placement': 'top'})
-#     # Add the different mouse event in the Html definition
-#     self.addAttr("onmouseover", "this.style.color='%s'" % self.getColor('border', 1))
-#     self.addAttr("onmouseout", "this.style.color='%s'" % self.getColor('border', 0))
-#     self.parentJqId = parentJqId
-#     self.addGlobalVar('thumbtack_counter', 0)
-#
-#   def __str__(self):
-#     self._report.jsOnLoadFnc.add('''
-#       %(jqId)s.on('click', function(event) {
-#           var posX = $(this).offset().left; var posY = $(this).offset().top;
-#           var comment = $('<div name="thumbtack" id="'+ thumbtack_counter +'"></div>');
-#           comment.append('<div autocorrect="off" spellcheck="false" placeholder="comment" contenteditable=true style="float:left;margin-left:5px;margin-right:10px;">Comment</div>') ;
-#           comment.append('<span style="color:%(color)s;margin-left:4px" onmouseover="this.style.color=\\\'grey\\\'" onmouseout="this.style.color=\\\'%(color)s\\\'"  class="far fa-edit" onclick="$(this).prev().focus()"></span>');
-#           comment.append('<span id="lock_' + thumbtack_counter + '" onclick="$(this).parent().draggable(\\\'disable\\\'); $(this).remove() ;" style="color:%(color)s;margin-left:4px" onmouseover="this.style.color=\\\'grey\\\'" onmouseout="this.style.color=\\\'%(color)s\\\'" class="fas fa-lock"></span>');
-#           comment.append('<span style="color:%(color)s;margin-left:4px" onmouseover="this.style.color=\\\'red\\\'" onmouseout="this.style.color=\\\'%(color)s\\\'"  class="far fa-trash-alt" onclick="$(this).parent().remove()"></span>');
-#           %(parent)s.append(comment) ;
-#           comment.css({'position': 'absolute', 'top':  event.pageY - posY+10, 'right': event.pageX - posX + 10}) ;
-#           comment.draggable()})''' % {'jqId': self.jqId, 'parent': self.parentJqId, 'color': self.getColor('colors', 9)})
-#     # self._report.jsOnLoadFnc.add(''' %(jqId)s.on('click', function(event) { $('#%(htmlId)s_content').focus() ; }) ''' % {"jqId": self.jqId, 'htmlId': self.htmlId})
-#     return "<div %s></div>" % (self.strAttr(pyClassNames=self.pyStyle))
-#
-#
-# class IconLock(IconEdit):
-#   name, category, callFnc = 'Icon Lock', 'Button', 'lock'
-#   mocks, icon, iconLock, title = "Lock", 'fas fa-unlock', 'fas fa-lock', 'Lock Comment'
-#
-#   def click(self, jsListFncLock, jsListFncUnLock):
-#     self._report.jsOnLoadFnc.add('''
-#       %(jqId)s.on('click', function(event) {
-#         if ($(this).hasClass('fa-unlock') == true) {%(jsFncLock)s; $(this).addClass('fa-lock'); $(this).removeClass('fa-unlock'); }
-#         else { %(jsFncUnLock)s; $(this).removeClass('fa-lock'); $(this).addClass('fa-unlock'); } ;
-#       })''' % {"jqId": self.jqId, "jsFncLock": ";".join(jsListFncLock), "jsFncUnLock": ";".join(jsListFncUnLock)})
-#
-#
-# class IconSum(IconEdit):
-#   name, category, callFnc = 'Icon Sum', 'Button', 'calculator'
-#   mocks, icon, title = "Sum", 'fas fa-calculator', 'Simple Calculator'
-#
-#   def __init__(self, report, parentJqId, icon, tooltip, width, widthUnit, height, heightUnit, htmlCode, profile):
-#     self.parentJqId = parentJqId
-#     super(IconSum, self).__init__(report, '', icon, tooltip, width, widthUnit, height, heightUnit, htmlCode, profile)
-#
-#   def __str__(self):
-#     self._report.jsOnLoadFnc.add('''
-#       %(jqId)s.on('click', function(event) {
-#          if($("#icon_sum").length == 0) {
-#           $('table[name="Table"] td').bind( "click", function( event ) {
-#               var sum = parseFloat($("#icon_sum").find('#floating_sum').text().replace(',', '') ) + parseFloat( $(this).text().replace(',', '') );
-#               var count = parseFloat($("#icon_sum").find('#floating_count').text().replace(',', '') ) + 1 ;
-#               var average = sum / count ;
-#               var absSum = parseFloat($("#icon_sum").find('#floating_abs_sum').text().replace(',', '') ) + Math.abs( parseFloat( $(this).text().replace(',', '')) ) ;
-#
-#               $("#icon_sum").find('#floating_sum').text(sum.formatMoney(2, ',', '.'));
-#               $("#icon_sum").find('#floating_count').text(count.formatMoney(0, ',', '.'));
-#               $("#icon_sum").find('#floating_average').text(average.formatMoney(2, ',', '.'));
-#               $("#icon_sum").find('#floating_abs_sum').text(absSum.formatMoney(2, ',', '.'));
-#
-#            } ) ;
-#           var comment = $('<div id="icon_sum" class="ui-widget-content" style="z-index:100;width:150px;border-radius:5px 5px 0 0;padding:5px"></div>');
-#           comment.append("<div style='float:left;font-weight:bold'>Sum:</div><div style='width:100%%;text-align:center;font-size:14px' id='floating_sum'>0</div>") ;
-#           comment.append("<div style='float:left;font-weight:bold'>Count:</div><div style='width:100%%;text-align:center;font-size:14px' id='floating_count'>0</div>") ;
-#           comment.append("<div style='float:left;font-weight:bold'>Average:</div><div style='width:100%%;text-align:center;font-size:14px' id='floating_average'>0</div>") ;
-#           comment.append("<div style='float:left;font-weight:bold'>Abs Sum:</div><div style='width:100%%;text-align:center;font-size:14px' id='floating_abs_sum'>0</div>") ;
-#           $('body').append(comment) ;
-#           comment.css( {'position': 'fixed', 'left': 200, 'top': 90} ) ; comment.draggable() ;
-#         } else {
-#           $("#icon_sum").remove() ; $('table[name="Table"] td').unbind( "click" ) ;}
-#       })''' % {'jqId': self.jqId, 'color': self.getColor('border', 0)})
-#     return "<div %s></div>" % (self.strAttr(pyClassNames=self.pyStyle))
-
-"""
-  # def jsDisable(self, bool=None, jsDataKey=None, isPyData=True, jsParse=False, jsFnc=None):
-  #   if bool is None:
-  #     return "%s.disabled;" % self.jqId
-  #
-  #   bool = self._jsData(bool, jsDataKey, jsParse, isPyData, jsFnc)
-  #   return '''
-  #     if(!%(bool)s) {%(jqId)s.css({"cursor": "pointer"})}
-  #     else {%(jqId)s.css({"cursor": "not-allowed"})};
-  #     %(jqId)s.attr("disabled", %(bool)s);
-  #     ''' % {'jqId': self.jqId, 'bool': bool}
-
-  # def isDisable(self, bool=True):
-  #   self.css({"cursor": "not-allowed"})
-  #   self.disable = True
-  #   return self
-  #
-  # def addAttr(self, key, val=None, isPyData=True):
-  #   if val is None and issubclass(key, Html.Html):
-  #     self.__battr[key.htmlCode] = key.val
-  #     self.isJs = True
-  #   else:
-  #     if isPyData:
-  #       val = json.dumps(val)
-  #     else:
-  #       self.isJs = True
-  #     self.__battr[key] = val
-  #   return self
-
-# def addStyles(self, cssAttrIcon=None, cssAttr=None):
-  #   if cssAttrIcon is not None:
-  #     self._jsStyles.setdefault('styleIcon', {}).update(cssAttrIcon)
-  #   if cssAttr is not None:
-  #     self._jsStyles.setdefault('styles', {}).update(cssAttr)
-  #   return self
-"""

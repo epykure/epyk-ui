@@ -120,7 +120,7 @@ class Lists(object):
     return html_select
 
   def list(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-           htmlCode=None, helper=None, profile=None):
+           htmlCode=None, helper=None, options=None, profile=None):
     """
     Example
     l = rptObj.ui.lists.list(["A", "B"])
@@ -131,13 +131,13 @@ class Lists(object):
     """
     size = self.context._size(size)
     html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
-                                   helper, profile)
+                                   helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list
 
   def numbers(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-                  htmlCode=None, helper=None, profile=None):
+                  htmlCode=None, helper=None, options=None, profile=None):
     """
     Example
     rptObj.ui.lists.numbers(["A", "B"])
@@ -148,33 +148,33 @@ class Lists(object):
     """
     size = self.context._size(size)
     html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
-                                   helper, profile)
+                                   helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'decimal'})
     return html_list
 
   def alpha(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-                  htmlCode=None, helper=None, profile=None):
+                  htmlCode=None, helper=None, options=None, profile=None):
 
     size = self.context._size(size)
     html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
-                                   helper, profile)
+                                   helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'lower-alpha'})
     return html_list
 
   def roman(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-                  htmlCode=None, helper=None, profile=None):
+                  htmlCode=None, helper=None, options=None, profile=None):
 
     size = self.context._size(size)
     html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
-                                   helper, profile)
+                                   helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'lower-roman'})
     return html_list
 
   def points(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-             htmlCode=None, helper=None, profile=None):
+             htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Documentation
@@ -182,13 +182,13 @@ class Lists(object):
     """
     size = self.context._size(size)
     html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
-                                   helper, profile)
+                                   helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'circle'})
     return html_list
 
   def disc(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-             htmlCode=None, helper=None, profile=None):
+             htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Documentation
@@ -196,13 +196,13 @@ class Lists(object):
     """
     size = self.context._size(size)
     html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
-                                   helper, profile)
+                                   helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'disc'})
     return html_list
 
   def squares(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-             htmlCode=None, helper=None, profile=None):
+             htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Documentation
@@ -210,7 +210,7 @@ class Lists(object):
     """
     size = self.context._size(size)
     html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
-                                   helper, profile)
+                                   helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'square'})
     return html_list

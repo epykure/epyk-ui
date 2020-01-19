@@ -1,5 +1,5 @@
 """
-Wrapper to the Codemirror components
+Wrapper to the HTML Editor components
 """
 
 import json
@@ -10,6 +10,64 @@ from epyk.core.html import Html
 # The list of CSS classes
 from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsText
+
+
+class OptionsConsole(object):
+  def __init__(self, src, options):
+    self.src = src
+    self._timestamp = options.get('timestamp', False)
+
+  @property
+  def timestamp(self):
+    """
+    """
+    return self._timestamp
+
+  @timestamp.setter
+  def timestamp(self, bool):
+    self._timestamp = bool
+
+
+class Console(Html.Html):
+  name, category = 'Console', 'Rich'
+
+  def __init__(self, report, data, color, size, width, height, htmlCode, helper, options, profile):
+    super(Console, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
+                                  heightUnit=height[1], profile=profile)
+    self.css({"overflow": 'auto'})
+    self.options = OptionsConsole(self, options)
+
+  def build(self, data=None, options=None, profile=False):
+    """
+
+    :param data:
+    :param options:
+    :param profile:
+    """
+    js_data = JsUtils.jsConvertData(data, None)
+    mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
+    return "var content = %s; %s.innerHTML = %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
+
+  def write(self, data, timestamp=None, profile=False):
+    """
+
+    :param data:
+    :param timestamp:
+    :param profile:
+    """
+    mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
+    js_data = JsUtils.jsConvertData(data, None)
+    if timestamp or (self.options.timestamp and timestamp != False):
+      return "var content = %s; %s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
+
+    return "var content = %s; %s.innerHTML += ' > '+ %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
+
+  def clear(self):
+    return "%s.innerHTML = ''" % self.dom.varId
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return "<div %s></div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
 
 
 class Editor(Html.Html):
@@ -182,15 +240,15 @@ class Editor(Html.Html):
            'strTime': self.strTime, 'events': "".join(events), "title": self.title, "title4": title4}
 
 
-class Console(Html.Html):
+class Cell(Html.Html):
   name, category, callFnc = 'Python Cell Runner', 'Text', 'pytestcell'
   __reqCss, __reqJs = ['codemirror'], ['codemirror']
 
   def __init__(self, report, vals, size, width, height, isEditable, htmlCode, profile):
-    super(Console, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
+    super(Cell, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
     self.size, self.isEditable = "%s%s" % (size[0], size[1]), isEditable
     self._jsRun, self._jsSave = '', ''
-    self.addGlobalVar("%s_count" % self.htmlId, "0")
+    # self.addGlobalVar("%s_count" % self.htmlId, "0")
     self.css({'font-size': self.size, 'padding': '10px', "min-height": "30px", "font-family": "Arial, monospace"})
 
   @property
@@ -241,7 +299,7 @@ class Console(Html.Html):
             else {
               $('#%(htmlId)s_result_data').text(''); $('#%(htmlId)s_print_data').text('');
               $('#%(htmlId)s_result').hide(); $('#%(htmlId)s_print').hide();}
-        }) ;
+        });
         $('#%(htmlId)s_run').on('click', function(event) {  var data = %(data)s ; %(run)s ; })''' % {"htmlId": self.htmlId, "run": self._jsRun[0], 'data': self.jsQueryData})
       self._report.style.cssCls('CssStdIcon')
       runButton = '<i title="%(tooltip)s" id="%(htmlId)s_run" class="%(iconCss)s fas fa-caret-right"></i>' % {'tooltip': self._jsRun[1], "htmlId": self.htmlId, "iconCss": self._report.style.cssName('CssStdIcon')}

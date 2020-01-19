@@ -22,6 +22,10 @@ from epyk.interfaces.components import CompDrops
 from epyk.interfaces.components import CompForms
 from epyk.interfaces.components import CompTags
 from epyk.interfaces.components import CompFields
+from epyk.interfaces.components import CompTrees
+from epyk.interfaces.components import CompVignets
+from epyk.interfaces.components import CompMenus
+from epyk.interfaces.components import CompPanels
 
 
 class Components(object):
@@ -94,6 +98,15 @@ class Components(object):
     return CompRich.Rich(self)
 
   @property
+  def vignets(self):
+    """
+    Group all the UI components dedicated to produce rich HTML Components.
+
+    This category will take into account very specific and bespoke components.
+    """
+    return CompVignets.Vignet(self)
+
+  @property
   def texts(self):
     """
     Group all the UI components dedicated to produce text components.
@@ -118,6 +131,14 @@ class Components(object):
     Simple list, trees or dropdown boxes will be part of this category of items
     """
     return CompLists.Lists(self)
+
+  @property
+  def trees(self):
+    """
+    Group all the UI components dedicated to produce Trees or selection items.
+
+    """
+    return CompTrees.Trees(self)
 
   @property
   def buttons(self):
@@ -173,6 +194,18 @@ class Components(object):
     This category of component will rely on the font-awesome library for the final display.
     """
     return CompIcons.Icons(self)
+
+  @property
+  def menus(self):
+    """
+    """
+    return CompMenus.Menus(self)
+
+  @property
+  def panels(self):
+    """
+    """
+    return CompPanels.Panels(self)
 
   @property
   def layouts(self):
@@ -332,7 +365,7 @@ class Components(object):
     :param position:
     """
     size = self._size(size)
-    bar = html.HtmlNavBar.HtmlSideBar(self.rptObj, links or [], color, size, servers)
+    bar = html.HtmlMenu.HtmlSideBar(self.rptObj, links or [], color, size, servers)
     self.register(bar)
     return bar
 

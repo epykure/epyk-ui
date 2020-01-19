@@ -277,8 +277,8 @@ class Inputs(object):
     return self.context.register(html.HtmlTextEditor.Editor(self.context.rptObj, text, title, size, language, width,
               height, isEditable, htmlCode, options, profile))
 
-  def console(self, text=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"), isEditable=False,
-              htmlCode=None, profile=None):
+  def cell(self, text=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"), isEditable=False,
+           htmlCode=None, profile=None):
     """
 
     :param text:
@@ -288,12 +288,12 @@ class Inputs(object):
     :param isEditable:
     :param htmlCode:
     :param profile:
-    :rtype: html.HtmlTextEditor.Console
-    :return:
     """
     size = self.context._size(size)
-    return self.context.register(html.HtmlTextEditor.Console(self.context.rptObj, text, size, width, height,
-               isEditable, htmlCode, profile))
+    html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, size, width, height,
+                                         isEditable, htmlCode, profile)
+    self.context.register(html_cell)
+    return html_cell
 
   def search(self, text='', placeholder='Search..', color=None, size=(None, 'px'), height=(None, "px"), htmlCode=None,
              tooltip='', extensible=False, profile=None):

@@ -304,6 +304,67 @@ class JsDomEvents(object):
     return strData
 
 
+class JsDomByName(JsObject.JsObject):
+  def css(self, type, jsObject=None):
+    """
+    Replicate in plain Js the Jquery CSS function
+
+    Example
+    select.label.dom.css({"color": "red"})
+
+    Documentation:
+    https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+    :param type: A String with the type of parameter or a python dictionary
+    :param jsObject: A JsObj with the value to be set
+    :return: A JsObj
+    """
+    if jsObject is None and isinstance(type, dict):
+      for k, v in type.items():
+        if "-" in k:
+          split_css = k.split("-")
+          k = "%s%s" % (split_css[0], split_css[1].title())
+        self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+    elif jsObject is None:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
+      return JsObject.JsObject("for(let e of %s){ e.style.%s }" % (self.varId, type))
+    else:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
+      self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+    return self
+
+  def attr(self, type, jsObject=None):
+    """
+    The attr() method adds the specified attribute to an element, and gives it the specified value.
+    It will use the underlying setAttribute() method
+
+    Example
+    select.label.dom.attr("title", "Tooltip")
+    select.label.dom.attr({"title": "Tooltip"})
+
+    Documentation:
+    https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+    :param type: A String with the type of parameter or a python dictionary
+    :param jsObject: A JsObj with the value to be set
+    :return: A JsObj
+    """
+    if jsObject is None and isinstance(type, dict):
+      for k, v in type.items():
+        if k == "id":
+          self._id = v
+        self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+    else:
+      if type == "id":
+        self._id = jsObject
+      self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+    return self
+
+
 class JsDoms(JsObject.JsObject):
   _id = None
 
@@ -488,8 +549,14 @@ class JsDoms(JsObject.JsObject):
           k = "%s%s" % (split_css[0], split_css[1].title())
         self._js.append("%s.style.%s = %s" % (self.varId, k, JsUtils.jsConvertData(v, None)))
     elif jsObject is None:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
       return JsObject.JsObject("%s.style.%s" % (self.varId, type))
     else:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
       self._js.append("%s.style.%s = %s" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 
@@ -546,7 +613,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("if(window.getComputedStyle(%(varId)s)['%(pivot_key)s'] == '%(pivot_val)s') {%(css_attrs_on)s} else {%(css_attrs_off)s}" % {"pivot_val": pivot_val, "varId": self.varId, "pivot_key": pivot_key, 'css_attrs_on': css_attrs_on, 'css_attrs_off': css_attrs_off})
     return self
 
-  def toggleClass(self, clsName):
+  def toggleClass(self, clsName, propagate=False):
     """
     Toggle a class name
 
@@ -554,6 +621,8 @@ class JsDoms(JsObject.JsObject):
 
     :return:
     """
+    if propagate:
+      self._js.append('%(varId)s.parentNode.childNodes.forEach(function(e){e.classList.remove("%(data)s")})' % {"varId": self.varId, 'data': clsName})
     self._js.append('%(varId)s.classList.toggle("%(data)s")' % {"varId": self.varId, 'data': clsName})
     return self
 
@@ -623,7 +692,7 @@ class JsDoms(JsObject.JsObject):
     :param attributename: Required. The name of the attribute you want to get the value from
     :return: A String, representing the specified attribute's value.
     """
-    return JsString.JsString("%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attributename, None)), isPyData=False)
+    return JsObject.JsObject("%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attributename, None)), isPyData=False)
 
   def getAttributeNode(self, attributename):
     """
@@ -636,6 +705,19 @@ class JsDoms(JsObject.JsObject):
     :return: An Attr object, representing the specified attribute node.
     """
     return JsString.JsString("%s.getAttributeNode('%s')" % (self.varId, attributename), isPyData=False)
+
+  def getComputedStyle(self, attributename=None):
+    """
+
+    :param attributename:
+    """
+    if attributename is None:
+      return JsString.JsString("getComputedStyle(%s)" % self.varId, isPyData=False)
+
+    if "-" in attributename:
+      split_css = attributename.split("-")
+      attributename = "%s%s" % (split_css[0], split_css[1].title())
+    return JsString.JsString("getComputedStyle(%s).%s" % (self.varId, attributename), isPyData=False)
 
   @property
   def hasChildNodes(self):
@@ -694,6 +776,18 @@ class JsDoms(JsObject.JsObject):
     :return: A String, representing the tag name of the element in uppercase
     """
     return JsString.JsString("%s.tagName" % self.varId, isPyData=False)
+
+  def contentEditable(self, bool):
+    """
+    Set content editable
+
+    Example
+    rptObj.ui.text("This is a text").dom.contentEditable(True)
+
+    :param bool: Boolean. Set the content editable flag to the Dom object
+    :return: Return a JsBoolean object
+    """
+    return JsBoolean.JsBoolean.get("%s.contentEditable = %s" % (self.varId, JsUtils.jsConvertData(bool, None)))
 
   def className(self, className=None):
     """
@@ -864,3 +958,11 @@ class JsDomsList(JsArray.JsArray):
   @property
   def first(self):
     return JsDoms.get("%s[0]" % self.toStr())
+
+  def __getitem__(self, index):
+    """
+
+    :param index:
+    :return:
+    """
+    return JsDoms.get("%s[%s]" % (self.toStr(), index))

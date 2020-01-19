@@ -13,6 +13,7 @@ import functools
 import logging
 
 from epyk.core.css import CssInternal
+from epyk.core.css import Properties
 from epyk.core.css.groups import CssGrpCls
 
 from epyk.core.js import JsUtils
@@ -82,7 +83,7 @@ class Html(object):
 
   _grpCls = CssGrpCls.CssGrpClass
 
-  class _CssStyle(object):
+  class _CssStyle(Properties.CssMixin):
     def __init__(self, htmlObj):
       self.htmlObj = htmlObj
       self._def_styles = None
@@ -189,9 +190,10 @@ class Html(object):
       :return: The Python htmlObj
       """
       if attrs is None and eventAttrs is None:
-        if self.htmlObj._report.style.get(cssNname) is not None:
-          self.htmlObj._report.style.add(cssNname)
-          self.htmlObj.defined.add(cssNname)
+        if self.htmlObj._report.style.cssStyles.get(cssNname) is not None:
+          cssObj = self.htmlObj._report.style.cssStyles[cssNname]
+          self.htmlObj._report.style.add(cssObj.classname)
+          self.htmlObj.defined.add(cssObj.classname)
         if formatClsName:
           cssNname = self.htmlObj._report.style.cssName(cssNname)
       else:
@@ -258,6 +260,9 @@ class Html(object):
       if self.__chart is None:
         self.__chart = CssInternal.DefinedChartStyles(self.htmlObj)
       return self.__chart
+
+    # CSS Attributes
+
 
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):
@@ -657,7 +662,10 @@ class Html(object):
 
   @property
   def content(self):
-    return self.val if self.innerPyHTML is None else self.innerPyHTML.html()
+    if self.innerPyHTML is not None:
+      return self.innerPyHTML.html()
+
+    return self.val if not hasattr(self.val, "html") else self.val.html()
 
   @property
   def style(self):
@@ -686,6 +694,14 @@ class Html(object):
       self.pyStyle = self._grpCls(self)
     return self.pyStyle
 
+  def move(self):
+    """
+    Move the component to this position in the page
+    """
+    comp_id = id(self)
+    self._report.content.remove(comp_id)
+    self._report.content.append(comp_id)
+
   def css(self, key, value=None, reset=False):
     """
     Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function
@@ -704,6 +720,9 @@ class Html(object):
     if value is None and isinstance(key, dict):
       # Do not add None value to the CSS otherwise it will break the page on the front end side
       css_vals = key if isinstance(key, dict) else {}
+    elif value is None and key in self.attr['css']:
+      return self.attr['css'][key]
+
     else:
       css_vals = {key: value}
     for key, value in css_vals.items():
@@ -824,10 +843,10 @@ class Html(object):
     elif pyClassNames is not None:
       cssClass = self._report.style.getClsTag(pyClassNames.clsMap)
     if withId:
-      str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+      str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
       return str_tag.strip()
 
-    str_tag = '%s %s %s' % (" ".join(['%s="%s"' % (key, val) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+    str_tag = '%s %s %s' % (" ".join(['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
     return str_tag.strip()
 
   # -------------------------------------------------------------
@@ -856,6 +875,30 @@ class Html(object):
     # span.on("mouseleave", span.dom.css("color", "blue"))
     self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
     self._events['doc_ready'][event]['profile'] = profile
+    return self
+
+  def drop(self, jsFncs, preventDefault=True, profile=False):
+    """
+    Add a drag and drop property to the element
+
+    Example
+    d = rptObj.ui.div()
+    d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
+
+    :param jsFncs:
+    :param preventDefault: Boolean.
+    :param profile:
+
+    :return: Return self to allow the chaining
+    """
+    dft_fnc = ""
+    if preventDefault:
+      dft_fnc = self.js.objects.event.preventDefault()
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self.js.objects.event.dataTransfer.text] + jsFncs, toStr=True)
+    self.attr["ondrop"] = "(function(event){%s; %s; return false})(event)" % (dft_fnc, str_fncs)
+    self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     return self
 
   def click(self, jsFncs, profile=False):
@@ -1033,7 +1076,9 @@ class Html(object):
     #  self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     for cssStyle in self.defined.clsMap:
       # Remove the . or # corresponding to the type of CSS reference
-      self.pyCssCls.add(self._report.style.add(cssStyle).classname)
+      cssStyleObj = self._report.style.add(cssStyle)
+      if cssStyleObj is not None:
+        self.pyCssCls.add(cssStyleObj.classname)
     str_result.append(str(self))
     return "".join(str_result)
 

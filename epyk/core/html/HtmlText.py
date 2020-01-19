@@ -7,6 +7,7 @@ import os
 import json
 
 from epyk.core.html import Html
+from epyk.core.html import Options
 
 from epyk.core.html import Defaults as Default_html
 
@@ -16,6 +17,8 @@ from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
+from epyk.core.css.styles.CssStylesDivComms import CssContentEditable
+
 from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.groups import CssGrpClsText
 
@@ -182,10 +185,25 @@ class Text(Html.Html):
                                code=htmlCode, profile=profile)
     self.color = color if color is not None else 'inherit'
     self.add_helper(helper)
-    self._jsStyles = options
+    self.options = Options.OptionsText(self, options)
+    self._jsStyles = {"reset": self.options.reset, "markdown": self.options.markdown, "maxlength": self.options.limit_char}
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'text-align': align})
     if tooltip is not None:
       self.tooltip(tooltip)
+
+  def editable(self):
+    """
+    Change the componenet properties to be editable if double clicked
+
+    Example
+    rptObj.ui.text("This is a text").editable()
+
+    :return: Self to allow the chaining
+    """
+    self.defined.add(CssContentEditable.__name__, toMain=False)
+    self.set_attrs({"contenteditable": "false", "ondblclick": "this.contentEditable=true;this.className='inEdit'",
+                    "onblur": "this.contentEditable=false;this.className=''"})
+    return self
 
   @property
   def _js__builder__(self):
@@ -196,12 +214,24 @@ class Text(Html.Html):
       if(data != ''){ 
         if((options.maxlength != undefined) && (data.length > options.maxlength)){
           content = data.slice(0, options.maxlength); 
-          htmlObj.innerHTML = %(markUp)s +"..."; htmlObj.title = data} 
-        else{htmlObj.innerHTML = %(markUp)s}};
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
+          if(options.markdown){htmlObj.innerHTML = %(markUp)s +"..."} else {htmlObj.innerHTML = content +"..."}; 
+          htmlObj.title = data} 
+        else{
+          if(options.markdown){htmlObj.innerHTML = %(markUp)s} else {htmlObj.innerHTML = content}}};
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}};
       ''' % {"markUp": mark_up}
 
   def __str__(self):
+    if self.options.limit_char and len(self.content) > self.options.limit_char:
+      self.set_attrs(name="title", value=self.content)
+      if self.options.markdown:
+        self._vals = self._report.py.markdown.all(self.content[:self.options.limit_char])
+      else:
+        self._vals = self.content[:self.options.limit_char]
+      return '<div %s>%s...</div>%s' % (self.get_attrs(pyClassNames=self.defined), self.content, self.helper)
+
+    if self.options.markdown:
+      self._vals = self._report.py.markdown.all(self.content)
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), self.content, self.helper)
 
   # -----------------------------------------------------------------------------------------
@@ -455,12 +485,11 @@ class Title(Html.Html):
     self.add_icon(icon)
     if contents is not None:
       self._name = contents.add(text, level or 1, name)
-
     if level is not None:
-      self.style.cssCls("CssTitle%s" % level)
+      self.style.addCls("CssTitle%s" % level)
       self.css({'color': color, 'margin': '%spx 0 5px 0' % marginTop})
     else:
-      self.style.cssCls('CssTitle')
+      self.style.addCls('CssTitle')
       self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': "%s%s" % (size[0], size[1])})
       if size[0] > 21 and color is None:
         self.css('color', self.getColor('colors', 9))
@@ -506,7 +535,7 @@ class Title(Html.Html):
       if not os.path.exists(filePath):
         raise Exception("Missing file %s in %s" % (self.picture, os.path.join(self._report.run.local_path, "static")))
 
-      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.pyStyle), path, self.picture, anchor_name, self.val, self.helper)
+      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.defined), path, self.picture, anchor_name, self.val, self.helper)
 
     return '<div %s><a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.defined), anchor_name, self.val, self.helper)
 

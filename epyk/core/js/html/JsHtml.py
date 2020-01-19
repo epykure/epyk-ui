@@ -33,6 +33,17 @@ class JsHtml(JsNodeDom.JsDoms):
     return JsObjects.JsObjects.get("{%s: {value: %s.value, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.varName))
 
   @property
+  def by_name(self):
+    """
+
+    :return:
+    """
+    if self._src.attr.get('name') is not None:
+      return JsNodeDom.JsDomByName(None, "document.getElementsByName('%s')" % self._src.attr.get('name'), report=self._report)
+
+    return self
+
+  @property
   def content(self):
     return JsObjects.JsObjects.get("%s.value" % self.varName)
 
@@ -142,7 +153,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     return self.css("display", "none")
 
-  def show(self):
+  def show(self, inline=True):
     """
     Example
     input.js.show()
@@ -150,11 +161,12 @@ class JsHtml(JsNodeDom.JsDoms):
     Documentation
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
+    :param inline: String
     :return:
     """
-    return JsUtils.jsConvertData(self.css("display", "block"), None)
+    return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else 'block'), None)
 
-  def toggle(self, attr="display", jsVal1="block", jsVal2="none"):
+  def toggle(self, attr="display", jsVal1="inline-block", jsVal2="none"):
     """
 
     Example
@@ -229,12 +241,46 @@ class JsHtmlButton(JsHtml):
 
     :return:
     """
-    return JsObjects.JsObjects.get(
-      "{%s: {value: %s.querySelector('label').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlId, self.varName))
+    return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
+      offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s}}
+      ''' % (self.htmlId, self.varName, self.getAttribute('data-locked'), self.getAttribute('name')))
 
   @property
   def content(self):
-    return JsObjects.JsObjects.get("%s.querySelector('label').innerHTML" % self.varName)
+    return JsObjects.JsObjects.get("%s.innerHTML" % self.varName)
+
+  def release(self, by_name=False):
+    """
+
+    :param by_name:
+    :return:
+    """
+    if by_name:
+      fncs = JsFncs.JsFunctions(self.by_name.css("color", ''))
+      fncs.append(self.by_name.css("background-color", ''))
+      fncs.append(self.by_name.css("cursor", "pointer"))
+      fncs.append(self.by_name.attr('data-locked', False))
+    else:
+      fncs = JsFncs.JsFunctions(self.css("color", ''))
+      fncs.append(self.css("background-color", ''))
+      fncs.append(self.css("cursor", "pointer"))
+      fncs.append(self.attr('data-locked', False))
+    return fncs
+
+  def disable(self, lock=True):
+    """
+
+    :param lock:
+    """
+    fncs = JsFncs.JsFunctions(self.css("color", self.getComputedStyle('color')))
+    fncs.append(self.css("background-color", self.getComputedStyle('background-color')))
+    if lock:
+      fncs.append(self.css("cursor", "not-allowed"))
+      fncs.append(self.attr('data-locked', True))
+    else:
+      fncs.append(self.css("cursor", "default"))
+      fncs.append(self.attr('data-locked', True))
+    return fncs
 
   def empty(self): return '%s.innerHTML = ""' % self.varName
 
@@ -253,6 +299,20 @@ class JsHtmlIcon(JsHtml):
   def content(self):
     return self._src.dom.getAttribute("class")
 
+
+class JsHtmlList(JsHtml):
+  @property
+  def val(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.varName))
+
+  @property
+  def content(self):
+    return self._src.dom.getAttribute("class")
 
 
 

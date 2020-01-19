@@ -2,8 +2,8 @@
 Module in charge of the CSS Standard modules
 """
 
-
 from epyk.core.css.styles import CssStyle
+from epyk.core.css import Defaults
 
 
 class CssBody(CssStyle.CssCls):
@@ -11,12 +11,14 @@ class CssBody(CssStyle.CssCls):
   cssId = {'tag': 'body'}
 
   def customize(self, style, eventsStyles):
-    if self.getColor('greys', 0) == '#000000':
-      style.update({"background-color": self.getColor('greys', 0), "color": self.getColor('greys', 9),
-                    'font-family': self.fontFamily, 'font-size': self.fontSize})
+    if isinstance(Defaults.BACKGROUND, tuple):
+      bgColor = self.getColor('greys', 0)
+      if bgColor != '#000000':
+        bgColor = self.getColor('greys', 2)
     else:
-      style.update({"background-color": self.getColor('greys', 2), "color": self.getColor('greys', 9),
-                    'font-family': self.fontFamily, 'font-size': self.fontSize})
+      bgColor = Defaults.BACKGROUND
+    style.update({"background-color": bgColor, "color": self.getColor('greys', 9),
+                  'font-family': self.fontFamily, 'font-size': self.fontSize})
 
 
 class CssTextSelection(CssStyle.CssCls):
@@ -30,6 +32,8 @@ class CssBodyContent(CssStyle.CssCls):
   def customize(self, style, eventsStyles):
     style.update({"background-color": self.getColor('greys', 0), "border-radius": "5px",
                   "border": '1px solid %s' % self.getColor('greys', 3)})
+    if Defaults.BODY_CONTAINER is not None:
+      style.update(Defaults.BODY_CONTAINER)
 
 
 class CssBodyLoadingBack(CssStyle.CssCls):

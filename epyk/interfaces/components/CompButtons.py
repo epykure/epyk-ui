@@ -42,13 +42,15 @@ class Buttons(object):
     :param options: Optional. Specific Python options available for this component
     """
     size = self.context._size(size)
+    if isinstance(width, int):
+      width = (width, "%")
     html_obj = html.HtmlButton.Button(self.context.rptObj, text, icon, size, width, height, htmlCode=htmlCode,
                                       tooltip=tooltip, profile=profile, options=options or {})
     self.context.register(html_obj)
     return html_obj
 
   def buttons(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-              htmlCode=None, helper=None, profile=None):
+              htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Example
@@ -69,7 +71,7 @@ class Buttons(object):
     """
     size = self.context._size(size)
     html_obj = html.HtmlButton.Buttons(self.context.rptObj, data or [], size, color, width, height, htmlCode, helper,
-                                       profile)
+                                       options or {}, profile)
 
     self.context.register(html_obj)
     return html_obj
@@ -174,9 +176,9 @@ class Buttons(object):
     self.context.register(html_obj)
     return html_obj
 
-  def radio(self, recordSet=None, checked=None, htmlCode=None, label=None, width=(100, '%'), height=(None, "px"),
+  def radio(self, recordSet=None, checked=None, htmlCode=None, label=None, width=(None, '%'), height=(None, "px"),
             radioVisible=False, event=None, withRemoveButton=False, column=None, align='left', filters=None,
-            tooltip='', allSelected=False, radioType="row", helper=None, profile=None):
+            tooltip='', allSelected=False, radioType="row", helper=None, options=None, profile=None):
     """
 
     Example
@@ -204,6 +206,7 @@ class Buttons(object):
     :param allSelected:
     :param title:
     :param radioType:
+    :param options:
     :param profile:
     """
     if column is not None:
@@ -222,12 +225,13 @@ class Buttons(object):
       if checked is None:
         tmpVals[0]['checked'] = True
       recordSet = tmpVals
+    options = options or {'layout': 'div'}
     html_obj = html.HtmlRadio.Radio(self.context.rptObj, recordSet, htmlCode, label, width, height, radioVisible,
                                     event, withRemoveButton, align, filters, tooltip, radioType, helper, profile)
     self.context.register(html_obj)
     return html_obj
 
-  def switch(self, recordSet=None, label=None, color=None, size=(None, 'px'), width=(150, '%'),
+  def switch(self, records=None, label=None, color=None, size=(None, 'px'), width=(None, '%'),
              height=(Defaults.LINE_HEIGHT, 'px'), htmlCode=None, profile=None):
     """
     Python wrapper to the HTML switch elements
@@ -239,7 +243,7 @@ class Buttons(object):
     http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     https://codepen.io/mburnette/pen/LxNxNg
 
-    :param recordSet:
+    :param records:
     :param label:
     :param color:
     :param size:
@@ -249,7 +253,7 @@ class Buttons(object):
     :param profile:
     """
     size = self.context._size(size)
-    html_obj = html.HtmlRadio.Switch(self.context.rptObj, recordSet or {'off': 'off', 'on': 'on'}, label, color, size, width, height, htmlCode, profile)
+    html_obj = html.HtmlRadio.Switch(self.context.rptObj, records or {'off': 'off', 'on': 'on'}, label, color, size, width, height, htmlCode, profile)
     self.context.register(html_obj)
     return html_obj
 
