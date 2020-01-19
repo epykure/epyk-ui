@@ -636,7 +636,7 @@ class JsWindow(object):
     """
     return JsObject.JsObject("%s.btoa(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)), isPyData=False)
 
-  def setInterval(self, jsFncs, milliseconds, windowId="window", varName=None):
+  def setInterval(self, jsFncs, varId, milliseconds, windowId="window"):
     """
     The setInterval() method calls a function or evaluates an expression at specified intervals (in milliseconds).
 
@@ -651,15 +651,17 @@ class JsWindow(object):
     #TODO: Add a control on setInterval to only have one created
 
     :param jsFncs: Required. The function that will be executed
+    :param varId:
     :param milliseconds: Required. The intervals (in milliseconds) on how often to execute the code. If the value is less than 10, the value 10 is used
     :param windowId: The JavaScript window object
 
     :return:
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return JsObject.JsObject("%s.setInterval(function(){%s}, %s)" % (windowId, ";".join(jsFncs), milliseconds), setVar=True, isPyData=False)
+    return JsObject.JsObject("%s.setInterval(function(){%s}, %s)" % (windowId, ";".join(jsFncs), milliseconds),
+                             varName=varId, setVar=True, isPyData=False)
 
-  def clearInterval(self, js_data, jsFnc=None, windowId="window"):
+  def clearInterval(self, varId, jsFnc=None, windowId="window"):
     """
     The clearInterval() method clears a timer set with the setInterval() method.
 
@@ -674,17 +676,27 @@ class JsWindow(object):
 
     #TODO: Check if interval is unique
 
-    :param js_data: A PythonJs object (JsArray, JsObject...)
+    :param varId: A PythonJs object (JsArray, JsObject...)
     :param jsFnc: A JsFnc or a list of JsFncs
     :param windowId: The JavaScript window object
 
     :return: Void, The Javascript String
     """
-    if not hasattr(js_data, "toStr"):
+    if not hasattr(varId, "toStr"):
       raise Exception("Must be a PythonJs type")
 
-    js_data = JsUtils.jsConvertData(js_data, jsFnc)
+    js_data = JsUtils.jsConvertData(varId, jsFnc)
     return JsFncs.JsFunction("%s.clearInterval(%s)" % (windowId, js_data))
+
+  def toggleInterval(self, jsFncs, varId, milliseconds, windowId="window"):
+    """
+
+    :param jsFncs:
+    :param varId:
+    :param milliseconds:
+    :param windowId:
+    :return:
+    """
 
   def setTimeout(self, jsFncs, milliseconds=0, windowId="window"):
     """
