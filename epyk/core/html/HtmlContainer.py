@@ -734,10 +734,8 @@ class Modal(Html.Html):
     return self
 
   def __str__(self):
-    s = self._report.ui.texts.span('&times;')
-    self.__add__(self._report.ui.div(s).css({"text-align": 'center'}))
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=CssGrpContainers.CssGrpClassModalContent), str_vals, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
 
 
 

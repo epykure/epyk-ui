@@ -88,8 +88,9 @@ class Modal(object):
       inp = self.context.rptObj.ui.fields.input(label=rec["label"])
       inp.input.set_attrs({"name": rec["htmlCode"]})
       html_objs.append(inp)
-    col = self.context.rptObj.ui.col(html_objs).css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
-                                                     "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
+    col = self.context.rptObj.ui.col(html_objs).css({'margin': '15%', 'padding': '20px',
+                                                     'border': '1px solid %s' % self.context.rptObj.getColor('greys', 4),
+                                                     'width': '80%', 'background-color': self.context.rptObj.getColor('greys', 0)})
     modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
     col += modal.submit
     self.context.register(modal)
@@ -110,7 +111,7 @@ class Modal(object):
     :return:
     """
     html_objs = []
-    for rec in records:
+    for rec in objlst:
       inp = self.context.rptObj.ui.fields.input(label=rec["label"])
       inp.input.set_attrs({"name": rec["htmlCode"]})
       html_objs.append(inp)
