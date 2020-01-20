@@ -26,6 +26,7 @@ from epyk.interfaces.components import CompTrees
 from epyk.interfaces.components import CompVignets
 from epyk.interfaces.components import CompMenus
 from epyk.interfaces.components import CompPanels
+from epyk.interfaces.components import CompModals
 
 
 class Components(object):
@@ -241,7 +242,7 @@ class Components(object):
 
     :return:
     """
-    pass
+    return CompModals.Modal(self)
 
 
   @property

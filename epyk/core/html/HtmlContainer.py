@@ -720,8 +720,9 @@ class Modal(Html.Html):
   _grpCls = CssGrpContainers.CssGrpClassModal
 
   def __init__(self, report, htmlObjs, helper):
-    super(Form, self).__init__(report, [])
+    super(Modal, self).__init__(report, [])
     self.add_helper(helper)
+    self.css({'display': 'none'})
     for htmlObj in htmlObjs:
       self.__add__(htmlObj)
 

@@ -12,4 +12,5 @@ class CssGrpClassModal(CssGrpCls.CssGrpClass):
   """
 
   css_div_no_border = CssStylesDiv.CssDivNoBorder
-  __map, __alt_map = ['CssDivNoBorder'], []
+  css_div_hidden = CssStylesDiv.CssDivHidden
+  __map, __alt_map = ['CssDivNoBorder', 'CssDivHidden'], []
