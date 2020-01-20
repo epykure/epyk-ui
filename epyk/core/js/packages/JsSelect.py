@@ -46,6 +46,16 @@ class JSelect(JsPackage):
     return JsObjects.JsObjects.get("%s.value" % self.varName)
 
   @property
+  def search(self):
+    """
+    Get the selected content from the Select component
+
+    Example
+    b.click([rptObj.js.console.log(s.dom.content)])
+    """
+    return JsObjects.JsObjects.get("this.plugin.query")
+
+  @property
   def name(self):
     """
     Get the selected name / label from the Select component
@@ -115,6 +125,14 @@ class JSelect(JsPackage):
     for k, v in options.items():
       if not isinstance(v, (dict, int)) and v.startswith("function"):
         opts.append("%s: %s" % (k, v))
+      elif isinstance(v, dict):
+        tmp_dict = []
+        for sk, sv in v.items():
+          if not isinstance(sv, (dict, int)) and (sv.startswith("function") or sv.startswith("(function") or sv.startswith('"')):
+            tmp_dict.append("%s: %s" % (sk, sv))
+          else:
+            tmp_dict.append("%s: %s" % (sk, json.dumps(sv)))
+        opts.append("%s: {%s}" % (k, ", ".join(tmp_dict)))
       else:
         opts.append("%s: %s" % (k, json.dumps(v)))
     return "%s.selectpicker().ajaxSelectPicker({%s})" % (self.jquery.varId, ", ".join(opts))
