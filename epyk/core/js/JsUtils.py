@@ -224,6 +224,19 @@ def cleanFncs(fnc):
   return "".join([r.strip() for r in fnc.strip().split('\n')])
 
 
+def isNotDefined(varName):
+  """
+  Check if a variable is defined
+
+  Example
+  JsUtils.isNotDefined(varId)
+
+  :param varName: String. The varName
+  :return: A string in Python and a Boolean in Javascript
+  """
+  return "typeof %s === 'undefined'" % varName
+
+
 class JsFile(object):
   def __init__(self, scriptName=None, path=None):
     self.scriptName, self.path = scriptName, path
