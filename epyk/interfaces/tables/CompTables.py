@@ -307,16 +307,17 @@ class Tables(object):
 
     :return:
     """
-    width_cells = 50
+    width_cells, width_rows_header = 50, 100
     for rec in records:
       for c in cols:
         if c not in rec:
           rec[c] = 0
     table = html_tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
-    table.css({"width": "%spx" % (100 + len(rows) * width_cells)})
+    table.css({"width": "%spx" % (width_rows_header + len(cols) * width_cells)})
     table[0][0]._vals = ""
     for i in table[1:]:
       i[0].attr["name"] = "row_header"
+      i[0].css({"width": "%spx" % width_rows_header})
       for cell in i[1:]:
         cell.attr["contenteditable"] = 'true'
         cell.css({"width": '%spx' % width_cells})
