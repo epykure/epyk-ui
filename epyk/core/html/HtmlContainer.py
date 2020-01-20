@@ -719,10 +719,11 @@ class Modal(Html.Html):
   name, category, callFnc = 'Modal Popup',  'Container', 'modal'
   _grpCls = CssGrpContainers.CssGrpClassModal
 
-  def __init__(self, report, htmlObjs, helper):
+  def __init__(self, report, htmlObjs, action, method, helper):
     super(Modal, self).__init__(report, [])
     self.add_helper(helper)
-    self.css({'display': 'none'})
+    self.submit = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
+    self.submit.inReport = False
     for htmlObj in htmlObjs:
       self.__add__(htmlObj)
 
@@ -736,7 +737,7 @@ class Modal(Html.Html):
     s = self._report.ui.texts.span('&times;')
     self.__add__(self._report.ui.div(s).css({"text-align": 'center'}))
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=CssGrpContainers.CssGrpClassModalContent), str_vals, self.helper)
 
 
 

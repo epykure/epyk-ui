@@ -90,10 +90,10 @@ class Modal(object):
       html_objs.append(inp)
     col = self.context.rptObj.ui.col(html_objs).css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
                                                      "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
-    form = html.HtmlContainer.Form(self.context.rptObj, [col], action, method, helper)
-    col += form.submit
-    self.context.register(form)
-    return form
+    modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
+    col += modal.submit
+    self.context.register(modal)
+    return modal
 
   def objects(self, objlst, action, method, helper=None):
     """
