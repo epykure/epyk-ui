@@ -88,3 +88,28 @@ class CssTdDetails(CssStyle.CssCls):
 class CssTdDetailsShown(CssStyle.CssCls):
   before = {'content': "'\\f146'", 'font-family': "'Font Awesome 5 Free'", 'cursor': 'pointer', 'padding': '0 5px 0 0'}
   cssId = {'child': 'td'}
+
+
+class CssTdGridHeaderCols(CssStyle.CssCls):
+  attrs = {"border-bottom": '1px solid black', "margin": '0 1px'}
+  cssId = {'child': 'th:not(:first-child)'}
+
+
+class CssTdGridNoHeaderCols(CssStyle.CssCls):
+  attrs = {"display": 'none'}
+  cssId = {'child': 'th:not(:first-child)'}
+
+
+class CssTdGridHeaderRows(CssStyle.CssCls):
+  attrs = {"text-align": 'left'}
+  cssId = {'child': 'td[name="row_header"]'}
+
+
+class CssTdGridVals(CssStyle.CssCls):
+  cssId = {'child': 'td:not([name="row_header"])'}
+  attrs = {"padding": '3px'}
+  focus = {"outline": "0px solid transparent"}
+
+  def customize(self, style, eventsStyles):
+    style.update({"background-color": self.getColor('colors', 0), "border-bottom": '1px solid %s' % self.getColor("greys", 4)})
+    eventsStyles['focus'].update({"border-bottom": '1px solid %s' % self.getColor("success", 1)})

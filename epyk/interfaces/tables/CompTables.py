@@ -301,3 +301,26 @@ class Tables(object):
     table = html_tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
     self.context.register(table)
     return table
+
+  def grid(self, records, cols, rows, width=(None, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+    """
+
+    :return:
+    """
+    width_cells = 50
+    for rec in records:
+      for c in cols:
+        if c not in rec:
+          rec[c] = 0
+    table = html_tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
+    table.css({"width": "%spx" % (100 + len(rows) * width_cells)})
+    table[0][0]._vals = ""
+    for i in table[1:]:
+      i[0].attr["name"] = "row_header"
+      for cell in i[1:]:
+        cell.attr["contenteditable"] = 'true'
+        cell.css({"width": '%spx' % width_cells})
+    table.style.clear()
+    table.style.addCls(["CssTdGridHeaderRows", "CssTdGridVals", "CssTdGridNoHeaderCols"])
+    self.context.register(table)
+    return table
