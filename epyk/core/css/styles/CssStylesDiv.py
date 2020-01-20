@@ -200,3 +200,15 @@ class CssDivFilterItems(CssStyle.CssCls):
   def customize(self, style, eventsStyles):
     style.update({'border': '1px solid %s' % self.getColor('colors', 2)})
     eventsStyles['hover'].update({'border': '1px solid %s' % self.getColor('success', 1)})
+
+class CssDivModal(CssStyle.CssCls):
+
+  attrs = {'display': 'none', 'z-index': 1, 'position': 'fixed', 'padding-top': '100px', 'left': 0, 'top': 0,
+           'width': '100%', 'height': '100%', 'overflow': 'auto', 'background-color': 'rgb(0,0,0,0.4)'}
+
+class CssDivModalContent(CssStyle.CssCls):
+
+  attrs = {'margin': 'auto', 'padding': '20px', 'border': '1px solid #888', 'width': '80%'}
+
+  def customize(self, style, eventsStyles):
+    style.update({'background-color': self.getColor('greys', 0)})
