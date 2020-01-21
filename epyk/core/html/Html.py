@@ -234,6 +234,29 @@ class Html(object):
           self.htmlObj.attr.setdefault('css', {})[k] = v
       return self
 
+    def keyframes(self, name, attrs):
+      """
+      The @keyframes rule specifies the animation code.
+
+      The animation is created by gradually changing from one set of CSS styles to another.
+
+      Example
+      rptObj.style.keyframes("test", {
+        "50%": {"transform": "scale(1.5, 1.5)", "opacity": 0},
+        "99%": {"transform": "scale(0.001, 0.001)", "opacity": 0},
+        "100%": {"transform": "scale(0.001, 0.001)", "opacity": 1},
+      })
+
+      Documentation
+      https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+
+      :param name: String. Required. Defines the name of the animation.
+      :param attrs: String. Required. Percentage of the animation duration.
+      :return:
+      """
+      self.htmlObj._report.style.keyframes(name, attrs)
+      return self
+
     @property
     def commons(self):
       """

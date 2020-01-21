@@ -39,7 +39,7 @@ class Css(object):
     if not 'css' in self.rptObj._props:
       self.rptObj._props['css'] = {}
     self.cssStyles, self._cssOvr, self._cssEventOvr, self.cssAttrs, self._cssCls = {}, {}, {}, {}, []
-    self._colors, self.__anonymous_id = None, 0
+    self._colors, self.__anonymous_id, self.__keyframes = None, 0, {}
 
   @property
   def globals(self):
@@ -461,6 +461,28 @@ class Css(object):
         style[css_id] = css_def
     return style
 
+  def keyframes(self, name, attrs):
+    """
+    The @keyframes rule specifies the animation code.
+
+    The animation is created by gradually changing from one set of CSS styles to another.
+
+    Example
+    rptObj.style.keyframes("test", {
+      "50%": {"transform": "scale(1.5, 1.5)", "opacity": 0},
+      "99%": {"transform": "scale(0.001, 0.001)", "opacity": 0},
+      "100%": {"transform": "scale(0.001, 0.001)", "opacity": 1},
+    })
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+
+    :param name: String. Required. Defines the name of the animation.
+    :param attrs: String. Required. Percentage of the animation duration.
+    :return:
+    """
+    self.__keyframes[name] = attrs
+  
   def toCss(self, file_name=None, path=None):
     """
     This function will be in charge of producing the best CSS content according to the need.
@@ -491,6 +513,12 @@ class Css(object):
       else:
         for css_id, css_def in cls_obj.getStyles().items():
           css_media_str.append("%s %s" % (css_id, css_def))
+    if self.__keyframes:
+      for name, k_attrs in self.__keyframes.items():
+        css_str.append("@keyframes %s {" % name)
+        for k, v_dict in k_attrs.items():
+          css_str.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, j) for i, j in v_dict.items()])))
+        css_str.append("}")
     if len(css_media_str) > 0:
       # Media CSS category for all the smaller screens (tablets and smartphones)
       css_str.append("@media only screen and (max-width: %spx){" % Defaults.MEDIA)
