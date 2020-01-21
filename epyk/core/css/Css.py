@@ -482,7 +482,7 @@ class Css(object):
     :return:
     """
     self.__keyframes[name] = attrs
-  
+
   def toCss(self, file_name=None, path=None):
     """
     This function will be in charge of producing the best CSS content according to the need.
