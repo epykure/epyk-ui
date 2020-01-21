@@ -106,14 +106,13 @@ class PanelSlide(Panel):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Slide Panel', 'Panels', 'slide'
 
-  def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, profile):
+  def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, options, profile):
     super(PanelSlide, self).__init__(report, htmlObj, title, color, size, width, height, htmlCode, helper, profile)
-    self.title._vals += " <i style='float:right;margin:4px 2px 0 0' name='icon_%s' class='far fa-caret-square-down'></i>" % self.htmlId
+    self.title._vals = "<i style='float:left;margin:4px 5px 0 0' name='icon_%s' class='fas fa-caret-down'></i>%s" % (self.htmlId, self.title._vals)
     self.title.click([
       report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
-      report.js.getElementsByName("icon_%s" % self.htmlId).first.toggleClass("fa-caret-square-up")])
-    self.title.css({"cursor": 'pointer', "font-size": "%s%s" % (size[0]+2, size[1]), "padding": "0 2px 0 0",
-                    "border-bottom": "1px solid black"})
+      report.js.getElementsByName("icon_%s" % self.htmlId).first.toggleClass("fa-caret-up")])
+    self.title.css({"cursor": 'pointer', "font-size": "%s%s" % (size[0]+1, size[1]), "padding": "0 2px 0 0"})
 
 
 class Div(Html.Html):
