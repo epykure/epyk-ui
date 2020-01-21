@@ -44,7 +44,7 @@ class Buttons(object):
     badge_css = options.get("badge_css", {})
     badge_position = options.get("badge_position")
     if badge_position == "left":
-      b = self.context.rptObj.ui.images.badge(value).link.css({"right": "-15px"})
+      b = self.context.rptObj.ui.images.badge(value).link.css({"right": "-15px", "bottom": 0})
     button = self.button(text, icon, width, height, size, htmlCode, tooltip, profile, options)
     if badge_position != "left":
       b = self.context.rptObj.ui.images.badge(value, options={"badge_position": badge_position}).link.css({"bottom": "none",
