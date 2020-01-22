@@ -241,11 +241,7 @@ class Html(object):
       The animation is created by gradually changing from one set of CSS styles to another.
 
       Example
-      rptObj.style.keyframes("test", {
-        "50%": {"transform": "scale(1.5, 1.5)", "opacity": 0},
-        "99%": {"transform": "scale(0.001, 0.001)", "opacity": 0},
-        "100%": {"transform": "scale(0.001, 0.001)", "opacity": 1},
-      })
+      triangle.style.animation(effect=EffectsMoves.EffectsSpin(), duration=3)
 
       Documentation
       https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
