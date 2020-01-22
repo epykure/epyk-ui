@@ -461,7 +461,7 @@ class Css(object):
         style[css_id] = css_def
     return style
 
-  def keyframes(self, name, attrs):
+  def keyframes(self, effects=None, name=None, attrs=None):
     """
     The @keyframes rule specifies the animation code.
 
@@ -477,11 +477,15 @@ class Css(object):
     Documentation
     https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
 
+    :param effects: Effect Class.
     :param name: String. Required. Defines the name of the animation.
     :param attrs: String. Required. Percentage of the animation duration.
-    :return:
     """
+    if effects is not None:
+      name = effects.__class__.__name__
+      attrs = effects.get_attrs()
     self.__keyframes[name] = attrs
+    return name
 
   def toCss(self, file_name=None, path=None):
     """

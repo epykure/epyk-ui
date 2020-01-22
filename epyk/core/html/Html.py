@@ -234,7 +234,7 @@ class Html(object):
           self.htmlObj.attr.setdefault('css', {})[k] = v
       return self
 
-    def keyframes(self, name, attrs):
+    def animation(self, effect=None, name=None, attrs=None, duration=0, delay=None, iteration=None, timing_fnc=None):
       """
       The @keyframes rule specifies the animation code.
 
@@ -249,12 +249,31 @@ class Html(object):
 
       Documentation
       https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+      https://www.w3schools.com/css/css3_animations.asp
 
+      :param effect: Effect Class.
       :param name: String. Required. Defines the name of the animation.
       :param attrs: String. Required. Percentage of the animation duration.
-      :return:
+      :param duration:
+      :param delay:
+      :param iteration:
+      :param timing_fnc:
       """
-      self.htmlObj._report.style.keyframes(name, attrs)
+      name = self.htmlObj._report.style.keyframes(effect, name, attrs)
+      css_animation = {"animation-name": name, "animation-duration": "%ss" % duration}
+      if delay:
+        css_animation["animation-delay"] = "%ss" % delay
+      if iteration:
+        css_animation["animation-iteration-count"] = iteration
+      if timing_fnc:
+        if timing_fnc not in ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] and not timing_fnc.startswith("cubic-bezier"):
+          raise Exception("%s missing from the list" % timing_fnc)
+
+        css_animation["animation-timing-function"] = iteration
+      # Add the -webkit- prefix for capatibility with some browsers
+      safari_css = dict([("-webkit-%s" % k, v) for k, v in css_animation.items()])
+      css_animation.update(safari_css)
+      self.css(css_animation)
       return self
 
     @property
