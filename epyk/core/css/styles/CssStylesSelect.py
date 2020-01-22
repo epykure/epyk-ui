@@ -22,6 +22,9 @@ class CssSelectButton(CssStyle.CssCls):
   focus = {'outline': 'none !IMPORTANT', 'border-color': 'none', 'box-shadow': 'none'}
   cssId = {'reference': ".btn"}
 
+  def customize(self, style, eventsStyles):
+    style.update({"background-color": self.getColor('colors', 0), "border": 'none', 'color': self.getColor('colors', -1)})
+
 
 class CssSelectSearchBox(CssStyle.CssCls):
   attrs = {"padding": "0 2px 1px 2px"}
@@ -43,6 +46,11 @@ class CssSelectOption(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
     style.update({"background": self.getColor('greys', 0), 'font-size': '%spx' % Defaults_css.Font.size})
+
+
+class CssSelectOptionItems(CssStyle.CssCls):
+  attrs = {"margin": 0, "padding": "0 5px", "border-radius": '0 !IMPORTANT'}
+  cssId = {'reference': ".dropdown-item"}
 
 
 class CssSelectOptionHover(CssStyle.CssCls):
@@ -69,3 +77,9 @@ class CssSelectOutline(CssStyle.CssCls):
   focus = {'outline': '0 !important'}
   cssId = {'reference': ".bootstrap-select .dropdown-toggle"}
 
+
+class CssSelectStatus(CssStyle.CssCls):
+  cssId = {'reference': ".dropdown-menu .status"}
+
+  def customize(self, style, eventsStyles):
+    style.update({"background-color": self.getColor('greys', 0), 'font-size': '%spx' % Defaults_css.Font.size})
