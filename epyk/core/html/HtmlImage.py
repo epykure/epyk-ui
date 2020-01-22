@@ -38,6 +38,7 @@ class Image(Html.Html):
       ''' % Defaults.SERVER_PATH
 
   def __str__(self):
+    self.attr["src"] = "%(path)s/%(image)s" % self.val
     return '<img %s></img>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
   # -----------------------------------------------------------------------------------------
