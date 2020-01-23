@@ -7,1627 +7,1636 @@ class CssMixin(object):
   """
 
   """
-
   @property
-  def align_content(self): return self.htmlObj.css("align-content")
+  def css_align_content(self): return self.htmlObj.css("align-content")
 
-  @align_content.setter
-  def align_content(self, val):
+  @css_align_content.setter
+  def css_align_content(self, val):
     val = val or 'None'
     self.htmlObj.css({"align-content": val})
 
   @property
-  def align_items(self): return self.htmlObj.css("align-items")
+  def css_align_items(self): return self.htmlObj.css("align-items")
 
-  @align_items.setter
-  def align_items(self, val):
+  @css_align_items.setter
+  def css_align_items(self, val):
     val = val or 'None'
     self.htmlObj.css({"align-items": val})
 
   @property
-  def align_self(self): return self.htmlObj.css("align-self")
+  def css_align_self(self): return self.htmlObj.css("align-self")
 
-  @align_self.setter
-  def align_self(self, val):
+  @css_align_self.setter
+  def css_align_self(self, val):
     val = val or 'None'
     self.htmlObj.css({"align-self": val})
 
   @property
-  def all(self): return self.htmlObj.css("all")
+  def css_all(self): return self.htmlObj.css("all")
 
-  @all.setter
-  def all(self, val):
+  @css_all.setter
+  def css_all(self, val):
     val = val or 'None'
     self.htmlObj.css({"all": val})
 
   @property
-  def animation(self): return self.htmlObj.css("animation")
+  def css_animation(self): return self.htmlObj.css("animation")
 
-  @animation.setter
-  def animation(self, val):
+  @css_animation.setter
+  def css_animation(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation": val})
 
   @property
-  def animation_delay(self): return self.htmlObj.css("animation-delay")
+  def css_animation_delay(self): return self.htmlObj.css("animation-delay")
 
-  @animation_delay.setter
-  def animation_delay(self, val):
+  @css_animation_delay.setter
+  def css_animation_delay(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation-delay": val})
 
   @property
-  def animation_direction(self): return self.htmlObj.css("animation-direction")
+  def css_animation_direction(self): return self.htmlObj.css("animation-direction")
 
-  @animation_direction.setter
-  def animation_direction(self, val):
+  @css_animation_direction.setter
+  def css_animation_direction(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation-direction": val})
 
   @property
-  def animation_duration(self): return self.htmlObj.css("animation-duration")
+  def css_animation_duration(self): return self.htmlObj.css("animation-duration")
 
-  @animation_duration.setter
-  def animation_duration(self, val):
+  @css_animation_duration.setter
+  def css_animation_duration(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation-duration": val})
 
   @property
-  def animation_fill_mode(self): return self.htmlObj.css("animation-fill-mode")
+  def css_animation_fill_mode(self): return self.htmlObj.css("animation-fill-mode")
 
-  @animation_fill_mode.setter
-  def animation_fill_mode(self, val):
+  @css_animation_fill_mode.setter
+  def css_animation_fill_mode(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation-fill-mode": val})
 
   @property
-  def animation_iteration_count(self): return self.htmlObj.css("animation-iteration-count")
+  def css_animation_iteration_count(self): return self.htmlObj.css("animation-iteration-count")
 
-  @animation_iteration_count.setter
-  def animation_iteration_count(self, val):
+  @css_animation_iteration_count.setter
+  def css_animation_iteration_count(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation-iteration-count": val})
 
   @property
-  def animation_name(self): return self.htmlObj.css("animation-name")
+  def css_animation_name(self): return self.htmlObj.css("animation-name")
 
-  @animation_name.setter
-  def animation_name(self, val):
+  @css_animation_name.setter
+  def css_animation_name(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation-name": val})
 
   @property
-  def animation_play_state(self): return self.htmlObj.css("animation-play-state")
+  def css_animation_play_state(self): return self.htmlObj.css("animation-play-state")
 
-  @animation_play_state.setter
-  def animation_play_state(self, val):
+  @css_animation_play_state.setter
+  def css_animation_play_state(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation-play-state": val})
 
   @property
-  def animation_timing_function(self): return self.htmlObj.css("animation-timing-function")
+  def css_animation_timing_function(self): return self.htmlObj.css("animation-timing-function")
 
-  @animation_timing_function.setter
-  def animation_timing_function(self, val):
+  @css_animation_timing_function.setter
+  def css_animation_timing_function(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation-timing-function": val})
 
   @property
-  def backface_visibility(self): return self.htmlObj.css("backface-visibility")
+  def css_backface_visibility(self): return self.htmlObj.css("backface-visibility")
 
-  @backface_visibility.setter
-  def backface_visibility(self, val):
+  @css_backface_visibility.setter
+  def css_backface_visibility(self, val):
     val = val or 'None'
     self.htmlObj.css({"backface-visibility": val})
 
   @property
-  def background(self): return self.htmlObj.css("background")
+  def css_background(self): return self.htmlObj.css("background")
 
-  @background.setter
-  def background(self, val):
+  @css_background.setter
+  def css_background(self, val):
     val = val or 'None'
     self.htmlObj.css({"background": val})
 
   @property
-  def background_attachment(self): return self.htmlObj.css("background-attachment")
+  def css_background_attachment(self): return self.htmlObj.css("background-attachment")
 
-  @background_attachment.setter
-  def background_attachment(self, val):
+  @css_background_attachment.setter
+  def css_background_attachment(self, val):
     val = val or 'None'
     self.htmlObj.css({"background-attachment": val})
 
   @property
-  def background_blend_mode(self): return self.htmlObj.css("background-blend-mode")
+  def css_background_blend_mode(self): return self.htmlObj.css("background-blend-mode")
 
-  @background_blend_mode.setter
-  def background_blend_mode(self, val):
+  @css_background_blend_mode.setter
+  def css_background_blend_mode(self, val):
     val = val or 'None'
     self.htmlObj.css({"background-blend-mode": val})
 
   @property
-  def background_clip(self): return self.htmlObj.css("background-clip")
+  def css_background_clip(self): return self.htmlObj.css("background-clip")
 
-  @background_clip.setter
-  def background_clip(self, val):
+  @css_background_clip.setter
+  def css_background_clip(self, val):
     val = val or 'None'
     self.htmlObj.css({"background-clip": val})
 
   @property
-  def background_color(self): return self.htmlObj.css("background-color")
+  def css_background_color(self): return self.htmlObj.css("background-color")
 
-  @background_color.setter
-  def background_color(self, val):
+  @css_background_color.setter
+  def css_background_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"background-color": val})
 
   @property
-  def background_image(self): return self.htmlObj.css("background-image")
+  def css_background_image(self): return self.htmlObj.css("background-image")
 
-  @background_image.setter
-  def background_image(self, val):
+  @css_background_image.setter
+  def css_background_image(self, val):
     val = val or 'None'
     self.htmlObj.css({"background-image": val})
 
   @property
-  def background_origin(self): return self.htmlObj.css("background-origin")
+  def css_background_origin(self): return self.htmlObj.css("background-origin")
 
-  @background_origin.setter
-  def background_origin(self, val):
+  @css_background_origin.setter
+  def css_background_origin(self, val):
     val = val or 'None'
     self.htmlObj.css({"background-origin": val})
 
   @property
-  def background_position(self): return self.htmlObj.css("background-position")
+  def css_background_position(self): return self.htmlObj.css("background-position")
 
-  @background_position.setter
-  def background_position(self, val):
+  @css_background_position.setter
+  def css_background_position(self, val):
     val = val or 'None'
     self.htmlObj.css({"background-position": val})
 
   @property
-  def background_repeat(self): return self.htmlObj.css("background-repeat")
+  def css_background_repeat(self): return self.htmlObj.css("background-repeat")
 
-  @background_repeat.setter
-  def background_repeat(self, val):
+  @css_background_repeat.setter
+  def css_background_repeat(self, val):
     val = val or 'None'
     self.htmlObj.css({"background-repeat": val})
 
   @property
-  def background_size(self): return self.htmlObj.css("background-size")
+  def css_background_size(self): return self.htmlObj.css("background-size")
 
-  @background_size.setter
-  def background_size(self, val):
+  @css_background_size.setter
+  def css_background_size(self, val):
     val = val or 'None'
     self.htmlObj.css({"background-size": val})
 
   @property
-  def border(self): return self.htmlObj.css("border")
+  def css_border(self): return self.htmlObj.css("border")
 
-  @border.setter
-  def border(self, val):
+  @css_border.setter
+  def css_border(self, val):
     val = val or 'None'
     self.htmlObj.css({"border": val})
 
   @property
-  def border_bottom(self): return self.htmlObj.css("border-bottom")
+  def css_border_bottom(self): return self.htmlObj.css("border-bottom")
 
-  @border_bottom.setter
-  def border_bottom(self, val):
+  @css_border_bottom.setter
+  def css_border_bottom(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-bottom": val})
 
   @property
-  def border_bottom_color(self): return self.htmlObj.css("border-bottom-color")
+  def css_border_bottom_color(self): return self.htmlObj.css("border-bottom-color")
 
-  @border_bottom_color.setter
-  def border_bottom_color(self, val):
+  @css_border_bottom_color.setter
+  def css_border_bottom_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-bottom-color": val})
 
   @property
-  def border_bottom_left_radius(self): return self.htmlObj.css("border-bottom-left-radius")
+  def css_border_bottom_left_radius(self): return self.htmlObj.css("border-bottom-left-radius")
 
-  @border_bottom_left_radius.setter
-  def border_bottom_left_radius(self, val):
+  @css_border_bottom_left_radius.setter
+  def css_border_bottom_left_radius(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-bottom-left-radius": val})
 
   @property
-  def border_bottom_right_radius(self): return self.htmlObj.css("border-bottom-right-radius")
+  def css_border_bottom_right_radius(self): return self.htmlObj.css("border-bottom-right-radius")
 
-  @border_bottom_right_radius.setter
-  def border_bottom_right_radius(self, val):
+  @css_border_bottom_right_radius.setter
+  def css_border_bottom_right_radius(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-bottom-right-radius": val})
 
   @property
-  def border_bottom_style(self): return self.htmlObj.css("border-bottom-style")
+  def css_border_bottom_style(self): return self.htmlObj.css("border-bottom-style")
 
-  @border_bottom_style.setter
-  def border_bottom_style(self, val):
+  @css_border_bottom_style.setter
+  def css_border_bottom_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-bottom-style": val})
 
   @property
-  def border_bottom_width(self): return self.htmlObj.css("border-bottom-width")
+  def css_border_bottom_width(self): return self.htmlObj.css("border-bottom-width")
 
-  @border_bottom_width.setter
-  def border_bottom_width(self, val):
+  @css_border_bottom_width.setter
+  def css_border_bottom_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-bottom-width": val})
 
   @property
-  def border_collapse(self): return self.htmlObj.css("border-collapse")
+  def css_border_collapse(self): return self.htmlObj.css("border-collapse")
 
-  @border_collapse.setter
-  def border_collapse(self, val):
+  @css_border_collapse.setter
+  def css_border_collapse(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-collapse": val})
 
   @property
-  def border_color(self): return self.htmlObj.css("border-color")
+  def css_border_color(self): return self.htmlObj.css("border-color")
 
-  @border_color.setter
-  def border_color(self, val):
+  @css_border_color.setter
+  def css_border_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-color": val})
 
   @property
-  def border_image(self): return self.htmlObj.css("border-image")
+  def css_border_image(self): return self.htmlObj.css("border-image")
 
-  @border_image.setter
-  def border_image(self, val):
+  @css_border_image.setter
+  def css_border_image(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-image": val})
 
   @property
-  def border_image_outset(self): return self.htmlObj.css("border-image-outset")
+  def css_border_image_outset(self): return self.htmlObj.css("border-image-outset")
 
-  @border_image_outset.setter
-  def border_image_outset(self, val):
+  @css_border_image_outset.setter
+  def css_border_image_outset(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-image-outset": val})
 
   @property
-  def border_image_repeat(self): return self.htmlObj.css("border-image-repeat")
+  def css_border_image_repeat(self): return self.htmlObj.css("border-image-repeat")
 
-  @border_image_repeat.setter
-  def border_image_repeat(self, val):
+  @css_border_image_repeat.setter
+  def css_border_image_repeat(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-image-repeat": val})
 
   @property
-  def border_image_slice(self): return self.htmlObj.css("border-image-slice")
+  def css_border_image_slice(self): return self.htmlObj.css("border-image-slice")
 
-  @border_image_slice.setter
-  def border_image_slice(self, val):
+  @css_border_image_slice.setter
+  def css_border_image_slice(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-image-slice": val})
 
   @property
-  def border_image_source(self): return self.htmlObj.css("border-image-source")
+  def css_border_image_source(self): return self.htmlObj.css("border-image-source")
 
-  @border_image_source.setter
-  def border_image_source(self, val):
+  @css_border_image_source.setter
+  def css_border_image_source(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-image-source": val})
 
   @property
-  def border_image_width(self): return self.htmlObj.css("border-image-width")
+  def css_border_image_width(self): return self.htmlObj.css("border-image-width")
 
-  @border_image_width.setter
-  def border_image_width(self, val):
+  @css_border_image_width.setter
+  def css_border_image_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-image-width": val})
 
   @property
-  def border_left(self): return self.htmlObj.css("border-left")
+  def css_border_left(self): return self.htmlObj.css("border-left")
 
-  @border_left.setter
-  def border_left(self, val):
+  @css_border_left.setter
+  def css_border_left(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-left": val})
 
   @property
-  def border_left_color(self): return self.htmlObj.css("border-left-color")
+  def css_border_left_color(self): return self.htmlObj.css("border-left-color")
 
-  @border_left_color.setter
-  def border_left_color(self, val):
+  @css_border_left_color.setter
+  def css_border_left_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-left-color": val})
 
   @property
-  def border_left_style(self): return self.htmlObj.css("border-left-style")
+  def css_border_left_style(self): return self.htmlObj.css("border-left-style")
 
-  @border_left_style.setter
-  def border_left_style(self, val):
+  @css_border_left_style.setter
+  def css_border_left_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-left-style": val})
 
   @property
-  def border_left_width(self): return self.htmlObj.css("border-left-width")
+  def css_border_left_width(self): return self.htmlObj.css("border-left-width")
 
-  @border_left_width.setter
-  def border_left_width(self, val):
+  @css_border_left_width.setter
+  def css_border_left_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-left-width": val})
 
   @property
-  def border_radius(self): return self.htmlObj.css("border-radius")
+  def css_border_radius(self): return self.htmlObj.css("border-radius")
 
-  @border_radius.setter
-  def border_radius(self, val):
+  @css_border_radius.setter
+  def css_border_radius(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-radius": val})
 
   @property
-  def border_right(self): return self.htmlObj.css("border-right")
+  def css_border_right(self): return self.htmlObj.css("border-right")
 
-  @border_right.setter
-  def border_right(self, val):
+  @css_border_right.setter
+  def css_border_right(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-right": val})
 
   @property
-  def border_right_color(self): return self.htmlObj.css("border-right-color")
+  def css_border_right_color(self): return self.htmlObj.css("border-right-color")
 
-  @border_right_color.setter
-  def border_right_color(self, val):
+  @css_border_right_color.setter
+  def css_border_right_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-right-color": val})
 
   @property
-  def border_right_style(self): return self.htmlObj.css("border-right-style")
+  def css_border_right_style(self): return self.htmlObj.css("border-right-style")
 
-  @border_right_style.setter
-  def border_right_style(self, val):
+  @css_border_right_style.setter
+  def css_border_right_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-right-style": val})
 
   @property
-  def border_right_width(self): return self.htmlObj.css("border-right-width")
+  def css_border_right_width(self): return self.htmlObj.css("border-right-width")
 
-  @border_right_width.setter
-  def border_right_width(self, val):
+  @css_border_right_width.setter
+  def css_border_right_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-right-width": val})
 
   @property
-  def border_spacing(self): return self.htmlObj.css("border-spacing")
+  def css_border_spacing(self): return self.htmlObj.css("border-spacing")
 
-  @border_spacing.setter
-  def border_spacing(self, val):
+  @css_border_spacing.setter
+  def css_border_spacing(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-spacing": val})
 
   @property
-  def border_style(self): return self.htmlObj.css("border-style")
+  def css_border_style(self): return self.htmlObj.css("border-style")
 
-  @border_style.setter
-  def border_style(self, val):
+  @css_border_style.setter
+  def css_border_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-style": val})
 
   @property
-  def border_top(self): return self.htmlObj.css("border-top")
+  def css_border_top(self): return self.htmlObj.css("border-top")
 
-  @border_top.setter
-  def border_top(self, val):
+  @css_border_top.setter
+  def css_border_top(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-top": val})
 
   @property
-  def border_top_color(self): return self.htmlObj.css("border-top-color")
+  def css_border_top_color(self): return self.htmlObj.css("border-top-color")
 
-  @border_top_color.setter
-  def border_top_color(self, val):
+  @css_border_top_color.setter
+  def css_border_top_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-top-color": val})
 
   @property
-  def border_top_left_radius(self): return self.htmlObj.css("border-top-left-radius")
+  def css_border_top_left_radius(self): return self.htmlObj.css("border-top-left-radius")
 
-  @border_top_left_radius.setter
-  def border_top_left_radius(self, val):
+  @css_border_top_left_radius.setter
+  def css_border_top_left_radius(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-top-left-radius": val})
 
   @property
-  def border_top_right_radius(self): return self.htmlObj.css("border-top-right-radius")
+  def css_border_top_right_radius(self): return self.htmlObj.css("border-top-right-radius")
 
-  @border_top_right_radius.setter
-  def border_top_right_radius(self, val):
+  @css_border_top_right_radius.setter
+  def css_border_top_right_radius(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-top-right-radius": val})
 
   @property
-  def border_top_style(self): return self.htmlObj.css("border-top-style")
+  def css_border_top_style(self): return self.htmlObj.css("border-top-style")
 
-  @border_top_style.setter
-  def border_top_style(self, val):
+  @css_border_top_style.setter
+  def css_border_top_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-top-style": val})
 
   @property
-  def border_top_width(self): return self.htmlObj.css("border-top-width")
+  def css_border_top_width(self): return self.htmlObj.css("border-top-width")
 
-  @border_top_width.setter
-  def border_top_width(self, val):
+  @css_border_top_width.setter
+  def css_border_top_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-top-width": val})
 
   @property
-  def border_width(self): return self.htmlObj.css("border-width")
+  def css_border_width(self): return self.htmlObj.css("border-width")
 
-  @border_width.setter
-  def border_width(self, val):
+  @css_border_width.setter
+  def css_border_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"border-width": val})
 
   @property
-  def bottom(self): return self.htmlObj.css("bottom")
+  def css_bottom(self): return self.htmlObj.css("bottom")
 
-  @bottom.setter
-  def bottom(self, val):
+  @css_bottom.setter
+  def css_bottom(self, val):
     val = val or 'None'
     self.htmlObj.css({"bottom": val})
 
   @property
-  def box_decoration_break(self): return self.htmlObj.css("box-decoration-break")
+  def css_box_decoration_break(self): return self.htmlObj.css("box-decoration-break")
 
-  @box_decoration_break.setter
-  def box_decoration_break(self, val):
+  @css_box_decoration_break.setter
+  def css_box_decoration_break(self, val):
     val = val or 'None'
     self.htmlObj.css({"box-decoration-break": val})
 
   @property
-  def box_shadow(self): return self.htmlObj.css("box-shadow")
+  def css_box_shadow(self): return self.htmlObj.css("box-shadow")
 
-  @box_shadow.setter
-  def box_shadow(self, val):
+  @css_box_shadow.setter
+  def css_box_shadow(self, val):
     val = val or 'None'
     self.htmlObj.css({"box-shadow": val})
 
   @property
-  def box_sizing(self): return self.htmlObj.css("box-sizing")
+  def css_box_sizing(self): return self.htmlObj.css("box-sizing")
 
-  @box_sizing.setter
-  def box_sizing(self, val):
+  @css_box_sizing.setter
+  def css_box_sizing(self, val):
     val = val or 'None'
     self.htmlObj.css({"box-sizing": val})
 
   @property
-  def caption_side(self): return self.htmlObj.css("caption-side")
+  def css_caption_side(self): return self.htmlObj.css("caption-side")
 
-  @caption_side.setter
-  def caption_side(self, val):
+  @css_caption_side.setter
+  def css_caption_side(self, val):
     val = val or 'None'
     self.htmlObj.css({"caption-side": val})
 
   @property
-  def caret_color(self): return self.htmlObj.css("caret-color")
+  def css_caret_color(self): return self.htmlObj.css("caret-color")
 
-  @caret_color.setter
-  def caret_color(self, val):
+  @css_caret_color.setter
+  def css_caret_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"caret-color": val})
 
   @property
-  def clear(self): return self.htmlObj.css("clear")
+  def css_clear(self): return self.htmlObj.css("clear")
 
-  @clear.setter
-  def clear(self, val):
+  @css_clear.setter
+  def css_clear(self, val):
     val = val or 'None'
     self.htmlObj.css({"clear": val})
 
   @property
-  def clip(self): return self.htmlObj.css("clip")
+  def css_clip(self): return self.htmlObj.css("clip")
 
-  @clip.setter
-  def clip(self, val):
+  @css_clip.setter
+  def css_clip(self, val):
     val = val or 'None'
     self.htmlObj.css({"clip": val})
 
   @property
-  def clip_path(self): return self.htmlObj.css("clip-path")
+  def css_clip_path(self): return self.htmlObj.css("clip-path")
 
-  @clip_path.setter
-  def clip_path(self, val):
+  @css_clip_path.setter
+  def css_clip_path(self, val):
     val = val or 'None'
     self.htmlObj.css({"clip-path": val})
 
   @property
-  def color(self): return self.htmlObj.css("color")
+  def css_color(self): return self.htmlObj.css("color")
 
-  @color.setter
-  def color(self, val):
+  @css_color.setter
+  def css_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"color": val})
 
   @property
-  def column_count(self): return self.htmlObj.css("column-count")
+  def css_column_count(self): return self.htmlObj.css("column-count")
 
-  @column_count.setter
-  def column_count(self, val):
+  @css_column_count.setter
+  def css_column_count(self, val):
     val = val or 'None'
     self.htmlObj.css({"column-count": val})
 
   @property
-  def column_fill(self): return self.htmlObj.css("column-fill")
+  def css_column_fill(self): return self.htmlObj.css("column-fill")
 
-  @column_fill.setter
-  def column_fill(self, val):
+  @css_column_fill.setter
+  def css_column_fill(self, val):
     val = val or 'None'
     self.htmlObj.css({"column-fill": val})
 
   @property
-  def column_gap(self): return self.htmlObj.css("column-gap")
+  def css_column_gap(self): return self.htmlObj.css("column-gap")
 
-  @column_gap.setter
-  def column_gap(self, val):
+  @css_column_gap.setter
+  def css_column_gap(self, val):
     val = val or 'None'
     self.htmlObj.css({"column-gap": val})
 
   @property
-  def column_rule(self): return self.htmlObj.css("column-rule")
+  def css_column_rule(self): return self.htmlObj.css("column-rule")
 
-  @column_rule.setter
-  def column_rule(self, val):
+  @css_column_rule.setter
+  def css_column_rule(self, val):
     val = val or 'None'
     self.htmlObj.css({"column-rule": val})
 
   @property
-  def column_rule_color(self): return self.htmlObj.css("column-rule-color")
+  def css_column_rule_color(self): return self.htmlObj.css("column-rule-color")
 
-  @column_rule_color.setter
-  def column_rule_color(self, val):
+  @css_column_rule_color.setter
+  def css_column_rule_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"column-rule-color": val})
 
   @property
-  def column_rule_style(self): return self.htmlObj.css("column-rule-style")
+  def css_column_rule_style(self): return self.htmlObj.css("column-rule-style")
 
-  @column_rule_style.setter
-  def column_rule_style(self, val):
+  @css_column_rule_style.setter
+  def css_column_rule_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"column-rule-style": val})
 
   @property
-  def column_rule_width(self): return self.htmlObj.css("column-rule-width")
+  def css_column_rule_width(self): return self.htmlObj.css("column-rule-width")
 
-  @column_rule_width.setter
-  def column_rule_width(self, val):
+  @css_column_rule_width.setter
+  def css_column_rule_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"column-rule-width": val})
 
   @property
-  def column_span(self): return self.htmlObj.css("column-span")
+  def css_column_span(self): return self.htmlObj.css("column-span")
 
-  @column_span.setter
-  def column_span(self, val):
+  @css_column_span.setter
+  def css_column_span(self, val):
     val = val or 'None'
     self.htmlObj.css({"column-span": val})
 
   @property
-  def column_width(self): return self.htmlObj.css("column-width")
+  def css_column_width(self): return self.htmlObj.css("column-width")
 
-  @column_width.setter
-  def column_width(self, val):
+  @css_column_width.setter
+  def css_column_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"column-width": val})
 
   @property
-  def columns(self): return self.htmlObj.css("columns")
+  def css_columns(self): return self.htmlObj.css("columns")
 
-  @columns.setter
-  def columns(self, val):
+  @css_columns.setter
+  def css_columns(self, val):
     val = val or 'None'
     self.htmlObj.css({"columns": val})
 
   @property
-  def content(self): return self.htmlObj.css("content")
+  def css_content(self): return self.htmlObj.css("content")
 
-  @content.setter
-  def content(self, val):
+  @css_content.setter
+  def css_content(self, val):
     val = val or 'None'
     self.htmlObj.css({"content": val})
 
   @property
-  def counter_increment(self): return self.htmlObj.css("counter-increment")
+  def css_counter_increment(self): return self.htmlObj.css("counter-increment")
 
-  @counter_increment.setter
-  def counter_increment(self, val):
+  @css_counter_increment.setter
+  def css_counter_increment(self, val):
     val = val or 'None'
     self.htmlObj.css({"counter-increment": val})
 
   @property
-  def counter_reset(self): return self.htmlObj.css("counter-reset")
+  def css_counter_reset(self): return self.htmlObj.css("counter-reset")
 
-  @counter_reset.setter
-  def counter_reset(self, val):
+  @css_counter_reset.setter
+  def css_counter_reset(self, val):
     val = val or 'None'
     self.htmlObj.css({"counter-reset": val})
 
   @property
-  def cursor(self): return self.htmlObj.css("cursor")
+  def css_cursor(self): return self.htmlObj.css("cursor")
 
-  @cursor.setter
-  def cursor(self, val):
+  @css_cursor.setter
+  def css_cursor(self, val):
     val = val or 'None'
     self.htmlObj.css({"cursor": val})
 
   @property
-  def direction(self): return self.htmlObj.css("direction")
+  def css_direction(self): return self.htmlObj.css("direction")
 
-  @direction.setter
-  def direction(self, val):
+  @css_direction.setter
+  def css_direction(self, val):
     val = val or 'None'
     self.htmlObj.css({"direction": val})
 
   @property
-  def display(self): return self.htmlObj.css("display")
+  def css_display(self): return self.htmlObj.css("display")
 
-  @display.setter
-  def display(self, val):
+  @css_display.setter
+  def css_display(self, val):
     val = val or 'None'
     self.htmlObj.css({"display": val})
 
   @property
-  def empty_cells(self): return self.htmlObj.css("empty-cells")
+  def css_empty_cells(self): return self.htmlObj.css("empty-cells")
 
-  @empty_cells.setter
-  def empty_cells(self, val):
+  @css_empty_cells.setter
+  def css_empty_cells(self, val):
     val = val or 'None'
     self.htmlObj.css({"empty-cells": val})
 
   @property
-  def filter(self): return self.htmlObj.css("filter")
+  def css_filter(self): return self.htmlObj.css("filter")
 
-  @filter.setter
-  def filter(self, val):
+  @css_filter.setter
+  def css_filter(self, val):
     val = val or 'None'
     self.htmlObj.css({"filter": val})
 
   @property
-  def flex(self): return self.htmlObj.css("flex")
+  def css_flex(self): return self.htmlObj.css("flex")
 
-  @flex.setter
-  def flex(self, val):
+  @css_flex.setter
+  def css_flex(self, val):
     val = val or 'None'
     self.htmlObj.css({"flex": val})
 
   @property
-  def flex_basis(self): return self.htmlObj.css("flex-basis")
+  def css_flex_basis(self): return self.htmlObj.css("flex-basis")
 
-  @flex_basis.setter
-  def flex_basis(self, val):
+  @css_flex_basis.setter
+  def css_flex_basis(self, val):
     val = val or 'None'
     self.htmlObj.css({"flex-basis": val})
 
   @property
-  def flex_direction(self): return self.htmlObj.css("flex-direction")
+  def css_flex_direction(self): return self.htmlObj.css("flex-direction")
 
-  @flex_direction.setter
-  def flex_direction(self, val):
+  @css_flex_direction.setter
+  def css_flex_direction(self, val):
     val = val or 'None'
     self.htmlObj.css({"flex-direction": val})
 
   @property
-  def flex_flow(self): return self.htmlObj.css("flex-flow")
+  def css_flex_flow(self): return self.htmlObj.css("flex-flow")
 
-  @flex_flow.setter
-  def flex_flow(self, val):
+  @css_flex_flow.setter
+  def css_flex_flow(self, val):
     val = val or 'None'
     self.htmlObj.css({"flex-flow": val})
 
   @property
-  def flex_grow(self): return self.htmlObj.css("flex-grow")
+  def css_flex_grow(self): return self.htmlObj.css("flex-grow")
 
-  @flex_grow.setter
-  def flex_grow(self, val):
+  @css_flex_grow.setter
+  def css_flex_grow(self, val):
     val = val or 'None'
     self.htmlObj.css({"flex-grow": val})
 
   @property
-  def flex_shrink(self): return self.htmlObj.css("flex-shrink")
+  def css_flex_shrink(self): return self.htmlObj.css("flex-shrink")
 
-  @flex_shrink.setter
-  def flex_shrink(self, val):
+  @css_flex_shrink.setter
+  def css_flex_shrink(self, val):
     val = val or 'None'
     self.htmlObj.css({"flex-shrink": val})
 
   @property
-  def flex_wrap(self): return self.htmlObj.css("flex-wrap")
+  def css_flex_wrap(self): return self.htmlObj.css("flex-wrap")
 
-  @flex_wrap.setter
-  def flex_wrap(self, val):
+  @css_flex_wrap.setter
+  def css_flex_wrap(self, val):
     val = val or 'None'
     self.htmlObj.css({"flex-wrap": val})
 
   @property
-  def float(self): return self.htmlObj.css("float")
+  def css_float(self): return self.htmlObj.css("float")
 
-  @float.setter
-  def float(self, val):
+  @css_float.setter
+  def css_float(self, val):
     val = val or 'None'
     self.htmlObj.css({"float": val})
 
   @property
-  def font(self): return self.htmlObj.css("font")
+  def css_font(self): return self.htmlObj.css("font")
 
-  @font.setter
-  def font(self, val):
+  @css_font.setter
+  def css_font(self, val):
     val = val or 'None'
     self.htmlObj.css({"font": val})
 
   @property
-  def font_family(self): return self.htmlObj.css("font-family")
+  def css_font_family(self): return self.htmlObj.css("font-family")
 
-  @font_family.setter
-  def font_family(self, val):
+  @css_font_family.setter
+  def css_font_family(self, val):
     val = val or 'None'
     self.htmlObj.css({"font-family": val})
 
   @property
-  def font_kerning(self): return self.htmlObj.css("font-kerning")
+  def css_font_kerning(self): return self.htmlObj.css("font-kerning")
 
-  @font_kerning.setter
-  def font_kerning(self, val):
+  @css_font_kerning.setter
+  def css_font_kerning(self, val):
     val = val or 'None'
     self.htmlObj.css({"font-kerning": val})
 
   @property
-  def font_size(self): return self.htmlObj.css("font-size")
+  def css_font_size(self): return self.htmlObj.css("font-size")
 
-  @font_size.setter
-  def font_size(self, val):
+  @css_font_size.setter
+  def css_font_size(self, val):
     val = val or 'None'
     self.htmlObj.css({"font-size": val})
 
   @property
-  def font_size_adjust(self): return self.htmlObj.css("font-size-adjust")
+  def css_font_size_adjust(self): return self.htmlObj.css("font-size-adjust")
 
-  @font_size_adjust.setter
-  def font_size_adjust(self, val):
+  @css_font_size_adjust.setter
+  def css_font_size_adjust(self, val):
     val = val or 'None'
     self.htmlObj.css({"font-size-adjust": val})
 
   @property
-  def font_stretch(self): return self.htmlObj.css("font-stretch")
+  def css_font_stretch(self): return self.htmlObj.css("font-stretch")
 
-  @font_stretch.setter
-  def font_stretch(self, val):
+  @css_font_stretch.setter
+  def css_font_stretch(self, val):
     val = val or 'None'
     self.htmlObj.css({"font-stretch": val})
 
   @property
-  def font_style(self): return self.htmlObj.css("font-style")
+  def css_font_style(self): return self.htmlObj.css("font-style")
 
-  @font_style.setter
-  def font_style(self, val):
+  @css_font_style.setter
+  def css_font_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"font-style": val})
 
   @property
-  def font_variant(self): return self.htmlObj.css("font-variant")
+  def css_font_variant(self): return self.htmlObj.css("font-variant")
 
-  @font_variant.setter
-  def font_variant(self, val):
+  @css_font_variant.setter
+  def css_font_variant(self, val):
     val = val or 'None'
     self.htmlObj.css({"font-variant": val})
 
   @property
-  def font_weight(self): return self.htmlObj.css("font-weight")
+  def css_font_weight(self): return self.htmlObj.css("font-weight")
 
-  @font_weight.setter
-  def font_weight(self, val):
+  @css_font_weight.setter
+  def css_font_weight(self, val):
     val = val or 'None'
     self.htmlObj.css({"font-weight": val})
 
   @property
-  def grid(self): return self.htmlObj.css("grid")
+  def css_grid(self): return self.htmlObj.css("grid")
 
-  @grid.setter
-  def grid(self, val):
+  @css_grid.setter
+  def css_grid(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid": val})
 
   @property
-  def grid_area(self): return self.htmlObj.css("grid-area")
+  def css_grid_area(self): return self.htmlObj.css("grid-area")
 
-  @grid_area.setter
-  def grid_area(self, val):
+  @css_grid_area.setter
+  def css_grid_area(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-area": val})
 
   @property
-  def grid_auto_columns(self): return self.htmlObj.css("grid-auto-columns")
+  def css_grid_auto_columns(self): return self.htmlObj.css("grid-auto-columns")
 
-  @grid_auto_columns.setter
-  def grid_auto_columns(self, val):
+  @css_grid_auto_columns.setter
+  def css_grid_auto_columns(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-auto-columns": val})
 
   @property
-  def grid_auto_flow(self): return self.htmlObj.css("grid-auto-flow")
+  def css_grid_auto_flow(self): return self.htmlObj.css("grid-auto-flow")
 
-  @grid_auto_flow.setter
-  def grid_auto_flow(self, val):
+  @css_grid_auto_flow.setter
+  def css_grid_auto_flow(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-auto-flow": val})
 
   @property
-  def grid_auto_rows(self): return self.htmlObj.css("grid-auto-rows")
+  def css_grid_auto_rows(self): return self.htmlObj.css("grid-auto-rows")
 
-  @grid_auto_rows.setter
-  def grid_auto_rows(self, val):
+  @css_grid_auto_rows.setter
+  def css_grid_auto_rows(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-auto-rows": val})
 
   @property
-  def grid_column(self): return self.htmlObj.css("grid-column")
+  def css_grid_column(self): return self.htmlObj.css("grid-column")
 
-  @grid_column.setter
-  def grid_column(self, val):
+  @css_grid_column.setter
+  def css_grid_column(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-column": val})
 
   @property
-  def grid_column_end(self): return self.htmlObj.css("grid-column-end")
+  def css_grid_column_end(self): return self.htmlObj.css("grid-column-end")
 
-  @grid_column_end.setter
-  def grid_column_end(self, val):
+  @css_grid_column_end.setter
+  def css_grid_column_end(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-column-end": val})
 
   @property
-  def grid_column_gap(self): return self.htmlObj.css("grid-column-gap")
+  def css_grid_column_gap(self): return self.htmlObj.css("grid-column-gap")
 
-  @grid_column_gap.setter
-  def grid_column_gap(self, val):
+  @css_grid_column_gap.setter
+  def css_grid_column_gap(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-column-gap": val})
 
   @property
-  def grid_column_start(self): return self.htmlObj.css("grid-column-start")
+  def css_grid_column_start(self): return self.htmlObj.css("grid-column-start")
 
-  @grid_column_start.setter
-  def grid_column_start(self, val):
+  @css_grid_column_start.setter
+  def css_grid_column_start(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-column-start": val})
 
   @property
-  def grid_gap(self): return self.htmlObj.css("grid-gap")
+  def css_grid_gap(self): return self.htmlObj.css("grid-gap")
 
-  @grid_gap.setter
-  def grid_gap(self, val):
+  @css_grid_gap.setter
+  def css_grid_gap(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-gap": val})
 
   @property
-  def grid_row(self): return self.htmlObj.css("grid-row")
+  def css_grid_row(self): return self.htmlObj.css("grid-row")
 
-  @grid_row.setter
-  def grid_row(self, val):
+  @css_grid_row.setter
+  def css_grid_row(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-row": val})
 
   @property
-  def grid_row_end(self): return self.htmlObj.css("grid-row-end")
+  def css_grid_row_end(self): return self.htmlObj.css("grid-row-end")
 
-  @grid_row_end.setter
-  def grid_row_end(self, val):
+  @css_grid_row_end.setter
+  def css_grid_row_end(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-row-end": val})
 
   @property
-  def grid_row_gap(self): return self.htmlObj.css("grid-row-gap")
+  def css_grid_row_gap(self): return self.htmlObj.css("grid-row-gap")
 
-  @grid_row_gap.setter
-  def grid_row_gap(self, val):
+  @css_grid_row_gap.setter
+  def css_grid_row_gap(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-row-gap": val})
 
   @property
-  def grid_row_start(self): return self.htmlObj.css("grid-row-start")
+  def css_grid_row_start(self): return self.htmlObj.css("grid-row-start")
 
-  @grid_row_start.setter
-  def grid_row_start(self, val):
+  @css_grid_row_start.setter
+  def css_grid_row_start(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-row-start": val})
 
   @property
-  def grid_template(self): return self.htmlObj.css("grid-template")
+  def css_grid_template(self): return self.htmlObj.css("grid-template")
 
-  @grid_template.setter
-  def grid_template(self, val):
+  @css_grid_template.setter
+  def css_grid_template(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-template": val})
 
   @property
-  def grid_template_areas(self): return self.htmlObj.css("grid-template-areas")
+  def css_grid_template_areas(self): return self.htmlObj.css("grid-template-areas")
 
-  @grid_template_areas.setter
-  def grid_template_areas(self, val):
+  @css_grid_template_areas.setter
+  def css_grid_template_areas(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-template-areas": val})
 
   @property
-  def grid_template_columns(self): return self.htmlObj.css("grid-template-columns")
+  def css_grid_template_columns(self): return self.htmlObj.css("grid-template-columns")
 
-  @grid_template_columns.setter
-  def grid_template_columns(self, val):
+  @css_grid_template_columns.setter
+  def css_grid_template_columns(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-template-columns": val})
 
   @property
-  def grid_template_rows(self): return self.htmlObj.css("grid-template-rows")
+  def css_grid_template_rows(self): return self.htmlObj.css("grid-template-rows")
 
-  @grid_template_rows.setter
-  def grid_template_rows(self, val):
+  @css_grid_template_rows.setter
+  def css_grid_template_rows(self, val):
     val = val or 'None'
     self.htmlObj.css({"grid-template-rows": val})
 
   @property
-  def hanging_punctuation(self): return self.htmlObj.css("hanging-punctuation")
+  def css_hanging_punctuation(self): return self.htmlObj.css("hanging-punctuation")
 
-  @hanging_punctuation.setter
-  def hanging_punctuation(self, val):
+  @css_hanging_punctuation.setter
+  def css_hanging_punctuation(self, val):
     val = val or 'None'
     self.htmlObj.css({"hanging-punctuation": val})
 
   @property
-  def height(self): return self.htmlObj.css("height")
+  def css_height(self): return self.htmlObj.css("height")
 
-  @height.setter
-  def height(self, val):
+  @css_height.setter
+  def css_height(self, val):
     val = val or 'None'
     self.htmlObj.css({"height": val})
 
   @property
-  def hyphens(self): return self.htmlObj.css("hyphens")
+  def css_hyphens(self): return self.htmlObj.css("hyphens")
 
-  @hyphens.setter
-  def hyphens(self, val):
+  @css_hyphens.setter
+  def css_hyphens(self, val):
     val = val or 'None'
     self.htmlObj.css({"hyphens": val})
 
   @property
-  def isolation(self): return self.htmlObj.css("isolation")
+  def css_isolation(self): return self.htmlObj.css("isolation")
 
-  @isolation.setter
-  def isolation(self, val):
+  @css_isolation.setter
+  def css_isolation(self, val):
     val = val or 'None'
     self.htmlObj.css({"isolation": val})
 
   @property
-  def justify_content(self): return self.htmlObj.css("justify-content")
+  def css_justify_content(self): return self.htmlObj.css("justify-content")
 
-  @justify_content.setter
-  def justify_content(self, val):
+  @css_justify_content.setter
+  def css_justify_content(self, val):
     val = val or 'None'
     self.htmlObj.css({"justify-content": val})
 
   @property
-  def left(self): return self.htmlObj.css("left")
+  def css_left(self): return self.htmlObj.css("left")
 
-  @left.setter
-  def left(self, val):
+  @css_left.setter
+  def css_left(self, val):
     val = val or 'None'
     self.htmlObj.css({"left": val})
 
   @property
-  def letter_spacing(self): return self.htmlObj.css("letter-spacing")
+  def css_letter_spacing(self): return self.htmlObj.css("letter-spacing")
 
-  @letter_spacing.setter
-  def letter_spacing(self, val):
+  @css_letter_spacing.setter
+  def css_letter_spacing(self, val):
     val = val or 'None'
     self.htmlObj.css({"letter-spacing": val})
 
   @property
-  def line_height(self): return self.htmlObj.css("line-height")
+  def css_line_height(self): return self.htmlObj.css("line-height")
 
-  @line_height.setter
-  def line_height(self, val):
+  @css_line_height.setter
+  def css_line_height(self, val):
     val = val or 'None'
     self.htmlObj.css({"line-height": val})
 
   @property
-  def list_style(self): return self.htmlObj.css("list-style")
+  def css_list_style(self): return self.htmlObj.css("list-style")
 
-  @list_style.setter
-  def list_style(self, val):
+  @css_list_style.setter
+  def css_list_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"list-style": val})
 
   @property
-  def list_style_image(self): return self.htmlObj.css("list-style-image")
+  def css_list_style_image(self): return self.htmlObj.css("list-style-image")
 
-  @list_style_image.setter
-  def list_style_image(self, val):
+  @css_list_style_image.setter
+  def css_list_style_image(self, val):
     val = val or 'None'
     self.htmlObj.css({"list-style-image": val})
 
   @property
-  def list_style_position(self): return self.htmlObj.css("list-style-position")
+  def css_list_style_position(self): return self.htmlObj.css("list-style-position")
 
-  @list_style_position.setter
-  def list_style_position(self, val):
+  @css_list_style_position.setter
+  def css_list_style_position(self, val):
     val = val or 'None'
     self.htmlObj.css({"list-style-position": val})
 
   @property
-  def list_style_type(self): return self.htmlObj.css("list-style-type")
+  def css_list_style_type(self): return self.htmlObj.css("list-style-type")
 
-  @list_style_type.setter
-  def list_style_type(self, val):
+  @css_list_style_type.setter
+  def css_list_style_type(self, val):
     val = val or 'None'
     self.htmlObj.css({"list-style-type": val})
 
   @property
-  def margin(self): return self.htmlObj.css("margin")
+  def css_margin(self): return self.htmlObj.css("margin")
 
-  @margin.setter
-  def margin(self, val):
+  @css_margin.setter
+  def css_margin(self, val):
     val = val or 'None'
     self.htmlObj.css({"margin": val})
 
   @property
-  def margin_bottom(self): return self.htmlObj.css("margin-bottom")
+  def css_margin_bottom(self): return self.htmlObj.css("margin-bottom")
 
-  @margin_bottom.setter
-  def margin_bottom(self, val):
+  @css_margin_bottom.setter
+  def css_margin_bottom(self, val):
     val = val or 'None'
     self.htmlObj.css({"margin-bottom": val})
 
   @property
-  def margin_left(self): return self.htmlObj.css("margin-left")
+  def css_margin_left(self): return self.htmlObj.css("margin-left")
 
-  @margin_left.setter
-  def margin_left(self, val):
+  @css_margin_left.setter
+  def css_margin_left(self, val):
+    """
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_margin-left.asp
+    
+    :param val:
+    :return:
+    """
+    if isinstance(val, int):
+      val = "%spx" % val
     val = val or 'None'
     self.htmlObj.css({"margin-left": val})
 
   @property
-  def margin_right(self): return self.htmlObj.css("margin-right")
+  def css_margin_right(self): return self.htmlObj.css("margin-right")
 
-  @margin_right.setter
-  def margin_right(self, val):
+  @css_margin_right.setter
+  def css_margin_right(self, val):
     val = val or 'None'
     self.htmlObj.css({"margin-right": val})
 
   @property
-  def margin_top(self): return self.htmlObj.css("margin-top")
+  def css_margin_top(self): return self.htmlObj.css("margin-top")
 
-  @margin_top.setter
-  def margin_top(self, val):
+  @css_margin_top.setter
+  def css_margin_top(self, val):
     val = val or 'None'
     self.htmlObj.css({"margin-top": val})
 
   @property
-  def max_height(self): return self.htmlObj.css("max-height")
+  def css_max_height(self): return self.htmlObj.css("max-height")
 
-  @max_height.setter
-  def max_height(self, val):
+  @css_max_height.setter
+  def css_max_height(self, val):
     val = val or 'None'
     self.htmlObj.css({"max-height": val})
 
   @property
-  def max_width(self): return self.htmlObj.css("max-width")
+  def css_max_width(self): return self.htmlObj.css("max-width")
 
-  @max_width.setter
-  def max_width(self, val):
+  @css_max_width.setter
+  def css_max_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"max-width": val})
 
   @property
-  def min_height(self): return self.htmlObj.css("min-height")
+  def css_min_height(self): return self.htmlObj.css("min-height")
 
-  @min_height.setter
-  def min_height(self, val):
+  @css_min_height.setter
+  def css_min_height(self, val):
     val = val or 'None'
     self.htmlObj.css({"min-height": val})
 
   @property
-  def min_width(self): return self.htmlObj.css("min-width")
+  def css_min_width(self): return self.htmlObj.css("min-width")
 
-  @min_width.setter
-  def min_width(self, val):
+  @css_min_width.setter
+  def css_min_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"min-width": val})
 
   @property
-  def mix_blend_mode(self): return self.htmlObj.css("mix-blend-mode")
+  def css_mix_blend_mode(self): return self.htmlObj.css("mix-blend-mode")
 
-  @mix_blend_mode.setter
-  def mix_blend_mode(self, val):
+  @css_mix_blend_mode.setter
+  def css_mix_blend_mode(self, val):
     val = val or 'None'
     self.htmlObj.css({"mix-blend-mode": val})
 
   @property
-  def object_fit(self): return self.htmlObj.css("object-fit")
+  def css_object_fit(self): return self.htmlObj.css("object-fit")
 
-  @object_fit.setter
-  def object_fit(self, val):
+  @css_object_fit.setter
+  def css_object_fit(self, val):
     val = val or 'None'
     self.htmlObj.css({"object-fit": val})
 
   @property
-  def object_position(self): return self.htmlObj.css("object-position")
+  def css_object_position(self): return self.htmlObj.css("object-position")
 
-  @object_position.setter
-  def object_position(self, val):
+  @css_object_position.setter
+  def css_object_position(self, val):
     val = val or 'None'
     self.htmlObj.css({"object-position": val})
 
   @property
-  def opacity(self): return self.htmlObj.css("opacity")
+  def css_opacity(self): return self.htmlObj.css("opacity")
 
-  @opacity.setter
-  def opacity(self, val):
+  @css_opacity.setter
+  def css_opacity(self, val):
     val = val or 'None'
     self.htmlObj.css({"opacity": val})
 
   @property
-  def order(self): return self.htmlObj.css("order")
+  def css_order(self): return self.htmlObj.css("order")
 
-  @order.setter
-  def order(self, val):
+  @css_order.setter
+  def css_order(self, val):
     val = val or 'None'
     self.htmlObj.css({"order": val})
 
   @property
-  def outline(self): return self.htmlObj.css("outline")
+  def css_outline(self): return self.htmlObj.css("outline")
 
-  @outline.setter
-  def outline(self, val):
+  @css_outline.setter
+  def css_outline(self, val):
     val = val or 'None'
     self.htmlObj.css({"outline": val})
 
   @property
-  def outline_color(self): return self.htmlObj.css("outline-color")
+  def css_outline_color(self): return self.htmlObj.css("outline-color")
 
-  @outline_color.setter
-  def outline_color(self, val):
+  @css_outline_color.setter
+  def css_outline_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"outline-color": val})
 
   @property
-  def outline_offset(self): return self.htmlObj.css("outline-offset")
+  def css_outline_offset(self): return self.htmlObj.css("outline-offset")
 
-  @outline_offset.setter
-  def outline_offset(self, val):
+  @css_outline_offset.setter
+  def css_outline_offset(self, val):
     val = val or 'None'
     self.htmlObj.css({"outline-offset": val})
 
   @property
-  def outline_style(self): return self.htmlObj.css("outline-style")
+  def css_outline_style(self): return self.htmlObj.css("outline-style")
 
-  @outline_style.setter
-  def outline_style(self, val):
+  @css_outline_style.setter
+  def css_outline_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"outline-style": val})
 
   @property
-  def outline_width(self): return self.htmlObj.css("outline-width")
+  def css_outline_width(self): return self.htmlObj.css("outline-width")
 
-  @outline_width.setter
-  def outline_width(self, val):
+  @css_outline_width.setter
+  def css_outline_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"outline-width": val})
 
   @property
-  def overflow(self): return self.htmlObj.css("overflow")
+  def css_overflow(self): return self.htmlObj.css("overflow")
 
-  @overflow.setter
-  def overflow(self, val):
+  @css_overflow.setter
+  def css_overflow(self, val):
     val = val or 'None'
     self.htmlObj.css({"overflow": val})
 
   @property
-  def overflow_x(self): return self.htmlObj.css("overflow-x")
+  def css_overflow_x(self): return self.htmlObj.css("overflow-x")
 
-  @overflow_x.setter
-  def overflow_x(self, val):
+  @css_overflow_x.setter
+  def css_overflow_x(self, val):
     val = val or 'None'
     self.htmlObj.css({"overflow-x": val})
 
   @property
-  def overflow_y(self): return self.htmlObj.css("overflow-y")
+  def css_overflow_y(self): return self.htmlObj.css("overflow-y")
 
-  @overflow_y.setter
-  def overflow_y(self, val):
+  @css_overflow_y.setter
+  def css_overflow_y(self, val):
     val = val or 'None'
     self.htmlObj.css({"overflow-y": val})
 
   @property
-  def padding(self): return self.htmlObj.css("padding")
+  def css_padding(self): return self.htmlObj.css("padding")
 
-  @padding.setter
-  def padding(self, val):
+  @css_padding.setter
+  def css_padding(self, val):
     val = val or 'None'
     self.htmlObj.css({"padding": val})
 
   @property
-  def padding_bottom(self): return self.htmlObj.css("padding-bottom")
+  def css_padding_bottom(self): return self.htmlObj.css("padding-bottom")
 
-  @padding_bottom.setter
-  def padding_bottom(self, val):
+  @css_padding_bottom.setter
+  def css_padding_bottom(self, val):
     val = val or 'None'
     self.htmlObj.css({"padding-bottom": val})
 
   @property
-  def padding_left(self): return self.htmlObj.css("padding-left")
+  def css_padding_left(self): return self.htmlObj.css("padding-left")
 
-  @padding_left.setter
-  def padding_left(self, val):
+  @css_padding_left.setter
+  def css_padding_left(self, val):
     val = val or 'None'
     self.htmlObj.css({"padding-left": val})
 
   @property
-  def padding_right(self): return self.htmlObj.css("padding-right")
+  def css_padding_right(self): return self.htmlObj.css("padding-right")
 
-  @padding_right.setter
-  def padding_right(self, val):
+  @css_padding_right.setter
+  def css_padding_right(self, val):
     val = val or 'None'
     self.htmlObj.css({"padding-right": val})
 
   @property
-  def padding_top(self): return self.htmlObj.css("padding-top")
+  def css_padding_top(self): return self.htmlObj.css("padding-top")
 
-  @padding_top.setter
-  def padding_top(self, val):
+  @css_padding_top.setter
+  def css_padding_top(self, val):
     val = val or 'None'
     self.htmlObj.css({"padding-top": val})
 
   @property
-  def page_break_after(self): return self.htmlObj.css("page-break-after")
+  def css_page_break_after(self): return self.htmlObj.css("page-break-after")
 
-  @page_break_after.setter
-  def page_break_after(self, val):
+  @css_page_break_after.setter
+  def css_page_break_after(self, val):
     val = val or 'None'
     self.htmlObj.css({"page-break-after": val})
 
   @property
-  def page_break_before(self): return self.htmlObj.css("page-break-before")
+  def css_page_break_before(self): return self.htmlObj.css("page-break-before")
 
-  @page_break_before.setter
-  def page_break_before(self, val):
+  @css_page_break_before.setter
+  def css_page_break_before(self, val):
     val = val or 'None'
     self.htmlObj.css({"page-break-before": val})
 
   @property
-  def page_break_inside(self): return self.htmlObj.css("page-break-inside")
+  def css_page_break_inside(self): return self.htmlObj.css("page-break-inside")
 
-  @page_break_inside.setter
-  def page_break_inside(self, val):
+  @css_page_break_inside.setter
+  def css_page_break_inside(self, val):
     val = val or 'None'
     self.htmlObj.css({"page-break-inside": val})
 
   @property
-  def perspective(self): return self.htmlObj.css("perspective")
+  def css_perspective(self): return self.htmlObj.css("perspective")
 
-  @perspective.setter
-  def perspective(self, val):
+  @css_perspective.setter
+  def css_perspective(self, val):
     val = val or 'None'
     self.htmlObj.css({"perspective": val})
 
   @property
-  def perspective_origin(self): return self.htmlObj.css("perspective-origin")
+  def css_perspective_origin(self): return self.htmlObj.css("perspective-origin")
 
-  @perspective_origin.setter
-  def perspective_origin(self, val):
+  @css_perspective_origin.setter
+  def css_perspective_origin(self, val):
     val = val or 'None'
     self.htmlObj.css({"perspective-origin": val})
 
   @property
-  def pointer_events(self): return self.htmlObj.css("pointer-events")
+  def css_pointer_events(self): return self.htmlObj.css("pointer-events")
 
-  @pointer_events.setter
-  def pointer_events(self, val):
+  @css_pointer_events.setter
+  def css_pointer_events(self, val):
     val = val or 'None'
     self.htmlObj.css({"pointer-events": val})
 
   @property
-  def position(self): return self.htmlObj.css("position")
+  def css_position(self): return self.htmlObj.css("position")
 
-  @position.setter
-  def position(self, val):
+  @css_position.setter
+  def css_position(self, val):
     val = val or 'None'
     self.htmlObj.css({"position": val})
 
   @property
-  def quotes(self): return self.htmlObj.css("quotes")
+  def css_quotes(self): return self.htmlObj.css("quotes")
 
-  @quotes.setter
-  def quotes(self, val):
+  @css_quotes.setter
+  def css_quotes(self, val):
     val = val or 'None'
     self.htmlObj.css({"quotes": val})
 
   @property
-  def resize(self): return self.htmlObj.css("resize")
+  def css_resize(self): return self.htmlObj.css("resize")
 
-  @resize.setter
-  def resize(self, val):
+  @css_resize.setter
+  def css_resize(self, val):
     val = val or 'None'
     self.htmlObj.css({"resize": val})
 
   @property
-  def right(self): return self.htmlObj.css("right")
+  def css_right(self): return self.htmlObj.css("right")
 
-  @right.setter
-  def right(self, val):
+  @css_right.setter
+  def css_right(self, val):
     val = val or 'None'
     self.htmlObj.css({"right": val})
 
   @property
-  def scroll_behavior(self): return self.htmlObj.css("scroll-behavior")
+  def css_scroll_behavior(self): return self.htmlObj.css("scroll-behavior")
 
-  @scroll_behavior.setter
-  def scroll_behavior(self, val):
+  @css_scroll_behavior.setter
+  def css_scroll_behavior(self, val):
     val = val or 'None'
     self.htmlObj.css({"scroll-behavior": val})
 
   @property
-  def tab_size(self): return self.htmlObj.css("tab-size")
+  def css_tab_size(self): return self.htmlObj.css("tab-size")
 
-  @tab_size.setter
-  def tab_size(self, val):
+  @css_tab_size.setter
+  def css_tab_size(self, val):
     val = val or 'None'
     self.htmlObj.css({"tab-size": val})
 
   @property
-  def table_layout(self): return self.htmlObj.css("table-layout")
+  def css_table_layout(self): return self.htmlObj.css("table-layout")
 
-  @table_layout.setter
-  def table_layout(self, val):
+  @css_table_layout.setter
+  def css_table_layout(self, val):
     val = val or 'None'
     self.htmlObj.css({"table-layout": val})
 
   @property
-  def text_align(self): return self.htmlObj.css("text-align")
+  def css_text_align(self): return self.htmlObj.css("text-align")
 
-  @text_align.setter
-  def text_align(self, val):
+  @css_text_align.setter
+  def css_text_align(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-align": val})
 
   @property
-  def text_align_last(self): return self.htmlObj.css("text-align-last")
+  def css_text_align_last(self): return self.htmlObj.css("text-align-last")
 
-  @text_align_last.setter
-  def text_align_last(self, val):
+  @css_text_align_last.setter
+  def css_text_align_last(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-align-last": val})
 
   @property
-  def text_decoration(self): return self.htmlObj.css("text-decoration")
+  def css_text_decoration(self): return self.htmlObj.css("text-decoration")
 
-  @text_decoration.setter
-  def text_decoration(self, val):
+  @css_text_decoration.setter
+  def css_text_decoration(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-decoration": val})
 
   @property
-  def text_decoration_color(self): return self.htmlObj.css("text-decoration-color")
+  def css_text_decoration_color(self): return self.htmlObj.css("text-decoration-color")
 
-  @text_decoration_color.setter
-  def text_decoration_color(self, val):
+  @css_text_decoration_color.setter
+  def css_text_decoration_color(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-decoration-color": val})
 
   @property
-  def text_decoration_line(self): return self.htmlObj.css("text-decoration-line")
+  def css_text_decoration_line(self): return self.htmlObj.css("text-decoration-line")
 
-  @text_decoration_line.setter
-  def text_decoration_line(self, val):
+  @css_text_decoration_line.setter
+  def css_text_decoration_line(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-decoration-line": val})
 
   @property
-  def text_decoration_style(self): return self.htmlObj.css("text-decoration-style")
+  def css_text_decoration_style(self): return self.htmlObj.css("text-decoration-style")
 
-  @text_decoration_style.setter
-  def text_decoration_style(self, val):
+  @css_text_decoration_style.setter
+  def css_text_decoration_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-decoration-style": val})
 
   @property
-  def text_indent(self): return self.htmlObj.css("text-indent")
+  def css_text_indent(self): return self.htmlObj.css("text-indent")
 
-  @text_indent.setter
-  def text_indent(self, val):
+  @css_text_indent.setter
+  def css_text_indent(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-indent": val})
 
   @property
-  def text_justify(self): return self.htmlObj.css("text-justify")
+  def css_text_justify(self): return self.htmlObj.css("text-justify")
 
-  @text_justify.setter
-  def text_justify(self, val):
+  @css_text_justify.setter
+  def css_text_justify(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-justify": val})
 
   @property
-  def text_overflow(self): return self.htmlObj.css("text-overflow")
+  def css_text_overflow(self): return self.htmlObj.css("text-overflow")
 
-  @text_overflow.setter
-  def text_overflow(self, val):
+  @css_text_overflow.setter
+  def css_text_overflow(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-overflow": val})
 
   @property
-  def text_shadow(self): return self.htmlObj.css("text-shadow")
+  def css_text_shadow(self): return self.htmlObj.css("text-shadow")
 
-  @text_shadow.setter
-  def text_shadow(self, val):
+  @css_text_shadow.setter
+  def css_text_shadow(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-shadow": val})
 
   @property
-  def text_transform(self): return self.htmlObj.css("text-transform")
+  def css_text_transform(self): return self.htmlObj.css("text-transform")
 
-  @text_transform.setter
-  def text_transform(self, val):
+  @css_text_transform.setter
+  def css_text_transform(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-transform": val})
 
   @property
-  def top(self): return self.htmlObj.css("top")
+  def css_top(self): return self.htmlObj.css("top")
 
-  @top.setter
-  def top(self, val):
+  @css_top.setter
+  def css_top(self, val):
     val = val or 'None'
     self.htmlObj.css({"top": val})
 
   @property
-  def transform(self): return self.htmlObj.css("transform")
+  def css_transform(self): return self.htmlObj.css("transform")
 
-  @transform.setter
-  def transform(self, val):
+  @css_transform.setter
+  def css_transform(self, val):
     val = val or 'None'
     self.htmlObj.css({"transform": val})
 
   @property
-  def transform_origin(self): return self.htmlObj.css("transform-origin")
+  def css_transform_origin(self): return self.htmlObj.css("transform-origin")
 
-  @transform_origin.setter
-  def transform_origin(self, val):
+  @css_transform_origin.setter
+  def css_transform_origin(self, val):
     val = val or 'None'
     self.htmlObj.css({"transform-origin": val})
 
   @property
-  def transform_style(self): return self.htmlObj.css("transform-style")
+  def css_transform_style(self): return self.htmlObj.css("transform-style")
 
-  @transform_style.setter
-  def transform_style(self, val):
+  @css_transform_style.setter
+  def css_transform_style(self, val):
     val = val or 'None'
     self.htmlObj.css({"transform-style": val})
 
   @property
-  def transition(self): return self.htmlObj.css("transition")
+  def css_transition(self): return self.htmlObj.css("transition")
 
-  @transition.setter
-  def transition(self, val):
+  @css_transition.setter
+  def css_transition(self, val):
     val = val or 'None'
     self.htmlObj.css({"transition": val})
 
   @property
-  def transition_delay(self): return self.htmlObj.css("transition-delay")
+  def css_transition_delay(self): return self.htmlObj.css("transition-delay")
 
-  @transition_delay.setter
-  def transition_delay(self, val):
+  @css_transition_delay.setter
+  def css_transition_delay(self, val):
     val = val or 'None'
     self.htmlObj.css({"transition-delay": val})
 
   @property
-  def transition_duration(self): return self.htmlObj.css("transition-duration")
+  def css_transition_duration(self): return self.htmlObj.css("transition-duration")
 
-  @transition_duration.setter
-  def transition_duration(self, val):
+  @css_transition_duration.setter
+  def css_transition_duration(self, val):
     val = val or 'None'
     self.htmlObj.css({"transition-duration": val})
 
   @property
-  def transition_property(self): return self.htmlObj.css("transition-property")
+  def css_transition_property(self): return self.htmlObj.css("transition-property")
 
-  @transition_property.setter
-  def transition_property(self, val):
+  @css_transition_property.setter
+  def css_transition_property(self, val):
     val = val or 'None'
     self.htmlObj.css({"transition-property": val})
 
   @property
-  def transition_timing_function(self): return self.htmlObj.css("transition-timing-function")
+  def css_transition_timing_function(self): return self.htmlObj.css("transition-timing-function")
 
-  @transition_timing_function.setter
-  def transition_timing_function(self, val):
+  @css_transition_timing_function.setter
+  def css_transition_timing_function(self, val):
     val = val or 'None'
     self.htmlObj.css({"transition-timing-function": val})
 
   @property
-  def unicode_bidi(self): return self.htmlObj.css("unicode-bidi")
+  def css_unicode_bidi(self): return self.htmlObj.css("unicode-bidi")
 
-  @unicode_bidi.setter
-  def unicode_bidi(self, val):
+  @css_unicode_bidi.setter
+  def css_unicode_bidi(self, val):
     val = val or 'None'
     self.htmlObj.css({"unicode-bidi": val})
 
   @property
-  def user_select(self): return self.htmlObj.css("user-select")
+  def css_user_select(self): return self.htmlObj.css("user-select")
 
-  @user_select.setter
-  def user_select(self, val):
+  @css_user_select.setter
+  def css_user_select(self, val):
     val = val or 'None'
     self.htmlObj.css({"user-select": val})
 
   @property
-  def vertical_align(self): return self.htmlObj.css("vertical-align")
+  def css_vertical_align(self): return self.htmlObj.css("vertical-align")
 
-  @vertical_align.setter
-  def vertical_align(self, val):
+  @css_vertical_align.setter
+  def css_vertical_align(self, val):
     val = val or 'None'
     self.htmlObj.css({"vertical-align": val})
 
   @property
-  def visibility(self): return self.htmlObj.css("visibility")
+  def css_visibility(self): return self.htmlObj.css("visibility")
 
-  @visibility.setter
-  def visibility(self, val):
+  @css_visibility.setter
+  def css_visibility(self, val):
     val = val or 'None'
     self.htmlObj.css({"visibility": val})
 
   @property
-  def white_space(self): return self.htmlObj.css("white-space")
+  def css_white_space(self): return self.htmlObj.css("white-space")
 
-  @white_space.setter
-  def white_space(self, val):
+  @css_white_space.setter
+  def css_white_space(self, val):
     val = val or 'None'
     self.htmlObj.css({"white-space": val})
 
   @property
-  def width(self): return self.htmlObj.css("width")
+  def css_width(self): return self.htmlObj.css("width")
 
-  @width.setter
-  def width(self, val):
+  @css_width.setter
+  def css_width(self, val):
     val = val or 'None'
     self.htmlObj.css({"width": val})
 
   @property
-  def word_break(self): return self.htmlObj.css("word-break")
+  def css_word_break(self): return self.htmlObj.css("word-break")
 
-  @word_break.setter
-  def word_break(self, val):
+  @css_word_break.setter
+  def css_word_break(self, val):
     val = val or 'None'
     self.htmlObj.css({"word-break": val})
 
   @property
-  def word_spacing(self): return self.htmlObj.css("word-spacing")
+  def css_word_spacing(self): return self.htmlObj.css("word-spacing")
 
-  @word_spacing.setter
-  def word_spacing(self, val):
+  @css_word_spacing.setter
+  def css_word_spacing(self, val):
     val = val or 'None'
     self.htmlObj.css({"word-spacing": val})
 
   @property
-  def word_wrap(self): return self.htmlObj.css("word-wrap")
+  def css_word_wrap(self): return self.htmlObj.css("word-wrap")
 
-  @word_wrap.setter
-  def word_wrap(self, val):
+  @css_word_wrap.setter
+  def css_word_wrap(self, val):
     val = val or 'None'
     self.htmlObj.css({"word-wrap": val})
 
   @property
-  def writing_mode(self): return self.htmlObj.css("writing-mode")
+  def css_writing_mode(self): return self.htmlObj.css("writing-mode")
 
-  @writing_mode.setter
-  def writing_mode(self, val):
+  @css_writing_mode.setter
+  def css_writing_mode(self, val):
     val = val or 'None'
     self.htmlObj.css({"writing-mode": val})
 
   @property
-  def z_index(self): return self.htmlObj.css("z-index")
+  def css_z_index(self): return self.htmlObj.css("z-index")
 
-  @z_index.setter
-  def z_index(self, val):
+  @css_z_index.setter
+  def css_z_index(self, val):
     val = val or 'None'
     self.htmlObj.css({"z-index": val})
