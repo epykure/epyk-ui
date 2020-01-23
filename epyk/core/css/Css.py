@@ -39,7 +39,7 @@ class Css(object):
     if not 'css' in self.rptObj._props:
       self.rptObj._props['css'] = {}
     self.cssStyles, self._cssOvr, self._cssEventOvr, self.cssAttrs, self._cssCls = {}, {}, {}, {}, []
-    self._colors, self.__anonymous_id, self.__keyframes = None, 0, {}
+    self._colors, self.__anonymous_id, self.__keyframes, self.__imports = None, 0, {}, {}
 
   @property
   def globals(self):
@@ -487,6 +487,20 @@ class Css(object):
     self.__keyframes[name] = attrs
     return name
 
+  def imports(self, name, medias=""):
+    """
+    The @import rule allows you to import a style sheet into another style sheet.
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_import_rule.asp
+
+    :param name: url|string. A url or a string representing the location of the resource to import.
+                            The url may be absolute or relative
+    :param medias: list-of-mediaqueries.
+        A comma-separated list of media queries conditioning the application of the CSS rules defined in the linked URL
+    """
+    self.__imports[name] = medias
+
   def toCss(self, file_name=None, path=None):
     """
     This function will be in charge of producing the best CSS content according to the need.
@@ -502,6 +516,10 @@ class Css(object):
     :return: The String with all the CSS classes and definition
     """
     css_str, css_media_str = [], []
+    if self.__imports:
+      # TODO find a data structure to manage dependencies
+      for k, v in self.__imports.items():
+        css_str.append('@import "%s" %s;' % (k, v))
     for clsName, cls_obj in self.cssStyles.items():
       if not hasattr(cls_obj, "classname"):
         css_str.append("%s %s" % (clsName, cls_obj))
