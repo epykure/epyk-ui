@@ -30,7 +30,7 @@ class CssPanelArrowDown(CssStyle.CssCls):
            }
 
   def customize(self, style, eventsStyles):
-    eventsStyles['after'].update({"border-top": "15px solid %s" % self.getColor("success", 1)})
+    eventsStyles['after'].update({"border-top": "15px solid %s" % self.rptObj.theme.success[1]})
 
 """
 .meow {
@@ -61,4 +61,4 @@ class CssPanelArrowUp(CssStyle.CssCls):
            }
 
   def customize(self, style, eventsStyles):
-    eventsStyles['after'].update({"border-bottom": "15px solid %s" % self.getColor("success", 1)})
+    eventsStyles['after'].update({"border-bottom": "15px solid %s" % self.rptObj.theme.success[1]})

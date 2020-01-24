@@ -21,7 +21,7 @@ class Hr(Html.Html):
       self.css('color', color)
     if align == "center":
       self.css('margin', "auto")
-    self.size, self.background_color = size, background_color if background_color is not None else self._report.getColor('greys', 2)
+    self.size, self.background_color = size, background_color if background_color is not None else self._report.theme.greys[2]
 
   def __str__(self):
     hr = '<hr style="height:%spx;background-color:%s">' % ("%s%s" % (self.size[0], self.size[1]), self.background_color) if self.size is not None else '<hr style="background-color:%s" />' % self.backgroundColor
@@ -82,7 +82,7 @@ class Stars(Html.Html):
     super(Stars, self).__init__(report, val, htmlCode=htmlCode, profile=profile)
     # Add the HTML components
     self._spans = []
-    self._jsStyles = {'color': self.getColor("success", 1) if color is None else color}
+    self._jsStyles = {'color': self._report.theme.success[1] if color is None else color}
     for i in range(best):
       self.add_span("", position="after", css=False)
       self._sub_htmls[-1].style.addCls("fa fa-star")
@@ -171,7 +171,7 @@ class Loading(Html.Html):
 
   def __init__(self, report, text, color, size, options):
     super(Loading, self).__init__(report, text)
-    self.color = self.getColor('greys', -1) if color is None else color
+    self.color = self._report.theme.greys[-1] if color is None else color
     self.size = size[0]
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'z-index': 5, 'margin': 0})
     self.add_icon("fas fa-spinner fa-spin", css={"font-size": "%spx" % (self.size+8)})
@@ -211,14 +211,14 @@ class Workflow(Html.Html):
 
   def __init__(self, report, records, width, height, color, size, options):
     super(Workflow, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
-    self.color = self.getColor('greys', -1) if color is None else color
+    self.color = self._report.theme.greys[-1] if color is None else color
     self.size = size[0]
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), "display": "inline-block", "margin": '5px'})
     self.status_colors = {
-      "success": {"border": self.getColor("success", 1), "background": self.getColor("success", 0), "stroke-width": 2, "stroke": self.getColor("greys", -1)},
-      "error": {"border": self.getColor("danger", 1), "background": self.getColor("danger", 0), "stroke-width": 2, "stroke": self.getColor("greys", -1)},
-      "pending": {"border": self.getColor("warning", 1), "background": self.getColor("warning", 1), "stroke-width": 1, "stroke": self.getColor("greys", -1)},
-      "default": {"border": self.getColor("greys", 5), "background": self.getColor("greys", 3), "stroke-width": 1, "stroke": self.getColor("greys", -1)}}
+      "success": {"border": self._report.theme.success[1], "background": self._report.theme.success[0], "stroke-width": 2, "stroke": self._report.theme.greys[-1]},
+      "error": {"border": self._report.theme.danger[1], "background": self._report.theme.danger[0], "stroke-width": 2, "stroke": self._report.theme.greys[-1]},
+      "pending": {"border": self._report.theme.warning[1], "background": self._report.theme.warning[1], "stroke-width": 1, "stroke": self._report.theme.greys[-1]},
+      "default": {"border": self._report.theme.greys[5], "background": self._report.theme.greys[3], "stroke-width": 1, "stroke": self._report.theme.greys[-1]}}
 
   def __str__(self):
     divs = []

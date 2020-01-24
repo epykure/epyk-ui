@@ -1088,7 +1088,7 @@ class CssMixin(object):
 
     Documentation
     https://www.w3schools.com/cssref/pr_margin-left.asp
-    
+
     :param val:
     :return:
     """

@@ -25,7 +25,7 @@ class UpDown(Html.Html):
     self.size = size[0]
     super(UpDown, self).__init__(report, rec, profile=profile)
     self.add_helper(helper)
-    self.val['color'] = self.getColor('colors', 9) if color is None else color
+    self.val['color'] = self._report.theme.colors[9] if color is None else color
     self._jsStyles = options
     self.css({'font-size': "%s%s" % (size[0], size[1])})
 
@@ -58,7 +58,7 @@ class UpDown(Html.Html):
         icon.className = 'fas fa-arrow-up';
         icon.setAttribute('style', 'color:%(greenColor)s;font-size:%(size)spx')};
       htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
-      ''' % {"greenColor": self.getColor("success", 1), "redColor": self.getColor("danger", 1), "size": self.size - 2,
+      ''' % {"greenColor": self._report.theme.success[1], "redColor": self._report.theme.danger[1], "size": self.size - 2,
              'value': self._report.js.number("data.value", isPyData=False).toFormattedNumber(
               decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
               thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
@@ -82,10 +82,10 @@ class TextBubble(Html.Html):
     super(TextBubble, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
                                      heightUnit=height[1], profile=profile)
     self.add_helper(helper)
-    self.color = self.getColor('greys', 0) if color is None else color
-    self.background_color = self.getColor('success', 1) if background_color is None else background_color
+    self.color = self._report.theme.greys[0] if color is None else color
+    self.background_color = self._report.theme.success[1] if background_color is None else background_color
     self.size, self.height = size, height[0]
-    self.css({'text-align': 'center', 'background-color': self.getColor('greys', 0)})
+    self.css({'text-align': 'center', 'background-color': self._report.theme.greys[0]})
 
   @property
   def _js__builder__(self):
@@ -97,7 +97,7 @@ class TextBubble(Html.Html):
       if (data.color != undefined) {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = data.color}
       else {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = '%(color)s'}
       div_elements[div_elements.length - 1].querySelectorAll('a')[0].innerHTML = data.title
-      ''' % {"color": self.getColor("colors", -1)}
+      ''' % {"color": self._report.theme.colors[-1]}
 
   def __str__(self):
     bubble_height = self.height - 20
@@ -123,7 +123,7 @@ class BlockText(Html.Html):
                                      heightUnit=height[1], profile=profile)
     self.size = size[0]
     self.add_helper(helper)
-    self.color = color if color is not None else self.getColor('colors', 9)
+    self.color = color if color is not None else self._report.theme.colors[9]
     self._jsStyles = {"reset": True, 'markdown': True}
     self.css({'color': self.color, 'padding': '5px'})
     if border != 'auto':
@@ -166,9 +166,9 @@ class TextWithBorder(Html.Html):
     self.add_helper(helper)
     self.align = align
     if not 'colorTitle' in self.val:
-      self.val['colorTitle'] = self.getColor('colors', 9)
+      self.val['colorTitle'] = self._report.theme.colors[9]
     if not 'color' in self.val:
-      self.val['color'] = self.getColor('colors', 9)
+      self.val['color'] = self._report.theme.colors[9]
     self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px', 'font-size': '%s%s' % (size[0], size[1])})
 
   @property
@@ -227,7 +227,7 @@ class Delta(Html.Html):
     self.add_helper(helper)
     self.size = int(self._report.pyStyleDfl['fontSize'][:-2]) if size is None else size
     if not 'color' in self.val:
-      self.val['color'] = self.getColor('colors', 9)
+      self.val['color'] = self._report.theme.colors[9]
     if not 'thresold1' in self.val:
       self.val['thresold1'] = 100
     if not 'thresold2' in self.val:
@@ -250,7 +250,7 @@ class Delta(Html.Html):
        else{progressElt.children().css({'background': options.colors.green})}
        jHtmlObj.find('div').first().html(warning + currVal);
        jHtmlObj.find('div').last().html('Previous number: '+ %(prev_number)s);
-      ''' % {"recColod": self.getColor('danger', 1), 'number': self._report.js.number("data.number", isPyData=False).toFormattedNumber(
+      ''' % {"recColod": self._report.theme.danger[1], 'number': self._report.js.number("data.number", isPyData=False).toFormattedNumber(
         decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
         thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
         decSeparator=self._report.js.number("options.decSeparator", isPyData=False)),
@@ -266,8 +266,9 @@ class Delta(Html.Html):
       <div id="progress" style="height:10px;color:%(color)s;border:1px solid %(greyColor)s"></div>
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "size": self.size + 12, 'htmlId': self.htmlId, "color": self.val['color'],
-                   "greyColor": self.getColor("greys", 6), "helper": self.helper}
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "size": self.size + 12,
+                   'htmlId': self.htmlId, "color": self.val['color'],
+                   "greyColor": self._report.theme.greys[6], "helper": self.helper}
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -313,7 +314,7 @@ class DocScript(Html.Html):
                                 width=width[0], widthUnit=width[1], height=height[0],
                                 heightUnit=height[1], profile=profile)
     self.size = "%s%s" % (size[0], size[1])
-    self.color = self.getColor('colors', -1) if color is None else color
+    self.color = self._report.theme.colors[-1] if color is None else color
 
   @property
   def _js__builder__(self):
@@ -359,7 +360,7 @@ class Prism(Html.Html):
             document.execCommand("copy"); $temp.remove()};         
           $('body').append("<div id='info' style='position:fixed;left:50;bottom:10px;z-index:100;background:#293846;padding:10px;color:%(whiteColor)s'>Data copied to clipboard</div>"); 
           $('#info').fadeOut(6000, function() { $('#info').remove()}) 
-          ''' % {"vals": json.dumps(self.val), 'whiteColor': self.getColor("greys", 0)})
+          ''' % {"vals": json.dumps(self.val), 'whiteColor': self._report.theme.greys[0]})
     copy.html()
     if self.trimSpaces:
       content = "".join(['<code style="width:100%%;">%s</code><br />' % line.strip() for line in self.val.split("\n")])
@@ -424,7 +425,7 @@ class Formula(Html.Html):
 
   def __init__(self, report, text, size, width, color, helper, profile):
     super(Formula, self).__init__(report, text, width=width[0], widthUnit=width[1], profile=profile)
-    self.color = color if color is not None else self.getColor('greys', 9)
+    self.color = color if color is not None else self._report.theme.greys[9]
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1])})
     self.add_helper(helper)
     #self._report.jsGlobal.addJs("MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}})")
@@ -467,7 +468,7 @@ class TrafficLight(Html.Html):
     self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
               'vertical-align': 'middle'})
     self.set_attrs(name="title", value=tooltip)
-    self._jsStyles = {'red': self.getColor('danger', 1), 'green': self.getColor('success', 1), 'orange': self.getColor('warning', 1)}
+    self._jsStyles = {'red': self._report.theme.danger[1], 'green': self._report.theme.success[1], 'orange': self._report.theme.warning[1]}
     if tooltip is not None:
       self.tooltip(tooltip)
 
@@ -584,9 +585,9 @@ class SearchResult(Html.Html):
 
   def __init__(self, report, recordSet, pageNumber, width, width_unit, height, height_unit):
     super(SearchResult, self).__init__(report, recordSet, width=width, widthUnit=width_unit, height=height, heightUnit=height_unit)
-    self._jsStyles = {'title': {'color': self.getColor("colors", 7), 'font-size': '18px'}, 'dsc': {'color': self.getColor('greys', 6)},
-                      'url': {'color': self.getColor("success", 1), 'font-size': '14px'}, 'visited': {'color': self.getColor('greys', 5)},
-                      'link': {'color': self.getColor("colors", 7), 'cursor': 'pointer'}, 'pageNumber': pageNumber}
+    self._jsStyles = {'title': {'color': self._report.theme.colors[7], 'font-size': '18px'}, 'dsc': {'color': self._report.theme.greys[6]},
+                      'url': {'color': self._report.theme.success[1], 'font-size': '14px'}, 'visited': {'color': self._report.theme.greys[5]},
+                      'link': {'color': self._report.theme.colors[7], 'cursor': 'pointer'}, 'pageNumber': pageNumber}
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles, currPage)" % self.__class__.__name__, ''' htmlObj.empty() ; 
@@ -637,7 +638,7 @@ class SearchResult(Html.Html):
           paginate.append(href)};
         htmlObj.append(paginate)
       } ''' % {"breadCrumb": self._report.jsGlobal.breadCrumVar, "class": self.__class__.__name__,
-               "greyColor": self.getColor("colors", 9), "whiteColor": self.getColor("greys", 0)})
+               "greyColor": self._report.theme.colors[9], "whiteColor": self._report.theme.greys[0]})
 
   def __str__(self):
     self._report.style.cssCls('CssDivPagination')

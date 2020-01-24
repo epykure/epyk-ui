@@ -25,7 +25,7 @@ class DatePicker(Html.Html):
     self.input = self._report.ui.inputs.d_date(self.val).css({"padding": 0})
     #self.input.attributes({"class": ['time']})
     self.prepend_child(self.input)
-    self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)}, position="after")
+    self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
@@ -96,7 +96,7 @@ class TimePicker(Html.Html):
     self.input = self._report.ui.inputs.d_time(value)
     self.input.set_attrs(name="class", value='time').css({"padding": 0})
     self.prepend_child(self.input)
-    self.add_icon(icon, css={"margin-left": '5px', 'color': self.getColor("success", 1)}, position="after")
+    self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})

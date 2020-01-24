@@ -12,7 +12,7 @@ class CssSelectStyle(CssStyle.CssCls):
   focus = {'outline': 0, 'border': 'none', 'box-shadow': 'none'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('greys', 0), "color": self.getColor('greys', -1),
+    style.update({"background": self.rptObj.theme.greys[0], "color": self.rptObj.theme.greys[-1],
                   'font-family': Defaults_css.Font.family, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
                   'font-size': '%spx' % Defaults_css.Font.size, 'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH})
 
@@ -23,7 +23,8 @@ class CssSelectButton(CssStyle.CssCls):
   cssId = {'reference': ".btn"}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('colors', 0), "border": 'none', 'color': self.getColor('colors', -1)})
+    style.update({"background-color": self.rptObj.theme.colors[0], "border": 'none',
+                  'color': self.rptObj.theme.colors[-1]})
 
 
 class CssSelectSearchBox(CssStyle.CssCls):
@@ -37,15 +38,15 @@ class CssSelectSearchBoxInput(CssStyle.CssCls):
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
-    style.update({"border-color": self.getColor('colors', 0), "height": "%spx" % Defaults_html.LINE_HEIGHT})
-    eventsStyles['focus'].update({"box-shadow": "0 0 0 0.2em %s" % self.getColor('colors', 0)})
+    style.update({"border-color": self.rptObj.theme.colors[0], "height": "%spx" % Defaults_html.LINE_HEIGHT})
+    eventsStyles['focus'].update({"box-shadow": "0 0 0 0.2em %s" % self.rptObj.theme.colors[0]})
 
 
 class CssSelectOption(CssStyle.CssCls):
   cssId = {'reference': ".dropdown-menu"}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('greys', 0), 'font-size': '%spx' % Defaults_css.Font.size})
+    style.update({"background": self.rptObj.theme.greys[0], 'font-size': '%spx' % Defaults_css.Font.size})
 
 
 class CssSelectOptionItems(CssStyle.CssCls):
@@ -57,15 +58,15 @@ class CssSelectOptionHover(CssStyle.CssCls):
   cssId = {'reference': ".dropdown-menu li a"}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('greys', -1)})
-    eventsStyles['hover'].update({'background': self.getColor('success', 0), "color": "black"})
+    style.update({"color": self.rptObj.theme.greys[-1]})
+    eventsStyles['hover'].update({'background': self.rptObj.theme.success[0], "color": "black"})
 
 
 class CssSelectOptionActive(CssStyle.CssCls):
   cssId = {'reference': ".active"}
 
   def customize(self, style, eventsStyles):
-    style.update({'background': self.getColor('success', 0), "color": self.getColor('success', 1)})
+    style.update({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1]})
 
 
 class CssSelectFilterOption(CssStyle.CssCls):
@@ -82,4 +83,4 @@ class CssSelectStatus(CssStyle.CssCls):
   cssId = {'reference': ".dropdown-menu .status"}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 0), 'font-size': '%spx' % Defaults_css.Font.size})
+    style.update({"background-color": self.rptObj.theme.greys[0], 'font-size': '%spx' % Defaults_css.Font.size})

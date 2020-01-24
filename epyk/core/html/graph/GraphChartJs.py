@@ -147,7 +147,7 @@ class Chart(Html.Html):
     if options is None:
       options = {}
     seriesIndex = len(self.chart.data.jsArgs[0]['values'])
-    colors = color if color is not None else self.getColor('charts', seriesIndex)
+    colors = color if color is not None else self._report.theme.charts[seriesIndex]
     self.chart.data._data[label] = data
     self.chart.data.jsArgs[0]['values'].append(label)
     options.update({'backgroundColor': colors, 'type': type})
@@ -219,7 +219,7 @@ class Chart(Html.Html):
     if label is not None:
       self.addAttr('display', True, ['scales', axisName, 'scaleLabel'], category='options')
       self.addAttr('labelString', label, ['scales', axisName, 'scaleLabel'], category='options')
-      self.addAttr('fontColor', self.getColor("greys", -1), ['scales', axisName, 'scaleLabel'], category='options')
+      self.addAttr('fontColor', self._report.theme.greys[-1], ['scales', axisName, 'scaleLabel'], category='options')
     if options is None:
       options = {'digits': 0}
     if 'digits' not in options:
@@ -463,7 +463,7 @@ class Chart(Html.Html):
           if (records.datasets[i] !== undefined){
             if (seriesIndex != -1){%(htmlId)s_chart.data.datasets.push({fill: false, borderColor: %(chartColors)s[seriesIndex], label: label, backgroundColor: %(chartColors)s[seriesIndex], data: records.datasets[i]})}
             else {%(htmlId)s_chart.data.datasets.push({fill: false, label: label, borderColor: %(chartColors)s[%(htmlId)s_chart.data.datasets.length], backgroundColor: %(chartColors)s[%(htmlId)s_chart.data.datasets.length], data: records.datasets[i]})}}
-        }); %(htmlId)s_chart.update()} ''' % {'htmlId': self.htmlId, 'jsData': jsData, 'chartColors': json.dumps(self._report.getColor('charts'))}
+        }); %(htmlId)s_chart.update()} ''' % {'htmlId': self.htmlId, 'jsData': jsData, 'chartColors': json.dumps(self._report.theme.charts)}
 
   def jsSetSeries(self, htmlObj, event, url=None, jsData=None, jsFnc='', cacheObj=None, isPyData=True, isDynUrl=False, httpCodes=None,
              htmlCodes=None, datatype='json', context=None, profile=False):
@@ -600,7 +600,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     strChart = '<div style="height:%spx;margin-top:10px"><canvas id="%s"></canvas></div>' % (self.height-40, self.htmlId)
-    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.defined), strChart)
+    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.defined), strChart)
 
   def to_word(self, document):
     # Will automatically add the external library to be able to use this module

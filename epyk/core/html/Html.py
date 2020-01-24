@@ -299,9 +299,6 @@ class Html(object):
         self.__chart = CssInternal.DefinedChartStyles(self.htmlObj)
       return self.__chart
 
-    # CSS Attributes
-
-
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):
     """ Create an python HTML object """
@@ -1018,7 +1015,7 @@ class Html(object):
           listMenu.append('<li class="list-group-item" style="cursor:cursor;width:100%%;display:inline-block;padding:5px 5px 2px 10px;font-weight:bold;color:white;background:%(color)s">MarkDown</li> ');
           listMenu.append('<li onclick="CopyMarkDown(\\''+ markdownFnc +'\\');" class="list-group-item" style="cursor:pointer;width:100%%;display:inline-block;padding:2px 5px 2px 10px"><i class="fas fa-thumbtack"></i>&nbsp;&nbsp;Copy MarkDown</li> ');};
         $('#popup').css({'padding': '0', 'width': '200px'});
-        $('#popup').show()''' % {'color': self.getColor('colors', 9)})
+        $('#popup').show()''' % {'color': self._report.theme.colors[9]})
 
   def paste(self, jsFnc):
     """ Generic click function """
@@ -1035,17 +1032,6 @@ class Html(object):
     filterObj = {"operation": operation, 'itemType': itemType, 'allIfEmpty': allSelected, 'colName': colName, 'val': self.val, 'typeVal': 'js'}
     self._report.jsSources.setdefault(jsId, {}).setdefault('_filters', {})[self.htmlCode] = filterObj
     return self
-
-  def getColor(self, typeChart, i):
-    """
-    CSS Color function
-
-    Python function to get the different pre defined color codes in the Framework
-
-    :return: the hexadecimal code of the CSS color used in the CSS framework
-    :link hexadecimal color: https://www.w3schools.com/colors/colors_picker.asp
-    """
-    return self._report.style.colors.get(typeChart, i)
 
   def _addToContainerMap(self, htmlObj):
     if hasattr(self, 'htmlMaps'):

@@ -157,7 +157,7 @@ class Menus(object):
     size = self.context._size(size)
     html_obj = html.HtmlButton.Buttons(self.context.rptObj, data or [], size, color, width, height, htmlCode, helper,
                                        dfl_button_css, profile)
-    html_obj.css({"border": "1px solid %s" % html_obj.getColor("greys", 4), "padding": "2px"})
+    html_obj.css({"border": "1px solid %s" % html_obj._report.theme.greys[4], "padding": "2px"})
     self.context.register(html_obj)
     return html_obj
 

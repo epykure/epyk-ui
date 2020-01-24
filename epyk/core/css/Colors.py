@@ -5,6 +5,8 @@ Documentation
 https://www.rapidtables.com/web/color/RGB_Color.html
 """
 
+import random
+import math
 
 defined = {
   'MAROON': {'hex': '#800000', 'rgb': '(128,0,0)'},
@@ -147,6 +149,110 @@ defined = {
   'WHITE SMOKE': {'hex': '#F5F5F5', 'rgb': '(245,245,245)'},
   'WHITE': {'hex': '#FFFFFF', 'rgb': '(255,255,255)'},
 }
+
+
+def getHexToRgb(hexColor):
+  """
+  Convert a hexadecimal color to a rgb code
+
+  Examples
+  >>> ColorMaker().getHexToRgb('#213B68')
+  [33, 59, 104]
+
+  :param hexColor: A String with a hexadecimal code color
+  :return: The list with the rgb code color
+  """
+  if not hexColor.startswith("#"):
+    raise Exception("Hexadecimal color should start with #")
+
+  if not len(hexColor) == 7:
+    raise Exception("Color should have a length of 7")
+
+  return [int(hexColor[1:3], 16), int(hexColor[3:5], 16), int(hexColor[5:7], 16)]
+
+
+def getRgbToHex(rgbColor):
+  """
+  Convert a RGB color to a hexadecimal code
+
+  Examples
+  >>> ColorMaker().getRgbToHex([255, 0, 0])
+  '#ff0000'
+
+  :param rgbColor: A list corresponding to the RGB color code
+  :return: String object defining the hexadecimal color code
+  """
+  color = []
+  for val in rgbColor:
+    val = hex(int(val)).lstrip('0x')
+    if len(val) != 2:
+      leadingZeros = ["0"] * (2 - len(val))
+      val = "%s%s" % ("".join(leadingZeros), val)
+    color.append(val)
+  return "#%s" % "".join(color)
+
+
+def randColor(seedNo=None):
+  """
+  Generate a random hexadecimal color code
+
+  Example
+  >>> ColorMaker.randColor(10)
+  '#9693DD'
+
+  :param seedNo: Optional, The seed number used to generate random numbers
+  :return: String with Hexadecimal color code
+  """
+  letters = '0123456789ABCDEF'
+  color = ['#']
+  if seedNo is not None:
+    random.seed(seedNo)
+  for i in range(6):
+    color.append(letters[math.floor(random.random() * 16)])
+  if seedNo is not None:
+    random.seed(None) # Resent the seed to None
+  return "".join(color)
+
+
+def gradient(start, end, factor):
+  """
+  Deduce the color from a factor in a range of colors
+
+  Examples
+  >>> ColorMaker().gradient("#ffffff", "#FF0000", 0.2)
+  '#ffcccc'
+
+  :param start: The start hexadecimal color code
+  :param end: The end hexadecimal color code
+  :param factor: A factor in the range [0, 1]
+  :return: The hexadecimal color code
+  """
+  if factor > 1:
+    raise Exception("Gradient factor must be <= 1")
+
+  rgbEnd = getHexToRgb(end)
+  rgbDiff = [(rgbEnd[i] - val) * factor + val for i, val in enumerate(getHexToRgb(start))]
+  return getRgbToHex(rgbDiff)
+
+
+def colors(start, end, steps):
+  """
+  Generate a list of colors between two color codes.
+
+  Example
+  >>> ColorMaker().colors("#ffffff", "#FF0000", 10)
+  ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
+
+  :param start: The start hexadecimal color code
+  :param end: The end hexadecimal color code
+  :param steps: The number of colors in the array
+  :return: A list of hexadecimal color codes
+  """
+  colors = [start]
+  for i in range(steps-2):
+    colors.append(gradient(start, end, 1.0 / (steps-1) * (i + 1)))
+  colors.append(end)
+  return colors
 
 
 class HexColors(object):

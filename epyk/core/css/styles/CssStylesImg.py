@@ -17,7 +17,7 @@ class CssImgParagraph(CssStyle.CssCls):
   cssId = {'child': 'p'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor("colors", 0)})
+    style.update({'color': self.rptObj.theme.colors[0]})
 
 
 class CssImgH2(CssStyle.CssCls):
@@ -27,7 +27,7 @@ class CssImgH2(CssStyle.CssCls):
   cssId = {'child': 'h2'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor("colors", 0)})
+    style.update({'color': self.rptObj.theme.colors[0]})
 
 
 class CssImgMask(CssStyle.CssCls):
@@ -37,7 +37,7 @@ class CssImgMask(CssStyle.CssCls):
   cssId = {'child': '.mask'}
 
   def customize(self, style, eventsStyles):
-    style.update({'background-color': self.getColor('success', 0)})
+    style.update({'background-color': self.rptObj.theme.success[0]})
 
 
 class CssImgAInfo(CssStyle.CssCls):
@@ -47,7 +47,7 @@ class CssImgAInfo(CssStyle.CssCls):
   cssId = {'child': 'a.info'}
 
   def customize(self, style, eventsStyles):
-    style.update({'background-color': self.getColor('colors', 0), 'color': self.getColor('colors', -1)})
+    style.update({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.colors[-1]})
 
 
 class CssImg(CssStyle.CssCls):
@@ -67,8 +67,8 @@ class CssView(CssStyle.CssCls):
            'text-align': 'center', 'cursor': 'default'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor('greys', 5)})
-    eventsStyles['hover'].update({'border': "1px solid %s" % self.getColor('success', 1)})
+    style.update({'border': '1px solid %s' % self.rptObj.theme.greys[5]})
+    eventsStyles['hover'].update({'border': "1px solid %s" % self.rptObj.theme.success[1]})
 
 
 class CssCarrouselLi(CssStyle.CssCls):

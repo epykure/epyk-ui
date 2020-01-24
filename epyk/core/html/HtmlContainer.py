@@ -64,8 +64,8 @@ class PanelSplit(Html.Html):
     if right_obj is not None:
       self.right(right_obj)
     self.css_left = {'flex': '0 0 auto', 'padding': '5px', 'min-width': '100px', 'width': self.left_width, 'white-space': 'nowrap'}
-    self.css_right = {'flex': '0 1 auto', 'padding': '5px', 'width': '100%', 'background': self.getColor('greys', 0),
-                     'border-left': '3px solid %s' % self.getColor("success", 1)}
+    self.css_right = {'flex': '0 1 auto', 'padding': '5px', 'width': '100%', 'background': self._report.theme.greys[0],
+                     'border-left': '3px solid %s' % self._report.theme.success[1]}
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
 
   def left(self, html_obj):
@@ -239,7 +239,7 @@ class Row(Html.Html):
       if self.titles:
         for i, htmlObj in enumerate(self.vals):
           onclickEvent = "ResizableRow(this, 'col_%s_%s')" % (self.htmlId, i)  # if self.colsWith else "$(\'#col_%s_%s\').children().toggle()" % ( self.htmlId, i)
-          items.append('<th style="text-align:left;padding:5px 0 5px 0;%s"><i onclick="%s" style="cursor:pointer;" class="far fa-minus-square"></i>&nbsp;<p style="color:%s;display:inline">%s</p></th>' % (widths.get(i, ''), onclickEvent, self.getColor('danger', 1), self.titles[i].upper()))
+          items.append('<th style="text-align:left;padding:5px 0 5px 0;%s"><i onclick="%s" style="cursor:pointer;" class="far fa-minus-square"></i>&nbsp;<p style="color:%s;display:inline">%s</p></th>' % (widths.get(i, ''), onclickEvent, self._report.theme.danger[1], self.titles[i].upper()))
       else:
         for i, htmlObj in enumerate(self.vals):
           onclickEvent = "ResizableRow(this, 'col_%s_%s'))" % (self.htmlId, i)  # if self.colsWith else "$(\'#col_%s_%s\').children().toggle()" % ( self.htmlId, i)
@@ -485,7 +485,7 @@ class Tabs(Html.Html):
     self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
     self.css_tab = css_tab
     self.options = options
-    self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self.getColor("success", 1)}
+    self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self._report.theme.success[1]}
     self.tabs_container = self._report.ui.div([])
     self.tabs_container.inReport = False
 
@@ -605,8 +605,8 @@ class Dialog(Html.Html):
   def __init__(self, report, recordSet, width, height, helper, profile):
     super(Dialog, self).__init__(report, recordSet,
                                  profile=profile)
-    self.css({"border": '2px solid %s' % self.getColor("greys", 3), "display": "block", "position": "absolute",
-              "background": self.getColor("greys", 0)})
+    self.css({"border": '2px solid %s' % self._report.theme.greys[3], "display": "block", "position": "absolute",
+              "background": self._report.theme.greys[0]})
     # self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable().toStr())
 
   @property

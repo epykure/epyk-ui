@@ -20,11 +20,11 @@ class CssLabelContainerDisabled(CssStyle.CssCls):
   attrs = {'color': 'red', 'cursor': 'not-allowed'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor("danger", 1)})
+    style.update({'color': self.rptObj.theme.danger[1]})
 
 
 class CssLabelCheckMarkHover(CssStyle.CssCls):
   cssId = {'child': "label"}
 
   def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({'background-color': self.getColor('colors', 5)})
+    eventsStyles['hover'].update({'background-color': self.rptObj.theme.colors[5]})

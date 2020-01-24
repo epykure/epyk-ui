@@ -12,14 +12,14 @@ class CssRadioButton(CssStyle.CssCls):
   attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor("colors", 3), 'font-size': '%spx' % Defaults_css.Font.size})
+    style.update({'border': '1px solid %s' % self.rptObj.theme.colors[3], 'font-size': '%spx' % Defaults_css.Font.size})
 
 
 class CssRadioButtonSelected(CssStyle.CssCls):
   attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor("success", 1), 'color': self.getColor('success', 1),
+    style.update({'border': '1px solid %s' % self.rptObj.theme.success[1], 'color': self.rptObj.theme.success[1],
                   'font-size': '%spx' % Defaults_css.Font.size})
 
 
@@ -36,8 +36,8 @@ class CssRadioSwitchLabel(CssStyle.CssCls):
   cssId = {'child': 'label'}
 
   def customize(self, style, eventsStyles):
-    style.update({'background': self.getColor('greys', 3)})
-    eventsStyles['after'].update({'background-color': self.getColor('success', 1)})
+    style.update({'background': self.rptObj.theme.greys[3]})
+    eventsStyles['after'].update({'background-color': self.rptObj.theme.success[1]})
 
 
 class CssRadioSwitchChecked(CssStyle.CssCls):

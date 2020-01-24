@@ -16,9 +16,10 @@ class CssButtonBasic(CssStyle.CssCls):
   disabled = {'cursor': 'none'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor('colors', -1), 'color': self.getColor('greys', -1), 'background-color': self.getColor('greys', 0)})
-    eventsStyles['hover'].update({'background-color': self.getColor('colors', -1), 'color': self.getColor('colors', 0)})
-    eventsStyles['disabled'].update({'background-color': self.getColor('colors', -1), 'color': self.getColor('colors', 6), 'font-style': 'italic'})
+    style.update({'border': '1px solid %s' % self.rptObj.theme.colors[-1], 'color': self.rptObj.theme.greys[-1],
+                  'background-color': self.rptObj.theme.greys[0]})
+    eventsStyles['hover'].update({'background-color': self.rptObj.theme.colors[-1], 'color': self.rptObj.theme.colors[0]})
+    eventsStyles['disabled'].update({'background-color': self.rptObj.theme.colors[-1], 'color': self.rptObj.theme.colors[6], 'font-style': 'italic'})
 
 
 class CssButtonReset(CssStyle.CssCls):
@@ -28,9 +29,9 @@ class CssButtonReset(CssStyle.CssCls):
   hover = {'text-decoration': 'none', 'cursor': 'pointer'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor('danger', 1), 'color': self.getColor('danger', 1),
-                   'background-color': self.getColor('greys', 0)})
-    eventsStyles['hover'].update({'background-color': self.getColor('danger', 1), 'color': self.getColor('greys', 0)})
+    style.update({'border': '1px solid %s' % self.rptObj.theme.danger[1], 'color': self.rptObj.theme.danger[1],
+                  'background-color': self.rptObj.theme.greys[0]})
+    eventsStyles['hover'].update({'background-color': self.rptObj.theme.danger[1], 'color': self.rptObj.theme.greys[0]})
 
 
 class CssButtonSuccess(CssStyle.CssCls):
@@ -40,6 +41,6 @@ class CssButtonSuccess(CssStyle.CssCls):
   hover = {'text-decoration': 'none', 'cursor': 'pointer'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('colors', 9), 'background-color': self.getColor('greys', 0),
-                  'border': '1px solid %s' % self.getColor('colors', 9)})
-    eventsStyles['hover'].update({'color': self.getColor('greys', 0), 'background-color': self.getColor('colors', 9)})
+    style.update({'color': self.rptObj.theme.colors[9], 'background-color': self.rptObj.theme.greys[0],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[9]})
+    eventsStyles['hover'].update({'color': self.rptObj.theme.greys[0], 'background-color': self.rptObj.theme.colors[9]})

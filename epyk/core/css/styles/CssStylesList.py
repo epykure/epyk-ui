@@ -12,30 +12,30 @@ class CssBasicList(CssStyle.CssCls):
   cssId = {'child': 'ul li:first-child'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('colors', 7)})
-    style.update({"color": self.getColor('greys', 0)})
+    style.update({"background": self.rptObj.theme.colors[7]})
+    style.update({"color": self.rptObj.theme.greys[0]})
 
 
 class CssBasicListItems(CssStyle.CssCls):
   attrs = {'padding': '15px 0 0 0', 'display': 'block'}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('greys', -1)})
-    style.update({"border-bottom": "1px solid %s" % self.getColor('colors', 7)})
-    eventsStyles['hover'].update({'color': self.getColor('colors', 8)})
+    style.update({"color": self.rptObj.theme.greys[-1]})
+    style.update({"border-bottom": "1px solid %s" % self.rptObj.theme.colors[7]})
+    eventsStyles['hover'].update({'color': self.rptObj.theme.colors[8]})
 
 
 class CssBasicListItemsSelected(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('success', 1)})
+    style.update({"color": self.rptObj.theme.success[1]})
 
 
 class CssBasicListItemsDisabled(CssStyle.CssCls):
   attrs = {'padding': '15px 0 0 0', 'display': 'block', 'cursor': 'not-allowed'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 7), "color": self.getColor('greys', 4)})
+    style.update({"background-color": self.rptObj.theme.greys[7], "color": self.rptObj.theme.greys[4]})
 
 
 class CssSquareList(CssStyle.CssCls):
@@ -44,7 +44,7 @@ class CssSquareList(CssStyle.CssCls):
   cssId = {'child': 'li'}
 
   def customize(self, style, eventsStyles):
-    eventsStyles['before'].update({"color": self.getColor('colors', 7)})
+    eventsStyles['before'].update({"color": self.rptObj.theme.colors[7]})
 
 
 class CssListBase(CssStyle.CssCls):
@@ -62,7 +62,8 @@ class CssListNoDecoration(CssStyle.CssCls):
 
 
 class CssListLiUlContainer(CssStyle.CssCls):
-  attrs = {'display': 'none', 'width': '100%', 'padding': '0', 'margin': '0', 'overflow': 'hidden', 'transition': 'height .2s ease-in-out'}
+  attrs = {'display': 'none', 'width': '100%', 'padding': '0', 'margin': '0', 'overflow': 'hidden',
+           'transition': 'height .2s ease-in-out'}
   cssId = {'direct': 'ul'}
 
 
@@ -71,4 +72,4 @@ class CssListLiSubItem(CssStyle.CssCls):
            'float': 'left', 'font-size': '12px', 'margin': 0}
 
   def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({"background": self.getColor('greys', 2)})
+    eventsStyles['hover'].update({"background": self.rptObj.theme.greys[2]})

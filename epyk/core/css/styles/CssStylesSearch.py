@@ -16,8 +16,8 @@ class CssSearchExt(CssStyle.CssCls):
   focus = {'width': '100%', 'outline': 0}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 0)})
-    eventsStyles['hover'].update({'color': self.getColor('greys', -1)})
+    style.update({"background-color": self.rptObj.theme.greys[0]})
+    eventsStyles['hover'].update({'color': self.rptObj.theme.greys[-1]})
 
 
 class CssSearch(CssStyle.CssCls):
@@ -29,8 +29,9 @@ class CssSearch(CssStyle.CssCls):
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 0), "border-bottom": '1px solid %s' % self.getColor('greys', 3), 'color': self.getColor('greys', -1)})
-    eventsStyles['hover'].update({'color': self.getColor('greys', -1), 'border-bottom-color': self.getColor('success', 1)})
+    style.update({"background-color": self.rptObj.theme.greys[0],
+                  "border-bottom": '1px solid %s' % self.rptObj.theme.greys[3], 'color': self.rptObj.theme.greys[-1]})
+    eventsStyles['hover'].update({'color': self.rptObj.theme.greys[-1], 'border-bottom-color': self.rptObj.theme.success[1]})
 
 
 class CssSearchButton(CssStyle.CssCls):
@@ -41,4 +42,4 @@ class CssSearchButton(CssStyle.CssCls):
   cssId = {'child': 'i'}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor("greys", 5)})
+    style.update({"color": self.rptObj.theme.greys[5]})

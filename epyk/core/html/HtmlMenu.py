@@ -83,20 +83,20 @@ class HtmlNavBar(Html.Html):
 
   def __str__(self):
     colorText = 7
-    barTheme = 'navbar-dark' if self.getColor('greys', -1) == '#FFFFFF' else 'navbar-light'
-    items = ['<nav id="report_nav_bar" class="navbar navbar-expand-sm fixed-top %s" style="background:%s;margin:0;padding:0 5px 2px 5px;border-bottom:1px solid %s">' % (barTheme, self.getColor('greys', 1), self.getColor('greys', 6))]
+    barTheme = 'navbar-dark' if self._report.theme.greys[-1] == '#FFFFFF' else 'navbar-light'
+    items = ['<nav id="report_nav_bar" class="navbar navbar-expand-sm fixed-top %s" style="background:%s;margin:0;padding:0 5px 2px 5px;border-bottom:1px solid %s">' % (barTheme, self._report.theme.greys[1], self._report.theme.greys[6])]
     items.append('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon" style="margin-top:-5px"></span></button>')
     # Common part with the logo and the link to the main page
     if self._report.run.report_name is None or self._report.run.title == "":
-      breadcrumb = '<a class="navbar-brand" href="%(url)s" style="padding:0;margin:0 5px;color:%(color)s">%(title)s</a>' % {'url': self._report.run.url, 'title': self._report.run.title, 'color': self.getColor('greys', colorText)}
+      breadcrumb = '<a class="navbar-brand" href="%(url)s" style="padding:0;margin:0 5px;color:%(color)s">%(title)s</a>' % {'url': self._report.run.url, 'title': self._report.run.title, 'color': self._report.theme.greys[colorText]}
     else:
       breadcrumb = '<a class="navbar-brand" href="/reports/run/%(env)s" style="padding:0;margin:0 5px;color:%(color)s">%(env)s</a> / <a class="navbar-brand" href="%(url)s" style="padding:0;margin:0 5px;color:%(color)s">%(title)s</a>' % {
-        'env': self._report.run.report_name, 'title': self._report.run.title, 'color': self.getColor('greys', colorText), 'url': self._report.run.url}
+        'env': self._report.run.report_name, 'title': self._report.run.title, 'color': self._report.theme.greys[colorText], 'url': self._report.run.url}
     if self._report.logo is not None and self._report.logo.lower().endswith(".ico"):
       items.append('<a href="%s" style="line-height:30px;margin:0;padding:0 10px 0 0" class="navbar-brand"><img height="25px" title="Environement Home page" style="margin:0;padding:0" src="%s" /></a>%s' % (self._report._urlsApp['index'], self._logoUrl, breadcrumb))
     else:
       awesomeIcon = self._report.logo if self._report.logo is not None else "fab fa-whmcs"
-      items.append('<a href="%s" class="navbar-brand" style="display:inline-block;vertical-align:middle;line-height:20px;padding:0;margin:3px 5px 0 0"><i class="%s" style="color:%s;font-size:24px"></i></a>%s' % (self._report._urlsApp['index'], awesomeIcon, self.getColor('greys', colorText), breadcrumb))
+      items.append('<a href="%s" class="navbar-brand" style="display:inline-block;vertical-align:middle;line-height:20px;padding:0;margin:3px 5px 0 0"><i class="%s" style="color:%s;font-size:24px"></i></a>%s' % (self._report._urlsApp['index'], awesomeIcon, self._report.theme.greys[colorText], breadcrumb))
     if self._report.run.url_root is not None:
       items.append('<div class="collapse navbar-collapse" id="navbarTogglerDemo02">')
       items.append('<ul class="navbar-nav ml-auto">')
@@ -104,7 +104,7 @@ class HtmlNavBar(Html.Html):
         section = self.categories.get(name, {})
         if len(section.get("content", [])) > 0:
           items.append('<li class="nav-item dropdown">')
-          items.append('<a class="nav-link %s" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin:0 5px;white-space:nowrap;padding-top:10px;display:inline-block;color:%s">%s</a>' % (section['style'], self.getColor('greys', colorText), name))
+          items.append('<a class="nav-link %s" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin:0 5px;white-space:nowrap;padding-top:10px;display:inline-block;color:%s">%s</a>' % (section['style'], self._report.theme.greys[colorText], name))
           items.append('<div class="dropdown-menu scroll_content" aria-labelledby="navbarDropdownMenuLink" style="max-height:500px;overflow:auto">')
           for s in section["content"]:
             if 'diviser' in s:
@@ -147,23 +147,23 @@ class HtmlNavBar(Html.Html):
         items.append('''
            <li class="nav-item">
               <i class="nav-link fas fa-lock" style="color:%(color)s;margin:0 5px;padding-top:12px;display:inline-block" title="Controlled Access"></i></li>
-           '''% {'color': self.getColor('greys', colorText), 'urlAdmin': self._report._urlsApp['admin']})
+           '''% {'color': self._report.theme.greys[colorText], 'urlAdmin': self._report._urlsApp['admin']})
       elif self.stype == 'owner':
         items.append('''
            <li class="nav-item">
               <a class="nav-link fas fa-lock" href="%(urlAdmin)s/access/%(reportName)s" style="color:%(color)s;white-space:nowrap;font-weight:bold;margin:0 5px;padding-top:12px;display:inline-block" target="_BLANK"></a></li>
-           ''' % {'color': self.getColor('greys', colorText), 'urlAdmin': self._report._urlsApp['admin'],
+           ''' % {'color': self._report.theme.greys[colorText], 'urlAdmin': self._report._urlsApp['admin'],
                   'reportName': self._report.run.report_name})
       elif self._report.run.current_user == 'anonymous':
         items.append('''
           <li class="nav-item">
             <a class="nav-link" href="%(urlAdmin)s/login" style="border:1px solid %(color)s;color:%(color)s;white-space:nowrap;font-weight:bold;margin:5px;display:inline-block;padding:4px 5px">SIGN IN</a>
-          </li>''' % {'color': self.getColor('greys', colorText), 'urlAdmin': self._report._urlsApp['admin']})
+          </li>''' % {'color': self._report.theme.greys[colorText], 'urlAdmin': self._report._urlsApp['admin']})
       else:
         items.append('''
           <li class="nav-item">
             <a class="nav-link" href="%(urlAdmin)s/logout" style="border:1px solid %(color)s;color:%(color)s;white-space:nowrap;font-weight:bold;margin:5px;display:inline-block;padding:4px 5px">SIGN OUT</a>
-          </li>''' % {'color': self.getColor('danger', 1), 'urlAdmin': self._report._urlsApp['admin']})
+          </li>''' % {'color': self._report.theme.danger[1], 'urlAdmin': self._report._urlsApp['admin']})
 
       items.append('''
         <li class="nav-item dropdown">
@@ -185,7 +185,7 @@ class HtmlNavBar(Html.Html):
             <div class="dropdown-item" style="font-size:12px;">Updated: %(updateDt)s</div>
           </div>
         </li>
-        ''' % {'color': self.getColor('greys', colorText), 'size': self._report.pyStyleDfl['headerFontSize'], 'Themes': self.dropDownThemes(self._report.pyStyleDfl['headerFontSize']),
+        ''' % {'color': self._report.theme.greys[colorText], 'size': self._report.pyStyleDfl['headerFontSize'], 'Themes': self.dropDownThemes(self._report.pyStyleDfl['headerFontSize']),
                'urlReport': self._report._urlsApp['report'], 'urlAdmin': self._report._urlsApp['admin'], 'userName': self._report.run.current_user,
                'user': self._report.run.current_user, 'mode': '%s (Local)' % self._report.run.url_root if self._report.run.is_local else '%s (Server)' % self._report.run.url_root,
                'updateDt': time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()), 'stackOverFlow': questionReport})
@@ -196,7 +196,7 @@ class HtmlNavBar(Html.Html):
           <form class="form-inline my-2 my-md-0" style="position:relative">
             <span onclick="GoToReport('%(urlReport)s/run/%(search)s/index?value='+ $('#search_input').val(), true, false)" class="fas fa-search my-2 my-sm-0" style="position:absolute;font-size:15px;left:7px;top:6px;cursor:pointer"></span>
             <input onkeydown="if (event.keyCode == 13) {GoToReport('%(urlReport)s/run/%(search)s/index?value=' + $(this).val(), true, false)}" class="form-control" type="search" id="search_input" placeholder="Search" aria-label="Search" style="font-size:%(size)s;color:%(color)s;text-indent:30px;height:30px;background-color:%(bgColor)s;margin-right:5px">
-          </form> ''' % {"urlReport": self._report._urlsApp['report'], 'search': self.searchEngine, 'bgColor': self.getColor("greys", 0), 'color': self.getColor("greys", -1), 'size': self._report.pyStyleDfl['fontSize']})
+          </form> ''' % {"urlReport": self._report._urlsApp['report'], 'search': self.searchEngine, 'bgColor': self._report.theme.greys[0], 'color': self._report.theme.greys[-1], 'size': self._report.pyStyleDfl['fontSize']})
         items.append('</div>')
     items.append('</nav>')
     self._report.jsOnLoadFnc.add('$("body").css("padding-top", "%spx")' % (self.lenght + 3))
@@ -311,7 +311,7 @@ class HtmlParamsBar(Html.Html):
       <div id="param_bar" class="%(clsParamBar)s" style="bottom:%(bottom)spx;border-bottom:1px solid %(border)s;z-index:30">
         <i class="fas fa-play" onclick="BreadCrumbClick(%(url)s)" style="margin-right:30px;cursor:pointer"></i><div %(strAttr)s></div>
       </div> ''' % {'bottom': 0, 'clsParamBar': self._report.style.cssName("CssParamsBar"),
-                    'strAttr': self.get_attrs(pyClassNames=['CssBasicList']), "border": self.getColor("greys", 5), "url": self.jsToUrlReset()}
+                    'strAttr': self.get_attrs(pyClassNames=['CssBasicList']), "border": self._report.theme.greys[5], "url": self.jsToUrlReset()}
 
 
 class HtmlSideBar(Html.Html):
@@ -322,7 +322,7 @@ class HtmlSideBar(Html.Html):
 
   def __init__(self, report, links, color, size, servers):
     super(HtmlSideBar, self).__init__(report, links)
-    self.color = self.getColor('greys', 0) if color is None else color
+    self.color = self._report.theme.greys[0] if color is None else color
     self.size, self.servers = "%s%s" % (size[0], size[1]), servers
     self.css({'color': self.color, 'font-size': self.size, 'z-index': 5, 'margin': 0})
     self._actions = []
@@ -373,7 +373,7 @@ class HtmlSideBar(Html.Html):
       $("#nav_link_title").tooltip()
       ''' % {'reportName': self._report.run.report_name, 'hoverColor': self.onMouseOverColor,
              'urlReport': "",
-             'cssLinks': self._report.style.getClsTag(['CssSideBarLinks']), 'darkBlue': self.getColor('colors', 9)})
+             'cssLinks': self._report.style.getClsTag(['CssSideBarLinks']), 'darkBlue': self._report.theme.colors[9]})
 
   def addAction(self, icon, url, tooltip='', color=None, isPyData=True):
     actionDef = ['<div style="position:relative;cursor:pointer;display:block;pointer-events:auto;margin-bottom:10px;">']
@@ -442,5 +442,5 @@ class HtmlSideBar(Html.Html):
                    'cssDef': self._report.style.cssName(styleBarBulble),
                    'cssSideBarMenu': "",
                    'script_name': self._report.run.script_name,
-                   'urlAdmin': "", 'lightBlue': self.getColor('colors', 1),
+                   'urlAdmin': "", 'lightBlue': self._report.theme.colors[1],
                    "actions": "".join(self._actions)}

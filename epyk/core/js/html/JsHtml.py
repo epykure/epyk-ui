@@ -199,8 +199,8 @@ class JsHtml(JsNodeDom.JsDoms):
         if isinstance(v, dict):
           dyn_attrs, dyn_attrs_orign = {}, {}
           if 'color' in v:
-            dyn_attrs['color'] = self._report.getColor(*v['color'])
-            dyn_attrs_orign['color'] = self._report.getColor("greys", 0)
+            dyn_attrs['color'] = getattr(self._report.theme, *v['color'])
+            dyn_attrs_orign['color'] = self._report.theme.greys[0]
           css_attrs[k] = v['attr'] % dyn_attrs
           css_attrs_origin[k] = self._src.attr[k] if k in self._src.attr else v['attr'] % dyn_attrs_orign
         else:

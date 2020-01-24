@@ -299,7 +299,7 @@ class Checkbox(Html.Html):
         <div onclick='event.stopPropagation();CheckBoxSelectAll(event, this, "%(htmlId)s");' style='vertical-align:middle;white-space:nowrap;margin-bottom:5px;cursor:pointer;padding:0'>
           <div style='box-sizing:border-box;margin:0;padding:0;border:1px solid %(color)s;font-size:10px;width:11px;height:11px;display:inline-block;color:%(color)s' class="fas">&nbsp;</div>
           <label style='cursor:inherit;margin:0;padding:0;font-style:italic;color:%(color)s;white-space:nowrap'>Select All</label>
-        </div>''' % {"color": self.getColor("colors", 5), 'htmlId': self.htmlId}
+        </div>''' % {"color": self._report.theme.colors[5], 'htmlId': self.htmlId}
 
     return '<div %(strAttr)s><div name="checks"></div></div>' % {'strAttr': self.get_attrs(pyClassNames=self.defined)}
 
@@ -322,7 +322,7 @@ class Checkbox(Html.Html):
     for rec in self.vals:
       cell_format = workbook.add_format({})
       if rec['value'] in selections:
-        cell_format = workbook.add_format({'bold': True, 'font_color': self.getColor('colors', 5)})
+        cell_format = workbook.add_format({'bold': True, 'font_color': self._report.theme.colors[5]})
       worksheet.write(cursor['row'], 0, rec['value'], cell_format)
       cursor['row'] += 1
     cursor['row'] += 1
@@ -374,7 +374,7 @@ class CheckButton(Html.Html):
       else {
         htmlObj.append('<i class="fas fa-times" style="font-size:14px;margin-top:2px;margin-left:5px;color:%(red)s"></i>');
         htmlObj.parent().data('isChecked', false)
-      }''' % {'green': self.getColor('success', 1), 'red': self.getColor('danger', 1)}
+      }''' % {'green': self._report.theme.success[1], 'red': self._report.theme.danger[1]}
 
   # def click(self, jsFncs, allevents=True, isChecked=None):
   #   if allevents:
@@ -426,7 +426,7 @@ class IconEdit(Html.Html):
     self.add_span(text, css=False)
     if text is not None:
       report.ui.texts.span.css({"float": 'right'})
-    self.add_icon(icon, {"color": self.getColor('success', 1), "margin": "2px", 'font-size': '%s%s' % (size[0], size[1])})
+    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': '%s%s' % (size[0], size[1])})
     self.css({"margin": "5px 0", "float": position or 'left', 'cursor': 'pointer'})
 
   def __str__(self):

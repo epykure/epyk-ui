@@ -7,7 +7,6 @@ https://www.w3schools.com/Jsref/dom_obj_style.asp
 import os
 
 from epyk.core.css.styles import CssStyle
-from epyk.core.css import Color
 from epyk.core.css import CssInternal
 from epyk.core.css import Defaults
 from epyk.core.css import Globals
@@ -39,7 +38,7 @@ class Css(object):
     if not 'css' in self.rptObj._props:
       self.rptObj._props['css'] = {}
     self.cssStyles, self._cssOvr, self._cssEventOvr, self.cssAttrs, self._cssCls = {}, {}, {}, {}, []
-    self._colors, self.__anonymous_id, self.__keyframes, self.__imports = None, 0, {}, {}
+    self.__anonymous_id, self.__keyframes, self.__imports = 0, {}, {}
 
   @property
   def globals(self):
@@ -53,30 +52,30 @@ class Css(object):
     """
     return Globals.CssGlobal(self)
 
-  @property
-  def colors(self):
-    """
-    CSS Colors category
-
-    This will provide an interface to deal with colors in Python and Javascript in a simple manner.
-    This will provide an object with different methods to play with colors.
-
-    Colors and themes can be changed directly in the report run time
-
-    For changing the colors you can use the below function
-
-    for adding a bespoke theme to the framework you can use the CLI command:
-
-    Example
-    >>> Css().colors.get('success', 0)
-    '#e8f2ef'
-
-    :return: A Python ColorMaker object
-    :rtype: epyk.core.css.Color.ColorMaker
-    """
-    if self._colors is None:
-      self._colors = Color.ColorMaker(self.rptObj)
-    return self._colors
+  # @property
+  # def colors(self):
+  #   """
+  #   CSS Colors category
+  #
+  #   This will provide an interface to deal with colors in Python and Javascript in a simple manner.
+  #   This will provide an object with different methods to play with colors.
+  #
+  #   Colors and themes can be changed directly in the report run time
+  #
+  #   For changing the colors you can use the below function
+  #
+  #   for adding a bespoke theme to the framework you can use the CLI command:
+  #
+  #   Example
+  #   >>> Css().colors.get('success', 0)
+  #   '#e8f2ef'
+  #
+  #   :return: A Python ColorMaker object
+  #   :rtype: epyk.core.css.Color.ColorMaker
+  #   """
+  #   if self._colors is None:
+  #     self._colors = Color.ColorMaker(self.rptObj)
+  #   return self._colors
 
   @property
   def defaults(self):
@@ -102,7 +101,7 @@ class Css(object):
     if not isinstance(clsNames, list):
       clsNames = [clsNames]
     for cls in clsNames:
-      clsObj = CssStyle.getCssObj(cls, theme=self.colors._themeObj.name)
+      clsObj = CssStyle.getCssObj(cls, self.rptObj)
       if clsObj is not None:
         self.cssStyles[clsObj.classname] = clsObj
       else:
@@ -145,7 +144,7 @@ class Css(object):
       for k, v in event_attrs.items():
         cls_virtual.eventsStyles[k] = event_attrs[k]
     #self.cssStyles[cls_name] = cls_virtual
-    CssStyle.setCssObj(cls_name, cls_virtual, self.rptObj, theme=self.colors._themeObj.selected)
+    CssStyle.setCssObj(cls_name, cls_virtual, self.rptObj)
     self.__anonymous_id += 1
     return cls_name
 
@@ -166,7 +165,7 @@ class Css(object):
     :return: The Python Class definition in the factory
     """
     if isinstance(clsName, str):
-      fCls = CssStyle.getCssObj(clsName, theme=self.colors._themeObj.name)
+      fCls = CssStyle.getCssObj(clsName, self.rptObj)
       if fCls is not None:
         if global_scope:
           fCls.css(attrs, eventAttrs=event_attrs)
@@ -184,7 +183,7 @@ class Css(object):
           for k, v in event_attrs.items():
             cls_virtual.eventsStyles[k] = event_attrs[k]
         if global_scope:
-          CssStyle.setCssObj(CssStyle.cssName(clsName), cls_virtual, self.rptObj, theme=self.colors._themeObj.selected)
+          CssStyle.setCssObj(CssStyle.cssName(clsName), cls_virtual, self.rptObj)
         else:
           self.cssStyles[clsName] = cls_virtual
       else:
@@ -215,13 +214,13 @@ class Css(object):
     :return: The CSS Class
     :rtype: epyk.core.css.styles.CssStyle.CssCls
     """
-    fCls = CssStyle.getCssObj(clsName, theme=self.colors._themeObj.name)
+    fCls = CssStyle.getCssObj(clsName, self.rptObj)
     derv_cls_name = CssStyle.cssName("%s_%s" % (clsName, htmlId))
     if fCls is not None:
       dervfCls = fCls.clone(derv_cls_name)
     else:
       dervfCls = type(derv_cls_name, (CssStyle.CssCls,), {})
-    drvClsObj = dervfCls(theme=self.colors._themeObj.name)
+    drvClsObj = dervfCls(context=self.rptObj)
     drvClsObj._is_media = is_media
     if attrs is not None:
       if all_important:
@@ -239,7 +238,7 @@ class Css(object):
           drvClsObj.eventsStyles[k].update(evt_attrs)
         else:
           drvClsObj.eventsStyles[k] = evt_attrs
-    CssStyle.setCssObj(derv_cls_name, drvClsObj, self.rptObj, theme=self.colors._themeObj.selected, force_reload=force_reload)
+    CssStyle.setCssObj(derv_cls_name, drvClsObj, self.rptObj, force_reload=force_reload)
     return drvClsObj
 
   def custom(self, clsName, attrs, event_attrs=None):
@@ -285,7 +284,7 @@ class Css(object):
     :return: A CSS Class Python object
     :rtype: CssStyle.CssCls
     """
-    return CssStyle.getCssObj(clsName, self.rptObj, theme=self.colors._themeObj.name)
+    return CssStyle.getCssObj(clsName, self.rptObj)
 
   def add(self, className, cssRef=None, htmlId=None):
     """

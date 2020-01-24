@@ -11,9 +11,11 @@ class CssPopupTable(CssStyle.CssCls):
   cssId = {'child': 'table'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('colors', 0), "color": self.getColor('greys', -1), 'border': '1px solid %s' % self.getColor('colors', 0),
-                  "box-shadow": '0 0 1px 1px %s' % self.getColor('colors', -1), "-webkit-box-shadow": '0 0 1px 1px %s' % self.getColor('colors', -1),
-                  "-moz-box-shadow": '0 0 1px 1px %s' % self.getColor('colors', -1)})
+    style.update({"background": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[0],
+                  "box-shadow": '0 0 1px 1px %s' % self.rptObj.theme.colors[-1],
+                  "-webkit-box-shadow": '0 0 1px 1px %s' % self.rptObj.theme.colors[-1],
+                  "-moz-box-shadow": '0 0 1px 1px %s' % self.rptObj.theme.colors[-1]})
 
 
 class CssPopupTableTitle(CssStyle.CssCls):
@@ -21,22 +23,24 @@ class CssPopupTableTitle(CssStyle.CssCls):
   cssId = {'child': 'table tr:first-child th'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('colors', -1), "border": "1px solid %s" % self.getColor('colors', -1),
-                  "color": self.getColor('greys', 0)})
+    style.update({"background-color": self.rptObj.theme.colors[-1], "border": "1px solid %s" % self.rptObj.theme.colors[-1],
+                  "color": self.rptObj.theme.greys[0]})
 
 
 class CssPopupTableTitleContent(CssStyle.CssCls):
-  attrs = {'vertical-align': 'middle', 'border-collapse': 'collapse', 'text-align': 'right', 'font-weight': 'bold', 'text-transform': 'uppercase'}
+  attrs = {'vertical-align': 'middle', 'border-collapse': 'collapse', 'text-align': 'right', 'font-weight': 'bold',
+           'text-transform': 'uppercase'}
   cssId = {'child': 'table th'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('colors', 0), "color": self.getColor('greys', -1), 'border': '1px solid %s' % self.getColor('colors', 0)})
+    style.update({"background": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[0]})
 
 
 class CssEventLoading(CssStyle.CssCls):
   attrs = {'bottom': '5px', 'right': '20px', 'position': 'fixed', 'padding': '5px'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 0), 'color': self.getColor('greys', -1)})
+    style.update({"background-color": self.rptObj.theme.greys[0], 'color': self.rptObj.theme.greys[-1]})
 
 

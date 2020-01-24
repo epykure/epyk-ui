@@ -13,7 +13,7 @@ class CssDivOnHover(CssStyle.CssCls):
   hover = {"cursor": 'pointer'}
 
   def customize(self, style, eventsStyles):
-    eventsStyles["hover"].update({"color": '%s !IMPORTANT' % self.getColor("colors", 1)})
+    eventsStyles["hover"].update({"color": '%s !IMPORTANT' % self.rptObj.theme.colors[1]})
 
 
 class CssDivOnHoverBackgroundLight(CssStyle.CssCls):
@@ -21,5 +21,5 @@ class CssDivOnHoverBackgroundLight(CssStyle.CssCls):
   hover = {"cursor": 'pointer'}
 
   def customize(self, style, eventsStyles):
-    eventsStyles["hover"].update({"background-color": self.getColor("greys", 2), "font-weight": 'bold',
-      "color": '%s !IMPORTANT' % self.getColor("greys", -1)})
+    eventsStyles["hover"].update({"background-color": self.rptObj.theme.greys[2], "font-weight": 'bold',
+      "color": '%s !IMPORTANT' % self.rptObj.theme.greys[-1]})

@@ -33,7 +33,7 @@ class ProgressBar(Html.Html):
     super(ProgressBar, self).__init__(report, value, width=width[0], widthUnit=width[1], height=height[0],
                                       heightUnit=height[1], profile=profile)
     self.add_helper(helper)
-    self._jsStyles = {"background": self.getColor('success', 1)}
+    self._jsStyles = {"background": self._report.theme.success[1]}
     self.attr["title"] = "%.2f%% (%s / %s)" % (value, number, total)
 
   @property
@@ -168,7 +168,7 @@ class SliderOld(Html.Html):
     self.add_helper(helper)
 
     self.css({'text-align': 'center', 'padding-top': '-50px', 'padding': '10px', 'margin': '0 0 10px 0'})
-    self.setColor(self.getColor('colors', 7) if color is None else color)
+    self.setColor(self._report.theme.colors[7] if color is None else color)
     if self.htmlCode is not None:
       self._report.htmlCodes[self.htmlCode] = self
       if 'values' in self.vals:
@@ -228,7 +228,7 @@ class SliderOld(Html.Html):
               if(!useAsync) {
                 var body_loading_count = parseInt($('#body_loading span').text()); $('#body_loading span').html(body_loading_count - 1);
                 if ($('#body_loading span').html() == '0') {$('#body_loading').remove()}}
-            })''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'lightGreyColor': self.getColor("greys", 2),
+            })''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'lightGreyColor': self._report.theme.greys[2],
                      'urlUpdate': self.js.window.history.updateState(self.htmlId, self.val).toStr(),
                      'jsFnc': ";".join([f for f in fnc if f is not None]), 'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
 
@@ -493,7 +493,7 @@ class SkillBar(Html.Html):
     y_pos = pkg_numpy.arange(len(labels))
     performance = values
     error = pkg_numpy.random.rand(len(labels))
-    ax.barh(y_pos, performance, xerr=error, align='center', color=self.getColor('colors', 7), ecolor='black')
+    ax.barh(y_pos, performance, xerr=error, align='center', color=self._report.theme.colors[7], ecolor='black')
     ax.set_yticks(y_pos)
     ax.set_yticklabels(labels)
     ax.invert_yaxis()  # labels read top-to-bottom
@@ -534,8 +534,8 @@ class ContextMenu(Html.Html):
     super(ContextMenu, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
                                       heightUnit=height[1], profile=profile)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
-              'padding': 0, 'margin': 0, 'background-color': self.getColor('greys', 0),
-              'border': '1px solid %s' % self.getColor('colors', 5), 'border-radius': '2px'})
+              'padding': 0, 'margin': 0, 'background-color': self._report.theme.greys[0],
+              'border': '1px solid %s' % self._report.theme.colors[5], 'border-radius': '2px'})
     for rec in recordSet:
       if "icon" in rec:
         self._report.jsImports.add("font-awesome")
@@ -599,7 +599,7 @@ class OptionsBar(Html.Html):
   def __init__(self, report, recordset, width, height, size, color, border_color, options):
     super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
     self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
-              'background': self.getColor("greys", 0)})
+              'background': self._report.theme.greys[0]})
     self.border_color = border_color
     if options.get("draggable", False):
       self.draggable()
@@ -632,8 +632,8 @@ class SignIn(Html.Html):
   def __init__(self, report, text, size, icon):
     super(SignIn, self).__init__(report, text, width=size, widthUnit="px", height=size, heightUnit="px")
     self.size, self.icon = size, icon
-    self.css({"text-align": "center", "font-size": "%s%s" % (size[0], size[1]), "padding": "5px", 'color': self.getColor('colors', 3),
-              "margin": 0, "border-radius": "%s%s" % (size[0], size[1]), "border": "1px solid %s" % self.getColor('colors', 3), 'cursor': 'pointer'})
+    self.css({"text-align": "center", "font-size": "%s%s" % (size[0], size[1]), "padding": "5px", 'color': self._report.theme.colors[3],
+              "margin": 0, "border-radius": "%s%s" % (size[0], size[1]), "border": "1px solid %s" % self._report.theme.colors[3], 'cursor': 'pointer'})
 
   def __str__(self):
     self._report.user = "o"
@@ -657,7 +657,7 @@ class Filters(Html.Html):
     self.add_title(title)
     self.css({"font-size": "%s%s" % (size[0], size[1]), "font-family": report.style.defaults.font.family})
     self._jsStyles = {'items': {'display': 'inline-block', 'padding': '1px 4px',
-                                'color': self.getColor('colors', -1), 'margin': '2px', 'border-radius': '5px', 'background-color': self.getColor('colors', 0)}}
+                                'color': self._report.theme.colors[-1], 'margin': '2px', 'border-radius': '5px', 'background-color': self._report.theme.colors[0]}}
     self.style.addCls('scroll_content')
 
   @property
@@ -712,7 +712,7 @@ class Filters(Html.Html):
             }}''' % {'jqId': self.jqId, 'jsData': jsData, 'existingItems': self.val,
                      "CssStyleBuilder": self._report.js.fncs.cssStyle,
                      "jsStyles": json.dumps(self._jsStyles), "jsColumn": jsColumn,
-                     'color': self.getColor('colors', 7), 'htmlId': self.htmlId, 'pyClass': cssItem}
+                     'color': self._report.theme.colors[7], 'htmlId': self.htmlId, 'pyClass': cssItem}
 
     return '''
       var idata = %(jsData)s; var existingItems = %(existingItems)s; var jsColumn = %(jsColumn)s;
@@ -727,7 +727,7 @@ class Filters(Html.Html):
           %(jqId)s.append('<div class="%(pyClass)s" name="item" style="'+ %(CssStyleBuilder)s(jsStyles.items) +'"><i onclick="%(jsCloseItem)s" style="font-size:9px;padding-right:2px;margin-right:10px;cursor:pointer" class="fas fa-times"></i>'+ idata +'</div>')
       }}''' % {'jqId': self.jqId, 'jsData': jsData, 'existingItems': self.val, "jsStyles": json.dumps(self._jsStyles),
                "jsColumn": jsColumn, "jsCloseItem": self._jsCloseItem(jsFncClosure),
-               "CssStyleBuilder": self._report.js.fncs.cssStyle, 'color': self.getColor('colors', 7),
+               "CssStyleBuilder": self._report.js.fncs.cssStyle, 'color': self._report.theme.colors[7],
                'htmlId': self.htmlId, 'pyClass': cssItem}
 
   def jsAddItems(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):

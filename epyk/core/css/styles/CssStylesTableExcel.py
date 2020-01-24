@@ -28,7 +28,8 @@ class CssTableExcelCell(CssStyle.CssCls):
 
 
 class CssTableExcelTitle(CssStyle.CssCls):
-  attrs = {'border': '1px solid #cecece', 'cursor': 'pointer', 'padding': '1px 20px 1px 20px', 'background-color': '#F3F3F3'}
+  attrs = {'border': '1px solid #cecece', 'cursor': 'pointer', 'padding': '1px 20px 1px 20px',
+           'background-color': '#F3F3F3'}
   hover, active = {'cursor': 'pointer'}, {'background-color': '#8EB0E7'}
   cssId = {'child': 'td.rows'}
 

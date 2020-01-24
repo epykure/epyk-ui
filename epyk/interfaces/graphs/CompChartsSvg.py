@@ -134,8 +134,8 @@ class SVG(object):
     """
     if not isinstance(width, tuple):
       width = (width, "px")
-    dflt_options = {"stroke": self.parent.context.rptObj.getColor("success", 1), "stroke-width": 1,
-                    'fill': self.parent.context.rptObj.getColor("success", 1)}
+    dflt_options = {"stroke": self.parent.context.rptObj.theme.success[1], "stroke-width": 1,
+                    'fill': self.parent.context.rptObj.theme.success[1]}
     if options is not None:
       dflt_options.update(options)
     shape = graph.GraphSvg.Polyline(self.parent.context.rptObj,

@@ -273,9 +273,9 @@ class Cell(Html.Html):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs] if jsFncs is not None else []
     jsFncs = [
-      "if (!data.status){$('#%(htmlId)s_result_data').css('color', '%(redColor)s')} else {$('#%(htmlId)s_result_data').css('color', '%(blackColor)s')}" % {"htmlId": self.htmlId, 'redColor': self.getColor('redColor', 4), 'blackColor': self.getColor('greyColor', 8) },
+      "if (!data.status){$('#%(htmlId)s_result_data').css('color', '%(redColor)s')} else {$('#%(htmlId)s_result_data').css('color', '%(blackColor)s')}" % {"htmlId": self.htmlId, 'redColor': self._report.theme.danger[1], 'blackColor': self._report.theme.greys[8]},
       "%(htmlId)s_count ++; $('#%(htmlId)s_counter').text( 'In [ '+ %(htmlId)s_count +']')" % {"htmlId": self.htmlId},
-      "$('#%(htmlId)s_result_data').text(data.output); $('#%(htmlId)s_print_data').text(data.print);" % {"htmlId": self.htmlId}] + jsFncs + ["$('#%(htmlId)s_result').show();$('#%(htmlId)s_print').show();" % {"htmlId": self.htmlId} ]
+      "$('#%(htmlId)s_result_data').text(data.output); $('#%(htmlId)s_print_data').text(data.print);" % {"htmlId": self.htmlId}] + jsFncs + ["$('#%(htmlId)s_result').show();$('#%(htmlId)s_print').show();" % {"htmlId": self.htmlId}]
     self._jsRun = (self._report.jsPost(url=url, jsData=jsData, jsFnc=jsFncs, httpCodes=httpCodes) if url is not None else ";".join(jsFncs), tooltip)
     return self
 
@@ -336,8 +336,8 @@ class Cell(Html.Html):
         </tr>
       </table>
       ''' % {'attr': self.get_attrs(), 'htmlId': self.htmlId, 'runButton': runButton, 'tdRunCss': self._report.style.cssName('CssTdEditor'), 'saveButton': saveButton,
-             'blackColor': self.getColor('greys', 9), 'whiteColor': self.getColor('greys', 0),
-             'redColor': self.getColor('danger', 1), 'blueColor': self.getColor('colors', 6)}
+             'blackColor': self._report.theme.greys[9], 'whiteColor': self._report.theme.greys[0],
+             'redColor': self._report.theme.danger[1], 'blueColor': self._report.theme.colors[6]}
 
 
 class Tags(Html.Html):
@@ -363,7 +363,7 @@ class Tags(Html.Html):
        fncDsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
     return '''
       $('#%(htmlId)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlId)s\\\")' style='margin-left:10px' class='far fa-times-circle'></i></span>")
-      ''' % {"htmlId": self.htmlId, "jsData": jsData, 'whiteColor': self.getColor('greys', 0), "baseColor": self.getColor("colors", 9)}
+      ''' % {"htmlId": self.htmlId, "jsData": jsData, 'whiteColor': self._report.theme.greys[0], "baseColor": self._report.theme.colors[9]}
 
   def __str__(self):
     return '''
@@ -372,4 +372,4 @@ class Tags(Html.Html):
           <i class="%(icon)s" style="margin-right:10px"></i>%(title)s</div>
         <div id='%(htmlId)s_tags' style='padding:2px 5px 0 5px;border:1px solid %(greyColor)s;height:30px'></div>
       </div>''' % {"attr": self.get_attrs(pyClassNames=self.defined), "title": self.title, 'icon': self.icon,
-                   'htmlId': self.htmlId, 'greyColor': self.getColor("greys", 2)}
+                   'htmlId': self.htmlId, 'greyColor': self._report.theme.greys[2]}
