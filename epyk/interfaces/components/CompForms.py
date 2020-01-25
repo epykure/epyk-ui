@@ -15,7 +15,7 @@ class Forms(object):
 
     Example
     f = rptObj.ui.form()
-    
+
     :param action:
     :param method:
     :param helper:

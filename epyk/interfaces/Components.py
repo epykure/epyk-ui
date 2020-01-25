@@ -251,7 +251,6 @@ class Components(object):
     """
     return CompModals.Modal(self)
 
-
   @property
   def charts(self):
     """
@@ -425,6 +424,22 @@ class Components(object):
     html_wf = html.HtmlOthers.Workflow(self.rptObj, records, width, height, color, size, options or {})
     self.register(html_wf)
     return html_wf
+
+  def form(self, action=None, method=None, helper=None):
+    """
+    Creates an new empty form
+
+    Example
+    f = rptObj.ui.form()
+
+    :param action:
+    :param method:
+    :param helper:
+    :return:
+    """
+    form = html.HtmlContainer.Form(self.rptObj, [], action, method, helper)
+    self.register(form)
+    return form
 
   #--------------------------------------------------------------------------------------------------------------------
   #
