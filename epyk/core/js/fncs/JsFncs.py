@@ -488,7 +488,7 @@ class JsFunctions(list):
     self.__strFncs.extend(strFncs)
 
   def toStr(self):
-    return "; ".join([s.toStr() for s in self.__strFncs])
+    return "; ".join([s.toStr() if hasattr(s, 'toStr') else str(s) for s in self.__strFncs])
 
 
 _JSFNCS = 0
