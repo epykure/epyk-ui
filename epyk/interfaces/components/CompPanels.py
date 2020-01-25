@@ -102,8 +102,10 @@ class Panels(object):
     :param options:
     :param profile:
     """
+    dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
+    dflt_options.update(options or {})
     size = self.context._size(size)
-    html_indices = html.HtmlContainer.Indices(self.context.rptObj, count, size, width, height, options, profile)
+    html_indices = html.HtmlContainer.Indices(self.context.rptObj, count, size, width, height, dflt_options, profile)
     self.context.register(html_indices)
     return html_indices
 
