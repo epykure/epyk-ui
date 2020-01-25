@@ -85,7 +85,7 @@ class Button(Html.Html):
         jsPressFncs = [jsPressFncs]
       if self.options.group is not None and not self.options.multiple:
         jsPressFncs.append(self.dom.release(by_name=True))
-      jsPressFncs.append(self.dom.disable(lock=jsReleaseFncs is None))
+      jsPressFncs.append(self.dom.lock(not_allowed=jsReleaseFncs is None))
       str_fnc = "if(%s == 'pointer'){%s}" % (self.dom.css('cursor'), JsUtils.jsConvertFncs(jsPressFncs, toStr=True))
     if jsReleaseFncs is not None:
       if jsPressFncs is None:

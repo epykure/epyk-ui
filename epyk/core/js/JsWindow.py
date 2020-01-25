@@ -882,4 +882,3 @@ class JsWindow(object):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._context.setdefault('beforeunload', []).extend(jsFncs)
-

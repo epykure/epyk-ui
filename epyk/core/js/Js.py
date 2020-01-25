@@ -325,14 +325,25 @@ class JsBase(object):
     self.window = JsWindow.JsWindow(self)
     self.performance = JsPerformance.JsPerformance(self)
     self.sessionStorage = JsWindow.JsSessionStorage()
-    self.location = JsLocation.JsLocation()
     self.json = JsJson()
     self.math = JsMaths.JsMaths()
 
     # shortcut functions
     self.alert = self.window.alert
     self.log = self.console.log
-    self._breadcrumb, self.__data = None, None
+    self._breadcrumb, self.__data, self.__location = None, None, None
+
+  @property
+  def location(self):
+    """
+    Property to the Javascript Location functions
+
+    Documentation
+    https://www.w3schools.com/jsref/obj_location.asp
+    """
+    if self.__location is None:
+      self.__location = JsLocation.JsLocation()
+    return self.__location
 
   @property
   def objects(self):
@@ -505,6 +516,22 @@ class JsBase(object):
     if self._breadcrumb is None:
       self._breadcrumb = JsBreadCrumb(self._src)
     return self._breadcrumb
+
+  def navigateTo(self, url, options=None):
+    """
+    Navigator to another URL like NodeJs
+
+    Example
+    icon.click([self.context.rptObj.js.navigateTo(url)])
+
+    Documentation
+    https://redfin.github.io/react-server/annotated-src/navigateTo.html
+
+    :param url:
+    :param options:
+    :return:
+    """
+    return self.location.open_new_tab(url=url)
 
   def registerFunction(self, fncName, jsFncs, pmts=None):
     """
