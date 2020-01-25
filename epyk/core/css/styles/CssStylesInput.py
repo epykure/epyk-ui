@@ -96,3 +96,14 @@ class CssInputTextArea(CssStyle.CssCls):
     style.update({"background-color": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
                   'border': '1px solid %s' % self.rptObj.theme.colors[1]})
     eventsStyles['hover'].update({'color': self.rptObj.theme.greys[-1]})
+
+
+class CssInputInValid(CssStyle.CssCls):
+  attrs = {'color': 'red'}
+  cssId = {'reference': 'input:invalid:not(:focus)'}
+
+
+class CssInputValid(CssStyle.CssCls):
+  attrs = {'color': 'yellow', "background": "url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg)",
+           "background-size": "10px", "background-repeat": 'no-repeat', "background-position": "0"}
+  cssId = {'reference': 'input:valid'}

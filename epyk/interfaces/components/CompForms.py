@@ -9,6 +9,21 @@ class Forms(object):
   def __init__(self, context):
     self.context = context
 
+  def new(self, action=None, method=None, helper=None):
+    """
+    Creates an new empty form
+
+    Example
+    f = rptObj.ui.form()
+    
+    :param action:
+    :param method:
+    :param helper:
+    """
+    form = html.HtmlContainer.Form(self.context.rptObj, [], action, method, helper)
+    self.context.register(form)
+    return form
+
   def date(self, action, method, htmlCode="Current", helper=None):
     """
 

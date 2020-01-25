@@ -65,9 +65,25 @@ class Input(Html.Html):
 
     :param source:
 
-    :return:
+    :return: Self to allow the chaining
     """
     self._report.js.addOnLoad(['%s.autocomplete({"source": %s})' % (self.dom.jquery.varId, source)])
+    return self
+
+  def validation(self, pattern, required=True):
+    """
+    Add validation rules on the input component
+
+    Example
+    input.validation(pattern="[0-9]{5}")
+
+    :param pattern: String.
+    :return: Self to allow the chaining
+    """
+    self.attr["pattern"] = pattern
+    if required:
+      self.attr["required"] = None
+    self.style.addCls(["CssInputInValid", "CssInputValid"])
     return self
 
   def enter(self, jsFncs, profile=False):

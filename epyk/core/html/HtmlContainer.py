@@ -695,7 +695,8 @@ class Form(Html.Html):
   def __init__(self, report, htmlObjs, action, method, helper):
     super(Form, self).__init__(report, [])
     self.css({"padding": '5px'})
-    self.attr.update({"action": action, "method": method})
+    if action is not None and method is not None:
+      self.attr.update({"action": action, "method": method})
     self.add_helper(helper)
     self.submit = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
     self.submit.inReport = False
