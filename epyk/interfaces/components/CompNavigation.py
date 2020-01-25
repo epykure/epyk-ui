@@ -66,7 +66,7 @@ class Navigation(object):
 
     Example
     rptObj.ui.navigation.to(100, tooltip="test")
-    
+
     :param y:
     :param x:
     :param icon:
