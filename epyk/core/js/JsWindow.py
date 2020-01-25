@@ -403,6 +403,56 @@ class JsHistory(object):
     return self.pushState("data", "", JsFncs.JsFunction("updateUrl(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None))))
 
 
+class JsWindowEvent(object):
+  def addEventListener(self, eventType, jsFncs, windowId="window"):
+    """
+
+    :param eventType:
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    eventType = JsUtils.jsConvertData(eventType, None)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return JsFncs.JsFunction("%s.addEventListener(%s, function(){%s})" % (windowId, eventType, jsFncs))
+
+  def addScrollListener(self, jsFncs, windowId="window"):
+    """
+
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    return self.addEventListener("scroll", jsFncs, windowId)
+
+  def addContentLoaded(self, jsFncs, windowId="window"):
+    """
+    The DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
+
+    Example
+    rptObj.js.addOnLoad(
+      rptObj.js.window.events.addContentLoaded(rptObj.js.alert("DOM fully loaded and parsed"))
+    )
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event
+
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    return self.addEventListener("DOMContentLoaded", jsFncs, windowId)
+
+  def addClickListener(self, jsFncs, windowId="window"):
+    """
+
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    return self.addEventListener("click", jsFncs, windowId)
+
+
 class JsWindow(object):
   """
   The window object represents an open window in a browser.
@@ -413,6 +463,9 @@ class JsWindow(object):
   Documentation:
   https://www.w3schools.com/Jsref/obj_window.asp
   """
+  @property
+  def scrollY(self, windowId="window"):
+    return JsNumber.JsNumber("%s.scrollY" % windowId)
 
   def __init__(self, src=None):
     """
@@ -455,6 +508,23 @@ class JsWindow(object):
     :return: The String representing the Javascript function
     """
     return JsFncs.JsFunction("%s.close()" % windowId)
+
+  @property
+  def events(self):
+    """ Property to all the events """
+    return JsWindowEvent()
+
+  def addEventListener(self, eventType, jsFncs, windowId="window"):
+    """
+
+    :param eventType:
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    eventType = JsUtils.jsConvertData(eventType, None)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return JsFncs.JsFunction("%s.addEventListener(%s, function(){%s})" % (windowId, eventType, jsFncs))
 
   def open(self, url, name="_self", specs=None, replace=None, windowId="window"):
     """
