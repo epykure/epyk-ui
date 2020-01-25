@@ -118,7 +118,7 @@ class ImgCarrousel(Html.Html):
         var label = document.createElement('label'); label.style.backgroundColor = '%(color)s'; 
         label.style.borderRadius = '20px'; label.for = i; label.innerHTML = '&nbsp;'; 
         document.getElementById(htmlObj.id +'_bullets').appendChild(label)
-      })''' % {'color': self.getColor('colors', 9)}
+      })''' % {'color': self._report.theme.colors[9]}
 
   def __str__(self):
     # self._report.jsOnLoadFnc.add('''
@@ -177,7 +177,7 @@ class Icon(Html.Html):
 
     """
     if color_out is None:
-      color_out = self.getColor('success', 1)
+      color_out = self._report.theme.success[1]
     else:
       self.css({"color": color_out})
     self.set_attrs(name="onmouseover", value="this.style.color='%s'" % color_hover)

@@ -23,3 +23,4 @@ class CssDivOnHoverBackgroundLight(CssStyle.CssCls):
   def customize(self, style, eventsStyles):
     eventsStyles["hover"].update({"background-color": self.rptObj.theme.greys[2], "font-weight": 'bold',
       "color": '%s !IMPORTANT' % self.rptObj.theme.greys[-1]})
+

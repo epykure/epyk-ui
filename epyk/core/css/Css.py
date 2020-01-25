@@ -52,31 +52,6 @@ class Css(object):
     """
     return Globals.CssGlobal(self)
 
-  # @property
-  # def colors(self):
-  #   """
-  #   CSS Colors category
-  #
-  #   This will provide an interface to deal with colors in Python and Javascript in a simple manner.
-  #   This will provide an object with different methods to play with colors.
-  #
-  #   Colors and themes can be changed directly in the report run time
-  #
-  #   For changing the colors you can use the below function
-  #
-  #   for adding a bespoke theme to the framework you can use the CLI command:
-  #
-  #   Example
-  #   >>> Css().colors.get('success', 0)
-  #   '#e8f2ef'
-  #
-  #   :return: A Python ColorMaker object
-  #   :rtype: epyk.core.css.Color.ColorMaker
-  #   """
-  #   if self._colors is None:
-  #     self._colors = Color.ColorMaker(self.rptObj)
-  #   return self._colors
-
   @property
   def defaults(self):
     """

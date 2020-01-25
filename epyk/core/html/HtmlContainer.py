@@ -3,10 +3,9 @@ Wrapper to the Bootstrap Layout library
 """
 
 
-import json
-
 from epyk.core.html import Html
 from epyk.core.html import HtmlSelect
+from epyk.core.html import Options
 
 #
 from epyk.core.js import JsUtils
@@ -737,4 +736,60 @@ class Modal(Html.Html):
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
 
 
+class Indices(Html.Html):
+  name, category, callFnc = 'Index', 'Panels', 'index'
 
+  def __init__(self, report, count, width, height, htmlCode, options, profile):
+    super(Indices, self).__init__(report, count, width=width, widthUnit=width[1], height=height[0],
+                                  heightUnit=height[1], profile=profile)
+
+  @property
+  def _js__builder__(self):
+    return '''
+      '''
+
+  def __getitem__(self, i):
+    pass
+
+  def __str__(self):
+    return ''
+
+
+class Points(Html.Html):
+  name, category, callFnc = 'Index', 'Panels', 'index'
+
+  def __init__(self, report, count, width, height, htmlCode, options, profile):
+    super(Points, self).__init__(report, count, width=width, widthUnit=width[1], height=height[0],
+                                  heightUnit=height[1], profile=profile)
+    self.items = []
+    self.css({"text-align": "center"})
+    self.options = Options.OptionsPanelPoints(report, options)
+    for i in range(count):
+      div = self._report.ui.div(self._report.entities.non_breaking_space)
+      div.attr["name"] = self.htmlId
+      div.attr["data-position"] = i + 1
+      div.css({"border": "1px solid %s" % self._report.theme.greys[5], "border-radius": "10px", "width": "15px", "height": "15px"})
+      div.css(self.options.div_css)
+      div.style.addCls('CssDivOnHoverBackgroundLight')
+      div.inReport = False
+      self.items.append(div)
+
+  def click(self, i, jsFncs, profile=False):
+    """
+
+    :param i:
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return self[i].on("click", [
+      self[i].dom.by_name.css({"background-color": ""}).r,
+      self[i].dom.css({"background-color": self.options.background_color})] + jsFncs, profile)
+
+  def __getitem__(self, i):
+    return self.items[i]
+
+  def __str__(self):
+    str_vals = "".join([i.html() for i in self.items])
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)

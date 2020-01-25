@@ -24,9 +24,9 @@ class JsObjects(object):
     """
     Interface to the Javascript Object primitive
 
-    :return: The Javascript "this" object
+    :return: The Javascript "this" object (which is a dom object very often)
     """
-    return JsObject.JsObject.get("this")
+    return JsNodeDom.JsDoms.get("this")
 
   @property
   def result(self):
