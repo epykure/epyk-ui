@@ -261,14 +261,15 @@ class Html(object):
         css_animation["animation-delay"] = "%ss" % delay
       if iteration:
         css_animation["animation-iteration-count"] = iteration
-      if timing_fnc:
+      if timing_fnc is not None:
         if timing_fnc not in ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] and not timing_fnc.startswith("cubic-bezier"):
           raise Exception("%s missing from the list" % timing_fnc)
 
-        css_animation["animation-timing-function"] = iteration
+        css_animation["animation-timing-function"] = timing_fnc
       # Add the -webkit- prefix for capatibility with some browsers
       safari_css = dict([("-webkit-%s" % k, v) for k, v in css_animation.items()])
       css_animation.update(safari_css)
+      print(css_animation)
       self.css(css_animation)
       return self
 

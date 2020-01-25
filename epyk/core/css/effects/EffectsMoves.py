@@ -12,3 +12,12 @@ class EffectsSpin(Effects.Effects):
   }
 
 
+class EffectsTranslate(Effects.Effects):
+  attrs = {
+    "0%": {
+      "-webkit-transform": "translateY(-100 %)",
+      "opacity": 1},
+    "100%": {
+      "-webkit-transform": "translateY(0)",
+      "opacity": 0}
+  }
