@@ -465,6 +465,7 @@ class JsWindow(object):
   """
   @property
   def scrollY(self, windowId="window"):
+    """ """
     return JsNumber.JsNumber("%s.scrollY" % windowId)
 
   def __init__(self, src=None):
@@ -636,6 +637,14 @@ class JsWindow(object):
     y = y or "document.body.scrollHeight"
     x = x or "document.body.scrollWidth"
     return JsFncs.JsFunction("%s.scrollTo(%s, %s)" % (windowId, x, y))
+
+  def scrollUp(self, windowId="window"):
+    """
+
+    :param windowId:
+    :return:
+    """
+    return JsFncs.JsFunction("%s.scrollTo(0, 0)" % windowId)
 
   def print(self, windowId="window"):
     """

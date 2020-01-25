@@ -18,6 +18,7 @@ class CssDivOnHover(CssStyle.CssCls):
 
 class CssDivOnHoverBackgroundLight(CssStyle.CssCls):
   """ Change the background color when the mouse is on the component """
+  attrs = {"background-color": "inherit"}
   hover = {"cursor": 'pointer'}
 
   def customize(self, style, eventsStyles):

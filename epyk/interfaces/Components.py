@@ -27,6 +27,7 @@ from epyk.interfaces.components import CompVignets
 from epyk.interfaces.components import CompMenus
 from epyk.interfaces.components import CompPanels
 from epyk.interfaces.components import CompModals
+from epyk.interfaces.components import CompNavigation
 
 
 class Components(object):
@@ -88,6 +89,12 @@ class Components(object):
     Group all the UI components dedicated to produce links to another page or website.
     """
     return CompLinks.Links(self)
+
+  @property
+  def navigation(self):
+    """
+    """
+    return CompNavigation.Navigation(self)
 
   @property
   def rich(self):
