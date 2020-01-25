@@ -744,11 +744,17 @@ class Indices(Html.Html):
     super(Indices, self).__init__(report, count, width=width, widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
     self.items = []
+    self.options = Options.OptionsPanelPoints(report, options)
     for i in range(count):
       div = self._report.ui.div(i, width=(15, "px"))
-      div.css({"display": 'inline-block', "padding": "2px"})
+      div.attr["name"] = self.htmlId
+      div.attr["data-position"] = i + 1
+      div.css({"display": 'inline-block', "padding": "2px", "text-align": "center"})
+      div.css(self.options.div_css)
+      div.style.addCls('CssDivOnHoverBackgroundLight')
       div.inReport = False
       self.items.append(div)
+    #
     self.first = self._report.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
     self.first.inReport = False
     self.prev = self._report.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
@@ -760,6 +766,19 @@ class Indices(Html.Html):
 
   def __getitem__(self, i):
     return self.items[i]
+
+  def click(self, i, jsFncs, profile=False):
+    """
+
+    :param i:
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return self[i].on("click", [
+      self[i].dom.by_name.css({"border-bottom": "1px solid %s" % self._report.theme.colors[0]}).r,
+      self[i].dom.css({"border-bottom": "1px solid %s" % self.options.background_color})] + jsFncs, profile)
 
   def __str__(self):
     str_vals = "".join([self.first.html(), self.prev.html()] + [i.html() for i in self.items] + [self.next.html(), self.last.html()])

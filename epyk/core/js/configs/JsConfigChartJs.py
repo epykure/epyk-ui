@@ -4,7 +4,7 @@
 
 
 from epyk.core.js.configs import JsConfig
-from epyk.core.css import Color
+from epyk.core.css import Colors
 
 
 class JsBase(JsConfig.JsConfig):
@@ -135,7 +135,7 @@ class JsArea(JsBase):
 
     :return:
     """
-    gbList = ["rgba(%s,%s,%s,0.3)" % tuple(Color.ColorMaker.getHexToRgb(val)) for val in cList]
+    gbList = ["rgba(%s,%s,%s,0.3)" % tuple(Colors.getHexToRgb(val)) for val in cList]
     if index is None:
       for i in range(len(self.data._schema['out']['params'][0])):
         if len(cList) > i:
@@ -335,8 +335,8 @@ class JsPolar(JsBase):
 
     :return:
     """
-    self.addAttr('gridLines', {"color": self._report.getColor("greys", 3)}, ['scale'], category='options')
-    rgbList = ["rgba(%s,%s,%s,0.5)" % tuple(Color.ColorMaker.getHexToRgb(val)) for val in cList]
+    self.addAttr('gridLines', {"color": self._report.theme.greys[3]}, ['scale'], category='options')
+    rgbList = ["rgba(%s,%s,%s,0.5)" % tuple(Colors.getHexToRgb(val)) for val in cList]
     if index is None:
       for i in range(len(self.data._schema['values'])):
         if len(cList) > i:
@@ -373,10 +373,10 @@ class JsRadar(JsBase):
 
     :return:
     """
-    self.addAttr('gridLines', {"color": self._report.getColor("greys", 3)}, ['scale'], category='options')
-    self.addAttr('angleLines', {"color": self._report.getColor("greys", 3)}, ['scale'], category='options')
-    self.addAttr('pointLabels', {"fontColor": self._report.getColor("greys", -1)}, ['scale'], category='options')
-    rgbList = ["rgba(%s,%s,%s,0.3)" % tuple(Color.ColorMaker.getHexToRgb(val)) for val in cList]
+    self.addAttr('gridLines', {"color": self._report.theme.greys[3]}, ['scale'], category='options')
+    self.addAttr('angleLines', {"color": self._report.theme.greys[3]}, ['scale'], category='options')
+    self.addAttr('pointLabels', {"fontColor": self._report.theme.greys[-1]}, ['scale'], category='options')
+    rgbList = ["rgba(%s,%s,%s,0.3)" % tuple(Colors.getHexToRgb(val)) for val in cList]
     if index is None:
       for i in range(len(self.data._schema['out']['params'][0])):
         self.seriesProperties['dynamic'].setdefault(i, {})['backgroundColor'] = rgbList[i]
