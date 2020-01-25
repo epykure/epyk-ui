@@ -11,6 +11,16 @@ class Navigation(object):
     self.context = context
 
   def up(self, icon="fas fa-arrow-up", tooltip=None, size=(None, "px"), width=(100, '%'), options=None, profile=False):
+    """
+
+    :param icon:
+    :param tooltip:
+    :param size:
+    :param width:
+    :param options:
+    :param profile:
+    :return:
+    """
     du = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
                                                 "border-radius": '20px', "padding": '8px', "right": '20px',
                                                 "bottom": "20px"})
@@ -27,6 +37,16 @@ class Navigation(object):
     return du
 
   def down(self, icon="fas fa-arrow-down", tooltip=None, size=(None, "px"), width=(100, '%'), options=None, profile=False):
+    """
+
+    :param icon:
+    :param tooltip:
+    :param size:
+    :param width:
+    :param options:
+    :param profile:
+    :return:
+    """
     dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
                                                   "border-radius": '20px', "padding": '8px', "right": '20px'})
     dd.style.addCls("CssDivOnHoverBackgroundLight")
@@ -42,6 +62,21 @@ class Navigation(object):
     return dd
 
   def to(self, y, x=None, icon="fas fa-map-pin", tooltip=None, size=(None, "px"), width=(100, '%'), options=None, profile=False):
+    """
+
+    Example
+    rptObj.ui.navigation.to(100, tooltip="test")
+    
+    :param y:
+    :param x:
+    :param icon:
+    :param tooltip:
+    :param size:
+    :param width:
+    :param options:
+    :param profile:
+    :return:
+    """
     dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
                                                 "border-radius": '20px', "padding": '8px', "right": '20px'})
     dd.style.addCls("CssDivOnHoverBackgroundLight")
