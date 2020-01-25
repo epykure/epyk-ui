@@ -749,16 +749,16 @@ class Indices(Html.Html):
       div.css({"display": 'inline-block', "margin": "2px"})
       div.inReport = False
       self.items.append(div)
+    self.first = self._report.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
+    self.prev = self._report.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
+    self.next = self._report.ui.icon("fas fa-chevron-right", width=(20, 'px')).css({"display": 'inline-block'})
+    self.last = self._report.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
 
   def __getitem__(self, i):
     return self.items[i]
 
   def __str__(self):
-    first = self._report.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
-    prev = self._report.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
-    next = self._report.ui.icon("fas fa-chevron-right", width=(20, 'px')).css({"display": 'inline-block'})
-    last = self._report.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
-    str_vals = "".join([first.html(), prev.html()] + [i.html() for i in self.items] + [next.html(), last.html()])
+    str_vals = "".join([self.first.html(), self.prev.html()] + [i.html() for i in self.items] + [self.next.html(), self.last.html()])
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
 
 
