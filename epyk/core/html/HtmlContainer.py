@@ -173,7 +173,7 @@ class Div(Html.Html):
     return "%s.innerHTML = %s" % (self.dom.varId, js_data) #, "{%s}" % ",".join(js_options))
 
   def __str__(self):
-    str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), str_div, self.helper)
 
   # -----------------------------------------------------------------------------------------
@@ -738,21 +738,28 @@ class Modal(Html.Html):
 
 class Indices(Html.Html):
   name, category, callFnc = 'Index', 'Panels', 'index'
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
 
   def __init__(self, report, count, width, height, htmlCode, options, profile):
     super(Indices, self).__init__(report, count, width=width, widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
-
-  @property
-  def _js__builder__(self):
-    return '''
-      '''
+    self.items = []
+    for i in range(count):
+      div = self._report.ui.div(i, width=(15, "px"))
+      div.css({"display": 'inline-block', "margin": "2px"})
+      div.inReport = False
+      self.items.append(div)
 
   def __getitem__(self, i):
-    pass
+    return self.items[i]
 
   def __str__(self):
-    return ''
+    first = self._report.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
+    prev = self._report.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
+    next = self._report.ui.icon("fas fa-chevron-right", width=(20, 'px')).css({"display": 'inline-block'})
+    last = self._report.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
+    str_vals = "".join([first.html(), prev.html()] + [i.html() for i in self.items] + [next.html(), last.html()])
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
 
 
 class Points(Html.Html):
