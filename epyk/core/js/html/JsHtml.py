@@ -249,10 +249,10 @@ class JsHtmlButton(JsHtml):
   def content(self):
     return JsObjects.JsObjects.get("%s.innerHTML" % self.varName)
 
-  def loading(self, flag):
+  def loading(self, flag, multiple=False):
     """
     Add a loading icon to the button
-    
+
     Example
     b = rptObj.ui.button("test")
     b.click([
@@ -263,10 +263,11 @@ class JsHtmlButton(JsHtml):
     ])
 
     :param flag:
+    :param multiple:
     :return:
     """
     i_loading = '<i class="fas fa-spinner fa-spin" style="margin-right:5px"></i>'
-    fnc = self.disable(flag)
+    fnc = self.disable(False) if multiple else self.disable(flag)
     if flag:
       fnc.append("%s.innerHTML = '%s' + %s.innerHTML" % (self.varName, i_loading, self.varName))
     else:
