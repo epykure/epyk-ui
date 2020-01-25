@@ -3,7 +3,6 @@
 """
 
 import os
-import sys
 import json
 import importlib
 import collections
@@ -77,7 +76,7 @@ class Report(object):
   def __init__(self, run_options=None, appCache=None, sideBar=True, urlsApp=None, theme=None, context=None):
     #
     self._css, self._ui, self._js, self._py, self._theme = None, None, None, None, None
-    self._props, self._tags, self._header_obj = {}, None, None
+    self._props, self._tags, self._header_obj, self.__import_manage = {}, None, None, None
 
     self.run = self.run_context(run_options if run_options is not None else {})
     self.useSideBar, self.preferredTheme = sideBar, None
@@ -158,22 +157,14 @@ class Report(object):
     else:
       self._theme = theme
 
-  # def getColor(self, typeChart, i=None):
-  #   """
-  #   Python function to get the different pre defined color codes in the Framework
-  #
-  #   Documentation
-  #   https://www.w3schools.com/colors/colors_picker.asp
-  #
-  #   :param typeChart:
-  #   :param i:
-  #
-  #   :return:
-  #   """
-  #   if i is None:
-  #     return self.style.colors.get(typeChart)
-  #
-  #   return self.style.colors.get(typeChart, i)
+  def imports(self, online=False):
+    """
+
+    :param online:
+    """
+    if self.__import_manage is None:
+      self.__import_manage = Imports.ImportManager(online, report=self)
+    return self.__import_manage
 
   @property
   def symbols(self):
@@ -513,7 +504,7 @@ class Report(object):
     self.cssImport |= self._props.get("css", {}).get('imports', set([]))
 
     # Section dedicated to the javascript for all the charts
-    importMng = Imports.ImportManager(online=online, report=self)
+    importMng = self.imports(online=online)
     result['cssImports'] = importMng.cssResolve(self.cssImport, self.cssLocalImports)
     result['jsImports'] = importMng.jsResolve(self.jsImports, self.jsLocalImports)
     result['jsDocumentReady'] = ";".join(onloadParts)
