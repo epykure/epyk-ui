@@ -746,13 +746,17 @@ class Indices(Html.Html):
     self.items = []
     for i in range(count):
       div = self._report.ui.div(i, width=(15, "px"))
-      div.css({"display": 'inline-block', "margin": "2px"})
+      div.css({"display": 'inline-block', "padding": "2px"})
       div.inReport = False
       self.items.append(div)
     self.first = self._report.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
+    self.first.inReport = False
     self.prev = self._report.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
+    self.prev.inReport = False
     self.next = self._report.ui.icon("fas fa-chevron-right", width=(20, 'px')).css({"display": 'inline-block'})
+    self.next.inReport = False
     self.last = self._report.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
+    self.last.inReport = False
 
   def __getitem__(self, i):
     return self.items[i]
