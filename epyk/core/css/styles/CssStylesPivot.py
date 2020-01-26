@@ -12,9 +12,9 @@ class CssPivotHead(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
     style.update({
-      'color': self.getColor('greys', -1),
-      'background-color': self.getColor('colors', 0),
-      'border': '1px solid %s' % self.getColor('colors', 3)})
+      'color': self.rptObj.theme.greys[-1],
+      'background-color': self.rptObj.theme.colors[0],
+      'border': '1px solid %s' % self.rptObj.theme.colors[3]})
 
 
 class CssPivotCells(CssStyle.CssCls):
@@ -22,9 +22,9 @@ class CssPivotCells(CssStyle.CssCls):
   cssId = {'reference': '.pvtTable tr td'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', -1), 'background-color': self.getColor('greys', 0),
-                  'border': '1px solid %s' % self.getColor('colors', 3)})
-    eventsStyles['hover'].update({'color': self.getColor('greys', -1), 'background-color': self.getColor('colors', 2)})
+    style.update({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[3]})
+    eventsStyles['hover'].update({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[2]})
 
 
 class CssPivotAxis(CssStyle.CssCls):
@@ -32,29 +32,29 @@ class CssPivotAxis(CssStyle.CssCls):
   cssId = {'reference': '.pvtAxisContainer li span.pvtAttr'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', -1), 'background-color': self.getColor('colors', 1),
-                  'border': '1px solid %s' % self.getColor('colors', 1)})
+    style.update({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})
 
 
 class CssPivotFilterBox(CssStyle.CssCls):
   cssId = {'reference': '.pvtAxisContainer'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', 1), 'background-color': self.getColor('colors', 3),
-                  'border': '1px solid %s' % self.getColor('colors', 1)})
+    style.update({'color': self.rptObj.theme.greys[1], 'background-color': self.rptObj.theme.colors[3],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})
 
 
 class CssPivotFilterVals(CssStyle.CssCls):
   cssId = {'reference': '.pvtVals'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', 1), 'background-color': self.getColor('colors', 3),
-                  'border': '1px solid %s' % self.getColor('colors', 1)})
+    style.update({'color': self.rptObj.theme.greys[1], 'background-color': self.rptObj.theme.colors[3],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})
 
 
 class CssPivotFilterBoxPopUp(CssStyle.CssCls):
   cssId = {'reference': '.pvtFilterBox'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', 1), 'background-color': self.getColor('colors', 2),
-                  'border': '1px solid %s' % self.getColor('colors', 1)})
+    style.update({'color': self.rptObj.theme.greys[1], 'background-color': self.rptObj.theme.colors[2],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})

@@ -65,9 +65,25 @@ class Input(Html.Html):
 
     :param source:
 
-    :return:
+    :return: Self to allow the chaining
     """
     self._report.js.addOnLoad(['%s.autocomplete({"source": %s})' % (self.dom.jquery.varId, source)])
+    return self
+
+  def validation(self, pattern, required=True):
+    """
+    Add validation rules on the input component
+
+    Example
+    input.validation(pattern="[0-9]{5}")
+
+    :param pattern: String.
+    :return: Self to allow the chaining
+    """
+    self.attr["pattern"] = pattern
+    if required:
+      self.attr["required"] = None
+    self.style.addCls(["CssInputInValid", "CssInputValid"])
     return self
 
   def enter(self, jsFncs, profile=False):
@@ -214,7 +230,7 @@ class InputRange(Input):
     self.input.pyStyle = CssGrpClsInput.CssClassInputRange(self)
     self.append_child(self.input)
     #
-    self.output = self._report.ui.inputs._output(text).css({"margin-left": '5px', 'color': self.getColor("success", 1)})
+    self.output = self._report.ui.inputs._output(text).css({"margin-left": '5px', 'color': self._report.theme.success[1]})
     self.output.inReport = False
     self.append_child(self.output)
     self.input.set_attrs(attrs={"type": "range", "min": min, "max": max, "step": step,
@@ -236,7 +252,7 @@ class Field(Html.Html):
     # add the input item
     self.input = input
     self.append_child(self.input)
-    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self.getColor("success", 1)})
+    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
     self.css({"margin-top": '2px'})
 
   @property
@@ -347,7 +363,7 @@ class Radio(Html.Html):
     self.input.css({"font-size": "%s%s" % (size[0], size[1]), "cursor": 'pointer', 'display': 'inline-block',
                     'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
-    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self.getColor("success", 1)})
+    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
 
   @property
   def _js__builder__(self):
@@ -398,7 +414,7 @@ class Search(Html.Html):
   def __init__(self, report, text, placeholder, color, size, height, htmlCode, tooltip, extensible, profile):
     self.size = "%s%s" % (size[0], size[1])
     super(Search, self).__init__(report, "", htmlCode=htmlCode, height=height[0], heightUnit=height[1], profile=profile)
-    self.color = self.getColor('colors', -1) if color is None else color
+    self.color = self._report.theme.colors[-1] if color is None else color
     self.css({"display": "inline-block", "margin-bottom": '2px'})
     #
     if not extensible:

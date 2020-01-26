@@ -3,10 +3,9 @@ Wrapper to the Bootstrap Layout library
 """
 
 
-import json
-
 from epyk.core.html import Html
 from epyk.core.html import HtmlSelect
+from epyk.core.html import Options
 
 #
 from epyk.core.js import JsUtils
@@ -64,8 +63,8 @@ class PanelSplit(Html.Html):
     if right_obj is not None:
       self.right(right_obj)
     self.css_left = {'flex': '0 0 auto', 'padding': '5px', 'min-width': '100px', 'width': self.left_width, 'white-space': 'nowrap'}
-    self.css_right = {'flex': '0 1 auto', 'padding': '5px', 'width': '100%', 'background': self.getColor('greys', 0),
-                     'border-left': '3px solid %s' % self.getColor("success", 1)}
+    self.css_right = {'flex': '0 1 auto', 'padding': '5px', 'width': '100%', 'background': self._report.theme.greys[0],
+                     'border-left': '3px solid %s' % self._report.theme.success[1]}
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
 
   def left(self, html_obj):
@@ -106,14 +105,13 @@ class PanelSlide(Panel):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Slide Panel', 'Panels', 'slide'
 
-  def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, profile):
+  def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, options, profile):
     super(PanelSlide, self).__init__(report, htmlObj, title, color, size, width, height, htmlCode, helper, profile)
-    self.title._vals += " <i style='float:right;margin:4px 2px 0 0' name='icon_%s' class='far fa-caret-square-down'></i>" % self.htmlId
+    self.title._vals = "<i style='float:left;margin:4px 5px 0 0' name='icon_%s' class='fas fa-caret-down'></i>%s" % (self.htmlId, self.title._vals)
     self.title.click([
       report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
-      report.js.getElementsByName("icon_%s" % self.htmlId).first.toggleClass("fa-caret-square-up")])
-    self.title.css({"cursor": 'pointer', "font-size": "%s%s" % (size[0]+2, size[1]), "padding": "0 2px 0 0",
-                    "border-bottom": "1px solid black"})
+      report.js.getElementsByName("icon_%s" % self.htmlId).first.toggleClass("fa-caret-up")])
+    self.title.css({"cursor": 'pointer', "font-size": "%s%s" % (size[0]+1, size[1]), "padding": "0 2px 0 0"})
 
 
 class Div(Html.Html):
@@ -175,7 +173,7 @@ class Div(Html.Html):
     return "%s.innerHTML = %s" % (self.dom.varId, js_data) #, "{%s}" % ",".join(js_options))
 
   def __str__(self):
-    str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), str_div, self.helper)
 
   # -----------------------------------------------------------------------------------------
@@ -240,7 +238,7 @@ class Row(Html.Html):
       if self.titles:
         for i, htmlObj in enumerate(self.vals):
           onclickEvent = "ResizableRow(this, 'col_%s_%s')" % (self.htmlId, i)  # if self.colsWith else "$(\'#col_%s_%s\').children().toggle()" % ( self.htmlId, i)
-          items.append('<th style="text-align:left;padding:5px 0 5px 0;%s"><i onclick="%s" style="cursor:pointer;" class="far fa-minus-square"></i>&nbsp;<p style="color:%s;display:inline">%s</p></th>' % (widths.get(i, ''), onclickEvent, self.getColor('danger', 1), self.titles[i].upper()))
+          items.append('<th style="text-align:left;padding:5px 0 5px 0;%s"><i onclick="%s" style="cursor:pointer;" class="far fa-minus-square"></i>&nbsp;<p style="color:%s;display:inline">%s</p></th>' % (widths.get(i, ''), onclickEvent, self._report.theme.danger[1], self.titles[i].upper()))
       else:
         for i, htmlObj in enumerate(self.vals):
           onclickEvent = "ResizableRow(this, 'col_%s_%s'))" % (self.htmlId, i)  # if self.colsWith else "$(\'#col_%s_%s\').children().toggle()" % ( self.htmlId, i)
@@ -486,7 +484,7 @@ class Tabs(Html.Html):
     self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
     self.css_tab = css_tab
     self.options = options
-    self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self.getColor("success", 1)}
+    self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self._report.theme.success[1]}
     self.tabs_container = self._report.ui.div([])
     self.tabs_container.inReport = False
 
@@ -606,8 +604,8 @@ class Dialog(Html.Html):
   def __init__(self, report, recordSet, width, height, helper, profile):
     super(Dialog, self).__init__(report, recordSet,
                                  profile=profile)
-    self.css({"border": '2px solid %s' % self.getColor("greys", 3), "display": "block", "position": "absolute",
-              "background": self.getColor("greys", 0)})
+    self.css({"border": '2px solid %s' % self._report.theme.greys[3], "display": "block", "position": "absolute",
+              "background": self._report.theme.greys[0]})
     # self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable().toStr())
 
   @property
@@ -697,7 +695,8 @@ class Form(Html.Html):
   def __init__(self, report, htmlObjs, action, method, helper):
     super(Form, self).__init__(report, [])
     self.css({"padding": '5px'})
-    self.attr.update({"action": action, "method": method})
+    if action is not None and method is not None:
+      self.attr.update({"action": action, "method": method})
     self.add_helper(helper)
     self.submit = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
     self.submit.inReport = False
@@ -738,4 +737,90 @@ class Modal(Html.Html):
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
 
 
+class Indices(Html.Html):
+  name, category, callFnc = 'Index', 'Panels', 'index'
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
 
+  def __init__(self, report, count, width, height, htmlCode, options, profile):
+    super(Indices, self).__init__(report, count, width=width, widthUnit=width[1], height=height[0],
+                                  heightUnit=height[1], profile=profile)
+    self.items = []
+    self.options = Options.OptionsPanelPoints(report, options)
+    for i in range(count):
+      div = self._report.ui.div(i, width=(15, "px"))
+      div.attr["name"] = self.htmlId
+      div.attr["data-position"] = i + 1
+      div.css({"display": 'inline-block', "padding": "2px", "text-align": "center"})
+      div.css(self.options.div_css)
+      div.style.addCls('CssDivOnHoverBackgroundLight')
+      div.inReport = False
+      self.items.append(div)
+    #
+    self.first = self._report.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
+    self.first.inReport = False
+    self.prev = self._report.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
+    self.prev.inReport = False
+    self.next = self._report.ui.icon("fas fa-chevron-right", width=(20, 'px')).css({"display": 'inline-block'})
+    self.next.inReport = False
+    self.last = self._report.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
+    self.last.inReport = False
+
+  def __getitem__(self, i):
+    return self.items[i]
+
+  def click(self, i, jsFncs, profile=False):
+    """
+
+    :param i:
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return self[i].on("click", [
+      self[i].dom.by_name.css({"border-bottom": "1px solid %s" % self._report.theme.colors[0]}).r,
+      self[i].dom.css({"border-bottom": "1px solid %s" % self.options.background_color})] + jsFncs, profile)
+
+  def __str__(self):
+    str_vals = "".join([self.first.html(), self.prev.html()] + [i.html() for i in self.items] + [self.next.html(), self.last.html()])
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
+
+
+class Points(Html.Html):
+  name, category, callFnc = 'Index', 'Panels', 'index'
+
+  def __init__(self, report, count, width, height, htmlCode, options, profile):
+    super(Points, self).__init__(report, count, width=width, widthUnit=width[1], height=height[0],
+                                  heightUnit=height[1], profile=profile)
+    self.items = []
+    self.css({"text-align": "center"})
+    self.options = Options.OptionsPanelPoints(report, options)
+    for i in range(count):
+      div = self._report.ui.div(self._report.entities.non_breaking_space)
+      div.attr["name"] = self.htmlId
+      div.attr["data-position"] = i + 1
+      div.css({"border": "1px solid %s" % self._report.theme.greys[5], "border-radius": "10px", "width": "15px", "height": "15px"})
+      div.css(self.options.div_css)
+      div.style.addCls('CssDivOnHoverBackgroundLight')
+      div.inReport = False
+      self.items.append(div)
+
+  def click(self, i, jsFncs, profile=False):
+    """
+
+    :param i:
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return self[i].on("click", [
+      self[i].dom.by_name.css({"background-color": ""}).r,
+      self[i].dom.css({"background-color": self.options.background_color})] + jsFncs, profile)
+
+  def __getitem__(self, i):
+    return self.items[i]
+
+  def __str__(self):
+    str_vals = "".join([i.html() for i in self.items])
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)

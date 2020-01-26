@@ -77,7 +77,7 @@ class Rich(object):
     if height is None or height[0] is None:
       height = (Defaults_css.Font.header_size, "px")
     if isinstance(color, bool):
-      color = self.context.rptObj.getColor("success", 1) if color else self.context.rptObj.getColor("danger", 1)
+      color = self.context.rptObj.theme.success[1] if color else self.context.rptObj.theme.danger[1]
     html_traffic = html.HtmlTextComp.TrafficLight(self.context.rptObj, color, label, height, tooltip, helper, profile)
     self.context.register(html_traffic)
     return html_traffic
@@ -213,7 +213,7 @@ class Rich(object):
     size = self.context._size(size)
     options = options or {}
     html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, color, size, width, height, htmlCode, None, options, profile)
-    html_div.css({"border": "1px solid %s" % html_div.getColor("greys", 4), "background": html_div.getColor("greys", 2),
+    html_div.css({"border": "1px solid %s" % html_div._report.theme.greys[4], "background": html_div._report.theme.greys[2],
                   'padding': '5px'})
     self.context.register(html_div)
     return html_div

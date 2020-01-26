@@ -19,6 +19,39 @@ class Buttons(object):
   def __init__(self, context):
     self.context = context
 
+  def badge(self, text=None, value=None, icon=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'),
+             htmlCode=None, tooltip=None, profile=None, options=None):
+
+    """
+
+    Example
+    rptObj.ui.buttons.badge("test", 10, options={"badge_css": {"color": "white", "background-color": "red"}, "badge_position": 'left'})
+
+    Documentation
+
+    :param text:
+    :param value:
+    :param icon:
+    :param width:
+    :param height:
+    :param size:
+    :param htmlCode:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
+    options = options or {}
+    badge_css = options.get("badge_css", {})
+    badge_position = options.get("badge_position")
+    if badge_position == "left":
+      b = self.context.rptObj.ui.images.badge(value).link.css({"right": "-15px", "bottom": 0})
+    button = self.button(text, icon, width, height, size, htmlCode, tooltip, profile, options)
+    if badge_position != "left":
+      b = self.context.rptObj.ui.images.badge(value, options={"badge_position": badge_position}).link.css({"bottom": "none",
+                "top": "-15px", "right": "15px"})
+    b.css(badge_css)
+    return button
+
   def button(self, text=None, icon=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'),
              htmlCode=None, tooltip=None, profile=None, options=None):
     """

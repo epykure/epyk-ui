@@ -3,7 +3,6 @@
 """
 
 import os
-import sys
 import json
 import importlib
 import collections
@@ -20,6 +19,8 @@ except NameError:
 from epyk.core.js import Imports
 from epyk.interfaces import Components
 from epyk.core.css import Css
+from epyk.core.css.themes import Theme
+
 from epyk.core import html
 from epyk.core import js
 from epyk.core import py
@@ -74,8 +75,8 @@ class Report(object):
 
   def __init__(self, run_options=None, appCache=None, sideBar=True, urlsApp=None, theme=None, context=None):
     #
-    self._css, self._ui, self._js, self._py = None, None, None, None
-    self._props, self._tags, self._header_obj = {}, None, None
+    self._css, self._ui, self._js, self._py, self._theme = None, None, None, None, None
+    self._props, self._tags, self._header_obj, self.__import_manage = {}, None, None, None
 
     self.run = self.run_context(run_options if run_options is not None else {})
     self.useSideBar, self.preferredTheme = sideBar, None
@@ -135,6 +136,35 @@ class Report(object):
     if self._css is None:
       self._css = Css.Css(self)
     return self._css
+
+  @property
+  def theme(self):
+    """ """
+    if self._theme is None:
+      self._theme = Theme.ThemeDefault()
+    return self._theme
+
+  @theme.setter
+  def theme(self, theme):
+    """
+
+    :param theme:
+    :return:
+    """
+    if isinstance(theme, dict):
+      self._theme = Theme.ThemeCustome()
+      self._theme = theme
+    else:
+      self._theme = theme
+
+  def imports(self, online=False):
+    """
+
+    :param online:
+    """
+    if self.__import_manage is None:
+      self.__import_manage = Imports.ImportManager(online, report=self)
+    return self.__import_manage
 
   @property
   def symbols(self):
@@ -266,46 +296,6 @@ class Report(object):
     """
     return self.style.cssCls(clsName, ovrData)
 
-  def setColor(self, category, index, colorCode):
-    """
-    Python function to override the defined colors
-
-    :category: Color
-    :rubric: CSS
-    :link hexadecimal color: https://www.w3schools.com/colors/colors_picker.asp
-    """
-    self.style.colors.get(category, index, colorCode)
-
-  def setColors(self, category, colorCodes):
-    self.style.colors.get(category, color=colorCodes)
-
-  def getColor(self, typeChart, i=None):
-    """
-    Python function to get the different pre defined color codes in the Framework
-
-    Documentation
-    https://www.w3schools.com/colors/colors_picker.asp
-
-    :param typeChart:
-    :param i:
-
-    :return:
-    """
-    if i is None:
-      return self.style.colors.get(typeChart)
-
-    return self.style.colors.get(typeChart, i)
-
-  def getThemes(self):
-    """
-    Return the list of pre defined themes
-
-    :category: Theme
-    :rubric: CSS
-    :type: Configuration
-    """
-    return list(self.style.colors._themeObj.themes.keys())
-
   def addCss(self, filename):
     """
     This will load your local CSS file when the report will be built. Then you will be able to use the new Styles in the different HTML Components
@@ -350,6 +340,7 @@ class Report(object):
 
   @property
   def headers(self):
+    """ Property to the HTML page header """
     if self._header_obj is None:
       self._header_obj = html.Header.Header(self)
     return self._header_obj
@@ -513,7 +504,7 @@ class Report(object):
     self.cssImport |= self._props.get("css", {}).get('imports', set([]))
 
     # Section dedicated to the javascript for all the charts
-    importMng = Imports.ImportManager(online=online, report=self)
+    importMng = self.imports(online=online)
     result['cssImports'] = importMng.cssResolve(self.cssImport, self.cssLocalImports)
     result['jsImports'] = importMng.jsResolve(self.jsImports, self.jsLocalImports)
     result['jsDocumentReady'] = ";".join(onloadParts)

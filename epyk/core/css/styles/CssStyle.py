@@ -8,7 +8,6 @@ import logging
 import inspect
 import importlib
 
-from epyk.core.css import Color
 from epyk.core.css import Defaults
 
 
@@ -86,7 +85,7 @@ def load(reset=False):
   return factory
 
 
-def getCssObj(clsName, context=None, colors=None, theme=None):
+def getCssObj(clsName, context=None, colors=None):
   """
   Load a CSS Python class from the Factory
 
@@ -105,14 +104,14 @@ def getCssObj(clsName, context=None, colors=None, theme=None):
   cls = factory.get(clsName)
   if cls is not None:
     if 'class' in cls:
-      return cls['class'](context, colors=colors, theme=theme)
+      return cls['class'](context, colors=colors, theme=context.theme)
     if 'object' in cls:
       return cls['object']
 
   return None
 
 
-def setCssObj(clsName, css_attrs, context, theme=None, force_reload=False):
+def setCssObj(clsName, css_attrs, context, force_reload=False):
   """
   CSS Factory
 
@@ -125,7 +124,6 @@ def setCssObj(clsName, css_attrs, context, theme=None, force_reload=False):
   :param clsName: The CSS classname as a string
   :param css_attrs: A Python dictionary with all the CSS attributes
   :param context: The context object
-  :param theme:
   :param force_reload:
 
   :return:
@@ -135,7 +133,7 @@ def setCssObj(clsName, css_attrs, context, theme=None, force_reload=False):
   load()
   if not clsName in factory or force_reload:
     factory[clsName] = {'object': css_attrs}
-  return getCssObj(clsName, context, theme=theme)
+  return getCssObj(clsName, context)
 
 
 class CssCls(object):
@@ -438,53 +436,53 @@ class CssCls(object):
       self.eventsStyles[event].update(css)
     return self
 
-  def getColor(self, name, index):
-    """
-    CSS Color definition
+  # def getColor(self, name, index):
+  #   """
+  #   CSS Color definition
+  #
+  #   Function dedicated to get a specific hexadecimal color code defined in the active theme
+  #
+  #   :param name: The color label
+  #   :param index: The color index in the list
+  #
+  #   :return: The hexadecimal color code
+  #   """
+  #   if self.theme is not None:
+  #     color_obj = Color.ColorMaker(self.rptObj, theme=self.theme)
+  #   else:
+  #     color_obj = Color.ColorMaker(self.rptObj)
+  #   if self.colorsCalc is not None and name in self.colorsCalc:
+  #     count_category = len(color_obj.get(name))
+  #     if index > 0:
+  #       inv_index = index - count_category - 1
+  #       if index in self.colorsCalc[name]:
+  #         return self.colorsCalc[name][index]
+  #
+  #       elif inv_index in self.colorsCalc[name]:
+  #         return self.colorsCalc[name][inv_index]
+  #
+  #     if index < 0:
+  #       inv_index = count_category + index + 1
+  #       if index in self.colorsCalc[name]:
+  #         return self.colorsCalc[name][index]
+  #
+  #       elif inv_index in self.colorsCalc[name]:
+  #         return self.colorsCalc[name][inv_index]
+  #
+  #   return color_obj.get(name, index)
 
-    Function dedicated to get a specific hexadecimal color code defined in the active theme
-
-    :param name: The color label
-    :param index: The color index in the list
-
-    :return: The hexadecimal color code
-    """
-    if self.theme is not None:
-      color_obj = Color.ColorMaker(self.rptObj, theme=self.theme)
-    else:
-      color_obj = Color.ColorMaker(self.rptObj)
-    if self.colorsCalc is not None and name in self.colorsCalc:
-      count_category = len(color_obj.get(name))
-      if index > 0:
-        inv_index = index - count_category - 1
-        if index in self.colorsCalc[name]:
-          return self.colorsCalc[name][index]
-
-        elif inv_index in self.colorsCalc[name]:
-          return self.colorsCalc[name][inv_index]
-
-      if index < 0:
-        inv_index = count_category + index + 1
-        if index in self.colorsCalc[name]:
-          return self.colorsCalc[name][index]
-
-        elif inv_index in self.colorsCalc[name]:
-          return self.colorsCalc[name][inv_index]
-
-    return color_obj.get(name, index)
-
-  def color(self, category, index=None, color=None):
-    """
-    CSS Color definition
-
-    :param category: The color category
-    :param index: The color index in the list
-    :param color: The hexadecimal color code
-
-    :return: The hexadecimal color code
-    """
-    color_obj = Color.ColorMaker(self.rptObj, theme=self.theme)
-    return color_obj.get(category, index, color)
+  # def color(self, category, index=None, color=None):
+  #   """
+  #   CSS Color definition
+  #
+  #   :param category: The color category
+  #   :param index: The color index in the list
+  #   :param color: The hexadecimal color code
+  #
+  #   :return: The hexadecimal color code
+  #   """
+  #   color_obj = Color.ColorMaker(self.rptObj, theme=self.theme)
+  #   return color_obj.get(category, index, color)
 
   @classmethod
   def important(cls, params_css):

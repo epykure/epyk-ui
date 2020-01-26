@@ -7,7 +7,6 @@ https://www.w3schools.com/Jsref/dom_obj_style.asp
 import os
 
 from epyk.core.css.styles import CssStyle
-from epyk.core.css import Color
 from epyk.core.css import CssInternal
 from epyk.core.css import Defaults
 from epyk.core.css import Globals
@@ -39,7 +38,7 @@ class Css(object):
     if not 'css' in self.rptObj._props:
       self.rptObj._props['css'] = {}
     self.cssStyles, self._cssOvr, self._cssEventOvr, self.cssAttrs, self._cssCls = {}, {}, {}, {}, []
-    self._colors, self.__anonymous_id = None, 0
+    self.__anonymous_id, self.__keyframes, self.__imports = 0, {}, {}
 
   @property
   def globals(self):
@@ -52,31 +51,6 @@ class Css(object):
     :return:
     """
     return Globals.CssGlobal(self)
-
-  @property
-  def colors(self):
-    """
-    CSS Colors category
-
-    This will provide an interface to deal with colors in Python and Javascript in a simple manner.
-    This will provide an object with different methods to play with colors.
-
-    Colors and themes can be changed directly in the report run time
-
-    For changing the colors you can use the below function
-
-    for adding a bespoke theme to the framework you can use the CLI command:
-
-    Example
-    >>> Css().colors.get('success', 0)
-    '#e8f2ef'
-
-    :return: A Python ColorMaker object
-    :rtype: epyk.core.css.Color.ColorMaker
-    """
-    if self._colors is None:
-      self._colors = Color.ColorMaker(self.rptObj)
-    return self._colors
 
   @property
   def defaults(self):
@@ -102,7 +76,7 @@ class Css(object):
     if not isinstance(clsNames, list):
       clsNames = [clsNames]
     for cls in clsNames:
-      clsObj = CssStyle.getCssObj(cls, theme=self.colors._themeObj.name)
+      clsObj = CssStyle.getCssObj(cls, self.rptObj)
       if clsObj is not None:
         self.cssStyles[clsObj.classname] = clsObj
       else:
@@ -145,7 +119,7 @@ class Css(object):
       for k, v in event_attrs.items():
         cls_virtual.eventsStyles[k] = event_attrs[k]
     #self.cssStyles[cls_name] = cls_virtual
-    CssStyle.setCssObj(cls_name, cls_virtual, self.rptObj, theme=self.colors._themeObj.selected)
+    CssStyle.setCssObj(cls_name, cls_virtual, self.rptObj)
     self.__anonymous_id += 1
     return cls_name
 
@@ -166,7 +140,7 @@ class Css(object):
     :return: The Python Class definition in the factory
     """
     if isinstance(clsName, str):
-      fCls = CssStyle.getCssObj(clsName, theme=self.colors._themeObj.name)
+      fCls = CssStyle.getCssObj(clsName, self.rptObj)
       if fCls is not None:
         if global_scope:
           fCls.css(attrs, eventAttrs=event_attrs)
@@ -184,7 +158,7 @@ class Css(object):
           for k, v in event_attrs.items():
             cls_virtual.eventsStyles[k] = event_attrs[k]
         if global_scope:
-          CssStyle.setCssObj(CssStyle.cssName(clsName), cls_virtual, self.rptObj, theme=self.colors._themeObj.selected)
+          CssStyle.setCssObj(CssStyle.cssName(clsName), cls_virtual, self.rptObj)
         else:
           self.cssStyles[clsName] = cls_virtual
       else:
@@ -215,13 +189,13 @@ class Css(object):
     :return: The CSS Class
     :rtype: epyk.core.css.styles.CssStyle.CssCls
     """
-    fCls = CssStyle.getCssObj(clsName, theme=self.colors._themeObj.name)
+    fCls = CssStyle.getCssObj(clsName, self.rptObj)
     derv_cls_name = CssStyle.cssName("%s_%s" % (clsName, htmlId))
     if fCls is not None:
       dervfCls = fCls.clone(derv_cls_name)
     else:
       dervfCls = type(derv_cls_name, (CssStyle.CssCls,), {})
-    drvClsObj = dervfCls(theme=self.colors._themeObj.name)
+    drvClsObj = dervfCls(context=self.rptObj)
     drvClsObj._is_media = is_media
     if attrs is not None:
       if all_important:
@@ -239,7 +213,7 @@ class Css(object):
           drvClsObj.eventsStyles[k].update(evt_attrs)
         else:
           drvClsObj.eventsStyles[k] = evt_attrs
-    CssStyle.setCssObj(derv_cls_name, drvClsObj, self.rptObj, theme=self.colors._themeObj.selected, force_reload=force_reload)
+    CssStyle.setCssObj(derv_cls_name, drvClsObj, self.rptObj, force_reload=force_reload)
     return drvClsObj
 
   def custom(self, clsName, attrs, event_attrs=None):
@@ -285,7 +259,7 @@ class Css(object):
     :return: A CSS Class Python object
     :rtype: CssStyle.CssCls
     """
-    return CssStyle.getCssObj(clsName, self.rptObj, theme=self.colors._themeObj.name)
+    return CssStyle.getCssObj(clsName, self.rptObj)
 
   def add(self, className, cssRef=None, htmlId=None):
     """
@@ -461,6 +435,46 @@ class Css(object):
         style[css_id] = css_def
     return style
 
+  def keyframes(self, effects=None, name=None, attrs=None):
+    """
+    The @keyframes rule specifies the animation code.
+
+    The animation is created by gradually changing from one set of CSS styles to another.
+
+    Example
+    rptObj.style.keyframes("test", {
+      "50%": {"transform": "scale(1.5, 1.5)", "opacity": 0},
+      "99%": {"transform": "scale(0.001, 0.001)", "opacity": 0},
+      "100%": {"transform": "scale(0.001, 0.001)", "opacity": 1},
+    })
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+
+    :param effects: Effect Class.
+    :param name: String. Required. Defines the name of the animation.
+    :param attrs: String. Required. Percentage of the animation duration.
+    """
+    if effects is not None:
+      name = effects.__class__.__name__
+      attrs = effects.get_attrs()
+    self.__keyframes[name] = attrs
+    return name
+
+  def imports(self, name, medias=""):
+    """
+    The @import rule allows you to import a style sheet into another style sheet.
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_import_rule.asp
+
+    :param name: url|string. A url or a string representing the location of the resource to import.
+                            The url may be absolute or relative
+    :param medias: list-of-mediaqueries.
+        A comma-separated list of media queries conditioning the application of the CSS rules defined in the linked URL
+    """
+    self.__imports[name] = medias
+
   def toCss(self, file_name=None, path=None):
     """
     This function will be in charge of producing the best CSS content according to the need.
@@ -476,6 +490,10 @@ class Css(object):
     :return: The String with all the CSS classes and definition
     """
     css_str, css_media_str = [], []
+    if self.__imports:
+      # TODO find a data structure to manage dependencies
+      for k, v in self.__imports.items():
+        css_str.append('@import "%s" %s;' % (k, v))
     for clsName, cls_obj in self.cssStyles.items():
       if not hasattr(cls_obj, "classname"):
         css_str.append("%s %s" % (clsName, cls_obj))
@@ -491,6 +509,12 @@ class Css(object):
       else:
         for css_id, css_def in cls_obj.getStyles().items():
           css_media_str.append("%s %s" % (css_id, css_def))
+    if self.__keyframes:
+      for name, k_attrs in self.__keyframes.items():
+        css_str.append("@keyframes %s {" % name)
+        for k, v_dict in k_attrs.items():
+          css_str.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, j) for i, j in v_dict.items()])))
+        css_str.append("}")
     if len(css_media_str) > 0:
       # Media CSS category for all the smaller screens (tablets and smartphones)
       css_str.append("@media only screen and (max-width: %spx){" % Defaults.MEDIA)

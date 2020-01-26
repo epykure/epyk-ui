@@ -13,7 +13,7 @@ class CssCommHeader(CssStyle.CssCls):
   cssId = {'child': 'span'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor("greys", -1), 'font-family': Defaults_css.Font.family,
+    style.update({'color': self.rptObj.theme.greys[-1], 'font-family': Defaults_css.Font.family,
                   'font-size': '%spx' % Defaults_css.Font.size})
 
 
@@ -23,8 +23,8 @@ class CssCommInput(CssStyle.CssCls):
   cssId = {'child': 'input'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor("greys", -1), 'background-color': self.getColor("greys", 0),
-                  'border-bottom': '1px solid %s' % self.getColor("success", 1), 'font-family': Defaults_css.Font.family,
+    style.update({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
+                  'border-bottom': '1px solid %s' % self.rptObj.theme.success[1], 'font-family': Defaults_css.Font.family,
                   'font-size': '%spx' % Defaults_css.Font.size})
 
 
@@ -36,4 +36,4 @@ class CssContentEditable(CssStyle.CssCls):
   cssId = {'reference': '[contenteditable]'}
 
   def customize(self, style, eventsStyles):
-    eventsStyles['focus'].update({'outline': "1px solid %s" % self.getColor("success", 1)})
+    eventsStyles['focus'].update({'outline': "1px solid %s" % self.rptObj.theme.success[1]})

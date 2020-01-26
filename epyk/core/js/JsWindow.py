@@ -403,6 +403,56 @@ class JsHistory(object):
     return self.pushState("data", "", JsFncs.JsFunction("updateUrl(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None))))
 
 
+class JsWindowEvent(object):
+  def addEventListener(self, eventType, jsFncs, windowId="window"):
+    """
+
+    :param eventType:
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    eventType = JsUtils.jsConvertData(eventType, None)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return JsFncs.JsFunction("%s.addEventListener(%s, function(){%s})" % (windowId, eventType, jsFncs))
+
+  def addScrollListener(self, jsFncs, windowId="window"):
+    """
+
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    return self.addEventListener("scroll", jsFncs, windowId)
+
+  def addContentLoaded(self, jsFncs, windowId="window"):
+    """
+    The DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
+
+    Example
+    rptObj.js.addOnLoad(
+      rptObj.js.window.events.addContentLoaded(rptObj.js.alert("DOM fully loaded and parsed"))
+    )
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event
+
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    return self.addEventListener("DOMContentLoaded", jsFncs, windowId)
+
+  def addClickListener(self, jsFncs, windowId="window"):
+    """
+
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    return self.addEventListener("click", jsFncs, windowId)
+
+
 class JsWindow(object):
   """
   The window object represents an open window in a browser.
@@ -413,6 +463,10 @@ class JsWindow(object):
   Documentation:
   https://www.w3schools.com/Jsref/obj_window.asp
   """
+  @property
+  def scrollY(self, windowId="window"):
+    """ """
+    return JsNumber.JsNumber("%s.scrollY" % windowId)
 
   def __init__(self, src=None):
     """
@@ -455,6 +509,23 @@ class JsWindow(object):
     :return: The String representing the Javascript function
     """
     return JsFncs.JsFunction("%s.close()" % windowId)
+
+  @property
+  def events(self):
+    """ Property to all the events """
+    return JsWindowEvent()
+
+  def addEventListener(self, eventType, jsFncs, windowId="window"):
+    """
+
+    :param eventType:
+    :param jsFncs:
+    :param windowId:
+    :return:
+    """
+    eventType = JsUtils.jsConvertData(eventType, None)
+    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return JsFncs.JsFunction("%s.addEventListener(%s, function(){%s})" % (windowId, eventType, jsFncs))
 
   def open(self, url, name="_self", specs=None, replace=None, windowId="window"):
     """
@@ -567,6 +638,14 @@ class JsWindow(object):
     x = x or "document.body.scrollWidth"
     return JsFncs.JsFunction("%s.scrollTo(%s, %s)" % (windowId, x, y))
 
+  def scrollUp(self, windowId="window"):
+    """
+
+    :param windowId:
+    :return:
+    """
+    return JsFncs.JsFunction("%s.scrollTo(0, 0)" % windowId)
+
   def print(self, windowId="window"):
     """
     Prints the content of the current window
@@ -636,7 +715,7 @@ class JsWindow(object):
     """
     return JsObject.JsObject("%s.btoa(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)), isPyData=False)
 
-  def setInterval(self, jsFncs, varId, milliseconds, windowId="window"):
+  def setInterval(self, jsFncs, varId, milliseconds, windowId="window", setVar=True):
     """
     The setInterval() method calls a function or evaluates an expression at specified intervals (in milliseconds).
 
@@ -654,14 +733,17 @@ class JsWindow(object):
     :param varId:
     :param milliseconds: Required. The intervals (in milliseconds) on how often to execute the code. If the value is less than 10, the value 10 is used
     :param windowId: The JavaScript window object
+    :param setVar: Boolean.
 
     :return:
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs)
-    return JsObject.JsObject("%s.setInterval(function(){%s}, %s)" % (windowId, ";".join(jsFncs), milliseconds),
-                             varName=varId, setVar=True, isPyData=False)
+    if setVar:
+      return JsFncs.JsFunction("var %s = %s.setInterval(function(){%s}, %s)" % (varId, windowId, ";".join(jsFncs), milliseconds))
 
-  def clearInterval(self, varId, jsFnc=None, windowId="window"):
+    return JsFncs.JsFunction("%s.setInterval(function(){%s}, %s)" % (windowId, ";".join(jsFncs), milliseconds))
+
+  def clearInterval(self, varId, windowId="window"):
     """
     The clearInterval() method clears a timer set with the setInterval() method.
 
@@ -677,26 +759,31 @@ class JsWindow(object):
     #TODO: Check if interval is unique
 
     :param varId: A PythonJs object (JsArray, JsObject...)
-    :param jsFnc: A JsFnc or a list of JsFncs
     :param windowId: The JavaScript window object
 
     :return: Void, The Javascript String
     """
-    if not hasattr(varId, "toStr"):
-      raise Exception("Must be a PythonJs type")
-
-    js_data = JsUtils.jsConvertData(varId, jsFnc)
-    return JsFncs.JsFunction("%s.clearInterval(%s)" % (windowId, js_data))
+    js_data = varId if not hasattr(varId, "toStr") else JsUtils.jsConvertData(varId, None)
+    return JsFncs.JsFunction("%s.clearInterval(%s); %s = undefined" % (windowId, js_data, js_data))
 
   def toggleInterval(self, jsFncs, varId, milliseconds, windowId="window"):
     """
+
+    Example
+    rptObj.ui.button("Interval Toggle").click([
+      rptObj.js.window.toggleInterval(rptObj.js.console.log('Print called'), 'test', 400),
+    ])
+
+    Documentation
 
     :param jsFncs:
     :param varId:
     :param milliseconds:
     :param windowId:
-    :return:
     """
+    interval = self.setInterval(jsFncs, varId, milliseconds, windowId, setVar=False)
+    clear = self.clearInterval(varId, windowId)
+    return JsFncs.JsFunction("if(%s){%s = %s} else{%s}" % (JsUtils.isNotDefined(varId), varId, interval, clear))
 
   def setTimeout(self, jsFncs, milliseconds=0, windowId="window"):
     """
@@ -795,4 +882,3 @@ class JsWindow(object):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._context.setdefault('beforeunload', []).extend(jsFncs)
-

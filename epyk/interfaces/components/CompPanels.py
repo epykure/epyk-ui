@@ -23,9 +23,9 @@ class Panels(object):
                  'border-radius': '5px', "font-size": '%s%s' % (size[0] + 2, size[1])}
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab,
                                         options or {}, profile)
-    html_tabs.css_tab["color"] = html_tabs.getColor("greys", -1)
-    html_tabs.css_tab["background"] = html_tabs.getColor("greys", 0)
-    html_tabs.css_tab_clicked_dflt = {'color': html_tabs.getColor("greys", 0), 'background': html_tabs.getColor("success", 1)}
+    html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
+    html_tabs.css_tab["background"] = html_tabs._report.theme.greys[0]
+    html_tabs.css_tab_clicked_dflt = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
     self.context.register(html_tabs)
     return html_tabs
 
@@ -62,9 +62,9 @@ class Panels(object):
                  "border-bottom": "1px solid white", "font-size": '%s%s' % (size[0]+2, size[1])}
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab,
                                         options or {"tab_class": 'CssPanelArrowUp'}, profile)
-    html_tabs.css_tab["color"] = html_tabs.getColor("greys", -1)
+    html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.css_tab["height"] = "60px"
-    html_tabs.css_tab_clicked_dflt = {"background": html_tabs.getColor("success", 1), "color": "white"}
+    html_tabs.css_tab_clicked_dflt = {"background": html_tabs._report.theme.success[1], "color": "white"}
     self.context.register(html_tabs)
     return html_tabs
 
@@ -83,9 +83,9 @@ class Panels(object):
                  "border-bottom": "1px solid white", "font-size": '%s%s' % (size[0]+2, size[1])}
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab,
                                         options or {"tab_class": 'CssPanelArrowDown'}, profile)
-    html_tabs.css_tab["color"] = html_tabs.getColor("greys", -1)
+    html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.css_tab["height"] = "60px"
-    html_tabs.css_tab_clicked_dflt = {"background": html_tabs.getColor("success", 1), "color": "white"}
+    html_tabs.css_tab_clicked_dflt = {"background": html_tabs._report.theme.success[1], "color": "white"}
     self.context.register(html_tabs)
     return html_tabs
 
@@ -103,15 +103,15 @@ class Panels(object):
                  'border-radius': '10px 10px 0 0', "font-size": '%s%s' % (size[0] + 2, size[1])}
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab,
                                         options or {}, profile)
-    html_tabs.css_tab["color"] = html_tabs.getColor("greys", -1)
-    html_tabs.css_tab["background"] = html_tabs.getColor("greys", 0)
-    html_tabs.css_tab_clicked_dflt = {'color': html_tabs.getColor("greys", 0), 'background': html_tabs.getColor("success", 1)}
-    html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs.getColor("success", 1)})
+    html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
+    html_tabs.css_tab["background"] = html_tabs._report.theme.greys[0]
+    html_tabs.css_tab_clicked_dflt = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
+    html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs._report.theme.success[1]})
     self.context.register(html_tabs)
     return html_tabs
 
   def sliding(self, htmlObjs, title, color=None, size=(None, "px"), width=(100, "%"), height=(None, "px"),
-            htmlCode=None, helper=None, profile=False):
+            htmlCode=None, helper=None, options=None, profile=False):
     """
 
     :param htmlObjs:
@@ -122,6 +122,7 @@ class Panels(object):
     :param height:
     :param htmlCode:
     :param helper:
+    :param options:
     :param profile:
     :return:
     """
@@ -129,7 +130,7 @@ class Panels(object):
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
     html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, size, width, height,
-                                               htmlCode, helper, profile)
+                                               htmlCode, helper, options or {}, profile)
     self.context.register(html_slide)
     return html_slide
 

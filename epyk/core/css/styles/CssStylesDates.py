@@ -10,7 +10,7 @@ class CssDatePickerUI(CssStyle.CssCls):
   cssId = {"reference": ".ui-datepicker"}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('colors', 0)})
+    style.update({"background": self.rptObj.theme.colors[0]})
 
   @property
   def classname(self):
@@ -23,12 +23,13 @@ class CssDatePicker(CssStyle.CssCls): # Calibri
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('colors', 0), "color": self.getColor('greys', -1), 'border': '1px solid %s' % self.getColor('colors', 0)})
-    eventsStyles['hover'].update({'color': self.getColor('colors', -1)})
+    style.update({"background": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[0]})
+    eventsStyles['hover'].update({'color': self.rptObj.theme.colors[-1]})
 
 
 class CssDatesTimePicker(CssStyle.CssCls):
   attrs = {'margin': '0'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', -1), "background": self.getColor('colors', 0)})
+    style.update({'color': self.rptObj.theme.greys[-1], "background": self.rptObj.theme.colors[0]})

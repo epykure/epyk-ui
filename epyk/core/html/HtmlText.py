@@ -254,7 +254,7 @@ class Code(Html.Html):
                                heightUnit=height[1], profile=profile)
     self.add_helper(helper)
     self._jsStyles, self.__editable = options, None
-    self.color = color if color is not None else self.getColor("greys", 9)
+    self.color = color if color is not None else self._report.theme.greys[9]
     self.css({'color': self.color, 'display': 'block', 'font-size': "%s%s" % (size[0], size[1]), 'margin': '5px 0'})
 
   @property
@@ -263,7 +263,7 @@ class Code(Html.Html):
       if(jsStyles.edit){
         htmlObj.append('<div style="position:relative;float:right;padding:2px 5px 2px 5px;cursor:pointer;background-color:%(blackColor)s;color:%(whiteColor)s">Edit</div>')}
       data.forEach(function(rec){htmlObj.append('<code>'+ rec +'</code><br />')})
-      ''' % {"blackColor": self.getColor("greys", 9), "whiteColor": self.getColor("greys", 0)}
+      ''' % {"blackColor": self._report.theme.greys[9], "whiteColor": self._report.theme.greys[0]}
 
   def editable(self, urlPost, title=None):
     self.__editable = urlPost
@@ -282,8 +282,8 @@ class Code(Html.Html):
           $('#%(htmlId)s span').on('click', function(event){
             var content = %(jqId)s.text();
             $.post("/%(url)s", {content: content.slice(4, content.length), title: '%(title)s'}, function(data){location.reload()})});   
-          })''' % {'jqId': self.jqId, "url": self.editable, 'htmlId': self.htmlId, 'backGroundColor': self.getColor('colors', 5),
-                   'whiteColor': self.getColor('greys', 0), 'title': self.scriptTitle})
+          })''' % {'jqId': self.jqId, "url": self.editable, 'htmlId': self.htmlId, 'backGroundColor': self._report.theme.colors[5],
+                   'whiteColor': self._report.theme.greys[0], 'title': self.scriptTitle})
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
 
 
@@ -293,7 +293,7 @@ class Pre(Html.Html):
   def __init__(self, report, vals, size, color, width, height, htmlCode, dataSrc, options, helper, profile):
     super(Pre, self).__init__(report, vals, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                               heightUnit=height[1], profile=profile, dataSrc=dataSrc)
-    color = color if color is not None else self.getColor("greys", 9)
+    color = color if color is not None else self._report.theme.greys[9]
     self._jsStyles = options
     self.css({'color': color, 'font-size': "%s%s" % (size[0], size[1]), "text-align": 'left', "margin": "auto"})
     self.add_helper(helper)
@@ -364,7 +364,7 @@ class Paragraph(Html.Html):
     self.add_helper(helper)
     self._jsStyles = jsStyles
     if border:
-      self.css('border', '1px solid %s' % self.getColor("greys", 9))
+      self.css('border', '1px solid %s' % self._report.theme.greys[9])
     color = color if color is not None else 'inherit'
     background_color = background_color if background_color is not None else 'inherit'
     self.size = size[0]
@@ -424,7 +424,7 @@ class BlockQuote(Html.Html):
   def __init__(self, report, text, author, size, color, width, height, htmlCode, helper, profile):
     super(BlockQuote, self).__init__(report, {'text': text, 'author': author}, code=htmlCode, width=width[0],
                                      widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
-    self.css({'color': color if color is not None else self.getColor("greys", 9),
+    self.css({'color': color if color is not None else self._report.theme.greys[9],
               'font-size': "%s%s" % (size[0], size[1]) if size[0] is not None else 'inherit',
               'display': 'inline-block', 'white-space': 'nowrap'})
     self.add_helper(helper)
@@ -445,7 +445,7 @@ class BlockQuote(Html.Html):
       <blockquote %s>
           <div style="padding:5px;border-left:4px solid %s"></div>
           <div style="text-align:right"></div>
-      </blockquote>%s''' % (self.get_attrs(pyClassNames=self.defined), self.getColor('colors', 9), self.helper)
+      </blockquote>%s''' % (self.get_attrs(pyClassNames=self.defined), self._report.theme.colors[9], self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -492,9 +492,9 @@ class Title(Html.Html):
       self.style.addCls('CssTitle')
       self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': "%s%s" % (size[0], size[1])})
       if size[0] > 21 and color is None:
-        self.css('color', self.getColor('colors', 9))
+        self.css('color', self._report.theme.colors[9])
       else:
-        self.css('color', self.getColor('colors', -1) if color is None else color)
+        self.css('color', self._report.theme.colors[-1] if color is None else color)
     if align == 'center':
       self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': 'center'})
     elif align is not None:
@@ -617,7 +617,7 @@ class Numeric(Html.Html):
     self.add_title(title, level=4, css={"margin-bottom": 0})
 
     # Update the CSS Style of the component
-    color = self.getColor('colors', -1) if color is None else color
+    color = self._report.theme.colors[-1] if color is None else color
     self.css({"color": color, 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
               'text-align': 'center', 'display': 'inline-block'})
     self.tooltip(tooltip)
@@ -643,7 +643,7 @@ class Highlights(Html.Html):
     super(Highlights, self).__init__(report, text, width=width[0], widthUnit=width[1], height=height[0],
                                      heightUnit=height[1], code=htmlCode, profile=profile)
     self.add_helper(helper)
-    self.color = color if color is not None else self.getColor("greys", 9)
+    self.color = color if color is not None else self._report.theme.greys[9]
     # Add the components title and icon
     self.add_title(title, css={"width": "none", "font-weight": 'bold'})
     self.add_icon(icon, {"float": "left"})
@@ -663,7 +663,7 @@ class Fieldset(Html.Html):
     super(Fieldset, self).__init__(report, legend, width=width[0], widthUnit=width[1], height=height[0],
                                    heightUnit=height[1], profile=profile)
     self.add_helper(helper)
-    self.css({'padding': '5px', 'border': '1px groove %s' % self.getColor("greys", 3), 'display': 'block',
+    self.css({'padding': '5px', 'border': '1px groove %s' % self._report.theme.greys[3], 'display': 'block',
               'margin': '5px 0', 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
 
   @property

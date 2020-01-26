@@ -16,10 +16,11 @@ class CssInput(CssStyle.CssCls):
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('colors', 0), "color": self.getColor('greys', -1), 'font-family': Defaults_css.Font.family,
-                  'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-                  'border': '1px solid %s' % self.getColor('colors', 0), 'font-size': '%spx' % Defaults_css.Font.size})
-    eventsStyles['hover'].update({'color': self.getColor('success', 1)})
+    style.update({"background": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
+                  'font-family': Defaults_css.Font.family, 'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH,
+                  'line-height': '%spx' % Defaults_html.LINE_HEIGHT, 'border': '1px solid %s' % self.rptObj.theme.colors[0],
+                  'font-size': '%spx' % Defaults_css.Font.size})
+    eventsStyles['hover'].update({'color': self.rptObj.theme.success[1]})
 
 
 class CssInputRange(CssStyle.CssCls):
@@ -31,7 +32,7 @@ class CssInputRange(CssStyle.CssCls):
   hover = {'opacity': 1}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('colors', 0)})
+    style.update({"background": self.rptObj.theme.colors[0]})
 
 
 class CssInputRangeThumb(CssStyle.CssCls):
@@ -42,7 +43,7 @@ class CssInputRangeThumb(CssStyle.CssCls):
   attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor('success', 1), 'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
+    style.update({"background": self.rptObj.theme.success[1], 'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
                   'height': '%spx' % Defaults_html.INPUTS_RANGE_THUMB})
 
   @property
@@ -92,6 +93,17 @@ class CssInputTextArea(CssStyle.CssCls):
   focus = {'outline': 0}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('colors', 0), "color": self.getColor('greys', -1),
-                  'border': '1px solid %s' % self.getColor('colors', 1)})
-    eventsStyles['hover'].update({'color': self.getColor('greys', -1)})
+    style.update({"background-color": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
+                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})
+    eventsStyles['hover'].update({'color': self.rptObj.theme.greys[-1]})
+
+
+class CssInputInValid(CssStyle.CssCls):
+  attrs = {'color': 'red'}
+  cssId = {'reference': 'input:invalid:not(:focus)'}
+
+
+class CssInputValid(CssStyle.CssCls):
+  attrs = {'color': 'yellow', "background": "url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg)",
+           "background-size": "10px", "background-repeat": 'no-repeat', "background-position": "0"}
+  cssId = {'reference': 'input:valid'}

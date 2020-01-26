@@ -169,7 +169,7 @@ class Comments(Html.Html):
       button.on('click', function(e) {replyComment(commentTxt, user, comId);});
       htmlObj.prepend(div); 
       replies.forEach(function(rec) {addReply(commentTxt, $('#%(htmlId)s_comms'), rec.comment, rec.username, rec.lst_mod_dt)});
-      $('#'+ htmlObj.attr('id') +'_count').text(countComs)''' % {'htmlId': self.htmlId, r'color': self.getColor("greys", -1), 'grey': self.getColor("greys", 6)})
+      $('#'+ htmlObj.attr('id') +'_count').text(countComs)''' % {'htmlId': self.htmlId, r'color': self._report.theme.greys[-1], 'grey': self._report.theme.greys[6]})
     self.addGlobalFnc('addReply(htmlObj, parentObj, data, user, timeStamp)', '''
       var replyCount = parseInt($('#'+ $.escapeSelector(htmlObj.attr('id')) + '_nbRep').text()) + 1;
       if (replyCount == 1) 
@@ -185,7 +185,7 @@ class Comments(Html.Html):
       var countTotalComs = parseInt($('#'+ parentObj.attr('id') + '_count').text()) + 1;
       $('#'+ parentObj.attr('id') +'_count').text(countTotalComs);
       $('#'+ $.escapeSelector(htmlObj.attr('id')) + '_nbRep').text(replyCount);
-    ''' % {'color': self.getColor("greys", -1), 'grey': self.getColor("greys", 6)})
+    ''' % {'color': self._report.theme.greys[-1], 'grey': self._report.theme.greys[6]})
     inputTag = ''
     if not self.readonly:
       inputTag = '<input spellcheck=”false” style="display:block" id="%s_text" type="text" placeholder="Add public comment" />' % self.htmlId
@@ -248,7 +248,7 @@ class Chat(Html.Html):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''htmlObj.empty();
       data.forEach(function(rec){addChatMessage(htmlObj, rec.message, rec.usr_name, rec.time, true)});
       htmlObj.prepend("<hr style='background:%(color)s;margin:10px 10px 0 10px'/>");
-      $('.scroll_content').mCustomScrollbar()''' % {'color': self.getColor("greys", 5)}, 'Javascript Object builder')
+      $('.scroll_content').mCustomScrollbar()''' % {'color': self._report.theme.greys[5]}, 'Javascript Object builder')
 
   def jsAppend(self, jsData='data', jsDataKey=None, isPyData=False, pmts=None, jsParse=False):
     jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData)
@@ -268,7 +268,7 @@ class Chat(Html.Html):
       div.append("<p style='margin:0;padding:0;display:inline-block;color:"+ color +";font-weight:bold'>"+ user +"</p>");
       div.append("<p style='margin:0;padding:0;display:inline-block;margin-left:10px;color:%(grey)s'>"+ timeStamp +"</p>");
       var commentTxt = $("<p style='margin:0 5px 20px 5px;padding:0;color:"+ color +";text-align:left'>"+ data +"</p>");
-      htmlObj.prepend(commentTxt); htmlObj.prepend(div)''' % {'htmlId': self.htmlId, 'color': self.getColor("greys", -1), 'grey': self.getColor("greys", 6)})
+      htmlObj.prepend(commentTxt); htmlObj.prepend(div)''' % {'htmlId': self.htmlId, 'color': self._report.theme.greys[-1], 'grey': self._report.theme.greys[6]})
     inputTag = ''
     if not self.readonly:
       inputTag = '<input spellcheck="false" style="display:block" id="%s_text" type="text" placeholder="Write a message" />' % self.htmlId
@@ -304,8 +304,8 @@ class Bot(Html.Html):
 
   def __init__(self, report, htmlCode, name, pmts, dbService, width, height, httpCodes, profile, botOptions):
     super(Bot, self).__init__(report, [], width=width[0], widthUnit=width[1], code=htmlCode, profile=profile)
-    self.css({"position": 'fixed', "bottom": 0, 'margin': '10px', 'background': self.getColor('greys', 0),
-              "right": 0, "display": "block", "padding": "5px", 'border': "1px solid %s" % self.getColor('success', 1),
+    self.css({"position": 'fixed', "bottom": 0, 'margin': '10px', 'background': self._report.theme.greys[0],
+              "right": 0, "display": "block", "padding": "5px", 'border': "1px solid %s" % self._report.theme.success[1],
               "z-index": 200})
     self.name, self.height = name, height
 
@@ -385,8 +385,8 @@ class News(Html.Html):
   def __init__(self, report, title, value, label, link_script, icon, width, height, htmlCode, profile):
     super(News, self).__init__(report, value, width=width[0], widthUnit=width[1],
                                height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
-    self.css({"padding": '5px', "display": 'none', 'position': 'fixed', 'border': '1px solid %s' % self.getColor("success", 1),
-              "background": self.getColor("greys", 0), 'bottom': '20px', 'right': '20px'})
+    self.css({"padding": '5px', "display": 'none', 'position': 'fixed', 'border': '1px solid %s' % self._report.theme.success[1],
+              "background": self._report.theme.greys[0], 'bottom': '20px', 'right': '20px'})
     # Add internal HTML component to the new feed
     self.add_label(label)
     self.add_title(title)

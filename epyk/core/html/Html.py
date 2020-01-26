@@ -234,6 +234,45 @@ class Html(object):
           self.htmlObj.attr.setdefault('css', {})[k] = v
       return self
 
+    def animation(self, effect=None, name=None, attrs=None, duration=0, delay=None, iteration=None, timing_fnc=None):
+      """
+      The @keyframes rule specifies the animation code.
+
+      The animation is created by gradually changing from one set of CSS styles to another.
+
+      Example
+      triangle.style.animation(effect=EffectsMoves.EffectsSpin(), duration=3)
+
+      Documentation
+      https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+      https://www.w3schools.com/css/css3_animations.asp
+
+      :param effect: Effect Class.
+      :param name: String. Required. Defines the name of the animation.
+      :param attrs: String. Required. Percentage of the animation duration.
+      :param duration:
+      :param delay:
+      :param iteration:
+      :param timing_fnc:
+      """
+      name = self.htmlObj._report.style.keyframes(effect, name, attrs)
+      css_animation = {"animation-name": name, "animation-duration": "%ss" % duration}
+      if delay:
+        css_animation["animation-delay"] = "%ss" % delay
+      if iteration:
+        css_animation["animation-iteration-count"] = iteration
+      if timing_fnc is not None:
+        if timing_fnc not in ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] and not timing_fnc.startswith("cubic-bezier"):
+          raise Exception("%s missing from the list" % timing_fnc)
+
+        css_animation["animation-timing-function"] = timing_fnc
+      # Add the -webkit- prefix for capatibility with some browsers
+      safari_css = dict([("-webkit-%s" % k, v) for k, v in css_animation.items()])
+      css_animation.update(safari_css)
+      print(css_animation)
+      self.css(css_animation)
+      return self
+
     @property
     def commons(self):
       """
@@ -260,9 +299,6 @@ class Html(object):
       if self.__chart is None:
         self.__chart = CssInternal.DefinedChartStyles(self.htmlObj)
       return self.__chart
-
-    # CSS Attributes
-
 
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):
@@ -980,7 +1016,7 @@ class Html(object):
           listMenu.append('<li class="list-group-item" style="cursor:cursor;width:100%%;display:inline-block;padding:5px 5px 2px 10px;font-weight:bold;color:white;background:%(color)s">MarkDown</li> ');
           listMenu.append('<li onclick="CopyMarkDown(\\''+ markdownFnc +'\\');" class="list-group-item" style="cursor:pointer;width:100%%;display:inline-block;padding:2px 5px 2px 10px"><i class="fas fa-thumbtack"></i>&nbsp;&nbsp;Copy MarkDown</li> ');};
         $('#popup').css({'padding': '0', 'width': '200px'});
-        $('#popup').show()''' % {'color': self.getColor('colors', 9)})
+        $('#popup').show()''' % {'color': self._report.theme.colors[9]})
 
   def paste(self, jsFnc):
     """ Generic click function """
@@ -997,17 +1033,6 @@ class Html(object):
     filterObj = {"operation": operation, 'itemType': itemType, 'allIfEmpty': allSelected, 'colName': colName, 'val': self.val, 'typeVal': 'js'}
     self._report.jsSources.setdefault(jsId, {}).setdefault('_filters', {})[self.htmlCode] = filterObj
     return self
-
-  def getColor(self, typeChart, i):
-    """
-    CSS Color function
-
-    Python function to get the different pre defined color codes in the Framework
-
-    :return: the hexadecimal code of the CSS color used in the CSS framework
-    :link hexadecimal color: https://www.w3schools.com/colors/colors_picker.asp
-    """
-    return self._report.style.colors.get(typeChart, i)
 
   def _addToContainerMap(self, htmlObj):
     if hasattr(self, 'htmlMaps'):

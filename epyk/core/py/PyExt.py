@@ -10,7 +10,12 @@ from epyk.core.py import PyHash
 from epyk.core.py import PyRest
 from epyk.core.py import PyDates
 from epyk.core.py import PyMarkdown
+
 from epyk.core.js.Imports import requires
+
+#
+# http://www.web-source.net/symbols.htm#.XiyBZuBzw2w
+ENTITY_MAP = {"é": "&#233;", "È": "&#200;", "à": "&agrave;"}
 
 
 class PyExt(object):
@@ -112,3 +117,15 @@ class PyExt(object):
     if not package_alias in self._report._props:
       self._report._props[package_alias] = requires(package, reason='Missing Package', package=sub_module, install=package)
     return self._report._props[package_alias]
+
+  def clean(self, text):
+    """
+    Replace the special characters by the corresponding HTML entities
+
+    :param text:
+    :return:
+    """
+    for c, t in ENTITY_MAP.items():
+      if c in text:
+        text = text.replace(c, t)
+    return text

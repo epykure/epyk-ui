@@ -96,7 +96,7 @@ class List(Html.Html):
                                heightUnit=height[1], code=htmlCode, profile=profile)
     self.options = Options.OptionsLi(self, options)
     self.add_helper(helper)
-    self.color = color if color is not None else self.getColor("greys", 9)
+    self.color = color if color is not None else self._report.theme.greys[9]
     self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
               'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
     self.items = None
@@ -189,7 +189,7 @@ class Groups(Html.Html):
     super(Groups, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1], code=htmlCode, profile=profile)
     self.add_helper(helper)
-    self.color = color if color is not None else self.getColor("greys", 9)
+    self.color = color if color is not None else self._report.theme.greys[9]
     self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
               'margin': "1px", 'padding': '0 2px'})
     self.builder_name, self._lists__map, self._lists__map_index = False, {}, []

@@ -199,8 +199,8 @@ class JsHtml(JsNodeDom.JsDoms):
         if isinstance(v, dict):
           dyn_attrs, dyn_attrs_orign = {}, {}
           if 'color' in v:
-            dyn_attrs['color'] = self._report.getColor(*v['color'])
-            dyn_attrs_orign['color'] = self._report.getColor("greys", 0)
+            dyn_attrs['color'] = getattr(self._report.theme, *v['color'])
+            dyn_attrs_orign['color'] = self._report.theme.greys[0]
           css_attrs[k] = v['attr'] % dyn_attrs
           css_attrs_origin[k] = self._src.attr[k] if k in self._src.attr else v['attr'] % dyn_attrs_orign
         else:
@@ -249,6 +249,44 @@ class JsHtmlButton(JsHtml):
   def content(self):
     return JsObjects.JsObjects.get("%s.innerHTML" % self.varName)
 
+  def loading(self, flag, multiple=False):
+    """
+    Add a loading icon to the button
+
+    Example
+    b = rptObj.ui.button("test")
+    b.click([
+      b.dom.loading(True),
+      rptObj.js.window.setTimeout([
+        b.dom.loading(False)
+      ], 5000),
+    ])
+
+    :param flag:
+    :param multiple:
+    :return:
+    """
+    i_loading = '<i class="fas fa-spinner fa-spin" style="margin-right:5px"></i>'
+    fnc = self.disable(False) if multiple else self.disable(flag)
+    if flag:
+      fnc.append("%s.innerHTML = '%s' + %s.innerHTML" % (self.varName, i_loading, self.varName))
+    else:
+      fnc.append("%s.innerHTML = %s.innerHTML.replace('%s', '')" % (self.varName, self.varName, i_loading))
+    return fnc
+
+  def error(self, time, color="red"):
+    """
+
+    :param time:
+    :param color:
+    :return:
+    """
+    return JsFncs.JsFunction("var bgColor = %s.style.borderColor; %s.style.borderColor = '%s'; setTimeout(function() {%s.style.borderColor = bgColor}, %s)" % (self.varName, self.varName, color, self.varName, time))
+
+  def disable(self, bool=True):
+    bool = JsUtils.jsConvertData(bool, None)
+    return JsFncs.JsFunctions("%s.disabled = %s" % (self.varName, bool))
+
   def release(self, by_name=False):
     """
 
@@ -267,14 +305,14 @@ class JsHtmlButton(JsHtml):
       fncs.append(self.attr('data-locked', False))
     return fncs
 
-  def disable(self, lock=True):
+  def lock(self, not_allowed=True):
     """
 
     :param lock:
     """
     fncs = JsFncs.JsFunctions(self.css("color", self.getComputedStyle('color')))
     fncs.append(self.css("background-color", self.getComputedStyle('background-color')))
-    if lock:
+    if not_allowed:
       fncs.append(self.css("cursor", "not-allowed"))
       fncs.append(self.attr('data-locked', True))
     else:

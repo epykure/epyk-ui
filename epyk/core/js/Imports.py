@@ -966,8 +966,6 @@ class ImportManager(object):
     """
     return re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', js_str)
 
-
-
   def getFiles(self, cssAlias, jsAlias):
     """
     retrieve the package definition from the list of module aliases

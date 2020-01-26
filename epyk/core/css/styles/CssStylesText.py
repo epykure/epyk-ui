@@ -30,7 +30,7 @@ class CssTitle1(CssStyle.CssCls):
            'white-space': 'pre-wrap', 'border-bottom': '1px dashed black', 'border-width': '2px', 'margin-bottom': '5px'}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('greys', 7), "border-color": self.getColor('greys', 9)})
+    style.update({"color": self.rptObj.theme.greys[7], "border-color": self.rptObj.theme.greys[9]})
 
 
 class CssTitle2(CssStyle.CssCls):
@@ -38,7 +38,7 @@ class CssTitle2(CssStyle.CssCls):
            'white-space': 'pre-wrap'}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('colors', 7)})
+    style.update({"color": self.rptObj.theme.colors[7]})
 
 
 class CssTitle3(CssStyle.CssCls):
@@ -46,7 +46,7 @@ class CssTitle3(CssStyle.CssCls):
            'white-space': 'pre-wrap'}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('colors', 7)})
+    style.update({"color": self.rptObj.theme.colors[7]})
 
 
 class CssTitle4(CssStyle.CssCls):
@@ -54,7 +54,7 @@ class CssTitle4(CssStyle.CssCls):
            'white-space': 'pre-wrap'}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('greys', 5)})
+    style.update({"color": self.rptObj.theme.greys[5]})
 
 
 class CssTitle(CssStyle.CssCls):
@@ -71,14 +71,14 @@ class CssMarkRed(CssStyle.CssCls):
   attrs = {'background': 'none', 'font-size': '12px'}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('danger', 1)})
+    style.update({"color": self.rptObj.theme.danger[1]})
 
 
 class CssMarkBlue(CssStyle.CssCls):
   attrs = {'background': 'none', 'font-weight': 'bold', 'font-size': '12px'}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('colors', 7)})
+    style.update({"color": self.rptObj.theme.colors[7]})
 
 
 class CssTextWithBorder(CssStyle.CssCls):
@@ -86,7 +86,7 @@ class CssTextWithBorder(CssStyle.CssCls):
   cssId = {'child': 'fieldset'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 0)})
+    style.update({"background-color": self.rptObj.theme.greys[0]})
 
 
 class CssCheckMark(CssStyle.CssCls):
@@ -94,18 +94,17 @@ class CssCheckMark(CssStyle.CssCls):
            'font-family': 'FontAwesome', 'height': '18px', 'width': '18px'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 0), "color": self.getColor('greys', 9)})
-    eventsStyles['hover'].update({'color': 'white', 'background-color': self.getColor('colors', 9)})
+    style.update({"background-color": self.rptObj.theme.greys[0], "color": self.rptObj.theme.greys[9]})
+    eventsStyles['hover'].update({'color': 'white', 'background-color': self.rptObj.theme.colors[9]})
 
 
 class CssTextItem(CssStyle.CssCls):
   attrs = {'cursor': 'pointer', 'width': '200px', 'padding': '5px 5px 5px 20px'}
 
   def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({"color": self.getColor('greys', -1), "background": self.getColor('colors', 2)})
+    eventsStyles['hover'].update({"color": self.rptObj.theme.greys[-1], "background": self.rptObj.theme.colors[2]})
 
 
 class CssTextNotSelectable(CssStyle.CssCls):
   attrs = {'-moz-user-select': '-moz-none', "user-select": 'none', '-khtml-user-select': 'none',
            '-webkit-user-select': 'none', '-ms-user-select': 'none'}
-

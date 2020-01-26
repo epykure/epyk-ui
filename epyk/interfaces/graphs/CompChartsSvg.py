@@ -118,3 +118,28 @@ class SVG(object):
     shape = graph.GraphSvg.Polygone(self.parent.context.rptObj, points, height, width, dflt_options)
     self.parent.context.register(shape)
     return shape
+
+  def triangle(self, width=20, options=None):
+    """
+    Documentation
+    https://www.w3schools.com/graphics/svg_polyline.asp
+
+    Example
+    rptObj.ui.charts.svg.triangle()
+
+    :param width:
+    :param options:
+
+    :return:
+    """
+    if not isinstance(width, tuple):
+      width = (width, "px")
+    dflt_options = {"stroke": self.parent.context.rptObj.theme.success[1], "stroke-width": 1,
+                    'fill': self.parent.context.rptObj.theme.success[1]}
+    if options is not None:
+      dflt_options.update(options)
+    shape = graph.GraphSvg.Polyline(self.parent.context.rptObj,
+                                    [(0, width[0]), (width[0]/2, 0), (width[0], width[0]), (0, width[0])],
+                                    width, width, dflt_options)
+    self.parent.context.register(shape)
+    return shape

@@ -12,26 +12,26 @@ class CssBody(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
     if isinstance(Defaults.BACKGROUND, tuple):
-      bgColor = self.getColor('greys', 0)
+      bgColor = self.rptObj.theme.greys[0]
       if bgColor != '#000000':
-        bgColor = self.getColor('greys', 2)
+        bgColor = self.rptObj.theme.greys[2]
     else:
       bgColor = Defaults.BACKGROUND
-    style.update({"background-color": bgColor, "color": self.getColor('greys', 9),
+    style.update({"background-color": bgColor, "color": self.rptObj.theme.greys[9],
                   'font-family': self.fontFamily, 'font-size': self.fontSize})
 
 
 class CssTextSelection(CssStyle.CssCls):
   def customize(self, style, eventsStyles):
-    style.update({"background": self.getColor("success", 0)})
+    style.update({"background": self.rptObj.theme.success[0]})
 
 
 class CssBodyContent(CssStyle.CssCls):
   attrs = {'margin-top': '10px', 'padding': '5px'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 0), "border-radius": "5px",
-                  "border": '1px solid %s' % self.getColor('greys', 3)})
+    style.update({"background-color": self.rptObj.theme.greys[0], "border-radius": "5px",
+                  "border": '1px solid %s' % self.rptObj.theme.greys[3]})
     if Defaults.BODY_CONTAINER is not None:
       style.update(Defaults.BODY_CONTAINER)
 
@@ -41,7 +41,7 @@ class CssBodyLoadingBack(CssStyle.CssCls):
            'z-index': '295', 'position': 'fixed', 'opacity': '0.5', 'filter': 'alpha(opacity=50)'}
 
   def customize(self, style, eventsStyles):
-    style.update({"background-color": self.getColor('greys', 5)})
+    style.update({"background-color": self.rptObj.theme.greys[5]})
 
 
 class CssBodyLoading(CssStyle.CssCls):
@@ -49,7 +49,7 @@ class CssBodyLoading(CssStyle.CssCls):
            'height': '100%', 'display': 'none', 'z-index': '300'}
 
   def customize(self, style, eventsStyles):
-    style.update({"color": self.getColor('greys', 9)})
+    style.update({"color": self.rptObj.theme.greys[9]})
 
 
 class CssNotSelect(CssStyle.CssCls):

@@ -27,6 +27,7 @@ from epyk.interfaces.components import CompVignets
 from epyk.interfaces.components import CompMenus
 from epyk.interfaces.components import CompPanels
 from epyk.interfaces.components import CompModals
+from epyk.interfaces.components import CompNavigation
 
 
 class Components(object):
@@ -88,6 +89,12 @@ class Components(object):
     Group all the UI components dedicated to produce links to another page or website.
     """
     return CompLinks.Links(self)
+
+  @property
+  def navigation(self):
+    """
+    """
+    return CompNavigation.Navigation(self)
 
   @property
   def rich(self):
@@ -243,7 +250,6 @@ class Components(object):
     :return:
     """
     return CompModals.Modal(self)
-
 
   @property
   def charts(self):
@@ -418,6 +424,22 @@ class Components(object):
     html_wf = html.HtmlOthers.Workflow(self.rptObj, records, width, height, color, size, options or {})
     self.register(html_wf)
     return html_wf
+
+  def form(self, action=None, method=None, helper=None):
+    """
+    Creates an new empty form
+
+    Example
+    f = rptObj.ui.form()
+
+    :param action:
+    :param method:
+    :param helper:
+    :return:
+    """
+    form = html.HtmlContainer.Form(self.rptObj, [], action, method, helper)
+    self.register(form)
+    return form
 
   #--------------------------------------------------------------------------------------------------------------------
   #

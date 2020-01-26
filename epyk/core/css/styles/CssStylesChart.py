@@ -13,8 +13,8 @@ class CssDivChart(CssStyle.CssCls):
   attrs = {'margin': '0 0 5px 0', 'outline': 'none'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': "1px solid %s" % self.getColor('greys', 3)})
-    eventsStyles['hover'].update({'border': "1px solid %s" % self.getColor('colors', 1)})
+    style.update({'border': "1px solid %s" % self.rptObj.theme.greys[3]})
+    eventsStyles['hover'].update({'border': "1px solid %s" % self.rptObj.theme.colors[1]})
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -25,35 +25,35 @@ class CssBillboardTitle(CssStyle.CssCls):
   cssId = {'child': ".bb-title"}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': "%s !IMPORTANT" % self.getColor('greys', -1)})
+    style.update({'fill': "%s !IMPORTANT" % self.rptObj.theme.greys[-1]})
 
 
 class CssBillboardLegend(CssStyle.CssCls):
   cssId = {'child': ".bb text"}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': "%s !IMPORTANT" % self.getColor('greys', -1)})
+    style.update({'fill': "%s !IMPORTANT" % self.rptObj.theme.greys[-1]})
 
 
 class CssBillboardAxis(CssStyle.CssCls):
   cssId = {'child': ".bb-axis line, .bb-axis-x line, .bb-axis .domain, .bb-axis-x .domain"}
 
   def customize(self, style, eventsStyles):
-    style.update({'stroke': self.getColor('greys', -1)})
+    style.update({'stroke': self.rptObj.theme.greys[-1]})
 
 
 class CssBillboardXAxis(CssStyle.CssCls):
   cssId = {'child': ".bb-axis-x text"}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': "%s !IMPORTANT" % self.getColor('greys', -1)})
+    style.update({'fill': "%s !IMPORTANT" % self.rptObj.theme.greys[-1]})
 
 
 class CssBillboardYAxis(CssStyle.CssCls):
   cssId = {'child': ".bb-axis-y text"}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': "%s !IMPORTANT" % self.getColor('greys', -1)})
+    style.update({'fill': "%s !IMPORTANT" % self.rptObj.theme.greys[-1]})
 
 
 
@@ -65,35 +65,35 @@ class CssC3Title(CssStyle.CssCls):
   cssId = {'child': ".c3-title"}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': "%s !IMPORTANT" % self.getColor('greys', -1)})
+    style.update({'fill': "%s !IMPORTANT" % self.rptObj.theme.greys[-1]})
 
 
 class CssC3Legend(CssStyle.CssCls):
   cssId = {'child': '.c3 text'}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': "%s !IMPORTANT" % self.getColor('greys', -1)})
+    style.update({'fill': "%s !IMPORTANT" % self.rptObj.theme.greys[-1]})
 
 
 class CssC3Axis(CssStyle.CssCls):
   cssId = {'child': '.c3-axis line, .c3-axis .domain'}
 
   def customize(self, style, eventsStyles):
-    style.update({'stroke': self.getColor('greys', -1)})
+    style.update({'stroke': self.rptObj.theme.greys[-1]})
 
 
 class CssC3XAxis(CssStyle.CssCls):
   cssId = {'child': ".c3-axis-x text"}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': "%s !IMPORTANT" % self.getColor('greys', -1)})
+    style.update({'fill': "%s !IMPORTANT" % self.rptObj.theme.greys[-1]})
 
 
 class CssC3YAxis(CssStyle.CssCls):
   cssId = {'child': ".c3-axis-y text"}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': "%s !IMPORTANT" % self.getColor('greys', -1)})
+    style.update({'fill': "%s !IMPORTANT" % self.rptObj.theme.greys[-1]})
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -104,21 +104,21 @@ class CssNVD3Axis(CssStyle.CssCls):
   cssId = {'child': '.nvd3 .nv-axis g path.domain'}
 
   def customize(self, style, eventsStyles):
-    style.update({'stroke': self.getColor('greys', -1), 'stroke-opacity': 1})
+    style.update({'stroke': self.rptObj.theme.greys[-1], 'stroke-opacity': 1})
 
 
 class CssNVD3AxisLabel(CssStyle.CssCls):
   cssId = {'child': '.nvd3 .nv-axis'}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': self.getColor('greys', -1)})
+    style.update({'fill': self.rptObj.theme.greys[-1]})
 
 
 class CssNVD3AxisLegend(CssStyle.CssCls):
   cssId = {'child': 'svg text'}
 
   def customize(self, style, eventsStyles):
-    style.update({'fill': self.getColor('greys', -1)})
+    style.update({'fill': self.rptObj.theme.greys[-1]})
 
 
 class CssNVD3HideGrid(CssStyle.CssCls):

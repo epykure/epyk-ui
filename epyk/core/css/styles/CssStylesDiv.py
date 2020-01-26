@@ -14,15 +14,15 @@ class CssDivNoBorder(CssStyle.CssCls):
 
 class CssDivBottomBorder(CssStyle.CssCls):
   def customize(self, style, eventsStyles):
-    style.update({"border-bottom": '2px solid %s' % self.getColor("colors", 0), 'font-family': Defaults_css.Font.family})
-    eventsStyles['hover'].update({"border-bottom": '2px solid %s' % self.getColor("success", -1)})
+    style.update({"border-bottom": '2px solid %s' % self.rptObj.theme.colors[0], 'font-family': Defaults_css.Font.family})
+    eventsStyles['hover'].update({"border-bottom": '2px solid %s' % self.rptObj.theme.success[-1]})
 
 
 class CssDivWithBorder(CssStyle.CssCls):
   attrs = {'margin': '0 0 5px 0', 'padding': '5px', 'outline': 'none'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': "1px solid %s" % self.getColor('colors', 0), 'font-family': Defaults_css.Font.family})
+    style.update({'border': "1px solid %s" % self.rptObj.theme.colors[0], 'font-family': Defaults_css.Font.family})
 
 
 class CssDivConsole(CssStyle.CssCls):
@@ -31,7 +31,7 @@ class CssDivConsole(CssStyle.CssCls):
   before = [{'attr': 'content', 'value': r"'C:\Users\LONDON>'"}]
   
   def customize(self, style, eventsStyles):
-    style.update({'background-color': self.getColor('greys', 9)})
+    style.update({'background-color': self.rptObj.theme.greys[9]})
 
 
 class CssDivCursor(CssStyle.CssCls):
@@ -43,8 +43,8 @@ class CsssDivBoxMargin(CssStyle.CssCls):
   attrs = {'margin': '0', 'padding': '0 2px 0 2px', 'white-space': 'pre-wrap'}
 
   def customize(self, style, eventsStyles):
-    style.update({"border": '1px solid %s' % self.getColor('greys', 0), 'font-family': Defaults_css.Font.family})
-    eventsStyles['hover'].update({'border': "1px solid %s" % self.getColor('greys', 5)})
+    style.update({"border": '1px solid %s' % self.rptObj.theme.greys[0], 'font-family': Defaults_css.Font.family})
+    eventsStyles['hover'].update({'border': "1px solid %s" % self.rptObj.theme.greys[5]})
 
 
 class CssDivBoxCenter(CssStyle.CssCls):
@@ -55,7 +55,7 @@ class CssDivBoxWithDotBorder(CssStyle.CssCls):
   attrs = {'margin': '5px'}
 
   def customize(self, style, eventsStyles):
-    style.update({"border": '1px dashed %s' % self.getColor('greys', 9)})
+    style.update({"border": '1px dashed %s' % self.rptObj.theme.greys[9]})
 
 
 class CssDivBubble(CssStyle.CssCls):
@@ -63,14 +63,15 @@ class CssDivBubble(CssStyle.CssCls):
            'text-align': 'center'}
 
   def customize(self, style, eventsStyles):
-    style.update({"border": '1px solid %s' % self.getColor('greys', 5)})
+    style.update({"border": '1px solid %s' % self.rptObj.theme.greys[5]})
 
 
 class CssDivBox(CssStyle.CssCls):
   attrs = {'width': '100%'}
 
   def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({"border-left": "4px solid %s" % self.getColor('greys', 0), 'background-color': self.getColor('colors', 9)})
+    eventsStyles['hover'].update({"border-left": "4px solid %s" % self.rptObj.theme.greys[0],
+                                  'background-color': self.rptObj.theme.colors[9]})
 
 
 class CssDivLeft(CssStyle.CssCls):
@@ -84,7 +85,7 @@ class CssDivRight(CssStyle.CssCls):
 class CssDivBorder(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({"border": "1px solid %s" % self.getColor('greys', 9)})
+    eventsStyles['hover'].update({"border": "1px solid %s" % self.rptObj.theme.greys[9]})
 
 
 class CssDivShadow(CssStyle.CssCls):
@@ -96,21 +97,21 @@ class CssDivWhitePage(CssStyle.CssCls):
   attrs = {'height': '80%', 'min-height': '600px', 'margin': '0 10px 0 10px'}
 
   def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({'background-color': self.getColor('greys', 0)})
+    eventsStyles['hover'].update({'background-color': self.rptObj.theme.greys[0]})
 
 
 class CssDivBanner(CssStyle.CssCls):
   attrs = {'width': '100%', 'margin': '0', 'overflow-y': 'auto', 'padding': '10px'}
 
   def customize(self, style, eventsStyles):
-    style.update({'background-color': self.getColor('greys', 0)})
+    style.update({'background-color': self.rptObj.theme.greys[0]})
 
 
 class CssDivSubBanner(CssStyle.CssCls):
   attrs = {'height': '400px', 'width': '100%', 'overflow-y': 'auto', 'margin-top': '50px', 'padding': '0', 'margin': '0'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', 9), 'background-color': self.getColor('greys', 0)})
+    style.update({'color': self.getColor('greys', 9), 'background-color': self.rptObj.theme.greys[0]})
 
 
 class CssDivLabelPoint(CssStyle.CssCls):
@@ -119,18 +120,19 @@ class CssDivLabelPoint(CssStyle.CssCls):
   cssId = {'child': 'label'}
 
   def customize(self, style, eventsStyles):
-    style.update({"border": '1px solid %s' % self.getColor("greys", 4), 'background': self.getColor('greys', 0)})
-    eventsStyles['hover'].update({"border": '1px solid %s' % self.getColor("success", 1)})
+    style.update({"border": '1px solid %s' % self.rptObj.theme.greys[4], 'background': self.rptObj.theme.greys[0]})
+    eventsStyles['hover'].update({"border": '1px solid %s' % self.rptObj.theme.success[1]})
 
 
 class CssDivCommBubble(CssStyle.CssCls):
   attrs = {'width': '100%', 'vertical-align': 'top', 'top': '0', 'margin-bottom': '20px', 'margin-left': '20px',
            'display': 'inline-block'}
-  before = {'content': "''", 'width': 0, 'height': 0, 'display': 'inline-block', 'border': '15px solid transparent', 'margin-left': '-30px'}
+  before = {'content': "''", 'width': 0, 'height': 0, 'display': 'inline-block', 'border': '15px solid transparent',
+            'margin-left': '-30px'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', 0)})
-    eventsStyles['before'].update({'border-right-color': self.getColor('colors', 9)})
+    style.update({'color': self.rptObj.theme.greys[0]})
+    eventsStyles['before'].update({'border-right-color': self.rptObj.theme.colors[9]})
 
 
 class CssDivComms(CssStyle.CssCls):
@@ -153,7 +155,7 @@ class CssDivTableContent(CssStyle.CssCls):
   attrs = {'padding': '5px 10px 5px 10px', 'width': 'auto', 'display': 'inline-block'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor('greys', 3), 'background-color': self.getColor('greys', 1)})
+    style.update({'border': '1px solid %s' % self.rptObj.theme.greys[3], 'background-color': self.rptObj.theme.greys[1]})
 
 
 class CssDivPagination(CssStyle.CssCls):
@@ -161,8 +163,8 @@ class CssDivPagination(CssStyle.CssCls):
   cssId = {'child': 'a'}
 
   def customize(self, style, eventsStyles):
-    style.update({'color': self.getColor('greys', 9)})
-    eventsStyles['hover'].update({"background-color": self.getColor('greys', 3)})
+    style.update({'color': self.rptObj.theme.greys[9]})
+    eventsStyles['hover'].update({"background-color": self.rptObj.theme.greys[3]})
 
 
 class CssDivEditor(CssStyle.CssCls):
@@ -170,21 +172,22 @@ class CssDivEditor(CssStyle.CssCls):
            'margin-top': '5px', 'text-align': 'left'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': "1px solid %s" % self.getColor('greys', 3), 'background-color': self.getColor('greys', 2)})
-    eventsStyles['focus'].update({'background-color': self.getColor('greys', 0), 'border': "2px solid %s" % self.getColor('colors', 5)})
+    style.update({'border': "1px solid %s" % self.rptObj.theme.greys[3], 'background-color': self.rptObj.theme.greys[2]})
+    eventsStyles['focus'].update({'background-color': self.rptObj.theme.greys[0],
+                                  'border': "2px solid %s" % self.rptObj.theme.colors[5]})
 
 
 class CssDivRow(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({'background-color': self.getColor('greys', 1)})
+    eventsStyles['hover'].update({'background-color': self.rptObj.theme.greys[1]})
 
 
 class CssPanelTitle(CssStyle.CssCls):
   attrs = {'padding': '1px 0', 'margin': '0 5px 5px 5px', 'font-weight': 'bold'}
 
   def customize(self, style, eventsStyles):
-    style.update({'border-bottom': "1px solid %s" % self.getColor('success', 1), "font-size": self.headerFontSize,
+    style.update({'border-bottom': "1px solid %s" % self.rptObj.theme.success[1], "font-size": self.headerFontSize,
                   'font-family': Defaults_css.Font.family})
 
 
@@ -192,23 +195,25 @@ class CssDivFilter(CssStyle.CssCls):
   attrs = {"padding": "5px"}
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor('colors', 0)})
+    style.update({'border': '1px solid %s' % self.rptObj.theme.colors[0]})
 
 
 class CssDivFilterItems(CssStyle.CssCls):
 
   def customize(self, style, eventsStyles):
-    style.update({'border': '1px solid %s' % self.getColor('colors', 2)})
-    eventsStyles['hover'].update({'border': '1px solid %s' % self.getColor('success', 1)})
+    style.update({'border': '1px solid %s' % self.rptObj.theme.colors[2]})
+    eventsStyles['hover'].update({'border': '1px solid %s' % self.rptObj.theme.success[1]})
+
 
 class CssDivModal(CssStyle.CssCls):
 
   attrs = {'display': 'none', 'z-index': 1, 'position': 'fixed', 'padding-top': '100px', 'left': 0, 'top': 0,
            'width': '100%', 'height': '100%', 'overflow': 'auto', 'background-color': 'rgb(0,0,0,0.4)', 'text-align': 'center'}
 
+
 class CssDivModalContent(CssStyle.CssCls):
 
   attrs = {'margin': 'auto', 'padding': '20px', 'border': '1px solid #888', 'width': '80%'}
 
   def customize(self, style, eventsStyles):
-    style.update({'background-color': self.getColor('greys', 0)})
+    style.update({'background-color': self.rptObj.theme.greys[0]})
