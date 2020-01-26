@@ -91,7 +91,6 @@ class Modal(object):
     col = self.context.rptObj.ui.col(html_objs).css({'margin': '15%', 'padding': '20px',
              'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
              'width': 'auto', 'background-color': self.context.rptObj.theme.greys[0]})
-    # col.style.addCls('CssDivModalContent')
     modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
     col += modal.submit
     self.context.register(modal)
@@ -111,12 +110,7 @@ class Modal(object):
     :param helper:
     :return:
     """
-    html_objs = []
-    for rec in objlst:
-      inp = self.context.rptObj.ui.fields.input(label=rec["label"])
-      inp.input.set_attrs({"name": rec["htmlCode"]})
-      html_objs.append(inp)
-    col = self.context.rptObj.ui.col(html_objs).css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
+    col = self.context.rptObj.ui.col(objlst).css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
                                                      "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
     modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
     col += modal.submit
