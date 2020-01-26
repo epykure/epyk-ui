@@ -8,6 +8,9 @@ class Modal(object):
   def __init__(self, context):
     self.context = context
 
+  def __mandatory_js__(self, required_fields):
+    """"""
+
   def date(self, action, method, htmlCode="Current", helper=None):
     """
 
@@ -96,7 +99,7 @@ class Modal(object):
     self.context.register(modal)
     return modal
 
-  def objects(self, html_objs, action, method, helper=None):
+  def objects(self, html_objs, action, method, htmlCodes=None, required_fields=None, helper=None):
     """
     Example
     rptObj.ui.forms.inputs([
@@ -110,10 +113,13 @@ class Modal(object):
     :param helper:
     :return:
     """
+    htmlCodes = [] if htmlCodes is None else htmlCodes
     col = self.context.rptObj.ui.col(html_objs).css({'margin': '15%', 'padding': '20px',
                                                      'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
                                                      'width': 'auto', 'background-color': self.context.rptObj.theme.greys[0]})
     modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
     col += modal.submit
     self.context.register(modal)
+    if required_fields:
+      self.context.rptObj.js.addOnReady([self.__mandatory_js__(required_fields)])
     return modal
