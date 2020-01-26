@@ -4,7 +4,6 @@
 
 from epyk.core import html
 
-
 class Modal(object):
   def __init__(self, context):
     self.context = context
@@ -90,8 +89,9 @@ class Modal(object):
       inp.input.set_attrs({"name": rec["htmlCode"]})
       html_objs.append(inp)
     col = self.context.rptObj.ui.col(html_objs).css({'margin': '15%', 'padding': '20px',
-                                                     'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
-                                                     'width': '80%', 'background-color': self.context.rptObj.theme.greys[0]})
+             'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
+             'width': 'auto', 'background-color': self.context.rptObj.theme.greys[0]})
+    # col.style.addCls('CssDivModalContent')
     modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
     col += modal.submit
     self.context.register(modal)
