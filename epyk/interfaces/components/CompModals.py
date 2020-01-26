@@ -96,7 +96,7 @@ class Modal(object):
     self.context.register(modal)
     return modal
 
-  def objects(self, objlst, action, method, helper=None):
+  def objects(self, html_objs, action, method, helper=None):
     """
     Example
     rptObj.ui.forms.inputs([
@@ -110,8 +110,9 @@ class Modal(object):
     :param helper:
     :return:
     """
-    col = self.context.rptObj.ui.col(objlst).css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
-                                                     "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
+    col = self.context.rptObj.ui.col(html_objs).css({'margin': '15%', 'padding': '20px',
+                                                     'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
+                                                     'width': 'auto', 'background-color': self.context.rptObj.theme.greys[0]})
     modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
     col += modal.submit
     self.context.register(modal)
