@@ -216,8 +216,6 @@ class CssDivModalContent(CssStyle.CssCls):
   attrs = {'margin': '15%', 'padding': '20px', 'border': '1px solid #888', 'width': 'auto'}
 
   def customize(self, style, eventsStyles):
-    print(self.rptObj.theme.colors)
-    print(self.rptObj.theme.colors[0])
     style.update({'background-color': self.rptObj.theme.colors[0]})
 
 
