@@ -4,10 +4,12 @@
 
 from epyk.core import html
 
-
 class Modal(object):
   def __init__(self, context):
     self.context = context
+
+  def __mandatory_js__(self, required_fields):
+    """"""
 
   def date(self, action, method, htmlCode="Current", helper=None):
     """
@@ -86,17 +88,18 @@ class Modal(object):
     html_objs = []
     for rec in records:
       inp = self.context.rptObj.ui.fields.input(label=rec["label"])
+      inp.label.css({'float': ''})
       inp.input.set_attrs({"name": rec["htmlCode"]})
       html_objs.append(inp)
     col = self.context.rptObj.ui.col(html_objs).css({'margin': '15%', 'padding': '20px',
-                                                     'border': '1px solid %s' % self.context.rptObj.getColor('greys', 4),
-                                                     'width': '80%', 'background-color': self.context.rptObj.getColor('greys', 0)})
+             'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
+             'width': 'auto', 'background-color': self.context.rptObj.theme.greys[0]})
     modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
     col += modal.submit
     self.context.register(modal)
     return modal
 
-  def objects(self, objlst, action, method, helper=None):
+  def objects(self, html_objs, action, method, htmlCodes=None, required_fields=None, helper=None):
     """
     Example
     rptObj.ui.forms.inputs([
@@ -110,14 +113,13 @@ class Modal(object):
     :param helper:
     :return:
     """
-    html_objs = []
-    for rec in objlst:
-      inp = self.context.rptObj.ui.fields.input(label=rec["label"])
-      inp.input.set_attrs({"name": rec["htmlCode"]})
-      html_objs.append(inp)
-    col = self.context.rptObj.ui.col(html_objs).css({"border": '1px solid %s' % self.context.rptObj.getColor("greys", 4),
-                                                     "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
-    form = html.HtmlContainer.Form(self.context.rptObj, [col], action, method, helper)
-    col += form.submit
-    self.context.register(form)
-    return form
+    htmlCodes = [] if htmlCodes is None else htmlCodes
+    col = self.context.rptObj.ui.col(html_objs).css({'margin': '15%', 'padding': '20px',
+                                                     'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
+                                                     'width': 'auto', 'background-color': self.context.rptObj.theme.greys[0]})
+    modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
+    col += modal.submit
+    self.context.register(modal)
+    if required_fields:
+      self.context.rptObj.js.addOnReady([self.__mandatory_js__(required_fields)])
+    return modal

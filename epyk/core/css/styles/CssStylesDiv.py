@@ -208,12 +208,16 @@ class CssDivFilterItems(CssStyle.CssCls):
 class CssDivModal(CssStyle.CssCls):
 
   attrs = {'display': 'none', 'z-index': 1, 'position': 'fixed', 'padding-top': '100px', 'left': 0, 'top': 0,
-           'width': '100%', 'height': '100%', 'overflow': 'auto', 'background-color': 'rgb(0,0,0,0.4)'}
+           'width': '100%', 'height': '100%', 'overflow': 'auto', 'background-color': 'rgb(0,0,0,0.4)', 'text-align': 'center'}
 
 
 class CssDivModalContent(CssStyle.CssCls):
 
-  attrs = {'margin': 'auto', 'padding': '20px', 'border': '1px solid #888', 'width': '80%'}
+  attrs = {'margin': '15%', 'padding': '20px', 'border': '1px solid #888', 'width': 'auto'}
 
   def customize(self, style, eventsStyles):
-    style.update({'background-color': self.rptObj.theme.greys[0]})
+    style.update({'background-color': self.rptObj.theme.colors[0]})
+
+
+
+
