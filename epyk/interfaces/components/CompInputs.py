@@ -320,3 +320,26 @@ class Inputs(object):
                                    extensible, profile)
     self.context.register(html_s)
     return html_s
+
+  def label(self, label, text="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+            options=None, attrs=None, profile=None):
+    """
+
+    :return:
+    """
+    size = self.context._size(size)
+    label = self.context.rptObj.ui.texts.label(label).css({"display": 'block', 'text-align': 'left', 'margin-top': '10px',
+                                                           "position": "absolute", "z-index": '20px', "font-size": '14px'})
+    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, size, width, height, htmlCode, filter,
+                                      options or {}, attrs or {}, profile).css({"margin-top": '10px'})
+    div = self.context.rptObj.ui.div([label, html_input])
+    div.input = html_input
+    div.label = label
+    self.context.register(html_input)
+    html_input.on('focus', [
+      "document.getElementById('%s').animate({'marginTop': ['10px', '-8px']}, {duration: 50, easing: 'linear', iterations: 1, fill: 'both'})" % label.htmlId,
+    ])
+    html_input.on('blur', [
+      "document.getElementById('%s').animate({'marginTop': ['-8px', '10px']}, {duration: 1000, easing: 'linear', iterations: 1, fill: 'both'})" % label.htmlId,
+    ])
+    return div
