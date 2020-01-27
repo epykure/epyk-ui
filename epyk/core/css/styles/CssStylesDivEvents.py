@@ -25,3 +25,18 @@ class CssDivOnHoverBackgroundLight(CssStyle.CssCls):
     eventsStyles["hover"].update({"background-color": self.rptObj.theme.greys[2], "font-weight": 'bold',
       "color": '%s !IMPORTANT' % self.rptObj.theme.greys[-1]})
 
+
+class CssDivOnHoverWidth(CssStyle.CssCls):
+  """ Change the background color when the mouse is on the component """
+  attrs = {"align": 'right', "background-color": "inherit",
+           #"-o-transition": "width 1s ease-out",
+           #"transition": "width 1s ease-out",
+           #"-moz-transition": "width 1s ease-out",
+           #"-webkit-transition": "width 1s ease-out",
+           #'width': '50px'
+  }
+  hover = {"cursor": 'pointer', 'width': '150px'}
+
+  def customize(self, style, eventsStyles):
+    eventsStyles["hover"].update({"background-color": self.rptObj.theme.greys[2], "font-weight": 'bold',
+      "color": '%s !IMPORTANT' % self.rptObj.theme.greys[-1]})

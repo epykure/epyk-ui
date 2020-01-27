@@ -91,6 +91,36 @@ class Navigation(object):
       self.context.rptObj.js.objects.this.hide()])
     return dd
 
+  def pin(self, top=50, right=20, bottom=None, left=None, icon="fas fa-map-pin", tooltip=None, size=(None, "px"),
+          width=(100, '%'), options=None, profile=False):
+    """
+
+    Example
+    rptObj.ui.navigation.to(100, tooltip="test")
+
+    :param top:
+    :param right:
+    :param bottom:
+    :param left:
+    :param icon:
+    :param tooltip:
+    :param size:
+    :param width:
+    :param options:
+    :param profile:
+    """
+    dd = self.context.rptObj.ui.icon(icon)
+    url = self.context.rptObj.ui.link(icon).css({"margin-left": "10px"})
+    div = self.context.rptObj.ui.div([dd, url]).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
+                                      "border-radius": '30px', "padding": '10px 15px', "right": '20px'})
+    div.style.addCls("CssDivOnHoverWidth")
+    url.css({"display": 'none', "white-space": 'nowrap'})
+    div.on("mouseover", [url.dom.css({"display": 'inline-block'})])
+    div.on("mouseout", [url.dom.css({"display": 'none'})])
+    if tooltip is not None:
+      div.tooltip(tooltip)
+    return div
+
   def indices(self, count, selected=1, size=(None, "px"), width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
 
