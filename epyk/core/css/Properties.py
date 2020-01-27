@@ -1110,6 +1110,8 @@ class CssMixin(object):
 
   @css_margin_top.setter
   def css_margin_top(self, val):
+    if isinstance(val, int):
+      val = "%spx" % val
     val = val or 'None'
     self.htmlObj.css({"margin-top": val})
 
