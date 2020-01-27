@@ -39,6 +39,37 @@ class Links(object):
     self.context.register(html_link)
     return html_link
 
+  def button(self, text, url, icon=None, helper=None, width=(60, 'px'), height=(None, 'px'), decoration=False, options=None, profile=None):
+    """
+
+    :param text:
+    :param url:
+    :param icon:
+    :param helper:
+    :param height:
+    :param decoration:
+    :param options:
+    :param profile:
+    :return:
+    """
+    if isinstance(width, int):
+      width = (width, 'px')
+    dft_options = {"target": '_blank'}
+    if options is not None:
+      dft_options.update(options)
+
+    # if url.startswith("http"):
+    #  url = "/%s" % url
+    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration,
+                                            dft_options, profile)
+    self.context.register(html_link)
+    html_link.style.addCls("CssButtonBasic")
+    html_link.style.css_display = "block"
+    html_link.style.css_width = "%s%s" % (width[0], width[1])
+    html_link.style.css_border = "1px solid %s" % self.context.rptObj.theme.colors[-1]
+    html_link.style.css_padding = "3px 5px"
+    return html_link
+
   def script(self, script_name, report_name=None, icon="fab fa-python", options=None, profile=None):
     """
     Direct link to another report within the server.
@@ -91,14 +122,11 @@ class Links(object):
     :param decoration:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlLinks.ExternalLink
-
-    :return:
     """
-    if options is None:
-      options = {}
-    return self.context.register(html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, options, profile))
+    options = options or {}
+    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, options, profile)
+    self.context.register(html_link)
+    return html_link
 
   def data(self, text, value, width=(100, '%'), height=(None, 'px'), format='txt', profile=None):
     """
@@ -132,9 +160,7 @@ class Links(object):
     :param url:
     :param jsData:
     :param context:
-
-    :rtype: html.HtmlLinks.Bridge
-
-    :return:
     """
-    return self.context.register(html.HtmlLinks.Bridge(self.context.rptObj, text, script_name, report_name, url, jsData, context))
+    html_bridge = html.HtmlLinks.Bridge(self.context.rptObj, text, script_name, report_name, url, jsData, context)
+    self.context.register(html_bridge)
+    return html_bridge
