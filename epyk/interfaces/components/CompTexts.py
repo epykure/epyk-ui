@@ -36,6 +36,8 @@ class Texts(object):
 
     :return: The text HTML object
     """
+    if not isinstance(width, tuple):
+      width = (width, 'px')
     size = self.context._size(size)
     text_comp = html.HtmlText.Text(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip,
                                    options or {}, helper, profile)

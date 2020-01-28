@@ -125,11 +125,18 @@ class Div(Html.Html):
   def __init__(self, report, htmlObj, label, color, size, width, icon, height, editable, align, padding, htmlCode, tag,
                helper, profile):
     if isinstance(htmlObj, list) and htmlObj:
+      newHtmlObj = []
       for obj in htmlObj:
-        if hasattr(obj, 'inReport'):
-          obj.inReport = False
-          if obj.css("display") != 'None':
-            obj.css({"display": 'inline-block'})
+        if isinstance(obj, list) and obj:
+          newHtmlObj.append(report.ui.div(obj, label, color, size, width, icon, height, editable, align, padding,
+                                          htmlCode, tag, helper, profile))
+        else:
+          newHtmlObj.append(obj)
+        if hasattr(newHtmlObj[-1], 'inReport'):
+          newHtmlObj[-1].inReport = False
+          if newHtmlObj[-1].css("display") != 'None':
+            newHtmlObj[-1].css({"display": 'inline-block'})
+      htmlObj = newHtmlObj
     elif htmlObj is not None and hasattr(htmlObj, 'inReport'):
       htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     super(Div, self).__init__(report, htmlObj, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
@@ -155,6 +162,9 @@ class Div(Html.Html):
       self.val = [self.val]
     self.val.append(htmlObj)
     return self
+
+  def __getitem__(self, i):
+    return self.val[i]
 
   def build(self, data=None, options=None, profile=False):
     if isinstance(data, dict):
