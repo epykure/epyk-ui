@@ -289,6 +289,28 @@ class Icons(object):
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
+  def epyk(self, align="center", format='logo'):
+    """
+    Add the Epyk Icon
+    Example
+    rptObj.ui.icons.epyk()
+
+    :param align:
+    :param format:
+    :return:
+    """
+    if format == 'logo':
+      img, width, height = "epyklogo.ico", (32, 'px'), (32, 'px')
+    elif format == 'small':
+      img, width, height = "epyklogo_whole_small.png", (45, 'px'), (32, 'px')
+    else:
+      img, width, height = "epyklogo_whole_big.png", ("auto", ''), ('auto', '')
+    icon = self.context.rptObj.ui.img(img, path="https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images",
+                                      align=align, width=width, height=height)
+    icon.css({"text-align": "center", "padding": "auto"})
+    icon.style.addCls("CssDivOnHoverBackgroundLight")
+    return icon
+
   def signin(self, text, size=(None, "px"), icon=None):
     """
 

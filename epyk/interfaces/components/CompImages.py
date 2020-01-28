@@ -9,7 +9,7 @@ class Images(object):
   def __init__(self, context):
     self.context = context
 
-  def img(self, text=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
+  def img(self, image=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
           profile=None, options=None):
     """
 
@@ -20,7 +20,7 @@ class Images(object):
     https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
     https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
-    :param text:
+    :param image:
     :param path:
     :param width:
     :param height:
@@ -29,7 +29,7 @@ class Images(object):
     :param profile:
     :param options:
     """
-    html_image = html.HtmlImage.Image(self.context.rptObj, text, path, align, htmlCode, width, height, profile, options or {})
+    html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
     self.context.register(html_image)
     return html_image
 
