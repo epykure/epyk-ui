@@ -728,9 +728,10 @@ class Modal(Html.Html):
   name, category, callFnc = 'Modal Popup',  'Container', 'modal'
   _grpCls = CssGrpContainers.CssGrpClassModal
 
-  def __init__(self, report, htmlObjs, action, method, helper):
+  def __init__(self, report, htmlObjs, helper):
     super(Modal, self).__init__(report, [])
     self.add_helper(helper)
+
     self.submit = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
     self.submit.inReport = False
     for htmlObj in htmlObjs:
