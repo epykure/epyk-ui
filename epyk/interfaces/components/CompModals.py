@@ -9,7 +9,12 @@ class Modal(object):
     self.context = context
 
   def __mandatory_js__(self, required_fields):
-    """"""
+    """
+    Tempoary function to allow action on missing mandatory fields
+    TODO: Check if necessary
+    :param required_fields: list of html Code that we need to check for when submit button is clicked
+    :return: js string
+    """
 
   def date(self, action, method, htmlCode="Current", helper=None):
     """
@@ -98,6 +103,30 @@ class Modal(object):
     col += modal.submit
     self.context.register(modal)
     return modal
+
+  def forms(self, html_objs, action, method, helper=None, htmlCodes=None):
+    """
+    Simple interface to create an html form within a modal
+    :param html_objs:
+    :param action:
+    :param method:
+    :param helper:
+    :return:
+    """
+    htmlCodes = [] if htmlCodes is None else htmlCodes
+    if not type(html_objs) == list:
+      html_objs = [html_objs]
+    form = html.HtmlContainer.Form(self.context.rptObj, html_objs, action, method, helper)
+    col = self.context.rptObj.ui.col([form]).css({'margin': '15%', 'padding': '20px',
+                                                     'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
+                                                     'width': 'auto', 'background-color': self.context.rptObj.theme.greys[0]})
+    modal = html.HtmlContainer.Modal(self.context.rptObj, [col], action, method, helper)
+    modal.submit = form.submit
+    col += modal.submit
+    modal.submit.click(self.context.rptObj.js.console.log('toto'))
+    self.context.register(modal)
+    return modal
+
 
   def objects(self, html_objs, action, method, htmlCodes=None, required_fields=None, helper=None):
     """
