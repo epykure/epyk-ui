@@ -728,13 +728,15 @@ class Modal(Html.Html):
   name, category, callFnc = 'Modal Popup',  'Container', 'modal'
   _grpCls = CssGrpContainers.CssGrpClassModal
 
-  def __init__(self, report, htmlObjs, helper):
+  def __init__(self, report, htmlObjs, submit, helper):
     super(Modal, self).__init__(report, [])
     self.add_helper(helper)
-    self.submit = report.ui.button("Submit").set_attrs({"type": 'submit'})
-    self.submit.inReport = False
+    self.doSubmit = submit
+    if self.doSubmit:
+      self.submit = report.ui.button("Submit").set_attrs({"type": 'submit'})
+      self.submit.inReport = False
     self.col = report.ui.col([]).css({'border': '1px solid %s' % report.theme.greys[4],
-                                                       'width': 'auto', 'background-color': report.theme.greys[0]})
+                                      'width': 'auto', 'background-color': report.theme.greys[0]})
     self.closeBtn = report.ui.texts.span('&times').css({'float': 'right', 'text-align': 'right', 'margin-right': '10px', 'font-size': '24px'})
     self.closeBtn.click(report.js.getElementById(self.htmlId).css({'display': "none"}))
     self.col += self.closeBtn
@@ -751,6 +753,8 @@ class Modal(Html.Html):
 
   def __str__(self):
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
+    if self.doSubmit:
+      self.col += self.submit
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
 
 
