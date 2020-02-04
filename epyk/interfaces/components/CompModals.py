@@ -89,5 +89,9 @@ class Modal(object):
       self.context.rptObj.js.addOnReady([self.__mandatory_js__(required_fields)])
     return modal
 
-  def disclaimer(self, text, helper=None):
-    pass
+  def disclaimer(self, text, submit=True, validation_text='AGREE', helper=None):
+    title = self.context.rptObj.ui.title('DISCLAIMER')
+    modal = html.HtmlContainer.Modal(self.context.rptObj, [title, text], submit, helper)
+    # if submit:
+    #   modal.submit.val = validation_text
+    self.context.register(modal)

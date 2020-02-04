@@ -4,7 +4,9 @@
 
 from epyk.core.Page import Report
 
-
+disc = '''This is not a production platform if you use this code in production\n
+YOU NEED TO BE AWARE OF THE IT GOVERNANCE\n
+Ciao bye'''
 rptObj = Report()
 # rptObj.theme = 'grey'
 # f = rptObj.ui.forms.inputs([
@@ -24,4 +26,6 @@ i2 = rptObj.ui.fields.input('test3', label='test2')
 # f + rptObj.ui.fields.today('test')
 rptObj.ui.modal.forms([d, i, i2], "http://127.0.0.1:5000", "POST")
 # rptObj.ui.modal.objects([d, i, i2], "POST", submit=False)
+disclaimer = rptObj.ui.texts.paragraph(disc)
+rptObj.ui.modal.disclaimer(disclaimer)
 rptObj.outs.html_file(name='test')
