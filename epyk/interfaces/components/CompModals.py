@@ -123,10 +123,10 @@ class Modal(object):
       html_objs = [html_objs]
     form = html.HtmlContainer.Form(self.context.rptObj, html_objs, action, method, helper)
     form += form.submit
-    col = self.context.rptObj.ui.col([form]).css({'margin': '15%', 'padding': '20px',
-                                                     'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
-                                                     'width': 'auto', 'background-color': self.context.rptObj.theme.greys[0]})
-    modal = html.HtmlContainer.Modal(self.context.rptObj, [col], helper)
+    # col = self.context.rptObj.ui.col([form]).css({'border': '1px solid %s' % self.context.rptObj.theme.greys[4],
+    #                                                  'width': 'auto', 'background-color': self.context.rptObj.theme.greys[0]})
+    modal = html.HtmlContainer.Modal(self.context.rptObj, [], helper)
+    modal += form
     modal.form = form
     self.context.register(modal)
     return modal

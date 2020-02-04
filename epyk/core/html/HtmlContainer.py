@@ -731,16 +731,21 @@ class Modal(Html.Html):
   def __init__(self, report, htmlObjs, helper):
     super(Modal, self).__init__(report, [])
     self.add_helper(helper)
-
-    self.submit = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
+    self.submit = report.ui.button("Submit").set_attrs({"type": 'submit'})
     self.submit.inReport = False
+    self.col = report.ui.col([]).css({'border': '1px solid %s' % report.theme.greys[4],
+                                                       'width': 'auto', 'background-color': report.theme.greys[0]})
+    closeBtn = report.ui.texts.span('&times').css({'float': 'right', 'text-align': 'right', 'margin-right': '10px', 'font-size': '24px'})
+    self.col += closeBtn
+    self.col.inReport = False
+    self.val.append(self.col)
     for htmlObj in htmlObjs:
       self.__add__(htmlObj)
 
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set too late
-    self.val.append(htmlObj)
+    self.col += htmlObj
     return self
 
   def __str__(self):
