@@ -90,7 +90,7 @@ class Modal(object):
     return modal
 
   def disclaimer(self, text, submit=True, validation_text='AGREE', helper=None):
-    title = self.context.rptObj.ui.title('DISCLAIMER')
+    title = self.context.rptObj.ui.title('DISCLAIMER').css({'text-align': 'center', 'display': 'inline-block', 'maring': 0})
     modal = html.HtmlContainer.Modal(self.context.rptObj, [title, text], submit, helper)
     # if submit:
     #   modal.submit.val = validation_text

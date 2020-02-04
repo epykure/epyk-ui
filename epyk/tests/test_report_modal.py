@@ -4,10 +4,11 @@
 
 from epyk.core.Page import Report
 
-disc = '''This is not a production platform if you use this code in production\n
-YOU NEED TO BE AWARE OF THE IT GOVERNANCE\n
-Ciao bye'''
 rptObj = Report()
+
+disc = '''This is not a production platform if you use this code in production%s 
+YOU NEED TO BE AWARE OF THE IT GOVERNANCE%s
+Ciao bye''' % (rptObj.ui.layouts.new_line(), rptObj.ui.layouts.new_line())
 # rptObj.theme = 'grey'
 # f = rptObj.ui.forms.inputs([
 #   {"label": "name", "htmlCode": "input"},

@@ -737,7 +737,9 @@ class Modal(Html.Html):
       self.submit.inReport = False
     self.col = report.ui.col([]).css({'border': '1px solid %s' % report.theme.greys[4],
                                       'width': 'auto', 'background-color': report.theme.greys[0]})
-    self.closeBtn = report.ui.texts.span('&times').css({'float': 'right', 'text-align': 'right', 'margin-right': '10px', 'font-size': '24px'})
+    self.closeBtn = report.ui.texts.span('&times', width='auto').css({'float': 'right', 'text-align': 'right',
+                                                                      'margin-right': '10px', 'font-size': '24px',
+                                                                      'z-index': 10})
     self.closeBtn.click(report.js.getElementById(self.htmlId).css({'display': "none"}))
     self.col += self.closeBtn
     self.col.inReport = False
