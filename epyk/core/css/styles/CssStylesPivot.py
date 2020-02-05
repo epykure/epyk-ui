@@ -6,55 +6,56 @@ CSS Style module for the Pivot components
 from epyk.core.css.styles import CssStyle
 
 
-class CssPivotHead(CssStyle.CssCls):
-  attrs = {'font-size': '8pt', 'padding': '5px'}
-  cssId = {'reference': '.pvtTable tr th'}
+class CssPivotHead(CssStyle.Style):
+  _attrs = {'font-size': '8pt', 'padding': '5px'}
+  classname = "pvtTable"
+  _selectors = {'child': "tr th"}
 
-  def customize(self, style, eventsStyles):
-    style.update({
-      'color': self.rptObj.theme.greys[-1],
-      'background-color': self.rptObj.theme.colors[0],
-      'border': '1px solid %s' % self.rptObj.theme.colors[3]})
-
-
-class CssPivotCells(CssStyle.CssCls):
-  attrs = {'font-size': '8pt', 'padding': '5px'}
-  cssId = {'reference': '.pvtTable tr td'}
-
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
-                  'border': '1px solid %s' % self.rptObj.theme.colors[3]})
-    eventsStyles['hover'].update({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[2]})
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[0],
+              'border': '1px solid %s' % self.rptObj.theme.colors[3]})
 
 
-class CssPivotAxis(CssStyle.CssCls):
-  attrs = {'background': 'red'}
-  cssId = {'reference': '.pvtAxisContainer li span.pvtAttr'}
+class CssPivotCells(CssStyle.Style):
+  _attrs = {'font-size': '8pt', 'padding': '5px'}
+  classname = "pvtTable"
+  _selectors = {'child': "tr td"}
 
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1],
-                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})
-
-
-class CssPivotFilterBox(CssStyle.CssCls):
-  cssId = {'reference': '.pvtAxisContainer'}
-
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.rptObj.theme.greys[1], 'background-color': self.rptObj.theme.colors[3],
-                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
+              'border': '1px solid %s' % self.rptObj.theme.colors[3]})
+    self.hover.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[2]})
 
 
-class CssPivotFilterVals(CssStyle.CssCls):
-  cssId = {'reference': '.pvtVals'}
+class CssPivotAxis(CssStyle.Style):
+  _attrs = {'background': 'red'}
+  classname = "pvtAxisContainer"
+  _selectors = {"child": "li span.pvtAttr"}
 
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.rptObj.theme.greys[1], 'background-color': self.rptObj.theme.colors[3],
-                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1],
+              'border': '1px solid %s' % self.rptObj.theme.colors[1]})
 
 
-class CssPivotFilterBoxPopUp(CssStyle.CssCls):
-  cssId = {'reference': '.pvtFilterBox'}
+class CssPivotFilterBox(CssStyle.Style):
+  classname = "pvtAxisContainer"
 
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.rptObj.theme.greys[1], 'background-color': self.rptObj.theme.colors[2],
-                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[1], 'background-color': self.rptObj.theme.colors[3],
+              'border': '1px solid %s' % self.rptObj.theme.colors[1]})
+
+
+class CssPivotFilterVals(CssStyle.Style):
+  classname = "pvtVals"
+
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[1], 'background-color': self.rptObj.theme.colors[3],
+              'border': '1px solid %s' % self.rptObj.theme.colors[1]})
+
+
+class CssPivotFilterBoxPopUp(CssStyle.Style):
+  classname = "pvtFilterBox"
+
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[1], 'background-color': self.rptObj.theme.colors[2],
+              'border': '1px solid %s' % self.rptObj.theme.colors[1]})

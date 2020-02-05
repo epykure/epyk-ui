@@ -8,103 +8,117 @@ from epyk.core.css.styles import CssStyle
 from epyk.core.css import Defaults as Defaults_css
 
 
-class CssTextBold(CssStyle.CssCls):
-  attrs = {'font-weight': 'bold'}
+class CssTextBold(CssStyle.Style):
+  _attrs = {'font-weight': 'bold'}
 
 
-class CssText(CssStyle.CssCls):
-  attrs = {'padding': 0, 'margin': 0}
+# class CssText(CssStyle.Style):
+#   _attrs = {'padding': 0, 'margin': 0}
 
 
-class CssFormula(CssStyle.CssCls):
+class CssFormula(CssStyle.Style):
   """
   CSS Style for the formulas component
   """
-  attrs = {'padding': 0, 'margin': 0}
-  focus = {'outline': 0, 'border': 'none', 'box-shadow': 'none'}
-  cssId = {'reference': ".math"}
+  _attrs = {'padding': 0, 'margin': 0}
+  _focus = {'outline': 0, 'border': 'none', 'box-shadow': 'none'}
+  classname = "math"
 
 
-class CssTitle1(CssStyle.CssCls):
-  attrs = {'padding': '0 0 5px 0', 'font-size': '24px', 'font-weight': 'bold', 'text-transform': 'uppercase',
-           'white-space': 'pre-wrap', 'border-bottom': '1px dashed black', 'border-width': '2px', 'margin-bottom': '5px'}
+class CssTitle1(CssStyle.Style):
+  _attrs = {'padding': '0 0 5px 0', 'font-weight': 'bold', 'text-transform': 'uppercase',
+            'white-space': 'pre-wrap', 'border-bottom': '1px dashed black', 'border-width': '2px',
+            'margin-bottom': '5px'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.greys[7], "border-color": self.rptObj.theme.greys[9]})
-
-
-class CssTitle2(CssStyle.CssCls):
-  attrs = {'padding': 0, 'font-size': '22px', 'margin-top': '5px', 'font-weight': 'bold', 'text-transform': 'uppercase',
-           'white-space': 'pre-wrap'}
-
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.colors[7]})
+  def customize(self):
+    self.css({"color": self.rptObj.theme.greys[7], "border-color": self.rptObj.theme.greys[9],
+              'font-size': '%s%s' % (Defaults_css.Font.header_size + 10, Defaults_css.Font.unit)})
 
 
-class CssTitle3(CssStyle.CssCls):
-  attrs = {'padding': 0, 'font-size': '16px', 'margin-top': '5px', 'font-weight': 'bold', 'text-transform': 'uppercase',
-           'white-space': 'pre-wrap'}
+class CssTitle2(CssStyle.Style):
+  _attrs = {'padding': 0, 'margin-top': '5px', 'font-weight': 'bold', 'text-transform': 'uppercase',
+            'white-space': 'pre-wrap'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.colors[7]})
-
-
-class CssTitle4(CssStyle.CssCls):
-  attrs = {'padding': 0, 'font-size': '14px', 'margin': '5px 0 0 0', 'font-weight': 'bold', 'width': '100%',
-           'white-space': 'pre-wrap'}
-
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.greys[5]})
+  def customize(self):
+    self.css({"color": self.rptObj.theme.colors[7],
+              'font-size': '%s%s' % (Defaults_css.Font.header_size + 8, Defaults_css.Font.unit)})
 
 
-class CssTitle(CssStyle.CssCls):
-  attrs = {'padding': 0, 'font-size': '14px', 'font-family': 'arial', 'margin-bottom': 0, 'white-space': 'pre-wrap',
-           'font-weight': 'bold'}
+class CssTitle3(CssStyle.Style):
+  _attrs = {'padding': 0, 'margin-top': '5px', 'font-weight': 'bold', 'text-transform': 'uppercase',
+            'white-space': 'pre-wrap'}
+
+  def customize(self):
+    self.css({"color": self.rptObj.theme.colors[7], 'font-family': Defaults_css.Font.family,
+              'font-size': '%s%s' % (Defaults_css.Font.header_size + 2, Defaults_css.Font.unit)})
 
 
-class CssNumberCenter(CssStyle.CssCls):
-  reqCssCls = [CssTitle]
-  attrs = {'width': '100%', 'text-align': 'center'}
+class CssTitle4(CssStyle.Style):
+  _attrs = {'padding': 0, 'margin': '5px 0 0 0', 'font-weight': 'bold', 'width': '100%', 'white-space': 'pre-wrap'}
+
+  def customize(self):
+    self.css({"color": self.rptObj.theme.greys[5],
+              'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit)})
 
 
-class CssMarkRed(CssStyle.CssCls):
-  attrs = {'background': 'none', 'font-size': '12px'}
+class CssTitle(CssStyle.Style):
+  _attrs = {'padding': 0, 'margin-bottom': 0, 'white-space': 'pre-wrap',
+            'font-weight': 'bold'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.danger[1]})
-
-
-class CssMarkBlue(CssStyle.CssCls):
-  attrs = {'background': 'none', 'font-weight': 'bold', 'font-size': '12px'}
-
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.colors[7]})
+  def customize(self):
+    self.css({'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit),
+              'font-family': Defaults_css.Font.family})
 
 
-class CssTextWithBorder(CssStyle.CssCls):
-  attrs = {'border': '1px solid', 'padding': '5px', 'margin': '10px'}
-  cssId = {'child': 'fieldset'}
+class CssNumberCenter(CssStyle.Style):
+  _attrs = {'width': '100%', 'text-align': 'center', 'padding': 0, 'margin-bottom': 0, 'white-space': 'pre-wrap',
+            'font-weight': 'bold'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"background-color": self.rptObj.theme.greys[0]})
-
-
-class CssCheckMark(CssStyle.CssCls):
-  attrs = {'text-align': 'center', 'display': 'inline-block',
-           'font-family': 'FontAwesome', 'height': '18px', 'width': '18px'}
-
-  def customize(self, style, eventsStyles):
-    style.update({"background-color": self.rptObj.theme.greys[0], "color": self.rptObj.theme.greys[9]})
-    eventsStyles['hover'].update({'color': 'white', 'background-color': self.rptObj.theme.colors[9]})
+  def customize(self):
+    self.css({'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit),
+              'font-family': Defaults_css.Font.family})
 
 
-class CssTextItem(CssStyle.CssCls):
-  attrs = {'cursor': 'pointer', 'width': '200px', 'padding': '5px 5px 5px 20px'}
+class CssMarkRed(CssStyle.Style):
+  _attrs = {'background': 'none'}
 
-  def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({"color": self.rptObj.theme.greys[-1], "background": self.rptObj.theme.colors[2]})
+  def customize(self):
+    self.css({"color": self.rptObj.theme.danger[1],
+              'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
 
 
-class CssTextNotSelectable(CssStyle.CssCls):
-  attrs = {'-moz-user-select': '-moz-none', "user-select": 'none', '-khtml-user-select': 'none',
-           '-webkit-user-select': 'none', '-ms-user-select': 'none'}
+class CssMarkBlue(CssStyle.Style):
+  _attrs = {'background': 'none', 'font-weight': 'bold'}
+
+  def customize(self):
+    self.css({"color": self.rptObj.theme.colors[7],
+              'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+
+
+class CssTextWithBorder(CssStyle.Style):
+  _attrs = {'border': '1px solid', 'padding': '5px', 'margin': '10px'}
+  _selectors = {'child': 'fieldset'}
+
+  def customize(self):
+    self.css({"background-color": self.rptObj.theme.greys[0]})
+
+
+class CssCheckMark(CssStyle.Style):
+  _attrs = {'text-align': 'center', 'display': 'inline-block',
+            'font-family': 'FontAwesome', 'height': '18px', 'width': '18px'}
+
+  def customize(self):
+    self.css({"background-color": self.rptObj.theme.greys[0], "color": self.rptObj.theme.greys[9]})
+    self.hover.css({'color': 'white', 'background-color': self.rptObj.theme.colors[9]})
+
+
+class CssTextItem(CssStyle.Style):
+  _attrs = {'cursor': 'pointer', 'width': '200px', 'padding': '5px 5px 5px 20px'}
+
+  def customize(self):
+    self.hover.css({"color": self.rptObj.theme.greys[-1], "background": self.rptObj.theme.colors[2]})
+
+
+class CssTextNotSelectable(CssStyle.Style):
+  _attrs = {'-moz-user-select': '-moz-none', "user-select": 'none', '-khtml-user-select': 'none',
+            '-webkit-user-select': 'none', '-ms-user-select': 'none'}

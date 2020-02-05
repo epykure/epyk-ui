@@ -52,7 +52,7 @@ class Buttons(object):
     b.css(badge_css)
     return button
 
-  def button(self, text=None, icon=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'),
+  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'),
              htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Standard button used in the framework

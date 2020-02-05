@@ -8,102 +8,91 @@ from epyk.core.css import Defaults as Defaults_css
 from epyk.core.css.styles import CssStyle
 
 
-class CssInput(CssStyle.CssCls):
+class CssInput(CssStyle.Style):
   """
   CSS Base style for the input components
   """
-  attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': '0', 'border-radius': '5px'}
-  focus = {'outline': 0}
+  _attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': 0, 'border-radius': '5px'}
+  _focus = {'outline': 0}
 
-  def customize(self, style, eventsStyles):
-    style.update({"background": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
-                  'font-family': Defaults_css.Font.family, 'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH,
-                  'line-height': '%spx' % Defaults_html.LINE_HEIGHT, 'border': '1px solid %s' % self.rptObj.theme.colors[0],
-                  'font-size': '%spx' % Defaults_css.Font.size})
-    eventsStyles['hover'].update({'color': self.rptObj.theme.success[1]})
+  def customize(self):
+    self.attrs.css({"background": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
+                    'font-family': Defaults_css.Font.family, 'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH,
+                    'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
+                    'border': '1px solid %s' % self.rptObj.theme.colors[0],
+                    'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+    self.hover.css({'color': self.rptObj.theme.success[1]})
 
 
-class CssInputRange(CssStyle.CssCls):
+class CssInputRange(CssStyle.Style):
   """
   CSS Style for the input range component
   """
-  attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'outline': 'none', 'opacity': 0.7,
-           '-webkit-transition': '.2s', 'transition': 'opacity .2s', 'cursor': 'pointer'}
-  hover = {'opacity': 1}
+  _attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'outline': 'none', 'opacity': 0.7,
+            '-webkit-transition': '.2s', 'transition': 'opacity .2s', 'cursor': 'pointer'}
+  _hover = {'opacity': 1}
 
-  def customize(self, style, eventsStyles):
-    style.update({"background": self.rptObj.theme.colors[0]})
+  def customize(self):
+    self.attrs.css({"background": self.rptObj.theme.colors[0]})
 
 
-class CssInputRangeThumb(CssStyle.CssCls):
+class CssInputRangeThumb(CssStyle.Style):
   """
   CSS Style for the thumb of the input range component
   """
   cssId = {'reference': 'input[type=range]::-webkit-slider-thumb'}
-  attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
+  _attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
+  classname = False
+  _selector = 'input[type=range]::-webkit-slider-thumb'
 
-  def customize(self, style, eventsStyles):
-    style.update({"background": self.rptObj.theme.success[1], 'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
-                  'height': '%spx' % Defaults_html.INPUTS_RANGE_THUMB})
-
-  @property
-  def classname(self):
-    return 'input[type=range]::-webkit-slider-thumb'
+  def customize(self):
+    self.attrs.css({"background": self.rptObj.theme.success[1], 'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
+                    'height': '%spx' % Defaults_html.INPUTS_RANGE_THUMB})
 
 
-class CssInputLabel(CssStyle.CssCls):
+class CssInputLabel(CssStyle.Style):
   """
   CSS Style for the label attached to an input component
   """
-  attrs = {'line-height': '1.5', 'margin-left': '10px'}
-  cssId = {'child': 'label'}
+  _attrs = {'line-height': '1.5', 'margin-left': '10px'}
+  _selectors = {'child': 'label'}
 
-  def customize(self, style, eventsStyles):
-    style.update({'font-family': Defaults_css.Font.family, 'font-size': '%spx' % Defaults_css.Font.size})
+  def customize(self):
+    self.attrs.css({'font-family': Defaults_css.Font.family,
+                    'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
 
 
-class CssInputInteger(CssStyle.CssCls):
+class CssInputInteger(CssStyle.Style):
   """
 
   """
   cssId = {'reference': 'input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button'}
-  attrs = {"-webkit-appearance": 'none', "margin": 0}
+  _attrs = {"-webkit-appearance": 'none', "margin": 0}
 
 
-class CssInputInt(CssStyle.CssCls):
-  """
-  CSS Style for the input integer component
-  """
-  cssId = {'child': 'input'}
-
-
-class CssInputText(CssStyle.CssCls):
+class CssInputText(CssStyle.Style):
   """
   CSS Style for the input text component (within a field object)
   """
-  attrs = {'margin-left': '10px'}
-  cssId = {'child': 'input'}
+  _attrs = {'margin-left': '10px'}
+  _selectors = {'child': 'input'}
 
 
-class CssInputTextArea(CssStyle.CssCls):
+class CssInputTextArea(CssStyle.Style):
   """
   CSS Style for the textarea component.
   """
-  attrs = {'resize': 'none', 'margin-bottom': '5px'}
-  focus = {'outline': 0}
+  _attrs = {'resize': 'none', 'margin-bottom': '5px'}
+  _focus = {'outline': 0}
 
-  def customize(self, style, eventsStyles):
-    style.update({"background-color": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
-                  'border': '1px solid %s' % self.rptObj.theme.colors[1]})
-    eventsStyles['hover'].update({'color': self.rptObj.theme.greys[-1]})
-
-
-class CssInputInValid(CssStyle.CssCls):
-  attrs = {'color': 'red'}
-  cssId = {'reference': 'input:invalid:not(:focus)'}
+  def customize(self):
+    self.css({"background-color": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
+              'border': '1px solid %s' % self.rptObj.theme.colors[1]})
+    self.hover.css.update({'color': self.rptObj.theme.greys[-1]})
 
 
-class CssInputValid(CssStyle.CssCls):
-  attrs = {'color': 'yellow', "background": "url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg)",
-           "background-size": "10px", "background-repeat": 'no-repeat', "background-position": "0"}
-  cssId = {'reference': 'input:valid'}
+class CssInputValid(CssStyle.Style):
+  _valid = {'color': 'red'}
+  _invalid = {'color': 'yellow', "background": "url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg)",
+            "background-size": "10px", "background-repeat": 'no-repeat', "background-position": "0"}
+

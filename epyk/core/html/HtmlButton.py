@@ -12,16 +12,12 @@ from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpCls
-from epyk.core.css.groups import CssGrpClsButton
+from epyk.core.css.categories import GrpClsButton
 
 
 class Button(Html.Html):
-  __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'bootstrap', 'jquery']
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Button', 'buttons', 'button'
-
-  # CSS Classes
-  _grpCls = CssGrpClsButton.CssClassButton
 
   def __init__(self, report, text, icon, size, width, height, htmlCode, tooltip, profile, options):
     super(Button, self).__init__(report, text, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
@@ -51,6 +47,12 @@ class Button(Html.Html):
   @property
   def _js__builder__(self):
     return "htmlObj.innerHTML = data"
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsButton.ClassButton(self)
+    return self._styleObj
 
   def disable(self, background_color=None, color=None):
     """
@@ -109,7 +111,7 @@ class Button(Html.Html):
     return self
 
   def __str__(self):
-    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.defined), self.val)
+    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
 
   @staticmethod
   def matchMarkDown(val):
@@ -138,7 +140,7 @@ class Checkbox(Html.Html):
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'bootstrap', 'jquery']
 
   # CSS Class
-  _grpCls = CssGrpClsButton.CssClassButtonCheckBox
+  #_grpCls = CssGrpClsButton.CssClassButtonCheckBox
 
   def __init__(self, rptObj, records, title, color, width, height, align, htmlCode, filters, tooltip, icon, options, profile):
     if rptObj.http.get(htmlCode) is not None:
@@ -348,10 +350,6 @@ class Checkbox(Html.Html):
 
 class CheckButton(Html.Html):
   name, category, callFnc = 'Check Button', 'Button', 'check'
-
-  # CSS Class
-  _grpCls = CssGrpCls.CssGrpClassBase
-
   def __init__(self, report, flag, tooltip, width, height, icon, label, htmlCode, options, profile):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                       heightUnit=height[1], profile=profile)
@@ -375,6 +373,12 @@ class CheckButton(Html.Html):
         htmlObj.append('<i class="fas fa-times" style="font-size:14px;margin-top:2px;margin-left:5px;color:%(red)s"></i>');
         htmlObj.parent().data('isChecked', false)
       }''' % {'green': self._report.theme.success[1], 'red': self._report.theme.danger[1]}
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
+    return self._styleObj
 
   # def click(self, jsFncs, allevents=True, isChecked=None):
   #   if allevents:
@@ -410,7 +414,7 @@ class CheckButton(Html.Html):
     #     })''' % {'jqId': self.dom.jquery.varId, 'htmlCode': self.htmlCode, 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'jsQueryData': "",
     #              'isChecked': ";".join(self.clickEvent['Y']), 'isNotChecked': ";".join(self.clickEvent['N']),
     #              'lightGrey': self.getColor('greys', 2), 'green': self.getColor('success', 1), 'red': self.getColor('danger', 1)})
-    return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.defined), self.input.html())
+    return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.input.html())
 
 
 class IconEdit(Html.Html):
@@ -430,7 +434,7 @@ class IconEdit(Html.Html):
     self.css({"margin": "5px 0", "float": position or 'left', 'cursor': 'pointer'})
 
   def __str__(self):
-    return "<span %s></span>" % (self.get_attrs(pyClassNames=self.defined))
+    return "<span %s></span>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
 class Buttons(Html.Html):
@@ -456,4 +460,4 @@ class Buttons(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.row])
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), str_div)
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)

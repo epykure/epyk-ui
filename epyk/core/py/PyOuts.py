@@ -71,14 +71,14 @@ class PyOuts(object):
 
     :return: A python dictionary with the HTML results
     """
-    if not content_only:
-      self._report.style.add('CssBody', cssRef='body')
-      self._report.style.add('CssBodyContent', htmlId='page_content')
-      self._report.style.add('CssBodyLoadingBack', htmlId='popup_loading_back')
-      self._report.style.add('CssBodyLoading', htmlId='popup_loading')
-    self._report.style.add('CssStandardLinks')
-    self._report.style.add('CssTextSelection', cssRef='::selection')
-    self._report.style.add('CssTextSelection', cssRef='::-moz-selection')
+    # if not content_only:
+    #   self._report.style.add('CssBody', cssRef='body')
+    #   self._report.style.add('CssBodyContent', htmlId='page_content')
+    #   self._report.style.add('CssBodyLoadingBack', htmlId='popup_loading_back')
+    #   self._report.style.add('CssBodyLoading', htmlId='popup_loading')
+    # self._report.style.add('CssStandardLinks')
+    # self._report.style.add('CssTextSelection', cssRef='::selection')
+    # self._report.style.add('CssTextSelection', cssRef='::-moz-selection')
     htmlParts = []
     for objId in self._report.content:
       if content_only and self._report.htmlItems[objId].name == "Nav Bar":
@@ -123,7 +123,7 @@ class PyOuts(object):
 
     importMng = Imports.ImportManager(online=True, report=self._report)
     results = {
-      'cssStyle': "%s%s" % (self._report._css.toCss(), self._report._cssText),
+      'cssStyle': "%s\n%s" % ("\n".join([str(c) for c in self._report._css.values()]), self._report._cssText),
       'cssContainer': ";".join(["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
       'content': "\n".join(htmlParts),
       'jsFrgs': ";".join(onloadParts),

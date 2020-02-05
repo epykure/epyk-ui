@@ -459,5 +459,5 @@ class Components(object):
     :return: A tuple with the size to be applied
     """
     if size[0] is None and size[1] == "px" and hasattr(self.rptObj, "style"):
-      size = (self.rptObj.style.defaults.font.size, self.rptObj.style.defaults.font.unit)
+      size = (self.rptObj.style.defaults.Font.size, self.rptObj.style.defaults.Font.unit)
     return size

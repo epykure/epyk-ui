@@ -18,7 +18,7 @@ except NameError:
 
 from epyk.core.js import Imports
 from epyk.interfaces import Components
-from epyk.core.css import Css
+from epyk.core.css.categories import CssGrpCls
 from epyk.core.css.themes import Theme
 
 from epyk.core import html
@@ -75,7 +75,7 @@ class Report(object):
 
   def __init__(self, run_options=None, appCache=None, sideBar=True, urlsApp=None, theme=None, context=None):
     #
-    self._css, self._ui, self._js, self._py, self._theme = None, None, None, None, None
+    self._css, self._ui, self._js, self._py, self._theme, self.__style = {}, None, None, None, None, None
     self._props, self._tags, self._header_obj, self.__import_manage = {}, None, None, None
 
     self.run = self.run_context(run_options if run_options is not None else {})
@@ -130,12 +130,12 @@ class Report(object):
     Documentation
     https://www.w3schools.com/css/default.asp
 
-    :rtype: Css.Css
+    :rtype: CssGrpCls.ClassPage
     :return: A Python CSS Object
     """
-    if self._css is None:
-      self._css = Css.Css(self)
-    return self._css
+    if self.__style is None:
+      self.__style = CssGrpCls.ClassPage(self)
+    return self.__style
 
   @property
   def theme(self):
@@ -288,20 +288,21 @@ class Report(object):
                     data=urlencode({'data': json.dumps(data)}).encode('utf-8')))
     response.read()
 
-  def getCss(self, clsName, ovrData=None):
-    """
-    Retrieve the CSS Class definition from the Python framework.
-    This will also allow the definition update by defining some overrides.
-    Overrides might be temporary changes in the class but the right practice will be to get them push to the core style framework
-    """
-    return self.style.cssCls(clsName, ovrData)
+  # def getCss(self, clsName, ovrData=None):
+  #   """
+  #   Retrieve the CSS Class definition from the Python framework.
+  #   This will also allow the definition update by defining some overrides.
+  #   Overrides might be temporary changes in the class but the right practice will be to get them push to the core style framework
+  #   """
+  #   return self.style.cssCls(clsName, ovrData)
 
-  def addCss(self, filename):
-    """
-    This will load your local CSS file when the report will be built. Then you will be able to use the new Styles in the different HTML Components
-    """
-    self.cssLocalImports.add("%s/css/%s" % (self.run.report_name, filename))
-    return self
+  # #
+  # def addCss(self, filename):
+  #   """
+  #   This will load your local CSS file when the report will be built. Then you will be able to use the new Styles in the different HTML Components
+  #   """
+  #   self.cssLocalImports.add("%s/css/%s" % (self.run.report_name, filename))
+  #   return self
 
   def addCssText(self, cssText):
     self._cssText = cssText

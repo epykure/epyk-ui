@@ -8,23 +8,24 @@ from epyk.core.css.styles import CssStyle
 from epyk.core.css import Defaults as Defaults_css
 
 
-class CssLabelContainer(CssStyle.CssCls):
-  attrs = {'display': 'block', 'position': 'relative', 'cursor': 'pointer', '-webkit-user-select': 'none',
-           '-moz-user-select': 'none', '-ms-user-select': 'none', 'user-select': 'none'}
+# class CssLabelContainer(CssStyle.Style):
+#   _attrs = {'display': 'block', 'position': 'relative', 'cursor': 'pointer', '-webkit-user-select': 'none',
+#             '-moz-user-select': 'none', '-ms-user-select': 'none', 'user-select': 'none'}
+#
+#   def customize(self):
+#     self.css({'font-family': Defaults_css.Font.family,
+#               'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+#
 
-  def customize(self, style, eventsStyles):
-    style.update({'font-family': Defaults_css.Font.family, 'font-size': '%spx' % Defaults_css.Font.size})
+class CssLabelContainerDisabled(CssStyle.Style):
+  _attrs = {'color': 'red', 'cursor': 'not-allowed'}
+
+  def customize(self):
+    self.css({'color': self.rptObj.theme.danger[1]})
 
 
-class CssLabelContainerDisabled(CssStyle.CssCls):
-  attrs = {'color': 'red', 'cursor': 'not-allowed'}
+class CssLabelCheckMarkHover(CssStyle.Style):
+  _selectors = {'child': "label"}
 
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.rptObj.theme.danger[1]})
-
-
-class CssLabelCheckMarkHover(CssStyle.CssCls):
-  cssId = {'child': "label"}
-
-  def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({'background-color': self.rptObj.theme.colors[5]})
+  def customize(self):
+    self.hover.css({'background-color': self.rptObj.theme.colors[5]})

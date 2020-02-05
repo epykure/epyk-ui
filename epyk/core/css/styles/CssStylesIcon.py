@@ -5,55 +5,63 @@ CSS Style module for the Icons components
 
 from epyk.core.css.styles import CssStyle
 
-
-class CssIcon(CssStyle.CssCls):
-  attrs = {'margin': '4px 10px', 'cursor': 'pointer'}
-
-  def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({"color": self.rptObj.theme.colors[5]})
+from epyk.core.css import Defaults as Defaults_css
 
 
-class CssStdIcon(CssStyle.CssCls):
-  attrs = {'display': 'inline-block', 'margin': '0 0 0 20px', 'font-size': '20px', 'cursor': 'pointer'}
+class CssIcon(CssStyle.Style):
+  _attrs = {'margin': '4px 10px', 'cursor': 'pointer'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.colors[5]})
-    eventsStyles['hover'].update({"color": self.rptObj.theme.colors[5]})
-
-
-class CssSmallIcon(CssStyle.CssCls):
-  attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'font-size': '10px', 'cursor': 'pointer'}
-
-  def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({"color": self.rptObj.theme.colors[5]})
+  def customize(self):
+    self.hover.css({"color": self.rptObj.theme.colors[5]})
 
 
-class CssSmallIconRigth(CssStyle.CssCls):
-  attrs = {'display': 'inline-block', 'margin': '0 0 0 5px', 'font-size': '10px', 'cursor': 'pointer', 'float': 'right'}
+class CssStdIcon(CssStyle.Style):
+  _attrs = {'display': 'inline-block', 'margin': '0 0 0 20px', 'cursor': 'pointer'}
 
-  def customize(self, style, eventsStyles):
-    eventsStyles['hover'].update({"color": self.rptObj.theme.colors[5]})
-
-
-class CssSmallIconRed(CssStyle.CssCls):
-  attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'font-size': '10px', 'cursor': 'pointer'}
-
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.danger[1]})
-    eventsStyles['hover'].update({"color": self.rptObj.theme.danger[1]})
+  def customize(self):
+    self.css({"color": self.rptObj.theme.colors[5],
+              'font-size': '%s%s' % (Defaults_css.Icon.big, Defaults_css.Icon.unit)})
+    self.hover.css({"color": self.rptObj.theme.colors[5]})
 
 
-class CssOutIcon(CssStyle.CssCls):
-  attrs = {'display': 'inline-block', 'margin': '0 0 0 20px', 'font-size': '15px', 'cursor': 'pointer'}
+class CssSmallIcon(CssStyle.Style):
+  _attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'cursor': 'pointer'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.danger[1]})
-    eventsStyles['hover'].update({"color": self.rptObj.theme.danger[1]})
+  def customize(self):
+    self.hover.css({"color": self.rptObj.theme.colors[5],
+                    'font-size': '%s%s' % (Defaults_css.Icon.small, Defaults_css.Icon.unit)})
 
 
-class CssBigIcon(CssStyle.CssCls):
+class CssSmallIconRight(CssStyle.Style):
+  _attrs = {'display': 'inline-block', 'margin': '0 0 0 5px', 'cursor': 'pointer', 'float': 'right'}
+
+  def customize(self):
+    self.hover.css({"color": self.rptObj.theme.colors[5],
+                    'font-size': '%s%s' % (Defaults_css.Icon.small, Defaults_css.Icon.unit)})
+
+
+class CssSmallIconRed(CssStyle.Style):
+  attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'cursor': 'pointer'}
+
+  def customize(self):
+    self.css({"color": self.rptObj.theme.danger[1],
+              'font-size': '%s%s' % (Defaults_css.Icon.small, Defaults_css.Icon.unit)})
+    self.hover.css({"color": self.rptObj.theme.danger[1]})
+
+
+class CssOutIcon(CssStyle.Style):
+  attrs = {'display': 'inline-block', 'margin': '0 0 0 20px', 'cursor': 'pointer'}
+
+  def customize(self):
+    self.css({"color": self.rptObj.theme.danger[1],
+              'font-size': '%s%s' % (Defaults_css.Icon.normal, Defaults_css.Icon.unit)})
+    self.hover.css({"color": self.rptObj.theme.danger[1]})
+
+
+class CssBigIcon(CssStyle.Style):
   attrs = {'display': 'inline-block', 'margin': '0 10px 0 10px', 'cursor': 'pointer'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.danger[1], 'font-size': self.fontSize})
-    eventsStyles['hover'].update({"color": self.rptObj.theme.danger[1]})
+  def customize(self):
+    self.css({"color": self.rptObj.theme.danger[1],
+              'font-size': '%s%s' % (Defaults_css.Icon.big, Defaults_css.Icon.unit)})
+    self.hover.css({"color": self.rptObj.theme.danger[1]})

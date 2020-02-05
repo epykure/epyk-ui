@@ -12,13 +12,12 @@ import collections
 import functools
 import logging
 
-from epyk.core.css import CssInternal
-from epyk.core.css import Properties
-from epyk.core.css.groups import CssGrpCls
-
 from epyk.core.js import JsUtils
 from epyk.core.js import Js
 from epyk.core.js.html import JsHtml
+
+from epyk.core.css.categories import CssGrpCls
+
 
 try:  # For python 3
   import urllib.request as urllib2
@@ -80,225 +79,6 @@ class Html(object):
   # mangling technique Python will make the change more difficult and easier to see
   reqJs, reqCss = [], []
   htmlCode, dataSrc, _code, inReport, builder_name = None, None, None, True, None
-
-  _grpCls = CssGrpCls.CssGrpClass
-
-  class _CssStyle(Properties.CssMixin):
-    def __init__(self, htmlObj):
-      self.htmlObj = htmlObj
-      self._def_styles = None
-      self.__common, self.__div, self.__chart = None, None, None
-
-    def get(self, css_attr=None):
-      """
-      Return the corresponding CSS Style
-
-      :param css_attr: Optional
-      """
-      if css_attr is None:
-        return self.htmlObj.attr['css']
-
-      return self.htmlObj.attr['css'].get(css_attr)
-
-    @property
-    def list(self):
-      """
-      Return a copy of the CSS class defined for a given component.
-      This will list all the classes which will be attached to the HTML container
-
-      The internal class name is defined using the dynamic prefix py_ in front of the classname
-
-      :return: A list of CSS class Name
-      """
-      return list(self.htmlObj.attr['class'])
-
-    def clear(self, all=False):
-      """
-      CSS Function to clear the pre defined styles
-
-      Clear all the CSS classes definition for this component (mainly the container).
-
-      :param all: Boolean. Default False. Remove all the class and the CSS style if true
-
-      :return: The Python Style attribute of the htmlObj to allow the chains
-      """
-      if all:
-        self.htmlObj.attr['css'] = {}
-      self.htmlObj.defined.clsMap = set([])
-      return self
-
-    def delete(self, cssNname):
-      """
-      CSS Function
-
-      Function to remove a predefined class attached to an HTML component.
-      This will not remove the CSS class from the factory. It will only remove the use in this object.
-
-      TODO: migrate everything to only use self.htmlObj.attr['class']
-
-      :param cssNname: The CSS classname (or class reference)
-      :return: The Python htmlObj
-      """
-      pyCssName = self.htmlObj._report.style.cssName(cssNname)
-      if pyCssName in self.htmlObj.attr['class']:
-        self.htmlObj.attr['class'].remove(pyCssName)
-      if cssNname in self.htmlObj.defined:
-        self.htmlObj.defined.remove(cssNname)
-      return self.htmlObj
-
-    def addCls(self, cssNames):
-      """
-      Add a class based on its name.
-
-      Example
-      cls_name = rptObj.style.anonymous_cls({"color": "red"})
-      rptObj.ui.text("test").style.addCls(cls_name)
-
-      :param cssName: The CSS Class name as a string
-
-      :return:
-      """
-      if not isinstance(cssNames, (list, set)):
-        cssNames = [cssNames]
-      for cssName in cssNames:
-        pyCssName = self.htmlObj._report.style.get(cssName)
-        self.htmlObj.attr['class'].add(cssName)
-        if pyCssName is not None:
-          self.htmlObj._report.style.cssStyles[pyCssName.classname] = pyCssName
-          self.htmlObj.defined.add(cssName)
-      return self
-
-    def cssCls(self, cssNname, attrs=None, eventAttrs=None, formatClsName=True, isMedia=False, allImportantAttrs=True):
-      """
-      CSS Function
-
-      Dedicated to replace the existing definition by a bespoke one only for an object of this class.
-      The way it work, the process will take a copy of the CSS object and then create a new one by adding the htmlId
-      in the class name.
-
-      Thus CSS properties can be overridden without impacting the all report
-
-      Documentation
-      https://www.w3schools.com/css/css_rwd_mediaqueries.asp
-
-      :param cssNname: The CSS classname (or class reference)
-      :param attrs: A dictionary with the main CSS attributes for the class
-      :param eventAttrs: A dictionary with the CSS Style for the events
-      :param formatClsName: Flag to change the classname to the internal convention for CSS classes in the framework
-      :param allImportantAttrs: Boolean. Default True. Change all the attributes to an important one
-
-      :return: The Python htmlObj
-      """
-      if attrs is None and eventAttrs is None:
-        if self.htmlObj._report.style.cssStyles.get(cssNname) is not None:
-          cssObj = self.htmlObj._report.style.cssStyles[cssNname]
-          self.htmlObj._report.style.add(cssObj.classname)
-          self.htmlObj.defined.add(cssObj.classname)
-        if formatClsName:
-          cssNname = self.htmlObj._report.style.cssName(cssNname)
-      else:
-        if cssNname in self.htmlObj.defined:
-          self.htmlObj.defined.remove(cssNname)
-        dervfCls = self.htmlObj._report.style.cssDerivCls(self.htmlObj.htmlId, cssNname, attrs, event_attrs=eventAttrs,
-                                                          force_reload=True, is_media=isMedia, all_important=allImportantAttrs)
-        self.htmlObj._report.style.add(dervfCls.classname)
-        self.htmlObj.defined.add(dervfCls.classname)
-      return self.htmlObj
-
-    def css(self, key, value=None):
-      """
-      CSS Function
-
-      Set the CSS Attributes to a HTML component.
-      This function is similar to the Jquery css function and it will accept any CSS Style defined by W3C.
-
-      https://www.w3schools.com/css/
-
-      Example:
-        - cssObj.css('color', 'red')
-        - cssObj.css({'color': 'red'})
-
-      :param key: The CSS Key definition or a dictionary with all the CSS definition
-      :param value: The CSS Value defined for a given attribute key (optional if key is a dictionary)
-      :rtype: Css
-      :return: The Python CSS Object
-      """
-      pixelCats = set(['font-size', 'width', 'height'])
-      cssVals = key if value is None and isinstance(key, dict) else {key: value}
-      for k, v in cssVals.items():
-        if isinstance(v, str):
-          self.htmlObj.attr.setdefault('css', {})[k] = v
-        elif v is not None:
-          if k in pixelCats and isinstance(v, int):
-            v = "%spx" % v
-          self.htmlObj.attr.setdefault('css', {})[k] = v
-      return self
-
-    def animation(self, effect=None, name=None, attrs=None, duration=0, delay=None, iteration=None, timing_fnc=None):
-      """
-      The @keyframes rule specifies the animation code.
-
-      The animation is created by gradually changing from one set of CSS styles to another.
-
-      Example
-      triangle.style.animation(effect=EffectsMoves.EffectsSpin(), duration=3)
-
-      Documentation
-      https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
-      https://www.w3schools.com/css/css3_animations.asp
-
-      :param effect: Effect Class.
-      :param name: String. Required. Defines the name of the animation.
-      :param attrs: String. Required. Percentage of the animation duration.
-      :param duration:
-      :param delay:
-      :param iteration:
-      :param timing_fnc:
-      """
-      name = self.htmlObj._report.style.keyframes(effect, name, attrs)
-      css_animation = {"animation-name": name, "animation-duration": "%ss" % duration}
-      if delay:
-        css_animation["animation-delay"] = "%ss" % delay
-      if iteration:
-        css_animation["animation-iteration-count"] = iteration
-      if timing_fnc is not None:
-        if timing_fnc not in ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] and not timing_fnc.startswith("cubic-bezier"):
-          raise Exception("%s missing from the list" % timing_fnc)
-
-        css_animation["animation-timing-function"] = timing_fnc
-      # Add the -webkit- prefix for capatibility with some browsers
-      safari_css = dict([("-webkit-%s" % k, v) for k, v in css_animation.items()])
-      css_animation.update(safari_css)
-      print(css_animation)
-      self.css(css_animation)
-      return self
-
-    @property
-    def commons(self):
-      """
-      All the defined commons styles
-      """
-      if self.__common is None:
-        self.__common = CssInternal.DefinedCommonStyles(self.htmlObj)
-      return self.__common
-
-    @property
-    def div(self):
-      """
-      All the defined Div styles
-      """
-      if self.__div is None:
-        self.__div = CssInternal.DefinedDivStyles(self.htmlObj)
-      return self.__div
-
-    @property
-    def chart(self):
-      """
-      All the defined Chart styles
-      """
-      if self.__chart is None:
-        self.__chart = CssInternal.DefinedChartStyles(self.htmlObj)
-      return self.__chart
 
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):
@@ -372,6 +152,12 @@ class Html(object):
     if dataSrc is not None:
       self.dataSrc = dataSrc
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = CssGrpCls.ClassHtml(self)
+    return self._styleObj
 
   @property
   def htmlId(self):
@@ -703,33 +489,6 @@ class Html(object):
 
     return self.val if not hasattr(self.val, "html") else self.val.html()
 
-  @property
-  def style(self):
-    """
-    CSS Functions
-
-    Derived CSS features for the HTML object. Those functions will only be applied on the style
-    of this HTML object. All the other styles loaded in the factory will not be impacted.
-
-    Example:
-    textObj.style.cssCls("CssText", {"background-color": 'yellow'})
-
-    :rtype: Html._CssStyle
-    :return: The Internal CSS Style Object
-    """
-    if self._styleObj is None:
-      self._styleObj = self._CssStyle(self)
-    return self._styleObj
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self._grpCls(self)
-    return self.pyStyle
-
   def move(self):
     """
     Move the component to this position in the page
@@ -877,7 +636,8 @@ class Html(object):
       else:
         cssClass = 'class="%s"' % classData
     elif pyClassNames is not None:
-      cssClass = self._report.style.getClsTag(pyClassNames.clsMap)
+      pyClsNames = [cls.classname if hasattr(cls, 'classname') else cls for cls in pyClassNames['main']]
+      cssClass = 'class="%s"' % " ".join(pyClsNames) if len(pyClsNames) > 0 else ""
     if withId:
       str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
       return str_tag.strip()
@@ -1099,11 +859,9 @@ class Html(object):
       self.helper.html()
     #if self.builder_name:
     #  self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    for cssStyle in self.defined.clsMap:
-      # Remove the . or # corresponding to the type of CSS reference
-      cssStyleObj = self._report.style.add(cssStyle)
-      if cssStyleObj is not None:
-        self.pyCssCls.add(cssStyleObj.classname)
+    for c in self.style.get_classes()['main']:
+      if hasattr(c, 'classname'):
+        self.pyCssCls.add(c.classname)
     str_result.append(str(self))
     return "".join(str_result)
 

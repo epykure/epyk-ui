@@ -6,116 +6,112 @@ CSS Style module for the Table components
 from epyk.core.css.styles import CssStyle
 
 
-class CssDataTable(CssStyle.CssCls):
-  attrs = {'border-collapse': 'collapse !IMPORTANT'}
+class CssDataTable(CssStyle.Style):
+  _attrs = {'border-collapse': 'collapse !IMPORTANT'}
 
-  def customize(self, style, eventsStyles):
-    style.update({'border': "1px solid %s !IMPORTANT" % self.rptObj.theme.greys[3]})
-    eventsStyles['hover'].update({'border': "1px solid %s !IMPORTANT" % self.rptObj.theme.success[1]})
-
-
-class CssDataTableHeader(CssStyle.CssCls):
-  cssId = {'child': 'thead'}
-
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.rptObj.theme.greys[0], "background": self.rptObj.theme.greys[-1], 'white-space': 'nowrap'})
+  def customize(self):
+    self.css({'border': "1px solid %s" % self.rptObj.theme.greys[3]}, important=True)
+    self.hover.css({'border': "1px solid %s" % self.rptObj.theme.success[1]}, important=True)
 
 
-class CssDataTableFooter(CssStyle.CssCls):
-  @property
-  def classname(self): return 'paginate_button'
+class CssDataTableHeader(CssStyle.Style):
+  _selectors = {'child': 'thead'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"color": "red !IMPORTANT", 'background-color': "%s !IMPORTANT" % self.rptObj.theme.colors[2]})
-
-
-class CssDataTableEven(CssStyle.CssCls):
-  cssId = {'child': 'tbody tr:nth-child(even)'}
-
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
-                  'border-top': "1px solid %s !IMPORTANT" % self.rptObj.theme.greys[0]})
-    eventsStyles['hover'].update({'border': "1px solid %s !IMPORTANT" % self.rptObj.theme.success[1],
-                                  'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[3]})
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[0], "background": self.rptObj.theme.greys[-1], 'white-space': 'nowrap'})
 
 
-class CssDataTableOdd(CssStyle.CssCls):
-  cssId = {'child': 'tbody tr:nth-child(odd)'}
+class CssDataTableFooter(CssStyle.Style):
+  _selector = 'paginate_button'
+  classname = False
 
-  def customize(self, style, eventsStyles):
-    style.update({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1],
-                  'border-top': "1px solid %s !IMPORTANT" % self.rptObj.theme.colors[1]})
-    eventsStyles['hover'].update({'border': "1px solid %s !IMPORTANT" % self.rptObj.theme.success[1],
-                                  'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[3]})
+  def customize(self):
+    self.css({"color": "red", 'background-color': "%s" % self.rptObj.theme.colors[2]}, important=True)
 
 
-class CssTableBasic(CssStyle.CssCls):
-  attrs = {'margin': '5px', 'border-collapse': 'collapse'}
+class CssDataTableEven(CssStyle.Style):
+  _selectors = {'child': 'tbody tr:nth-child(even)'}
+
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.greys[0],
+              'border-top': "1px solid %s !IMPORTANT" % self.rptObj.theme.greys[0]})
+    self.hover.css({'border': "1px solid %s !IMPORTANT" % self.rptObj.theme.success[1],
+                    'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[3]})
 
 
-class CssTableColumnSystem(CssStyle.CssCls):
-  attrs = {'margin': '5px', 'text-align': 'left', 'font-weight': 'bold'}
+class CssDataTableOdd(CssStyle.Style):
+  _selectors = {'child': 'tbody tr:nth-child(odd)'}
+
+  def customize(self):
+    self.css({'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[1],
+              'border-top': "1px solid %s !IMPORTANT" % self.rptObj.theme.colors[1]})
+    self.hover.css({'border': "1px solid %s !IMPORTANT" % self.rptObj.theme.success[1],
+                    'color': self.rptObj.theme.greys[-1], 'background-color': self.rptObj.theme.colors[3]})
 
 
-class CssTableColumnFixed(CssStyle.CssCls):
-  attrs = {'margin': '5px', 'text-align': 'left', 'font-weight': 'bold'}
+class CssTableBasic(CssStyle.Style):
+  _attrs = {'margin': '5px', 'border-collapse': 'collapse'}
 
 
-class CssTableNewRow(CssStyle.CssCls):
-  attrs = {'color': '#546472'}
+# class CssTableColumnFixed(CssStyle.Style):
+#   _attrs = {'margin': '5px', 'text-align': 'left', 'font-weight': 'bold'}
+#
+
+class CssTableNewRow(CssStyle.Style):
+  _attrs = {'color': '#546472'}
 
 
-class CssTableSelected(CssStyle.CssCls):
-  attrs = {'background-color': '#AEDAF8!important'}
+class CssTableSelected(CssStyle.Style):
+  _attrs = {'background-color': '#AEDAF8 !important'}
 
 
-class CssCellComment(CssStyle.CssCls):
-  attrs = {'margin': '0!important', 'padding': '2px 0 0 2px!important'}
+class CssCellComment(CssStyle.Style):
+  _attrs = {'margin': '0!important', 'padding': '2px 0 0 2px!important'}
 
 
-class CssCellSave(CssStyle.CssCls):
-  attrs = {'color': '#293846!important'}
+class CssCellSave(CssStyle.Style):
+  _attrs = {'color': '#293846!important'}
 
 
-class CssTdEditor(CssStyle.CssCls):
-  attrs = {'border-width': '1px', 'border-style': 'solid', 'text-align': 'left', 'height': '30px', 'padding': '5px',
-           'vertical-align': 'middle'}
+class CssTdEditor(CssStyle.Style):
+  _attrs = {'border-width': '1px', 'border-style': 'solid', 'text-align': 'left', 'height': '30px', 'padding': '5px',
+            'vertical-align': 'middle'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.colors[5], 'border-color': self.rptObj.theme.greys[5]})
-
-
-class CssTdDetails(CssStyle.CssCls):
-  before = {'content': "'\\f0fe'", 'font-family': "'Font Awesome 5 Free'", 'cursor': 'pointer', 'padding': '0 5px 0 0'}
-  cssId = {'child': 'td'}
+  def customize(self):
+    self.css({"color": self.rptObj.theme.colors[5], 'border-color': self.rptObj.theme.greys[5]})
 
 
-class CssTdDetailsShown(CssStyle.CssCls):
-  before = {'content': "'\\f146'", 'font-family': "'Font Awesome 5 Free'", 'cursor': 'pointer', 'padding': '0 5px 0 0'}
-  cssId = {'child': 'td'}
+class CssTdDetails(CssStyle.Style):
+  _before = {'content': "'\\f0fe'", 'font-family': "'Font Awesome 5 Free'", 'cursor': 'pointer', 'padding': '0 5px 0 0'}
+  _selectors = {'child': 'td'}
 
 
-class CssTdGridHeaderCols(CssStyle.CssCls):
-  attrs = {"border-bottom": '1px solid black', "margin": '0 1px'}
-  cssId = {'child': 'th:not(:first-child)'}
+class CssTdDetailsShown(CssStyle.Style):
+  _before = {'content': "'\\f146'", 'font-family': "'Font Awesome 5 Free'", 'cursor': 'pointer', 'padding': '0 5px 0 0'}
+  _selectors = {'child': 'td'}
 
 
-class CssTdGridNoHeaderCols(CssStyle.CssCls):
-  attrs = {"display": 'none'}
-  cssId = {'child': 'th:not(:first-child)'}
+class CssTdGridHeaderCols(CssStyle.Style):
+  _attrs = {"border-bottom": '1px solid black', "margin": '0 1px'}
+  _selectors = {'child': 'th:not(:first-child)'}
 
 
-class CssTdGridHeaderRows(CssStyle.CssCls):
-  attrs = {"text-align": 'left'}
-  cssId = {'child': 'td[name="row_header"]'}
+class CssTdGridNoHeaderCols(CssStyle.Style):
+  _attrs = {"display": 'none'}
+  _selectors = {'child': 'th:not(:first-child)'}
 
 
-class CssTdGridVals(CssStyle.CssCls):
-  cssId = {'child': 'td:not([name="row_header"])'}
-  attrs = {"padding": '3px'}
-  focus = {"outline": "0px solid transparent"}
+class CssTdGridHeaderRows(CssStyle.Style):
+  _attrs = {"text-align": 'left'}
+  _selectors = {'child': 'td[name="row_header"]'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"background-color": self.rptObj.theme.colors[0],
-                  "border-bottom": '1px solid %s' % self.rptObj.theme.greys[4]})
-    eventsStyles['focus'].update({"border-bottom": '1px solid %s' % self.rptObj.theme.success[1]})
+
+class CssTdGridVals(CssStyle.Style):
+  _selectors = {'child': 'td:not([name="row_header"])'}
+  _attrs = {"padding": '3px'}
+  _focus = {"outline": "0px solid transparent"}
+
+  def customize(self):
+    self.css({"background-color": self.rptObj.theme.colors[0],
+              "border-bottom": '1px solid %s' % self.rptObj.theme.greys[4]})
+    self.focus.css({"border-bottom": '1px solid %s' % self.rptObj.theme.success[1]})

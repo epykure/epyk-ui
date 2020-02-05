@@ -6,53 +6,52 @@ from epyk.core.css.styles import CssStyle
 from epyk.core.css import Defaults
 
 
-class CssBody(CssStyle.CssCls):
-  attrs = {'top': '0', 'margin': '0 20px 0 20px'}
+class CssBody(CssStyle.Style):
+  _attrs = {'top': 0, 'margin': '0 20px 0 20px'}
   cssId = {'tag': 'body'}
 
-  def customize(self, style, eventsStyles):
+  def customize(self):
     if isinstance(Defaults.BACKGROUND, tuple):
-      bgColor = self.rptObj.theme.greys[0]
-      if bgColor != '#000000':
-        bgColor = self.rptObj.theme.greys[2]
+      bg_color = self.rptObj.theme.greys[0]
+      if bg_color != '#000000':
+        bg_color = self.rptObj.theme.greys[2]
     else:
-      bgColor = Defaults.BACKGROUND
-    style.update({"background-color": bgColor, "color": self.rptObj.theme.greys[9],
-                  'font-family': self.fontFamily, 'font-size': self.fontSize})
+      bg_color = Defaults.BACKGROUND
+    self.css({"background-color": bg_color, "color": self.rptObj.theme.greys[9], 'font-family':
+      Defaults.Font.family, 'font-size': "%s%s" % (Defaults.Font.size, Defaults.Font.unit)})
 
 
-class CssTextSelection(CssStyle.CssCls):
-  def customize(self, style, eventsStyles):
-    style.update({"background": self.rptObj.theme.success[0]})
+class CssTextSelection(CssStyle.Style):
+  def customize(self):
+    self.css({"background": self.rptObj.theme.success[0]})
 
 
-class CssBodyContent(CssStyle.CssCls):
-  attrs = {'margin-top': '10px', 'padding': '5px'}
+class CssBodyContent(CssStyle.Style):
+  _attrs = {'margin-top': '10px', 'padding': '5px'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"background-color": self.rptObj.theme.greys[0], "border-radius": "5px",
-                  "border": '1px solid %s' % self.rptObj.theme.greys[3]})
+  def customize(self):
+    self.css({"background-color": self.rptObj.theme.greys[0], "border-radius": "5px",
+              "border": '1px solid %s' % self.rptObj.theme.greys[3]})
     if Defaults.BODY_CONTAINER is not None:
-      style.update(Defaults.BODY_CONTAINER)
+      self.css(Defaults.BODY_CONTAINER)
 
 
-class CssBodyLoadingBack(CssStyle.CssCls):
-  attrs = {'text-align': 'center', 'top': '0', 'left': '0', 'width': '100%', 'padding-top': '20%', 'height': '100%',
-           'z-index': '295', 'position': 'fixed', 'opacity': '0.5', 'filter': 'alpha(opacity=50)'}
+class CssBodyLoadingBack(CssStyle.Style):
+  _attrs = {'text-align': 'center', 'top': 0, 'left': 0, 'width': '100%', 'padding-top': '20%', 'height': '100%',
+            'z-index': 295, 'position': 'fixed', 'opacity': 0.5, 'filter': 'alpha(opacity=50)'}
 
-  def customize(self, style, eventsStyles):
-    style.update({"background-color": self.rptObj.theme.greys[5]})
-
-
-class CssBodyLoading(CssStyle.CssCls):
-  attrs = {'text-align': 'center', 'top': '0', 'left': '0', 'width': '100%', 'position': 'fixed', 'padding-top': '10%',
-           'height': '100%', 'display': 'none', 'z-index': '300'}
-
-  def customize(self, style, eventsStyles):
-    style.update({"color": self.rptObj.theme.greys[9]})
+  def customize(self):
+    self.css({"background-color": self.rptObj.theme.greys[5]})
 
 
-class CssNotSelect(CssStyle.CssCls):
-  attrs = {"-webkit-touch-callout": 'none', "user-select": 'none',
-           "-webkit-user-select": 'none', "-khtml-user-select": 'none',
-           "-moz-user-select": 'none', "-ms-user-select": 'none'}
+class CssBodyLoading(CssStyle.Style):
+  _attrs = {'text-align': 'center', 'top': 0, 'left': 0, 'width': '100%', 'position': 'fixed', 'padding-top': '10%',
+            'height': '100%', 'display': 'none', 'z-index': 300}
+
+  def customize(self):
+    self.css({"color": self.rptObj.theme.greys[9]})
+
+
+class CssNotSelect(CssStyle.Style):
+  _attrs = {"-webkit-touch-callout": 'none', "user-select": 'none', "-webkit-user-select": 'none',
+            "-khtml-user-select": 'none', "-moz-user-select": 'none', "-ms-user-select": 'none'}

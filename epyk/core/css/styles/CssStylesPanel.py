@@ -19,8 +19,8 @@ from epyk.core.css.styles import CssStyle
 """
 
 
-class CssPanelArrowDown(CssStyle.CssCls):
-  after = {"content": '" "', "border-left": "15px solid transparent",
+class CssPanelArrowDown(CssStyle.Style):
+  _after = {"content": '" "', "border-left": "15px solid transparent",
            "border-right": "15px solid transparent",
            "position": "relative",
            #"top": "25px",
@@ -29,8 +29,8 @@ class CssPanelArrowDown(CssStyle.CssCls):
            #"right": '15px'
            }
 
-  def customize(self, style, eventsStyles):
-    eventsStyles['after'].update({"border-top": "15px solid %s" % self.rptObj.theme.success[1]})
+  def customize(self):
+    self.after.css({"border-top": "15px solid %s" % self.rptObj.theme.success[1]})
 
 """
 .meow {
@@ -52,13 +52,13 @@ class CssPanelArrowDown(CssStyle.CssCls):
 """
 
 
-class CssPanelArrowUp(CssStyle.CssCls):
-  after = {"content": '" "', "border-left": "15px solid transparent",
+class CssPanelArrowUp(CssStyle.Style):
+  _after = {"content": '" "', "border-left": "15px solid transparent",
            "border-right": "15px solid transparent",
            "position": "relative",
            "width": "10px", "left": "37px",
            "display": "block", "bottom": '74px'
            }
 
-  def customize(self, style, eventsStyles):
-    eventsStyles['after'].update({"border-bottom": "15px solid %s" % self.rptObj.theme.success[1]})
+  def customize(self):
+    self.after.css({"border-bottom": "15px solid %s" % self.rptObj.theme.success[1]})

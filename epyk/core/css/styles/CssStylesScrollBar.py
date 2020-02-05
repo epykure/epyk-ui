@@ -35,36 +35,28 @@ Right
 from epyk.core.css.styles import CssStyle
 
 
-class CssScrollBar(CssStyle.CssCls):
-  attrs = {"width": "14px", "height": "14px"}
-  cssId = {'reference': '::-webkit-scrollbar'}
+class CssScrollBar(CssStyle.Style):
+  _attrs = {"width": "14px", "height": "14px"}
+  _selector = '::-webkit-scrollbar'
 
 
-class CssScrollBarTrack(CssStyle.CssCls):
-  attrs = {"background": "#303030",
-           "border": "solid 2px rgba(236, 0,0 , 0.5)"}
-  cssId = {'reference': '::-webkit-scrollbar-track'}
+class CssScrollBarTrack(CssStyle.Style):
+  _attrs = {"background": "#303030", "border": "solid 2px rgba(236, 0,0 , 0.5)"}
+  _selector = '::-webkit-scrollbar-track'
 
 
-class CssScrollBarTrackThumb(CssStyle.CssCls):
-  attrs = {"background": "#ffcf17"}
-  cssId = {'reference': '::-webkit-scrollbar-thumb'}
+class CssScrollBarTrackThumb(CssStyle.Style):
+  _attrs = {"background": "#ffcf17"}
+  _hover = {"background": "green"}
+  _active = {"background": "green"}
+
+  _selector = "::-webkit-scrollbar-thumb"
 
 
-class CssScrollBarTrackThumbHover(CssStyle.CssCls):
-  attrs = {"background": "green"}
-  cssId = {'reference': '::-webkit-scrollbar-thumb:hover'}
-
-
-class CssScrollBarTrackThumbActive(CssStyle.CssCls):
-  attrs = {"background": "green"}
-  cssId = {'reference': '::-webkit-scrollbar-thumb:active'}
-
-
-class CssScrollBarTrackThumbHorizontal(CssStyle.CssCls):
-  attrs = {
-    "border-right": "solid 2px rgba(33,33,33,0.5)",
-    "border-left": "solid 2px rgba(33,33,33,0.5)",
-           }
-  cssId = {'reference': '::-webkit-scrollbar-thumb:horizontal'}
+# class CssScrollBarTrackThumbHorizontal(CssStyle.Style):
+#   attrs = {
+#     "border-right": "solid 2px rgba(33,33,33,0.5)",
+#     "border-left": "solid 2px rgba(33,33,33,0.5)",
+#            }
+#   cssId = {'reference': '::-webkit-scrollbar-thumb:horizontal'}
 

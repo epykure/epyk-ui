@@ -25,3 +25,4 @@ from . import Header
 
 from . import tables
 from . import graph
+from . import Defaults as Defaults_html
