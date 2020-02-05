@@ -12,7 +12,7 @@ from epyk.core.html import Defaults
 from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsImage
+from epyk.core.css.categories import CssGrpClsImage
 
 
 class Image(Html.Html):

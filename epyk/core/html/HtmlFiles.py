@@ -9,8 +9,8 @@ import zipfile
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsFile
-from epyk.core.css.groups import CssGrpClsButton
+from epyk.core.css.categories import CssGrpClsFile
+from epyk.core.css.categories import GrpClsButton
 
 
 class DownloadMemoryZip(Html.Html):
@@ -22,7 +22,7 @@ class DownloadMemoryZip(Html.Html):
   name, category = 'Memory Files', 'System'
   builder_name = False
   # CSS Classes
-  _grpCls = CssGrpClsButton.CssClassButton
+  #_grpCls = CssGrpClsButton.CssClassButton
 
   def __init__(self, report, vals, fileName, cssCls, cssAttr, profile):
     super(DownloadMemoryZip, self).__init__(report, vals,  cssCls, cssAttr, profile=profile)

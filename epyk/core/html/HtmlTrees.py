@@ -5,7 +5,7 @@ Wrapper to the HTML tree components
 from epyk.core.html import HtmlList
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsList
+from epyk.core.css.categories import CssGrpClsList
 
 
 class OptionsTree(object):

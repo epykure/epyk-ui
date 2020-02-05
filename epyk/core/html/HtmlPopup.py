@@ -6,7 +6,7 @@
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsInput
+from epyk.core.css.categories import CssGrpClsInput
 
 
 class Popup(Html.Html):

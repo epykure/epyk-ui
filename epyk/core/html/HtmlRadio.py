@@ -2,11 +2,10 @@
 Module for the HTML radio components
 """
 
-
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsList
+from epyk.core.css.categories import CssGrpClsList
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
@@ -59,7 +58,7 @@ class Radio(Html.Html):
     return self
 
   def __str__(self):
-    row = self._report.ui.layouts.grid(self.val)
+    row = self._report.ui.layouts.div(self.val)
     row.css({"width": 'none'})
     row.inReport = False
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.defined), row.html(), self.helper)
@@ -70,9 +69,9 @@ class Switch(Html.Html):
   name, category, callFnc = 'Switch Buttons', 'Buttons', 'switch'
   _grpCls = CssGrpClsList.CssClassSwitch
 
-  def __init__(self, report, recordSet, label, color, size, width, height, htmlCode, profile):
+  def __init__(self, report, records, label, color, size, width, height, htmlCode, profile):
     self.width, self.jsChange, self.size = width[0], '', size
-    super(Switch, self).__init__(report, recordSet, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
+    super(Switch, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1], profile=profile)
     self.add_label(label) # add for
     self._clicks = {'on': [], 'off': []}
@@ -83,7 +82,7 @@ class Switch(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      if (data.off == data.checked) {htmlObj.querySelector("input").checked = false; htmlObj.querySelector("p").innerHTML = data.off}
+      if (data.off == data.checked){htmlObj.querySelector("input").checked = false; htmlObj.querySelector("p").innerHTML = data.off}
       else {htmlObj.querySelector("input").checked = true; htmlObj.querySelector("p").innerHTML = data.on}'''
 
   def click(self, onFncs=None, offFncs=None):

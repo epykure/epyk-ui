@@ -19,8 +19,8 @@ from epyk.core.js.html import JsHtml
 # The list of CSS classes
 from epyk.core.css.styles.CssStylesDivComms import CssContentEditable
 
-from epyk.core.css.groups import CssGrpCls
-from epyk.core.css.groups import CssGrpClsText
+from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import CssGrpClsText
 
 
 class Label(Html.Html):

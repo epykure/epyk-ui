@@ -6,7 +6,7 @@ from epyk.core.html import Html
 from epyk.core.html import Options
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsList
+from epyk.core.css.categories import CssGrpClsList
 
 #
 from epyk.core.js.packages import JsQuery

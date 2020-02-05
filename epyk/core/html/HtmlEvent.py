@@ -16,11 +16,11 @@ from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpCls
-from epyk.core.css.groups import CssGrpClsText
-from epyk.core.css.groups import CssGrpClsImage
-from epyk.core.css.groups import CssGrpClsList
-from epyk.core.css.groups import CssGrpClsTable
+from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import CssGrpClsText
+from epyk.core.css.categories import CssGrpClsImage
+from epyk.core.css.categories import CssGrpClsList
+from epyk.core.css.categories import CssGrpClsTable
 
 
 class ProgressBar(Html.Html):

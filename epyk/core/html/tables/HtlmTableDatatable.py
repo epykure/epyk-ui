@@ -8,7 +8,7 @@ from epyk.core.html import Html
 from epyk.core.js.packages import JsDatatable
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsTable
+from epyk.core.css.categories import CssGrpClsTable
 
 
 # The object with all the different configurations available for the table interface

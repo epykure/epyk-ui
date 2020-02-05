@@ -10,7 +10,7 @@ from epyk.core.html import Html
 from epyk.core.js.objects import JsPivotFncs
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsTable
+from epyk.core.css.categories import CssGrpClsTable
 
 extensions = {
   'sub-total': {'jsImports': ['pivot-sub-total']},

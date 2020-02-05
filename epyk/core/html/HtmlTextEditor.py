@@ -8,8 +8,8 @@ from epyk.core.js import JsUtils
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpCls
-from epyk.core.css.groups import CssGrpClsText
+from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import CssGrpClsText
 
 
 class OptionsConsole(object):

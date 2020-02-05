@@ -8,9 +8,9 @@ import json
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpCls
-from epyk.core.css.groups import CssGrpClsText
-from epyk.core.css.groups import CssGrpClsTable
+from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import CssGrpClsText
+from epyk.core.css.categories import CssGrpClsTable
 
 
 class UpDown(Html.Html):

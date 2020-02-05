@@ -11,7 +11,7 @@ import logging
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.categories import CssGrpCls
 
 
 class HtmlNavBar(Html.Html):

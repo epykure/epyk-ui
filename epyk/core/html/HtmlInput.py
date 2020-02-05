@@ -15,8 +15,8 @@ from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsInput
-from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.categories import CssGrpClsInput
+from epyk.core.css.categories import CssGrpCls
 
 
 class Output(Html.Html):

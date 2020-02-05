@@ -12,7 +12,7 @@ import datetime
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsText
+from epyk.core.css.categories import CssGrpClsText
 
 from epyk.core.js.Imports import requires
 sqlalchemy = requires("sqlalchemy", reason='Missing Package', install='sqlalchemy', source_script=__file__)

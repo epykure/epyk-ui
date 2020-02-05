@@ -13,12 +13,11 @@ from epyk.core.css import Defaults
 
 # The list of CSS classes
 from epyk.core.css.styles import CssStyle
-from epyk.core.css.groups import CssGrpCls, CssGrpContainers
+from epyk.core.css.categories import CssGrpCls, CssGrpContainers
 
 
 class Panel(Html.Html):
   name, category, callFnc = 'Panel', 'Layouts', 'panel'
-  builder_name = False
 
   def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, profile):
     if isinstance(htmlObj, list) and htmlObj:
@@ -52,7 +51,6 @@ class Panel(Html.Html):
 class PanelSplit(Html.Html):
   __reqJs, __reqCss = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Panel Split', 'Layouts', 'panelsplit'
-  builder_name = False
 
   def __init__(self, report, width, height, left_width, left_obj, right_obj, resizable, helper, profile):
     super(PanelSplit, self).__init__(report, None, width=width[0], widthUnit=width[1], height=height[0],
@@ -117,10 +115,9 @@ class PanelSlide(Panel):
 class Div(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['jquery']
   name, category, callFnc = 'Simple Container', 'Layouts', 'div'
-  builder_name = False
 
   # CSS Class
-  _grpCls = CssGrpCls.CssGrpClassBase
+  #_grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, htmlObj, label, color, size, width, icon, height, editable, align, padding, htmlCode, tag,
                helper, profile):
@@ -201,7 +198,6 @@ class Div(Html.Html):
 
 class Row(Html.Html):
   name, category, callFnc = 'Row', 'Layouts', 'row'
-  builder_name = False
 
   def __init__(self, report, htmlObjs, width, height, data, align, valign, colsWith, closable, resizable, titles,
                helper, profile):
@@ -273,7 +269,6 @@ class Row(Html.Html):
 
 class Col(Html.Html):
   name, category, callFnc = 'Column', 'Layouts', 'col'
-  builder_name = False
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
     self.position, self.htmlMaps, self.rows_css, self.row_css_dflt = position, {}, {}, {}
@@ -349,7 +344,6 @@ class Col(Html.Html):
 class Grid(Html.Html):
   cssCls = ['container-fluid']
   name, category, callFnc = 'Grid', 'Layouts', 'grid'
-  builder_name = False
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
 
   def __init__(self, report, htmlObjs, width, height, colsDim, colsAlign, noGlutters, align, helper, profile):
@@ -592,7 +586,7 @@ class IFrame(Html.Html):
   name, category, callFnc = 'IFrame', 'Container', 'iframe'
 
   # CSS Class
-  _grpCls = CssGrpCls.CssGrpClassBase
+  #_grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, url, width, height, helper, profile):
     super(IFrame, self).__init__(report, url, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
@@ -700,7 +694,7 @@ class IconsMenu(Html.Html):
 
 class Form(Html.Html):
   name, category, callFnc = 'Generic Form', 'Forms', 'form'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  #_grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, htmlObjs, action, method, helper):
     super(Form, self).__init__(report, [])

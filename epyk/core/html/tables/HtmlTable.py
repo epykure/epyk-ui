@@ -7,7 +7,7 @@ import json
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsTable
+from epyk.core.css.categories import CssGrpClsTable
 
 
 class Row(Html.Html):

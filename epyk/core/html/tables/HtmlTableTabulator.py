@@ -9,7 +9,7 @@ from epyk.core.html import Html
 from epyk.core.js.packages import JsTabulator
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsTable
+from epyk.core.css.categories import CssGrpClsTable
 
 
 class DataTabulator(Html.Html):

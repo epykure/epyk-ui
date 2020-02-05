@@ -8,7 +8,7 @@ from epyk.core.html import Html
 from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.categories import CssGrpCls
 
 
 class DatePicker(Html.Html):

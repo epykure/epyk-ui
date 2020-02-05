@@ -8,7 +8,7 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.html.entities import EntHtml4
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.categories import CssGrpCls
 
 
 class Hr(Html.Html):

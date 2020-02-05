@@ -8,7 +8,6 @@ from epyk.core.html import Html
 
 class HtmlGeneric(Html.Html):
   category, name = 'Tags', 'tag'
-  builder_name = False
 
   def __init__(self, report, tag, text, size, width, height, htmlCode, tooltip, profile):
     self.tag = tag
@@ -24,7 +23,6 @@ class HtmlGeneric(Html.Html):
 
 class HtmlComment(Html.Html):
   category, name = 'Tags', 'comment'
-  builder_name = False
 
   def __str__(self):
     return '<!--%s-->' % self.val
