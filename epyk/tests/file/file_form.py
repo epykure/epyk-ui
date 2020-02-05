@@ -45,6 +45,11 @@ b.click([
 #popup = rptObj.ui.layouts.popup(rptObj.ui.title('Test'), color="red")
 #popup + rptObj.ui.texts.paragraph('Test')
 
+rptObj.ui.forms.input("", '', "POST")
+
+# popup = rptObj.ui.layouts.popup(rptObj.ui.title('Test'), color="red")
+# popup + rptObj.ui.texts.paragraph('Test')
+
 print(rptObj.outs.html_file(path=test_statics.OUTPUT_PATHS, name="report_form"))
 
 

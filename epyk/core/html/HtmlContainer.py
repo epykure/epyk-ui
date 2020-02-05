@@ -728,22 +728,35 @@ class Modal(Html.Html):
   name, category, callFnc = 'Modal Popup',  'Container', 'modal'
   _grpCls = CssGrpContainers.CssGrpClassModal
 
-  def __init__(self, report, htmlObjs, action, method, helper):
+  def __init__(self, report, htmlObjs, submit, helper):
     super(Modal, self).__init__(report, [])
     self.add_helper(helper)
-    self.submit = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
-    self.submit.inReport = False
+    self.doSubmit = submit
+    if self.doSubmit:
+      self.submit = report.ui.button("Submit").set_attrs({"type": 'submit'})
+      self.submit.inReport = False
+    self.col = report.ui.col([]).css({'border': '1px solid %s' % report.theme.greys[4],
+                                      'width': 'auto', 'background-color': report.theme.greys[0]})
+    self.closeBtn = report.ui.texts.span('&times', width='auto').css({'float': 'right', 'text-align': 'right',
+                                                                      'margin-right': '10px', 'font-size': '24px',
+                                                                      'z-index': 10})
+    self.closeBtn.click(report.js.getElementById(self.htmlId).css({'display': "none"}))
+    self.col += self.closeBtn
+    self.col.inReport = False
+    self.val.append(self.col)
     for htmlObj in htmlObjs:
       self.__add__(htmlObj)
 
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set too late
-    self.val.append(htmlObj)
+    self.col += htmlObj
     return self
 
   def __str__(self):
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
+    if self.doSubmit:
+      self.col += self.submit
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
 
 

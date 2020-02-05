@@ -81,6 +81,7 @@ rptObj.ui.button("test").click([
   rptObj.js.window.toggleInterval(rptObj.js.console.log('ok'), 'test', 400),
 ])
 
+from datetime import datetime
 
 s = rptObj.ui.select(["A", "B", "C"], label="label", selected="C", multiple=True,
                       options={"title": "ttle", 'showTick': True, 'maxOptions': 2})

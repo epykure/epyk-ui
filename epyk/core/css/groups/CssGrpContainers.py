@@ -11,8 +11,8 @@ class CssGrpClassModal(object):
   Set attributes to defaults but will change in the future
   """
 
-  css_div_modal = CssStylesDiv.CssDivModal
-  __map, __alt_map = ['CssDivModal'], []
+  css_div_modal = CssStylesDiv.CssDivModalTest #CssDivModal
+  __map, __alt_map = ['CssDivModalTest'], []
 
 
 class CssGrpClassModalContent(object):
