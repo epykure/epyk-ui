@@ -1,0 +1,94 @@
+"""
+
+"""
+
+from epyk.core.css.catalogs import Catalog
+
+from epyk.core.css.styles import CssStylesHr
+from epyk.core.css.styles import CssStylesCommon
+from epyk.core.css.styles import CssStylesPanel
+from epyk.core.css.styles import CssStylesDivMenuBars
+from epyk.core.css.styles import CssStylesSearch
+from epyk.core.css.styles import CssStylesScrollBar
+
+
+class CatalogLayout(Catalog.CatalogGroup):
+  def hr(self):
+    """  """
+    return self._set_class(CssStylesHr.CssHr)
+
+  def body(self):
+    """  """
+    return self._set_class(CssStylesCommon.CssBody)
+
+  def body_content(self):
+    """  """
+    return self._set_class(CssStylesCommon.CssBodyContent)
+
+  def loading(self):
+    """  """
+    return self._set_class(CssStylesCommon.CssBodyLoadingBack)
+
+  def selection(self):
+    """  """
+    return self._set_class(CssStylesCommon.CssTextSelection)
+
+  def panel_arrow_down(self):
+    """  """
+    return self._set_class(CssStylesPanel.CssPanelArrowDown)
+
+  def panel_arrow_up(self):
+    """  """
+    return self._set_class(CssStylesPanel.CssPanelArrowUp)
+
+  def menubar(self):
+    """  """
+    return self._set_class(CssStylesDivMenuBars.CssSideBarMenu)
+
+  def menubar_fixed(self):
+    """  """
+    return self._set_class(CssStylesDivMenuBars.CssSideBarFixed)
+
+  def menubar_bubble(self):
+    """  """
+    return self._set_class(CssStylesDivMenuBars.CssSideBarBubble)
+
+  def menubar_side(self):
+    """  """
+    return self._set_class(CssStylesDivMenuBars.CssSideBar)
+
+  def menubar_link(self):
+    """  """
+    return self._set_class(CssStylesDivMenuBars.CssSideBarLiHref)
+
+  def menubar_item(self):
+    """  """
+    return self._set_class(CssStylesDivMenuBars.CssSideBarLi)
+
+  def menubar_params(self):
+    """  """
+    return self._set_class(CssStylesDivMenuBars.CssParamsBar)
+
+  def search(self):
+    """  """
+    return self._set_class(CssStylesSearch.CssSearch)
+
+  def search_extension(self):
+    """  """
+    return self._set_class(CssStylesSearch.CssSearchExt)
+
+  def search_button(self):
+    """  """
+    return self._set_class(CssStylesSearch.CssSearchButton)
+
+  def scrollbar(self):
+    """  """
+    return self._set_class(CssStylesScrollBar.CssScrollBar)
+
+  def scrollbar_track(self):
+    """  """
+    return self._set_class(CssStylesScrollBar.CssScrollBarTrack)
+
+  def scrollbar_track_thumb(self):
+    """  """
+    return self._set_class(CssStylesScrollBar.CssScrollBarTrackThumb)
