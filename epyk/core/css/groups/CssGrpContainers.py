@@ -6,7 +6,7 @@ from epyk.core.css.groups import CssGrpCls
 from epyk.core.css.styles import CssStylesDiv
 
 
-class CssGrpClassModal(CssGrpCls.CssGrpClass):
+class CssGrpClassModal(object):
   """
   Set attributes to defaults but will change in the future
   """
@@ -15,7 +15,7 @@ class CssGrpClassModal(CssGrpCls.CssGrpClass):
   __map, __alt_map = ['CssDivModal'], []
 
 
-class CssGrpClassModalContent(CssGrpCls.CssGrpClass):
+class CssGrpClassModalContent(object):
   """
   """
   css_div_modal_content = CssStylesDiv.CssDivModalContent
