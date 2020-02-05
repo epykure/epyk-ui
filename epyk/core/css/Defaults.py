@@ -10,6 +10,10 @@ class Font(object):
   family = "Calibri"
 
 
+class Icon(object):
+  small, normal, big, unit = 10, 15, 20, 'px'
+
+
 # Default CSS Styles
 BODY_CONTAINER = None # The body CSS dictionary
 BACKGROUND = ('greys', 0)
