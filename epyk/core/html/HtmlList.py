@@ -16,7 +16,7 @@ from epyk.core.html import Options
 from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 from epyk.core.css.categories import CssGrpClsList
 
 
@@ -232,7 +232,7 @@ class Groups(Html.Html):
 
 
 class Badges(List):
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'List Badges', 'Lists', 'Badges'
 
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
@@ -245,7 +245,7 @@ class Badges(List):
 
 
 class Buttons(List):
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'List Buttons', 'Lists', 'buttons'
 
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
@@ -257,7 +257,7 @@ class Buttons(List):
 
 class Checks(List):
   name, category, callFnc = 'List Checked', 'Lists', 'checklist'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
     super(Checks, self).__init__(report, data, size, color, width, height, htmlCode, helper, profile)

@@ -16,7 +16,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js import Js
 from epyk.core.js.html import JsHtml
 
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 
 
 try:  # For python 3
@@ -156,7 +156,7 @@ class Html(object):
   @property
   def style(self):
     if self._styleObj is None:
-      self._styleObj = CssGrpCls.ClassHtml(self)
+      self._styleObj = GrpCls.ClassHtml(self)
     return self._styleObj
 
   @property

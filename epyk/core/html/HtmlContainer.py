@@ -13,7 +13,7 @@ from epyk.core.css import Defaults
 
 # The list of CSS classes
 from epyk.core.css.styles import CssStyle
-from epyk.core.css.categories import CssGrpCls, CssGrpContainers
+from epyk.core.css.categories import GrpCls, CssGrpContainers
 
 
 class Panel(Html.Html):

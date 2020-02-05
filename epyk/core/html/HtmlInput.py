@@ -16,7 +16,7 @@ from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.categories import CssGrpClsInput
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 
 
 class Output(Html.Html):
@@ -218,7 +218,7 @@ class InputInteger(Input):
 
 class InputRange(Input):
   name, callFnc = 'Input Range', 'input'
-  _grpCls = CssGrpCls.CssGrpClass
+  _grpCls = GrpCls.CssGrpClass
 
   def __init__(self, report, text, min, max, step, placeholder, size, width, height, htmlCode, filter, options, attrs, profile):
     super(InputRange, self).__init__(report, text, placeholder, size, width, height, htmlCode, filter, options,
@@ -356,7 +356,7 @@ class Radio(Html.Html):
     self.input.inReport = False
     if flag:
       self.input.set_attrs({"checked": json.dumps(flag)})
-    self.input.pyStyle = CssGrpCls.CssGrpClass(self)
+    self.input.pyStyle = GrpCls.CssGrpClass(self)
     if group_name is not None:
       self.input.set_attrs(name="name", value=group_name)
     self.input.set_attrs(attrs={"type": "radio"})
@@ -409,7 +409,7 @@ class TextArea(Html.Html):
 
 class Search(Html.Html):
   name, category, callFnc = 'Search', 'Inputs', 'search'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, text, placeholder, color, size, height, htmlCode, tooltip, extensible, profile):
     self.size = "%s%s" % (size[0], size[1])

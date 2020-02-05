@@ -16,7 +16,7 @@ from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 from epyk.core.css.categories import CssGrpClsText
 from epyk.core.css.categories import CssGrpClsImage
 from epyk.core.css.categories import CssGrpClsList
@@ -26,7 +26,7 @@ from epyk.core.css.categories import CssGrpClsTable
 class ProgressBar(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
   name, category, callFnc = 'Progress Bar', 'Sliders', 'progressbar'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, number, total, width, height, attrs, helper, profile):
     value = number / total * 100

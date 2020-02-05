@@ -2,13 +2,13 @@
 Group CSS class for all the buttons components
 """
 
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 from epyk.core.css.categories.groups import GrpsButton
 from epyk.core.css import Properties
 from epyk.core.css import Classes
 
 
-class ClassButton(CssGrpCls.ClassHtml):
+class ClassButton(GrpCls.ClassHtml):
   def __init__(self, htmlObj):
     self.__htmlObj = htmlObj
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": set(), 'other': set()}, None, None

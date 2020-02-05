@@ -19,7 +19,7 @@ from epyk.core.js.html import JsHtml
 # The list of CSS classes
 from epyk.core.css.styles.CssStylesDivComms import CssContentEditable
 
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 from epyk.core.css.categories import CssGrpClsText
 
 
@@ -245,7 +245,7 @@ class Text(Html.Html):
 
 
 class Code(Html.Html):
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'Code', 'Text', 'code'
   scriptTitle = ''
 
@@ -418,7 +418,7 @@ class Paragraph(Html.Html):
 
 
 class BlockQuote(Html.Html):
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'Block quotation', 'Texts', 'blockquote'
 
   def __init__(self, report, text, author, size, color, width, height, htmlCode, helper, profile):

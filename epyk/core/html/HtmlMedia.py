@@ -10,12 +10,12 @@ from epyk.core.html import Html
 from epyk.core.js import JsUtils
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 
 
 class Media(Html.Html):
   name, category, callFnc = 'Video', 'Media', 'video'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, video, path, width, height, htmlCode, profile, options):
     if path is None:
@@ -61,7 +61,7 @@ class Media(Html.Html):
 
 class Audio(Html.Html):
   name, category, callFnc = 'Video', 'Media', 'audio'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, audio, path, width, height, htmlCode, profile, options):
     if path is None:
@@ -107,7 +107,7 @@ class Audio(Html.Html):
 
 class Youtube(Html.Html):
   name, category, callFnc = 'Youtube Video', 'Media', 'youtube'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
   builder_name = False
 
   def __init__(self, report, link, width, height, htmlCode, profile, options):

@@ -18,7 +18,7 @@ except NameError:
 
 from epyk.core.js import Imports
 from epyk.interfaces import Components
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 from epyk.core.css.themes import Theme
 
 from epyk.core import html
@@ -130,11 +130,11 @@ class Report(object):
     Documentation
     https://www.w3schools.com/css/default.asp
 
-    :rtype: CssGrpCls.ClassPage
+    :rtype: GrpCls.ClassPage
     :return: A Python CSS Object
     """
     if self.__style is None:
-      self.__style = CssGrpCls.ClassPage(self)
+      self.__style = GrpCls.ClassPage(self)
     return self.__style
 
   @property

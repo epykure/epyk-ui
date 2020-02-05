@@ -8,12 +8,12 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.html.entities import EntHtml4
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 
 
 class Hr(Html.Html):
   name, category, callFnc = 'Line delimiter', 'Layouts', 'hr'
-  _grpCls = CssGrpCls.CssClassHr
+  _grpCls = GrpCls.CssClassHr
 
   def __init__(self, report, color, count, size, background_color, height, align, profile):
     super(Hr, self).__init__(report, count, height=height[0], heightUnit=height[1], profile=profile)
@@ -166,7 +166,7 @@ class Help(Html.Html):
 class Loading(Html.Html):
   name, category = 'Loading', 'Others'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  _grpCls = CssGrpCls.CssClassLoading
+  _grpCls = GrpCls.CssClassLoading
   builder_name = False
 
   def __init__(self, report, text, color, size, options):

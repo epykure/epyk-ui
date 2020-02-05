@@ -8,7 +8,7 @@ import json
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 from epyk.core.css.categories import CssGrpClsText
 from epyk.core.css.categories import CssGrpClsTable
 
@@ -157,7 +157,7 @@ class BlockText(Html.Html):
 class TextWithBorder(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Text with Border and Icon', 'Rich', 'textborder'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, recordSet, width, height, size, align, helper, profile):
     super(TextWithBorder, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
@@ -300,7 +300,7 @@ class DocScript(Html.Html):
   Security checks are done in the script to ensure they are TAGS as open
   """
   docTypes = set(['documentation', 'code'])
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery']
   name, category, callFnc = 'Script Documentation', 'Text', 'doc'
 
@@ -455,7 +455,7 @@ class Formula(Html.Html):
 
 class TrafficLight(Html.Html):
   name, category, callFnc = 'Light', 'Rich', 'light'
-  _grpCls = CssGrpCls.CssGrpClassBox
+  _grpCls = GrpCls.CssGrpClassBox
 
   def __init__(self, report, color, label, height, tooltip, helper, profile):
     # Small change to allow the direct use of boolean and none to define the color

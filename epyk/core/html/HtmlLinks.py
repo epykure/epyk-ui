@@ -9,13 +9,13 @@ from epyk.core.html import Html
 from epyk.core.js.Imports import requires
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpCls
+from epyk.core.css.categories import GrpCls
 from epyk.core.css.categories import CssGrpClsText
 
 
 class ExternalLink(Html.Html):
   name, category, callFnc = 'External link', 'Links', 'externallink'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, text, url, icon, helper, height, decoration, options, profile):
     super(ExternalLink, self).__init__(report, {"text": text, "url": url}, height=height[0], heightUnit=height[1], profile=profile)
@@ -129,7 +129,7 @@ class DataLink(Html.Html):
 class Bridge(Html.Html):
   reqCss, reqJs = [], ['jquery']
   name, category, callFnc = 'Node Bridge', 'Links', 'bridge'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  _grpCls = GrpCls.CssGrpClassBase
   builder_name = False
 
   def __init__(self, report, text, script_name, report_name, url, jsData, context):
