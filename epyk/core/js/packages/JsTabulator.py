@@ -12,6 +12,25 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsPackage
 
 
+class Settings(object):
+  def __init__(self, src, options):
+    self.src = src
+    self.__headerVisible = True
+    self.__ctx = {}
+
+  @property
+  def headerVisible(self):
+    """
+    By setting the headerVisible option to false you can hide the column headers and present the table as a simple list if needed.
+    """
+    return self.__headerVisible
+
+  @headerVisible.setter
+  def headerVisible(self, flag):
+    self.__headerVisible = flag
+    self.__ctx['headerVisible'] = flag
+
+
 class Navigation(JsPackage):
   def prev(self):
     """
@@ -60,7 +79,6 @@ class Navigation(JsPackage):
     :return:
     """
     return JsObjects.JsObject.JsObject("%s.down()" % self.toStr())
-
 
   def toStr(self):
     """
@@ -406,6 +424,9 @@ class ColumnComponent(JsPackage):
     """
     The toggle function toggles the visibility of the column, switching between hidden and visible.
 
+    Documentation
+    http://tabulator.info/docs/4.5/columns#addColumn
+
     :return:
     """
     return JsObjects.JsObject.JsObject("%s.hide()" % self.toStr())
@@ -416,7 +437,7 @@ class ColumnComponent(JsPackage):
 
     :return:
     """
-    return self.fnc_closure("delete()")
+    return self.fnc_closure_in_promise("delete()")
 
   def scrollTo(self):
     """
@@ -589,7 +610,7 @@ class RowComponent(JsPackage):
 
     :return:
     """
-    return self.fnc_closure("delete()")
+    return self.fnc_closure_in_promise("delete()")
 
   def scrollTo(self):
     """
@@ -741,7 +762,7 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return self.fnc_closure("deleteRow(%s)" % n)
+    return self.fnc_closure_in_promise("deleteRow(%s)" % n)
 
   def addRow(self, data, flag=False):
     """
@@ -822,25 +843,70 @@ class Tabulator(JsPackage):
     return JsObjects.JsArray.JsArray("%s.getSelectedRows()" % self.toStr())
 
   def getRows(self):
-    pass
-
-  def getRowPosition(self):
-    pass
-
-  def getRowFromPosition(self):
-    pass
-
-  def toggleColumn(self, columns):
     """
+    The getRows function returns an array of RowComponent objects, one for each row in the table.
+
+    Example
+    rows = table.getRows()
+
+    Documentation
+    http://tabulator.info/docs/4.1/components
 
     :return:
     """
+    return JsObjects.JsArray.JsArray("%s.getRows()" % self.toStr())
 
-  def hideColumn(self):
-    pass
+  def getRowPosition(self, row, bool=True):
+    """
+    The new getRowPosition function and Row Component getPosition function allow you to retrieve the current position of a row in the table.
+
+    Documentation
+    http://tabulator.info/news
+
+    :return:
+    """
+    return JsObjects.JsNumber.JsNumber("%s.getRowPosition(%s, %s)" % (self.toStr(), row, bool))
+
+  def getRowFromPosition(self, n, bool=True):
+    """
+
+    :param n:
+    :return:
+    """
+    return JsObjects.JsNumber.JsNumber("%s.getRowFromPosition(%s, %s)" % (self.toStr(), n, bool))
+
+  def toggleColumn(self, column):
+    """
+    You can toggle the visibility of a column at any point using the toggleColumn function. Pass the field name of the column you wish to toggle as the first parameter of the function.
+
+    Example
+    table.toggleColumn("name")
+
+    Documentation
+    http://tabulator.info/docs/4.5/columns#addColumn
+
+    :return:
+    """
+    column = JsUtils.jsConvertData(column, None)
+    return self.fnc_closure_in_promise("toggleColumn(%s)" % column)
+
+  def hideColumn(self, column):
+    """
+    You can hide a visible column at any point using the hideColumn function. Pass the field name of the column you wish to hide as the first parameter of the function.
+
+    Example
+    table.hideColumn("name")
+
+    Documentation
+    http://tabulator.info/docs/4.5/columns#addColumn
+
+    :param column:
+    """
+    column = JsUtils.jsConvertData(column, None)
+    return self.fnc_closure_in_promise("hideColumn(%s)" % column)
 
   @property
-  def getColumns(self, jsData=None):
+  def getColumns(self):
     """
     To get an array of Column Components for the current table setup, call the getColumns function.
     This will only return actual data columns not column groups.
@@ -856,7 +922,7 @@ class Tabulator(JsPackage):
     self.fnc(columns)
     return columns
 
-  def addColumn(self, jsData, before, position, jsFncThen=None, jsFncCatch=None):
+  def addColumn(self, jsData, before, position):
     """
     If you wish to add a single column to the table, you can do this using the addColumn function
 
@@ -866,11 +932,17 @@ class Tabulator(JsPackage):
     Documentation
     http://tabulator.info/docs/4.5/columns#addColumn
 
-    :return:
+    :param jsData: The column definition object for the column you want to add
+    :param before: Determines how to position the new column.
+                   A value of true will insert the column to the left of existing columns, a value of false will insert it to the right
+    :param position: The field to insert the new column next to, this can be any of the standard column component look up options.
     """
-    return ""
+    jsData = JsUtils.jsConvertData(jsData, None)
+    before = JsUtils.jsConvertData(before, None)
+    position = JsUtils.jsConvertData(position, None)
+    return self.fnc_closure_in_promise("addColumn(%s, %s, %s)" % (jsData, position, before))
 
-  def deleteColumn(self, jsData, jsFncThen=None, jsFncCatch=None):
+  def deleteColumn(self, jsData):
     """
     To permanently remove a column from the table deleteColumn function. This function takes any of the standard column component look up options as its first parameter.
 
@@ -878,16 +950,10 @@ class Tabulator(JsPackage):
     http://tabulator.info/docs/4.5/columns#delete
 
     :param jsData:
-    :param jsFncThen:
-    :param jsFncCatch:
-
     :return:
     """
     jsData = JsUtils.jsConvertData(jsData, None)
-    if jsFncThen is not None:
-      return self.fnc_closure("deleteColumn(%s).then(function(){%s}).catch(function(error){%s})" % (jsData, jsFncThen, jsFncCatch))
-
-    return self.fnc_closure("deleteColumn(%s)" % jsData)
+    return self.fnc_closure_in_promise("deleteColumn(%s)" % jsData)
 
   def redraw(self, jsData):
     """

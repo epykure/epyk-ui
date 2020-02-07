@@ -5,6 +5,7 @@ This class must be extended
 """
 
 from epyk.core.js.primitives import JsString
+from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
 
@@ -79,6 +80,24 @@ class JsPackage(object):
       self._u[len(self._js) - 1] = checkUndefined
     self._js.append([])
     return self
+
+  def fnc_closure_in_promise(self, data, checkUndefined=False):
+    """
+    Base function to allow the creation of a promise.
+
+    A Js promise is an event attached toa function which will be only executed after the function.
+    In case of success the then will be triggered otherwise the exception will be caught.
+
+    :param data: String. The Javascript fragment to be added
+    :param checkUndefined: Boolean. Add a check on the variable definition
+
+    :return: The promise
+    """
+    self._js[-1].append(JsObjects.JsPromise(data))
+    if checkUndefined:
+      self._u[len(self._js) - 1] = checkUndefined
+    self._js.append([])
+    return data
 
   @property
   def var(self):

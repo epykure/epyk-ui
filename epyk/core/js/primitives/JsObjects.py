@@ -241,3 +241,53 @@ class JsObjects(object):
     :return:
     """
     return JsData.RawData.get(self._jsObj, varName)
+
+
+class JsPromise(object):
+  """
+
+  https://promisesaplus.com/
+  https://www.geeksforgeeks.org/javascript-promises/
+
+  """
+
+  def __init__(self, jsObj):
+    self._jsObj = jsObj
+    self.__then, self.__catch = [], []
+
+  def then(self, jsFnc):
+    """
+
+    :param jsFnc:
+    :return:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = []
+    self.__then.extend(jsFnc)
+    return self
+
+  def catch(self, jsFnc):
+    """
+    
+    :param jsFnc:
+    :return:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = []
+    self.__catch.extend(jsFnc)
+    return self
+
+  @property
+  def r(self):
+    return self.toStr()
+
+  def toStr(self):
+    result = [str(self._jsObj)]
+    if self.__then:
+      result.append("then(function(fulfilled){%s})" % ";".join(self.__then))
+    if self.__catch:
+      result.append("catch(function(error){%s})" % ";".join(self.__catch))
+    return ".".join(result)
+
+  def __str__(self):
+    return self.toStr()
