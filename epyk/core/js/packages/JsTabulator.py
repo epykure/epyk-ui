@@ -799,6 +799,12 @@ class Tabulator(JsPackage):
   def getRow(self, jsIndex):
     """
     Get the Row component
+
+    Documentation
+    http://tabulator.info/docs/4.1/components
+
+    Example
+    var row = cell.getRow();
     """
     row = RowComponent(self.src, selector="getRow(%s)" % jsIndex, setVar=False, parent=self)
     self.fnc(row)
@@ -834,25 +840,105 @@ class Tabulator(JsPackage):
     pass
 
   @property
-  def getColumns(self):
+  def getColumns(self, jsData=None):
     """
-    Get the table columns
+    To get an array of Column Components for the current table setup, call the getColumns function.
+    This will only return actual data columns not column groups.
+
+    Example
+    var cols = table.getColumns()
+
+    Documentation
+    http://tabulator.info/docs/4.5/columns#getColumns
+
     """
     columns = ColumnComponents(self.src, selector="getColumns()", setVar=False, parent=self)
     self.fnc(columns)
     return columns
 
-  def addColumn(self):
+  def addColumn(self, jsData, before, position, jsFncThen=None, jsFncCatch=None):
+    """
+    If you wish to add a single column to the table, you can do this using the addColumn function
+
+    Example
+    table.addColumn({"title": "Age", "field": "age"}, True, "name");
+
+    Documentation
+    http://tabulator.info/docs/4.5/columns#addColumn
+
+    :return:
+    """
     return ""
 
-  def deleteColumn(self):
-    pass
+  def deleteColumn(self, jsData, jsFncThen=None, jsFncCatch=None):
+    """
+    To permanently remove a column from the table deleteColumn function. This function takes any of the standard column component look up options as its first parameter.
 
-  def redraw(self):
-    pass
+    Documentation
+    http://tabulator.info/docs/4.5/columns#delete
+
+    :param jsData:
+    :param jsFncThen:
+    :param jsFncCatch:
+
+    :return:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    if jsFncThen is not None:
+      return self.fnc_closure("deleteColumn(%s).then(function(){%s}).catch(function(error){%s})" % (jsData, jsFncThen, jsFncCatch))
+
+    return self.fnc_closure("deleteColumn(%s)" % jsData)
+
+  def redraw(self, jsData):
+    """
+    This can be done by calling the redraw method. For example, to trigger a redraw whenever the viewport width is changed:
+
+    The redraw function also has an optional boolean argument that when set to true triggers a full rerender of the table including all data on all rows.
+
+    Documentation
+    http://tabulator.info/docs/4.5/layout#redraw
+
+    :param jsData: Boolean. Trigger full rerender including all data and rows
+    :return:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return self.fnc_closure("redraw(%s)" % jsData)
+
+  def blockRedraw(self):
+    """
+    To get around this you can use the blockRedraw and restoreRedraw functions to temporarlity disable all table redraw actions while you are manipulating the table data.
+
+    Example
+    table.blockRedraw(); //block table redrawing
+
+    Documentation
+    http://tabulator.info/docs/4.5/release#redraw-block
+
+    :return:
+    """
+    return self.fnc_closure("blockRedraw()")
+
+  def restoreRedraw(self):
+    """
+
+    Example
+    table.restoreRedraw(); //restore table redrawing
+
+    Documentation
+    http://tabulator.info/docs/4.5/release#redraw-block
+
+    :return:
+    """
+    return self.fnc_closure("restoreRedraw()")
 
   def setSort(self, jsData):
     """
+
+    Example
+    table.setSort([{column:"age", dir:"asc"}]);
+
+    Documentation
+    http://tabulator.info/docs/4.0/sort
 
     :param jsData:
     :return:
@@ -860,11 +946,34 @@ class Tabulator(JsPackage):
     self._js.append("setSort(%s)" % JsUtils.jsConvertData(jsData, None))
     return self
 
-  def getGroups(self):
-    pass
+  def getGroups(self, jsData=None):
+    """
+    You can use the getGroups function to retrieve an array of all the first level Group Components in the table.
+
+    Example
+    var cols = table.getColumns()
+
+    Documentation
+    http://tabulator.info/docs/4.0/group
+
+    :param jsData: To get a structured array of Column Components that includes column groups, pass a value of true as an argument
+    :return:
+    """
+    if jsData is not None:
+      jsData = JsUtils.jsConvertData(jsData, None)
+      return JsObjects.JsObject.JsObject("%s.getGroups(%s)" % (self.toStr(), jsData))
+
+    return JsObjects.JsObject.JsObject("%s.getGroups()" % self.toStr())
 
   def clearData(self):
     """
+    You can remove all data from the table using the clearData function:
+
+    Example
+    table.clearData()
+
+    Documentation
+    http://tabulator.info/docs/4.0/update
 
     :return:
     """
