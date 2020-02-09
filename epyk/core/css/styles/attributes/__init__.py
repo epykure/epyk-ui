@@ -37,4 +37,5 @@ class Commons(Attrs):
   def __init__(self, htmlObj):
     super(Commons, self).__init__(htmlObj)
     self.font_size = Defaults_css.font()
+    self.font_family = Defaults_css.Font.family
 

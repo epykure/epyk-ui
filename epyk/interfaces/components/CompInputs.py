@@ -71,14 +71,14 @@ class Inputs(object):
     self.context.register(html_search)
     return html_search
 
-  def password(self, text="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     attrs = attrs or {}
     attrs.update({"type": 'password'})
-    return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, size, width, height,
+    return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height,
                                                       htmlCode, filter, options, attrs, profile))
 
-  def d_time(self, text="", placeholder='', size=(None, 'px'), width=(139, "px"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
@@ -96,13 +96,12 @@ class Inputs(object):
     :param attrs:
     :param profile:
     """
-    size = self.context._size(size)
-    html_input_t = html.HtmlInput.InputTime(self.context.rptObj, text, placeholder, size, width, height, htmlCode, filter,
+    html_input_t = html.HtmlInput.InputTime(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
                                             options, attrs or {}, profile)
     self.context.register(html_input_t)
     return html_input_t
 
-  def d_date(self, text, placeholder='', size=(None, 'px'), width=(140, "px"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
@@ -120,18 +119,16 @@ class Inputs(object):
     :param attrs:
     :param profile:
     """
-    size = self.context._size(size)
-    html_date = html.HtmlInput.InputDate(self.context.rptObj, text, placeholder, size, width, height, htmlCode, filter,
+    html_date = html.HtmlInput.InputDate(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
                                          options, attrs or {}, profile)
     self.context.register(html_date)
     return html_date
 
-  def d_int(self, value="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
-    size = self.context._size(size)
     attrs = attrs or {}
     attrs.update({"type": 'number'})
-    html_integer = html.HtmlInput.InputInteger(self.context.rptObj, value, placeholder, size, width, height, htmlCode, filter,
+    html_integer = html.HtmlInput.InputInteger(self.context.rptObj, value, placeholder, width, height, htmlCode, filter,
                                                options, attrs, profile)
     self.context.register(html_integer)
     return html_integer
@@ -161,7 +158,7 @@ class Inputs(object):
     self.context.register(html_output)
     return html_output
 
-  def textarea(self, text="", width=(100, '%'), rows=5, placeholder=None, size=(None, 'px'), background_color=None, htmlCode=None,
+  def textarea(self, text="", width=(100, '%'), rows=5, placeholder=None, background_color=None, htmlCode=None,
                options=None, profile=None):
     """
 
@@ -179,10 +176,9 @@ class Inputs(object):
     :param options:
     :param profile:
     """
-    size = self.context._size(size)
     dfltOptions = {"spellcheck": True, 'selectable': True}
     dfltOptions.update(options or {})
-    html_t_area = html.HtmlInput.TextArea(self.context.rptObj, text, width, rows, placeholder, size, background_color,
+    html_t_area = html.HtmlInput.TextArea(self.context.rptObj, text, width, rows, placeholder, background_color,
                                           htmlCode, dfltOptions, profile)
     self.context.register(html_t_area)
     return html_t_area

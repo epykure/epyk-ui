@@ -382,7 +382,6 @@ class TextArea(Html.Html):
   def __init__(self, report, text, width, rows, placeholder, background_color, htmlCode, options, profile):
     super(TextArea, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width}, profile=profile)
     self.width, self.rows, self.backgroundColor = width, rows, background_color
-    self.css({"font-family": report.style.defaults.font.family})
     if not options.get("selectable", True):
       self.attr['onclick'] = "this.blur();this.select()"
       options["readOnly"] = True
@@ -401,7 +400,7 @@ class TextArea(Html.Html):
   def empty(self): return 'document.getElementById("%s").value = ""' % self.htmlId
 
   def __str__(self):
-    return '<textarea %(strAttr)s></textarea>' % {"strAttr": self.get_attrs(pyClassNames=self.defined)}
+    return '<textarea %(strAttr)s></textarea>' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class Search(Html.Html):

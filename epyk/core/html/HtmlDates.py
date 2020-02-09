@@ -82,7 +82,7 @@ class DatePicker(Html.Html):
       ''' % JsQuery.decorate_var("htmlObj.querySelector('input')", convert_var=False)
 
   def __str__(self):
-    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'helper': self.helper}
+    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
 
 
 class TimePicker(Html.Html):
