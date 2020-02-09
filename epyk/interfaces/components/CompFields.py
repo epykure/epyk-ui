@@ -26,7 +26,7 @@ class Fields(object):
     This component is based on the Jquery Date Picker object.
 
     Example
-    rptObj.ui.dates.today(label="Date").selectable(["2019-09-01", "2019-09-06"])
+    rptObj.ui.fields.today(label="Date").selectable(["2019-09-01", "2019-09-06"])
 
     Documentation
     https://jqueryui.com/datepicker/
@@ -122,6 +122,9 @@ class Fields(object):
              helper=None, profile=None):
     """
 
+    Example
+    rptObj.ui.fields.static(label="readonly field")
+
     :param value:
     :param label:
     :param placeholder:
@@ -139,6 +142,9 @@ class Fields(object):
   def integer(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+
+    Example
+    rptObj.ui.fields.integer(label="test")
 
     :param value:
     :param label:
@@ -174,6 +180,9 @@ class Fields(object):
   def textarea(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+
+    Example
+    rptObj.ui.fields.textarea(label="Date")
 
     :param value:
     :param label:
