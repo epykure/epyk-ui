@@ -751,7 +751,14 @@ class CssMixin(object):
     self.htmlObj.css({"flex-wrap": val})
 
   @property
-  def float(self): return self.htmlObj.css("float")
+  def float(self):
+    """
+    The float property specifies how an element should float
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_class_float.asp
+    """
+    return self.htmlObj.css("float")
 
   @float.setter
   def float(self, val):
