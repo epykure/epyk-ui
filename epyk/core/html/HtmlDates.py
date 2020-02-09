@@ -90,7 +90,7 @@ class TimePicker(Html.Html):
   name, category, callFnc = 'Time Picker', 'Dates', 'date'
   # _grpCls = GrpCls.CssGrpClassBase
 
-  def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
+  def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
     # Add the internal components (label, icon)
     self.input = self._report.ui.inputs.d_time(value)
@@ -101,8 +101,7 @@ class TimePicker(Html.Html):
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-    self.css({"color": color or 'inherit', "vertical-align": "middle", "font-size": "%s%s" % (size[0], size[1]),
-              'margin-top': '2px'})
+    self.css({"color": color or 'inherit', "vertical-align": "middle", 'margin-top': '2px'})
     self.options = options
 
   @property
@@ -152,7 +151,7 @@ class TimePicker(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'helper': self.helper}
+    return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
 
 
 class CountDownDate(Html.Html):

@@ -54,7 +54,8 @@ class Fields(object):
     This component is based on the Jquery Date Picker object.
 
     Example
-    rptObj.ui.dates.cob(label="Date").selectable(["2019-09-01", "2019-09-06"])
+    rptObj.ui.fields.cob(label="Date").selectable(["2019-09-01", "2019-09-06"])
+    rptObj.ui.fields.cob(label="COB Date")
 
     Documentation
     https://jqueryui.com/datepicker/
@@ -82,7 +83,8 @@ class Fields(object):
     This component is based on the Jquery Time Picker object.
 
     Example
-    rptObj.ui.dates.now(label="timestamp", color="red", helper="This is the report timestamp")
+    rptObj.ui.fields.now(label="timestamp", color="red", helper="This is the report timestamp")
+    rptObj.ui.fields.now(label="Time field")
 
     Documentation
     https://github.com/jonthornton/jquery-timepicker
