@@ -6,7 +6,7 @@ import re
 import json
 
 from epyk.core.html import Html
-from epyk.core.html import Options
+from epyk.core.html.options import OptButton
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
@@ -23,10 +23,18 @@ class Button(Html.Html):
     super(Button, self).__init__(report, text, code=htmlCode, profile=profile,
                                  css_attrs={"color": color, "width": width, "height": height})
     self.add_icon(icon, css={"font-size": '%s%s' % (Defaults_css.Font.size-2, Defaults_css.Font.unit)})
-    self.options = Options.OptionsButton(self, options)
+    self.__options = OptButton.OptionsButton(self, options)
     if tooltip is not None:
       self.tooltip(tooltip)
     self.set_attrs(name="data-count", value=0)
+
+  @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+    :rtype: OptButton.OptionsButton
+    """
+    return self.__options
 
   @property
   def dom(self):

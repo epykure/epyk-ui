@@ -215,7 +215,7 @@ class Icons(object):
     icon = self.awesome('fab fa-facebook-f', text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
-    icon.style.addCls("CssDivOnHoverBackgroundLight")
+    icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
@@ -224,7 +224,7 @@ class Icons(object):
     icon = self.awesome('fab fa-twitter', text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
-    icon.style.addCls("CssDivOnHoverBackgroundLight")
+    icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
@@ -233,7 +233,7 @@ class Icons(object):
     icon = self.awesome('fab fa-linkedin-in', text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
-    icon.style.addCls("CssDivOnHoverBackgroundLight")
+    icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 

@@ -5,7 +5,7 @@ Wrapper to the Bootstrap Layout library
 
 from epyk.core.html import Html
 from epyk.core.html import HtmlSelect
-from epyk.core.html import Options
+from epyk.core.html.options import OptPanel
 
 #
 from epyk.core.js import JsUtils
@@ -770,14 +770,14 @@ class Indices(Html.Html):
     super(Indices, self).__init__(report, count, width=width, widthUnit=width[1], height=height[0],
                                   heightUnit=height[1], profile=profile)
     self.items = []
-    self.options = Options.OptionsPanelPoints(report, options)
+    self.__options = OptPanel.OptionsPanelPoints(report, options)
     for i in range(count):
       div = self._report.ui.div(i, width=(15, "px"))
       div.attr["name"] = self.htmlId
       div.attr["data-position"] = i + 1
       div.css({"display": 'inline-block', "padding": "2px", "text-align": "center"})
       div.css(self.options.div_css)
-      div.style.addCls('CssDivOnHoverBackgroundLight')
+      div.style.add_classes.div.background_hover()
       div.inReport = False
       self.items.append(div)
     #
@@ -789,6 +789,14 @@ class Indices(Html.Html):
     self.next.inReport = False
     self.last = self._report.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
     self.last.inReport = False
+
+  @property
+  def options(self):
+    """
+
+    :rtype: OptPanel.OptionsPanelPoints
+    """
+    return self.__options
 
   def __getitem__(self, i):
     return self.items[i]
@@ -819,16 +827,24 @@ class Points(Html.Html):
                                   heightUnit=height[1], profile=profile)
     self.items = []
     self.css({"text-align": "center"})
-    self.options = Options.OptionsPanelPoints(report, options)
+    self.__options = OptPanel.OptionsPanelPoints(report, options)
     for i in range(count):
       div = self._report.ui.div(self._report.entities.non_breaking_space)
       div.attr["name"] = self.htmlId
       div.attr["data-position"] = i + 1
       div.css({"border": "1px solid %s" % self._report.theme.greys[5], "border-radius": "10px", "width": "15px", "height": "15px"})
       div.css(self.options.div_css)
-      div.style.addCls('CssDivOnHoverBackgroundLight')
+      div.style.add_classes.div.background_hover()
       div.inReport = False
       self.items.append(div)
+
+  @property
+  def options(self):
+    """
+
+    :rtype: OptPanel.OptionsPanelPoints
+    """
+    return self.__options
 
   def click(self, i, jsFncs, profile=False):
     """
@@ -848,4 +864,4 @@ class Points(Html.Html):
 
   def __str__(self):
     str_vals = "".join([i.html() for i in self.items])
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)

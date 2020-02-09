@@ -3,7 +3,7 @@ Module for the HTML Selects components
 """
 
 from epyk.core.html import Html
-from epyk.core.html import Options
+from epyk.core.html.options import OptSelect
 
 # The list of CSS classes
 # from epyk.core.css.styles import CssGrpClsList
@@ -26,7 +26,7 @@ class Option(Html.Html):
       self.set_attrs(name="data-icon", value=icon)
 
   def __str__(self):
-    return "<option %s>%s</option>" % (self.get_attrs(pyClassNames=self.defined), self.val)
+    return "<option %s>%s</option>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
 
 
 class Optgroup(Html.Html):
@@ -39,7 +39,7 @@ class Optgroup(Html.Html):
 
   def __str__(self):
     val = "".join([v.html() for v in self.val])
-    return "<optgroup %s>%s</optgroup>" % (self.get_attrs(pyClassNames=self.defined), val)
+    return "<optgroup %s>%s</optgroup>" % (self.get_attrs(pyClassNames=self.style.get_classes()), val)
 
 
 class Select(Html.Html):
@@ -48,8 +48,8 @@ class Select(Html.Html):
   # _grpCls = CssGrpClsList.CssClassListSelectMin
 
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
-    super(Select, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1],
-                                 height=height[0],  heightUnit=height[1], globalFilter=filter, profile=profile)
+    super(Select, self).__init__(report, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
+                                 globalFilter=filter, profile=profile)
     self.selected = None
     self.style.addCls(self.defined.clsAltMap)
     self._jsStyles = options
@@ -68,6 +68,11 @@ class Select(Html.Html):
     if self._dom is None:
       self._dom = JsSelect.JSelect(self, report=self._report)
     return self._dom
+
+  @property
+  def options(self):
+    """ Add options to the selection component """
+    return
 
   @property
   def _js__builder__(self):
@@ -91,7 +96,7 @@ class Select(Html.Html):
       opt_rp.inReport = False
       data.append(opt_rp.html())
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return "<select %s>%s</select>" % (self.get_attrs(pyClassNames=self.defined), "".join(data))
+    return "<select %s>%s</select>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(data))
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS

@@ -5,8 +5,8 @@ Wrapper to the HTML Image components
 import re
 
 from epyk.core.html import Html
-from epyk.core.html import Options
 from epyk.core.html import Defaults
+from epyk.core.html.options import OptButton
 
 from epyk.core.css import Defaults_css
 from epyk.core.css.styles import GrpClsImage
@@ -246,7 +246,7 @@ class Badge(Html.Html):
     super(Badge, self).__init__(report, None, css_attrs={"color": color, 'background-color': background_color},
                                 profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
-    self.options = Options.OptionsBadge(self, options)
+    self.__options = OptButton.OptionsBadge(self, options)
     if self.options.badge_position == 'left':
       self.add_icon(icon, css={"float": 'None', "font-size": Defaults_css.font(5)}, position="after")
     else:
@@ -264,6 +264,13 @@ class Badge(Html.Html):
     self.attr['class'].add("badge") # From bootstrap
     if tooltip is not None:
       self.tooltip(tooltip)
+
+  def options(self):
+    """
+
+    :rtype: OptButton.OptionsBadge
+    """
+    return self.__options
 
   def __str__(self):
     if self.link is not None:

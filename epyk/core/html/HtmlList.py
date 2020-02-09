@@ -10,7 +10,7 @@ import json
 
 from epyk.core.js import JsUtils
 from epyk.core.html import Html
-from epyk.core.html import Options
+from epyk.core.html.options import OptList
 
 # The list of Javascript classes
 from epyk.core.js.html import JsHtml
@@ -94,7 +94,7 @@ class List(Html.Html):
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, options, profile):
     super(List, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
                                heightUnit=height[1], code=htmlCode, profile=profile)
-    self.options = Options.OptionsLi(self, options)
+    self.__options = OptList.OptionsLi(self, options)
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
     self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
@@ -102,6 +102,14 @@ class List(Html.Html):
     self.items = None
     if len(data) > 0:
       self.set_items()
+
+  @property
+  def options(self):
+    """
+
+    :rtype: OptList.OptionsLi
+    """
+    return self.__options
 
   @property
   def dom(self):

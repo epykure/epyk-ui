@@ -7,7 +7,7 @@ import os
 import json
 
 from epyk.core.html import Html
-from epyk.core.html import Options
+from epyk.core.html.options import OptText
 
 from epyk.core.html import Defaults as Default_html
 
@@ -177,11 +177,19 @@ class Text(Html.Html):
     super(Text, self).__init__(report, text, css_attrs={"color": color, "width": width, "height": height},
                                code=htmlCode, profile=profile)
     self.add_helper(helper)
-    self.options = Options.OptionsText(self, options)
+    self.__options = OptText.OptionsText(self, options)
     self._jsStyles = {"reset": self.options.reset, "markdown": self.options.markdown, "maxlength": self.options.limit_char}
     self.css({'text-align': align})
     if tooltip is not None:
       self.tooltip(tooltip)
+
+  @property
+  def options(self):
+    """
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
 
   def editable(self):
     """
@@ -275,7 +283,7 @@ class Code(Html.Html):
             $.post("/%(url)s", {content: content.slice(4, content.length), title: '%(title)s'}, function(data){location.reload()})});   
           })''' % {'jqId': self.jqId, "url": self.editable, 'htmlId': self.htmlId, 'backGroundColor': self._report.theme.colors[5],
                    'whiteColor': self._report.theme.greys[0], 'title': self.scriptTitle})
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Pre(Html.Html):

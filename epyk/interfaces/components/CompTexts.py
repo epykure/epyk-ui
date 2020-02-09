@@ -152,8 +152,7 @@ class Texts(object):
     self.context.register(html_formula)
     return html_formula
 
-  def code(self, text="", color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None,
-           options=None, helper=None, profile=None):
+  def code(self, text="", color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None, options=None, helper=None, profile=None):
     """
     Python Wrapper to the Bootstrap CODE Tag
 
