@@ -14,7 +14,7 @@ class Popup(Html.Html):
   name, category, callFnc = 'Popup Container', 'Container', 'popup'
   # _grpCls = CssGrpClsInput.CssClassPopup
 
-  def __init__(self, report, htmlObj, title, color, size, width, height, withBackground, draggable, margin, profile):
+  def __init__(self, report, htmlObj, title, color, width, height, withBackground, draggable, margin, profile):
     super(Popup, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
                                 profile=profile)
     self.inputs, self.height, self.width = [], "%s%s" % (height[0], height[1]) if height is not None else "100%", width
@@ -24,7 +24,6 @@ class Popup(Html.Html):
           self.__add__(obj)
       else:
         self.__add__(htmlObj)
-    self.size = int(self._report.pyStyleDfl['fontSize'][:-2]) if size is None else size
     self._title, self.withBackground, self.draggable, self.margin = title, withBackground, draggable, margin
     if color is not None:
       self.css({"color": color})

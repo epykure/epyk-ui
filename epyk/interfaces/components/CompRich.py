@@ -10,7 +10,7 @@ class Rich(object):
   def __init__(self, context):
     self.context = context
 
-  def delta(self, rec=None, width=(200, 'px'), height=(80, 'px'), size=None, options=None, helper=None, profile=None):
+  def delta(self, rec=None, width=(200, 'px'), height=(80, 'px'), options=None, helper=None, profile=None):
     """
 
     Example
@@ -23,7 +23,6 @@ class Rich(object):
     :param rec:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -31,7 +30,7 @@ class Rich(object):
                     'colors': {'green': 'green', 'red': 'red', 'orange': 'orange'}}
     if options is not None:
       dflt_options.update(options)
-    html_delta = html.HtmlTextComp.Delta(self.context.rptObj, rec or {}, width, height, size, dflt_options, helper, profile)
+    html_delta = html.HtmlTextComp.Delta(self.context.rptObj, rec or {}, width, height, dflt_options, helper, profile)
     self.context.register(html_delta)
     return html_delta
 

@@ -108,7 +108,6 @@ class Report(object):
 
     # Add Style default and Standard values in a given report
     self.ageReference, self.colorBase = 'red', 'green'
-    self.pyStyleDfl = {'fontSize': '12px', 'headerFontSize': '14px'}
     if theme is not None:
       self.style.colors.setTheme(theme)
 

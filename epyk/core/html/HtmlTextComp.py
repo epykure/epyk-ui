@@ -8,26 +8,22 @@ import json
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.styles import GrpCls
-# from epyk.core.css.styles import CssGrpClsText
-# from epyk.core.css.styles import CssGrpClsTable
+from epyk.core.css import Defaults_css
 
 
 class UpDown(Html.Html):
   name, category, callFnc = 'Up and Down', 'Texts', 'updown'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
 
-  def __init__(self, report, rec, size, color, label, options, helper, profile):
+  def __init__(self, report, rec, color, label, options, helper, profile):
     if rec is None:
       rec = {'value': 0, 'previous': 0}
     if label is not None:
       rec["label"] = label
-    self.size = size[0]
     super(UpDown, self).__init__(report, rec, profile=profile)
     self.add_helper(helper)
     self.val['color'] = self._report.theme.colors[9] if color is None else color
     self._jsStyles = options
-    self.css({'font-size': "%s%s" % (size[0], size[1])})
 
   @property
   def _js__builder__(self):
@@ -71,20 +67,19 @@ class UpDown(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class TextBubble(Html.Html):
   name, category, callFnc = 'Bubble text', 'Vignets', 'bubble'
   # _grpCls = CssGrpClsText.CssClassTextBubble
 
-  def __init__(self, report, recordSet, width, height, color, size, background_color, helper, profile):
-    super(TextBubble, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
-                                     heightUnit=height[1], profile=profile)
+  def __init__(self, report, recordSet, width, height, color, background_color, helper, profile):
+    super(TextBubble, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.color = self._report.theme.greys[0] if color is None else color
     self.background_color = self._report.theme.success[1] if background_color is None else background_color
-    self.size, self.height = size, height[0]
+    self.height = height[0]
     self.css({'text-align': 'center', 'background-color': self._report.theme.greys[0]})
 
   @property
@@ -105,11 +100,11 @@ class TextBubble(Html.Html):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '''
       <div %(strAttr)s>
-        <div %(clsTag)s style="padding-top:10px;width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s;font-size:%(size)s;color:%(color)s"></div>
+        <div %(clsTag)s style="padding-top:10px;width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s"></div>
         <div "%(clsTitle)s"><a style="text-decoration:none"></a></div>%(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "clsTag": self._report.style.getClsTag(['CssDivBubble'], loadCls=True),
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "clsTag": self._report.style.getClsTag(['CssDivBubble'], loadCls=True),
                    'clsTitle': self._report.style.getClsTag(['CssTitle'], loadCls=True),
-                   'bgcolor': self.background_color, 'size': "%s%s" % (self.size[0], self.size[1]), 'color': self.color,
+                   'bgcolor': self.background_color,
                    'helper': self.helper, 'height': bubble_height, 'width': bubble_width}
 
 
@@ -118,14 +113,11 @@ class BlockText(Html.Html):
   name, category, callFnc = 'Block text', 'Rich', 'blocktext'
   # _grpCls = CssGrpClsText.CssClassTextBlock
 
-  def __init__(self, report, recordSet, color, size, border, width, height, helper, profile):
-    super(BlockText, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
-                                     heightUnit=height[1], profile=profile)
-    self.size = size[0]
+  def __init__(self, report, recordSet, color, border, width, height, helper, profile):
+    super(BlockText, self).__init__(report, recordSet, css_attrs={'color': color, "width": width, "height": height}, profile=profile)
     self.add_helper(helper)
-    self.color = color if color is not None else self._report.theme.colors[9]
     self._jsStyles = {"reset": True, 'markdown': True}
-    self.css({'color': self.color, 'padding': '5px'})
+    self.css({'padding': '5px'})
     if border != 'auto':
       self.css('border', str(border))
 
@@ -144,9 +136,9 @@ class BlockText(Html.Html):
       ''' % {"markUp": mark_up}
 
   def __str__(self):
-    items = ['<div %s>' % self.get_attrs(pyClassNames=self.defined)]
-    items.append('<div id="%s_title" %s style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlId, self._report.style.getClsTag(['CssTitle']), self.size+3))
-    items.append('<div id="%s_p" %s style="color:%s:font-size:%spx;width:100%%;text-justify:inter-word;text-align:justify;"></div>' % (self.htmlId, self._report.style.getClsTag(['CssText']), self.color, self.size))
+    items = ['<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
+    items.append('<div id="%s_title" %s style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlId, self._report.style.getClsTag(['CssTitle']), Defaults_css.font(3)))
+    items.append('<div id="%s_p" %s style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % (self.htmlId, self._report.style.getClsTag(['CssText'])))
     if self.val.get('button') is not None:
       items.append('<a href="#" %s><i></i></a>' % (self._report.style.getClsTag(['CssHrefNoDecoration', 'CssButtonBasic'])))
     items.append('</div>')
@@ -159,17 +151,15 @@ class TextWithBorder(Html.Html):
   name, category, callFnc = 'Text with Border and Icon', 'Rich', 'textborder'
   # _grpCls = GrpCls.CssGrpClassBase
 
-  def __init__(self, report, recordSet, width, height, size, align, helper, profile):
-    super(TextWithBorder, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
-                                   heightUnit=height[1], profile=profile)
-    self.size = size[0]
+  def __init__(self, report, recordSet, width, height, align, helper, profile):
+    super(TextWithBorder, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.align = align
     if not 'colorTitle' in self.val:
       self.val['colorTitle'] = self._report.theme.colors[9]
     if not 'color' in self.val:
       self.val['color'] = self._report.theme.colors[9]
-    self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px', 'font-size': '%s%s' % (size[0], size[1])})
+    self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px'})
 
   @property
   def _js__builder__(self):
@@ -178,14 +168,14 @@ class TextWithBorder(Html.Html):
       htmlObj.querySelector('span').innerHTML = data.value'''
 
   def __str__(self):
-    item = ['<fieldset %s>' % self.get_attrs(pyClassNames=self.defined)]
+    item = ['<fieldset %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
     if 'icon' in self.val:
       self.val['align'] = self.align
       item.append('<i class="%(icon)s fa-5x" style="width:100%%;text-align:%(align)s;margin:2px 0 10px 0;color:%(color)s"></i>' % self.val)
     if 'url' in self.val:
-      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span><br><a style="float:right" href="%s">+ more details</a></fieldset>' % (self.size + 10, self.val['colorTitle'], self.val['url']))
+      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span><br><a style="float:right" href="%s">+ more details</a></fieldset>' % (Defaults_css.font(10), self.val['colorTitle'], self.val['url']))
     else:
-      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span></fieldset>' % (self.size + 10, self.val['colorTitle']))
+      item.append('<legend style="font-size:%spx;color:%s"></legend><span></span></fieldset>' % (Defaults_css.font(10), self.val['colorTitle']))
     item.append(self.helper)
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return "".join(item)
@@ -194,38 +184,35 @@ class TextWithBorder(Html.Html):
 class Number(Html.Html):
   name, category, callFnc = 'Number', 'Rich', 'number'
 
-  def __init__(self, report, number, label, size, width, height, profile, options):
-    super(Number, self).__init__(report, number, width=width[0], widthUnit=width[1], height=height[0],
-                                 heightUnit=height[1], profile=profile)
+  def __init__(self, report, number, label, width, height, profile, options):
+    super(Number, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
     if options.get('url', None) is not None:
-      self.add_link(number, url=options['url'], css={"font-size": "%s%s" % (size[0] + 10, size[1]),
+      self.add_link(number, url=options['url'], css={"font-size": Defaults_css.font(10),
                       "width": "100%", 'text-decoration': 'none', 'display': 'inline-block', "text-align": 'center',
                       'margin': 0, 'color': 'inherit', 'padding': 0})
       self.span = self.link
     else:
-      self.add_link(number, url="#", css={"font-size": "%s%s" % (size[0] + 10, size[1]),
+      self.add_link(number, url="#", css={"font-size": Defaults_css.font(10),
                      "width": "100%", 'text-decoration': 'none', 'cursor': 'default',
                      'display': 'inline-block', "text-align": 'center', 'margin': 0, 'color': 'inherit', 'padding': 0})
       self.link.attr['target'] = '_self'
       self.span = self.link
 
       # self.add_span(number, css={'height': 'auto', "font-size": "%s%s" % (size[0] + 10, size[1]), "width": "100%", 'margin': 0})
-    self.add_label(label, css={'float': 'none', "font-size": "%s%s" % (size[0], size[1]), "width": "100%", "margin": 0})
+    self.add_label(label, css={'float': 'none', "width": "100%", "margin": 0})
     self.css({"display": "inline-block", 'padding': '2px 0', 'clear': 'both', 'margin': '2px'})
 
   def __str__(self):
-    return "<div %s></div>" % self.get_attrs(pyClassNames=self.defined)
+    return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class Delta(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui'] # jquery ui for progressbar
   name, category, callFnc = 'Delta Figures', 'Rich', 'delta'
 
-  def __init__(self, report, records, width, height, size, options, helper, profile):
-    super(Delta, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0],
-                                heightUnit=height[1], profile=profile)
+  def __init__(self, report, records, width, height, options, helper, profile):
+    super(Delta, self).__init__(report, records, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
-    self.size = int(self._report.pyStyleDfl['fontSize'][:-2]) if size is None else size
     if not 'color' in self.val:
       self.val['color'] = self._report.theme.colors[9]
     if not 'thresold1' in self.val:
@@ -262,11 +249,11 @@ class Delta(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '''<div %(strAttr)s>
-      <div style="width:100%%;text-align:right;font-size:%(size)spx;"></div>
+      <div style="width:100%%;text-align:right;font-size:%(size)s"></div>
       <div id="progress" style="height:10px;color:%(color)s;border:1px solid %(greyColor)s"></div>
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.defined), "size": self.size + 12,
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "size": Defaults_css.font(12),
                    'htmlId': self.htmlId, "color": self.val['color'],
                    "greyColor": self._report.theme.greys[6], "helper": self.helper}
 
@@ -304,16 +291,14 @@ class DocScript(Html.Html):
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery']
   name, category, callFnc = 'Script Documentation', 'Text', 'doc'
 
-  def __init__(self, report, title, scriptName, clssName, functionName, docType, width, height, color, size, profile):
+  def __init__(self, report, title, scriptName, clssName, functionName, docType, width, height, color, profile):
     if not docType in self.docTypes:
       raise Exception('The docType %s does not exist' % docType)
 
     clssName = clssName if clssName is not None else 'NOT_SET'
     super(DocScript, self).__init__(report, {'title': title, 'clssName': clssName, 'functionName': functionName,
                                              'docType': docType, 'scriptName': scriptName.replace('.py', '')},
-                                width=width[0], widthUnit=width[1], height=height[0],
-                                heightUnit=height[1], profile=profile)
-    self.size = "%s%s" % (size[0], size[1])
+                                    css_attrs={"width": width, "height": height}, profile=profile)
     self.color = self._report.theme.colors[-1] if color is None else color
 
   @property
@@ -331,22 +316,20 @@ class DocScript(Html.Html):
       label = "%s, function <b>%s</b>" % (label, self.val['functionName'])
     return '''
       <div %s>
-        <div style="color:%s;font-size:%s;font-weight:bold;">%s</div>
+        <div style="color:%s;font-weight:bold;">%s</div>
         <pre style="padding:5px"></pre>
         <span style="font-style:italic;width:100%%;text-align:right;display:block;margin-top:-15px">%s</span>
-      </div> ''' % (self.get_attrs(pyClassNames=self.defined), self.color, self.size, self.val['title'], label)
+      </div> ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.color, self.val['title'], label)
 
 
 class Prism(Html.Html):
   __reqCss, __reqJs = ['prism'], ['prism', 'jqueryui']
   name, category, callFnc = 'Code Viewer', 'Rich', 'prism'
 
-  def __init__(self, report, vals, language, size, width, height, isEditable, trimSpaces, align, helper, profile):
-    super(Prism, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0],
-                                heightUnit=height[1], profile=profile)
+  def __init__(self, report, vals, language, width, height, isEditable, trimSpaces, align, helper, profile):
+    super(Prism, self).__init__(report, vals, css_attrs={"width": width, "height": height}, profile=profile)
     self.isEditable = isEditable
     self.trimSpaces = trimSpaces
-    self.css({'font-size': "%s%s" % (size[0], size[1])})
     self.style.addCls('language-%s' % language)
     if align == 'center':
       self.css('margin', 'auto')
@@ -378,7 +361,7 @@ class Prism(Html.Html):
           </tr>
         </table>
         <div style="display:inline-block;margin:0;padding:0;width:100%%;text-align:right"><p style="display:inline:block;float:right;width:80px;white-space:nowrap;cursor:pointer" onclick="$('#%(htmlId)s_code').toggle()">[hide / show]</p></div>
-      </div>''' % {"strAttr": self.get_attrs(self.get_attrs(pyClassNames=self.defined)), "copy": copy.html(),
+      </div>''' % {"strAttr": self.get_attrs(self.get_attrs(pyClassNames=self.style.get_classes())), "copy": copy.html(),
                    "isEditable": self.isEditable, "content": content, "helper": self.helper, "htmlId": self.htmlId}
 
   # -----------------------------------------------------------------------------------------
@@ -423,10 +406,8 @@ class Formula(Html.Html):
   name, category, callFnc = 'Latex Formula', 'Texts', 'formula'
   # _grpCls = CssGrpClsText.CssClassFormulas
 
-  def __init__(self, report, text, size, width, color, helper, profile):
-    super(Formula, self).__init__(report, text, width=width[0], widthUnit=width[1], profile=profile)
-    self.color = color if color is not None else self._report.theme.greys[9]
-    self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1])})
+  def __init__(self, report, text, width, color, helper, profile):
+    super(Formula, self).__init__(report, text, css_attrs={"color": color, "width": width}, profile=profile)
     self.add_helper(helper)
     #self._report.jsGlobal.addJs("MathJax.Hub.Config({tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}})")
 
@@ -435,7 +416,7 @@ class Formula(Html.Html):
     return 'htmlObj.innerHTML = data'
 
   def __str__(self):
-    return '<font %s>%s</font>%s' % (self.get_attrs(pyClassNames=self.defined), self.content, self.helper)
+    return '<font %s>%s</font>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -499,7 +480,7 @@ class TrafficLight(Html.Html):
       else {htmlObj.style.backgroundColor =data}'''
 
   def __str__(self):
-    return '<div id="%s"><div %s></div></div>%s' % (self.htmlId, self.get_attrs(pyClassNames=self.defined, withId=False), self.helper)
+    return '<div id="%s"><div %s></div></div>%s' % (self.htmlId, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -521,13 +502,10 @@ class TrafficLight(Html.Html):
 class ContentsTable(Html.Html):
   name, category, callFnc = 'Contents Table', None, 'contents'
   # _grpCls = CssGrpClsTable.CssClassTableContent
-  builder_name = False
 
-  def __init__(self, report, recordSet, size, width, height, profile):
+  def __init__(self, report, recordSet, width, height, profile):
     self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
-    super(ContentsTable, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
-                                        heightUnit=height[1], profile=profile)
-    self.css({"font-size": "%s%s" % (size[0], size[1])})
+    super(ContentsTable, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
 
   def add(self, text, level, name=None, script_name=None, report_name=None):
     """
@@ -571,13 +549,12 @@ class ContentsTable(Html.Html):
     #     if( $("#contents_vals_"+ htmlId).css('display') == 'none'){
     #       $(src).text("Show"); $("#contents_title_"+ htmlId).css( "text-align", 'left')}
     #     else{$(src).text("Hide") ;$("#contents_title_"+ htmlId).css( "text-align", 'center')}''')
-    size = int(self.style.get("font-size").replace("px", ""))
     return '''
       <div %(attr)s>
         <div id='contents_title_%(htmlId)s' style="text-align:center;font-size:%(size)spx;font-weight:bold">Contents [<a href='#' onclick='ChangeContents(this, "%(htmlId)s")' >hide</a>] </div>
         <div id='contents_vals_%(htmlId)s' style="margin:0;padding:0">%(contents)s</div>
-      </div> ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'contents': "<br />".join(entries),
-                    'size': size+4, 'htmlId': self.htmlId}
+      </div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'contents': "<br />".join(entries),
+                    'size': Defaults_css.font(4), 'htmlId': self.htmlId}
 
 
 class SearchResult(Html.Html):

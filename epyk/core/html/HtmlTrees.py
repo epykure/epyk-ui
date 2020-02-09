@@ -149,8 +149,8 @@ class DropDown(HtmlList.List):
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
     super(DropDown, self).__init__(report, [], size, color, width, height, htmlCode, helper, profile)
     self.allowTableFilter, self._jsStyles = [], {"clearDropDown": True, 'dropdown_submenu': {},
-      'a_dropdown_item': {'text-decoration': 'none', "color": 'inherit', 'font-size': self._report.pyStyleDfl['fontSize']}, # {"width": "100%", 'font-size': '12px', 'text-decoration': 'none', 'padding-left': "10px"},
-      "li_dropdown_item": {"text-align": "left", 'font-size': self._report.pyStyleDfl['fontSize']}}
+      'a_dropdown_item': {'text-decoration': 'none', "color": 'inherit'}, # {"width": "100%", 'font-size': '12px', 'text-decoration': 'none', 'padding-left': "10px"},
+      "li_dropdown_item": {"text-align": "left"}}
     self._vals = data
     self.css({"margin-top": "5px", "display": "inline-block"})
     self.set(self, self.val)

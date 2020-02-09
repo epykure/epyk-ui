@@ -281,7 +281,7 @@ class Components(object):
     self.rptObj.content.append(id(html_comp))
     return html_comp
 
-  def contents(self, vals=None, size=(None, "px"), width=(None, "%"), height=(None, "px"), profile=None):
+  def contents(self, vals=None, width=(None, "%"), height=(None, "px"), profile=None):
     """
     Add a content table to the page
 
@@ -290,8 +290,7 @@ class Components(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
     """
-    size = self._size(size)
-    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, vals or [], size, width, height, profile)
+    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, vals or [], width, height, profile)
     self.register(html_contents)
     return html_contents
 
