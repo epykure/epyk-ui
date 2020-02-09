@@ -10,7 +10,7 @@ from epyk.core.html import Html
 from epyk.core.js.objects import JsPivotFncs
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsTable
+# from epyk.core.css.styles import CssGrpClsTable
 
 extensions = {
   'sub-total': {'jsImports': ['pivot-sub-total']},
@@ -21,7 +21,7 @@ extensions = {
 class PivotTable(Html.Html):
   __reqJs, __reqCss = ["pivot"], ["pivot"]
   name, category, callFnc = 'Pivot Table', 'Tables', 'pivot'
-  _grpCls = CssGrpClsTable.CssStylesPivot
+  # _grpCls = CssGrpClsTable.CssStylesPivot
 
   def __init__(self, report, recordSet, rows, cols, valCol, title, tableOptions, width, height, aggOptions, rendererName,
                htmlCode, dataSrc, helper, profile):

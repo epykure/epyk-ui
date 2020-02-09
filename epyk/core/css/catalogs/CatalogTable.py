@@ -5,10 +5,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesTable
-from epyk.core.css.styles import CssStylesPivot
-from epyk.core.css.styles import CssStylesTableExcel
-from epyk.core.css.styles import CssStylesTabulator
+from epyk.core.css.styles.classes import CssStylesPivot, CssStylesTableExcel, CssStylesTable, CssStylesTabulator
 
 
 class CatalogTable(Catalog.CatalogGroup):

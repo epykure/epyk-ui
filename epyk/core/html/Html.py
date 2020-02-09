@@ -16,7 +16,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js import Js
 from epyk.core.js.html import JsHtml
 
-from epyk.core.css.categories import GrpCls
+from epyk.core.css.styles import GrpCls
 
 
 try:  # For python 3
@@ -81,14 +81,16 @@ class Html(object):
   htmlCode, dataSrc, _code, inReport, builder_name = None, None, None, True, None
 
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
-               heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None):
+               heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
     self._triggerEvents, self.profile = set(), profile
     self._report, self._styleObj = report, None # The html object ID
     self._dom, self._container, self._sub_htmls, self._js, self.helper = None, None, [], None, ""
     self.jsImports = report.jsImports
     self.cssImport = report.cssImport
-    self.attr = {'class': set([])} if self.cssCls is None else {'class': set(self.cssCls)} # default HTML attributes
+    self.attr = {'class': self.style.classList['main']}
+    if css_attrs is not None:
+      self.css(css_attrs)
     self.jsFncFrag, self._code, self._jsStyles, self._events = {}, code, {}, {"comp_ready": {}, 'doc_ready': {}}
     self.innerPyHTML = None
     if code is not None:
@@ -124,12 +126,7 @@ class Html(object):
       self.reqJs = list(getattr(self, '_%s__reqJs' % self.__class__.__name__, []))
     if hasattr(self, '_%s__reqCss' % self.__class__.__name__):
       self.reqCss = list(getattr(self, '_%s__reqCss' % self.__class__.__name__, []))
-    #if hasattr(self, '_%s__table_name' % self.__class__.__name__):
-    #  self.createObjectTables()
     self.pyCssCls = set()
-    #if css is not None:
-      # we need to do a copy of the CSS style at this stage
-    #  self.attr['css'] = dict(css)
     self.jsOnLoad, self.jsEvent, self.jsEventFnc = set(), {}, collections.defaultdict(set)
     self._vals = vals
     self.jsVal = "%s_data" % self.htmlId
@@ -511,7 +508,8 @@ class Html(object):
     :return: The python object itself
     """
     if reset:
-      self.attr['css'] = {}
+      self.style.css.attrs = {}
+      self.attr['css'] = self.style.css.attrs
     if value is None and isinstance(key, dict):
       # Do not add None value to the CSS otherwise it will break the page on the front end side
       css_vals = key if isinstance(key, dict) else {}
@@ -519,16 +517,21 @@ class Html(object):
       return self.attr['css'][key]
 
     else:
+      if isinstance(value, tuple):
+        value = value[0] if value[0] is None else "%s%s" % (value[0], value[1])
       css_vals = {key: value}
+    if not 'css' in self.attr:
+      self.attr['css'] = self.style.css.attrs
     for key, value in css_vals.items():
-      if not 'css' in self.attr:
-        # Convert the variable to something to be dump to javascript / CSS
-        if isinstance(value, str):
-          self.attr['css'] = {key: value}
-        else:
-          self.attr['css'] = {key: json.dumps(value)}
-      else:
-        self.attr['css'][key] = value
+      if isinstance(value, tuple):
+        if value[0] is None:
+          continue
+
+        value = "%s%s" % (value[0], value[1])
+      if value is None:
+        continue
+
+      self.attr['css'][key] = value if isinstance(value, str) else json.dumps(value)
     return self
 
   def tooltip(self, value, location='top'):
@@ -619,10 +622,9 @@ class Html(object):
 
     :return: A string with the dom attributes
     """
-    cssStyle, cssClass = '', ''
+    cssStyle, cssClass, classData = '', '', ''
     if 'css' in self.attr:
       cssStyle = 'style="%s"' % ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
-    classData = " ".join(self.attr['class'])
     if 'class' in self.attr and len(self.attr['class']) > 0 and classData:
       if pyClassNames is not None:
         # Need to merge in the class attribute some static classes coming from external CSS Styles sheets

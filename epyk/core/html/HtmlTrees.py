@@ -5,7 +5,7 @@ Wrapper to the HTML tree components
 from epyk.core.html import HtmlList
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsList
+# from epyk.core.css.styles import CssGrpClsList
 
 
 class OptionsTree(object):
@@ -143,7 +143,7 @@ class TreeInput(Tree):
 class DropDown(HtmlList.List):
   alias, cssCls = 'dropdown', ['btn', 'dropdown-toggle']
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
-  _grpCls = CssGrpClsList.CssClassListDropDown
+  # _grpCls = CssGrpClsList.CssClassListDropDown
   name, category, callFnc = 'DropDown Select', 'Lists', 'dropdown'
 
   def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):

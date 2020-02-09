@@ -45,6 +45,17 @@ class Catalog(object):
     return self.__ctx['button']
 
   @property
+  def chart(self):
+    """
+    CSS Classes specific to the buttons components
+
+    :rtype: CatalogButton.CatalogButton
+    """
+    if "chart" not in self.__ctx:
+      self.__ctx['chart'] = CatalogChart.CatalogChart(self.__rptObj, self.__class_list_type)
+    return self.__ctx['chart']
+
+  @property
   def date(self):
     """
 
@@ -55,23 +66,44 @@ class Catalog(object):
     return self.__ctx['date']
 
   @property
+  def text(self):
+    """
+
+    :rtype: CatalogText.CatalogText
+    """
+    if "text" not in self.__ctx:
+      self.__ctx['text'] = CatalogText.CatalogText(self.__rptObj, self.__class_list_type)
+    return self.__ctx['text']
+
+  @property
   def input(self):
     """
     """
-    if self.__inputs is None:
-      self.__inputs = CatalogInput.CatalogInput(self.__rptObj, self.__class_list_type)
-    return self.__inputs
+    if "inputs" not in self.__ctx:
+      self.__ctx['inputs'] = CatalogInput.CatalogInput(self.__rptObj, self.__class_list_type)
+    return self.__ctx['inputs']
 
   @property
   def image(self):
     """
     """
-    if self.__image is None:
-      self.__image = CatalogImg(self.__rptObj, self.__class_list_type)
-    return self.__image
+    if "image" not in self.__ctx:
+      self.__ctx['image'] = CatalogImg.CatalogImg(self.__rptObj, self.__class_list_type)
+    return self.__ctx['image']
 
-  def custom(self):
+  @property
+  def div(self):
+    """
+    """
+    if "div" not in self.__ctx:
+      self.__ctx['div'] = CatalogDiv.CatalogDiv(self.__rptObj, self.__class_list_type)
+    return self.__ctx['div']
+
+  def custom(self, classname, attrs):
     """ """
+    pass
+
+  def customFile(self, filename, path=None):
     pass
 
   def anonymous_cls(self, attrs):

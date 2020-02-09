@@ -4,12 +4,10 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesDrop
-from epyk.core.css.styles import CssStylesDiv
-from epyk.core.css.styles import CssStylesDivEvents
+from epyk.core.css.styles.classes import CssStylesDrop, CssStylesDivEvents, CssStylesDiv
 
 
-class CatalogDropAreas(Catalog.CatalogGroup):
+class CatalogDiv(Catalog.CatalogGroup):
   def basic(self):
     """  """
     return self._set_class(CssStylesDrop.CssDropFile)
@@ -70,9 +68,17 @@ class CatalogDropAreas(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesDiv.CssDivConsole)
 
-  def margin(self):
+  def margin_with_border(self):
     """  """
-    return self._set_class(CssStylesDiv.CsssDivBoxMargin)
+    return self._set_class(CssStylesDiv.CsssDivBoxMarginBorder)
+
+  def no_margin(self):
+    """  """
+    return self._set_class(CssStylesDiv.CssDivNoMargin)
+
+  def margin_vertical(self):
+    """  """
+    return self._set_class(CssStylesDiv.CsssDivBoxMarginVertical)
 
   def content_center(self):
     """  """

@@ -6,7 +6,7 @@ from epyk.core.html import Html
 from epyk.core.html import Options
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsList
+# from epyk.core.css.styles import CssGrpClsList
 
 #
 from epyk.core.js.packages import JsQuery
@@ -45,7 +45,7 @@ class Optgroup(Html.Html):
 class Select(Html.Html):
   __reqCss, __reqJs = ['select'], ['select']
   name, category, callFnc = 'Select', 'Lists', 'select'
-  _grpCls = CssGrpClsList.CssClassListSelectMin
+  # _grpCls = CssGrpClsList.CssClassListSelectMin
 
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
     super(Select, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1],

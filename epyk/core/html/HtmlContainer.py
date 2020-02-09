@@ -12,14 +12,14 @@ from epyk.core.js import JsUtils
 from epyk.core.css import Defaults
 
 # The list of CSS classes
-from epyk.core.css.styles import CssStyle
-from epyk.core.css.categories import GrpCls, CssGrpContainers
+from epyk.core.css.styles.classes import CssStyle
+from epyk.core.css.styles import GrpClsContainer
 
 
 class Panel(Html.Html):
   name, category, callFnc = 'Panel', 'Layouts', 'panel'
 
-  def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, profile):
+  def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, profile):
     if isinstance(htmlObj, list) and htmlObj:
       for obj in htmlObj:
         if hasattr(obj, 'inReport'):
@@ -34,18 +34,25 @@ class Panel(Html.Html):
     container = report.ui.div(htmlObj)
     container.inReport = False
     component.append(container)
-    super(Panel, self).__init__(report, component, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                               heightUnit=height[1], profile=profile)
+    super(Panel, self).__init__(report, component, code=htmlCode, profile=profile,
+                                css_attrs={"color": color, "width": width, "height": height})
     container.set_attrs(name="name", value="panel_%s" % self.htmlId)
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsContainer.ClassDiv(self)
+    return self._styleObj
 
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    self.val[1] += htmlObj
+    self.val.append(htmlObj)
     return self
 
   def __str__(self):
-    return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.val[0].html(), self.val[1].html(), self.helper)
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
+    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
 
 
 class PanelSplit(Html.Html):
@@ -60,7 +67,8 @@ class PanelSplit(Html.Html):
       self.left(left_obj)
     if right_obj is not None:
       self.right(right_obj)
-    self.css_left = {'flex': '0 0 auto', 'padding': '5px', 'min-width': '100px', 'width': self.left_width, 'white-space': 'nowrap'}
+    self.css_left = {'flex': '0 0 auto', 'padding': '5px', 'min-width': '100px', 'width': self.left_width,
+                     'white-space': 'nowrap'}
     self.css_right = {'flex': '0 1 auto', 'padding': '5px', 'width': '100%', 'background': self._report.theme.greys[0],
                      'border-left': '3px solid %s' % self._report.theme.success[1]}
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
@@ -113,19 +121,15 @@ class PanelSlide(Panel):
 
 
 class Div(Html.Html):
-  __reqCss, __reqJs = ['bootstrap'], ['jquery']
   name, category, callFnc = 'Simple Container', 'Layouts', 'div'
 
-  # CSS Class
-  #_grpCls = CssGrpCls.CssGrpClassBase
-
-  def __init__(self, report, htmlObj, label, color, size, width, icon, height, editable, align, padding, htmlCode, tag,
+  def __init__(self, report, htmlObj, label, color, width, icon, height, editable, align, padding, htmlCode, tag,
                helper, profile):
     if isinstance(htmlObj, list) and htmlObj:
       newHtmlObj = []
       for obj in htmlObj:
         if isinstance(obj, list) and obj:
-          newHtmlObj.append(report.ui.div(obj, label, color, size, width, icon, height, editable, align, padding,
+          newHtmlObj.append(report.ui.div(obj, label, color, width, icon, height, editable, align, padding,
                                           htmlCode, tag, helper, profile))
         else:
           newHtmlObj.append(obj)
@@ -136,7 +140,7 @@ class Div(Html.Html):
       htmlObj = newHtmlObj
     elif htmlObj is not None and hasattr(htmlObj, 'inReport'):
       htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    super(Div, self).__init__(report, htmlObj, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
+    super(Div, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"color": color, "width": width, "height": height},
                               profile=profile)
     self.htmlMaps, self.tag = {}, tag
     # Add the component predefined elements
@@ -144,8 +148,7 @@ class Div(Html.Html):
     self.add_label(label)
     self.add_helper(helper)
 
-    self.css({"color": color or "inherit", "font-size": "%s%s" % (size[0], size[1]) if size[0] is not None else 'inherit',
-              'text-align': align, "vertical-align": 'middle'})
+    self.css({'text-align': align})
     if padding is not None:
       self.css('padding', '%s' % padding)
     if editable:
@@ -163,11 +166,16 @@ class Div(Html.Html):
   def __getitem__(self, i):
     return self.val[i]
 
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsContainer.ClassDiv(self)
+    return self._styleObj
+
   def build(self, data=None, options=None, profile=False):
     if isinstance(data, dict):
       # check if there is no nested HTML components in the data
-      tmp_data = ["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()]
-      js_data = "{%s}" % ",".join(tmp_data)
+      js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()])
     else:
       js_data = JsUtils.jsConvertData(data, None)
     options, js_options = options or {}, []
@@ -181,7 +189,7 @@ class Div(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), str_div, self.helper)
+    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -306,7 +314,7 @@ class Col(Html.Html):
     Set the CSS attributes for the row container
 
     :param css_attrs: The CSS attributes
-    :param row_id: The row id for the special styles. None if it should be applied to all the rows
+    :param row_id: The row id for the special classes. None if it should be applied to all the rows
 
     :return: self to allow the chains
     """
@@ -720,7 +728,7 @@ class Form(Html.Html):
 
 class Modal(Html.Html):
   name, category, callFnc = 'Modal Popup',  'Container', 'modal'
-  _grpCls = CssGrpContainers.CssGrpClassModal
+  # _grpCls = CssGrpContainers.CssGrpClassModal
 
   def __init__(self, report, htmlObjs, submit, helper):
     super(Modal, self).__init__(report, [])

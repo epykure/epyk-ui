@@ -9,16 +9,15 @@ from epyk.core.html import Html
 from epyk.core.js.Imports import requires
 
 # The list of CSS classes
-from epyk.core.css.categories import GrpCls
-from epyk.core.css.categories import CssGrpClsText
+# from epyk.core.css.styles import GrpCls
+# from epyk.core.css.styles import CssGrpClsText
 
 
 class ExternalLink(Html.Html):
   name, category, callFnc = 'External link', 'Links', 'externallink'
-  _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, text, url, icon, helper, height, decoration, options, profile):
-    super(ExternalLink, self).__init__(report, {"text": text, "url": url}, height=height[0], heightUnit=height[1], profile=profile)
+    super(ExternalLink, self).__init__(report, {"text": text, "url": url}, css_attrs={'height': height}, profile=profile)
     # Add the internal components icon and helper
     self.add_icon(icon)
     self.add_helper(helper)
@@ -37,7 +36,8 @@ class ExternalLink(Html.Html):
     """
     Property to remove the list default style
     """
-    self.css({"text-decoration": "none", "list-style-type": 'none'})
+    self.style.css.text_decoration = None
+    self.style.list_style_type = None
     return self
 
   def build(self, data=None, options=None, profile=False):
@@ -49,7 +49,7 @@ class ExternalLink(Html.Html):
 
   def __str__(self):
     self.set_attrs(name="href", value=self.val['url'])
-    return '<a %s>%s</a>%s' % (self.get_attrs(pyClassNames=self.defined), self.val['text'], self.helper)
+    return '<a %s>%s</a>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val['text'], self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -100,11 +100,11 @@ class ExternalLink(Html.Html):
 
 class DataLink(Html.Html):
   name, category, callFnc = 'Data link', 'Links', 'linkdata'
-  _grpCls = CssGrpClsText.CssClassHref
+  # _grpCls = CssGrpClsText.CssClassHref
 
   def __init__(self, report, text, value, width, height, format, profile):
-    super(DataLink, self).__init__(report, {"text": text, 'value': value}, width=width[0], widthUnit=width[1], height=height[0],
-                                   heightUnit=height[1], profile=profile)
+    super(DataLink, self).__init__(report, {"text": text, 'value': value}, profile=profile,
+                                   css_attrs={"width": width, 'height': height})
     self.format = format
 
   @property
@@ -112,7 +112,8 @@ class DataLink(Html.Html):
     """
     Property to remove the list default style
     """
-    self.css({"text-decoration": "none", "list-style-type": 'none'})
+    self.style.css.text_decoration = None
+    self.style.css.list_style_type = None
     return self
 
   @property
@@ -123,14 +124,13 @@ class DataLink(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.get_attrs(pyClassNames=self.defined), 'val': self.val['text'], 'format': self.format}
+    return '<a %(attr)s href="#" download="Download.%(format)s" type="text/%(format)s">%(val)s</a>' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val['text'], 'format': self.format}
 
 
 class Bridge(Html.Html):
   reqCss, reqJs = [], ['jquery']
   name, category, callFnc = 'Node Bridge', 'Links', 'bridge'
-  _grpCls = GrpCls.CssGrpClassBase
-  builder_name = False
+  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, text, script_name, report_name, url, jsData, context):
     super(Bridge, self).__init__(report, text)

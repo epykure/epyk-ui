@@ -788,6 +788,8 @@ class CssMixin(object):
   @font_size.setter
   def font_size(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"font-size": val})
 
   @property

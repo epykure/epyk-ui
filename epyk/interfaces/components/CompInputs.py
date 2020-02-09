@@ -18,7 +18,7 @@ class Inputs(object):
   def __init__(self, context):
     self.context = context
 
-  def d_text(self, text="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_text(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
@@ -32,8 +32,7 @@ class Inputs(object):
     :param attrs:
     :param profile:
     """
-    size = self.context._size(size)
-    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, size, width, height, htmlCode, filter,
+    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
                                       options or {}, attrs or {}, profile)
     self.context.register(html_input)
     return html_input
@@ -188,7 +187,7 @@ class Inputs(object):
     self.context.register(html_t_area)
     return html_t_area
 
-  def input(self, text="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
@@ -206,7 +205,7 @@ class Inputs(object):
     :rtype: html.HtmlInput.Input
     :return:
     """
-    return self.d_text(text, placeholder, size, width, height, htmlCode, filter, options, attrs, profile)
+    return self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
 
   def checkbox(self, flag, label=None, group_name=None, size=(None, 'px'), width=(None, "%"), height=(None, "px"),
                htmlCode=None, filter=None, options=None, attrs=None, profile=None):

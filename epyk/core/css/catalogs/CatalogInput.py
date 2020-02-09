@@ -4,9 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesInput
-from epyk.core.css.styles import CssStylesLabel
-from epyk.core.css.styles import CssStylesDates
+from epyk.core.css.styles.classes import CssStylesLabel, CssStylesDates, CssStylesInput
 
 
 class CatalogInput(Catalog.CatalogGroup):

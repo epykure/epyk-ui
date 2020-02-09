@@ -1,5 +1,5 @@
 """
-Theme module for the Blue styles
+Theme module for the Blue classes
 
 https://htmlcolorcodes.com/color-chart/material-design-color-chart/
 """

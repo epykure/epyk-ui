@@ -16,22 +16,15 @@ from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
-from epyk.core.css.categories import GrpCls
-from epyk.core.css.categories import CssGrpClsText
-from epyk.core.css.categories import CssGrpClsImage
-from epyk.core.css.categories import CssGrpClsList
-from epyk.core.css.categories import CssGrpClsTable
 
 
 class ProgressBar(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
   name, category, callFnc = 'Progress Bar', 'Sliders', 'progressbar'
-  _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, number, total, width, height, attrs, helper, profile):
     value = number / total * 100
-    super(ProgressBar, self).__init__(report, value, width=width[0], widthUnit=width[1], height=height[0],
-                                      heightUnit=height[1], profile=profile)
+    super(ProgressBar, self).__init__(report, value, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self._jsStyles = {"background": self._report.theme.success[1]}
     self.attr["title"] = "%.2f%% (%s / %s)" % (value, number, total)
@@ -57,7 +50,7 @@ class ProgressBar(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -400,7 +393,7 @@ class SliderOld(Html.Html):
 
 class SkillBar(Html.Html):
   name, category, callFnc = 'Skill Bars', 'Chart', 'skillbars'
-  _grpCls = CssGrpClsTable.CssClassTable
+  # _grpCls = CssGrpClsTable.CssClassTable
 
   def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, colUrl, colTooltip, filters, profile):
     super(SkillBar, self).__init__(report, "", width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
@@ -429,7 +422,7 @@ class SkillBar(Html.Html):
       '''
 
   def __str__(self):
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), self.content)
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -525,7 +518,7 @@ class SkillBar(Html.Html):
 class ContextMenu(Html.Html):
   name, category, callFnc = 'Context Menu', None, 'contextmenu'
   source = None # The container
-  _grpCls = CssGrpClsText.CssClassTextItem
+  # _grpCls = CssGrpClsText.CssClassTextItem
 
   def __init__(self, report, recordSet, width, height, visible, profile):
     for rec in recordSet:
@@ -594,7 +587,7 @@ class ContextMenu(Html.Html):
 class OptionsBar(Html.Html):
   name, category, callFnc = 'Options', 'Event', 'optionsbar'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  _grpCls = CssGrpClsImage.CssClassIcon
+  # _grpCls = CssGrpClsImage.CssClassIcon
 
   def __init__(self, report, recordset, width, height, size, color, border_color, options):
     super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
@@ -630,27 +623,28 @@ class SignIn(Html.Html):
   builder_name = False
 
   def __init__(self, report, text, size, icon):
-    super(SignIn, self).__init__(report, text, width=size, widthUnit="px", height=size, heightUnit="px")
+    super(SignIn, self).__init__(report, text, css_attrs={"width": size, 'height': size})
     self.size, self.icon = size, icon
-    self.css({"text-align": "center", "font-size": "%s%s" % (size[0], size[1]), "padding": "5px", 'color': self._report.theme.colors[3],
-              "margin": 0, "border-radius": "%s%s" % (size[0], size[1]), "border": "1px solid %s" % self._report.theme.colors[3], 'cursor': 'pointer'})
+    self.css({"text-align": "center", "padding": "5px", 'color': self._report.theme.colors[3],
+              "margin": 0, "border-radius": "%s%s" % (size[0], size[1]),
+              "border": "1px solid %s" % self._report.theme.colors[3], 'cursor': 'pointer'})
 
   def __str__(self):
     self._report.user = "o"
     if self._report.user == 'local':
       self.style.addCls(self.icon)
-      return '<i title="Guest Mode" %(attrs)s></i>' % {'size': self.size, 'attrs': self.get_attrs(pyClassNames=self.pyStyle)}
+      return '<i title="Guest Mode" %(attrs)s></i>' % {'size': self.size, 'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
 
     return '''
       <div title="%(user)s" %(attrs)s>
         <p style="margin:auto">%(letter)s</p>
-      </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self._report.user, 'attrs': self.get_attrs(pyClassNames=self.pyStyle)}
+      </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self._report.user, 'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class Filters(Html.Html):
   name, category, callFnc = 'Multi Filter', 'Event', 'multiFilter'
   __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery', 'jquery-scrollbar']
-  _grpCls = CssGrpClsList.CssClassListFilters
+  # _grpCls = CssGrpClsList.CssClassListFilters
 
   def __init__(self, report, items, title, size, width, height, htmlCode, helper, profile):
     super(Filters, self).__init__(report, items, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)

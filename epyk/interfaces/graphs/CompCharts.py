@@ -120,7 +120,6 @@ class Graphs(object):
     return self.context.register(getattr(graph, 'Graph%s' % chartFam).Chart(self.context.rptObj, chartType, data, width,
                                                                             height, title, options, htmlCode, filters, profile))
 
-
   def d3script(self, script, aresDf=None, seriesNames=None, xAxis=None, otherDims=None, dataFncs=None, title='',
             globalFilter=None, filterSensitive=True, profile=None, dataSrc=None, xAxisOrder=None, chartOptions=None,
             width=100, widthUnit="%", height=330, heightUnit="px", url=None, htmlCode=None, d3Version=None):

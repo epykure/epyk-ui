@@ -9,8 +9,8 @@ import zipfile
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsFile
-from epyk.core.css.categories import GrpClsButton
+# from epyk.core.css.styles import CssGrpClsFile
+# from epyk.core.css.styles import GrpClsButton
 
 
 class DownloadMemoryZip(Html.Html):
@@ -51,13 +51,13 @@ class DownloadMemoryZip(Html.Html):
     self.click('''
         $.ajax({url: %(url)s, type: "POST", contentType: attr("enctype", "multipart/form-data"), data: %(archive)s, success: success})
         ''' % {'htmlId': self.htmlId, 'url': "''", 'archive': self.zf})
-    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.defined), self.val)
+    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
 
 
 class DropFile(Html.Html):
   __reqCss, __reqJs = ['bootstrap', 'font-awesome'], ['bootstrap']
   name, category, inputType, callFnc = 'Drop File Area', 'Input', "file", 'dropfile'
-  _grpCls = CssGrpClsFile.CssStylesDrop
+  #_grpCls = CssGrpClsFile.CssStylesDrop
 
   def __init__(self, report, vals, tooltip, report_name, file_type, profile):
     super(DropFile, self).__init__(report, vals, profile=profile)
@@ -103,12 +103,12 @@ class DropFile(Html.Html):
     return '''
       <div %(strAttr)s><b><i class="fas fa-cloud-upload-alt" style="font-size:20px"></i>&nbsp;&nbsp;%(vals)s</b></div>
       <input id="%(htmlId)s_report" style="display:none;" value="%(envs)s"/>
-      ''' % {'htmlId': self.htmlId, 'strAttr': self.get_attrs(pyClassNames=self.__pyStyle), 'vals': self.vals, 'envs': self.report_name}
+      ''' % {'htmlId': self.htmlId, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'vals': self.vals, 'envs': self.report_name}
 
 
 class DropConfiguration(Html.Html):
   __reqCss, __reqJs = ['bootstrap', 'font-awesome'], ['bootstrap']
-  _grpCls = CssGrpClsFile.CssStylesDrop
+  #_grpCls = CssGrpClsFile.CssStylesDrop
   name, category, inputType, callFnc = 'Drop Configuration Area', 'Input', "file", 'config'
 
   def __init__(self, report, vals, htmlCode, url, tablename):
@@ -134,4 +134,4 @@ class DropConfiguration(Html.Html):
     return '''
       <div %(strAttr)s><b><i class="fas fa-cloud-upload-alt" style="font-size:20px"></i>&nbsp;&nbsp;%(vals)s</b></div>
       <input id="%(htmlId)s_report" style="display:none;" value="%(envs)s"/>
-      ''' % {'htmlId': self.htmlId, 'strAttr': self.get_attrs(pyClassNames=self.__pyStyle), 'vals': self.vals, 'envs': self._report.run.report_name}
+      ''' % {'htmlId': self.htmlId, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'vals': self.vals, 'envs': self._report.run.report_name}

@@ -8,7 +8,7 @@ from epyk.core.html import Html
 from epyk.core.js.packages import JsDatatable
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsTable
+# from epyk.core.css.styles import CssGrpClsTable
 
 
 # The object with all the different configurations available for the table interface
@@ -32,7 +32,7 @@ extensions = {
 class DataTable(Html.Html):
   name, category, callFnc = 'Table', 'Tables', 'table'
   __reqCss, __reqJs = ['datatables', 'datatables-export'], ['datatables', 'datatables-export']
-  _grpCls = CssGrpClsTable.CssClassDataTable
+  # _grpCls = CssGrpClsTable.CssClassDataTable
 
   def __init__(self, report, records, cols, rows, header, width, height, htmlCode, options, profile):
     data, columns = [], []

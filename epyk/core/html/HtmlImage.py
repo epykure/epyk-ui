@@ -8,23 +8,23 @@ from epyk.core.html import Html
 from epyk.core.html import Options
 from epyk.core.html import Defaults
 
+from epyk.core.css import Defaults_css
+from epyk.core.css.styles import GrpClsImage
+
 # The list of Javascript classes
 from epyk.core.js.html import JsHtml
-
-# The list of CSS classes
-from epyk.core.css.categories import CssGrpClsImage
 
 
 class Image(Html.Html):
   name, category, callFnc = 'Picture', 'Image', 'img'
-  _grpCls = CssGrpClsImage.CssClassImage
+  # _grpCls = CssGrpClsImage.CssClassImage
 
   def __init__(self, report, image, path, align, htmlCode, width, height, profile, options):
     if path is None:
       path = Defaults.SERVER_PATH if report.run.report_name is None else "%s/%s" % (Defaults.SERVER_PATH, report.run.report_name)
-    super(Image, self).__init__(report, {'path': path, 'image': image}, code=htmlCode, width=width[0], widthUnit=width[1],
-                                height=height[0], heightUnit=height[1], profile=profile)
-    self.css({'margin': '5px 5px 5px 0', 'display': 'block'})
+    super(Image, self).__init__(report, {'path': path, 'image': image}, code=htmlCode, profile=profile,
+                                css_attrs={"width": width, "height": height})
+    # self.css({'margin': '5px 5px 5px 0', 'display': 'block'})
     self._jsStyles = options
     if align is not None:
       self.css({"text-align": align})
@@ -39,7 +39,7 @@ class Image(Html.Html):
 
   def __str__(self):
     self.attr["src"] = "%(path)s/%(image)s" % self.val
-    return '<img %s></img>%s' % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return '<img %s></img>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -63,7 +63,7 @@ class Image(Html.Html):
 class AnimatedImage(Html.Html):
   name, category, callFnc = 'Animated Picture', 'Images', 'animatedimg'
   __reqJs, cssCls = ['jquery'], ['view']
-  _grpCls = CssGrpClsImage.CssClassImageAnimated
+  # _grpCls = CssGrpClsImage.CssClassImageAnimated
 
   def __init__(self, report, image, text, title, url, path, width, height, profile):
     if path is None:
@@ -90,7 +90,7 @@ class AnimatedImage(Html.Html):
 
 class ImgCarrousel(Html.Html):
   name, category, callFnc = 'Carrousel', 'Images', 'carrousel'
-  _grpCls = CssGrpClsImage.CssClassImageCarrousel
+  # _grpCls = CssGrpClsImage.CssClassImageCarrousel
 
   def __init__(self, report, images, path, width, height, profile):
     if path is None:
@@ -139,11 +139,9 @@ class Icon(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Icon', 'Images', 'icon'
 
-  def __init__(self, report, value, size, width, height, tooltip, profile):
-    super(Icon, self).__init__(report, value, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
+  def __init__(self, report, value, width, height, color, tooltip, profile):
+    super(Icon, self).__init__(report, value, css_attrs={"color": color, "width": width, "height": height},
                                profile=profile)
-    self.css({'vertical-align': 'middle', "display": 'inline-block', "margin": "auto 0", "padding": "auto 0",
-              "font-size": "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
     self.attr['class'].add(value)
     self.attr['aria-hidden'] = 'true'
     if tooltip is not None:
@@ -165,6 +163,16 @@ class Icon(Html.Html):
       self._dom = JsHtml.JsHtmlIcon(self, report=self._report)
     return self._dom
 
+  @property
+  def style(self):
+    """
+
+    :rtype: GrpClsImage.ClassIcon
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsImage.ClassIcon(self)
+    return self._styleObj
+
   def hover_colors(self, color_hover, color_out=None):
     """
     Change the color of the button background when the mouse is hover
@@ -185,7 +193,7 @@ class Icon(Html.Html):
     return self
 
   def click(self, jsFncs, profile=False):
-    self.css({"cursor": 'pointer'})
+    self.style.css.cursor = "pointer"
     return super(Icon, self).click(jsFncs, profile)
 
   @property
@@ -194,15 +202,15 @@ class Icon(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<i %s></i>' % (self.get_attrs(pyClassNames=self.defined))
+    return '<i %s></i>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
 class Emoji(Html.Html):
   name, category, callFnc = 'Emoji', 'Images', 'emoji'
 
-  def __init__(self, report, symbole, size, top, profile):
+  def __init__(self, report, symbole, top, profile):
     super(Emoji, self).__init__(report, symbole, profile=profile)
-    self.css({'margin-top': '%s%s' % (top[0], top[1]), 'font-size': "%s%s" % (size[0], size[1])})
+    self.style.css.margin_top = '%s%s' % (top[0], top[1])
 
   @property
   def _js__builder__(self):
@@ -227,44 +235,38 @@ class Emoji(Html.Html):
     return self._dom
 
   def __str__(self):
-    return '<p %s>%s</p>' % (self.get_attrs(pyClassNames=self.defined), self.val)
+    return '<p %s>%s</p>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
 
 
 class Badge(Html.Html):
   name, category, callFnc = 'Badge', 'Images', 'badge'
   __reqCss = ['bootstrap', 'font-awesome']
-  builder_name = False
 
-  def __init__(self, report, text, label, icon, size, background_color, color, url, tooltip, options, profile):
-    super(Badge, self).__init__(report, None, profile=profile)
+  def __init__(self, report, text, label, icon, background_color, color, url, tooltip, options, profile):
+    super(Badge, self).__init__(report, None, css_attrs={"color": color, 'background-color': background_color},
+                                profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     self.options = Options.OptionsBadge(self, options)
     if self.options.badge_position == 'left':
-      self.add_icon(icon, css={"float": 'None', "font-size": '%s%s' % (size[0] + 8, size[1])}, position="after")
+      self.add_icon(icon, css={"float": 'None', "font-size": Defaults_css.font(5)}, position="after")
     else:
-      self.add_icon(icon, css={"float": 'left', "font-size": '%s%s' % (size[0] + 8, size[1])})
+      self.add_icon(icon, css={"float": 'left', "font-size": Defaults_css.font(5)})
     self.link = None
     if url is not None:
       self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
+          "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": Defaults_css.font()})
       self.link.inReport = False
     else:
-      self.link = self._report.ui.text(text, size=size).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": "%spx" % (size[0] + 4)})
+      self.link = self._report.ui.text(text).css({"color": "inherit", 'display': 'inline-block',
+          "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": Defaults_css.font()})
     self.link.css(self.options.badge_css)
     self.link.inReport = False
-    # Update the CSS Style of the component
-    color = 'inherit' if color is None else color
-    if background_color is not None:
-      self.css({'background-color': background_color})
-    self.css({'color': color, 'padding': "1px 3px", 'margin': '1px 1px 1px 2px',
-              "vertical-align": "bottom", 'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit'})
     self.attr['class'].add("badge") # From bootstrap
     if tooltip is not None:
       self.tooltip(tooltip)
 
   def __str__(self):
     if self.link is not None:
-      return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.defined), self.link)
+      return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)
 
-    return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.defined), self.link)
+    return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)

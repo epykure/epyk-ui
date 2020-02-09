@@ -4,7 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesHref
+from epyk.core.css.styles.classes import CssStylesHref
 
 
 class CatalogLink(Catalog.CatalogGroup):

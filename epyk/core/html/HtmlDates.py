@@ -8,16 +8,16 @@ from epyk.core.html import Html
 from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
-from epyk.core.css.categories import GrpCls
+from epyk.core.css.styles import GrpCls
 
 
 class DatePicker(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   cssCls = ["datepicker"]
   name, category, callFnc = 'Date Picker', 'Dates', 'date'
-  _grpCls = GrpCls.CssGrpClassBase
+  # _grpCls = GrpCls.CssGrpClassBase
 
-  def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
+  def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
     dfltOptions = {'dateFormat': 'yy-mm-dd'}
     dfltOptions.update(options)
     super(DatePicker, self).__init__(report, {"value": value, "options": dfltOptions}, htmlCode=htmlCode, profile=profile)
@@ -31,7 +31,7 @@ class DatePicker(Html.Html):
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto',
-              "font-size": "%s%s" % (size[0], size[1]), 'margin-top': '2px'})
+              'margin-top': '2px'})
 
   def selectable(self, dts):
     """
@@ -88,7 +88,7 @@ class DatePicker(Html.Html):
 class TimePicker(Html.Html):
   __reqCss, __reqJs = ['timepicker'], ['timepicker']
   name, category, callFnc = 'Time Picker', 'Dates', 'date'
-  _grpCls = GrpCls.CssGrpClassBase
+  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, value, label, icon, color, size, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
@@ -157,7 +157,7 @@ class TimePicker(Html.Html):
 
 class CountDownDate(Html.Html):
   name, category, callFnc = 'Countdown', 'Dates', 'countdown'
-  _grpCls = GrpCls.CssGrpClassBase
+  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile):
     super(CountDownDate, self).__init__(report, yyyy_mm_dd, code=htmlCode, width=width[0], widthUnit=width[1],

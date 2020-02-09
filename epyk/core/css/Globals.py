@@ -1,8 +1,8 @@
 """
-CSS Module in charge of defining the global styles
+CSS Module in charge of defining the global classes
 """
 
-from epyk.core.css.styles import CssStyle
+from epyk.core.css.styles.classes import CssStyle
 
 
 class Overflow(object):

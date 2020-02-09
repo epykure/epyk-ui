@@ -1,5 +1,5 @@
 """
-Theme module for the Red styles
+Theme module for the Red classes
 """
 
 from epyk.core.css.themes import Theme

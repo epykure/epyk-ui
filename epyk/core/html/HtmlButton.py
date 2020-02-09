@@ -12,23 +12,18 @@ from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
 
 # The list of CSS classes
-from epyk.core.css.categories import GrpClsButton
+from epyk.core.css.styles import GrpClsButton
+from epyk.core.css import Defaults_css
 
 
 class Button(Html.Html):
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Button', 'buttons', 'button'
 
-  def __init__(self, report, text, icon, size, width, height, htmlCode, tooltip, profile, options):
-    super(Button, self).__init__(report, text, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                 heightUnit=height[1], profile=profile)
-    # Add the component icon
-    self.add_icon(icon, css={"font-size": '10px'})
-
-    #
-    self.css({"cursor": 'pointer', 'font-size': "%s%s" % (size[0], size[1])})
+  def __init__(self, report, text, icon, width, height, color, htmlCode, tooltip, profile, options):
+    super(Button, self).__init__(report, text, code=htmlCode, profile=profile,
+                                 css_attrs={"color": color, "width": width, "height": height})
+    self.add_icon(icon, css={"font-size": '%s%s' % (Defaults_css.Font.size-2, Defaults_css.Font.unit)})
     self.options = Options.OptionsButton(self, options)
-
     if tooltip is not None:
       self.tooltip(tooltip)
     self.set_attrs(name="data-count", value=0)
@@ -105,7 +100,7 @@ class Button(Html.Html):
 
     :param color:
     """
-    self.css({"border": "1px solid %s" % color})
+    self.style.css.border = "1px solid %s" % color
     self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)
     self.set_attrs(name="onmouseout", value="this.style.backgroundColor=\'white\';this.style.color=\'%s\';" % color)
     return self
@@ -421,16 +416,15 @@ class IconEdit(Html.Html):
   name, category, callFnc = 'Icon', 'Icons', 'iconEdit'
   cssCls = ["fa-layers", "fa-fw"]
 
-  def __init__(self, report, position, icon, text, size, tooltip, width, height, htmlCode, profile):
-    super(IconEdit, self).__init__(report, '', code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                   heightUnit=height[1], profile=profile)
+  def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, profile):
+    super(IconEdit, self).__init__(report, '', code=htmlCode, css_attrs={"width": width, 'height': height}, profile=profile)
     if tooltip is not None:
       self.tooltip(tooltip)
     # Add the internal components icons and helper
     self.add_span(text, css=False)
     if text is not None:
       report.ui.texts.span.css({"float": 'right'})
-    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': '%s%s' % (size[0], size[1])})
+    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()})
     self.css({"margin": "5px 0", "float": position or 'left', 'cursor': 'pointer'})
 
   def __str__(self):
@@ -439,9 +433,9 @@ class IconEdit(Html.Html):
 
 class Buttons(Html.Html):
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, options, profile):
-    super(Buttons, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                  heightUnit=height[1], profile=profile)
+  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
+    super(Buttons, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height, 'color': color},
+                                  profile=profile)
     self.row = []
     for b in data:
       bt = report.ui.button(b, options={"group": "group_%s" % self.htmlId}).css({"margin-right": '5px'})

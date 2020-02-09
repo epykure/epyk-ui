@@ -7,7 +7,7 @@ import json
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsTable
+# from epyk.core.css.styles import CssGrpClsTable
 
 
 class Row(Html.Html):
@@ -47,14 +47,14 @@ class Cell(Html.Html):
 
   def __str__(self):
     if self.is_header:
-      return "<th %s>%s</th>" % (self.get_attrs(pyClassNames=self.defined), self.content)
+      return "<th %s>%s</th>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
 
-    return "<td %s>%s</td>" % (self.get_attrs(pyClassNames=self.defined), self.content)
+    return "<td %s>%s</td>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
 
 
 class Bespoke(Html.Html):
   name, category, callFnc = 'Basic', 'Tables', 'basic'
-  _grpCls = CssGrpClsTable.CssClassTableBespoke
+  # _grpCls = CssGrpClsTable.CssClassTableBespoke
 
   def __init__(self, report, recordSet, cols, rows, width, height, htmlCode, options, profile):
     data = []
@@ -149,12 +149,12 @@ class Bespoke(Html.Html):
 
   def __str__(self):
     str_rows = [r.html() for r in self.items]
-    return "<table %s>%s</table>" % (self.get_attrs(pyClassNames=self.defined), "".join(str_rows))
+    return "<table %s>%s</table>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(str_rows))
 
 
 class Excel(Html.Html):
   name, category, callFnc = 'Excel', 'Tables', 'excel'
-  _grpCls = CssGrpClsTable.CssClassTableExcel
+  # _grpCls = CssGrpClsTable.CssClassTableExcel
 
   def __init__(self, report, recordSet, cols, rows, title, width, height, cellwidth, delimiter, htmlCode):
     self.recordSet, self.delimiter = recordSet, delimiter

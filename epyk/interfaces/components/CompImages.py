@@ -76,7 +76,7 @@ class Images(object):
     self.context.register(html_i)
     return html_i
 
-  def emoji(self, symbole=None, size=(None, 'px'), top=(20, 'px'), profile=None):
+  def emoji(self, symbole=None, top=(20, 'px'), profile=None):
     """
 
     Example
@@ -86,16 +86,14 @@ class Images(object):
     https://github.com/wedgies/jquery-emoji-picker
 
     :param symbole:
-    :param size:
     :param top:
     :param profile:
     """
-    size = self.context._size(size)
-    html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbole, size, top, profile)
+    html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbole, top, profile)
     self.context.register(html_emoji)
     return html_emoji
 
-  def icon(self, text=None, size=(None, "px"), width=(None, 'px'), height=(None, "px"), tooltip=None, profile=None):
+  def icon(self, text=None, width=(None, 'px'), height=(None, "px"), color=None, tooltip=None, profile=None):
     """
 
     Example
@@ -105,19 +103,18 @@ class Images(object):
     https://fontawesome.com/icons?m=free
 
     :param text:
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color:
     :param tooltip:
     :param profile:
     """
-    size = self.context._size(size)
-    html_icon = html.HtmlImage.Icon(self.context.rptObj, text, size=size, width=width, height=height, tooltip=tooltip,
+    html_icon = html.HtmlImage.Icon(self.context.rptObj, text, width=width, height=height, color=color, tooltip=tooltip,
                                     profile=profile)
     self.context.register(html_icon)
     return html_icon
 
-  def badge(self, text=None, label=None, size=(None, 'px'), icon=None, background_color=None, color=None, url=None,
+  def badge(self, text=None, label=None, icon=None, background_color=None, color=None, url=None,
             tooltip=None, options=None, profile=None):
     """
     Display a badge component using Bootstrap
@@ -135,7 +132,6 @@ class Images(object):
 
     :param text: The content of the badge
     :param label: Optional, The label to display close to the badge
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param icon: Optional, A String with the icon to display from font-awesome
     :param background_color: Optional, The background color of the badge
     :param color: Optional, The text color of the badge
@@ -144,10 +140,7 @@ class Images(object):
     :param options:
     :param profile: Optional, A boolean to store the performances for each components
     """
-    tmp_size = self.context._size(size)
-    if size[0] is None:
-      size = (tmp_size[0] - 3, tmp_size[1])
-    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, size, background_color, color, url,
+    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, background_color, color, url,
                                       tooltip, options or {}, profile)
     self.context.register(html_badge)
     return html_badge

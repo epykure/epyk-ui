@@ -34,7 +34,6 @@ class Forms(object):
     :param method:
     :param htmlCode:
     :param helper:
-    :return:
     """
     date = self.context.rptObj.ui.fields.today(label=htmlCode)
     date.input.set_attrs({"name": htmlCode.upper()})

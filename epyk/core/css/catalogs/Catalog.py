@@ -4,8 +4,8 @@
 
 
 class CatalogGroup(object):
-  def __init__(self, report, classListType):
-    self.__rptObj, self.__class_list_type = report, classListType
+  def __init__(self, report, class_list_yype):
+    self.__rptObj, self.__class_list_type = report, class_list_yype
 
   def _set_class(self, classObj):
     cssObj = classObj(self.__rptObj)

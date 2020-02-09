@@ -268,7 +268,7 @@ class JsPromise(object):
 
   def catch(self, jsFnc):
     """
-    
+
     :param jsFnc:
     :return:
     """

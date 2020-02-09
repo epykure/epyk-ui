@@ -5,7 +5,7 @@ Module for the HTML radio components
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsList
+# from epyk.core.css.styles import CssGrpClsList
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
@@ -61,22 +61,21 @@ class Radio(Html.Html):
     row = self._report.ui.layouts.div(self.val)
     row.css({"width": 'none'})
     row.inReport = False
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.defined), row.html(), self.helper)
+    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), row.html(), self.helper)
 
 
 class Switch(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
   name, category, callFnc = 'Switch Buttons', 'Buttons', 'switch'
-  _grpCls = CssGrpClsList.CssClassSwitch
+  # _grpCls = CssGrpClsList.CssClassSwitch
 
-  def __init__(self, report, records, label, color, size, width, height, htmlCode, profile):
-    self.width, self.jsChange, self.size = width[0], '', size
-    super(Switch, self).__init__(report, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                 heightUnit=height[1], profile=profile)
+  def __init__(self, report, records, label, color, width, height, htmlCode, profile):
+    self.width, self.jsChange = width[0], ''
+    super(Switch, self).__init__(report, records, htmlCode=htmlCode, profile=profile,
+                                 css_attrs={"width": width, "height": height, 'color': color})
     self.add_label(label) # add for
     self._clicks = {'on': [], 'off': []}
-    self.color = 'inherit' if color is None else color
-    self.css({"display": 'inline-block'})
+    # self.css({"display": 'inline-block'})
     self.switch = self.dom.querySelector("label")
 
   @property
@@ -104,4 +103,4 @@ class Switch(Html.Html):
         <input type="checkbox"/>
         <label style="width:50px;display:inline-block" for="switch">&nbsp;</label>
         <p style="display:inline-block;margin-left:3px;font-weight:bold" title="%s">%s</p>
-      </div>''' % (self.get_attrs(pyClassNames=self.defined), self.val.get('text', ''), self.val['off'])
+      </div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val.get('text', ''), self.val['off'])

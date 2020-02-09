@@ -15,8 +15,7 @@ from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsInput
-from epyk.core.css.categories import GrpCls
+from epyk.core.css.styles import GrpInput
 
 
 class Output(Html.Html):
@@ -28,15 +27,19 @@ class Output(Html.Html):
 
 class Input(Html.Html):
   name, category, callFnc = 'Input', 'Inputs', 'input'
-  _grpCls = CssGrpClsInput.CssClassInput
 
-  def __init__(self, report, text, placeholder, size, width, height, htmlCode, filter, options, attrs, profile):
-    super(Input, self).__init__(report, text, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                heightUnit=height[1], globalFilter=filter, profile=profile, options=options)
+  def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+    super(Input, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
+                                globalFilter=filter, profile=profile, options=options)
     value = text['value'] if isinstance(text, dict) else text
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
     self.set_attrs(attrs=attrs)
-    self.css({"font-size": "%s%s" % (size[0], size[1])})
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpInput.ClassInput(self)
+    return self._styleObj
 
   @property
   def _js__builder__(self):
@@ -117,15 +120,14 @@ class Input(Html.Html):
     return self
 
   def __str__(self):
-    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.pyStyle)}
+    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class InputTime(Input):
   name, callFnc = 'Input Time', 'input'
   __reqCss, __reqJs = ['timepicker'], ['timepicker']
-  _grpCls = CssGrpClsInput.CssClassTimePicker
 
-  def __init__(self, report, text, placeholder, size, width, height, htmlCode, filter, options, attrs, profile):
+  def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     if text is None:
       text = {"value": str(datetime.datetime.now()).split(" ")[1].split(".")[0]}
     elif isinstance(text, str):
@@ -133,7 +135,7 @@ class InputTime(Input):
     if 'options' not in text:
       text['options'] = {'timeFormat': 'HH:mm:ss'}
       text['options']["_change"] = []
-    super(InputTime, self).__init__(report, text, placeholder, size, width, height, htmlCode, filter, options, attrs, profile)
+    super(InputTime, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
 
   @property
   def dom(self):
@@ -160,17 +162,17 @@ class InputTime(Input):
   def __str__(self):
     # Javascript builder is mandatory for this object
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.pyStyle)}
+    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class InputDate(Input):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, callFnc = 'Input Time', 'input'
   cssCls = ["datepicker"]
-  _grpCls = CssGrpClsInput.CssClassDatePicker
+  # _grpCls = CssGrpClsInput.CssClassDatePicker
 
-  def __init__(self, report, records, placeholder, size, width, height, htmlCode, filter, options, attrs, profile):
-    super(InputDate, self).__init__(report, records, placeholder, size, width, height, htmlCode, filter, options, attrs, profile)
+  def __init__(self, report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+    super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile)
 
   @property
   def dom(self):
@@ -201,11 +203,11 @@ class InputDate(Input):
   def __str__(self):
     # Javascript builder is mandatory for this object
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.pyStyle)}
+    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class InputInteger(Input):
-  _grpCls = CssGrpClsInput.CssClassInputInteger
+  # _grpCls = CssGrpClsInput.CssClassInputInteger
   name, callFnc = 'Input Number', 'input'
 
   def quantity(self):
@@ -218,16 +220,16 @@ class InputInteger(Input):
 
 class InputRange(Input):
   name, callFnc = 'Input Range', 'input'
-  _grpCls = GrpCls.CssGrpClass
+  # _grpCls = GrpCls.CssGrpClass
 
-  def __init__(self, report, text, min, max, step, placeholder, size, width, height, htmlCode, filter, options, attrs, profile):
-    super(InputRange, self).__init__(report, text, placeholder, size, width, height, htmlCode, filter, options,
+  def __init__(self, report, text, min, max, step, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+    super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options,
                                      attrs, profile)
 
     #
     self.input = report.ui.inputs.input(text, width=(None, "%"), placeholder=placeholder).css({"vertical-align": 'middle'})
     self.input.inReport = False
-    self.input.pyStyle = CssGrpClsInput.CssClassInputRange(self)
+    # self.input.pyStyle = CssGrpClsInput.CssClassInputRange(self)
     self.append_child(self.input)
     #
     self.output = self._report.ui.inputs._output(text).css({"margin-left": '5px', 'color': self._report.theme.success[1]})
@@ -239,13 +241,12 @@ class InputRange(Input):
 
   def __str__(self):
     self.output.css({"display": 'inline-block'})
-    return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.pyStyle)}
+    return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class Field(Html.Html):
-  def __init__(self, report, input, label, placeholder, size, icon, width, height, htmlCode, helper, profile):
-    super(Field, self).__init__(report, "", code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                     heightUnit=height[1], profile=profile)
+  def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, profile):
+    super(Field, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     # Add the component predefined elements
     self.add_label(label)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
@@ -265,7 +266,7 @@ class Field(Html.Html):
 
     :return: A Javascript Dom object
 
-    :rtype: JsHtml.JsHtml
+    :rtype: JsHtmlField.JsHtmlFields
     """
     if self._dom is None:
       self._dom = JsHtmlField.JsHtmlFields(self, report=self._report)
@@ -278,61 +279,60 @@ class Field(Html.Html):
 
 class FieldInput(Field):
 
-  def __init__(self, report, value, label, placeholder, size, icon, width, height, htmlCode, helper, profile):
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.input(value, width=(None, "%"), placeholder=placeholder)
-    super(FieldInput, self).__init__(report, input, label, placeholder, size, icon, width, height, htmlCode, helper, profile)
+    super(FieldInput, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldRange(Field):
 
-  def __init__(self, report, value, min, max, step, label, placeholder, size, icon, width, height, htmlCode, helper, profile):
+  def __init__(self, report, value, min, max, step, label, placeholder, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.d_range(value, min=min, max=max, step=step, width=(None, "%"), placeholder=placeholder)
-    super(FieldRange, self).__init__(report, input, label, placeholder, size, icon, width, height, htmlCode, helper, profile)
+    super(FieldRange, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldCheckBox(Field):
-  def __init__(self, report, value, label, size, icon, width, height, htmlCode, helper, profile):
+  def __init__(self, report, value, label, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.checkbox(value, width=(None, "%"))
-    super(FieldCheckBox, self).__init__(report, input, label, "", size, icon, width, height, htmlCode, helper, profile)
+    super(FieldCheckBox, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, profile)
 
 
 class FieldInteger(Field):
 
-  def __init__(self, report, value, label, placeholder, size, icon, width, height, htmlCode, helper, profile):
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.d_int(value, width=(None, "%"), placeholder=placeholder)
-    super(FieldInteger, self).__init__(report, input, label, placeholder, size, icon, width, height, htmlCode, helper, profile)
+    super(FieldInteger, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldPassword(Field):
-  def __init__(self, report, value, label, placeholder, size, icon, width, height, htmlCode, helper, profile):
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.password(value, width=(None, "%"), placeholder=placeholder)
-    super(FieldPassword, self).__init__(report, input, label, placeholder, size, icon, width, height, htmlCode, helper, profile)
+    super(FieldPassword, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldTextArea(Field):
-  def __init__(self, report, value, label, placeholder, size, icon, width, height, htmlCode, helper, profile):
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.textarea(value, width=(100, "%"), placeholder=placeholder)
-    super(FieldTextArea, self).__init__(report, input, label, placeholder, size, icon, width, height, htmlCode, helper, profile)
+    super(FieldTextArea, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldSelect(Field):
-  def __init__(self, report, value, label, size, icon, width, height, htmlCode, helper, profile):
+  def __init__(self, report, value, label, icon, width, height, htmlCode, helper, profile):
     input = report.ui.select(value, width=(100, "%"))
-    super(FieldSelect, self).__init__(report, input, label, "", size, icon, width, height, htmlCode, helper, profile)
+    super(FieldSelect, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, profile)
 
 
 class Checkbox(Html.Html):
   name, category, callFnc = 'Checkbox', 'Inputs', 'checkbox'
-  _grpCls = CssGrpClsInput.CssClassInput
+  # _grpCls = CssGrpClsInput.CssClassInput
 
-  def __init__(self, report, flag, label, group_name, size, width, height, htmlCode, filter, options, attrs, profile):
-    super(Checkbox, self).__init__(report, {"value": flag, 'text': label}, htmlCode=htmlCode, width=width[0],
-                                   widthUnit=width[1], height=height[0], heightUnit=height[1], globalFilter=filter,
+  def __init__(self, report, flag, label, group_name, width, height, htmlCode, filter, options, attrs, profile):
+    super(Checkbox, self).__init__(report, {"value": flag, 'text': label}, htmlCode=htmlCode,
+                                   css_attrs={"width": width, "height": height}, globalFilter=filter,
                                    profile=profile, options=options)
     self.set_attrs(attrs={"type": "checkbox"})
     self.set_attrs(attrs=attrs)
-    self.css({"font-size": "%s%s" % (size[0], size[1]), "cursor": 'pointer', 'display': 'inline-block',
-              'vertical-align': 'middle', 'margin-left': '2px'})
+    self.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'margin-left': '2px'})
 
   @property
   def _js__builder__(self):
@@ -342,15 +342,15 @@ class Checkbox(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<input %(strAttr)s>' % {'strAttr': self.get_attrs(pyClassNames=self.defined)}
+    return '<input %(strAttr)s>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class Radio(Html.Html):
   name, category, callFnc = 'Radio', 'Inputs', 'radio'
 
-  def __init__(self, report, flag, label, group_name, icon, size, width, height, htmlCode, helper, profile):
-    super(Radio, self).__init__(report, {"value": flag, 'text': label}, htmlCode=htmlCode, width=width[0], widthUnit=width[1],
-                                height=height[0], heightUnit=height[1], profile=profile)
+  def __init__(self, report, flag, label, group_name, icon, width, height, htmlCode, helper, profile):
+    super(Radio, self).__init__(report, {"value": flag, 'text': label}, htmlCode=htmlCode,
+                                         css_attrs={"width": width, 'height': height}, profile=profile)
     self.add_input("", position="before", css={"width": 'none', "vertical-align": 'middle'})
     self.add_label(label, position="after", css={"display": 'inline-block', "width": "None", 'float': 'none'})
     self.input.inReport = False
@@ -360,8 +360,7 @@ class Radio(Html.Html):
     if group_name is not None:
       self.input.set_attrs(name="name", value=group_name)
     self.input.set_attrs(attrs={"type": "radio"})
-    self.input.css({"font-size": "%s%s" % (size[0], size[1]), "cursor": 'pointer', 'display': 'inline-block',
-                    'vertical-align': 'middle', 'min-width': 'none'})
+    self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
     self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
 
@@ -373,18 +372,17 @@ class Radio(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.defined)}
+    return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class TextArea(Html.Html):
   name, category, callFnc = 'Text Area', 'Inputs', 'textArea'
-  _grpCls = CssGrpClsInput.CssClassTextArea
+  # _grpCls = CssGrpClsInput.CssClassTextArea
 
-  def __init__(self, report, text, width, rows, placeholder, size, background_color, htmlCode, options, profile):
-    super(TextArea, self).__init__(report, text, htmlCode=htmlCode, width=width[0], widthUnit=width[1], profile=profile)
+  def __init__(self, report, text, width, rows, placeholder, background_color, htmlCode, options, profile):
+    super(TextArea, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width}, profile=profile)
     self.width, self.rows, self.backgroundColor = width, rows, background_color
-    self.css({"font-size": "%s%s" % (report.style.defaults.font.size, report.style.defaults.font.unit),
-              "font-family": report.style.defaults.font.family})
+    self.css({"font-family": report.style.defaults.font.family})
     if not options.get("selectable", True):
       self.attr['onclick'] = "this.blur();this.select()"
       options["readOnly"] = True
@@ -392,7 +390,6 @@ class TextArea(Html.Html):
 
     options.update({"rows": rows, "placeholder": placeholder or ""})
     self.set_attrs(attrs=options)
-    self.css({"font-size": "%s%s" % (size[0], size[1])})
 
   def jsAppend(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
     return "%s.append(%s+ '\\r\\n')" % (self.jqId, self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc))
@@ -409,11 +406,10 @@ class TextArea(Html.Html):
 
 class Search(Html.Html):
   name, category, callFnc = 'Search', 'Inputs', 'search'
-  _grpCls = GrpCls.CssGrpClassBase
+  # _grpCls = GrpCls.CssGrpClassBase
 
-  def __init__(self, report, text, placeholder, color, size, height, htmlCode, tooltip, extensible, profile):
-    self.size = "%s%s" % (size[0], size[1])
-    super(Search, self).__init__(report, "", htmlCode=htmlCode, height=height[0], heightUnit=height[1], profile=profile)
+  def __init__(self, report, text, placeholder, color, height, htmlCode, tooltip, extensible, profile):
+    super(Search, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"height": height}, profile=profile)
     self.color = self._report.theme.colors[-1] if color is None else color
     self.css({"display": "inline-block", "margin-bottom": '2px'})
     #
@@ -460,4 +456,4 @@ class Search(Html.Html):
     return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s } " % {"jsFnc": JsUtils.jsConvertFncs(jsFncs, toStr=True)}], profile=profile)
 
   def __str__(self):
-    return '<div %(attr)s></div>' % {"attr": self.get_attrs(pyClassNames=self.defined)}
+    return '<div %(attr)s></div>' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes())}

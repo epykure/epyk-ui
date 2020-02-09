@@ -6,13 +6,13 @@
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsInput
+# from epyk.core.css.styles import CssGrpClsInput
 
 
 class Popup(Html.Html):
   __reqCss, __reqJs = ['bootstrap', 'jquery-scrollbar'], ['jquery', 'jquery-scrollbar']
   name, category, callFnc = 'Popup Container', 'Container', 'popup'
-  _grpCls = CssGrpClsInput.CssClassPopup
+  # _grpCls = CssGrpClsInput.CssClassPopup
 
   def __init__(self, report, htmlObj, title, color, size, width, height, withBackground, draggable, margin, profile):
     super(Popup, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],

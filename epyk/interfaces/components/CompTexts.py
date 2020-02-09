@@ -11,7 +11,7 @@ class Texts(object):
   def __init__(self, context):
     self.context = context
 
-  def text(self, text="", size=(None, "px"), color=None, align='left', width=(100, "%"), height=(None, "px"),
+  def text(self, text="", color=None, align='left', width=(100, "%"), height=(None, "px"),
            htmlCode=None, tooltip=None, options=None, helper=None, profile=None):
     """
     Add the HTML text component to the page
@@ -23,7 +23,6 @@ class Texts(object):
     https://www.w3schools.com/tags/tag_font.asp
 
     :param text: The string value to be displayed in the component
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -38,13 +37,12 @@ class Texts(object):
     """
     if not isinstance(width, tuple):
       width = (width, 'px')
-    size = self.context._size(size)
-    text_comp = html.HtmlText.Text(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip,
+    text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip,
                                    options or {}, helper, profile)
     self.context.register(text_comp)
     return text_comp
 
-  def label(self, text=None, size=(None, "px"), color=None, align='center', width=(100, "px"), height=('auto', ""), htmlCode=None,
+  def label(self, text=None, color=None, align='center', width=(100, "px"), height=('auto', ""), htmlCode=None,
             tooltip='', profile=None, options=None):
     """
     The <label> tag defines a label for a <button>, <input>, <meter>, <output>, <progress>, <select>, or <textarea> element...
@@ -59,7 +57,6 @@ class Texts(object):
     https://www.w3schools.com/tags/tag_label.asp
 
     :param text: Optional. The string value to be displayed in the component
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -71,13 +68,12 @@ class Texts(object):
     dflt_options = {"markdown": True}
     if options is not None:
       dflt_options.update(options)
-    size = self.context._size(size)
-    html_label = html.HtmlText.Label(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip,
+    html_label = html.HtmlText.Label(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip,
                                      profile, dflt_options)
     self.context.register(html_label)
     return html_label
 
-  def span(self, text=None, size=(None, "px"), color=None, align='center', width=None, height=None, htmlCode=None,
+  def span(self, text=None, color=None, align='center', width=None, height=None, htmlCode=None,
            tooltip=None, profile=None):
     """
     The <span> tag is used to group inline-elements in a document.
@@ -93,7 +89,6 @@ class Texts(object):
     https://www.w3schools.com/tags/tag_span.asp
 
     :param text: Optional. The string value to be displayed in the component
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -106,12 +101,11 @@ class Texts(object):
       width = (Defaults.TEXTS_SPAN_WIDTH, 'px')
     if height is None:
       height = (Defaults.LINE_HEIGHT, 'px')
-    size = self.context._size(size)
-    html_label = html.HtmlText.Span(self.context.rptObj, text, size, color, align, width, height, htmlCode, tooltip, profile)
+    html_label = html.HtmlText.Span(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, profile)
     self.context.register(html_label)
     return html_label
 
-  def highlights(self, text=None, title="", icon=None, type="danger", size=(None, "px"), color=None, width=(None, "%"),
+  def highlights(self, text=None, title="", icon=None, type="danger", color=None, width=(None, "%"),
                  height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
 
@@ -126,7 +120,6 @@ class Texts(object):
     :param icon:
     :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
                  dark). Default danger
-    :param size:
     :param color:
     :param width:
     :param height:
@@ -134,13 +127,12 @@ class Texts(object):
     :param helper:
     :param profile:
     """
-    size = self.context._size(size)
-    html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, size, color, width,
+    html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, color, width,
                                           height, htmlCode, helper, profile)
     self.context.register(html_light)
     return html_light
 
-  def formula(self, text=None, size=(None, "px"), width=(100, "%"), color=None, helper=None, profile=None):
+  def formula(self, text=None, width=(100, "%"), color=None, helper=None, profile=None):
     """
     Interface to the mathjs Formulas object
 
@@ -151,18 +143,16 @@ class Texts(object):
     https://www.w3schools.com/tags/tag_font.asp
 
     :param text: Optional. The string value to be displayed in the component
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param color: Optional. The color of the text
     :param helper:
     :param profile: Optional. A flag to set the component performance storage
     """
-    size = self.context._size(size)
-    html_formula = html.HtmlTextComp.Formula(self.context.rptObj, text, size, width, color, helper, profile)
+    html_formula = html.HtmlTextComp.Formula(self.context.rptObj, text, width, color, helper, profile)
     self.context.register(html_formula)
     return html_formula
 
-  def code(self, text="", size=(None, 'px'), color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None,
+  def code(self, text="", color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None,
            options=None, helper=None, profile=None):
     """
     Python Wrapper to the Bootstrap CODE Tag
@@ -174,7 +164,6 @@ class Texts(object):
     https://v4-alpha.getbootstrap.com/content/code/
 
     :param text:
-    :param size:
     :param color:
     :param width:
     :param height:
@@ -188,13 +177,12 @@ class Texts(object):
     dflt_options = {"edit": True}
     if options is not None:
       dflt_options.update(options)
-    size = self.context._size(size)
-    html_code = html.HtmlText.Code(self.context.rptObj, text, size, color, width, height, htmlCode, dflt_options,
+    html_code = html.HtmlText.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options,
                                    helper, profile)
     self.context.register(html_code)
     return html_code
 
-  def paragraph(self, text="", size=(None, 'px'), color=None, background_color=None, border=False, width=(100, "%"),
+  def paragraph(self, text="", color=None, background_color=None, border=False, width=(100, "%"),
                 height=(None, 'px'), htmlCode=None, encoding="UTF-8", dataSrc=None, helper=None, profile=None):
     """
     Python Wrapper to the HTML P Tag
@@ -206,7 +194,6 @@ class Texts(object):
     https://www.w3schools.com/html/html_styles.asp
 
     :param text:
-    :param size:
     :param color:
     :param background_color:
     :param border:
@@ -217,13 +204,12 @@ class Texts(object):
     :param dataSrc:
     :param profile:
     """
-    size = self.context._size(size)
-    html_paragraph = html.HtmlText.Paragraph(self.context.rptObj, text, size, color, background_color, border,
+    html_paragraph = html.HtmlText.Paragraph(self.context.rptObj, text, color, background_color, border,
                                                          width, height, htmlCode, encoding, dataSrc, helper, profile)
     self.context.register(html_paragraph)
     return html_paragraph
 
-  def preformat(self, text=None, size=(None, "px"), color=None, width=(90, '%'), height=(None, 'px'),
+  def preformat(self, text=None, color=None, width=(90, '%'), height=(None, 'px'),
                 htmlCode=None, dataSrc=None, options=None, helper=None, profile=None):
     """
 
@@ -234,7 +220,6 @@ class Texts(object):
     https://www.w3schools.com/html/html_styles.asp
 
     :param text:
-    :param size:
     :param color:
     :param width:
     :param height:
@@ -247,12 +232,11 @@ class Texts(object):
     dflt_options = {"reset": True, 'markdown': True}
     if options is not None:
       dflt_options.update(options)
-    size = self.context._size(size)
-    html_pre = html.HtmlText.Pre(self.context.rptObj, text, size, color, width, height, htmlCode, dataSrc, dflt_options, helper, profile)
+    html_pre = html.HtmlText.Pre(self.context.rptObj, text, color, width, height, htmlCode, dataSrc, dflt_options, helper, profile)
     self.context.register(html_pre)
     return html_pre
 
-  def blockquote(self, text=None, author=None, size=(None, "px"), color=None, width=(None, '%'), height=(None, 'px'),
+  def blockquote(self, text=None, author=None, color=None, width=(None, '%'), height=(None, 'px'),
                  htmlCode=None, helper=None, profile=None):
     """
 
@@ -264,23 +248,18 @@ class Texts(object):
 
     :param text:
     :param author:
-    :param size:
     :param color:
     :param width:
     :param height:
     :param htmlCode:
     :param helper:
     :param profile:
-
-    :rtype: html.HtmlText.BlockQuote
-
-    :return:
     """
-    size = self.context._size(size)
-    return self.context.register(html.HtmlText.BlockQuote(self.context.rptObj, text, author, size, color, width,
-                                                          height, htmlCode, helper, profile))
+    html_blockquote = html.HtmlText.BlockQuote(self.context.rptObj, text, author, color, width, height, htmlCode, helper, profile)
+    self.context.register(html_blockquote)
+    return html_blockquote
 
-  def up_down(self, rec=None, size=(None, "px"), color=None, label=None, options=None, helper=None, profile=None):
+  def up_down(self, rec=None, color=None, label=None, options=None, helper=None, profile=None):
     """
     Up and down Text component
 
@@ -291,7 +270,6 @@ class Texts(object):
     https://fontawesome.com/
 
     :param rec:
-    :param size:
     :param color:
     :param label:
     :param options:
@@ -301,8 +279,7 @@ class Texts(object):
     dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
     if options is not None:
       dflt_options.update(options)
-    size = self.context._size(size)
-    html_up_down = html.HtmlTextComp.UpDown(self.context.rptObj, rec, size, color, label, dflt_options, helper, profile)
+    html_up_down = html.HtmlTextComp.UpDown(self.context.rptObj, rec, color, label, dflt_options, helper, profile)
     self.context.register(html_up_down)
     return html_up_down
 
@@ -336,7 +313,7 @@ class Texts(object):
     self.context.register(html_number)
     return html_number
 
-  def title(self, text=None, size=(None, 'px'), level=None, name=None, contents=None, color=None, picture=None, icon=None,
+  def title(self, text=None, level=None, name=None, contents=None, color=None, picture=None, icon=None,
             marginTop=5, htmlCode=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
 
@@ -348,7 +325,6 @@ class Texts(object):
     https://www.w3schools.com/tags/tag_hn.asp
 
     :param text:
-    :param size:
     :param level:
     :param name:
     :param contents:
@@ -366,13 +342,12 @@ class Texts(object):
     dflt_options = {"reset": True, 'markdown': False}
     if options is not None:
       dflt_options.update(options)
-    size = self.context._size(size)
-    html_title = html.HtmlText.Title(self.context.rptObj, text, size, level, name, contents, color, picture, icon,
+    html_title = html.HtmlText.Title(self.context.rptObj, text, level, name, contents, color, picture, icon,
                                      marginTop, htmlCode, width, height, align, dflt_options, profile)
     self.context.register(html_title)
     return html_title
 
-  def fieldset(self, legend="", size=(None, 'px'), width=(100, "%"), height=(None, "px"), helper=None, profile=None):
+  def fieldset(self, legend="", width=(100, "%"), height=(None, "px"), helper=None, profile=None):
     """
 
     Example
@@ -383,13 +358,11 @@ class Texts(object):
     https://www.w3schools.com/tags/tag_fieldset.asp
 
     :param legend:
-    :param size:
     :param width:
     :param height:
     :param profile:
     """
-    size = self.context._size(size)
-    html_fieldset = html.HtmlText.Fieldset(self.context.rptObj, legend, size, width=width, height=height, helper=helper,
+    html_fieldset = html.HtmlText.Fieldset(self.context.rptObj, legend, width=width, height=height, helper=helper,
                                            profile=profile)
     self.context.register(html_fieldset)
     return html_fieldset

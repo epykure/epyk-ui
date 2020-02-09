@@ -4,7 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesChart
+from epyk.core.css.styles.classes import CssStylesChart
 
 
 class CatalogChart(Catalog.CatalogGroup):

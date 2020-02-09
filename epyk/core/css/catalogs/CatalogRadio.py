@@ -4,7 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesRadio
+from epyk.core.css.styles.classes import CssStylesRadio
 
 
 class CatalogRadio(Catalog.CatalogGroup):

@@ -4,8 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesText
-from epyk.core.css.styles import CssStylesDivComms
+from epyk.core.css.styles.classes import CssStylesDivComms, CssStylesText
 
 
 class CatalogText(Catalog.CatalogGroup):
@@ -65,6 +64,10 @@ class CatalogText(Catalog.CatalogGroup):
     """ Text cannot be selected """
     return self._set_class(CssStylesText.CssTextNotSelectable)
 
+  def content_editable(self):
+    """  """
+    return self._set_class(CssStylesDivComms.CssContentEditable)
+  
 
 class CatalogComments(Catalog.CatalogGroup):
   def header(self):

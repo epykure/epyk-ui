@@ -3,7 +3,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesSelect
+from epyk.core.css.styles.classes import CssStylesSelect
 
 
 class CatalogSelect(Catalog.CatalogGroup):

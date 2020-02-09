@@ -23,11 +23,10 @@ class Layouts(object):
 
     :param count: Optional, The number of empty line to put. Default 1
     :param profile: Optional, Activate the profiler
-    :return:
     """
     return self.context.register(html.HtmlOthers.Newline(self.context.rptObj, count, profile=profile))
 
-  def hr(self, count=1, size=(None, 'px'), color=None, background_color=None, height=(None, 'px'), align=None, profile=None):
+  def hr(self, count=1, color=None, background_color=None, height=(None, 'px'), align=None, profile=None):
     """
     Wrapper around the HT html tag.
 
@@ -40,7 +39,6 @@ class Layouts(object):
     https://www.w3schools.com/tags/tag_hr.asp
 
     :param count: The number of HR tag to be added
-    :param size:
     :param color: Optional. The color code for the font
     :param background_color: Optional. The component background color
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -48,8 +46,11 @@ class Layouts(object):
     :param profile: Optional. A flag to set the component performance storage
     :return:
     """
-    size = self.context._size(size)
-    return self.context.register(html.HtmlOthers.Hr(self.context.rptObj, color, count, size, background_color, height, align, profile))
+    hr_html = self.context.rptObj.ui.div()
+    for _ in range(count):
+      hr_html += html.HtmlOthers.Hr(self.context.rptObj, background_color, height, align, profile)
+    self.context.register(hr_html)
+    return hr_html
 
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
     """
@@ -119,16 +120,15 @@ class Layouts(object):
     self.context.register(html_grid)
     return html_grid
 
-  def panel(self, htmlObjs=None, title=None, color=None, size=(None, "px"), width=(100, "%"), height=(None, "px"),
+  def panel(self, htmlObjs=None, title=None, color=None, width=(100, "%"), height=(None, "px"),
             htmlCode=None, helper=None, profile=False):
-    size = self.context._size(size)
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
-    html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs, title, color, size, width, height, htmlCode, helper, profile)
+    html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs, title, color, width, height, htmlCode, helper, profile)
     self.context.register(html_panel)
     return html_panel
 
-  def div(self, htmlObjs=None, label=None, color=None, size=(None, "px"), width=(100, "%"), icon=None, height=(None, "px"), editable=False,
+  def div(self, htmlObjs=None, label=None, color=None, width=(100, "%"), icon=None, height=(None, "px"), editable=False,
           align='left', padding=None, htmlCode=None, tag='div', helper=None, profile=None):
     """
     Example
@@ -152,10 +152,9 @@ class Layouts(object):
     :param tag:
     :param profile:
     """
-    size = self.context._size(size)
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
-    html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs or [], label, color, size, width, icon, height,
+    html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs or [], label, color, width, icon, height,
                                       editable, align, padding, htmlCode, tag, helper, profile)
     self.context.register(html_div)
     return html_div

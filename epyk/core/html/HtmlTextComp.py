@@ -8,9 +8,9 @@ import json
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.categories import GrpCls
-from epyk.core.css.categories import CssGrpClsText
-from epyk.core.css.categories import CssGrpClsTable
+from epyk.core.css.styles import GrpCls
+# from epyk.core.css.styles import CssGrpClsText
+# from epyk.core.css.styles import CssGrpClsTable
 
 
 class UpDown(Html.Html):
@@ -76,7 +76,7 @@ class UpDown(Html.Html):
 
 class TextBubble(Html.Html):
   name, category, callFnc = 'Bubble text', 'Vignets', 'bubble'
-  _grpCls = CssGrpClsText.CssClassTextBubble
+  # _grpCls = CssGrpClsText.CssClassTextBubble
 
   def __init__(self, report, recordSet, width, height, color, size, background_color, helper, profile):
     super(TextBubble, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
@@ -116,7 +116,7 @@ class TextBubble(Html.Html):
 class BlockText(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Block text', 'Rich', 'blocktext'
-  _grpCls = CssGrpClsText.CssClassTextBlock
+  # _grpCls = CssGrpClsText.CssClassTextBlock
 
   def __init__(self, report, recordSet, color, size, border, width, height, helper, profile):
     super(BlockText, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
@@ -157,7 +157,7 @@ class BlockText(Html.Html):
 class TextWithBorder(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Text with Border and Icon', 'Rich', 'textborder'
-  _grpCls = GrpCls.CssGrpClassBase
+  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, recordSet, width, height, size, align, helper, profile):
     super(TextWithBorder, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
@@ -300,7 +300,7 @@ class DocScript(Html.Html):
   Security checks are done in the script to ensure they are TAGS as open
   """
   docTypes = set(['documentation', 'code'])
-  _grpCls = GrpCls.CssGrpClassBase
+  # _grpCls = GrpCls.CssGrpClassBase
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery']
   name, category, callFnc = 'Script Documentation', 'Text', 'doc'
 
@@ -421,7 +421,7 @@ class Prism(Html.Html):
 class Formula(Html.Html):
   __reqJs = ['mathjs']
   name, category, callFnc = 'Latex Formula', 'Texts', 'formula'
-  _grpCls = CssGrpClsText.CssClassFormulas
+  # _grpCls = CssGrpClsText.CssClassFormulas
 
   def __init__(self, report, text, size, width, color, helper, profile):
     super(Formula, self).__init__(report, text, width=width[0], widthUnit=width[1], profile=profile)
@@ -455,7 +455,7 @@ class Formula(Html.Html):
 
 class TrafficLight(Html.Html):
   name, category, callFnc = 'Light', 'Rich', 'light'
-  _grpCls = GrpCls.CssGrpClassBox
+  # _grpCls = GrpCls.CssGrpClassBox
 
   def __init__(self, report, color, label, height, tooltip, helper, profile):
     # Small change to allow the direct use of boolean and none to define the color
@@ -520,7 +520,7 @@ class TrafficLight(Html.Html):
 
 class ContentsTable(Html.Html):
   name, category, callFnc = 'Contents Table', None, 'contents'
-  _grpCls = CssGrpClsTable.CssClassTableContent
+  # _grpCls = CssGrpClsTable.CssClassTableContent
   builder_name = False
 
   def __init__(self, report, recordSet, size, width, height, profile):

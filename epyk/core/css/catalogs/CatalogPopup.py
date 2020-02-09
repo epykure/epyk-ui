@@ -4,7 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesPopup
+from epyk.core.css.styles.classes import CssStylesPopup
 
 
 class CatalogPopup(Catalog.CatalogGroup):

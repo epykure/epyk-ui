@@ -14,7 +14,7 @@ class Icons(object):
   def get(self):
     return JsFontAwesome
 
-  def awesome(self, icon, text=None, tooltip=None, position=None, size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def awesome(self, icon, text=None, tooltip=None, position=None, width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, profile=None):
     """
 
@@ -23,20 +23,17 @@ class Icons(object):
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    size = self.context._size(size)
-    html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, size, tooltip, width, height, htmlCode, profile)
+    html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, profile)
     html_edit.css({"display": "inline-block", "float": position})
     self.context.register(html_edit)
     return html_edit
 
-  def edit(self, text=None, position=None, tooltip="Edit", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
-           htmlCode=None, profile=None):
+  def edit(self, text=None, position=None, tooltip="Edit", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
     """
 
     Example
@@ -45,43 +42,40 @@ class Icons(object):
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-edit', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('far fa-edit', text, position, tooltip, width, height, htmlCode, profile)
 
-  def clock(self, text=None, position=None, tooltip="Last Updated Time", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def clock(self, text=None, position=None, tooltip="Last Updated Time", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-clock', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('fas fa-clock', text, position, tooltip, width, height, htmlCode, profile)
 
-  def refresh(self, text=None, position=None, tooltip="Refresh Component", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def refresh(self, text=None, position=None, tooltip="Refresh Component", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-sync-alt', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('fas fa-sync-alt', text, position, tooltip, width, height, htmlCode, profile)
 
-  def pdf(self, text=None, position=None, tooltip="Convert to PDF", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def pdf(self, text=None, position=None, tooltip="Convert to PDF", width=(None, 'px'), height=(None, 'px'),
           htmlCode=None,  profile=None):
     """
 
@@ -90,112 +84,104 @@ class Icons(object):
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-file-pdf', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('far fa-file-pdf', text, position, tooltip, width, height, htmlCode, profile)
 
-  def plus(self, text=None, position=None, tooltip="Add line", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def plus(self, text=None, position=None, tooltip="Add line", width=(None, 'px'), height=(None, 'px'),
            htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-plus-square', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('fas fa-plus-square', text, position, tooltip, width, height, htmlCode, profile)
 
-  def excel(self, text=None, position=None, tooltip="Convert to Excel", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def excel(self, text=None, position=None, tooltip="Convert to Excel", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-file-excel', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('far fa-file-excel', text, position, tooltip, width, height, htmlCode, profile)
 
-  def download(self, text=None, position=None, tooltip="Download", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def download(self, text=None, position=None, tooltip="Download", width=(None, 'px'), height=(None, 'px'),
                htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-download', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('fas fa-download', text, position, tooltip, width, height, htmlCode, profile)
 
-  def delete(self, text=None, position=None, tooltip="Delete Component on the page", size=(None, 'px'), width=(None, 'px'),
+  def delete(self, text=None, position=None, tooltip="Delete Component on the page", width=(None, 'px'),
              height=(None, 'px'), htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-trash-alt', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('far fa-trash-alt', text, position, tooltip, width, height, htmlCode, profile)
 
-  def zoom(self, text=None, position=None, tooltip="Zoom on Component", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
+  def zoom(self, text=None, position=None, tooltip="Zoom on Component", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-search-plus', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('fas fa-search-plus', text, position, tooltip, width, height, htmlCode, profile)
 
-  def capture(self, text=None, position=None, tooltip="Save to clipboard", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def capture(self, text=None, position=None, tooltip="Save to clipboard", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-clipboard', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('far fa-clipboard', text, position, tooltip, width, height, htmlCode, profile)
 
-  def remove(self, text=None, position=None, tooltip="Remove Item", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def remove(self, text=None, position=None, tooltip="Remove Item", width=(None, 'px'), height=(None, 'px'),
              htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-times-circle', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('fas fa-times-circle', text, position, tooltip, width, height, htmlCode, profile)
 
-  def table(self, text=None, position=None, tooltip="Convert to Table", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def table(self, text=None, position=None, tooltip="Convert to Table", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
     """
 
@@ -204,49 +190,47 @@ class Icons(object):
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-table', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('fas fa-table', text, position, tooltip, width, height, htmlCode, profile)
 
-  def wrench(self, text=None, position=None, tooltip="Processing Time", size=(None, 'px'), width=(None, 'px'), height=(None, 'px'),
+  def wrench(self, text=None, position=None, tooltip="Processing Time", width=(None, 'px'), height=(None, 'px'),
              htmlCode=None, profile=None):
     """
 
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-wrench', text, position, tooltip, size, width, height, htmlCode, profile)
+    return self.awesome('fas fa-wrench', text, position, tooltip, width, height, htmlCode, profile)
 
-  def facebook(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", size=(None, 'px'), width=(25, 'px'),
+  def facebook(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
                htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-facebook-f', text, position, tooltip, size, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-facebook-f', text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
     icon.style.addCls("CssDivOnHoverBackgroundLight")
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
-  def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="Twitter", size=(None, 'px'), width=(25, 'px'),
+  def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="Twitter", width=(25, 'px'),
               htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-twitter', text, position, tooltip, size, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-twitter', text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
     icon.style.addCls("CssDivOnHoverBackgroundLight")
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
-  def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="linkedIn", size=(None, 'px'),
+  def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="linkedIn",
                width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-linkedin-in', text, position, tooltip, size, width, width, htmlCode, profile)
+    icon = self.awesome('fab fa-linkedin-in', text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
     icon.style.addCls("CssDivOnHoverBackgroundLight")
@@ -254,44 +238,45 @@ class Icons(object):
     return icon
 
   def youtube(self, text=None, url="https://www.youtube.com/", position=None, tooltip="Follow us on Youtube",
-              size=(None, 'px'), width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-youtube', text, position, tooltip, size, width, width, htmlCode, profile)
+              width=(25, 'px'), htmlCode=None, profile=None):
+    icon = self.awesome('fab fa-youtube', text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
-    icon.style.addCls("CssDivOnHoverBackgroundLight")
+    icon.style.add_classes.div.background_hover()# addCls("CssDivOnHoverBackgroundLight")
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
   def github(self, text=None, url="https://github.com/", position=None, tooltip="Go the the Github project",
-              size=(None, 'px'), width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-github', text, position, tooltip, size, width, width, htmlCode, profile)
+             width=(25, 'px'), htmlCode=None, profile=None):
+    icon = self.awesome('fab fa-github', text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
-    icon.style.addCls("CssDivOnHoverBackgroundLight")
+    icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
   def python(self, text=None, url="https://pypi.org/", position=None, tooltip="Like or package",
-              size=(None, 'px'), width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome("fab fa-python", text, position, tooltip, size, width, width, htmlCode, profile)
+             width=(25, 'px'), htmlCode=None, profile=None):
+    icon = self.awesome("fab fa-python", text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
-    icon.style.addCls("CssDivOnHoverBackgroundLight")
+    icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
   def stackoverflow(self, text=None, url="https://stackoverflow.com/", position=None, tooltip="Share your comments",
-              size=(None, 'px'), width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome("fab fa-stack-overflow", text, position, tooltip, size, width, width, htmlCode, profile)
+                    width=(25, 'px'), htmlCode=None, profile=None):
+    icon = self.awesome("fab fa-stack-overflow", text, position, tooltip, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
-    icon.style.addCls("CssDivOnHoverBackgroundLight")
+    icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
   def epyk(self, align="center", format='logo'):
     """
     Add the Epyk Icon
+
     Example
     rptObj.ui.icons.epyk()
 
@@ -308,7 +293,7 @@ class Icons(object):
     icon = self.context.rptObj.ui.img(img, path="https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images",
                                       align=align, width=width, height=height)
     icon.css({"text-align": "center", "padding": "auto"})
-    icon.style.addCls("CssDivOnHoverBackgroundLight")
+    icon.style.add_classes.div.background_hover()
     return icon
 
   def signin(self, text, size=(None, "px"), icon=None):

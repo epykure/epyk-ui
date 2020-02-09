@@ -18,7 +18,7 @@ except NameError:
 
 from epyk.core.js import Imports
 from epyk.interfaces import Components
-from epyk.core.css.categories import GrpCls
+from epyk.core.css.styles import GrpCls
 from epyk.core.css.themes import Theme
 
 from epyk.core import html

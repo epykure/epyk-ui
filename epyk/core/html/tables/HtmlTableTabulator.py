@@ -9,13 +9,13 @@ from epyk.core.html import Html
 from epyk.core.js.packages import JsTabulator
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsTable
+# from epyk.core.css.styles import CssGrpClsTable
 
 
 class DataTabulator(Html.Html):
   name, category, callFnc = 'Tabulator', 'Table', 'tabulator'
   __reqCss, __reqJs = ['tabulator'], ['tabulator']
-  _grpCls = CssGrpClsTable.CssClassTabulator
+  # _grpCls = CssGrpClsTable.CssClassTabulator
 
   def __init__(self, report, records, cols, rows, header, width, height, htmlCode, options, profile):
     self.header, columns = rows + cols, []

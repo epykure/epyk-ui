@@ -4,7 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesButton
+from epyk.core.css.styles.classes import CssStylesButton
 
 
 class CatalogButton(Catalog.CatalogGroup):

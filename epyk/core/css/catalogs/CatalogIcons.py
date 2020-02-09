@@ -4,7 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesIcon
+from epyk.core.css.styles.classes import CssStylesIcon
 
 
 class CatalogIcon(Catalog.CatalogGroup):

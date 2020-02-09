@@ -12,7 +12,7 @@ import datetime
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsText
+# from epyk.core.css.styles import CssGrpClsText
 
 from epyk.core.js.Imports import requires
 sqlalchemy = requires("sqlalchemy", reason='Missing Package', install='sqlalchemy', source_script=__file__)
@@ -66,7 +66,7 @@ def system_user_comments():
 class Comments(Html.Html):
   name, category, callFnc = 'Comment', 'Text', 'comments'
   __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery-scrollbar']
-  _grpCls = CssGrpClsText.CssClassComment
+  # _grpCls = CssGrpClsText.CssClassComment
 
   def __init__(self, report, htmlCode, recordset, title, pmts, db_service, width, height, httpCodes, readonly, profile):
     if httpCodes is None:
@@ -211,7 +211,7 @@ class Comments(Html.Html):
 class Chat(Html.Html):
   name, category, callFnc = 'Chat', 'Messaging', 'chat'
   __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery-scrollbar']
-  _grpCls = CssGrpClsText.CssClassComment
+  # _grpCls = CssGrpClsText.CssClassComment
 
   def __init__(self, report, htmlCode, title, pmts, dbService, width, height, httpCodes, readonly, profile, chatOptions):
     self.readonly, self._height = readonly, "%s%s" % (height[0], height[1])

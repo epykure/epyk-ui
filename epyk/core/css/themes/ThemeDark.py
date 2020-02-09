@@ -1,5 +1,5 @@
 """
-Theme module for the Dark styles
+Theme module for the Dark classes
 
 All the themes are following the same structure and the are all inheriting from Theme
 this will allow them to be converted to HTML to be able to check the colors.

@@ -4,7 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesList
+from epyk.core.css.styles.classes import CssStylesList
 
 
 class CatalogList(Catalog.CatalogGroup):

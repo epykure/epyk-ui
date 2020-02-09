@@ -4,12 +4,8 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles import CssStylesHr
-from epyk.core.css.styles import CssStylesCommon
-from epyk.core.css.styles import CssStylesPanel
-from epyk.core.css.styles import CssStylesDivMenuBars
-from epyk.core.css.styles import CssStylesSearch
-from epyk.core.css.styles import CssStylesScrollBar
+from epyk.core.css.styles.classes import CssStylesHr, CssStylesScrollBar
+from epyk.core.css.styles.classes import CssStylesSearch, CssStylesCommon, CssStylesDivMenuBars, CssStylesPanel
 
 
 class CatalogLayout(Catalog.CatalogGroup):

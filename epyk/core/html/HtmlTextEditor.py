@@ -8,8 +8,8 @@ from epyk.core.js import JsUtils
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.categories import GrpCls
-from epyk.core.css.categories import CssGrpClsText
+from epyk.core.css.styles import GrpCls
+# from epyk.core.css.styles import CssGrpClsText
 
 
 class OptionsConsole(object):
@@ -72,7 +72,7 @@ class Console(Html.Html):
 
 class Editor(Html.Html):
   name, category, callFnc = 'Code Editor', 'Text', 'editor'
-  _grpCls = CssGrpClsText.CssClassEditor
+  # _grpCls = CssGrpClsText.CssClassEditor
   __reqCss, __reqJs = ['codemirror', 'font-awesome'], ['codemirror', 'font-awesome']
   cssTitle = "CssTitle4"
 
@@ -342,7 +342,7 @@ class Cell(Html.Html):
 
 class Tags(Html.Html):
   name, category, callFnc = 'Tags', None, 'tags'
-  _grpCls = GrpCls.CssGrpClassBase
+  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, vals, title, icon, size, width, height, htmlCode, profile):
     super(Tags, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],

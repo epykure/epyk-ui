@@ -8,24 +8,27 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.html.entities import EntHtml4
 
 # The list of CSS classes
-from epyk.core.css.categories import GrpCls
+from epyk.core.css.styles import GrpClsLayout
 
 
 class Hr(Html.Html):
   name, category, callFnc = 'Line delimiter', 'Layouts', 'hr'
-  _grpCls = GrpCls.CssClassHr
 
-  def __init__(self, report, color, count, size, background_color, height, align, profile):
-    super(Hr, self).__init__(report, count, height=height[0], heightUnit=height[1], profile=profile)
-    if color is not None:
-      self.css('color', color)
+  def __init__(self, report, background_color, height, align, profile):
+    super(Hr, self).__init__(report, "", profile=profile, css_attrs={"height": height,
+                             'border-color': background_color or report.theme.greys[2],
+                             'background-color': background_color or report.theme.greys[2]})
     if align == "center":
-      self.css('margin', "auto")
-    self.size, self.background_color = size, background_color if background_color is not None else self._report.theme.greys[2]
+      self.style.css.margin = "auto"
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsLayout.ClassStandard(self)
+    return self._styleObj
 
   def __str__(self):
-    hr = '<hr style="height:%spx;background-color:%s">' % ("%s%s" % (self.size[0], self.size[1]), self.background_color) if self.size is not None else '<hr style="background-color:%s" />' % self.backgroundColor
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), "".join(self.val * [hr]))
+    return '<hr %s>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -85,8 +88,8 @@ class Stars(Html.Html):
     self._jsStyles = {'color': self._report.theme.success[1] if color is None else color}
     for i in range(best):
       self.add_span("", position="after", css=False)
-      self._sub_htmls[-1].style.addCls("fa fa-star")
-      self._sub_htmls[-1].css({"margin": '0', "padding": 0})
+      self._sub_htmls[-1].attr['class'].add("fa fa-star")
+      self._sub_htmls[-1].css({"margin": 0, "padding": 0})
       self._sub_htmls[-1].set_attrs(name="data-level", value=i)
       if i < val:
         self._sub_htmls[-1].css({"color": self._jsStyles['color']})
@@ -130,7 +133,7 @@ class Stars(Html.Html):
         else {span.style.color = ''}})'''
 
   def __str__(self):
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Help(Html.Html):
@@ -138,11 +141,16 @@ class Help(Html.Html):
   name, category, callFnc = 'Info', 'Rich', 'info'
 
   def __init__(self, report, val, width, profile, options):
-    super(Help, self).__init__(report, val, width=width[0], widthUnit=width[1], profile=profile)
-    self.css({"cursor": "pointer", "float": "right", 'margin': '1px 4px'})
+    super(Help, self).__init__(report, val, css_attrs={"width": width}, profile=profile)
     self.attr['class'].add("fas fa-question-circle")
     self.attr['title'] = val
     self._jsStyles = options
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsLayout.ClassHelp(self)
+    return self._styleObj
 
   @property
   def _js__builder__(self):
@@ -151,7 +159,7 @@ class Help(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<i %s></i>' % self.get_attrs()
+    return '<i %s></i>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -166,8 +174,6 @@ class Help(Html.Html):
 class Loading(Html.Html):
   name, category = 'Loading', 'Others'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  _grpCls = GrpCls.CssClassLoading
-  builder_name = False
 
   def __init__(self, report, text, color, size, options):
     super(Loading, self).__init__(report, text)

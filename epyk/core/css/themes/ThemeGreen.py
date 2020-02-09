@@ -1,5 +1,5 @@
 """
-Theme module for the Green styles
+Theme module for the Green classes
 """
 
 from epyk.core.css.themes import Theme

@@ -8,23 +8,31 @@ from epyk.core.html import Html
 from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
-from epyk.core.css.categories import CssGrpClsCharts
+from epyk.core.css.styles import GrpChart
 
 
 class Sparklines(Html.Html):
   __reqJs = ['jquery-sparklines']
   name, category, callFnc = 'sparkline', 'Charts', 'sparkline'
-  _grpCls = CssGrpClsCharts.CssClassChartsSparkline
 
   def __init__(self, report, data, chart_type, title, options):
     super(Sparklines, self).__init__(report, data)
-    self._jsStyles = {"type": chart_type}
+    self._jsStyles, self.title = {"type": chart_type}, None
     if title is not None:
       self.title = self._report.ui.title(title, level=4)
       self.title.inReport = False
     if options is not None:
       self._jsStyles.update(options)
-    self.css({"margin-top": '5px', 'display': 'inline-block'})
+
+  @property
+  def style(self):
+    """
+
+    :rtype: GrpChart.ClassBSpartlines
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpChart.ClassBSpartlines(self)
+    return self._styleObj
 
   def options(self, attrs):
     """
@@ -51,6 +59,6 @@ class Sparklines(Html.Html):
     # Javascript builder is mandatory for this object
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     if self.title is not None:
-      return "<div style='display:inline-block;text-align:center'>%s<span %s></span></div>" % (self.title, self.get_attrs(pyClassNames=self.defined))
+      return "<div style='display:inline-block;text-align:center'>%s<span %s></span></div>" % (self.title, self.get_attrs(pyClassNames=self.style.get_classes()))
 
-    return "<span %s></span>" % self.get_attrs(pyClassNames=self.defined)
+    return "<span %s>Loading..</span>" % self.get_attrs(pyClassNames=self.style.get_classes())
