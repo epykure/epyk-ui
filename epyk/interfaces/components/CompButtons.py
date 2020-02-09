@@ -241,7 +241,7 @@ class Buttons(object):
         tmpVals[0]['checked'] = True
       recordSet = tmpVals
     options = options or {'layout': 'div'}
-    html_obj = html.HtmlRadio.Radio(self.context.rptObj, recordSet, htmlCode, label, width, height, radioVisible,
+    html_obj = html.HtmlRadio.Radio(self.context.rptObj, recordSet or [], htmlCode, label, width, height, radioVisible,
                                     event, withRemoveButton, align, filters, tooltip, radioType, helper, profile)
     self.context.register(html_obj)
     return html_obj

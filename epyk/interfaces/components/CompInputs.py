@@ -226,7 +226,7 @@ class Inputs(object):
     self.context.register(html_coech)
     return html_coech
 
-  def radio(self, flag, label=None, group_name=None, icon=None, size=(None, 'px'), width=(None, "%"), height=(None, "px"),
+  def radio(self, flag, label=None, group_name=None, icon=None, width=(None, "%"), height=(None, "px"),
             htmlCode=None, helper=None, profile=None):
     """
 
@@ -239,17 +239,15 @@ class Inputs(object):
     :param flag:
     :param label:
     :param group_name:
-    :param size:
     :param width:
     :param height:
     :param htmlCode:
     :param profile:
     """
-    size = self.context._size(size)
-    html_coech = html.HtmlInput.Radio(self.context.rptObj, flag, label, group_name, icon, size, width, height, htmlCode,
+    html_radio = html.HtmlInput.Radio(self.context.rptObj, flag, label, group_name, icon, width, height, htmlCode,
                                       helper, profile)
-    self.context.register(html_coech)
-    return html_coech
+    self.context.register(html_radio)
+    return html_radio
 
   def editor(self, text="", title="", size=(None, 'px'), language='python', width=(100, "%"), height=(None, "px"), isEditable=True,
              htmlCode=None, options=None, profile=None):

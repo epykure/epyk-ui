@@ -91,6 +91,7 @@ class Switch(Html.Html):
       self._clicks['off'].extend(offFncs)
 
   def __str__(self):
+    # TODO: Change the logic to allow the update of the self.val in the Javascript
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(
       self.switch.onclick('''
         if(this.parentNode.querySelector('input').checked){%s; this.parentNode.querySelector('p').innerHTML = %s;

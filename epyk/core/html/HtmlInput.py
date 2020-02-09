@@ -356,7 +356,7 @@ class Radio(Html.Html):
     self.input.inReport = False
     if flag:
       self.input.set_attrs({"checked": json.dumps(flag)})
-    self.input.pyStyle = GrpCls.CssGrpClass(self)
+    self.input.style.clear()
     if group_name is not None:
       self.input.set_attrs(name="name", value=group_name)
     self.input.set_attrs(attrs={"type": "radio"})
