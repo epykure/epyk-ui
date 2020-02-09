@@ -468,6 +468,16 @@ class JsWindow(object):
     """ """
     return JsNumber.JsNumber("%s.scrollY" % windowId)
 
+  @property
+  def scrollMaxY(self, windowId="window"):
+    """
+    The Window.scrollMaxY read-only property returns the maximum number of pixels that the document can be scrolled vertically.
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollMaxY
+    """
+    return JsNumber.JsNumber("(%s.scrollMaxY || (document.documentElement.scrollHeight - document.documentElement.clientHeight))" % windowId)
+
   def __init__(self, src=None):
     """
 

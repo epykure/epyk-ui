@@ -425,7 +425,8 @@ class IconEdit(Html.Html):
   cssCls = ["fa-layers", "fa-fw"]
 
   def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, profile):
-    super(IconEdit, self).__init__(report, '', code=htmlCode, css_attrs={"width": width, 'height': height}, profile=profile)
+    super(IconEdit, self).__init__(report, '', code=htmlCode, profile=profile,
+                                   css_attrs={"width": width, 'height': height, 'float': 'left' if position is None else position})
     if tooltip is not None:
       self.tooltip(tooltip)
     # Add the internal components icons and helper
@@ -433,7 +434,7 @@ class IconEdit(Html.Html):
     if text is not None:
       report.ui.texts.span.css({"float": 'right'})
     self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()})
-    self.css({"margin": "5px 0", "float": position or 'left', 'cursor': 'pointer'})
+    self.css({"margin": "5px 0", 'cursor': 'pointer'})
 
   def __str__(self):
     return "<span %s></span>" % (self.get_attrs(pyClassNames=self.style.get_classes()))

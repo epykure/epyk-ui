@@ -196,7 +196,17 @@ class JsNumber(JsObject.JsObject):
     return JsNumber("%s += %s" % (self.varId, value), isPyData=False)
 
   def __sub__(self, value):
-    return JsNumber("%s -= %s" % (self.varId, value), isPyData=False)
+    return JsNumber("%s - %s" % (self.varId, value), isPyData=False)
+
+  def __iadd__(self, value):
+    # TODO: Fix this
+    self.varData = "%s += %s" % (self.varData, value)
+    return self
+
+  def __isub__(self, value):
+    # TODO: Fix this
+    self.varData = "%s -= %s" % (self.varData, value)
+    return self
 
   def __mul__(self, value):
     return JsNumber("%s *= %s" % (self.varId, value), isPyData=False)

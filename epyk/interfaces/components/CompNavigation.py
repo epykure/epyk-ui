@@ -36,23 +36,24 @@ class Navigation(object):
       self.context.rptObj.js.objects.this.hide()])
     return du
 
-  def down(self, icon="fas fa-arrow-down", tooltip=None, size=(None, "px"), width=(100, '%'), options=None, profile=False):
+  def down(self, icon="fas fa-arrow-down", tooltip=None, width=(100, '%'), options=None, profile=False):
     """
+
+    Example
+    rptObj.ui.navigation.down()
 
     :param icon:
     :param tooltip:
-    :param size:
     :param width:
     :param options:
     :param profile:
-    :return:
     """
     dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
-                                                  "border-radius": '20px', "padding": '8px', "right": '20px'})
+        "border-radius": '20px', "padding": '8px', "right": '20px', 'top': '20px'})
     dd.style.add_classes.div.background_hover()
     self.context.rptObj.js.addOnReady(
       self.context.rptObj.js.window.events.addScrollListener([
-        self.context.rptObj.js.if_(self.context.rptObj.js.window.scrollY > 50, [dd.dom.show()]).else_(dd.dom.hide())
+        self.context.rptObj.js.if_(self.context.rptObj.js.window.scrollY < (self.context.rptObj.js.window.scrollMaxY - 50), [dd.dom.show()]).else_(dd.dom.hide())
       ]))
     if tooltip is not None:
       dd.tooltip(tooltip)
@@ -112,8 +113,9 @@ class Navigation(object):
     dd = self.context.rptObj.ui.icon(icon)
     url = self.context.rptObj.ui.link(icon).css({"margin-left": "10px"})
     div = self.context.rptObj.ui.div([dd, url]).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
-                                      "border-radius": '30px', "padding": '10px 15px', "right": '20px'})
-    div.style.addCls("CssDivOnHoverWidth")
+                                      "border-radius": '30px', "padding": '10px 15px', "right": '20px', 'top': '20px',
+                                      "background-color": self.context.rptObj.theme.greys[0]})
+    div.attr['class'].add("CssDivOnHoverWidth")
     url.css({"display": 'none', "white-space": 'nowrap'})
     div.on("mouseover", [url.dom.css({"display": 'inline-block'})])
     div.on("mouseout", [url.dom.css({"display": 'none'})])
