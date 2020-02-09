@@ -29,7 +29,8 @@ class Icons(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, profile)
-    html_edit.css({"display": "inline-block", "float": position})
+    html_edit.style.css.float = position
+    html_edit.style.css.display = "inline-block"
     self.context.register(html_edit)
     return html_edit
 
@@ -212,54 +213,54 @@ class Icons(object):
 
   def facebook(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
                htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-facebook-f', text, position, tooltip, width, width, htmlCode, profile)
-    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
+    icon = self.awesome('fab fa-facebook-f', text, tooltip, position, width, width, htmlCode, profile)
+    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
   def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="Twitter", width=(25, 'px'),
               htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-twitter', text, position, tooltip, width, width, htmlCode, profile)
-    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
+    icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, htmlCode, profile)
+    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
   def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="linkedIn",
                width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-linkedin-in', text, position, tooltip, width, width, htmlCode, profile)
-    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
+    icon = self.awesome('fab fa-linkedin-in', text, tooltip, position, width, width, htmlCode, profile)
+    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
   def youtube(self, text=None, url="https://www.youtube.com/", position=None, tooltip="Follow us on Youtube",
               width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-youtube', text, position, tooltip, width, width, htmlCode, profile)
-    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
+    icon = self.awesome('fab fa-youtube', text, tooltip, position, width, width, htmlCode, profile)
+    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
     icon.style.add_classes.div.background_hover()# addCls("CssDivOnHoverBackgroundLight")
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
-  def github(self, text=None, url="https://github.com/", position=None, tooltip="Go the the Github project",
+  def github(self, text=None, url="https://github.com/", position=False, tooltip="Go the the Github project",
              width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome('fab fa-github', text, position, tooltip, width, width, htmlCode, profile)
-    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
+    icon = self.awesome('fab fa-github', text, tooltip, position, width, width, htmlCode, profile)
+    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
   def python(self, text=None, url="https://pypi.org/", position=None, tooltip="Like or package",
              width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome("fab fa-python", text, position, tooltip, width, width, htmlCode, profile)
-    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
+    icon = self.awesome("fab fa-python", text, tooltip, position, width, width, htmlCode, profile)
+    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
@@ -267,8 +268,8 @@ class Icons(object):
   def stackoverflow(self, text=None, url="https://stackoverflow.com/", position=None, tooltip="Share your comments",
                     width=(25, 'px'), htmlCode=None, profile=None):
     icon = self.awesome("fab fa-stack-overflow", text, position, tooltip, width, width, htmlCode, profile)
-    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "padding": "auto"})
-    icon.icon.css({"margin-right": "auto", "margin": "auto", "vertical-align": 'middle', 'padding-top': '2px', "color": 'blue'})
+    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
@@ -282,7 +283,7 @@ class Icons(object):
 
     :param align:
     :param format:
-    :return:
+    :rtype: html.HtmlImage.Image
     """
     if format == 'logo':
       img, width, height = "epyklogo.ico", (32, 'px'), (32, 'px')

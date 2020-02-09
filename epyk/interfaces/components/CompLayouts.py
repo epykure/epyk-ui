@@ -204,9 +204,9 @@ class Layouts(object):
     self.context.register(html_frame)
     return html_frame
 
-  def dialogs(self, recordSet=None, width=(100, "%"), height=(200, "px"), helper=None, profile=None):
+  def dialogs(self, record=None, width=(100, "%"), height=(200, "px"), helper=None, profile=None):
 
-    html_dialog = html.HtmlContainer.Dialog(self.context.rptObj, recordSet, width, height, helper, profile)
+    html_dialog = html.HtmlContainer.Dialog(self.context.rptObj, record, width, height, helper, profile)
     self.context.register(html_dialog)
     return html_dialog
 
@@ -214,8 +214,9 @@ class Layouts(object):
     """
 
     Example
-    menu = rptObj.ui.layouts.icons()
+    menu = rptObj.ui.layouts.icons(["fas fa-bell", "fas fa-calendar-check"])
     menu.icon.click([menu.icon.dom.css({"color": 'red'})])
+    menu[0].click([menu[0].dom.css({"color": 'red'})])
 
     :param icon_names:
     :param width:
@@ -231,12 +232,12 @@ class Layouts(object):
     self.context.register(html_icon)
     return html_icon
 
-  def multiFilter(self, items=None, title=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
+  def multiFilter(self, items=None, title=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None,
+                  profile=None):
     """
 
     :param items:
     :param title:
-    :param size:
     :param width:
     :param height:
     :param htmlCode:
@@ -246,9 +247,8 @@ class Layouts(object):
     :rtype: html.HtmlEvent.Filters
     :return:
     """
-    size = self.context._size(size)
     items = items or []
-    return self.context.register(html.HtmlEvent.Filters(self.context.rptObj, items, title, size, width, height, htmlCode, helper, profile))
+    return self.context.register(html.HtmlEvent.Filters(self.context.rptObj, items, title, width, height, htmlCode, helper, profile))
 
   def table(self, records, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """

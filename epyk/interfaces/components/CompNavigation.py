@@ -121,14 +121,14 @@ class Navigation(object):
       div.tooltip(tooltip)
     return div
 
-  def indices(self, count, selected=1, size=(None, "px"), width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def indices(self, count, selected=1, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
 
     Example
+    rptObj.ui.navigation.indices(10)
 
     :param count:
     :param selected:
-    :param size:
     :param width:
     :param height:
     :param options:
@@ -136,12 +136,11 @@ class Navigation(object):
     """
     dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
     dflt_options.update(options or {})
-    size = self.context._size(size)
-    html_indices = html.HtmlContainer.Indices(self.context.rptObj, count, size, width, height, dflt_options, profile)
+    html_indices = html.HtmlContainer.Indices(self.context.rptObj, count, width, height, None, dflt_options, profile)
     self.context.register(html_indices)
     return html_indices
 
-  def points(self, count, selected=1, size=(None, "px"), width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def points(self, count, selected=1, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
 
     Example
@@ -151,7 +150,6 @@ class Navigation(object):
 
     :param count:
     :param selected:
-    :param size:
     :param width:
     :param height:
     :param options:
@@ -159,12 +157,11 @@ class Navigation(object):
     """
     dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
     dflt_options.update(options or {})
-    size = self.context._size(size)
-    html_points = html.HtmlContainer.Points(self.context.rptObj, count, size, width, height, dflt_options, profile)
+    html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, None, dflt_options, profile)
     self.context.register(html_points)
     return html_points
 
-  def dots(self, count, selected=1, position="right", size=(None, "px"), width=(100, '%'), height=(None, 'px'), options=None,
+  def dots(self, count, selected=1, position="right", width=(100, '%'), height=(None, 'px'), options=None,
            profile=False):
     """
 
@@ -174,7 +171,6 @@ class Navigation(object):
     :param count:
     :param selected:
     :param position:
-    :param size:
     :param width:
     :param height:
     :param options:
@@ -182,7 +178,6 @@ class Navigation(object):
     """
     dflt_options = {"div_css": {"margin": "2px", "float": position}, "selected": selected}
     dflt_options.update(options or {})
-    size = self.context._size(size)
-    html_points = html.HtmlContainer.Points(self.context.rptObj, count, size, width, height, dflt_options, profile)
+    html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, None, dflt_options, profile)
     self.context.register(html_points)
     return html_points

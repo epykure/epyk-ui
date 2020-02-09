@@ -12,6 +12,14 @@ class Attrs(Properties.CssMixin):
     self.orign_htmlObj = htmlObj
 
   def css(self, attrs):
+    """
+
+    :param attrs:
+    :return:
+    """
+    if not isinstance(attrs, dict):
+      return self.attrs.get(attrs)
+
     for k, v in attrs.items():
       self.attrs[k] = v
 

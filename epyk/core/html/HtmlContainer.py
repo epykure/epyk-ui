@@ -593,12 +593,8 @@ class Tabs(Html.Html):
 class IFrame(Html.Html):
   name, category, callFnc = 'IFrame', 'Container', 'iframe'
 
-  # CSS Class
-  #_grpCls = CssGrpCls.CssGrpClassBase
-
   def __init__(self, report, url, width, height, helper, profile):
-    super(IFrame, self).__init__(report, url, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
-                                 profile=profile)
+    super(IFrame, self).__init__(report, url, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow-x": 'hidden'})
 
   @property
@@ -606,7 +602,7 @@ class IFrame(Html.Html):
     return 'htmlObj.src = data'
 
   def __str__(self):
-    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>" % (self.val, self.get_attrs(pyClassNames=self.defined))
+    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>" % (self.val, self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
 class Dialog(Html.Html):
@@ -652,7 +648,7 @@ class IconsMenu(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
 
   def __init__(self, icon_names, report, width, height, htmlCode, helper, profile):
-    super(IconsMenu, self).__init__(report, None, width=width, widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode,
+    super(IconsMenu, self).__init__(report, None, width=width, css_attrs={"width": width, "height": height}, code=htmlCode,
                                     profile=profile)
     self._jsActions, self._definedActions = {}, []
     self._icons, self.icon = [], None
@@ -697,7 +693,7 @@ class IconsMenu(Html.Html):
 
   def __str__(self):
     htmlIcons = [htmlDef for action, htmlDef in self._jsActions.items()]
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.defined), "".join(htmlIcons))
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(htmlIcons))
 
 
 class Form(Html.Html):
@@ -759,7 +755,7 @@ class Modal(Html.Html):
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
     if self.doSubmit:
       self.col += self.submit
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)
 
 
 class Indices(Html.Html):
@@ -767,8 +763,7 @@ class Indices(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
 
   def __init__(self, report, count, width, height, htmlCode, options, profile):
-    super(Indices, self).__init__(report, count, width=width, widthUnit=width[1], height=height[0],
-                                  heightUnit=height[1], profile=profile)
+    super(Indices, self).__init__(report, count, css_attrs={"width": width, "height": height}, profile=profile)
     self.items = []
     self.__options = OptPanel.OptionsPanelPoints(report, options)
     for i in range(count):
@@ -816,15 +811,14 @@ class Indices(Html.Html):
 
   def __str__(self):
     str_vals = "".join([self.first.html(), self.prev.html()] + [i.html() for i in self.items] + [self.next.html(), self.last.html()])
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)
 
 
 class Points(Html.Html):
   name, category, callFnc = 'Index', 'Panels', 'index'
 
   def __init__(self, report, count, width, height, htmlCode, options, profile):
-    super(Points, self).__init__(report, count, width=width, widthUnit=width[1], height=height[0],
-                                  heightUnit=height[1], profile=profile)
+    super(Points, self).__init__(report, count, css_attrs={"width": width, "height": height}, profile=profile)
     self.items = []
     self.css({"text-align": "center"})
     self.__options = OptPanel.OptionsPanelPoints(report, options)
