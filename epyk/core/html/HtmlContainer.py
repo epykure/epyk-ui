@@ -587,7 +587,7 @@ class Tabs(Html.Html):
     for p in self.__panels:
       self.tabs_container += self.__panel_objs[p]["tab"]
       content.append(self.__panel_objs[p]["content"].html())
-    return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.defined), self.tabs_container.html(), "".join(content), self.helper)
+    return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.tabs_container.html(), "".join(content), self.helper)
 
 
 class IFrame(Html.Html):
