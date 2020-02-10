@@ -3,7 +3,6 @@
 """
 
 from epyk.core import html
-from epyk.core.html import Defaults
 
 
 class Navigation(object):

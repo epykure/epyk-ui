@@ -21,7 +21,6 @@ class Buttons(object):
 
   def badge(self, text=None, value=None, icon=None, width=(None, "%"), height=(None, "px"), color=None, htmlCode=None,
             tooltip=None, profile=None, options=None):
-
     """
 
     Example

@@ -26,7 +26,7 @@ class Media(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
-    :param options:
+    :param options: Optional. A dictionary with the components properties
     """
     dft_options = {"autoplay": True}
     if options is not None:
@@ -35,8 +35,7 @@ class Media(object):
     self.context.register(html_media)
     return html_media
 
-  def audio(self, value, path=None, width=(100, '%'), height=(None, 'px'),
-            htmlCode=None, profile=None, options=None):
+  def audio(self, value, path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
     """
     Add a audio track from the server to the page.
     The format for the video must be mpeg
@@ -53,7 +52,7 @@ class Media(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
-    :param options:
+    :param options: Optional. A dictionary with the components properties
     """
     dft_options = {"autoplay": True}
     if options is not None:
@@ -77,7 +76,7 @@ class Media(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
-    :param options:
+    :param options: Optional. A dictionary with the components properties
     """
     dflt_options = {"width": "420", "height": "315", "type": "text/html"}
     if options is not None:
@@ -86,3 +85,11 @@ class Media(object):
     self.context.register(html_youtube)
     return html_youtube
 
+  def camera(self):
+    """
+
+    Documentation
+    https://www.html5rocks.com/en/tutorials/getusermedia/intro/
+
+    :return:
+    """
