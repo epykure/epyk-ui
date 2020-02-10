@@ -4,7 +4,39 @@
 
 
 def autoPrefixer(prop):
-  pass
+  """
+
+  Documentation
+  https://www.w3schools.com/cssref/css3_browsersupport.asp
+
+  :param prop:
+  :return:
+  """
+  map = {'backface-visibility': ['-webkit-'],
+         'box-decoration-break': ['-webkit-'],
+         'font-kerning': ['-webkit-'],
+         'font-variant-ligatures': ['-webkit-'],
+         'hyphens': ['-webkit-'],
+         'image-rendering': ['-moz-'],
+         'mask': ['-webkit-'],
+         'mask-type': ['-webkit-'],
+         'tab-size': ['-moz-'],
+         'text-combine-upright': ['-webkit-'],
+         'text-decoration-color': ['-webkit-'],
+         'text-decoration-line': ['-webkit-'],
+         'text-emphasis': ['-webkit-'],
+         'text-emphasis-color': ['-webkit-'],
+         'text-emphasis-position': ['-webkit-'],
+         'text-emphasis-style': ['-webkit-'],
+         'text-orientation': ['-webkit-'],
+         'transition': ['-webkit-', '-moz-', '-o-'],
+         'transition-property': ['-webkit-', '-moz-', '-o-'],
+         'transition-duration': ['-webkit-', '-moz-', '-o-'],
+         'transition-timing-function': ['-webkit-', '-moz-', '-o-'],
+         'transition-delay': ['-webkit-', '-moz-', '-o-'],
+         'user-select': ['-webkit-']
+      }
+  return map.get(prop, [])
 
 
 class CssMixin(object):
@@ -116,11 +148,20 @@ class CssMixin(object):
     self.htmlObj.css({"animation-timing-function": val})
 
   @property
-  def backface_visibility(self): return self.htmlObj.css("backface-visibility")
+  def backface_visibility(self):
+    """
+    Hide and show the back face of two rotated <div> elements:
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_backface-visibility.asp
+    """
+    return self.htmlObj.css("backface-visibility")
 
   @backface_visibility.setter
   def backface_visibility(self, val):
     val = val or 'None'
+    for m_val in autoPrefixer("backface-visibility"):
+      self.htmlObj.css({m_val: val})
     self.htmlObj.css({"backface-visibility": val})
 
   @property
@@ -479,7 +520,12 @@ class CssMixin(object):
     self.htmlObj.css({"bottom": val})
 
   @property
-  def box_decoration_break(self): return self.htmlObj.css("box-decoration-break")
+  def box_decoration_break(self):
+    """
+
+    :return:
+    """
+    return self.htmlObj.css("box-decoration-break")
 
   @box_decoration_break.setter
   def box_decoration_break(self, val):
@@ -1565,10 +1611,13 @@ class CssMixin(object):
   @transition_property.setter
   def transition_property(self, val):
     val = val or 'None'
+    for m_val in autoPrefixer("transition-property"):
+      self.htmlObj.css({m_val: val})
     self.htmlObj.css({"transition-property": val})
 
   @property
-  def transition_timing_function(self): return self.htmlObj.css("transition-timing-function")
+  def transition_timing_function(self):
+    return self.htmlObj.css("transition-timing-function")
 
   @transition_timing_function.setter
   def transition_timing_function(self, val):
