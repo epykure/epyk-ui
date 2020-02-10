@@ -284,37 +284,44 @@ class JQuery(JsPackage):
       jqFnc = "fadeToggle()"
     return self.fnc(jqFnc)
 
-  def fadeTo(self, speed=None, callback=None):
+  def fadeTo(self, duration, opacity, easing=None, complete=None):
     """
+    Adjust the opacity of the matched elements.
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_fade.asp
+    https://www.w3schools.com/jquery/jquery_fade.asp
+    https://api.jquery.com/fadeto/
 
-    :param speed:
-    :param jsCallback:
-    :return:
+    :param duration: A string or number determining how long the animation will run.
+    :param opacity: A number between 0 and 1 denoting the target opacity.
+    :param easing: A string indicating which easing function to use for the transition.
+    :param complete: A function to call once the animation is complete.
     """
-    if speed is not None:
-      if callback is not None:
-        if not isinstance(callback, list):
-          callback = [callback]
-        jqFnc = "fadeTo(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
+    if complete is not None:
+      if not isinstance(complete, list):
+        complete = [complete]
+      complete = "function(){%s}" % ";".join(complete)
+    if easing is not None:
+      if complete is not None:
+        jqFnc = "fadeTo(%(speed)s, %(opacity)s, %(easing)s, %(callback)s)" % {'speed': duration, 'opacity': opacity, 'easing': easing, 'callback': complete}
       else:
-        jqFnc = "fadeTo(%(speed)s)" % {'speed': speed}
+        jqFnc = "fadeTo(%(speed)s, %(opacity)s, %(easing)s)" % {'speed': duration, 'opacity': opacity, 'easing': easing}
+    elif complete is not None:
+      jqFnc = "fadeTo(%(speed)s, %(opacity)s, %(complete)s)" % {'speed': duration, 'opacity': opacity, 'complete': complete}
     else:
-      jqFnc = "fadeTo()"
+      jqFnc = "fadeTo(%(speed)s, %(opacity)s)" % {'speed': duration, 'opacity': opacity}
     return self.fnc(jqFnc)
 
   def slideDown(self, speed=None, callback=None):
     """
+    Display the matched elements with a sliding motion.
 
     Documentation:
     https://www.w3schools.com/jquery/jquery_slide.asp
+    https://api.jquery.com/slideDown/#slideDown-duration-complete
 
-    :param speed:
-    :param callback:
-
-    :return:
+    :param speed: A string or number determining how long the animation will run.
+    :param callback: A string indicating which easing function to use for the transition.
     """
     if speed is not None:
       if callback is not None:
@@ -329,14 +336,14 @@ class JQuery(JsPackage):
 
   def slideUp(self, speed=None, callback=None):
     """
+    Hide the matched elements with a sliding motion.
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_slide.asp
+    https://www.w3schools.com/jquery/jquery_slide.asp
+    https://api.jquery.com/slideUp/#slideUp-duration-complete
 
-    :param speed:
-    :param callback:
-
-    :return:
+    :param speed: A string or number determining how long the animation will run.
+    :param callback: A function to call once the animation is complete, called once per matched element
     """
     if speed is not None:
       if callback is not None:
@@ -351,14 +358,14 @@ class JQuery(JsPackage):
 
   def slideToggle(self, speed=None, callback=None):
     """
+    Display or hide the matched elements with a sliding motion.
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_slide.asp
+    https://www.w3schools.com/jquery/jquery_slide.asp
+    https://api.jquery.com/slideToggle/#slideToggle-duration-complete
 
-    :param speed:
-    :param callback:
-
-    :return:
+    :param speed: A string or number determining how long the animation will run.
+    :param callback: A function to call once the animation is complete, called once per matched element.
     """
     if speed is not None:
       if callback is not None:
@@ -371,83 +378,121 @@ class JQuery(JsPackage):
       jqFnc = "slideToggle()"
     return self.fnc(jqFnc)
 
-  def animate(self, params, speed, callback):
+  def animate(self, params, speed=400, easing='swing', callback=None):
     """
+    Perform a custom animation of a set of CSS properties.
 
     Example
     myObj.animate(0.25, "+=50")
 
     Documentation
     https://www.w3schools.com/jquery/jquery_animate.asp
+    https://api.jquery.com/animate/#animate-properties-duration-easing-complete
 
-    :param params:
-    :param speed:
-    :param callback:
-
-    :return:
+    :param params: An object of CSS properties and values that the animation will move toward.
+    :param speed: A string or number determining how long the animation will run.
+    :param easing: A string indicating which easing function to use for the transition.
+    :param callback: A function to call once the animation is complete, called once per matched element.
     """
-    return self.fnc("animate()")
+    easing = JsUtils.jsConvertData(easing, None)
+    if callback is not None:
+      return self.fnc("animate(%s, %s, %s, %s)" % (params, speed, easing, callback))
 
-  def stop(self, stopAll='false', goToEnd='false'):
+    return self.fnc("animate(%s, %s, %s)" % (params, speed, easing))
+
+  def stop(self, stopAll=False, goToEnd=False):
     """
+    Stop the currently-running animation on the matched elements.
+
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_stop.asp
+    https://www.w3schools.com/jquery/jquery_stop.asp
+    https://api.jquery.com/stop/#stop-clearQueue-jumpToEnd
 
-    :param stopAll: Javascript.
-    :param goToEnd: Javascript.
-
-    :return:
+    :param stopAll: A Boolean indicating whether to remove queued animation as well
+    :param goToEnd: A Boolean indicating whether to complete the current animation immediately
     """
+    stopAll = JsUtils.jsConvertData(stopAll, None)
+    goToEnd = JsUtils.jsConvertData(goToEnd, None)
     return self.fnc("stop(%(stopAll)s, %(goToEnd)s)" % {'stopAll': stopAll, 'goToEnd': goToEnd})
 
-  def remove(self):
+  def remove(self, selector=None):
     """
+    Remove the set of matched elements from the DOM.
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_dom_remove.asp
+    https://www.w3schools.com/jquery/jquery_dom_remove.asp
+    https://api.jquery.com/remove/#remove-selector
 
-    :return:
+    :param selector: A selector expression that filters the set of matched elements to be removed.
     """
+    if selector is not None:
+      selector = JsUtils.jsConvertData(selector, None)
+      return self.fnc("remove(%s)" % selector)
+
     return self.fnc("remove()")
 
   def empty(self):
     """
+    Remove all child nodes of the set of matched elements from the DOM.
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_dom_remove.asp
+    https://www.w3schools.com/jquery/jquery_dom_remove.asp
+    https://api.jquery.com/empty/#empty
 
     :return:
     """
     return self.fnc("empty()")
 
-  def siblings(self, tag):
+  def siblings(self, selector=None):
     """
+    Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_traversing_siblings.asp
+    https://www.w3schools.com/jquery/jquery_traversing_siblings.asp
+    https://api.jquery.com/siblings/#siblings-selector
 
-    :return:
+    :param selector: A string containing a selector expression to match elements against.
     """
+    if selector is not None:
+      selector = JsUtils.jsConvertData(selector, None)
+      return self.fnc("siblings(%s)" % selector)
+
     return self.fnc("siblings()")
 
-  def next(self):
+  def next(self, selector=None):
     """
+    Get the immediately following sibling of each element in the set of matched elements.
+    If a selector is provided, it retrieves the next sibling only if it matches that selector.
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_traversing_siblings.asp
+    https://www.w3schools.com/jquery/jquery_traversing_siblings.asp
+    https://api.jquery.com/next/#next-selector
 
+    :param selector: A string containing a selector expression to match elements against.
     :return:
     """
+    if selector is not None:
+      selector = JsUtils.jsConvertData(selector, None)
+      return self.fnc("next(%s)" % selector)
+
     return self.fnc("next()")
 
-  def prev(self):
+  def prev(self, selector=None):
     """
+    Get the immediately preceding sibling of each element in the set of matched elements.
+    If a selector is provided, it retrieves the previous sibling only if it matches that selector.
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_traversing_siblings.asp
+    https://www.w3schools.com/jquery/jquery_traversing_siblings.asp
+    https://api.jquery.com/prev/#prev-selector
 
+    :param selector: A string containing a selector expression to match elements against.
     :return:
     """
+    if selector is not None:
+      selector = JsUtils.jsConvertData(selector, None)
+      return self.fnc("prev(%s)" % selector)
+
     return self.fnc("prev()")
 
   def first(self):
@@ -455,33 +500,34 @@ class JQuery(JsPackage):
     The first() method returns the first element of the specified elements.
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_traversing_filtering.asp
+    https://www.w3schools.com/jquery/jquery_traversing_filtering.asp
+    https://api.jquery.com/first/#first
 
     :return:
     """
     return self.fnc("first()")
 
-  def children(self, filter=None):
+  def children(self, selector=None):
     """
     The children() method returns all direct children of the selected element
 
     Documentation:
-      - https://www.w3schools.com/jquery/traversing_children.asp
+    https://www.w3schools.com/jquery/traversing_children.asp
 
-    :param filter: Optional. Specifies a selector expression to narrow down the search for children
+    :param selector: Optional. Specifies a selector expression to narrow down the search for children
     :return:
     """
-    if filter is None:
+    if selector is None:
       return self.fnc("children()")
 
-    return self.fnc("children(%s)" % filter)
+    return self.fnc("children(%s)" % selector)
 
   def last(self):
     """
     The last() method returns the last element of the specified element
 
     Documentation:
-      - https://www.w3schools.com/jquery/jquery_traversing_filtering.asp
+    https://www.w3schools.com/jquery/jquery_traversing_filtering.asp
 
     :return:
     """
@@ -489,8 +535,9 @@ class JQuery(JsPackage):
 
   def appendTo(self, dstJqId, jsFnc=None):
     """
+    Insert every element in the set of matched elements to the end of the target.
 
-    :param dstJqId:
+    :param dstJqId: A selector, element, HTML string, array of elements, or jQuery object; the matched set of elements will be inserted at the end of the element(s) specified by this parameter.
     :param jsFnc:
 
     :rtype: str
@@ -512,6 +559,10 @@ class JQuery(JsPackage):
 
   def prepend(self, jsData, jsFnc=None):
     """
+    Insert content, specified by the parameter, to the beginning of each element in the set of matched elements.
+
+    Documentation
+    https://api.jquery.com/prepend/#prepend-content-content
 
     :param jsData:
     :param jsFnc:
@@ -532,7 +583,7 @@ class JQuery(JsPackage):
     """
     return self.fnc("eq(%(index)s)" % {'index': i})
 
-  def filter(self):
+  def filter(self, selector=None):
     """
 
     :return:
@@ -546,15 +597,26 @@ class JQuery(JsPackage):
 
   def find(self, criteria):
     """
+    Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object, or element.
+
+    Documentation
+    https://api.jquery.com/find/#entry-examples
+
+    :param criteria: Selector or element An element or a jQuery object to match elements against.
 
     :return:
     """
-    return self.fnc("find('%s')" % criteria)
+    criteria = JsUtils.jsConvertData(criteria, None)
+    return self.fnc("find(%s)" % criteria)
 
   def each(self, jsFncs):
     """
+    Iterate over a jQuery object, executing a function for each matched element.
 
-    :param jsFncs:
+    Documentation
+    https://api.jquery.com/each/#each-function
+
+    :param jsFncs: A function to execute for each matched element.
 
     :return:
     """
@@ -563,6 +625,10 @@ class JQuery(JsPackage):
 
   def css(self, key, value=None):
     """
+    Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property naming, or create custom properties.
+
+    Documentation
+    https://api.jquery.com/jQuery.cssHooks/#jQuery-cssHooks1
 
     :param key:
     :param value:
@@ -581,9 +647,13 @@ class JQuery(JsPackage):
 
   def attr(self, key, value):
     """
+    Get the value of an attribute for the first element in the set of matched elements.
 
-    :param key:
-    :param value:
+    Documentation
+    https://api.jquery.com/attr/#attr-attributeName
+
+    :param key: The name of the attribute to get.
+    :param value: A value to set for the attribute. If null, the specified attribute will be removed
 
     :return:
     """
@@ -595,6 +665,10 @@ class JQuery(JsPackage):
 
   def val(self, jsData=None, jsFnc=None):
     """
+    Get the current value of the first element in the set of matched elements.
+
+    Documentation
+    https://api.jquery.com/val/#val
 
     :param jsData:
     :param jsFnc:
@@ -607,6 +681,10 @@ class JQuery(JsPackage):
 
   def text(self, jsData, jsFnc=None):
     """
+    Get the combined text contents of each element in the set of matched elements, including their descendants, or set the text contents of the matched elements.
+
+    Documentation
+    https://api.jquery.com/text/#text
 
     :param jsData:
     :param jsFnc:
