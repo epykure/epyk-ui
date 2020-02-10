@@ -716,15 +716,18 @@ class JQuery(JsPackage):
       else:
         rptObj = self.src
     else:
-      rptObj = self.src.aresObj
+      rptObj = self.src._report
     if data is None:
       data = {}
     qParams = self.getParams('%s/data/%s/%s' % (rptObj._urlsApp['report'], rptObj.run.report_name, script.replace(".py", "")), data, successFncs, None, options, timeout, props)
     return Jsjqxhr("jQuery.post(%s)" % qParams)
 
-  def load(self, url, jsData, successFncs=None):
+  def load(self, url, jsData=None, successFncs=None):
     """
     Load data from the server and place the returned HTML into the matched elements.
+
+    Example
+    div.dom.jquery.load(r"./report_list.html")
 
     Documentation
     https://api.jquery.com/load/#load-url-data-complete
@@ -735,9 +738,13 @@ class JQuery(JsPackage):
     :return:
     """
     if successFncs is None:
-      return "%s.load('%s', {data: JSON.stringify(%s)})" % (self.src.jqId, url, jsData)
+      if jsData is None:
+        return "%s.load('%s')" % (self.varId, url)
+      return "%s.load('%s', {data: JSON.stringify(%s)})" % (self.varId, url, jsData)
 
-    return "%s.load('%s', {data: JSON.stringify(%s)}, function(data) {%s})" % (self.src.jqId, url, jsData, successFncs)
+    if jsData is None:
+      return "%s.load('%s', function(data) {%s})" % (self.varId, url, successFncs)
+    return "%s.load('%s', {data: JSON.stringify(%s)}, function(data) {%s})" % (self.varId, url, jsData, successFncs)
 
   def ajaxError(self, jsFncs):
     """
