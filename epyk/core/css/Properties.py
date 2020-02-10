@@ -762,7 +762,11 @@ class CssMixin(object):
 
   @float.setter
   def float(self, val):
-    val = val or 'None'
+    val = val or 'none'
+    defined_vals = set(['none', 'left', 'right', 'initial', 'inherit'])
+    if val not in defined_vals:
+      raise Exception("float value %s not recognized" % val)
+
     self.htmlObj.css({"float": val})
 
   @property
