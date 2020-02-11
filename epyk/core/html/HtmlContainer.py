@@ -9,6 +9,8 @@ from epyk.core.html.options import OptPanel
 
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtmlPanels
+
 from epyk.core.css import Defaults
 
 # The list of CSS classes
@@ -49,6 +51,21 @@ class Panel(Html.Html):
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     return self
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+    :rtype: JsHtmlPanels.JsHtmlPanel
+    """
+    if self._dom is None:
+      self._dom = JsHtmlPanels.JsHtmlPanel(self, report=self._report)
+    return self._dom
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
@@ -103,7 +120,7 @@ class PanelSplit(Html.Html):
         <div style="%(css_left)s" id="%(htmlId)s_left" class="panel-left">%(left)s</div>
         <div style="%(css_right)s" id="%(htmlId)s_right" class="panel-right">%(right)s</div>
       </div>
-      ''' % {"attrs": self.get_attrs(pyClassNames=self.defined), "htmlId": self.htmlId, 'left': self.html_left.html(),
+      ''' % {"attrs": self.get_attrs(pyClassNames=self.style.get_classes()), "htmlId": self.htmlId, 'left': self.html_left.html(),
              'right': self.html_right.html(), 'css_left': CssStyle.get_style(self.css_left), 'css_right': CssStyle.get_style(self.css_right)}
 
 
@@ -111,13 +128,13 @@ class PanelSlide(Panel):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Slide Panel', 'Panels', 'slide'
 
-  def __init__(self, report, htmlObj, title, color, size, width, height, htmlCode, helper, options, profile):
-    super(PanelSlide, self).__init__(report, htmlObj, title, color, size, width, height, htmlCode, helper, profile)
+  def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
+    super(PanelSlide, self).__init__(report, htmlObj, title, color, width, height, htmlCode, helper, profile)
     self.title._vals = "<i style='float:left;margin:4px 5px 0 0' name='icon_%s' class='fas fa-caret-down'></i>%s" % (self.htmlId, self.title._vals)
     self.title.click([
       report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
       report.js.getElementsByName("icon_%s" % self.htmlId).first.toggleClass("fa-caret-up")])
-    self.title.css({"cursor": 'pointer', "font-size": "%s%s" % (size[0]+1, size[1]), "padding": "0 2px 0 0"})
+    self.title.css({"cursor": 'pointer', "padding": "0 2px 0 0"})
 
 
 class Div(Html.Html):
@@ -350,13 +367,13 @@ class Col(Html.Html):
 
 
 class Grid(Html.Html):
-  cssCls = ['container-fluid']
   name, category, callFnc = 'Grid', 'Layouts', 'grid'
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
 
   def __init__(self, report, htmlObjs, width, height, colsDim, colsAlign, noGlutters, align, helper, profile):
     super(Grid, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
     self.css({'overflow-x': 'hidden', 'padding': 0})
+    #self.attr["class"].add("container-fluid")
     self.rowsStyle, self.colsStyle, self.noGlutters = {}, {}, noGlutters
     if align == 'center':
       self.css({'margin': 'auto'})
@@ -388,6 +405,21 @@ class Grid(Html.Html):
   def __getitem__(self, i):
     return self.val[i]
 
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+    :rtype: JsHtmlPanels.JsHtmlGrid
+    """
+    if self._dom is None:
+      self._dom = JsHtmlPanels.JsHtmlGrid(self, report=self._report)
+    return self._dom
+
   def get(self, htmlCode):
     """
     Return the Html component in the parameter bar
@@ -395,21 +427,6 @@ class Grid(Html.Html):
     :param htmlCode: The htmlCode for the component as a String
     """
     return self.htmlMaps[htmlCode]
-
-  def jsTogglePanel(self, i):
-    if i == 1:
-      return '''
-       var nextColDim = panel_dims_%(htmlId)s[1];
-       var nextColDimTotal = panel_dims_%(htmlId)s[1] + panel_dims_%(htmlId)s[0];
-       $(%(jqId)s.find('div')[1]).toggle();
-       const panelDisplay = $(%(jqId)s.find('div')[1]).css('display');
-       if (panelDisplay == 'block') {var cls = $(%(jqId)s.find('div')[1]).next().attr('class').replace("col-md-" + nextColDimTotal, "col-md-" + panel_dims_%(htmlId)s[1])}
-       else {var cls = $(%(jqId)s.find('div')[1]).next().attr('class').replace("col-md-" + panel_dims_%(htmlId)s[1], "col-md-" + nextColDimTotal)}
-       $(%(jqId)s.find('div')[1]).next().attr('class', cls)
-       ''' % {'jqId': self.jqId, 'htmlId': self.htmlId}
-
-    # TODO: Fix this part
-    return "$(%(jqId)s.find('div:nth-child(%(index)s)')).toggle()" % {'jqId': self.jqId, 'index': i}
 
   def resize(self):
     """
@@ -423,13 +440,13 @@ class Grid(Html.Html):
     return self
 
   def __str__(self):
-    items = ['<div %s>' % self.get_attrs(pyClassNames=self.pyStyle)]
+    items = ['<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
     items.append('<div class="row%s">' % (' no-gutters' if self.noGlutters else ''))
     dim_row, row_index, col_per_obj = 0, 1, {}
     for i, htmlObj in enumerate(self.val):
       if dim_row == 12:
         items.append('</div><div class="row%s">' % (' no-gutters' if self.noGlutters else ''))
-        dimRow = 0
+        dim_row = 0
 
       if isinstance(htmlObj, HtmlSelect.Select):
         htmlObj.container = "#%s" % self.htmlId # The container should be defined in this case to be visible

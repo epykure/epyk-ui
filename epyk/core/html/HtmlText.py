@@ -480,12 +480,8 @@ class Title(Html.Html):
       self.style.addCls("CssTitle%s" % level)
       self.css({'color': color, 'margin': '%spx 0 5px 0' % marginTop})
     else:
-      self.style.addCls('CssTitle')
+      self.attr['class'].add('CssTitle')
       self.css({'margin': '%spx 0 5px 0' % marginTop})
-      if size[0] > 21 and color is None:
-        self.css('color', self._report.theme.colors[9])
-      else:
-        self.css('color', self._report.theme.colors[-1] if color is None else color)
     if align == 'center':
       self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': 'center'})
     elif align is not None:

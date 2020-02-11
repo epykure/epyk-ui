@@ -110,7 +110,7 @@ class Panels(object):
     self.context.register(html_tabs)
     return html_tabs
 
-  def sliding(self, htmlObjs, title, color=None, size=(None, "px"), width=(100, "%"), height=(None, "px"),
+  def sliding(self, htmlObjs, title, color=None, width=(100, "%"), height=(None, "px"),
             htmlCode=None, helper=None, options=None, profile=False):
     """
 
@@ -126,10 +126,9 @@ class Panels(object):
     :param profile:
     :return:
     """
-    size = self.context._size(size)
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
-    html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, size, width, height,
+    html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, width, height,
                                                htmlCode, helper, options or {}, profile)
     self.context.register(html_slide)
     return html_slide

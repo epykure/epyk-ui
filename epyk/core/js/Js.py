@@ -11,6 +11,7 @@ The main websites used in the implementation of those modules are:
 import json
 
 from epyk.core.js import JsUtils
+from epyk.core.js import JsNavigator
 from epyk.core.js import JsWindow
 from epyk.core.js import JsLocation
 from epyk.core.js import JsMaths
@@ -323,6 +324,7 @@ class JsBase(object):
     self.console = JsConsole()
     self.localStorage = JsWindow.JsLocalStorage()
     self.window = JsWindow.JsWindow(self)
+    self.navigator = JsNavigator.JsNavigator(self)
     self.performance = JsPerformance.JsPerformance(self)
     self.sessionStorage = JsWindow.JsSessionStorage()
     self.json = JsJson()
@@ -461,6 +463,9 @@ class JsBase(object):
     """
     jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
     self._src._props.setdefault('js', {}).setdefault('bespoke', []).append(jsData)
+
+  def customFile(self, filename, path=None):
+    pass
 
   def _addImport(self, importAlias):
     """
