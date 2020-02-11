@@ -550,9 +550,8 @@ class Grid(Html.Html):
 class Tabs(Html.Html):
   name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
 
-  def __init__(self, report, color, size, width, height, htmlCode, helper, css_tab, options, profile):
-    super(Tabs, self).__init__(report, "", code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                               heightUnit=height[1], profile=profile)
+  def __init__(self, report, color, width, height, htmlCode, helper, css_tab, options, profile):
+    super(Tabs, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__panels, self.__panel_objs = [], {}
     self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
     self.css_tab = css_tab

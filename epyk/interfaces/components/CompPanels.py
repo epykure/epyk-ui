@@ -9,7 +9,7 @@ class Panels(object):
   def __init__(self, context):
     self.context = context
 
-  def pills(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
+  def pills(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
             css_tab=None, options=None, profile=False):
     """
     Python wrapper to the Bootstrap Pills interface
@@ -17,11 +17,10 @@ class Panels(object):
     Documentation
     https://getbootstrap.com/docs/4.0/components/navs/
     """
-    size = self.context._size(size)
     if css_tab is None:
       css_tab = {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 'border-radius': '5px', "font-size": '%s%s' % (size[0] + 2, size[1])}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab,
+                 'border-radius': '5px'}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
                                         options or {}, profile)
     html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.css_tab["background"] = html_tabs._report.theme.greys[0]
@@ -29,7 +28,7 @@ class Panels(object):
     self.context.register(html_tabs)
     return html_tabs
 
-  def tabs(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
+  def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
            css_tab=None, options=None, profile=False):
     """
     Python wrapper for a multi Tabs component
@@ -38,16 +37,15 @@ class Panels(object):
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
-    size = self.context._size(size)
     if css_tab is None:
       css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
-                 "border-bottom": "1px solid white", "font-size": '%s%s' % (size[0]+2, size[1])}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab,
+                 "border-bottom": "1px solid white"}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
                                         options or {}, profile)
     self.context.register(html_tabs)
     return html_tabs
 
-  def arrows_up(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
+  def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
                 css_tab=None, options=None, profile=False):
     """
     Python wrapper for a multi Tabs component
@@ -56,11 +54,10 @@ class Panels(object):
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
-    size = self.context._size(size)
     if css_tab is None:
       css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 "border-bottom": "1px solid white", "font-size": '%s%s' % (size[0]+2, size[1])}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab,
+                 "border-bottom": "1px solid white"}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
                                         options or {"tab_class": 'CssPanelArrowUp'}, profile)
     html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.css_tab["height"] = "60px"
@@ -68,7 +65,7 @@ class Panels(object):
     self.context.register(html_tabs)
     return html_tabs
 
-  def arrows_down(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
+  def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
                   css_tab=None, options=None, profile=False):
     """
     Python wrapper for a multi Tabs component
@@ -77,11 +74,10 @@ class Panels(object):
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
-    size = self.context._size(size)
     if css_tab is None:
       css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 "border-bottom": "1px solid white", "font-size": '%s%s' % (size[0]+2, size[1])}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab,
+                 "border-bottom": "1px solid white"}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
                                         options or {"tab_class": 'CssPanelArrowDown'}, profile)
     html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.css_tab["height"] = "60px"
@@ -89,7 +85,7 @@ class Panels(object):
     self.context.register(html_tabs)
     return html_tabs
 
-  def menu(self, color=None, size=(None, "px"), width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
+  def menu(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
            css_tab=None, options=None, profile=False):
     """
     Python wrapper to the Bootstrap Pills interface
@@ -97,11 +93,10 @@ class Panels(object):
     Documentation
     https://getbootstrap.com/docs/4.0/components/navs/
     """
-    size = self.context._size(size)
     if css_tab is None:
       css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 'border-radius': '10px 10px 0 0', "font-size": '%s%s' % (size[0] + 2, size[1])}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, size, width, height, htmlCode, helper, css_tab,
+                 'border-radius': '10px 10px 0 0'}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
                                         options or {}, profile)
     html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.css_tab["background"] = html_tabs._report.theme.greys[0]
@@ -117,7 +112,6 @@ class Panels(object):
     :param htmlObjs:
     :param title:
     :param color:
-    :param size:
     :param width:
     :param height:
     :param htmlCode:
