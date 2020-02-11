@@ -75,7 +75,30 @@ class Layouts(object):
     self.context.register(html_col)
     return html_col
 
-  def row(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), aresData=None, align='left',
+  def row(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
+    """
+    Python wrapper for a column of HTML elements from Bootstrap
+
+    This component is a container and it is used to display multiple Ares components in column.
+    You can first add a component in the data list then add the + operator to add more.
+
+    Documentation
+    https://getbootstrap.com/docs/4.0/layout/grid/
+    https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
+
+    :param htmlObjs:
+    :param position:
+    :param width:
+    :param height:
+    :param align:
+    :param helper:
+    :param profile:
+    """
+    html_col = html.HtmlContainer.Row(self.context.rptObj, htmlObjs, position, width, height, align, helper, profile)
+    self.context.register(html_col)
+    return html_col
+
+  def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), aresData=None, align='left',
           valign='top', colsWith=None, closable=False, resizable=False, titles=None, helper=None, profile=None):
     """
     Python wrapper for a row of HTML items
@@ -93,8 +116,8 @@ class Layouts(object):
     :param helper:
     :param profile:
     """
-    html_row = html.HtmlContainer.Row(self.context.rptObj, htmlObjs, width, height, aresData, align, valign, colsWith,
-                                      closable, resizable, titles, helper, profile)
+    html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, aresData, align, valign, colsWith,
+                                        closable, resizable, titles, helper, profile)
     self.context.register(html_row)
     return html_row
 

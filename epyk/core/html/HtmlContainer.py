@@ -221,7 +221,7 @@ class Div(Html.Html):
         self.vals.to_word(document)
 
 
-class Row(Html.Html):
+class Table(Html.Html):
   name, category, callFnc = 'Row', 'Layouts', 'row'
 
   def __init__(self, report, htmlObjs, width, height, data, align, valign, colsWith, closable, resizable, titles,
@@ -237,7 +237,7 @@ class Row(Html.Html):
 
         htmlObjs.append(fnc(**parameters))
     self.colsWith, self.htmlMaps = [] if colsWith is None else colsWith, {}
-    super(Row, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
+    super(Table, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
     for htmlObj in htmlObjs:
       self.__add__(htmlObj)
     self.align, self.valign, self.closable, self.resizable, self.titles = align, valign, closable, resizable, titles
@@ -364,6 +364,50 @@ class Col(Html.Html):
         cell_format = workbook.add_format({'bold': True, 'font_color': 'red'})
         worksheet.write(cursor['row'], 0, str(err), cell_format)
         cursor['row'] += 2
+
+
+class Row(Html.Html):
+  name, category, callFnc = 'Column', 'Layouts', 'col'
+  __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
+
+  def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
+    self.position, self.htmlMaps = position, {}
+    super(Row, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    if htmlObjs is not None:
+      for htmlObj in htmlObjs:
+        self.__add__(htmlObj)
+    self.attr["class"].add('row')
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    if not hasattr(htmlObj, 'inReport'):
+      # Add a text HTML internal object by default
+      # todo: add options to this component to remove hard coded Css
+      htmlObj = self._report.ui.div(htmlObj)
+      htmlObj.attr["class"].add("CssDivOnHover")
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.val.append(htmlObj)
+    self.htmlMaps[htmlObj.htmlId] = htmlObj
+    return self
+
+  def get(self, htmlCode):
+    """
+    Return the Html component in the parameter bar
+
+    :param htmlCode: The htmlCode for the component as a String
+    """
+    return self.htmlMaps[htmlCode]
+
+  def __getitem__(self, i):
+    return self.val[i]
+
+  def __str__(self):
+    self.css({"justify-content": self.position})
+    rows = []
+    for i, htmlObj in enumerate(self.val):
+      htmlObj.attr["class"].add("col col-md-2")
+      rows.append(htmlObj.html())
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))
 
 
 class Grid(Html.Html):
