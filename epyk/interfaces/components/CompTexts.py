@@ -282,8 +282,8 @@ class Texts(object):
     self.context.register(html_up_down)
     return html_up_down
 
-  def number(self, number=None, title=None, label=None, icon=None, size=(20, "px"), color=None, tooltip='', htmlCode=None,
-             options=None, helper=None, width=(100, 'px'), profile=None):
+  def number(self, number=None, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
+             options=None, helper=None, width=(150, 'px'), profile=None):
     """
 
     Example
@@ -295,7 +295,6 @@ class Texts(object):
     :param title:
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param size: Optional. The font size in the component. Default 12px
     :param color:
     :param tooltip:
     :param htmlCode:
@@ -306,8 +305,7 @@ class Texts(object):
     dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
     if options is not None:
       dflt_options.update(options)
-    size = self.context._size(size)
-    html_number = html.HtmlText.Numeric(self.context.rptObj, number, title, label, icon, size, color, tooltip, htmlCode,
+    html_number = html.HtmlText.Numeric(self.context.rptObj, number, title, label, icon, color, tooltip, htmlCode,
                                         dflt_options, helper, width, profile)
     self.context.register(html_number)
     return html_number

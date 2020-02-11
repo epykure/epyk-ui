@@ -422,17 +422,20 @@ class BlockQuote(Html.Html):
     self.add_helper(helper)
     self._jsStyles = {"reset": True, 'markdown': True}
 
-  @property
-  def val(self):
-    return "$('#%s > p').html() +' by '+ $('#%s cite').html()" % (self.htmlId, self.htmlId)
+  #@property
+  #def val(self):
+  #  return "$('#%s > p').html() +' by '+ $('#%s cite').html()" % (self.htmlId, self.htmlId)
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, '''
-      var div = htmlObj.find('div').first(); div.empty();
-      data.text.split("\\n").forEach(function(rec) {div.append('<p style="margin:0;padding:0">'+ rec +'</p>')});
-      if(data.author != null){htmlObj.find('div').last().html('<small>by '+ data.author +'<cite></cite></small>')}''')
+  @property
+  def _js__builder__(self):
+      return '''var div = htmlObj.querySelector('div'); div.innerHTML = ''; console.log(data);
+          data.text.split("\\n").forEach(function(rec) {
+            var p = document.createElement("p");
+            p.style.margin = 0; p.style.padding = 0; p.innerHTML = rec; div.appendChild(p) });
+          if(data.author != null){htmlObj.querySelector('div:last-child').innerHTML = '<small>by '+ data.author +'<cite></cite></small>'}'''
 
   def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '''
       <blockquote %s>
           <div style="padding:5px;border-left:4px solid %s"></div>
@@ -600,7 +603,7 @@ class Numeric(Html.Html):
     # Add the components label and icon
     self.add_label(label, css={"float": None, "width": 'none'})
     self.add_icon(icon)
-    self.add_helper(helper)
+    self.add_helper(helper, css={"line-height": '20px'})
     self.add_title(title, level=4, css={"margin-bottom": 0})
 
     # Update the CSS Style of the component
@@ -608,15 +611,16 @@ class Numeric(Html.Html):
     self.tooltip(tooltip)
     self._jsStyles = options
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__,
-                      "%s.html(%s)" % (self.jqId, self.js.string("data", isPyData=False).toFormattedNumber(
-                        decPlaces=self._report.js.number("jsStyles.decPlaces", isPyData=False),
-                        thouSeparator=self._report.js.number("jsStyles.thouSeparator", isPyData=False),
-                        decSeparator=self._report.js.number("jsStyles.decSeparator", isPyData=False))))
+  @property
+  def _js__builder__(self):
+    return "htmlObj.querySelector('font').innerHTML = %s" % (self.js.string("data", isPyData=False).toFormattedNumber(
+              decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
+              thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
+              decSeparator=self._report.js.number("options.decSeparator", isPyData=False)))
 
   def __str__(self):
-    return "<div %s><font style='padding:0;margin:0'>%s</font>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return "<div %s><font style='vertical-align:middle;height:100%%;padding:0;margin:0;display:inline-block'>%s</font>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
 
 
 class Highlights(Html.Html):
@@ -631,8 +635,8 @@ class Highlights(Html.Html):
     self.add_title(title, css={"width": "none", "font-weight": 'bold'})
     self.add_icon(icon, {"float": "left"})
     # Change the style of the component
-    self.css({"margin": "5px"})
-    self.style.addCls('alert alert-%s' % type)
+    self.css({"margin": "5px", 'padding': "5px"})
+    self.attr['class'].add('alert alert-%s' % type)
     self.set_attrs(name='role', value="alert")
 
   def __str__(self):
