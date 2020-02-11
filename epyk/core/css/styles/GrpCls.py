@@ -1,5 +1,8 @@
 """
 Group CSS class for all the Layouts components
+
+Default HTML component per HTML tag
+https://www.w3schools.com/cssref/css_default_values.asp
 """
 
 from epyk.core.css import Classes
