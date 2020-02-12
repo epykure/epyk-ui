@@ -59,6 +59,12 @@ class Layouts(object):
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
 
+    Example
+    rptObj.ui.layouts.col([
+      rptObj.ui.text("test C"),
+      rptObj.ui.text("test D"),
+    ])
+
     Documentation
     https://getbootstrap.com/docs/4.0/layout/grid/
     https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
@@ -81,6 +87,13 @@ class Layouts(object):
 
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
+
+    Example
+    row = rptObj.ui.layouts.row()
+    row += rptObj.ui.layouts.col([
+      rptObj.ui.text("test A"),
+      rptObj.ui.text("test B"),
+    ])
 
     Documentation
     https://getbootstrap.com/docs/4.0/layout/grid/
@@ -121,25 +134,25 @@ class Layouts(object):
     self.context.register(html_row)
     return html_row
 
-  def grid(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), colsDim=None, colsAlign=None,
-           noGlutters=False, align=None, helper=None, profile=None):
+  def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
     """
+    Python wrapper to the HTML Bootstrap Grid
 
     Example
-    div = rptObj.ui.layouts.grid([number, number_3, number_2, number_4])
+    gr = rptObj.ui.layouts.grid()
+    gr += [rptObj.ui.text("test %s" % i) for i in range(5)]
 
-    :param htmlObjs:
+    Documentation
+    https://getbootstrap.com/docs/4.0/layout/grid/
+
+    :param rows:
     :param width:
     :param height:
-    :param colsDim:
-    :param colsAlign:
-    :param noGlutters:
     :param align:
     :param helper:
     :param profile:
     """
-    html_grid = html.HtmlContainer.Grid(self.context.rptObj, htmlObjs, width, height, colsDim, colsAlign, noGlutters,
-                                        align, helper, profile)
+    html_grid = html.HtmlContainer.Grid(self.context.rptObj, rows, width, height, align, helper, profile)
     self.context.register(html_grid)
     return html_grid
 

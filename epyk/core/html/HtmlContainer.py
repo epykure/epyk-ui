@@ -416,16 +416,16 @@ class Grid(Html.Html):
   name, category, callFnc = 'Grid', 'Layouts', 'grid'
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
 
-  def __init__(self, report, htmlObjs, width, height, colsDim, colsAlign, noGlutters, align, helper, profile):
+  def __init__(self, report, rows, width, height, align, helper, profile):
     super(Grid, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'overflow-x': 'hidden', 'padding': 0})
     self.attr["class"].add("container-fluid")
     self.htmlMaps = {}
     if align == 'center':
       self.css({'margin': 'auto'})
-    if htmlObjs is not None:
-      for i, htmlObj in enumerate(htmlObjs):
-        self.__add__((htmlObj, colsDim[i]))
+    if rows is not None:
+      for row in rows:
+        self.__add__(row)
 
   def __add__(self, row_data):
     """ Add items to a container """
