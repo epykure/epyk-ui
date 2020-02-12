@@ -540,7 +540,7 @@ class Tabs(Html.Html):
   name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
 
   def __init__(self, report, color, width, height, htmlCode, helper, css_tab, options, profile):
-    super(Tabs, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Tabs, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     self.__panels, self.__panel_objs = [], {}
     self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
     self.css_tab = css_tab
@@ -548,6 +548,21 @@ class Tabs(Html.Html):
     self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self._report.theme.success[1]}
     self.tabs_container = self._report.ui.div([])
     self.tabs_container.inReport = False
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+    :rtype: JsHtmlPanels.JsHtmlTabs
+    """
+    if self._dom is None:
+      self._dom = JsHtmlPanels.JsHtmlTabs(self, report=self._report)
+    return self._dom
 
   def __getitem__(self, name):
     return self.__panel_objs[name]
@@ -606,14 +621,17 @@ class Tabs(Html.Html):
         css_not_clicked[key] = 'none'
     tab.css(css_tab).css({"padding": '5px 0'})
     tab.set_attrs(name="name", value=self.tabs_name)
+    tab.set_attrs(name="data-index", value=len(self.__panels) - 1)
     tab_container = self._report.ui.div(tab, width=("100", "px"))
     tab_container.inReport = False
     tab_container.css({'display': 'inline-block'})
     css_cls_name = None
-    if self.options.get("tab_class") is not None:
-      tab_container.defined.add(self.options.get("tab_class"), toMain=False)
-      css_cls_name = CssStyle.cssName(self.options.get("tab_class"))
+    # if self.options.get("tab_class") is not None:
+    #   tab_container.defined.add(self.options.get("tab_class"), toMain=False)
+    #   css_cls_name = CssStyle.cssName(self.options.get("tab_class"))
     tab.click([
+      self.dom.reset_tabs,
+      tab.dom.setAttribute("data-selected", True).r,
       self._report.js.getElementsByName(self.panels_name).all([
         self._report.js.getElementsByName(self.tabs_name).all([
           self._report.js.data.all.element.css(css_not_clicked)]),

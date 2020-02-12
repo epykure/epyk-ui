@@ -391,6 +391,20 @@ class JsDoms(JsObject.JsObject):
     """
     return JsDoms("%s.querySelector('%s')" % (self.toStr(), tag))
 
+  def querySelectorAll(self, tag, varName):
+    """
+    The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
+    
+    Documentation
+    https://www.w3schools.com/jsref/met_document_queryselectorall.asp
+
+    :param tag: String. The tag name
+    :param varName: String. The variable name on the javascript side
+
+    :return: A javascript Array object
+    """
+    return JsArray.JsArray("%s.querySelectorAll('%s')" % (self.toStr(), tag), varName=varName, setVar=True, isPyData=False)
+
   @property
   def jquery(self):
     """

@@ -9,7 +9,7 @@ from epyk.core.js.primitives import JsObject
 
 class JsFor(object):
 
-  def __init__(self, jsIterable, iterVar, start, step, context=None):
+  def __init__(self, jsIterable, iterVar="i", start=0, step=1, context=None):
     """
     The for statement creates a loop that is executed as long as a condition is true.
 
@@ -26,7 +26,10 @@ class JsFor(object):
     :param context:
     """
     self._context = context
-    self.__jsObj = JsObject.JsObject(jsIterable, setVar=True)
+    if not hasattr(jsIterable, 'toStr'):
+      self.__jsObj = JsObject.JsObject(jsIterable, setVar=True)
+    else:
+      self.__jsObj = jsIterable
     self._js = [
       "var %s = %s" % (self.__jsObj.varName, jsIterable),
       "var l = %s.length" % self.__jsObj.varName,
@@ -53,8 +56,8 @@ class JsFor(object):
 
     :return:
     """
-    if self.__forid is None:
-      raise Exception("Javascript For loop not correctly defined")
+    #if self.__forid is None:
+    #  raise Exception("Javascript For loop not correctly defined")
 
     strData = ";".join(self._js) + "{%s}"
     strData %= ";".join(self.__jsFncs)

@@ -4,6 +4,9 @@
 
 
 from epyk.core.js.html import JsHtml
+from epyk.core.js.primitives import JsObjects
+from epyk.core.js.fncs import JsFncs
+from epyk.core.js.statements import JsFor
 
 
 class JsHtmlPanel(JsHtml.JsHtml):
@@ -60,3 +63,33 @@ class JsHtmlGrid(JsHtml.JsHtml):
     # # TODO: Fix this part
     #return "$(%(jqId)s.find('div:nth-child(%(index)s)')).toggle()" % {'jqId': self.jqId, 'index': i}
 
+
+class JsHtmlTabs(JsHtml.JsHtml):
+
+  @property
+  def selected_index(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get("%s.querySelector('div[data-selected=true').getAttribute('data-index')" % self.varId)
+
+  @property
+  def selected_name(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get("%s.querySelector('div[data-selected=true').innerHTML" % self.varId)
+
+  @property
+  def reset_tabs(self):
+    """
+
+    :return:
+    """
+    return JsFncs.JsFunctions([
+      self._report.js.getElementsByName(self._src.tabs_name).all([
+        self._report.js.data.all.element.setAttribute("data-selected", False)
+      ])
+    ])

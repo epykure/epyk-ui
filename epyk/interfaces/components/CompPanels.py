@@ -14,6 +14,11 @@ class Panels(object):
     """
     Python wrapper to the Bootstrap Pills interface
 
+    Example
+    tab = rptObj.ui.panels.pills()
+    for i in range(5):
+      tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
+
     Documentation
     https://getbootstrap.com/docs/4.0/components/navs/
     """
@@ -28,10 +33,14 @@ class Panels(object):
     self.context.register(html_tabs)
     return html_tabs
 
-  def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-           css_tab=None, options=None, profile=False):
+  def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, css_tab=None, options=None, profile=False):
     """
     Python wrapper for a multi Tabs component
+
+    Example
+    tab = rptObj.ui.panels.tabs()
+    for i in range(5):
+      tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
 
     Documentation
     https://getbootstrap.com/docs/4.0/components/navs/
