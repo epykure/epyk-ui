@@ -297,7 +297,7 @@ class Col(Html.Html):
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
     self.position, self.htmlMaps, self.rows_css, self.row_css_dflt = position, {}, {}, {}
-    super(Col, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
+    super(Col, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
@@ -305,17 +305,30 @@ class Col(Html.Html):
       self.css({'margin': 'auto', 'display': 'inline-block', 'text-align': 'center'})
     else:
       self.css({'display': 'inline-block'})
+    self.attr["class"].add('col')
+    self.style.justify_content = self.position
 
   def __add__(self, htmlObj):
     """ Add items to a container """
     if not hasattr(htmlObj, 'inReport'):
-      # Add a text HTML internal object by default
-      # todo: add options to this component to remove hard coded Css
       htmlObj = self._report.ui.div(htmlObj)
-      htmlObj.style.addCls("CssDivOnHover")
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     self.htmlMaps[htmlObj.htmlId] = htmlObj
+    return self
+
+  def set_size(self, n):
+    """
+    Set the column size
+
+    Example
+    ps = rptObj.ui.layouts.grid()
+    ps += [rptObj.ui.text("test %s" % i) for i in range(5)]
+    ps[0][0].set_size(10)
+
+    :return:
+    """
+    self.attr["class"].add("col-%s" % n)
     return self
 
   def get(self, htmlCode):
@@ -326,28 +339,12 @@ class Col(Html.Html):
     """
     return self.htmlMaps[htmlCode]
 
-  def set_css_row(self, css_attrs, row_id=None):
-    """
-    Set the CSS attributes for the row container
-
-    :param css_attrs: The CSS attributes
-    :param row_id: The row id for the special classes. None if it should be applied to all the rows
-
-    :return: self to allow the chains
-    """
-    if row_id is None:
-      self.row_css_dflt = css_attrs
-    self.rows_css[row_id] = dict(self.row_css_dflt)
-    self.rows_css[row_id].update(css_attrs)
-    return self
+  def __getitem__(self, i):
+    return self.val[i]
 
   def __str__(self):
-    self.css({"justify-content": self.position})
-    rows = []
-    for i, htmlObj in enumerate(self.val):
-      css_style = "style='%s'" % ";".join(["%s:%s" % (k, v) for k, v in self.rows_css.get(i, self.row_css_dflt).items()])
-      rows.append("<div %s>%s</div>" % (css_style, htmlObj.html()))
-    return '<div %s>%s</div>' % (self.get_attrs(), "".join(rows))
+    content = [htmlObj.html() for htmlObj in self.val]
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -377,14 +374,15 @@ class Row(Html.Html):
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
     self.attr["class"].add('row')
+    self.attr["class"].add('no-gutters')
+    self.style.justify_content = self.position
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    if not hasattr(htmlObj, 'inReport'):
-      # Add a text HTML internal object by default
-      # todo: add options to this component to remove hard coded Css
-      htmlObj = self._report.ui.div(htmlObj)
-      htmlObj.attr["class"].add("CssDivOnHover")
+    if not isinstance(htmlObj, Col):
+      if not isinstance(htmlObj, list):
+        htmlObj = [htmlObj]
+      htmlObj = self._report.ui.layouts.col(htmlObj)
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     self.htmlMaps[htmlObj.htmlId] = htmlObj
@@ -399,15 +397,19 @@ class Row(Html.Html):
     return self.htmlMaps[htmlCode]
 
   def __getitem__(self, i):
+    """
+    Return the internal column in the row for the given index
+
+    :param i: the column index
+    :rtype: Col
+    """
     return self.val[i]
 
   def __str__(self):
-    self.css({"justify-content": self.position})
-    rows = []
+    cols = []
     for i, htmlObj in enumerate(self.val):
-      htmlObj.attr["class"].add("col col-md-2")
-      rows.append(htmlObj.html())
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))
+      cols.append(htmlObj.html())
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(cols))
 
 
 class Grid(Html.Html):
@@ -415,38 +417,42 @@ class Grid(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
 
   def __init__(self, report, htmlObjs, width, height, colsDim, colsAlign, noGlutters, align, helper, profile):
-    super(Grid, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
+    super(Grid, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'overflow-x': 'hidden', 'padding': 0})
-    #self.attr["class"].add("container-fluid")
-    self.rowsStyle, self.colsStyle, self.noGlutters = {}, {}, noGlutters
+    self.attr["class"].add("container-fluid")
+    self.htmlMaps = {}
     if align == 'center':
       self.css({'margin': 'auto'})
-    self.colsDim, self.htmlMaps, self.colsAlign = [], {}, []
-    if colsDim is None:
-      colsDim, currDim = [], 0
-      for h in range(0, len(htmlObjs)-1):
-        currDim += int(12 / len(htmlObjs))
-        colsDim.append(int(12 / len(htmlObjs)))
-      colsDim.append(12 - currDim)
-    for i, htmlObj in enumerate(htmlObjs):
-      self.__add__((htmlObj, colsDim[i]))
-    if colsAlign is not None:
-      self.colsAlign = colsAlign
+    if htmlObjs is not None:
+      for i, htmlObj in enumerate(htmlObjs):
+        self.__add__((htmlObj, colsDim[i]))
 
-  def __add__(self, htmlObjWithDim):
+  def __add__(self, row_data):
     """ Add items to a container """
-    if isinstance(htmlObjWithDim, tuple):
-      htmlObj, dim = htmlObjWithDim
+    if isinstance(row_data, Row):
+      row = row_data
     else:
-      htmlObj, dim = htmlObjWithDim, 1
-    self.htmlMaps[htmlObj.htmlId] = htmlObj
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    self.val.append(htmlObj)
-    self.colsDim.append(dim)
-    self.colsAlign.append("left")
+      row = self._report.ui.layouts.row()
+      for htmlObjWithDim in row_data:
+        if isinstance(htmlObjWithDim, tuple):
+          htmlObj, dim = htmlObjWithDim
+        else:
+          htmlObj, dim = htmlObjWithDim, None
+        row += htmlObj
+        if dim is not None:
+          row[-1].attr["class"].add("col-%s" % dim)
+    row.inReport = False
+    self.htmlMaps[row.htmlId] = row
+    self.val.append(row)
+    #self.colsAlign.append("left")
     return self
 
   def __getitem__(self, i):
+    """
+
+    :param i: Integer. The internal row based on the index
+    :rtype: Row
+    """
     return self.val[i]
 
   @property
@@ -484,26 +490,9 @@ class Grid(Html.Html):
     return self
 
   def __str__(self):
-    items = ['<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
-    items.append('<div class="row%s">' % (' no-gutters' if self.noGlutters else ''))
-    dim_row, row_index, col_per_obj = 0, 1, {}
-    for i, htmlObj in enumerate(self.val):
-      if dim_row == 12:
-        items.append('</div><div class="row%s">' % (' no-gutters' if self.noGlutters else ''))
-        dim_row = 0
+    rows = [htmlObj.html() for htmlObj in self.val]
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))
 
-      if isinstance(htmlObj, HtmlSelect.Select):
-        htmlObj.container = "#%s" % self.htmlId # The container should be defined in this case to be visible
-      htmlContent = htmlObj.html() # htmlObj.content() if isinstance(htmlObj, Col) else htmlObj.html()
-      items.append('<div class="col col-md-%s text-%s">%s</div>' % (self.colsDim[i], self.colsAlign[i], htmlContent))
-      dim_row += 1 if self.colsDim[i] == 'auto' else self.colsDim[i]
-      col_per_obj[i] = self.colsDim[i]
-      row_index += 1
-      if dim_row > 12:
-        raise Exception("BootStrap allow a max of 12 columns per Row")
-    self._report.js.getVar("panel_dims_%s" % self.htmlId, col_per_obj)
-    items.append('</div></div>')
-    return "".join(items)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS

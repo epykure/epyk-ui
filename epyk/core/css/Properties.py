@@ -1066,10 +1066,29 @@ class CssMixin(object):
     self.htmlObj.css({"isolation": val})
 
   @property
-  def justify_content(self): return self.htmlObj.css("justify-content")
+  def justify_content(self):
+    """
+    The justify-content property aligns the flexible container's items when the items do not use all available space on the main-axis (horizontally).
+    This property is not inherited
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_justify-content.asp
+
+    :return:
+    """
+    return self.htmlObj.css("justify-content")
 
   @justify_content.setter
   def justify_content(self, val):
+    """
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_justify-content.asp
+
+    :param val: String. Default value flex-start
+    :return:
+    """
+    vals = set(["flex-start", "flex-end", "center", "space-between", "space-around", "initial", "inherit"])
     val = val or 'None'
     self.htmlObj.css({"justify-content": val})
 
