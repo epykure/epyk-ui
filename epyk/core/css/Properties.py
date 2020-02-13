@@ -1134,11 +1134,24 @@ class CssMixin(object):
     self.htmlObj.css({"hanging-punctuation": val})
 
   @property
-  def height(self): return self.htmlObj.css("height")
+  def height(self):
+    """
+    The height property sets the height of an element.
+
+    The height of an element does not include padding, borders, or margins!
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_dim_height.asp
+
+    :return:
+    """
+    return self.htmlObj.css("height")
 
   @height.setter
   def height(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"height": val})
 
   @property
@@ -1522,6 +1535,8 @@ class CssMixin(object):
   @position.setter
   def position(self, val):
     val = val or 'None'
+    if val in ["sticky"]:
+      self.htmlObj.css({"position": "-webkit-%s" % val})
     self.htmlObj.css({"position": val})
 
   @property
@@ -1661,11 +1676,22 @@ class CssMixin(object):
     self.htmlObj.css({"text-transform": val})
 
   @property
-  def top(self): return self.htmlObj.css("top")
+  def top(self):
+    """
+    The top property affects the vertical position of a positioned element.
+    This property has no effect on non-positioned elements.
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_pos_top.asp
+
+    :return:
+    """
+    return self.htmlObj.css("top")
 
   @top.setter
   def top(self, val):
-    val = val or 'None'
+    if val is None:
+      val = 'None'
     self.htmlObj.css({"top": val})
 
   @property
@@ -1776,11 +1802,24 @@ class CssMixin(object):
     self.htmlObj.css({"white-space": val})
 
   @property
-  def width(self): return self.htmlObj.css("width")
+  def width(self):
+    """
+    The width property sets the width of an element.
+
+    The width of an element does not include padding, borders, or margins!
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_dim_width.asp
+
+    :return:
+    """
+    return self.htmlObj.css("width")
 
   @width.setter
   def width(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"width": val})
 
   @property
@@ -1822,3 +1861,18 @@ class CssMixin(object):
   def z_index(self, val):
     val = val or 'None'
     self.htmlObj.css({"z-index": val})
+
+  def sticky(self, top=0):
+    """
+    An element with position: sticky; is positioned based on the user's scroll position
+
+    Documentation
+    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_sticky_element
+
+    :param top: Integer
+
+    :return:
+    """
+    self.top = top
+    self.position = "sticky"
+    return self
