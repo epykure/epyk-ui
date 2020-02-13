@@ -12,32 +12,39 @@ def autoPrefixer(prop):
   :param prop:
   :return:
   """
-  map = {'appearance': ['-webkit-', '-moz-'],
-         'backface-visibility': ['-webkit-'],
-         'box-decoration-break': ['-webkit-'],
-         'font-kerning': ['-webkit-'],
-         'font-variant-ligatures': ['-webkit-'],
-         'hyphens': ['-webkit-'],
-         'image-rendering': ['-moz-'],
-         'mask': ['-webkit-'],
-         'mask-type': ['-webkit-'],
-         'tab-size': ['-moz-'],
-         'text-combine-upright': ['-webkit-'],
-         'text-decoration-color': ['-webkit-'],
-         'text-decoration-line': ['-webkit-'],
-         'text-emphasis': ['-webkit-'],
-         'text-emphasis-color': ['-webkit-'],
-         'text-emphasis-position': ['-webkit-'],
-         'text-emphasis-style': ['-webkit-'],
-         'text-orientation': ['-webkit-'],
-         'transition': ['-webkit-', '-moz-', '-o-'],
-         'transition-property': ['-webkit-', '-moz-', '-o-'],
-         'transition-duration': ['-webkit-', '-moz-', '-o-'],
-         'transition-timing-function': ['-webkit-', '-moz-', '-o-'],
-         'transition-delay': ['-webkit-', '-moz-', '-o-'],
-         'user-select': ['-webkit-'],
+  map = {
+    'animation-direction': ['-webkit-', '-moz-', '-o-'],
+    'animation-duration': ['-webkit-', '-moz-', '-o-'],
+    'animation-iteration-count': ['-webkit-', '-moz-', '-o-'],
+    'animation-timing-function': ['-webkit-', '-moz-', '-o-'],
+    'animation-name': ['-webkit-', '-moz-', '-o-'],
+    'appearance': ['-webkit-', '-moz-'],
+    'backface-visibility': ['-webkit-'],
+    'box-decoration-break': ['-webkit-'],
+    'font-kerning': ['-webkit-'],
+    'font-variant-ligatures': ['-webkit-'],
+    'hyphens': ['-webkit-'],
+    'image-rendering': ['-moz-'],
+    'mask': ['-webkit-'],
+    'mask-type': ['-webkit-'],
+    'tab-size': ['-moz-'],
+    'text-combine-upright': ['-webkit-'],
+    'text-decoration-color': ['-webkit-'],
+    'text-decoration-line': ['-webkit-'],
+    'text-emphasis': ['-webkit-'],
+    'text-emphasis-color': ['-webkit-'],
+    'text-emphasis-position': ['-webkit-'],
+    'text-emphasis-style': ['-webkit-'],
+    'text-orientation': ['-webkit-'],
+    'transition': ['-webkit-', '-moz-', '-o-'],
+    'transition-property': ['-webkit-', '-moz-', '-o-'],
+    'transition-duration': ['-webkit-', '-moz-', '-o-'],
+    'transition-timing-function': ['-webkit-', '-moz-', '-o-'],
+    'transition-delay': ['-webkit-', '-moz-', '-o-'],
+    'user-select': ['-webkit-'],
       }
-  return map.get(prop, [])
+  for pref in map.get(prop, []):
+    yield "%s%s" % (pref, prop)
 
 
 class CssMixin(object):
@@ -77,7 +84,12 @@ class CssMixin(object):
     self.htmlObj.css({"all": val})
 
   @property
-  def animation(self): return self.htmlObj.css("animation")
+  def animation(self):
+    """
+
+    :return:
+    """
+    return self.htmlObj.css("animation")
 
   @animation.setter
   def animation(self, val):
@@ -93,19 +105,41 @@ class CssMixin(object):
     self.htmlObj.css({"animation-delay": val})
 
   @property
-  def animation_direction(self): return self.htmlObj.css("animation-direction")
+  def animation_direction(self):
+    """
+    The animation-direction property defines whether an animation should be played forwards, backwards or in alternate cycles.
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_animation-direction.asp
+
+    :return:
+    """
+    return self.htmlObj.css("animation-direction")
 
   @animation_direction.setter
   def animation_direction(self, val):
     val = val or 'None'
+    for m_val in autoPrefixer("animation-direction"):
+      self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-direction": val})
 
   @property
-  def animation_duration(self): return self.htmlObj.css("animation-duration")
+  def animation_duration(self):
+    """
+    The animation-duration property defines how long an animation should take to complete one cycle.
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_animation-duration.asp
+
+    :return:
+    """
+    return self.htmlObj.css("animation-duration")
 
   @animation_duration.setter
   def animation_duration(self, val):
     val = val or 'None'
+    for m_val in autoPrefixer("animation-duration"):
+      self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-duration": val})
 
   @property
@@ -117,19 +151,41 @@ class CssMixin(object):
     self.htmlObj.css({"animation-fill-mode": val})
 
   @property
-  def animation_iteration_count(self): return self.htmlObj.css("animation-iteration-count")
+  def animation_iteration_count(self):
+    """
+    The animation-iteration-count property specifies the number of times an animation should be played.
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_animation-iteration-count.asp
+
+    :return:
+    """
+    return self.htmlObj.css("animation-iteration-count")
 
   @animation_iteration_count.setter
   def animation_iteration_count(self, val):
     val = val or 'None'
+    for m_val in autoPrefixer("animation-iteration-count"):
+      self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-iteration-count": val})
 
   @property
-  def animation_name(self): return self.htmlObj.css("animation-name")
+  def animation_name(self):
+    """
+    The animation-name property specifies a name for the @keyframes animation.
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_animation-name.asp
+
+    :return:
+    """
+    return self.htmlObj.css("animation-name")
 
   @animation_name.setter
   def animation_name(self, val):
     val = val or 'None'
+    for m_val in autoPrefixer("animation-name"):
+      self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-name": val})
 
   @property
@@ -141,11 +197,22 @@ class CssMixin(object):
     self.htmlObj.css({"animation-play-state": val})
 
   @property
-  def animation_timing_function(self): return self.htmlObj.css("animation-timing-function")
+  def animation_timing_function(self):
+    """
+    The animation-timing-function specifies the speed curve of an animation.
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_animation-timing-function.asp
+
+    :return:
+    """
+    return self.htmlObj.css("animation-timing-function")
 
   @animation_timing_function.setter
   def animation_timing_function(self, val):
     val = val or 'None'
+    for m_val in autoPrefixer("animation-timing-function"):
+      self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-timing-function": val})
 
   @property

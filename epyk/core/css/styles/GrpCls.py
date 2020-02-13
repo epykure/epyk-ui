@@ -9,6 +9,7 @@ from epyk.core.css import Classes
 from epyk.core.css import Defaults_css
 from epyk.core.css import Properties
 from epyk.core.css.styles.attributes import Commons
+from epyk.core.css.styles.classes import CssStyle
 
 
 class ClassPage(object):

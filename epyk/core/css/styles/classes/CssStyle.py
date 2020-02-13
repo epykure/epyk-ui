@@ -433,6 +433,7 @@ class Style(object):
   def __init__(self, rptObj, css_ovrs=None, selector_ovrs=None):
     self.rptObj = rptObj
     css_ovrs = css_ovrs or {}
+    self.__keyframes = {}
 
     selector_ids = dict(getattr(self, '_selectors', {}))
     if self.classname is None:
@@ -468,7 +469,7 @@ class Style(object):
   def customize(self):
     pass
 
-  def transition(self, attribute, duration=0, delay=None, iteration=None, timing_fnc=None):
+  def transition(self, attribute, duration=2, delay=None, iteration=None, timing_fnc=None):
     """
 
     :param attribute:
@@ -494,14 +495,17 @@ class Style(object):
     self.css(css_transition, change=False)
     return self
 
-  def animation(self, effect=None, name=None, attrs=None, duration=0, delay=None, iteration=None, timing_fnc=None):
+  def animation(self, name=None, attrs=None, duration=2, delay=None, iteration='infinite', timing_fnc=None, effect=None):
     """
     The @keyframes rule specifies the animation code.
 
     The animation is created by gradually changing from one set of CSS classes to another.
 
     Example
-    triangle.style.animation(effect=EffectsMoves.EffectsSpin(), duration=3)
+    rptObj.ui.button("Ok").style.css_class.animation('test', {
+      "from": {"border-color": "white"},
+      "to": {"border-color": "red"},
+    })
 
     Documentation
     https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
@@ -515,7 +519,7 @@ class Style(object):
     :param iteration:
     :param timing_fnc:
     """
-    name = self.htmlObj._report.style.keyframes(effect, name, attrs)
+    name = self.keyframes(name, attrs, effect)
     css_animation = {"animation-name": name, "animation-duration": "%ss" % duration}
     if delay:
       css_animation["animation-delay"] = "%ss" % delay
@@ -741,6 +745,32 @@ class Style(object):
     :return:
     """
 
+  def keyframes(self, name, attrs, effects=None):
+    """
+    The @keyframes rule specifies the animation code.
+
+    The animation is created by gradually changing from one set of CSS styles to another.
+
+    Example
+    rptObj.style.keyframes("test", {
+      "50%": {"transform": "scale(1.5, 1.5)", "opacity": 0},
+      "99%": {"transform": "scale(0.001, 0.001)", "opacity": 0},
+      "100%": {"transform": "scale(0.001, 0.001)", "opacity": 1},
+    })
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+
+    :param effects: Effect Class.
+    :param name: String. Required. Defines the name of the animation.
+    :param attrs: String. Required. Percentage of the animation duration.
+    """
+    if effects is not None:
+      name = effects.__class__.__name__
+      attrs = effects.get_attrs()
+    self.__keyframes[name] = attrs
+    return name
+
   def __str__(self):
     style = []
     for e in self.__internal_props:
@@ -766,6 +796,12 @@ class Style(object):
         else:
           css_id = str(s.selector) % self.classname
         style.append("%s::%s %s" % (css_id.strip(), e, s))
+    if self.__keyframes:
+      for name, k_attrs in self.__keyframes.items():
+        style.append("@keyframes %s {" % name)
+        for k, v_dict in k_attrs.items():
+          style.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, j) for i, j in v_dict.items()])))
+          style.append("}")
     return "\n".join(style)
 
   def _repr_html_(self):
