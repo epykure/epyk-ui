@@ -465,7 +465,7 @@ class JsDoms(JsObject.JsObject):
     :return: THe JsObj
     """
     if jsString is None:
-      return "%s.innerHTML" % self.varId
+      return JsString.JsString("%s.innerHTML" % self.varId, isPyData=False)
 
     self._js.append("%s.innerHTML = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     return self

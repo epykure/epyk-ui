@@ -630,7 +630,7 @@ class Tabs(Html.Html):
     #   tab_container.defined.add(self.options.get("tab_class"), toMain=False)
     #   css_cls_name = CssStyle.cssName(self.options.get("tab_class"))
     tab.click([
-      self.dom.reset_tabs,
+      self.dom.deselect_tabs,
       tab.dom.setAttribute("data-selected", True).r,
       self._report.js.getElementsByName(self.panels_name).all([
         self._report.js.getElementsByName(self.tabs_name).all([

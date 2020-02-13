@@ -6,7 +6,6 @@
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.fncs import JsFncs
-from epyk.core.js.statements import JsFor
 
 
 class JsHtmlPanel(JsHtml.JsHtml):
@@ -33,11 +32,9 @@ class JsHtmlGrid(JsHtml.JsHtml):
 
   @property
   def panels(self):
-
     for i, _ in enumerate(self._src.colsDim):
-      p = self.panel(i)
       yield self.panel(i)
-      print(p)
+
     return ""
 
   def togglePanel(self, i):
@@ -50,25 +47,38 @@ class JsHtmlGrid(JsHtml.JsHtml):
       %(compId)s.querySelector('.row').querySelector('div:nth-child(%(i)s)').style.display = 'none'
       ''' % {'compId': self.varId, 'i': i}
 
-    # return '''
-    #    var nextColDim = panel_dims_%(htmlId)s[1];
-    #    var nextColDimTotal = panel_dims_%(htmlId)s[1] + panel_dims_%(htmlId)s[0];
-    #    $(%(jqId)s.find('div')[1]).toggle();
-    #    const panelDisplay = $(%(jqId)s.find('div')[1]).css('display');
-    #    if (panelDisplay == 'block') {var cls = $(%(jqId)s.find('div')[1]).next().attr('class').replace("col-md-" + nextColDimTotal, "col-md-" + panel_dims_%(htmlId)s[1])}
-    #    else {var cls = $(%(jqId)s.find('div')[1]).next().attr('class').replace("col-md-" + panel_dims_%(htmlId)s[1], "col-md-" + nextColDimTotal)}
-    #    $(%(jqId)s.find('div')[1]).next().attr('class', cls)
-    #    ''' % {'jqId': self.varId, 'htmlId': self.htmlId}
-    #
-    # # TODO: Fix this part
-    #return "$(%(jqId)s.find('div:nth-child(%(index)s)')).toggle()" % {'jqId': self.jqId, 'index': i}
-
 
 class JsHtmlTabs(JsHtml.JsHtml):
+
+  def add_tab(self, name):
+    return JsFncs.JsFunctions([
+      JsObjects.JsNodeDom.JsDoms.new("div", varName="new_table"),
+      JsObjects.JsNodeDom.JsDoms.new("div", varName="new_table_content"),
+      JsObjects.JsNodeDom.JsDoms.get("new_table").css({"width": "100px", "display": 'inline-block'}),
+      JsObjects.JsNodeDom.JsDoms.get("new_table_content").innerText(name),
+      JsObjects.JsNodeDom.JsDoms.get("new_table_content").css(self._src.css_tab),
+      JsObjects.JsNodeDom.JsDoms.get("new_table_content").css({"padding": '5px 0'}),
+      JsObjects.JsNodeDom.JsDoms.get("new_table").appendChild(JsObjects.JsObjects.get("new_table_content")),
+      self.querySelector("div").appendChild(JsObjects.JsObjects.get("new_table")),
+     ])
+    #return self._report.js.console.log( self._report.js.getElementsByName(self._src.tabs_name).length )
+
+  def tab(self, i):
+    """
+    Return the Javascript tab object
+
+    Example
+    tab.dom.tab(3).firstChild.css({"color": 'red'})
+
+    :param i: Integer. Starting from 0 as we keep the Python indexing as reference
+    :return:
+    """
+    return JsObjects.JsNodeDom.JsDoms.get("%s.firstChild.querySelector('div:nth-child(%s)')" % (self.varId, i+1))
 
   @property
   def selected_index(self):
     """
+    Return the index of the selected tab
 
     :return:
     """
@@ -77,14 +87,15 @@ class JsHtmlTabs(JsHtml.JsHtml):
   @property
   def selected_name(self):
     """
-
+    Return the name of the selected tab
     :return:
     """
     return JsObjects.JsObjects.get("%s.querySelector('div[data-selected=true').innerHTML" % self.varId)
 
   @property
-  def reset_tabs(self):
+  def deselect_tabs(self):
     """
+    Deselect all the tabs in the component
 
     :return:
     """
