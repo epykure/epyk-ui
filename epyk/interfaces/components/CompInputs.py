@@ -203,7 +203,7 @@ class Inputs(object):
     """
     return self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
 
-  def checkbox(self, flag, label=None, group_name=None, size=(None, 'px'), width=(None, "%"), height=(None, "px"),
+  def checkbox(self, flag, label=None, group_name=None, width=(None, "%"), height=(None, "px"),
                htmlCode=None, filter=None, options=None, attrs=None, profile=None):
     """
 
@@ -211,7 +211,6 @@ class Inputs(object):
     rptObj.ui.inputs.checkbox(False)
 
     :param flag:
-    :param size:
     :param width:
     :param height:
     :param htmlCode:
@@ -220,8 +219,7 @@ class Inputs(object):
     :param attrs:
     :param profile:
     """
-    size = self.context._size(size)
-    html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, label, group_name, size, width, height, htmlCode,
+    html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, label, group_name, width, height, htmlCode,
                                          filter, options or {}, attrs or {}, profile)
     self.context.register(html_coech)
     return html_coech

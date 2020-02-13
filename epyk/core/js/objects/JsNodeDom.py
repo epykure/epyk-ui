@@ -394,7 +394,7 @@ class JsDoms(JsObject.JsObject):
   def querySelectorAll(self, tag, varName):
     """
     The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
-    
+
     Documentation
     https://www.w3schools.com/jsref/met_document_queryselectorall.asp
 

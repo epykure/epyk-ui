@@ -761,7 +761,7 @@ class Style(object):
       if str(s):
         if self.has_changed:
           # dedicated unique ID if it is not the original style
-          self.classname = "%s_%s" % (self.classname, id(self))
+          #self.classname = "%s_%s" % (self.classname, id(self))
           css_id = "%s" % str(s.selector) % self.classname
         else:
           css_id = str(s.selector) % self.classname

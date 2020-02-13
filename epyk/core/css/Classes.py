@@ -99,6 +99,16 @@ class Catalog(object):
       self.__ctx['div'] = CatalogDiv.CatalogDiv(self.__rptObj, self.__class_list_type)
     return self.__ctx['div']
 
+  @property
+  def radio(self):
+    """
+
+    :rtype: CatalogRadio.CatalogRadio
+    """
+    if "radio" not in self.__ctx:
+      self.__ctx['radio'] = CatalogRadio.CatalogRadio(self.__rptObj, self.__class_list_type)
+    return self.__ctx['radio']
+
   def custom(self, classname, attrs):
     """ """
     pass

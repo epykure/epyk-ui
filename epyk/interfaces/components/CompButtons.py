@@ -252,6 +252,7 @@ class Buttons(object):
 
     Example
     rptObj.ui.buttons.switch()
+    rptObj.ui.buttons.switch({"on": 'Python', 'off': 'Not Python', 'text': 'which language ?'})
 
     Documentation
     http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch

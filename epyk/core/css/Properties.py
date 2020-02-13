@@ -12,7 +12,8 @@ def autoPrefixer(prop):
   :param prop:
   :return:
   """
-  map = {'backface-visibility': ['-webkit-'],
+  map = {'appearance': ['-webkit-', '-moz-'],
+         'backface-visibility': ['-webkit-'],
          'box-decoration-break': ['-webkit-'],
          'font-kerning': ['-webkit-'],
          'font-variant-ligatures': ['-webkit-'],
@@ -34,7 +35,7 @@ def autoPrefixer(prop):
          'transition-duration': ['-webkit-', '-moz-', '-o-'],
          'transition-timing-function': ['-webkit-', '-moz-', '-o-'],
          'transition-delay': ['-webkit-', '-moz-', '-o-'],
-         'user-select': ['-webkit-']
+         'user-select': ['-webkit-'],
       }
   return map.get(prop, [])
 
@@ -146,6 +147,30 @@ class CssMixin(object):
   def animation_timing_function(self, val):
     val = val or 'None'
     self.htmlObj.css({"animation-timing-function": val})
+
+  @property
+  def appearance(self):
+    """
+    This property is frequently used in XUL stylesheets to design custom widgets with platform-appropriate styling.
+    It is also used in the XBL implementations of the widgets that ship with the Mozilla platform.
+
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
+
+    :return:
+    """
+    return self.htmlObj.css(autoPrefixer("appearance")[0])
+
+  @appearance.setter
+  def appearance(self, val):
+    """
+
+    :param val:
+    :return:
+    """
+    val = val or 'None'
+    for m_val in autoPrefixer("appearance"):
+      self.htmlObj.css({m_val: val})
 
   @property
   def backface_visibility(self):

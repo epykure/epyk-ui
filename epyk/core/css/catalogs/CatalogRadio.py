@@ -16,7 +16,7 @@ class CatalogRadio(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesRadio.CssRadioButtonSelected)
 
-  def switch(self):
+  def switch_checkbox(self):
     """  """
     return self._set_class(CssStylesRadio.CssRadioSwitch)
 

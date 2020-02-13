@@ -4,11 +4,8 @@ Module for the HTML radio components
 
 from epyk.core.html import Html
 
-# The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsList
-
-from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
+from epyk.core.js.html import JsHtmlSelect
 
 
 class Radio(Html.Html):
@@ -67,16 +64,46 @@ class Radio(Html.Html):
 class Switch(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
   name, category, callFnc = 'Switch Buttons', 'Buttons', 'switch'
-  # _grpCls = CssGrpClsList.CssClassSwitch
 
   def __init__(self, report, records, label, color, width, height, htmlCode, profile):
     self.width, self.jsChange = width[0], ''
     super(Switch, self).__init__(report, records, htmlCode=htmlCode, profile=profile,
                                  css_attrs={"width": width, "height": height, 'color': color})
     self.add_label(label) # add for
+    # self.label.style.add_classes.radio.switch_label()
+    self.style.add_classes.radio.switch_checked()
     self._clicks = {'on': [], 'off': []}
+    #
+    self.checkbox = report.ui.inputs.checkbox("", width=(None, "%"))
+    self.checkbox.style.add_classes.radio.switch_checkbox()
+    self.checkbox.inReport = False
+    #
+    self.switch_label = report.ui.texts.label(report.entities.non_breaking_space, width=(50, "px"))
+    self.switch_label.style.clear()
+    self.switch_label.style.add_classes.radio.switch_label()
+    self.switch_label.inReport = False
+    self.switch_label.style.css.line_height = "18px"
+
+    self.switch_text = report.ui.tags.p(self.val['on'])
+    self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold"})
+    self.switch_text.tooltip(self.val.get('text', ''))
+    self.switch_text.inReport = False
+
     # self.css({"display": 'inline-block'})
     self.switch = self.dom.querySelector("label")
+    # data should be stored for this object
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append("var %s_data = %s" % (self.htmlCode, records))
+
+  @property
+  def dom(self):
+    """
+    HTML Dom object
+
+    :rtype: JsHtmlSelect.JsHtmlSwitch
+    """
+    if self._dom is None:
+      self._dom = JsHtmlSelect.JsHtmlSwitch(self, report=self._report)
+    return self._dom
 
   @property
   def _js__builder__(self):
@@ -85,23 +112,24 @@ class Switch(Html.Html):
       else {htmlObj.querySelector("input").checked = true; htmlObj.querySelector("p").innerHTML = data.on}'''
 
   def click(self, onFncs=None, offFncs=None):
+    """
+    Set the click property for the Switch
+
+    :param onFncs: List. The list of JavaScript functions
+    :param offFncs: List. The list of JavaScript functions
+    """
     if onFncs is not None:
       self._clicks['on'].extend(onFncs)
     if offFncs is not None:
       self._clicks['off'].extend(offFncs)
 
   def __str__(self):
-    # TODO: Change the logic to allow the update of the self.val in the Javascript
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(
       self.switch.onclick('''
-        if(this.parentNode.querySelector('input').checked){%s; this.parentNode.querySelector('p').innerHTML = %s;
-            this.parentNode.querySelector('input').checked = false}
-        else {%s; this.parentNode.querySelector('input').checked = true; this.parentNode.querySelector('p').innerHTML = %s}
-        ''' % (";".join(self._clicks["on"]), JsUtils.jsConvertData(self.val['off'], None),
-               ";".join(self._clicks["off"]), JsUtils.jsConvertData(self.val['on'], None))).toStr())
+        var input_check = this.parentNode.querySelector('input');
+        if(input_check.checked){%(clickOn)s; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.on; input_check.checked = false}
+        else {%(clickOff)s; input_check.checked = true; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.off}
+        ''' % {'clickOn': ";".join(self._clicks["on"]), "htmlCode": self.htmlCode, 'clickOff': ";".join(self._clicks["off"])}).toStr())
     return '''
-      <div %s>
-        <input type="checkbox"/>
-        <label style="width:50px;display:inline-block" for="switch">&nbsp;</label>
-        <p style="display:inline-block;margin-left:3px;font-weight:bold" title="%s">%s</p>
-      </div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val.get('text', ''), self.val['off'])
+      <div %s>%s %s %s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()),
+                                   self.checkbox.html(), self.switch_label.html(), self.switch_text.html())
