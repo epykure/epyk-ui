@@ -67,15 +67,18 @@ class Label(Html.Html):
     self.on("click", jsFncs)
     return self
 
-  def not_selectable(self):
+  def selectable(self, flag=False):
     """
     Make the label component not selectable.
 
     This will be done by adding the class CssTextNotSelectable to the component
 
+    :param flag: Boolean.
+
     :return: self to allow the chains
     """
-    self.style.addCls("CssTextNotSelectable")
+    if not flag:
+      self.style.add_classes.text.no_selection()
     return self
 
   @property
@@ -317,8 +320,14 @@ class Pre(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  def not_selectable(self):
-    self.style.addCls("CssTextNotSelectable")
+  def selectable(self, flag=False):
+    """
+
+    :param flag: Boolean.
+    :return:
+    """
+    if not flag:
+      self.style.add_classes.text.no_selection()
     return self
 
   @property

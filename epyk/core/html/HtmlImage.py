@@ -265,6 +265,7 @@ class Badge(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
+  @property
   def options(self):
     """
 

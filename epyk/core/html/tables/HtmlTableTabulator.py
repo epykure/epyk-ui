@@ -75,4 +75,4 @@ class DataTabulator(Html.Html):
     return "window[htmlObj.getAttribute('id') +'_table'] = new Tabulator('#'+ htmlObj.getAttribute('id'), data)"
 
   def __str__(self):
-    return "<div %s></div>" % (self.get_attrs(pyClassNames=self.defined))
+    return "<div %s></div>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
