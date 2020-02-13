@@ -185,6 +185,10 @@ class Div(Html.Html):
 
   @property
   def style(self):
+    """
+
+    :rtype: GrpClsContainer.ClassDiv
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassDiv(self)
     return self._styleObj

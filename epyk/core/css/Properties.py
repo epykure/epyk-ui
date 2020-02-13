@@ -1913,4 +1913,5 @@ class CssMixin(object):
       "to": {
         "text-shadow": ["0 0 20px #fff", "0 0 30px #ff4da6", "0 0 40px #ff4da6", "0 0 50px #ff4da6", "0 0 60px #ff4da6",
                         "0 0 70px #ff4da6", "0 0 80px #ff4da6"]}}
-    self.htmlObj.style.css_class.keyframes("glow", attrs)
+    self.orign_htmlObj.style.css_class.keyframes("glow", attrs)
+    return self
