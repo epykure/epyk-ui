@@ -677,8 +677,7 @@ class Dialog(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
 
   def __init__(self, report, recordSet, width, height, helper, profile):
-    super(Dialog, self).__init__(report, recordSet,
-                                 profile=profile)
+    super(Dialog, self).__init__(report, recordSet, css_attrs={"width": width, 'height': helper}, profile=profile)
     self.css({"border": '2px solid %s' % self._report.theme.greys[3], "display": "block", "position": "absolute",
               "background": self._report.theme.greys[0]})
     # self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable().toStr())
@@ -707,7 +706,7 @@ class Dialog(Html.Html):
   #   event.preventDefault()''' % {'title': title, 'htmlId': self.htmlId}
 
   def __str__(self):
-    return "<div %s></div>" % self.get_attrs(pyClassNames=self.defined)
+    return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class IconsMenu(Html.Html):
@@ -765,7 +764,6 @@ class IconsMenu(Html.Html):
 
 class Form(Html.Html):
   name, category, callFnc = 'Generic Form', 'Forms', 'form'
-  #_grpCls = CssGrpCls.CssGrpClassBase
 
   def __init__(self, report, htmlObjs, action, method, helper):
     super(Form, self).__init__(report, [])
@@ -786,7 +784,7 @@ class Form(Html.Html):
 
   def __str__(self):
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
-    return '<form %s>%s</form>%s' % (self.get_attrs(pyClassNames=self.defined), str_vals, self.helper)
+    return '<form %s>%s</form>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)
 
 
 class Modal(Html.Html):
