@@ -177,7 +177,6 @@ class Layouts(object):
     :param htmlObjs:
     :param label:
     :param color:
-    :param size:
     :param width:
     :param icon:
     :param height:

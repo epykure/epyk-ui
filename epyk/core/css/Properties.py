@@ -13,6 +13,7 @@ def autoPrefixer(prop):
   :return:
   """
   map = {
+    'animation': ['-webkit-', '-moz-', '-o-'],
     'animation-direction': ['-webkit-', '-moz-', '-o-'],
     'animation-duration': ['-webkit-', '-moz-', '-o-'],
     'animation-iteration-count': ['-webkit-', '-moz-', '-o-'],
@@ -86,6 +87,10 @@ class CssMixin(object):
   @property
   def animation(self):
     """
+    CSS allows animation of HTML elements without using JavaScript or Flash!
+
+    Documentation
+    https://www.w3schools.com/css/css3_animations.asp
 
     :return:
     """
@@ -94,6 +99,8 @@ class CssMixin(object):
   @animation.setter
   def animation(self, val):
     val = val or 'None'
+    for m_val in autoPrefixer("animation"):
+      self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation": val})
 
   @property
@@ -1660,11 +1667,24 @@ class CssMixin(object):
     self.htmlObj.css({"text-overflow": val})
 
   @property
-  def text_shadow(self): return self.htmlObj.css("text-shadow")
+  def text_shadow(self):
+    """
+    The text-shadow property adds shadow to text.
+
+    This property accepts a comma-separated list of shadows to be applied to the text.
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_text-shadow.asp
+
+    :return:
+    """
+    return self.htmlObj.css("text-shadow")
 
   @text_shadow.setter
   def text_shadow(self, val):
     val = val or 'None'
+    if isinstance(val, list):
+      val = ",".join(val)
     self.htmlObj.css({"text-shadow": val})
 
   @property
@@ -1876,3 +1896,21 @@ class CssMixin(object):
     self.top = top
     self.position = "sticky"
     return self
+
+  def glow(self):
+    """
+
+    Documentation
+    https://www.w3schools.com/howto/howto_css_glowing_text.asp
+
+    :return:
+    """
+    self.animation = "glow 1s ease-in-out infinite alternate"
+    attrs = {
+      "from": {
+        "text-shadow": ["0 0 10px #fff", "0 0 20px #fff", "0 0 30px #e60073", "0 0 40px #e60073", "0 0 50px #e60073",
+                        "0 0 60px #e60073", "0 0 70px #e60073"]},
+      "to": {
+        "text-shadow": ["0 0 20px #fff", "0 0 30px #ff4da6", "0 0 40px #ff4da6", "0 0 50px #ff4da6", "0 0 60px #ff4da6",
+                        "0 0 70px #ff4da6", "0 0 80px #ff4da6"]}}
+    self.htmlObj.style.css_class.keyframes("glow", attrs)
