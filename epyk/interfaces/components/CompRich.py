@@ -81,7 +81,7 @@ class Rich(object):
     self.context.register(html_traffic)
     return html_traffic
 
-  def prism(self, text=None, language='python', size=(None, 'px'), width=(100, "%"), height=(None, "px"),
+  def prism(self, text=None, language='python', width=(100, "%"), height=(None, "px"),
             isEditable=False, trimSpaces=True, align=None, helper=None, profile=None):
     """
 
@@ -101,9 +101,7 @@ class Rich(object):
     :param align:
     :param profile: Optional. A flag to set the component performance storage
     """
-    size = self.context._size(size)
-    html_prism = html.HtmlTextComp.Prism(self.context.rptObj, text, language, size, width,
-                                                         height, isEditable, trimSpaces, align, helper, profile)
+    html_prism = html.HtmlTextComp.Prism(self.context.rptObj, text, language, width, height, isEditable, trimSpaces, align, helper, profile)
     self.context.register(html_prism)
     return html_prism
 
@@ -126,7 +124,7 @@ class Rich(object):
     return html_help
 
   def script(self, title, scriptName, clssName=None, functionName=None, docType='documentation',
-             width=(100, "%"), height=(None, "px"),  color=None, size=(None, 'px'), profile=None):
+             width=(100, "%"), height=(None, "px"),  color=None, profile=None):
     """
     Entry point to the source code component.
 
@@ -139,17 +137,15 @@ class Rich(object):
     :param functionName:
     :param docType:
     :param color:
-    :param size:
     :param profile:
     """
-    size = self.context._size(size)
     html_script = html.HtmlTextComp.DocScript(self.context.rptObj, title, scriptName, clssName, functionName,
-                                            docType, width, height, color, size, profile)
+                                            docType, width, height, color, profile)
     self.context.register(html_script)
     return html_script
 
   def countdown(self, yyyy_mm_dd, label=None, icon="fas fa-stopwatch", timeInMilliSeconds=1000, width=(100, '%'), height=(None, 'px'),
-                htmlCode=None, size=(None, 'px'), helper=None, profile=None):
+                htmlCode=None, helper=None, profile=None):
     """
     Add a countdown to the page and remove the content if the page has expired.
 
@@ -171,12 +167,11 @@ class Rich(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
-    size = self.context._size(size)
     html_cd = html.HtmlDates.CountDownDate(self.context.rptObj, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile)
     self.context.register(html_cd)
     return html_cd
 
-  def update(self, label=None, size=(None, 'px'), color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
+  def update(self, label=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
     Last Update time component
 
@@ -191,17 +186,15 @@ class Rich(object):
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
     """
-    size = self.context._size(size)
-    html_dt = html.HtmlDates.LastUpdated(self.context.rptObj, label, size, color, width, height, htmlCode, profile)
+    html_dt = html.HtmlDates.LastUpdated(self.context.rptObj, label, color, width, height, htmlCode, profile)
     self.context.register(html_dt)
     return html_dt
 
-  def console(self, content="", size=(None, 'px'), color=None, width=(100, "%"), height=(200, "px"), htmlCode=None,
+  def console(self, content="", color=None, width=(100, "%"), height=(200, "px"), htmlCode=None,
               options=None, profile=None):
     """
 
     :param content:
-    :param size:
     :param color:
     :param width:
     :param height:
@@ -209,9 +202,8 @@ class Rich(object):
     :param options:
     :param profile:
     """
-    size = self.context._size(size)
     options = options or {}
-    html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, color, size, width, height, htmlCode, None, options, profile)
+    html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, color, width, height, htmlCode, None, options, profile)
     html_div.css({"border": "1px solid %s" % html_div._report.theme.greys[4], "background": html_div._report.theme.greys[2],
                   'padding': '5px'})
     self.context.register(html_div)

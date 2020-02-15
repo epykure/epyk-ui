@@ -36,3 +36,8 @@ def header(step=0):
 BODY_CONTAINER = None # The body CSS dictionary
 BACKGROUND = ('greys', 0)
 MEDIA = 600
+
+
+# Default CSS
+CSS_EXCEPTIONS = True
+CSS_EXCEPTIONS_FORMAT = "CSS - %s - invalid %s"

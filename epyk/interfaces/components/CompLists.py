@@ -119,7 +119,7 @@ class Lists(object):
     self.context.register(html_select)
     return html_select
 
-  def list(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def list(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
     Example
@@ -129,14 +129,13 @@ class Lists(object):
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
-    size = self.context._size(size)
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def numbers(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def numbers(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
     """
     Example
@@ -146,76 +145,70 @@ class Lists(object):
     https://www.w3schools.com/html/html_lists.asp
     https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
-    size = self.context._size(size)
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'decimal'})
     return html_list
 
-  def alpha(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def alpha(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
 
-    size = self.context._size(size)
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'lower-alpha'})
     return html_list
 
-  def roman(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def roman(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
 
-    size = self.context._size(size)
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'lower-roman'})
     return html_list
 
-  def points(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def points(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Documentation
     https://www.w3schools.com/html/html_lists.asp
     """
-    size = self.context._size(size)
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'circle'})
     return html_list
 
-  def disc(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def disc(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Documentation
     https://www.w3schools.com/cssref/pr_list-style-type.asp
     """
-    size = self.context._size(size)
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'disc'})
     return html_list
 
-  def squares(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def squares(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Documentation
     https://www.w3schools.com/cssref/pr_list-style-type.asp
     """
-    size = self.context._size(size)
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'square'})
     return html_list
 
-  def groups(self, data=None, categories=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def groups(self, data=None, categories=None, color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, profile=None):
     """
 
@@ -227,7 +220,6 @@ class Lists(object):
     http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
     http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
     """
-    size = self.context._size(size)
     data = data or []
     categories = categories or [""]
     if len(data) > 0:
@@ -236,7 +228,7 @@ class Lists(object):
       else:
         # This object is expecting a list of lists
         data = [data]
-    html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, size, color, width, height, htmlCode,
+    html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, color, width, height, htmlCode,
                                     helper, profile)
     self.context.register(html_obj)
     return html_obj
@@ -281,7 +273,7 @@ class Lists(object):
     self.context.register(html_tree)
     return html_tree
 
-  def dropdown(self, recordSet=None, size=(None, "px"), color=None, width=(100, "%"), height=(32, 'px'), htmlCode=None,
+  def dropdown(self, recordSet=None, color=None, width=(100, "%"), height=(32, 'px'), htmlCode=None,
                helper=None, profile=None):
     """
 
@@ -291,19 +283,17 @@ class Lists(object):
     https://codepen.io/svnt/pen/beEgre
 
     :param recordSet:
-    :param size:
     :param width:
     :param height:
     :param htmlCode:
     :param profile:
     :return:
     """
-    size = self.context._size(size)
-    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, size, color, width, height, htmlCode, helper, profile)
+    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, color, width, height, htmlCode, helper, profile)
     self.context.register(html_d)
     return html_d
 
-  def badges(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def badges(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, profile=None):
     """
 
@@ -315,20 +305,18 @@ class Lists(object):
     https://v4-alpha.getbootstrap.com/components/list-group/
 
     :param data:
-    :param size:
     :param color:
     :param width:
     :param height:
     :param profile:
     """
-    size = self.context._size(size)
-    html_obj = html.HtmlList.Badges(self.context.rptObj, data or [], size, color, width, height, htmlCode,
+    html_obj = html.HtmlList.Badges(self.context.rptObj, data or [], color, width, height, htmlCode,
                                        helper, profile)
 
     self.context.register(html_obj)
     return html_obj
 
-  def buttons(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
+  def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
               htmlCode=None, helper=None, profile=None):
     """
 
@@ -340,14 +328,12 @@ class Lists(object):
     https://v4-alpha.getbootstrap.com/components/list-group/
 
     :param data:
-    :param size:
     :param color:
     :param width:
     :param height:
     :param profile:
     """
-    size = self.context._size(size)
-    html_obj = html.HtmlList.Buttons(self.context.rptObj, data or [], size, color, width, height, htmlCode, helper, profile)
+    html_obj = html.HtmlList.Buttons(self.context.rptObj, data or [], color, width, height, htmlCode, helper, profile)
 
     self.context.register(html_obj)
     return html_obj

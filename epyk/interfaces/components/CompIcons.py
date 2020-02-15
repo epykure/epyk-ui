@@ -297,12 +297,11 @@ class Icons(object):
     icon.style.add_classes.div.background_hover()
     return icon
 
-  def signin(self, text, size=(None, "px"), icon=None):
+  def signin(self, text, icon=None):
     """
 
     :return:
     """
-    size = self.context._size(size)
-    bar = html.HtmlEvent.SignIn(self.context.rptObj, text, size, icon)
+    bar = html.HtmlEvent.SignIn(self.context.rptObj, text, icon)
     self.context.register(bar)
     return bar

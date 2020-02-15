@@ -194,7 +194,7 @@ class Layouts(object):
     self.context.register(html_div)
     return html_div
 
-  def popup(self, htmlObj=None, title=None, color=None, size=(None, 'px'), width=(100, '%'), height=(None, 'px'),
+  def popup(self, htmlObj=None, title=None, color=None, width=(100, '%'), height=(None, 'px'),
             withBackground=True, draggable=False, margin=10, profile=None):
     """
 
@@ -209,7 +209,6 @@ class Layouts(object):
     :param htmlObj:
     :param title:
     :param color:
-    :param size:
     :param width:
     :param height:
     :param withBackground:
@@ -219,8 +218,7 @@ class Layouts(object):
     :rtype: html.HtmlPopup.Popup
     :return:
     """
-    size = self.context._size(size)
-    return self.context.register(html.HtmlPopup.Popup(self.context.rptObj, htmlObj, title, color, size, width, height,
+    return self.context.register(html.HtmlPopup.Popup(self.context.rptObj, htmlObj, title, color, width, height,
                                                       withBackground, draggable, margin, profile))
 
   def iframe(self, url, width=(100, "%"), height=(100, "%"), helper=None, profile=None):

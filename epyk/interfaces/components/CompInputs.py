@@ -37,7 +37,7 @@ class Inputs(object):
     self.context.register(html_input)
     return html_input
 
-  def d_search(self, text="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
     One of the new types of inputs in HTML5 is search
@@ -58,14 +58,9 @@ class Inputs(object):
     :param options:
     :param attrs:
     :param profile:
-
-    :rtype: html.HtmlInput.Input
-
-    :return:
     """
-    size = self.context._size(size)
     attrs = attrs or {}
-    html_search = html.HtmlInput.Input(self.context.rptObj, text, placeholder, size, width, height, htmlCode, filter,
+    html_search = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
                                        options, attrs, profile)
     attrs.update({"type": 'search'})
     self.context.register(html_search)
@@ -133,12 +128,11 @@ class Inputs(object):
     self.context.register(html_integer)
     return html_integer
 
-  def d_range(self, value, min=0, max=100, step=1, placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_range(self, value, min=0, max=100, step=1, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
-    size = self.context._size(size)
     attrs = attrs or {}
     attrs.update({"type": 'range'})
-    html_range = html.HtmlInput.InputRange(self.context.rptObj, value, min, max, step, placeholder, size, width, height,
+    html_range = html.HtmlInput.InputRange(self.context.rptObj, value, min, max, step, placeholder, width, height,
                                            htmlCode, filter, options, attrs, profile)
     self.context.register(html_range)
     return html_range
@@ -247,13 +241,12 @@ class Inputs(object):
     self.context.register(html_radio)
     return html_radio
 
-  def editor(self, text="", title="", size=(None, 'px'), language='python', width=(100, "%"), height=(None, "px"), isEditable=True,
+  def editor(self, text="", title="", language='python', width=(100, "%"), height=(None, "px"), isEditable=True,
              htmlCode=None, options=None, profile=None):
     """
 
     :param text:
     :param title:
-    :param size:
     :param language:
     :param width:
     :param height:
@@ -264,29 +257,25 @@ class Inputs(object):
     :rtype: html.HtmlTextEditor.Editor
     :return:
     """
-    size = self.context._size(size)
-    return self.context.register(html.HtmlTextEditor.Editor(self.context.rptObj, text, title, size, language, width,
+    return self.context.register(html.HtmlTextEditor.Editor(self.context.rptObj, text, title, language, width,
               height, isEditable, htmlCode, options, profile))
 
-  def cell(self, text=None, size=(None, 'px'), width=(100, "%"), height=(None, "px"), isEditable=False,
+  def cell(self, text=None, width=(100, "%"), height=(None, "px"), isEditable=False,
            htmlCode=None, profile=None):
     """
 
     :param text:
-    :param size:
     :param width:
     :param height:
     :param isEditable:
     :param htmlCode:
     :param profile:
     """
-    size = self.context._size(size)
-    html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, size, width, height,
-                                         isEditable, htmlCode, profile)
+    html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, width, height, isEditable, htmlCode, profile)
     self.context.register(html_cell)
     return html_cell
 
-  def search(self, text='', placeholder='Search..', color=None, size=(None, 'px'), height=(None, "px"), htmlCode=None,
+  def search(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
              tooltip='', extensible=False, profile=None):
     """
 
@@ -299,29 +288,26 @@ class Inputs(object):
     :param text:
     :param placeholder:
     :param color:
-    :param size:
     :param height:
     :param htmlCode:
     :param tooltip:
     :param extensible:
     :param profile:
     """
-    size = self.context._size(size)
-    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, size, height, htmlCode, tooltip,
+    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
                                    extensible, profile)
     self.context.register(html_s)
     return html_s
 
-  def label(self, label, text="", placeholder='', size=(None, 'px'), width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
 
     :return:
     """
-    size = self.context._size(size)
     label = self.context.rptObj.ui.texts.label(label).css({"display": 'block', 'text-align': 'left', 'margin-top': '10px',
                                                            "position": "absolute", "z-index": '20px', "font-size": '14px'})
-    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, size, width, height, htmlCode, filter,
+    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
                                       options or {}, attrs or {}, profile).css({"margin-top": '10px'})
     div = self.context.rptObj.ui.div([label, html_input])
     div.input = html_input

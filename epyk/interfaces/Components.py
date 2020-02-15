@@ -294,7 +294,7 @@ class Components(object):
     self.register(html_contents)
     return html_contents
 
-  def _tags(self, vals=None, title="", icon="", size=(None, "px"), width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
+  def _tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
 
     Example
@@ -304,7 +304,6 @@ class Components(object):
     :param vals: Optional.
     :param title: Optional.
     :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param size:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
@@ -313,8 +312,7 @@ class Components(object):
     :rtype: html.HtmlTextEditor.Tags
     :return: 
     """
-    size = self._size(size)
-    return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, size, width, height, htmlCode, profile))
+    return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile))
 
   def context_menu(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, profile=None):
     """
@@ -338,7 +336,7 @@ class Components(object):
     """
     return self.register(html.HtmlEvent.ContextMenu(self.rptObj, records, width, height, visible, profile))
 
-  def options_bar(self, records=None, color=None, border_color=None, size=(None, "px"), width=(None, 'px'),
+  def options_bar(self, records=None, color=None, border_color=None, width=(None, 'px'),
                   height=(None, 'px'), options=None):
     """
     Add a bespoke options / actions bar with icons
@@ -359,14 +357,13 @@ class Components(object):
     options = options or {}
     border_color = border_color or self.rptObj.getColor("colors", 1)
     color = color or self.rptObj.getColor("greys", -1)
-    size = self._size(size)
     if width[0] is None:
       width = (len(records) * 35, width[1])
-    html_opts = html.HtmlEvent.OptionsBar(self.rptObj, records, width, height, size, color, border_color, options)
+    html_opts = html.HtmlEvent.OptionsBar(self.rptObj, records, width, height, color, border_color, options)
     self.register(html_opts)
     return html_opts
 
-  def side_bar(self, links=None, color=None, size=(None, "px"), servers=None, position="right"):
+  def side_bar(self, links=None, color=None, servers=None, position="right"):
     """
     Add a side Bar to the report.
 
@@ -375,16 +372,14 @@ class Components(object):
 
     :param links:
     :param color:
-    :param size:
     :param servers:
     :param position:
     """
-    size = self._size(size)
-    bar = html.HtmlMenu.HtmlSideBar(self.rptObj, links or [], color, size, servers)
+    bar = html.HtmlMenu.HtmlSideBar(self.rptObj, links or [], color, servers)
     self.register(bar)
     return bar
 
-  def loading(self, text="Loading", size=(None, "px"), color=None, options=None):
+  def loading(self, text="Loading", color=None, options=None):
     """
     Entry point to the loading component
 
@@ -393,16 +388,14 @@ class Components(object):
       - icon component for the loading icon
 
     :param text:
-    :param size:
     :param color:
     :param options:
     """
-    size = self._size(size)
-    html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, size, options or {})
+    html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, options or {})
     self.register(html_loading)
     return html_loading
 
-  def workflow(self, records, size=(None, "px"), width=(None, '%'), height=(40, 'px'), color=None, options=None):
+  def workflow(self, records, width=(None, '%'), height=(40, 'px'), color=None, options=None):
     """
     Entry point for the workflow object
 
@@ -419,8 +412,7 @@ class Components(object):
     :param color: Optional.
     :param options: Optional.
     """
-    size = self._size(size)
-    html_wf = html.HtmlOthers.Workflow(self.rptObj, records, width, height, color, size, options or {})
+    html_wf = html.HtmlOthers.Workflow(self.rptObj, records, width, height, color, options or {})
     self.register(html_wf)
     return html_wf
 
@@ -439,24 +431,3 @@ class Components(object):
     form = html.HtmlContainer.Form(self.rptObj, [], action, method, helper)
     self.register(form)
     return form
-
-  #--------------------------------------------------------------------------------------------------------------------
-  #
-  #                                                 COMMON FUNCTIONS
-  #
-
-  def _size(self, size):
-    """
-    Used to get the font-size in the framework.
-    In case of None this function will default to the CSS common properties
-
-    Example
-    _size((10, "px"))
-
-    :param size: A tuple with the integer size and it is unit.
-
-    :return: A tuple with the size to be applied
-    """
-    if size[0] is None and size[1] == "px" and hasattr(self.rptObj, "style"):
-      size = (self.rptObj.style.defaults.Font.size, self.rptObj.style.defaults.Font.unit)
-    return size

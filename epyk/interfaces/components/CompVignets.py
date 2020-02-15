@@ -75,8 +75,7 @@ class Vignet(object):
     self.context.register(html_blocktext)
     return html_blocktext
 
-  def text(self, recordSet=None, width=(None, '%'), height=(None, "px"), size=(None, 'px'), align='center',
-           helper=None, profile=None):
+  def text(self, recordSet=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, profile=None):
     """
 
     Example
@@ -88,13 +87,11 @@ class Vignet(object):
     :param recordSet:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param align:
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
-    size = self.context._size(size)
-    html_text = html.HtmlTextComp.TextWithBorder(self.context.rptObj, recordSet, width, height, size, align, helper, profile)
+    html_text = html.HtmlTextComp.TextWithBorder(self.context.rptObj, recordSet, width, height, align, helper, profile)
     self.context.register(html_text)
     return html_text
 
