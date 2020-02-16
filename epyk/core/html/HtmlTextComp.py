@@ -40,21 +40,21 @@ class UpDown(Html.Html):
       var relMoveElt = document.createElement('span');
       var icon = document.createElement('i');
       if (delta < 0){
-        deltaElt.setAttribute('style', 'padding:5px;color:%(redColor)s;font-size:%(size)spx');
+        deltaElt.setAttribute('style', 'padding:5px;color:%(redColor)s;font-size:%(size)s');
         deltaElt.innerHTML = "(+"+ %(delta)s +")";
-        relMoveElt.setAttribute('style', 'padding:5px;color:%(redColor)s;font-size:%(size)spx')
+        relMoveElt.setAttribute('style', 'padding:5px;color:%(redColor)s;font-size:%(size)s')
         relMoveElt.innerHTML = "("+ %(relMove)s +"%%)";
         icon.className = 'fas fa-arrow-down';
-        icon.setAttribute('style', 'color:%(redColor)s;font-size:%(size)spx')}
+        icon.setAttribute('style', 'color:%(redColor)s;font-size:%(size)s')}
       else{  
-        deltaElt.setAttribute('style', 'padding:5px;color:%(greenColor)s;font-size:%(size)spx');
+        deltaElt.setAttribute('style', 'padding:5px;color:%(greenColor)s;font-size:%(size)s');
         deltaElt.innerHTML = "(+"+ %(delta)s +")";
-        relMoveElt.setAttribute('style', 'padding:5px;color:%(greenColor)s;font-size:%(size)spx')
+        relMoveElt.setAttribute('style', 'padding:5px;color:%(greenColor)s;font-size:%(size)s')
         relMoveElt.innerHTML = "("+ %(relMove)s +"%%)";
         icon.className = 'fas fa-arrow-up';
         icon.setAttribute('style', 'color:%(greenColor)s;font-size:%(size)spx')};
       htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
-      ''' % {"greenColor": self._report.theme.success[1], "redColor": self._report.theme.danger[1], "size": self.size - 2,
+      ''' % {"greenColor": self._report.theme.success[1], "redColor": self._report.theme.danger[1], "size": Defaults_css.font(-2),
              'value': self._report.js.number("data.value", isPyData=False).toFormattedNumber(
               decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
               thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
@@ -103,8 +103,7 @@ class TextBubble(Html.Html):
         <div %(clsTag)s style="padding-top:10px;width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s"></div>
         <div "%(clsTitle)s"><a style="text-decoration:none"></a></div>%(helper)s
       </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "clsTag": self._report.style.getClsTag(['CssDivBubble'], loadCls=True),
-                   'clsTitle': self._report.style.getClsTag(['CssTitle'], loadCls=True),
-                   'bgcolor': self.background_color,
+                   'clsTitle': self._report.style.getClsTag(['CssTitle'], loadCls=True), 'bgcolor': self.background_color,
                    'helper': self.helper, 'height': bubble_height, 'width': bubble_width}
 
 
@@ -560,8 +559,8 @@ class ContentsTable(Html.Html):
 class SearchResult(Html.Html):
   name, category, callFnc = 'Search Result', 'Text', 'searchr'
 
-  def __init__(self, report, recordSet, pageNumber, width, width_unit, height, height_unit):
-    super(SearchResult, self).__init__(report, recordSet, width=width, widthUnit=width_unit, height=height, heightUnit=height_unit)
+  def __init__(self, report, recordSet, pageNumber, width, height):
+    super(SearchResult, self).__init__(report, recordSet, css_attrs={"width": width, "height": height})
     self._jsStyles = {'title': {'color': self._report.theme.colors[7], 'font-size': '18px'}, 'dsc': {'color': self._report.theme.greys[6]},
                       'url': {'color': self._report.theme.success[1], 'font-size': '14px'}, 'visited': {'color': self._report.theme.greys[5]},
                       'link': {'color': self._report.theme.colors[7], 'cursor': 'pointer'}, 'pageNumber': pageNumber}

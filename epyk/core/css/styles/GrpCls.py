@@ -8,6 +8,7 @@ https://www.w3schools.com/cssref/css_default_values.asp
 from epyk.core.css import Classes
 from epyk.core.css import Defaults_css
 from epyk.core.css import Properties
+from epyk.core.css.styles.effects import Effects
 from epyk.core.css.styles.attributes import Commons
 from epyk.core.css.styles.classes import CssStyle
 
@@ -56,6 +57,7 @@ class ClassHtml(Properties.CssMixin):
   def __init__(self, htmlObj):
     self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": set(), 'other': set()}, None, None
+    self.__cls_effects = None
     self.classList['main'].add(self.css_class)
 
   @property
@@ -83,6 +85,15 @@ class ClassHtml(Properties.CssMixin):
   def defaults(self):
     """ The Default CSS Attributes in the framework """
     return Defaults_css
+
+  @property
+  def effects(self):
+    """
+    :rtype: Effects.Effects
+    """
+    if self.__cls_effects is None:
+      self.__cls_effects = Effects.Effects(self.htmlObj._report, self.htmlObj)
+    return self.__cls_effects
 
   @property
   def add_classes(self):
@@ -119,3 +130,15 @@ class ClassHtml(Properties.CssMixin):
         if hasattr(c, 'classname'):
           self.htmlObj._report._css[c.classname] = c
     return self.classList
+
+  def get_classes_css(self):
+    """
+
+    :return:
+    """
+    css_frgs = {}
+    for css_cls in self.classList.values():
+      for c in css_cls:
+        if hasattr(c, 'classname'):
+          css_frgs[c.classname] = str(c)
+    return css_frgs

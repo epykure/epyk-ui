@@ -7,9 +7,6 @@ import time
 from epyk.core.html import Html
 from epyk.core.js.packages import JsQuery
 
-# The list of CSS classes
-from epyk.core.css.styles import GrpCls
-
 
 class DatePicker(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
@@ -159,15 +156,14 @@ class CountDownDate(Html.Html):
   # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile):
-    super(CountDownDate, self).__init__(report, yyyy_mm_dd, code=htmlCode, width=width[0], widthUnit=width[1],
-                                        height=height[0], heightUnit=height[1], profile=profile)
+    super(CountDownDate, self).__init__(report, yyyy_mm_dd, code=htmlCode, profile=profile,
+                                        css_attrs={"width": width, "height": height})
     self._jsStyles = {"delete": True}
     self.timeInMilliSeconds = timeInMilliSeconds
     # Add the underlying components
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_icon(icon)
     self.add_helper(helper)
-    self.css({"margin": '2px 0'})
 
   @property
   def jqId(self):
@@ -192,21 +188,15 @@ class CountDownDate(Html.Html):
     self.jsUpdateDataFnc = '''var %(htmlId)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)
               ''' % {'htmlId': self.htmlId, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds}
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.jsUpdateDataFnc)
-    return '<div %s><span></span>%s</div>' % (self.get_attrs(pyClassNames=self.defined), self.helper)
+    return '<div %s><span></span>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class LastUpdated(Html.Html):
   name, category, callFnc = 'Last Update', 'Text', 'update'
-  builder_name = False
 
-  def __init__(self, report, label, size, color, width, height, htmlCode, profile):
+  def __init__(self, report, label, color, width, height, htmlCode, profile):
     super(LastUpdated, self).__init__(report, "%s %s" % (label or "Last update", time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
-                                      htmlCode, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
-                                      profile=profile)
-    if color is not None:
-      self.css("color", color)
-    if size is not None:
-      self.css("font-size", "%s%s" % (size[0], size[1]))
+                                      htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
 
   def __str__(self):
-    return '<div %(strAttr)s>%(content)s</div>' % {'strAttr': self.get_attrs(pyClassNames=self.defined), 'content': self.val}
+    return '<div %(strAttr)s>%(content)s</div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'content': self.val}

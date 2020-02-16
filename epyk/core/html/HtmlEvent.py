@@ -15,8 +15,6 @@ from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
 
-# The list of CSS classes
-
 
 class ProgressBar(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
@@ -396,8 +394,8 @@ class SkillBar(Html.Html):
   # _grpCls = CssGrpClsTable.CssClassTable
 
   def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, colUrl, colTooltip, filters, profile):
-    super(SkillBar, self).__init__(report, "", width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
-                                   htmlCode=htmlCode, globalFilter=filters, profile=profile)
+    super(SkillBar, self).__init__(report, "", css_attrs={"width": width, "height": height}, htmlCode=htmlCode,
+                                   globalFilter=filters, profile=profile)
     self.add_title(title)
     self.innerPyHTML = report.ui.layouts.table(data, y_column, x_axis)
     self.innerPyHTML.inReport = False
@@ -524,8 +522,7 @@ class ContextMenu(Html.Html):
     for rec in recordSet:
       if isinstance(rec['event'], list):
         rec['event'] = ";".join(rec['event'])
-    super(ContextMenu, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], height=height[0],
-                                      heightUnit=height[1], profile=profile)
+    super(ContextMenu, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
               'padding': 0, 'margin': 0, 'background-color': self._report.theme.greys[0],
               'border': '1px solid %s' % self._report.theme.colors[5], 'border-radius': '2px'})
@@ -535,15 +532,6 @@ class ContextMenu(Html.Html):
         self._report.cssImport.add("font-awesome")
     self.addGlobalVar("CONTEXT_MENU_VAL", "{}")
     self._jsStyles = {'liStyles': ""}
-
-  @property
-  def defined(self):
-    """
-    Return the static CSS style definition of this component
-    """
-    if self.pyStyle is None:
-      self.pyStyle = self.CssClassDef()
-    return self.pyStyle
 
   def onDocumentLoadFnc(self):
     """ Pure Javascript onDocumentLoad Function """
@@ -638,7 +626,8 @@ class SignIn(Html.Html):
     return '''
       <div title="%(user)s" %(attrs)s>
         <p style="margin:auto">%(letter)s</p>
-      </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self._report.user, 'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
+      </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self._report.user,
+                    'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class Filters(Html.Html):

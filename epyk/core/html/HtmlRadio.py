@@ -18,8 +18,7 @@ class Radio(Html.Html):
       r = report.ui.inputs.radio(v.get('checked', False), v['value'])
       r.inReport = False
       items.append(r)
-    super(Radio, self).__init__(report, items, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                heightUnit=height[1], globalFilter=filters, profile=profile)
+    super(Radio, self).__init__(report, items, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, globalFilter=filters, profile=profile)
     for v in self.val:
       v.set_attrs(name="name", value="radio_%s" % self.htmlId)
 

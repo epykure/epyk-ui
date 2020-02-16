@@ -115,5 +115,5 @@ class CssTextItem(CssStyle.Style):
 
 
 class CssTextNotSelectable(CssStyle.Style):
-  _attrs = {'-moz-user-select': '-moz-none', "user-select": 'none', '-khtml-user-select': 'none',
-            '-webkit-user-select': 'none', '-ms-user-select': 'none'}
+  _attrs = {'-moz-user-select': 'none', "user-select": 'none', '-khtml-user-select': 'none',
+            '-webkit-user-select': 'none', '-ms-user-select': 'none', "-o-user-select": 'none'}

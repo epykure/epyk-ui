@@ -32,6 +32,7 @@ class Button(Html.Html):
   def options(self):
     """
     Property to set all the possible object for a button
+
     :rtype: OptButton.OptionsButton
     """
     return self.__options
@@ -53,6 +54,11 @@ class Button(Html.Html):
 
   @property
   def style(self):
+    """
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsButton.ClassButton
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsButton.ClassButton(self)
     return self._styleObj
@@ -151,8 +157,8 @@ class Checkbox(Html.Html):
       for rec in records:
         if rec["value"] in selectedVals:
           rec["checked"] = True
-    super(Checkbox, self).__init__(rptObj, records, htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                       heightUnit=height[1], globalFilter=filters, profile=profile)
+    super(Checkbox, self).__init__(rptObj, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
+                                   globalFilter=filters, profile=profile)
     # Add the component title
     self.add_title(title)
     self.css({'text-align': align, 'color': 'inherit' if color is None else color, 'padding': '5px'})
@@ -353,9 +359,10 @@ class Checkbox(Html.Html):
 
 class CheckButton(Html.Html):
   name, category, callFnc = 'Check Button', 'Button', 'check'
+
   def __init__(self, report, flag, tooltip, width, height, icon, label, htmlCode, options, profile):
-    super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                      heightUnit=height[1], profile=profile)
+    super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode,
+                                      css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon("fas fa-check" if flag else "fas fa-times").css({"width": "12px"})
     self.input.inReport = False
     self.isDisable = options.get("disable", False)
@@ -379,6 +386,11 @@ class CheckButton(Html.Html):
 
   @property
   def style(self):
+    """
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsButton.ClassButtonCheckBox
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
     return self._styleObj

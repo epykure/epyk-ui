@@ -12,7 +12,6 @@ from epyk.core.html import Defaults
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlField
 from epyk.core.js.html import JsHtmlJqueryUI
-from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpInput
@@ -37,6 +36,11 @@ class Input(Html.Html):
 
   @property
   def style(self):
+    """
+    Property to the CSS Style of the component
+
+    :rtype: GrpInput.ClassInput
+    """
     if self._styleObj is None:
       self._styleObj = GrpInput.ClassInput(self)
     return self._styleObj
@@ -223,8 +227,7 @@ class InputRange(Input):
   # _grpCls = GrpCls.CssGrpClass
 
   def __init__(self, report, text, min, max, step, placeholder, width, height, htmlCode, filter, options, attrs, profile):
-    super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options,
-                                     attrs, profile)
+    super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
 
     #
     self.input = report.ui.inputs.input(text, width=(None, "%"), placeholder=placeholder).css({"vertical-align": 'middle'})

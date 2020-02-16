@@ -67,7 +67,7 @@ class Label(Html.Html):
     self.on("click", jsFncs)
     return self
 
-  def selectable(self, flag=False):
+  def no_selectable(self, flag=True):
     """
     Make the label component not selectable.
 
@@ -77,7 +77,7 @@ class Label(Html.Html):
 
     :return: self to allow the chains
     """
-    if not flag:
+    if flag:
       self.style.add_classes.text.no_selection()
     return self
 
@@ -133,7 +133,7 @@ class Span(Html.Html):
 
     :return: A Javascript Dom object
 
-    :rtype: JsHtml.JsHtml
+    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
@@ -189,6 +189,7 @@ class Text(Html.Html):
   @property
   def options(self):
     """
+    Property to set all the possible object for a button
 
     :rtype: OptText.OptionsText
     """
@@ -248,16 +249,15 @@ class Text(Html.Html):
 
 
 class Code(Html.Html):
-  # _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'Code', 'Text', 'code'
   scriptTitle = ''
 
   def __init__(self, report, vals, color, width, height, htmlCode, options, helper, profile):
-    super(Code, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Code, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
     self.add_helper(helper)
     self._jsStyles, self.__editable = options, None
-    self.color = color if color is not None else self._report.theme.greys[9]
-    self.css({'color': self.color, 'display': 'block', 'margin': '5px 0'})
+    #self.color = color if color is not None else self._report.theme.greys[9]
+    self.css({'display': 'block', 'margin': '5px 0'})
 
   @property
   def _js__builder__(self):
@@ -296,13 +296,8 @@ class Pre(Html.Html):
     super(Pre, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, 'height': height, 'color': color},
                               profile=profile, dataSrc=dataSrc)
     self._jsStyles = options
-    self.css({"text-align": 'left', "margin": "auto"})
+    self.css({"text-align": 'left'})
     self.add_helper(helper)
-
-    def append(text):
-      return ";".join(JsUtils.jsConvertFncs("%s.append(%s)" % (self.dom.varId, JsUtils.jsConvertData(text, None))))
-
-    self.js.append = append
 
   @property
   def dom(self):
@@ -314,19 +309,19 @@ class Pre(Html.Html):
 
     :return: A Javascript Dom object
 
-    :rtype: JsHtml.JsHtml
+    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  def selectable(self, flag=False):
+  def no_selectable(self, flag=True):
     """
 
     :param flag: Boolean.
     :return:
     """
-    if not flag:
+    if flag:
       self.style.add_classes.text.no_selection()
     return self
 
@@ -336,7 +331,7 @@ class Pre(Html.Html):
     return '''if(options.markdown){htmlObj.innerHTML = %(markdown)s} else{htmlObj.innerHTML = data}''' % {"markdown": markdown}
 
   def __str__(self):
-    return '<pre %s></pre>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<pre %s>%s</pre>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
 
 
 class Paragraph(Html.Html):
@@ -421,19 +416,13 @@ class Paragraph(Html.Html):
 
 
 class BlockQuote(Html.Html):
-  # _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'Block quotation', 'Texts', 'blockquote'
 
   def __init__(self, report, text, author, color, width, height, htmlCode, helper, profile):
-    super(BlockQuote, self).__init__(report, {'text': text, 'author': author}, code=htmlCode,
-                                     css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
-    self.css({'display': 'inline-block', 'white-space': 'nowrap'})
+    super(BlockQuote, self).__init__(report, {'text': text, 'author': author}, code=htmlCode, profile=profile,
+                                     css_attrs={"width": width, "height": height, 'color': color, "white-space": 'nowrap'})
     self.add_helper(helper)
     self._jsStyles = {"reset": True, 'markdown': True}
-
-  #@property
-  #def val(self):
-  #  return "$('#%s > p').html() +' by '+ $('#%s cite').html()" % (self.htmlId, self.htmlId)
 
   @property
   def _js__builder__(self):
@@ -467,7 +456,7 @@ class BlockQuote(Html.Html):
     return ["report.blockquote(%s, '%s')" % (json.dumps([val for val in data[1:-1]]), author)]
 
   @classmethod
-  def jsMarkDown(self, vals): return [">>>Quote:%s" % self.vals['author'], [rec for rec in vals['text']], "<<<"]
+  def jsMarkDown(self, vals): return [">>>Quote:%s" % self.val['author'], [rec for rec in vals['text']], "<<<"]
 
 
 class Title(Html.Html):

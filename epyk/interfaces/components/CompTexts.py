@@ -11,7 +11,7 @@ class Texts(object):
   def __init__(self, context):
     self.context = context
 
-  def text(self, text="", color=None, align='left', width=(100, "%"), height=(None, "px"),
+  def text(self, text="", color=None, align='left', width=('auto', ""), height=(None, "px"),
            htmlCode=None, tooltip=None, options=None, helper=None, profile=None):
     """
     Add the HTML text component to the page
@@ -208,8 +208,8 @@ class Texts(object):
     self.context.register(html_paragraph)
     return html_paragraph
 
-  def preformat(self, text=None, color=None, width=(90, '%'), height=(None, 'px'),
-                htmlCode=None, dataSrc=None, options=None, helper=None, profile=None):
+  def preformat(self, text=None, color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None, dataSrc=None,
+                options=None, helper=None, profile=None):
     """
 
     Example

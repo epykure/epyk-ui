@@ -2,6 +2,7 @@
 Wrapper to the HTML Image components
 """
 
+import os
 import re
 
 from epyk.core.html import Html
@@ -69,8 +70,7 @@ class AnimatedImage(Html.Html):
     if path is None:
       path = Defaults.SERVER_PATH if report.run.report_name is None else "%s/%s" % (Defaults.SERVER_PATH, report.run.report_name)
     super(AnimatedImage, self).__init__(report, {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
-                                        width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
-    self.width = width[0]
+                                        css_attrs={"width": width, "height": height}, profile=profile)
 
   @property
   def _js__builder__(self):
@@ -82,10 +82,16 @@ class AnimatedImage(Html.Html):
 
   def __str__(self):
     return '''
-      <div %s>
-        <img />
-        <div class="mask"><h2></h2><p></p><a class="info" style="cursor:pointer">Enter</a></div>
-      </div>''' % self.get_attrs(pyClassNames=self.defined)
+      <div %(cssAttr)s>
+        <img src="%(src)s" style="width:inherit;height:auto">
+        <div class="mask">
+          <h2>%(title)s</h2>
+          <p></p>
+          <a class="info" href="%(url)s" style="cursor:pointer">Enter</a>
+        </div>
+      </div>''' % {"cssAttr": self.get_attrs(pyClassNames=self.style.get_classes()),
+                   'src': os.path.join(self.val["path"],  self.val["image"]), 'url': self.val["url"],
+                   "title": self.val["title"]}
 
 
 class ImgCarrousel(Html.Html):
@@ -102,8 +108,7 @@ class ImgCarrousel(Html.Html):
       if not 'path' in rec:
         rec['path'] = path
       imgs.append(rec)
-    super(ImgCarrousel, self).__init__(report, imgs, width=width[0], widthUnit=width[1], height=height[0],
-                                       heightUnit=height[1], profile=profile)
+    super(ImgCarrousel, self).__init__(report, imgs, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'padding-top': '20px', 'display': 'block', 'padding': 0, 'margin': 0})
 
   @property
@@ -131,7 +136,7 @@ class ImgCarrousel(Html.Html):
     return '''
       <ul %(strAttr)s></ul>
       <div id="%(htmlId)s_bullets" %(clsTag)s></div>
-      ''' % {'strAttr': self.get_attrs(pyClassNames=self.defined), 'htmlId': self.htmlId,
+      ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlId': self.htmlId,
              'clsTag': self._report.style.getClsTag(self.defined.clsAltMap)}
 
 
@@ -140,8 +145,7 @@ class Icon(Html.Html):
   name, category, callFnc = 'Icon', 'Images', 'icon'
 
   def __init__(self, report, value, width, height, color, tooltip, profile):
-    super(Icon, self).__init__(report, value, css_attrs={"color": color, "width": width, "height": height},
-                               profile=profile)
+    super(Icon, self).__init__(report, value, css_attrs={"color": color, "width": width, "height": height}, profile=profile)
     self.attr['class'].add(value)
     self.attr['aria-hidden'] = 'true'
     if tooltip is not None:
@@ -166,6 +170,7 @@ class Icon(Html.Html):
   @property
   def style(self):
     """
+    Property to the CSS Style of the component
 
     :rtype: GrpClsImage.ClassIcon
     """
@@ -180,9 +185,8 @@ class Icon(Html.Html):
     Example
     rptObj.ui.icons.capture().icon.hover_colors("red", "yellow")
 
-    :param color_hover: The color of the icon when mouse hover
-    :param color_out: Optional. The color of the icon when mouse out
-
+    :param color_hover: String. The color of the icon when mouse hover
+    :param color_out: Optional, String. The color of the icon when mouse out
     """
     if color_out is None:
       color_out = self._report.theme.success[1]
@@ -268,6 +272,7 @@ class Badge(Html.Html):
   @property
   def options(self):
     """
+    Property to the options specific to the HTML component
 
     :rtype: OptButton.OptionsBadge
     """

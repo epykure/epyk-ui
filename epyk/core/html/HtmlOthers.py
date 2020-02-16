@@ -23,6 +23,11 @@ class Hr(Html.Html):
 
   @property
   def style(self):
+    """
+    Property to the CSS Style of the component
+
+    :return: GrpClsLayout.ClassStandard
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsLayout.ClassStandard(self)
     return self._styleObj
@@ -148,6 +153,11 @@ class Help(Html.Html):
 
   @property
   def style(self):
+    """
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsLayout.ClassHelp
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsLayout.ClassHelp(self)
     return self._styleObj
@@ -209,14 +219,14 @@ class Loading(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.defined))
+    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
 class Workflow(Html.Html):
   name = "workflow"
 
   def __init__(self, report, records, width, height, color, size, options):
-    super(Workflow, self).__init__(report, records, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
+    super(Workflow, self).__init__(report, records, css_attrs={"width": width, "height": height})
     self.color = self._report.theme.greys[-1] if color is None else color
     self.size = size[0]
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), "display": "inline-block", "margin": '5px'})
@@ -249,4 +259,4 @@ class Workflow(Html.Html):
                 'padding': '2px', "background": colors["background"]})
       step.inReport = False
       divs.append("<div style='display:inline-block;width:auto;height:auto'>%s<span>%s</span></div>" % (step, v.get("label", EntHtml4.NO_BREAK_SPACE)))
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.defined), "".join(divs))
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(divs))

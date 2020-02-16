@@ -79,14 +79,15 @@ class PyOuts(object):
     # self._report.style.add('CssStandardLinks')
     # self._report.style.add('CssTextSelection', cssRef='::selection')
     # self._report.style.add('CssTextSelection', cssRef='::-moz-selection')
-    htmlParts = []
+    htmlParts, cssParts = [], {}
     for objId in self._report.content:
       if content_only and self._report.htmlItems[objId].name == "Nav Bar":
         continue
 
       if self._report.htmlItems[objId].inReport:
         htmlParts.append(self._report.htmlItems[objId].html())
-
+      #
+      cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
     onloadParts = []
     for data_id, data in self._report._props.get("data", {}).get('sources', {}).items():
       onloadParts.append("var data_%s = %s" % (data_id, json.dumps(data)))
@@ -123,7 +124,7 @@ class PyOuts(object):
 
     importMng = Imports.ImportManager(online=True, report=self._report)
     results = {
-      'cssStyle': "%s\n%s" % ("\n".join([str(c) for c in self._report._css.values()]), self._report._cssText),
+      'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), self._report._cssText),
       'cssContainer': ";".join(["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
       'content': "\n".join(htmlParts),
       'jsFrgs': ";".join(onloadParts),

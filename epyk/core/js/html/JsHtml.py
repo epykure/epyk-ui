@@ -231,6 +231,21 @@ class JsHtmlRich(JsHtml):
   def content(self):
     return JsObjects.JsObjects.get("%s.innerHTML" % self.varName)
 
+  def append(self, text, new_line=False):
+    """
+
+    Example
+    pre.dom.append("ok", new_line=True)
+
+    :param text:
+    :param new_line: Boolean
+
+    """
+    if new_line:
+      return ";".join(JsUtils.jsConvertFncs("%s.append('\\n' + %s)" % (self.varName, JsUtils.jsConvertData(text, None))))
+
+    return ";".join(JsUtils.jsConvertFncs("%s.append(%s)" % (self.varName, JsUtils.jsConvertData(text, None))))
+
   def empty(self): return '%s.innerHTML = ""' % self.varName
 
 

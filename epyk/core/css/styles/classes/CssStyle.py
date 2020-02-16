@@ -434,7 +434,6 @@ class Style(object):
     self.rptObj = rptObj
     css_ovrs = css_ovrs or {}
     self.__keyframes = {}
-
     selector_ids = dict(getattr(self, '_selectors', {}))
     if self.classname is None:
       self.classname = self.__class__.__name__.lower()
@@ -484,11 +483,10 @@ class Style(object):
     if iteration:
       css_transition["transition-iteration-count"] = iteration
     if timing_fnc is not None:
-      if timing_fnc not in ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] and not timing_fnc.startswith(
-        "cubic-bezier"):
+      if timing_fnc not in ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] and not timing_fnc.startswith("cubic-bezier"):
         raise Exception("%s missing from the list" % timing_fnc)
 
-        css_transition["transition-timing-function"] = timing_fnc
+      css_transition["transition-timing-function"] = timing_fnc
     # Add the -webkit- prefix for compatibility with some browsers
     safari_css = dict([("-webkit-%s" % k, v) for k, v in css_transition.items()])
     css_transition.update(safari_css)
@@ -800,7 +798,7 @@ class Style(object):
       for name, k_attrs in self.__keyframes.items():
         style.append("@keyframes %s {" % name)
         for k, v_dict in k_attrs.items():
-          style.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, j) for i, j in v_dict.items()])))
+          style.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, ", ".join(j)) if isinstance(j, list) else "%s: %s" % (i, j) for i, j in v_dict.items()])))
           style.append("}")
     return "\n".join(style)
 

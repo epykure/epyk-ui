@@ -2,6 +2,9 @@
 
 """
 
+from epyk.core.css import Colors
+from epyk.core.css import Defaults_css
+
 
 def autoPrefixer(prop):
   """
@@ -42,7 +45,7 @@ def autoPrefixer(prop):
     'transition-duration': ['-webkit-', '-moz-', '-o-'],
     'transition-timing-function': ['-webkit-', '-moz-', '-o-'],
     'transition-delay': ['-webkit-', '-moz-', '-o-'],
-    'user-select': ['-webkit-'],
+    'user-select': ['-webkit-', '-moz-', '-o-', '-khtml-', '-ms-'],
       }
   for pref in map.get(prop, []):
     yield "%s%s" % (pref, prop)
@@ -296,7 +299,16 @@ class CssMixin(object):
     self.htmlObj.css({"background-clip": val})
 
   @property
-  def background_color(self): return self.htmlObj.css("background-color")
+  def background_color(self):
+    """
+    The background-color property sets the background color of an element.
+
+    The background of an element is the total size of the element, including padding and border (but not the margin).
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_background-color.asp
+    """
+    return self.htmlObj.css("background-color")
 
   @background_color.setter
   def background_color(self, val):
@@ -499,11 +511,20 @@ class CssMixin(object):
     self.htmlObj.css({"border-left-width": val})
 
   @property
-  def border_radius(self): return self.htmlObj.css("border-radius")
+  def border_radius(self):
+    """
+    The border-radius property defines the radius of the element's corners.
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_border-radius.asp
+    """
+    return self.htmlObj.css("border-radius")
 
   @border_radius.setter
   def border_radius(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"border-radius": val})
 
   @property
@@ -611,11 +632,20 @@ class CssMixin(object):
     self.htmlObj.css({"border-width": val})
 
   @property
-  def bottom(self): return self.htmlObj.css("bottom")
+  def bottom(self):
+    """
+    The bottom property affects the vertical position of a positioned element. This property has no effect on non-positioned elements.
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_pos_bottom.asp
+    """
+    return self.htmlObj.css("bottom")
 
   @bottom.setter
   def bottom(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"bottom": val})
 
   @property
@@ -632,7 +662,14 @@ class CssMixin(object):
     self.htmlObj.css({"box-decoration-break": val})
 
   @property
-  def box_shadow(self): return self.htmlObj.css("box-shadow")
+  def box_shadow(self):
+    """
+    The box-shadow property attaches one or more shadows to an element.
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_box-shadow.asp
+    """
+    return self.htmlObj.css("box-shadow")
 
   @box_shadow.setter
   def box_shadow(self, val):
@@ -909,8 +946,8 @@ class CssMixin(object):
   def float(self, val):
     val = val or 'none'
     defined_vals = set(['none', 'left', 'right', 'initial', 'inherit'])
-    if val not in defined_vals:
-      raise Exception("float value %s not recognized" % val)
+    if Defaults_css.CSS_EXCEPTIONS not in defined_vals:
+      raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("float", val))
 
     self.htmlObj.css({"float": val})
 
@@ -939,7 +976,16 @@ class CssMixin(object):
     self.htmlObj.css({"font-kerning": val})
 
   @property
-  def font_size(self): return self.htmlObj.css("font-size")
+  def font_size(self):
+    """
+    The font-size property sets the size of a font.
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_font_font-size.asp
+
+    :return:
+    """
+    return self.htmlObj.css("font-size")
 
   @font_size.setter
   def font_size(self, val):
@@ -1205,11 +1251,20 @@ class CssMixin(object):
     self.htmlObj.css({"justify-content": val})
 
   @property
-  def left(self): return self.htmlObj.css("left")
+  def left(self):
+    """
+    The left property affects the horizontal position of a positioned element. This property has no effect on non-positioned elements.
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_pos_left.asp
+    """
+    return self.htmlObj.css("left")
 
   @left.setter
   def left(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"left": val})
 
   @property
@@ -1563,11 +1618,23 @@ class CssMixin(object):
     self.htmlObj.css({"resize": val})
 
   @property
-  def right(self): return self.htmlObj.css("right")
+  def right(self):
+    """
+    The right property affects the horizontal position of a positioned element.
+    This property has no effect on non-positioned elements.
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_pos_right.asp
+
+    :return:
+    """
+    return self.htmlObj.css("right")
 
   @right.setter
   def right(self, val):
     val = val or 'None'
+    if isinstance(val , int):
+      val = "%spx" % val
     self.htmlObj.css({"right": val})
 
   @property
@@ -1595,11 +1662,23 @@ class CssMixin(object):
     self.htmlObj.css({"table-layout": val})
 
   @property
-  def text_align(self): return self.htmlObj.css("text-align")
+  def text_align(self):
+    """
+    The text-align property specifies the horizontal alignment of text in an element.
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_text_text-align.ASP
+
+    :return:
+    """
+    return self.htmlObj.css("text-align")
 
   @text_align.setter
   def text_align(self, val):
     val = val or 'None'
+    if Defaults_css.CSS_EXCEPTIONS and val not in ['center', 'None', 'left', 'right', 'justify', 'inherit', 'initial']:
+      raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("text_align", val))
+
     self.htmlObj.css({"text-align": val})
 
   @property
@@ -1675,8 +1754,6 @@ class CssMixin(object):
 
     Documentation
     https://www.w3schools.com/cssref/css3_pr_text-shadow.asp
-
-    :return:
     """
     return self.htmlObj.css("text-shadow")
 
@@ -1790,19 +1867,41 @@ class CssMixin(object):
     self.htmlObj.css({"unicode-bidi": val})
 
   @property
-  def user_select(self): return self.htmlObj.css("user-select")
+  def user_select(self):
+    """
+    The user-select property specifies whether the text of an element can be selected.
+
+    In web browsers, if you double-click on some text it will be selected/highlighted. This property can be used to prevent this.
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_user-select.asp
+    """
+    return self.htmlObj.css("user-select")
 
   @user_select.setter
   def user_select(self, val):
     val = val or 'None'
+    for m_val in autoPrefixer("user-select"):
+      self.htmlObj.css({m_val: val})
     self.htmlObj.css({"user-select": val})
 
   @property
-  def vertical_align(self): return self.htmlObj.css("vertical-align")
+  def vertical_align(self):
+    """
+    The vertical-align property sets the vertical alignment of an element
+
+    Documentation
+    https://www.w3schools.com/cssref/pr_pos_vertical-align.asp
+    """
+    return self.htmlObj.css("vertical-align")
 
   @vertical_align.setter
   def vertical_align(self, val):
     val = val or 'None'
+    if Defaults_css.CSS_EXCEPTIONS and val not in ["baseline", "length", "sub", "super", "top", "text-top", "middle",
+                                                   "bottom", "text-bottom", "initial", "inherit", 'None']:
+      raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("vertical_align", val))
+
     self.htmlObj.css({"vertical-align": val})
 
   @property
@@ -1882,36 +1981,64 @@ class CssMixin(object):
     val = val or 'None'
     self.htmlObj.css({"z-index": val})
 
-  def sticky(self, top=0):
+  def middle(self):
+    """
+
+    :return:
+    """
+    self.vertical_align = "middle"
+    self.text_align = "center"
+
+  def sticky(self, top=0, bottom=None, left=None, right=None):
     """
     An element with position: sticky; is positioned based on the user's scroll position
+
+    Example
+    htmlObj.style.css.sticky()
 
     Documentation
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_sticky_element
 
-    :param top: Integer
+    :param top: Integer. The number of pixel from the top
+    :param bottom:
+    :param left:
+    :param right:
 
-    :return:
+    :return: The CSS object to allow the chaining
     """
-    self.top = top
+    if top is not None:
+      self.top = top
+    elif bottom is not None:
+      self.bottom = bottom
+    if left is not None:
+      self.left = left
+    elif right is not None:
+      self.right = right
     self.position = "sticky"
     return self
 
-  def glow(self):
+  def shadow_box(self, hexa_color=None):
+    """
+    Set the box shadow color
+
+    Documentation
+    https://www.w3schools.com/css/css3_shadows.asp
+
+    :param hexa_color: String. An hexadecimal color code
+
+    :return: The CSS object to allow the functions chaining
+    """
+    rgb = Colors.getHexToRgb(self.orign_htmlObj._report.theme.greys[-1]) if hexa_color is None else hexa_color
+    self.box_shadow = "0 4px 8px 0 rgba(%(r)s, %(g)s, %(b)s, 0.2), 0 6px 20px 0 rgba(%(r)s, %(g)s, %(b)s, 0.19)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2]}
+    return self
+
+  def shadow_text(self):
     """
 
     Documentation
-    https://www.w3schools.com/howto/howto_css_glowing_text.asp
+    https://www.w3schools.com/css/css3_shadows.asp
 
     :return:
     """
-    self.animation = "glow 1s ease-in-out infinite alternate"
-    attrs = {
-      "from": {
-        "text-shadow": ["0 0 10px #fff", "0 0 20px #fff", "0 0 30px #e60073", "0 0 40px #e60073", "0 0 50px #e60073",
-                        "0 0 60px #e60073", "0 0 70px #e60073"]},
-      "to": {
-        "text-shadow": ["0 0 20px #fff", "0 0 30px #ff4da6", "0 0 40px #ff4da6", "0 0 50px #ff4da6", "0 0 60px #ff4da6",
-                        "0 0 70px #ff4da6", "0 0 80px #ff4da6"]}}
-    self.orign_htmlObj.style.css_class.keyframes("glow", attrs)
+    self.text_shadow = "0 0 3px #FF0000, 0 0 5px #0000FF"
     return self

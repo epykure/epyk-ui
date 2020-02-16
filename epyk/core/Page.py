@@ -77,7 +77,6 @@ class Report(object):
     #
     self._css, self._ui, self._js, self._py, self._theme, self.__style = {}, None, None, None, None, None
     self._props, self._tags, self._header_obj, self.__import_manage = {}, None, None, None
-
     self.run = self.run_context(run_options if run_options is not None else {})
     self.useSideBar, self.preferredTheme = sideBar, None
     self.cache, self._urlsApp = appCache, {'incidents': '/incidents', 'index': '/', 'questions': '/questions',
