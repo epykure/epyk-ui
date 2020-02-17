@@ -797,8 +797,6 @@ class Modal(Html.Html):
 
   def __init__(self, report, htmlObjs, submit, helper):
     super(Modal, self).__init__(report, [])
-
-    print(self.style.get_classes())
     self.add_helper(helper)
     self.doSubmit = submit
     if self.doSubmit:
@@ -836,7 +834,7 @@ class Modal(Html.Html):
   def __str__(self):
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
     self.set_attrs({'css': self.style.css.attrs})
-    print(self.attr)
+    self.set_attrs({'css': {'display': 'inline'}})
     if self.doSubmit:
       self.col += self.submit
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)

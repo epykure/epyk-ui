@@ -215,12 +215,6 @@ class CssDivModalTest(CssStyle.Style):
             'text-align': 'center'}
 
 
-class CssDivModalContent(CssStyle.Style):
-  def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.colors[2]})
-    self.hover.css({'border': '1px solid %s' % self.rptObj.theme.success[1]})
-
-
 class CssDivModal(CssStyle.Style):
   _attrs = {'z-index': 100, 'position': 'fixed', 'padding-top': '100px', 'left': 0, 'top': 0,
             'width': '100%', 'height': '100%', 'overflow': 'auto', 'text-align': 'center'}
