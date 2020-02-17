@@ -725,7 +725,17 @@ class CssMixin(object):
     self.htmlObj.css({"clip-path": val})
 
   @property
-  def color(self): return self.htmlObj.css("color")
+  def color(self):
+    """
+    The color property specifies the color of text.
+
+    Tip: Use a background color combined with a text color that makes the text easy to read.
+
+    Documentation
+    ^^^^^^^^^^^^^
+    https://www.w3schools.com/cssref/pr_text_color.asp
+    """
+    return self.htmlObj.css("color")
 
   @color.setter
   def color(self, val):
