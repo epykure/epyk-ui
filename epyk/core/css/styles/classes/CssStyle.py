@@ -430,8 +430,8 @@ class Selector(object):
 class Style(object):
   classname, classnames = None, None
 
-  def __init__(self, rptObj, css_ovrs=None, selector_ovrs=None):
-    self.rptObj = rptObj
+  def __init__(self, rptObj, css_ovrs=None, selector_ovrs=None, html_id=None):
+    self.rptObj, self.html_id, self.cls_ref = rptObj, html_id, None
     css_ovrs = css_ovrs or {}
     self.__keyframes = {}
     selector_ids = dict(getattr(self, '_selectors', {}))
@@ -743,7 +743,7 @@ class Style(object):
     :return:
     """
 
-  def keyframes(self, name, attrs, effects=None):
+  def keyframes(self, name, attrs, effects=None, change=True):
     """
     The @keyframes rule specifies the animation code.
 
@@ -763,36 +763,41 @@ class Style(object):
     :param name: String. Required. Defines the name of the animation.
     :param attrs: String. Required. Percentage of the animation duration.
     """
+    if change:
+      self.__has_changed = True
     if effects is not None:
       name = effects.__class__.__name__
       attrs = effects.get_attrs()
     self.__keyframes[name] = attrs
     return name
 
+  def get_ref(self):
+    """
+
+    :return:
+    """
+    if self.has_changed and self.cls_ref in [None, self.classname] and self.html_id is not None:
+      # dedicated unique ID if it is not the original style
+      self.cls_ref = "%s_%s" % (self.classname, self.html_id)
+    else:
+      self.cls_ref = self.classname
+    return self.cls_ref
+
   def __str__(self):
     style = []
+    cls_reference = self.get_ref()
     for e in self.__internal_props:
       s = getattr(self, e)
+      css_id = str(s.selector) % cls_reference
       if str(s):
-        if self.has_changed:
-          # dedicated unique ID if it is not the original style
-          #self.classname = "%s_%s" % (self.classname, id(self))
-          css_id = "%s" % str(s.selector) % self.classname
-        else:
-          css_id = str(s.selector) % self.classname
         if e == "attrs":
           style.append("%s %s" % (css_id.strip(), s))
         else:
           style.append("%s:%s %s" % (css_id.strip(), e, s))
     for e in ['after', 'before']:
       s = getattr(self, e)
+      css_id = str(s.selector) % cls_reference
       if str(s):
-        if self.has_changed:
-          # dedicated unique ID if it is not the original style
-          #self.classname = "%s_%s" % (self.classname, id(self))
-          css_id = "%s" % str(s.selector) % self.classname
-        else:
-          css_id = str(s.selector) % self.classname
         style.append("%s::%s %s" % (css_id.strip(), e, s))
     if self.__keyframes:
       for name, k_attrs in self.__keyframes.items():

@@ -78,7 +78,7 @@ class ClassHtml(Properties.CssMixin):
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main']).no_border()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
     return self._css_class
 
   @property
@@ -121,14 +121,14 @@ class ClassHtml(Properties.CssMixin):
     Remove the predefined class and set the default one for the div components
     :return:
     """
-    self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main']).no_border()
+    self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
 
   def get_classes(self):
     """ Returns the list of Internal and bespoke classes to be added to the class HTML table on the component """
     for css_cls in self.classList.values():
       for c in css_cls:
-        if hasattr(c, 'classname'):
-          self.htmlObj._report._css[c.classname] = c
+        if hasattr(c, 'get_ref'):
+          self.htmlObj._report._css[c.get_ref()] = c
     return self.classList
 
   def get_classes_css(self):
@@ -139,6 +139,6 @@ class ClassHtml(Properties.CssMixin):
     css_frgs = {}
     for css_cls in self.classList.values():
       for c in css_cls:
-        if hasattr(c, 'classname'):
-          css_frgs[c.classname] = str(c)
+        if hasattr(c, 'get_ref'):
+          css_frgs[c.get_ref()] = str(c)
     return css_frgs

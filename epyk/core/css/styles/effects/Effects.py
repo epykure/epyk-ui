@@ -28,16 +28,15 @@ class Effects(object):
     :param color: String. The color to use fin the effect
     :param radius: Integer. The lenght of the radius to display in the animate
     """
-    self._htmlObj.style.css.animation = "glow 1s ease-in-out infinite alternate"
+    keyframe_name = "glow_%s" % color
+    self._htmlObj.style.css.animation = "%s 1s ease-in-out infinite alternate" % keyframe_name
     color_effects = []
     for i in range(1, int(radius / 10)+1):
       color_effects.append("0 0 %s0px %s" % (i, color))
     if not color_effects:
       color_effects.append("0 0 %spx %s" % (radius, color))
-    attrs = {
-      "from": {"text-shadow": color_effects},
-      "to": {"text-shadow": color_effects}}
-    self._htmlObj.style.css_class.keyframes("glow", attrs)
+    attrs = {"from": {"text-shadow": color_effects}, "to": {"text-shadow": color_effects}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self
 
   def blink(self, duration=1):
@@ -47,7 +46,7 @@ class Effects(object):
 
     :param duration:
     """
-    keyframe_name = "blink"
+    keyframe_name = "blink_%s" % duration
     self._htmlObj.style.css.animation = "%s %ss ease-in-out infinite alternate" % (keyframe_name, duration)
     attrs = {"from": {"opacity": 0}, "to": {"opacity": 1}}
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)

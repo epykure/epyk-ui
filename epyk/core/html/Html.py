@@ -638,7 +638,7 @@ class Html(object):
       else:
         cssClass = 'class="%s"' % classData
     elif pyClassNames is not None:
-      pyClsNames = [cls.classname if hasattr(cls, 'classname') else cls for cls in pyClassNames['main']]
+      pyClsNames = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in pyClassNames['main']]
       cssClass = 'class="%s"' % " ".join(pyClsNames) if len(pyClsNames) > 0 else ""
     if withId:
       str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
@@ -862,8 +862,8 @@ class Html(object):
     #if self.builder_name:
     #  self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     for c in self.style.get_classes()['main']:
-      if hasattr(c, 'classname'):
-        self.pyCssCls.add(c.classname)
+      if hasattr(c, 'get_ref'):
+        self.pyCssCls.add(c.get_ref())
     str_result.append(str(self))
     return "".join(str_result)
 
