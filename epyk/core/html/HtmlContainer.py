@@ -797,8 +797,6 @@ class Modal(Html.Html):
 
   def __init__(self, report, htmlObjs, submit, helper):
     super(Modal, self).__init__(report, [])
-
-    print(self.style.get_classes())
     self.add_helper(helper)
     self.doSubmit = submit
     if self.doSubmit:

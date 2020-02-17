@@ -776,10 +776,13 @@ class Style(object):
 
     :return:
     """
-    if self.has_changed and self.cls_ref in [None, self.classname] and self.html_id is not None:
+    if self.has_changed and self.cls_ref in [None, self.classname]:
       # dedicated unique ID if it is not the original style
-      self.cls_ref = "%s_%s" % (self.classname, self.html_id)
-    else:
+      if self.html_id is not None:
+        self.cls_ref = "%s_%s" % (self.classname, self.html_id)
+      else:
+        self.cls_ref = self.classname
+    elif not self.has_changed:
       self.cls_ref = self.classname
     return self.cls_ref
 
