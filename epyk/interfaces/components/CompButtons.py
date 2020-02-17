@@ -56,11 +56,13 @@ class Buttons(object):
     Standard button used in the framework
 
     Example
+    ^^^^^^^^^
     rptObj.ui.button("Test")
 
     Documentation
-    https://www.w3schools.com/tags/tag_button.asp
-    http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+    ^^^^^^^^^^^^^
+    - https://www.w3schools.com/tags/tag_button.asp
+    - http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
