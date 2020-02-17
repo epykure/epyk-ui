@@ -40,6 +40,19 @@ class Effects(object):
     self._htmlObj.style.css_class.keyframes("glow", attrs)
     return self
 
+  def blink(self, duration=1):
+    """
+
+    Documentation
+
+    :param duration:
+    """
+    keyframe_name = "blink"
+    self._htmlObj.style.css.animation = "%s %ss ease-in-out infinite alternate" % (keyframe_name, duration)
+    attrs = {"from": {"opacity": 0}, "to": {"opacity": 1}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
+    return self
+
   def shiny_text(self, color):
     """
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
@@ -51,9 +64,7 @@ class Effects(object):
     """
     keyframe_name = "shiny_text"
     self._htmlObj.style.css.animation = "%s 1s ease-in-out infinite alternate" % keyframe_name
-    attrs = {
-      "from": {"color": color},
-      "to": {"color": "none"}}
+    attrs = {"from": {"color": color}, "to": {"color": "none"}}
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self
 
@@ -68,10 +79,7 @@ class Effects(object):
     """
     keyframe_name = "shiny_border"
     self._htmlObj.style.css.animation = "%s %ss ease-in-out infinite alternate" % (keyframe_name, duration)
-    attrs = {
-      "from": {"border": "1px solid %s" % color},
-      "to": {"border": "1px solid %s" % color}
-    }
+    attrs = {"from": {"border": "1px solid %s" % color}, "to": {"border": "1px solid %s" % color}}
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self
 
