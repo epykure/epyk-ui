@@ -833,6 +833,8 @@ class Modal(Html.Html):
 
   def __str__(self):
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
+    self.set_attrs({'css': self.style.css.attrs})
+    print(self.attr)
     if self.doSubmit:
       self.col += self.submit
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)
