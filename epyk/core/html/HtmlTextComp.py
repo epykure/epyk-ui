@@ -435,7 +435,6 @@ class Formula(Html.Html):
 
 class TrafficLight(Html.Html):
   name, category, callFnc = 'Light', 'Rich', 'light'
-  # _grpCls = GrpCls.CssGrpClassBox
 
   def __init__(self, report, color, label, height, tooltip, helper, profile):
     # Small change to allow the direct use of boolean and none to define the color
