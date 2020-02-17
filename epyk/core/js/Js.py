@@ -324,7 +324,6 @@ class JsBase(object):
     self.console = JsConsole()
     self.localStorage = JsWindow.JsLocalStorage()
     self.window = JsWindow.JsWindow(self)
-    self.navigator = JsNavigator.JsNavigator(self)
     self.performance = JsPerformance.JsPerformance(self)
     self.sessionStorage = JsWindow.JsSessionStorage()
     self.json = JsJson()
@@ -334,6 +333,18 @@ class JsBase(object):
     self.alert = self.window.alert
     self.log = self.console.log
     self._breadcrumb, self.__data, self.__location = None, None, None
+
+  @property
+  def navigator(self):
+    """
+    The information from the navigator object can often be misleading, and should not be used to detect browser versions because:
+
+      - Different browsers can use the same name
+      - The navigator data can be changed by the browser owner
+      - Some browsers misidentify themselves to bypass site tests
+      - Browsers cannot report new operating systems, released later than the browser
+    """
+    return JsNavigator.JsNavigator(self)
 
   @property
   def location(self):

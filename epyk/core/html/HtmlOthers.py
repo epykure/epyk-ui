@@ -7,6 +7,8 @@ from epyk.core.html import Html
 from epyk.core.js.primitives import JsObjects
 from epyk.core.html.entities import EntHtml4
 
+from epyk.core.js import JsUtils
+
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsLayout
 
@@ -125,8 +127,9 @@ class Stars(Html.Html):
         js_fncs = [js_fncs]
     js_fncs = ["var data = parseInt(event.target.dataset.level)+1"] + js_fncs
     js_fncs.append(self.build(data=JsObjects.JsObjects.get("data"), options=self._jsStyles))
+    str_fncs = JsUtils.jsConvertFncs(js_fncs)
     for span in self._spans:
-      span.click(js_fncs, profile)
+      span.click(str_fncs, profile)
     return self
 
   @property
