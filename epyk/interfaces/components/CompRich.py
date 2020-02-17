@@ -93,7 +93,6 @@ class Rich(object):
 
     :param text:
     :param language: Optional, The language format used. Default Python
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param isEditable:
@@ -179,7 +178,6 @@ class Rich(object):
     rptObj.ui.rich.update("Last update: ")
 
     :param label: The label to be displayed close to the date. Default Last Update
-    :param size: Optional, A integer to set the font-size
     :param color: Optional. The color code for the font
     :param width: Optional. Integer for the component width
     :param height: Optional. Integer for the component height
