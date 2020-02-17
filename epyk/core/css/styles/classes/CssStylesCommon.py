@@ -55,3 +55,6 @@ class CssBodyLoading(CssStyle.Style):
 class CssNotSelect(CssStyle.Style):
   _attrs = {"-webkit-touch-callout": 'none', "user-select": 'none', "-webkit-user-select": 'none',
             "-khtml-user-select": 'none', "-moz-user-select": 'none', "-ms-user-select": 'none'}
+
+class CssCloseSpan(CssStyle.Style):
+  _attrs = {'float': 'right', 'text-align': 'right', 'margin-right': '10px', 'font-size': '24px', 'z-index': 10, 'color': 'red'}
