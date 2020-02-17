@@ -24,9 +24,10 @@ class ClassDiv(GrpCls.ClassHtml):
     """
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object
+
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main']).no_border()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
     return self._css_class
 

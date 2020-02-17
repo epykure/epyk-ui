@@ -28,7 +28,7 @@ class ClassButton(GrpCls.ClassHtml):
     :rtype: Classes.CatalogButton.CatalogButton
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main']).basic()
+      self._css_class = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).basic()
     return self._css_class
 
 
