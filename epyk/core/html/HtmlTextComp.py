@@ -439,9 +439,8 @@ class TrafficLight(Html.Html):
   def __init__(self, report, color, label, height, tooltip, helper, profile):
     # Small change to allow the direct use of boolean and none to define the color
     # Those standards will simplify the creation of themes going forward
-    super(TrafficLight, self).__init__(report, color, width=height[0] - 3, widthUnit=height[1], height=height[0],
-                                       heightUnit=height[1], profile=profile)
-    self.add_helper(helper)
+    super(TrafficLight, self).__init__(report, color, css_attrs={"width": height, "height": height}, profile=profile)
+    self.add_helper(helper, css={"margin-top": "-17px"})
     self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
                                "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'})
     self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
