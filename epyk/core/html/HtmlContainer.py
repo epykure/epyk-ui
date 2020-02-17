@@ -14,7 +14,7 @@ from epyk.core.js.html import JsHtmlPanels
 from epyk.core.css import Defaults
 
 # The list of CSS classes
-from epyk.core.css.styles.classes import CssStyle
+from epyk.core.css.styles.classes import CssStyle, CssStylesDiv
 from epyk.core.css.styles import GrpClsContainer
 
 
@@ -797,6 +797,8 @@ class Modal(Html.Html):
 
   def __init__(self, report, htmlObjs, submit, helper):
     super(Modal, self).__init__(report, [])
+
+    print(self.style.get_classes())
     self.add_helper(helper)
     self.doSubmit = submit
     if self.doSubmit:
@@ -813,6 +815,17 @@ class Modal(Html.Html):
     self.val.append(self.col)
     for htmlObj in htmlObjs:
       self.__add__(htmlObj)
+
+  @property
+  def style(self):
+    """
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsButton.ClassButton
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsContainer.ClassModal(self)
+    return self._styleObj
 
   def __add__(self, htmlObj):
     """ Add items to a container """
