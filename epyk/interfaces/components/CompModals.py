@@ -97,3 +97,4 @@ class Modal(object):
     # if submit:
     #   modal.submit.val = validation_text
     self.context.register(modal)
+    return modal

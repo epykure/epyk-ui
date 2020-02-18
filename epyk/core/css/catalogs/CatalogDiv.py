@@ -106,4 +106,4 @@ class CatalogDiv(Catalog.CatalogGroup):
 
   def modal_content(self):
     """  """
-    return self.__set_class(CssStylesDiv.CssDivModalContent)
+    return self._set_class(CssStylesDiv.CssDivModalContent)

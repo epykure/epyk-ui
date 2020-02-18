@@ -217,11 +217,12 @@ class CssDivModalTest(CssStyle.Style):
 
 class CssDivModal(CssStyle.Style):
   _attrs = {'z-index': 100, 'position': 'fixed', 'padding-top': '100px', 'left': 0, 'top': 0,
-            'width': '100%', 'height': '100%', 'overflow': 'auto', 'text-align': 'center'}
+            'width': '100%', 'height': '100%', 'overflow': 'auto', 'text-align': 'center', 'display': 'none'}
 
 
 class CssDivModalContent(CssStyle.Style):
-  _attrs = {'margin': '15%', 'padding': '20px', 'border': '1px solid #888', 'width': 'auto'}
+  _attrs = {'margin': '15%', 'padding': '20px', 'border': '1px solid #888', 'width': '75%',
+            'box-shadow': '0 19px 38px rgba(0, 0, 0, 0.12), 0 15px 12px rgba(0, 0, 0, 0.22)'}
 
   def customize(self):
     self.css({'background-color': self.rptObj.theme.colors[0]})
