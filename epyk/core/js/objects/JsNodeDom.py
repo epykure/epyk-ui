@@ -748,6 +748,15 @@ class JsDoms(JsObject.JsObject):
     """
     return JsBoolean.JsBoolean("%s.hasChildNodes()" % self.varId, isPyData=False)
 
+  def hasClass(self, className):
+    """
+
+    :param className:
+    :return:
+    """
+    className = JsUtils.jsConvertData(className, None)
+    return JsBoolean.JsBoolean("%s.classList.contains(%s)" % (self.varId, className), isPyData=False)
+
   def text(self, jsString):
     """
     Javascript Function

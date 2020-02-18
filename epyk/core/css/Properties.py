@@ -8,12 +8,19 @@ from epyk.core.css import Defaults_css
 
 def autoPrefixer(prop):
   """
+  Description:
+  ------------
+  CSS Style function to return the different attributes names for the compatibility with the main browsers.
+  This function is used everytime there is a need for a CSS extension.
 
-  Documentation
+  The main browsers supported are IE, Chrome, Firefox and Opera
+
+  Related Pages:
+  --------------
   https://www.w3schools.com/cssref/css3_browsersupport.asp
 
-  :param prop:
-  :return:
+  :param prop: String. The CSS Attribute key
+  :return: A generator function with the different keys to be added to the style
   """
   map = {
     'animation': ['-webkit-', '-moz-', '-o-'],
@@ -52,9 +59,7 @@ def autoPrefixer(prop):
 
 
 class CssMixin(object):
-  """
 
-  """
   @property
   def align_content(self): return self.htmlObj.css("align-content")
 
@@ -90,12 +95,13 @@ class CssMixin(object):
   @property
   def animation(self):
     """
+    Description:
+    ------------
     CSS allows animation of HTML elements without using JavaScript or Flash!
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/css/css3_animations.asp
-
-    :return:
     """
     return self.htmlObj.css("animation")
 
@@ -117,12 +123,13 @@ class CssMixin(object):
   @property
   def animation_direction(self):
     """
+    Description:
+    ------------
     The animation-direction property defines whether an animation should be played forwards, backwards or in alternate cycles.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_animation-direction.asp
-
-    :return:
     """
     return self.htmlObj.css("animation-direction")
 
@@ -136,12 +143,13 @@ class CssMixin(object):
   @property
   def animation_duration(self):
     """
+    Description:
+    ------------
     The animation-duration property defines how long an animation should take to complete one cycle.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_animation-duration.asp
-
-    :return:
     """
     return self.htmlObj.css("animation-duration")
 
@@ -163,12 +171,13 @@ class CssMixin(object):
   @property
   def animation_iteration_count(self):
     """
+    Description:
+    ------------
     The animation-iteration-count property specifies the number of times an animation should be played.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_animation-iteration-count.asp
-
-    :return:
     """
     return self.htmlObj.css("animation-iteration-count")
 
@@ -182,12 +191,13 @@ class CssMixin(object):
   @property
   def animation_name(self):
     """
+    Description:
+    ------------
     The animation-name property specifies a name for the @keyframes animation.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_animation-name.asp
-
-    :return:
     """
     return self.htmlObj.css("animation-name")
 
@@ -209,12 +219,13 @@ class CssMixin(object):
   @property
   def animation_timing_function(self):
     """
+    Description:
+    ------------
     The animation-timing-function specifies the speed curve of an animation.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_animation-timing-function.asp
-
-    :return:
     """
     return self.htmlObj.css("animation-timing-function")
 
@@ -228,23 +239,19 @@ class CssMixin(object):
   @property
   def appearance(self):
     """
+    Description:
+    ------------
     This property is frequently used in XUL stylesheets to design custom widgets with platform-appropriate styling.
     It is also used in the XBL implementations of the widgets that ship with the Mozilla platform.
 
-    Documentation
+    Related Pages:
+    --------------
     https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
-
-    :return:
     """
     return self.htmlObj.css(autoPrefixer("appearance")[0])
 
   @appearance.setter
   def appearance(self, val):
-    """
-
-    :param val:
-    :return:
-    """
     val = val or 'None'
     for m_val in autoPrefixer("appearance"):
       self.htmlObj.css({m_val: val})
@@ -252,9 +259,12 @@ class CssMixin(object):
   @property
   def backface_visibility(self):
     """
+    Description:
+    ------------
     Hide and show the back face of two rotated <div> elements:
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_backface-visibility.asp
     """
     return self.htmlObj.css("backface-visibility")
@@ -301,11 +311,14 @@ class CssMixin(object):
   @property
   def background_color(self):
     """
+    Description:
+    ------------
     The background-color property sets the background color of an element.
 
     The background of an element is the total size of the element, including padding and border (but not the margin).
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_background-color.asp
     """
     return self.htmlObj.css("background-color")
@@ -513,9 +526,12 @@ class CssMixin(object):
   @property
   def border_radius(self):
     """
+    Description:
+    ------------
     The border-radius property defines the radius of the element's corners.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_border-radius.asp
     """
     return self.htmlObj.css("border-radius")
@@ -634,9 +650,12 @@ class CssMixin(object):
   @property
   def bottom(self):
     """
+    Description:
+    ------------
     The bottom property affects the vertical position of a positioned element. This property has no effect on non-positioned elements.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_pos_bottom.asp
     """
     return self.htmlObj.css("bottom")
@@ -651,8 +670,13 @@ class CssMixin(object):
   @property
   def box_decoration_break(self):
     """
+    Description:
+    ------------
+    The box-decoration-break property specifies how the background, padding, border, border-image, box-shadow, margin, and clip-path of an element is applied when the box for the element is fragmented.
 
-    :return:
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/css3_pr_box-decoration-break.asp
     """
     return self.htmlObj.css("box-decoration-break")
 
@@ -664,9 +688,12 @@ class CssMixin(object):
   @property
   def box_shadow(self):
     """
+    Description:
+    ------------
     The box-shadow property attaches one or more shadows to an element.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_box-shadow.asp
     """
     return self.htmlObj.css("box-shadow")
@@ -727,12 +754,14 @@ class CssMixin(object):
   @property
   def color(self):
     """
+    Description:
+    ------------
     The color property specifies the color of text.
 
     Tip: Use a background color combined with a text color that makes the text easy to read.
 
-    Documentation
-    ^^^^^^^^^^^^^
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_text_color.asp
     """
     return self.htmlObj.css("color")
@@ -847,7 +876,17 @@ class CssMixin(object):
     self.htmlObj.css({"counter-reset": val})
 
   @property
-  def cursor(self): return self.htmlObj.css("cursor")
+  def cursor(self):
+    """
+    Description:
+    ------------
+    The cursor property specifies the mouse cursor to be displayed when pointing over an element.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_class_cursor.asp
+    """
+    return self.htmlObj.css("cursor")
 
   @cursor.setter
   def cursor(self, val):
@@ -945,9 +984,12 @@ class CssMixin(object):
   @property
   def float(self):
     """
+    Description:
+    ------------
     The float property specifies how an element should float
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_class_float.asp
     """
     return self.htmlObj.css("float")
@@ -988,12 +1030,13 @@ class CssMixin(object):
   @property
   def font_size(self):
     """
+    Description:
+    ------------
     The font-size property sets the size of a font.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_font_font-size.asp
-
-    :return:
     """
     return self.htmlObj.css("font-size")
 
@@ -1199,14 +1242,15 @@ class CssMixin(object):
   @property
   def height(self):
     """
+    Description:
+    ------------
     The height property sets the height of an element.
 
     The height of an element does not include padding, borders, or margins!
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_dim_height.asp
-
-    :return:
     """
     return self.htmlObj.css("height")
 
@@ -1236,26 +1280,19 @@ class CssMixin(object):
   @property
   def justify_content(self):
     """
+    Description:
+    ------------
     The justify-content property aligns the flexible container's items when the items do not use all available space on the main-axis (horizontally).
     This property is not inherited
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_justify-content.asp
-
-    :return:
     """
     return self.htmlObj.css("justify-content")
 
   @justify_content.setter
   def justify_content(self, val):
-    """
-
-    Documentation
-    https://www.w3schools.com/cssref/css3_pr_justify-content.asp
-
-    :param val: String. Default value flex-start
-    :return:
-    """
     vals = set(["flex-start", "flex-end", "center", "space-between", "space-around", "initial", "inherit"])
     val = val or 'None'
     self.htmlObj.css({"justify-content": val})
@@ -1263,9 +1300,12 @@ class CssMixin(object):
   @property
   def left(self):
     """
+    Description:
+    ------------
     The left property affects the horizontal position of a positioned element. This property has no effect on non-positioned elements.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_pos_left.asp
     """
     return self.htmlObj.css("left")
@@ -1342,18 +1382,22 @@ class CssMixin(object):
     self.htmlObj.css({"margin-bottom": val})
 
   @property
-  def margin_left(self): return self.htmlObj.css("margin-left")
+  def margin_left(self):
+    """
+    Description:
+    ------------
+    The margin-left property sets the left margin of an element.
+
+    Note: Negative values are allowed.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_margin-left.asp
+    """
+    return self.htmlObj.css("margin-left")
 
   @margin_left.setter
   def margin_left(self, val):
-    """
-
-    Documentation
-    https://www.w3schools.com/cssref/pr_margin-left.asp
-
-    :param val:
-    :return:
-    """
     if isinstance(val, int):
       val = "%spx" % val
     val = val or 'None'
@@ -1630,13 +1674,14 @@ class CssMixin(object):
   @property
   def right(self):
     """
+    Description:
+    ------------
     The right property affects the horizontal position of a positioned element.
     This property has no effect on non-positioned elements.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_pos_right.asp
-
-    :return:
     """
     return self.htmlObj.css("right")
 
@@ -1674,12 +1719,13 @@ class CssMixin(object):
   @property
   def text_align(self):
     """
+    Description:
+    ------------
     The text-align property specifies the horizontal alignment of text in an element.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_text_text-align.ASP
-
-    :return:
     """
     return self.htmlObj.css("text-align")
 
@@ -1758,11 +1804,14 @@ class CssMixin(object):
   @property
   def text_shadow(self):
     """
+    Description:
+    ------------
     The text-shadow property adds shadow to text.
 
     This property accepts a comma-separated list of shadows to be applied to the text.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_text-shadow.asp
     """
     return self.htmlObj.css("text-shadow")
@@ -1785,13 +1834,14 @@ class CssMixin(object):
   @property
   def top(self):
     """
+    Description:
+    ------------
     The top property affects the vertical position of a positioned element.
     This property has no effect on non-positioned elements.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_pos_top.asp
-
-    :return:
     """
     return self.htmlObj.css("top")
 
@@ -1879,11 +1929,14 @@ class CssMixin(object):
   @property
   def user_select(self):
     """
+    Description:
+    ------------
     The user-select property specifies whether the text of an element can be selected.
 
     In web browsers, if you double-click on some text it will be selected/highlighted. This property can be used to prevent this.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css3_pr_user-select.asp
     """
     return self.htmlObj.css("user-select")
@@ -1898,9 +1951,12 @@ class CssMixin(object):
   @property
   def vertical_align(self):
     """
+    Description:
+    ------------
     The vertical-align property sets the vertical alignment of an element
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_pos_vertical-align.asp
     """
     return self.htmlObj.css("vertical-align")
@@ -1933,14 +1989,15 @@ class CssMixin(object):
   @property
   def width(self):
     """
+    Description:
+    ------------
     The width property sets the width of an element.
 
     The width of an element does not include padding, borders, or margins!
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_dim_width.asp
-
-    :return:
     """
     return self.htmlObj.css("width")
 
@@ -1984,7 +2041,21 @@ class CssMixin(object):
     self.htmlObj.css({"writing-mode": val})
 
   @property
-  def z_index(self): return self.htmlObj.css("z-index")
+  def z_index(self):
+    """
+    Description:
+    ------------
+    The z-index property specifies the stack order of an element.
+
+    An element with greater stack order is always in front of an element with a lower stack order.
+
+    Note: z-index only works on positioned elements (position: absolute, position: relative, position: fixed, or position: sticky).
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_pos_z-index.asp
+    """
+    return self.htmlObj.css("z-index")
 
   @z_index.setter
   def z_index(self, val):
@@ -1992,23 +2063,26 @@ class CssMixin(object):
     self.htmlObj.css({"z-index": val})
 
   def middle(self):
-    """
-
-    :return:
-    """
     self.vertical_align = "middle"
     self.text_align = "center"
+    return self
 
   def sticky(self, top=0, bottom=None, left=None, right=None):
     """
+    Description:
+    ------------
     An element with position: sticky; is positioned based on the user's scroll position
 
-    Example
+    Usage:
+    ------
     htmlObj.style.css.sticky()
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_sticky_element
 
+    Attributes:
+    ----------
     :param top: Integer. The number of pixel from the top
     :param bottom:
     :param left:
@@ -2029,11 +2103,16 @@ class CssMixin(object):
 
   def shadow_box(self, hexa_color=None):
     """
+    Description:
+    ------------
     Set the box shadow color
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/css/css3_shadows.asp
 
+    Attributes:
+    ----------
     :param hexa_color: String. An hexadecimal color code
 
     :return: The CSS object to allow the functions chaining
@@ -2045,10 +2124,9 @@ class CssMixin(object):
   def shadow_text(self):
     """
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/css/css3_shadows.asp
-
-    :return:
     """
     self.text_shadow = "0 0 3px #FF0000, 0 0 5px #0000FF"
     return self
