@@ -19,9 +19,11 @@ from epyk.core.css import Defaults_css
 class Button(Html.Html):
   name, category, callFnc = 'Button', 'buttons', 'button'
 
-  def __init__(self, report, text, icon, width, height, color, htmlCode, tooltip, profile, options):
+  def __init__(self, report, text, icon, width, height, htmlCode, tooltip, profile, options):
     super(Button, self).__init__(report, text, code=htmlCode, profile=profile,
-                                 css_attrs={"color": color, "width": width, "height": height})
+                                 css_attrs={"width": width, "height": height})
+    if options is None:
+      options = {}
     self.add_icon(icon, css={"font-size": '%s%s' % (Defaults_css.Font.size-2, Defaults_css.Font.unit)})
     self.__options = OptButton.OptionsButton(self, options)
     if tooltip is not None:

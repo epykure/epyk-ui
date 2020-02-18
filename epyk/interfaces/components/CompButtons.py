@@ -18,7 +18,7 @@ class Buttons(object):
   def __init__(self, context):
     self.context = context
 
-  def button(self, text=None, icon=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'),
+  def button(self, text=None, icon=None, width=(None, "%"), height=(None, "px"),
              htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -50,8 +50,7 @@ class Buttons(object):
 
     :rtype: html.HtmlButton.Button
     """
-    size = self.context._size(size)
-    return self.context.register(html.HtmlButton.Button(self.context.rptObj, text, icon, size, width, height, htmlCode=htmlCode,
+    return self.context.register(html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
                                                         tooltip=tooltip, profile=profile, options=options))
 
   def validate(self, text=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'), htmlCode=None,

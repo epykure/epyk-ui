@@ -4,7 +4,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles.classes import CssStylesDrop, CssStylesDivEvents, CssStylesDiv
+from epyk.core.css.styles.classes import CssStylesDrop, CssStylesDivEvents, CssStylesDiv, CssStylesCommon
 
 
 class CatalogDiv(Catalog.CatalogGroup):
@@ -95,6 +95,10 @@ class CatalogDiv(Catalog.CatalogGroup):
   def width_hover(self):
     """ Change the background color when the mouse is on the component """
     return self._set_class(CssStylesDivEvents.CssDivOnHoverWidth)
+
+  def span_close(self):
+    """Change the font size and location of the close button - generally used for the modal components"""
+    return self._set_class(CssStylesCommon.CssCloseSpan)
 
   def modal(self):
     """  """

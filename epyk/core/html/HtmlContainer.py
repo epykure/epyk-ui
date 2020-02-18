@@ -5,13 +5,11 @@ Wrapper to the Bootstrap Layout library
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptPanel
-
 #
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlPanels
 
 from epyk.core.css import Defaults
-
 # The list of CSS classes
 from epyk.core.css.styles.classes import CssStyle
 from epyk.core.css.styles import GrpClsContainer
@@ -804,7 +802,7 @@ class Modal(Html.Html):
     self.col = report.ui.col([]).css({'border': '1px solid %s' % report.theme.greys[4],
                                       'width': 'auto', 'background-color': report.theme.greys[0]})
     self.closeBtn = report.ui.texts.span('&times', width='auto')
-    self.closeBtn.css({}, reset=True)
+    self.closeBtn.css(None, reset=True)
     self.closeBtn.style.add_classes.div.span_close()
     self.closeBtn.click(report.js.getElementById(self.htmlId).css({'display': "none"}))
     self.col += self.closeBtn
