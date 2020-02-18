@@ -18,8 +18,7 @@ class Buttons(object):
   def __init__(self, context):
     self.context = context
 
-  def button(self, text=None, icon=None, width=(None, "%"), height=(None, "px"),
-             htmlCode=None, tooltip=None, profile=None, options=None):
+  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
     ------------
@@ -39,7 +38,6 @@ class Buttons(object):
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -47,14 +45,13 @@ class Buttons(object):
     :param options: Optional. Specific Python options available for this component
 
     :return: The Button HTML object
-
-    :rtype: html.HtmlButton.Button
     """
-    return self.context.register(html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
-                                                        tooltip=tooltip, profile=profile, options=options))
+    html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
+                                         tooltip=tooltip, profile=profile, options=options)
+    self.context.register(html_button)
+    return html_button
 
-  def validate(self, text=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'), htmlCode=None,
-               tooltip=None, profile=None, options=None):
+  def validate(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
     -----------
@@ -73,21 +70,17 @@ class Buttons(object):
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
-
-    :rtype: html.HtmlButton.Button
     """
-    size = self.context._size(size)
-    return self.context.register(
-      html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-check-circle', size, width, height, htmlCode=htmlCode,
-                             tooltip=tooltip, profile=profile, options=options))
+    html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-check-circle', width, height, htmlCode=htmlCode,
+                                      tooltip=tooltip, profile=profile, options=options)
+    self.context.register(html_but)
+    return html_but
 
-  def remove(self, text=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'), htmlCode=None,
-            tooltip=None, profile=None, options=None):
+  def remove(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
     -----------
@@ -107,23 +100,19 @@ class Buttons(object):
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
 
     :return: The Button HTML object
-
-    :rtype: html.HtmlButton.Button
     """
-    size = self.context._size(size)
-    return self.context.register(
-      html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-trash-alt', size, width, height, htmlCode=htmlCode,
-                             tooltip=tooltip, profile=profile, options=options))
+    html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-trash-alt', width, height, htmlCode=htmlCode,
+                             tooltip=tooltip, profile=profile, options=options)
+    self.context.register(html_but)
+    return html_but
 
-  def phone(self, text=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'), htmlCode=None,
-            tooltip=None, profile=None, options=None):
+  def phone(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
     -----------
@@ -142,23 +131,19 @@ class Buttons(object):
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
 
     :return: The Button HTML object
-
-    :rtype: html.HtmlButton.Button
     """
-    size = self.context._size(size)
-    return self.context.register(
-      html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-phone', size, width, height, htmlCode=htmlCode,
-                             tooltip=tooltip, profile=profile, options=options))
+    html_button = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-phone', width, height, htmlCode=htmlCode,
+                                         tooltip=tooltip, profile=profile, options=options)
+    self.context.register(html_button)
+    return html_button
 
-  def mail(self, text=None, width=(None, "%"), height=(None, "px"), size=(None, 'px'), htmlCode=None,
-           tooltip=None, profile=None, options=None):
+  def mail(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
     ------------
@@ -177,19 +162,15 @@ class Buttons(object):
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param size: Optional, A tuple with a integer for the size and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
-
-    :rtype: html.HtmlButton.Button
     """
-    size = self.context._size(size)
-    return self.context.register(
-      html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-envelope', size, width, height, htmlCode=htmlCode,
-                             tooltip=tooltip, profile=profile, options=options))
-
+    html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-envelope', width, height, htmlCode=htmlCode,
+                                      tooltip=tooltip, profile=profile, options=options)
+    self.context.register(html_but)
+    return html_but
 
   def radio(self, recordSet=None, checked=None, htmlCode=None, label=None, width=(100, '%'), height=(None, "px"), radioVisible=False,
             event=None, withRemoveButton=False, column=None, align='left', filters=None, tooltip='', allSelected=False,
@@ -197,6 +178,7 @@ class Buttons(object):
     """
     Description:
     ------------
+    Creates a radio HTML component
 
     Usage:
     ------
@@ -225,8 +207,6 @@ class Buttons(object):
     :param title:
     :param radioType:
     :param profile:
-
-    :rtype: html.HtmlRadio.Radio
     """
     if column is not None:
       if filters is not None:
@@ -243,17 +223,20 @@ class Buttons(object):
       tmpVals = [{'value': str(v)} for v in recordSet]
       tmpVals[0]['checked'] = True
       recordSet = tmpVals
-    return self.context.register(html.HtmlRadio.Radio(self.context.rptObj, recordSet, checked, htmlCode, label, width,
+    html_radio = html.HtmlRadio.Radio(self.context.rptObj, recordSet, checked, htmlCode, label, width,
                                                       height, radioVisible, event, withRemoveButton, align, filters,
-                                                      tooltip, radioType, helper, profile))
+                                                      tooltip, radioType, helper, profile)
+    self.context.register(html_radio)
+    return html_radio
 
-  def switch(self, recordSet=None, label=None, color=None, size=16, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
+  def switch(self, recordSet=None, label=None, color=None, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
     """
     Description:
     ------------
 
     Usage:
     ------
+    rptObj.ui.buttons.switch({'on': "true", 'off': 'false'})
 
     Related Pages:
     --------------
@@ -265,19 +248,16 @@ class Buttons(object):
     :param recordSet:
     :param label:
     :param color:
-    :param size:
     :param width: Optional. Integer for the component width
-    :param width_unit: Optional. The unit for the with. Default %
     :param height: Optional. Integer for the component height
-    :param height_unit: Optional. The unit for the height. Default px
     :param htmlCode:
     :param profile:
-
-    :rtype: html.HtmlRadio.Switch
     """
-    return self.context.register(html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, size, width, height, htmlCode, profile))
+    html_switch = html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, width, height, htmlCode, profile)
+    self.context.register(html_switch)
+    return html_switch
 
-  def checkbox(self, records=None, title=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
+  def checkboxes(self, records=None, title=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
                htmlCode=None, globalFilter=None, tooltip='', dfColumn=None, icon="fas fa-check", options=None, profile=None):
     """
     Description:
@@ -305,8 +285,6 @@ class Buttons(object):
     :param dfColumn:
     :param icon:
     :param profile:
-
-    :rtype: html.HtmlButton.Checkbox
     """
     if dfColumn is not None:
       if has_pandas and issubclass(type(records), pd.DataFrame):
@@ -324,8 +302,10 @@ class Buttons(object):
     elif isinstance(records, list) and len(records) > 0:
       if not isinstance(records[0], dict):
         records = [{"value": rec} for rec in records]
-    return self.context.register(html.HtmlButton.Checkbox(self.context.rptObj, records, title, color, width,
-                                             height, align, htmlCode, globalFilter, tooltip, icon, options or {}, profile))
+    html_boxes = html.HtmlButton.Checkbox(self.context.rptObj, records, title, color, width,
+                                             height, align, htmlCode, globalFilter, tooltip, icon, options or {}, profile)
+    self.context.register(html_boxes)
+    return html_boxes
 
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None, htmlCode=None,
             profile=None, options=None):
@@ -354,8 +334,6 @@ class Buttons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
-
-    rtype: html.HtmlButton.CheckButton
     """
     html_but = html.HtmlButton.CheckButton(self.context.rptObj, flag, tooltip, width, height, icon, label, htmlCode, options or {}, profile)
     self.context.register(html_but)
@@ -381,6 +359,7 @@ class Buttons(object):
     :param css_attr:
     :param profile:
 
-    :rtype: html.HtmlFiles.DownloadMemoryZip
     """
-    return self.context.register(html.HtmlFiles.DownloadMemoryZip(self.context.rptObj, text, fileName, css_cls, css_attr, profile))
+    html_file = html.HtmlFiles.DownloadMemoryZip(self.context.rptObj, text, fileName, css_cls, css_attr, profile)
+    self.context.register(html_file)
+    return html_file

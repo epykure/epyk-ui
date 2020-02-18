@@ -1,7 +1,3 @@
-"""
-Wrapper to define HTML Button components
-"""
-
 import re
 import json
 
@@ -25,7 +21,9 @@ class Button(Html.Html):
                                  css_attrs={"width": width, "height": height})
     if options is None:
       options = {}
-    self.add_icon(icon, css={"font-size": '%s%s' % (Defaults_css.Font.size-2, Defaults_css.Font.unit)})
+    self.add_icon(icon)
+    if icon is not None and not text:
+      self.icon.style.css.margin_right = None
     self.__options = OptButton.OptionsButton(self, options)
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -34,6 +32,8 @@ class Button(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    -----------
     Property to set all the possible object for a button
 
     :rtype: OptButton.OptionsButton
@@ -43,6 +43,8 @@ class Button(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    -----------
     HTML Dom object
 
     :rtype: JsHtml.JsHtmlButton
@@ -58,7 +60,13 @@ class Button(Html.Html):
   @property
   def style(self):
     """
+    Description:
+    -----------
     Property to the CSS Style of the component
+
+    Usage:
+    ------
+    self.style.css.margin = "5px"
 
     :rtype: GrpClsButton.ClassButton
     """
@@ -68,11 +76,15 @@ class Button(Html.Html):
 
   def disable(self, background_color=None, color=None):
     """
+    Description:
+    -----------
 
-    :param background_color:
-    :param color:
+    Attributes:
+    ----------
+    :param background_color: String.
+    :param color: String.
 
-    :return:
+    :return: The htmlObj to allow the chaining
     """
     css_pmts = {"cursor": "not-allowed"}
     if background_color is not None:
@@ -83,12 +95,17 @@ class Button(Html.Html):
     self.attr['disabled'] = True
     return self
 
-  def click(self, jsFncs, profile=False):
-    return self.on("click", jsFncs, profile)
-
   def press(self, jsPressFncs=None, jsReleaseFncs=None, profile=False):
     """
+    Description:
+    -----------
+    Special click event to keep in memory the state of the component
 
+    Usage:
+    ------
+
+    Attributes:
+    ----------
     :param jsPressFncs:
     :param jsReleaseFncs:
     :param profile:
@@ -113,9 +130,17 @@ class Button(Html.Html):
 
   def color(self, color):
     """
+    Description:
+    -----------
     Change the color of the button background when the mouse is hover
 
-    :param color:
+    Usage:
+    ------
+    rptObj.ui.buttons.remove("remove").color("blue")
+
+    Attributes:
+    ----------
+    :param color: String. the color of the component (text and borders)
     """
     self.style.css.border = "1px solid %s" % color
     self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)

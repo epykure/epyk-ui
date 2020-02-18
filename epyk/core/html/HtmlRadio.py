@@ -4,8 +4,8 @@ Module for the HTML radio components
 
 from epyk.core.html import Html
 
-from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlSelect
+from epyk.core.js import JsUtils
 
 
 class Radio(Html.Html):
@@ -112,14 +112,29 @@ class Switch(Html.Html):
 
   def click(self, onFncs=None, offFncs=None):
     """
+    Description:
+    ------------
     Set the click property for the Switch
 
+    Usage:
+    ------
+    sw = rptObj.ui.buttons.switch({'on': "true", 'off': 'false'})
+    sw.click([
+      rptObj.js.console.log(sw.content)
+    ])
+
+    Attributes:
+    ----------
     :param onFncs: List. The list of JavaScript functions
     :param offFncs: List. The list of JavaScript functions
     """
     if onFncs is not None:
+      if not isinstance(onFncs, list):
+        onFncs = [onFncs]
       self._clicks['on'].extend(onFncs)
     if offFncs is not None:
+      if not isinstance(offFncs, list):
+        offFncs = [offFncs]
       self._clicks['off'].extend(offFncs)
 
   def __str__(self):
@@ -128,7 +143,8 @@ class Switch(Html.Html):
         var input_check = this.parentNode.querySelector('input');
         if(input_check.checked){%(clickOn)s; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.on; input_check.checked = false}
         else {%(clickOff)s; input_check.checked = true; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.off}
-        ''' % {'clickOn': ";".join(self._clicks["on"]), "htmlCode": self.htmlCode, 'clickOff': ";".join(self._clicks["off"])}).toStr())
+        ''' % {'clickOn': JsUtils.jsConvertFncs(self._clicks["on"], toStr=True), "htmlCode": self.htmlCode,
+               'clickOff': JsUtils.jsConvertFncs(self._clicks["off"], toStr=True)}).toStr())
     return '''
       <div %s>%s %s %s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()),
                                    self.checkbox.html(), self.switch_label.html(), self.switch_text.html())
