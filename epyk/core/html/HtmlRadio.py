@@ -1,7 +1,3 @@
-"""
-Module for the HTML radio components
-"""
-
 from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlSelect
