@@ -9,7 +9,6 @@ from epyk.core.css.styles.attributes import Attrs
 class AttrButton(Attrs):
   def __init__(self, rptObj):
     super(AttrButton, self).__init__(rptObj)
-    self.cursor = "pointer"
     self.font_size = Defaults_css.font()
 
 

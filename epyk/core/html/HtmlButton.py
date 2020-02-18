@@ -349,12 +349,17 @@ class CheckButton(Html.Html):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode,
                                       css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon("fas fa-check" if flag else "fas fa-times").css({"width": "12px"})
+    self.input.style.css.border = "1px solid black"
+    if flag:
+      self.input.style.css.color = self._report.theme.success[1]
+    else:
+      self.input.style.css.color = self._report.theme.danger[1]
+    self.input.style.middle()
     self.input.inReport = False
     self.isDisable = options.get("disable", False)
     self.add_label(label, {"width": "none", "float": "none"}, position="after")
     self.add_icon(icon, {"float": 'none'}, position="after")
     self.css({'display': 'inline-block', 'margin-right': '10px'})
-    self.clickEvent = {'Y': [], 'N': []}
     if tooltip is not None:
       self.tooltip(tooltip)
 
@@ -372,6 +377,8 @@ class CheckButton(Html.Html):
   @property
   def style(self):
     """
+    Description:
+    ------------
     Property to the CSS Style of the component
 
     :rtype: GrpClsButton.ClassButtonCheckBox
@@ -380,7 +387,7 @@ class CheckButton(Html.Html):
       self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
     return self._styleObj
 
-  def click(self, jsFncsTrue, jsFncFalse=None, profile=False):
+  def click(self, jsFncsTrue, jsFncFalse=None, withColors=True, profile=False):
     """
     Description:
     ------------
@@ -400,17 +407,20 @@ class CheckButton(Html.Html):
     """
     if self.label is not None:
       self.label.style.css.cursor = 'pointer'
-    self.style.css.cursor = 'pointer'
+    self.style.css.cursor = "pointer"
     if not isinstance(jsFncsTrue, list):
       jsFncsTrue = [jsFncsTrue]
     if jsFncFalse is None:
       jsFncFalse = []
     elif not isinstance(jsFncFalse, list):
       jsFncFalse = [jsFncFalse]
-
+    if withColors:
+      jsFncsTrue.append(self.input.dom.css({"color": self._report.theme.success[1]}).r)
+      jsFncFalse.append(self.input.dom.css({"color": self._report.theme.danger[1]}).r)
     jsFncs = [
       self.input.dom.switchClass("fa-check", "fa-times"),
-      JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue).else_(jsFncFalse)]
+      JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue).else_(
+        jsFncFalse)]
     return super(CheckButton, self).click(jsFncs, profile)
 
   def __str__(self):
