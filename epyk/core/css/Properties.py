@@ -1012,11 +1012,21 @@ class CssMixin(object):
     self.htmlObj.css({"font": val})
 
   @property
-  def font_family(self): return self.htmlObj.css("font-family")
+  def font_family(self):
+    """
+    Description:
+    ------------
+    The font-family property specifies the font for an element.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_font_font-family.asp
+    """
+    return self.htmlObj.css("font-family")
 
   @font_family.setter
   def font_family(self, val):
-    val = val or 'None'
+    val = val or 'none'
     self.htmlObj.css({"font-family": val})
 
   @property
@@ -1558,7 +1568,17 @@ class CssMixin(object):
     self.htmlObj.css({"overflow-y": val})
 
   @property
-  def padding(self): return self.htmlObj.css("padding")
+  def padding(self):
+    """
+    Description:
+    ------------
+    The CSS padding properties are used to generate space around an element's content, inside of any defined borders.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/css/css_padding.asp
+    """
+    return self.htmlObj.css("padding")
 
   @padding.setter
   def padding(self, val):
