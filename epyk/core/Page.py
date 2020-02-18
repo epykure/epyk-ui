@@ -192,15 +192,19 @@ class Report(object):
   @property
   def ui(self):
     """
+    Description:
+    ------------
     User Interface section.
 
     All the components which can be used in the dashboard to display the data.
     Within this object different categories of items can be used like (list, simple text, charts...)
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/html/default.asp
 
     :rtype: Components.Components
+
     :return: Python HTML object
     """
     if self._ui is None:
@@ -210,10 +214,17 @@ class Report(object):
   @property
   def js(self):
     """
-    Javascript section.
+    Description:
+    ------------
+    Go to the Javascript section. Property to get all the JavaScript features.
+    Most of the standard modules will be available in order to add event and interaction to the Js transpiled
 
+    Usage:
+    ------
+    js.console.log("test")
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/default.asp
 
     :return: Python HTML object

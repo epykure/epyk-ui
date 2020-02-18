@@ -355,10 +355,11 @@ class Buttons(object):
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
 
-    :rtype: html.HtmlButton.CheckButton
+    rtype: html.HtmlButton.CheckButton
     """
-    return self.context.register(html.HtmlButton.CheckButton(self.context.rptObj, flag, tooltip, width, height, icon, label,
-                                                             htmlCode, options or {}, profile))
+    html_but = html.HtmlButton.CheckButton(self.context.rptObj, flag, tooltip, width, height, icon, label, htmlCode, options or {}, profile)
+    self.context.register(html_but)
+    return html_but
 
   def zipfile(self, text, fileName, css_cls=None, css_attr=None, profile=None):
     """

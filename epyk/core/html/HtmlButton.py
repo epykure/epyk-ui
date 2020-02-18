@@ -10,6 +10,7 @@ from epyk.core.html.options import OptButton
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
+from epyk.core.js.statements import JsIf
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsButton
@@ -150,9 +151,6 @@ class Checkbox(Html.Html):
   name, category, callFnc = 'Check Box', 'Buttons', 'checkbox'
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'bootstrap', 'jquery']
 
-  # CSS Class
-  #_grpCls = CssGrpClsButton.CssClassButtonCheckBox
-
   def __init__(self, rptObj, records, title, color, width, height, align, htmlCode, filters, tooltip, icon, options, profile):
     if rptObj.http.get(htmlCode) is not None:
       selectedVals = set(rptObj.http[htmlCode].split(","))
@@ -170,21 +168,6 @@ class Checkbox(Html.Html):
   def tooltip(self, value, location='top'):
     self._jsStyles['tooltip'] = value
     return self
-
-  @property
-  def val(self):
-    return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {"htmlCode": self.htmlId, 'breadCrumVar': self._report.jsGlobal.breadCrumVar}
-
-  @property
-  def jqId(self):
-    return "$('#%s div[name=\"checks\"]')" % self.htmlId
-
-  @property
-  def jsQueryData(self):
-    if self.htmlCode is not None:
-      return "{event_label: $(this).text(), %s: %s, event_type: $(this).find('span').data('content'), event_val: isChecked, event_code: '%s'}" % (self.htmlCode, self.val, self.htmlId)
-
-    return "{event_label: $(this).text(), event_type: $(this).find('span').data('content'), event_val: isChecked, event_code: '%s'}" % self.htmlId
 
   def jsDisable(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None, reset=True):
     jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
@@ -314,7 +297,7 @@ class Checkbox(Html.Html):
           <label style='cursor:inherit;margin:0;padding:0;font-style:italic;color:%(color)s;white-space:nowrap'>Select All</label>
         </div>''' % {"color": self._report.theme.colors[5], 'htmlId': self.htmlId}
 
-    return '<div %(strAttr)s><div name="checks"></div></div>' % {'strAttr': self.get_attrs(pyClassNames=self.defined)}
+    return '<div %(strAttr)s><div name="checks"></div></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
   def to_word(self, document):
     from docx.shared import RGBColor
@@ -370,7 +353,7 @@ class CheckButton(Html.Html):
     self.isDisable = options.get("disable", False)
     self.add_label(label, {"width": "none", "float": "none"}, position="after")
     self.add_icon(icon, {"float": 'none'}, position="after")
-    self.css({'cursor': 'pointer', 'display': 'inline-block', 'margin-right': '10px'})
+    self.css({'display': 'inline-block', 'margin-right': '10px'})
     self.clickEvent = {'Y': [], 'N': []}
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -397,40 +380,40 @@ class CheckButton(Html.Html):
       self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
     return self._styleObj
 
-  # def click(self, jsFncs, allevents=True, isChecked=None):
-  #   if allevents:
-  #     jsFncs = [jsFncs] if not isinstance(jsFncs, list) else jsFncs
-  #     self.clickEvent = {"Y": jsFncs, "N": jsFncs}
-  #   else:
-  #     if isinstance(jsFncs, list):
-  #       for jsFnc in jsFncs:
-  #         if isChecked:
-  #           self.clickEvent['Y'].append(jsFnc)
-  #         else:
-  #           self.clickEvent['N'].append(jsFnc)
-  #     else:
-  #       if isChecked:
-  #         self.clickEvent['Y'].append(jsFncs)
-  #       else:
-  #         self.clickEvent['N'].append(jsFncs)
-  #   return self
+  def click(self, jsFncsTrue, jsFncFalse=None, profile=False):
+    """
+    Description:
+    ------------
+    Click even on the checkbox item
+
+    Usage:
+    ------
+    ch = rptObj.ui.buttons.check(label="Label")
+    ch.click(rptObj.js.alert("true"), rptObj.js.alert("false"))
+
+    Attributes:
+    ----------
+    :param jsFncsTrue: Js function or a list of JsFunction to be triggered when checked
+    :param jsFncFalse: Optional. Js function or a list of JsFunction to be triggered when unchecked
+
+    :return: The htmlObl to allow the chaining
+    """
+    if self.label is not None:
+      self.label.style.css.cursor = 'pointer'
+    self.style.css.cursor = 'pointer'
+    if not isinstance(jsFncsTrue, list):
+      jsFncsTrue = [jsFncsTrue]
+    if jsFncFalse is None:
+      jsFncFalse = []
+    elif not isinstance(jsFncFalse, list):
+      jsFncFalse = [jsFncFalse]
+
+    jsFncs = [
+      self.input.dom.switchClass("fa-check", "fa-times"),
+      JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue).else_(jsFncFalse)]
+    return super(CheckButton, self).click(jsFncs, profile)
 
   def __str__(self):
-    # if not self.isDisable:
-    #   self._report.jsOnLoadFnc.add('''
-    #     %(jqId)s.parent().on('click', function(event){
-    #       if (!$(this).data('isChecked')){
-    #         $(this).data('isChecked', true);
-    #         var data = %(jsQueryData)s; %(isChecked)s; data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
-    #         $(this).find('div[name="check_box"]').html('<i class="fas fa-check" style="margin-bottom:2px;margin-left:2px;color:%(green)s"></i>')}
-    #       else {
-    #         $(this).data('isChecked', false);
-    #         var data = %(jsQueryData)s; %(isNotChecked)s; data.event_time = Today(); data.event_time_offset = new Date().getTimezoneOffset();
-    #         $(this).find('div[name="check_box"]').html('<i class="fas fa-times" style="font-size:14px;margin-top:2px;margin-left:5px;color:%(red)s"></i>')}
-    #       if ('%(htmlCode)s' != 'None') {%(breadCrumVar)s['params']['%(htmlCode)s'] = $(this).data('isChecked'); breadCrumbPushState()};
-    #     })''' % {'jqId': self.dom.jquery.varId, 'htmlCode': self.htmlCode, 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'jsQueryData': "",
-    #              'isChecked': ";".join(self.clickEvent['Y']), 'isNotChecked': ";".join(self.clickEvent['N']),
-    #              'lightGrey': self.getColor('greys', 2), 'green': self.getColor('success', 1), 'red': self.getColor('danger', 1)})
     return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.input.html())
 
 

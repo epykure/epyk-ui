@@ -1,21 +1,23 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-
 from epyk.core.js import JsUtils
 
 
 class JsIf(object):
-  """
-
-  """
 
   def __init__(self, jsCondition, jsFncs, context=None):
     """
+    Description:
+    ------------
+    Create a JavaScript If statement
 
-    :param jsCondition:
-    :param jsFncs:
-    :param context:
+    Usage:
+    ------
+    JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue)
+
+    Attributes:
+    ----------
+    :param jsCondition: The Javascript condition. Can be a JsBoolean object
+    :param jsFncs: The Javascript functions
+    :param context: Optional. Dictionary. Meta data concerning the context
     """
     self._context = context
     jsFncs = JsUtils.jsConvertFncs(jsFncs, False)
@@ -24,10 +26,18 @@ class JsIf(object):
 
   def elif_(self, jsCondition, jsFncs):
     """
+    Description:
+    ------------
+    Add a Javascript elif statement to the loop
 
-    :param jsCondition:
-    :param jsFncs:
-    :return:
+    Usage:
+    ------
+
+    Attributes:
+    ----------
+    :param jsCondition: The Javascript condition. Can be a JsBoolean object
+    :param jsFncs: The Javascript functions
+    :return: The If object to allow the chaining
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs, False)
     self._js.append((jsCondition, jsFncs))
@@ -35,19 +45,24 @@ class JsIf(object):
 
   def else_(self, jsFncs):
     """
+    Description:
+    ------------
+    Add the Javascript else statement to the loop
 
-    :param jsFncs:
-    :return:
+    Usage:
+    ------
+    JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue).else_(jsFncFalse)
+
+    Attributes:
+    ----------
+    :param jsFncs: The Javascript functions
+    :return: The If object to allow the chaining
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs, False)
     self.__jsElse = jsFncs
     return self
 
   def toStr(self):
-    """
-
-    :return:
-    """
     strData = ["if(%s){%s}" % (self._js[0][0], ";".join(map(lambda x: str(x),  self._js[0][1])))]
     for condition, fncs in self._js[1:]:
       strData.append("else if(%s){%s}" % (condition, ";".join(fncs)))

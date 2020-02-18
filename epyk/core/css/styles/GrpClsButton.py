@@ -44,19 +44,17 @@ class ClassBadge(GrpCls.ClassHtml):
     return self._css_struct
 
 
-class ClassButtonCheckBox(Properties.CssMixin):
-  def __init__(self, htmlObj):
-    self.htmlObj = htmlObj
+class ClassButtonCheckBox(GrpCls.ClassHtml):
 
   @property
   def css(self):
-    return AttrClsButtons.CssButton(self.__rptObj)
-
-  @property
-  def basic(self): return Classes.CatalogButton.CatalogButton(self.__rptObj, self.__classList['main']).basic()
-
-  @property
-  def label_disable(self): return Classes.CatalogInput.CatalogInput(self.__rptObj, self.__classList['main']).label_disable()
+    """
+    Property to the underlying CSS definition to be added to the style HTML tag of a component
+    :rtype: AttrClsButtons.AttrButton
+    """
+    if self._css_struct is None:
+      self._css_struct = AttrClsButtons.AttrButton(self.htmlObj)
+    return self._css_struct
 
 
 # class CssClassButtonCheckBox(CssGrpCls.CssGrpClass):
