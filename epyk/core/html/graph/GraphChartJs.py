@@ -14,7 +14,7 @@ from epyk.core.html.graph import GraphFabric
 from epyk.core.js.packages import JsChartJs
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsCharts
+# from epyk.core.css.styles import CssGrpClsCharts
 
 
 # Define a set of common standard properties cross charting libraries.
@@ -64,7 +64,7 @@ class Chart(Html.Html):
     'examples': 'http://tobiasahlin.com/blog/chartjs-charts-to-get-you-started/#10-bubble-chart',
     'Repository': 'https://github.com/chartjs/Chart.js'}
   __reqJs = ['Chart.js']
-  _grpCls = CssGrpClsCharts.CssClassCharts
+  # _grpCls = CssGrpClsCharts.CssClassCharts
 
   def __init__(self, report, width, height, title, options, htmlCode, filters, profile):
     digits = 0
@@ -642,7 +642,7 @@ class Chart(Html.Html):
     chart = workbook.add_chart({'type': {"line": "line", "bar": "bar", "pie": "pie"}.get(chartType, 'line')})
     chart.add_series({
       'name': self.title,
-      'categories': '=%s!$A$%s:$A$%s' % (worksheet.get_name(), startRow + 1, startRow + len(sizes)) ,
+      'styles': '=%s!$A$%s:$A$%s' % (worksheet.get_name(), startRow + 1, startRow + len(sizes)) ,
       'values': '=%s!$B$%s:$B$%s' % (worksheet.get_name(), startRow + 1, startRow + len(sizes)),
     })
 

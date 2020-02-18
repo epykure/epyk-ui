@@ -16,7 +16,7 @@ from epyk.core.js.packages import JsNvd3
 from epyk.core.js.packages import JsD3
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsCharts
+# from epyk.core.css.styles import CssGrpClsCharts
 
 
 # Define a set of common standard properties cross charting libraries.
@@ -54,7 +54,7 @@ CHART_ATTRS = {
 
 class Chart(Html.Html):
   name, category, callFnc = 'NVD3', 'Charts', 'nvd3.chart'
-  _grpCls = CssGrpClsCharts.CssClassChartsNvd3
+  # _grpCls = CssGrpClsCharts.CssClassChartsNvd3
 
   def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
@@ -92,7 +92,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     strChart = '<svg id="%s"></svg>' % self.htmlId
-    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.defined), strChart)
+    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.defined), strChart)
 
 
 class ChartLine(Chart):
@@ -365,7 +365,7 @@ class Chart_old(Html.Html):
 
   def __str__(self):
     strChart = '<svg id="%s"></svg>' % self.htmlId
-    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.pyStyle), strChart)
+    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.pyStyle), strChart)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
