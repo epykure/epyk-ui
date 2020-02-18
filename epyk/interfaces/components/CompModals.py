@@ -89,8 +89,10 @@ class Modal(object):
       self.context.rptObj.js.addOnReady([self.__mandatory_js__(required_fields)])
     return modal
 
-  def disclaimer(self, text, submit=True, validation_text='AGREE', helper=None):
-    title = self.context.rptObj.ui.title('DISCLAIMER').css({'text-align': 'center', 'display': 'inline-block', 'maring': 0})
+  def disclaimer(self, disc_text, submit=True, validation_text='AGREE', to_html=True, helper=None):
+    title = self.context.rptObj.ui.title('DISCLAIMER').css({'text-align': 'center', 'display': 'inline-block', 'maring': 0, 'background-color': 'rgb(0,0,0,0.4)'})
+    disc_text = disc_text.replace('\n', '<br/>') if to_html else disc_text
+    text = self.context.rptObj.ui.texts.paragraph(disc_text)
     modal = html.HtmlContainer.Modal(self.context.rptObj, [title, text], submit, helper)
     # if submit:
     #   modal.submit.val = validation_text
