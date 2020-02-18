@@ -8,13 +8,13 @@ from epyk.core.html.graph import GraphFabric
 from epyk.core.js.objects import JsChartDC
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpClsCharts
+# from epyk.core.css.styles import CssGrpClsCharts
 
 
 class Chart(Html.Html):
   name, category, callFnc = 'DC', 'Charts', 'dc'
   __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
-  _grpCls = CssGrpClsCharts.CssClassCharts
+  # _grpCls = CssGrpClsCharts.CssClassCharts
 
   def __init__(self,  report, width, height, title, options, htmlCode, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
@@ -70,7 +70,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     strChart = '<div id="%s" style="height:%spx;width:100%%"></div>' % (self.htmlId, self.height-30)
-    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.defined), strChart)
+    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.defined), strChart)
 
 
 class ChartLine(Chart):

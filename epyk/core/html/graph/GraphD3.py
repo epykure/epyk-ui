@@ -10,7 +10,7 @@ from epyk.core.html import Html
 from epyk.core.html.graph import GraphFabric
 
 # The list of CSS classes
-from epyk.core.css.groups import CssGrpCls
+from epyk.core.css.styles import GrpCls
 
 
 class Chart(Html.Html):
@@ -18,7 +18,7 @@ class Chart(Html.Html):
 
   """
   name, category, callFnc = 'D3', 'Charts', 'plotChartD3'
-  _grpCls = CssGrpCls.CssGrpClassBase
+  # _grpCls = GrpCls.CssGrpClassBase
   __reqJs = ['d3']
   references = {
     'Website': 'https://d3js.org/',
@@ -127,7 +127,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     strChart = '<div style="height:%spx" id="%s"></div>' % (self.height-30, self.htmlId)
-    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.defined), strChart)
+    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.defined), strChart)
 
   def setSeriesColor(self, colors, seriesId=None, borderColors=None):
     """
@@ -207,7 +207,7 @@ class Config(Html.Html):
 
   def __str__(self):
     strChart = '<svg style="height:%spx" id="%s"></svg>' % (self.height-30, self.htmlId)
-    return GraphFabric.Chart.html(self, self.strAttr(withId=False, pyClassNames=self.pyStyle), strChart)
+    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.pyStyle), strChart)
 
 
 
