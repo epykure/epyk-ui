@@ -130,7 +130,7 @@ class Lists(object):
     http://astronautweb.co/snippet/font-awesome/
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options, profile)
+                                   helper, options or {}, profile)
     self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list
@@ -146,7 +146,7 @@ class Lists(object):
     https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options, profile)
+                                   helper, options or {}, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'decimal'})
     return html_list
@@ -155,7 +155,7 @@ class Lists(object):
                   htmlCode=None, helper=None, options=None, profile=None):
 
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options, profile)
+                                   helper, options or {}, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'lower-alpha'})
     return html_list
@@ -164,7 +164,7 @@ class Lists(object):
                   htmlCode=None, helper=None, options=None, profile=None):
 
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options, profile)
+                                   helper, options or {}, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'lower-roman'})
     return html_list
@@ -177,7 +177,7 @@ class Lists(object):
     https://www.w3schools.com/html/html_lists.asp
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options, profile)
+                                   helper, options or {}, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'circle'})
     return html_list
@@ -190,7 +190,7 @@ class Lists(object):
     https://www.w3schools.com/cssref/pr_list-style-type.asp
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options, profile)
+                                   helper, options or {}, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'disc'})
     return html_list
@@ -199,11 +199,13 @@ class Lists(object):
              htmlCode=None, helper=None, options=None, profile=None):
     """
 
+    rptObj.ui.lists.squares(["A", "B"])
+
     Documentation
     https://www.w3schools.com/cssref/pr_list-style-type.asp
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options, profile)
+                                   helper, options or {}, profile)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'square'})
     return html_list
@@ -233,8 +235,8 @@ class Lists(object):
     self.context.register(html_obj)
     return html_obj
 
-  def checklist(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-                htmlCode=None, helper=None, profile=None):
+  def checklist(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+                htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Example
@@ -242,7 +244,6 @@ class Lists(object):
     checks = rptObj.ui.lists.checklist(data)
 
     :param data:
-    :param size:
     :param color:
     :param width:
     :param height:
@@ -250,8 +251,7 @@ class Lists(object):
     :param helper:
     :param profile:
     """
-    html_obj = html.HtmlList.Checks(self.context.rptObj, data or [], size, color, width, height, htmlCode,
-                                       helper, profile)
+    html_obj = html.HtmlList.Checks(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
     self.context.register(html_obj)
     return html_obj
 

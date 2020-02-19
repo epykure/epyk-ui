@@ -300,6 +300,9 @@ class Icons(object):
   def signin(self, text, width=(40, "px"), icon=None):
     """
 
+    Example
+    rptObj.ui.icons.signin("test")
+
     :return:
     """
     bar = html.HtmlEvent.SignIn(self.context.rptObj, text, width, icon)

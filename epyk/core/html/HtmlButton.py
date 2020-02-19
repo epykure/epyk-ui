@@ -374,7 +374,6 @@ class CheckButton(Html.Html):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode,
                                       css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon("fas fa-check" if flag else "fas fa-times").css({"width": "12px"})
-    self.input.style.css.border = "1px solid black"
     if flag:
       self.input.style.css.color = self._report.theme.success[1]
     else:
@@ -430,7 +429,7 @@ class CheckButton(Html.Html):
 
     :return: The htmlObl to allow the chaining
     """
-    if self.label is not None:
+    if self.label is not None and hasattr(self.label, 'style'):
       self.label.style.css.cursor = 'pointer'
     self.style.css.cursor = "pointer"
     if not isinstance(jsFncsTrue, list):
