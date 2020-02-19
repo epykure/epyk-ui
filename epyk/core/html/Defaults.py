@@ -15,6 +15,8 @@ LINE_HEIGHT = 23
 #
 HTML_HIGHLIGHT = {"border": {'attr': "1px solid %(color)s", 'color': ("success", 1)}}
 
+FAVICON_URL = "https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo.ico"
+
 # Component defaults
 BUTTONS_CHECK_HEIGHT = 20
 INPUTS_MIN_WIDTH = 140

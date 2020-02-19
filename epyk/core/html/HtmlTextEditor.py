@@ -31,9 +31,8 @@ class OptionsConsole(object):
 class Console(Html.Html):
   name, category = 'Console', 'Rich'
 
-  def __init__(self, report, data, color, size, width, height, htmlCode, helper, options, profile):
-    super(Console, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                  heightUnit=height[1], profile=profile)
+  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
+    super(Console, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow": 'auto'})
     self.options = OptionsConsole(self, options)
 

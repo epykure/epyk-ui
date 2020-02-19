@@ -559,6 +559,13 @@ JS_IMPORTS = {
       {'script': 'r.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/mode/r/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
       {'script': 'markdown.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/mode/markdown/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
       {'script': 'placeholder.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+
+  # Leaflet
+  'leaflet': {
+    'website': 'https://leafletjs.com/',
+    'modules': [
+      {'script': 'leaflet.js', 'version': '1.6.0', 'path': 'leaflet/%(version)s/',
+       'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 }
 
 
@@ -749,7 +756,15 @@ CSS_IMPORTS = {
     'website': 'https://codemirror.net/',
     'modules': [
       {'script': 'codemirror.css', 'version': '5.39.2', 'path': 'codemirror/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
-  }
+
+  # Leaflet
+  'leaflet': {
+    'website': 'https://leafletjs.com/',
+    'modules': [
+      {'script': 'leaflet.css', 'version': '1.6.0', 'path': 'leaflet/%(version)s/',
+       'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+
+}
 
 
 class ImportManager(object):

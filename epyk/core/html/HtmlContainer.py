@@ -766,16 +766,22 @@ class IconsMenu(Html.Html):
 class Form(Html.Html):
   name, category, callFnc = 'Generic Form', 'Forms', 'form'
 
-  def __init__(self, report, htmlObjs, action, method, helper):
+  def __init__(self, report, htmlObjs, helper):
     super(Form, self).__init__(report, [])
-    self.css({"padding": '5px'})
-    if action is not None and method is not None:
-      self.attr.update({"action": action, "method": method})
+    self.style.css.padding = "5px"
     self.add_helper(helper)
-    self.submit = self._report.ui.button("Submit").set_attrs({"type": 'submit'})
-    self.submit.inReport = False
+    self.__submit, self._has_container = None, False
     for i, htmlObj in enumerate(htmlObjs):
       self.__add__(htmlObj)
+
+  def __getitem__(self, i):
+    """
+    Return the internal column in the row for the given index
+
+    :param i: the column index
+    :rtype: Col
+    """
+    return self.val[i]
 
   def __add__(self, htmlObj):
     """ Add items to a container """
@@ -783,9 +789,30 @@ class Form(Html.Html):
     self.val.append(htmlObj)
     return self
 
+  def submit(self, method, action="#", text="Submit"):
+    """
+
+    :param action:
+    :param method:
+    :param text:
+
+    :return:
+    """
+    if action is not None and method is not None:
+      self.attr.update({"action": action, "method": method})
+
+    self.__submit = self._report.ui.button(text).set_attrs({"type": 'submit'})
+    self.__submit.inReport = False
+    if self._has_container:
+      self[0] + self.__submit
+    return self
+
   def __str__(self):
+    if self.__submit is None:
+      raise Exception("Submit must be defined in a form ")
+
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
-    return '<form %s>%s</form>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)
+    return '<form %s>%s%s</form>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.__submit.html(), self.helper)
 
 
 class Modal(Html.Html):

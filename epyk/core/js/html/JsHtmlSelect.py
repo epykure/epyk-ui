@@ -1,7 +1,3 @@
-"""
-
-"""
-
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 
@@ -10,13 +6,18 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
 
   def set_text(self, value, is_on_val=True):
     """
+    Description:
+    ------------
     Change the value of the text component
 
-    Example
+    Usage:
+    ------
     sw = rptObj.ui.buttons.switch()
     rptObj.ui.button("test").click([
       sw.dom.set_text("ok")])
 
+    Attributes:
+    ----------
     :param value: String. The new value
     :param is_on_val: Boolean. Change either the on or the off value displayed
     """

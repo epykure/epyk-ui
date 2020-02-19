@@ -277,7 +277,17 @@ class CssMixin(object):
     self.htmlObj.css({"backface-visibility": val})
 
   @property
-  def background(self): return self.htmlObj.css("background")
+  def background(self):
+    """
+    Description:
+    ------------
+    Set different background properties in one declaration
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/css3_pr_background.asp
+    """
+    return self.htmlObj.css("background")
 
   @background.setter
   def background(self, val):
@@ -369,7 +379,20 @@ class CssMixin(object):
     self.htmlObj.css({"background-size": val})
 
   @property
-  def border(self): return self.htmlObj.css("border")
+  def border(self):
+    """
+    Description:
+    ------------
+    The border property is a shorthand property for:
+    - border-width
+    - border-style (required)
+    - border-color
+
+    Usage:
+    ------
+    https://www.w3schools.com/cssref/pr_border.asp
+    """
+    return self.htmlObj.css("border")
 
   @border.setter
   def border(self, val):
@@ -902,7 +925,19 @@ class CssMixin(object):
     self.htmlObj.css({"direction": val})
 
   @property
-  def display(self): return self.htmlObj.css("display")
+  def display(self):
+    """
+    Description:
+    ------------
+    The display property specifies the display behavior (the type of rendering box) of an element.
+
+    In HTML, the default display property value is taken from the HTML specifications or from the browser/user default style sheet. The default value in XML is inline, including SVG elements.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_class_display.asp
+    """
+    return self.htmlObj.css("display")
 
   @display.setter
   def display(self, val):
@@ -1012,11 +1047,21 @@ class CssMixin(object):
     self.htmlObj.css({"font": val})
 
   @property
-  def font_family(self): return self.htmlObj.css("font-family")
+  def font_family(self):
+    """
+    Description:
+    ------------
+    The font-family property specifies the font for an element.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_font_font-family.asp
+    """
+    return self.htmlObj.css("font-family")
 
   @font_family.setter
   def font_family(self, val):
-    val = val or 'None'
+    val = val or 'none'
     self.htmlObj.css({"font-family": val})
 
   @property
@@ -1326,7 +1371,19 @@ class CssMixin(object):
     self.htmlObj.css({"letter-spacing": val})
 
   @property
-  def line_height(self): return self.htmlObj.css("line-height")
+  def line_height(self):
+    """
+    Description:
+    ------------
+    The line-height property specifies the height of a line.
+
+    Note: Negative values are not allowed.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_dim_line-height.asp
+    """
+    return self.htmlObj.css("line-height")
 
   @line_height.setter
   def line_height(self, val):
@@ -1366,7 +1423,21 @@ class CssMixin(object):
     self.htmlObj.css({"list-style-type": val})
 
   @property
-  def margin(self): return self.htmlObj.css("margin")
+  def margin(self):
+    """
+    Description:
+    ------------
+    The margin property sets the margins for an element, and is a shorthand property for the following properties:
+    - margin-top
+    - margin-right
+    - margin-bottom
+    - margin-left
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_margin.asp
+    """
+    return self.htmlObj.css("margin")
 
   @margin.setter
   def margin(self, val):
@@ -1374,7 +1445,19 @@ class CssMixin(object):
     self.htmlObj.css({"margin": val})
 
   @property
-  def margin_bottom(self): return self.htmlObj.css("margin-bottom")
+  def margin_bottom(self):
+    """
+    Description:
+    ------------
+    The margin-bottom property sets the bottom margin of an element.
+
+    Note: Negative values are allowed.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_margin-bottom.asp
+    """
+    return self.htmlObj.css("margin-bottom")
 
   @margin_bottom.setter
   def margin_bottom(self, val):
@@ -1404,7 +1487,19 @@ class CssMixin(object):
     self.htmlObj.css({"margin-left": val})
 
   @property
-  def margin_right(self): return self.htmlObj.css("margin-right")
+  def margin_right(self):
+    """
+    Description:
+    ------------
+    The margin-right property sets the right margin of an element.
+
+    Note: Negative values are allowed.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_margin-right.asp
+    """
+    return self.htmlObj.css("margin-right")
 
   @margin_right.setter
   def margin_right(self, val):
@@ -1412,7 +1507,19 @@ class CssMixin(object):
     self.htmlObj.css({"margin-right": val})
 
   @property
-  def margin_top(self): return self.htmlObj.css("margin-top")
+  def margin_top(self):
+    """
+    Description:
+    ------------
+    The margin-top property sets the top margin of an element.
+
+    Note: Negative values are allowed.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_margin-top.asp
+    """
+    return self.htmlObj.css("margin-top")
 
   @margin_top.setter
   def margin_top(self, val):
@@ -1478,7 +1585,19 @@ class CssMixin(object):
     self.htmlObj.css({"object-position": val})
 
   @property
-  def opacity(self): return self.htmlObj.css("opacity")
+  def opacity(self):
+    """
+    Description:
+    ------------
+    The opacity property sets the opacity level for an element.
+
+    The opacity-level describes the transparency-level, where 1 is not transparent at all, 0.5 is 50% see-through, and 0 is completely transparent.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/css3_pr_opacity.asp
+    """
+    return self.htmlObj.css("opacity")
 
   @opacity.setter
   def opacity(self, val):
@@ -1558,7 +1677,17 @@ class CssMixin(object):
     self.htmlObj.css({"overflow-y": val})
 
   @property
-  def padding(self): return self.htmlObj.css("padding")
+  def padding(self):
+    """
+    Description:
+    ------------
+    The CSS padding properties are used to generate space around an element's content, inside of any defined borders.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/css/css_padding.asp
+    """
+    return self.htmlObj.css("padding")
 
   @padding.setter
   def padding(self, val):
@@ -1646,7 +1775,17 @@ class CssMixin(object):
     self.htmlObj.css({"pointer-events": val})
 
   @property
-  def position(self): return self.htmlObj.css("position")
+  def position(self):
+    """
+    Description:
+    ------------
+    The position property specifies the type of positioning method used for an element (static, relative, absolute, fixed, or sticky).
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_class_position.asp
+    """
+    return self.htmlObj.css("position")
 
   @position.setter
   def position(self, val):
@@ -1852,7 +1991,17 @@ class CssMixin(object):
     self.htmlObj.css({"top": val})
 
   @property
-  def transform(self): return self.htmlObj.css("transform")
+  def transform(self):
+    """
+    Description:
+    ------------
+    The transform property applies a 2D or 3D transformation to an element. This property allows you to rotate, scale, move, skew, etc., elements.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/css3_pr_transform.asp
+    """
+    return self.htmlObj.css("transform")
 
   @transform.setter
   def transform(self, val):

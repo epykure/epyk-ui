@@ -608,24 +608,25 @@ class OptionsBar(Html.Html):
 class SignIn(Html.Html):
   name, category, callFnc = 'SignIn', 'Event', 'signin'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  builder_name = False
 
   def __init__(self, report, text, size, icon):
     super(SignIn, self).__init__(report, text, css_attrs={"width": size, 'height': size})
-    self.size, self.icon = size, icon
-    self.css({"text-align": "center", "padding": "5px", 'color': self._report.theme.colors[3],
+    self.size, self.icon = "%s%s" % (size[0]-8, size[1]), icon
+    self.css({"text-align": "center", "padding": 0, 'color': self._report.theme.colors[3],
               "margin": 0, "border-radius": "%s%s" % (size[0], size[1]),
               "border": "1px solid %s" % self._report.theme.colors[3], 'cursor': 'pointer'})
 
   def __str__(self):
-    self._report.user = "o"
-    if self._report.user == 'local':
-      self.style.addCls(self.icon)
+    if not hasattr(self._report, 'user') or self._report.user == 'local':
+      self.attr["class"].add(self.icon or "fas fa-user-tie")
+      self.style.css.font_family = "Font Awesome 5 Free"
+      self.style.css.padding = "2px"
+      self.style.css.font_size = self.size
       return '<i title="Guest Mode" %(attrs)s></i>' % {'size': self.size, 'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
 
     return '''
       <div title="%(user)s" %(attrs)s>
-        <p style="margin:auto">%(letter)s</p>
+        <p style="font-size:%(size)s;margin-top:-2px">%(letter)s</p>
       </div> ''' % {'size': self.size, 'letter': self._report.user[0].upper(), 'user': self._report.user,
                     'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
 

@@ -1,8 +1,3 @@
-"""
-Internal wrapper for all the exports
-
-"""
-
 import os
 import time
 import json
@@ -21,13 +16,19 @@ class OutBrowsers(object):
 
   def codepen(self, path=None, target="_blank", open_browser=True):
     """
+    Description:
+    ------------
     Update the Html launcher and send the data to codepen
+    URL used: https://codepen.io/pen/define/
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.debuggex.com/cheatsheet/regex/python
 
+    Attributes:
+    ----------
     :param path: Output path in which the static files will be generated
-    :param target:
+    :param target: String. Load the data in a new tab in the browser
     :param open_browser: Boolean. Flag to open the browser automatically
 
     :return: The output launcher full file name
@@ -65,8 +66,12 @@ class PyOuts(object):
 
   def _to_html_obj(self, content_only=False):
     """
+    Description:
+    ------------
     Create the HTML result object from the report definition
 
+    Attributes:
+    ----------
     :param content_only: Optional. Boolean to remove all the frame of the report
 
     :return: A python dictionary with the HTML results
@@ -135,33 +140,38 @@ class PyOuts(object):
 
   def _repr_html_(self):
     """
+    Description:
+    ------------
     Standard output for Jupyter Notebooks.
 
     This is what will use IPython in order to display the results in cells.
-
-    Documentation
-
-    :return:
     """
-
     results = self._to_html_obj(content_only=True)
     return HtmlTmplBase.JUPYTER.strip() % results
 
   def jupyterlab(self):
     """
+    Description:
+    ------------
+    For a display of the report in JupyterLab.
+    Thanks to this function some packages will not be imported to not conflict with the existing ones
 
-    Documentation
+    Related Pages:
+    --------------
     https://jupyter.org/
-
-    :return:
     """
     self.excluded_packages = ['bootstrap']
     return self
 
   def jupyter(self):
     """
+    Description:
+    ------------
+    For a display of the report in Jupyter.
+    Thanks to this function some packages will not be imported to not conflict with the existing ones
 
-    Documentation
+    Related Pages:
+    --------------
     https://jupyter.org/
 
     :return: The ouput object with the function _repr_html_
@@ -171,11 +181,16 @@ class PyOuts(object):
 
   def w3cTryIt(self, path=None, name=None):
     """
+    Description:
+    ------------
     This will produce everything in a single page which can be directly copied to the try editor in w3C website
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic
 
+    Attributes:
+    ----------
     :param path: The path in which the output files will be created
     :param name: The filename without the extension
 
@@ -195,12 +210,18 @@ class PyOuts(object):
 
   def codepen(self, path=None, name=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
 
-    Documentation
+    Related Pages:
+    --------------
     https://codepen.io/
 
+    Attributes:
+    ----------
     :param path: The path in which the output files will be created
     :param name: The filename without the extension
 
@@ -213,15 +234,21 @@ class PyOuts(object):
 
   def jsfiddle(self, path=None, name=None, framework="jsfiddle"):
     """
+    Description:
+    ------------
     Produce files which can be copied directly to https://jsfiddle.net in order to test the results and perform changes.
 
     The output is always in a sub directory jsfiddle
 
-    Example
+    Usage:
+    ------
 
-    Documentation
+    Related Pages:
+    --------------
     https://jsfiddle.net/
 
+    Attributes:
+    ----------
     :param path: The path in which the output files will be created
     :param name: The filename without the extension
 
@@ -254,7 +281,15 @@ class PyOuts(object):
 
   def html_file(self, path=None, name=None):
     """
+    Description:
+    ------------
+    Function used to generate a static HTML page for the report
 
+    Usage:
+    ------
+
+    Attributes:
+    ----------
     :param path: The path in which the output files will be created
     :param name: The filename without the extension
 
@@ -277,8 +312,12 @@ class PyOuts(object):
 
   def markdown_file(self, path=None, name=None):
     """
+    Description:
+    ------------
     Writes a Markdown file from the report object
 
+    Attributes:
+    ----------
     :param path: The path in which the output files will be created
     :param name: The filename without the extension
 
@@ -318,8 +357,12 @@ class PyOuts(object):
 
   def word(self, path=None, name=None):
     """
+    Description:
+    ------------
     Writes the result to an Word document
 
+    Attributes:
+    ----------
     :param path: The path in which the output files will be created
     :param name: The filename without the extension
 
@@ -353,8 +396,12 @@ class PyOuts(object):
 
   def excel(self, path=None, name=None):
     """
+    Description:
+    ------------
     Writes the result to an Excel document
 
+    Attributes:
+    ----------
     :param path: The path in which the output files will be created
     :param name: The filename without the extension
 
@@ -386,6 +433,8 @@ class PyOuts(object):
 
   def power_point(self):
     """
+    Description:
+    ------------
 
     :return:
     """
@@ -393,6 +442,8 @@ class PyOuts(object):
   @property
   def browser(self):
     """
+    Description:
+    ------------
     This module will require the package webbrowser.
     It will allow outputs to be created directly in the webpages (without using intermediary text files
     """

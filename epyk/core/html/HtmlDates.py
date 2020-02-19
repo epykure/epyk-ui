@@ -1,7 +1,3 @@
-"""
-Module in charge of the structured date objects
-"""
-
 import time
 
 from epyk.core.html import Html
@@ -12,7 +8,6 @@ class DatePicker(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   cssCls = ["datepicker"]
   name, category, callFnc = 'Date Picker', 'Dates', 'date'
-  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
     dfltOptions = {'dateFormat': 'yy-mm-dd'}
@@ -85,7 +80,6 @@ class DatePicker(Html.Html):
 class TimePicker(Html.Html):
   __reqCss, __reqJs = ['timepicker'], ['timepicker']
   name, category, callFnc = 'Time Picker', 'Dates', 'date'
-  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
@@ -153,7 +147,6 @@ class TimePicker(Html.Html):
 
 class CountDownDate(Html.Html):
   name, category, callFnc = 'Countdown', 'Dates', 'countdown'
-  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile):
     super(CountDownDate, self).__init__(report, yyyy_mm_dd, code=htmlCode, profile=profile,

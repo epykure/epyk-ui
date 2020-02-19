@@ -282,7 +282,7 @@ class Texts(object):
     self.context.register(html_up_down)
     return html_up_down
 
-  def number(self, number=None, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
+  def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
              options=None, helper=None, width=(150, 'px'), profile=None):
     """
 

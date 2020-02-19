@@ -83,7 +83,7 @@ class Li(Html.Html):
     return super(Li, self).click(jsFncs, profile)
 
   def __str__(self):
-    return "<li %s>%s</li>" % (self.get_attrs(pyClassNames=self.defined), self.content)
+    return "<li %s>%s</li>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
 
 
 class List(Html.Html):
@@ -91,14 +91,12 @@ class List(Html.Html):
   # The CSS Group attached to this component
   # grpCls = CssGrpClsList.CssClassList
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, options, profile):
-    super(List, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
-                               heightUnit=height[1], code=htmlCode, profile=profile)
+  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
+    super(List, self).__init__(report, data, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
     self.__options = OptList.OptionsLi(self, options)
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
-    self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
-              'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
+    self.css({'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
     self.items = None
     if len(data) > 0:
       self.set_items()
@@ -154,7 +152,8 @@ class List(Html.Html):
       li_obj.inReport = False
       self._report.ui.register(li_obj)
       li_obj.css(self.options.li_css)
-      li_obj.style.addCls(self.options.li_class)
+      if self.options.li_class:
+        li_obj.attr["class"].add(self.options.li_class)
       self.items.append(li_obj)
     return self
 
@@ -186,7 +185,7 @@ class List(Html.Html):
     self._vals = "".join([i.html() for i in self.items]) if self.items is not None else ""
     #self.builder_name = self.__class__.__name__
     #self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return "<ul %s>%s</ul>" % (self.get_attrs(pyClassNames=self.defined), self._vals)
+    return "<ul %s>%s</ul>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self._vals)
 
 
 class Groups(Html.Html):
@@ -243,8 +242,8 @@ class Badges(List):
   # _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'List Badges', 'Lists', 'Badges'
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
-    super(Badges, self).__init__(report, data, size, color, width, height, htmlCode, helper, profile)
+  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
+    super(Badges, self).__init__(report, data, color, width, height, htmlCode, helper, options, profile)
     for l in self.items:
       l.set_html_content(report.ui.div([
         report.ui.texts.label(l.val['label']).css({"width": 'auto'}),
@@ -256,8 +255,8 @@ class Buttons(List):
   # _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'List Buttons', 'Lists', 'buttons'
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
-    super(Buttons, self).__init__(report, data, size, color, width, height, htmlCode, helper, profile)
+  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
+    super(Buttons, self).__init__(report, data, color, width, height, htmlCode, helper, options, profile)
     for l in self.items:
       l.set_html_content(
         report.ui.buttons.button(l.val, width=width).css({"text-align": 'center'})).no_decoration
@@ -267,8 +266,8 @@ class Checks(List):
   name, category, callFnc = 'List Checked', 'Lists', 'checklist'
   # _grpCls = GrpCls.CssGrpClassBase
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
-    super(Checks, self).__init__(report, data, size, color, width, height, htmlCode, helper, profile)
+  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
+    super(Checks, self).__init__(report, data, color, width, height, htmlCode, helper, options, profile)
     for l in self.items:
       c = report.ui.buttons.check(l.val['value'])
       c.click([

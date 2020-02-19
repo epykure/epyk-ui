@@ -1,7 +1,3 @@
-"""
-
-"""
-
 from epyk.core import html
 
 
@@ -9,7 +5,7 @@ class Forms(object):
   def __init__(self, context):
     self.context = context
 
-  def new(self, action=None, method=None, helper=None):
+  def new(self, helper=None):
     """
     Creates an new empty form
 
@@ -20,11 +16,11 @@ class Forms(object):
     :param method:
     :param helper:
     """
-    form = html.HtmlContainer.Form(self.context.rptObj, [], action, method, helper)
+    form = html.HtmlContainer.Form(self.context.rptObj, [], helper)
     self.context.register(form)
     return form
 
-  def date(self, action, method, htmlCode="Current", helper=None):
+  def date(self, htmlCode="Current", helper=None):
     """
 
     Example
@@ -40,12 +36,12 @@ class Forms(object):
     col = self.context.rptObj.ui.col([date])
     col.css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
                                    "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
-    form = html.HtmlContainer.Form(self.context.rptObj, [col], action, method, helper)
-    col += form.submit
+    form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
+    form._has_container = True
     self.context.register(form)
     return form
 
-  def dates(self, action, method, htmlCode1="current", htmlCode2="Previous",  helper=None):
+  def dates(self, htmlCode1="current", htmlCode2="Previous",  helper=None):
     """
 
     Example
@@ -65,37 +61,33 @@ class Forms(object):
     col = self.context.rptObj.ui.col([date1, date2])
     col.css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
              "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
-    form = html.HtmlContainer.Form(self.context.rptObj, [col], action, method, helper)
-    col += form.submit
+    form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
+    form._has_container = True
     self.context.register(form)
     return form
 
-  def input(self, htmlCode, action, method, helper=None):
+  def input(self, htmlCode, helper=None):
     """
 
-    :param action:
-    :param method:
     :param helper:
     """
     inp = self.context.rptObj.ui.fields.input()
     inp.input.set_attrs({"name": htmlCode})
-    form = html.HtmlContainer.Form(self.context.rptObj, [inp], action, method, helper)
+    form = html.HtmlContainer.Form(self.context.rptObj, [inp], helper)
     self.context.register(form)
     return form
 
-  def inputs(self, records, action, method, helper=None):
+  def inputs(self, records, helper=None):
     """
+
     Example
     rptObj.ui.forms.inputs([
       {"label": "name", "htmlCode": "input"},
       {"label": "name 2", "htmlCode": "input2"},
-    ], "http://127.0.0.1:5000", "POST")
+    ])
 
     :param records:
-    :param action:
-    :param method:
     :param helper:
-    :return:
     """
     html_objs = []
     for rec in records:
@@ -104,7 +96,7 @@ class Forms(object):
       html_objs.append(inp)
     col = self.context.rptObj.ui.col(html_objs).css({"border": '1px solid %s' % self.context.rptObj.theme.greys[4],
                                    "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
-    form = html.HtmlContainer.Form(self.context.rptObj, [col], action, method, helper)
-    col += form.submit
+    form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
+    form._has_container = True
     self.context.register(form)
     return form
