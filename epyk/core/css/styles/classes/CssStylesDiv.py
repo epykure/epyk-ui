@@ -217,7 +217,7 @@ class CssDivModalTest(CssStyle.Style):
 
 class CssDivModal(CssStyle.Style):
   _attrs = {'z-index': 100, 'position': 'fixed', 'padding-top': '100px', 'left': 0, 'top': 0,
-            'width': '100%', 'height': '100%', 'overflow': 'auto', 'text-align': 'center', 'display': 'none'}
+            'width': '100%', 'height': '100%', 'overflow': 'auto', 'text-align': 'center'}
 
 
 class CssDivModalContent(CssStyle.Style):
