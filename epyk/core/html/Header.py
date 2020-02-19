@@ -3,6 +3,8 @@
 https://www.w3schools.com/html/html_head.asp
 """
 
+from epyk.core.html import Defaults
+
 
 class Meta(object):
   """
@@ -123,23 +125,34 @@ class Meta(object):
 class Header(object):
   def __init__(self, report=None):
     self._headers, self._links, self._styles, self._scripts, self._base, self.__meta = {}, [], [], [], None, None
+    self._favicon_url = Defaults.FAVICON_URL
     if report is not None:
       self._report = report
       self._report._props["header"] = self._headers
 
   @property
   def meta(self):
+    """
+    Property to the Meta data dictionary for the HTML page
+
+    https://www.w3schools.com/tags/tag_meta.asp
+
+    :rtype: Meta
+    """
     if self.__meta is None:
       self.__meta = Meta()
     return self.__meta
 
-  @property
-  def title(self):
-    return self._headers.get('title')
+  def title(self, value):
+    """
+    The <title> tag is required in all HTML documents and it defines the title of the document.
 
-  @title.setter
-  def title(self, title):
-    self._headers['title'] = title
+    https://www.w3schools.com/tags/tag_title.asp
+
+    :param value:
+    """
+    self._headers['title'] = value
+    return self
 
   def base(self, url):
     """
@@ -156,30 +169,30 @@ class Header(object):
     self._base = url
     return self
 
-  def favicon(self):
+  def favicon(self, url):
     """
+    The <link> tag defines a link between a document and an external resource.
 
-    <link rel="shortcut icon" href="http://example.com/myicon.ico" />
-    <link rel="icon" type="image/png" href="http://example.com/image.png" />
+    The <link> tag is used to link to external style sheets.
 
-    <link rel='shortcut icon' type='image/vnd.microsoft.icon' href='/favicon.ico'> <!-- IE -->
-    <link rel='apple-touch-icon' type='image/png' href='/icon.57.png'> <!-- iPhone -->
-    <link rel='apple-touch-icon' type='image/png' sizes='72x72' href='/icon.72.png'> <!-- iPad -->
-    <link rel='apple-touch-icon' type='image/png' sizes='114x114' href='/icon.114.png'> <!-- iPhone4 -->
-    <link rel='icon' type='image/png' href='/icon.114.png'> <!-- Opera Speed Dial, at least 144×114 px -->
-    :return:
+    https://www.w3schools.com/tags/tag_link.asp
     """
+    self._favicon_url = url
+    return self
 
   def __str__(self):
     """
 
     :return:
     """
+    if self._headers.get("title") is not None:
+      print("<title>%s</title>" % self._headers.get("title"))
+    print("<link rel='icon' href='%s' type='image/x-icon'/ >" % self._favicon_url)
     return str(self.meta)
 
 
 if __name__ == "__main__":
   header = Header()
-  header.title = "test"
+  header.title("test")
   print(header)
 
