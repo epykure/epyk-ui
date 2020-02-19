@@ -222,7 +222,9 @@ class CssDivModal(CssStyle.Style):
 
 class CssDivModalContent(CssStyle.Style):
   _attrs = {'margin': '15%', 'padding': '20px', 'border': '1px solid #888', 'width': '75%',
-            'box-shadow': '0 19px 38px rgba(0, 0, 0, 0.12), 0 15px 12px rgba(0, 0, 0, 0.22)'}
+            'box-shadow': '0 19px 38px rgba(0, 0, 0, 0.12), 0 15px 12px rgba(0, 0, 0, 0.22)',
+            'position': 'relative'}
 
   def customize(self):
     self.css({'background-color': self.rptObj.theme.colors[0]})
+    self.animation('epyk_modal_animatetop', {'0%': {'top': '-300px', 'opacity': '0'}, '100%': {'top': '0px', 'opacity': '1'}}, 0.7, iteration=1)

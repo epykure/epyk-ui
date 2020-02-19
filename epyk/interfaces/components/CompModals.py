@@ -68,27 +68,6 @@ class Modal(object):
     return modal
 
 
-  def objects(self, html_objs, htmlCodes=None, required_fields=None, submit=True, helper=None):
-    """
-    Example
-    rptObj.ui.forms.inputs([
-      {"label": "name", "htmlCode": "input"},
-      {"label": "name 2", "htmlCode": "input2"},
-    ], "http://127.0.0.1:5000", "POST")
-
-    :param records:
-    :param action:
-    :param method:
-    :param helper:
-    :return:
-    """
-    htmlCodes = [] if htmlCodes is None else htmlCodes
-    modal = html.HtmlContainer.Modal(self.context.rptObj, html_objs, submit, helper)
-    self.context.register(modal)
-    if required_fields:
-      self.context.rptObj.js.addOnReady([self.__mandatory_js__(required_fields)])
-    return modal
-
   def disclaimer(self, disc_text, submit=True, validation_text='AGREE', to_html=True, helper=None):
     title = self.context.rptObj.ui.title('DISCLAIMER').css({'text-align': 'center', 'display': 'inline-block', 'maring': 0, 'background-color': 'rgb(0,0,0,0.4)'})
     disc_text = disc_text.replace('\n', '<br/>') if to_html else disc_text

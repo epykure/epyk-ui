@@ -16,3 +16,4 @@ class AttrModal(Attrs):
   def __init__(self, rptObj):
     super(AttrModal, self).__init__(rptObj)
     self.background_color = 'rgb(0,0,0,0.4)'
+    self.display = 'none'

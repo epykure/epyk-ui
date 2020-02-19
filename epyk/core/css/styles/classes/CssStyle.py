@@ -493,7 +493,7 @@ class Style(object):
     self.css(css_transition, change=False)
     return self
 
-  def animation(self, name=None, attrs=None, duration=2, delay=None, iteration='infinite', timing_fnc=None, effect=None):
+  def animation(self, name=None, attrs=None, duration=2, delay=None, iteration='infinite', timing_fnc=None, effect=None, fill_mode=None):
     """
     The @keyframes rule specifies the animation code.
 
@@ -516,6 +516,7 @@ class Style(object):
     :param delay:
     :param iteration:
     :param timing_fnc:
+    :param fill_mode: String Specify the fill mode (whether the style should go back to its original position or something else etc...
     """
     name = self.keyframes(name, attrs, effect)
     css_animation = {"animation-name": name, "animation-duration": "%ss" % duration}
@@ -523,6 +524,8 @@ class Style(object):
       css_animation["animation-delay"] = "%ss" % delay
     if iteration:
       css_animation["animation-iteration-count"] = iteration
+    if fill_mode:
+      css_animation['animation-fill-mode'] = fill_mode
     if timing_fnc is not None:
       if timing_fnc not in ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] and not timing_fnc.startswith(
         "cubic-bezier"):
@@ -807,7 +810,7 @@ class Style(object):
         style.append("@keyframes %s {" % name)
         for k, v_dict in k_attrs.items():
           style.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, ", ".join(j)) if isinstance(j, list) else "%s: %s" % (i, j) for i, j in v_dict.items()])))
-          style.append("}")
+        style.append("}")
     return "\n".join(style)
 
   def _repr_html_(self):
