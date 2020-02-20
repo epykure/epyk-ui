@@ -233,6 +233,7 @@ class AnimateTransform(Html.Html):
   def __str__(self):
     return "<animateTransform %s />" % self.get_attrs(pyClassNames=self.style.get_classes())
 
+# https://stackoverflow.com/questions/6725288/svg-text-inside-rect
 
 class Animate(Html.Html):
   # https://css-tricks.com/guide-svg-animations-smil/

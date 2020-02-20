@@ -1,7 +1,3 @@
-"""
-
-"""
-
 from epyk.core.css.catalogs import CatalogButton
 from epyk.core.css.catalogs import CatalogInput
 from epyk.core.css.catalogs import CatalogChart
@@ -43,6 +39,17 @@ class Catalog(object):
     if "button" not in self.__ctx:
       self.__ctx['button'] = CatalogButton.CatalogButton(self.__rptObj, self.__class_list_type)
     return self.__ctx['button']
+
+  @property
+  def table(self):
+    """
+    CSS Classes specific to the Table components
+
+    :rtype: CatalogTable.CatalogTable
+    """
+    if "table" not in self.__ctx:
+      self.__ctx['table'] = CatalogTable.CatalogTable(self.__rptObj, self.__class_list_type)
+    return self.__ctx['table']
 
   @property
   def chart(self):

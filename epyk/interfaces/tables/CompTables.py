@@ -285,7 +285,7 @@ class Tables(object):
 
     Example
     simple_table = rptObj.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
-    simple_table.add_row({"COL1": "Value"})
+    simple_table.add({"COL1": "Value"})
 
     :param records:
     :param cols:
@@ -316,12 +316,16 @@ class Tables(object):
     table.css({"width": "%spx" % (width_rows_header + len(cols) * width_cells)})
     table[0][0]._vals = ""
     for i in table[1:]:
-      i[0].attr["name"] = "row_header"
-      i[0].css({"width": "%spx" % width_rows_header})
-      for cell in i[1:]:
+      for j in range(len(rows)):
+        i[j].attr["name"] = "row_header"
+        i[j].css({"width": "%spx" % width_rows_header})
+      for cell in i[j:]:
         cell.attr["contenteditable"] = 'true'
         cell.css({"width": '%spx' % width_cells})
     table.style.clear()
-    table.style.addCls(["CssTdGridHeaderRows", "CssTdGridVals", "CssTdGridNoHeaderCols"])
+    # Set the style for the table grid
+    # table.style.add_classes.table.grid_row_header()
+    table.style.add_classes.table.grid_vals()
+    # table.style.add_classes.table.grid_no_header()
     self.context.register(table)
     return table
