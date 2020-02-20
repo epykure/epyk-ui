@@ -227,4 +227,4 @@ class CssDivModalContent(CssStyle.Style):
 
   def customize(self):
     self.css({'background-color': self.rptObj.theme.colors[0]})
-    self.animation('epyk_modal_animatetop', {'0%': {'top': '-300px', 'opacity': '0'}, '100%': {'top': '0px', 'opacity': '1'}}, 0.7, iteration=1)
+    self.animation('epyk_modal_animatetop', {'0%': {'top': '-300px', 'opacity': '0'}, '100%': {'top': '0px', 'opacity': '1'}}, 0.5, iteration=1)
