@@ -155,41 +155,58 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def show(self, inline=True):
     """
-    Example
+    Usage:
+    ------
     input.js.show()
 
-    Documentation
+    Related Pages:
+    --------------
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
+    Attributes:
+    ----------
     :param inline: String
+
     :return:
     """
     return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else 'block'), None)
 
   def toggle(self, attr="display", jsVal1="inline-block", jsVal2="none"):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     input.js.toggle()
     input.js.toggle("background", "red", "blue")
 
-    Documentation
+    Related Pages:
+    --------------
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
+    Attributes:
+    ----------
     :param attr:
     :param jsVal1:
     :param jsVal2:
-    :return:
+
+    :return: A Javascript if statement
     """
     return JsIf.JsIf(self.css(attr) == jsVal2, [self.css(attr, jsVal1)]).else_([self.css(attr, jsVal2)])
 
   def highlight(self, css_attrs=None, time_event=1000):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     s.dom.highlight()
     s.dom.highlight(css_attrs={"background": "red"}),
 
+    Attributes:
+    ----------
     :param css_attrs: A dictionary with the CSS attributes
     :param time_event: Integer. The time of the event
     """
@@ -216,7 +233,7 @@ class JsHtml(JsNodeDom.JsDoms):
     return '''%s; setTimeout(function(){%s}, %s)
       ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
-  def loadHtml(self, htmlObjs):
+  def loadHtml(self, htmlObjs, append=False):
     """
     Description:
     ------------
@@ -231,12 +248,13 @@ class JsHtml(JsNodeDom.JsDoms):
     b = rptObj.ui.button("test")
     b.click([
       rptObj.js.console.debugger,
-      d.dom.loadHtml(rptObj.ui.texts.label("okkkk").css({"color": 'blue', 'float': 'none'}))
+      d.dom.loadHtml(rptObj.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
     ])
 
     Attributes:
     ----------
     :param htmlObjs: List. The different HTML objects to be added to the component
+    :param append: Boolean. Mention if the component should replace or append the data
 
     :return: The Javascript string to be added to the page
     """
@@ -247,7 +265,7 @@ class JsHtml(JsNodeDom.JsDoms):
     for i, h in enumerate(htmlObjs):
       h.inReport = False
       jsFncs.append(self._report.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
-      jsFncs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i)))
+      jsFncs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i), append=append).r)
     return JsUtils.jsConvertFncs(jsFncs, toStr=True)
 
 

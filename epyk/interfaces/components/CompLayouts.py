@@ -24,7 +24,9 @@ class Layouts(object):
     :param count: Optional, The number of empty line to put. Default 1
     :param profile: Optional, Activate the profiler
     """
-    return self.context.register(html.HtmlOthers.Newline(self.context.rptObj, count, profile=profile))
+    html_new_line = html.HtmlOthers.Newline(self.context.rptObj, count, profile=profile)
+    self.context.register(html_new_line)
+    return html_new_line
 
   def hr(self, count=1, color=None, background_color=None, height=(None, 'px'), align=None, profile=None):
     """

@@ -432,7 +432,7 @@ class JsDoms(JsObject.JsObject):
     """
     self._report._props.setdefault('js', {}).setdefault('onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(jsFncs))
 
-  def innerText(self, jsString=None):
+  def innerText(self, jsString=None, append=False):
     """
     The innerText property sets or returns the text content of the specified node, and all its descendants.
 
@@ -443,33 +443,47 @@ class JsDoms(JsObject.JsObject):
     https://www.w3schools.com/jsref/prop_node_innertext.asp
 
     :param jsString: Optional, The Javascript String to be added
+    :param append:
+
     :return: THe JsObj
     """
     if jsString is None:
       return "%s.innerText" % self.varId
 
-    self._js.append("%s.innerText = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    if append:
+      self._js.append("%s.innerText += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    else:
+      self._js.append("%s.innerText = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     return self
 
-  def innerHTML(self, jsString=None):
+  def innerHTML(self, jsString=None, append=False):
     """
+    Description:
+    ------------
     Sets or returns the content of an element
 
-    Example
+    Usage:
+    ------
     select.label.dom.innerHTML("<p style='color:red'>Changed !</p>")
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/prop_html_innerhtml.asp
 
     Attributes:
     ----------
     :param jsString: Optional, The Javascript String to be added
-    :return: THe JsObj
+    :param append: Boolean. Mention if the component should replace or append the data
+
+    :return: The JsObj
     """
     if jsString is None:
       return JsString.JsString("%s.innerHTML" % self.varId, isPyData=False)
 
-    self._js.append("%s.innerHTML = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    if append:
+      self._js.append("%s.innerHTML += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    else:
+      self._js.append("%s.innerHTML = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     return self
 
   def attr(self, type, jsObject=None):

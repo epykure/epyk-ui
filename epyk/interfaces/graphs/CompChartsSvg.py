@@ -104,7 +104,7 @@ class SVG(object):
     https://www.w3schools.com/graphics/tryit.asp?filename=trysvg_polygon
 
     Example
-    rptObj.ui.charts.svg.polygone(points=[(200,10), (250,190), (160,190)], height=("210", "px"), width=("500", "px"))
+    rptObj.ui.charts.svg.polygone(points=[(200, 10), (250, 190), (160, 190)], height=("210", "px"), width=("500", "px"))
 
     :param points: The points attribute defines the list of points (pairs of x and y coordinates) required to draw the polyline
     :param height:
@@ -143,3 +143,10 @@ class SVG(object):
                                     width, width, dflt_options)
     self.parent.context.register(shape)
     return shape
+
+  def rectangle(self, x, y, width, height, fill):
+    """"""
+    rect = graph.GraphSvg.SVG(self.parent.context.rptObj, (100, "%"), (200, "px"))
+    rect.rect(x, y, width, height, fill)
+    self.parent.context.register(rect)
+    return rect
