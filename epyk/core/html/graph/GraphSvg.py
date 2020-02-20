@@ -2,108 +2,110 @@ from epyk.core.html import Html
 
 
 class SVG(Html.Html):
-  def __init__(self, report, height, width):
+  def __init__(self, report, width, height):
     super(SVG, self).__init__(report, "", css_attrs={"width": width, "height": height})
+    if width is not None:
+      self.set_attrs({"viewBox": "0 0 %s %s" % (width[0], height[0]), "version": '1.1', 'preserveAspectRatio': 'xMinYMin meet'})
     self.css({"display": 'inline-block'})
     self.html_objs = []
 
   def __getitem__(self, i):
     return self.html_objs[i]
 
-  def text(self, text, x, y, options):
+  def text(self, text, x, y):
     """
 
     :param text:
     :param x:
     :param y:
+
+    :return:
+    """
+    self.html_objs.append(Text(self._report, text, x, y))
+    return self.html_objs[-1]
+
+  def rect(self, x, y, width, height, fill):
+    """
+
+    :param x:
+    :param y:
+    :param width:
+    :param height:
+    :param fill:
+    :return:
+    """
+    self.html_objs.append(Rectangle(self._report, x, y, width, height, fill))
+    return self.html_objs[-1]
+
+  def line(self, x1, y1, x2, y2):
+    """
+
+    :param x1:
+    :param y1:
+    :param x2:
+    :param y2:
+
+    :return:
+    """
+    self.html_objs.append(Line(self._report, x1, y1, x2, y2))
+    return self.html_objs[-1]
+
+  def circle(self, x, y, r):
+    """
+
+    :param x:
+    :param y:
+    :param r:
+    :return:
+    """
+    self.html_objs.append(Circle(self._report, x, y, r))
+    return self.html_objs[-1]
+
+  def ellipse(self, cx, cy, rx, ry):
+    self.html_objs.append(Ellipse(self._report, cx, cy, rx, ry))
+    return self.html_objs[-1]
+
+  def polygon(self, points):
+    self.html_objs.append(Polygone(self._report, points))
+    return self.html_objs[-1]
+
+  def triangle(self, width, options=None):
+    """
+
+    :param width:
     :param options:
     :return:
     """
-    vals = ["%s='%s'" % (k, v) for k, v in options.items()]
-    self.html_objs.append("<text x='%s' y='%s' %s>%s</text>" % (x, y, " ".join(vals), text))
+    if isinstance(width, int):
+      width = (width, "px")
+    self.html_objs.append(Polyline(self._report, [(0, width[0]), (width[0]/2, 0), (width[0], width[0]), (0, width[0])],
+                                   width, width, options or {}))
+    return self
 
-  def rect(self, x, y, width, height, fill):
-    self.html_objs.append(Rectangle(self._report, x, y, width, height, fill))
+  def g(self):
+    """
+
+    :return:
+    """
+    self.html_objs.append(G(self._report))
+    return self.html_objs[-1]
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
     return "<svg %s>%s</svg>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
 
 
-class Line(Html.Html):
-  def __init__(self, report, x1, y1, x2, y2, height, width, options):
-    super(Line, self).__init__(report, {"x1": x1, "y1": y1, "x2": x2, "y2": y2}, css_attrs={"width": width, "height": height})
-    if options is not None:
-      self._jsStyles.update(options)
-    self.css({"display": 'inline-block'})
-
-  def __str__(self):
-    html_line = "<line x1='%s' y1='%s' x2='%s' y2='%s' style='stroke:%s;stroke-width:%s' />" % (self.val['x1'], self.val['y1'], self.val['x2'], self.val['y2'], self._jsStyles['stroke'], self._jsStyles["stroke-width"])
-    return "<svg %s>%s</svg>" % (self.get_attrs(pyClassNames=self.style.get_classes()), html_line)
-
-
-class Ellipse(Html.Html):
-  def __init__(self, report, cx, cy, rx, ry, height, width, options):
-    super(Ellipse, self).__init__(report, {"cx": cx, "cy": cy, "rx": rx, "ry": ry}, css_attrs={"width": width, "height": height})
-    if options is not None:
-      self._jsStyles.update(options)
-    self.css({"display": 'inline-block'})
-
-  def __str__(self):
-    html_line = "<ellipse cx='%s' cy='%s' rx='%s' ry='%s' style='fill:%s;stroke:%s;stroke-width:%s' />" % (self.val['cx'], self.val['cy'], self.val['rx'], self.val['ry'], self._jsStyles['fill'], self._jsStyles['stroke'], self._jsStyles["stroke-width"])
-    return "<svg %s>%s</svg>" % (self.get_attrs(pyClassNames=self.style.get_classes()), html_line)
-
-
-class Polygone(Html.Html):
-  def __init__(self, report, points, height, width, options):
-    super(Polygone, self).__init__(report, points, css_attrs={"width": width, "height": height})
-    if options is not None:
-      self._jsStyles.update(options)
-    self.css({"display": 'inline-block'})
-    self._transform = None
-
-  def animate(self, attributeName, type, from_pos, to_pos, duration=4, repeatCount="indefinite"):
-    """
-
-    :param attributeName:
-    :param type:
-    :param from_pos:
-    :param to_pos:
-    :param duration:
-    :param repeatCount:
-
-    :return:
-    """
-    self._transform = "<animateTransform attributeName='%s' type='%s' from='%s' to='%s' dur='%ss' repeatCount='%s' />" % (attributeName, type, from_pos, to_pos, duration, repeatCount)
-
-  def __str__(self):
-    str_point = " ".join(["%s,%s" % (x, y) for x, y in self.val])
-    if self._transform is not None:
-      html_line = "<polygon points='%s' style='fill:%s;stroke:%s;stroke-width:%s'>%s</polygon>" % (str_point, self._jsStyles['fill'], self._jsStyles['stroke'], self._jsStyles["stroke-width"], self._transform)
-    else:
-      html_line = "<polygon points='%s' style='fill:%s;stroke:%s;stroke-width:%s' />" % (str_point, self._jsStyles['fill'], self._jsStyles['stroke'], self._jsStyles["stroke-width"])
-    return "<svg %s>%s</svg>" % (self.get_attrs(pyClassNames=self.style.get_classes()), html_line)
-
-
-class Polyline(Html.Html):
-  def __init__(self, report, points, height, width, options):
-    super(Polyline, self).__init__(report, points, css_attrs={"width": width, "height": height})
-    if options is not None:
-      self._jsStyles.update(options)
-    self.css({"display": 'inline-block'})
-
-  def __str__(self):
-    str_point = " ".join(["%s,%s" % (x, y) for x, y in self.val])
-    html_line = "<polyline points='%s' style='fill:%s;stroke:%s;stroke-width:%s' />" % (str_point, self._jsStyles['fill'], self._jsStyles['stroke'], self._jsStyles["stroke-width"])
-    return "<svg %s>%s</svg>" % (self.get_attrs(pyClassNames=self.style.get_classes()), html_line)
-
-
-class Rectangle(Html.Html):
-  def __init__(self, report, x, y, width, height, fill):
-    super(Rectangle, self).__init__(report, "", css_attrs={"width": width, "height": height})
-    self.set_attrs({"x": x, "y": y, "fill": fill})
-    self.css({"display": 'inline-block'})
+class G(SVG):
+  def __init__(self, report):
+    super(G, self).__init__(report, None, None)
     self.html_objs = []
+
+  def __str__(self):
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<g %s>%s</g>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+
+
+class SVGItem(Html.Html):
 
   def transform(self, attributeName, type, from_pos, to_pos, duration=4, repeatCount="indefinite"):
     """
@@ -120,9 +122,105 @@ class Rectangle(Html.Html):
     self.html_objs.append(AnimateTransform(self._report, attributeName, type, from_pos, to_pos, duration, repeatCount))
     return self
 
+
+class Polygone(SVGItem):
+  def __init__(self, report, points):
+    super(Polygone, self).__init__(report, points)
+    self.set_attrs(({"points": " ".join(["%s,%s" % (x, y) for x, y in self.val])}))
+    self.css({'stroke': report.theme.success[1], 'stroke-width': 1, 'fill': 'none'})
+    self.html_objs = []
+
+  def __str__(self):
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<polygon %s>%s</polygon>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+
+
+class Ellipse(SVGItem):
+  def __init__(self, report, cx, cy, rx, ry):
+    super(Ellipse, self).__init__(report, "")
+    self.set_attrs({"cx": cx, "cy": cy, "rx": rx, "ry": ry})
+    self.css({'stroke': report.theme.success[1], 'stroke-width': 1, 'fill': 'none'})
+    self.html_objs = []
+
+  def __str__(self):
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<ellipse %s>%s</ellipse>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+
+
+class Line(SVGItem):
+  def __init__(self, report, x1, y1, x2, y2):
+    super(Line, self).__init__(report, "")
+    self.set_attrs({"x1": x1, "y1": y1, "x2": x2, "y2": y2})
+    self.css({"stroke": report.theme.success[1], "stroke-width": 1})
+    self.html_objs = []
+
+  def __str__(self):
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<line %s>%s</line>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+
+
+class Polyline(SVGItem):
+  def __init__(self, report, points, height, width, options):
+    super(Polyline, self).__init__(report, points, css_attrs={"width": width, "height": height})
+    self.set_attrs({"points": " ".join(["%s,%s" % (x, y) for x, y in self.val])})
+    self.html_objs = []
+    if options is not None:
+      self._jsStyles.update(options)
+    self.css({"display": 'inline-block', "fill": options.get('fill', ''),
+              'stroke': options.get('stroke', report.theme.success[1]), 'stroke-width': options.get('stroke-width', 1)})
+
+  def __str__(self):
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<polyline %s>%s</polyline>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+
+
+class Rectangle(SVGItem):
+  def __init__(self, report, x, y, width, height, fill):
+    super(Rectangle, self).__init__(report, "", css_attrs={"width": width, "height": height})
+    self.set_attrs({"x": x, "y": y, "fill": fill})
+    self.css({"display": 'inline-block'})
+    self.html_objs = []
+
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
     return "<rect %s>%s</rect>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+
+
+class Circle(SVGItem):
+  def __init__(self, report, x, y, r):
+    super(Circle, self).__init__(report, "")
+    self.set_attrs({"cx": x, "cy": y, "r": r})
+    self.html_objs = []
+
+  def __str__(self):
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<circle %s>%s</circle>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+
+
+class Text(SVGItem):
+  def __init__(self, report, text, x, y):
+    super(Text, self).__init__(report, text)
+    self.set_attrs({"x": x, "y": y, 'fill': 'black'})
+    self.html_objs = []
+
+  def line(self, text, x, y):
+    self.html_objs.append(TSpan(self._report, text, x, y))
+    return self
+
+  def __str__(self):
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<text %s>%s%s</text>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, str_c)
+
+
+class TSpan(SVGItem):
+  def __init__(self, report, text, x, y):
+    super(TSpan, self).__init__(report, text)
+    self.set_attrs({"x": x, "y": y, 'fill': 'black'})
+    self.html_objs = []
+
+  def __str__(self):
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<tspan %s>%s%s</tspan>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, str_c)
 
 
 class AnimateTransform(Html.Html):

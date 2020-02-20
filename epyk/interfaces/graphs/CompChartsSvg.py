@@ -138,15 +138,15 @@ class SVG(object):
                     'fill': self.parent.context.rptObj.theme.success[1]}
     if options is not None:
       dflt_options.update(options)
-    shape = graph.GraphSvg.Polyline(self.parent.context.rptObj,
-                                    [(0, width[0]), (width[0]/2, 0), (width[0], width[0]), (0, width[0])],
+    tri = graph.GraphSvg.SVG(self.parent.context.rptObj, (100, "%"), (200, "px"))
+    tri.rect([(0, width[0]), (width[0]/2, 0), (width[0], width[0]), (0, width[0])],
                                     width, width, dflt_options)
-    self.parent.context.register(shape)
-    return shape
+    self.parent.context.register(tri)
+    return tri
 
   def rectangle(self, x, y, width, height, fill):
     """"""
-    rect = graph.GraphSvg.SVG(self.parent.context.rptObj, (100, "%"), (200, "px"))
+    rect = graph.GraphSvg.SVG(self.parent.context.rptObj, (900, "px"), (200, "px"))
     rect.rect(x, y, width, height, fill)
     self.parent.context.register(rect)
     return rect
