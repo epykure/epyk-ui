@@ -461,6 +461,8 @@ class JsDoms(JsObject.JsObject):
     Documentation:
     https://www.w3schools.com/jsref/prop_html_innerhtml.asp
 
+    Attributes:
+    ----------
     :param jsString: Optional, The Javascript String to be added
     :return: THe JsObj
     """

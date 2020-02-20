@@ -216,6 +216,40 @@ class JsHtml(JsNodeDom.JsDoms):
     return '''%s; setTimeout(function(){%s}, %s)
       ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
+  def loadHtml(self, htmlObjs):
+    """
+    Description:
+    ------------
+    Load during a Javascript event a component within the one using this method.
+    This cannot be tested during the Python execution and should be tested in the browser.
+
+    Tip: It is possible to add a break point to debug in the browser by adding
+
+    Usage:
+    ------
+    d = rptObj.ui.div().css({"border": "1px solid black"})
+    b = rptObj.ui.button("test")
+    b.click([
+      rptObj.js.console.debugger,
+      d.dom.loadHtml(rptObj.ui.texts.label("okkkk").css({"color": 'blue', 'float': 'none'}))
+    ])
+
+    Attributes:
+    ----------
+    :param htmlObjs: List. The different HTML objects to be added to the component
+
+    :return: The Javascript string to be added to the page
+    """
+    if not isinstance(htmlObjs, list):
+      htmlObjs = [htmlObjs]
+
+    jsFncs = []
+    for i, h in enumerate(htmlObjs):
+      h.inReport = False
+      jsFncs.append(self._report.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
+      jsFncs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i)))
+    return JsUtils.jsConvertFncs(jsFncs, toStr=True)
+
 
 class JsHtmlRich(JsHtml):
   @property
