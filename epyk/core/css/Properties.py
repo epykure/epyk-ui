@@ -161,7 +161,23 @@ class CssMixin(object):
     self.htmlObj.css({"animation-duration": val})
 
   @property
-  def animation_fill_mode(self): return self.htmlObj.css("animation-fill-mode")
+  def animation_fill_mode(self):
+    """
+    Description:
+    ------------
+    The animation-fill-mode property specifies a style for the target element when the animation is not playing (before it starts, after it ends, or both)
+    The animation-fill-mode property can have the following values:
+
+    none - Default value. Animation will not apply any styles to the element before or after it is executing
+    forwards - The element will retain the style values that is set by the last keyframe (depends on animation-direction and animation-iteration-count)
+    backwards - The element will get the style values that is set by the first keyframe (depends on animation-direction), and retain this during the animation-delay period
+    both - The animation will follow the rules for both forwards and backwards, extending the animation properties in both directions
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/css3_pr_animation-fill-mode.asp
+    """
+    return self.htmlObj.css("animation-fill-mode")
 
   @animation_fill_mode.setter
   def animation_fill_mode(self, val):
