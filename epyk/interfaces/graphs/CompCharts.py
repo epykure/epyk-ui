@@ -24,6 +24,7 @@ from epyk.interfaces.graphs import CompChartsNvd3
 from epyk.interfaces.graphs import CompChartsD3
 from epyk.interfaces.graphs import CompChartsVis
 from epyk.interfaces.graphs import CompChartsSvg
+from epyk.interfaces.graphs import CompChartsCanvas
 
 
 class Graphs(object):
@@ -283,3 +284,8 @@ class Graphs(object):
     https://www.w3schools.com/graphics/svg_intro.asp
     """
     return CompChartsSvg.SVG(self)
+
+  @property
+  def canvas(self):
+    """ """
+    return CompChartsCanvas.Canvas(self)
