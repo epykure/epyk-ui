@@ -391,7 +391,6 @@ class SliderOld(Html.Html):
 
 class SkillBar(Html.Html):
   name, category, callFnc = 'Skill Bars', 'Chart', 'skillbars'
-  # _grpCls = CssGrpClsTable.CssClassTable
 
   def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, colUrl, colTooltip, filters, profile):
     super(SkillBar, self).__init__(report, "", css_attrs={"width": width, "height": height}, htmlCode=htmlCode,
@@ -401,11 +400,10 @@ class SkillBar(Html.Html):
     self.innerPyHTML.inReport = False
     for c in self.innerPyHTML.col(i=1):
       if c.val not in y_column:
-        c.set_html_content(report.ui.div(EntHtml4.NO_BREAK_SPACE).css({"width": '%spx' % c.val, "background": 'red'}))
+        c.set_html_content(report.ui.div(EntHtml4.NO_BREAK_SPACE).css({"width": '%spx' % c.val, 'margin-left': "2px",
+                                                                       "background": report.theme.success[0]}))
     self.innerPyHTML.style.clear()
     self.css({"margin": '5px 0'})
-    #self._jsStyles = {'val': list(self.data._schema['values'])[0], 'label': list(self.data._schema['keys'])[0],
-    #                  'color': self.getColor('colors', 7), 'fontColor': self.getColor('greys', 0), 'colUrl': colUrl, 'colTooltip': colTooltip}
 
   @property
   def _js__builder__(self):
@@ -518,9 +516,9 @@ class ContextMenu(Html.Html):
   source = None # The container
   # _grpCls = CssGrpClsText.CssClassTextItem
 
-  def __init__(self, report, recordSet, width, height, visible, profile):
+  def __init__(self, report, recordSet, width, height, visible, options, profile):
     for rec in recordSet:
-      if isinstance(rec['event'], list):
+      if isinstance(rec.get('event'), list):
         rec['event'] = ";".join(rec['event'])
     super(ContextMenu, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
@@ -530,7 +528,7 @@ class ContextMenu(Html.Html):
       if "icon" in rec:
         self._report.jsImports.add("font-awesome")
         self._report.cssImport.add("font-awesome")
-    self.addGlobalVar("CONTEXT_MENU_VAL", "{}")
+    # self.addGlobalVar("CONTEXT_MENU_VAL", "{}")
     self._jsStyles = {'liStyles': ""}
 
   def onDocumentLoadFnc(self):

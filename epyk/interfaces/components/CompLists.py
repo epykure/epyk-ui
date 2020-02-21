@@ -1,7 +1,3 @@
-"""
-
-"""
-
 # Check if pandas is available in the current environment
 # if it is the case this module can handle Dataframe directly
 try:
@@ -87,8 +83,6 @@ class Lists(object):
     :param profile: Optional. A flag to set the component performance storage
     :param multiple: Boolean. To set if the component can handle multiple selections
     :param options: The select options as defined https://developer.snapappointments.com/bootstrap-select/options/
-    :rtype: html.HtmlSelect.Select
-    :return:
     """
     options = {} if options is None else options
     all_selected = options.get("allSelected", False)
@@ -274,7 +268,7 @@ class Lists(object):
     return html_tree
 
   def dropdown(self, recordSet=None, color=None, width=(100, "%"), height=(32, 'px'), htmlCode=None,
-               helper=None, profile=None):
+               helper=None, options=None, profile=None):
     """
 
     Documentation
@@ -287,14 +281,14 @@ class Lists(object):
     :param height:
     :param htmlCode:
     :param profile:
-    :return:
     """
-    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, color, width, height, htmlCode, helper, profile)
+    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, color, width, height, htmlCode, helper,
+                                     options or {}, profile)
     self.context.register(html_d)
     return html_d
 
   def badges(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
-             htmlCode=None, helper=None, profile=None):
+             htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Example
@@ -308,10 +302,10 @@ class Lists(object):
     :param color:
     :param width:
     :param height:
+    :param options:
     :param profile:
     """
-    html_obj = html.HtmlList.Badges(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                       helper, profile)
+    html_obj = html.HtmlList.Badges(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
 
     self.context.register(html_obj)
     return html_obj

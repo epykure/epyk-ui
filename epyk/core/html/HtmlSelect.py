@@ -51,7 +51,7 @@ class Select(Html.Html):
     super(Select, self).__init__(report, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
                                  globalFilter=filter, profile=profile)
     self.selected = None
-    self.style.addCls(self.defined.clsAltMap)
+    #self.attr['class'].add(self.defined.clsAltMap)
     self._jsStyles = options
 
   @property
@@ -63,7 +63,7 @@ class Select(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-    :rtype: JsHtml.JsHtml
+    :rtype: JsSelect.JSelect
     """
     if self._dom is None:
       self._dom = JsSelect.JSelect(self, report=self._report)

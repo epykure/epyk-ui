@@ -314,7 +314,7 @@ class Tables(object):
           rec[c] = 0
     table = html_tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
     table.css({"width": "%spx" % (width_rows_header + len(cols) * width_cells)})
-    table[0][0]._vals = ""
+    # table[0][0]._vals = ""
     for i in table[1:]:
       for j in range(len(rows)):
         i[j].attr["name"] = "row_header"

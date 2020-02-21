@@ -314,7 +314,7 @@ class Components(object):
     """
     return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile))
 
-  def context_menu(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, profile=None):
+  def context_menu(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None, profile=None):
     """
     Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
     This component is generic is need to be added to a component to work
@@ -330,11 +330,10 @@ class Components(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param visible: Optional.
     :param profile: Optional. A flag to set the component performance storage
-
-    :rtype: html.HtmlEvent.ContextMenu
-    :return:
     """
-    return self.register(html.HtmlEvent.ContextMenu(self.rptObj, records, width, height, visible, profile))
+    html_menu = html.HtmlEvent.ContextMenu(self.rptObj, records, width, height, visible, options, profile)
+    self.register(html_menu)
+    return html_menu
 
   def options_bar(self, records=None, color=None, border_color=None, width=(None, 'px'),
                   height=(None, 'px'), options=None):

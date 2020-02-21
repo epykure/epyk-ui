@@ -1,73 +1,32 @@
-"""
-Wrapper to the HTML tree components
-"""
-
 from epyk.core.html import HtmlList
+from epyk.core.html.options import OptTrees
 
 # The list of CSS classes
 # from epyk.core.css.styles import CssGrpClsList
 
 
-class OptionsTree(object):
-
-  def __init__(self, src):
-    self._icon_open, self._icon_close, self._expanded = "fas fa-folder-open", "fas fa-folder", True
-    self.src = src
-
-  @property
-  def icon_open(self):
-    """
-
-    :return:
-    """
-    return self._icon_open
-
-  @property
-  def icon_close(self):
-    """
-
-    :return:
-    """
-    return self._icon_close
-
-  @property
-  def expanded(self):
-    """
-
-    :return:
-    """
-    return self._expanded
-
-  @expanded.setter
-  def expanded(self, bool):
-    self._expanded = bool
-    self.src.items = None
-    self.src.set(self.src, self.src.val)
-
-  @icon_open.setter
-  def icon_open(self, icon):
-    self._icon_open = icon
-    self.src.items = []
-    self.src.set(self.src, self.src.val)
-
-  @icon_close.setter
-  def icon_close(self, icon):
-    self._icon_close = icon
-    self.src.items = []
-    self.src.set(self.src, self.src.val)
-
-
 class Tree(HtmlList.List):
   name, category, callFnc = 'List Expandable', 'Lists', 'tree'
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
-    super(Tree, self).__init__(report, [], size, color, width, height, htmlCode, helper, profile)
+  def __init__(self, report, data, color, width, height, htmlCode, helper, option, profile):
+    super(Tree, self).__init__(report, [], color, width, height, htmlCode, helper, {}, profile)
     self._vals = data # Attach the original data anyway to the object
-    self.options = OptionsTree(self)
+    self.__options = OptTrees.OptionsTree(self, option)
     self.set(self, self.val)
 
+  @property
+  def options(self):
+    """
+
+    :rtype: OptTrees.OptionsTree
+    """
+    return self.__options
+
   def empty(self):
-    """"""
+    """
+
+    :return:
+    """
     return self
 
   def set(self, ul, data):
@@ -146,8 +105,8 @@ class DropDown(HtmlList.List):
   # _grpCls = CssGrpClsList.CssClassListDropDown
   name, category, callFnc = 'DropDown Select', 'Lists', 'dropdown'
 
-  def __init__(self, report, data, size, color, width, height, htmlCode, helper, profile):
-    super(DropDown, self).__init__(report, [], size, color, width, height, htmlCode, helper, profile)
+  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
+    super(DropDown, self).__init__(report, [], color, width, height, htmlCode, helper, options, profile)
     self.allowTableFilter, self._jsStyles = [], {"clearDropDown": True, 'dropdown_submenu': {},
       'a_dropdown_item': {'text-decoration': 'none', "color": 'inherit'}, # {"width": "100%", 'font-size': '12px', 'text-decoration': 'none', 'padding-left': "10px"},
       "li_dropdown_item": {"text-align": "left"}}

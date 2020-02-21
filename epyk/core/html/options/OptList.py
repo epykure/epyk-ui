@@ -1,7 +1,3 @@
-"""
-
-"""
-
 
 class OptionsLi(object):
   def __init__(self, src, options):

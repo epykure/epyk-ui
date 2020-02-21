@@ -190,7 +190,6 @@ class List(Html.Html):
 
 class Groups(Html.Html):
   name, category, callFnc = 'Groups', 'Lists', 'groups'
-  builder_name = False
 
   def __init__(self, report, data, categories, size, color, width, height, htmlCode, helper, profile):
     super(Groups, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0],
@@ -206,13 +205,12 @@ class Groups(Html.Html):
   def __getitem__(self, i):
     return self.val[i]
 
-  def add_list(self, data, category="", size=('inherit', ''), color='inherit', width=(None, 'px'), height=(None, 'px'),
+  def add_list(self, data, category="", color='inherit', width=(None, 'px'), height=(None, 'px'),
                htmlCode=None, helper=None, options=None, profile=False):
     """
 
     :param data:
     :param category:
-    :param size:
     :param color:
     :param width:
     :param height:
@@ -222,7 +220,7 @@ class Groups(Html.Html):
     :param profile:
     """
     self._lists__map[category] = len(self.val)
-    html_li = List(self._report, data, size, color, width, height, htmlCode, helper, options, profile)
+    html_li = List(self._report, data, color, width, height, htmlCode, helper, options, profile)
     html_li.inReport = False
     html_li.css({"margin-bottom": '5px'})
     self.val.append(html_li)
@@ -239,7 +237,6 @@ class Groups(Html.Html):
 
 
 class Badges(List):
-  # _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'List Badges', 'Lists', 'Badges'
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
@@ -252,7 +249,6 @@ class Badges(List):
 
 
 class Buttons(List):
-  # _grpCls = GrpCls.CssGrpClassBase
   name, category, callFnc = 'List Buttons', 'Lists', 'buttons'
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
@@ -264,7 +260,6 @@ class Buttons(List):
 
 class Checks(List):
   name, category, callFnc = 'List Checked', 'Lists', 'checklist'
-  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
     super(Checks, self).__init__(report, data, color, width, height, htmlCode, helper, options, profile)
