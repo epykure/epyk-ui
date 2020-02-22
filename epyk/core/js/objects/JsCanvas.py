@@ -5,8 +5,27 @@ from epyk.core.js.packages import JsQueryUi
 
 
 class RadialGradient(object):
-  def addColorStop(self):
-    """"""
+  def __init__(self, x0, y0, r0, x1, y1, r1):
+    self.x0, self.y0, self.r0, self.x1, self.y1, self.r1 = x0, y0, r0, x1, y1, r1
+
+  def addColorStop(self, stop, color):
+    """
+    Description:
+    ------------
+    The addColorStop() method specifies the colors and position in a gradient object.
+
+    The addColorStop() method is used together with createLinearGradient() or createRadialGradient().
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createRadialGradient
+
+    Attributes:
+    ----------
+    :param stop: Float. A value between 0.0 and 1.0 that represents the position between start and end in a gradient
+    :param color: String. A CSS color value to display at the stop position
+    """
+    return "%s.addColorStop(%s, %s)" % ()
 
 
 class Context2D(object):
@@ -21,6 +40,7 @@ class Context2D(object):
 
     :return:
     """
+
   def arc(self):
     pass
 
@@ -46,12 +66,17 @@ class Context2D(object):
     :return:
     """
 
-  def createRadialGradient(self):
+  def createRadialGradient(self, x0, y0, r0, x1, y1, r1):
     """
-    The createRadialGradient() method creates a radial/circular gradient object.
+    Description:
+    ------------
+    The createRadialGradient() method is specified by six parameters, three defining the gradient's start circle, and three defining the end circle.
 
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/canvas_createradialgradient.asp
     """
+    return RadialGradient(x0, y0, r0, x1, y1, r1)
 
   def addColorStop(self):
     """

@@ -1,7 +1,3 @@
-"""
-Module dedicated to the Buttons Interface
-"""
-
 # Check if pandas is available in the current environment
 # if it is the case this module can handle DataFrame directly
 try:
@@ -204,7 +200,6 @@ class Buttons(object):
     :param filters:
     :param tooltip:
     :param allSelected:
-    :param title:
     :param radioType:
     :param profile:
     """
