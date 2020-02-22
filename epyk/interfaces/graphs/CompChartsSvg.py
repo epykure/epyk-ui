@@ -8,14 +8,21 @@ class SVG(object):
 
   def new(self, height=(100, "%"), width=(30, "px")):
     """
+    SVG stands for Scalable Vector Graphics.
+
+    SVG defines vector-based graphics in XML format.
 
     Example
     svg = rptObj.ui.charts.svg.new(width=200)
     svg.add_text("I love SVG!", x=0, y=15, options={"fill": 'red'})
 
+    Documentation
+    https://developer.mozilla.org/en-US/docs/Web/SVG
+    https://www.w3schools.com/graphics/svg_intro.asp
 
     :param height:
     :param width:
+
     :return:
     """
     if not isinstance(width, tuple):
@@ -142,9 +149,18 @@ class SVG(object):
     self.parent.context.register(tri)
     return tri
 
-  def rectangle(self, x, y, width, height, fill):
-    """"""
+  def rectangle(self, x, y, width, height, fill=None, rx=0, ry=0):
+    """
+
+    :param x:
+    :param y:
+    :param width:
+    :param height:
+    :param fill:
+    :param rx:
+    :param ry:
+    """
     rect = graph.GraphSvg.SVG(self.parent.context.rptObj, (900, "px"), (200, "px"))
-    rect.rect(x, y, width, height, fill)
+    rect.rect(x, y, width, height, fill, rx=rx, ry=ry)
     self.parent.context.register(rect)
     return rect
