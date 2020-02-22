@@ -1,9 +1,3 @@
-"""
-Base class for all the Javascript Packages.
-
-This class must be extended
-"""
-
 from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
@@ -31,17 +25,24 @@ class JsPackage(object):
   @property
   def varId(self):
     """
+    Description:
+    ------------
     The Javascript and Python reference ID
     """
     return self._selector if self.varName is None else self.varName
 
   def version(self, ver):
     """
+    Description:
+    ------------
     Change the package version number
 
-    Example
+    Usage:
+    ------
     bar.chart.version("1.11.0")
 
+    Attributes:
+    ----------
     :param ver: String. The package versions example 1.11.0
     """
     self.src._props.setdefault("packages", {})[self.lib_alias] = ver
@@ -49,10 +50,14 @@ class JsPackage(object):
 
   def fnc(self, data):
     """
+    Description:
+    ------------
     Base function to allow the object chain.
     THis will add the elements to the current section in the object structure
     All the items at the same level wil be chained
 
+    Attributes:
+    ----------
     :param data: THe Javascript fragment to be added
 
     :return: "Self" to allow the chains
@@ -62,14 +67,16 @@ class JsPackage(object):
 
   def fnc_closure(self, data, checkUndefined=False):
     """
+    Description:
+    ------------
     Add the function string to the existing object definition but create a new entry point for the next ones.
     This structure will allow the chain on the Javascript side but also on the Python side.
 
     Thanks to this Python can always keep the same structure and produce the correct Javascript definition
     There will be no chain in the Javascript side
 
-    Example
-
+    Attributes:
+    ----------
     :param data: String. The Javascript fragment to be added
     :param checkUndefined: Boolean. Add a check on the variable definition
 
@@ -83,11 +90,15 @@ class JsPackage(object):
 
   def fnc_closure_in_promise(self, data, checkUndefined=False):
     """
+    Description:
+    ------------
     Base function to allow the creation of a promise.
 
     A Js promise is an event attached toa function which will be only executed after the function.
     In case of success the then will be triggered otherwise the exception will be caught.
 
+    Attributes:
+    ----------
     :param data: String. The Javascript fragment to be added
     :param checkUndefined: Boolean. Add a check on the variable definition
 
@@ -102,15 +113,21 @@ class JsPackage(object):
   @property
   def var(self):
     """
+    Description:
+    ------------
     Property to return the variable name as a valid pyJs object
     """
     return JsString.JsString(self.varId, isPyData=False)
 
   def set_var(self, flag):
     """
+    Description:
+    ------------
     Change the flag to define if the variable should be defined on the Javascript side.
     Default this is set to True
 
+    Attributes:
+    ----------
     :param flag: A python boolean
 
     :return: This in order to allow js chains
@@ -120,6 +137,8 @@ class JsPackage(object):
 
   def getStr(self, emptyStack=True):
     """
+    Description:
+    ------------
     Get the current string representation for the object and remove the stack
     """
     js_stack = None
@@ -135,9 +154,13 @@ class JsPackage(object):
 
   def _mapVarId(self, strFnc, varId):
     """
+    Description:
+    ------------
     Special function used for some external packages used to fix the problem of function override.
     Indeed in Datatable row.add is used as a class method compare to the other functions used at object level
 
+    Attributes:
+    ----------
     :param strFnc: The function string
     :param varId: The object reference
 
@@ -147,6 +170,8 @@ class JsPackage(object):
 
   def toStr(self):
     """
+    Description:
+    ------------
     Javascript representation
 
     :return: Return the Javascript String
@@ -187,11 +212,15 @@ class DataAttrs(object):
 
   def custom(self, name, value):
     """
+    Description:
+    ------------
     Custom function to add a bespoke attribute to a class.
 
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
     If the value is a Javascript object, the PyJs object must be used
 
+    Attributes:
+    ----------
     :param name: String. The key to be added to the attributes
     :param value: String or JString. The value of the defined attributes
 
@@ -202,8 +231,12 @@ class DataAttrs(object):
 
   def attr(self, name, value):
     """
+    Description:
+    ------------
     Add an attribute to the Javascript underlying dictionary
 
+    Attributes:
+    ----------
     :param name: String. The attribute name
     :param value: Object. The attribute value
 
@@ -214,6 +247,8 @@ class DataAttrs(object):
 
   def __str__(self):
     """
+    Description:
+    ------------
     Produce the resulting string to be added to the Javascript section of the web page
     """
     return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._attrs.items()])

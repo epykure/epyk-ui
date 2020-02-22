@@ -4,10 +4,17 @@ from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsQueryUi
 
 
+class RadialGradient(object):
+  def addColorStop(self):
+    """"""
+
+
 class Context2D(object):
 
   def fillStyle(self):
     """
+    Description:
+    ------------
     The fillStyle property sets or returns the color, gradient, or pattern used to fill the drawing.
 
     https://www.w3schools.com/tags/canvas_fillstyle.asp
@@ -52,7 +59,7 @@ class Context2D(object):
 
     https://www.w3schools.com/tags/canvas_addcolorstop.asp
     """
-  
+
   def shadowBlur(self):
     """
     The shadowBlur property sets or returns the blur level for shadows.
