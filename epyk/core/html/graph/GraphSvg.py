@@ -107,7 +107,7 @@ class SVG(Html.Html):
     self.html_objs.append(Line(self._report, x1, y1, x2, y2))
     return self.html_objs[-1]
 
-  def circle(self, x, y, r, fill):
+  def circle(self, x, y, r, fill="None"):
     """
     Description:
     ------------
@@ -156,7 +156,7 @@ class SVG(Html.Html):
     self.html_objs.append(Ellipse(self._report, cx, cy, rx, ry))
     return self.html_objs[-1]
 
-  def polygon(self, points, fill=None):
+  def polygon(self, points, fill="None"):
     """
     Description:
     ------------
@@ -178,7 +178,7 @@ class SVG(Html.Html):
     self.html_objs.append(Polygone(self._report, points, fill))
     return self.html_objs[-1]
 
-  def polyline(self, points):
+  def polyline(self, points, fill="None"):
     """
     Description:
     ------------
@@ -197,8 +197,11 @@ class SVG(Html.Html):
 
     :rtype: Polyline
     """
+    polygone = Polyline(self._report, points, height=None, width=None, fill=fill, options={})
+    self.html_objs.append(polygone)
+    return polygone
 
-  def triangle(self, width, options=None):
+  def triangle(self, points, fill="None", options=None):
     """
     Description:
     ------------
@@ -213,18 +216,15 @@ class SVG(Html.Html):
 
     Attributes:
     ----------
-    :param width:
+    :param points:
     :param options:
 
     :rtpye: Polyline
     """
-    if isinstance(width, int):
-      width = (width, "px")
-    self.html_objs.append(Polyline(self._report, [(0, width[0]), (width[0]/2, 0), (width[0], width[0]), (0, width[0])],
-                                   width, width, options or {}))
-    return self.html_objs[-2]
+    self.html_objs.append(Polyline(self._report, points, None, None, fill, options or {}))
+    return self.html_objs[-1]
 
-  def g(self, fill=None, stroke=None, stroke_width=None):
+  def g(self, fill="None", stroke=None, stroke_width=None):
     """
     Description:
     ------------
@@ -296,6 +296,84 @@ class LinearGradient(Html.Html):
     return "<linearGradient %s>%s</linearGradient>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(self.items))
 
 
+class RadialGradient(Html.Html):
+  def __init__(self, report, htmlCode):
+    super(RadialGradient, self).__init__(report, "", htmlCode=htmlCode)
+    self.items = []
+
+  @property
+  def url(self):
+    return "url(#%s)" % self.htmlCode
+
+  def stop(self, offset, styles):
+    self.items.append('<stop offset="%s" style="%s" />' % (offset, ";".join(["%s:%s" % (k, v) for k, v in styles.items()])))
+    return self
+
+  def __str__(self):
+    return "<radialGradient %s>%s</radialGradient>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(self.items))
+
+
+class Marker(SVG):
+  def __init__(self, report, htmlCode, viewBox, refX, refY):
+    super(Marker, self).__init__(report, None, None)
+    self.htmlCode = htmlCode
+    self.set_attrs({'id': htmlCode, "viewBox": viewBox, "refX": refX, "refY": refY})
+    self.html_objs = []
+
+  @property
+  def url(self):
+    """
+
+    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+
+    :return:
+    """
+    return "url(#%s)" % self.htmlCode
+
+  def orient(self, orientation):
+    """
+
+    :param orientation:
+
+    :return:
+    """
+    self.set_attrs(name="orient", value=orientation)
+    return self
+
+  def markerWidth(self, value):
+    """
+
+    :param value:
+    :return:
+    """
+    self.set_attrs(name="markerWidth", value=value)
+    return self
+
+  def markerHeight(self, value):
+    """
+
+    :param value:
+
+    :return:
+    """
+    self.set_attrs(name="markerHeight", value=value)
+    return self
+
+  def arrow(self):
+    """
+
+    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+
+    :return:
+    """
+    self.html_objs.append("<path d='M 0 0 L 10 5 L 0 10 z' />")
+    return self
+
+  def __str__(self):
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<marker %s>%s</marker>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+
+
 class Defs(Html.Html):
   def __init__(self, report):
     super(Defs, self).__init__(report, "")
@@ -303,15 +381,65 @@ class Defs(Html.Html):
 
   def linearGradient(self, htmlCode, x1="0%", y1="0%", x2="100%", y2="0%", gradientTransform=None):
     """
+    Description:
+    ------------
+    The <linearGradient> element lets authors define linear gradients that can be applied to fill or stroke of graphical elements.
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient
 
     Attributes:
     ----------
-    :param htmlCode:
+    :param htmlCode: String. The HTML id of the component
+    :param x1: Float.
+    :param y1: Float.
+    :param x2: Float.
+    :param y2: Float.
     :param gradientTransform:
 
     :rtype: LinearGradient
     """
     self.html_objs.append(LinearGradient(self._report, htmlCode, x1, y1, x2, y2, gradientTransform))
+    return self.html_objs[-1]
+
+  def radialGradient(self, htmlCode):
+    """
+    Description:
+    ------------
+    The <radialGradient> element lets authors define radial gradients that can be applied to fill or stroke of graphical elements.
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialGradient
+
+    Attributes:
+    ----------
+    :param htmlCode: String. The HTML id of the component
+
+    :rtype: radialGradient
+    """
+    self.html_objs.append(RadialGradient(self._report, htmlCode))
+    return self.html_objs[-1]
+
+  def marker(self, htmlCode, viewBox, refX, refY):
+    """
+    The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+
+    Attributes:
+    ----------
+    :param htmlCode:
+    :param viewBox:
+    :param refX:
+    :param refY:
+
+    :rtype: Marker
+    """
+    self.html_objs.append(Marker(self._report, htmlCode, viewBox, refX, refY))
     return self.html_objs[-1]
 
   def __str__(self):
@@ -407,7 +535,7 @@ class Line(SVGItem):
   def __init__(self, report, x1, y1, x2, y2):
     super(Line, self).__init__(report, "")
     self.set_attrs({"x1": x1, "y1": y1, "x2": x2, "y2": y2})
-    self.css({"stroke": report.theme.success[1], "stroke-width": 1})
+    self.css({"stroke": report.theme.greys[-1], "stroke-width": 1})
     self.html_objs = []
 
   def __str__(self):
@@ -416,14 +544,33 @@ class Line(SVGItem):
 
 
 class Polyline(SVGItem):
-  def __init__(self, report, points, height, width, options):
+  def __init__(self, report, points, height, width, fill, options):
     super(Polyline, self).__init__(report, points, css_attrs={"width": width, "height": height})
-    self.set_attrs({"points": " ".join(["%s,%s" % (x, y) for x, y in self.val])})
+    self.set_attrs({"fill": fill, "points": " ".join(["%s,%s" % (x, y) for x, y in self.val])})
     self.html_objs = []
     if options is not None:
       self._jsStyles.update(options)
     self.css({"display": 'inline-block', "fill": options.get('fill', ''),
               'stroke': options.get('stroke', report.theme.success[1]), 'stroke-width': options.get('stroke-width', 1)})
+
+  def markers(self, marker_code):
+    """
+
+    :param marker_code:
+    """
+    self.set_attrs(name="marker-start", value=marker_code)
+    self.set_attrs(name="marker-mid", value=marker_code)
+    self.set_attrs(name="marker-end", value=marker_code)
+    return self
+
+  def marker_start(self, marker_code):
+    self.set_attrs(name="marker-start", value=marker_code)
+
+  def marker_mid(self, marker_code):
+    self.set_attrs(name="marker-mid", value=marker_code)
+
+  def marker_end(self, marker_code):
+    self.set_attrs(name="marker-end", value=marker_code)
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
