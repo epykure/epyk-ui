@@ -209,10 +209,10 @@ class JsNumber(JsObject.JsObject):
     return self
 
   def __mul__(self, value):
-    return JsNumber("%s *= %s" % (self.varId, value), isPyData=False)
+    return JsNumber("%s * %s" % (self.varId, value), isPyData=False)
 
   def __truediv__(self, value):
-    return JsNumber("%s /= %s" % (self.varId, value), isPyData=False)
+    return JsNumber("%s / %s" % (self.varId, value), isPyData=False)
 
   def __mod__(self, value):
     return JsNumber("%s %%= %s" % (self.varId, value), isPyData=False)

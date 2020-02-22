@@ -104,6 +104,15 @@ class JsMaths(object):
     """
     return JsNumber.JsNumber("Math.SQRT2", isPyData=False)
 
+  @property
+  def PI(self):
+    """
+    The PI property returns the ratio of a circle's area to the square of its radius, approximately 3.14
+
+    https://www.w3schools.com/jsref/jsref_pi.asp
+    """
+    return JsNumber.JsNumber("Math.PI", isPyData=False)
+
   def random(self, min=0, max=1):
     """
     Math.random() returns a random number between 0 (inclusive),  and 1 (exclusive):
