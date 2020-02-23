@@ -22,15 +22,20 @@ class Fields(object):
   def today(self, value=None, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
             profile=None, options=None, filters=None, helper=None):
     """
-
+    Description:
+    ------------
     This component is based on the Jquery Date Picker object.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.fields.today(label="Date").selectable(["2019-09-01", "2019-09-06"])
 
-    Documentation
+    Related Pages:
+    --------------
     https://jqueryui.com/datepicker/
 
+    Attributes:
+    ----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -50,16 +55,21 @@ class Fields(object):
   def cob(self, value=None, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
           profile=None, options=None, filters=None, helper=None):
     """
-
+    Description:
+    ------------
     This component is based on the Jquery Date Picker object.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.fields.cob(label="Date").selectable(["2019-09-01", "2019-09-06"])
     rptObj.ui.fields.cob(label="COB Date")
 
-    Documentation
+    Related Pages:
+    --------------
     https://jqueryui.com/datepicker/
 
+    Attributes:
+    ----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -79,16 +89,21 @@ class Fields(object):
   def now(self, value=None, label=None, icon="far fa-clock", color=None, htmlCode=None, profile=None,
           options=None, filters=None, helper=None):
     """
-
+    Description:
+    ------------
     This component is based on the Jquery Time Picker object.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.fields.now(label="timestamp", color="red", helper="This is the report timestamp")
     rptObj.ui.fields.now(label="Time field")
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/jonthornton/jquery-timepicker
 
+    Attributes:
+    ----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -106,7 +121,11 @@ class Fields(object):
   def input(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
             height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param value:
     :param label:
     :param placeholder:
@@ -123,10 +142,15 @@ class Fields(object):
   def static(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
              helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.fields.static(label="readonly field")
 
+    Attributes:
+    ----------
     :param value:
     :param label:
     :param placeholder:
@@ -144,10 +168,15 @@ class Fields(object):
   def integer(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.fields.integer(label="test")
 
+    Attributes:
+    ----------
     :param value:
     :param label:
     :param placeholder:
@@ -164,7 +193,11 @@ class Fields(object):
   def password(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param value:
     :param label:
     :param placeholder:
@@ -182,10 +215,15 @@ class Fields(object):
   def textarea(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.fields.textarea(label="Date")
 
+    Attributes:
+    ----------
     :param value:
     :param label:
     :param placeholder:
@@ -203,10 +241,19 @@ class Fields(object):
   def checkbox(self, value=False, label=None, icon=None, width=(100, "%"), height=(None, "px"),
                htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.fields.checkbox(True, label="Check")
 
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_input_type_checkbox.asp
+
+    Attributes:
+    ----------
     :param value:
     :param label:
     :param icon:
@@ -222,10 +269,21 @@ class Fields(object):
   def radio(self, value=False, label=None, group_name=None, icon=None, width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
+    The <input type="radio"> defines a radio button.
+    Radio buttons are normally presented in radio groups (a collection of radio buttons describing a set of related options).
+    Only one radio button in a group can be selected at the same time.
 
-    Example
-    rptObj.ui.fields.checkbox(True, label="Check")
+    Usage:
+    ------
 
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_input_type_radio.asp
+
+    Attributes:
+    ----------
     :param value:
     :param label:
     :param group_name:
@@ -244,10 +302,25 @@ class Fields(object):
   def range(self, value="", min=0, max=100, step=1, label=None, placeholder="", icon=None, width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
+    The <input type="range"> defines a control for entering a number whose exact value is not important (like a slider control).
+    Default range is 0 to 100. However, you can set restrictions on what numbers are accepted with the attributes below.
+    - max - specifies the maximum value allowed
+    - min - specifies the minimum value allowed
+    - step - specifies the legal number intervals
+    - value - Specifies the default value
 
-    Example
+    Usage:
+    ------
     rptObj.ui.fields.range(54, min=20, label="Range Example", icon="fas fa-unlock-alt")
 
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_input_type_range.asp
+
+    Attributes:
+    ----------
     :param value:
     :param min:
     :param max:
@@ -268,10 +341,15 @@ class Fields(object):
   def select(self, value=False, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
              helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.fields.select(["a", "b"], label="Check")
 
+    Attributes:
+    ----------
     :param value:
     :param label:
     :param icon:

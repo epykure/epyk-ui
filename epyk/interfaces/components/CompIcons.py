@@ -17,10 +17,15 @@ class Icons(object):
   def awesome(self, icon, text=None, tooltip=None, position=None, width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.icons.awesome(icon="fas fa-align-center")
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -36,11 +41,16 @@ class Icons(object):
 
   def edit(self, text=None, position=None, tooltip="Edit", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.icons.edit()
     rptObj.ui.icons.edit().color("red")
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -53,7 +63,11 @@ class Icons(object):
   def clock(self, text=None, position=None, tooltip="Last Updated Time", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -66,7 +80,11 @@ class Icons(object):
   def refresh(self, text=None, position=None, tooltip="Refresh Component", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -79,10 +97,15 @@ class Icons(object):
   def pdf(self, text=None, position=None, tooltip="Convert to PDF", width=(None, 'px'), height=(None, 'px'),
           htmlCode=None,  profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.icons.pdf(tooltip="helper")
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -95,7 +118,11 @@ class Icons(object):
   def plus(self, text=None, position=None, tooltip="Add line", width=(None, 'px'), height=(None, 'px'),
            htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -108,7 +135,11 @@ class Icons(object):
   def excel(self, text=None, position=None, tooltip="Convert to Excel", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -121,7 +152,11 @@ class Icons(object):
   def download(self, text=None, position=None, tooltip="Download", width=(None, 'px'), height=(None, 'px'),
                htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -134,7 +169,11 @@ class Icons(object):
   def delete(self, text=None, position=None, tooltip="Delete Component on the page", width=(None, 'px'),
              height=(None, 'px'), htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -146,7 +185,11 @@ class Icons(object):
 
   def zoom(self, text=None, position=None, tooltip="Zoom on Component", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -159,7 +202,11 @@ class Icons(object):
   def capture(self, text=None, position=None, tooltip="Save to clipboard", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -172,7 +219,11 @@ class Icons(object):
   def remove(self, text=None, position=None, tooltip="Remove Item", width=(None, 'px'), height=(None, 'px'),
              htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -185,10 +236,15 @@ class Icons(object):
   def table(self, text=None, position=None, tooltip="Convert to Table", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.icons.table(tooltip="helper")
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -201,7 +257,11 @@ class Icons(object):
   def wrench(self, text=None, position=None, tooltip="Processing Time", width=(None, 'px'), height=(None, 'px'),
              htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -276,11 +336,16 @@ class Icons(object):
 
   def epyk(self, align="center", format='logo'):
     """
+    Description:
+    ------------
     Add the Epyk Icon
 
-    Example
+    Usage:
+    ------
     rptObj.ui.icons.epyk()
 
+    Attributes:
+    ----------
     :param align:
     :param format:
     :rtype: html.HtmlImage.Image
@@ -299,10 +364,15 @@ class Icons(object):
 
   def signin(self, text, width=(40, "px"), icon=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.icons.signin("test")
 
+    Attributes:
+    ----------
     :return:
     """
     bar = html.HtmlEvent.SignIn(self.context.rptObj, text, width, icon)

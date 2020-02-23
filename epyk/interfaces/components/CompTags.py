@@ -14,11 +14,16 @@ class Tags(object):
 
   def b(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <b> tag specifies bold text without any extra importance.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_b.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -34,6 +39,11 @@ class Tags(object):
 
   def delete(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -48,6 +58,17 @@ class Tags(object):
 
   def u(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
+    Underline a misspelled word with the <u> tag:
+    <p>This is a <u>paragraph</u>.</p>
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/tag_u.asp
+
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -63,6 +84,17 @@ class Tags(object):
 
   def p(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
+    A paragraph is marked up as follows with the <p> tag:
+    <p>This is some text in a paragraph.</p>
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/tag_p.asp
+
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -78,17 +110,23 @@ class Tags(object):
 
   def bdi(self, text, width=(100, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     BDI stands for Bi-Directional Isolation.
     The <bdi> tag is new in HTML5.
 
-    Example
+    Usage:
+    ------
     bdi = rptObj.ui.tags.bdi("bdi tag")
     bdi.click(rptObj.js.alert("test"))
     bdi.css({'cursor': 'pointer'})
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_bdi.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -103,12 +141,17 @@ class Tags(object):
 
   def bdo(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     bdo stands for Bi-Directional Override.
     The <bdo> tag is used to override the current text direction.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_bdo.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -123,11 +166,16 @@ class Tags(object):
 
   def em(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <em> tag is a phrase tag. It renders as emphasized text.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_em.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -142,11 +190,16 @@ class Tags(object):
 
   def strong(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <strong> tag is a phrase tag. It defines important text.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_strong.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -161,11 +214,16 @@ class Tags(object):
 
   def samp(self, text, size=(None, "px"), width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <samp> tag is a phrase tag. It defines sample output from a computer program.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_samp.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param size: Tuple with the size value and its unit
     :param width: Tuple with the width value and its unit
@@ -181,11 +239,16 @@ class Tags(object):
 
   def kbd(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <kbd> tag is a phrase tag. It defines keyboard input.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_kbd.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -200,11 +263,16 @@ class Tags(object):
 
   def var(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <var> tag also supports the Global Attributes in HTML.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_var.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -219,11 +287,16 @@ class Tags(object):
 
   def sup(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <sup> tag defines superscript text. Superscript text appears half a character above the normal line, and is sometimes rendered in a smaller font. Superscript text can be used for footnotes, like WWW
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_sup.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -238,11 +311,16 @@ class Tags(object):
 
   def wbr(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <wbr> (Word Break Opportunity) tag specifies where in a text it would be ok to add a line-break.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_wbr.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -257,11 +335,16 @@ class Tags(object):
 
   def time(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <time> tag defines a human-readable date/time.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_time.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -276,12 +359,17 @@ class Tags(object):
 
   def sub(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <sub> tag defines subscript text. Subscript text appears half a character below the normal line, and is sometimes rendered in a smaller font.
     Subscript text can be used for chemical formulas, like H2O.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_sub.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -296,11 +384,16 @@ class Tags(object):
 
   def small(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <small> tag defines smaller text (and other side comments).
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_small.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -315,11 +408,16 @@ class Tags(object):
 
   def s(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <s> tag specifies text that is no longer correct, accurate or relevant.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_s.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -334,11 +432,16 @@ class Tags(object):
 
   def i(self, text, width=(None, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <i> tag defines a part of text in an alternate voice or mood. The content of the <i> tag is usually displayed in italic.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_i.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -353,13 +456,18 @@ class Tags(object):
 
   def q(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <q> tag defines a short quotation.
 
     Browsers normally insert quotation marks around the quotation.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_q.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -374,13 +482,18 @@ class Tags(object):
 
   def mark(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <mark> tag defines marked text.
 
     Use the <mark> tag if you want to highlight parts of your text.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_mark.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -395,11 +508,16 @@ class Tags(object):
 
   def ins(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <ins> tag defines a text that has been inserted into a document.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_ins.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -414,11 +532,16 @@ class Tags(object):
 
   def dfn(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <dfn> tag represents the defining instance of a term in HTML.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_dfn.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -433,11 +556,16 @@ class Tags(object):
 
   def cite(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <cite> tag defines the title of a work (e.g. a book, a song, a movie, a TV show, a painting, a sculpture, etc.).
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_cite.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -452,11 +580,16 @@ class Tags(object):
 
   def abbr(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <abbr> tag defines an abbreviation or an acronym, like "HTML", "Mr.", "Dec.", "ASAP", "ATM".
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_abbr.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -471,12 +604,17 @@ class Tags(object):
 
   def meter(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
+    Description:
+    ------------
     The <meter> tag defines a scalar measurement within a known range, or a fractional value.
     This is also known as a gauge.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_meter.asp
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -491,8 +629,12 @@ class Tags(object):
 
   def comment(self, text):
     """
+    Description:
+    ------------
     Add an HTML comment to the code
 
+    Attributes:
+    ----------
     :param text: String with the content to be added to the component
     """
     html_comm = html.HtmlTags.HtmlComment(self.context.rptObj, text)

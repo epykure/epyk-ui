@@ -7,11 +7,16 @@ class Forms(object):
 
   def new(self, helper=None):
     """
+    Description:
+    ------------
     Creates an new empty form
 
-    Example
+    Usage:
+    ------
     f = rptObj.ui.form()
 
+    Attributes:
+    ----------
     :param action:
     :param method:
     :param helper:
@@ -22,10 +27,15 @@ class Forms(object):
 
   def date(self, htmlCode="Current", helper=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.forms.date("http://127.0.0.1:5000", "POST")
 
+    Attributes:
+    ----------
     :param action:
     :param method:
     :param htmlCode:
@@ -43,10 +53,15 @@ class Forms(object):
 
   def dates(self, htmlCode1="current", htmlCode2="Previous",  helper=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.forms.dates("http://127.0.0.1:5000", "POST")
 
+    Attributes:
+    ----------
     :param action:
     :param method:
     :param htmlCode1:
@@ -68,7 +83,11 @@ class Forms(object):
 
   def input(self, htmlCode, helper=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param helper:
     """
     inp = self.context.rptObj.ui.fields.input()
@@ -79,13 +98,18 @@ class Forms(object):
 
   def inputs(self, records, helper=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.forms.inputs([
       {"label": "name", "htmlCode": "input"},
       {"label": "name 2", "htmlCode": "input2"},
     ])
 
+    Attributes:
+    ----------
     :param records:
     :param helper:
     """

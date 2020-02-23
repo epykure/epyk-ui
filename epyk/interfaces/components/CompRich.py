@@ -12,14 +12,18 @@ class Rich(object):
 
   def delta(self, rec=None, width=(200, 'px'), height=(80, 'px'), options=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
 
-    Documentation
-    https://jqueryui.com/progressbar/
-    https://fontawesome.com/icons?d=gallery
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param rec:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -36,17 +40,23 @@ class Rich(object):
 
   def stars(self, val=None, label=None, color=None, align='left', best=5, htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Entry point for the Stars component
 
-    Example
+    Usage:
+    ------
     rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
 
     stars = rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
     stars.click()
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/howto/howto_css_star_rating.asp
 
+    Attributes:
+    ----------
     :param val:
     :param label: Optional. The text of label to be added to the component
     :param color: Optional. The font color in the component. Default inherit
@@ -61,11 +71,16 @@ class Rich(object):
 
   def light(self, color=None, height=(None, 'px'), label=None, tooltip=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.rich.light("red", label="label", tooltip="Tooltip", helper="Helper")
     rptObj.ui.rich.light(True)
 
+    Attributes:
+    ----------
     :param color:
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param label: Optional. The text of label to be added to the component
@@ -84,13 +99,19 @@ class Rich(object):
   def prism(self, text=None, language='python', width=(100, "%"), height=(None, "px"),
             isEditable=False, trimSpaces=True, align=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.rich.prism("print('test')")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_font.asp
 
+    Attributes:
+    ----------
     :param text:
     :param language: Optional, The language format used. Default Python
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -106,15 +127,21 @@ class Rich(object):
 
   def info(self, text=None, options=None, profile=None):
     """
-    Display a info icon with a tooltip
+    Description:
+    ------------
+    Display an info icon with a tooltip
 
-    Example
+    Usage:
+    ------
     rptObj.ui.info("Test")
 
-    Documentation
+    Related Pages:
+    --------------
     https://fontawesome.com/icons/question-circle?style=solid
     https://api.jqueryui.com/tooltip/
 
+    Attributes:
+    ----------
     :param text: The content of the tooltip
     :param profile: Optional, A boolean to store the performances for each components
     """
@@ -125,11 +152,16 @@ class Rich(object):
   def script(self, title, scriptName, clssName=None, functionName=None, docType='documentation',
              width=(100, "%"), height=(None, "px"),  color=None, profile=None):
     """
+    Description:
+    ------------
     Entry point to the source code component.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.rich.script("Documentation", "test.py")
 
+    Attributes:
+    ----------
     :param title:
     :param scriptName:
     :param clssName:
@@ -146,16 +178,22 @@ class Rich(object):
   def countdown(self, yyyy_mm_dd, label=None, icon="fas fa-stopwatch", timeInMilliSeconds=1000, width=(100, '%'), height=(None, 'px'),
                 htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Add a countdown to the page and remove the content if the page has expired.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.rich.countdown("2050-09-24")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/js_date_methods.asp
     https://www.w3schools.com/howto/howto_js_countdown.asp
     https://fontawesome.com/icons/stopwatch?style=solid
 
+    Attributes:
+    ----------
     :param yyyy_mm_dd: The end date in format YYYY-MM-DD
     :param label: Optional. The component label content
     :param icon: Optional. The component icon content from font-awesome references
@@ -172,11 +210,16 @@ class Rich(object):
 
   def update(self, label=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
+    Description:
+    ------------
     Last Update time component
 
-    Example
+    Usage:
+    ------
     rptObj.ui.rich.update("Last update: ")
 
+    Attributes:
+    ----------
     :param label: The label to be displayed close to the date. Default Last Update
     :param color: Optional. The color code for the font
     :param width: Optional. Integer for the component width
@@ -191,7 +234,11 @@ class Rich(object):
   def console(self, content="", color=None, width=(100, "%"), height=(200, "px"), htmlCode=None,
               options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param content:
     :param color:
     :param width:

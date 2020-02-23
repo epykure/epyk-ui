@@ -21,7 +21,11 @@ class Inputs(object):
   def d_text(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param placeholder:
     :param width:
@@ -40,15 +44,21 @@ class Inputs(object):
   def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
+    Description:
+    ------------
     One of the new types of inputs in HTML5 is search
 
-    Example
+    Usage:
+    ------
     rptObj.ui.inputs.d_search("")
 
-    Documentation
+    Related Pages:
+    --------------
     https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search
     https://css-tricks.com/webkit-html5-search-inputs/
 
+    Attributes:
+    ----------
     :param text:
     :param placeholder:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -76,11 +86,16 @@ class Inputs(object):
   def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
+    Description:
+    ------------
 
-    Examples
+    Usage:
+    ------
     date = rptObj.ui.dates.now(label="date")
     date.label.css({"width": "auto"})
 
+    Attributes:
+    ----------
     :param text:
     :param placeholder:
     :param width:
@@ -99,11 +114,16 @@ class Inputs(object):
   def d_date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
+    Description:
+    ------------
 
-    Examples
+    Usage:
+    ------
     date = rptObj.ui.dates.now(label="date")
     date.label.css({"width": "auto"})
 
+    Attributes:
+    ----------
     :param text:
     :param placeholder:
     :param width:
@@ -139,11 +159,16 @@ class Inputs(object):
 
   def _output(self, value="", options=None, profile=False):
     """
+    Description:
+    ------------
     Create a HTML output object
 
-    Example
+    Usage:
+    ------
     rptObj.ui.inputs._output("test output")
 
+    Attributes:
+    ----------
     :param value:
     :param options:
     :param profile:
@@ -155,13 +180,19 @@ class Inputs(object):
   def textarea(self, text="", width=(100, '%'), rows=5, placeholder=None, background_color=None, htmlCode=None,
                options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.inputs.textarea("Test")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_textarea.asp
 
+    Attributes:
+    ----------
     :param text:
     :param width:
     :param rows:
@@ -180,7 +211,11 @@ class Inputs(object):
   def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param placeholder:
     :param size:
@@ -200,10 +235,15 @@ class Inputs(object):
   def checkbox(self, flag, label=None, group_name=None, width=(None, "%"), height=(None, "px"),
                htmlCode=None, filter=None, options=None, attrs=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.inputs.checkbox(False)
 
+    Attributes:
+    ----------
     :param flag:
     :param width:
     :param height:
@@ -221,13 +261,19 @@ class Inputs(object):
   def radio(self, flag, label=None, group_name=None, icon=None, width=(None, "%"), height=(None, "px"),
             htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/att_input_type_radio.asp
 
-    Example
+    Usage:
+    ------
     rptObj.ui.inputs.radio(False, label="radio")
 
+    Attributes:
+    ----------
     :param flag:
     :param label:
     :param group_name:
@@ -244,7 +290,11 @@ class Inputs(object):
   def editor(self, text="", title="", language='python', width=(100, "%"), height=(None, "px"), isEditable=True,
              htmlCode=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param title:
     :param language:
@@ -263,7 +313,11 @@ class Inputs(object):
   def cell(self, text=None, width=(100, "%"), height=(None, "px"), isEditable=False,
            htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param width:
     :param height:
@@ -278,13 +332,19 @@ class Inputs(object):
   def search(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
              tooltip='', extensible=False, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.inputs.search()
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
 
+    Attributes:
+    ----------
     :param text:
     :param placeholder:
     :param color:
@@ -302,7 +362,11 @@ class Inputs(object):
   def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :return:
     """
     label = self.context.rptObj.ui.texts.label(label).css({"display": 'block', 'text-align': 'left', 'margin-top': '10px',

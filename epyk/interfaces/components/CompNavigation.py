@@ -12,6 +12,8 @@ class Navigation(object):
   def up(self, icon="fas fa-arrow-up", tooltip=None, size=(None, "px"), width=(100, '%'), options=None, profile=False):
     """
 
+    Attributes:
+    ----------
     :param icon:
     :param tooltip:
     :param size:
@@ -38,9 +40,12 @@ class Navigation(object):
   def down(self, icon="fas fa-arrow-down", tooltip=None, width=(100, '%'), options=None, profile=False):
     """
 
-    Example
+    Usage:
+    ------
     rptObj.ui.navigation.down()
 
+    Attributes:
+    ----------
     :param icon:
     :param tooltip:
     :param width:
@@ -64,9 +69,12 @@ class Navigation(object):
   def to(self, y, x=None, icon="fas fa-map-pin", tooltip=None, size=(None, "px"), width=(100, '%'), options=None, profile=False):
     """
 
-    Example
+    Usage:
+    ------
     rptObj.ui.navigation.to(100, tooltip="test")
 
+    Attributes:
+    ----------
     :param y:
     :param x:
     :param icon:
@@ -95,9 +103,12 @@ class Navigation(object):
           width=(100, '%'), options=None, profile=False):
     """
 
-    Example
+    Usage:
+    ------
     rptObj.ui.navigation.to(100, tooltip="test")
 
+    Attributes:
+    ----------
     :param top:
     :param right:
     :param bottom:
@@ -125,9 +136,12 @@ class Navigation(object):
   def indices(self, count, selected=1, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
 
-    Example
+    Usage:
+    ------
     rptObj.ui.navigation.indices(10)
 
+    Attributes:
+    ----------
     :param count:
     :param selected:
     :param width:
@@ -149,6 +163,8 @@ class Navigation(object):
     for i, _ in enumerate(p):
       p.click(i, [])
 
+    Attributes:
+    ----------
     :param count:
     :param selected:
     :param width:
@@ -166,9 +182,12 @@ class Navigation(object):
            profile=False):
     """
 
-    Example
+    Usage:
+    ------
     d = rptObj.ui.navigation.dots(10)
 
+    Attributes:
+    ----------
     :param count:
     :param selected:
     :param position:

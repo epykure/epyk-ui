@@ -20,7 +20,8 @@ class Lists(object):
 
   def _filter(self, recordSet, column, options=None):
     """
-
+    Attributes:
+    ----------
     :param recordSet:
     :param column:
     :param options: A dictionary with specific filtering options e.g {'allSelected': True, 'operation': 'in'}
@@ -37,7 +38,8 @@ class Lists(object):
 
   def _recordSet(self, recordSet, column):
     """
-
+    Attributes:
+    ----------
     :param recordSet:
     :param column:
     :return:
@@ -59,9 +61,12 @@ class Lists(object):
   def select(self, records, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
              column=None, filter=None, profile=None, multiple=False, options=None):
     """
+    Description:
+    ------------
     HTML Select component
 
-    Example
+    Usage:
+    ------
     rptObj.ui.select(["A", "B", "C"], label="label", selected="C", multiple=True,
                       options={"title": "ttle", 'showTick': True, 'maxOptions': 2})
     s.selected = "B"
@@ -72,6 +77,8 @@ class Lists(object):
     https://www.npmjs.com/package/bootstrap-select-v4
     https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
 
+    Attributes:
+    ----------
     :param records: The input data. Can be a list or a dataFrame
     :param htmlCode: Optional. The component identifier code (for bot
     :param label: Optional. The HTML label attached to the component
@@ -116,7 +123,8 @@ class Lists(object):
   def list(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
-    Example
+    Usage:
+    ------
     l = rptObj.ui.lists.list(["A", "B"])
 
     Documentation
@@ -132,7 +140,8 @@ class Lists(object):
   def numbers(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
     """
-    Example
+    Usage:
+    ------
     rptObj.ui.lists.numbers(["A", "B"])
 
     Documentation
@@ -208,7 +217,8 @@ class Lists(object):
              htmlCode=None, helper=None, profile=None):
     """
 
-    Example
+    Usage:
+    ------
     l = rptObj.ui.lists.groups(["AWW", "B"])
     l.add_list(["D", "E"], category="Test")
 
@@ -233,10 +243,13 @@ class Lists(object):
                 htmlCode=None, helper=None, options=None, profile=None):
     """
 
-    Example
+    Usage:
+    ------
     data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
     checks = rptObj.ui.lists.checklist(data)
 
+    Attributes:
+    ----------
     :param data:
     :param color:
     :param width:
@@ -253,10 +266,13 @@ class Lists(object):
            htmlCode=None, helper=None, profile=None):
     """
 
-    Example
+    Usage:
+    ------
     data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
     rptObj.ui.lists.tree(data)
 
+    Attributes:
+    ----------
     :param data:
     :param width:
     :param height:
@@ -276,6 +292,8 @@ class Lists(object):
     https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
     https://codepen.io/svnt/pen/beEgre
 
+    Attributes:
+    ----------
     :param recordSet:
     :param width:
     :param height:
@@ -291,13 +309,16 @@ class Lists(object):
              htmlCode=None, helper=None, options=None, profile=None):
     """
 
-    Example
+    Usage:
+    ------
     rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Documentation
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     https://v4-alpha.getbootstrap.com/components/list-group/
 
+    Attributes:
+    ----------
     :param data:
     :param color:
     :param width:
@@ -314,13 +335,16 @@ class Lists(object):
               htmlCode=None, helper=None, profile=None):
     """
 
-    Example
+    Usage:
+    ------
     rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Documentation
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     https://v4-alpha.getbootstrap.com/components/list-group/
 
+    Attributes:
+    ----------
     :param data:
     :param color:
     :param width:

@@ -12,14 +12,18 @@ class Panels(object):
   def pills(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
             css_tab=None, options=None, profile=False):
     """
+    Description:
+    ------------
     Python wrapper to the Bootstrap Pills interface
 
-    Example
+    Usage:
+    ------
     tab = rptObj.ui.panels.pills()
     for i in range(5):
       tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/navs/
     """
     if css_tab is None:
@@ -35,14 +39,18 @@ class Panels(object):
 
   def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, css_tab=None, options=None, profile=False):
     """
+    Description:
+    ------------
     Python wrapper for a multi Tabs component
 
-    Example
+    Usage:
+    ------
     tab = rptObj.ui.panels.tabs()
     for i in range(5):
       tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
@@ -57,9 +65,12 @@ class Panels(object):
   def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
                 css_tab=None, options=None, profile=False):
     """
+    Description:
+    ------------
     Python wrapper for a multi Tabs component
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
@@ -77,9 +88,12 @@ class Panels(object):
   def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
                   css_tab=None, options=None, profile=False):
     """
+    Description:
+    ------------
     Python wrapper for a multi Tabs component
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
@@ -97,9 +111,12 @@ class Panels(object):
   def menu(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
            css_tab=None, options=None, profile=False):
     """
+    Description:
+    ------------
     Python wrapper to the Bootstrap Pills interface
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/navs/
     """
     if css_tab is None:
@@ -117,7 +134,11 @@ class Panels(object):
   def sliding(self, htmlObjs, title, color=None, width=(100, "%"), height=(None, "px"),
             htmlCode=None, helper=None, options=None, profile=False):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param htmlObjs:
     :param title:
     :param color:
@@ -139,15 +160,21 @@ class Panels(object):
   def split(self, width=(100, '%'), height=(None, 'px'), leftWidth=50, left=None, right=None, resizable=True,
             helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     number = rptObj.ui.rich.number(500, "Test", height=(150, 'px'))
     number_2 = rptObj.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
     div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)
 
-    Documentation
+    Related Pages:
+    --------------
     https://codepen.io/rstrahl/pen/eJZQej
 
+    Attributes:
+    ----------
     :param width:
     :param height:
     :param leftWidth:

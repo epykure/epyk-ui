@@ -14,14 +14,20 @@ class Texts(object):
   def text(self, text="", color=None, align='left', width=('auto', ""), height=(None, "px"),
            htmlCode=None, tooltip=None, options=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Add the HTML text component to the page
 
-    Example
+    Usage:
+    ------
     rptObj.ui.text("this is a test")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_font.asp
 
+    Attributes:
+    ----------
     :param text: The string value to be displayed in the component
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
@@ -45,17 +51,23 @@ class Texts(object):
   def label(self, text=None, color=None, align='center', width=(100, "px"), height=('auto', ""), htmlCode=None,
             tooltip='', profile=None, options=None):
     """
+    Description:
+    ------------
     The <label> tag defines a label for a <button>, <input>, <meter>, <output>, <progress>, <select>, or <textarea> element...
 
     The for attribute of the <label> tag should be equal to the id attribute of the related element to bind them together.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.label("Test")
     rptObj.ui.texts.label("this is a test", color="red")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_label.asp
 
+    Attributes:
+    ----------
     :param text: Optional. The string value to be displayed in the component
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
@@ -76,18 +88,24 @@ class Texts(object):
   def span(self, text=None, color=None, align='center', width=None, height=None, htmlCode=None,
            tooltip=None, profile=None):
     """
+    Description:
+    ------------
     The <span> tag is used to group inline-elements in a document.
 
     The <span> tag provides no visual change by itself.
 
     The <span> tag provides a way to add a hook to a part of a text or a part of a document.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.span("Test")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_span.asp
 
+    Attributes:
+    ----------
     :param text: Optional. The string value to be displayed in the component
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
@@ -108,13 +126,20 @@ class Texts(object):
   def highlights(self, text=None, title="", icon=None, type="danger", color=None, width=(None, "%"),
                  height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
+    Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.3/components/alerts/
 
+    Attributes:
+    ----------
     :param text: Optional. The string value to be displayed in the component
     :param title:
     :param icon:
@@ -134,14 +159,19 @@ class Texts(object):
 
   def formula(self, text=None, width=(100, "%"), color=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Interface to the mathjs Formulas object
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.formula("$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$", helper="This is a formula")
 
-    Documentation
-    https://www.w3schools.com/tags/tag_font.asp
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param text: Optional. The string value to be displayed in the component
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param color: Optional. The color of the text
@@ -154,14 +184,20 @@ class Texts(object):
 
   def code(self, text="", color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None, options=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Python Wrapper to the Bootstrap CODE Tag
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.code("This is a code")
 
-    Documentation
+    Related Pages:
+    --------------
     https://v4-alpha.getbootstrap.com/content/code/
 
+    Attributes:
+    ----------
     :param text:
     :param color:
     :param width:
@@ -184,14 +220,20 @@ class Texts(object):
   def paragraph(self, text="", color=None, background_color=None, border=False, width=(100, "%"),
                 height=(None, 'px'), htmlCode=None, encoding="UTF-8", dataSrc=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Python Wrapper to the HTML P Tag
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/html/html_styles.asp
 
+    Attributes:
+    ----------
     :param text:
     :param color:
     :param background_color:
@@ -211,13 +253,23 @@ class Texts(object):
   def preformat(self, text=None, color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None, dataSrc=None,
                 options=None, helper=None, profile=None):
     """
+    Description:
+    ------------
+    Preformatted text:
+    The <pre> tag defines preformatted text.
+    Text in a <pre> element is displayed in a fixed-width font (usually Courier), and it preserves both spaces and line breaks.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.preformat("This is a pre formatted text")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/html/html_styles.asp
+    https://www.w3schools.com/tags/tag_pre.asp
 
+    Attributes:
+    ----------
     :param text:
     :param color:
     :param width:
@@ -238,13 +290,22 @@ class Texts(object):
   def blockquote(self, text=None, author=None, color=None, width=(None, '%'), height=(None, 'px'),
                  htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
+    The <blockquote> tag specifies a section that is quoted from another source.
+    Browsers usually indent <blockquote> elements.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.blockquote("This is a code")
 
-    Documentation
+    Related Pages:
+    --------------
     https://v4-alpha.getbootstrap.com/content/typography/
+    https://www.w3schools.com/TAGS/tag_blockquote.asp
 
+    Attributes:
+    ----------
     :param text:
     :param author:
     :param color:
@@ -260,14 +321,20 @@ class Texts(object):
 
   def up_down(self, rec=None, color=None, label=None, options=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Up and down Text component
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.up_down({'previous': 240885, 'value': 240985})
 
-    Documentation
+    Related Pages:
+    --------------
     https://fontawesome.com/
 
+    Attributes:
+    ----------
     :param rec:
     :param color:
     :param label:
@@ -285,12 +352,18 @@ class Texts(object):
   def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
              options=None, helper=None, width=(150, 'px'), profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
-    Documentation
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param number: Optional. The value to be displayed to the component. Default now
     :param title:
     :param label: Optional. The text of label to be added to the component
@@ -313,14 +386,21 @@ class Texts(object):
   def title(self, text=None, level=None, name=None, contents=None, color=None, picture=None, icon=None,
             marginTop=5, htmlCode=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
+    Description:
+    ------------
+    Add a title
 
-    Example
+    Usage:
+    ------
     rptObj.ui.title("Test")
     rptObj.ui.title("Test", level=2)
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_hn.asp
 
+    Attributes:
+    ----------
     :param text:
     :param level:
     :param name:
@@ -346,14 +426,22 @@ class Texts(object):
 
   def fieldset(self, legend="", width=(100, "%"), height=(None, "px"), helper=None, profile=None):
     """
+    Description:
+    ------------
+    The <fieldset> tag is used to group related elements in a form.
+    The <fieldset> tag draws a box around the related elements.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.texts.fieldset("legend")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_legend.asp
     https://www.w3schools.com/tags/tag_fieldset.asp
 
+    Attributes:
+    ----------
     :param legend:
     :param width:
     :param height:

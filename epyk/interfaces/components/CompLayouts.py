@@ -11,16 +11,22 @@ class Layouts(object):
 
   def new_line(self, count=1, profile=None):
     """
+    Description:
+    ------------
     Wrapper around the Br html tag.
 
     The <br> tag inserts a single line break.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.layouts.new_line(10)
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_br.asp
 
+    Attributes:
+    ----------
     :param count: Optional, The number of empty line to put. Default 1
     :param profile: Optional, Activate the profiler
     """
@@ -30,16 +36,22 @@ class Layouts(object):
 
   def hr(self, count=1, color=None, background_color=None, height=(None, 'px'), align=None, profile=None):
     """
+    Description:
+    ------------
     Wrapper around the HT html tag.
 
     The <hr> tag defines a thematic break in an HTML page (e.g. a shift of topic).
 
-    Example
+    Usage:
+    ------
     rptObj.ui.layouts.hr(10)
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_hr.asp
 
+    Attributes:
+    ----------
     :param count: The number of HR tag to be added
     :param color: Optional. The color code for the font
     :param background_color: Optional. The component background color
@@ -56,21 +68,27 @@ class Layouts(object):
 
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Python wrapper for a column of HTML elements from Bootstrap
 
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.layouts.col([
       rptObj.ui.text("test C"),
       rptObj.ui.text("test D"),
     ])
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/layout/grid/
     https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
+    Attributes:
+    ----------
     :param htmlObjs:
     :param position:
     :param width:
@@ -85,22 +103,28 @@ class Layouts(object):
 
   def row(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Python wrapper for a column of HTML elements from Bootstrap
 
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
 
-    Example
+    Usage:
+    ------
     row = rptObj.ui.layouts.row()
     row += rptObj.ui.layouts.col([
       rptObj.ui.text("test A"),
       rptObj.ui.text("test B"),
     ])
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/layout/grid/
     https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
+    Attributes:
+    ----------
     :param htmlObjs:
     :param position:
     :param width:
@@ -116,8 +140,12 @@ class Layouts(object):
   def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), aresData=None, align='left',
           valign='top', colsWith=None, closable=False, resizable=False, titles=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Python wrapper for a row of HTML items
 
+    Attributes:
+    ----------
     :param htmlObjs:
     :param width:
     :param height:
@@ -138,15 +166,21 @@ class Layouts(object):
 
   def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
     """
+    Description:
+    ------------
     Python wrapper to the HTML Bootstrap Grid
 
-    Example
+    Usage:
+    ------
     gr = rptObj.ui.layouts.grid()
     gr += [rptObj.ui.text("test %s" % i) for i in range(5)]
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/layout/grid/
 
+    Attributes:
+    ----------
     :param rows:
     :param width:
     :param height:
@@ -169,13 +203,20 @@ class Layouts(object):
   def div(self, htmlObjs=None, label=None, color=None, width=(100, "%"), icon=None, height=(None, "px"), editable=False,
           align='left', padding=None, htmlCode=None, tag='div', helper=None, profile=None):
     """
-    Example
+    Description:
+    ------------
+
+    Usage:
+    ------
     div = rptObj.ui.div([html])
     div += html_2
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_div.asp
 
+    Attributes:
+    ----------
     :param htmlObjs:
     :param label:
     :param color:
@@ -199,15 +240,20 @@ class Layouts(object):
   def popup(self, htmlObj=None, title=None, color=None, width=(100, '%'), height=(None, 'px'),
             withBackground=True, draggable=False, margin=10, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     popup = report.popup(report.title('Test'), color="red")
     popup + report.paragraph('Test')
 
-
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_div.asp
 
+    Attributes:
+    ----------
     :param htmlObj:
     :param title:
     :param color:
@@ -225,10 +271,15 @@ class Layouts(object):
 
   def iframe(self, url, width=(100, "%"), height=(100, "%"), helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.layouts.iframe("http://www.google.com")
 
+    Attributes:
+    ----------
     :param url:
     :param width:
     :param height:
@@ -247,12 +298,17 @@ class Layouts(object):
 
   def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     menu = rptObj.ui.layouts.icons(["fas fa-bell", "fas fa-calendar-check"])
     menu.icon.click([menu.icon.dom.css({"color": 'red'})])
     menu[0].click([menu[0].dom.css({"color": 'red'})])
 
+    Attributes:
+    ----------
     :param icon_names:
     :param width:
     :param height:
@@ -270,7 +326,11 @@ class Layouts(object):
   def multiFilter(self, items=None, title=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None,
                   profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param items:
     :param title:
     :param width:
@@ -287,11 +347,16 @@ class Layouts(object):
 
   def table(self, records, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     simple_table = rptObj.ui.layouts.table(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
     simple_table.add_row({"COL1": "Value"})
 
+    Attributes:
+    ----------
     :param records:
     :param cols:
     :param rows:
@@ -318,7 +383,11 @@ class Layouts(object):
 
   def form(self, action, method, htmlObj=None, helper=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param action:
     :param method:
     :param htmlObj:

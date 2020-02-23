@@ -12,7 +12,8 @@ class Menus(object):
   def top(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
-    Example
+    Usage:
+    ------
     l = rptObj.ui.lists.list(["A", "B"])
 
     Documentation
@@ -44,7 +45,8 @@ class Menus(object):
   def bottom(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
-    Example
+    Usage:
+    ------
     l = rptObj.ui.lists.list(["A", "B"])
 
     Documentation
@@ -84,7 +86,8 @@ class Menus(object):
   def menu(self, data=None, position="bottom", color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
-    Example
+    Usage:
+    ------
     l = rptObj.ui.lists.list(["A", "B"])
 
     Documentation
@@ -132,12 +135,15 @@ class Menus(object):
               htmlCode=None, helper=None, options=None, profile=None):
     """
 
-    Example
+    Usage:
+    ------
     bs = rptObj.ui.buttons.buttons(["Button", "Button 2", "Button 3"])
     bs[2].click([
       rptObj.js.alert(bs[2].dom.content)
     ])
 
+    Attributes:
+    ----------
     :param data:
     :param color:
     :param width:

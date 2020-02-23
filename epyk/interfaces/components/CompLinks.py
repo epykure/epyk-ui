@@ -13,13 +13,19 @@ class Links(object):
 
   def external(self, text, url, icon=None, helper=None, height=(None, 'px'), decoration=False, options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     rptObj.ui.links.external('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/TagS/att_a_href.asp
 
+    Attributes:
+    ----------
     :param text: The string value to be displayed in the component
     :param url: The string url of the link
     :param icon: Optional. A string with the value of the icon to display from font-awesome
@@ -41,7 +47,11 @@ class Links(object):
 
   def button(self, text, url, icon=None, helper=None, width=(60, 'px'), height=(None, 'px'), decoration=False, options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param url:
     :param icon:
@@ -72,14 +82,19 @@ class Links(object):
 
   def script(self, script_name, report_name=None, icon="fab fa-python", options=None, profile=None):
     """
+    Description:
+    ------------
     Direct link to another report within the server.
 
     This is only dedicated to move between reports internally.
     If the target is to move between nodes, the function to use is rather bridge
 
-    Example
+    Usage:
+    ------
     rptObj.ui.links.script("TestParams")
 
+    Attributes:
+    ----------
     :param script_name: The destination script name
     :param report_name: Optional, the report name. Default current one
     :param options: Optional, the link properties
@@ -103,17 +118,23 @@ class Links(object):
 
   def link(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, options=None, profile=None):
     """
+    Description:
+    ------------
     Python interface to the common Hyperlink
 
-    Example:
+    Usage:
+    ------
     rptObj.ui.link({"text": "Profiling results", "url": '#'})
 
     l = rptObj.ui.links.link('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
     b = rptObj.ui.images.badge("new")
     l.append_child(b)
 
-    Documentation
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param text: The string value to be displayed in the component
     :param url: The string url of the link
     :param icon: Optional. A string with the value of the icon to display from font-awesome
@@ -130,12 +151,17 @@ class Links(object):
 
   def data(self, text, value, width=(100, '%'), height=(None, 'px'), format='txt', profile=None):
     """
+    Description:
+    ------------
     Python interface to the Hyperlink to retrieve data
 
-    Example
+    Usage:
+    ------
     data_link = rptObj.ui.links.data("link", "test#data")
     data_link.build({"text": 'new link Name', 'data': "new content"})
 
+    Attributes:
+    ----------
     :param text: The string value to be displayed in the component
     :param value:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -149,11 +175,17 @@ class Links(object):
 
   def bridge(self, text, script_name, report_name, url, jsData=None, context=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
 
-    Documentation
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param text:
     :param script_name:
     :param report_name:

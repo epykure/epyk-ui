@@ -18,12 +18,15 @@ class Modal(object):
 
   def inputs(self, records, submit=False, helper=None):
     """
-    Example
+    Usage:
+    ------
     rptObj.ui.forms.inputs([
       {"label": "name", "htmlCode": "input"},
       {"label": "name 2", "htmlCode": "input2"},
     ], "http://127.0.0.1:5000", "POST")
 
+    Attributes:
+    ----------
     :param records:
     :param action:
     :param method:
@@ -46,10 +49,13 @@ class Modal(object):
     """
     Simple interface to create an html form within a modal
 
-    Example
+    Usage:
+    ------
 
     Documentation
 
+    Attributes:
+    ----------
     :param html_objs list, :
     :param action: String. frebtbtoojtrjn, fdeul
     :param method:

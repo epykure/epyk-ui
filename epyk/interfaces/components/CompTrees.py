@@ -17,11 +17,16 @@ class Trees(object):
   def tree(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
     rptObj.ui.lists.tree(data)
 
+    Attributes:
+    ----------
     :param data:
     :param width:
     :param height:
@@ -35,11 +40,14 @@ class Trees(object):
   def inputs(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
-    data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
-    rptObj.ui.lists.tree(data)
+    Usage:
+    ------
 
+    Attributes:
+    ----------
     :param data:
     :param width:
     :param height:

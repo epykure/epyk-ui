@@ -14,12 +14,15 @@ class Media(object):
     Add a video from the server to the page.
     The format for the video must be MP4
 
-    Example
+    Usage:
+    ------
     rptObj.ui.media.video("CWWB3673.MP4")
 
     Documentation
     https://www.w3schools.com/html/html5_video.asp
 
+    Attributes:
+    ----------
     :param value: The name of the video
     :param path: Optional. THe path to the video
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -40,12 +43,15 @@ class Media(object):
     Add a audio track from the server to the page.
     The format for the video must be mpeg
 
-    Example
+    Usage:
+    ------
     rptObj.ui.media.video("CWWB3673.mpeg")
 
     Documentation
     https://www.w3schools.com/html/html5_video.asp
 
+    Attributes:
+    ----------
     :param value: The name of the audio object
     :param path: Optional. THe path to the audio object
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -65,12 +71,15 @@ class Media(object):
     """
     This will add a youtube video using the shared line to embedded to a website.
 
-    Example
+    Usage:
+    ------
     rptObj.ui.media.youtube("https://www.youtube.com/embed/dfiHMtih5Ac")
 
     Documentation
     https://www.w3schools.com/html/html5_video.asp
 
+    Attributes:
+    ----------
     :param link: The youtube link
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -91,5 +100,7 @@ class Media(object):
     Documentation
     https://www.html5rocks.com/en/tutorials/getusermedia/intro/
 
+    Attributes:
+    ----------
     :return:
     """

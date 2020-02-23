@@ -12,17 +12,23 @@ class Messaging(object):
   def comments(self, htmlCode, recordset=None, title="", pmts=None, dbService=None, width=(100, '%'),
                height=(200, 'px'), httpCodes=None, readonly=False, profile=None):
     """
+    Description:
+    ------------
     Python wrapper to a div item composed to several sub html items to display message
 
-    Example
+    Usage:
+    ------
 
     db = report.db(database="test.db")
     report.comments('Test', dbService={'db': db, 'com_table': 'comments', 'reply_table': 'replyComments', 'reply_service': 'post_reply/url', 'user_coms': 'user_comments', 'privacy': 'public', 'service': your/url})
 
-    Documentation
+    Related Pages:
+    --------------
     https://leaverou.github.io/bubbly/
     http://manos.malihu.gr/jquery-custom-content-scroller/
 
+    Attributes:
+    ----------
     :param htmlCode:
     :param recordset:
     :param title:
@@ -53,6 +59,8 @@ class Messaging(object):
   def alert(self, category, title, value, htmlCode=None, background_color=None, close_button=True, width=(320, 'px'),
              height=(None, None), color='black', profile=False, dataSrc=None):
     """
+    Description:
+    ------------
     Function to add when the python run some tags to put on the top of your report messages.
 
     The type of the messages can be different according to its criticallity.
@@ -61,12 +69,16 @@ class Messaging(object):
     All the notification can be hidden directly from the report by setting the flag alerts = False
     e.g: rptObj.alerts = False
 
-    Example
+    Usage:
+    ------
     report.ui.messaging.alert('WARNING', 'Server URL not recognized', 'Please check')
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/alerts/
 
+    Attributes:
+    ----------
     :param title: The title of the notification
     :param value: The content of the notification
     :param category:
@@ -92,7 +104,9 @@ class Messaging(object):
   def danger(self, title, value, htmlCode=None, close_button=True, width=(320, 'px'),
              height=(None, None), color='black', profile=False, dataSrc=None):
     """
-    Function to add when the python run some tags to put on the top of your report messages.
+
+    Description:
+    ------------Function to add when the python run some tags to put on the top of your report messages.
 
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
@@ -100,12 +114,16 @@ class Messaging(object):
     All the notification can be hidden directly from the report by setting the flag alerts = False
     e.g: rptObj.alerts = False
 
-    Example
+    Usage:
+    ------
     rptObj.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/alerts/
 
+    Attributes:
+    ----------
     :param title: The title of the notification
     :param value: The content of the notification
     :param htmlCode:
@@ -128,16 +146,22 @@ class Messaging(object):
   def info(self, title, value, htmlCode=None, close_button=True, width=(320, 'px'),
            height=(None, None), color='black', profile=False, dataSrc=None):
     """
+    Description:
+    ------------
     Function to add when the python run some tags to put on the top of your report messages.
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Example
+    Usage:
+    ------
     rptObj.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/alerts/
 
+    Attributes:
+    ----------
     :rtype: html.HtmlMessaging.Alert
     """
     if not getattr(self.context.rptObj, "alerts", True):
@@ -151,16 +175,22 @@ class Messaging(object):
   def success(self, title, value, htmlCode=None, close_button=True, width=(320, 'px'), height=(None, 'black'),
               color='black', profile=False, dataSrc=None):
     """
-    Function to add when the python run some tags to put on the top of your report messages.
+    Description:
+    ------------
+    unction to add when the python run some tags to put on the top of your report messages.
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Example
+    Usage:
+    ------
     rptObj.ui.messaging.alert('success', 'Server URL not recognized', 'Please check')
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/alerts/
 
+    Attributes:
+    ----------
     :rtype: html.HtmlMessaging.Alert
     """
     if not getattr(self.context.rptObj, "alerts", True):
@@ -176,16 +206,22 @@ class Messaging(object):
   def warning(self, title, value, htmlCode=None, close_button=True, width=(320, 'px'), height=(None, None),
               color='black', profile=False, dataSrc=None):
     """
+    Description:
+    ------------
     Function to add when the python run some tags to put on the top of your report messages.
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Example
+    Usage:
+    ------
     rptObj.ui.messaging.alert('warning', 'Server URL not recognized', 'Please check')
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.0/components/alerts/
 
+    Attributes:
+    ----------
     :rtype: html.HtmlMessaging.Alert
     """
     if not getattr(self.context.rptObj, "alerts", True):
@@ -199,12 +235,17 @@ class Messaging(object):
   def news(self, title, value, label=None, link_script=None, icon=None, htmlCode=None, width=(320, 'px'), height=(None, None),
            profile=False):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     b = rptObj.ui.button("Display")
     n = rptObj.ui.messaging.news("This is a title", "This is the content", link_script="TestSlider")
     b.click(n.jsGenerate("Updated content", isPyData=True))
 
+    Attributes:
+    ----------
     :return:
     """
     return self.context.register(html.HtmlMessaging.News(self.context.rptObj, title, value, label, link_script, icon, width,
