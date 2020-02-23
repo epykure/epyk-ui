@@ -155,13 +155,14 @@ class Navigation(object):
     self.context.register(html_indices)
     return html_indices
 
-  def points(self, count, selected=1, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def points(self, count, selected=0, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
 
-    Example
+    Usage:
+    ------
     p = rptObj.ui.navigation.points(10)
     for i, _ in enumerate(p):
-      p.click(i, [])
+      p.click_item(i, [])
 
     Attributes:
     ----------

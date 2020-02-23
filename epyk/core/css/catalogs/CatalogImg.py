@@ -21,11 +21,21 @@ class CatalogImg(Catalog.CatalogGroup):
     return self._set_class(CssStylesImg.CssImgH2)
 
   def mask(self):
-    """  """
+    """
+    Description:
+    ------------
+    CSS Class definition to change a div component to a mask which will cover the parent container
+    when the mouse is hover
+    """
     return self._set_class(CssStylesImg.CssImgMask)
 
   def info_link(self):
-    """  """
+    """
+    Description:
+    ------------
+    CSS class definition to add shadow and specific colors to a link href component.
+    This is used in the image section for actions on the mask or the animated image
+    """
     return self._set_class(CssStylesImg.CssImgAInfo)
 
   def image(self):

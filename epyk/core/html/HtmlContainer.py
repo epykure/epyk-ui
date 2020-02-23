@@ -149,8 +149,8 @@ class Div(Html.Html):
           newHtmlObj.append(obj)
         if hasattr(newHtmlObj[-1], 'inReport'):
           newHtmlObj[-1].inReport = False
-          if newHtmlObj[-1].css("display") != 'None':
-            newHtmlObj[-1].css({"display": 'inline-block'})
+          #if newHtmlObj[-1].css("display") != 'None':
+          #  newHtmlObj[-1].css({"display": 'inline-block'})
       htmlObj = newHtmlObj
     elif htmlObj is not None and hasattr(htmlObj, 'inReport'):
       htmlObj.inReport = False # Has to be defined here otherwise it is set to late
@@ -902,8 +902,10 @@ class Indices(Html.Html):
   def __getitem__(self, i):
     return self.items[i]
 
-  def click(self, i, jsFncs, profile=False):
+  def click_item(self, i, jsFncs, profile=False):
     """
+    Description:
+    ------------
 
     :param i:
     :param jsFncs:
@@ -931,31 +933,80 @@ class Points(Html.Html):
     for i in range(count):
       div = self._report.ui.div(self._report.entities.non_breaking_space)
       div.attr["name"] = self.htmlId
-      div.attr["data-position"] = i + 1
+      div.attr["data-position"] = i # keep the python indexation
       div.css({"border": "1px solid %s" % self._report.theme.greys[5], "border-radius": "10px", "width": "15px", "height": "15px"})
       div.css(self.options.div_css)
       div.style.add_classes.div.background_hover()
       div.inReport = False
       self.items.append(div)
+    self[self.options.selected].css({"background-color": self.options.background_color})
 
   @property
   def options(self):
     """
+    Description:
+    ------------
 
     :rtype: OptPanel.OptionsPanelPoints
     """
     return self.__options
 
-  def click(self, i, jsFncs, profile=False):
+  def on(self, event, jsFncs, profile=False):
     """
+    Description:
+    ------------
+    Add Javascript events to all the items in the component
 
-    :param i:
-    :param jsFncs:
+    Attributes:
+    ----------
+    :param jsFncs: Array. The Javascript functions
+    :param profile:
+    :return:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    str_fnc = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    if event == "click":
+      for i in range(len(self.items)):
+        self.click_item(i, str_fnc)
+    else:
+      for i in range(len(self.items)):
+        self.on_item(i, event, str_fnc)
+    return self
+
+  def on_item(self, i, event, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param i: Integer. The item index
+    :param event: String. The Javascript event reference
+    :param jsFncs: Array. The Javascript functions
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return self[i].on(event, [
+      'var data = {position: this.getAttribute("data-position")}'] + jsFncs, profile)
+
+  def click_item(self, i, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+    Add a click event on a particular item of the component
+
+    Attributes:
+    ----------
+    :param i: Integer. The item index
+    :param jsFncs: Array. The Javascript functions
     :param profile:
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     return self[i].on("click", [
+      'var data = {position: this.getAttribute("data-position")}',
       self[i].dom.by_name.css({"background-color": ""}).r,
       self[i].dom.css({"background-color": self.options.background_color})] + jsFncs, profile)
 

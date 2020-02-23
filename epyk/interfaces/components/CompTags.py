@@ -12,6 +12,35 @@ class Tags(object):
   def __init__(self, context):
     self.context = context
 
+  def a(self, text, url, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
+    """
+    Description:
+    ------------
+    The <a> tag defines a hyperlink, which is used to link from one page to another.
+
+    The most important attribute of the <a> element is the href attribute, which indicates the link's destination.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/tag_a.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param url: String. Specifies the URL of the page the link goes to
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_a = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
+                                       height, htmlCode, tooltip, profile)
+    html_a.set_attrs(name="href", value=url)
+    html_a.style.clear()
+    self.context.register(html_a)
+    return html_a
+
   def b(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """
     Description:
@@ -36,6 +65,87 @@ class Tags(object):
     html_b.style.clear()
     self.context.register(html_b)
     return html_b
+
+  def h1(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
+    """
+    Description:
+    ------------
+    The <h1> to <h6> tags are used to define HTML headings.
+
+    <h1> defines the most important heading. <h6> defines the least important heading.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/tag_hn.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_h1 = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
+                                        height, htmlCode, tooltip, profile)
+    html_h1.style.clear_all()
+    self.context.register(html_h1)
+    return html_h1
+
+  def h2(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
+    """
+    Description:
+    ------------
+    The <h1> to <h6> tags are used to define HTML headings.
+
+    <h1> defines the most important heading. <h6> defines the least important heading.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/tag_hn.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_h2 = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
+                                        height, htmlCode, tooltip, profile)
+    html_h2.style.clear_all()
+    self.context.register(html_h2)
+    return html_h2
+
+  def h3(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
+    """
+    Description:
+    ------------
+    The <h1> to <h6> tags are used to define HTML headings.
+
+    <h1> defines the most important heading. <h6> defines the least important heading.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/tag_hn.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_h3 = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
+                                        height, htmlCode, tooltip, profile)
+    html_h3.style.clear_all()
+    self.context.register(html_h3)
+    return html_h3
 
   def delete(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', profile=None):
     """

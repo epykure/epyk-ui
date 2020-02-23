@@ -234,7 +234,7 @@ class SVG(object):
     """
 
     https://codepen.io/susanwinters/pen/WxbRJK
-    
+
     :param w:
     :param h:
     :param fill:

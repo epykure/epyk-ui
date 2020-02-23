@@ -1,7 +1,3 @@
-"""
-CSS Style module for the Image components
-"""
-
 from epyk.core.css.styles.classes import CssStyle
 
 
@@ -31,21 +27,19 @@ class CssImgH2(CssStyle.Style):
 
 
 class CssImgMask(CssStyle.Style):
-  _attrs = {'opacity': 0, 'transition': 'all 0.4s ease-in-out', 'width': '100%', 'height': '100%',
-            'position': 'absolute', 'overflow': 'hidden', 'top': 0, 'left': 0}
-  _hover = {'opacity': 1}
-  classname = 'mask'
+  _attrs = {'opacity': 0, 'transition': 'all 0.4s ease-in-out', 'height': 'inherit', 'left': 1,
+            'position': 'absolute'}
+  _hover = {'opacity': 0.8}
 
   def customize(self):
     self.css({'background-color': self.rptObj.theme.success[0]})
 
 
 class CssImgAInfo(CssStyle.Style):
-  _attrs = {'opacity': 0, 'transition': 'all 0.2s ease-in-out', 'display': 'inline-block', 'text-decoration': 'none',
-            'padding': '7px 14px', 'position': 'relative', 'top': '70%', 'text-transform': 'uppercase',
-            'box-shadow': '0 0 1px #000'}
-  _hover = {'opacity': 1, 'transform': 'translateY(0px)', 'box-shadow': '0 0 5px #000', 'transition-delay': '0.2s'}
-  _selectors = {'child': 'a.info'}
+  _attrs = {'opacity': 1, 'transition': 'all 0.2s ease-in-out', 'display': 'block', 'text-decoration': 'none',
+            'padding': '7px 14px', 'text-transform': 'uppercase', 'box-shadow': '0 0 1px #000', "margin": '10px auto',
+            'text-align': "center"}
+  _hover = {'transform': 'translateY(0px)', 'box-shadow': '0 0 5px #000', 'transition-delay': '0.2s'}
 
   def customize(self):
     self.css({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.colors[-1]})

@@ -1,14 +1,8 @@
-"""
-Group CSS class for all the Layouts components
-
-Default HTML component per HTML tag
-https://www.w3schools.com/cssref/css_default_values.asp
-"""
-
 from epyk.core.css import Classes
 from epyk.core.css import Defaults_css
 from epyk.core.css import Properties
 from epyk.core.css.styles.effects import Effects
+from epyk.core.css.styles.attributes import Attrs
 from epyk.core.css.styles.attributes import Commons
 from epyk.core.css.styles.classes import CssStyle
 
@@ -20,13 +14,20 @@ class ClassPage(object):
 
   @property
   def defaults(self):
-    """ The Default CSS Attributes in the framework """
+    """
+    Description:
+    ------------
+    The Default CSS Attributes in the framework
+    """
     return Defaults_css
 
   @property
   def add_classes(self):
     """
+    Description:
+    ------------
     Property to get access to the catalog of CSS classes to be added to the HTML class tag component
+
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
@@ -36,8 +37,11 @@ class ClassPage(object):
   @property
   def define_classes(self):
     """
+    Description:
+    ------------
     Property to get access to the catalog of CSS classes to be loaded in the page
     Those classes will not be automatically added to any HTML tag and they need to be added manually
+
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
@@ -45,7 +49,11 @@ class ClassPage(object):
     return self.__cls_catalog._class_type('other')
 
   def get_classes(self):
-    """ Returns the list of Internal and bespoke classes to be added to the class HTML table on the component """
+    """
+    Description:
+    ------------
+    Returns the list of Internal and bespoke classes to be added to the class HTML table on the component
+    """
     for css_cls in self.classList.values():
       for c in css_cls:
         if hasattr(c, 'classname'):
@@ -63,7 +71,10 @@ class ClassHtml(Properties.CssMixin):
   @property
   def css(self):
     """
+    Description:
+    ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component
+
     :rtype: Commons
     """
     if self._css_struct is None:
@@ -73,8 +84,11 @@ class ClassHtml(Properties.CssMixin):
   @property
   def css_class(self):
     """
+    Description:
+    ------------
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object
+
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
@@ -83,12 +97,20 @@ class ClassHtml(Properties.CssMixin):
 
   @property
   def defaults(self):
-    """ The Default CSS Attributes in the framework """
+    """
+    Description:
+    ------------
+    The Default CSS Attributes in the framework
+    """
     return Defaults_css
 
   @property
   def effects(self):
     """
+    Description:
+    ------------
+    Add animation effect to the component based either on a bespoke definition or a predefined one.
+
     :rtype: Effects.Effects
     """
     if self.__cls_effects is None:
@@ -98,7 +120,10 @@ class ClassHtml(Properties.CssMixin):
   @property
   def add_classes(self):
     """
+    Description:
+    ------------
     Property to get access to the catalog of CSS classes to be added to the HTML class tag component
+
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
@@ -108,23 +133,45 @@ class ClassHtml(Properties.CssMixin):
   @property
   def define_classes(self):
     """
+    Description:
+    ------------
     Property to get access to the catalog of CSS classes to be loaded in the page
     Those classes will not be automatically added to any HTML tag and they need to be added manually
+
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
       self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
     return self.__cls_catalog._class_type('other')
 
+  def clear_all(self):
+    """
+    Description:
+    ------------
+    Clear all the Style, Classes and CSS attrubites for the HTML component.
+    Once this function is called it is possible to add new CSS attributes or classes using the different catalog
+    """
+    self.htmlObj.attr['css'] = {}
+    self.classList['main'] = set()
+    self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_margin()
+    return self
+
   def clear(self):
     """
+    Description:
+    ------------
     Remove the predefined class and set the default one for the div components
-    :return:
     """
+    self.classList['main'] = set()
     self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
+    return self
 
   def get_classes(self):
-    """ Returns the list of Internal and bespoke classes to be added to the class HTML table on the component """
+    """
+    Description:
+    ------------
+    Returns the list of Internal and bespoke classes to be added to the class HTML table on the component
+    """
     for css_cls in self.classList.values():
       for c in css_cls:
         if hasattr(c, 'get_ref'):
@@ -133,6 +180,8 @@ class ClassHtml(Properties.CssMixin):
 
   def get_classes_css(self):
     """
+    Description:
+    ------------
 
     :return:
     """

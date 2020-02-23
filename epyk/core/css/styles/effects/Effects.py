@@ -1,12 +1,6 @@
-"""
-
-"""
 
 
 class Effects(object):
-  """
-
-  """
 
   def __init__(self, report, htmlObj, ovrs_attrs=None):
     self._report, self._htmlObj = report, htmlObj
@@ -15,16 +9,25 @@ class Effects(object):
       self.attrs.update(ovrs_attrs)
 
   def get_attrs(self):
-    """ Return the effect CSS attributes """
+    """
+    Description:
+    ------------
+    Return the effect CSS attributes
+    """
     return self.attrs
 
   def glow(self, color, radius=50):
     """
+    Description:
+    ------------
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
+    Attributes:
+    ----------
     :param color: String. The color to use fin the effect
     :param radius: Integer. The lenght of the radius to display in the animate
     """
@@ -41,9 +44,11 @@ class Effects(object):
 
   def blink(self, duration=1):
     """
+    Description:
+    ------------
 
-    Documentation
-
+    Attributes:
+    ----------
     :param duration:
     """
     keyframe_name = "blink_%s" % duration
@@ -54,11 +59,16 @@ class Effects(object):
 
   def shiny_text(self, color):
     """
+    Description:
+    ------------
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
+    Attributes:
+    ----------
     :param color: String. The color to use fin the effect
     """
     keyframe_name = "shiny_text"
@@ -69,12 +79,18 @@ class Effects(object):
 
   def shiny_border(self, color, duration=1):
     """
+    Description:
+    ------------
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
+    Attributes:
+    ----------
     :param color: String. The color to use fin the effect
+    :param duration:
     """
     keyframe_name = "shiny_border"
     self._htmlObj.style.css.animation = "%s %ss ease-in-out infinite alternate" % (keyframe_name, duration)
@@ -82,17 +98,54 @@ class Effects(object):
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self
 
+  def spin(self, duration):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+    """
+    keyframe_name = "spin_%s" % duration
+    self._htmlObj.style.css.animation = "%s %ss ease-in-out infinite alternate" % (keyframe_name, duration)
+    attrs = {"from": {"transform": "rotate(0deg)"}, "to": {"transform": "rotate(360deg)"}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
+    return self
+
+  def translate(self, duration):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+
+    """
+    keyframe_name = "trans_%s" % duration
+    self._htmlObj.style.css.animation = "%s %ss ease-in-out infinite alternate" % (keyframe_name, duration)
+    attrs = {"from": {"transform": "translateY(-100%)"}, "to": {"transform": "translateY(0)"}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
+    return self
+
   def animate(self, name, css_attrs, duration=1):
     """
+    Description:
+    ------------
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
 
-    Example
+    Attributes:
+    ----------
     htmlObj.style.effects.animate("pink", {"color": "blue", "width": "400px"})
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/css_animatable.asp
 
-    :param color: String. The color to use fin the effect
+    :param name: String. The animation name
+    :param css_attrs: Dictionary. The different CSS attributes to animate
+    :param duration: Integer. The animation duration in second
     """
     keyframe_name = "animate_%s" % name
     self._htmlObj.style.css.animation = "%s %ss ease-in-out infinite alternate" % (keyframe_name, duration)

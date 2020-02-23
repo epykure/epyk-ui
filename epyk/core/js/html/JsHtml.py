@@ -36,10 +36,10 @@ class JsHtml(JsNodeDom.JsDoms):
   def by_name(self):
     """
 
-    :return:
+    :rtype: JsNodeDom.JsDomsList
     """
     if self._src.attr.get('name') is not None:
-      return JsNodeDom.JsDomByName(None, "document.getElementsByName('%s')" % self._src.attr.get('name'), report=self._report)
+      return JsNodeDom.JsDomsList(None, "document.getElementsByName('%s')" % self._src.attr.get('name'), report=self._report)
 
     return self
 

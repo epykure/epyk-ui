@@ -8,6 +8,7 @@ class OptionsPanelPoints(object):
     self.src = src
     self.__background_color = options.get("background-color", src.theme.success[1])
     self.__div_css = options.get("div_css", {})
+    self.__selected = options.get("selected", 0)
 
   @property
   def background_color(self):
@@ -24,3 +25,11 @@ class OptionsPanelPoints(object):
   @div_css.setter
   def div_css(self, css):
     self.__div_css = css
+
+  @property
+  def selected(self):
+    return self.__selected
+
+  @selected.setter
+  def selected(self, num):
+    self.__selected = num

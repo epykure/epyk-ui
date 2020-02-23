@@ -28,6 +28,8 @@ class JsDomEvents(object):
 
   def stopPropagation(self):
     """
+    Description:
+    ------------
     The stopPropagation() method prevents propagation of the same event from being called.
 
     Documentation
@@ -40,6 +42,8 @@ class JsDomEvents(object):
 
   def blur(self, jsFncs):
     """
+    Description:
+    ------------
     FocusEvent
 
     The event occurs when an element loses focus
@@ -56,6 +60,8 @@ class JsDomEvents(object):
 
   def click(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the user clicks on an element
 
     Example
@@ -73,6 +79,8 @@ class JsDomEvents(object):
 
   def change(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the content of a form element, the selection, or the checked state have changed (for <input>, <select>, and <textarea>)
 
     Example
@@ -90,6 +98,8 @@ class JsDomEvents(object):
 
   def dblclick(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when the user double-clicks on an element
 
     Documentation
@@ -104,6 +114,8 @@ class JsDomEvents(object):
 
   def focus(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when an element gets focus
 
     Documentation
@@ -118,6 +130,8 @@ class JsDomEvents(object):
 
   def focusin(self, jsFncs):
     """
+    Description:
+    ------------
     The event occurs when an element is about to get focus
 
     Documentation
@@ -302,67 +316,6 @@ class JsDomEvents(object):
     strData = "document.getElementById('%(htmlId)s').%(items)s" % {'htmlId': self._src.htmlId, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
     return strData
-
-
-class JsDomByName(JsObject.JsObject):
-  def css(self, type, jsObject=None):
-    """
-    Replicate in plain Js the Jquery CSS function
-
-    Example
-    select.label.dom.css({"color": "red"})
-
-    Documentation:
-    https://www.w3schools.com/jsref/met_element_setattribute.asp
-
-    :param type: A String with the type of parameter or a python dictionary
-    :param jsObject: A JsObj with the value to be set
-    :return: A JsObj
-    """
-    if jsObject is None and isinstance(type, dict):
-      for k, v in type.items():
-        if "-" in k:
-          split_css = k.split("-")
-          k = "%s%s" % (split_css[0], split_css[1].title())
-        self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
-    elif jsObject is None:
-      if "-" in type:
-        split_css = type.split("-")
-        type = "%s%s" % (split_css[0], split_css[1].title())
-      return JsObject.JsObject("for(let e of %s){ e.style.%s }" % (self.varId, type))
-    else:
-      if "-" in type:
-        split_css = type.split("-")
-        type = "%s%s" % (split_css[0], split_css[1].title())
-      self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
-    return self
-
-  def attr(self, type, jsObject=None):
-    """
-    The attr() method adds the specified attribute to an element, and gives it the specified value.
-    It will use the underlying setAttribute() method
-
-    Example
-    select.label.dom.attr("title", "Tooltip")
-    select.label.dom.attr({"title": "Tooltip"})
-
-    Documentation:
-    https://www.w3schools.com/jsref/met_element_setattribute.asp
-
-    :param type: A String with the type of parameter or a python dictionary
-    :param jsObject: A JsObj with the value to be set
-    :return: A JsObj
-    """
-    if jsObject is None and isinstance(type, dict):
-      for k, v in type.items():
-        if k == "id":
-          self._id = v
-        self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
-    else:
-      if type == "id":
-        self._id = jsObject
-      self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
-    return self
 
 
 class JsDoms(JsObject.JsObject):
@@ -988,20 +941,107 @@ class JsDomsList(JsArray.JsArray):
 
   def all(self, jsFncs):
     """
+    Description:
+    ------------
+    Apply a set of functions on all the elements with this name.
 
-    :param jsFncs:
+    Attributes:
+    ----------
+    :param jsFncs: Array. List of Javascript fragments
     """
     self._js.append("%s.forEach(function(elt, index){%s})" % (self.varId, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
     return self
 
   @property
   def first(self):
+    """
+    Description:
+    ------------
+    Get the first dom item in corresponding to the name criteria
+    """
     return JsDoms.get("%s[0]" % self.toStr())
+
+  def css(self, type, jsObject=None):
+    """
+    Description:
+    ------------
+    Replicate in plain Js the Jquery CSS function
+
+    Usage:
+    ------
+    select.label.dom.css({"color": "red"})
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+    Attributes:
+    ----------
+    :param type: A String with the type of parameter or a python dictionary
+    :param jsObject: A JsObj with the value to be set
+
+    :return: A JsObj
+    """
+    if jsObject is None and isinstance(type, dict):
+      for k, v in type.items():
+        if "-" in k:
+          split_css = k.split("-")
+          k = "%s%s" % (split_css[0], split_css[1].title())
+        self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+    elif jsObject is None:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
+      return JsObject.JsObject("for(let e of %s){ e.style.%s }" % (self.varId, type))
+    else:
+      if "-" in type:
+        split_css = type.split("-")
+        type = "%s%s" % (split_css[0], split_css[1].title())
+      self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+    return self
+
+  def attr(self, type, jsObject=None):
+    """
+    Description:
+    ------------
+    The attr() method adds the specified attribute to an element, and gives it the specified value.
+    It will use the underlying setAttribute() method
+
+    Usage:
+    ------
+    select.label.dom.attr("title", "Tooltip")
+    select.label.dom.attr({"title": "Tooltip"})
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+    Attributes:
+    ----------
+    :param type: A String with the type of parameter or a python dictionary
+    :param jsObject: A JsObj with the value to be set
+
+    :return: A JsObj
+    """
+    if jsObject is None and isinstance(type, dict):
+      for k, v in type.items():
+        if k == "id":
+          self._id = v
+        self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+    else:
+      if type == "id":
+        self._id = jsObject
+      self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+    return self
 
   def __getitem__(self, index):
     """
+    Description:
+    ------------
+    Get the nth item corresponding to the name in the HTML page
 
-    :param index:
-    :return:
+    Attributes:
+    ----------
+    :param index: Integer. The index number of the item
     """
     return JsDoms.get("%s[%s]" % (self.toStr(), index))

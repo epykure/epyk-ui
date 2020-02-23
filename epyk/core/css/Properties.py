@@ -2295,3 +2295,22 @@ class CssMixin(object):
     """
     self.text_shadow = "0 0 3px #FF0000, 0 0 5px #0000FF"
     return self
+
+  def borders(self, color=None, size=1, style="solid"):
+    """
+    Description:
+    ------------
+    Shortcut function to set the border color for a defined HTML component
+
+    Usage:
+    ------
+    a.style.css.borders()
+
+    Attributes:
+    ----------
+    :param color: Optional. The border color. Default the grey from selected theme
+    :param size: Optional. The border size. Default 1pz
+    :param style: Optional. The border style. Default solid - a plain line
+    """
+    self.border = "%spx %s %s" % (size, style, self.orign_htmlObj._report.theme.greys[0])
+    return self

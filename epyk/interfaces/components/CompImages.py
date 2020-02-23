@@ -1,7 +1,3 @@
-"""
-Module dedicated to produce Images components
-"""
-
 from epyk.core import html
 
 
@@ -14,9 +10,13 @@ class Images(object):
     """
     Description:
     ------------
+    Add an HTML image to the page. The path can be defined either in a absolute or relative format.
+
+    Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server
 
     Usage:
     ------
+    rptObj.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
     Documentation
     https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
@@ -24,15 +24,17 @@ class Images(object):
 
     Attributes:
     ----------
-    :param image:
-    :param path:
-    :param width:
-    :param height:
+    :param image: String. The image file name
+    :param path: Optional. String. The image file path
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel or percentage
     :param align:
     :param htmlCode:
     :param profile:
     :param options:
     """
+    if height[0] is not None and width[1] == '%':
+      width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
     self.context.register(html_image)
     return html_image
@@ -42,51 +44,60 @@ class Images(object):
     """
     Description:
     ------------
+    Advance image with mask and gallery link.
+    This will display some details when the mouse is on the container
 
     Usage:
     ------
-    rptObj.ui.images.animated("philo.PNG")
+    c = rptObj.ui.images.animated("epykIcon.PNG", text="This is a comment", title="Title", url="#", path=r"../../../static/images")
+    c.style.css.borders()
 
     Documentation
     https://tympanus.net/Tutorials/OriginalHoverEffects/
 
     Attributes:
     ----------
-    :param image:
-    :param text:
-    :param title:
-    :param url:
-    :param path:
-    :param width:
-    :param height:
+    :param image: String. The image file name
+    :param text: Optional. String. The image file path
+    :param title: String. The image title displayed in to the mask on mouse hover the container
+    :param url: String. The link to the gallery
+    :param path: Optional. String. The image file path
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel or percentage
     :param profile:
     """
     html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, profile)
     self.context.register(html_id)
     return html_id
 
-  def carrousel(self, images, path=None, width=(100, "%"), height=('auto', ""), profile=None):
+  def carrousel(self, images, path=None, selected=0, width=(100, "%"), height=(300, "px"), profile=None):
     """
     Description:
     ------------
+    Carousel component for pictures
 
     Usage:
     ------
-    Defaults.SERVER_PATH = r"XXXXX"
-    rptObj.ui.images.carrousel(["Capture.PNG", "philo.PNG"])
+    car = rptObj.ui.images.carrousel(["epykIcon.PNG", "epyklogo.ico", "epyklogo_whole_big.png"],
+                                 path=r"../../../static/images", height=(200, 'px'))
+    car.click([rptObj.js.console.log('data', skip_data_convert=True)])
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.cssscript.com/basic-pure-css-slideshow-carousel/
 
     Attributes:
     ----------
-    :param images:
-    :param path:
-    :param width:
-    :param height:
+    :param images: List. With the different picture file names
+    :param path: String. The common path for the pictures
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel
     :param profile:
     """
-    html_i = html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, width, height, profile)
+    if height[1] == '%':
+      raise Exception("This height cannot be in percentage")
+
+    html_i = html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, selected, width, height, profile)
     self.context.register(html_i)
     return html_i
 

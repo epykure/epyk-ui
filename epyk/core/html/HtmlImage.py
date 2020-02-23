@@ -1,7 +1,3 @@
-"""
-Wrapper to the HTML Image components
-"""
-
 import os
 import re
 
@@ -25,7 +21,6 @@ class Image(Html.Html):
       path = Defaults.SERVER_PATH if report.run.report_name is None else "%s/%s" % (Defaults.SERVER_PATH, report.run.report_name)
     super(Image, self).__init__(report, {'path': path, 'image': image}, code=htmlCode, profile=profile,
                                 css_attrs={"width": width, "height": height})
-    # self.css({'margin': '5px 5px 5px 0', 'display': 'block'})
     self._jsStyles = options
     if align is not None:
       self.css({"text-align": align})
@@ -63,53 +58,58 @@ class Image(Html.Html):
 
 class AnimatedImage(Html.Html):
   name, category, callFnc = 'Animated Picture', 'Images', 'animatedimg'
-  __reqJs, cssCls = ['jquery'], ['view']
-  # _grpCls = CssGrpClsImage.CssClassImageAnimated
 
   def __init__(self, report, image, text, title, url, path, width, height, profile):
     if path is None:
       path = Defaults.SERVER_PATH if report.run.report_name is None else "%s/%s" % (Defaults.SERVER_PATH, report.run.report_name)
     super(AnimatedImage, self).__init__(report, {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
-                                        css_attrs={"width": width, "height": height}, profile=profile)
-
-  @property
-  def _js__builder__(self):
-    return ''' 
-      htmlObj.querySelector('img').src = data.path + "/" + data.image;
-      htmlObj.querySelector('div').querySelector('h2').innerHTML = data.title; 
-      htmlObj.querySelector('div').querySelector('p').text = data.text; 
-      if (data.url != null){htmlObj.querySelector('a').href = data.url}'''
+                                        css_attrs={"width": width, "height": height, 'overflow': 'hidden', 'display': 'block'}, profile=profile)
+    self.img = report.ui.img(image, path=path, width=(width[0]-5, width[1]), height=("auto", ''))
+    self.img.inReport = False
+    self.title = report.ui.tags.h2(title).css({"display": 'block'})
+    self.text = report.ui.tags.p(text).css({"display": 'block'})
+    self.a = report.ui.tags.a("Enter", url).css({"width": "100px"})
+    self.a.style.add_classes.image.info_link()
+    self.div = report.ui.div([self.title, self.text, self.a], width=(width[0]-2, width[1])).css({"padding": "5px"})
+    self.div.style.add_classes.image.mask()
+    self.div.inReport = False
 
   def __str__(self):
-    return '''
-      <div %(cssAttr)s>
-        <img src="%(src)s" style="width:inherit;height:auto">
-        <div class="mask">
-          <h2>%(title)s</h2>
-          <p></p>
-          <a class="info" href="%(url)s" style="cursor:pointer">Enter</a>
-        </div>
-      </div>''' % {"cssAttr": self.get_attrs(pyClassNames=self.style.get_classes()),
-                   'src': os.path.join(self.val["path"],  self.val["image"]), 'url': self.val["url"],
-                   "title": self.val["title"]}
+    return '''<div %(cssAttr)s>%(div)s%(img)s</div>
+      ''' % {"cssAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'img': self.img.html(), 'div': self.div.html()}
 
 
 class ImgCarrousel(Html.Html):
   name, category, callFnc = 'Carrousel', 'Images', 'carrousel'
-  # _grpCls = CssGrpClsImage.CssClassImageCarrousel
 
-  def __init__(self, report, images, path, width, height, profile):
+  def __init__(self, report, images, path, selected, width, height, profile):
     if path is None:
       path = Defaults.SERVER_PATH if report.run.report_name is None else "%s/%s" % (Defaults.SERVER_PATH, report.run.report_name)
-    imgs = []
+    self.items, self.__click_items = [], []
+    super(ImgCarrousel, self).__init__(report, "", css_attrs={"width": width, "height": height}, profile=profile)
     for i, rec in enumerate(images):
       if not isinstance(rec, dict):
         rec = {"image": rec, 'title': "picture %s" % (i+1)}
       if not 'path' in rec:
         rec['path'] = path
-      imgs.append(rec)
-    super(ImgCarrousel, self).__init__(report, imgs, css_attrs={"width": width, "height": height}, profile=profile)
-    self.css({'padding-top': '20px', 'display': 'block', 'padding': 0, 'margin': 0})
+      if rec.get('selected') is not None:
+        selected = i
+      img = report.ui.img(rec["image"], path=rec["path"], width=width, height=(height[0] - 60, height[1]))
+      div = report.ui.layouts.div([report.ui.tags.h3(rec['title']), img], htmlCode="%s_img_%s" % (self.htmlCode, i)).css({"display": 'none', "text-align": "center"})
+      div.set_attrs(name="name", value="%s_img" % self.htmlCode)
+      div.inReport = False
+      self.items.append(div)
+    self.items[selected].css({"display": 'block'})
+    self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0})
+
+  def __getitem__(self, i):
+    return self.items[i]
+
+  def click(self, jsFncs, profile=False):
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__click_items.extend(jsFncs)
+    return self
 
   @property
   def _js__builder__(self):
@@ -126,18 +126,17 @@ class ImgCarrousel(Html.Html):
       })''' % {'color': self._report.theme.colors[9]}
 
   def __str__(self):
-    # self._report.jsOnLoadFnc.add('''
-    #   $("label[for][name=img-selector]").click(function(){
-    #     for (var i=0; i < %(count)s; i++) {$('#%(htmlId)s_picture_'+ i ).css('display', 'none')}
-    #     $("label[for][name=img-selector").css('background', '%(grey)s');
-    #     $('#%(htmlId)s_picture_'+ parseInt($(this).attr('for'))).css('display', 'inline-block');
-    #     $("label[for='"+ $(this).attr('for') +"'][name=img-selector").css('background', '%(color)s')})
-    # ''' % {'htmlId': self.htmlId, 'count': len(self.vals), 'color': self.getColor('colors', 9), 'grey': self.getColor('greys', 2)})
-    return '''
-      <ul %(strAttr)s></ul>
-      <div id="%(htmlId)s_bullets" %(clsTag)s></div>
-      ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlId': self.htmlId,
-             'clsTag': self._report.style.getClsTag(self.defined.clsAltMap)}
+    img_cont = self._report.ui.layouts.div(self.items).css({"display": 'block', "width": "100%", "text-align": "center"})
+    img_cont.inReport = False
+    points = self._report.ui.navigation.points(len(self.items))
+    points.inReport = False
+    points.click([
+      self._report.js.getElementsByName("%s_img" % self.htmlCode).css({"display": 'none'}),
+      self._report.js.getElementById("%s_img_' + data.position +'" % self.htmlCode).css({"display": 'block'})
+    ] + self.__click_items)
+    return '''<div %(strAttr)s>%(img_cont)s%(points)s</div>
+      ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()),
+             'img_cont': img_cont.html(), "points": points.html()}
 
 
 class Icon(Html.Html):
@@ -261,7 +260,7 @@ class Badge(Html.Html):
           "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": Defaults_css.font()})
       self.link.inReport = False
     else:
-      self.link = self._report.ui.text(text).css({"color": "inherit", 'display': 'inline-block',
+      self.link = self._report.ui.text(text).css({'display': 'inline-block',
           "padding": "2px 2px 0 2px", "border-radius": "20px", "width": "auto", "height": Defaults_css.font()})
     self.link.css(self.options.badge_css)
     self.link.inReport = False
