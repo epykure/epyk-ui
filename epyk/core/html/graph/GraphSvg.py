@@ -511,7 +511,7 @@ class Polygone(SVGItem):
   def __init__(self, report, points, fill):
     super(Polygone, self).__init__(report, points)
     self.set_attrs(({"points": " ".join(["%s,%s" % (x, y) for x, y in self.val]), "fill": fill}))
-    self.css({'stroke': report.theme.success[1], 'stroke-width': 1, 'fill': 'none'})
+    self.css({'stroke': report.theme.greys[-1], 'stroke-width': 1})
     self.html_objs = []
 
   def __str__(self):

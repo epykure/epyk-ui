@@ -178,7 +178,7 @@ class SVG(object):
     self.parent.context.register(tri)
     return tri
 
-  def axes(self, width=(300, "px"), height=(200, "px")):
+  def axes(self, width=(500, "px"), height=(300, "px")):
     """
 
     :param width:
@@ -196,7 +196,7 @@ class SVG(object):
     self.parent.context.register(svg)
     return svg
 
-  def rectangle(self, x, y, width, height, fill=None, rx=0, ry=0):
+  def rectangle(self, x, y, width=(500, "px"), height=(300, "px"), fill=None, rx=0, ry=0):
     """
 
     :param x:
@@ -211,3 +211,38 @@ class SVG(object):
     rect.rect(x, y, width, height, fill, rx=rx, ry=ry)
     self.parent.context.register(rect)
     return rect
+
+  def heart(self, w, h, fill='none', width=(500, "px"), height=(300, "px")):
+    """
+
+    c = rptObj.ui.charts.svg.heart(w=50, h=100, fill="pink")
+    c[0].transform("transform", "rotate", "0 100 100", "360 100 10")
+
+    :param w:
+    :param h:
+    :param fill:
+    :param width:
+    :param height:
+    """
+    svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
+    svg.polygon([(w, w), (3/4 * h, 3/4 * h), (h, w), (h, 3/4 * w), (9/10 * h, 6/10 * w), (8.5/10 * h, 6/10 * w), (3/4 * h, 3/4 * w),
+                 (2/3 * h, 6/10 * w), (6/10 * h, 6/10 * w), (w, 3/4 * w), (w, w)], fill=fill)
+    self.parent.context.register(svg)
+    return svg
+
+  def star(self, fill='none', width=(500, "px"), height=(300, "px")):
+    """
+
+    https://codepen.io/susanwinters/pen/WxbRJK
+    
+    :param w:
+    :param h:
+    :param fill:
+    :param width:
+    :param height:
+    """
+    svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
+    svg.polygon([(100, 10), (40, 180), (190, 60), (10, 60), (160, 180)], fill=fill)
+    svg[-1].css({"stroke": 'none'})
+    self.parent.context.register(svg)
+    return svg
