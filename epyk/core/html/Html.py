@@ -606,8 +606,9 @@ class Html(object):
         else:
           self.attr['css'].update(v)
       else:
-        # Section for all the other attributes
-        self.attr[k] = v
+        # Section for all the other attributes#
+        if v is not None:
+          self.attr[k] = v
     return self
 
   def get_attrs(self, withId=True, pyClassNames=None):
