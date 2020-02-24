@@ -99,6 +99,7 @@ class Stars(Html.Html):
       if i < val:
         self._sub_htmls[-1].css({"color": self._jsStyles['color']})
       self._spans.append(self._sub_htmls[-1])
+    self.set_attrs(name='data-level', value=val)
     self.add_label(label, {"margin": "0 0 0 5px", 'height': 'none', "text-align": "left", "display": "inline-block",
                            'float': 'None'}, position="after")
     self.add_helper(helper).helper.css({"margin": '1px 4px'})
@@ -107,6 +108,9 @@ class Stars(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
+    The JavaScript dom object to be used in any events
 
     :rtype: JsHtmlStars.Stars
     """
@@ -116,14 +120,20 @@ class Stars(Html.Html):
 
   def click(self, js_fncs=None, profile=False):
     """
+    Description:
+    ------------
     Add the event click and double click to the starts item
+    The Javascript function will be triggered after the change of content of the component
 
-    Example
+    Usage:
+    ------
     stars = rptObj.ui.rich.stars(3, label="test Again")
     stars.click(rptObj.js.console.log("test").toStr())
 
+    Attributes:
+    ----------
     :param js_fncs: An array of Js functions or string. Or a string with the Js
-    :param profile:
+    :param profile: Boolean.
 
     :return: self to allow the chains
     """
@@ -133,8 +143,8 @@ class Stars(Html.Html):
     else:
       if not isinstance(js_fncs, list):
         js_fncs = [js_fncs]
-    js_fncs = ["var data = parseInt(event.target.dataset.level)+1"] + js_fncs
-    js_fncs.append(self.build(data=JsObjects.JsObjects.get("data"), options=self._jsStyles))
+    js_fncs = ["var data = parseInt(event.target.dataset.level)+1",
+               self.build(data=JsObjects.JsObjects.get("data"), options=self._jsStyles)] + js_fncs
     str_fncs = JsUtils.jsConvertFncs(js_fncs)
     for span in self._spans:
       span.click(str_fncs, profile)

@@ -90,6 +90,8 @@ class SVG(object):
   def arrow_left(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), options=None):
     """
 
+    rptObj.ui.charts.svg.arrow_left()
+
     :param x1:
     :param y1:
     :param x2:
