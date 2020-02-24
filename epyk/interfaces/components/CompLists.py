@@ -332,7 +332,7 @@ class Lists(object):
     return html_obj
 
   def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
-              htmlCode=None, helper=None, profile=None):
+              htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Usage:
@@ -351,7 +351,7 @@ class Lists(object):
     :param height:
     :param profile:
     """
-    html_obj = html.HtmlList.Buttons(self.context.rptObj, data or [], color, width, height, htmlCode, helper, profile)
+    html_obj = html.HtmlList.Buttons(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
 
     self.context.register(html_obj)
     return html_obj

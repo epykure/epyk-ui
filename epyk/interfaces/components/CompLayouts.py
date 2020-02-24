@@ -1,7 +1,3 @@
-"""
-
-"""
-
 from epyk.core import html
 
 

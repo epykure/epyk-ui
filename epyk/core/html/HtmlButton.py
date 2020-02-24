@@ -461,9 +461,7 @@ class IconEdit(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
     # Add the internal components icons and helper
-    self.add_span(text, css=False)
-    if text is not None:
-      report.ui.texts.span.css({"float": 'right'})
+    self.add_span(text, css={"float": 'right'})
     self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()})
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
 
