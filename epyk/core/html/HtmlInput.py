@@ -416,13 +416,11 @@ class Search(Html.Html):
     self.css({"display": "inline-block", "margin-bottom": '2px'})
     #
     if not extensible:
-      self._report.style.cssCls('CssSearch')
-      pyCssCls = self._report.style.cssName('CssSearch')
+      self.attr["class"].add('CssSearch')
       self.css({"width": "100%"})
     else:
       self._report.style.cssCls('CssSearchExt')
-      pyCssCls = self._report.style.cssName('CssSearchExt')
-    self.add_input(text).input.set_attrs({"class": [pyCssCls], "placeholder": placeholder, "spellcheck": False})
+    self.add_input(text).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
     self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
     self.add_icon("fas fa-search").icon.attr['id'] = "%s_button" % self.htmlId
     self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute'})

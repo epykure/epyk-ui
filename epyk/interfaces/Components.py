@@ -39,6 +39,7 @@ class Components(object):
     self.input = self.inputs.input
     self.div = self.layouts.div
     self.grid = self.layouts.grid
+    self.row = self.layouts.row
     self.col = self.layouts.col
     self.table = self.tables.tabulator
     self.pivot = self.tables.pivot
@@ -396,20 +397,24 @@ class Components(object):
 
   def workflow(self, records, width=(None, '%'), height=(40, 'px'), color=None, options=None):
     """
+    Description:
+    ------------
     Entry point for the workflow object
 
-    Example
+    Usage:
+    ------
     rptObj.ui.workflow([
       {"value": 'test 1', "status": 'success', 'label': 'test'},
       {"value": 'test 2', "status": 'error'},
       {"value": 'test 3', "status": 'pending'}])
 
+    Attributes:
+    ----------
     :param records: A list with the different steps defined in the workflow
-    :param size: Optional.
-    :param width: Optional.
-    :param height: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param color: Optional.
-    :param options: Optional.
+    :param options: Optional. Specific Python options available for this component
     """
     html_wf = html.HtmlOthers.Workflow(self.rptObj, records, width, height, color, options or {})
     self.register(html_wf)

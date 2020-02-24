@@ -60,12 +60,50 @@ class SVG(object):
     :param options:
     """
     x2 = x2 or width[0]
-    y2 = 0 if height[1] == "%" else y2 / 2
-    y1 = 0 if height[1] == "%" else y1 / 2
+    if y2 is None:
+      y2 = 0 if height[1] == "%" else height[0] / 2
+    if y1 is None:
+      y1 = 0 if height[1] == "%" else height[0] / 2
     html_svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     html_svg.line(x1, y1, x2, y2)
     self.parent.context.register(html_svg)
     return html_svg
+
+  def arrow_right(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), options=None):
+    """
+
+    :param x1:
+    :param y1:
+    :param x2:
+    :param y2:
+    :param width:
+    :param height:
+    :param options:
+    """
+    line = self.line(x1, y1, x2 or width[0]-size, y2, width, height, options)
+    defs = line.defs()
+    m = defs.marker("arrow", "0 0 10 10", 5, 5)
+    m.arrow(size)
+    line[0].marker_end(m.url)
+    return line
+
+  def arrow_left(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), options=None):
+    """
+
+    :param x1:
+    :param y1:
+    :param x2:
+    :param y2:
+    :param width:
+    :param height:
+    :param options:
+    """
+    line = self.line(x1+size, y1, x2, y2, width, height, options)
+    defs = line.defs()
+    m = defs.marker("arrow", "0 0 10 10", 5, 5)
+    m.arrow(size).orient("auto-start-reverse")
+    line[0].marker_start(m.url)
+    return line
 
   def ellipse(self, cx, cy, rx, ry, width=(500, "px"), height=(300, "px"), options=None):
     """
@@ -178,19 +216,33 @@ class SVG(object):
     self.parent.context.register(tri)
     return tri
 
-  def axes(self, width=(500, "px"), height=(300, "px")):
+  def axes(self, size=10, width=(500, "px"), height=(300, "px")):
     """
+    Description:
+    ------------
 
+    Usage:
+    --------------
+    svg = rptObj.ui.charts.svg.axes()
+    m = svg.defs().marker("circle", "0 0 10 10", 5, 5)
+    m.circle(5, 5, 5, 'red')
+    m.markerWidth(10).markerHeight(10)
+    p = svg.path(0, 0, from_origin=True).line_to(50, 100).horizontal_line_to(300).line_to(400, 200)
+    p.markers(m.url)
+
+    Attributes:
+    ----------
+    :param size:
     :param width:
     :param height:
-
     """
-    svg = graph.GraphSvg.SVG(self.parent.context.rptObj, (300, "px"), (200, "px"))
+    svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
+    svg.origine = (size, height[0]-size)
     defs = svg.defs()
     m = defs.marker("arrow", "0 0 10 10", 5, 5)
     m.arrow().orient("auto-start-reverse")
-    m.markerWidth(10).markerHeight(10)
-    pl = svg.polyline([(10, 10), (10, height[0]-10), (width[0]-10, height[0]-10)]).css({'stroke': "black"})
+    m.markerWidth(size).markerHeight(size)
+    pl = svg.polyline([(size, size), (size, height[0]-size), (width[0]-size, height[0]-size)]).css({'stroke': "black"})
     pl.marker_start(m.url)
     pl.marker_end(m.url)
     self.parent.context.register(svg)

@@ -1,9 +1,7 @@
-"""
-HTML Definition for extra layouts and feedbacks components
-"""
-
 from epyk.core.html import Html
 
+from epyk.core.js.html import JsHtmlWorkflow
+from epyk.core.js.html import JsHtmlStars
 from epyk.core.js.primitives import JsObjects
 from epyk.core.html.entities import EntHtml4
 
@@ -105,6 +103,16 @@ class Stars(Html.Html):
                            'float': 'None'}, position="after")
     self.add_helper(helper).helper.css({"margin": '1px 4px'})
     self.css({'text-align': align, "display": 'block'})
+
+  @property
+  def dom(self):
+    """
+
+    :rtype: JsHtmlStars.Stars
+    """
+    if self._dom is None:
+      self._dom = JsHtmlStars.Stars(self, report=self._report)
+    return self._dom
 
   def click(self, js_fncs=None, profile=False):
     """
@@ -228,16 +236,25 @@ class Loading(Html.Html):
 class Workflow(Html.Html):
   name = "workflow"
 
-  def __init__(self, report, records, width, height, color, size, options):
+  def __init__(self, report, records, width, height, color, options):
     super(Workflow, self).__init__(report, records, css_attrs={"width": width, "height": height})
     self.color = self._report.theme.greys[-1] if color is None else color
-    self.size = size[0]
-    self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), "display": "inline-block", "margin": '5px'})
+    self.css({'color': self.color, "display": "inline-block", "margin": '5px'})
     self.status_colors = {
       "success": {"border": self._report.theme.success[1], "background": self._report.theme.success[0], "stroke-width": 2, "stroke": self._report.theme.greys[-1]},
       "error": {"border": self._report.theme.danger[1], "background": self._report.theme.danger[0], "stroke-width": 2, "stroke": self._report.theme.greys[-1]},
       "pending": {"border": self._report.theme.warning[1], "background": self._report.theme.warning[1], "stroke-width": 1, "stroke": self._report.theme.greys[-1]},
       "default": {"border": self._report.theme.greys[5], "background": self._report.theme.greys[3], "stroke-width": 1, "stroke": self._report.theme.greys[-1]}}
+
+  @property
+  def dom(self):
+    """
+
+    :rtype: JsHtmlWorkflow.Workflow
+    """
+    if self._dom is None:
+      self._dom = JsHtmlWorkflow.Workflow(self, report=self._report)
+    return self._dom
 
   def __str__(self):
     divs = []
@@ -252,7 +269,7 @@ class Workflow(Html.Html):
     for v in self.val[1:]:
       colors = self.status_colors.get(v.get('status', 'default'), self.status_colors['default'])
       # Add the link to the next step
-      line = self._report.ui.charts.svg.line(options={"stroke": colors["stroke"], "stroke-width": colors["stroke-width"]})
+      line = self._report.ui.charts.svg.line(y1=10, y2=10, width=(40, "px"), height=(60, "px"), options={"stroke": colors["stroke"], "stroke-width": colors["stroke-width"]})
       line.inReport = False
       divs.append(str(line))
 

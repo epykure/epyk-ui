@@ -377,19 +377,17 @@ class Layouts(object):
     self.context.register(table)
     return table
 
-  def form(self, action, method, htmlObj=None, helper=None):
+  def form(self, htmlObj=None, helper=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param action:
-    :param method:
     :param htmlObj:
     :param helper:
     :return:
     """
-    form = html.HtmlContainer.Form(self.context.rptObj, htmlObj, action, method, helper)
+    form = html.HtmlContainer.Form(self.context.rptObj, htmlObj, helper)
     self.context.register(form)
     return form

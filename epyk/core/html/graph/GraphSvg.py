@@ -4,6 +4,7 @@ from epyk.core.html import Html
 class SVG(Html.Html):
   def __init__(self, report, width, height):
     super(SVG, self).__init__(report, "", css_attrs={"width": width, "height": height})
+    self.origine = None
     if width is not None:
       self.set_attrs({"viewBox": "0 0 %s %s" % (width[0], height[0]), "version": '1.1', 'preserveAspectRatio': 'xMinYMin meet'})
     self.css({"display": 'inline-block'})
@@ -248,6 +249,23 @@ class SVG(Html.Html):
     self.html_objs.append(G(self._report, fill, stroke, stroke_width))
     return self.html_objs[-1]
 
+  def path(self, x=0, y=0, fill='none', from_origin=False):
+    """
+
+    https://www.w3.org/TR/SVG/paths.html
+
+    :param x:
+    :param y:
+
+    :rtype: Path
+    """
+    if from_origin:
+      print(self.origine)
+      x += self.origine[0]
+      y += self.origine[1]
+    self.html_objs.append(Path(self._report, x, y, fill, self.origine))
+    return self.html_objs[-1]
+
   def foreignObject(self, x, y, width, height):
     """
     Description:
@@ -359,7 +377,7 @@ class Marker(SVG):
     self.set_attrs(name="markerHeight", value=value)
     return self
 
-  def arrow(self):
+  def arrow(self, size=None):
     """
 
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
@@ -367,6 +385,8 @@ class Marker(SVG):
     :return:
     """
     self.html_objs.append("<path d='M 0 0 L 10 5 L 0 10 z' />")
+    if size is not None:
+      self.markerWidth(size).markerHeight(size)
     return self
 
   def __str__(self):
@@ -538,6 +558,25 @@ class Line(SVGItem):
     self.css({"stroke": report.theme.greys[-1], "stroke-width": 1})
     self.html_objs = []
 
+  def markers(self, marker_code):
+    """
+
+    :param marker_code:
+    """
+    self.set_attrs(name="marker-start", value=marker_code)
+    self.set_attrs(name="marker-mid", value=marker_code)
+    self.set_attrs(name="marker-end", value=marker_code)
+    return self
+
+  def marker_start(self, marker_code):
+    self.set_attrs(name="marker-start", value=marker_code)
+
+  def marker_mid(self, marker_code):
+    self.set_attrs(name="marker-mid", value=marker_code)
+
+  def marker_end(self, marker_code):
+    self.set_attrs(name="marker-end", value=marker_code)
+
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
     return "<line %s>%s</line>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
@@ -642,6 +681,59 @@ class TSpan(SVGItem):
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
     return "<tspan %s>%s%s</tspan>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, str_c)
+
+
+class Path(SVGItem):
+  def __init__(self, report, x, y, fill, origin):
+    super(Path, self).__init__(report, "")
+    self.set_attrs({'fill': fill, "stroke": report.theme.greys[-1], "stroke-width": 1})
+    self.html_objs, self.__path = [], ["M%s %s" % (x, y)]
+    self.origin = origin
+
+  def markers(self, marker_code):
+    """
+
+    :param marker_code:
+    """
+    self.set_attrs(name="marker-start", value=marker_code)
+    self.set_attrs(name="marker-mid", value=marker_code)
+    self.set_attrs(name="marker-end", value=marker_code)
+    return self
+
+  def line_to(self, x, y):
+    if self.origin is not None:
+      x = self.origin[0] + x
+      y = self.origin[1] - y
+    self.__path.append("L%s %s" % (x, y))
+    return self
+
+  def horizontal_line_to(self, x):
+    if self.origin is not None:
+      x = self.origin[0] + x
+    self.__path.append("H%s" % x)
+    return self
+
+  def vertical_line_to(self, y):
+    if self.origin is not None:
+      y = self.origin[1] - y
+    self.__path.append("V%s" % y)
+    return self
+
+  def move_to(self, x, y):
+    if self.origin is not None:
+      x = self.origin[0] + x
+      y = self.origin[1] - y
+    self.__path.append("M%s %s" % (x, y))
+    return self
+
+  def close_path(self):
+    self.__path.append("Z")
+    return self
+
+  def __str__(self):
+    self.set_attrs(name="d", value="".join(self.__path))
+    str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
+    return "<path %s>%s%s</path>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, str_c)
 
 
 class AnimateTransform(Html.Html):

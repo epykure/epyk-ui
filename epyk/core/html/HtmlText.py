@@ -478,7 +478,7 @@ class Title(Html.Html):
     if contents is not None:
       self._name = contents.add(text, level or 1, name)
     if level is not None:
-      self.style.addCls("CssTitle%s" % level)
+      self.attr["class"].add("CssTitle%s" % level)
       self.css({'color': color, 'margin': '%spx 0 5px 0' % marginTop})
     else:
       self.attr['class'].add('CssTitle')
