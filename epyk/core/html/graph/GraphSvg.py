@@ -251,9 +251,17 @@ class SVG(Html.Html):
 
   def path(self, x=0, y=0, fill='none', from_origin=False):
     """
+    Description:
+    ------------
+    The <path> element is used to define a path.
 
+    Related Pages:
+    --------------
     https://www.w3.org/TR/SVG/paths.html
+    https://www.w3.org/TR/svg-paths/
 
+    Attributes:
+    ----------
     :param x:
     :param y:
 
@@ -724,6 +732,79 @@ class Path(SVGItem):
       x = self.origin[0] + x
       y = self.origin[1] - y
     self.__path.append("M%s %s" % (x, y))
+    return self
+
+  def curve_to(self, x1, y1, x2, y2):
+    """
+
+    https://www.w3.org/TR/svg-paths/
+
+    :param x1:
+    :param y1:
+    :param x2:
+    :param y2:
+    :return:
+    """
+    if self.origin is not None:
+      x1 = self.origin[0] + x1
+      y1 = self.origin[1] - y1
+      x2 = self.origin[0] + x2
+      y2 = self.origin[1] - y2
+    self.__path.append("C%s %s %s %s" % (x1, y1, x2, y2))
+    return self
+
+  def smooth_curve_to(self, x1, y1, x2, y2):
+    """
+
+    https://www.w3.org/TR/svg-paths/
+
+    :param x1:
+    :param y1:
+    :param x2:
+    :param y2:
+    :return:
+    """
+    if self.origin is not None:
+      x1 = self.origin[0] + x1
+      y1 = self.origin[1] - y1
+      x2 = self.origin[0] + x2
+      y2 = self.origin[1] - y2
+    self.__path.append("S%s %s %s %s" % (x1, y1, x2, y2))
+    return self
+
+  def quadratic_bezier_curve_to(self, x1, y1, x2, y2):
+    """
+
+    https://www.w3.org/TR/svg-paths/
+
+    :param x1:
+    :param y1:
+    :param x2:
+    :param y2:
+    :return:
+    """
+    if self.origin is not None:
+      x1 = self.origin[0] + x1
+      y1 = self.origin[1] - y1
+      x2 = self.origin[0] + x2
+      y2 = self.origin[1] - y2
+    self.__path.append("Q%s %s %s %s" % (x1, y1, x2, y2))
+    return self
+
+  def smooth_quadratic_bezier_curve_to(self, x, y, absolute=True):
+    """
+
+    https://www.w3.org/TR/svg-paths/
+
+    :param x:
+    :param y:
+    :param absolute:
+    :return:
+    """
+    if self.origin is not None:
+      x = self.origin[0] + x
+      y = self.origin[1] - y
+    self.__path.append("T%s %s" % (x, y))
     return self
 
   def close_path(self):
