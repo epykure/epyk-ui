@@ -29,9 +29,10 @@ class Radio(Html.Html):
 
   def set_disable(self, text):
     """
+    Description:
+    ------------
 
     :param text:
-    :return:
     """
     for v in self.val:
       if v.val["text"] == text:

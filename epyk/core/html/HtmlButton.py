@@ -483,8 +483,12 @@ class Buttons(Html.Html):
 
   def __getitem__(self, i):
     """
+    Description:
+    ------------
     Get a button in this component
 
+    Attributes:
+    ----------
     :param i: Integer. The button index
     :rtype: Button
     """

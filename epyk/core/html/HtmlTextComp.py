@@ -445,6 +445,7 @@ class TrafficLight(Html.Html):
     self.set_attrs(name="title", value=tooltip)
     self.set_attrs(name="data-status", value=color)
     self._jsStyles = {'red': self._report.theme.danger[1], 'green': self._report.theme.success[1], 'orange': self._report.theme.warning[1]}
+    self.action = None
     if tooltip is not None:
       self.tooltip(tooltip)
 
@@ -481,7 +482,15 @@ class TrafficLight(Html.Html):
     :param jsFncs:
     :param profile:
     """
-    return self.click(jsFncs, profile)
+    self.action = self._report.ui.icon("fas fa-wrench")
+    self.action.inReport = False
+    self.action.tooltip("Click to try to resolve the issue")
+    self.action.style.css.font_size = 8
+    self.action.style.css.margin_top = 8
+    self.action.style.css.cursor = 'pointer'
+    self.action.style.css.vertical_align = 'top'
+    self.action.click(jsFncs, profile)
+    return self
 
   def click(self, jsFncs, profile=False):
     """
@@ -508,6 +517,9 @@ class TrafficLight(Html.Html):
       else {htmlObj.style.backgroundColor =data}'''
 
   def __str__(self):
+    if self.action is not None:
+      return '<div id="%s"><div %s></div>%s</div>%s' % (self.htmlId, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.action.html(), self.helper)
+
     return '<div id="%s"><div %s></div></div>%s' % (self.htmlId, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.helper)
 
   # -----------------------------------------------------------------------------------------

@@ -24,6 +24,8 @@ class Hr(Html.Html):
   @property
   def style(self):
     """
+    Description:
+    ------------
     Property to the CSS Style of the component
 
     :return: GrpClsLayout.ClassStandard
@@ -175,6 +177,8 @@ class Help(Html.Html):
   @property
   def style(self):
     """
+    Description:
+    ------------
     Property to the CSS Style of the component
 
     :rtype: GrpClsLayout.ClassHelp
@@ -221,9 +225,13 @@ class Loading(Html.Html):
 
   def fixed(self, css=None, icon_css=None):
     """
+    Description:
+    ------------
     Set css attributes of the loading div to be fixed
     This can be done directly in options in the component constructor options={"fixed": True}
 
+    Attributes:
+    ----------
     :param css: Dictionary with the css attributes
     :param icon_css: Dictionary with the CSS attributes
 
@@ -259,6 +267,8 @@ class Workflow(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
 
     :rtype: JsHtmlWorkflow.Workflow
     """
