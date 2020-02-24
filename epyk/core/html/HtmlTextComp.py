@@ -1,11 +1,8 @@
-"""
-Wrapper to the different complex text HTML components
-"""
-
 import re
 import json
 
 from epyk.core.html import Html
+from epyk.core.css import Colors
 
 # The list of CSS classes
 from epyk.core.css import Defaults_css
@@ -446,14 +443,19 @@ class TrafficLight(Html.Html):
     self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
               'vertical-align': 'middle'})
     self.set_attrs(name="title", value=tooltip)
+    self.set_attrs(name="data-status", value=color)
     self._jsStyles = {'red': self._report.theme.danger[1], 'green': self._report.theme.success[1], 'orange': self._report.theme.warning[1]}
     if tooltip is not None:
       self.tooltip(tooltip)
 
   def colors(self, green=None, red=None, neutral=None):
     """
+    Description:
+    ------------
     Set the 3 colors of the traffic light
 
+    Attributes:
+    ----------
     :param green: The color used in case of result true
     :param red: The color used in case of result false
     :param neutral: The color used in case of null
@@ -467,6 +469,35 @@ class TrafficLight(Html.Html):
     if red is not None:
       self._jsStyles['red'] = red
     return self
+
+  def resolve(self, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+    Turn a error warning to a green one
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    return self.click(jsFncs, profile)
+
+  def click(self, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    success = Colors.getHexToRgb(self._report.theme.success[1])
+    self.style.css.cursor = "pointer"
+    jsFncs = [self.dom.querySelector("div").toggle("background-color", "rgb(%s, %s, %s)" % (success[0], success[1], success[2]),
+                                                   self._report.theme.danger[1])] + jsFncs
+    return super(TrafficLight, self).click(jsFncs, profile)
 
   @property
   def _js__builder__(self):

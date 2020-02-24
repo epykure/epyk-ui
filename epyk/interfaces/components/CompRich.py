@@ -73,6 +73,7 @@ class Rich(object):
     """
     Description:
     ------------
+    Add a traffic light component to give a visual status of a given process
 
     Usage:
     ------

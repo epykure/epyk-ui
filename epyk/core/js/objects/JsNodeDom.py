@@ -569,12 +569,23 @@ class JsDoms(JsObject.JsObject):
     """
     return self.css("display", "block")
 
-  def toggle(self):
+  def toggle(self, attr="display", jsVal1="block", jsVal2="none"):
     """
+    Description:
+    ------------
+    Hexadecimal colors should be converted to rgb code as only the computed style will be compared.
+    To do so you can use: Colors.getHexToRgb(self._report.theme.success[1]) from epyk.core.css import Colors
 
-    :return:
+    Attributes:
+    ----------
+    :param attr:
+    :param jsVal1:
+    :param jsVal2:
     """
-    self._js.append("if(window.getComputedStyle(%(varId)s).display == 'block'){ %(varId)s.style.display = 'none'} else { %(varId)s.style.display = 'block'}" % {"varId": self.varId})
+    if "-" in attr:
+      split_css = attr.split("-")
+      attr = "%s%s" % (split_css[0], split_css[1].title())
+    self._js.append("if(window.getComputedStyle(%(varId)s).%(attr)s == '%(jsVal1)s'){ %(varId)s.style.%(attr)s = '%(jsVal2)s'} else { %(varId)s.style.%(attr)s = '%(jsVal1)s'}" % {"varId": self.varId, "attr": attr, "jsVal1": jsVal1, "jsVal2": jsVal2})
     return self
 
   def toggleAttrs(self, pivot_key, pivot_val, attrs_off, attrs_on):
