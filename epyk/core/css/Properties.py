@@ -1458,6 +1458,8 @@ class CssMixin(object):
   @margin.setter
   def margin(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"margin": val})
 
   @property
@@ -2312,5 +2314,27 @@ class CssMixin(object):
     :param size: Optional. The border size. Default 1pz
     :param style: Optional. The border style. Default solid - a plain line
     """
-    self.border = "%spx %s %s" % (size, style, self.orign_htmlObj._report.theme.greys[0])
+    if color is None:
+      color = self.orign_htmlObj._report.theme.greys[-1]
+    self.border = "%spx %s %s" % (size, style, color)
     return self
+
+  def borders_light(self, color=None, size=1, style="solid"):
+    """
+    Description:
+    ------------
+    Shortcut function to set the light border color for a defined HTML component
+
+    Usage:
+    ------
+    a.style.css.borders_light()
+
+    Attributes:
+    ----------
+    :param color: Optional. The border color. Default the grey from selected theme
+    :param size: Optional. The border size. Default 1pz
+    :param style: Optional. The border style. Default solid - a plain line
+    """
+    if color is None:
+      color = self.orign_htmlObj._report.theme.greys[3]
+    return self.borders(color, size, style)

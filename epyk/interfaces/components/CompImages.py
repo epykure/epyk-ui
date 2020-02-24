@@ -39,6 +39,37 @@ class Images(object):
     self.context.register(html_image)
     return html_image
 
+  def section(self, image, name, title, text, path=None, width=(200, "px"), height=(200, "px")):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+    rptObj.ui.images.section("epykIcon.PNG", "# Test", "Epyk Test", 'This is a test', path=r"../../../static/images")
+
+    Attributes:
+    ----------
+    :param image:
+    :param name:
+    :param title:
+    :param text:
+    :param path:
+    :param width:
+    :param height:
+    :return:
+    """
+    img = self.img(image, width=(width[0]-10, 'px'), height=(100, "px"), path=path)
+    title = self.context.rptObj.ui.title(title, level=2)
+    highlight = self.context.rptObj.ui.texts.span(name, width=(50, "px"), height=(20, 'px'))
+    paragraph = self.context.rptObj.ui.texts.paragraph(text)
+    div = self.context.rptObj.ui.layouts.div([highlight, img, title, paragraph], width=width, height=height)
+    highlight.css({"position": "absolute", 'left': 0, "background-color": self.context.rptObj.theme.colors[-1],
+                   "color": self.context.rptObj.theme.greys[0], 'padding': "0 2px"})
+    div.style.css.margin = 2
+    div.style.add_classes.div.border_bottom()
+    return div
+
   def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
                profile=None):
     """

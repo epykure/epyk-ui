@@ -14,7 +14,6 @@ from epyk.core.js.html import JsHtml
 
 class Image(Html.Html):
   name, category, callFnc = 'Picture', 'Image', 'img'
-  # _grpCls = CssGrpClsImage.CssClassImage
 
   def __init__(self, report, image, path, align, htmlCode, width, height, profile, options):
     if path is None:
@@ -106,6 +105,15 @@ class ImgCarrousel(Html.Html):
     return self.items[i]
 
   def click(self, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__click_items.extend(jsFncs)
@@ -153,6 +161,8 @@ class Icon(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -169,6 +179,8 @@ class Icon(Html.Html):
   @property
   def style(self):
     """
+    Description:
+    ------------
     Property to the CSS Style of the component
 
     :rtype: GrpClsImage.ClassIcon
@@ -179,11 +191,16 @@ class Icon(Html.Html):
 
   def hover_colors(self, color_hover, color_out=None):
     """
+    Description:
+    ------------
     Change the color of the button background when the mouse is hover
 
-    Example
+    Usage:
+    ------
     rptObj.ui.icons.capture().icon.hover_colors("red", "yellow")
 
+    Attributes:
+    ----------
     :param color_hover: String. The color of the icon when mouse hover
     :param color_out: Optional, String. The color of the icon when mouse out
     """
@@ -196,6 +213,16 @@ class Icon(Html.Html):
     return self
 
   def click(self, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :return:
+    """
     self.style.css.cursor = "pointer"
     return super(Icon, self).click(jsFncs, profile)
 
@@ -224,6 +251,8 @@ class Emoji(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -271,6 +300,8 @@ class Badge(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
     Property to the options specific to the HTML component
 
     :rtype: OptButton.OptionsBadge

@@ -101,6 +101,10 @@ class Catalog(object):
   @property
   def div(self):
     """
+    Description:
+    ------------
+
+    :rtype: CatalogDiv.CatalogDiv
     """
     if "div" not in self.__ctx:
       self.__ctx['div'] = CatalogDiv.CatalogDiv(self.__rptObj, self.__class_list_type)
