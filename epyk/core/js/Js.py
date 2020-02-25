@@ -1,13 +1,4 @@
-"""
-Main entry point for all the Javascript Framework.
-
-This will load all the modules and function directly copied from the Javascript documentation.
-The main websites used in the implementation of those modules are:
-
-
-
-"""
-
+import os
 import json
 
 from epyk.core.js import JsUtils
@@ -295,8 +286,6 @@ class JsBreadCrumb(object):
     """
     return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, None)))
 
-
-
   @property
   def url(self):
     """
@@ -365,7 +354,7 @@ class JsBase(object):
 
     Documentation
 
-    :return:
+    :rtypw: JsObjects.JsObjects
     """
     return JsObjects.JsObjects(self)
 
@@ -508,6 +497,60 @@ class JsBase(object):
     jsData = JsUtils.jsConvertFncs(jsFncs)
     self._src._props.setdefault('js', {}).setdefault('prototypes', {})["%s.prototype.%s" % (pyClass._jsClass, fncName)] = {"content": ";".join(jsData), 'pmts': pmts}
     return self
+
+  def request_http(self, varName, method_type, url):
+    """
+    Description:
+    ------------
+    All modern browsers have a built-in XMLHttpRequest object to request data from a server.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/xml/xml_http.asp
+
+    Usage:
+    ------
+    rptObj.js.request_http("ajax", "POST", "https://api.cdnjs.com/libraries").setHeaders(header).onSuccess([
+      rptObj.js.alert(rptObj.js.objects.request.get("ajax").responseText)]).send(encodeURIData={"search": 'ractive'})
+
+    Attributes:
+    ----------
+    :param varName: String. The variable name created in the Javascript
+    :param method_type: String. The method of the HTTP Request
+    :param url: String. The url path of the HTTP request
+
+    :rtype: JsObjects.XMLHttpRequest
+    """
+    method_type = JsUtils.jsConvertData(method_type, None)
+    url = JsUtils.jsConvertData(url, None)
+    return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+
+  def request_rpc(self, varName, method_type, fnc, url):
+    """
+    Description:
+    ------------
+    Internal RPC to trigger services
+
+    Attributes:
+    ----------
+    :param varName: String. The variable name created in the Javascript
+    :param method_type: String. The method type
+    :param fnc: Fnc. A python function
+    :param url: String. The service url
+
+    :rtype: JsObjects.XMLHttpRequest
+    """
+    method_type = JsUtils.jsConvertData(method_type, None)
+    url = JsUtils.jsConvertData(url, None)
+    mod_name = fnc.__module__
+    if mod_name == "__main__":
+      import __main__
+
+      mod_path, mod_name = os.path.split(__main__.__file__[:-3])
+    else:
+      mod_path = os.path.abspath(os.path.dirname(fnc.__module__))
+    rpc_params = {"function": fnc.__name__, 'module': mod_name, 'path': mod_path}
+    return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
 
   @property
   def fncs(self):

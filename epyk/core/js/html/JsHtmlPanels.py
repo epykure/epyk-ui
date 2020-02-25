@@ -56,6 +56,7 @@ class JsHtmlTabs(JsHtml.JsHtml):
       JsObjects.JsNodeDom.JsDoms.new("div", varName="new_table_content"),
       JsObjects.JsNodeDom.JsDoms.get("new_table").css({"width": "100px", "display": 'inline-block'}),
       JsObjects.JsNodeDom.JsDoms.get("new_table_content").innerText(name),
+      JsObjects.JsNodeDom.JsDoms.get("new_table_content").setAttribute("name", self._src.tabs_name),
       JsObjects.JsNodeDom.JsDoms.get("new_table_content").css(self._src.css_tab),
       JsObjects.JsNodeDom.JsDoms.get("new_table_content").css({"padding": '5px 0'}),
       JsObjects.JsNodeDom.JsDoms.get("new_table").appendChild(JsObjects.JsObjects.get("new_table_content")),
