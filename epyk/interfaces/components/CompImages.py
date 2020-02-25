@@ -39,7 +39,7 @@ class Images(object):
     self.context.register(html_image)
     return html_image
 
-  def section(self, image, name, title, text, path=None, width=(200, "px"), height=(200, "px")):
+  def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px")):
     """
     Description:
     ------------
@@ -54,6 +54,7 @@ class Images(object):
     :param name:
     :param title:
     :param text:
+    :param url:
     :param path:
     :param width:
     :param height:
@@ -67,6 +68,9 @@ class Images(object):
     highlight.css({"position": "absolute", 'left': 0, "background-color": self.context.rptObj.theme.colors[-1],
                    "color": self.context.rptObj.theme.greys[0], 'padding': "0 2px"})
     div.style.css.margin = 2
+    if url is not None:
+      div.style.css.cursor = 'pointer'
+      div.click([self.context.rptObj.js.location.href(url)])
     div.style.add_classes.div.border_bottom()
     return div
 

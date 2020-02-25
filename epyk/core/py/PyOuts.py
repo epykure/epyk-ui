@@ -296,9 +296,7 @@ class PyOuts(object):
     :return: The file full path
     """
     if path is None:
-      path = os.path.join(os.getcwd(), "outs", "html")
-    else:
-      path = os.path.join(path, "html")
+      path = os.path.join(os.getcwd(), "outs")
     if not os.path.exists(path):
       os.makedirs(path, exist_ok=True)
     if name is None:
