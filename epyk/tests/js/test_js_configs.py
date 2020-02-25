@@ -8,7 +8,7 @@ report = Page.Report()
 chart_type = 'hbar'
 configs = JsConfig.get(chart_type, chartFam='Billboard', preferred=False)
 config_chart = configs['Billboard'][chart_type](report, [], {})
-config_chart.addAttr("test", 'function(){alert}', isPyData=False)
+config_chart.set_attrs(name="test", value='function(){alert}')
 
 print(config_chart.toJs())
 
