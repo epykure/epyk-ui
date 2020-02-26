@@ -78,7 +78,7 @@ class Images(object):
     html_image.style.css.border_radius = 50
     return html_image
 
-  def avatar(self, text=None, image=None, path=None, width=(30, "px"), height=(30, "px"), align="center", htmlCode=None,
+  def avatar(self, text=None, image=None, path=None, status=None, width=(30, "px"), height=(30, "px"), align="center", htmlCode=None,
                profile=None, options=None):
     """
     Description:
@@ -87,7 +87,8 @@ class Images(object):
 
     Usage:
     ------
-    rptObj.ui.images.avatar("EpykIcon.PNG")
+    rptObj.ui.images.avatar("Epyk", status='out')
+    rptObj.ui.images.avatar(image="epykIcon.PNG", path=config.IMG_PATH, status=False)
 
     Attributes:
     ----------
@@ -100,22 +101,44 @@ class Images(object):
     :param profile:
     :param options:
     """
+    status_map = {
+      True: self.context.rptObj.theme.success[1],
+      'available': self.context.rptObj.theme.success[1],
+      False: self.context.rptObj.theme.danger[1],
+      'busy': self.context.rptObj.theme.danger[1],
+      'out': self.context.rptObj.theme.warning[1],
+                  }
+    bgcolor, margin_top = None, -5
     if image is not None:
-      return self.circular(image, path, width, height, align, htmlCode, profile, options)
+      img = self.img(image, path, (width[0]-5, width[1]), (height[0]-5, height[1]), align, htmlCode, profile, options)
+      img.style.css.border_radius = 50
+      img.style.css.margin = 2
+      margin_top = -8
+    else:
+      bgcolor = Colors.randColor(self.context.rptObj.py.hash(text))
+      img = self.context.rptObj.ui.layouts.div(text[0].upper())
+      img.style.css.line_height = width[0] - 5
+      img.style.css.color = "white"
+      img.style.css.font_size = width[0]
+      img.style.css.font_weight = 'bold'
+      img.style.css.padding = 0
+    img.style.css.middle()
+    status_o = self.context.rptObj.ui.layouts.div("&nbsp;", width=(10, "px"), height=(10, "px"))
+    status_o.style.css.position = 'relative'
 
-    id = self.context.rptObj.py.hash(text)
-    bgcolor = Colors.randColor(id)
-    div = self.context.rptObj.ui.layouts.div(text[0].upper(), width=width, height=height)
-    div.style.css.padding = 0
-    div.style.css.line_height = width[0] - 5
-    div.style.css.color = "white"
-    div.style.css.font_size = width[0]
-    div.style.css.font_weight = 'bold'
-    div.style.css.middle()
-    div.style.css.background_color = bgcolor
+    status_o.style.css.background_color = status_map.get(status, self.context.rptObj.theme.greys[5])
+    status_o.style.css.border_radius = 10
+    status_o.style.css.margin_top = margin_top
+    status_o.style.css.float = 'right'
+
+    div = self.context.rptObj.ui.layouts.div([img, status_o], width=width, height=height)
+    if bgcolor is not None:
+      div.style.css.background_color = bgcolor
+      div.style.css.text_stoke = "1px %s" % bgcolor
     div.style.css.borders_light()
     div.style.css.border_radius = 50
-    div.style.css.text_stoke = "1px %s" % bgcolor
+    div.img = img
+    div.status = status_o
     return div
 
   def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px")):
