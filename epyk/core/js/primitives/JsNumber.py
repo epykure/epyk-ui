@@ -193,7 +193,7 @@ class JsNumber(JsObject.JsObject):
     return JsNumber("%s.toPrecision(%s)" % (self.varId, n), isPyData=False)
 
   def __add__(self, value):
-    return JsNumber("%s += %s" % (self.varId, value), isPyData=False)
+    return JsNumber("%s + %s" % (self.varId, value), isPyData=False)
 
   def __sub__(self, value):
     return JsNumber("%s - %s" % (self.varId, value), isPyData=False)

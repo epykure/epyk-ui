@@ -19,7 +19,8 @@ class Images(object):
     ------
     rptObj.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
     https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
@@ -53,7 +54,8 @@ class Images(object):
     ------
     rptObj.ui.circular("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
     https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
@@ -160,7 +162,6 @@ class Images(object):
     :param path:
     :param width:
     :param height:
-    :return:
     """
     img = self.img(image, width=(width[0]-10, 'px'), height=(100, "px"), path=path)
     title = self.context.rptObj.ui.title(title, level=2)

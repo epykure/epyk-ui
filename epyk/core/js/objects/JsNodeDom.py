@@ -12,6 +12,7 @@ from epyk.core.css import Colors
 
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
+from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsArray
 
@@ -606,6 +607,24 @@ class JsDoms(JsObject.JsObject):
     css_attrs_off = self.css(attrs_off).toStr()
     self._js.append("if(window.getComputedStyle(%(varId)s)['%(pivot_key)s'] == '%(pivot_val)s') {%(css_attrs_on)s} else {%(css_attrs_off)s}" % {"pivot_val": pivot_val, "varId": self.varId, "pivot_key": pivot_key, 'css_attrs_on': css_attrs_on, 'css_attrs_off': css_attrs_off})
     return self
+
+  @property
+  def clientHeight(self):
+    """
+    Description:
+    ------------
+    The Element.clientHeight read-only property is zero for elements with no CSS or inline layout boxes; otherwise, it's the inner height of an element in pixels.
+    It includes padding but excludes borders, margins, and horizontal scrollbars (if present).
+
+    Usage:
+    ------
+    rptObj.js.alert(rptObj.js.body.clientHeight)
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight
+    """
+    return JsNumber.JsNumber("%s.clientHeight" % self.varId)
 
   def toggleClass(self, clsName, propagate=False):
     """

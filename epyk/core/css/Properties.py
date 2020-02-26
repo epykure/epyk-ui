@@ -2072,6 +2072,8 @@ class CssMixin(object):
   def top(self, val):
     if val is None:
       val = 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"top": val})
 
   @property
@@ -2356,12 +2358,52 @@ class CssMixin(object):
 
   def shadow_text(self):
     """
+    Description:
+    ------------
 
     Related Pages:
     --------------
     https://www.w3schools.com/css/css3_shadows.asp
     """
     self.text_shadow = "0 0 3px #FF0000, 0 0 5px #0000FF"
+    return self
+
+  def fixed_top(self, top=5):
+    """
+    Description:
+    ------------
+    Fix the component on the top of the page
+
+    Usage:
+    ------
+    p.style.css.fixed_top()
+
+    Attributes:
+    ----------
+    :param top: Number. The margin with the page top border
+    """
+    self.position = "fixed"
+    self.display = "block"
+    self.top = top
+    return self
+
+  def fixed_bottom(self, bottom=10):
+    """
+    Description:
+    ------------
+    Fix the component at the bottom of the page
+
+    Usage:
+    ------
+    p.style.css.fixed_bottom()
+
+    Attributes:
+    ----------
+    :param bottom: Number. The margin with the bottom of the page
+    """
+    self.position = "fixed"
+    self.display = "block"
+    self.bottom = bottom
     return self
 
   def borders(self, color=None, size=1, style="solid"):

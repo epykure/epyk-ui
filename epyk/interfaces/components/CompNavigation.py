@@ -133,6 +133,26 @@ class Navigation(object):
       div.tooltip(tooltip)
     return div
 
+  def scroll(self, position=0, height=(5, 'px'), options=None, profile=False):
+    """
+
+    Usage:
+    ------
+    rptObj.ui.navigation.scroll()
+
+    Attributes:
+    ----------
+    :param position:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    p = self.context.rptObj.ui.sliders.progressbar(position, height=height)
+    self.context.rptObj.js.addOnReady(
+      self.context.rptObj.js.window.events.addScrollListener([
+        p.build(self.context.rptObj.js.window.scrollPercentage)]))
+    return p
+
   def indices(self, count, selected=1, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
 

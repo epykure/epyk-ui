@@ -12,6 +12,7 @@ from epyk.core.js.objects import JsNodeDom
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
+from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsObject
 
@@ -572,12 +573,61 @@ class JsWindow(object):
     """
     Description:
     ------------
+    The read-only scrollY property of the Window interface returns the number of pixels that the document is currently scrolled vertically.
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
 
     Attributes:
     ----------
-    :param windowId:
+    :param windowId: String. The window reference
     """
     return JsNumber.JsNumber("%s.scrollY" % windowId)
+
+  @property
+  def innerHeight(self, windowId="window"):
+    """
+    Description:
+    ------------
+    The innerHeight property returns the height of a window's content area.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/prop_win_innerheight.asp
+
+    Attributes:
+    ----------
+    :param windowId: String. The window reference
+    """
+    return JsNumber.JsNumber("%s.innerHeight" % windowId)
+
+  @property
+  def scrollEndPage(self, windowId="window"):
+    """
+    Description:
+    ------------
+    The scrollEndPage property indicates if the page is scrolled to the end
+
+    Attributes:
+    ----------
+    :param windowId: String. The window reference
+    """
+    return JsBoolean.JsBoolean("(%s.scrollY + %s.innerHeight > document.body.clientHeight)? true: false" % (windowId, windowId), isPyData=False)
+
+  @property
+  def scrollPercentage(self, windowId="window"):
+    """
+    Description:
+    ------------
+    The scrollPercentage property return the percentage of the page scrolled
+
+    Attributes:
+    ----------
+    :param windowId: String. The window reference
+    """
+    return JsNumber.JsNumber(
+      "Math.min((%s.scrollY + %s.innerHeight)/ document.body.clientHeight * 100, 100)" % (windowId, windowId), isPyData=False)
 
   @property
   def scrollMaxY(self, windowId="window"):
