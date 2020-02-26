@@ -1,4 +1,5 @@
 from epyk.core import html
+from epyk.core.css import Colors
 
 
 class Images(object):
@@ -38,6 +39,84 @@ class Images(object):
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
     self.context.register(html_image)
     return html_image
+
+  def circular(self, image=None, path=None, width=(100, "%"), height=('auto', ""), align="center", htmlCode=None,
+          profile=None, options=None):
+    """
+    Description:
+    ------------
+    Add an HTML image to the page. The path can be defined either in a absolute or relative format.
+
+    Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server
+
+    Usage:
+    ------
+    rptObj.ui.circular("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
+
+    Documentation
+    https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
+    https://www.w3schools.com/cssref/css3_pr_border-radius.asp
+
+    Attributes:
+    ----------
+    :param image: String. The image file name
+    :param path: Optional. String. The image file path
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel or percentage
+    :param align:
+    :param htmlCode:
+    :param profile:
+    :param options:
+    """
+    if height[0] is not None and width[1] == '%':
+      width = ("auto", '')
+    html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
+    self.context.register(html_image)
+    # add the css styles
+    html_image.style.css.padding = 5
+    html_image.style.css.borders_light()
+    html_image.style.css.border_radius = 50
+    return html_image
+
+  def avatar(self, text=None, image=None, path=None, width=(30, "px"), height=(30, "px"), align="center", htmlCode=None,
+               profile=None, options=None):
+    """
+    Description:
+    ------------
+    Generate or load an avatar
+
+    Usage:
+    ------
+    rptObj.ui.images.avatar("EpykIcon.PNG")
+
+    Attributes:
+    ----------
+    :param image:
+    :param path:
+    :param width:
+    :param height:
+    :param align:
+    :param htmlCode:
+    :param profile:
+    :param options:
+    """
+    if image is not None:
+      return self.circular(image, path, width, height, align, htmlCode, profile, options)
+
+    id = self.context.rptObj.py.hash(text)
+    bgcolor = Colors.randColor(id)
+    div = self.context.rptObj.ui.layouts.div(text[0].upper(), width=width, height=height)
+    div.style.css.padding = 0
+    div.style.css.line_height = width[0] - 5
+    div.style.css.color = "white"
+    div.style.css.font_size = width[0]
+    div.style.css.font_weight = 'bold'
+    div.style.css.middle()
+    div.style.css.background_color = bgcolor
+    div.style.css.borders_light()
+    div.style.css.border_radius = 50
+    div.style.css.text_stoke = "1px %s" % bgcolor
+    return div
 
   def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px")):
     """

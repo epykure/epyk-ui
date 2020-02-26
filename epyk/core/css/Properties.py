@@ -1141,7 +1141,17 @@ class CssMixin(object):
     self.htmlObj.css({"font-variant": val})
 
   @property
-  def font_weight(self): return self.htmlObj.css("font-weight")
+  def font_weight(self):
+    """
+    Description:
+    ------------
+    The font-weight property sets how thick or thin characters in text should be displayed.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_font_weight.asp
+    """
+    return self.htmlObj.css("font-weight")
 
   @font_weight.setter
   def font_weight(self, val):
@@ -1404,6 +1414,8 @@ class CssMixin(object):
   @line_height.setter
   def line_height(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"line-height": val})
 
   @property
@@ -1987,6 +1999,60 @@ class CssMixin(object):
   def text_transform(self, val):
     val = val or 'None'
     self.htmlObj.css({"text-transform": val})
+
+  @property
+  def text_stoke(self):
+    """
+    Description:
+    ------------
+    The -webkit-text-stroke CSS property specifies the width and color of strokes for text characters. This is a shorthand property for the longhand properties -webkit-text-stroke-width and -webkit-text-stroke-color.
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke
+    """
+    return self.htmlObj.css("-webkit-text-stroke")
+
+  @text_stoke.setter
+  def text_stoke(self, val):
+    val = val or 'None'
+    self.htmlObj.css({"-webkit-text-stroke": val})
+
+  @property
+  def text_stoke_width(self):
+    """
+    Description:
+    ------------
+    The -webkit-text-stroke-width CSS property specifies the width of the stroke for text.
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-width
+    """
+    return self.htmlObj.css("-webkit-text-stroke-width")
+
+  @text_stoke_width.setter
+  def text_stoke_width(self, val):
+    val = val or 'None'
+    self.htmlObj.css({"-webkit-text-stroke-width": val})
+
+  @property
+  def text_stoke_color(self):
+    """
+    Description:
+    ------------
+    The -webkit-text-stroke-color CSS property specifies the stroke color of characters of text. If this property is not set, the value of the color property is used.
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-color
+    """
+    return self.htmlObj.css("-webkit-text-stroke-color")
+
+  @text_stoke_color.setter
+  def text_stoke_color(self, val):
+    val = val or 'None'
+    self.htmlObj.css({"-webkit-text-stroke-color": val})
 
   @property
   def top(self):
