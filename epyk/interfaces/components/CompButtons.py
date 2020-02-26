@@ -223,14 +223,14 @@ class Buttons(object):
     self.context.register(html_radio)
     return html_radio
 
-  def switch(self, recordSet=None, label=None, color=None, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
+  def toggle(self, recordSet=None, label=None, color=None, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
     """
     Description:
     ------------
 
     Usage:
     ------
-    rptObj.ui.buttons.switch({'on': "true", 'off': 'false'})
+    rptObj.ui.buttons.toggle({'on': "true", 'off': 'false'})
 
     Related Pages:
     --------------
@@ -247,9 +247,9 @@ class Buttons(object):
     :param htmlCode:
     :param profile:
     """
-    html_switch = html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, width, height, htmlCode, profile)
-    self.context.register(html_switch)
-    return html_switch
+    html_toggle = html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, width, height, htmlCode, profile)
+    self.context.register(html_toggle)
+    return html_toggle
 
   def checkboxes(self, records=None, title=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
                htmlCode=None, globalFilter=None, tooltip='', dfColumn=None, icon="fas fa-check", options=None, profile=None):
