@@ -452,6 +452,9 @@ class Style(object):
     self.__enabled, self.__invalid, self.__valid = dict(getattr(self, '_enabled', {})), dict(getattr(self, '_invalid', {})), dict(getattr(self, '_valid', {}))
     self.__visited, self.__after, self.__before = dict(getattr(self, '_visited', {})), dict(getattr(self, '_after', {})), dict(getattr(self, '_before', {}))
     self.__active = dict(getattr(self, '_active', {}))
+
+    # More bespoke items
+    self.__webkit_slider_thumb = dict(getattr(self, '_webkit_slider_thumb', {}))
     self.__internal_props = ["attrs", "hover", "focus", "checked", "valid", "disabled", "empty", "enabled", "invalid"]
     self.customize()
     for k in self.__internal_props:
@@ -703,6 +706,15 @@ class Style(object):
     return self.__after
 
   @property
+  def webkit_slider_thumb(self):
+    """
+    :return:
+    """
+    if self.__webkit_slider_thumb is None or isinstance(self.__webkit_slider_thumb, dict):
+      self.__webkit_slider_thumb = Data(self.__webkit_slider_thumb or {}, self.selector)
+    return self.__webkit_slider_thumb
+
+  @property
   def active(self):
     """
     Selects the active link
@@ -800,8 +812,9 @@ class Style(object):
           style.append("%s %s" % (css_id.strip(), s))
         else:
           style.append("%s:%s %s" % (css_id.strip(), e, s))
-    for e in ['after', 'before']:
-      s = getattr(self, e)
+    map_cls_ref = {'-webkit-slider-thumb': 'webkit_slider_thumb'}
+    for e in ['after', 'before', '-webkit-slider-thumb']:
+      s = getattr(self, map_cls_ref.get(e, e))
       css_id = str(s.selector) % cls_reference
       if str(s):
         style.append("%s::%s %s" % (css_id.strip(), e, s))

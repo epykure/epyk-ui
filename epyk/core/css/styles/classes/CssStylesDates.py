@@ -3,13 +3,14 @@ CSS Style module for the Dates components
 """
 
 from epyk.core.css.styles.classes import CssStyle
+from epyk.core.css import Defaults_css
 
 
 class CssDatePickerUI(CssStyle.Style):
   classname = "ui-datepicker"
 
   def customize(self):
-    self.css({"background": self.rptObj.theme.colors[0]})
+    self.css({"background": self.rptObj.theme.colors[0], "font-size": Defaults_css.font()})
 
 
 class CssDatePicker(CssStyle.Style):
@@ -25,6 +26,15 @@ class CssDatePicker(CssStyle.Style):
 
 class CssDatesTimePicker(CssStyle.Style):
   _attrs = {'margin': 0}
+  classname = "ui-timepicker-standard"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], "background": self.rptObj.theme.colors[0]})
+    self.css({'color': self.rptObj.theme.greys[-1], "background": self.rptObj.theme.colors[0],
+              "font-size": Defaults_css.font()})
+
+
+class CssDatesTimePickerState(CssStyle.Style):
+  classname = "ui-timepicker-standard .ui-state-hover"
+
+  def customize(self):
+    self.css({"background": self.rptObj.theme.colors[0]})

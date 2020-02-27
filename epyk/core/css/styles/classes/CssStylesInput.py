@@ -40,13 +40,12 @@ class CssInputRangeThumb(CssStyle.Style):
   """
   CSS Style for the thumb of the input range component
   """
-  cssId = {'reference': 'input[type=range]::-webkit-slider-thumb'}
-  _attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
-  classname = False
-  _selector = 'input[type=range]::-webkit-slider-thumb'
+  _attrs = {'-webkit-appearance': 'none', 'appearance': 'none'}
+  _webkit_slider_thumb = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
 
   def customize(self):
-    self.attrs.css({"background": self.rptObj.theme.success[1], 'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
+    self.webkit_slider_thumb.css({"background": self.rptObj.theme.success[1],
+                    'width': '%spx' % Defaults_html.INPUTS_RANGE_THUMB,
                     'height': '%spx' % Defaults_html.INPUTS_RANGE_THUMB})
 
 

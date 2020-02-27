@@ -1,9 +1,3 @@
-"""
-This below module is defining HTML components expecting Javascript events. Each of them are using specific function in
-order to update their content or to run some functions on the server side.
-
-Components using Ajax functions will be fully working only if a server is defined.
-"""
 
 import re
 import json
@@ -14,6 +8,9 @@ from epyk.core.html.entities import EntHtml4
 from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
+
+# The list of CSS classes
+from epyk.core.css.styles import GrpClsJqueryUI
 
 
 class ProgressBar(Html.Html):
@@ -80,6 +77,19 @@ class Slider(Html.Html):
                                  globalFilter=globalFilter, profile=profile)
 
   @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsJqueryUI.ClassSlider
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsJqueryUI.ClassSlider(self)
+    return self._styleObj
+
+  @property
   def dom(self):
     """
     The Javascript Dom object
@@ -115,278 +125,7 @@ class Slider(Html.Html):
         </div>
         <div id="%(htmlId)s"></div>
       </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.val['min'], "htmlId": self.htmlId,
-                             "max": self.val['max'], "helper": self.helper}
-
-
-class SliderOld(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
-  name, category, callFnc = 'Slider', 'Sliders', 'slider'
-
-  def __init__(self, report, value, typeObj, range, animate, step, min, max, width, height,
-               globalFilter, recordSet, color, attrs, helper, profile):
-    if recordSet is not None:
-      series = recordSet
-      if range is None and min == True:
-        operation, range = 'below', 'min'
-      elif range is None and max == True:
-        operation, range = 'above', 'max'
-      elif range is not None:
-        operation = 'between'
-      else:
-        operation = "="
-      min, max = series[0], series[-1]
-      value, typeObj = value, typeObj
-    if typeObj == 'integer':
-      try:
-        int(value)
-      except:
-        report.log("Slider is expected type as a number by default - value = %s, change type variable to range " % value)
-        raise Exception("Slider is expected type as a number by default - value = %s, change type variable to range " % value)
-
-    self.type = typeObj
-    val = {'animate': animate, 'min': min, 'max': max, 'step': step}
-    if range is not None:
-      val['range'] = range
-    if isinstance(value, list) and len(value) == 2:
-      val['range'] = True
-      val['values'] = value
-    else:
-      val['value'] = value
-    super(SliderOld, self).__init__(report, val, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
-                                 globalFilter=globalFilter, profile=profile)
-    self._jsStyles = {'type': typeObj}
-    #
-    self.add_helper(helper)
-
-    self.css({'text-align': 'center', 'padding-top': '-50px', 'padding': '10px', 'margin': '0 0 10px 0'})
-    self.setColor(self._report.theme.colors[7] if color is None else color)
-    if self.htmlCode is not None:
-      self._report.htmlCodes[self.htmlCode] = self
-      if 'values' in self.vals:
-        if typeObj == 'date':
-          self.jsFrg('slidechange', self.jsAddUrlParam(self.htmlCode, '[FormatDate(ui.values[0]), FormatDate(ui.values[1])]', isPyData=False))
-        else:
-          self.jsFrg('slidechange', self.jsAddUrlParam(self.htmlCode, "ui.values", isPyData=False))
-      else:
-        if typeObj == 'date':
-          self.jsFrg('slidechange', self.jsAddUrlParam(self.htmlCode, "FormatDate(ui.value)", isPyData=False))
-        else:
-          self.jsFrg('slidechange', self.jsAddUrlParam(self.htmlCode, "ui.value", isPyData=False))
-
-    # if typeObj == 'date':
-    #   self.change('''var value = new Date(ui.value);
-    #     if(ui.handleIndex == 0) { $(ui.handle).html("<div style='margin-top:12px'>" + FormatDate(value) + "</div>" )}
-    #     else {$(ui.handle).html("<div style='margin-top:-17px'>" + FormatDate(value) + "</div>")}''')
-    # else:
-    #   self.js.objects.proto("formatMoney")
-    #   self.change('''
-    #     if(ui.handleIndex == 0) {$(ui.handle).html("<div style='margin-top:12px'>"+ ui.value.formatMoney(0, ",", ".") +"</div>")}
-    #     else {$(ui.handle).html("<div style='margin-top:-17px'>"+ ui.value.formatMoney(0, ",", ".") +"</div>")}''')
-    if typeObj == 'date':
-      self.addGlobalFnc('DateToTimeStamp(date)', '''
-        var splitDt = date.split("-") ; var dateTime = new Date(splitDt[0], parseInt(splitDt[1])-1, splitDt[2]);
-        return dateTime.getTime(); ''', 'Javascript function to convert a string date YYYY-MM-DD to a Javascript timestamp')
-      self.addGlobalFnc('FormatDate(timeStamp)', '''
-        var d = new Date(timeStamp), month = '' + (d.getMonth() + 1), day = '' + d.getDate(), year = d.getFullYear();
-        if (month.length < 2) month = '0' + month;
-        if (day.length < 2) day = '0' + day;
-        return [year, month, day].join('-'); ''', 'Javascript function to convert a Js timestamp to a string date YYYY-MM-DD')
-    #self.change("var data = {event_val: ui.value, event_code:'%(htmlId)s'}; $('#%(htmlId)s_val').html(data.event_val);" % {'htmlId': self.htmlId } )
-
-  @property
-  def dom(self):
-    """
-    The Javascript Dom object
-
-    :rtype: JsHtmlJqueryUI.JsHtmlSlider
-    """
-    if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, report=self._report)
-    return self._dom
-
-  @property
-  def id_container(self):
-    return self.htmlId
-
-  def jsEvents(self):
-    if hasattr(self, 'jsFncFrag'):
-      for eventKey, fnc in self.jsFncFrag.items():
-        #fnc.insert(0, self.jsAddUrlParam(self.htmlId, self.val, isPyData=False))
-        self._report.jsOnLoadEvtsFnc.add(''' 
-            %(jqId)s.on('%(eventKey)s', function(event, ui) {
-              var useAsync = false; var data = %(data)s;
-              %(jsInfo)s; %(jsFnc)s; %(urlUpdate)s;
-              if(!useAsync) {
-                var body_loading_count = parseInt($('#body_loading span').text()); $('#body_loading span').html(body_loading_count - 1);
-                if ($('#body_loading span').html() == '0') {$('#body_loading').remove()}}
-            })''' % {'jqId': self.eventId, 'eventKey': eventKey, 'data': self.jsQueryData, 'lightGreyColor': self._report.theme.greys[2],
-                     'urlUpdate': self.js.window.history.updateState(self.htmlId, self.val).toStr(),
-                     'jsFnc': ";".join([f for f in fnc if f is not None]), 'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
-
-  # data.slide: function( event, ui ) {  $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] ); }
-  @property
-  def _js__builder__(self):
-    return '''
-    if (options.type == 'date'){
-      data.step = data.step * 86400000; data.min = DateToTimeStamp(data.min); data.max = DateToTimeStamp(data.max);
-      if (data.values != undefined) {data.values = [DateToTimeStamp(data.values[0]), DateToTimeStamp(data.values[1])]}
-      else if(data.value != 0) {data.value = DateToTimeStamp(data.value)}};
-    if(!isNaN(data)){data = {value: data}};
-    htmlObj.slider(data);
-    $('#'+ htmlObj.attr('id') +' .ui-slider-range').css("background-color", options.backgroundColor);
-    $('#'+ htmlObj.attr('id') +' .ui-slider-handle').css({"outline": 0, "white-space": "nowrap"});
-    $('#'+ htmlObj.attr('id') +' .ui-slider-handle').css("color", options.backgroundColor);
-    $('#'+ htmlObj.attr('id') +' .ui-state-default, .ui-widget-content .ui-state-default' ).css("background-color", options.backgroundDotColor)
-    '''
-
-  def addAttr(self, key, val):
-    """
-    :category: Javascript features
-    :rubric: JS
-    :example: >>> myObj.change( report.addAttr('value', 20) )
-    :returns: Javascript string with the function to define some slider properties
-    :dsc:
-      This function will change or add some javascript attributes attached to the slider object
-    :link Jquery documentation: https://jqueryui.com/slider/
-    """
-    self.vals[key] = val
-
-  def setColor(self, color, colorDot=None):
-    """
-    :category: Color Change
-    :rubric: CSS
-    :type: Style
-    :dsc:
-      Set the color of the Slider object
-    :return: The Python object
-    """
-    if colorDot is None:
-      colorDot = color
-    self._jsStyles['backgroundColor'] = color
-    self._jsStyles['backgroundDotColor'] = colorDot
-    return self
-
-  def __str__(self):
-    return '''
-      <div %(strAttr)s>
-        <div style="width:100%%;height:20px">
-          <span style="float:left;display:inline-block">%(min)s</span>
-          <span style="float:right;display:inline-block">%(max)s</span>
-        </div>
-        <div id="%(htmlId)s"></div>
-      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.val['min'], "htmlId": self.htmlId,
-                     "max": self.val['max'], "helper": self.helper}
-
-  def click(self, jsFnc):
-    return self.change(jsFnc)
-
-  def change(self, jsFnc):
-    """
-    :category: Javascript event
-    :rubric: JS
-    :example: myObj.change( report.jsAlert() )
-    :returns: Javascript string with the function to trigger other functions with the slider value is changed
-    :dsc:
-      Python wrapper to a javascript function to trigger events on slider changes
-    :link Jquery documentation: https://api.jqueryui.com/slider/
-    """
-    return self.jsFrg('slidechange', jsFnc)
-
-  def jsUpdate(self, jsData, isPyData=True):
-    """
-    :category: Javascript function
-    :rubric: JS
-    :example: myObj.jsUpdate( 20 )
-    :example: myObj.jsUpdate( "2018-07-21" )
-    :example: myObj.jsUpdate( ["2018-07-21", "2018-07-22"] ) # if the type is a date
-    :return: Javascript string with the function to change the value of the component
-    :dsc:
-      Python wrapper to a javascript function to change the value of a Jquery slider object
-    :link Jquery documentation: https://jqueryui.com/slider/
-    """
-    if isPyData:
-      if ('values' in self.vals or self.vals.get('range', False) == True) and not isinstance(jsData, list):
-        self._report.log("Problem in Slider jsUpdate expect a list")
-        raise Exception("Problem in Slider jsUpdate expect a list")
-
-      jsData = json.dumps(jsData)
-    if 'values' in self.vals or self.vals.get('range', False) == True:
-      if self.type == 'date':
-        return "%(jqId)s.slider('values', 0, DateToTimeStamp(%(jsData)s[0])); %(jqId)s.slider('values', 1, DateToTimeStamp(%(jsData)s[1]));" % {'jqId': self.jqId, 'jsData': jsData}
-      else:
-        return "%(jqId)s.slider('values', 0, %(jsData)s[0]); %(jqId)s.slider('values', 1, %(jsData)s[1]);" % {'jqId': self.jqId, 'jsData': jsData}
-
-    if self.type == 'date':
-      return "%s.slider('value', DateToTimeStamp(%s)); " % (self.jqId, jsData)
-    else:
-      return "%s.slider('value', %s); " % (self.jqId, jsData)
-
-  # @property
-  # def val(self):
-  #   """
-  #   :category: Javascript function
-  #   :rubric: JS
-  #   :example: myObj.val
-  #   :returns: Javascript string with the function to get the current value of the component
-  #   :dsc:
-  #     Property to get the jquery value of the HTML object in a python HTML object.
-  #     This method can be used in any jsFunction to get the value of a component in the browser.
-  #     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
-  #   """
-  #   if 'values' in self.val or self.val.get('range', False) == True:
-  #     if self.type == 'date':
-  #       return '[FormatDate(%(jqId)s.slider("values")[0]), FormatDate( %(jqId)s.slider("values")[1] )]' % {'jqId': self.jqId}
-  #
-  #     return self.js.objects.get('%(jqId)s.slider("values")' % {'jqId': self.jqId})
-  #
-  #   if self.type == 'date':
-  #     return 'FormatDate(%(jqId)s.slider("value"))' % {'jqId': self.jqId}
-  #
-  #   return self.js.objects.get('%(jqId)s.slider("value")' % {'jqId': self.jqId})
-
-  @property
-  def jsQueryData(self):
-    """
-    :category: Javascript function
-    :rubric: JS
-    :example: >>> myObj.jsQueryData
-    :dsc:
-      Python function to define the Javascript object to be passed in case of Ajax call internally or via external REST service with other languages
-    :return: Javascript String of the data to be used in a jQuery call
-    :link ajax call: http://api.jquery.com/jquery.ajax/
-    """
-    if 'values' in self.vals or self.vals.get('range', False) == True:
-      if self.type == 'date':
-        return "{event_val: [FormatDate(ui.values[0]), FormatDate(ui.values[1])], event_code: '%(htmlId)s', event_min: %(min)s, event_max: %(max)s, event_range: '%(range)s' }" % {"htmlId":  self.htmlId, 'min': self.vals['min'], 'max': self.vals['max'], 'range': self.vals.get('range') }
-      else:
-        return "{event_val: ui.values, event_code: '%(htmlId)s', event_min: %(min)s, event_max: %(max)s, event_range: '%(range)s'}" % {"htmlId":  self.htmlId, 'min': self.vals['min'], 'max': self.vals['max'], 'range': self.vals.get('range') }
-
-    if self.type == 'date':
-      return "{ event_val: FormatDate(ui.value), event_code: '%(htmlId)s', event_min: %(min)s, event_max: %(max)s, event_range: '%(range)s' }" % {"htmlId":  self.htmlId, 'min': self.vals['min'], 'max': self.vals['max'], 'range': self.vals.get('range') }
-
-    return "{ event_val: ui.value, event_code: '%(htmlId)s', event_min: %(min)s, event_max: %(max)s, event_range: '%(range)s' }" % {"htmlId":  self.htmlId, 'min': self.vals['min'], 'max': self.vals['max'], 'range': self.vals.get('range') }
-
-
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document):
-    label = self.title if self.title != "" else 'Input'
-    p = document.add_paragraph("%s: %s [%s, %s]" % (label, self._report.http.get(self.htmlCode, ''), self.vals['min'], self.vals['max']))
-
-  def to_xls(self, workbook, worksheet, cursor):
-    """
-
-    Documentation
-    https://xlsxwriter.readthedocs.io/format.html
-    """
-    cellTitle = self.title if self.title != "" else 'Input'
-    cell_format = workbook.add_format({'bold': True})
-    worksheet.write(cursor['row'], 0, cellTitle, cell_format)
-    cursor['row'] += 1
-    worksheet.write(cursor['row'], 0, self._report.http.get(self.htmlCode, ''))
-    worksheet.write(cursor['row'], 1, "[%s, %s]" % (self.vals['min'], self.vals['max']))
-    cursor['row'] += 2
+                        "max": self.val['max'], "helper": self.helper}
 
 
 class SkillBar(Html.Html):

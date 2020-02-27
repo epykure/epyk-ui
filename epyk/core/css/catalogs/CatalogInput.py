@@ -51,14 +51,33 @@ class CatalogInput(Catalog.CatalogGroup):
 
 class CatalogDate(Catalog.CatalogGroup):
   def datepicker_ui(self):
-    """  """
+    """
+    Description:
+    ------------
+
+    """
     return self._set_class(CssStylesDates.CssDatePickerUI)
 
   def datepicker(self):
-    """  """
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesDates.CssDatePicker)
 
   def time_picker(self):
-    """  """
+    """
+    Description:
+    ------------
+    CSS class in charge of changing the container of the different possible items to be selected
+    """
     return self._set_class(CssStylesDates.CssDatesTimePicker)
 
+  def time_picker_items(self):
+    """
+    Description:
+    ------------
+    CSS class in charge of changing the color of the items on mouse hover.
+    This will by default change the background of the item
+    """
+    return self._set_class(CssStylesDates.CssDatesTimePickerState)

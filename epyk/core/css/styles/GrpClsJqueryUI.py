@@ -1,13 +1,10 @@
-"""
-
-"""
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.css import Classes
 from epyk.core.css.styles.attributes import AttrInput
 
 
-class ClassInput(GrpCls.ClassHtml):
+class ClassSlider(GrpCls.ClassHtml):
   @property
   def css(self):
     """
@@ -28,3 +25,4 @@ class ClassInput(GrpCls.ClassHtml):
     if self._css_class is None:
       self._css_class = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).basic()
     return self._css_class
+

@@ -1,6 +1,3 @@
-"""
-Wrapper to the different HTML input components
-"""
 
 import datetime
 import json
@@ -14,7 +11,7 @@ from epyk.core.js.html import JsHtmlField
 from epyk.core.js.html import JsHtmlJqueryUI
 
 # The list of CSS classes
-from epyk.core.css.styles import GrpInput
+from epyk.core.css.styles import GrpClsInput
 
 
 class Output(Html.Html):
@@ -39,10 +36,10 @@ class Input(Html.Html):
     """
     Property to the CSS Style of the component
 
-    :rtype: GrpInput.ClassInput
+    :rtype: GrpClsInput.ClassInput
     """
     if self._styleObj is None:
-      self._styleObj = GrpInput.ClassInput(self)
+      self._styleObj = GrpClsInput.ClassInput(self)
     return self._styleObj
 
   @property
@@ -90,11 +87,14 @@ class Input(Html.Html):
     self.attr["pattern"] = pattern
     if required:
       self.attr["required"] = None
+    #self.style.add_classes.input.
     self.style.addCls(["CssInputInValid", "CssInputValid"])
     return self
 
   def enter(self, jsFncs, profile=False):
     """
+    Description:
+    ------------
     Add an javascript action when the key enter is pressed on the keyboard
 
     Example
@@ -142,8 +142,23 @@ class InputTime(Input):
     super(InputTime, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
 
   @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsInput.ClassInputTime
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsInput.ClassInputTime(self)
+    return self._styleObj
+
+  @property
   def dom(self):
     """
+    Description:
+    ------------
     The Javascript Dom object
 
     :rtype: JsHtmlJqueryUI.JsHtmlTimePicker
@@ -172,15 +187,28 @@ class InputTime(Input):
 class InputDate(Input):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, callFnc = 'Input Time', 'input'
-  cssCls = ["datepicker"]
-  # _grpCls = CssGrpClsInput.CssClassDatePicker
 
   def __init__(self, report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile)
 
   @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsInput.ClassInput
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsInput.ClassInputDate(self)
+    return self._styleObj
+
+  @property
   def dom(self):
     """
+    Description:
+    ------------
     The Javascript Dom object
 
     :rtype: JsHtmlJqueryUI.JsHtmlDatePicker
@@ -224,7 +252,6 @@ class InputInteger(Input):
 
 class InputRange(Input):
   name, callFnc = 'Input Range', 'input'
-  # _grpCls = GrpCls.CssGrpClass
 
   def __init__(self, report, text, min, max, step, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
@@ -277,7 +304,7 @@ class Field(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
-    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.pyStyle), str_div, self.helper)
+    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
 
 
 class FieldInput(Field):
@@ -292,6 +319,19 @@ class FieldRange(Field):
   def __init__(self, report, value, min, max, step, label, placeholder, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.d_range(value, min=min, max=max, step=step, width=(None, "%"), placeholder=placeholder)
     super(FieldRange, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsInput.ClassInputRange
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsInput.ClassInputRange(self)
+    return self._styleObj
 
 
 class FieldCheckBox(Field):

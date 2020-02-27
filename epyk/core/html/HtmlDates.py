@@ -6,7 +6,6 @@ from epyk.core.js.packages import JsQuery
 
 class DatePicker(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
-  cssCls = ["datepicker"]
   name, category, callFnc = 'Date Picker', 'Dates', 'date'
 
   def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
@@ -15,7 +14,6 @@ class DatePicker(Html.Html):
     super(DatePicker, self).__init__(report, {"value": value, "options": dfltOptions}, htmlCode=htmlCode, profile=profile)
     # Add all the internal components input, label, icon and helper
     self.input = self._report.ui.inputs.d_date(self.val).css({"padding": 0})
-    #self.input.attributes({"class": ['time']})
     self.prepend_child(self.input)
     self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
     if self.icon is not None:
