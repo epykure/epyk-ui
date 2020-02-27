@@ -54,12 +54,12 @@ class Layouts(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. The content position. Values (left, right, center). Default center
     :param profile: Optional. A flag to set the component performance storage
-    :return:
     """
     hr_html = self.context.rptObj.ui.div()
     for _ in range(count):
-      hr_html += html.HtmlOthers.Hr(self.context.rptObj, background_color, height, align, profile)
-    self.context.register(hr_html)
+      hr_item = html.HtmlOthers.Hr(self.context.rptObj, background_color, height, align, profile)
+      self.context.register(hr_item)
+      hr_html += hr_item
     return hr_html
 
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):

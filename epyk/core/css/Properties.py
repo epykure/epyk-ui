@@ -2336,7 +2336,31 @@ class CssMixin(object):
     self.position = "sticky"
     return self
 
-  def shadow_box(self, hexa_color=None):
+  def shadow(self, color=None, size=5):
+    """
+    Description:
+    ------------
+    Add a default dark shadow to the container
+
+    Usage:
+    ------
+    .style.css.shadow()
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/css/css3_shadows.asp
+
+    Attributes:
+    ----------
+    :param color: String. The color
+    :param size: Number. The size for the shadow
+    """
+    if color is None:
+      color = self.orign_htmlObj._report.theme.colors[2]
+    self.css({"box-shadow": "%(size)spx %(size)spx %(size)spx %(color)s" % {'color': color, 'size': size}})
+    return self
+
+  def shadow_box(self, hexa_color=None, opacity=0.2):
     """
     Description:
     ------------
@@ -2349,11 +2373,12 @@ class CssMixin(object):
     Attributes:
     ----------
     :param hexa_color: String. An hexadecimal color code
+    :param opacity:
 
     :return: The CSS object to allow the functions chaining
     """
     rgb = Colors.getHexToRgb(self.orign_htmlObj._report.theme.greys[-1]) if hexa_color is None else hexa_color
-    self.box_shadow = "0 4px 8px 0 rgba(%(r)s, %(g)s, %(b)s, 0.2), 0 6px 20px 0 rgba(%(r)s, %(g)s, %(b)s, 0.19)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2]}
+    self.box_shadow = "0 4px 8px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s), 0 6px 20px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity}
     return self
 
   def shadow_text(self):
