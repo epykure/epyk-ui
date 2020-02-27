@@ -124,6 +124,10 @@ class Fields(object):
     Description:
     ------------
 
+    Usage:
+    ------
+    rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
+
     Attributes:
     ----------
     :param value:

@@ -1,11 +1,3 @@
-"""
-Dom properties
-
-Documentation
-- https://www.w3schools.com/jsref/dom_obj_event.asp
-- https://www.w3schools.com/jsref/dom_obj_all.asp
-
-"""
 
 from epyk.core.js.fncs import JsFncs
 from epyk.core.css import Colors
@@ -319,6 +311,84 @@ class JsDomEvents(object):
     return strData
 
 
+class JsDomsTransforms(object):
+
+  def __init__(self, src, selector):
+    self._src, self.selector = src, selector
+
+  def translateX(self, x):
+    """
+    Description:
+    ------------
+
+    https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX
+    https://www.w3schools.com/jsref/prop_style_transform.asp
+
+    :param x:
+    """
+    return "%s.style.transform = 'translateX(%spx)'" % (self.selector, x)
+
+  def translateY(self, y):
+    """
+    Description:
+    ------------
+
+    https://www.w3schools.com/jsref/prop_style_transform.asp
+
+    :param y:
+    """
+    return "%s.style.transform = 'translateY(%spx)'" % (self.selector, y)
+
+  def translate(self, x, y):
+    """
+    Description:
+    ------------
+
+    https://www.w3schools.com/jsref/prop_style_transform.asp
+
+    :param x:
+    :param y:
+    """
+    return "%s.style.transform = 'translate(%spx, %spx)'" % (self.selector, x, y)
+
+  def scale(self, x, y):
+    """
+    Description:
+    ------------
+
+    :param x:
+    :param y:
+    """
+    return "%s.style.transform = 'scale(%s, %s)'" % (self.selector, x, y)
+
+  def scaleX(self, x):
+    """
+    Description:
+    ------------
+
+    :param x:
+    """
+    return "%s.style.transform = 'scaleX(%s)'" % (self.selector, x)
+
+  def scaleY(self, y):
+    """
+    Description:
+    ------------
+
+    :param y:
+    """
+    return "%s.style.transform = 'scaleY(%s)'" % (self.selector, y)
+
+  def rotate(self, r):
+    """
+    Description:
+    ------------
+
+    :param r:
+    """
+    return "%s.style.transform = 'rotate(%s)'" % (self.selector, r)
+
+
 class JsDoms(JsObject.JsObject):
   _id = None
 
@@ -358,6 +428,10 @@ class JsDoms(JsObject.JsObject):
     :return: A javascript Array object
     """
     return JsArray.JsArray("%s.querySelectorAll('%s')" % (self.toStr(), tag), varName=varName, setVar=True, isPyData=False)
+
+  @property
+  def transform(self):
+    return JsDomsTransforms(self._report, self.varId)
 
   @property
   def jquery(self):
