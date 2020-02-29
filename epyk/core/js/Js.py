@@ -1,3 +1,4 @@
+
 import os
 import json
 
@@ -640,20 +641,23 @@ class JsBase(object):
     self._src._props.setdefault('js', {}).setdefault('builders', []).append(";".join(JsUtils.jsConvertFncs(jsFncs)))
     return self
 
-  def addKeyEvent(self, jsFncs, keyCode=None, keyCondition=None):
+  def addKeyEvent(self, jsFncs, keyCode=None, keyCondition=None, event="onkeyup"):
     """
+    Description:
+    ------------
     Add keyboard event to the document
 
     Either the keyCode or the keyCondition can be None
 
-    Documentation
+    Related Pages:
+    --------------
     http://gcctech.org/csc/javascript/javascript_keycodes.htm
 
+    Attributes:
+    ----------
     :param jsFncs: The Javascript function
     :param keyCode: Optional. The keycode as an integer
     :param keyCondition: Optional. A special condition based on the code
-
-    :return:
     """
     if keyCode is None and keyCondition is None:
       raise Exception("keyCode or keyCondition must be defined")
@@ -665,12 +669,14 @@ class JsBase(object):
       jsFncs = [jsFncs]
 
     if keyCode is not None:
-      keyCondition = "code == %s" % keyCode
-    self._src._props.setdefault('js', {}).setdefault('keyboard', {})[keyCondition] = ";".join(JsUtils.jsConvertFncs(jsFncs))
+      keyCondition = "e.which == %s" % keyCode
+    self._src._props.setdefault('js', {}).setdefault('builders', []).append("document.%s = function(e){if(%s) {%s}}" % (event, keyCondition, ";".join(JsUtils.jsConvertFncs(jsFncs))))
     return self
 
   def preload(self, ajaxParams):
     """
+    Description:
+    ------------
     Preload feature to be able to produce pre cached files.
     Those files will be produced in a asynchrone way and they will facilitate the fluidity in the web dashboard.
     The success file is only used as an indicator to check if the preload function has to be started. If the file is already present it will not be triggered.
@@ -689,11 +695,16 @@ class JsBase(object):
 
   def addOnReady(self, jsFncs):
     """
+    Description:
+    ------------
     The ready event occurs when the body DOM (document object model) has been loaded.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jquery/event_ready.asp
 
+    Attributes:
+    ----------
     :param jsFncs: The Javascript functions to be added to this section
     """
     self._src._props.setdefault('js', {}).setdefault('onReady', []).append(";".join(JsUtils.jsConvertFncs(jsFncs)))
@@ -718,11 +729,16 @@ class JsBase(object):
   # https://www.w3schools.com/jsref/dom_obj_document.a
   def getElementById(self, idName):
     """
+    Description:
+    ------------
     The getElementById() method returns the element that has the ID attribute with the specified value.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_document_getelementbyid.asp
 
+    Attributes:
+    ----------
     :param idName: Required. The ID attribute's value of the element you want to get
 
     :return: An Element Object, representing an element with the specified ID. Returns null if no elements with the specified ID exists
@@ -731,13 +747,18 @@ class JsBase(object):
 
   def getElementsByName(self, name):
     """
+    Description:
+    ------------
     The getElementsByName() method returns a collection of all elements in the document with the specified name (the value of the name attribute), as a NodeList object.
 
     The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers. The index starts at 0.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp
 
+    Attributes:
+    ----------
     :param name: Required. The name attribute value of the element you want to access/manipulate
 
     :return: A NodeList object, representing a collection of elements with the specified name.
@@ -748,33 +769,39 @@ class JsBase(object):
 
   def getElementsByTagName(self, tagName, i=0):
     """
+    Description:
+    ------------
     The getElementsByTagName() method returns a collection of an elements's child elements with the specified tag name, as a NodeList object.
 
     The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers. The index starts at 0.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
 
+    Attributes:
+    ----------
     :param tagName: Required. The tagname of the child elements you want to get
     :param i:
-
-    :return:
     """
     return JsNodeDom.JsDoms("document.getElementsByTagName('%s')[%s]" % (tagName, i), varName="%s_%s" % (tagName, i), setVar=True)
 
   def createElement(self, tagName, varName=None, setVar=True, dom_id=None):
     """
+    Description:
+    ------------
     The createElement() method creates an Element Node with the specified name.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_document_createelement.asp
 
+    Attributes:
+    ----------
     :param tagName: Required. The name of the element you want to create
     :param varName: Optional. The variable name to be set. Default random name
     :param setVar: Optional. Create a variable for the new object. Default True
     :param dom_id:
-
-    :return:
     """
     dom_obj = JsNodeDom.JsDoms.new(tagName, varName=varName, setVar=setVar, report=self._src)
     if dom_id is not None:

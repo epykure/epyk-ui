@@ -1,6 +1,3 @@
-"""
-
-"""
 
 from epyk.core.css import Properties
 from epyk.core.css import Defaults_css

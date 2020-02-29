@@ -1,6 +1,3 @@
-"""
-Base class for the CSS Style modules
-"""
 
 from epyk.core.css import Properties
 
