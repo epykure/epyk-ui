@@ -1,8 +1,6 @@
-"""
-Module dedicated to produce Menus components
-"""
 
 from epyk.core import html
+from epyk.core.css import Defaults_css
 
 
 class Menus(object):
@@ -171,3 +169,67 @@ class Menus(object):
 
   def left(self):
     pass
+
+  def divisor(self, data, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+    record = []
+    rptObj.ui.menus.divisor(record)
+
+    Attributes:
+    ----------
+    :param divider:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    if divider is None:
+      divider = self.context.rptObj.symbols.shapes.BLACK_RIGHT_POINTING_TRIANGLE
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    div.texts = []
+    for rec in data[:-1]:
+      div.texts.append(self.context.rptObj.ui.text(rec).css({"display": 'inline-block'}))
+      div += div.texts[-1]
+      div += self.context.rptObj.ui.text(divider).css({"display": 'inline-block', 'margin': '0 5px', 'font-size': Defaults_css.font(-2)})
+    div +=self.context.rptObj.ui.text(data[-1]).css({"display": 'inline-block'})
+    return div
+
+  def button(self, value, object, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+    mb = rptObj.ui.menus.button("Value", rptObj.ui.button("sub button"))
+    mb.item.click([rptObj.js.alert(mb.item.dom.content)])
+
+    Attributes:
+    ----------
+    :param value:
+    :param object:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    div.item = object
+    content = self.context.rptObj.ui.div(object, width=("auto", ''))
+    content.style.css.display = None
+    content.style.css.bottom = 0
+    content.style.css.padding = 5
+    content.style.css.background = self.context.rptObj.theme.greys[0]
+    content.style.css.z_index = 5
+    content.style.css.position = 'absolute'
+    but = self.context.rptObj.ui.button(value, width=width, profile=profile)
+    div += but
+    div += content
+    div.on("mouseover", [content.dom.css({"display": 'block'})])
+    div.on("mouseout", [content.dom.css({"display": 'none'})])
+    return div

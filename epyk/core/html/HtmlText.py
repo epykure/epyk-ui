@@ -186,6 +186,37 @@ class Text(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
+  def click(self, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+    Add a click event on the text component.
+    The style of the mouse on the component will be changed to make the event more visible
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    self.style.css.cursor = 'pointer'
+    return super(Text, self).click(jsFncs, profile)
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlRich
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
+  
   @property
   def options(self):
     """

@@ -1722,6 +1722,8 @@ class CssMixin(object):
   @padding.setter
   def padding(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"padding": val})
 
   @property
