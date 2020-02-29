@@ -92,6 +92,8 @@ class Slider(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    -----------
     The Javascript Dom object
 
     :rtype: JsHtmlJqueryUI.JsHtmlSlider

@@ -197,7 +197,7 @@ class Layouts(object):
     return html_panel
 
   def div(self, htmlObjs=None, label=None, color=None, width=(100, "%"), icon=None, height=(None, "px"), editable=False,
-          align='left', padding=None, htmlCode=None, tag='div', helper=None, profile=None):
+          align='left', padding=None, htmlCode=None, tag='div', helper=None, options=None, profile=None):
     """
     Description:
     ------------

@@ -1,6 +1,3 @@
-"""
-CSS Style module for the Button components
-"""
 
 from epyk.core.css.styles.classes import CssStyle
 
@@ -11,7 +8,7 @@ class CssBorderRadius(CssStyle.Style):
 
 class CssButtonBasic(CssStyle.Style):
   # Static properties for this class
-  _attrs = {'font-weight': 'bold', 'padding': '1px 10px', 'margin': '2px 0 2px 0', 'text-decoration': 'none',
+  _attrs = {'font-weight': 'bold', 'padding': '2px 10px', 'margin': '2px 0 2px 0', 'text-decoration': 'none',
             'border-radius': '5px', 'white-space': 'nowrap', 'display': 'inline-block',
             '-webkit-appearance': 'none', '-moz-appearance': 'none'}
   _hover = {'text-decoration': 'none', 'cursor': 'pointer'}

@@ -86,6 +86,9 @@ class Menus(object):
   def menu(self, data=None, position="bottom", color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
+
     Usage:
     ------
     l = rptObj.ui.lists.list(["A", "B"])
@@ -134,6 +137,8 @@ class Menus(object):
   def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
               htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -151,7 +156,6 @@ class Menus(object):
     :param htmlCode:
     :param helper:
     :param profile:
-    :return:
     """
     dfl_button_css = {"button_css": {"border-radius": 0, "border": "0px solid black"}}
     options = options or {}

@@ -1,4 +1,4 @@
-import os
+
 import re
 
 from epyk.core.html import Html

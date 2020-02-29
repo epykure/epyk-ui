@@ -8,6 +8,8 @@ from epyk.core.js.objects import JsChartBillboard
 from epyk.core.js.objects import JsChartDC
 from epyk.core.js.objects import JsChartPlotly
 
+from epyk.core.js.primitives import JsObject
+
 from epyk.core.js import JsUtils
 
 
@@ -526,3 +528,22 @@ class JsTypeOf(object):
     :return:
     """
     return "%s(%s)" % (self.fncName, ", ".join([str(a) for a in self.__jsArgs]))
+
+
+class JsAnonymous(object):
+
+  def __init__(self, jsFncs):
+    self.__strFnc, self.__returnFnc = jsFncs, ""
+
+  def return_(self, value):
+    self.__returnFnc = value
+    return self
+
+  def call(self):
+    return JsObject.JsObject("%s()" % self)
+
+  def __str__(self):
+    return "(function () {%s; return %s})" % (self.__strFnc, self.__returnFnc)
+
+  def toStr(self):
+    return str(self.__strFnc)

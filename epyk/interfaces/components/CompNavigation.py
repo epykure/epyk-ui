@@ -1,30 +1,38 @@
-"""
-
-"""
 
 from epyk.core import html
+from epyk.core.css import Defaults_css
 
 
 class Navigation(object):
   def __init__(self, context):
     self.context = context
 
-  def up(self, icon="fas fa-arrow-up", tooltip=None, size=(None, "px"), width=(100, '%'), options=None, profile=False):
+  def up(self, icon="fas fa-arrow-up", top=20, right=20, bottom=None, tooltip=None, width=(100, '%'), options=None, profile=False):
     """
+    Description:
+    ------------
+
+    Usage:
+    ------
+    rptObj.ui.navigation.up()
 
     Attributes:
     ----------
     :param icon:
+    :param top:
+    :param right:
+    :param bottom:
     :param tooltip:
-    :param size:
     :param width:
     :param options:
     :param profile:
-    :return:
     """
     du = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
-                                                "border-radius": '20px', "padding": '8px', "right": '20px',
-                                                "bottom": "20px"})
+                                                "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
+    if top is not None:
+      du.style.css.top = top
+    else:
+      du.style.css.bottom = bottom
     du.style.add_classes.div.background_hover()
     self.context.rptObj.js.addOnReady(
       self.context.rptObj.js.window.events.addScrollListener([
@@ -37,8 +45,10 @@ class Navigation(object):
       self.context.rptObj.js.objects.this.hide()])
     return du
 
-  def down(self, icon="fas fa-arrow-down", tooltip=None, width=(100, '%'), options=None, profile=False):
+  def down(self, icon="fas fa-arrow-down", top=20, right=20, bottom=None, tooltip=None, width=(100, '%'), options=None, profile=False):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -47,13 +57,20 @@ class Navigation(object):
     Attributes:
     ----------
     :param icon:
+    :param top:
+    :param right:
+    :param bottom:
     :param tooltip:
     :param width:
     :param options:
     :param profile:
     """
     dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
-        "border-radius": '20px', "padding": '8px', "right": '20px', 'top': '20px'})
+        "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
+    if bottom is not None:
+      dd.style.css.bottom = bottom
+    else:
+      dd.style.css.top = top
     dd.style.add_classes.div.background_hover()
     self.context.rptObj.js.addOnReady(
       self.context.rptObj.js.window.events.addScrollListener([
@@ -66,8 +83,10 @@ class Navigation(object):
       self.context.rptObj.js.objects.this.hide()])
     return dd
 
-  def to(self, y, x=None, icon="fas fa-map-pin", tooltip=None, size=(None, "px"), width=(100, '%'), options=None, profile=False):
+  def to(self, y, x=None, icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None, width=(100, '%'), options=None, profile=False):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -78,15 +97,21 @@ class Navigation(object):
     :param y:
     :param x:
     :param icon:
+    :param top:
+    :param right:
+    :param bottom:
     :param tooltip:
-    :param size:
     :param width:
     :param options:
     :param profile:
     :return:
     """
     dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
-                                                "border-radius": '20px', "padding": '8px', "right": '20px'})
+                                                "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
+    if bottom is not None:
+      dd.style.css.bottom = bottom
+    else:
+      dd.style.css.top = top
     dd.style.add_classes.div.background_hover()
     if tooltip is not None:
       dd.tooltip(tooltip)
@@ -99,42 +124,49 @@ class Navigation(object):
       self.context.rptObj.js.objects.this.hide()])
     return dd
 
-  def pin(self, top=50, right=20, bottom=None, left=None, icon="fas fa-map-pin", tooltip=None, size=(None, "px"),
-          width=(100, '%'), options=None, profile=False):
+  def pin(self, text, url="#", icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None, width=(100, '%'), options=None, profile=False):
     """
+    Description:
+    ------------
 
     Usage:
     ------
-    rptObj.ui.navigation.to(100, tooltip="test")
+    rptObj.ui.navigation.pin("anchor", tooltip="test", bottom=20)
 
     Attributes:
     ----------
+    :param text:
+    :param url:
+    :param icon:
     :param top:
     :param right:
     :param bottom:
-    :param left:
-    :param icon:
     :param tooltip:
-    :param size:
     :param width:
     :param options:
     :param profile:
     """
     dd = self.context.rptObj.ui.icon(icon)
-    url = self.context.rptObj.ui.link(icon).css({"margin-left": "10px"})
-    div = self.context.rptObj.ui.div([dd, url]).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
-                                      "border-radius": '30px', "padding": '10px 15px', "right": '20px', 'top': '20px',
-                                      "background-color": self.context.rptObj.theme.greys[0]})
+    h_url = self.context.rptObj.ui.link(text, url=url).css({"margin-left": "10px"})
+    div = self.context.rptObj.ui.div([dd, h_url]).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
+                          "border-radius": '30px', "padding": '10px 15px', "right": '%spx' % right,
+                          "background-color": self.context.rptObj.theme.greys[0]})
+    if bottom is not None:
+      div.style.css.bottom = bottom
+    else:
+      div.style.css.top = top
     div.attr['class'].add("CssDivOnHoverWidth")
-    url.css({"display": 'none', "white-space": 'nowrap'})
-    div.on("mouseover", [url.dom.css({"display": 'inline-block'})])
-    div.on("mouseout", [url.dom.css({"display": 'none'})])
+    h_url.css({"display": 'none', "white-space": 'nowrap'})
+    div.on("mouseover", [h_url.dom.css({"display": 'inline-block'})])
+    div.on("mouseout", [h_url.dom.css({"display": 'none'})])
     if tooltip is not None:
       div.tooltip(tooltip)
     return div
 
   def scroll(self, position=0, height=(5, 'px'), options=None, profile=False):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -155,6 +187,8 @@ class Navigation(object):
 
   def indices(self, count, selected=1, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -177,6 +211,8 @@ class Navigation(object):
 
   def points(self, count, selected=0, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -202,6 +238,8 @@ class Navigation(object):
   def dots(self, count, selected=1, position="right", width=(100, '%'), height=(None, 'px'), options=None,
            profile=False):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -222,3 +260,31 @@ class Navigation(object):
     html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, None, dflt_options, profile)
     self.context.register(html_points)
     return html_points
+
+  def path(self, records, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+    record = [{"text": "Lin 1", 'url': 'report_list.html'}, {"text": "Link 2"}]
+    rptObj.ui.navigation.path(record)
+
+    Attributes:
+    ----------
+    :param records:
+    :param divider:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    if divider is None:
+      divider = self.context.rptObj.symbols.shapes.BLACK_RIGHT_POINTING_TRIANGLE
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    for rec in records[:-1]:
+      div += self.context.rptObj.ui.link(rec['text'], url=rec.get('url', '#')).css({"display": 'inline-block'})
+      div += self.context.rptObj.ui.text(divider).css({"display": 'inline-block', 'margin': '0 5px', 'font-size': Defaults_css.font(-2)})
+    div +=self.context.rptObj.ui.link(records[-1]['text'], url=records[-1].get('url', '#')).css({"display": 'inline-block'})
+    return div

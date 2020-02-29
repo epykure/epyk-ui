@@ -325,6 +325,28 @@ class JsBase(object):
     self._breadcrumb, self.__data, self.__location = None, None, None
 
   @property
+  def viewHeight(self):
+    """
+    Description:
+    -----------
+    Return the current View port height visible in the browser
+    """
+    return JsNumber.JsNumber("Math.max(%s, %s)" % (self.documentElement.clientHeight, self.window.innerHeight))
+
+  @property
+  def documentElement(self):
+    """
+    Description:
+    -----------
+    Document.documentElement returns the Element that is the root element of the document (for example, the <html> element for HTML documents).
+
+    Related Pages:
+    --------------
+    https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
+    """
+    return JsNodeDom.JsDoms.get("document.documentElement")
+
+  @property
   def navigator(self):
     """
     The information from the navigator object can often be misleading, and should not be used to detect browser versions because:

@@ -8,6 +8,8 @@ from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsArray
 
+from epyk.core.js.objects import JsNodeDomRect
+
 from epyk.core.js import JsUtils
 
 
@@ -1088,7 +1090,7 @@ class JsDoms(JsObject.JsObject):
     :param attributename: Required. The name of the attribute you want to return
     :return: An Attr object, representing the specified attribute node.
     """
-    return JsString.JsString("%s.getAttributeNode('%s')" % (self.varId, attributename), isPyData=False)
+    return JsString.JsString(varId="%s.getAttributeNode('%s')" % (self.varId, attributename))
 
   def getComputedStyle(self, attributename=None):
     """
@@ -1102,6 +1104,19 @@ class JsDoms(JsObject.JsObject):
       split_css = attributename.split("-")
       attributename = "%s%s" % (split_css[0], split_css[1].title())
     return JsString.JsString("getComputedStyle(%s).%s" % (self.varId, attributename), isPyData=False)
+
+  def getBoundingClientRect(self):
+    """
+    Description:
+    -----------
+    The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
+
+    https://www.w3schools.com/jsref/met_element_getboundingclientrect.asp
+    https://developer.mozilla.org/en-US/docs/Web/API/DOMRect
+
+    :return:
+    """
+    return JsNodeDomRect.JsDOMRect("%s.getBoundingClientRect()" % self.varId)
 
   @property
   def hasChildNodes(self):
@@ -1309,6 +1324,10 @@ class JsDoms(JsObject.JsObject):
     if autoStyle:
       self.css({"cursor": "pointer"})
     self._js.append("%s.onclick = function(){%s}" % (self.varId, ";".join(JsUtils.jsConvertFncs(jsFncs))))
+    return self
+
+  def onVisible(self, jsFncs):
+    self._js.append("var rect = elm.getBoundingClientRect()" % self.varId)
     return self
 
   def getContext(self, contextType, contextAttributes=None):

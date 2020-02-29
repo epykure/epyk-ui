@@ -1,6 +1,3 @@
-"""
-Group CSS class for all the buttons components
-"""
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.css.styles.attributes import AttrClsButtons
@@ -13,7 +10,10 @@ class ClassButton(GrpCls.ClassHtml):
   @property
   def css(self):
     """
+    Description:
+    -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component
+
     :rtype: AttrClsButtons.AttrButton
     """
     if self._css_struct is None:
@@ -23,8 +23,11 @@ class ClassButton(GrpCls.ClassHtml):
   @property
   def css_class(self):
     """
+    Description:
+    -----------
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object
+
     :rtype: Classes.CatalogButton.CatalogButton
     """
     if self._css_class is None:
@@ -36,7 +39,10 @@ class ClassBadge(GrpCls.ClassHtml):
   @property
   def css(self):
     """
+    Description:
+    -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component
+
     :rtype: AttrClsButtons.AttrBadge
     """
     if self._css_struct is None:
@@ -49,7 +55,10 @@ class ClassButtonCheckBox(GrpCls.ClassHtml):
   @property
   def css(self):
     """
+    Description:
+    -----------
     Property to the underlying CSS definition to be added to the style HTML tag of a component
+
     :rtype: AttrClsButtons.AttrButton
     """
     if self._css_struct is None:

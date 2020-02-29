@@ -1,6 +1,3 @@
-"""
-CSS Style module for the Input components
-"""
 
 from epyk.core.html import Defaults as Defaults_html
 from epyk.core.css import Defaults as Defaults_css
@@ -87,7 +84,7 @@ class CssInputTextArea(CssStyle.Style):
   def customize(self):
     self.css({"background-color": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
               'border': '1px solid %s' % self.rptObj.theme.colors[1]})
-    self.hover.css.update({'color': self.rptObj.theme.greys[-1]})
+    self.hover.css({'color': self.rptObj.theme.greys[-1]})
 
 
 class CssInputValid(CssStyle.Style):
@@ -95,3 +92,11 @@ class CssInputValid(CssStyle.Style):
   _invalid = {'color': 'yellow', "background": "url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg)",
             "background-size": "10px", "background-repeat": 'no-repeat', "background-position": "0"}
 
+
+class CssUIActive(CssStyle.Style):
+  classname = "ui-state-active"
+
+  def customize(self):
+    self.css({"border": "1px solid %s" % self.rptObj.theme.success[1], 'background-color': self.rptObj.theme.success[1]}, important=True)
+    self.hover.css({"border": "1px solid %s" % self.rptObj.theme.success[1],
+                    'background-color': self.rptObj.theme.success[1]})

@@ -1,6 +1,3 @@
-"""
-Module dedicated to produce icon components
-"""
 
 from epyk.core import html
 from epyk.core.js.packages import JsFontAwesome

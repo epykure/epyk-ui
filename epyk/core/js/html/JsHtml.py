@@ -10,6 +10,7 @@ from epyk.core.js.statements import JsIf
 from epyk.core.js.fncs import JsFncs
 
 from epyk.core.js.objects import JsNodeDom
+from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsQueryUi
@@ -42,6 +43,18 @@ class JsHtml(JsNodeDom.JsDoms):
       return JsNodeDom.JsDomsList(None, "document.getElementsByName('%s')" % self._src.attr.get('name'), report=self._report)
 
     return self
+
+  @property
+  def isVisible(self):
+    """
+    Description:
+    -----------
+
+    """
+    bool = JsBoolean.JsBoolean("!(rect.bottom < 0 || rect.top - viewHeight >= 0)", varName="visibleFlag", setVar=True, isPyData=False)
+    bool._js.insert(0, self._report.js.viewHeight.setVar('viewHeight'))
+    bool._js.insert(0, self.getBoundingClientRect().setVar("rect"))
+    return JsFncs.JsAnonymous(bool.r).return_("visibleFlag").call()
 
   @property
   def content(self):
