@@ -533,17 +533,36 @@ class JsTypeOf(object):
 class JsAnonymous(object):
 
   def __init__(self, jsFncs):
-    self.__strFnc, self.__returnFnc = jsFncs, ""
+    self.__strFnc, self.__returnFnc, self.__paramsFnc = jsFncs, "", []
 
   def return_(self, value):
     self.__returnFnc = value
     return self
 
-  def call(self):
-    return JsObject.JsObject("%s()" % self)
+  def params(self, pmts):
+    """
+    """
+    self.__paramsFnc = pmts
+    return self
+
+  def call(self, *args, **kwargs):
+    """
+
+    :param args:
+    :param kwargs:
+    """
+    _args = []
+    if self.__paramsFnc:
+      for a in list(args):
+        _args.append(str(a))
+      if kwargs:
+        for i, p in enumerate(self.__paramsFnc):
+          if p in kwargs:
+            _args.append(str(kwargs[p]))
+    return JsObject.JsObject("%s(%s)" % (self, ", ".join(_args)))
 
   def __str__(self):
-    return "(function () {%s; return %s})" % (self.__strFnc, self.__returnFnc)
+    return "(function (%s) {%s; return %s})" % (", ".join(self.__paramsFnc), self.__strFnc, self.__returnFnc)
 
   def toStr(self):
     return str(self.__strFnc)

@@ -45,7 +45,7 @@ class JsHtml(JsNodeDom.JsDoms):
     return self
 
   @property
-  def isVisible(self):
+  def inViewPort(self):
     """
     Description:
     -----------
