@@ -199,7 +199,7 @@ class Menus(object):
     div +=self.context.rptObj.ui.text(data[-1]).css({"display": 'inline-block'})
     return div
 
-  def button(self, value, object, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
+  def button(self, value, object, symbol=None, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -213,11 +213,13 @@ class Menus(object):
     ----------
     :param value:
     :param object:
+    :param symbol:
     :param width:
     :param height:
     :param options:
     :param profile:
     """
+
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     div.item = object
     content = self.context.rptObj.ui.div(object, width=("auto", ''))
@@ -227,9 +229,38 @@ class Menus(object):
     content.style.css.background = self.context.rptObj.theme.greys[0]
     content.style.css.z_index = 5
     content.style.css.position = 'absolute'
-    but = self.context.rptObj.ui.button(value, width=width, profile=profile)
+    if symbol is None:
+      symbol = self.context.rptObj.symbols.shapes.BLACK_DOWN_POINTING_SMALL_TRIANGLE
+    but = self.context.rptObj.ui.button("%s %s" % (value, symbol),
+                                        width=width, profile=profile)
     div += but
     div += content
     div.on("mouseover", [content.dom.css({"display": 'block'})])
     div.on("mouseout", [content.dom.css({"display": 'none'})])
+    return div
+
+  def toolbar(self, data, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+    tb = rptObj.ui.menus.toolbar(["fas fa-paint-brush", "fas fa-code"])
+    tb[1].link.val = 4589
+    tb[1].tooltip("This is a tooltip")
+    tb[0].style.css.color = 'red'
+
+    Attributes:
+    ----------
+    :param data:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    for d in data:
+      div += self.context.rptObj.ui.images.badge(icon=d, text="", options={"badge_position": 'right'})
+      div[-1].style.css.cursor = 'pointer'
     return div

@@ -1,6 +1,3 @@
-"""
-Interface to the Vignets HTML components
-"""
 
 from epyk.core import html
 from epyk.core.css import Defaults as Defaults_css

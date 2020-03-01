@@ -258,6 +258,8 @@ class Html(object):
 
   def add_icon(self, text, css=None, position="before"):
     """
+    Description:
+    ------------
     Add an icon to the HTML object
 
     Example

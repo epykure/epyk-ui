@@ -202,10 +202,27 @@ class Text(Html.Html):
     return super(Text, self).click(jsFncs, profile)
 
   @property
+  def val(self):
+    """
+    Description:
+    ------------
+    Property to get the jquery value of the HTML object in a python HTML object.
+    This method can be used in any jsFunction to get the value of a component in the browser.
+    This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
+
+    :returns: Javascript string with the function to get the current value of the component
+    """
+    return self._vals
+
+  @val.setter
+  def val(self, val):
+    self._vals = val
+
+  @property
   def dom(self):
     """
-    Javascript Functions
-
+    Description:
+    ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -216,7 +233,7 @@ class Text(Html.Html):
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
-  
+
   @property
   def options(self):
     """

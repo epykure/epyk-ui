@@ -99,8 +99,9 @@ class TextBubble(Html.Html):
       <div %(strAttr)s>
         <div %(clsTag)s style="padding-top:10px;width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s"></div>
         <div "%(clsTitle)s"><a style="text-decoration:none"></a></div>%(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "clsTag": self._report.style.getClsTag(['CssDivBubble'], loadCls=True),
-                   'clsTitle': self._report.style.getClsTag(['CssTitle'], loadCls=True), 'bgcolor': self.background_color,
+      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "clsTag": ''# self._report.style.getClsTag(['CssDivBubble'], loadCls=True)
+      , 'clsTitle': '' #self._report.style.getClsTag(['CssTitle'], loadCls=True)
+      , 'bgcolor': self.background_color,
                    'helper': self.helper, 'height': bubble_height, 'width': bubble_width}
 
 
@@ -145,7 +146,6 @@ class BlockText(Html.Html):
 class TextWithBorder(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Text with Border and Icon', 'Rich', 'textborder'
-  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, recordSet, width, height, align, helper, profile):
     super(TextWithBorder, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
@@ -283,7 +283,6 @@ class DocScript(Html.Html):
   Security checks are done in the script to ensure they are TAGS as open
   """
   docTypes = set(['documentation', 'code'])
-  # _grpCls = GrpCls.CssGrpClassBase
   __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery']
   name, category, callFnc = 'Script Documentation', 'Text', 'doc'
 
@@ -326,7 +325,7 @@ class Prism(Html.Html):
     super(Prism, self).__init__(report, vals, css_attrs={"width": width, "height": height}, profile=profile)
     self.isEditable = isEditable
     self.trimSpaces = trimSpaces
-    self.style.addCls('language-%s' % language)
+    self.attr['class'].add('language-%s' % language)
     if align == 'center':
       self.css('margin', 'auto')
 
