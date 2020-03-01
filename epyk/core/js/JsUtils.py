@@ -1,6 +1,3 @@
-"""
-Module with some Python helpers for the Javascript framework
-"""
 
 import os
 import re
@@ -14,8 +11,28 @@ from epyk.core.js.primitives import JsObject
 # --------------------------------------------------------------------------------------------------------------
 #                                                       DECORATORS
 #
+def incompatibleBrowser(browsers):
+  """
+  Description:
+  ------------
+
+  :param browsers: List. Incompatible browsers
+  """
+  def decorator(func):
+    @functools.wraps(func)
+    def decorated(*args, **kwargs):
+      print("Warning: This function - %s - is not compatible with %s" % (func.__name__, ", ".join(browsers)))
+      return func(*args, **kwargs)
+
+    return decorated
+
+  return decorator
+
+
 def fromVersion(data):
   """
+  Description:
+  ------------
   This system decorate will decorate a component function to specify during the Python execution
   if a method is not yet available in the current state of the Javascript modules.
 
@@ -44,13 +61,16 @@ def fromVersion(data):
 
 def untilVersion(data, newFeature):
   """
+  Description:
+  ------------
   This system decorate will decorate a component function to specify during the Python execution
   if a method is not available since the current state of the Javascript modules.
   Indeed as it is possible to override JS version on the fly it is also important to get notify with functions
   are not compatible anymore.
   This decorator will also propose an alternative with the new feature to.
 
-  Example
+  Usage:
+  ------
   .untilVersion({'jqueryui': '1.12.0'}, "new function")
 
   :param data: String. The maximum version number of a package to use this function
@@ -77,6 +97,8 @@ def untilVersion(data, newFeature):
 #
 def jsConvertData(jsData, jsFnc):
   """
+  Description:
+  ------------
   Generic conversion function for any data in the internal framework.
   This will convert to String any data coming from the Javascript Python interface.
 
@@ -106,13 +128,13 @@ def jsConvertData(jsData, jsFnc):
 
 def jsConvert(jsData, jsDataKey, isPyData, jsFnc):
   """
+  Description:
+  ------------
 
   :param jsData:
   :param jsDataKey:
   :param isPyData:
   :param jsFnc:
-
-  :return:
   """
   if isPyData:
     if hasattr(jsData, 'toStr'):
@@ -172,6 +194,8 @@ def getJsValid(value, fail=True):
 
 def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False):
   """
+  Description:
+  ------------
   Generic conversion function for all the PyJs functions
 
   :param jsFncs: Array. The PyJs functions
@@ -212,6 +236,8 @@ def jsConvertFncs(jsFncs, isPyData=False, jsFncVal=None, toStr=False):
 
 def cleanFncs(fnc):
   """
+  Description:
+  ------------
   Try to remove as much as possible all the characters in order to speed up the javascript
   Indeed most of the browsers are using minify Javascript to make the page less heavy
 
@@ -226,6 +252,8 @@ def cleanFncs(fnc):
 
 def isNotDefined(varName):
   """
+  Description:
+  ------------
   Check if a variable is defined
 
   Example

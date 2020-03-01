@@ -1,4 +1,7 @@
 
+from epyk.core.js import JsUtils
+
+from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
@@ -111,11 +114,211 @@ class Event(object):
     return JsString.JsString("event.stopPropagation()", isPyData=False)
 
 
-class KeyboardEvent(object):
-  pass
+class UIEvent(Event):
+
+  @property
+  def detail(self):
+    """
+    Description:
+    ------------
+    The detail property returns a number with details about the event.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_detail.asp
+    """
+    return JsNumber.JsNumber("event.detail", isPyData=False)
+
+  @property
+  def view(self):
+    """
+    Description:
+    ------------
+    The view event property returns a reference to the Window object where the event occured.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_view.asp
+    """
+    from epyk.core.js.JsWindow import JsWindow
+
+    return JsWindow()
 
 
-class MouseEvent(object):
+class KeyboardEvent(UIEvent):
+
+  @property
+  def altKey(self):
+    """
+    Description:
+    ------------
+    The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a key event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_altkey.asp
+    """
+    return JsBoolean.JsBoolean(varName="event.altKey")
+
+  @property
+  def charCode(self):
+    """
+    Description:
+    ------------
+    The charCode property returns the Unicode character code of the key that triggered the onkeypress event.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_charcode.asp
+    """
+    return JsString.JsString(varName="event.charCode")
+
+  @property
+  @JsUtils.incompatibleBrowser(["Internet Explorer"])
+  def code(self):
+    """
+    Description:
+    ------------
+    The code property returns the key that triggered the event.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_code.asp
+    """
+    return JsString.JsString("event.code", isPyData=False)
+
+  @property
+  def ctrlKey(self):
+    """
+    Description:
+    ------------
+    The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a key event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_ctrlkey.asp
+    """
+    return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
+
+  @property
+  @JsUtils.incompatibleBrowser(["Safari"])
+  def key(self):
+    """
+    Description:
+    ------------
+    The getModifierState() method returns true if the specified modifier key was pressed, or activated.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_key.asp
+    """
+    return JsString.JsString("event.key", isPyData=False)
+
+  @property
+  def keyCode(self):
+    """
+    Description:
+    ------------
+    The keyCode property returns the Unicode character code of the key that triggered the onkeypress event, or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_keycode.asp
+    """
+    return JsString.JsString("event.keyCode", isPyData=False)
+
+  @property
+  @JsUtils.incompatibleBrowser(["Safari"])
+  def location(self):
+    """
+    Description:
+    ------------
+    The location property returns a number that indicates the location of a key on the keyboard or device.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_location.asp
+    """
+    return JsNumber.JsNumber("event.location", isPyData=False)
+
+  @property
+  def metaKey(self):
+    """
+    Description:
+    ------------
+    The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed when a key event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_metakey.asp
+    """
+    return JsString.JsString("event.metaKey", isPyData=False)
+
+  @property
+  def shiftKey(self):
+    """
+    Description:
+    ------------
+    The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a key event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_shiftkey.asp
+    """
+    return JsBoolean.JsBoolean(varName="event.shiftKey")
+
+  @property
+  def which(self):
+    """
+    Description:
+    ------------
+    The which property returns the Unicode character code of the key that triggered the onkeypress event, or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_key_which.asp
+    """
+    return JsNumber.JsNumber("event.which", isPyData=False)
+
+
+class MouseEvent(UIEvent):
+
+  @property
+  def altKey(self):
+    """
+    Description:
+    ------------
+    The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a key event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_altkey.asp
+    """
+    return JsBoolean.JsBoolean(varName="event.altKey")
+
+  @property
+  def button(self):
+    """
+    The button property returns a number that indicates which mouse button was pressed when a mouse event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_button.asp
+    """
+    return JsNumber.JsNumber("event.button", isPyData=False)
+
+  @property
+  @JsUtils.incompatibleBrowser(["Safari"])
+  def buttons(self):
+    """
+    The buttons property returns a number that indicates which mouse button or mouse buttons were pressed when a mouse event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_buttons.asp
+    """
+    return JsNumber.JsNumber("event.buttons", isPyData=False)
+
   @property
   def isTrusted(self):
     """
@@ -162,5 +365,134 @@ class MouseEvent(object):
   def getField(self, fieldName):
     return JsObject.JsObject.get("event.%s" % fieldName)
 
+  @property
+  def metaKey(self):
+    """
+    The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed when a key event was triggered.
+
+    https://www.w3schools.com/jsref/event_metakey.asp
+    """
+    return JsString.JsString("event.metaKey", isPyData=False)
+
+  @property
+  def shiftKey(self):
+    """
+    The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a mouse event was triggered.
+
+    https://www.w3schools.com/jsref/event_shiftkey.asp
+    """
+    return JsBoolean.JsBoolean(varName="event.shiftKey")
+
+  @property
+  def ctrlKey(self):
+    """
+    The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a mouse event was triggered.
+
+    https://www.w3schools.com/jsref/event_ctrlkey.asp
+    """
+    return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
+
+  @property
+  def which(self):
+    """
+    The which property returns a number that indicates which mouse button was pressed when a mouse event was triggered.
+
+    https://www.w3schools.com/jsref/event_which.asp
+    """
+    return JsNumber.JsNumber("event.which", isPyData=False)
+
   def toStr(self):
     return JsObject.JsObject.get("event")
+
+
+class TouchEvent(UIEvent):
+
+  @property
+  def altKey(self):
+    """
+    Description:
+    ------------
+    The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a touch event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_touch_altkey.asp
+    """
+    return JsBoolean.JsBoolean(varName="event.altKey")
+
+  @property
+  def ctrlKey(self):
+    """
+    Description:
+    ------------
+    The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a touch event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_touch_ctrlkey.asp
+    """
+    return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
+
+  @property
+  def metaKey(self):
+    """
+    Description:
+    ------------
+    The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed when a touch event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_touch_metakey.asp
+    """
+    return JsString.JsString("event.metaKey", isPyData=False)
+
+  @property
+  def shiftKey(self):
+    """
+    Description:
+    ------------
+    The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a touch event was triggered.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_touch_shiftkey.asp
+    """
+    return JsBoolean.JsBoolean(varName="event.shiftKey")
+
+  @property
+  def targetTouches(self):
+    """
+    Description:
+    ------------
+    The targetTouches property returns an array of Touch objects, one for each finger that is touching the current target element.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_touch_targettouches.asp
+    """
+    return JsArray.JsArray("event.shiftKey", isPyData=False)
+
+  @property
+  def touches(self):
+    """
+    Description:
+    ------------
+    The touches property returns an array of Touch objects, one for each finger that is currently touching the surface.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/event_touch_touches.asp
+    """
+    return JsArray.JsArray("event.shiftKey", isPyData=False)
+
+  def ontouchcancel(self):
+    pass
+
+  def ontouchend(self):
+    pass
+
+  def ontouchmove(self):
+    pass
+
+  def ontouchstart(self):
+    pass
