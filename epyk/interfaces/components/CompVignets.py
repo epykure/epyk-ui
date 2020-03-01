@@ -7,7 +7,7 @@ class Vignet(object):
   def __init__(self, context):
     self.context = context
 
-  def bubble(self, recordSet=None, width=(100, "%"), height=(80, 'px'), color=None,
+  def bubble(self, recordSet=None, width=(50, "px"), height=(110, 'px'), color=None,
              background_color=None, helper=None, profile=None):
     """
     Description:
@@ -37,10 +37,28 @@ class Vignet(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_bubble = html.HtmlTextComp.TextBubble(self.context.rptObj, recordSet or {}, width, height, color,
-                                               background_color, helper, profile)
-    self.context.register(html_bubble)
-    return html_bubble
+    div = self.context.rptObj.ui.div(width=width, height=height)
+    bubble = self.context.rptObj.ui.div(width=width, height=(height[0]-60, height[1]))
+    div.number = self.context.rptObj.ui.text(recordSet["value"], width=width)
+    if recordSet.get("url") is not None:
+      div.title = self.context.rptObj.ui.link(recordSet["title"], url=recordSet['url'])
+      div.title.no_decoration()
+    else:
+      div.title = self.context.rptObj.ui.text(recordSet["title"])
+    div.title.style.css.bold()
+    div.number.style.css.line_height = height[0]-60
+    div.number.style.css.text_align = "center"
+    div.number.style.css.font_size = height[0]-80
+    bubble += div.number
+    bubble.style.css.background_color = self.context.rptObj.theme.success[1]
+    bubble.style.css.color = self.context.rptObj.theme.greys[0]
+    bubble.style.css.borders_light()
+    bubble.style.css.border_radius = height[0]-60
+    bubble.style.css.middle()
+    div.style.css.text_align = "center"
+    div += bubble
+    div += div.title
+    return div
 
   def number(self, number, label="", width=(100, "px"), height=(None, "px"), profile=None, options=None):
     """

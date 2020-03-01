@@ -67,44 +67,6 @@ class UpDown(Html.Html):
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
-class TextBubble(Html.Html):
-  name, category, callFnc = 'Bubble text', 'Vignets', 'bubble'
-  # _grpCls = CssGrpClsText.CssClassTextBubble
-
-  def __init__(self, report, recordSet, width, height, color, background_color, helper, profile):
-    super(TextBubble, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
-    self.add_helper(helper)
-    self.color = self._report.theme.greys[0] if color is None else color
-    self.background_color = self._report.theme.success[1] if background_color is None else background_color
-    self.height = height[0]
-    self.css({'text-align': 'center', 'background-color': self._report.theme.greys[0]})
-
-  @property
-  def _js__builder__(self):
-    return '''
-      htmlObj.querySelectorAll('div')[0].innerHTML = data.value;
-      var div_elements = htmlObj.querySelectorAll('div');  
-      if (data.url != undefined){div_elements[div_elements.length - 1].querySelectorAll('a')[0].href = data.url} 
-      else {div_elements[div_elements.length - 1].querySelectorAll('a')[0].href = '#'};
-      if (data.color != undefined) {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = data.color}
-      else {div_elements[div_elements.length - 1].querySelectorAll('a')[0].style.color = '%(color)s'}
-      div_elements[div_elements.length - 1].querySelectorAll('a')[0].innerHTML = data.title
-      ''' % {"color": self._report.theme.colors[-1]}
-
-  def __str__(self):
-    bubble_height = self.height - 20
-    bubble_width = self.height - 20
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '''
-      <div %(strAttr)s>
-        <div %(clsTag)s style="padding-top:10px;width:%(width)spx;height:%(height)spx;vertical-align:middle;background-color:%(bgcolor)s"></div>
-        <div "%(clsTitle)s"><a style="text-decoration:none"></a></div>%(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "clsTag": ''# self._report.style.getClsTag(['CssDivBubble'], loadCls=True)
-      , 'clsTitle': '' #self._report.style.getClsTag(['CssTitle'], loadCls=True)
-      , 'bgcolor': self.background_color,
-                   'helper': self.helper, 'height': bubble_height, 'width': bubble_width}
-
-
 class BlockText(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Block text', 'Rich', 'blocktext'

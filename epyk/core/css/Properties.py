@@ -2473,3 +2473,12 @@ class CssMixin(object):
     if color is None:
       color = self.orign_htmlObj._report.theme.greys[3]
     return self.borders(color, size, style)
+
+  def bold(self):
+    """
+    Description:
+    ------------
+    Shotcut to put the text in bold
+    """
+    self.font_weight = "bold"
+    return self

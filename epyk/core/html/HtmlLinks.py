@@ -1,6 +1,3 @@
-"""
-Core modules in charge of providing links services
-"""
 
 import json
 import re
@@ -31,13 +28,15 @@ class ExternalLink(Html.Html):
   def _js__builder__(self):
     return 'htmlObj.innerHTML = data.text; htmlObj.href = data.url'
 
-  @property
-  def no_decoration(self):
+  def no_decoration(self, color=None):
     """
     Property to remove the list default style
     """
     self.style.css.text_decoration = None
     self.style.list_style_type = None
+    if color is None:
+      color = self._report.theme.greys[-1]
+    self.style.css.color = color
     return self
 
   def build(self, data=None, options=None, profile=False):
@@ -130,7 +129,6 @@ class DataLink(Html.Html):
 class Bridge(Html.Html):
   reqCss, reqJs = [], ['jquery']
   name, category, callFnc = 'Node Bridge', 'Links', 'bridge'
-  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, text, script_name, report_name, url, jsData, context):
     super(Bridge, self).__init__(report, text)
