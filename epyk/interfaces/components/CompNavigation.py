@@ -163,10 +163,11 @@ class Navigation(object):
       div.tooltip(tooltip)
     return div
 
-  def scroll(self, position=0, height=(5, 'px'), options=None, profile=False):
+  def scroll(self, position=0, height=(3, 'px'), options=None, profile=False):
     """
     Description:
     ------------
+    Add a horizontal progressbar to display the status of the page scrollbar.
 
     Usage:
     ------
@@ -179,7 +180,7 @@ class Navigation(object):
     :param options:
     :param profile:
     """
-    p = self.context.rptObj.ui.sliders.progressbar(position, height=height)
+    p = self.context.rptObj.ui.sliders.progressbar(position, height=height, options=options, profile=profile)
     self.context.rptObj.js.addOnReady(
       self.context.rptObj.js.window.events.addScrollListener([
         p.build(self.context.rptObj.js.window.scrollPercentage)]))
@@ -287,4 +288,39 @@ class Navigation(object):
       div += self.context.rptObj.ui.link(rec['text'], url=rec.get('url', '#')).css({"display": 'inline-block'})
       div += self.context.rptObj.ui.text(divider).css({"display": 'inline-block', 'margin': '0 5px', 'font-size': Defaults_css.font(-2)})
     div +=self.context.rptObj.ui.link(records[-1]['text'], url=records[-1].get('url', '#')).css({"display": 'inline-block'})
+    return div
+
+  def bar(self, icon=None, title=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param icon:
+    :param title:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    div.style.css.margin = 0
+    div.style.css.left = 0
+    div.style.css.padding = "5px 2px 0 2px"
+    div.style.css.position = "fixed"
+    div.style.css.background_color = self.context.rptObj.theme.greys[0]
+    div.style.css.border_bottom = "1px solid %s" % self.context.rptObj.theme.greys[4]
+    div.style.css.top = 0
+    if icon is None:
+      div += self.context.rptObj.ui.icons.epyk()
+    if title is not None:
+      html_title = self.context.rptObj.ui.title(title)
+      html_title.style.css.width = "auto"
+      html_title.style.css.margin = "0 0 0 5px"
+      html_title.style.css.vertical_align = 'top'
+      html_title.style.css.display = "inline-block"
+      html_title.style.css.font_size = 25
+      div += html_title
+    div += self.context.rptObj.ui.navigation.scroll()
     return div

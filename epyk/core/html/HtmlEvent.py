@@ -17,7 +17,7 @@ class ProgressBar(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
   name, category, callFnc = 'Progress Bar', 'Sliders', 'progressbar'
 
-  def __init__(self, report, number, total, width, height, attrs, helper, profile):
+  def __init__(self, report, number, total, width, height, attrs, helper, options, profile):
     value = number / total * 100
     super(ProgressBar, self).__init__(report, value, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)

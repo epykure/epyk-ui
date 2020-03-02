@@ -1413,9 +1413,9 @@ class CssMixin(object):
 
   @line_height.setter
   def line_height(self, val):
-    val = val or 'None'
     if isinstance(val, int):
       val = "%spx" % val
+    val = val or 'none'
     self.htmlObj.css({"line-height": val})
 
   @property

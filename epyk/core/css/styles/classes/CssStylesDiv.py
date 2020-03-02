@@ -157,7 +157,7 @@ class CssDivTableContent(CssStyle.Style):
   _attrs = {'padding': '5px 10px 5px 10px', 'width': 'auto', 'display': 'inline-block'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.greys[3], 'background-color': self.rptObj.theme.greys[1]})
+    self.css({'border': '1px solid %s' % self.rptObj.theme.greys[3], 'background-color': self.rptObj.theme.greys[0]})
 
 
 class CssDivPagination(CssStyle.Style):
