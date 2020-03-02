@@ -297,7 +297,7 @@ class Components(object):
     self.rptObj.content.append(id(html_comp))
     return html_comp
 
-  def contents(self, top=10, right=10, left=None, width=(None, "%"), height=(None, "px"), options=None, profile=None):
+  def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"), options=None, profile=None):
     """
     Description:
     ------------
@@ -309,7 +309,7 @@ class Components(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, width, height, options, profile)
+    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, title, width, height, options, profile)
     self.register(html_contents)
     html_contents.style.css.top = top
     if left is not None:

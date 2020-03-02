@@ -506,10 +506,16 @@ class TrafficLight(Html.Html):
 class ContentsTable(Html.Html):
   name, category, callFnc = 'Contents Table', None, 'contents'
 
-  def __init__(self, report, width, height, options, profile):
+  def __init__(self, report, title, width, height, options, profile):
     self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
     super(ContentsTable, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.style.css.position = "fixed"
+    self.title = self._report.ui.div()
+    self.title += self._report.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
+    self.title += self._report.ui.text("[hide]").css({"width": 'auto', 'display': 'inline-block', 'margin-left': '5px'})
+    self.title[0].style.css.font_size = Defaults_css.font(4)
+    self.title[0].style.css.font_weight = "bold"
+    self.title.inReport = False
 
   def __getitem__(self, i):
     """
@@ -539,7 +545,6 @@ class ContentsTable(Html.Html):
     """
     href = self._report.ui.link(text, url=anchor)
     self.val.append(href)
-    href.inReport = False
     href.style.css.display = 'block'
     href.style.css.width = '100%'
     if level is not None:
@@ -547,20 +552,11 @@ class ContentsTable(Html.Html):
     return self
 
   def __str__(self):
-    # self.addGlobalFnc("ChangeContents(src, htmlId)", '''
-    #     $("#contents_vals_"+ htmlId).toggle() ;
-    #     if( $("#contents_vals_"+ htmlId).css('display') == 'none'){
-    #       $(src).text("Show"); $("#contents_title_"+ htmlId).css( "text-align", 'left')}
-    #     else{$(src).text("Hide") ;$("#contents_title_"+ htmlId).css( "text-align", 'center')}''')
-    # <div id='contents_vals_%(htmlId)s' style="margin:0;padding:0">%(contents)s</div>
     div_link = self._report.ui.div(self.val)
-    return '''
-      <div %(attr)s>
-        <div id='contents_title_%(htmlId)s' style="text-align:center;font-size:%(size)spx;font-weight:bold">Contents [<a href='#' onclick='ChangeContents(this, "%(htmlId)s")' >hide</a>] </div>
-        %(links)s
-      </div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
-                    'size': Defaults_css.font(4), 'htmlId': self.htmlId,
-                    'links': div_link.html()}
+    div_link.inReport = False
+    self.title[-1].click([div_link.dom.toggle(), self.title[-1].dom.toggleText('[show]', '[hide]')])
+    return '''<div %(attr)s>%(title)s%(links)s</div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
+                                                            'title': self.title.html(), 'htmlId': self.htmlId, 'links': div_link.html()}
 
 
 class SearchResult(Html.Html):

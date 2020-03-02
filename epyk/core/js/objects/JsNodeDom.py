@@ -994,6 +994,16 @@ class JsDoms(JsObject.JsObject):
     self._js.append("if(window.getComputedStyle(%(varId)s)['%(pivot_key)s'] == '%(pivot_val)s') {%(css_attrs_on)s} else {%(css_attrs_off)s}" % {"pivot_val": pivot_val, "varId": self.varId, "pivot_key": pivot_key, 'css_attrs_on': css_attrs_on, 'css_attrs_off': css_attrs_off})
     return self
 
+  def toggleText(self, jsString1, jsString2):
+    """
+
+    :param jsString:
+    """
+    str1 = JsUtils.jsConvertData(jsString1, None)
+    str2 = JsUtils.jsConvertData(jsString2, None)
+    self._js.append("if(%(varId)s.innerText == %(str2)s) {%(varId)s.innerText = %(str1)s} else {%(varId)s.innerText = %(str2)s}" % {"varId": self.varId, "str1": str1, "str2": str2})
+    return self
+
   @property
   def clientHeight(self):
     """

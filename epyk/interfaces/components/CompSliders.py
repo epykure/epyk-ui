@@ -1,7 +1,3 @@
-"""
-Common interface for the slider type of objects
-"""
-
 # Check if pandas is available in the current environment
 # if it is the case this module can handle DataFrame directly
 try:
@@ -72,13 +68,11 @@ class Sliders(object):
           if isinstance(recordSet, pd.DataFrame):
             recordSet = sorted(recordSet[column].unique().tolist())
             is_converted = True
-
         if not is_converted:
           result = set([])
           for rec in recordSet:
             result.add(rec[column])
           recordSet = sorted(list(result))
-
     attrs = {} if attrs is None else attrs
     if htmlCode is not None:
       attrs.update({"htmlCode": htmlCode, "changeUrl": False})
@@ -115,7 +109,6 @@ class Sliders(object):
     """
     if htmlCode is not None:
       attrs.update({"htmlCode": htmlCode, "changeUrl": False})
-
     html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper, options, profile)
     self.context.register(html_pr)
     return html_pr
