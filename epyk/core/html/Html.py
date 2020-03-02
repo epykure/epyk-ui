@@ -799,26 +799,26 @@ class Html(object):
     self._report.jsSources.setdefault(jsId, {}).setdefault('_filters', {})[self.htmlCode] = filterObj
     return self
 
-  def _addToContainerMap(self, htmlObj):
-    if hasattr(self, 'htmlMaps'):
-      if hasattr(htmlObj, 'htmlMaps'):
-        # It is a container and we need to get the mapping of the different components inside
-        self.htmlMaps.update(htmlObj.htmlMaps)
-      else:
-        if getattr(htmlObj, 'htmlCode', None) is not None:
-          if htmlObj.category == 'Table':
-            self.htmlMaps[htmlObj.htmlCode] = (htmlObj.__class__.__name__, '%s_table' % htmlObj.htmlCode)
-          elif htmlObj.category == 'Charts':
-            self.htmlMaps[htmlObj.htmlCode] = ('PyChartJs', '$("#%s")' % htmlObj.htmlCode)
-          else:
-            self.htmlMaps[htmlObj.htmlCode] = (htmlObj.__class__.__name__, htmlObj.jqId)
-        elif getattr(htmlObj, '_code', None) is not None:
-          if htmlObj.category == 'Table':
-            self.htmlMaps[htmlObj._code] = (htmlObj.__class__.__name__, '%s_table' % htmlObj._code)
-          elif htmlObj.category == 'Charts':
-            self.htmlMaps[htmlObj._code] = ('PyChartJs', '$("#%s")' % htmlObj._code)
-          else:
-            self.htmlMaps[htmlObj._code] = (htmlObj.__class__.__name__, htmlObj.jqId)
+  # def _addToContainerMap(self, htmlObj):
+  #   if hasattr(self, 'htmlMaps'):
+  #     if hasattr(htmlObj, 'htmlMaps'):
+  #       # It is a container and we need to get the mapping of the different components inside
+  #       self.htmlMaps.update(htmlObj.htmlMaps)
+  #     else:
+  #       if getattr(htmlObj, 'htmlCode', None) is not None:
+  #         if htmlObj.category == 'Table':
+  #           self.htmlMaps[htmlObj.htmlCode] = (htmlObj.__class__.__name__, '%s_table' % htmlObj.htmlCode)
+  #         elif htmlObj.category == 'Charts':
+  #           self.htmlMaps[htmlObj.htmlCode] = ('PyChartJs', '$("#%s")' % htmlObj.htmlCode)
+  #         else:
+  #           self.htmlMaps[htmlObj.htmlCode] = (htmlObj.__class__.__name__, htmlObj.jqId)
+  #       elif getattr(htmlObj, '_code', None) is not None:
+  #         if htmlObj.category == 'Table':
+  #           self.htmlMaps[htmlObj._code] = (htmlObj.__class__.__name__, '%s_table' % htmlObj._code)
+  #         elif htmlObj.category == 'Charts':
+  #           self.htmlMaps[htmlObj._code] = ('PyChartJs', '$("#%s")' % htmlObj._code)
+  #         else:
+  #           self.htmlMaps[htmlObj._code] = (htmlObj.__class__.__name__, htmlObj.jqId)
 
   # -------------------------------------------------------------------------------------------------------------------
   #                    OUTPUT METHODS

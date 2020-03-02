@@ -34,6 +34,8 @@ class Input(Html.Html):
   @property
   def style(self):
     """
+    Description:
+    ------------
     Property to the CSS Style of the component
 
     :rtype: GrpClsInput.ClassInput

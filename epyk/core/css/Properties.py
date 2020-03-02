@@ -1383,9 +1383,9 @@ class CssMixin(object):
 
   @left.setter
   def left(self, val):
-    val = val or 'None'
     if isinstance(val, int):
       val = "%spx" % val
+    val = val or 'None'
     self.htmlObj.css({"left": val})
 
   @property
@@ -1469,9 +1469,9 @@ class CssMixin(object):
 
   @margin.setter
   def margin(self, val):
-    val = val or 'None'
     if isinstance(val, int):
       val = "%spx" % val
+    val = val or 'None'
     self.htmlObj.css({"margin": val})
 
   @property
@@ -1735,11 +1735,25 @@ class CssMixin(object):
     self.htmlObj.css({"padding-bottom": val})
 
   @property
-  def padding_left(self): return self.htmlObj.css("padding-left")
+  def padding_left(self):
+    """
+    Description:
+    ------------
+    An element's padding is the space between its content and its border.
+
+    The padding-left property sets the left padding (space) of an element.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_padding-left.asp
+    """
+    return self.htmlObj.css("padding-left")
 
   @padding_left.setter
   def padding_left(self, val):
     val = val or 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"padding-left": val})
 
   @property

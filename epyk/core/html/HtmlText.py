@@ -1,6 +1,3 @@
-"""
-Wrapper to the different basic text HTML components
-"""
 
 import re
 import os
@@ -13,12 +10,7 @@ from epyk.core.html import Defaults as Default_html
 
 # The list of Javascript classes
 from epyk.core.js.objects import JsNodeDom
-from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
-
-# The list of CSS classes
-
-# from epyk.core.css.styles import CssGrpClsText
 
 
 class Label(Html.Html):
@@ -509,7 +501,6 @@ class BlockQuote(Html.Html):
 
 class Title(Html.Html):
   name, category, callFnc = 'Title', 'texts', 'title'
-  # _grpCls = CssGrpClsText.CssClassTitle
 
   def __init__(self, report, text, level, name, contents, color, picture, icon, marginTop, htmlCode, width,
                height, align, dflt_options, profile):
@@ -537,18 +528,24 @@ class Title(Html.Html):
       self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': align})
     else:
       self.css({'display': 'block', "margin-right": "10px"})
+    if hasattr(report, '_content_table'):
+      # Special attribute set in the base component interface
+      report._content_table.add(text, level or 4, "#%s" % self.htmlId)
+      report._content_table[-1].click([
+        self.dom.transition(["color", "font-size"], ['red', '102%'], duration=[0.5, 0.5], reverse=True)])
 
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtml
+    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)

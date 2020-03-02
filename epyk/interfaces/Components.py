@@ -57,6 +57,7 @@ class Components(object):
     self.tree = self.lists.tree
     self.info = self.rich.info
     self.radio = self.buttons.radio
+    self.navbar = self.navigation.bar
 
   def css(self, cssAttrs):
     """
@@ -219,6 +220,8 @@ class Components(object):
   @property
   def layouts(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce component containers.
 
     All the items in this category are dedicated for the structure of the dashboard and they
@@ -230,6 +233,8 @@ class Components(object):
   @property
   def drops(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to drop data.
     """
     return CompDrops.DropData(self)
@@ -237,6 +242,8 @@ class Components(object):
   @property
   def forms(self):
     """
+    Description:
+    ------------
     Group all the Forms components dedicated to drop data.
 
     Documentation
@@ -255,6 +262,8 @@ class Components(object):
   @property
   def charts(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce charts.
 
     Different kind of charts framework are available (ChartJs, Plotly, C3, Billboard, NVD3, DC, Vis or even D3).
@@ -264,6 +273,8 @@ class Components(object):
   @property
   def tags(self):
     """
+    Description:
+    ------------
     Group all the other tags available in HTML.
 
     Those tags can be considered as normal HTML component, which means Js and CSS features are also available
@@ -272,8 +283,12 @@ class Components(object):
 
   def register(self, html_comp):
     """
+    Description:
+    ------------
     Internal function to register a HTML component based on its memory id.
 
+    Related Pages:
+    --------------
     :param html_comp: The html component
 
     return the html component
@@ -282,26 +297,36 @@ class Components(object):
     self.rptObj.content.append(id(html_comp))
     return html_comp
 
-  def contents(self, vals=None, width=(None, "%"), height=(None, "px"), profile=None):
+  def contents(self, top=10, right=10, left=None, width=(None, "%"), height=(None, "px"), options=None, profile=None):
     """
+    Description:
+    ------------
     Add a content table to the page
 
-    :param vals: Optional.
+    Related Pages:
+    --------------
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, vals or [], width, height, profile)
+    html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, width, height, options, profile)
     self.register(html_contents)
+    html_contents.style.css.top = top
+    if left is not None:
+      html_contents.style.css.left = left
+    else:
+      html_contents.style.css.right = right
+    # Attach the table content to the main report object
+    self.rptObj._content_table = html_contents
     return html_contents
 
   def _tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
+    Description:
+    ------------
 
-    Example
-
-    Documentation
-
+    Related Pages:
+    --------------
     :param vals: Optional.
     :param title: Optional.
     :param icon: Optional. A string with the value of the icon to display from font-awesome
@@ -348,7 +373,6 @@ class Components(object):
     :param records:
     :param color:
     :param border_color:
-    :param size:
     :param width:
     :param height:
     :param options:

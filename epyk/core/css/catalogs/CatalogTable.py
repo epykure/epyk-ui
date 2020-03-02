@@ -1,11 +1,8 @@
-"""
 
-
-"""
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles.classes import CssStylesPivot, CssStylesTableExcel, CssStylesTable, CssStylesTabulator
+from epyk.core.css.styles.classes import CssStylesPivot, CssStylesTableExcel, CssStylesTable, CssStylesTabulator, CssStylesDiv
 
 
 class CatalogTable(Catalog.CatalogGroup):
@@ -197,3 +194,7 @@ class CatalogTable(Catalog.CatalogGroup):
   def tabulator_tree_control_expand(self):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorTreeControlExpand)
+
+  def table_content(self):
+    """ """
+    return self._set_class(CssStylesDiv.CssDivTableContent)

@@ -48,7 +48,7 @@ class Vignet(object):
     div.title.style.css.bold()
     div.number.style.css.line_height = height[0]-60
     div.number.style.css.text_align = "center"
-    div.number.style.css.font_size = height[0]-80
+    div.number.style.css.font_size = height[0]-90
     bubble += div.number
     bubble.style.css.background_color = self.context.rptObj.theme.success[1]
     bubble.style.css.color = self.context.rptObj.theme.greys[0]

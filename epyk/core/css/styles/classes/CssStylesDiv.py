@@ -1,6 +1,3 @@
-"""
-CSS Style module for the Div components
-"""
 
 from epyk.core.css.styles.classes import CssStyle
 

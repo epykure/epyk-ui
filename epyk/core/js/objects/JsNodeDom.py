@@ -897,23 +897,36 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param attribute: String. Specifies the name of the CSS property the transition effect is for
-    :param value: String. Specifies the value of the CSS property the transition effect is for
-    :param duration: Number. Specifies how many seconds or milliseconds the transition effect takes to complete
+    :param attribute: String or List. Specifies the name of the CSS property the transition effect is for
+    :param value: String or List. Specifies the value of the CSS property the transition effect is for
+    :param duration: Number or List. Specifies how many seconds or milliseconds the transition effect takes to complete
     :param delay: Number. Defines when the transition effect will start
     :param reverse: Boolean. Rewind the transition animation
     """
-    self.css("transition-property", attribute)
-    self.css("transition-duration", "%ss" % duration)
+    self.css("transition-property", ",".join(attribute) if isinstance(attribute, list) else attribute)
+    if isinstance(duration, list):
+      self.css("transition-duration", "%ss" % "s, ".join(map(lambda x: str(x), duration)))
+    else:
+      self.css("transition-duration", "%ss" % duration)
     if delay is not None:
       if isinstance(delay, int):
         self.css("transition-delay", "%ss" % delay)
       else:
         self.css("transition-delay", delay)
     if reverse:
-      self._js.append(self.css(attribute).setVar("css_transition").r)
-      self._js.append("setTimeout(function(){%s = css_transition}, %s)" % (self.css(attribute), duration * 1000))
-    self.css(attribute, value)
+      if isinstance(attribute, list):
+        for i, attr in enumerate(attribute):
+          self._js.append(self.css(attr).setVar("css_transition_%s" % i).r)
+          self._js.append("setTimeout(function(){%s = css_transition_%s}, %s)" % (self.css(attr), i, duration[i] * 1000))
+      else:
+        self._js.append(self.css(attribute).setVar("css_transition").r)
+        self._js.append("setTimeout(function(){%s = css_transition}, %s)" % (self.css(attribute), duration * 1000))
+
+    if isinstance(attribute, list):
+      for i, attr in enumerate(attribute):
+        self.css(attr, value[i])
+    else:
+      self.css(attribute, value)
     self.css("transition-property", "initial")
     return self
 

@@ -7,6 +7,9 @@ from epyk.core.css import Colors
 # The list of CSS classes
 from epyk.core.css import Defaults_css
 
+# The list of CSS classes
+from epyk.core.css.styles import GrpClsText
+
 
 class UpDown(Html.Html):
   name, category, callFnc = 'Up and Down', 'Texts', 'updown'
@@ -502,60 +505,62 @@ class TrafficLight(Html.Html):
 
 class ContentsTable(Html.Html):
   name, category, callFnc = 'Contents Table', None, 'contents'
-  # _grpCls = CssGrpClsTable.CssClassTableContent
 
-  def __init__(self, report, recordSet, width, height, profile):
+  def __init__(self, report, width, height, options, profile):
     self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
-    super(ContentsTable, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
+    super(ContentsTable, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    self.style.css.position = "fixed"
 
-  def add(self, text, level, name=None, script_name=None, report_name=None):
+  def __getitem__(self, i):
+    """
+    Return the internal column in the row for the given index
+
+    :param i: the column index
+    :rtype: Col
+    """
+    return self.val[i]
+
+  @property
+  def style(self):
+    """
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsText.ContentTable
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsText.ContentTable(self)
+    return self._styleObj
+
+  def add(self, text, level, anchor):
     """
 
     :param text:
     :param level:
-    :param name:
-    :param script_name:
-    :param report_name:
     """
-    if script_name is not None:
-      self.ext_links[self.entries_count] = {"scriptName": script_name,
-                     "folderName": report_name if report_name is not None else self._report.run.report_name}
-    if self.first_level is None:
-      self.first_level = level
-    adjLevel = level - self.first_level + 1
-    self.indices.append(adjLevel)
-    if name is None:
-      name = self.entries_count
-    self.val.append({'text': text, 'level': adjLevel, 'name': name})
-    self.entries_count += 1
-    return name
+    href = self._report.ui.link(text, url=anchor)
+    self.val.append(href)
+    href.inReport = False
+    href.style.css.display = 'block'
+    href.style.css.width = '100%'
+    if level is not None:
+      href.style.css.padding_left = (level - 1) * 5
+    return self
 
   def __str__(self):
-    entries = []
-    for i, v in enumerate(self.val):
-      try:
-        css_cls_name = 'CssHrefContentLevel%(level)s' % v
-        self._report.style.cssCls(css_cls_name)
-        v['classname'] = self._report.style.cssName(css_cls_name)
-      except:
-        raise Exception("Missing css class CssHrefContentLevel%(level)s" % v)
-
-      if i in self.ext_links:
-        v.update(self.ext_links[i])
-        entries.append("<a href='/reports/run/%(folderName)s/%(scriptName)s' target='_blank' class='%(classname)s'>%(text)s</a>" % v)
-      else:
-        entries.append("<a href='#%(name)s' class='%(classname)s'>%(text)s</a>" % v)
     # self.addGlobalFnc("ChangeContents(src, htmlId)", '''
     #     $("#contents_vals_"+ htmlId).toggle() ;
     #     if( $("#contents_vals_"+ htmlId).css('display') == 'none'){
     #       $(src).text("Show"); $("#contents_title_"+ htmlId).css( "text-align", 'left')}
     #     else{$(src).text("Hide") ;$("#contents_title_"+ htmlId).css( "text-align", 'center')}''')
+    # <div id='contents_vals_%(htmlId)s' style="margin:0;padding:0">%(contents)s</div>
+    div_link = self._report.ui.div(self.val)
     return '''
       <div %(attr)s>
         <div id='contents_title_%(htmlId)s' style="text-align:center;font-size:%(size)spx;font-weight:bold">Contents [<a href='#' onclick='ChangeContents(this, "%(htmlId)s")' >hide</a>] </div>
-        <div id='contents_vals_%(htmlId)s' style="margin:0;padding:0">%(contents)s</div>
-      </div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'contents': "<br />".join(entries),
-                    'size': Defaults_css.font(4), 'htmlId': self.htmlId}
+        %(links)s
+      </div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
+                    'size': Defaults_css.font(4), 'htmlId': self.htmlId,
+                    'links': div_link.html()}
 
 
 class SearchResult(Html.Html):
