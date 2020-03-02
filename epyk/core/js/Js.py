@@ -304,6 +304,87 @@ class JsBreadCrumb(object):
     return '%s(%s)' % (fncToUrl, self._selector)
 
 
+class JsScreen(object):
+
+  @property
+  def availHeight(self):
+    """
+    Description:
+    ------------
+    The availHeight property returns the height of the user's screen, in pixels, minus interface features like the Windows Taskbar.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/prop_screen_availheight.asp
+    """
+    return JsNumber.JsNumber("screen.availHeight")
+
+  @property
+  def availWidth(self):
+    """
+    Description:
+    ------------
+    The availWidth property returns the width of the user's screen, in pixels, minus interface features like the Windows Taskbar.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/prop_screen_availwidth.asp
+    """
+    return JsNumber.JsNumber("screen.availWidth")
+
+  @property
+  def colorDepth(self):
+    """
+    Description:
+    ------------
+    The colorDepth property returns the bit depth of the color palette for displaying images (in bits per pixel).
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/prop_screen_colordepth.asp
+    """
+    return JsNumber.JsNumber("screen.colorDepth")
+
+  @property
+  def height(self):
+    """
+    Description:
+    ------------
+    The height property returns the total height of the user's screen, in pixels.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/prop_screen_height.asp
+    """
+    return JsNumber.JsNumber("screen.height")
+
+  @property
+  def pixelDepth(self):
+    """
+    Description:
+    ------------
+    The pixelDepth property returns the color resolution (in bits per pixel) of the visitor's screen.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/prop_screen_pixeldepth.asp
+    """
+    return JsNumber.JsNumber("screen.pixelDepth")
+
+  @property
+  def width(self):
+    """
+    Description:
+    ------------
+    The width property returns the total width of the user's screen, in pixels.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/prop_screen_width.asp
+    """
+    return JsNumber.JsNumber("screen.width")
+
+
 class JsBase(object):
   class __internal(object):
     _props, _context, jsOnLoadEvtsFnc, http = {}, {}, [], []
@@ -345,6 +426,19 @@ class JsBase(object):
     https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
     """
     return JsNodeDom.JsDoms.get("document.documentElement")
+
+  @property
+  def screen(self):
+    """
+    Description:
+    ------------
+    The screen object contains information about the visitor's screen.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/obj_screen.asp
+    """
+    return JsScreen()
 
   @property
   def navigator(self):
