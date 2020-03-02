@@ -1,13 +1,12 @@
-"""
-CSS Style module for the HREF / links components
-"""
 
 from epyk.core.css.styles.classes import CssStyle
 
 
 class CssHrefNoDecoration(CssStyle.Style):
   _attrs = {'text-decoration': 'none', 'color': 'inherit'}
-  _selectors = {'child': 'a'}
+
+  def customize(self):
+    self.hover.css({'color': self.rptObj.theme.success[1]})
 
 
 class CssLabelDates(CssStyle.Style):

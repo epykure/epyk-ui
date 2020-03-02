@@ -512,8 +512,8 @@ class ContentsTable(Html.Html):
     self.style.css.position = "fixed"
     self.title = self._report.ui.div()
     self.title += self._report.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
-    self.title += self._report.ui.text("[hide]").css({"width": 'auto', 'display': 'inline-block', 'margin-left': '5px'})
-    self.title[0].style.css.font_size = Defaults_css.font(4)
+    self.title += self._report.ui.text("[hide]").css({"width": '30px', 'display': 'inline-block', 'margin-left': '5px'})
+    self.title[0].style.css.font_size = Defaults_css.font(6)
     self.title[0].style.css.font_weight = "bold"
     self.title.inReport = False
 
@@ -544,6 +544,8 @@ class ContentsTable(Html.Html):
     :param level:
     """
     href = self._report.ui.link(text, url=anchor)
+    href.style.css.font_size = Defaults_css.font(2)
+    href.style.add_classes.link.no_decoration()
     self.val.append(href)
     href.style.css.display = 'block'
     href.style.css.width = '100%'

@@ -63,6 +63,16 @@ class Catalog(object):
     return self.__ctx['chart']
 
   @property
+  def link(self):
+    """
+
+    :rtype: CatalogLink.CatalogLink
+    """
+    if "link" not in self.__ctx:
+      self.__ctx['link'] = CatalogLink.CatalogLink(self.__rptObj, self.__class_list_type)
+    return self.__ctx['link']
+
+  @property
   def date(self):
     """
 
