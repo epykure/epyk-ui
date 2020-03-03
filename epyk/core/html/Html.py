@@ -872,6 +872,7 @@ class Html(object):
 
 
 class Body(Html):
+  name = "Body"
 
   @property
   def style(self):
@@ -879,12 +880,28 @@ class Body(Html):
       self._styleObj = GrpCls.ClassPage(self)
     return self._styleObj
 
-  def set_content(self, html_content):
-    self.__content = html_content
+  def set_content(self, report, page_content):
+    """
+    Description:
+    ------------
+    Function to allow the templating of the report.
+    This can be overridden by a generic class which can be shared within a set of report
+
+    Attributes:
+    ----------
+    :param report: Report. The main report object
+    :param page_content: String. The html content of the page
+
+    :return: The Body HTML object
+    """
+    self._html_content = page_content
     return self
 
   def __str__(self):
-    return '<body %s>%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.__content)
+    return '<body %s>%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self._html_content)
+
+
+
 
 
 """

@@ -61,7 +61,7 @@ class PyOuts(object):
     self._report = report
     self.excluded_packages = None
 
-  def _to_html_obj(self, content_only=False):
+  def _to_html_obj(self, htmlParts=None, cssParts=None):
     """
     Description:
     ------------
@@ -69,27 +69,21 @@ class PyOuts(object):
 
     Attributes:
     ----------
-    :param content_only: Optional. Boolean to remove all the frame of the report
+    :param htmlParts: Optional. HTML Content of the page
+    :param cssParts: Optional. CSS classes content of the page
 
     :return: A python dictionary with the HTML results
     """
-    # if not content_only:
-    #   self._report.style.add('CssBody', cssRef='body')
-    #   self._report.style.add('CssBodyContent', htmlId='page_content')
-    #   self._report.style.add('CssBodyLoadingBack', htmlId='popup_loading_back')
-    #   self._report.style.add('CssBodyLoading', htmlId='popup_loading')
-    # self._report.style.add('CssStandardLinks')
-    # self._report.style.add('CssTextSelection', cssRef='::selection')
-    # self._report.style.add('CssTextSelection', cssRef='::-moz-selection')
-    htmlParts, cssParts = [], {}
-    for objId in self._report.content:
-      if content_only and self._report.htmlItems[objId].name == "Nav Bar":
-        continue
+    if htmlParts is None:
+      htmlParts, cssParts = [], {}
+      for objId in self._report.content:
+        #if content_only and self._report.htmlItems[objId].name == "Nav Bar":
+        #  continue
 
-      if self._report.htmlItems[objId].inReport:
-        htmlParts.append(self._report.htmlItems[objId].html())
-      #
-      cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
+        if self._report.htmlItems[objId].inReport:
+          htmlParts.append(self._report.htmlItems[objId].html())
+        #
+        cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
     onloadParts = []
     for data_id, data in self._report._props.get("data", {}).get('sources', {}).items():
       onloadParts.append("var data_%s = %s" % (data_id, json.dumps(data)))
@@ -300,9 +294,15 @@ class PyOuts(object):
       name = int(time.time())
     file_path = os.path.join(path, "%s.html" % name)
     with open(file_path, "w") as f:
-      results = self._to_html_obj()
+      htmlParts, cssParts = [], {}
+      for objId in self._report.content:
+        if self._report.htmlItems[objId].inReport:
+          htmlParts.append(self._report.htmlItems[objId].html())
+        cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
+      body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
+      results = self._to_html_obj(htmlParts, cssParts)
+      results['body'] = body
       results['header'] = self._report.headers
-      results['body'] = str(self._report.body.set_content(results['content']))
       f.write(HtmlTmplBase.STATIC_PAGE % results)
     return file_path
 

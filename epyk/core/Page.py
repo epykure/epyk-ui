@@ -112,6 +112,10 @@ class Report(object):
       self.__body = html.Html.Body(self, None)
     return self.__body
 
+  @body.setter
+  def body(self, calc):
+    self.__body = calc(self, None)
+
   @property
   def theme(self):
     """ """
