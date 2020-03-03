@@ -1,7 +1,3 @@
-"""
-Module for the bespoke HTML tags
-"""
-
 
 from epyk.core.html import Html
 from epyk.core.js.html import JsHtml

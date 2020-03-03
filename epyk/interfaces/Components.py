@@ -1,6 +1,3 @@
-"""
-Main interface for all the difference HTML components in the framework
-"""
 
 from epyk.core import html
 
