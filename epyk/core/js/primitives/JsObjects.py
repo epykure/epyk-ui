@@ -308,8 +308,9 @@ class JsPromise(object):
 
 class XMLHttpRequest(object):
 
-  def __init__(self, report, varName, method_type, url):
-    self._src, self.__headers, self.url = report, {}, url
+  def __init__(self, report, varName, method_type, url, data=None):
+    self.data = {} if data is None else data
+    self._src, self.__headers, self.url, self.init_params = report, {}, url, init_params
     self.__mod_name, self.__mod_path, self.method = None, None, method_type
     self.__req_success, self.__req_fail, self.__req_send = None, None, None
     self.__url_prefix = ""
@@ -528,7 +529,14 @@ class XMLHttpRequest(object):
     :param jsonData:
     :param encodeURIData:
     """
-    if jsonData is not None:
+    #Initialize jsonData with potential initial data passed in the constructor
+    if jsonData:
+      jsonData.update(self.data)
+    else:
+      jsonData = self.data
+
+
+    if jsonData:
       self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, json.dumps(jsonData))
     elif encodeURIData is not None:
       self.__url_prefix = "?%s" % "&".join(["%s=%s" % (k, v) for k, v in encodeURIData.items()])
