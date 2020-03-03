@@ -57,9 +57,6 @@ class OutBrowsers(object):
 
 
 class PyOuts(object):
-  class __internal(object):
-    _props, _context, jsOnLoadEvtsFnc = {}, {}, []
-
   def __init__(self, report=None):
     self._report = report
     self.excluded_packages = None
@@ -305,6 +302,7 @@ class PyOuts(object):
     with open(file_path, "w") as f:
       results = self._to_html_obj()
       results['header'] = self._report.headers
+      results['body'] = str(self._report.body.set_content(results['content']))
       f.write(HtmlTmplBase.STATIC_PAGE % results)
     return file_path
 

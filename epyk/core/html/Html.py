@@ -88,7 +88,7 @@ class Html(object):
     self._dom, self._container, self._sub_htmls, self._js, self.helper = None, None, [], None, ""
     self.jsImports = report.jsImports
     self.cssImport = report.cssImport
-    self.attr = {'class': self.style.classList['main']}
+    self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
     if css_attrs is not None:
       self.css(css_attrs)
     self.jsFncFrag, self._code, self._jsStyles, self._events = {}, code, {}, {"comp_ready": {}, 'doc_ready': {}}
@@ -871,7 +871,20 @@ class Html(object):
     return "".join(str_result)
 
 
+class Body(Html):
 
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpCls.ClassPage(self)
+    return self._styleObj
+
+  def set_content(self, html_content):
+    self.__content = html_content
+    return self
+
+  def __str__(self):
+    return '<body %s>%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.__content)
 
 
 """

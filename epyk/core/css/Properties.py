@@ -1103,9 +1103,9 @@ class CssMixin(object):
 
   @font_size.setter
   def font_size(self, val):
-    val = val or 'None'
     if isinstance(val, int):
       val = "%spx" % val
+    val = val or 'None'
     self.htmlObj.css({"font-size": val})
 
   @property
@@ -1765,10 +1765,24 @@ class CssMixin(object):
     self.htmlObj.css({"padding-right": val})
 
   @property
-  def padding_top(self): return self.htmlObj.css("padding-top")
+  def padding_top(self):
+    """
+    Description:
+    ------------
+    An element's padding is the space between its content and its border.
+
+    The padding-top property sets the top padding (space) of an element.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_padding-top.asp
+    """
+    return self.htmlObj.css("padding-top")
 
   @padding_top.setter
   def padding_top(self, val):
+    if isinstance(val, int):
+      val = "%spx" % val
     val = val or 'None'
     self.htmlObj.css({"padding-top": val})
 

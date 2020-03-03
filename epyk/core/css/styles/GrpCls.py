@@ -9,9 +9,22 @@ from epyk.core.css.styles.classes import CssStyle
 
 
 class ClassPage(object):
-  def __init__(self, rptObj):
-    self._report = rptObj
+  def __init__(self, htmlObj):
+    self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": set(), 'other': set()}, None, None
+
+  @property
+  def css(self):
+    """
+    Description:
+    ------------
+    Property to the underlying CSS definition to be added to the style HTML tag of a component
+
+    :rtype: Commons
+    """
+    if self._css_struct is None:
+      self._css_struct = Commons(self.htmlObj)
+    return self._css_struct
 
   @property
   def defaults(self):

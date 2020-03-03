@@ -530,7 +530,11 @@ class Title(Html.Html):
       self.css({'display': 'block', "margin-right": "10px"})
     if hasattr(report, '_content_table'):
       # Special attribute set in the base component interface
-      report._content_table.add(text, level or 4, "#%s" % self.htmlId)
+      div = self._report.ui.div(htmlCode="%s_anchor" % self.htmlId)
+      div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
+      div.style.css.position = "absolute"
+      div.style.css.z_index = -1
+      report._content_table.add(text, level or 4, "#%s_anchor" % self.htmlId)
       report._content_table[-1].click([
         self.dom.transition(["color", "font-size"], ['red', '102%'], duration=[0.5, 0.5], reverse=True)])
 
