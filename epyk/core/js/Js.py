@@ -642,7 +642,7 @@ class JsBase(object):
     url = JsUtils.jsConvertData(url, None)
     return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
 
-  def request_rpc(self, varName, method_type, fnc, url):
+  def request_rpc(self, varName, method_type, fnc, url, extra_params=None):
     """
     Description:
     ------------
@@ -657,6 +657,9 @@ class JsBase(object):
 
     :rtype: JsObjects.XMLHttpRequest
     """
+    if not extra_params:
+      extra_params = {}
+    extra_params = JsUtils.jsConvertData(extra_params, None)
     method_type = JsUtils.jsConvertData(method_type, None)
     url = JsUtils.jsConvertData(url, None)
     mod_name = fnc.__module__
@@ -666,8 +669,8 @@ class JsBase(object):
       mod_path, mod_name = os.path.split(__main__.__file__[:-3])
     else:
       mod_path = os.path.abspath(os.path.dirname(fnc.__module__))
-    rpc_params = {"function": fnc.__name__, 'module': mod_name, 'path': mod_path}
-    return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+    rpc_params = {"function": fnc.__name__, 'module': mod_name, 'path': mod_path, 'extra_params': extra_params}
+    return JsObjects.XMLHttpRequest(self._src, varName, method_type, url, rpc_params)
 
   @property
   def fncs(self):
