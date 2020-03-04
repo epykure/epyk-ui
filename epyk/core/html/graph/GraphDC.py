@@ -1,6 +1,3 @@
-"""
-
-"""
 
 from epyk.core.html import Html
 

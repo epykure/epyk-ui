@@ -1,15 +1,11 @@
-"""
-Wrapper to produce NVD3 Charts component
-
-Documentation
-http://nvd3.org/
-"""
 
 import json
 
 from epyk.core.html import Html
 
 from epyk.core.js import JsUtils
+from epyk.core.js.primitives import JsObject
+from epyk.core.js.html import JsHtmlD3
 
 from epyk.core.html.graph import GraphFabric
 from epyk.core.js.packages import JsNvd3
@@ -58,9 +54,24 @@ class Chart(Html.Html):
 
   def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
-    super(Chart, self).__init__(report, [], code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                heightUnit=height[1], profile=profile)
+    super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self._d3, self._chart = None, None
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlD3.JsHtmlD3
+    """
+    if self._dom is None:
+      self._dom = JsHtmlD3.JsHtmlD3(self, report=self._report)
+    return self._dom
 
   @property
   def chartId(self):
@@ -79,20 +90,15 @@ class Chart(Html.Html):
   def chart(self):
     raise Exception("Chart object should be defined in the configuration")
 
-  def onDocumentLoadVar(self): pass # Data should be registered externally
-  def onDocumentLoadFnc(self): return True
-  def onDocumentReady(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.jsGenerate(jsData=None))
-
-  def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsId=None):
-    jsFncs = JsUtils.jsConvertFncs([
-      self.chart.set_var(True), self.chart.xAxis,
-      self.d3.datum(self._data).call(self.chart.var)])
-    return ";".join(jsFncs)
+  @property
+  def _js__builder__(self):
+    return JsUtils.jsConvertFncs([
+      self.chart.set_var(True), self.chart.xAxis, self.d3.datum(JsObject.JsObject.get('data')).call(self.chart.var)], toStr=True)
 
   def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     strChart = '<svg id="%s"></svg>' % self.htmlId
-    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.defined), strChart)
+    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.style.get_classes()), strChart)
 
 
 class ChartLine(Chart):

@@ -290,7 +290,7 @@ class Navigation(object):
     div +=self.context.rptObj.ui.link(records[-1]['text'], url=records[-1].get('url', '#')).css({"display": 'inline-block'})
     return div
 
-  def bar(self, icon=None, title=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def bar(self, icon=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -312,6 +312,7 @@ class Navigation(object):
     div.style.css.background_color = self.context.rptObj.theme.greys[0]
     div.style.css.border_bottom = "1px solid %s" % self.context.rptObj.theme.greys[4]
     div.style.css.top = 0
+    self.context.rptObj.body.style.css.padding_top = height[0]
     if icon is None:
       div += self.context.rptObj.ui.icons.epyk()
     if title is not None:

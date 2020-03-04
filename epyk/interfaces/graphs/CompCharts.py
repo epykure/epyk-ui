@@ -1,6 +1,3 @@
-"""
-
-"""
 
 # Check if pandas is available in the current environment
 # if it is the case this module can handle DataFrame directly
