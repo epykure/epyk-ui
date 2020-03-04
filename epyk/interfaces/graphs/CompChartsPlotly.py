@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import sys
 
@@ -11,8 +9,7 @@ class Plotly(object):
     self.parent = context
     self.chartFamily = "Plotly"
 
-  def line(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None,
-           filters=None, profile=None, xAxisOrder=None, options=None,
+  def line(self, data=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, xAxisOrder=None, options=None,
            width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -35,12 +32,14 @@ class Plotly(object):
 
     :rtype: graph.GraphPlotly.Chart
     """
-    if options is None:
-      options = {}
-    return self.parent.context.chart(chartType=sys._getframe().f_code.co_name, data=data, seriesNames=seriesNames,
-                                     xAxis=xAxis, otherDims=otherDims, title=title, chartFamily=self.chartFamily,
-                                     filters=filters, profile=profile, xAxisOrder=xAxisOrder, options=options, width=width,
-                                     height=height, htmlCode=htmlCode)
+    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(line_chart)
+    line_chart.chart._data = [{
+      "x": [1, 2, 3, 4],
+      "y": [12, 9, 15, 12],
+      "mode": 'lines+markers',
+      "name": 'Scatter + Lines'}]
+    return line_chart
 
 
   def bar(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None,
