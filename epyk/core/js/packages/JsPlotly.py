@@ -79,7 +79,16 @@ class JsPlotly(JsPackage):
 
 class JsPlotlyLegend(object):
 
+  def x(self):
+    pass
+
   def y(self):
+    pass
+
+  def bgcolor(self):
+    pass
+
+  def bordercolor(self):
     pass
 
   def traceorder(self):
@@ -137,6 +146,7 @@ class JsPlotlyMargin(object):
 class JsPlotlyAnnotation(object):
   pass
 
+
 class JsPlotlyLayout(object):
 
   def __init__(self, attrs):
@@ -150,6 +160,30 @@ class JsPlotlyLayout(object):
   def height(self):
     return
 
+  def legend(self):
+    pass
+
+  def title(self):
+    pass
+
+  def paper_bgcolor(self):
+    pass
+
+  def plot_bgcolor(self):
+    pass
+
+  def showlegend(self):
+    pass
+
+  def bargap(self):
+    pass
+
+  def barmode(self):
+    pass
+
+  def xaxis(self):
+    pass
+
   def toStr(self):
     return {}
 
@@ -162,10 +196,37 @@ class PlotlyFont(object):
 
 class PlotlyMarkers(object):
 
+  def arearatio(self):
+    pass
+
+  def sizemin(self):
+    pass
+
+  def sizemax(self):
+    pass
+
+  def blend(self):
+    pass
+
+  def border(self):
+    pass
+  
   def color(self):
     pass
 
   def size(self):
+    pass
+
+  def line(self):
+    pass
+
+  def sizeref(self):
+    pass
+
+  def opacity(self):
+    pass
+
+  def sizemode(self):
     pass
 
 
