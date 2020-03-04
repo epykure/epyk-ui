@@ -1,7 +1,3 @@
-"""
-
-
-"""
 
 import sys
 
@@ -34,8 +30,7 @@ class ChartJs(object):
     """
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
                                               filters, profile)
-    line_chart.chart._data_attrs["data"] = self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False).toStr()
-    print(self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False).toStr())
+    line_chart.chart._data = self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False)
     self.parent.context.register(line_chart)
     return line_chart
 

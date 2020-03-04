@@ -1,9 +1,3 @@
-"""
-Wrapper to produce Plotly Charts component
-
-Documentation
-https://plot.ly/javascript/
-"""
 
 import json
 

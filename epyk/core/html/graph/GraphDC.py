@@ -67,7 +67,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     strChart = '<div id="%s" style="height:%spx;width:100%%"></div>' % (self.htmlId, self.height-30)
-    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.defined), strChart)
+    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.style.get_classes()), strChart)
 
 
 class ChartLine(Chart):

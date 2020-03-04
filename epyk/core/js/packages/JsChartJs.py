@@ -20,7 +20,7 @@ EASING_OPTIONS = ['linear', 'easeInQuad', 'easeOutQuad', 'easeInOutQuad', 'easeI
                   'easeInOutBounce']
 
 
-class CHartJsConfig(object):
+class ChartJsConfig(object):
   """
   ChartJs Configuration object
 
@@ -68,7 +68,7 @@ class CHartJsConfig(object):
     self.__easing = value
 
 
-class ChartJs(object):
+class ChartJs(JsPackage):
   lib_alias = {'js': 'Chart.js'}
 
   class __internal(object):
@@ -76,9 +76,9 @@ class ChartJs(object):
 
   def __init__(self, htmlId, config, src=None, varName=None, setVar=True):
     self.src = src if src is not None else self.__internal()
-    self._selector = 'new Chart(document.getElementById("%s").getContext("2d"), %s)' % (htmlId, config.toStr())
+    self._selector = 'new Chart(%s.getContext("2d"), %s)' % (htmlId, config.toStr())
     self.varName, self.setVar = varName or self._selector, setVar
-    self.src.jsImports.add(self.lib_alias)
+    self.src.jsImports.add(self.lib_alias['js'])
     self._js = []
 
   def update(self, config=None):
@@ -629,6 +629,8 @@ class ChartJsOptLegend(DataAttrs):
 
 
 class ChartJsType(object):
+  lib_alias = {'js': 'nvd3', 'css': 'nvd3'}
+
   def __init__(self, type, data):
     self._type, self._data = type, data
     self._data_attrs, self._opts_attrs = {}, {}
@@ -753,6 +755,7 @@ class ChartJsType(object):
 class ChartJsTypeBar(ChartJsType):
 
   def __init__(self, report, data, type='bar'):
+    super(ChartJsTypeBar, self).__init__(type, data)
     self._report = report
     self._data_attrs, self._opts_attrs = {}, {}
     self._data_attrs.update({"type": JsUtils.jsConvertData(type, None), "data": data})
