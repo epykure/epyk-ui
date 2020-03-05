@@ -474,8 +474,8 @@ JS_IMPORTS = {
     'website': 'https://www.chartjs.org/',
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'script': 'Chart.bundle.min.js', 'version': '2.8.0', 'path': 'Chart.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'reqAlias': 'Chart', 'script': 'Chart.min.js', 'version': '2.8.0', 'path': 'Chart.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'Chart.bundle.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      {'reqAlias': 'Chart', 'script': 'Chart.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # ChartJs addon to add label width CDN links
   'chartjs-pie-labels': {

@@ -252,3 +252,10 @@ class DataAttrs(object):
     Produce the resulting string to be added to the Javascript section of the web page
     """
     return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._attrs.items()])
+
+  def toStr(self):
+    """
+
+    :return:
+    """
+    return "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
