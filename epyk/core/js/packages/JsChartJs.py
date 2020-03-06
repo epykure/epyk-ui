@@ -823,9 +823,12 @@ class Options(DataAttrs):
 
 
 class DataSetPie(DataAttrs):
+
   @property
   def backgroundColor(self):
     """
+    Arc background color.
+
     https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["backgroundColor"]
@@ -848,6 +851,8 @@ class DataSetPie(DataAttrs):
   @property
   def borderColor(self):
     """
+    Arc border color.
+
     https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["borderColor"]
@@ -859,6 +864,8 @@ class DataSetPie(DataAttrs):
   @property
   def borderWidth(self):
     """
+    Arc border width (in pixels).
+
     https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["borderWidth"]
@@ -881,6 +888,8 @@ class DataSetPie(DataAttrs):
   @property
   def hoverBackgroundColor(self):
     """
+    Arc background color when hovered.
+
     https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["hoverBackgroundColor"]
@@ -892,6 +901,8 @@ class DataSetPie(DataAttrs):
   @property
   def hoverBorderColor(self):
     """
+    Arc border color when hovered.
+
     https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["hoverBorderColor"]
@@ -903,6 +914,8 @@ class DataSetPie(DataAttrs):
   @property
   def hoverBorderWidth(self):
     """
+    Arc border width when hovered (in pixels).
+
     https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["hoverBorderWidth"]
@@ -914,6 +927,8 @@ class DataSetPie(DataAttrs):
   @property
   def weight(self):
     """
+    The relative thickness of the dataset. Providing a value for weight will cause the pie or doughnut dataset to be drawn with a thickness relative to the sum of all the dataset weight values.
+
     https://www.chartjs.org/docs/latest/charts/doughnut.html
     """
     return self._attrs["weight"]
@@ -2078,7 +2093,6 @@ class DataSetBubble(DataAttrs):
 
 
 class ChartJsType(object):
-  lib_alias = {'js': 'nvd3', 'css': 'nvd3'}
 
   def __init__(self, report, type, data):
     self._report, self._type, self._data = report, type, data
@@ -2323,8 +2337,11 @@ class ChartJsTypeRadar(ChartJsType):
     super(ChartJsTypeRadar, self).__init__(report, type, data)
     self._datasets, self.__options, self.__config = [], None, None
 
-  def dataset(self, i):
-    return self._datasets[-1]
+  def dataset(self, i=None):
+    if i is None:
+      return self._datasets[-1]
+
+    return self._datasets[i]
 
   def add_dataset(self, data):
     """
@@ -2361,6 +2378,33 @@ class ChartJsTypeRadar(ChartJsType):
   def toStr(self):
     print(self.config.toStr())
     print("{%s}" % ", ".join([d.toStr() for d in self._datasets]))
+
+
+class ChartJsTypePie(ChartJsType):
+  def __init__(self, report, data, type='pie'):
+    super(ChartJsTypePie, self).__init__(report, type, data)
+    self._datasets, self.__options, self.__config = [], None, None
+    self.labels = []
+
+  def dataset(self, i=None):
+    if i is None:
+      return self._datasets[-1]
+
+    return self._datasets[i]
+
+  def add_dataset(self, data):
+    """
+
+    :param data:
+    """
+    data = DataSetPie(self._report, attrs={"data": data})
+    self._datasets.append(data)
+    return data
+
+  def toStr(self):
+    return "{type: '%s', data: {labels: %s, datasets: [%s]}}" % (self._type, self.labels, ", ".join([d.toStr() for d in self._datasets]))
+
+
 
 #
 # if __name__ == '__main__':

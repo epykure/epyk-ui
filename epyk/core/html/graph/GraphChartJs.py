@@ -3,7 +3,6 @@ from epyk.core.html import Html
 from epyk.core.js import JsUtils
 
 # from epyk.core.html.graph import AxisDisplay
-from epyk.core.html.graph import GraphFabric
 from epyk.core.js.packages import JsChartJs
 from epyk.core.js.packages import JsD3
 
@@ -52,7 +51,6 @@ CHART_ATTRS = {
 
 class Chart(Html.Html):
   name, category, callFnc = 'ChartJs', 'Charts', 'chartJs'
-  # _grpCls = CssGrpClsCharts.CssClassChartsNvd3
 
   def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
@@ -78,12 +76,13 @@ class Chart(Html.Html):
 
   @property
   def _js__builder__(self):
-    return JsUtils.jsConvertFncs([JsChartJs.ChartJs(self.dom.varId, self._chart, varName=self.chartId, src=self._report)], toStr=True)
+    return JsUtils.jsConvertFncs([
+      JsChartJs.ChartJs(self.dom.varId, self._chart, varName=self.chartId, src=self._report)
+    ], toStr=True)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    strChart = '<div style="height:%spx;margin-top:10px"><canvas id="%s"></canvas></div>' % (self.height-40, self.htmlId)
-    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.style.get_classes()), strChart)
+    return '<div style="height:%spx;margin-top:10px"><canvas id="%s"></canvas></div>' % (self.height-40, self.htmlId)
 
 
 class ChartLine(Chart):
@@ -112,10 +111,10 @@ class ChartPie(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsChartJs.ChartJsTypeBar
+    :rtype: JsChartJs.ChartJsTypePie
     """
     if self._chart is None:
-      self._chart = JsChartJs.ChartJsTypeBar(self._report, [])
+      self._chart = JsChartJs.ChartJsTypePie(self._report, [])
     return self._chart
 
 

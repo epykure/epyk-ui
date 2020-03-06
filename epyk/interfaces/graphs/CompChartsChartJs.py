@@ -47,7 +47,7 @@ class ChartJs(object):
     """
     line_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
                                               filters, profile)
-    line_chart.chart._data = self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False)
+    line_chart.chart.add_dataset([2,3,4, 5])
     self.parent.context.register(line_chart)
     return line_chart
 
@@ -64,7 +64,8 @@ class ChartJs(object):
     """
     line_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
                                               filters, profile)
-    line_chart.chart._data = self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False)
+    print(self.parent.context.rptObj.js.data.records(data).to.chartJs.pie(y_columns, x_axis, profile or False))
+    line_chart.chart.add_dataset(self.parent.context.rptObj.js.data.records(data).to.chartJs.pie(y_columns, x_axis, profile or False))
     self.parent.context.register(line_chart)
     return line_chart
 
