@@ -25,8 +25,6 @@ class ChartJs(object):
     :param width:
     :param height:
     :param htmlCode:
-
-    :return:
     """
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
                                               filters, profile)
@@ -34,20 +32,29 @@ class ChartJs(object):
     self.parent.context.register(line_chart)
     return line_chart
 
-  def pie(self, data=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
-           width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def pie(self, record=None, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+          width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    :param data:
+    :param record:
     :param title:
     :param profile:
     :param width:
     :param height:
     :param htmlCode:
     """
+    agg_data = {}
+    for rec in record:
+      agg_data[rec[x_axis]] = agg_data.get(rec[x_axis],  0) + float(rec[y_column])
+    labels, data = [], []
+    for x, y in agg_data.items():
+      labels.append(x)
+      data.append(y)
+
     line_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
                                               filters, profile)
-    line_chart.chart.add_dataset([2,3,4, 5])
+    line_chart.chart.add_dataset(data)
+    line_chart.chart.labels = labels
     self.parent.context.register(line_chart)
     return line_chart
 
