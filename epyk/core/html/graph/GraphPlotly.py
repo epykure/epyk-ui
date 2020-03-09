@@ -127,6 +127,68 @@ class Bar(Chart):
     return super(Bar, self).add_trace(data, type, mode)
 
 
+class LayoutAxis(DataClass):
+
+  @property
+  def autorange(self):
+    return self._attrs["autorange"]
+
+  @autorange.setter
+  def autorange(self, val):
+    self._attrs["autorange"] = val
+
+  @property
+  def range(self):
+    return self._attrs["range"]
+
+  @range.setter
+  def range(self, val):
+    self._attrs["range"] = val
+
+  @property
+  def type(self):
+    return self._attrs["type"]
+
+  @type.setter
+  def type(self, val):
+    self._attrs["type"] = val
+
+
+class LayoutMargin(DataClass):
+
+  @property
+  def l(self):
+    return self._attrs["l"]
+
+  @l.setter
+  def l(self, val):
+    self._attrs["l"] = val
+
+  @property
+  def r(self):
+    return self._attrs["r"]
+
+  @r.setter
+  def r(self, val):
+    self._attrs["r"] = val
+
+  @property
+  def b(self):
+    return self._attrs["b"]
+
+  @b.setter
+  def b(self, val):
+    self._attrs["b"] = val
+
+  @property
+  def t(self):
+    return self._attrs["t"]
+
+  @t.setter
+  def t(self, val):
+    self._attrs["t"] = val
+
+
 class Layout(DataClass):
 
   @property
@@ -160,6 +222,30 @@ class Layout(DataClass):
   @width.setter
   def width(self, val):
     self._attrs["width"] = val
+
+  @property
+  def xaxis(self):
+    """
+
+    https://plot.ly/javascript/time-series/
+    """
+    return self.sub_data("xaxis", LayoutAxis)
+
+  @property
+  def yaxis(self):
+    """
+
+    https://plot.ly/javascript/time-series/
+    """
+    return self.sub_data("yaxis", LayoutAxis)
+
+  @property
+  def margin(self):
+    """
+
+    https://plot.ly/javascript/3d-surface-plots/
+    """
+    return self.sub_data("margin", LayoutMargin)
 
 
 class LayoutBar(Layout):
