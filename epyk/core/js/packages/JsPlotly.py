@@ -8,7 +8,6 @@ from epyk.core.js.packages import DataAttrs
 
 
 class JsPlotly(JsPackage):
-  lib_alias = {'js': 'plotly.js'}
 
   def newPlot(self, htmlId, data=None, layout=None, config=None):
     """
@@ -449,6 +448,7 @@ class JsPlotlyTrace(object):
 
 
 class Line(JsPlotlyTrace):
+  lib_alias = {'js': 'plotly.js'}
 
   @property
   def layout(self):
@@ -457,5 +457,21 @@ class Line(JsPlotlyTrace):
     return self._layout
 
 
-if __name__ == '__main__':
-  pass
+class Bar(JsPlotlyTrace):
+  lib_alias = {'js': 'plotly.js'}
+
+  @property
+  def layout(self):
+    if self._layout is None:
+      self._layout = JsPlotlyLayout({})
+    return self._layout
+
+
+class Pie(JsPlotlyTrace):
+  lib_alias = {'js': 'plotly.js'}
+
+  @property
+  def layout(self):
+    if self._layout is None:
+      self._layout = JsPlotlyLayout({})
+    return self._layout

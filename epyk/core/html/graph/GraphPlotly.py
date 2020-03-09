@@ -1,102 +1,24 @@
 
 from epyk.core.html import Html
+from epyk.core.html.options import OptPlotly
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObject
 
-from epyk.core.html.graph import GraphFabric
+from epyk.core.data import DataClass
+
 from epyk.core.js.packages import JsPlotly
 from epyk.core.js.packages import JsD3
-
-# The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsCharts
-
-
-CHART_ATTRS = {
-  # Chart layout
-  'bottom': {"key": "b", "category": "margin", 'type': 'layout'},
-  'top': {"key": "t", "category": "margin", 'type': 'layout'},
-  'left': {"key": "l", "category": "margin", 'type': 'layout'},
-  'right': {"key": "r", "category": "margin", 'type': 'layout'},
-
-  # Legend
-  'legend': {'key': 'showlegend', 'type': 'layout'},
-  'legendFontColor': {"key": "color", "tree": ['font'], "category": "legend", 'type': 'layout'},
-  'legendPosition': {"key": "orientation", "category": "legend", 'type': 'layout'},
-
-  # Title
-  'title': {"key": "text", 'type': 'layout', 'category': 'title'},
-  'titleFontColor': {"key": "color", "tree": ['font'], 'type': 'layout', 'category': 'title'},
-
-  # Axes
-  'grid': [
-    {"key": "showgrid", 'type': 'layout', "category": "yaxis"},
-    {"key": "showgrid", 'type': 'layout', "category": "xaxis"}
-  ],
-  'xDisplay': [
-    {"key": "showline", 'type': 'layout', "category": "xaxis"},
-    {"key": "zeroline", 'type': 'layout', "category": "xaxis"},
-  ],
-  'xGrid': {"key": "showgrid", 'type': 'layout', "category": "xaxis"},
-  'xLabel': {"key": "title", "category": "xaxis", 'type': 'layout'},
-  'xType': {"key": "type", "category": "xaxis", 'type': 'layout'},
-  'xFontColor': [
-    {"key": "color", "category": "xaxis", 'type': 'layout'},
-    {"key": "color", "tree": ["titlefont"], "category": "xaxis", 'type': 'layout'},
-    {"key": "color", "tree": ["tickfont"], "category": "xaxis", 'type': 'layout'},
-  ],
-  'yDisplay': [
-    {"key": "showline", 'type': 'layout', "category": "yaxis"},
-    {"key": "zeroline", 'type': 'layout', "category": "yaxis"},
-  ],
-  'yGrid': {"key": "showgrid", 'type': 'layout', "category": "yaxis"},
-  'yLabel': {"key": "title", "category": "yaxis", 'type': 'layout'},
-  'yFontColor': [
-    {"key": "color", "category": "yaxis", 'type': 'layout'},
-    {"key": "color", "tree": ["titlefont"], "category": "yaxis", 'type': 'layout'},
-    {"key": "color", "tree": ["tickfont"], "category": "yaxis", 'type': 'layout'},
-  ],
-  'zlabel': {"key": "title", "category": "zaxis", 'type': 'layout'},
-  'zFontColor': [
-    {"key": "color", "tree": ["titlefont"], "category": "zaxis", 'type': 'layout'},
-    {"key": "color", "tree": ["tickfont"], "category": "zaxis", 'type': 'layout'},
-  ],
-}
-
-
-CHART_ATTRS_3D = {
-  'grid': [
-    {"key": "showgrid", 'type': 'layout', "tree": ["xaxis"], "category": "scene"},
-    {"key": "showgrid", 'type': 'layout', "tree": ["yaxis"], "category": "scene"},
-    {"key": "showgrid", 'type': 'layout', "tree": ["zaxis"], "category": "scene"},
-  ],
-  'xFontColor': [
-    {"key": "color", "tree": ["xaxis", "titlefont"], "category": "scene", 'type': 'layout'},
-    {"key": "color", "tree": ["xaxis", "tickfont"], "category": "scene", 'type': 'layout'},
-  ],
-
-  'yLabel': {"key": "title", "tree": ["yaxis"], "category": "scene", 'type': 'layout'},
-  'yFontColor': [
-    {"key": "color", "tree": ["yaxis", "titlefont"], "category": "scene", 'type': 'layout'},
-    {"key": "color", "tree": ["yaxis", "tickfont"], "category": "scene", 'type': 'layout'},
-  ],
-
-  'zLabel': {"key": "title", "tree": ["zaxis"], "category": "scene", 'type': 'layout'},
-  'zFontColor': [
-    {"key": "color", "tree": ["zaxis", "titlefont"], "category": "scene", 'type': 'layout'},
-    {"key": "color", "tree": ["zaxis", "tickfont"], "category": "scene", 'type': 'layout'},
-  ],
-}
 
 
 class Chart(Html.Html):
   name, category, callFnc = 'Plotly', 'Charts', 'plotly'
-  # _grpCls = CssGrpClsCharts.CssClassChartsNvd3
 
   def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
     super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self._d3, self._chart = None, None
+    self._d3, self._attrs, self._traces, self._layout, self._options = None, None, [], None, None
+    self._options_init = options
 
   @property
   def chartId(self):
@@ -106,26 +28,70 @@ class Chart(Html.Html):
     return "%s_obj" % self.htmlId
 
   @property
+  def data(self):
+    return self._traces[-1]
+
+  @property
+  def options(self):
+    """
+
+    :rtype: Options
+    :return:
+    """
+    if self._options is None:
+      self._options = OptPlotly.OptionConfig(self._report, attrs=self._options_init)
+    return self._options
+
+  def traces(self, i=None):
+    """
+
+    :rtype: JsChartJs.DataSetPie
+    """
+    if i is None:
+      return self._traces[-1]
+
+    return self._traces[i]
+
+  @property
+  def layout(self):
+    if self._layout is None:
+      self._layout = Layout(self._report)
+    return self._layout
+
+  @property
   def d3(self):
     if self._d3 is None:
       self._d3 = JsD3.D3Select(self._report, id="#%s" % self.htmlId)
     return self._d3
 
+  def add_trace(self, data, type=None, mode=None):
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataChart(self._report, attrs=c_data))
+    return self
+
   @property
   def chart(self):
     raise Exception("Chart object should be defined in the configuration")
 
-  @property
-  def _js__builder__(self):
-    return JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).newPlot(self.htmlId, self.chart._data, self.chart.layout)], toStr=True)
+  def build(self, data=None, options=None, profile=False):
+    str_traces = []
+    for t in self._traces:
+      str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in t.items()]))
+    obj_datasets = JsObject.JsObject.get("[%s]" % ", ".join(str_traces))
+    return JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).newPlot(self.htmlId, obj_datasets, self.layout, self.options)], toStr=True)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    strChart = '<div id="%s"></div>' % self.htmlId
-    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.style.get_classes()), strChart)
+    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class Line(Chart):
+  __reqJs = ['plotly.js']
+
   @property
   def chart(self):
     """
@@ -134,6 +100,259 @@ class Line(Chart):
     if self._chart is None:
       self._chart = JsPlotly.Line(self._report, varName=self.chartId)
     return self._chart
+
+  def add_trace(self, data, type=None, mode='lines+markers'):
+    return super(Line, self).add_trace(data, type, mode)
+
+
+class Bar(Chart):
+  __reqJs = ['plotly.js']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsPlotly.Bar
+    """
+    if self._chart is None:
+      self._chart = JsPlotly.Bar(self._report, varName=self.chartId)
+    return self._chart
+
+  @property
+  def layout(self):
+    if self._layout is None:
+      self._layout = LayoutBar(self._report)
+    return self._layout
+
+  def add_trace(self, data, type='bar', mode=None):
+    return super(Bar, self).add_trace(data, type, mode)
+
+
+class Layout(DataClass):
+
+  @property
+  def title(self):
+    return self._attrs["title"]
+
+  @title.setter
+  def title(self, val):
+    self._attrs["title"] = val
+
+  @property
+  def showlegend(self):
+    return self._attrs["showlegend"]
+
+  @showlegend.setter
+  def showlegend(self, val):
+    self._attrs["showlegend"] = val
+
+  @property
+  def height(self):
+    return self._attrs["height"]
+
+  @height.setter
+  def height(self, val):
+    self._attrs["height"] = val
+
+  @property
+  def width(self):
+    return self._attrs["width"]
+
+  @width.setter
+  def width(self, val):
+    self._attrs["width"] = val
+
+
+class LayoutBar(Layout):
+
+  @property
+  def barmode(self):
+    return self._attrs["barmode"]
+
+  @barmode.setter
+  def barmode(self, val):
+    self._attrs["barmode"] = val
+
+
+class DataMarkersLine(DataClass):
+
+  @property
+  def width(self):
+    return self._attrs["width"]
+
+  @width.setter
+  def width(self, val):
+    self._attrs["width"] = val
+
+  @property
+  def color(self):
+    return self._attrs["color"]
+
+  @color.setter
+  def color(self, val):
+    self._attrs["color"] = val
+
+
+class DataMarkers(DataClass):
+
+  @property
+  def size(self):
+    return self._attrs["size"]
+
+  @size.setter
+  def size(self, val):
+    self._attrs["size"] = val
+
+  @property
+  def symbol(self):
+    return self._attrs["symbol"]
+
+  @symbol.setter
+  def symbol(self, val):
+    self._attrs["symbol"] = val
+
+  @property
+  def sizemode(self):
+    return self._attrs["sizemode"]
+
+  @sizemode.setter
+  def sizemode(self, val):
+    self._attrs["sizemode"] = val
+
+  @property
+  def color(self):
+    return self._attrs["color"]
+
+  @color.setter
+  def color(self, val):
+    self._attrs["color"] = val
+
+  @property
+  def opacity(self):
+    return self._attrs["opacity"]
+
+  @opacity.setter
+  def opacity(self, val):
+    self._attrs["opacity"] = val
+
+  @property
+  def width(self):
+    return self._attrs["width"]
+
+  @width.setter
+  def width(self, val):
+    self._attrs["width"] = val
+
+  @property
+  def line(self):
+    """
+
+    https://plot.ly/javascript/webgl-vs-svg/
+    """
+    return self.sub_data("line", DataMarkersLine)
+
+
+class DataChart(DataClass):
+
+  @property
+  def hole(self):
+    return self._attrs["hole"]
+
+  @hole.setter
+  def hole(self, val):
+    self._attrs["hole"] = val
+
+  @property
+  def name(self):
+    return self._attrs["name"]
+
+  @name.setter
+  def name(self, val):
+    self._attrs["name"] = val
+
+  @property
+  def fill(self):
+    return self._attrs["fill"]
+
+  @fill.setter
+  def fill(self, val):
+    self._attrs["fill"] = val
+
+  @property
+  def orientation(self):
+    return self._attrs["orientation"]
+
+  @orientation.setter
+  def orientation(self, val):
+    self._attrs["orientation"] = val
+
+  @property
+  def marker(self):
+    """
+
+    https://plot.ly/javascript/bubble-charts/
+    """
+    return self.sub_data("marker", DataMarkers)
+
+
+class DataPie(DataChart):
+
+  @property
+  def hole(self):
+    return self._attrs["hole"]
+
+  @hole.setter
+  def hole(self, val):
+    self._attrs["hole"] = val
+
+  @property
+  def hoverinfo(self):
+    return self._attrs["hoverinfo"]
+
+  @hoverinfo.setter
+  def hoverinfo(self, val):
+    self._attrs["hoverinfo"] = val
+
+  @property
+  def text(self):
+    return self._attrs["text"]
+
+  @text.setter
+  def text(self, val):
+    self._attrs["text"] = val
+
+  @property
+  def textposition(self):
+    return self._attrs["textposition"]
+
+  @textposition.setter
+  def textposition(self, val):
+    self._attrs["textposition"] = val
+
+
+class Pie(Chart):
+  __reqJs = ['plotly.js']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsPlotly.Bar
+    """
+    if self._chart is None:
+      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+    return self._chart
+
+  @property
+  def data(self):
+    return self._traces[-1]
+
+  def add_trace(self, data, type='pie', mode=None):
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataPie(self._report, attrs=c_data))
+    return self
 
 #
 #   name, category, callFnc = 'Plotly', 'Charts', 'plotly'

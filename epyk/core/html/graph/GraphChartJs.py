@@ -1,61 +1,23 @@
 
 from epyk.core.html import Html
-from epyk.core.js import JsUtils
+from epyk.core.html.options import OptChartJs
 
-# from epyk.core.html.graph import AxisDisplay
+from epyk.core.js import JsUtils
+from epyk.core.js.primitives import JsObject
+
 from epyk.core.js.packages import JsChartJs
 from epyk.core.js.packages import JsD3
-
-# The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsCharts
-
-
-# Define a set of common standard properties cross charting libraries.
-# The below mapping will ensure the correct definition is applied
-CHART_ATTRS = {
-  # Chart layout
-  'bottom': {"key": "bottom", "tree": ['layout', 'padding'], "category": "options"},
-  'top': {"key": "top", "tree": ['layout', 'padding'], "category": "options"},
-
-  # Legend
-  'legendPosition': {"key": "position", "tree": ['legend'], "category": "options"},
-  'legendFontColor': {"key": "fontColor", "tree": ['legend', 'labels'], "category": "options"},
-
-  # Title
-  'title': {"key": "text", "tree": ['title'], "category": "options"},
-  'titleDisplay': {"key": "display", "tree": ['title'], "category": "options"},
-  'titleFontColor': {"key": "fontColor", "tree": ['title'], "category": "options"},
-
-  # Axes
-  'grid': [
-    {"key": "drawOnChartArea", "tree": ['scales', 'xAxes', 'gridLines'], "category": "options"},
-    {"key": "drawOnChartArea", "tree": ['scales', 'yAxes', 'gridLines'], "category": "options"},
-  ],
-  'xLabel': {"key": "labelString", "tree": ['scales', "xAxes", 'scaleLabel'], "category": "options"},
-  'xDisplay': {"key": "display", "tree": ['scales', "xAxes", 'scaleLabel'], "category": "options"},
-  'xFontColor': [
-    {"key": "fontColor", "tree": ['scales', 'xAxes', 'ticks'], "category": "options"},
-    {"key": "color", "tree": ['scales', 'xAxes', 'gridLines'], "category": "options"}
-  ],
-  'xGrid': {"key": "display", "tree": ['scales', 'xAxes', 'gridLines'], "category": "options"},
-  'yLabel': {"key": "labelString", "tree": ['scales', "yAxes", 'scaleLabel'], "category": "options"},
-  'yDisplay': {"key": "display", "tree": ['scales', "yAxes", 'scaleLabel'], "category": "options"},
-  'precision': {"key": "precision", "tree": ['scales', 'yAxes', 'ticks'], "category": "options"},
-  'yFontColor': [
-    {"key": "fontColor", "tree": ['scales', 'yAxes', 'ticks'], "category": "options"},
-    {"key": "color", "tree": ['scales', 'yAxes', 'gridLines'], "category": "options"}],
-  'yGrid': {"key": "display", "tree": ['scales', 'yAxes', 'gridLines'], "category": "options"},
-
-}
 
 
 class Chart(Html.Html):
   name, category, callFnc = 'ChartJs', 'Charts', 'chartJs'
 
-  def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
-    self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
+  def __init__(self,  report, width, height, htmlCode, options, profile):
+    self.height = height[0]
     super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self._d3, self._chart = None, None
+    self._d3, self._chart, self._datasets, self._options, self._data_attrs, self._attrs = None, None, [], None, {}, {}
+    self._options_init = options
+    self.style.css.margin_top = 10
 
   @property
   def chartId(self):
@@ -71,59 +33,272 @@ class Chart(Html.Html):
     return self._d3
 
   @property
-  def chart(self):
-    raise Exception("Chart object should be defined in the configuration")
+  def options(self):
+    """
+
+    :rtype: Options
+    :return:
+    """
+    if self._options is None:
+      self._options = OptChartJs.Options(self._report, attrs=self._options_init)
+    return self._options
+
+  def labels(self, labels):
+    """
+
+    :param labels:
+    :return:
+    """
+    self._data_attrs['labels'] = labels
+    return self
+
+  def dataset(self, i=None):
+    """
+
+    :rtype: JsChartJs.DataSetPie
+    """
+    if i is None:
+      return self._datasets[-1]
+
+    return self._datasets[i]
+
+  def getCtx(self):
+    obj_datasets = "[%s]" % ", ".join([d.toStr() for d in self._datasets])
+    self._data_attrs['datasets'] = JsObject.JsObject.get(obj_datasets)
+    obj_data = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._data_attrs.items()])
+    self._attrs["data"] = JsObject.JsObject.get(obj_data)
+    self._attrs["options"] = JsObject.JsObject.get(str(self.options))
+    str_ctx = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
+    return str_ctx
 
   @property
   def _js__builder__(self):
-    return JsUtils.jsConvertFncs([
-      JsChartJs.ChartJs(self.dom.varId, self._chart, varName=self.chartId, src=self._report)
-    ], toStr=True)
+    return '''
+      %s = new Chart(%s.getContext("2d"), %s)
+      ''' % (self.chartId, self.dom.varId, self.getCtx())
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<div style="height:%spx;margin-top:10px"><canvas id="%s"></canvas></div>' % (self.height-40, self.htmlId)
+    return '<canvas %s></canvas>' % self.get_attrs(pyClassNames=self.style.get_classes())
+
+
+class Datasets(object):
+
+  def __init__(self, report):
+    self._report, self.__data = report, []
+
+  def add(self, data):
+    self.__data.append(data)
+    return self
 
 
 class ChartLine(Chart):
+  __reqJs = ['Chart.js']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
+    self._attrs['type'] = 'line'
+
   @property
-  def chart(self):
+  def options(self):
     """
-    :rtype: JsChartJs.ChartJsTypeBar
+
+    :rtype: OptionsPolar
+    :return:
     """
-    if self._chart is None:
-      self._chart = JsChartJs.ChartJsTypeBar(self._report, [])
-    return self._chart
+    if self._options is None:
+      self._options = OptChartJs.OptionsLine(self._report, attrs=self._options_init)
+    return self._options
+
+  def add_dataset(self, data, colors=None, opacity=None):
+    """
+
+    :return:
+    """
+    data = JsChartJs.DataSetScatterLine(self._report, attrs={"data": data})
+    data.fill = False
+    data.label = self._data_attrs['labels'][len(self._datasets)]
+    if colors is None:
+      data.borderColor = self._report.theme.charts[len(self._datasets)]
+      data.backgroundColor = self._report.theme.charts[len(self._datasets)]
+    data.borderWidth = 1
+    data.pointRadius = 1
+    if opacity is not None:
+      data.fillOpacity = opacity
+    self._datasets.append(data)
+    return data
+
+
+class ChartBubble(Chart):
+  __reqJs = ['Chart.js']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartBubble, self).__init__(report, width, height, htmlCode, options, profile)
+    self._attrs['type'] = 'bubble'
+
+  def add_dataset(self, data, colors=None, opacity=0.8):
+    """
+
+    """
+    data = JsChartJs.DataSetBubble(self._report, attrs={"data": data})
+    data.fill = False
+    data.label = self._data_attrs['labels'][len(self._datasets)]
+    if colors is None:
+      data.borderColor = self._report.theme.charts[len(self._datasets)]
+      data.backgroundColor = self._report.theme.charts[len(self._datasets)]
+      data.fillOpacity = opacity
+    self._datasets.append(data)
+    return data
 
 
 class ChartBar(Chart):
+  __reqJs = ['Chart.js']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartBar, self).__init__(report, width, height, htmlCode, options, profile)
+    self._attrs['type'] = 'bar'
+
   @property
-  def chart(self):
+  def options(self):
     """
-    :rtype: JsChartJs.ChartJsTypeBar
+
+    :rtype: OptionsPolar
+    :return:
     """
-    if self._chart is None:
-      self._chart = JsChartJs.ChartJsTypeBar(self._report, [])
-    return self._chart
+    if self._options is None:
+      self._options = OptChartJs.OptionsBar(self._report, attrs=self._options_init)
+    return self._options
+
+  def add_dataset(self, data, type=None, colors=None, opacity=0.8):
+    """
+
+    :return:
+    """
+    if type is not None:
+      data = JsChartJs.DataSetBar(self._report, attrs={"data": data, 'type': type})
+    else:
+      data = JsChartJs.DataSetBar(self._report, attrs={"data": data})
+    self._datasets.append(data)
+    data.label = self._data_attrs['labels'][len(self._datasets)]
+    if colors is None:
+      data.backgroundColor = self._report.theme.charts[len(self._datasets)]
+      data.fillOpacity = opacity
+    return data
+
+
+class ChartPolar(Chart):
+  __reqJs = ['Chart.js']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartPolar, self).__init__(report, width, height, htmlCode, options, profile)
+    self._attrs['type'] = 'polarArea'
+
+  @property
+  def options(self):
+    """
+
+    :rtype: OptionsPolar
+    :return:
+    """
+    if self._options is None:
+      self._options = OptChartJs.OptionsPolar(self._report, attrs=self._options_init)
+    return self._options
+
+  def add_dataset(self, data, type=None, colors=None, opacity=0.2):
+    """
+
+    :return:
+    """
+    if type is not None:
+      data = JsChartJs.DataSetPolar(self._report, attrs={"data": data, 'type': type})
+    else:
+      data = JsChartJs.DataSetPolar(self._report, attrs={"data": data})
+    self._datasets.append(data)
+    data.label = self._data_attrs['labels'][len(self._datasets)]
+    if colors is None:
+      data.backgroundColor = self._report.theme.charts[len(self._datasets)]
+    data.fillOpacity = opacity
+    return data
+
+
+class ChartHBar(ChartBar):
+  __reqJs = ['Chart.js']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartBar, self).__init__(report, width, height, htmlCode, options, profile)
+    self._attrs['type'] = 'horizontalBar'
 
 
 class ChartPie(Chart):
+  __reqJs = ['Chart.js']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartPie, self).__init__(report, width, height, htmlCode, options, profile)
+    self._attrs['type'] = 'pie'
+
   @property
-  def chart(self):
+  def options(self):
     """
-    :rtype: JsChartJs.ChartJsTypePie
+
+    :rtype: OptionsPie
+    :return:
     """
-    if self._chart is None:
-      self._chart = JsChartJs.ChartJsTypePie(self._report, [])
-    return self._chart
+    if self._options is None:
+      self._options = OptChartJs.OptionsPie(self._report, attrs=self._options_init)
+    return self._options
+
+  def add_dataset(self, data, colors=None, opacity=0.8):
+    """
+
+    :return:
+    """
+    data = JsChartJs.DataSetPie(self._report, attrs={"data": data})
+    self._datasets.append(data)
+    if colors is None:
+      data.backgroundColor = self._report.theme.charts
+      data.fillOpacity = opacity
+    return data
+
+
+class ChartRadar(Chart):
+  __reqJs = ['Chart.js']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartRadar, self).__init__(report, width, height, htmlCode, options, profile)
+    self._attrs['type'] = 'radar'
+
+  def add_dataset(self, data, colors=None, opacity=0.2):
+    """
+
+    :return:
+    """
+    data = JsChartJs.DataSetRadar(self._report, attrs={"data": data})
+    self._datasets.append(data)
+    if colors is None:
+      data.backgroundColor = self._report.theme.charts[len(self._datasets)]
+      data.borderColor = self._report.theme.charts[len(self._datasets)]
+      data.borderWidth = 0.2
+      data.fillOpacity = opacity
+    return data
 
 
 class ChartScatter(Chart):
-  @property
-  def chart(self):
+  __reqJs = ['Chart.js']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartScatter, self).__init__(report, width, height, htmlCode, options, profile)
+    self._attrs['type'] = 'scatter'
+
+  def add_dataset(self, data, colors=None):
     """
-    :rtype: JsChartJs.ChartJsTypeBar
+
+    :return:
     """
-    if self._chart is None:
-      self._chart = JsChartJs.ChartJsTypeBar(self._report, [])
-    return self._chart
+    data = JsChartJs.DataSetScatterLine(self._report, attrs={"data": data})
+    data.fill = False
+    data.label = self._data_attrs['labels'][len(self._datasets)]
+    if colors is None:
+      data.backgroundColor = self._report.theme.charts[len(self._datasets)]
+      data.borderColor = self._report.theme.charts[len(self._datasets)]
+    self._datasets.append(data)
+    return data

@@ -4,6 +4,8 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import DataAttrs
 from epyk.core.js.packages import JsPackage
 
+from epyk.core.css import Colors
+
 
 EASING_OPTIONS = ['linear', 'easeInQuad', 'easeOutQuad', 'easeInOutQuad', 'easeInCubic', 'easeOutCubic',
                   'easeInOutCubic', 'easeInQuart', 'easeOutQuart', 'easeInOutQuart', 'easeInQuint', 'easeOutQuint',
@@ -886,6 +888,28 @@ class DataSetPie(DataAttrs):
     self._attrs["data"] = val
 
   @property
+  def fillOpacity(self):
+    """
+    Convert the hexadecimal color to the corresponding RGB one with the opacity
+
+    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    """
+    return self._attrs["backgroundColor"]
+
+  @fillOpacity.setter
+  def fillOpacity(self, val):
+    bgColors = self._attrs["backgroundColor"]
+    if isinstance(bgColors, list):
+      opColors = []
+      for c in bgColors:
+        color = Colors.getHexToRgb(c)
+        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
+      self._attrs["backgroundColor"] = opColors
+    else:
+      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
+      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
+
+  @property
   def hoverBackgroundColor(self):
     """
     Arc background color when hovered.
@@ -1048,6 +1072,28 @@ class DataSetScatterLine(DataAttrs):
   @fill.setter
   def fill(self, val):
     self._attrs["fill"] = val
+
+  @property
+  def fillOpacity(self):
+    """
+    Convert the hexadecimal color to the corresponding RGB one with the opacity
+
+    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    """
+    return self._attrs["backgroundColor"]
+
+  @fillOpacity.setter
+  def fillOpacity(self, val):
+    bgColors = self._attrs["backgroundColor"]
+    if isinstance(bgColors, list):
+      opColors = []
+      for c in bgColors:
+        color = Colors.getHexToRgb(c)
+        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
+      self._attrs["backgroundColor"] = opColors
+    else:
+      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
+      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
 
   @property
   def hoverBackgroundColor(self):
@@ -1371,6 +1417,28 @@ class DataSetBar(DataAttrs):
     self._attrs["barThickness"] = val
 
   @property
+  def fillOpacity(self):
+    """
+    Convert the hexadecimal color to the corresponding RGB one with the opacity
+
+    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    """
+    return self._attrs["backgroundColor"]
+
+  @fillOpacity.setter
+  def fillOpacity(self, val):
+    bgColors = self._attrs["backgroundColor"]
+    if isinstance(bgColors, list):
+      opColors = []
+      for c in bgColors:
+        color = Colors.getHexToRgb(c)
+        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
+      self._attrs["backgroundColor"] = opColors
+    else:
+      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
+      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
+
+  @property
   def maxBarThickness(self):
     """
     https://www.chartjs.org/docs/latest/charts/bar.html
@@ -1571,6 +1639,28 @@ class DataSetPolar(DataAttrs):
     self._attrs["data"] = val
 
   @property
+  def fillOpacity(self):
+    """
+    Convert the hexadecimal color to the corresponding RGB one with the opacity
+
+    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    """
+    return self._attrs["backgroundColor"]
+
+  @fillOpacity.setter
+  def fillOpacity(self, val):
+    bgColors = self._attrs["backgroundColor"]
+    if isinstance(bgColors, list):
+      opColors = []
+      for c in bgColors:
+        color = Colors.getHexToRgb(c)
+        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
+      self._attrs["backgroundColor"] = opColors
+    else:
+      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
+      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
+
+  @property
   def hoverBackgroundColor(self):
     """
     https://www.chartjs.org/docs/latest/charts/polar.html
@@ -1769,6 +1859,28 @@ class DataSetRadar(DataAttrs):
   @fill.setter
   def fill(self, val):
     self._attrs["fill"] = val
+
+  @property
+  def fillOpacity(self):
+    """
+    Convert the hexadecimal color to the corresponding RGB one with the opacity
+
+    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    """
+    return self._attrs["backgroundColor"]
+
+  @fillOpacity.setter
+  def fillOpacity(self, val):
+    bgColors = self._attrs["backgroundColor"]
+    if isinstance(bgColors, list):
+      opColors = []
+      for c in bgColors:
+        color = Colors.getHexToRgb(c)
+        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
+      self._attrs["backgroundColor"] = opColors
+    else:
+      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
+      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
 
   @property
   def label(self):
@@ -1982,6 +2094,28 @@ class DataSetBubble(DataAttrs):
     self._attrs["data"] = val
 
   @property
+  def fillOpacity(self):
+    """
+    Convert the hexadecimal color to the corresponding RGB one with the opacity
+
+    https://www.chartjs.org/docs/latest/charts/doughnut.html
+    """
+    return self._attrs["backgroundColor"]
+
+  @fillOpacity.setter
+  def fillOpacity(self, val):
+    bgColors = self._attrs["backgroundColor"]
+    if isinstance(bgColors, list):
+      opColors = []
+      for c in bgColors:
+        color = Colors.getHexToRgb(c)
+        opColors.append("rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val))
+      self._attrs["backgroundColor"] = opColors
+    else:
+      color = Colors.getHexToRgb(self._attrs["backgroundColor"])
+      self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
+
+  @property
   def hoverBackgroundColor(self):
     """
     https://www.chartjs.org/docs/latest/charts/bubble.html
@@ -2092,318 +2226,317 @@ class DataSetBubble(DataAttrs):
     self._attrs["radius"] = val
 
 
-class ChartJsType(object):
-
-  def __init__(self, report, type, data):
-    self._report, self._type, self._data = report, type, data
-    self._data_attrs, self._opts_attrs = {}, {}
-
-  def toStr(self):
-    return '{type: "%s", data: %s}' % (self._type, self._data.toStr())
-
-  def backgroundColor(self, colors):
-    """
-    Data attribute to change the background color (the area between the line chart and the x axis)
-
-    :param colors: Array. The list of colors to add to the data definition
-    :return: The ChartJs configuration dictionary for chaining
-    """
-    self._data_attrs["backgroundColor"] = colors
-    return self
-
-  def pointStyle(self, text):
-    """
-
-    Documentation
-
-    :param text:
-    :return:
-    """
-    self._data_attrs["pointStyle"] = text
-    return self
-
-  def borderColor(self, colors):
-    """
-
-    Documentation
-
-    :param colors:
-    :return:
-    """
-    self._data_attrs["backgroundColor"] = colors
-    return self
-
-  def fill(self, flag):
-    """
-
-    Documentation
-
-    :param flag:
-    :return:
-    """
-    self._data_attrs["fill"] = flag
-    return self
-
-  def steppedLine(self, flag):
-    self._data_attrs["steppedLine"] = flag
-    return self
-
-  def customDataAttr(self, name, value):
-    """
-    Add a bespoke attribute to the ChartJs definition
-
-    Example
-
-    Documentation
-
-    :param name: The name of the option
-    :param value: The value of the option
-
-    :return:
-    """
-    self._data_attrs[name] = JsUtils.jsConvertData(value, None)
-    return self
-
-  def maintainAspectRatio(self, flag):
-    """
-
-    Example
-
-    Documentation
-
-    :param flag:
-    :return:
-    """
-    self._opts_attrs["maintainAspectRatio"] = flag
-    return self
-
-  def responsive(self, flag):
-    self._opts_attrs["responsive"] = flag
-    return self
-
-  def scaleShowLabels(self, flag):
-    self._opts_attrs["scaleShowLabels"] = flag
-    return self
-
-  def customOption(self, name, value):
-    """
-    Add a bespoke option to the ChartJs definition
-
-    :param name: The name of the option
-    :param value: The value of the option
-
-    :return:
-    """
-    self._opts_attrs[name] = JsUtils.jsConvertData(value, None)
-    return self
-
-  @property
-  def legend(self):
-    return OptionsLegend(self._report)
-
-  @property
-  def xAxes(self):
-    self._opts_attrs.setdefault("scales", {})["xAxes"] = []
-    return ChartJsOptScale(self._opts_attrs.setdefault("scales", {})["xAxes"])
-
-  @property
-  def yAxes(self):
-    self._opts_attrs.setdefault("scales", {})["yAxes"] = []
-    return ChartJsOptScale(self._opts_attrs.setdefault("scales", {})["yAxes"])
-
-  def build(self, htmlId, varName):
-    return "var %s = new Chart(document.getElementById('%s'), %s)" % (varName, htmlId, self)
-
-
-class ChartJsTypeBar(ChartJsType):
-
-  def __init__(self, report, data, type='bar'):
-    super(ChartJsTypeBar, self).__init__(report, type, data)
-    self._data_attrs, self._opts_attrs = {}, {}
-    self._data_attrs.update({"type": JsUtils.jsConvertData(type, None), "data": data})
-
-  def backgroundColor(self, colors='rgba(0, 0, 0, 0.1)'):
-    """
-
-    Documentation
-    https://www.chartjs.org/docs/latest/charts/bar.html
-
-    :param colors:
-    :return:
-    """
-    if not isinstance(colors, list):
-      colors = [colors]
-    self._data_attrs["backgroundColor"] = colors
-    return self
-
-  def borderColor(self, colors='rgba(0, 0, 0, 0.1)'):
-    """
-
-    Documentation
-    https://www.chartjs.org/docs/latest/charts/bar.html
-
-    :param colors:
-    :return:
-    """
-    if not isinstance(colors, list):
-      colors = [colors]
-    self._data_attrs["borderColor"] = colors
-    return self
-
-  def borderSkipped(self, text='bottom'):
-    """
-    This setting is used to avoid drawing the bar stroke at the base of the fill.
-    In general, this does not need to be changed except when creating chart types that derive from a bar chart.
-
-    Documentation
-    https://www.chartjs.org/docs/latest/charts/bar.html#borderskipped
-
-    :param text: A value among ['bottom', 'left', 'top', 'right', False]
-
-    :return:
-    """
-    skipped_pos = ['bottom', 'left', 'top', 'right', False]
-    if not text in skipped_pos:
-      raise Exception("text value should be in %s" % skipped_pos)
-
-    self._data_attrs["borderSkipped"] = JsUtils.jsConvertData(text, None)
-    return self
-
-  def borderWidth(self, n=0):
-    """
-    If this value is a number, it is applied to all sides of the rectangle (left, top, right, bottom), except borderSkipped.
-    If this value is an object, the left property defines the left border width.
-    Similarly the right, top and bottom properties can also be specified. Omitted borders and borderSkipped are skipped.
-
-    Documentation
-    https://www.chartjs.org/docs/latest/charts/bar.html#borderwidth
-
-    :param n:
-    :return:
-    """
-    self._data_attrs["borderWidth"] = n
-    return self
-
-  def hoverBackgroundColor(self, colors):
-    pass
-
-  def hoverBorderColor(self, colors):
-    pass
-
-  def hoverBorderWidth(self, n):
-    pass
-
-  def label(self, text):
-    """
-    The label for the dataset which appears in the legend and tooltips.
-
-    :param text:
-    :return:
-    """
-    self._data_attrs["label"] = JsUtils.jsConvertData(text, None)
-    return self
-
-  def xAxisID(self, axisId):
-    """
-    The ID of the x axis to plot this dataset on.
-
-    Documentation
-    https://www.chartjs.org/docs/latest/charts/bar.html#general
-
-    :param axisId: The ID of the x axis to plot this dataset on.
-
-    """
-
-  def yAxisID(self, axisId):
-    pass
-
-  @property
-  def scales(self):
-    """
-
-    :rtype: ChartJsOptScaleBar
-    :return:
-    """
-    if not "scales" in self._data_attrs:
-      self._data_attrs["scales"] = ChartJsOptScaleBar(self._report)
-    return self._data_attrs["scales"]
-
-  def __str__(self):
-    return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._data_attrs.items()])
-
-
-class ChartJsTypeRadar(ChartJsType):
-  def __init__(self, report, data, type='radar'):
-    super(ChartJsTypeRadar, self).__init__(report, type, data)
-    self._datasets, self.__options, self.__config = [], None, None
-
-  def dataset(self, i=None):
-    if i is None:
-      return self._datasets[-1]
-
-    return self._datasets[i]
-
-  def add_dataset(self, data):
-    """
-
-    :param data:
-    :return:
-    """
-    data = DataSetRadar(self._report, attrs={"data": data})
-    self._datasets.append(data)
-    return data
-
-  @property
-  def config(self):
-    """
-
-    :rtype: Config
-    :return:
-    """
-    if self.__config is None:
-      self.__config = Config(self._report)
-    return self.__config
-
-  @property
-  def options(self):
-    """
-
-    :rtype: Options
-    :return:
-    """
-    if self._options is None:
-      self._options = Options(self._report)
-    return self._options
-
-  def toStr(self):
-    print(self.config.toStr())
-    print("{%s}" % ", ".join([d.toStr() for d in self._datasets]))
-
-
-class ChartJsTypePie(ChartJsType):
-  def __init__(self, report, data, type='pie'):
-    super(ChartJsTypePie, self).__init__(report, type, data)
-    self._datasets, self.__options, self.__config = [], None, None
-    self.labels = []
-
-  def dataset(self, i=None):
-    if i is None:
-      return self._datasets[-1]
-
-    return self._datasets[i]
-
-  def add_dataset(self, data):
-    """
-
-    :param data:
-    """
-    data = DataSetPie(self._report, attrs={"data": data})
-    self._datasets.append(data)
-    return data
-
-  def toStr(self):
-    return "{type: '%s', data: {labels: %s, datasets: [%s]}}" % (self._type, self.labels, ", ".join([d.toStr() for d in self._datasets]))
-
+# class ChartJsType(object):
+#
+#   def __init__(self, report, type, data):
+#     self._report, self._type, self._data = report, type, data
+#     self._data_attrs, self._opts_attrs = {}, {}
+#
+#   def toStr(self):
+#     return '{type: "%s", data: %s}' % (self._type, self._data.toStr())
+#
+#   def backgroundColor(self, colors):
+#     """
+#     Data attribute to change the background color (the area between the line chart and the x axis)
+#
+#     :param colors: Array. The list of colors to add to the data definition
+#     :return: The ChartJs configuration dictionary for chaining
+#     """
+#     self._data_attrs["backgroundColor"] = colors
+#     return self
+#
+#   def pointStyle(self, text):
+#     """
+#
+#     Documentation
+#
+#     :param text:
+#     :return:
+#     """
+#     self._data_attrs["pointStyle"] = text
+#     return self
+#
+#   def borderColor(self, colors):
+#     """
+#
+#     Documentation
+#
+#     :param colors:
+#     :return:
+#     """
+#     self._data_attrs["backgroundColor"] = colors
+#     return self
+#
+#   def fill(self, flag):
+#     """
+#
+#     Documentation
+#
+#     :param flag:
+#     :return:
+#     """
+#     self._data_attrs["fill"] = flag
+#     return self
+#
+#   def steppedLine(self, flag):
+#     self._data_attrs["steppedLine"] = flag
+#     return self
+#
+#   def customDataAttr(self, name, value):
+#     """
+#     Add a bespoke attribute to the ChartJs definition
+#
+#     Example
+#
+#     Documentation
+#
+#     :param name: The name of the option
+#     :param value: The value of the option
+#
+#     :return:
+#     """
+#     self._data_attrs[name] = JsUtils.jsConvertData(value, None)
+#     return self
+#
+#   def maintainAspectRatio(self, flag):
+#     """
+#
+#     Example
+#
+#     Documentation
+#
+#     :param flag:
+#     :return:
+#     """
+#     self._opts_attrs["maintainAspectRatio"] = flag
+#     return self
+#
+#   def responsive(self, flag):
+#     self._opts_attrs["responsive"] = flag
+#     return self
+#
+#   def scaleShowLabels(self, flag):
+#     self._opts_attrs["scaleShowLabels"] = flag
+#     return self
+#
+#   def customOption(self, name, value):
+#     """
+#     Add a bespoke option to the ChartJs definition
+#
+#     :param name: The name of the option
+#     :param value: The value of the option
+#
+#     :return:
+#     """
+#     self._opts_attrs[name] = JsUtils.jsConvertData(value, None)
+#     return self
+#
+#   @property
+#   def legend(self):
+#     return OptionsLegend(self._report)
+#
+#   @property
+#   def xAxes(self):
+#     self._opts_attrs.setdefault("scales", {})["xAxes"] = []
+#     return ChartJsOptScale(self._opts_attrs.setdefault("scales", {})["xAxes"])
+#
+#   @property
+#   def yAxes(self):
+#     self._opts_attrs.setdefault("scales", {})["yAxes"] = []
+#     return ChartJsOptScale(self._opts_attrs.setdefault("scales", {})["yAxes"])
+#
+#   def build(self, htmlId, varName):
+#     return "var %s = new Chart(document.getElementById('%s'), %s)" % (varName, htmlId, self)
+#
+#
+# class ChartJsTypeBar(ChartJsType):
+#
+#   def __init__(self, report, data, type='bar'):
+#     super(ChartJsTypeBar, self).__init__(report, type, data)
+#     self._data_attrs, self._opts_attrs = {}, {}
+#     self._data_attrs.update({"type": JsUtils.jsConvertData(type, None), "data": data})
+#
+#   def backgroundColor(self, colors='rgba(0, 0, 0, 0.1)'):
+#     """
+#
+#     Documentation
+#     https://www.chartjs.org/docs/latest/charts/bar.html
+#
+#     :param colors:
+#     :return:
+#     """
+#     if not isinstance(colors, list):
+#       colors = [colors]
+#     self._data_attrs["backgroundColor"] = colors
+#     return self
+#
+#   def borderColor(self, colors='rgba(0, 0, 0, 0.1)'):
+#     """
+#
+#     Documentation
+#     https://www.chartjs.org/docs/latest/charts/bar.html
+#
+#     :param colors:
+#     :return:
+#     """
+#     if not isinstance(colors, list):
+#       colors = [colors]
+#     self._data_attrs["borderColor"] = colors
+#     return self
+#
+#   def borderSkipped(self, text='bottom'):
+#     """
+#     This setting is used to avoid drawing the bar stroke at the base of the fill.
+#     In general, this does not need to be changed except when creating chart types that derive from a bar chart.
+#
+#     Documentation
+#     https://www.chartjs.org/docs/latest/charts/bar.html#borderskipped
+#
+#     :param text: A value among ['bottom', 'left', 'top', 'right', False]
+#
+#     :return:
+#     """
+#     skipped_pos = ['bottom', 'left', 'top', 'right', False]
+#     if not text in skipped_pos:
+#       raise Exception("text value should be in %s" % skipped_pos)
+#
+#     self._data_attrs["borderSkipped"] = JsUtils.jsConvertData(text, None)
+#     return self
+#
+#   def borderWidth(self, n=0):
+#     """
+#     If this value is a number, it is applied to all sides of the rectangle (left, top, right, bottom), except borderSkipped.
+#     If this value is an object, the left property defines the left border width.
+#     Similarly the right, top and bottom properties can also be specified. Omitted borders and borderSkipped are skipped.
+#
+#     Documentation
+#     https://www.chartjs.org/docs/latest/charts/bar.html#borderwidth
+#
+#     :param n:
+#     :return:
+#     """
+#     self._data_attrs["borderWidth"] = n
+#     return self
+#
+#   def hoverBackgroundColor(self, colors):
+#     pass
+#
+#   def hoverBorderColor(self, colors):
+#     pass
+#
+#   def hoverBorderWidth(self, n):
+#     pass
+#
+#   def label(self, text):
+#     """
+#     The label for the dataset which appears in the legend and tooltips.
+#
+#     :param text:
+#     :return:
+#     """
+#     self._data_attrs["label"] = JsUtils.jsConvertData(text, None)
+#     return self
+#
+#   def xAxisID(self, axisId):
+#     """
+#     The ID of the x axis to plot this dataset on.
+#
+#     Documentation
+#     https://www.chartjs.org/docs/latest/charts/bar.html#general
+#
+#     :param axisId: The ID of the x axis to plot this dataset on.
+#
+#     """
+#
+#   def yAxisID(self, axisId):
+#     pass
+#
+#   @property
+#   def scales(self):
+#     """
+#
+#     :rtype: ChartJsOptScaleBar
+#     :return:
+#     """
+#     if not "scales" in self._data_attrs:
+#       self._data_attrs["scales"] = ChartJsOptScaleBar(self._report)
+#     return self._data_attrs["scales"]
+#
+#   def __str__(self):
+#     return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._data_attrs.items()])
+#
+#
+# class ChartJsTypeRadar(ChartJsType):
+#   def __init__(self, report, data, type='radar'):
+#     super(ChartJsTypeRadar, self).__init__(report, type, data)
+#     self._datasets, self.__options, self.__config = [], None, None
+#
+#   def dataset(self, i=None):
+#     if i is None:
+#       return self._datasets[-1]
+#
+#     return self._datasets[i]
+#
+#   def add_dataset(self, data):
+#     """
+#
+#     :param data:
+#     :return:
+#     """
+#     data = DataSetRadar(self._report, attrs={"data": data})
+#     self._datasets.append(data)
+#     return data
+#
+#   @property
+#   def config(self):
+#     """
+#
+#     :rtype: Config
+#     :return:
+#     """
+#     if self.__config is None:
+#       self.__config = Config(self._report)
+#     return self.__config
+#
+#   @property
+#   def options(self):
+#     """
+#
+#     :rtype: Options
+#     :return:
+#     """
+#     if self._options is None:
+#       self._options = Options(self._report)
+#     return self._options
+#
+#   def toStr(self):
+#     print(self.config.toStr())
+#     print("{%s}" % ", ".join([d.toStr() for d in self._datasets]))
+#
+
+# class ChartJsTypePie(ChartJsType):
+#   def __init__(self, report, data, type='pie'):
+#     super(ChartJsTypePie, self).__init__(report, type, data)
+#     self._datasets, self.__options, self.__config = [], None, None
+#
+#   def dataset(self, i=None):
+#     if i is None:
+#       return self._datasets[-1]
+#
+#     return self._datasets[i]
+#
+#   def add_dataset(self, data):
+#     """
+#
+#     :param data:
+#     """
+#     data = DataSetPie(self._report, attrs={"data": data})
+#     self._datasets.append(data)
+#     return data
+#
+#   def toStr(self):
+#     return "{type: '%s', data: {labels: %s, datasets: [%s]}}" % (self._type, self.labels, ", ".join([d.toStr() for d in self._datasets]))
+#
 
 
 #

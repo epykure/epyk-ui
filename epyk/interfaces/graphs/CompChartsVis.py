@@ -12,35 +12,39 @@ class Vis(object):
     self.parent = context
     self.chartFamily = "Vis"
 
-  def line(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
-          xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def line(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
 
     Documentation
-    http://visjs.org/
-    http://visjs.org/network_examples.html
+    http://www.chartjs.org/
 
-    :param data:
-    :param seriesNames:
-    :param xAxis:
-    :param otherDims:
-    :param title:
+    :param record:
+    :param y_columns:
+    :param x_axis:
     :param profile:
-    :param xAxisOrder:
-    :param width:
     :param height:
     :param htmlCode:
-
-    :return:
-
-    :rtype: graph.GraphVis.Chart
     """
-    if options is None:
-      options = {}
-    return self.parent.context.chart(chartType=sys._getframe().f_code.co_name, data=data, seriesNames=seriesNames,
-                                     xAxis=xAxis, otherDims=otherDims, title=title, chartFamily=self.chartFamily,
-                                     filters=filters, profile=profile, xAxisOrder=xAxisOrder, options=options, width=width,
-                                     height=height, htmlCode=htmlCode)
+    agg_data = {}
+    for rec in record:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
+    labels, data = set(), []
+    for c in y_columns:
+      series = []
+      for x, y in agg_data[c].items():
+        labels.add(x)
+        series.append({"x": x, "y": y})
+      data.append(series)
+
+    line_chart = graph.GraphVis.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    line_chart.groups(sorted(list(labels)))
+    for d in data:
+      line_chart.add_items(d)
+
+    self.parent.context.register(line_chart)
+    return line_chart
 
   def scatter(self, aresDf=None, seriesNames=None, xAxis=None, otherDims=None, dataFncs=None, title='',
            globalFilter=None, filterSensitive=True, profile=None, dataSrc=None, xAxisOrder=None, chartOptions=None,
