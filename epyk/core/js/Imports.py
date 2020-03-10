@@ -429,7 +429,7 @@ JS_IMPORTS = {
     'website': 'https://plot.ly/javascript/',
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'reqAlias': 'Plotly', 'script': 'plotly.min.js', 'version': '1.48.3', 'path': 'plotly.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'reqAlias': 'Plotly', 'script': 'plotly.min.js', 'version': '1.51.1', 'path': 'plotly.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # NVD3 Components width CDN links
   'nvd3': {
