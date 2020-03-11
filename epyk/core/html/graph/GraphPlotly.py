@@ -127,7 +127,102 @@ class Bar(Chart):
     return super(Bar, self).add_trace(data, type, mode)
 
 
+class LayoutFont(DataClass):
+
+  @property
+  def color(self):
+    return self._attrs["color"]
+
+  @color.setter
+  def color(self, val):
+    self._attrs["color"] = val
+
+
+class LayoutGrid(DataClass):
+
+  @property
+  def rows(self):
+    return self._attrs["rows"]
+
+  @rows.setter
+  def rows(self, val):
+    self._attrs["rows"] = val
+
+  @property
+  def columns(self):
+    return self._attrs["columns"]
+
+  @columns.setter
+  def columns(self, val):
+    self._attrs["columns"] = val
+
+  @property
+  def pattern(self):
+    return self._attrs["pattern"]
+
+  @pattern.setter
+  def pattern(self, val):
+    self._attrs["pattern"] = val
+
+
 class LayoutAxis(DataClass):
+
+  @property
+  def title(self):
+    return self._attrs["title"]
+
+  @title.setter
+  def title(self, val):
+    self._attrs["title"] = val
+
+  @property
+  def titlefont(self):
+    return self.sub_data("titlefont", LayoutFont)
+
+  @property
+  def tickfont(self):
+    return self.sub_data("tickfont", LayoutFont)
+
+  def set_color(self, color):
+    """
+
+    :param color:
+    """
+    self.titlefont.color = color
+    self.tickfont.color = color
+    return self
+
+  @property
+  def overlaying(self):
+    return self._attrs["overlaying"]
+
+  @overlaying.setter
+  def overlaying(self, val):
+    self._attrs["overlaying"] = val
+
+  @property
+  def side(self):
+    return self._attrs["side"]
+
+  @side.setter
+  def side(self, val):
+    self._attrs["side"] = val
+
+  @property
+  def anchor(self):
+    return self._attrs["anchor"]
+
+  @anchor.setter
+  def anchor(self, val):
+    self._attrs["anchor"] = val
+
+  @property
+  def domain(self):
+    return self._attrs["domain"]
+
+  @domain.setter
+  def domain(self, val):
+    self._attrs["domain"] = val
 
   @property
   def autorange(self):
@@ -136,6 +231,14 @@ class LayoutAxis(DataClass):
   @autorange.setter
   def autorange(self, val):
     self._attrs["autorange"] = val
+
+  @property
+  def position(self):
+    return self._attrs["position"]
+
+  @position.setter
+  def position(self, val):
+    self._attrs["position"] = val
 
   @property
   def range(self):
@@ -280,6 +383,22 @@ class Layout(DataClass):
     return self.sub_data("xaxis", LayoutAxis)
 
   @property
+  def xaxis2(self):
+    """
+
+    https://plot.ly/javascript/time-series/
+    """
+    return self.sub_data("xaxis2", LayoutAxis)
+
+  @property
+  def grid(self):
+    """
+
+    https://plot.ly/javascript/subplots/
+    """
+    return self.sub_data("grid", LayoutGrid)
+
+  @property
   def yaxis(self):
     """
 
@@ -288,12 +407,46 @@ class Layout(DataClass):
     return self.sub_data("yaxis", LayoutAxis)
 
   @property
+  def yaxis2(self):
+    """
+
+    https://plot.ly/javascript/time-series/
+    """
+    return self.sub_data("yaxis2", LayoutAxis)
+
+  @property
   def margin(self):
     """
 
     https://plot.ly/javascript/3d-surface-plots/
     """
     return self.sub_data("margin", LayoutMargin)
+
+  def sub_plot(self, columns, rows=1, pattern='independent'):
+    self.grid.rows = rows
+    self.grid.columns = columns
+    self.grid.pattern = pattern
+    return self
+
+  def inset_trace(self, x_domain, x, y=None, y_domain=None):
+    """
+
+    https://plot.ly/javascript/insets/
+
+    :param x_domain:
+    :param x:
+    :param y:
+    :param y_domain:
+    """
+    y = y or x
+    y_domain = y_domain or x_domain
+    x_axis = self.sub_data('xaxis%s' % x, LayoutAxis)
+    x_axis.domain = x_domain
+    x_axis.anchor = "y%s" % y
+    y_axis = self.sub_data('yaxis%s' % y, LayoutAxis)
+    y_axis.domain = y_domain
+    y_axis.anchor = "x%s" % x
+    return self
 
 
 class LayoutBar(Layout):
@@ -418,6 +571,40 @@ class DataChart(DataClass):
   @orientation.setter
   def orientation(self, val):
     self._attrs["orientation"] = val
+
+  @property
+  def type(self):
+    return self._attrs["type"]
+
+  @type.setter
+  def type(self, val):
+    self._attrs["type"] = val
+
+  @property
+  def xaxis(self):
+    return self._attrs["xaxis"]
+
+  @xaxis.setter
+  def xaxis(self, val):
+    self._attrs["xaxis"] = val
+
+  @property
+  def yaxis(self):
+    return self._attrs["yaxis"]
+
+  @yaxis.setter
+  def yaxis(self, val):
+    self._attrs["yaxis"] = val
+
+  def axis_index(self, x, y=None):
+    """
+
+    :param x:
+    :param y:
+    """
+    self.xaxis = "x%s" % x
+    self.yaxis = "y%s" % (y or x)
+    return self
 
   @property
   def marker(self):

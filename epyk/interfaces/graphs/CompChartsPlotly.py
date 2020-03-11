@@ -142,7 +142,7 @@ class Plotly(object):
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
     self.parent.context.register(sc_chart)
     for d in data:
-      sc_chart.add_trace(d, mode='markers')
+      sc_chart.add_trace(d, mode='markers', type="scatter")
     return sc_chart
 
   def scattergl(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
