@@ -8,17 +8,33 @@ class CssBorderRadius(CssStyle.Style):
 
 class CssButtonBasic(CssStyle.Style):
   # Static properties for this class
-  _attrs = {'font-weight': 'bold', 'padding': '2px 10px', 'margin': '2px 0 2px 0', 'text-decoration': 'none',
-            'border-radius': '5px', 'white-space': 'nowrap', 'display': 'inline-block',
+  _attrs = {'font-weight': 'bold', 'padding': '2px 15px', 'margin': '2px 0 2px 0', 'text-decoration': 'none',
+            'border-radius': '3px', 'white-space': 'nowrap', 'display': 'inline-block', 'line-height': '30px',
             '-webkit-appearance': 'none', '-moz-appearance': 'none'}
   _hover = {'text-decoration': 'none', 'cursor': 'pointer'}
   _focus = {'outline': 0}
   _disabled = {'cursor': 'none'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.rptObj.theme.colors[-1], 'color': self.rptObj.theme.greys[-1],
+    self.css({'border': '1px solid %s' % self.rptObj.theme.greys[4], 'color': self.rptObj.theme.colors[-1],
               'background-color': self.rptObj.theme.greys[0]})
-    self.hover.css({'background-color': self.rptObj.theme.colors[-1], 'color': self.rptObj.theme.colors[0]})
+    self.hover.css({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.colors[-1]})
+    self.disabled.css({'background-color': self.rptObj.theme.colors[-1], 'color': self.rptObj.theme.colors[6],
+                       'font-style': 'italic'})
+
+class CssButtonImportant(CssStyle.Style):
+  # Static properties for this class
+  _attrs = {'font-weight': 'bold', 'padding': '2px 15px', 'margin': '2px 0 2px 0', 'text-decoration': 'none',
+            'border-radius': '3px', 'white-space': 'nowrap', 'display': 'inline-block', 'line-height': '30px',
+            '-webkit-appearance': 'none', '-moz-appearance': 'none'}
+  _hover = {'text-decoration': 'none', 'cursor': 'pointer'}
+  _focus = {'outline': 0}
+  _disabled = {'cursor': 'none'}
+
+  def customize(self):
+    self.css({'border': '1px solid %s' % self.rptObj.theme.colors[1], 'color': self.rptObj.theme.colors[-1],
+              'background-color': self.rptObj.theme.greys[0],})
+    self.hover.css({'background-color': self.rptObj.theme.colors[0], 'color': self.rptObj.theme.colors[-1]})
     self.disabled.css({'background-color': self.rptObj.theme.colors[-1], 'color': self.rptObj.theme.colors[6],
                        'font-style': 'italic'})
 
