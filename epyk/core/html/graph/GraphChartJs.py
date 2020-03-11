@@ -71,11 +71,8 @@ class Chart(Html.Html):
     str_ctx = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
     return str_ctx
 
-  @property
-  def _js__builder__(self):
-    return '''
-      %s = new Chart(%s.getContext("2d"), %s)
-      ''' % (self.chartId, self.dom.varId, self.getCtx())
+  def build(self, data=None, options=None, profile=False):
+    return '%s = new Chart(%s.getContext("2d"), %s)' % (self.chartId, self.dom.varId, self.getCtx())
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

@@ -1,11 +1,9 @@
 
-import sys
-
 from epyk.core.html import graph
-from epyk.core.js.Imports import requires
 
 
 class ChartJs(object):
+
   def __init__(self, context):
     self.parent = context
     self.chartFamily = "ChartJs"
@@ -319,8 +317,13 @@ class ChartJs(object):
 
   def radar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    A radar chart is a way of showing multiple data points and the variation between them.
 
-    :param title:
+    https://www.chartjs.org/docs/latest/charts/radar.html
+
+    :param record:
+    :param y_columns:
+    :param x_axis:
     :param profile:
     :param width:
     :param height:
@@ -341,70 +344,8 @@ class ChartJs(object):
 
     radar_chart = graph.GraphChartJs.ChartRadar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     radar_chart.labels(sorted(list(labels)))
-    for d in data:
+    for i, d in enumerate(data):
       radar_chart.add_dataset(d)
+      radar_chart.dataset().label = y_columns[i]
     self.parent.context.register(radar_chart)
     return radar_chart
-
-  def kde(self, aresDf=None, seriesNames=None, otherDims=None, dataFncs=None, title='',
-            globalFilter=None, filterSensitive=True, profile=None, dataSrc=None, xAxisOrder=None, chartOptions=None,
-            width=100, widthUnit="%", height=330, heightUnit="px", htmlCode=None):
-    """
-
-    Specific options to the chartOptions
-      - step      : The number of step used in the gaussian_kde function
-      - chartType : The type of display for the result
-
-    :param aresDf:
-    :param seriesNames:
-    :param xAxis:
-    :param otherDims:
-    :param dataFncs:
-    :param title:
-    :param globalFilter:
-    :param filterSensitive:
-    :param profile:
-    :param dataSrc:
-    :param xAxisOrder:
-    :param chartOptions:
-    :param width:
-    :param widthUnit:
-    :param height:
-    :param heightUnit:
-    :param htmlCode:
-    :return: The Python Chart object
-    :rtype: graph.GraphChartJs.Chart
-    """
-
-    # Those two packages are required for this type of chart
-    ares_numpy = requires("numpy", reason='Missing Package', install='numpy', autoImport=True, sourceScript=__file__)
-    ares_scipy_stats = requires(name='scipy.stats', reason='Missing Package', install='scipy', autoImport=True, sourceScript=__file__)
-
-    step, chartType = 500, 'line'
-    if chartOptions is not None and "step" in chartOptions:
-      step = chartOptions["step"]
-      del chartOptions["step"]
-
-    if chartOptions is not None and "chartType" in chartOptions:
-      chartType = chartOptions["chartType"]
-      del chartOptions["chartType"]
-
-    kdeSeries = {}
-    for series in seriesNames:
-      x = ares_numpy.linspace(min(aresDf[series]), max(aresDf[series]), step)
-      kdeSeries[series] = ares_scipy_stats.gaussian_kde(list(aresDf[series]))(x)
-
-    newDff = []
-    for i in range(step):
-      row = {'x': i}
-      for series in seriesNames:
-        row[series] = kdeSeries[series][i]
-      newDff.append(row)
-
-    return self.parent.context.chart(chartType=chartType, aresDf=newDff, seriesNames=seriesNames,
-                                     xAxis="x", otherDims=otherDims, dataFncs=dataFncs, title=title,
-                                     chartFamily=self.chartFamily, dataSrc=dataSrc,
-                                     globalFilter=globalFilter, filterSensitive=filterSensitive, profile=profile,
-                                     xAxisOrder=xAxisOrder, chartOptions=chartOptions, width=width, widthUnit=widthUnit,
-                                     height=height, heightUnit=heightUnit, htmlCode=htmlCode)
-
