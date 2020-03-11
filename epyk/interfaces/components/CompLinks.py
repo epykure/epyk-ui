@@ -1,6 +1,3 @@
-"""
-
-"""
 
 import importlib
 
@@ -45,7 +42,7 @@ class Links(object):
     self.context.register(html_link)
     return html_link
 
-  def button(self, text, url, icon=None, helper=None, width=(60, 'px'), height=(None, 'px'), decoration=False, options=None, profile=None):
+  def button(self, text, url, icon=None, helper=None, width=(None, 'px'), height=(None, 'px'), decoration=False, options=None, profile=None):
     """
     Description:
     ------------
@@ -67,17 +64,11 @@ class Links(object):
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
-
-    # if url.startswith("http"):
-    #  url = "/%s" % url
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration,
                                             dft_options, profile)
     self.context.register(html_link)
-    html_link.style.addCls("CssButtonBasic")
-    html_link.style.css_display = "block"
-    html_link.style.css_width = "%s%s" % (width[0], width[1])
-    html_link.style.css_border = "1px solid %s" % self.context.rptObj.theme.colors[-1]
-    html_link.style.css_padding = "3px 5px"
+    html_link.style.add_classes.button.basic()
+    html_link.style.css.padding = "0 10px"
     return html_link
 
   def script(self, script_name, report_name=None, icon="fab fa-python", options=None, profile=None):

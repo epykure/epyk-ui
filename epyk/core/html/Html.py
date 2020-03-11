@@ -515,8 +515,8 @@ class Html(object):
     if value is None and isinstance(key, dict):
       # Do not add None value to the CSS otherwise it will break the page on the front end side
       css_vals = key if isinstance(key, dict) else {}
-    elif value is None and key in self.attr.get('css', []):
-      return self.attr['css'][key]
+    elif value is None and not isinstance(key, dict):
+      return self.attr['css'].get(key)
 
     else:
       if isinstance(value, tuple):

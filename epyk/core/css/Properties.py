@@ -1,6 +1,3 @@
-"""
-
-"""
 
 from epyk.core.css import Colors
 from epyk.core.css import Defaults_css
@@ -2023,7 +2020,17 @@ class CssMixin(object):
     self.htmlObj.css({"text-shadow": val})
 
   @property
-  def text_transform(self): return self.htmlObj.css("text-transform")
+  def text_transform(self):
+    """
+    Description:
+    ------------
+    The text-transform property controls the capitalization of text.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_text_text-transform.asp
+    """
+    return self.htmlObj.css("text-transform")
 
   @text_transform.setter
   def text_transform(self, val):
@@ -2268,7 +2275,7 @@ class CssMixin(object):
 
   @width.setter
   def width(self, val):
-    val = val or 'None'
+    val = val or 'none'
     if isinstance(val, int):
       val = "%spx" % val
     self.htmlObj.css({"width": val})

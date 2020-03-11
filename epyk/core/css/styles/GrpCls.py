@@ -4,7 +4,7 @@ from epyk.core.css import Defaults_css
 from epyk.core.css import Properties
 from epyk.core.css.styles.effects import Effects
 from epyk.core.css.styles.attributes import Attrs
-from epyk.core.css.styles.attributes import Commons
+from epyk.core.css.styles.attributes import Commons, Body
 from epyk.core.css.styles.classes import CssStyle
 
 
@@ -23,7 +23,7 @@ class ClassPage(object):
     :rtype: Commons
     """
     if self._css_struct is None:
-      self._css_struct = Commons(self.htmlObj)
+      self._css_struct = Body(self.htmlObj)
     return self._css_struct
 
   @property

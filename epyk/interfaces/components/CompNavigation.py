@@ -295,6 +295,12 @@ class Navigation(object):
     Description:
     ------------
 
+    Usage:
+    ------
+    nav = rptObj.ui.navigation.bar(title="test")
+    nav.add_text("Test text")
+    nav + rptObj.ui.button("Click")
+
     Attributes:
     ----------
     :param icon:
@@ -304,24 +310,47 @@ class Navigation(object):
     :param options:
     :param profile:
     """
-    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
-    div.style.css.margin = 0
-    div.style.css.left = 0
-    div.style.css.padding = "5px 2px 0 2px"
-    div.style.css.position = "fixed"
-    div.style.css.background_color = self.context.rptObj.theme.greys[0]
-    div.style.css.border_bottom = "1px solid %s" % self.context.rptObj.theme.greys[4]
-    div.style.css.top = 0
-    self.context.rptObj.body.style.css.padding_top = height[0]
+    components = []
     if icon is None:
-      div += self.context.rptObj.ui.icons.epyk()
+      components.append(self.context.rptObj.ui.icons.epyk())
     if title is not None:
-      html_title = self.context.rptObj.ui.title(title)
-      html_title.style.css.width = "auto"
-      html_title.style.css.margin = "0 0 0 5px"
-      html_title.style.css.vertical_align = 'top'
-      html_title.style.css.display = "inline-block"
-      html_title.style.css.font_size = 25
-      div += html_title
-    div += self.context.rptObj.ui.navigation.scroll()
+      title = self.context.rptObj.ui.div(title, height=(100, "%"))
+      title.style.css.text_transform = "uppercase"
+      title.style.css.margin_left = 5
+      title.style.css.bold()
+      components.append(title)
+    components.append(self.context.rptObj.ui.navigation.scroll())
+    html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
+    self.context.rptObj.body.style.css.padding_top = height[0]
+    self.context.register(html_nav)
+    return html_nav
+
+  def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+    """
+
+    :param image:
+    :param text:
+    :param link:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    h_image = self.context.rptObj.ui.img(image)
+    h_text = self.context.rptObj.ui.text(text)
+    h_link = self.context.rptObj.ui.links.button("click", link)
+    h_row = self.context.rptObj.ui.row(
+      [h_image, self.context.rptObj.ui.col([h_text, h_link])])
+    div + h_row
+    div.style.css.background_color = self.context.rptObj.theme.colors[3]
+    div.style.css.color = "white"
+    div.style.css.font_size = Defaults_css.font(5)
+    div.style.css.text_align = 'center'
+    div.style.css.padding = "5px 15px"
     return div
+
+  def footer(self, components=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+    footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
+    self.context.register(footer)
+    return footer

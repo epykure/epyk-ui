@@ -33,5 +33,13 @@ class Attrs(Properties.CssMixin):
 class Commons(Attrs):
   def __init__(self, htmlObj):
     super(Commons, self).__init__(htmlObj)
+    self.font_size = 'inherit'
+    self.font_family = 'inherit'
+
+
+class Body(Attrs):
+  def __init__(self, htmlObj):
+    super(Body, self).__init__(htmlObj)
     self.font_size = Defaults_css.font()
     self.font_family = Defaults_css.Font.family
+    self.margin = 0
