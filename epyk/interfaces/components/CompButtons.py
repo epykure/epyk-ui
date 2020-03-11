@@ -9,7 +9,6 @@ except:
 
 from epyk.core import html
 
-
 class Buttons(object):
   def __init__(self, context):
     self.context = context
@@ -44,6 +43,41 @@ class Buttons(object):
     """
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
                                          tooltip=tooltip, profile=profile, options=options)
+    self.context.register(html_button)
+    return html_button
+
+  def important(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Same as Standard button but used to attract user attention
+
+    Usage:
+    ------
+    rptObj.ui.buttons.important("Important")
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/tag_button.asp
+    http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+
+    Attributes:
+    ----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+
+    :return: The Button HTML object
+    """
+    html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
+                                         tooltip=tooltip, profile=profile, options=options)
+    html_button.style.clear_all()
+    html_button.style.add_classes.button.important()
     self.context.register(html_button)
     return html_button
 
