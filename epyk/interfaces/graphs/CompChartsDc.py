@@ -1,6 +1,3 @@
-"""
-
-"""
 
 from epyk.core.html.graph import GraphDC
 from epyk.core.js.objects import JsChartDC
@@ -11,7 +8,7 @@ class DC(object):
     self.parent = context
     self.chartFamily = "DC"
 
-  def line(self, data=None, seriesNames=None, xAxis=None, otherDims=None, title=None, filters=None, profile=None,
+  def line(self, data=None, y_columns=None, x_axis=None, otherDims=None, title=None, filters=None, profile=None,
            xAxisOrder=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -20,8 +17,8 @@ class DC(object):
     https://dc-js.github.io/dc.js/
 
     :param data:
-    :param seriesNames:
-    :param xAxis:
+    :param y_columns:
+    :param x_axis:
     :param otherDims:
     :param title:
     :param profile:

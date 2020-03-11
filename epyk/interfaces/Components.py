@@ -9,6 +9,7 @@ from epyk.interfaces.components import CompMedia
 from epyk.interfaces.components import CompLists
 from epyk.interfaces.tables import CompTables
 from epyk.interfaces.graphs import CompCharts
+from epyk.interfaces.geo import CompGeo
 from epyk.interfaces.components import CompTexts
 from epyk.interfaces.components import CompRich
 from epyk.interfaces.components import CompImages
@@ -146,6 +147,14 @@ class Components(object):
 
     """
     return CompTrees.Trees(self)
+
+  @property
+  def geo(self):
+    """
+    Group all the UI components dedicated to produce Trees or selection items.
+
+    """
+    return CompGeo.Geo(self)
 
   @property
   def buttons(self):

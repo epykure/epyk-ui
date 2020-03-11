@@ -1,14 +1,78 @@
+'''
+Module used as a wrapper to the Javascript C3 libraries
+reference website: http://c3js.org/
+https://c3js.org/gettingstarted.html
+
+This module is defined by a main class ** Chart **.
+
+The constructor ::__init__
+::onDocumentLoadVar
+::onDocumentReady
+
+
+Python / Javascript Events
+::click
+::mouseover
+::mouseout
+
+
+Pure Javascript Wrapper
+Those function will be only used in **Javascript called** and they will return a piece of string which will be added in the
+report to get the data later on in the Javascript layer. Python is just used here to put all the pieces together
+
+The method to destroy the C3 chart ::jsDestroy
+The method to group the different charts ::jsGroups
+
+'''
+
 
 from epyk.core.data import DataClass
 
 from epyk.core.html import Html
 
 from epyk.core.js import JsUtils
+from epyk.core.js.primitives import JsObject
+
 from epyk.core.js.packages import JsD3
+
+# The list of CSS classes
+# from epyk.core.css.styles import CssGrpClsCharts
+
+
+CHART_ATTRS = {
+  # Legend
+  'legend': {'key': 'show', 'category': 'legend'},
+  'legendPosition': {"key": "position", "category": "legend"},
+  'legendFontColor': False,  # devrived from the CSS Style
+
+  # Title
+  'title': {"key": "text", "category": "title"},
+  'titleDisplay': False,
+  'titleFontColor': False,  # devrived from the CSS Style
+
+  # Points
+  'pointDisplay': {"key": "show", 'tree': ['point'], "category": "line"},
+
+  # Axes
+  'grid': [
+    {"key": 'show', 'tree': ['x'], 'category': 'grid'},
+    {"key": 'show', 'tree': ['y'], 'category': 'grid'},
+  ],
+
+  # x Axis
+  'xLabel': {"key": "label", "tree": ['x'], "category": "axis"},
+  'xGrid': {"key": 'show', 'tree': ['x'], 'category': 'grid'},
+  'xFontColor': False,  # devrived from the CSS Style
+
+  # y Axis
+  'yLabel': {"key": "label", "tree": ['y'], "category": "axis"},
+  'yGrid': {"key": 'show', 'tree': ['y'], 'category': 'grid'},
+  'yFontColor': False,  # devrived from the CSS Style
+}
 
 
 class Chart(Html.Html):
-  name, category, callFnc = 'C3', 'Charts', 'C3'
+  name, category, callFnc = 'Billboard', 'Charts', 'Billboard'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     self.height = height[0]
@@ -33,7 +97,7 @@ class Chart(Html.Html):
 
   @property
   def _js__builder__(self):
-    return '''%s = c3.generate(%s)''' % (self.chartId, self.getCtx())
+    return '''%s = bb.generate(%s)''' % (self.chartId, self.getCtx())
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -390,7 +454,7 @@ class C3Points(DataClass):
 
 
 class ChartLine(Chart):
-  __reqJs, __reqCss = ['c3'], ['c3']
+  __reqJs, __reqCss = ['billboard'], ['billboard']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
@@ -460,4 +524,5 @@ class ChartLine(Chart):
 
   def getCtx(self):
     str_ctx = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
+    print(str_ctx)
     return str_ctx

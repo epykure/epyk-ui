@@ -429,7 +429,7 @@ JS_IMPORTS = {
     'website': 'https://plot.ly/javascript/',
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'reqAlias': 'Plotly', 'script': 'plotly.min.js', 'version': '1.48.3', 'path': 'plotly.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'reqAlias': 'Plotly', 'script': 'plotly.min.js', 'version': '1.51.1', 'path': 'plotly.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # NVD3 Components width CDN links
   'nvd3': {
@@ -474,8 +474,8 @@ JS_IMPORTS = {
     'website': 'https://www.chartjs.org/',
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'script': 'Chart.bundle.min.js', 'version': '2.8.0', 'path': 'Chart.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'reqAlias': 'Chart', 'script': 'Chart.min.js', 'version': '2.8.0', 'path': 'Chart.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'Chart.bundle.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      {'reqAlias': 'Chart', 'script': 'Chart.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # ChartJs addon to add label width CDN links
   'chartjs-pie-labels': {

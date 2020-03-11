@@ -117,6 +117,9 @@ def jsConvertData(jsData, jsFnc):
       try:
         return JsObject.JsObject(json.dumps(jsData))
 
+      except TypeError as err:
+        return str(jsData)
+
       except Exception as err:
         if isinstance(jsData, range):
           return JsObject.JsObject(json.dumps(list(jsData)))

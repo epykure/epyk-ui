@@ -164,5 +164,5 @@ class Chart(Html.Html):
             </span>
           </div>
           ''' % {'htmlId': chart_obj.htmlId, 'strAttr': attrs, 'strChart': chart_container,
-                 'grey': chart_obj._report.getColor("greys", 3),
+                 'grey': chart_obj._report.theme.greys[3],
                  'options': "".join(options), 'animated': iconAnimated, 'iconEvent': iconEvent}

@@ -1,211 +1,67 @@
-"""
-Wrapper to Bootstrap Nav Bar
-"""
-
 
 import json
-import time
 import logging
 
 
 from epyk.core.html import Html
 
 # The list of CSS classes
-from epyk.core.css.styles import GrpCls
+from epyk.core.css.styles import GrpClsMenu
+from epyk.core.css import Defaults_css
 
 
 class HtmlNavBar(Html.Html):
-  __reqCss, __reqJs = ['bootstrap', 'font-awesome'], ['bootstrap', 'font-awesome']
-  lenght = 42
-  name, category, docCategory = 'Nav Bar', 'System', 'System'
-  searchEngine, stackOverFlow = None, None
+  name, category = 'Nav Bar', 'System'
 
-  def __init__(self, report, value, color, selected, size, breadcrum, logo, backgroundColor):
-    self.selected, self.extraLinks, self.breadcrum = selected, None, breadcrum
-    report.marginTop, self.categories, self.definedOrder = self.lenght, {}, ['Report', 'Archives', 'Export', 'Notebook']
-    super(HtmlNavBar, self).__init__(report, value)
-    self.backgroundColor = 'inherit' if backgroundColor is None else backgroundColor
-    self.size = int(self._report.pyStyleDfl['fontSize'][:-2]) + 2 if size is None else size
-    self.color, self.stype = 'inherit' if color is None else color, 'standard'
-    self._report.logo, self._logoUrl = logo, "%s/img/%s/%s" % (self._report._urlsApp['index'].replace("/index", ''),
-                                                               self._report.run.report_name, logo)
+  def __init__(self, report, components, width, height, options, profile):
+    super(HtmlNavBar, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    if components is not None:
+      if not isinstance(components, list):
+        components = [components]
+      for c in components:
+        self.__add__(c)
 
+  @property
+  def style(self):
+    """
+    Description:
+    -----------
+    Property to the CSS Style of the component
 
-  # --------------------------------------------------------------------------------------------------------------
-  #                                     DROPDOWN SECTIONS
-  #
-  def dropDown(self, name, definition, style="dropdown-toggle"):
-    self.categories[name] = {"content": definition, "style": style}
-    if not name in self.definedOrder:
-      self.definedOrder.append(name)
+    :rtype: GrpClsMenu.ClassNav
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsMenu.ClassNav(self)
+    return self._styleObj
+
+  def __add__(self, htmlObj):
+    """ Add items to the footer """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.style.css.display = 'inline-block'
+    htmlObj.style.css.line_height = '100%'
+    htmlObj.style.css.font_size = Defaults_css.font(5)
+    if htmlObj.css('height') is None:
+      htmlObj.style.css.vertical_align = 'middle'
+    if htmlObj.css('width') == '100%':
+      htmlObj.style.css.width = None
+    self.val.append(htmlObj)
     return self
 
-  def dropDownReport(self,  report_name, script_name):
-    return self.dropDown('Report', [
-      {"name": "Clear Parameters", 'url': '%s/run/%s/%s' % (self._report._urlsApp['report'], report_name, script_name)},
-      {"diviser": True},
-      {"name": "Documentation", 'url': '%s/dsc/%s/%s' % (self._report._urlsApp['report'], report_name, script_name)},
-      {"name": "Quick Share", 'url': '#', 'action': "onclick=\"FormGoTo('%s/quick/%s/%s', 'POST')\"" % (self._report._urlsApp['transfer'], report_name, script_name)},
-      {"diviser": True},
-      {"name": "Activity Info", 'target': '_blank', 'url': '%s/logs/%s/%s' % (self._report._urlsApp['report'], report_name, script_name)},
-      {"name": "System Info", 'target': '_blank', 'url': '%s/info/%s/%s' % (self._report._urlsApp['report'], report_name, script_name)},
-      {"name": "Code Inspection", 'target': '_blank', 'url': '%s/code/%s/%s' % (self._report._urlsApp['report'], report_name, script_name)},
-      #{"diviser": True},
-      #{"name": "Download Env", 'url': '%s/download/report/%s' % (self._report._urlsApp['transfer'], report_name)},
-      #{"name": "Download Page", 'url': ''},
-    ])
-
-  def dropDownExport(self, report_name, script_name):
-    return []
-    # return self.dropDown('Export', [
-    #   {"name": "Copy URL", 'url': '#', 'action': "onclick='CopyToClipboard()'"},
-    #   {"diviser": True},
-    #   {"name": "HTML 5", 'url': '#', 'action': "onclick=\"FormGoTo('%s/html/%s/%s', 'POST')\"" % (self._report._urlsApp['transfer'], report_name, script_name)},
-    #   {"name": "Excel", 'url': '#', 'action': "onclick=\"FormGoTo('%s/xls/%s/%s', 'POST')\"" % (self._report._urlsApp['transfer'], report_name, script_name)},
-    #   {"name": "Word", 'url': '#', 'action': "onclick=\"FormGoTo('%s/doc/%s/%s', 'POST')\"" % (self._report._urlsApp['transfer'], report_name, script_name)},
-    #   #{"name": "Power Point", 'url': '#', 'action': "onclick=\"FormGoTo('%s/ppt/%s/%s', 'POST')\"" % (self._report._urlsApp['transfer'], report_name, script_name)}
-    # ])
-
-  def dropDownThemes(self, size):
-    themeLst = []
-    for theme in self._report.getThemes():
-      themeLst.append('''<a class="dropdown-item" href="#" onclick="SetTheme('%s')" style="font-size:%s;position:relative;padding-left:35px;display:inline-block"><i class="fas fa-fill-drip" style="margin-right:10px"></i>%s</a>''' % (theme, size, theme))
-    return '\n'.join(themeLst)
-
-
-  def signingType(self, stype):
+  def add_text(self, text):
     """
+
+    :param text:
+    :return:
     """
-    sTypes = ['controlled', 'standard', 'owner']
-    if not stype.lower() in sTypes:
-      raise Exception("Signing Type accepted %s" % sTypes)
-    self.stype = stype.lower()
+    val = self._report.ui.text(text)
+    self.__add__(val)
+    val.style.css.height = "100%"
+    val.style.css.vertical_align = 'middle'
+    return val
 
   def __str__(self):
-    colorText = 7
-    barTheme = 'navbar-dark' if self._report.theme.greys[-1] == '#FFFFFF' else 'navbar-light'
-    items = ['<nav id="report_nav_bar" class="navbar navbar-expand-sm fixed-top %s" style="background:%s;margin:0;padding:0 5px 2px 5px;border-bottom:1px solid %s">' % (barTheme, self._report.theme.greys[1], self._report.theme.greys[6])]
-    items.append('<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon" style="margin-top:-5px"></span></button>')
-    # Common part with the logo and the link to the main page
-    if self._report.run.report_name is None or self._report.run.title == "":
-      breadcrumb = '<a class="navbar-brand" href="%(url)s" style="padding:0;margin:0 5px;color:%(color)s">%(title)s</a>' % {'url': self._report.run.url, 'title': self._report.run.title, 'color': self._report.theme.greys[colorText]}
-    else:
-      breadcrumb = '<a class="navbar-brand" href="/reports/run/%(env)s" style="padding:0;margin:0 5px;color:%(color)s">%(env)s</a> / <a class="navbar-brand" href="%(url)s" style="padding:0;margin:0 5px;color:%(color)s">%(title)s</a>' % {
-        'env': self._report.run.report_name, 'title': self._report.run.title, 'color': self._report.theme.greys[colorText], 'url': self._report.run.url}
-    if self._report.logo is not None and self._report.logo.lower().endswith(".ico"):
-      items.append('<a href="%s" style="line-height:30px;margin:0;padding:0 10px 0 0" class="navbar-brand"><img height="25px" title="Environement Home page" style="margin:0;padding:0" src="%s" /></a>%s' % (self._report._urlsApp['index'], self._logoUrl, breadcrumb))
-    else:
-      awesomeIcon = self._report.logo if self._report.logo is not None else "fab fa-whmcs"
-      items.append('<a href="%s" class="navbar-brand" style="display:inline-block;vertical-align:middle;line-height:20px;padding:0;margin:3px 5px 0 0"><i class="%s" style="color:%s;font-size:24px"></i></a>%s' % (self._report._urlsApp['index'], awesomeIcon, self._report.theme.greys[colorText], breadcrumb))
-    if self._report.run.url_root is not None:
-      items.append('<div class="collapse navbar-collapse" id="navbarTogglerDemo02">')
-      items.append('<ul class="navbar-nav ml-auto">')
-      for name in self.definedOrder:
-        section = self.categories.get(name, {})
-        if len(section.get("content", [])) > 0:
-          items.append('<li class="nav-item dropdown">')
-          items.append('<a class="nav-link %s" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin:0 5px;white-space:nowrap;padding-top:10px;display:inline-block;color:%s">%s</a>' % (section['style'], self._report.theme.greys[colorText], name))
-          items.append('<div class="dropdown-menu scroll_content" aria-labelledby="navbarDropdownMenuLink" style="max-height:500px;overflow:auto">')
-          for s in section["content"]:
-            if 'diviser' in s:
-              items.append('<div class="dropdown-divider"></div>')
-            elif 'header' in s:
-              items.append('<div class="dropdown-header" style="font-weight:bold">%s</div>' % s['header'])
-            elif 'group' in s:
-              subItems = []
-              for sub in s['group']:
-                if not 'action' in sub:
-                  sub['action'] = ""
-                if not 'dsc' in sub:
-                  sub['dsc'] = ""
-                if not 'target' in sub:
-                  sub['target'] = '_self'
-                sub['size'] = self._report.pyStyleDfl['fontSize']
-                subItems.append('<a class="dropdown-item" title="%(dsc)s" target="%(target)s" href="%(url)s" %(action)s style="font-size:%(size)s;color:inherit">%(name)s</a>' % sub)
-              items.append("<div style='max-height:200px;overflow:auto' class='scroll_content'>%s</div>" % "".join(subItems))
-              self._report.jsOnLoadFnc.add("$('.scroll_content').mCustomScrollbar()")
-              self._report.jsImports.add('jquery-scrollbar')
-              self._report.cssImport.add('jquery-scrollbar')
-            else:
-              if not 'action' in s:
-                s['action'] = ""
-              if not 'dsc' in s:
-                s['dsc'] = ""
-              if not 'target' in s:
-                s['target'] = '_self'
-              s['size'] = self._report.pyStyleDfl['fontSize']
-              items.append('<a class="dropdown-item" title="%(dsc)s" target="%(target)s" href="%(url)s" %(action)s style="font-size:%(size)s;color:inherit">%(name)s</a>' % s)
-          items.append('</div></li>')
-      questionReport = ''
-      if self.stackOverFlow is not None:
-        questionReport = '''
-          <a class="dropdown-item" target="_blank" href="%(urlReport)s/run/%(stackOverFlow)s" style="font-size:%(size)s"><i class="fas fa-question-circle" style="margin-right:10px"></i>Help</a>
-          <a class="dropdown-item" target="_blank" href="%(urlReport)s/run/%(stackOverFlow)s/ideas" style="font-size:%(size)s"><i class="fas fa-comment-alt" style="margin-right:10px"></i>Send Feedback</a>''' % {'stackOverFlow': self.stackOverFlow, 'urlReport': self._report._urlsApp['report']}
-
-      # The different SIGN IN Options in the framework
-      if self.stype == 'controlled':
-        items.append('''
-           <li class="nav-item">
-              <i class="nav-link fas fa-lock" style="color:%(color)s;margin:0 5px;padding-top:12px;display:inline-block" title="Controlled Access"></i></li>
-           '''% {'color': self._report.theme.greys[colorText], 'urlAdmin': self._report._urlsApp['admin']})
-      elif self.stype == 'owner':
-        items.append('''
-           <li class="nav-item">
-              <a class="nav-link fas fa-lock" href="%(urlAdmin)s/access/%(reportName)s" style="color:%(color)s;white-space:nowrap;font-weight:bold;margin:0 5px;padding-top:12px;display:inline-block" target="_BLANK"></a></li>
-           ''' % {'color': self._report.theme.greys[colorText], 'urlAdmin': self._report._urlsApp['admin'],
-                  'reportName': self._report.run.report_name})
-      elif self._report.run.current_user == 'anonymous':
-        items.append('''
-          <li class="nav-item">
-            <a class="nav-link" href="%(urlAdmin)s/login" style="border:1px solid %(color)s;color:%(color)s;white-space:nowrap;font-weight:bold;margin:5px;display:inline-block;padding:4px 5px">SIGN IN</a>
-          </li>''' % {'color': self._report.theme.greys[colorText], 'urlAdmin': self._report._urlsApp['admin']})
-      else:
-        items.append('''
-          <li class="nav-item">
-            <a class="nav-link" href="%(urlAdmin)s/logout" style="border:1px solid %(color)s;color:%(color)s;white-space:nowrap;font-weight:bold;margin:5px;display:inline-block;padding:4px 5px">SIGN OUT</a>
-          </li>''' % {'color': self._report.theme.danger[1], 'urlAdmin': self._report._urlsApp['admin']})
-
-      items.append('''
-        <li class="nav-item dropdown">
-          <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:%(color)s;margin:0 5px;padding-top:10px;display:inline-block"><i class="fas fa-ellipsis-v"></i></a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" target="_blank" href="%(urlAdmin)s/user" style="font-size:%(size)s"><i class="fas fa-cogs" style="margin-right:10px"></i>Settings</a>
-            <a class="dropdown-item" target="_blank" href="%(urlAdmin)s/systems" style="font-size:%(size)s"><i class="fas fa-bezier-curve" style="margin-right:10px"></i>Add-Ons</a>
-            <a class="dropdown-item" href="#" id="epyk-nav-themes" role="button" data-toggle="dropdown" aria-expanded="true" aria-haspopup="true" style="font-size:%(size)s"><i class="fas fa-palette" style="margin-right:10px"></i>Themes</a>
-            <div class="dropdown-menu" onclick="OpenDropDownThemes()" style="position:relative;z-index:2" aria-labelledby="epyk-nav-themes">
-                %(Themes)s
-            </div>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" target="_blank" href="%(urlReport)s/framework" style="font-size:%(size)s"><i class="fab fa-python" style="margin-right:10px"></i>Framework</a>
-            %(stackOverFlow)s
-            <div class="dropdown-divider"></div>
-            <div class="dropdown-item" style="font-size:12px;">Mode: %(mode)s</div>
-            <div class="dropdown-item" style="font-size:12px;">User Mode: %(user)s</div>
-            <div class="dropdown-item" style="font-size:12px;">User Name: %(userName)s</div>
-            <div class="dropdown-item" style="font-size:12px;">Updated: %(updateDt)s</div>
-          </div>
-        </li>
-        ''' % {'color': self._report.theme.greys[colorText], 'size': self._report.pyStyleDfl['headerFontSize'], 'Themes': self.dropDownThemes(self._report.pyStyleDfl['headerFontSize']),
-               'urlReport': self._report._urlsApp['report'], 'urlAdmin': self._report._urlsApp['admin'], 'userName': self._report.run.current_user,
-               'user': self._report.run.current_user, 'mode': '%s (Local)' % self._report.run.url_root if self._report.run.is_local else '%s (Server)' % self._report.run.url_root,
-               'updateDt': time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()), 'stackOverFlow': questionReport})
-
-      items.append('</ul>')
-      if self.searchEngine is not None:
-        items.append('''
-          <form class="form-inline my-2 my-md-0" style="position:relative">
-            <span onclick="GoToReport('%(urlReport)s/run/%(search)s/index?value='+ $('#search_input').val(), true, false)" class="fas fa-search my-2 my-sm-0" style="position:absolute;font-size:15px;left:7px;top:6px;cursor:pointer"></span>
-            <input onkeydown="if (event.keyCode == 13) {GoToReport('%(urlReport)s/run/%(search)s/index?value=' + $(this).val(), true, false)}" class="form-control" type="search" id="search_input" placeholder="Search" aria-label="Search" style="font-size:%(size)s;color:%(color)s;text-indent:30px;height:30px;background-color:%(bgColor)s;margin-right:5px">
-          </form> ''' % {"urlReport": self._report._urlsApp['report'], 'search': self.searchEngine, 'bgColor': self._report.theme.greys[0], 'color': self._report.theme.greys[-1], 'size': self._report.pyStyleDfl['fontSize']})
-        items.append('</div>')
-    items.append('</nav>')
-    self._report.jsOnLoadFnc.add('$("body").css("padding-top", "%spx")' % (self.lenght + 3))
-    self._report.jsOnLoadFnc.add('function OpenDropDownThemes(){}')
-    return "".join(items)
-
-
-
-  def to_word(self, document): pass
+    str_h = "".join([h.html() for h in self.val])
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_h)
 
 
 class HtmlParamsBar(Html.Html):
@@ -444,3 +300,34 @@ class HtmlSideBar(Html.Html):
                    'script_name': self._report.run.script_name,
                    'urlAdmin': "", 'lightBlue': self._report.theme.colors[1],
                    "actions": "".join(self._actions)}
+
+
+class HtmlFooter(Html.Html):
+
+  def __init__(self, report, components, width, height, options, profile):
+    super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    if components is not None:
+      if not isinstance(components, list):
+        components = [components]
+      for c in components:
+        self.__add__(c)
+
+  def __add__(self, htmlObj):
+    """ Add items to the footer """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.val.append(htmlObj)
+    return self
+
+  def __getitem__(self, i):
+    """
+    Return the internal column in the row for the given index
+
+    :param i: the column index
+    """
+    return self.val[i]
+
+  def add_menu(self):
+    pass
+
+  def __str__(self):
+    return "<footer %s></footer>" % self.get_attrs(pyClassNames=self.style.get_classes())

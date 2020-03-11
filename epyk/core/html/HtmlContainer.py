@@ -386,7 +386,7 @@ class Row(Html.Html):
       htmlObj = self._report.ui.layouts.col(htmlObj)
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
-    self.htmlMaps[htmlObj.htmlId] = htmlObj
+    # self.htmlMaps[htmlObj.htmlId] = htmlObj
     return self
 
   def get(self, htmlCode):

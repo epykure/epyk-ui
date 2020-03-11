@@ -1,6 +1,3 @@
-"""
-
-"""
 
 
 class OptionsButton(object):

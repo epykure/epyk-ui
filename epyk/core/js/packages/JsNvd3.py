@@ -1,11 +1,6 @@
-"""
-
-https://nvd3-community.github.io/nvd3/examples/documentation.html
-"""
 
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
-from epyk.core.js.primitives import JsString
 
 
 class JsNvd3Axis(object):
@@ -105,7 +100,7 @@ class JsNvd3(JsPackage):
     self.varName, self.setVar = varName, setVar
     self.src.jsImports.add(self.lib_alias['js'])
     self.src.cssImport.add(self.lib_alias['css'])
-    self._js, self._xaxis, self._yaxis = [[]], None, None
+    self._js, self._xaxis, self._yaxis, self._u = [[]], None, None, {}
 
   def version(self, ver):
     """
@@ -308,18 +303,18 @@ class JsNvd3Bar(JsNvd3):
 
   def x(self, column=None, jsFnc=None):
     if column is not None:
-      self._js.append("x(function(d){return d.%s})" % column)
+      self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
       jsFnc = JsUtils.jsConvertFncs(jsFnc)
-      self._js.append("x(%s)" % jsFnc)
+      self.fnc("x(%s)" % jsFnc)
     return self
 
   def y(self, column=None, jsFnc=None):
     if column is not None:
-      self._js.append("y(function(d){return d.%s})" % column)
+      self.fnc("y(function(d){return d.%s})" % column)
     elif jsFnc is not None:
       jsFnc = JsUtils.jsConvertFncs(jsFnc)
-      self._js.append("y(%s)" % jsFnc)
+      self.fnc("y(%s)" % jsFnc)
     return self
 
   def rotateLabels(self, value):
@@ -332,7 +327,7 @@ class JsNvd3Bar(JsNvd3):
     :param value:
     :return:
     """
-    self._js.append("rotateLabels(%s)" % value)
+    self.fnc("rotateLabels(%s)" % value)
     return self
 
   def reduceXTicks(self, flag):
@@ -364,18 +359,18 @@ class JsNvd3Pie(JsNvd3):
 
   def x(self, column=None, jsFnc=None):
     if column is not None:
-      self._js.append("x(function(d){return d.%s})" % column)
+      self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
       jsFnc = JsUtils.jsConvertFncs(jsFnc)
-      self._js.append("x(%s)" % jsFnc)
+      self.fnc("x(%s)" % jsFnc)
     return self
 
   def y(self, column=None, jsFnc=None):
     if column is not None:
-      self._js.append("y(function(d){return d.%s})" % column)
+      self.fnc("y(function(d){return d.%s})" % column)
     elif jsFnc is not None:
       jsFnc = JsUtils.jsConvertFncs(jsFnc)
-      self._js.append("y(%s)" % jsFnc)
+      self.fnc("y(%s)" % jsFnc)
     return self
 
   def showLabels(self, flag):

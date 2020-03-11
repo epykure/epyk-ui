@@ -553,7 +553,7 @@ class VisNetwork(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
 
 
-class VisTImeline(JsPackage):
+class VisTimeline(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
 
 
