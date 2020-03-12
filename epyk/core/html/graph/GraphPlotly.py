@@ -581,6 +581,14 @@ class DataChart(DataClass):
     self._attrs["type"] = val
 
   @property
+  def mode(self):
+    return self._attrs["mode"]
+
+  @mode.setter
+  def mode(self, val):
+    self._attrs["mode"] = val
+
+  @property
   def xaxis(self):
     return self._attrs["xaxis"]
 
@@ -726,6 +734,154 @@ class DataSurface(DataChart):
     return self.sub_data("contours", DataContours)
 
 
+class DataDelta(DataClass):
+
+  @property
+  def reference(self):
+    return self._attrs["reference"]
+
+  @reference.setter
+  def reference(self, val):
+    self._attrs["reference"] = val
+
+  @property
+  def relative(self):
+    return self._attrs["relative"]
+
+  @relative.setter
+  def relative(self, val):
+    self._attrs["relative"] = val
+
+  @property
+  def position(self):
+    return self._attrs["position"]
+
+  @position.setter
+  def position(self, val):
+    self._attrs["position"] = val
+
+  @property
+  def valueformat(self):
+    return self._attrs["valueformat"]
+
+  @valueformat.setter
+  def valueformat(self, val):
+    self._attrs["valueformat"] = val
+
+
+class DataTitle(DataChart):
+
+  @property
+  def text(self):
+    return self._attrs["text"]
+
+  @text.setter
+  def text(self, val):
+    self._attrs["text"] = val
+
+
+class DataNumber(DataChart):
+
+  @property
+  def prefix(self):
+    return self._attrs["prefix"]
+
+  @prefix.setter
+  def prefix(self, val):
+    self._attrs["prefix"] = val
+
+
+class DataGauge(DataChart):
+
+  @property
+  def shape(self):
+    return self._attrs["shape"]
+
+  @shape.setter
+  def shape(self, val):
+    self._attrs["shape"] = val
+
+  @property
+  def axis(self):
+    """
+
+    https://plot.ly/javascript/indicator/
+    """
+    return self.sub_data("axis", LayoutAxis)
+
+
+class DataIndicator(DataChart):
+
+  @property
+  def vmax(self):
+    return self._attrs["vmax"]
+
+  @vmax.setter
+  def vmax(self, val):
+    self._attrs["vmax"] = val
+
+  def domain(self, x, y):
+    """
+
+    https://plot.ly/javascript/indicator/
+
+    :param x:
+    :param y:
+    """
+    self._attrs['domain'] = {"x": x, 'y': y}
+
+  @property
+  def title(self):
+    """
+
+    https://plot.ly/javascript/indicator/
+    """
+    return self.sub_data("title", DataTitle)
+
+  @property
+  def number(self):
+    """
+
+    https://plot.ly/javascript/indicator/
+    """
+    return self.sub_data("number", DataNumber)
+
+  @property
+  def gauge(self):
+    """
+
+    https://plot.ly/javascript/indicator/
+    """
+    if not 'gauge' in self.mode:
+      self.mode = "%s+gauge" % self.mode
+    return self.sub_data("gauge", DataGauge)
+
+  def add_prefix(self, text):
+    self.number.prefix = text
+    return self
+
+  def add_title(self, text):
+    """
+
+    delta.data.add_title("<b style='color:red'>test</b>")
+
+    https://plot.ly/javascript/indicator/
+
+    :param text:
+    :return:
+    """
+    self.title.text = text
+    return self
+
+  @property
+  def delta(self):
+    """
+
+    https://plot.ly/javascript/3d-surface-plots/
+    """
+    return self.sub_data("delta", DataDelta)
+
+
 class Pie(Chart):
 
   __reqJs = ['plotly.js']
@@ -802,4 +958,25 @@ class Mesh3d(Chart):
     if mode is not None:
       c_data['mode'] = mode
     self._traces.append(DataSurface(self._report, attrs=c_data))
+    return self
+
+
+class Indicator(Chart):
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsPlotly.Bar
+    """
+    if self._chart is None:
+      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+    return self._chart
+
+  def add_trace(self, data, type='indicator', mode=None):
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataIndicator(self._report, attrs=c_data))
     return self
