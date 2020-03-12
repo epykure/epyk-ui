@@ -145,6 +145,41 @@ class Plotly(object):
       sc_chart.add_trace(d, mode='markers', type="scatter")
     return sc_chart
 
+  def timeseries(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+                 width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+        Documentation
+        https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+        https://plot.ly/javascript/
+
+        :param record:
+        :param title:
+        :param profile:
+        :param width:
+        :param height:
+        :param htmlCode:
+        """
+    agg_data = {}
+    for rec in record:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+    data = []
+    for c in y_columns:
+      series = {'x': [], 'y': []}
+      for x, y in agg_data[c].items():
+        series['x'].append(x)
+        series['y'].append(y)
+      data.append(series)
+
+    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                      filters, profile)
+    self.parent.context.register(sc_chart)
+    for d in data:
+      sc_chart.add_trace(d, mode='lines', type="scatter")
+    return sc_chart
+
   def scattergl(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
@@ -506,3 +541,45 @@ class Plotly(object):
     #for d in records:
     spolar_chart.add_trace({'r': [0, 3, 3, 0], 'theta': [0, 262.5, 277.5, 0]}, mode="line")
     return spolar_chart
+
+  def box(self, records, y_columns=None, x_columns=None, title=None, filters=None, profile=None,
+             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+
+    axis, cols = ('y', y_columns) if y_columns is not None else ('x', x_columns)
+    series = []
+    for c in cols:
+      series.append([rec.get(c) for rec in records])
+
+    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(box_chart)
+    for s in series:
+      box_chart.add_trace({axis: s})
+    return box_chart
+
+  def group_box(self, records, y_columns=None, x_axis=None, title=None, filters=None, profile=None,
+             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+
+    """
+    https://plot.ly/javascript/box-plots/
+
+    :param records:
+    :param y_columns:
+    :param x_axis:
+    :param title:
+    :param filters:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    series, x = [[] for _ in range(len(y_columns))], []
+    for rec in records:
+      for i, c in enumerate(y_columns):
+        series[i].append(rec.get(c))
+      x.append(rec.get(x_axis))
+    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(box_chart)
+    for s in series:
+      box_chart.add_trace({'y': s, 'x': x})
+    return box_chart

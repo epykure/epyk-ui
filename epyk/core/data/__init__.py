@@ -68,12 +68,13 @@ class DataClass(object):
     :param data:
     :return:
     """
-    if name in self._attrs:
-      return self._attrs[name]
+    #if name in self._attrs:
+    #  return self._attrs[name]
 
     self.__sub__enum_levels.add(name)
-    self._attrs.setdefault(name, []).append(clsObj(self._report))
-    return self._attrs[name]
+    enum_data = clsObj(self._report)
+    self._attrs.setdefault(name, []).append(enum_data)
+    return enum_data
 
   def __str__(self):
     result = []
