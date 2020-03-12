@@ -355,7 +355,7 @@ class Icons(object):
       img, width, height = "epyklogo_whole_big.png", ("auto", ''), ('auto', '')
     icon = self.context.rptObj.ui.img(img, path="https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images",
                                       align=align, width=width, height=height)
-    icon.css({"text-align": "center", "padding": "auto"})
+    icon.css({"text-align": "center", "padding": "auto", "vertical-align": "middle"})
     icon.style.add_classes.div.background_hover()
     return icon
 

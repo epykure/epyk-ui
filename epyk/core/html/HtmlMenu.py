@@ -37,8 +37,8 @@ class HtmlNavBar(Html.Html):
   def __add__(self, htmlObj):
     """ Add items to the footer """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    htmlObj.style.css.display = 'inline-block'
-    htmlObj.style.css.line_height = '100%'
+    htmlObj.style.css.display = 'inline'
+    # htmlObj.style.css.line_height = '100%'
     htmlObj.style.css.font_size = Defaults_css.font(5)
     if htmlObj.css('height') is None:
       htmlObj.style.css.vertical_align = 'middle'

@@ -6,12 +6,23 @@ from epyk.core.Page import Report
 from epyk.core.css.themes import ThemeBlue
 from epyk.core.css.themes import ThemeDark
 from epyk.core.css.themes import ThemeRed
+from epyk.core.css.themes import ThemeGreen
 rptObj = Report()
 
 disc = '''This is not a production platform if you use this code in production
 YOU NEED TO BE AWARE OF THE IT GOVERNANCE
 Ciao bye'''
-# rptObj.theme =
+#########THEMES#########
+# rptObj.theme = ThemeBlue.BlueGrey()
+# rptObj.theme = ThemeBlue.Blue()
+# rptObj.theme = ThemeBlue.LightBlue()
+# rptObj.theme = ThemeRed.Red()
+# rptObj.theme = ThemeDark.Dark()
+# rptObj.theme = ThemeDark.Grey()
+# rptObj.theme = ThemeGreen.Green()
+# rptObj.theme = ThemeGreen.LightGreen()
+# rptObj.theme = ThemeGreen.Teal()
+
 # f = rptObj.ui.forms.inputs([
 #   {"label": "name", "htmlCode": "input"},
 #   {"label": "name 2", "htmlCode": "input2"},
@@ -27,6 +38,7 @@ Ciao bye'''
 # i.input.set_attrs({'name': 'input1'})
 # i2 = rptObj.ui.fields.input('test3', label='test2')
 # f + rptObj.ui.fields.today('test')
+###########BUTTONS###########
 button = rptObj.ui.buttons.button('Contact Sales')
 imp = rptObj.ui.buttons.important('Get Started for Free')
 # rptObj.ui.modal.forms([d, i, i2], "http://127.0.0.1:5000", "POST")
@@ -35,5 +47,18 @@ imp = rptObj.ui.buttons.important('Get Started for Free')
 
 # dis = rptObj.ui.modal.disclaimer(disc)
 # button.click(rptObj.js.getElementById(dis.htmlId).css({'display': 'block'}))
+
+
+
+#########FOOTER#########
+nav = rptObj.ui.navigation.bar(title="test")
+nav.add_text("This is a huge text that I don't know what to do with")
+nav + button
+nav + imp
+# nav.add_text("Test text")
+# nav + rptObj.ui.button("Click").css({"margin": '0 0 20px 5px'})
+# rptObj.ui.navigation.banner("", "test", "google")
+# rptObj.ui.navigation.footer()
+
 rptObj.outs.html_file(name='test')
 
