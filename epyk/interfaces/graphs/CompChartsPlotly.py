@@ -142,7 +142,7 @@ class Plotly(object):
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
     self.parent.context.register(sc_chart)
     for d in data:
-      sc_chart.add_trace(d, mode='markers')
+      sc_chart.add_trace(d, mode='markers', type="scatter")
     return sc_chart
 
   def scattergl(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
@@ -458,3 +458,51 @@ class Plotly(object):
     self.parent.context.register(mesh_chart)
     mesh_chart.add_trace(data)
     return mesh_chart
+
+  def number(self, value, title=None, filters=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
+             htmlCode=None):
+    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(ind)
+    ind.add_trace({'value': value}, mode="number")
+    return ind
+
+  def number_with_delta(self, value, title=None, filters=None, profile=None, options=None, width=(100, "%"),
+                        height=(330, "px"), htmlCode=None):
+    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(ind)
+    ind.add_trace({'value': value}, mode="number+delta")
+    return ind
+
+  def gauge(self, value, title=None, filters=None, profile=None, options=None, width=(100, "%"),
+                        height=(330, "px"), htmlCode=None):
+    """
+
+    gauge = rptObj.ui.charts.plotly.gauge(2000)
+    gauge.data.gauge.axis.range = [0, 5000]
+
+    https://plot.ly/javascript/indicator/
+
+    :param value:
+    :param title:
+    :param filters:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
+    gau = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    self.parent.context.register(gau)
+    gau.add_trace({'value': value}, mode="gauge+number")
+    return gau
+
+  def scatterpolar(self, records, title=None, filters=None, profile=None,
+             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+
+    spolar_chart = graph.GraphPlotly.ScatterPolar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                           filters, profile)
+    self.parent.context.register(spolar_chart)
+    #for d in records:
+    spolar_chart.add_trace({'r': [0, 3, 3, 0], 'theta': [0, 262.5, 277.5, 0]}, mode="line")
+    return spolar_chart
