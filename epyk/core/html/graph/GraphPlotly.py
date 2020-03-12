@@ -565,6 +565,14 @@ class DataChart(DataClass):
     self._attrs["fill"] = val
 
   @property
+  def fillcolor(self):
+    return self._attrs["fillcolor"]
+
+  @fillcolor.setter
+  def fillcolor(self, val):
+    self._attrs["fillcolor"] = val
+
+  @property
   def orientation(self):
     return self._attrs["orientation"]
 
@@ -979,4 +987,27 @@ class Indicator(Chart):
     if mode is not None:
       c_data['mode'] = mode
     self._traces.append(DataIndicator(self._report, attrs=c_data))
+    return self
+
+
+class ScatterPolar(Chart):
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsPlotly.Bar
+    """
+    if self._chart is None:
+      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+    return self._chart
+
+  def add_trace(self, data, type='scatterpolar', mode=None):
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataChart(self._report, attrs=c_data))
+    self.data.fill = 'toself'
+    self.data.fillcolor = 'red'
     return self

@@ -481,7 +481,7 @@ class Plotly(object):
     gauge.data.gauge.axis.range = [0, 5000]
 
     https://plot.ly/javascript/indicator/
-    
+
     :param value:
     :param title:
     :param filters:
@@ -496,3 +496,13 @@ class Plotly(object):
     self.parent.context.register(gau)
     gau.add_trace({'value': value}, mode="gauge+number")
     return gau
+
+  def scatterpolar(self, records, title=None, filters=None, profile=None,
+             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+
+    spolar_chart = graph.GraphPlotly.ScatterPolar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                           filters, profile)
+    self.parent.context.register(spolar_chart)
+    #for d in records:
+    spolar_chart.add_trace({'r': [0, 3, 3, 0], 'theta': [0, 262.5, 277.5, 0]}, mode="line")
+    return spolar_chart
