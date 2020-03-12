@@ -158,12 +158,25 @@ class ClassHtml(Properties.CssMixin):
       self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
     return self.__cls_catalog._class_type('other')
 
+  def no_class(self):
+    """
+    Description:
+    ------------
+    Clear all the Style, Classes and CSS attrubites for the HTML component.
+    Once this function is called it is possible to add new CSS attributes or classes using the different catalog
+    """
+    self.classList['main'] = set()
+    self._css_class = None
+    return self
+
+
   def clear_all(self):
     """
     Description:
     ------------
     Clear all the Style, Classes and CSS attrubites for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog
+    Set the default style to no marging and no padding
     """
     self.htmlObj.attr['css'] = {}
     self.classList['main'] = set()
@@ -205,3 +218,5 @@ class ClassHtml(Properties.CssMixin):
         if hasattr(c, 'get_ref'):
           css_frgs[c.get_ref()] = str(c)
     return css_frgs
+
+

@@ -58,7 +58,9 @@ nav + imp
 # nav.add_text("Test text")
 # nav + rptObj.ui.button("Click").css({"margin": '0 0 20px 5px'})
 # rptObj.ui.navigation.banner("", "test", "google")
-# rptObj.ui.navigation.footer()
+footer = rptObj.ui.navigation.footer([button, imp])
 
-rptObj.outs.html_file(name='test')
+footer + rptObj.ui.texts.paragraph('This is the end')
+
+print(rptObj.outs.html_file(name='test'))
 

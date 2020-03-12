@@ -304,13 +304,26 @@ class HtmlSideBar(Html.Html):
 
 class HtmlFooter(Html.Html):
 
-  def __init__(self, report, components, width, height, options, profile):
+  def __init__(self, report, components, width, height, profile):
     super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     if components is not None:
       if not isinstance(components, list):
         components = [components]
       for c in components:
         self.__add__(c)
+
+  @property
+  def style(self):
+    """
+    Description:
+    -----------
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsMenu.ClassFooter
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsMenu.ClassFooter(self)
+    return self._styleObj
 
   def __add__(self, htmlObj):
     """ Add items to the footer """
@@ -330,4 +343,5 @@ class HtmlFooter(Html.Html):
     pass
 
   def __str__(self):
-    return "<footer %s></footer>" % self.get_attrs(pyClassNames=self.style.get_classes())
+    str_h = "".join([val.html() for val in self.val])
+    return "<footer %s>%s</footer>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_h)
