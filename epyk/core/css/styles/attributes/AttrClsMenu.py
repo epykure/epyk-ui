@@ -11,7 +11,7 @@ class NavBar(Attrs):
     self.margin = 0
     self.vertical_align = 'top'
     self.left = 0
-    self.padding = "5px 2px 0 2px"
+    self.padding = "0 2px 0 2px"
     self.position = "fixed"
     self.background_color = htmlObj._report.theme.greys[0]
     self.border_bottom = "1px solid %s" % htmlObj._report.theme.greys[4]
