@@ -165,6 +165,85 @@ class LayoutGrid(DataClass):
     self._attrs["pattern"] = val
 
 
+class LayoutButtons(DataClass):
+
+  @property
+  def count(self):
+    return self._attrs["count"]
+
+  @count.setter
+  def count(self, val):
+    self._attrs["count"] = val
+
+  @property
+  def label(self):
+    return self._attrs["label"]
+
+  @label.setter
+  def label(self, val):
+    self._attrs["label"] = val
+
+  @property
+  def step(self):
+    return self._attrs["step"]
+
+  @step.setter
+  def step(self, val):
+    self._attrs["step"] = val
+
+  @property
+  def stepmode(self):
+    return self._attrs["stepmode"]
+
+  @stepmode.setter
+  def stepmode(self, val):
+    self._attrs["stepmode"] = val
+
+
+class LayoutRangeSelector(DataClass):
+
+  @property
+  def buttons(self):
+    """
+
+    https://plot.ly/javascript/time-series/
+    https://plot.ly/javascript/range-slider/
+    """
+    return self.sub_data_enum("buttons", LayoutButtons)
+
+  def month(self, n):
+    but = self.buttons
+    but.step = 'month'
+    but.stepmode = 'backward'
+    but.count = n
+    but.label = "%sm" % n
+    return self
+
+  def year(self, n=0):
+    but = self.buttons
+    but.step = 'year'
+    but.count = n
+    but.stepmode = 'todate' if n == 0 else 'backward'
+    but.label = 'YTD' if n == 0 else "%sy" % n
+    return self
+
+  def all(self):
+    but = self.buttons
+    but.step = 'all'
+    return self
+
+
+class LayoutRangeSlider(DataClass):
+
+  @property
+  def range(self):
+    return self._attrs["range"]
+
+  @range.setter
+  def range(self, val):
+    self._attrs["range"] = val
+
+
 class LayoutAxis(DataClass):
 
   @property
@@ -174,6 +253,22 @@ class LayoutAxis(DataClass):
   @title.setter
   def title(self, val):
     self._attrs["title"] = val
+
+  @property
+  def tickangle(self):
+    return self._attrs["tickangle"]
+
+  @tickangle.setter
+  def tickangle(self, val):
+    self._attrs["tickangle"] = val
+
+  @property
+  def showticklabels(self):
+    return self._attrs["showticklabels"]
+
+  @showticklabels.setter
+  def showticklabels(self, val):
+    self._attrs["showticklabels"] = val
 
   @property
   def titlefont(self):
@@ -225,6 +320,14 @@ class LayoutAxis(DataClass):
     self._attrs["domain"] = val
 
   @property
+  def dtick(self):
+    return self._attrs["dtick"]
+
+  @dtick.setter
+  def dtick(self, val):
+    self._attrs["dtick"] = val
+
+  @property
   def autorange(self):
     return self._attrs["autorange"]
 
@@ -241,6 +344,22 @@ class LayoutAxis(DataClass):
     self._attrs["position"] = val
 
   @property
+  def paper_bgcolor(self):
+    return self._attrs["paper_bgcolor"]
+
+  @paper_bgcolor.setter
+  def paper_bgcolor(self, val):
+    self._attrs["paper_bgcolor"] = val
+
+  @property
+  def plot_bgcolor(self):
+    return self._attrs["plot_bgcolor"]
+
+  @plot_bgcolor.setter
+  def plot_bgcolor(self, val):
+    self._attrs["plot_bgcolor"] = val
+
+  @property
   def range(self):
     return self._attrs["range"]
 
@@ -249,12 +368,52 @@ class LayoutAxis(DataClass):
     self._attrs["range"] = val
 
   @property
+  def gridcolor(self):
+    return self._attrs["gridcolor"]
+
+  @gridcolor.setter
+  def gridcolor(self, val):
+    self._attrs["gridcolor"] = val
+
+  @property
+  def gridwidth(self):
+    return self._attrs["gridwidth"]
+
+  @gridwidth.setter
+  def gridwidth(self, val):
+    self._attrs["gridwidth"] = val
+
+  @property
   def type(self):
     return self._attrs["type"]
 
   @type.setter
   def type(self, val):
     self._attrs["type"] = val
+
+  @property
+  def zeroline(self):
+    return self._attrs["zeroline"]
+
+  @zeroline.setter
+  def zeroline(self, val):
+    self._attrs["zeroline"] = val
+
+  @property
+  def rangeselector(self):
+    """
+
+    https://plot.ly/javascript/time-series/
+    """
+    return self.sub_data("rangeselector", LayoutRangeSelector)
+
+  @property
+  def rangeslider(self):
+    """
+
+    https://plot.ly/javascript/time-series/
+    """
+    return self.sub_data("rangeslider", LayoutRangeSlider)
 
 
 class LayoutMargin(DataClass):
@@ -460,6 +619,16 @@ class LayoutBar(Layout):
     self._attrs["barmode"] = val
 
 
+class LayoutBox(Layout):
+  @property
+  def boxmode(self):
+    return self._attrs["boxmode"]
+
+  @boxmode.setter
+  def boxmode(self, val):
+    self._attrs["boxmode"] = val
+
+
 class DataMarkersLine(DataClass):
 
   @property
@@ -477,6 +646,22 @@ class DataMarkersLine(DataClass):
   @color.setter
   def color(self, val):
     self._attrs["color"] = val
+
+  @property
+  def outliercolor(self):
+    return self._attrs["outliercolor"]
+
+  @outliercolor.setter
+  def outliercolor(self, val):
+    self._attrs["outliercolor"] = val
+
+  @property
+  def outlierwidth(self):
+    return self._attrs["outlierwidth"]
+
+  @outlierwidth.setter
+  def outlierwidth(self, val):
+    self._attrs["outlierwidth"] = val
 
 
 class DataMarkers(DataClass):
@@ -528,6 +713,18 @@ class DataMarkers(DataClass):
   @width.setter
   def width(self, val):
     self._attrs["width"] = val
+
+  @property
+  def outliercolor(self):
+    """
+
+    https://plot.ly/javascript/box-plots/
+    """
+    return self._attrs["outliercolor"]
+
+  @outliercolor.setter
+  def outliercolor(self, val):
+    self._attrs["outliercolor"] = val
 
   @property
   def line(self):
@@ -890,6 +1087,49 @@ class DataIndicator(DataChart):
     return self.sub_data("delta", DataDelta)
 
 
+class DataBox(DataChart):
+
+  @property
+  def boxpoints(self):
+    return self._attrs["boxpoints"]
+
+  @boxpoints.setter
+  def boxpoints(self, val):
+    self._attrs["boxpoints"] = val
+
+  @property
+  def boxmean(self):
+    return self._attrs["boxmean"]
+
+  @boxmean.setter
+  def boxmean(self, val):
+    self._attrs["boxmean"] = val
+
+  @property
+  def jitter(self):
+    return self._attrs["jitter"]
+
+  @jitter.setter
+  def jitter(self, val):
+    self._attrs["jitter"] = val
+
+  @property
+  def whiskerwidth(self):
+    return self._attrs["whiskerwidth"]
+
+  @whiskerwidth.setter
+  def whiskerwidth(self, val):
+    self._attrs["whiskerwidth"] = val
+
+  @property
+  def pointpos(self):
+    return self._attrs["pointpos"]
+
+  @pointpos.setter
+  def pointpos(self, val):
+    self._attrs["pointpos"] = val
+
+
 class Pie(Chart):
 
   __reqJs = ['plotly.js']
@@ -971,6 +1211,8 @@ class Mesh3d(Chart):
 
 class Indicator(Chart):
 
+  __reqJs = ['plotly.js']
+
   @property
   def chart(self):
     """
@@ -992,6 +1234,8 @@ class Indicator(Chart):
 
 class ScatterPolar(Chart):
 
+  __reqJs = ['plotly.js']
+
   @property
   def chart(self):
     """
@@ -1010,4 +1254,32 @@ class ScatterPolar(Chart):
     self._traces.append(DataChart(self._report, attrs=c_data))
     self.data.fill = 'toself'
     self.data.fillcolor = 'red'
+    return self
+
+
+class Box(Chart):
+  __reqJs = ['plotly.js']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsPlotly.Bar
+    """
+    if self._chart is None:
+      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+    return self._chart
+
+  @property
+  def layout(self):
+    if self._layout is None:
+      self._layout = LayoutBox(self._report)
+    return self._layout
+
+  def add_trace(self, data, type='box', mode=None):
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataBox(self._report, attrs=c_data))
     return self

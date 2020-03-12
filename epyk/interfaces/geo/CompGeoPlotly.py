@@ -86,3 +86,108 @@ class Plotly(object):
     line_chart.layout.dragmode = 'zoom'
     line_chart.layout.zoom = 3
     return line_chart
+
+  def world_map(self, record, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+              width=(100, "%"), height=(330, "px"), htmlCode=None):
+    data = {"locations": ["NY", "MA", "VT"], "z": [-50, -10, -20]}
+    line_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                          filters, profile)
+    line_chart.options.responsive = True
+    self.parent.context.register(line_chart)
+    line_chart.add_trace({'locations': ['France'], 'z': ['50']})
+    line_chart.data.locationmode = 'country names'
+    return line_chart
+
+  def europe(self, record, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+              width=(100, "%"), height=(330, "px"), htmlCode=None):
+    map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                          filters, profile)
+    map_chart.options.responsive = True
+    data = {}
+    for rec in record:
+      if x_axis in rec:
+        data[rec[x_axis]] = data.get(x_axis, 0) + float(rec.get(y_column, 0))
+    self.parent.context.register(map_chart)
+    locations = list(data.keys())
+    map_chart.add_trace({'locations': locations, 'z': [data[k] for k in locations]})
+    map_chart.data.locationmode = 'country names'
+    map_chart.data.autocolorscale = True
+    map_chart.layout.geo.scope = 'europe'
+    map_chart.layout.geo.showlakes = True
+    map_chart.layout.geo.showland = True
+    return map_chart
+
+  def asia(self, record, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+              width=(100, "%"), height=(330, "px"), htmlCode=None):
+    map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                          filters, profile)
+    map_chart.options.responsive = True
+    data = {}
+    for rec in record:
+      if x_axis in rec:
+        data[rec[x_axis]] = data.get(x_axis, 0) + float(rec.get(y_column, 0))
+
+    map_chart.options.responsive = True
+    self.parent.context.register(map_chart)
+    locations = list(data.keys())
+    map_chart.add_trace({'locations': locations, 'z': [data[k] for k in locations]})
+    map_chart.data.locationmode = 'country names'
+    map_chart.layout.geo.scope = 'asia'
+    map_chart.layout.geo.showlakes = True
+    map_chart.layout.geo.showland = True
+    return map_chart
+
+  def africa(self, record, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+              width=(100, "%"), height=(330, "px"), htmlCode=None):
+    map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                          filters, profile)
+    map_chart.options.responsive = True
+    data = {}
+    for rec in record:
+      if x_axis in rec:
+        data[rec[x_axis]] = data.get(x_axis, 0) + float(rec.get(y_column, 0))
+    self.parent.context.register(map_chart)
+    locations = list(data.keys())
+    map_chart.add_trace({'locations': locations, 'z': [data[k] for k in locations]})
+    map_chart.data.locationmode = 'country names'
+    map_chart.layout.geo.scope = 'africa'
+    map_chart.layout.geo.showlakes = True
+    map_chart.layout.geo.showland = True
+    return map_chart
+
+  def usa(self, record, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+              width=(100, "%"), height=(330, "px"), htmlCode=None):
+    map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                          filters, profile)
+    map_chart.options.responsive = True
+    data = {}
+    for rec in record:
+      if x_axis in rec:
+        data[rec[x_axis]] = data.get(x_axis, 0) + float(rec.get(y_column, 0))
+    self.parent.context.register(map_chart)
+    locations = list(data.keys())
+    map_chart.add_trace({'locations': locations, 'z': [data[k] for k in locations]})
+    map_chart.data.locationmode = 'USA-states'
+    map_chart.layout.geo.scope = 'usa'
+    map_chart.layout.geo.showlakes = True
+    map_chart.layout.geo.showland = True
+    return map_chart
+
+  def scatter_europe(self, record, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+              width=(100, "%"), height=(330, "px"), htmlCode=None):
+    map_chart = geo.GeoPlotly.ScatterGeo(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                         filters, profile)
+    map_chart.options.responsive = True
+    data = {}
+    for rec in record:
+      if x_axis in rec:
+        data[rec[x_axis]] = data.get(x_axis, 0) + float(rec.get(y_column, 0))
+    self.parent.context.register(map_chart)
+    locations = list(data.keys())
+    map_chart.add_trace({'locations': locations, 'z': [data[k] for k in locations]})
+    map_chart.data.locationmode = 'country names'
+    map_chart.data.autocolorscale = True
+    map_chart.layout.geo.scope = 'europe'
+    map_chart.layout.geo.showlakes = True
+    map_chart.layout.geo.showland = True
+    return map_chart
