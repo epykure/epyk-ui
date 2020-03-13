@@ -17,6 +17,7 @@ from epyk.core import js
 
 from epyk.interfaces.tables import CompTabulator
 from epyk.interfaces.tables import CompDatatable
+from epyk.interfaces.tables import CompTablesPlotly
 
 
 class Tables(object):
@@ -34,6 +35,18 @@ class Tables(object):
     :rtype: CompTabulator.Tabulators
     """
     return CompTabulator.Tabulators(self)
+
+  @property
+  def plotlys(self):
+    """
+    Interface to the different Tabulator configurations
+
+    Documentation
+    http://tabulator.info/
+
+    :rtype: CompTabulator.Tabulators
+    """
+    return CompTablesPlotly.Plotly(self)
 
   @property
   def datatables(self):

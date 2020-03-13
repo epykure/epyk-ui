@@ -173,8 +173,8 @@ class Plotly(object):
     map_chart.layout.geo.showland = True
     return map_chart
 
-  def scatter_europe(self, record, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
-              width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def bubble(self, scope, record, y_column=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+              width=(100, "%"), height=(430, "px"), htmlCode=None):
     map_chart = geo.GeoPlotly.ScatterGeo(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
                                          filters, profile)
     map_chart.options.responsive = True
@@ -184,10 +184,17 @@ class Plotly(object):
         data[rec[x_axis]] = data.get(x_axis, 0) + float(rec.get(y_column, 0))
     self.parent.context.register(map_chart)
     locations = list(data.keys())
-    map_chart.add_trace({'locations': locations, 'z': [data[k] for k in locations]})
-    map_chart.data.locationmode = 'country names'
-    map_chart.data.autocolorscale = True
-    map_chart.layout.geo.scope = 'europe'
-    map_chart.layout.geo.showlakes = True
-    map_chart.layout.geo.showland = True
+    values = [data[k] for k in locations]
+    map_chart.add_trace({'locations': locations})
+    map_chart.data.marker.colorbar.title = "Test"
+    map_chart.data.marker.line.color = "black"
+    map_chart.data.marker.size = values
+    map_chart.data.marker.cmin = 0
+    map_chart.data.marker.cmax = max(values)
+    map_chart.data.marker.color = values
+    map_chart.data.marker.colorscale = 'Reds'
+    map_chart.layout.geo.scope = scope
+    map_chart.layout.geo.resolution = 150
+    if width[1] == 'px':
+      map_chart.layout.width = width[0]
     return map_chart

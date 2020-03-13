@@ -127,6 +127,17 @@ class Bar(Chart):
     return super(Bar, self).add_trace(data, type, mode)
 
 
+class DataFill(DataClass):
+
+  @property
+  def color(self):
+    return self._attrs["color"]
+
+  @color.setter
+  def color(self, val):
+    self._attrs["color"] = val
+
+
 class LayoutFont(DataClass):
 
   @property
@@ -492,6 +503,80 @@ class LayoutScene(DataClass):
     return self.sub_data("scene", LayoutCamera)
 
 
+class LayoutLegend(DataClass):
+
+  @property
+  def x(self):
+    return self._attrs["x"]
+
+  @x.setter
+  def x(self, val):
+    self._attrs["x"] = val
+
+  @property
+  def bgcolor(self):
+    return self._attrs["bgcolor"]
+
+  @bgcolor.setter
+  def bgcolor(self, val):
+    self._attrs["bgcolor"] = val
+
+  @property
+  def bordercolor(self):
+    return self._attrs["bordercolor"]
+
+  @bordercolor.setter
+  def bordercolor(self, val):
+    self._attrs["bordercolor"] = val
+
+  @property
+  def borderwidth(self):
+    return self._attrs["borderwidth"]
+
+  @borderwidth.setter
+  def borderwidth(self, val):
+    self._attrs["borderwidth"] = val
+
+  @property
+  def traceorder(self):
+    return self._attrs["traceorder"]
+
+  @traceorder.setter
+  def traceorder(self, val):
+    self._attrs["traceorder"] = val
+
+  @property
+  def orientation(self):
+    return self._attrs["orientation"]
+
+  @orientation.setter
+  def orientation(self, val):
+    self._attrs["orientation"] = val
+
+  @property
+  def y(self):
+    return self._attrs["y"]
+
+  @y.setter
+  def y(self, val):
+    self._attrs["y"] = val
+
+  @property
+  def xanchor(self):
+    return self._attrs["xanchor"]
+
+  @xanchor.setter
+  def xanchor(self, val):
+    self._attrs["xanchor"] = val
+
+  @property
+  def font(self):
+    """
+
+    """
+    return self.sub_data("font", LayoutFont)
+
+
 class Layout(DataClass):
 
   @property
@@ -532,6 +617,14 @@ class Layout(DataClass):
 
     """
     return self.sub_data("scene", LayoutScene)
+
+  @property
+  def legend(self):
+    """
+
+    https://plot.ly/javascript/legend/
+    """
+    return self.sub_data("legend", LayoutLegend)
 
   @property
   def xaxis(self):
@@ -627,6 +720,33 @@ class LayoutBox(Layout):
   @boxmode.setter
   def boxmode(self, val):
     self._attrs["boxmode"] = val
+
+
+class DataFont(DataClass):
+
+  @property
+  def family(self):
+    return self._attrs["family"]
+
+  @family.setter
+  def family(self, val):
+    self._attrs["family"] = val
+
+  @property
+  def size(self):
+    return self._attrs["size"]
+
+  @size.setter
+  def size(self, val):
+    self._attrs["size"] = val
+
+  @property
+  def color(self):
+    return self._attrs["color"]
+
+  @color.setter
+  def color(self, val):
+    self._attrs["color"] = val
 
 
 class DataMarkersLine(DataClass):
@@ -784,6 +904,22 @@ class DataChart(DataClass):
   @type.setter
   def type(self, val):
     self._attrs["type"] = val
+
+  @property
+  def showlegend(self):
+    return self._attrs["showlegend"]
+
+  @showlegend.setter
+  def showlegend(self, val):
+    self._attrs["showlegend"] = val
+
+  @property
+  def legendgroup(self):
+    return self._attrs["legendgroup"]
+
+  @legendgroup.setter
+  def legendgroup(self, val):
+    self._attrs["legendgroup"] = val
 
   @property
   def mode(self):
