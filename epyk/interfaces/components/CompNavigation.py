@@ -350,8 +350,8 @@ class Navigation(object):
     div.style.css.padding = "5px 15px"
     return div
 
-  def footer(self, components=None, width=(100, '%'), height=(40, 'px'), profile=False):
+  def footer(self, components=None, width=(100, '%'), height=('auto', ''), profile=False):
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
-    self.context.rptObj.body.style.css.padding_bottom = height[0]
+    # self.context.rptObj.body.style.css.padding_bottom = height[0]
     self.context.register(footer)
     return footer

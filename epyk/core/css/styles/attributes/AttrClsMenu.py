@@ -27,7 +27,7 @@ class Footer(Attrs):
     self.left = 0
     self.padding = "0 2px 0 2px"
     self.position = "fixed"
-    self.background_color = htmlObj._report.theme.greys[0]
-    self.border_bottom = "1px solid %s" % htmlObj._report.theme.greys[4]
+    self.background_color = htmlObj._report.theme.greys[1]
+    self.border_top = "1px solid %s" % htmlObj._report.theme.greys[4]
     self.bottom = 0
     self.z_index = 10

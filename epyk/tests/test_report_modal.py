@@ -53,13 +53,15 @@ imp = rptObj.ui.buttons.important('Get Started for Free')
 #########FOOTER#########
 nav = rptObj.ui.navigation.bar(title="test")
 nav.add_text("This is a huge text that I don't know what to do with")
-nav + button
-nav + imp
+# nav + button
+# nav + imp
 # nav.add_text("Test text")
 # nav + rptObj.ui.button("Click").css({"margin": '0 0 20px 5px'})
 # rptObj.ui.navigation.banner("", "test", "google")
 footer = rptObj.ui.navigation.footer([button, imp])
-
+# footer = rptObj.
+# footer + button
+# footer + imp
 footer + rptObj.ui.texts.paragraph('This is the end')
 
 print(rptObj.outs.html_file(name='test'))

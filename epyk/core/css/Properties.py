@@ -698,7 +698,7 @@ class CssMixin(object):
 
   @bottom.setter
   def bottom(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
     self.htmlObj.css({"bottom": val})

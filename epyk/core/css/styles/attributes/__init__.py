@@ -43,3 +43,5 @@ class Body(Attrs):
     self.font_size = Defaults_css.font()
     self.font_family = Defaults_css.Font.family
     self.margin = 0
+
+
