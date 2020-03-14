@@ -1,8 +1,3 @@
-"""
-Wrapper to Jquery module
-
-https://jquery.com/
-"""
 
 import json
 

@@ -880,6 +880,10 @@ class Body(Html):
       self._styleObj = GrpCls.ClassPage(self)
     return self._styleObj
 
+  @property
+  def htmlId(self):
+    return "body"
+
   def set_content(self, report, page_content):
     """
     Description:

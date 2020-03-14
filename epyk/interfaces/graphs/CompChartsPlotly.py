@@ -111,7 +111,7 @@ class Plotly(object):
       bar_chart.data.orientation = 'h'
     return bar_chart
 
-  def scatter(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def scatter(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -126,18 +126,21 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data[c].items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
+    if record is None:
+      data = []
+    else:
+      agg_data = {}
+      for rec in record:
+        for y in y_columns:
+          if y in rec:
+            agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+      data = []
+      for c in y_columns:
+        series = {'x': [], 'y': []}
+        for x, y in agg_data[c].items():
+          series['x'].append(x)
+          series['y'].append(y)
+        data.append(series)
 
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
     self.parent.context.register(sc_chart)

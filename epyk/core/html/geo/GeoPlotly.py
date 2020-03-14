@@ -4,6 +4,68 @@ from epyk.core.html.graph import GraphPlotly
 from epyk.core.js.packages import JsPlotly
 
 
+class DataMarkersChoroMapBar(GraphPlotly.DataMarkers):
+
+  @property
+  def title(self):
+    return self._attrs["title"]
+
+  @title.setter
+  def title(self, val):
+    self._attrs["title"] = val
+
+  @property
+  def ticksuffix(self):
+    return self._attrs["ticksuffix"]
+
+  @ticksuffix.setter
+  def ticksuffix(self, val):
+    self._attrs["ticksuffix"] = val
+
+  @property
+  def showticksuffix(self):
+    return self._attrs["showticksuffix"]
+
+  @showticksuffix.setter
+  def showticksuffix(self, val):
+    self._attrs["showticksuffix"] = val
+
+
+class DataMarkersChoroMap(GraphPlotly.DataMarkers):
+
+  @property
+  def cmax(self):
+    return self._attrs["cmax"]
+
+  @cmax.setter
+  def cmax(self, val):
+    self._attrs["cmax"] = val
+
+  @property
+  def cmin(self):
+    return self._attrs["cmin"]
+
+  @cmin.setter
+  def cmin(self, val):
+    self._attrs["cmin"] = val
+
+  @property
+  def colorscale(self):
+    return self._attrs["colorscale"]
+
+  @colorscale.setter
+  def colorscale(self, val):
+    self._attrs["colorscale"] = val
+
+  @property
+  def colorbar(self):
+    """
+
+    :rtype: LayoutMapBox
+    """
+    return self.sub_data("colorbar", DataMarkersChoroMapBar)
+
+
 class LayoutCenter(GraphPlotly.Layout):
 
   @property
@@ -86,6 +148,14 @@ class LayoutGeoMapGeo(LayoutGeo):
   @scope.setter
   def scope(self, val):
     self._attrs["scope"] = val
+
+  @property
+  def resolution(self):
+    return self._attrs["resolution"]
+
+  @resolution.setter
+  def resolution(self, val):
+    self._attrs["resolution"] = val
 
   @property
   def showlakes(self):
@@ -190,6 +260,14 @@ class DataChoropleth(GraphPlotly.DataChart):
   @zmax.setter
   def zmax(self, val):
     self._attrs["zmax"] = val
+
+  @property
+  def marker(self):
+    """
+
+    https://plot.ly/javascript/bubble-maps/
+    """
+    return self.sub_data("marker", DataMarkersChoroMap)
 
 
 class Scatter(GraphPlotly.Chart):
