@@ -56,6 +56,7 @@ class Components(object):
     self.info = self.rich.info
     self.radio = self.buttons.radio
     self.navbar = self.navigation.bar
+    self.footer = self.navigation.footer
 
   def css(self, cssAttrs):
     """
