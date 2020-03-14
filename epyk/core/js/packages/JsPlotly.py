@@ -424,8 +424,8 @@ class PlotlyMarkers(object):
 
 class JsPlotlyTrace(object):
 
-  def __init__(self, src, varName):
-    self._src, self.varName = src, varName
+  def __init__(self, htmlObj, varName=None, isPyData=True, report=None):
+    self._src, self.varName, self._report = htmlObj, varName, report
     self._layout = None
 
   def mode(self):
@@ -451,10 +451,19 @@ class Line(JsPlotlyTrace):
   lib_alias = {'js': 'plotly.js'}
 
   @property
+  def varId(self): return ""
+
+  @property
   def layout(self):
     if self._layout is None:
       self._layout = JsPlotlyLayout({})
     return self._layout
+
+  def add_trace(self, x, y):
+    return JsObject.JsObject.get("Plotly.addTraces('%s', {y: %s, x: %s})" % (self._src.htmlId, y, x))
+
+  def deleteTraces(self, i):
+    return JsObject.JsObject.get("Plotly.deleteTraces('%s', %s)" % (self._src.htmlId, i))
 
 
 class Bar(JsPlotlyTrace):

@@ -485,6 +485,16 @@ class JsBase(object):
 
     return JsQuery.JQuery(None)
 
+  @property
+  def d3(self):
+    """
+
+    :return:
+    """
+    from epyk.core.js.packages import JsD3
+
+    return JsD3.JsD3(self._src, "d3")
+
   def not_(self, data):
     """
     Add the Symbol (!) for the boolean negation.

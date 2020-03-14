@@ -880,6 +880,10 @@ class Body(Html):
       self._styleObj = GrpCls.ClassPage(self)
     return self._styleObj
 
+  @property
+  def htmlId(self):
+    return "body"
+
   def set_content(self, report, page_content):
     """
     Description:
@@ -899,6 +903,7 @@ class Body(Html):
 
   def __str__(self):
     return '<body %s>%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self._html_content)
+
 
 class Footer(Html):
   name = 'Footer'

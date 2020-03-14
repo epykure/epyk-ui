@@ -1,6 +1,3 @@
-"""
-Javascript Dom element for the HTML Components
-"""
 
 import json
 
@@ -13,6 +10,7 @@ from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsQuery
+from epyk.core.js.packages import JsD3
 from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.packages import JsCrossFilter
 
@@ -23,7 +21,7 @@ class JsHtml(JsNodeDom.JsDoms):
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
     self._src, self._report = htmlObj, report
     self._js = []
-    self._jquery, self._jquery_ui = None, None
+    self._jquery, self._jquery_ui, self._d3 = None, None, None
 
   @property
   def val(self):
@@ -81,6 +79,17 @@ class JsHtml(JsNodeDom.JsDoms):
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId))
     return self._jquery
+
+  @property
+  def d3(self):
+    """
+
+    :return:
+    :rtype: JsD3.D3Select
+    """
+    if self._d3 is None:
+      self._d3 = JsD3.D3Select(src=self._src, id=self._src.htmlId)
+    return self._d3
 
   @property
   def jquery_ui(self):

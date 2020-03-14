@@ -1,13 +1,12 @@
-"""
-Wrapper to D3 package
-
-https://d3js.org/
-"""
-
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsNumber
+from epyk.core.js.primitives import JsArray
+from epyk.core.js.primitives import JsObject
 from epyk.core.js.packages import JsPackage
+
+# All the predefined variable types
+from epyk.core.js.fncs import JsFncs
 
 
 class D3ScaleLinear(object):
@@ -21,17 +20,57 @@ class D3ScaleLinear(object):
     pass
 
 
+class D3Html(object):
+  def __init__(self, src, selector, tag, setVar=False):
+    self.src, self._selector, self.setVar, self.tag = src, selector, setVar, tag
+    self._js = []
+
+  def attr(self, key, val):
+    """
+
+    :param key:
+    :param val:
+    """
+    key = JsUtils.jsConvertData(key, None)
+    val = JsUtils.jsConvertData(val, None)
+    self._js.append("attr(%s, %s)" % (key, val))
+    return self
+
+  def text(self, data):
+    self._js.append("text(function(column) { return column; })")
+    return self
+
+  def html(self, data):
+    self._js.append("html(function(d) { return d.value; })")
+    return self
+
+  def selectAll(self, d3Type):
+    d3Type = JsUtils.jsConvertData(d3Type, None)
+    self._js.append("selectAll(%s)" % d3Type)
+    return D3Select(self.src, selector=self.toStr())
+
+  def toStr(self):
+    content = [self._selector] + self._js
+    if self.setVar:
+      self.setVar = False
+      return "var %s = %s" % (self.tag, ".".join(content))
+
+    return ".".join(content)
+
+
 class D3Select(object):
   class __internal(object):
     # By default it will attach eveything to the body
     jqId, jsImports = 'd3.select("body")', set([])
 
-  def __init__(self, src=None, id=None, d3Type=None):
+  def __init__(self, src=None, id=None, d3Type=None, selector=None):
     self.src = src if src is not None else self.__internal()
-    if id is None and d3Type is None:
+    if id is None and d3Type is None and selector is None:
       raise Exception()
 
-    if id is not None:
+    if selector is not None:
+      self._selector = selector
+    elif id is not None:
       self._selector = self.select(id)
     else:
       self._selector = self.selectAll(d3Type)
@@ -40,7 +79,8 @@ class D3Select(object):
 
   def data(self, datasets=None):
     """
-    Binds the specified array of data with the selected elements, returning a new selection that represents the update selection: the elements successfully bound to data.
+    Binds the specified array of data with the selected elements,
+    returning a new selection that represents the update selection: the elements successfully bound to data.
 
     The data is specified for each group in the selection.
     If the selection has multiple groups (such as d3.selectAll followed by selection.selectAll), then data should typically be specified as a function.
@@ -49,14 +89,20 @@ class D3Select(object):
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_data
 
     :param datasets:
-
-    :return:
     """
     if datasets is None:
       self._js.append("data()")
     else:
-      datasets = JsUtils.jsConvertData(datasets, None)
+      #datasets = JsUtils.jsConvertData(datasets, None)
       self._js.append("data(%s)" % datasets)
+    return self
+
+  def dataFncRows(self, columns):
+    """
+
+    :param columns:
+    """
+    self._js.append("data(function(row) {return %s.map(function(c, i) {return {column: c, value: row[i]}; }); })" % columns)
     return self
 
   def datum(self, datasets=None):
@@ -107,7 +153,7 @@ class D3Select(object):
     self._js.append("exit()")
     return self
 
-  def append(self, jsHtmlType):
+  def append(self, htmlType, setVar=True):
     """
     If the specified type is a string, appends a new element of this type (tag name) as the last child of each selected element, or before the next following sibling in the update selection if this is an enter selection.
 
@@ -115,12 +161,12 @@ class D3Select(object):
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
 
     :param htmlType:
-
-    :return:
     """
-    jsHtmlType = JsUtils.jsConvertData(jsHtmlType, None)
-    self._js.append("append(%s)" % jsHtmlType)
-    return self
+    cnv_htmlType = JsUtils.jsConvertData(htmlType, None)
+    return D3Html(self.src, "%s.append(%s)" % (self.toStr(), cnv_htmlType), htmlType, setVar=setVar)
+
+  def rappend(self, htmlType):
+    return self.append(htmlType, setVar=False)
 
   def insert(self, htmlType, id):
     pass
@@ -129,7 +175,15 @@ class D3Select(object):
     pass
 
   def attr(self, key, val):
-    pass
+    """
+
+    :param key:
+    :param val:
+    """
+    key = JsUtils.jsConvertData(key, None)
+    val = JsUtils.jsConvertData(val, None)
+    self._js.append("attr(%s, %s)" % (key, val))
+    return self
 
   def call(self, fnc_name):
     """
@@ -190,7 +244,17 @@ class D3Select(object):
     return 'd3.select("%s")' % id
 
   def selectAll(self, d3Type):
-    return 'd3.selectAll("%s")' % d3Type
+    d3Type = JsUtils.jsConvertData(d3Type, None)
+    self._js.append("selectAll(%s)" % d3Type)
+    return self
+
+  def var(self, varName):
+    """
+
+    :param variable_name:
+    :return:
+    """
+    return D3Select(self.src, selector=varName)
 
   def toStr(self):
     """
@@ -481,31 +545,80 @@ class D3Band(object):
     return strData
 
 
-class JsD3(object):
-  class __internal(object):
-    jqId, _context = 'd3', {}
+class D3Csv(object):
 
-  def __init__(self, src=None, d3Id=None):
-    """
+  def __init__(self, src, filename):
+    self._f, self.src = filename, src
+    self._js_frg, self._js_ids = [], set()
 
-    Documentation:
-      - https://github.com/d3/d3/blob/master/API.md
+  def unpack(self, jsId, column=None):
+    if not jsId in self._js_ids:
+      column = JsUtils.jsConvertData(column, None)
+      self._js_frg.append("%s.push(row[%s])" % (jsId, column))
+      self._js_ids.add(jsId)
+    return JsObject.JsObject(jsId, isPyData=False)
 
-    :param src:
-    """
-    self.src = src if src is not None else self.__internal()
-    self.src.jsImports.add('d3')
-    self._selector = d3Id or self.src.jqId
+  def filter(self):
+    pass
+
+  def callback(self):
+    pass
+
+  def toStr(self):
+    file = JsUtils.jsConvertData(self._f, None)
+    return "%s; d3.csv(%s, function(row, err){%s})" % (";".join(["var %s = []" % i for i in self._js_ids]), file, ";".join(self._js_frg))
+
+
+class D3Svg(object):
+  def __init__(self, src, selector, varName=None):
+    self.src, self._selector, self.varName = src, selector, varName
     self._js = []
+
+  def line(self):
+    self._js.append("line()")
+    return self
+
+  def x(self):
+    self._js.append("x(function(d) { return x(d.date1); })")
+    return self
+
+  def y(self):
+    self._js.append("y(function(d) { return x(d.date1); })")
+    return self
+
+  def toStr(self):
+    content = [self._selector] + self._js
+    if self.varName is not None:
+      return "var %s = %s" % (self.varName, ".".join(content))
+
+    return ".".join(content)
+
+
+class JsD3(JsPackage):
+
+  lib_alias = {"js": 'd3'}
+  lib_selector = 'd3'
+
+  @property
+  def svg(self):
+    return D3Svg(self.src, selector="%s.svg" % self._selector)
+
+  def csv(self, url):
+    """
+
+    """
+    #url = JsUtils.jsConvertData(url, None)
+    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
+    return D3Csv(self.src, url)
 
   def min(self, dataset, jsFnc):
     return JsNumber.JsNumber("d3.min(%s, %s)" % (dataset, jsFnc))
 
-  def min(self, dataset, jsFnc):
+  def max(self, dataset, jsFnc):
     return JsNumber.JsNumber("d3.max(%s, %s)" % (dataset, jsFnc))
 
   def select(self, id):
-    return D3Select(id)
+    return D3Select(self.src, id)
 
   def selectAll(self, d3Type):
     return D3Select(d3Type=d3Type)
@@ -561,3 +674,15 @@ class JsD3(object):
     self._js = [] # empty the stack
     return strData
 
+
+if __name__ == '__main__':
+  columns = ["A", "B"]
+  data = [["1", 12], ["2", 30], ["2", 33]]
+  rptObj = None
+
+  rptObj.body.dom.d3.append('table').attr("style", "margin-left: 250px"),
+  rptObj.body.dom.d3.var('table').append("thead"),
+  rptObj.body.dom.d3.var('thead').rappend("tr").selectAll("th").data(columns).enter().rappend("th").text("test"),
+  rptObj.body.dom.d3.var('table').append("tbody"),
+  rptObj.body.dom.d3.var('tbody').selectAll("tr").data(data).enter().append("tr"),
+  rptObj.body.dom.d3.var('tr').selectAll("td").dataFncRows(columns).enter().rappend("td").html("")

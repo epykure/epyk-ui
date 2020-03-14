@@ -93,13 +93,13 @@ class Line(Chart):
   __reqJs = ['plotly.js']
 
   @property
-  def chart(self):
+  def dom(self):
     """
     :rtype: JsPlotly.Line
     """
-    if self._chart is None:
-      self._chart = JsPlotly.Line(self._report, varName=self.chartId)
-    return self._chart
+    if self._dom is None:
+      self._dom = JsPlotly.Line(self, varName=self.chartId, report=self._report)
+    return self._dom
 
   def add_trace(self, data, type=None, mode='lines+markers'):
     return super(Line, self).add_trace(data, type, mode)
