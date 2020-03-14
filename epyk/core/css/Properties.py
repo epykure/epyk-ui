@@ -62,7 +62,7 @@ class CssMixin(object):
 
   @align_content.setter
   def align_content(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"align-content": val})
 
   @property
@@ -70,7 +70,7 @@ class CssMixin(object):
 
   @align_items.setter
   def align_items(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"align-items": val})
 
   @property
@@ -78,7 +78,7 @@ class CssMixin(object):
 
   @align_self.setter
   def align_self(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"align-self": val})
 
   @property
@@ -86,7 +86,7 @@ class CssMixin(object):
 
   @all.setter
   def all(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"all": val})
 
   @property
@@ -104,7 +104,7 @@ class CssMixin(object):
 
   @animation.setter
   def animation(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation"):
       self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation": val})
@@ -114,7 +114,7 @@ class CssMixin(object):
 
   @animation_delay.setter
   def animation_delay(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"animation-delay": val})
 
   @property
@@ -132,7 +132,7 @@ class CssMixin(object):
 
   @animation_direction.setter
   def animation_direction(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-direction"):
       self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-direction": val})
@@ -152,7 +152,7 @@ class CssMixin(object):
 
   @animation_duration.setter
   def animation_duration(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-duration"):
       self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-duration": val})
@@ -178,7 +178,7 @@ class CssMixin(object):
 
   @animation_fill_mode.setter
   def animation_fill_mode(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"animation-fill-mode": val})
 
   @property
@@ -196,7 +196,7 @@ class CssMixin(object):
 
   @animation_iteration_count.setter
   def animation_iteration_count(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-iteration-count"):
       self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-iteration-count": val})
@@ -216,7 +216,7 @@ class CssMixin(object):
 
   @animation_name.setter
   def animation_name(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-name"):
       self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-name": val})
@@ -226,7 +226,7 @@ class CssMixin(object):
 
   @animation_play_state.setter
   def animation_play_state(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"animation-play-state": val})
 
   @property
@@ -244,7 +244,7 @@ class CssMixin(object):
 
   @animation_timing_function.setter
   def animation_timing_function(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("animation-timing-function"):
       self.htmlObj.css({m_val: val})
     self.htmlObj.css({"animation-timing-function": val})
@@ -265,7 +265,7 @@ class CssMixin(object):
 
   @appearance.setter
   def appearance(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("appearance"):
       self.htmlObj.css({m_val: val})
 
@@ -284,7 +284,7 @@ class CssMixin(object):
 
   @backface_visibility.setter
   def backface_visibility(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("backface-visibility"):
       self.htmlObj.css({m_val: val})
     self.htmlObj.css({"backface-visibility": val})
@@ -304,7 +304,7 @@ class CssMixin(object):
 
   @background.setter
   def background(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background": val})
 
   @property
@@ -312,7 +312,7 @@ class CssMixin(object):
 
   @background_attachment.setter
   def background_attachment(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background-attachment": val})
 
   @property
@@ -320,7 +320,7 @@ class CssMixin(object):
 
   @background_blend_mode.setter
   def background_blend_mode(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background-blend-mode": val})
 
   @property
@@ -328,7 +328,7 @@ class CssMixin(object):
 
   @background_clip.setter
   def background_clip(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background-clip": val})
 
   @property
@@ -348,7 +348,7 @@ class CssMixin(object):
 
   @background_color.setter
   def background_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background-color": val})
 
   @property
@@ -356,7 +356,7 @@ class CssMixin(object):
 
   @background_image.setter
   def background_image(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background-image": val})
 
   @property
@@ -364,7 +364,7 @@ class CssMixin(object):
 
   @background_origin.setter
   def background_origin(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background-origin": val})
 
   @property
@@ -372,7 +372,7 @@ class CssMixin(object):
 
   @background_position.setter
   def background_position(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background-position": val})
 
   @property
@@ -380,7 +380,7 @@ class CssMixin(object):
 
   @background_repeat.setter
   def background_repeat(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background-repeat": val})
 
   @property
@@ -388,7 +388,7 @@ class CssMixin(object):
 
   @background_size.setter
   def background_size(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"background-size": val})
 
   @property
@@ -409,7 +409,7 @@ class CssMixin(object):
 
   @border.setter
   def border(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border": val})
 
   @property
@@ -417,7 +417,7 @@ class CssMixin(object):
 
   @border_bottom.setter
   def border_bottom(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-bottom": val})
 
   @property
@@ -425,7 +425,7 @@ class CssMixin(object):
 
   @border_bottom_color.setter
   def border_bottom_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-bottom-color": val})
 
   @property
@@ -433,7 +433,7 @@ class CssMixin(object):
 
   @border_bottom_left_radius.setter
   def border_bottom_left_radius(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-bottom-left-radius": val})
 
   @property
@@ -441,7 +441,7 @@ class CssMixin(object):
 
   @border_bottom_right_radius.setter
   def border_bottom_right_radius(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-bottom-right-radius": val})
 
   @property
@@ -449,7 +449,7 @@ class CssMixin(object):
 
   @border_bottom_style.setter
   def border_bottom_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-bottom-style": val})
 
   @property
@@ -457,7 +457,7 @@ class CssMixin(object):
 
   @border_bottom_width.setter
   def border_bottom_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-bottom-width": val})
 
   @property
@@ -465,7 +465,7 @@ class CssMixin(object):
 
   @border_collapse.setter
   def border_collapse(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-collapse": val})
 
   @property
@@ -473,7 +473,7 @@ class CssMixin(object):
 
   @border_color.setter
   def border_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-color": val})
 
   @property
@@ -481,7 +481,7 @@ class CssMixin(object):
 
   @border_image.setter
   def border_image(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-image": val})
 
   @property
@@ -489,7 +489,7 @@ class CssMixin(object):
 
   @border_image_outset.setter
   def border_image_outset(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-image-outset": val})
 
   @property
@@ -497,7 +497,7 @@ class CssMixin(object):
 
   @border_image_repeat.setter
   def border_image_repeat(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-image-repeat": val})
 
   @property
@@ -505,7 +505,7 @@ class CssMixin(object):
 
   @border_image_slice.setter
   def border_image_slice(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-image-slice": val})
 
   @property
@@ -513,7 +513,7 @@ class CssMixin(object):
 
   @border_image_source.setter
   def border_image_source(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-image-source": val})
 
   @property
@@ -521,7 +521,7 @@ class CssMixin(object):
 
   @border_image_width.setter
   def border_image_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-image-width": val})
 
   @property
@@ -529,7 +529,7 @@ class CssMixin(object):
 
   @border_left.setter
   def border_left(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if isinstance(val, int):
       self.htmlObj.css({"border-left": "%spx" % val})
     else:
@@ -540,7 +540,7 @@ class CssMixin(object):
 
   @border_left_color.setter
   def border_left_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-left-color": val})
 
   @property
@@ -548,7 +548,7 @@ class CssMixin(object):
 
   @border_left_style.setter
   def border_left_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-left-style": val})
 
   @property
@@ -556,7 +556,7 @@ class CssMixin(object):
 
   @border_left_width.setter
   def border_left_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-left-width": val})
 
   @property
@@ -574,7 +574,7 @@ class CssMixin(object):
 
   @border_radius.setter
   def border_radius(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
     self.htmlObj.css({"border-radius": val})
@@ -584,7 +584,7 @@ class CssMixin(object):
 
   @border_right.setter
   def border_right(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-right": val})
 
   @property
@@ -592,7 +592,7 @@ class CssMixin(object):
 
   @border_right_color.setter
   def border_right_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-right-color": val})
 
   @property
@@ -600,7 +600,7 @@ class CssMixin(object):
 
   @border_right_style.setter
   def border_right_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-right-style": val})
 
   @property
@@ -608,7 +608,7 @@ class CssMixin(object):
 
   @border_right_width.setter
   def border_right_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-right-width": val})
 
   @property
@@ -616,7 +616,7 @@ class CssMixin(object):
 
   @border_spacing.setter
   def border_spacing(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-spacing": val})
 
   @property
@@ -624,7 +624,7 @@ class CssMixin(object):
 
   @border_style.setter
   def border_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-style": val})
 
   @property
@@ -632,7 +632,7 @@ class CssMixin(object):
 
   @border_top.setter
   def border_top(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-top": val})
 
   @property
@@ -640,7 +640,7 @@ class CssMixin(object):
 
   @border_top_color.setter
   def border_top_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-top-color": val})
 
   @property
@@ -648,7 +648,7 @@ class CssMixin(object):
 
   @border_top_left_radius.setter
   def border_top_left_radius(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-top-left-radius": val})
 
   @property
@@ -656,7 +656,7 @@ class CssMixin(object):
 
   @border_top_right_radius.setter
   def border_top_right_radius(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-top-right-radius": val})
 
   @property
@@ -664,7 +664,7 @@ class CssMixin(object):
 
   @border_top_style.setter
   def border_top_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-top-style": val})
 
   @property
@@ -672,7 +672,7 @@ class CssMixin(object):
 
   @border_top_width.setter
   def border_top_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-top-width": val})
 
   @property
@@ -680,7 +680,7 @@ class CssMixin(object):
 
   @border_width.setter
   def border_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"border-width": val})
 
   @property
@@ -718,7 +718,7 @@ class CssMixin(object):
 
   @box_decoration_break.setter
   def box_decoration_break(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"box-decoration-break": val})
 
   @property
@@ -736,7 +736,7 @@ class CssMixin(object):
 
   @box_shadow.setter
   def box_shadow(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"box-shadow": val})
 
   @property
@@ -744,7 +744,7 @@ class CssMixin(object):
 
   @box_sizing.setter
   def box_sizing(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"box-sizing": val})
 
   @property
@@ -752,7 +752,7 @@ class CssMixin(object):
 
   @caption_side.setter
   def caption_side(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"caption-side": val})
 
   @property
@@ -760,7 +760,7 @@ class CssMixin(object):
 
   @caret_color.setter
   def caret_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"caret-color": val})
 
   @property
@@ -768,7 +768,7 @@ class CssMixin(object):
 
   @clear.setter
   def clear(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"clear": val})
 
   @property
@@ -776,7 +776,7 @@ class CssMixin(object):
 
   @clip.setter
   def clip(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"clip": val})
 
   @property
@@ -784,7 +784,7 @@ class CssMixin(object):
 
   @clip_path.setter
   def clip_path(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"clip-path": val})
 
   @property
@@ -804,7 +804,7 @@ class CssMixin(object):
 
   @color.setter
   def color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"color": val})
 
   @property
@@ -812,7 +812,7 @@ class CssMixin(object):
 
   @column_count.setter
   def column_count(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"column-count": val})
 
   @property
@@ -820,7 +820,7 @@ class CssMixin(object):
 
   @column_fill.setter
   def column_fill(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"column-fill": val})
 
   @property
@@ -828,7 +828,7 @@ class CssMixin(object):
 
   @column_gap.setter
   def column_gap(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"column-gap": val})
 
   @property
@@ -836,7 +836,7 @@ class CssMixin(object):
 
   @column_rule.setter
   def column_rule(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"column-rule": val})
 
   @property
@@ -844,7 +844,7 @@ class CssMixin(object):
 
   @column_rule_color.setter
   def column_rule_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"column-rule-color": val})
 
   @property
@@ -852,7 +852,7 @@ class CssMixin(object):
 
   @column_rule_style.setter
   def column_rule_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"column-rule-style": val})
 
   @property
@@ -860,7 +860,7 @@ class CssMixin(object):
 
   @column_rule_width.setter
   def column_rule_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"column-rule-width": val})
 
   @property
@@ -868,7 +868,7 @@ class CssMixin(object):
 
   @column_span.setter
   def column_span(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"column-span": val})
 
   @property
@@ -876,7 +876,7 @@ class CssMixin(object):
 
   @column_width.setter
   def column_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"column-width": val})
 
   @property
@@ -884,7 +884,7 @@ class CssMixin(object):
 
   @columns.setter
   def columns(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"columns": val})
 
   @property
@@ -892,7 +892,7 @@ class CssMixin(object):
 
   @content.setter
   def content(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"content": val})
 
   @property
@@ -900,7 +900,7 @@ class CssMixin(object):
 
   @counter_increment.setter
   def counter_increment(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"counter-increment": val})
 
   @property
@@ -908,7 +908,7 @@ class CssMixin(object):
 
   @counter_reset.setter
   def counter_reset(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"counter-reset": val})
 
   @property
@@ -926,7 +926,7 @@ class CssMixin(object):
 
   @cursor.setter
   def cursor(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"cursor": val})
 
   @property
@@ -934,7 +934,7 @@ class CssMixin(object):
 
   @direction.setter
   def direction(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"direction": val})
 
   @property
@@ -954,7 +954,7 @@ class CssMixin(object):
 
   @display.setter
   def display(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"display": val})
 
   @property
@@ -962,7 +962,7 @@ class CssMixin(object):
 
   @empty_cells.setter
   def empty_cells(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"empty-cells": val})
 
   @property
@@ -970,7 +970,7 @@ class CssMixin(object):
 
   @filter.setter
   def filter(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"filter": val})
 
   @property
@@ -978,7 +978,7 @@ class CssMixin(object):
 
   @flex.setter
   def flex(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"flex": val})
 
   @property
@@ -986,7 +986,7 @@ class CssMixin(object):
 
   @flex_basis.setter
   def flex_basis(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"flex-basis": val})
 
   @property
@@ -994,7 +994,7 @@ class CssMixin(object):
 
   @flex_direction.setter
   def flex_direction(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"flex-direction": val})
 
   @property
@@ -1002,7 +1002,7 @@ class CssMixin(object):
 
   @flex_flow.setter
   def flex_flow(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"flex-flow": val})
 
   @property
@@ -1010,7 +1010,7 @@ class CssMixin(object):
 
   @flex_grow.setter
   def flex_grow(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"flex-grow": val})
 
   @property
@@ -1018,7 +1018,7 @@ class CssMixin(object):
 
   @flex_shrink.setter
   def flex_shrink(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"flex-shrink": val})
 
   @property
@@ -1026,7 +1026,7 @@ class CssMixin(object):
 
   @flex_wrap.setter
   def flex_wrap(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"flex-wrap": val})
 
   @property
@@ -1044,7 +1044,7 @@ class CssMixin(object):
 
   @float.setter
   def float(self, val):
-    val = val or 'none'
+    val = val if val is not None else 'None'
     defined_vals = set(['none', 'left', 'right', 'initial', 'inherit'])
     if Defaults_css.CSS_EXCEPTIONS and val not in defined_vals:
       raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("float", val))
@@ -1056,7 +1056,7 @@ class CssMixin(object):
 
   @font.setter
   def font(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"font": val})
 
   @property
@@ -1074,7 +1074,7 @@ class CssMixin(object):
 
   @font_family.setter
   def font_family(self, val):
-    val = val or 'none'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"font-family": val})
 
   @property
@@ -1082,7 +1082,7 @@ class CssMixin(object):
 
   @font_kerning.setter
   def font_kerning(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"font-kerning": val})
 
   @property
@@ -1102,7 +1102,7 @@ class CssMixin(object):
   def font_size(self, val):
     if isinstance(val, int):
       val = "%spx" % val
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"font-size": val})
 
   @property
@@ -1110,7 +1110,7 @@ class CssMixin(object):
 
   @font_size_adjust.setter
   def font_size_adjust(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"font-size-adjust": val})
 
   @property
@@ -1118,7 +1118,7 @@ class CssMixin(object):
 
   @font_stretch.setter
   def font_stretch(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"font-stretch": val})
 
   @property
@@ -1126,7 +1126,7 @@ class CssMixin(object):
 
   @font_style.setter
   def font_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"font-style": val})
 
   @property
@@ -1134,7 +1134,7 @@ class CssMixin(object):
 
   @font_variant.setter
   def font_variant(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"font-variant": val})
 
   @property
@@ -1152,7 +1152,7 @@ class CssMixin(object):
 
   @font_weight.setter
   def font_weight(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"font-weight": val})
 
   @property
@@ -1160,7 +1160,7 @@ class CssMixin(object):
 
   @grid.setter
   def grid(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid": val})
 
   @property
@@ -1168,7 +1168,7 @@ class CssMixin(object):
 
   @grid_area.setter
   def grid_area(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-area": val})
 
   @property
@@ -1176,7 +1176,7 @@ class CssMixin(object):
 
   @grid_auto_columns.setter
   def grid_auto_columns(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-auto-columns": val})
 
   @property
@@ -1184,7 +1184,7 @@ class CssMixin(object):
 
   @grid_auto_flow.setter
   def grid_auto_flow(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-auto-flow": val})
 
   @property
@@ -1192,7 +1192,7 @@ class CssMixin(object):
 
   @grid_auto_rows.setter
   def grid_auto_rows(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-auto-rows": val})
 
   @property
@@ -1200,7 +1200,7 @@ class CssMixin(object):
 
   @grid_column.setter
   def grid_column(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-column": val})
 
   @property
@@ -1208,7 +1208,7 @@ class CssMixin(object):
 
   @grid_column_end.setter
   def grid_column_end(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-column-end": val})
 
   @property
@@ -1216,7 +1216,7 @@ class CssMixin(object):
 
   @grid_column_gap.setter
   def grid_column_gap(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-column-gap": val})
 
   @property
@@ -1224,7 +1224,7 @@ class CssMixin(object):
 
   @grid_column_start.setter
   def grid_column_start(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-column-start": val})
 
   @property
@@ -1232,7 +1232,7 @@ class CssMixin(object):
 
   @grid_gap.setter
   def grid_gap(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-gap": val})
 
   @property
@@ -1240,7 +1240,7 @@ class CssMixin(object):
 
   @grid_row.setter
   def grid_row(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-row": val})
 
   @property
@@ -1248,7 +1248,7 @@ class CssMixin(object):
 
   @grid_row_end.setter
   def grid_row_end(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-row-end": val})
 
   @property
@@ -1256,7 +1256,7 @@ class CssMixin(object):
 
   @grid_row_gap.setter
   def grid_row_gap(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-row-gap": val})
 
   @property
@@ -1264,7 +1264,7 @@ class CssMixin(object):
 
   @grid_row_start.setter
   def grid_row_start(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-row-start": val})
 
   @property
@@ -1272,7 +1272,7 @@ class CssMixin(object):
 
   @grid_template.setter
   def grid_template(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-template": val})
 
   @property
@@ -1280,7 +1280,7 @@ class CssMixin(object):
 
   @grid_template_areas.setter
   def grid_template_areas(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-template-areas": val})
 
   @property
@@ -1288,7 +1288,7 @@ class CssMixin(object):
 
   @grid_template_columns.setter
   def grid_template_columns(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-template-columns": val})
 
   @property
@@ -1296,7 +1296,7 @@ class CssMixin(object):
 
   @grid_template_rows.setter
   def grid_template_rows(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"grid-template-rows": val})
 
   @property
@@ -1304,7 +1304,7 @@ class CssMixin(object):
 
   @hanging_punctuation.setter
   def hanging_punctuation(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"hanging-punctuation": val})
 
   @property
@@ -1324,7 +1324,7 @@ class CssMixin(object):
 
   @height.setter
   def height(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
     self.htmlObj.css({"height": val})
@@ -1334,7 +1334,7 @@ class CssMixin(object):
 
   @hyphens.setter
   def hyphens(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"hyphens": val})
 
   @property
@@ -1342,7 +1342,7 @@ class CssMixin(object):
 
   @isolation.setter
   def isolation(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"isolation": val})
 
   @property
@@ -1362,7 +1362,7 @@ class CssMixin(object):
   @justify_content.setter
   def justify_content(self, val):
     vals = set(["flex-start", "flex-end", "center", "space-between", "space-around", "initial", "inherit"])
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"justify-content": val})
 
   @property
@@ -1382,7 +1382,7 @@ class CssMixin(object):
   def left(self, val):
     if isinstance(val, int):
       val = "%spx" % val
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"left": val})
 
   @property
@@ -1390,7 +1390,7 @@ class CssMixin(object):
 
   @letter_spacing.setter
   def letter_spacing(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"letter-spacing": val})
 
   @property
@@ -1412,7 +1412,7 @@ class CssMixin(object):
   def line_height(self, val):
     if isinstance(val, int):
       val = "%spx" % val
-    val = val or 'none'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"line-height": val})
 
   @property
@@ -1420,7 +1420,7 @@ class CssMixin(object):
 
   @list_style.setter
   def list_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"list-style": val})
 
   @property
@@ -1428,7 +1428,7 @@ class CssMixin(object):
 
   @list_style_image.setter
   def list_style_image(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"list-style-image": val})
 
   @property
@@ -1436,7 +1436,7 @@ class CssMixin(object):
 
   @list_style_position.setter
   def list_style_position(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"list-style-position": val})
 
   @property
@@ -1444,7 +1444,7 @@ class CssMixin(object):
 
   @list_style_type.setter
   def list_style_type(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"list-style-type": val})
 
   @property
@@ -1468,7 +1468,7 @@ class CssMixin(object):
   def margin(self, val):
     if isinstance(val, int):
       val = "%spx" % val
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"margin": val})
 
   @property
@@ -1488,7 +1488,7 @@ class CssMixin(object):
 
   @margin_bottom.setter
   def margin_bottom(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"margin-bottom": val})
 
   @property
@@ -1510,7 +1510,7 @@ class CssMixin(object):
   def margin_left(self, val):
     if isinstance(val, int):
       val = "%spx" % val
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"margin-left": val})
 
   @property
@@ -1530,7 +1530,7 @@ class CssMixin(object):
 
   @margin_right.setter
   def margin_right(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"margin-right": val})
 
   @property
@@ -1552,7 +1552,7 @@ class CssMixin(object):
   def margin_top(self, val):
     if isinstance(val, int):
       val = "%spx" % val
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"margin-top": val})
 
   @property
@@ -1560,7 +1560,7 @@ class CssMixin(object):
 
   @max_height.setter
   def max_height(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"max-height": val})
 
   @property
@@ -1568,7 +1568,7 @@ class CssMixin(object):
 
   @max_width.setter
   def max_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"max-width": val})
 
   @property
@@ -1576,7 +1576,7 @@ class CssMixin(object):
 
   @min_height.setter
   def min_height(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"min-height": val})
 
   @property
@@ -1584,7 +1584,7 @@ class CssMixin(object):
 
   @min_width.setter
   def min_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"min-width": val})
 
   @property
@@ -1592,7 +1592,7 @@ class CssMixin(object):
 
   @mix_blend_mode.setter
   def mix_blend_mode(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"mix-blend-mode": val})
 
   @property
@@ -1600,7 +1600,7 @@ class CssMixin(object):
 
   @object_fit.setter
   def object_fit(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"object-fit": val})
 
   @property
@@ -1608,7 +1608,7 @@ class CssMixin(object):
 
   @object_position.setter
   def object_position(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"object-position": val})
 
   @property
@@ -1628,7 +1628,7 @@ class CssMixin(object):
 
   @opacity.setter
   def opacity(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"opacity": val})
 
   @property
@@ -1636,7 +1636,7 @@ class CssMixin(object):
 
   @order.setter
   def order(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"order": val})
 
   @property
@@ -1644,7 +1644,7 @@ class CssMixin(object):
 
   @outline.setter
   def outline(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"outline": val})
 
   @property
@@ -1652,7 +1652,7 @@ class CssMixin(object):
 
   @outline_color.setter
   def outline_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"outline-color": val})
 
   @property
@@ -1660,7 +1660,7 @@ class CssMixin(object):
 
   @outline_offset.setter
   def outline_offset(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"outline-offset": val})
 
   @property
@@ -1668,7 +1668,7 @@ class CssMixin(object):
 
   @outline_style.setter
   def outline_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"outline-style": val})
 
   @property
@@ -1676,7 +1676,7 @@ class CssMixin(object):
 
   @outline_width.setter
   def outline_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"outline-width": val})
 
   @property
@@ -1684,7 +1684,7 @@ class CssMixin(object):
 
   @overflow.setter
   def overflow(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"overflow": val})
 
   @property
@@ -1692,7 +1692,7 @@ class CssMixin(object):
 
   @overflow_x.setter
   def overflow_x(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"overflow-x": val})
 
   @property
@@ -1700,7 +1700,7 @@ class CssMixin(object):
 
   @overflow_y.setter
   def overflow_y(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"overflow-y": val})
 
   @property
@@ -1718,7 +1718,7 @@ class CssMixin(object):
 
   @padding.setter
   def padding(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
     self.htmlObj.css({"padding": val})
@@ -1728,7 +1728,7 @@ class CssMixin(object):
 
   @padding_bottom.setter
   def padding_bottom(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"padding-bottom": val})
 
   @property
@@ -1748,7 +1748,7 @@ class CssMixin(object):
 
   @padding_left.setter
   def padding_left(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
     self.htmlObj.css({"padding-left": val})
@@ -1758,7 +1758,7 @@ class CssMixin(object):
 
   @padding_right.setter
   def padding_right(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"padding-right": val})
 
   @property
@@ -1780,7 +1780,7 @@ class CssMixin(object):
   def padding_top(self, val):
     if isinstance(val, int):
       val = "%spx" % val
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"padding-top": val})
 
   @property
@@ -1788,7 +1788,7 @@ class CssMixin(object):
 
   @page_break_after.setter
   def page_break_after(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"page-break-after": val})
 
   @property
@@ -1796,7 +1796,7 @@ class CssMixin(object):
 
   @page_break_before.setter
   def page_break_before(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"page-break-before": val})
 
   @property
@@ -1804,7 +1804,7 @@ class CssMixin(object):
 
   @page_break_inside.setter
   def page_break_inside(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"page-break-inside": val})
 
   @property
@@ -1812,7 +1812,7 @@ class CssMixin(object):
 
   @perspective.setter
   def perspective(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"perspective": val})
 
   @property
@@ -1820,7 +1820,7 @@ class CssMixin(object):
 
   @perspective_origin.setter
   def perspective_origin(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"perspective-origin": val})
 
   @property
@@ -1828,7 +1828,7 @@ class CssMixin(object):
 
   @pointer_events.setter
   def pointer_events(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"pointer-events": val})
 
   @property
@@ -1846,7 +1846,7 @@ class CssMixin(object):
 
   @position.setter
   def position(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if val in ["sticky"]:
       self.htmlObj.css({"position": "-webkit-%s" % val})
     self.htmlObj.css({"position": val})
@@ -1856,7 +1856,7 @@ class CssMixin(object):
 
   @quotes.setter
   def quotes(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"quotes": val})
 
   @property
@@ -1864,7 +1864,7 @@ class CssMixin(object):
 
   @resize.setter
   def resize(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"resize": val})
 
   @property
@@ -1883,7 +1883,7 @@ class CssMixin(object):
 
   @right.setter
   def right(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if isinstance(val , int):
       val = "%spx" % val
     self.htmlObj.css({"right": val})
@@ -1893,7 +1893,7 @@ class CssMixin(object):
 
   @scroll_behavior.setter
   def scroll_behavior(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"scroll-behavior": val})
 
   @property
@@ -1901,7 +1901,7 @@ class CssMixin(object):
 
   @tab_size.setter
   def tab_size(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"tab-size": val})
 
   @property
@@ -1909,7 +1909,7 @@ class CssMixin(object):
 
   @table_layout.setter
   def table_layout(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"table-layout": val})
 
   @property
@@ -1927,7 +1927,7 @@ class CssMixin(object):
 
   @text_align.setter
   def text_align(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if Defaults_css.CSS_EXCEPTIONS and val not in ['center', 'None', 'left', 'right', 'justify', 'inherit', 'initial']:
       raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("text_align", val))
 
@@ -1938,7 +1938,7 @@ class CssMixin(object):
 
   @text_align_last.setter
   def text_align_last(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"text-align-last": val})
 
   @property
@@ -1946,7 +1946,7 @@ class CssMixin(object):
 
   @text_decoration.setter
   def text_decoration(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"text-decoration": val})
 
   @property
@@ -1954,7 +1954,7 @@ class CssMixin(object):
 
   @text_decoration_color.setter
   def text_decoration_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"text-decoration-color": val})
 
   @property
@@ -1962,7 +1962,7 @@ class CssMixin(object):
 
   @text_decoration_line.setter
   def text_decoration_line(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"text-decoration-line": val})
 
   @property
@@ -1970,7 +1970,7 @@ class CssMixin(object):
 
   @text_decoration_style.setter
   def text_decoration_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"text-decoration-style": val})
 
   @property
@@ -1978,7 +1978,7 @@ class CssMixin(object):
 
   @text_indent.setter
   def text_indent(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"text-indent": val})
 
   @property
@@ -1986,7 +1986,7 @@ class CssMixin(object):
 
   @text_justify.setter
   def text_justify(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"text-justify": val})
 
   @property
@@ -1994,7 +1994,7 @@ class CssMixin(object):
 
   @text_overflow.setter
   def text_overflow(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"text-overflow": val})
 
   @property
@@ -2014,7 +2014,7 @@ class CssMixin(object):
 
   @text_shadow.setter
   def text_shadow(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if isinstance(val, list):
       val = ",".join(val)
     self.htmlObj.css({"text-shadow": val})
@@ -2034,7 +2034,7 @@ class CssMixin(object):
 
   @text_transform.setter
   def text_transform(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"text-transform": val})
 
   @property
@@ -2052,7 +2052,7 @@ class CssMixin(object):
 
   @text_stoke.setter
   def text_stoke(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"-webkit-text-stroke": val})
 
   @property
@@ -2070,7 +2070,7 @@ class CssMixin(object):
 
   @text_stoke_width.setter
   def text_stoke_width(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"-webkit-text-stroke-width": val})
 
   @property
@@ -2088,7 +2088,7 @@ class CssMixin(object):
 
   @text_stoke_color.setter
   def text_stoke_color(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"-webkit-text-stroke-color": val})
 
   @property
@@ -2128,7 +2128,7 @@ class CssMixin(object):
 
   @transform.setter
   def transform(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"transform": val})
 
   @property
@@ -2136,7 +2136,7 @@ class CssMixin(object):
 
   @transform_origin.setter
   def transform_origin(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"transform-origin": val})
 
   @property
@@ -2144,7 +2144,7 @@ class CssMixin(object):
 
   @transform_style.setter
   def transform_style(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"transform-style": val})
 
   @property
@@ -2152,7 +2152,7 @@ class CssMixin(object):
 
   @transition.setter
   def transition(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"transition": val})
 
   @property
@@ -2160,7 +2160,7 @@ class CssMixin(object):
 
   @transition_delay.setter
   def transition_delay(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"transition-delay": val})
 
   @property
@@ -2168,7 +2168,7 @@ class CssMixin(object):
 
   @transition_duration.setter
   def transition_duration(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"transition-duration": val})
 
   @property
@@ -2176,7 +2176,7 @@ class CssMixin(object):
 
   @transition_property.setter
   def transition_property(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("transition-property"):
       self.htmlObj.css({m_val: val})
     self.htmlObj.css({"transition-property": val})
@@ -2187,7 +2187,7 @@ class CssMixin(object):
 
   @transition_timing_function.setter
   def transition_timing_function(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"transition-timing-function": val})
 
   @property
@@ -2195,7 +2195,7 @@ class CssMixin(object):
 
   @unicode_bidi.setter
   def unicode_bidi(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"unicode-bidi": val})
 
   @property
@@ -2215,7 +2215,7 @@ class CssMixin(object):
 
   @user_select.setter
   def user_select(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     for m_val in autoPrefixer("user-select"):
       self.htmlObj.css({m_val: val})
     self.htmlObj.css({"user-select": val})
@@ -2235,7 +2235,7 @@ class CssMixin(object):
 
   @vertical_align.setter
   def vertical_align(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     if Defaults_css.CSS_EXCEPTIONS and val not in ["baseline", "length", "sub", "super", "top", "text-top", "middle",
                                                    "bottom", "text-bottom", "initial", "inherit", 'None']:
       raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("vertical_align", val))
@@ -2247,7 +2247,7 @@ class CssMixin(object):
 
   @visibility.setter
   def visibility(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"visibility": val})
 
   @property
@@ -2255,7 +2255,7 @@ class CssMixin(object):
 
   @white_space.setter
   def white_space(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"white-space": val})
 
   @property
@@ -2275,7 +2275,7 @@ class CssMixin(object):
 
   @width.setter
   def width(self, val):
-    val = val or 'none'
+    val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
     self.htmlObj.css({"width": val})
@@ -2285,7 +2285,7 @@ class CssMixin(object):
 
   @word_break.setter
   def word_break(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"word-break": val})
 
   @property
@@ -2293,7 +2293,7 @@ class CssMixin(object):
 
   @word_spacing.setter
   def word_spacing(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"word-spacing": val})
 
   @property
@@ -2301,7 +2301,7 @@ class CssMixin(object):
 
   @word_wrap.setter
   def word_wrap(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"word-wrap": val})
 
   @property
@@ -2309,7 +2309,7 @@ class CssMixin(object):
 
   @writing_mode.setter
   def writing_mode(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"writing-mode": val})
 
   @property
@@ -2331,7 +2331,7 @@ class CssMixin(object):
 
   @z_index.setter
   def z_index(self, val):
-    val = val or 'None'
+    val = val if val is not None else 'None'
     self.htmlObj.css({"z-index": val})
 
   def middle(self):

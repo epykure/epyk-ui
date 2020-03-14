@@ -2,7 +2,6 @@
 import json
 import logging
 
-
 from epyk.core.html import Html
 
 # The list of CSS classes
@@ -304,11 +303,22 @@ class HtmlFooter(Html.Html):
 
   def __init__(self, report, components, width, height, profile):
     super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    self.__col_lst = None
     if components is not None:
       if not isinstance(components, list):
         components = [components]
       for c in components:
         self.__add__(c)
+
+  @property
+  def sections(self):
+    if not self.__col_lst:
+      self.__col_lst = []
+    return self.__col_lst
+
+  @sections.setter
+  def sections(self, col_lst):
+    self.__col_lst = col_lst
 
   @property
   def style(self):

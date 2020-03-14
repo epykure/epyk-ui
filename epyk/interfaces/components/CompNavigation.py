@@ -321,6 +321,7 @@ class Navigation(object):
       components.append(title)
     components.append(self.context.rptObj.ui.navigation.scroll())
     html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
+    html_nav.style.css.line_height = height[0]
     self.context.rptObj.body.style.css.padding_top = height[0]
     self.context.register(html_nav)
     return html_nav
@@ -350,8 +351,16 @@ class Navigation(object):
     div.style.css.padding = "5px 15px"
     return div
 
-  def footer(self, components=None, width=(100, '%'), height=('auto', ''), profile=False):
+  def footer(self, components=None, width=(100, '%'), height=('120', 'px'), profile=False):
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
-    # self.context.rptObj.body.style.css.padding_bottom = height[0]
     self.context.register(footer)
     return footer
+
+  def complex_footer(self, nbcols, obj_map=None, width=(100, '%'), height=('120', 'px'), profile=False):
+    """"""
+    if not obj_map:
+      obj_map = {}
+    self.context.rptObj.ui.div()
+    col_lst = [self.context.rptObj.ui.div(self.context.rptObj, [obj_map.get(i, [])]).css('display', 'inline-block') for i in range(nbcols)]
+    footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, col_lst, width=width, height=height, profile=profile)
+    footer.sections = col_lst
