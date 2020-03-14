@@ -17,8 +17,6 @@ class JsNvd3Axis(object):
     chart.xAxis.axisLabel('Time (ms)')
 
     :param text:
-
-    :return:
     """
     text = JsUtils.jsConvertData(text, None)
     self._js.append("axisLabel(%s)" % text)
@@ -32,8 +30,6 @@ class JsNvd3Axis(object):
     chart.xAxis.tickFormat(d3.format(',r'))
 
     :param jsFnc:
-
-    :return:
     """
     jsFnc = JsUtils.jsConvertData(jsFnc, None)
     self._js.append("tickFormat(%s)" % jsFnc)
@@ -47,8 +43,6 @@ class JsNvd3Axis(object):
     chart.xAxis.tickValues(10)
 
     :param values:
-
-    :return:
     """
     values = JsUtils.jsConvertData(values, None)
     self._js.append("tickValues(%s)" % values)
@@ -189,7 +183,6 @@ class JsNvd3(JsPackage):
     """
 
     :param time:
-    :return:
     """
     time = JsUtils.jsConvertData(time, None)
     return self.fnc("transitionDuration(%s)" % time)
@@ -198,7 +191,6 @@ class JsNvd3(JsPackage):
     """
 
     :param flag:
-    :return:
     """
     flag = JsUtils.jsConvertData(flag, None)
     return self.fnc("showLegend(%s)" % flag)
@@ -297,6 +289,202 @@ class JsNvd3Area(JsNvd3):
     flag = JsUtils.jsConvertData(flag, None)
     return self.fnc("clipEdge(%s)" % flag)
 
+  def controlLabels(self, attrs):
+    """
+
+    controlLabels({"stacked": "Stacked"})
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/stackedAreaChart.html
+
+    :param attrs:
+    """
+    self.fnc("controlLabels(%s)" % JsUtils.jsConvertData(attrs, None))
+    return self
+
+
+class JsNvd3ParallelCoordinates(JsNvd3):
+  chartFnc = "parallelCoordinates"
+
+  def dimensionNames(self, categories):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/parallelCoordinates.html
+
+    :param categories:
+    """
+    self.fnc("dimensionNames(%s)" % JsUtils.jsConvertData(categories, None))
+    return self
+
+  def dimensionFormats(self, formats):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/parallelCoordinates.html
+
+    :param formats:
+    """
+    self.fnc("dimensionFormats(%s)" % JsUtils.jsConvertData(formats, None))
+    return self
+
+  def lineTension(self, val):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/parallelCoordinates.html
+
+    :param val:
+    """
+    self.fnc("lineTension(%s)" % JsUtils.jsConvertData(val, None))
+    return self
+
+
+class JsNvd3CandlestickBar(JsNvd3):
+  chartFnc = "candlestickBarChart"
+
+
+class JsNvd3OhlcBar(JsNvd3):
+  chartFnc = "ohlcBarChart"
+
+
+class JsNvd3Sunburst(JsNvd3):
+  chartFnc = "sunburstChart"
+
+
+class JsNvd3BoxPlot(JsNvd3):
+  chartFnc = "boxPlotChart"
+
+  def staggerLabels(self, flag):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlot.html
+
+    :param flag:
+    """
+    self.fnc("staggerLabels(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
+
+  def maxBoxWidth(self, value):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlot.html
+
+    :param value:
+    """
+    self.fnc("maxBoxWidth(%s)" % JsUtils.jsConvertData(value, None))
+    return self
+
+  def yDomain(self, range):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlot.html
+
+    :param range:
+    """
+    self.fnc("yDomain(%s)" % JsUtils.jsConvertData(range, None))
+    return self
+
+  def maxBoxWidth(self, value):
+    """
+    Prevent boxes from being incredibly wide
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param value:
+    """
+    self.fnc("maxBoxWidth(%s)" % JsUtils.jsConvertData(value, None))
+    return self
+
+  def itemColor(self, seriesColor):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param seriesColor:
+    """
+    self.fnc("itemColor(function (d) { return d[%s] })" % JsUtils.jsConvertData(seriesColor, None))
+    return self
+
+  def outliers(self, outlData):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param outlData:
+    """
+    self.fnc("outliers(function (d) { return d[%s] })" % JsUtils.jsConvertData(outlData, None))
+    return self
+
+  def outlierValue(self, data):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param data:
+    """
+    self.fnc("outlierValue(function (d) { return d[%s] })" % JsUtils.jsConvertData(data, None))
+    return self
+
+  def outlierColor(self, color):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param color:
+    """
+    self.fnc("outlierColor(function (d) { return d[%s] })" % JsUtils.jsConvertData(color, None))
+    return self
+
+  def q1(self, q1_col):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param q1_col:
+    """
+    self.fnc("q1(function (d) { return d[%s] })" % JsUtils.jsConvertData(q1_col, None))
+    return self
+
+  def q2(self, q2_col):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param q2_col:
+    """
+    self.fnc("q2(function (d) { return d[%s] })" % JsUtils.jsConvertData(q2_col, None))
+    return self
+
+  def q3(self, q3_col):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param q3_col:
+    """
+    self.fnc("q3(function (d) { return d[%s] })" % JsUtils.jsConvertData(q3_col, None))
+    return self
+
+  def wl(self, wl_col):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param wl_col:
+    """
+    self.fnc("wl(function (d) { return d[%s] })" % JsUtils.jsConvertData(wl_col, None))
+    return self
+
+  def wh(self, wh_col):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param wh_col:
+    """
+    self.fnc("wh(function (d) { return d[%s] })" % JsUtils.jsConvertData(wh_col, None))
+    return self
+
+  def outlierLabel(self):
+    pass
+
 
 class JsNvd3Bar(JsNvd3):
   chartFnc = "discreteBarChart"
@@ -305,16 +493,24 @@ class JsNvd3Bar(JsNvd3):
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      jsFnc = JsUtils.jsConvertFncs(jsFnc)
-      self.fnc("x(%s)" % jsFnc)
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
     return self
 
   def y(self, column=None, jsFnc=None):
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      jsFnc = JsUtils.jsConvertFncs(jsFnc)
-      self.fnc("y(%s)" % jsFnc)
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc))
+    return self
+
+  def color(self, colors):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/TimeSeries.html
+
+    :param colors:
+    """
+    self.fnc("rotateLabels(%s)" % JsUtils.jsConvertData(colors, None))
     return self
 
   def rotateLabels(self, value):
@@ -325,7 +521,6 @@ class JsNvd3Bar(JsNvd3):
     https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param value:
-    :return:
     """
     self.fnc("rotateLabels(%s)" % value)
     return self
@@ -340,53 +535,404 @@ class JsNvd3Bar(JsNvd3):
     pass
 
   def showValues(self, flag):
-    pass
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/discreteBarChart.html
+
+    :param flag:
+    """
+    self.fnc("showValues(%s)" % JsUtils.jsConvertData(range, None))
+    return self
 
   def groupSpacing(self, value):
     pass
+
+
+class JsNvd3MultiBar(JsNvd3):
+  chartFnc = "multiBarChart"
+
+  def barColor(self, colors):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarChart.html
+
+    :param colors:
+    """
+    self.fnc("barColor(%s)" % JsUtils.jsConvertData(colors, None))
+    return self
+
+  def stacked(self, flag):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarChart2.html
+
+    :param flag:
+    """
+    self.fnc("stacked(%s)" % JsUtils.jsConvertData(range, None))
+    return self
+
+
+class JsNvd3MultiBarHorizontal(JsNvd3):
+  chartFnc = "multiBarHorizontalChart"
+
+  def yErr(self):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarHorizontalChart.html
+
+    """
+    pass
+
+  def barColor(self, colors):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarHorizontalChart.html
+
+    :param colors:
+    """
+    self.fnc("barColor(%s)" % JsUtils.jsConvertData(colors, None))
+    return self
+
+
+class JsNvd3Multi(JsNvd3Bar):
+  chartFnc = "multiChart"
 
 
 class JsNvd3Line(JsNvd3Bar):
   chartFnc = "lineChart"
 
 
-class JsNvd3Histo(JsNvd3Bar):
+class JsNvd3Scatter(JsNvd3Bar):
+  chartFnc = "scatterChart"
+
+  def showDistX(self, flag):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/scatterChart.html
+
+    :param flag:
+    """
+    self.fnc("showDistX(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
+
+  def showDistY(self, flag):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/scatterChart.html
+
+    :param flag:
+    """
+    self.fnc("showDistY(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
+
+  def useVoronoi(self, flag):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/scatterChart.html
+
+    :param flag:
+    """
+    self.fnc("useVoronoi(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
+
+
+class JsNvd3LineWithFocus(JsNvd3Line):
+  chartFnc = "lineWithFocusChart"
+
+  def brushExtent(self, range):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/lineWithFocusChart.html
+
+    :param range:
+    """
+    self.fnc("brushExtent(%s)" % JsUtils.jsConvertData(range, None))
+    return self
+
+
+class JsNvd3CumulativeLine(JsNvd3Line):
+  chartFnc = "cumulativeLineChart"
+
+  def average(self, mean):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/cumulativeLineChart.html
+
+    :param mean: String. The column name corresponding to the mean value
+    """
+    self.fnc("average(function(d) { return d.[%s] / 100; })" % JsUtils.jsConvertData(mean, None))
+    return self
+
+  def clipVoronoi(self, flag):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/cumulativeLineChart.html
+
+    :param flag:
+    """
+    self.fnc("clipVoronoi(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
+
+
+class JsNvd3LinePlusBar(JsNvd3Bar):
+  chartFnc = "linePlusBarChart"
+
+  def legendRightAxisHint(self, text):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/linePlusBarChart.html
+
+    :param text:
+    """
+    self.fnc("legendRightAxisHint(%s)" % JsUtils.jsConvertData(text, None))
+    return self
+
+  def forceY(self, indices):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/linePlusBarChart.html
+
+    :param indices:
+    """
+    self.fnc("forceY(%s)" % JsUtils.jsConvertData(indices, None))
+    return self
+
+  def padData(self, flag):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/linePlusBarChart.html
+
+    :param flag:
+    """
+    self.fnc("padData(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
+
+
+class JsNvd3HistoricalBar(JsNvd3Bar):
   chartFnc = "historicalBarChart"
+
+  def xScale(self, d3fnc):
+    """
+    use a time scale instead of plain numbers in order to get nice round default values in the axis
+
+    xScale(d3.time.scale())
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/TimeSeries.html
+
+    :param d3fnc:
+    """
+    self.fnc("xScale(%s)" % JsUtils.jsConvertData(d3fnc, None))
+    return self
+
+  def forceX(self, values):
+    """
+    fix half-bar problem on the first and last bars
+
+    :param values:
+    :return:
+    """
+    self.fnc("forceX(%s)" % JsUtils.jsConvertData(values, None))
+    return self
 
 
 class JsNvd3Pie(JsNvd3):
   chartFnc = "pieChart"
 
+  def arcsRadius(self, value):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/monitoringChart.html
+
+    :param value:
+    """
+    self.fnc("arcsRadius(%s)" % JsUtils.jsConvertData(value, None))
+    return self
+
   def x(self, column=None, jsFnc=None):
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      jsFnc = JsUtils.jsConvertFncs(jsFnc)
-      self.fnc("x(%s)" % jsFnc)
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
     return self
 
   def y(self, column=None, jsFnc=None):
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
     elif jsFnc is not None:
-      jsFnc = JsUtils.jsConvertFncs(jsFnc)
-      self.fnc("y(%s)" % jsFnc)
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc))
     return self
 
   def showLabels(self, flag):
-    pass
+    """
+    Description:
+    ------------
+    Display pie labels
+
+    Related Pages:
+    --------------
+    http://nvd3.org/examples/pie.html
+
+    Attributes:
+    ----------
+    :param flag:
+    """
+    self.fnc("showLabels(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
 
   def labelThreshold(self, value):
-    pass
+    """
+    Description:
+    ------------
+    Configure the minimum slice size for labels to show up
+
+    Related Pages:
+    --------------
+    http://nvd3.org/examples/pie.html
+
+    Attributes:
+    ----------
+    :param value:
+    """
+    self.fnc("labelThreshold(%s)" % JsUtils.jsConvertData(value, None))
+    return self
+
+  def labelSunbeamLayout(self, flag):
+    """
+    Change the label orientation for each category
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/monitoringChart.html
+
+    :param flag:
+    """
+    self.fnc("labelSunbeamLayout(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
 
   def labelType(self, text):
     pass
 
+  def donutLabelsOutside(self, flag):
+    """
+
+    :param flag:
+    """
+    self.fnc("donutLabelsOutside(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
+
   def donut(self, flag):
+    """
+    Description:
+    ------------
+    Turn on Donut mode. Makes pie chart look tasty!
+
+    Related Pages:
+    --------------
+    http://nvd3.org/examples/pie.html
+
+    Attributes:
+    ----------
+    :param flag:
+    """
+    value = "donut(%s)" % JsUtils.jsConvertData(flag, None)
+    if not value in self._js[-1]:
+      self.fnc(value)
+    return self
+
+  def startAngle(self, angle):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
+    """
+    self.fnc("startAngle(function(d) { return d.startAngle/2 -Math.PI/2; } )")
+    return self
+
+  def endAngle(self, angle):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
+
+    """
+    self.fnc("endAngle(function(d) { return d.startAngle/2 -Math.PI/2 })")
+    return self
+
+  def half(self):
     pass
 
   def donutRatio(self, value):
-    pass
+    """
+    Description:
+    ------------
+    Configure how big you want the donut hole size to be.
+
+    Related Pages:
+    --------------
+    http://nvd3.org/examples/pie.html
+
+    Attributes:
+    ----------
+    :param flag:
+    """
+    self.donut(True)
+    self.fnc("donutRatio(%s)" % JsUtils.jsConvertData(value, None))
+    return self
+
+  def padAngle(self, val):
+    """
+    Description:
+    ------------
+    Add a padding (space) between the different categories of the chart
+
+    Related Pages:
+    --------------
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
+
+    Attributes:
+    ----------
+    :param val: Float. The padding value
+    """
+    self.fnc("padAngle(%s)" % JsUtils.jsConvertData(val, None))
+    return self
+
+  def cornerRadius(self, val):
+    """
+    Description:
+    ------------
+    Change the angle corner radius
+
+    Related Pages:
+    --------------
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
+
+    Attributes:
+    ----------
+    :param val: Float. The rounding to be set to the angles
+    """
+    self.fnc("cornerRadius(%s)" % JsUtils.jsConvertData(val, None))
+    return self
+
+  def id(self, classname):
+    """
+    Description:
+    ------------
+    allow custom CSS for this one svg
+
+    Attributes:
+    ----------
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
+
+    Attributes:
+    ----------
+    :param classname:
+    """
+    self.fnc("id(%s)" % JsUtils.jsConvertData(classname, None))
+    return self
+
+  def growOnHover(self, flag):
+    """
+
+    :param flag:
+    """
+    self.fnc("growOnHover(%s)" % JsUtils.jsConvertData(flag, None))
+    return self
 
   def reduceXTicks(self, flag):
     pass
@@ -419,4 +965,17 @@ class JsNvd3Pie(JsNvd3):
     return self
 
   def titleOffset(self, value):
+    pass
+
+
+class JsNvd3ForceDirectedGraph(JsNvd3Bar):
+  chartFnc = "forceDirectedGraph"
+
+  def nodeExtras(self, node):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/forceDirected.html
+
+    :param node:
+    """
     pass

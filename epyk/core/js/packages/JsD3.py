@@ -551,18 +551,56 @@ class D3Csv(object):
     self._f, self.src = filename, src
     self._js_frg, self._js_ids = [], set()
 
+  def records(self, jsId):
+    """
+
+    :param jsId:
+    """
+    self._js_frg.append("%s.push(row)" % jsId)
+    return self
+
   def unpack(self, jsId, column=None):
+    """
+
+    :param jsId:
+    :param column:
+    """
     if not jsId in self._js_ids:
       column = JsUtils.jsConvertData(column, None)
       self._js_frg.append("%s.push(row[%s])" % (jsId, column))
       self._js_ids.add(jsId)
     return JsObject.JsObject(jsId, isPyData=False)
 
-  def filter(self):
-    pass
+  def filter(self, rules):
+    """
 
-  def callback(self):
-    pass
+    csv.filter("row['direction'] != 'Decreasing'")
+
+    :param rules:
+    """
+    if not isinstance(rules, list):
+      rules = [rules]
+    self._js_frg.append("if(%s){ return; }" % "&&".join(rules))
+    return self
+
+  def filterCol(self, column, value, type="=="):
+    """
+
+    :param value:
+    :return:
+    """
+    column = JsUtils.jsConvertData(column, None)
+    value = JsUtils.jsConvertData(value, None)
+    self._js_frg.append("if(row[%s] %s %s){ return; }" % (column, type, value))
+    return self
+
+  def callback(self, jsFnc):
+    """
+
+    :param jsFnc:
+    """
+    self._js_frg.append(jsFnc)
+    return self
 
   def toStr(self):
     file = JsUtils.jsConvertData(self._f, None)
