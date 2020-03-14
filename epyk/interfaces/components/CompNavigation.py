@@ -321,7 +321,7 @@ class Navigation(object):
       components.append(title)
     components.append(self.context.rptObj.ui.navigation.scroll())
     html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
-    html_nav.style.css.line_height = '40px'
+    html_nav.style.css.line_height = height[0]
     self.context.rptObj.body.style.css.padding_top = height[0]
     self.context.register(html_nav)
     return html_nav
