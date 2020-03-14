@@ -73,10 +73,6 @@ class Chart(Html.Html):
     self._traces.append(DataChart(self._report, attrs=c_data))
     return self
 
-  @property
-  def chart(self):
-    raise Exception("Chart object should be defined in the configuration")
-
   def build(self, data=None, options=None, profile=False):
     str_traces = []
     for t in self._traces:
