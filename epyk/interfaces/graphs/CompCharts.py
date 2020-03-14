@@ -99,25 +99,6 @@ class Graphs(object):
     params = (seriesNames, xAxis) if otherDims is None else tuple([seriesNames, xAxis] + list(otherDims))
     return js.AresJs.Js(self.context.rptObj, data, profile=profile).fncs(dataFncs).output(chartFam, chartType, params)
 
-  def chart(self, chartType=None, data=None, seriesNames=None, xAxis=None, otherDims=None, dataFncs=None, title=None,
-            chartFamily=None, filters=None, profile=None, xAxisOrder=None, options=None,
-            width=(100, "%"), height=(330, 'px'),  htmlCode=None):
-    """
-    Quick charts generation.
-
-    This function will always return the preferred Chart library for the requested chartType.
-    This can be overridden by defining the variable chartFamily
-
-    :rtype: graph.GraphFabric.Chart
-    """
-    chartFam = html.graph.GraphFabric.Chart.get(self.context.rptObj, chartType, chartFamily)
-    if chartFam is None:
-      raise Exception("This type of chart %s does not exist in all the Js Charting families" % chartType)
-
-    data = self._data(data, seriesNames, xAxis, otherDims, dataFncs, xAxisOrder, chartFam, chartType, profile)
-    return self.context.register(getattr(graph, 'Graph%s' % chartFam).Chart(self.context.rptObj, chartType, data, width,
-                                                                            height, title, options, htmlCode, filters, profile))
-
   def d3script(self, script, aresDf=None, seriesNames=None, xAxis=None, otherDims=None, dataFncs=None, title='',
             globalFilter=None, filterSensitive=True, profile=None, dataSrc=None, xAxisOrder=None, chartOptions=None,
             width=100, widthUnit="%", height=330, heightUnit="px", url=None, htmlCode=None, d3Version=None):

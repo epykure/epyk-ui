@@ -7,7 +7,6 @@ import json
 
 from epyk.core.js import Imports
 from epyk.core.html import Html
-from epyk.core.html.graph import GraphFabric
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpCls
@@ -29,8 +28,6 @@ class Chart(Html.Html):
                htmlCode, globalFilter, filterSensitive, dataSrc, profile):
     if chartOptions is None:
       chartOptions = {}
-    if GraphFabric.CHARTS_FACTORY is None:
-      GraphFabric.CHARTS_FACTORY = GraphFabric.loadFactory()  # atomic function to store all the different table mapping
     self.title, self.toolsbar, self.seriesProperties, self.height = title, toolsbar, {'static': {}, 'dynamic': {}}, height
     super(Chart, self).__init__(aresObj, [], code=htmlCode, width=width, widthUnit=widthUnit, height=height, heightUnit=heightUnit, dataSrc=dataSrc)
     self.__chart = GraphFabric.CHARTS_FACTORY[self.name][chartType](aresObj, data, self.seriesProperties)
@@ -126,8 +123,8 @@ class Chart(Html.Html):
     pass
 
   def __str__(self):
-    strChart = '<div style="height:%spx" id="%s"></div>' % (self.height-30, self.htmlId)
-    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.defined), strChart)
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
   def setSeriesColor(self, colors, seriesId=None, borderColors=None):
     """
@@ -206,9 +203,8 @@ class Config(Html.Html):
   def onDocumentReady(self): pass
 
   def __str__(self):
-    strChart = '<svg style="height:%spx" id="%s"></svg>' % (self.height-30, self.htmlId)
-    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.pyStyle), strChart)
-
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<svg %s></svg>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 

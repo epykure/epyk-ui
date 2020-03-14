@@ -47,7 +47,6 @@ class Components(object):
     self.img = self.images.img
     self.list = self.lists.list
     self.link = self.links.link
-    self.chart = self.charts.chart
     self.check = self.buttons.check
     self.slider = self.sliders.slider
     self.select = self.lists.select
