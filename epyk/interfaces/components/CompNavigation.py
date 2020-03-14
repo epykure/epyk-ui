@@ -359,6 +359,7 @@ class Navigation(object):
     """"""
     if not obj_map:
       obj_map = {}
-    col_lst = [html.HtmlContainer.Div(self.context.rptObj, [obj_map.get(i, [])]).css('display', 'inline-block') for i in range(nbcols)]
+    self.context.rptObj.ui.div()
+    col_lst = [self.context.rptObj.ui.div(self.context.rptObj, [obj_map.get(i, [])]).css('display', 'inline-block') for i in range(nbcols)]
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, col_lst, width=width, height=height, profile=profile)
     footer.sections = col_lst
