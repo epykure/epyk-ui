@@ -8,7 +8,6 @@ import logging
 import importlib
 
 from epyk.core.html import Html
-from epyk.core.js.configs import JsConfig
 
 
 JS_CHARTS = [

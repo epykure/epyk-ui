@@ -460,7 +460,7 @@ JS_IMPORTS = {
       {'alias': 'crossfilter'},
     ],
     'modules': [
-      {'reqAlias': 'dc', 'script': 'dc.min.js', 'version': '3.0.9', 'path': 'dc/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'reqAlias': 'dc', 'script': 'dc.min.js', 'version': '3.2.1', 'path': 'dc/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # billboard modules width CDN links
   'billboard': {
@@ -703,7 +703,7 @@ CSS_IMPORTS = {
   'dc': {
     'website': 'https://dc-js.github.io/dc.js/examples/',
     'modules': [
-      {'script': 'dc.min.css', 'version': '3.0.9', 'path': 'dc/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'dc.min.css', 'version': '3.2.1', 'path': 'dc/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # billboard modules width CDN links
   'billboard': {

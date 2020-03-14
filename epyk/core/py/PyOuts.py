@@ -104,7 +104,7 @@ class PyOuts(object):
     # Add the component on ready functions
     for objId in self._report.content:
       obj_id = self._report.htmlItems[objId].dom.varId
-      if obj_id in self._report._props.get('js', {}).get('onCompReady', {}):
+      if obj_id and obj_id in self._report._props.get('js', {}).get('onCompReady', {}):
         onloadParts.append(self._report._props['js']['onCompReady'][obj_id])
       for event, fncs in self._report.htmlItems[objId]._events['doc_ready'].items():
         if fncs['profile']:

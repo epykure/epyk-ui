@@ -26,13 +26,9 @@ class DC(object):
     :param width:
     :param height:
     :param htmlCode:
-
-    :return:
-
-    :rtype: GraphDC.Chart
     """
     line_chart = GraphDC.ChartLine(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
-    line_chart._data = data
+    line_chart.dom.height(height[0]).x().yAxisLabel("This is the Y Axis!").renderArea(True).dimension("ndx").group("ndx.group().reduceSum(function(d) {return d.a * d.b ;})")
     self.parent.context.register(line_chart)
     return line_chart
 

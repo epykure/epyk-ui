@@ -5,7 +5,6 @@ from epyk.core.js.objects import JsChartNvd3
 from epyk.core.js.objects import JsChartsJs
 from epyk.core.js.objects import JsChartD3
 from epyk.core.js.objects import JsChartBillboard
-from epyk.core.js.objects import JsChartDC
 from epyk.core.js.objects import JsChartPlotly
 
 from epyk.core.js.primitives import JsObject
@@ -75,6 +74,8 @@ class FncToObject(object):
     """
     Data transformation to the DC package
     """
+    from epyk.core.js.objects import JsChartDC
+
     return JsChartDC.JsChartDCLinks(self._data, self._js_src, self._data_schema)
 
   @property

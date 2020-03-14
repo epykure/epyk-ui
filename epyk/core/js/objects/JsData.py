@@ -12,7 +12,6 @@ from epyk.core.js.primitives import JsString
 
 from epyk.core.js.objects import JsNodeDom
 
-from epyk.core.js.packages.JsCrossFilter import CrossFilter
 from epyk.core.js.packages.JsVis import VisDataSet, VisDataView
 
 from epyk.core.js.fncs import JsFncs
@@ -236,6 +235,8 @@ class JsData(object):
 
     :return:
     """
+    from epyk.core.js.packages.JsCrossFilter import CrossFilter
+
     return CrossFilter(self._src, varName=var_name, data=data)
 
   def dataset(self, data, var_name=None):
