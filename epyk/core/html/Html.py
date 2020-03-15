@@ -901,5 +901,27 @@ class Body(Html):
     self._html_content = page_content
     return self
 
+  def set_background(self, start_color=None, end_color=None, from_theme=False):
+    """
+    Description:
+    ------------
+    Change the body background color
+
+    Usage:
+    ------
+    rptObj.body.set_background("#101626", "#374F67")
+
+    Attributes:
+    ----------
+    :param start_color:
+    :param end_color:
+    """
+    if from_theme or (start_color is None and end_color is None):
+      self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (self._report.theme.colors[-1], self._report.theme.colors[2])
+    elif end_color is not None:
+      self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (start_color, end_color)
+    else:
+      self.style.css.background = start_color
+
   def __str__(self):
     return '<body %s>%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self._html_content)
