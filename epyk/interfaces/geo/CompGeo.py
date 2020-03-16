@@ -7,7 +7,7 @@ class Geo(object):
     self.context = context
 
   @property
-  def plotly(self):
+  def plotly_map(self):
     """
     Interface for the Plotly library
 
@@ -16,3 +16,31 @@ class Geo(object):
     :return: A Python Plolty object
     """
     return CompGeoPlotly.Plotly(self)
+
+  @property
+  def plotly_choropleth(self):
+    """
+
+    :return:
+    """
+    return CompGeoPlotly.PlotlyChoropleth(self)
+
+  @property
+  def plotly_scatter(self):
+    """
+
+    https://plot.ly/javascript/scatter-plots-on-maps/
+
+    :return:
+    """
+    return CompGeoPlotly.PlotlyScatter(self)
+
+  @property
+  def plotly_bubble(self):
+    """
+
+    https://plot.ly/javascript/bubble-maps/
+
+    :return:
+    """
+    return CompGeoPlotly.PlotlyBubble(self)

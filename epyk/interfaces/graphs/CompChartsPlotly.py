@@ -7,7 +7,7 @@ class Plotly(object):
     self.parent = context
     self.chartFamily = "Plotly"
 
-  def line(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def line(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
            width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -22,6 +22,9 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
+    if record is None:
+      record = []
+      y_columns = y_columns or []
     agg_data = {}
     for rec in record:
       for y in y_columns:
@@ -42,7 +45,7 @@ class Plotly(object):
       line_chart.add_trace(d)
     return line_chart
 
-  def bar(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def bar(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
           width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -57,6 +60,9 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
+    if record is None:
+      record = []
+      y_columns = y_columns or []
     agg_data = {}
     for rec in record:
       for y in y_columns:
@@ -251,7 +257,7 @@ class Plotly(object):
       histo_chart.add_trace(d, type='histogram')
     return histo_chart
 
-  def pie(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def pie(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -266,6 +272,9 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
+    if record is None:
+      record = []
+      y_columns = y_columns or []
     agg_data = {}
     for rec in record:
       for y in y_columns:
@@ -422,7 +431,7 @@ class Plotly(object):
       if z_axis in rec and x_axis in rec:
         agg_key = (rec[x_axis], rec[z_axis])
         for y in y_columns:
-          agg_y.setdefault(agg_key, {})[y] = agg_y.get(agg_key, {}).get(y, 0) + rec[y]
+          agg_y.setdefault(agg_key, {})[y] = agg_y.get(agg_key, {}).get(y, 0) + float(rec[y])
     z_array = sorted(list(z_a))
     x_array = sorted(list(x_a))
     naps = []
@@ -440,6 +449,43 @@ class Plotly(object):
       surf_chart.add_trace({'z': d})
       surf_chart.data.showscale = False
     return surf_chart
+
+  def scatter3d(self, record, y_columns=None, x_columns=None, z_columns=None, title=None, filters=None, profile=None,
+             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    https://plot.ly/javascript/3d-line-plots/
+
+    :param record:
+    :param y_columns:
+    :param x_columns:
+    :param z_columns:
+    :param title:
+    :param filters:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    x_series, y_all_series, z_series = [], [], []
+    for i, y in enumerate(y_columns):
+      xs, ys, zs = [], [], []
+      for rec in record:
+        xs.append(rec.get(x_columns[i]))
+        zs.append(rec.get(z_columns[i]))
+        ys.append(rec.get(y))
+      x_series.append(xs)
+      y_all_series.append(ys)
+      z_series.append(zs)
+
+    sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                             filters, profile)
+    self.parent.context.register(sc_chart)
+    for i, y_series in enumerate(y_all_series):
+      sc_chart.add_trace({'x': x_series[i], 'y': y_series, 'z': z_series[i]})
+      sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
+    return sc_chart
 
   def maps(self, records, title=None, filters=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):

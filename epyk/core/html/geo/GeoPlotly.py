@@ -270,6 +270,17 @@ class DataChoropleth(GraphPlotly.DataChart):
     return self.sub_data("marker", DataMarkersChoroMap)
 
 
+class DataBubble(DataChoropleth):
+
+  @property
+  def locations(self):
+    return self._attrs["locations"]
+
+  @locations.setter
+  def locations(self, val):
+    self._attrs["locations"] = val
+
+
 class Scatter(GraphPlotly.Chart):
 
   __reqJs = ['plotly.js']
@@ -415,4 +426,41 @@ class ScatterGeo(GraphPlotly.Chart):
     if mode is not None:
       c_data['mode'] = mode
     self._traces.append(DataChoropleth(self._report, attrs=c_data))
+    return self
+
+
+class BubbleGeo(GraphPlotly.Chart):
+
+  __reqJs = ['plotly.js']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsPlotly.Bar
+    """
+    if self._chart is None:
+      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+    return self._chart
+
+  @property
+  def layout(self):
+    """
+
+    :rtype: LayoutGeo
+    """
+    if self._layout is None:
+      self._layout = LayoutGeoMap(self._report)
+    return self._layout
+
+  @property
+  def data(self):
+    return self._traces[-1]
+
+  def add_trace(self, data, type='scattergeo', mode='markers'):
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataBubble(self._report, attrs=c_data))
     return self

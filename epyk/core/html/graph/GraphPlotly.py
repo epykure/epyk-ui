@@ -14,7 +14,7 @@ from epyk.core.js.packages import JsD3
 class Chart(Html.Html):
   name, category, callFnc = 'Plotly', 'Charts', 'plotly'
 
-  def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
+  def __init__(self,  report, width, height, title, options, htmlCode, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
     super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self._d3, self._attrs, self._traces, self._layout, self._options = None, None, [], None, None
