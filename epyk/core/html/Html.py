@@ -922,6 +922,8 @@ class Body(Html):
       self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (start_color, end_color)
     else:
       self.style.css.background = start_color
+    self.style.css.background_repeat = "no-repeat"
+    self.style.css.background_color = self._report.theme.colors[2]
 
   def __str__(self):
     return '<body %s>%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self._html_content)

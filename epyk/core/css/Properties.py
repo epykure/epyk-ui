@@ -376,7 +376,17 @@ class CssMixin(object):
     self.htmlObj.css({"background-position": val})
 
   @property
-  def background_repeat(self): return self.htmlObj.css("background-repeat")
+  def background_repeat(self):
+    """
+    Description:
+    ------------
+    The background-repeat property sets if/how a background image will be repeated.
+
+    Usage:
+    ------
+    https://www.w3schools.com/cssref/pr_background-repeat.asp
+    """
+    return self.htmlObj.css("background-repeat")
 
   @background_repeat.setter
   def background_repeat(self, val):

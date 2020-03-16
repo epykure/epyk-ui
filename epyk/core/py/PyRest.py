@@ -31,12 +31,15 @@ class PyRest(object):
 
   def http_server(self, port=5000, service_name=""):
     """
+    Description:
+    ------------
     Start a local server for all the services.
     This should be at the end of the script in order to allow the services debug
 
+    Attributes:
+    ----------
     :param port:
     :param service_name:
-    :return:
     """
     import http.server
     import socketserver
@@ -66,17 +69,23 @@ class PyRest(object):
 
   def post(self, url, data=None, encoding='utf-8', headers=None, proxy=None):
     """
+    Description:
+    ------------
     Run a external REST call using the POST method.
 
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Example
+    Usage:
+    ------
     rptObj.py.requests.post("https://jsonplaceholder.typicode.com/todos/1")
 
-    Documentation
+    Related Pages:
+    --------------
     https://docs.python.org/2/howto/urllib2.html
 
+    Attributes:
+    ----------
     :param url: The external URL to the REST service
     :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
     :param encoding: Optional. The encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
@@ -95,18 +104,24 @@ class PyRest(object):
 
   def get(self, url, data=None, encoding='utf-8', headers=None, proxy=None):
     """
+    Description:
+    ------------
     Run a external REST call using the GET method.
 
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Example
+    Usage:
+    ------
     rptObj.py.requests.get("https://api.cdnjs.com/libraries")
     pyrest.get(r"https://jsonplaceholder.typicode.com/todos/1")
 
-    Documentation
+    Related Pages:
+    --------------
     https://docs.python.org/2/howto/urllib2.html
 
+    Attributes:
+    ----------
     :param url: Should be a string containing a valid URL
     :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
     :param encoding: Optional. The encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
@@ -128,18 +143,24 @@ class PyRest(object):
 
   def request(self, url, data=None, method=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
     """
+    Description:
+    ------------
     Run a external REST call using a specific method (PUT, DELETE, OPTIONS, HEAD, PUT, PATCH...).
 
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Example
+    Usage:
+    ------
     json.loads(PyRest().request(r"https://jsonplaceholder.typicode.com/todos/1", method="GET"))
 
-    Documentation
+    Related Pages:
+    --------------
     https://2.python-requests.org/en/master/api/
     https://docs.python.org/3/library/urllib.request.html
 
+    Attributes:
+    ----------
     :param url: Should be a string containing a valid URL
     :param method: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
     :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
@@ -156,11 +177,16 @@ class PyRest(object):
 
   def webscrapping(self, url, data=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
     """
+    Description:
+    ------------
     Create a REST request with the appropriate header to mimic a browser GET request
 
-    Example
+    Usage:
+    ------
     PyRest().webscrapping(r"https://doc.scrapy.org/en/latest/topics/request-response.html")
 
+    Attributes:
+    ----------
     :param url: Should be a string containing a valid URL
     :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
     :param encoding: Optional. the encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
@@ -179,14 +205,34 @@ class PyRest(object):
     except Exception as err:
       return err
 
+  def csv(self, url, delimiter=",", encoding='utf-8'):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param url:
+    :param delimiter:
+    :param encoding:
+    """
+    raw_data = self.webscrapping(url).decode(encoding).split("\n")
+    records = []
+    if raw_data:
+      header = raw_data[0].split(delimiter)
+      for line in raw_data[1:]:
+        records.append(dict(zip(header, line.split(delimiter))))
+    return records
+
   def query(self, service_name, function_name="getData", report_name=None, data=None, encoding='utf-8'):
     """
 
-    Example
+    Usage:
+    ------
     rptObj.py.requests.query("SrcTest", "textbubble")
 
-    Documentation
-
+    Attributes:
+    ----------
     :param service_name: The service Name in the sources folder
     :param function_name: Optional, Optional, the function name in the service. Default getData()
     :param report_name: Optional, The folder name
