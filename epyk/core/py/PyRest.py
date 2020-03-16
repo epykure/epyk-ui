@@ -205,7 +205,7 @@ class PyRest(object):
     except Exception as err:
       return err
 
-  def csv(self, url, delimiter=",", encoding='utf-8'):
+  def csv(self, url, delimiter=",", encoding='utf-8', with_header=True):
     """
     Description:
     ------------
@@ -215,11 +215,16 @@ class PyRest(object):
     :param url:
     :param delimiter:
     :param encoding:
+    :param with_header:
     """
     raw_data = self.webscrapping(url).decode(encoding).split("\n")
     records = []
     if raw_data:
       header = raw_data[0].split(delimiter)
+      if not with_header:
+        line = list(header)
+        header = [i for i in range(len(header))]
+        records.append(dict(zip(header, line)))
       for line in raw_data[1:]:
         records.append(dict(zip(header, line.split(delimiter))))
     return records

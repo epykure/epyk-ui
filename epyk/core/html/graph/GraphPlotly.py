@@ -29,6 +29,8 @@ class Chart(Html.Html):
 
   @property
   def data(self):
+    if not self._traces:
+      self.add_trace([])
     return self._traces[-1]
 
   @property
@@ -98,7 +100,13 @@ class Line(Chart):
     return self._dom
 
   def add_trace(self, data, type=None, mode='lines+markers'):
-    return super(Line, self).add_trace(data, type, mode)
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataXY(self._report, attrs=c_data))
+    return self
 
 
 class Bar(Chart):
@@ -120,7 +128,13 @@ class Bar(Chart):
     return self._layout
 
   def add_trace(self, data, type='bar', mode=None):
-    return super(Bar, self).add_trace(data, type, mode)
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataXY(self._report, attrs=c_data))
+    return self
 
 
 class DataFill(DataClass):
@@ -138,11 +152,44 @@ class LayoutFont(DataClass):
 
   @property
   def color(self):
+    """
+
+    :param color: color or array of colors
+    """
     return self._attrs["color"]
 
   @color.setter
   def color(self, val):
     self._attrs["color"] = val
+
+  @property
+  def family(self):
+    """
+    HTML font family - the typeface that will be applied by the web browser.
+
+    https://plot.ly/javascript/reference/#pie-outsidetextfont-family
+
+    :param font-family:  string or array of strings
+    """
+    return self._attrs["family"]
+
+  @family.setter
+  def family(self, val):
+    self._attrs["family"] = val
+
+  @property
+  def size(self):
+    """
+
+    https://plot.ly/javascript/reference/#pie-outsidetextfont-family
+
+    :return: number or array of numbers greater than or equal to 1
+    """
+    return self._attrs["size"]
+
+  @size.setter
+  def size(self, val):
+    self._attrs["size"] = val
 
 
 class LayoutGrid(DataClass):
@@ -260,6 +307,22 @@ class LayoutAxis(DataClass):
   @title.setter
   def title(self, val):
     self._attrs["title"] = val
+
+  @property
+  def showbackground(self):
+    return self._attrs["showbackground"]
+
+  @showbackground.setter
+  def showbackground(self, val):
+    self._attrs["showbackground"] = val
+
+  @property
+  def backgroundcolor(self):
+    return self._attrs["backgroundcolor"]
+
+  @backgroundcolor.setter
+  def backgroundcolor(self, val):
+    self._attrs["backgroundcolor"] = val
 
   @property
   def tickangle(self):
@@ -407,6 +470,30 @@ class LayoutAxis(DataClass):
     self._attrs["zeroline"] = val
 
   @property
+  def showline(self):
+    return self._attrs["showline"]
+
+  @showline.setter
+  def showline(self, val):
+    self._attrs["showline"] = val
+
+  @property
+  def showgrid(self):
+    return self._attrs["showgrid"]
+
+  @showgrid.setter
+  def showgrid(self, val):
+    self._attrs["showgrid"] = val
+
+  @property
+  def showticklabels(self):
+    return self._attrs["showticklabels"]
+
+  @showticklabels.setter
+  def showticklabels(self, val):
+    self._attrs["showticklabels"] = val
+
+  @property
   def rangeselector(self):
     """
 
@@ -498,6 +585,18 @@ class LayoutScene(DataClass):
   def camera(self):
     return self.sub_data("scene", LayoutCamera)
 
+  @property
+  def xaxis(self):
+    return self.sub_data("xaxis", LayoutAxis)
+
+  @property
+  def yaxis(self):
+    return self.sub_data("yaxis", LayoutAxis)
+
+  @property
+  def zaxis(self):
+    return self.sub_data("zaxis", LayoutAxis)
+
 
 class LayoutLegend(DataClass):
 
@@ -582,6 +681,22 @@ class Layout(DataClass):
   @title.setter
   def title(self, val):
     self._attrs["title"] = val
+
+  @property
+  def paper_bgcolor(self):
+    return self._attrs["paper_bgcolor"]
+
+  @paper_bgcolor.setter
+  def paper_bgcolor(self, val):
+    self._attrs["paper_bgcolor"] = val
+
+  @property
+  def plot_bgcolor(self):
+    return self._attrs["plot_bgcolor"]
+
+  @plot_bgcolor.setter
+  def plot_bgcolor(self, val):
+    self._attrs["plot_bgcolor"] = val
 
   @property
   def showlegend(self):
@@ -694,6 +809,94 @@ class Layout(DataClass):
     y_axis = self.sub_data('yaxis%s' % y, LayoutAxis)
     y_axis.domain = y_domain
     y_axis.anchor = "x%s" % x
+    return self
+
+  def no_background(self):
+    """
+
+    https://community.plot.ly/t/you-can-remove-the-white-background-of-the-graphics-background/933
+
+    :return:
+    """
+    self.paper_bgcolor = 'rgba(0,0,0,0)'
+    self.plot_bgcolor = 'rgba(0,0,0,0)'
+    return self
+
+  def no_grid(self):
+    """
+    Remove the vertical and horizontal sub axis from the chart display.
+    Keep the zeroline axis
+
+    :return: The attribute object to allow the chaining
+    """
+    self.xaxis.showgrid = False
+    self.xaxis.showline = False
+    self.xaxis.showticklabels = False
+    self.yaxis.showgrid = False
+    self.yaxis.showline = False
+    self.yaxis.showticklabels = False
+    return self
+
+  def grid_colors(self, x_color, y_color=None):
+    """
+
+    :param x_color:
+    :param y_color:
+
+    :return:
+    """
+    self.xaxis.gridcolor = x_color
+    self.yaxis.gridcolor = y_color or x_color
+    return self
+
+  def axis_colors(self, x_color, y_color=None):
+    """
+
+    :param x_color:
+    :param y_color:
+
+    :return:
+    """
+    self.xaxis.set_color(x_color)
+    self.yaxis.set_color(y_color or x_color)
+    return self
+
+
+class Layout3D(Layout):
+
+  @property
+  def scene(self):
+    """
+
+    """
+    return self.sub_data("scene", LayoutScene)
+
+  def grid_colors(self, x_color, y_color=None, z_color=None):
+    """
+
+    :param x_color:
+    :param y_color:
+    :param z_color:
+    """
+    self.scene.xaxis.gridcolor = x_color
+    self.scene.xaxis.zerolinecolor = x_color
+    self.scene.yaxis.gridcolor = y_color
+    self.scene.yaxis.zerolinecolor = y_color
+    self.scene.zaxis.gridcolor = z_color
+    self.scene.zaxis.zerolinecolor = z_color
+    return self
+
+  def axis_colors(self, x_color, y_color=None, z_color=None):
+    """
+
+    :param x_color:
+    :param y_color:
+
+    :return:
+    """
+    self.scene.xaxis.set_color(x_color)
+    self.scene.yaxis.set_color(y_color or x_color)
+    self.scene.zaxis.set_color(z_color or x_color)
     return self
 
 
@@ -854,6 +1057,14 @@ class DataMarkers(DataClass):
 class DataChart(DataClass):
 
   @property
+  def automargin(self):
+    return self._attrs["automargin"]
+
+  @automargin.setter
+  def automargin(self, val):
+    self._attrs["automargin"] = val
+
+  @property
   def hole(self):
     return self._attrs["hole"]
 
@@ -862,12 +1073,28 @@ class DataChart(DataClass):
     self._attrs["hole"] = val
 
   @property
+  def opacity(self):
+    return self._attrs["opacity"]
+
+  @opacity.setter
+  def opacity(self, val):
+    self._attrs["opacity"] = val
+
+  @property
   def name(self):
     return self._attrs["name"]
 
   @name.setter
   def name(self, val):
     self._attrs["name"] = val
+
+  @property
+  def mode(self):
+    return self._attrs["mode"]
+
+  @mode.setter
+  def mode(self, val):
+    self._attrs["mode"] = val
 
   @property
   def fill(self):
@@ -960,6 +1187,25 @@ class DataChart(DataClass):
     return self.sub_data("marker", DataMarkers)
 
 
+class DataXY(DataChart):
+
+  @property
+  def x(self):
+    return self._attrs["x"]
+
+  @x.setter
+  def x(self, val):
+    self._attrs["x"] = val
+
+  @property
+  def y(self):
+    return self._attrs["y"]
+
+  @y.setter
+  def y(self, val):
+    self._attrs["y"] = val
+
+
 class DataPie(DataChart):
 
   @property
@@ -969,6 +1215,48 @@ class DataPie(DataChart):
   @hole.setter
   def hole(self, val):
     self._attrs["hole"] = val
+
+  @property
+  def values(self):
+    return self._attrs["values"]
+
+  @values.setter
+  def values(self, val):
+    self._attrs["values"] = val
+
+  @property
+  def labels(self):
+    return self._attrs["labels"]
+
+  @labels.setter
+  def labels(self, val):
+    self._attrs["labels"] = val
+
+  @property
+  def textinfo(self):
+    return self._attrs["textinfo"]
+
+  @textinfo.setter
+  def textinfo(self, val):
+    self._attrs["textinfo"] = val
+
+  @property
+  def textposition(self):
+    return self._attrs["textposition"]
+
+  @textposition.setter
+  def textposition(self, val):
+    self._attrs["textposition"] = val
+
+  @property
+  def outsidetextfont(self):
+    """
+    Sets the font used for `textinfo` lying outside the sector.
+
+    https://plot.ly/javascript/reference/#pie-outsidetextfont-family
+
+    """
+    return self.sub_data("outsidetextfont", DataFont)
 
   @property
   def hoverinfo(self):
@@ -1052,6 +1340,17 @@ class DataContours(DataChart):
     return self.sub_data("z", DataZ)
 
 
+class DataLine(DataChart):
+
+  @property
+  def color(self):
+    return self._attrs["color"]
+
+  @color.setter
+  def color(self, val):
+    self._attrs["color"] = val
+
+
 class DataSurface(DataChart):
 
   @property
@@ -1069,6 +1368,10 @@ class DataSurface(DataChart):
     https://plot.ly/javascript/3d-surface-plots/
     """
     return self.sub_data("contours", DataContours)
+
+  @property
+  def line(self):
+    return self.sub_data("line", DataLine)
 
 
 class DataDelta(DataClass):
@@ -1277,6 +1580,8 @@ class Pie(Chart):
 
   @property
   def data(self):
+    if not self._traces:
+      self._traces.append(DataPie(self._report))
     return self._traces[-1]
 
   def add_trace(self, data, type='pie', mode=None):
@@ -1306,6 +1611,38 @@ class Surface(Chart):
     return self._traces[-1]
 
   def add_trace(self, data, type='surface', mode=None):
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataSurface(self._report, attrs=c_data))
+    return self
+
+
+class Scatter3D(Chart):
+  __reqJs = ['plotly.js']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsPlotly.Bar
+    """
+    if self._chart is None:
+      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+    return self._chart
+
+  @property
+  def layout(self):
+    if self._layout is None:
+      self._layout = Layout3D(self._report)
+    return self._layout
+
+  @property
+  def data(self):
+    return self._traces[-1]
+
+  def add_trace(self, data, type='scatter3d', mode="lines"):
     c_data = dict(data)
     if type is not None:
       c_data['type'] = type
