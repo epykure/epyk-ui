@@ -113,26 +113,39 @@ class PlotlyBubble(object):
       if x_axis in rec:
         data[rec[x_axis]] = data.get(x_axis, 0) + float(rec.get(y_column, 0))
     self.parent.context.register(map_chart)
-    locations = list(data.keys())
-    values = [data[k] for k in locations]
-    map_chart.add_trace({'locations': locations})
-    map_chart.data.marker.colorbar.title = "Test"
-    map_chart.data.marker.line.color = "black"
-    map_chart.data.marker.size = values
-    # map_chart.data.marker.cmin = 0
-    # map_chart.data.marker.cmax = max(values)
-    map_chart.data.marker.color = values
-    map_chart.data.marker.colorscale = 'Reds'
+    if record:
+      locations = list(data.keys())
+      values = [data[k] for k in locations]
+      map_chart.add_trace({'locations': locations})
+      map_chart.data.marker.colorbar.title = "Test"
+      map_chart.data.marker.line.color = "black"
+      map_chart.data.marker.size = values
+      # map_chart.data.marker.cmin = 0
+      # map_chart.data.marker.cmax = max(values)
+      map_chart.data.marker.color = values
+      map_chart.data.marker.colorscale = 'Reds'
     map_chart.layout.geo.scope = scope
     map_chart.layout.geo.resolution = 150
     if width[1] == 'px':
       map_chart.layout.width = width[0]
     return map_chart
 
-  def usa(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None,
+  def usa(self, record=None, lon_columns=None, lat_columns=None, text_columns=None, title=None, profile=None, options=None,
              width=(100, "%"), height=(430, "px"), htmlCode=None):
-    map_usa = self.bubble('usa', record, y_column, x_axis, title, profile, options, width, height, htmlCode)
+    map_usa = self.bubble('usa', record, None, None, title, profile, options, width, height, htmlCode)
+
+    series = []
+    for i, l in enumerate(lon_columns):
+      series.append({'lon': [], 'lat': [], 'text': []})
+      for rec in record:
+        series[-1]['lon'].append(rec.get(l, 0))
+        series[-1]['lat'].append(rec.get(lat_columns[i], 0))
+        if text_columns is not None:
+          series[-1]['text'].append(rec.get(text_columns[i], 0))
+    for i, s in enumerate(series):
+      map_usa.add_trace(s)
     map_usa.data.locationmode = 'USA-states'
+    map_usa.layout.no_background()
     return map_usa
 
   def europe(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None,

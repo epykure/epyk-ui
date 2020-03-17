@@ -46,7 +46,7 @@ class Nvd3(object):
     line_chart.dom.x(column="x").y(column="y")
     return line_chart
 
-  def bar(self, data=None, y_columns=None, x_axis='labels', title=None, filters=None, profile=None, options=None,
+  def bar(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
           width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -63,15 +63,28 @@ class Nvd3(object):
     :param htmlCode:
 
     """
-    if y_columns is None:
-      y_columns = ['y']
+    agg_data = {}
+    for rec in record:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+
+    labels, data = set(), []
+    for c in y_columns:
+      series = []
+      for x, y in agg_data[c].items():
+        labels.add(x)
+        series.append({"label": x, "y": y})
+      data.append(series)
+
     bar_chart = graph.GraphNVD3.ChartBar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
     if y_columns is not None and len(y_columns) > 1:
       # Change automatically the underlying chart object to add a multibars chart
       bar_chart.dom._selector = "nv.models.multiBarChart()"
     self.parent.context.register(bar_chart)
     bar_chart.dom.x(column="label").y(column="y")
-    bar_chart._vals = self.parent.context.rptObj.js.data.records(data).to.nvd3.bar(y_columns, x_axis, profile or False)
+    for i, d in enumerate(data):
+      bar_chart.add_trace(d, y_columns[i])
     return bar_chart
 
   def histo(self, data=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
@@ -98,7 +111,7 @@ class Nvd3(object):
     self.parent.context.register(bar_chart)
     return bar_chart
 
-  def area(self, data=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def area(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
             width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -115,8 +128,23 @@ class Nvd3(object):
     :param htmlCode:
 
     """
+    agg_data = {}
+    for rec in record:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+
+    labels, data = set(), []
+    for c in y_columns:
+      series = []
+      for x, y in agg_data[c].items():
+        labels.add(x)
+        series.append({"label": x, "y": y})
+      data.append(series)
+
     area_chart = graph.GraphNVD3.ChartArea(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
-    area_chart._vals = self.parent.context.rptObj.js.data.records(data).to.nvd3.bar(y_columns, x_axis, profile or False)
+    for i, d in enumerate(data):
+      area_chart.add_trace(d, y_columns[i])
     area_chart.dom.x(column="label").y(column="y")
     self.parent.context.register(area_chart)
     return area_chart

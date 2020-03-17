@@ -217,7 +217,7 @@ class PyRest(object):
     :param encoding:
     :param with_header:
     """
-    raw_data = self.webscrapping(url).decode(encoding).split("\n")
+    raw_data = self.webscrapping(url).decode(encoding).strip().split("\n")
     records = []
     if raw_data:
       header = raw_data[0].split(delimiter)

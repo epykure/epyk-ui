@@ -80,6 +80,13 @@ class ChartBar(Chart):
       self._dom = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
     return self._dom
 
+  # def add_trace(self, data, name=""):
+  #   dataset = {"values": data, 'key': name}
+  #   next_index = len(self._vals)
+  #   self._dom.color(self._report.theme.colors[next_index])
+  #   self._vals.append(dataset)
+  #   return self
+
 
 class ChartPie(Chart):
 
@@ -96,6 +103,7 @@ class ChartPie(Chart):
     #next_index = len(self._vals)
     #if len(self._report.theme.colors) > next_index:
     #  dataset['color'] = self._report.theme.colors[next_index]
+    self.dom.color(self._report.theme.colors)
     self._vals = data
     return self
 

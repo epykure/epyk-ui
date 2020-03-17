@@ -148,6 +148,223 @@ class DataFill(DataClass):
     self._attrs["color"] = val
 
 
+class LayoutAnnotation(DataClass):
+
+  @property
+  def xanchor(self):
+    return self._attrs["xanchor"]
+
+  @xanchor.setter
+  def xanchor(self, val):
+    self._attrs["xanchor"] = val
+
+  @property
+  def ax(self):
+    return self._attrs["ax"]
+
+  @ax.setter
+  def ax(self, val):
+    self._attrs["ax"] = val
+
+  @property
+  def ay(self):
+    return self._attrs["ay"]
+
+  @ay.setter
+  def ay(self, val):
+    self._attrs["ay"] = val
+
+  @property
+  def text(self):
+    return self._attrs["text"]
+
+  @text.setter
+  def text(self, val):
+    self._attrs["text"] = val
+
+  @property
+  def showarrow(self):
+    return self._attrs["showarrow"]
+
+  @showarrow.setter
+  def showarrow(self, val):
+    self._attrs["showarrow"] = val
+
+  @property
+  def x(self):
+    return self._attrs["x"]
+
+  @x.setter
+  def x(self, val):
+    self._attrs["x"] = val
+
+  @property
+  def y(self):
+    return self._attrs["y"]
+
+  @y.setter
+  def y(self, val):
+    self._attrs["y"] = val
+
+  @property
+  def xref(self):
+    return self._attrs["xref"]
+
+  @xref.setter
+  def xref(self, val):
+    self._attrs["xref"] = val
+
+  @property
+  def yref(self):
+    return self._attrs["yref"]
+
+  @yref.setter
+  def yref(self, val):
+    self._attrs["yref"] = val
+
+  @property
+  def font(self):
+    return self.sub_data("font", DataFont)
+
+
+class LayoutShape(DataClass):
+
+  def add_path(self, points, color=None):
+    """
+
+    https://plot.ly/javascript/shapes/
+
+    :param points:
+    """
+    self._attrs.update({'type': 'path', 'path': points})
+    self.fillcolor = color or self._report.theme.warning[0]
+    return self
+
+  def add_line(self, x, y, x1, y1, opacity=0.2, color=None):
+    """
+
+    .layout.shapes.add_line(-100, 10, -50, -10, color="red")
+
+    :param x:
+    :param y:
+    :param x1:
+    :param y1:
+    :param opacity:
+    :param color:
+    """
+    self._attrs.update({'type': 'line', 'xref': 'x', 'yref': 'y', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
+    self.line.color = color or self._report.theme.warning[0]
+    self.line.dash = 'dot'
+    self.opacity = opacity
+    return self
+
+  def add_circle(self, x, y, x1, y1, opacity=0.2, color=None):
+    """
+
+    :param x:
+    :param y:
+    :param x1:
+    :param y1:
+    :param opacity:
+    :param color:
+    """
+    self._attrs.update({'type': 'circle', 'xref': 'x', 'yref': 'y', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
+    self.fillcolor = color or self._report.theme.warning[0]
+    self.line.width = 0
+    self.opacity = opacity
+    return self
+
+  def add_rect(self, x, y, x1, y1, opacity=0.2, color=None):
+    """
+
+    :param x:
+    :param y:
+    :param x1:
+    :param y1:
+    """
+    self._attrs.update({'type': 'rect', 'xref': 'x', 'yref': 'paper', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
+    self.fillcolor = color or self._report.theme.warning[0]
+    self.line.width = 0
+    self.opacity = opacity
+    return self
+
+  @property
+  def type(self):
+    return self._attrs["type"]
+
+  @type.setter
+  def type(self, val):
+    self._attrs["type"] = val
+
+  @property
+  def xref(self):
+    return self._attrs["xref"]
+
+  @xref.setter
+  def xref(self, val):
+    self._attrs["xref"] = val
+
+  @property
+  def yref(self):
+    return self._attrs["yref"]
+
+  @yref.setter
+  def yref(self, val):
+    self._attrs["yref"] = val
+
+  @property
+  def x0(self):
+    return self._attrs["x0"]
+
+  @x0.setter
+  def x0(self, val):
+    self._attrs["x0"] = val
+
+  @property
+  def y0(self):
+    return self._attrs["y0"]
+
+  @y0.setter
+  def y0(self, val):
+    self._attrs["y0"] = val
+
+  @property
+  def x1(self):
+    return self._attrs["x1"]
+
+  @x1.setter
+  def x1(self, val):
+    self._attrs["x1"] = val
+
+  @property
+  def y1(self):
+    return self._attrs["y1"]
+
+  @y1.setter
+  def y1(self, val):
+    self._attrs["y1"] = val
+
+  @property
+  def fillcolor(self):
+    return self._attrs["fillcolor"]
+
+  @fillcolor.setter
+  def fillcolor(self, val):
+    self._attrs["fillcolor"] = val
+
+  @property
+  def opacity(self):
+    return self._attrs["opacity"]
+
+  @opacity.setter
+  def opacity(self, val):
+    self._attrs["opacity"] = val
+
+  @property
+  def line(self):
+    return self.sub_data("line", DataMarkersLine)
+
+
 class LayoutFont(DataClass):
 
   @property
@@ -861,6 +1078,22 @@ class Layout(DataClass):
     self.yaxis.set_color(y_color or x_color)
     return self
 
+  @property
+  def shapes(self):
+    """
+
+    https://plot.ly/javascript/shapes/
+    """
+    return self.sub_data_enum("shapes", LayoutShape)
+
+  @property
+  def annotations(self):
+    """
+
+    https://plot.ly/javascript/shapes/
+    """
+    return self.sub_data_enum("annotations", LayoutAnnotation)
+
 
 class Layout3D(Layout):
 
@@ -965,6 +1198,14 @@ class DataMarkersLine(DataClass):
   @color.setter
   def color(self, val):
     self._attrs["color"] = val
+
+  @property
+  def dash(self):
+    return self._attrs["dash"]
+
+  @dash.setter
+  def dash(self, val):
+    self._attrs["dash"] = val
 
   @property
   def outliercolor(self):
@@ -1351,6 +1592,13 @@ class DataLine(DataChart):
     self._attrs["color"] = val
 
 
+class DataMove(DataChart):
+
+  @property
+  def line(self):
+    return self.sub_data("line", DataLine)
+
+
 class DataSurface(DataChart):
 
   @property
@@ -1565,6 +1813,49 @@ class DataBox(DataChart):
     self._attrs["pointpos"] = val
 
 
+class DataCandle(DataChart):
+
+  @property
+  def close(self):
+    return self._attrs["close"]
+
+  @close.setter
+  def close(self, val):
+    self._attrs["close"] = val
+
+  @property
+  def high(self):
+    return self._attrs["high"]
+
+  @high.setter
+  def high(self, val):
+    self._attrs["high"] = val
+
+  @property
+  def low(self):
+    return self._attrs["low"]
+
+  @low.setter
+  def low(self, val):
+    self._attrs["low"] = val
+
+  @property
+  def open(self):
+    return self._attrs["open"]
+
+  @open.setter
+  def open(self, val):
+    self._attrs["open"] = val
+
+  @property
+  def increasing(self):
+    return self.sub_data("increasing", DataMove)
+
+  @property
+  def decreasing(self):
+    return self.sub_data("decreasing", DataMove)
+
+
 class Pie(Chart):
 
   __reqJs = ['plotly.js']
@@ -1751,4 +2042,32 @@ class Box(Chart):
     if mode is not None:
       c_data['mode'] = mode
     self._traces.append(DataBox(self._report, attrs=c_data))
+    return self
+
+
+class CandleStick(Chart):
+  __reqJs = ['plotly.js']
+
+  @property
+  def chart(self):
+    """
+    :rtype: JsPlotly.Bar
+    """
+    if self._chart is None:
+      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+    return self._chart
+
+  @property
+  def layout(self):
+    if self._layout is None:
+      self._layout = LayoutBox(self._report)
+    return self._layout
+
+  def add_trace(self, data, type='candlestick', mode=None):
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = type
+    if mode is not None:
+      c_data['mode'] = mode
+    self._traces.append(DataCandle(self._report, attrs=c_data))
     return self

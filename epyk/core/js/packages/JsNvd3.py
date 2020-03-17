@@ -234,9 +234,6 @@ class JsNvd3(JsPackage):
     flag = JsUtils.jsConvertData(flag, None)
     return self.fnc("showControls(%s)" % flag)
 
-  def color(self, d3ColorScale):
-    pass
-
   def noData(self):
     pass
 
@@ -510,7 +507,7 @@ class JsNvd3Bar(JsNvd3):
 
     :param colors:
     """
-    self.fnc("rotateLabels(%s)" % JsUtils.jsConvertData(colors, None))
+    self.fnc("color(%s)" % JsUtils.jsConvertData(colors, None))
     return self
 
   def rotateLabels(self, value):
@@ -748,6 +745,8 @@ class JsNvd3Pie(JsNvd3):
     self.fnc("arcsRadius(%s)" % JsUtils.jsConvertData(value, None))
     return self
 
+
+
   def x(self, column=None, jsFnc=None):
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
@@ -807,6 +806,8 @@ class JsNvd3Pie(JsNvd3):
     self.fnc("labelSunbeamLayout(%s)" % JsUtils.jsConvertData(flag, None))
     return self
 
+
+
   def labelType(self, text):
     pass
 
@@ -818,6 +819,18 @@ class JsNvd3Pie(JsNvd3):
     self.fnc("donutLabelsOutside(%s)" % JsUtils.jsConvertData(flag, None))
     return self
 
+
+
+  def color(self, colors):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/TimeSeries.html
+
+    :param colors:
+    """
+    self.fnc("color(%s)" % JsUtils.jsConvertData(colors, None))
+    return self
+  
   def donut(self, flag):
     """
     Description:
@@ -853,6 +866,8 @@ class JsNvd3Pie(JsNvd3):
     """
     self.fnc("endAngle(function(d) { return d.startAngle/2 -Math.PI/2 })")
     return self
+
+
 
   def half(self):
     pass

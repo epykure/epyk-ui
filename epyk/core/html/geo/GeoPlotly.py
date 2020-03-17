@@ -166,12 +166,36 @@ class LayoutGeoMapGeo(LayoutGeo):
     self._attrs["showlakes"] = val
 
   @property
+  def oceancolor(self):
+    return self._attrs["oceancolor"]
+
+  @oceancolor.setter
+  def oceancolor(self, val):
+    self._attrs["oceancolor"] = val
+
+  @property
   def showland(self):
     return self._attrs["showland"]
 
   @showland.setter
   def showland(self, val):
     self._attrs["showland"] = val
+
+  @property
+  def showframe(self):
+    return self._attrs["showframe"]
+
+  @showframe.setter
+  def showframe(self, val):
+    self._attrs["showframe"] = val
+
+  @property
+  def bgcolor(self):
+    return self._attrs["bgcolor"]
+
+  @bgcolor.setter
+  def bgcolor(self, val):
+    self._attrs["bgcolor"] = val
 
   @property
   def lakecolor(self):
@@ -208,6 +232,17 @@ class LayoutGeoMap(LayoutGeo):
     """
     return self.sub_data("mapbox", LayoutMapBox)
 
+  def no_background(self):
+    """
+
+    https://community.plot.ly/t/you-can-remove-the-white-background-of-the-graphics-background/933
+
+    :return:
+    """
+    self.paper_bgcolor = 'rgba(0,0,0,0)'
+    self.plot_bgcolor = 'rgba(0,0,0,0)'
+    self.geo.bgcolor = 'rgba(0,0,0,0)'
+    return self
 
 class DataScatterMapBox(GraphPlotly.DataChart):
 

@@ -117,7 +117,7 @@ class Plotly(object):
       bar_chart.data.orientation = 'h'
     return bar_chart
 
-  def scatter(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def scatter(self, record=None, y_columns=None, x_axis=None, texts=None, title=None, filters=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -135,23 +135,28 @@ class Plotly(object):
     if record is None:
       data = []
     else:
-      agg_data = {}
+      agg_data, pount_texts = {}, {}
       for rec in record:
-        for y in y_columns:
+        for i, y in enumerate(y_columns):
           if y in rec:
             agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+            if texts is not None:
+              pount_texts.setdefault(y, {})[rec[x_axis]] = rec[texts[i]]
       data = []
       for c in y_columns:
-        series = {'x': [], 'y': []}
+        series = {'x': [], 'y': [], 'text': []}
         for x, y in agg_data[c].items():
           series['x'].append(x)
           series['y'].append(y)
+          if texts is not None:
+            series['text'].append(pount_texts[c][x])
         data.append(series)
-
-    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
-    for d in data:
-      sc_chart.add_trace(d, mode='markers', type="scatter")
+    for i, d in enumerate(data):
+      sc_chart.add_trace(d, mode='markers+text' if texts is not None else 'markers', type="scatter")
+      sc_chart.data.marker.color = self.parent.context.rptObj.theme.colors[i]
+    sc_chart.layout.no_background()
     return sc_chart
 
   def timeseries(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
@@ -574,7 +579,6 @@ class Plotly(object):
     :param width:
     :param height:
     :param htmlCode:
-    :return:
     """
     gau = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
     self.parent.context.register(gau)
@@ -632,3 +636,45 @@ class Plotly(object):
     for s in series:
       box_chart.add_trace({'y': s, 'x': x})
     return box_chart
+
+  def candlestick(self, records, closes, highs, lows, opens, x_axis, title=None, filters=None, profile=None,
+                  options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+
+    """
+
+    data = rptObj.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
+    sc = rptObj.ui.charts.plotly.candlestick(data, closes=["AAPL.Close"], highs=["AAPL.High"], lows=["AAPL.Low"], opens=["AAPL.Open"], x_axis='Date')
+
+    :param records:
+    :param closes:
+    :param highs:
+    :param lows:
+    :param opens:
+    :param x_axis:
+    :param title:
+    :param filters:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
+    all_series = []
+    for i, c in enumerate(closes):
+      series = {'x': [], 'close': [], 'high': [], 'low': [], 'open': []}
+      for rec in records:
+        series['x'].append(rec[x_axis])
+        series['close'].append(rec[c])
+        series['high'].append(rec[highs[i]])
+        series['low'].append(rec[lows[i]])
+        series['open'].append(rec[opens[i]])
+      all_series.append(series)
+
+    candle_chart = graph.GraphPlotly.CandleStick(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                       profile)
+    self.parent.context.register(candle_chart)
+    for s in all_series:
+      candle_chart.add_trace(s)
+    candle_chart.layout.no_background()
+    return candle_chart

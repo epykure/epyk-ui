@@ -1,6 +1,3 @@
-"""
-Python entry point for the different internal Python wrappers
-"""
 
 import sys
 import importlib
