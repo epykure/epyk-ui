@@ -12,7 +12,10 @@ PLOTLY_APPLE_PRICES = r'https://raw.githubusercontent.com/plotly/datasets/master
 'https://raw.githubusercontent.com/plotly/datasets/master/earthquakes-23k.csv'
 'https://raw.githubusercontent.com/plotly/datasets/master/2015_06_30_precipitation.csv'
 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv'
+PLOTLY_WEBGL_POLAR = 'https://raw.githubusercontent.com/plotly/datasets/master/hobbs-pearson-trials.csv'
 
+#https://earthquake.usgs.gov/earthquakes/feed/v1.0/csv.php
+DATA_EARTHQUAKE = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.csv'
 
 DATATABLE_ARRAY_URL = 'https://datatables.net/examples/ajax/data/arrays.txt'
 DATATABLE_ARRAY_NESTED_URL = 'https://datatables.net/examples/ajax/data/objects_subarrays.txt'

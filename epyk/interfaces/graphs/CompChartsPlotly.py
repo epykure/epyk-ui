@@ -585,14 +585,22 @@ class Plotly(object):
     gau.add_trace({'value': value}, mode="gauge+number")
     return gau
 
-  def scatterpolar(self, records, title=None, filters=None, profile=None,
+  def scatterpolar(self, records, r_columns=None, theta_axis=None, title=None, profile=None,
              options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
 
+    all_series = []
+    for c in r_columns:
+      series = {"r": [], "theta": []}
+      for rec in records:
+        series['r'].append(rec[c])
+        series['theta'].append(rec[theta_axis])
+      all_series.append(series)
     spolar_chart = graph.GraphPlotly.ScatterPolar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                           filters, profile)
+                                                  profile)
     self.parent.context.register(spolar_chart)
-    #for d in records:
-    spolar_chart.add_trace({'r': [0, 3, 3, 0], 'theta': [0, 262.5, 277.5, 0]}, mode="line")
+    for d in all_series:
+      spolar_chart.add_trace(d, mode="line")
+      spolar_chart.data.marker.color = None
     return spolar_chart
 
   def box(self, records, y_columns=None, x_columns=None, title=None, filters=None, profile=None,

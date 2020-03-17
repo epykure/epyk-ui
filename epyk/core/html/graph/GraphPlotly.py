@@ -2013,7 +2013,6 @@ class ScatterPolar(Chart):
       c_data['mode'] = mode
     self._traces.append(DataChart(self._report, attrs=c_data))
     self.data.fill = 'toself'
-    self.data.fillcolor = 'red'
     return self
 
 
