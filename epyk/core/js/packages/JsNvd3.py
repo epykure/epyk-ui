@@ -830,7 +830,7 @@ class JsNvd3Pie(JsNvd3):
     """
     self.fnc("color(%s)" % JsUtils.jsConvertData(colors, None))
     return self
-  
+
   def donut(self, flag):
     """
     Description:
