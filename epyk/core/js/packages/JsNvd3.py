@@ -1,6 +1,8 @@
 
 from epyk.core.js import JsUtils
+
 from epyk.core.js.packages import JsPackage
+from epyk.core.js.packages import DataAttrs
 
 
 class JsNvd3Axis(object):
@@ -95,6 +97,7 @@ class JsNvd3(JsPackage):
     self.src.jsImports.add(self.lib_alias['js'])
     self.src.cssImport.add(self.lib_alias['css'])
     self._js, self._xaxis, self._yaxis, self._u = [[]], None, None, {}
+    self._js_enums = {}
 
   def version(self, ver):
     """
@@ -734,20 +737,48 @@ class JsNvd3HistoricalBar(JsNvd3Bar):
     return self
 
 
+class JsDataArcRadius(DataAttrs):
+
+  @property
+  def inner(self):
+    """
+    """
+    return self._attrs["inner"]
+
+  @inner.setter
+  def inner(self, time):
+    self._attrs["inner"] = time
+
+  @property
+  def outer(self):
+    """
+    """
+    return self._attrs["outer"]
+
+  @outer.setter
+  def outer(self, time):
+    self._attrs["outer"] = time
+
+
 class JsNvd3Pie(JsNvd3):
   chartFnc = "pieChart"
 
-  def arcsRadius(self, value):
+  def arcsRadius(self, values=None):
     """
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/monitoringChart.html
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/monitoringChart.html
 
-    :param value:
+    :param values:
     """
-    self.fnc("arcsRadius(%s)" % JsUtils.jsConvertData(value, None))
-    return self
+    if values is not None:
+      for a in values:
+        arc = self.fnc_enum('arcsRadius', JsDataArcRadius)
+        for k, v in a.items():
+          setattr(arc, k, v)
+      return self
 
-
+    return self.fnc_enum('arcsRadius', JsDataArcRadius)
 
   def x(self, column=None, jsFnc=None):
     if column is not None:

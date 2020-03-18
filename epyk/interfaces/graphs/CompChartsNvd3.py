@@ -419,16 +419,13 @@ class Nvd3(object):
     pie_chart.add_trace(series, y_column)
     return pie_chart
 
-  def gauge(self, record=None, y_column=None, x_axis=None, text='', title=None, filters=None, profile=None, options=None,
+  def gauge(self, value, text=None, title=None, total=100, profile=None, options=None,
           width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
     Documentation
     http://nvd3.org/examples/pie.html
 
-    :param record:
-    :param y_column:
-    :param x_axis:
     :param text:
     :param title:
     :param profile:
@@ -437,17 +434,19 @@ class Nvd3(object):
     :param htmlCode:
 
     """
-    agg_data = {}
-    for rec in record:
-      if y_column in rec:
-        agg_data.setdefault(y_column, {})[rec[x_axis]] = agg_data.get(y_column, {}).get(rec[x_axis],  0) + float(rec[y_column])
-
-    series = []
-    for x, y in agg_data[y_column].items():
-      series.append({"x": x, "y": y})
-
-    pie_chart = graph.GraphNVD3.ChartPie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    if total != 100:
+      value = value / total * 100
+      total = 100
+    pie_chart = graph.GraphNVD3.ChartPie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, None, profile)
     self.parent.context.register(pie_chart)
-    pie_chart.dom.x(column="x").y(column="y").donut(True).title(text)
-    pie_chart.add_trace(series, y_column)
+    pie_chart.dom.x(column="x").y(column="y").donut(True).title(text or "%s%%" % value)
+    pie_chart.dom.arcsRadius([
+      {"inner": 0.7, "outer": 1},
+      {"inner": 0.9, "outer": 1},
+    ])
+
+    pie_chart.add_trace([
+      {"x": '', "y": value},
+      {"x": '', "y": total - value},
+    ])
     return pie_chart

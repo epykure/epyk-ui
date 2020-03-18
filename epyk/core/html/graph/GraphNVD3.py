@@ -178,3 +178,24 @@ class ChartHistoBar(Chart):
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3HistoricalBar(self._report, varName=self.chartId)
     return self._dom
+
+
+class ChartParallelCoord(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3ParallelCoordinates
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3ParallelCoordinates(self._report, varName=self.chartId)
+    return self._dom
+
+  def add_trace(self, data, name=""):
+    """
+
+    :param data:
+    :param name:
+    """
+    self._vals = data
+    return self

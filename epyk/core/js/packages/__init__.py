@@ -15,7 +15,7 @@ class JsPackage(object):
     self._selector = selector if selector is not None else self.lib_selector
     self.varName, self.setVar, self._parent = varName, self.lib_set_var if setVar is None else setVar, parent
     self._data = data
-    self._js, self._u = [[]], {} # a list of list of object definition
+    self._js, self._u, self._js_enums = [[]], {}, {} # a list of list of object definition
     if self.lib_alias is not None:
       if 'css' in self.lib_alias:
         self.src.cssImport.add(self.lib_alias['css'])
@@ -64,6 +64,26 @@ class JsPackage(object):
     """
     self._js[-1].append(data)
     return self
+
+  def fnc_enum(self, name, data_class):
+    """
+    Description:
+    ------------
+    Base function to allow the creation of function with parameters which are list of dataclasses.
+    Basically this will be then transpiled to a list of dictionary
+
+    :param name: String. The function Name
+    :param data_class: Class. The Python Data class
+    """
+    index = len(self._js) - 1
+    if not index in self._js_enums:
+      self._js_enums[index] = {name: []}
+      self._js[-1].append(name)
+    elif not name in self._js_enums[index]:
+      self._js_enums[index][name] = []
+      self._js[-1].append(name)
+    self._js_enums[index][name].append(data_class(self.src))
+    return self._js_enums[index][name][-1]
 
   def fnc_closure(self, data, checkUndefined=False):
     """
@@ -184,7 +204,16 @@ class JsPackage(object):
       if len(js) == 0:
         continue
 
-      str_fnc = ".".join([d.toStr() if hasattr(d, "toStr") else d for d in js])
+      fnc_frg = []
+      for d in js:
+        if hasattr(d, "toStr"):
+          fnc_frg.append(d.toStr())
+        else:
+          if i in self._js_enums and d in self._js_enums[i]:
+            fnc_frg.append("%s([%s])" % (d, ",".join([str(s) for s in self._js_enums[i][d]])))
+          else:
+            fnc_frg.append(d)
+      str_fnc = ".".join(fnc_frg)
       if self.setVar:
         if str_fnc:
           str_fnc = "var %s = %s.%s" % (self.varId, self._selector, str_fnc)
