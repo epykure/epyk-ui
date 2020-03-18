@@ -216,10 +216,12 @@ class JsNvd3(JsPackage):
     return self._yaxis
 
   def showYAxis(self, flag):
-    pass
+    flag = JsUtils.jsConvertData(flag, None)
+    return self.fnc("showYAxis(%s)" % flag)
 
   def showXAxis(self, flag):
-    pass
+    flag = JsUtils.jsConvertData(flag, None)
+    return self.fnc("showXAxis(%s)" % flag)
 
   def update(self):
     pass
@@ -975,8 +977,7 @@ class JsNvd3Pie(JsNvd3):
 
     :return:
     """
-    title = JsUtils.jsConvertData(text, None)
-    self._js.append("title(%s)" % title)
+    self.fnc("title(%s)" % JsUtils.jsConvertData(JsUtils.jsConvertData(text, None), None))
     return self
 
   def titleOffset(self, value):

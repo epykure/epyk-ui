@@ -294,7 +294,8 @@ class PyOuts(object):
       name = int(time.time())
     file_path = os.path.join(path, "%s.html" % name)
     with open(file_path, "w") as f:
-      htmlParts, cssParts = [], {}
+      htmlParts = []
+      cssParts = dict(self._report.body.style.get_classes_css())
       for objId in self._report.content:
         if self._report.htmlItems[objId].inReport:
           htmlParts.append(self._report.htmlItems[objId].html())

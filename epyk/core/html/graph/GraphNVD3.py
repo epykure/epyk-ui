@@ -11,7 +11,11 @@ class Chart(Html.Html):
   def __init__(self,  report, width, height, title, options, htmlCode, filters, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
     super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self._d3 = None
+    self._d3, self.html_items = None, []
+    if title is not None:
+      h_title = report.ui.title(title, level=2).css({"padding-left": '10px'})
+      h_title.inReport = False
+      self.html_items.append(h_title)
 
   @property
   def chartId(self):
@@ -54,7 +58,8 @@ class Chart(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<svg %s></svg>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    str_items = "".join([h.html() for h in self.html_items])
+    return '%s<svg %s></svg>' % (str_items, self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
 class ChartLine(Chart):
@@ -69,6 +74,42 @@ class ChartLine(Chart):
     return self._dom
 
 
+class ChartScatter(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3Line
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3Scatter(self._report, varName=self.chartId)
+    return self._dom
+
+
+class ChartCumulativeLine(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3CumulativeLine
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3CumulativeLine(self._report, varName=self.chartId)
+    return self._dom
+
+
+class ChartFocusLine(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3CumulativeLine
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3LineWithFocus(self._report, varName=self.chartId)
+    return self._dom
+
+
 class ChartBar(Chart):
 
   @property
@@ -78,6 +119,18 @@ class ChartBar(Chart):
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
+    return self._dom
+
+
+class ChartMultiBar(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3Bar
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3MultiBar(self._report, varName=self.chartId)
     return self._dom
 
 
@@ -112,4 +165,16 @@ class ChartArea(Chart):
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Area(self._report, varName=self.chartId)
+    return self._dom
+
+
+class ChartHistoBar(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3Area
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3HistoricalBar(self._report, varName=self.chartId)
     return self._dom

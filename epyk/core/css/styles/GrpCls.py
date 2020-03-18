@@ -45,7 +45,7 @@ class ClassPage(object):
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self._report, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
     return self.__cls_catalog._class_type('main')
 
   @property
@@ -59,7 +59,7 @@ class ClassPage(object):
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self._report, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
     return self.__cls_catalog._class_type('other')
 
   def get_classes(self):
@@ -70,9 +70,51 @@ class ClassPage(object):
     """
     for css_cls in self.classList.values():
       for c in css_cls:
-        if hasattr(c, 'classname'):
-          self._report._css[c.classname] = c
+        if hasattr(c, 'get_ref'):
+          self.htmlObj._report._css[c.get_ref()] = str(c)
     return self.classList
+
+  def get_classes_css(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    css_frgs = {}
+    for css_cls in self.classList.values():
+      for c in css_cls:
+        if hasattr(c, 'get_ref'):
+          css_frgs[c.get_ref()] = str(c)
+    return css_frgs
+
+  def custom_class(self, css_attrs, classname=None, selector=None):
+    """
+    Description:
+    -----------
+    This will create dynamic CSS class which will not be added to any component.
+    The class definition can then be reused in mutiple components.
+
+    The CSS style of the body can only be done using predefined classes or inline CSS
+
+    Usage:
+    ------
+    rptObj.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
+
+    Attributes:
+    ----------
+    :param css_attrs: Nested dictionary with the different attributes
+    :param classname: Optional. String. The classname in the CSS definition
+    :param selector: Optional. String. The class selector (if it is not a classname using . but a strict definition)
+    """
+    if classname is None:
+      cls_def = {"classname": False, '_selector': selector}
+    else:
+      cls_def = {"classname": classname}
+    cls_def.update(css_attrs)
+    v_cls = type(classname, (CssStyle.Style, ), cls_def)
+    self.classList['other'].add(v_cls(self.htmlObj._report))
+    return cls_def
 
 
 class ClassHtml(Properties.CssMixin):
@@ -157,6 +199,28 @@ class ClassHtml(Properties.CssMixin):
     if self.__cls_catalog is None:
       self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
     return self.__cls_catalog._class_type('other')
+
+  def add_custom_class(self, classname, css_attrs):
+    """
+    Description:
+    -----------
+    This will create dynamic CSS class which will then be added to the component
+
+    Usage:
+    ------
+    text = rptObj.ui.text("toto")
+    text.style.add_custom_class("css_class", {"_attrs": {"color": 'red'}})
+
+    Attributes:
+    ----------
+    :param classname: String. The classname
+    :param css_attrs: Nested dictionary with the different attributes
+    """
+    cls_def = {"classname": classname}
+    cls_def.update(css_attrs)
+    v_cls = type(classname, (CssStyle.Style, ), cls_def)
+    self.classList['main'].add(v_cls(self.htmlObj._report))
+    return cls_def
 
   def no_class(self):
     """
