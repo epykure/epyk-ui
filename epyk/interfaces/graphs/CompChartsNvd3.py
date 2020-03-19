@@ -1,4 +1,6 @@
 
+import datetime
+
 from epyk.core.html import graph
 from epyk.core.js.packages import JsNvd3
 
@@ -194,6 +196,45 @@ class Nvd3(object):
     if y_columns is not None and len(y_columns) > 1:
       # Change automatically the underlying chart object to add a multibars chart
       bar_chart.dom._selector = "nv.models.multiBarChart()"
+    self.parent.context.register(bar_chart)
+    bar_chart.dom.x(column="label").y(column="y")
+    for i, d in enumerate(data):
+      bar_chart.add_trace(d, y_columns[i])
+    return bar_chart
+
+  def hbar(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None,
+          width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+        Documentation
+        http://nvd3.org/examples/discreteBar.html
+
+        :param data:
+        :param y_columns:
+        :param x_axis:
+        :param title:
+        :param profile:
+        :param width:
+        :param height:
+        :param htmlCode:
+
+        """
+    agg_data = {}
+    for rec in record:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+
+    labels, data = set(), []
+    for c in y_columns:
+      series = []
+      for x, y in agg_data[c].items():
+        labels.add(x)
+        series.append({"label": x, "y": y})
+      data.append(series)
+
+    bar_chart = graph.GraphNVD3.ChartHorizontalBar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                                   None, profile)
     self.parent.context.register(bar_chart)
     bar_chart.dom.x(column="label").y(column="y")
     for i, d in enumerate(data):
@@ -450,3 +491,70 @@ class Nvd3(object):
       {"x": '', "y": total - value},
     ])
     return pie_chart
+
+  def parallel_coordinates(self, records, dimensions=None, title=None, profile=None, options=None,
+                      width=(100, "%"), height=(330, "px"), htmlCode=None):
+
+    chart = graph.GraphNVD3.ChartParallelCoord(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                         None, profile)
+    chart.set_dimension_names(dimensions)
+    chart.add_trace(records)
+    self.parent.context.register(chart)
+    return chart
+
+  def sunburst(self, records, name, title=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    :param records:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    chart = graph.GraphNVD3.ChartSunbrust(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, None, profile)
+    chart.add_trace(records, name=name)
+    self.parent.context.register(chart)
+    return chart
+
+  def candlestick(self, records, closes, highs, lows, opens, x_axis, title=None, filters=None, profile=None,
+                  options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+
+    """
+
+    data = rptObj.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
+    sc = rptObj.ui.charts.nvd3.candlestick(data, closes=["AAPL.Close"], highs=["AAPL.High"], lows=["AAPL.Low"], opens=["AAPL.Open"], x_axis='Date')
+
+    :param records:
+    :param closes:
+    :param highs:
+    :param lows:
+    :param opens:
+    :param x_axis:
+    :param title:
+    :param filters:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
+    all_series = []
+    js_date_start = datetime.datetime(1970, 1, 1)
+    for i, c in enumerate(closes):
+      data_set = []
+      for rec in records:
+        dt = datetime.datetime.strptime(rec[x_axis], "%Y-%m-%d") - js_date_start
+        data_set.append({'date': dt.days, 'close': float(rec[c]), 'high': float(rec[highs[i]]), 'low': float(rec[lows[i]]), 'open': float(rec[opens[i]])})
+      all_series.append(data_set)
+
+    candle_chart = graph.GraphNVD3.ChartCandlestick(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
+                                         None, profile)
+    candle_chart.dom.x(column='date').y(column='close')
+    candle_chart.dom.xAxis.tickDateFormat()
+    self.parent.context.register(candle_chart)
+    for s in all_series:
+      candle_chart.add_trace(s)
+    return candle_chart

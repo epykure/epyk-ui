@@ -14,6 +14,8 @@ PLOTLY_APPLE_PRICES = r'https://raw.githubusercontent.com/plotly/datasets/master
 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv'
 PLOTLY_WEBGL_POLAR = 'https://raw.githubusercontent.com/plotly/datasets/master/hobbs-pearson-trials.csv'
 
+'https://raw.githubusercontent.com/juliencohensolal/BankMarketing/master/rawData/bank-additional-full.csv'
+
 #https://earthquake.usgs.gov/earthquakes/feed/v1.0/csv.php
 DATA_EARTHQUAKE = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.csv'
 

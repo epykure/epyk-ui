@@ -200,37 +200,42 @@ class JsPackage(object):
       raise Exception("Selector not defined, use this() or new() first")
 
     obj_content = []
-    for i, js in enumerate(self._js):
-      if len(js) == 0:
-        continue
+    # TODO find better way to check emtpy js structure
+    if self._js != [[]]:
+      for i, js in enumerate(self._js):
+        if len(js) == 0:
+          continue
 
-      fnc_frg = []
-      for d in js:
-        if hasattr(d, "toStr"):
-          fnc_frg.append(d.toStr())
-        else:
-          if i in self._js_enums and d in self._js_enums[i]:
-            fnc_frg.append("%s([%s])" % (d, ",".join([str(s) for s in self._js_enums[i][d]])))
+        fnc_frg = []
+        for d in js:
+          if hasattr(d, "toStr"):
+            fnc_frg.append(d.toStr())
           else:
-            fnc_frg.append(d)
-      str_fnc = ".".join(fnc_frg)
+            if i in self._js_enums and d in self._js_enums[i]:
+              fnc_frg.append("%s([%s])" % (d, ",".join([str(s) for s in self._js_enums[i][d]])))
+            else:
+              fnc_frg.append(d)
+        str_fnc = ".".join(fnc_frg)
+        if self.setVar:
+          if str_fnc:
+            str_fnc = "var %s = %s.%s" % (self.varId, self._selector, str_fnc)
+          else:
+            str_fnc = "var %s = %s" % (self.varId, self._selector)
+          self.setVar = False
+        else:
+          if str_fnc:
+            if i in self._u:
+              # to avoid raising an error when the variable is not defined
+              str_fnc = "if(%s !== undefined){%s.%s}" % (self.varId, self.varId, str_fnc)
+            else:
+              varId = self._mapVarId(str_fnc, self.varId)
+              str_fnc = "%s.%s" % (varId, str_fnc)
+          else:
+            str_fnc = self.varId
+        obj_content.append(str_fnc)
+    else:
       if self.setVar:
-        if str_fnc:
-          str_fnc = "var %s = %s.%s" % (self.varId, self._selector, str_fnc)
-        else:
-          str_fnc = "var %s = %s" % (self.varId, self._selector)
-        self.setVar = False
-      else:
-        if str_fnc:
-          if i in self._u:
-            # to avoid raising an error when the variable is not defined
-            str_fnc = "if(%s !== undefined){%s.%s}" % (self.varId, self.varId, str_fnc)
-          else:
-            varId = self._mapVarId(str_fnc, self.varId)
-            str_fnc = "%s.%s" % (varId, str_fnc)
-        else:
-          str_fnc = self.varId
-      obj_content.append(str_fnc)
+        obj_content = ["var %s = %s" % (self.varId, self._selector)]
     self._js = [[]] # empty the stack
     return "; ".join(obj_content)
 

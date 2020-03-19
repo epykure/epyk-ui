@@ -37,6 +37,18 @@ class JsNvd3Axis(object):
     self._js.append("tickFormat(%s)" % jsFnc)
     return self
 
+  def tickNumberFormat(self):
+    self._js.append("tickFormat(function(d,i){ return d3.format(',.1f')(d); })")
+    return self
+
+  def tickCurrencyFormat(self, currency):
+    self._js.append("tickFormat(function(d,i){ return '%s' + d3.format(',.1f')(d); })" % currency)
+    return self
+
+  def tickDateFormat(self):
+    self._js.append("tickFormat(function(d,i){ return d3.time.format('%x')(new Date(new Date() - (20000 * 86400000) + (d * 86400000))); })")
+    return self
+
   def tickValues(self, values):
     """
     Chart axis settings
@@ -341,6 +353,20 @@ class JsNvd3ParallelCoordinates(JsNvd3):
 class JsNvd3CandlestickBar(JsNvd3):
   chartFnc = "candlestickBarChart"
 
+  def x(self, column=None, jsFnc=None):
+    if column is not None:
+      self.fnc("x(function(d){return d.%s})" % column)
+    elif jsFnc is not None:
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
+    return self
+
+  def y(self, column=None, jsFnc=None):
+    if column is not None:
+      self.fnc("y(function(d){return d.%s})" % column)
+    elif jsFnc is not None:
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc))
+    return self
+
 
 class JsNvd3OhlcBar(JsNvd3):
   chartFnc = "ohlcBarChart"
@@ -574,7 +600,7 @@ class JsNvd3MultiBar(JsNvd3):
     return self
 
 
-class JsNvd3MultiBarHorizontal(JsNvd3):
+class JsNvd3MultiBarHorizontal(JsNvd3Bar):
   chartFnc = "multiBarHorizontalChart"
 
   def yErr(self):

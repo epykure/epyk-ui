@@ -122,6 +122,18 @@ class ChartBar(Chart):
     return self._dom
 
 
+class ChartHorizontalBar(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3Bar
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3MultiBarHorizontal(self._report, varName=self.chartId)
+    return self._dom
+
+
 class ChartMultiBar(Chart):
 
   @property
@@ -191,6 +203,15 @@ class ChartParallelCoord(Chart):
       self._dom = JsNvd3.JsNvd3ParallelCoordinates(self._report, varName=self.chartId)
     return self._dom
 
+  def set_dimension_names(self, dimensions):
+    """
+
+    :param dimensions:
+    """
+    self.__dimensions = dimensions
+    self.dom.dimensionNames(dimensions)
+    return self
+
   def add_trace(self, data, name=""):
     """
 
@@ -199,3 +220,62 @@ class ChartParallelCoord(Chart):
     """
     self._vals = data
     return self
+
+
+class ChartSunbrust(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3Sunburst
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3Sunburst(self._report, varName=self.chartId)
+    return self._dom
+
+  def set_rcolors(self, color, data):
+    """
+
+    :param color:
+    :param data:
+    """
+    for rec in data:
+      rec['color'] = color
+      if 'children' in rec:
+        self.set_rcolors(color, rec['children'])
+
+  def add_trace(self, data, name=""):
+    """
+
+    :param data:
+    :param name:
+    """
+    for i, rec in enumerate(data):
+      rec['color'] = self._report.theme.colors[i+3]
+      self.set_rcolors(rec['color'], rec['children'])
+    self._vals = [{'name': name, 'children': data, 'color': self._report.theme.colors[0]}]
+    return self
+
+
+class ChartBoxPlot(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3BoxPlot
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3BoxPlot(self._report, varName=self.chartId)
+    return self._dom
+
+
+class ChartCandlestick(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3BoxPlot
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3CandlestickBar(self._report, varName=self.chartId)
+    return self._dom

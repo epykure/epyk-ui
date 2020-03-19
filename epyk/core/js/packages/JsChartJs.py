@@ -339,7 +339,6 @@ class ChartJs(JsPackage):
     return strData
 
 
-
 class ChartJsOptTicks(DataAttrs):
   def beginAtZero(self, flag):
     self._attrs["beginAtZero"] = JsUtils.jsConvertData(flag, None)
