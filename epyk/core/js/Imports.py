@@ -443,7 +443,7 @@ JS_IMPORTS = {
     'website': 'https://c3js.org/',
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'reqAlias': 'c3', 'script': 'c3.min.js', 'version': '0.6.12', 'path': 'c3/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'reqAlias': 'c3', 'script': 'c3.min.js', 'version': '0.7.15', 'path': 'c3/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   'crossfilter': {
     'website': 'http://square.github.io/crossfilter/',
@@ -467,7 +467,7 @@ JS_IMPORTS = {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'reqAlias': 'bb', 'script': 'billboard.min.js', 'version': '1.8.1', 'path': 'billboard.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'reqAlias': 'bb', 'script': 'billboard.min.js', 'version': '1.11.1', 'path': 'billboard.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # ChartJs modules width CDN links
   'Chart.js': {
@@ -697,7 +697,7 @@ CSS_IMPORTS = {
   'c3': {
     'website': 'https://c3js.org/',
     'modules': [
-      {'script': 'c3.min.css', 'version': '0.6.12', 'path': 'c3/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'c3.min.css', 'version': '0.7.15', 'path': 'c3/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # DC modules width CDN links
   'dc': {
@@ -708,7 +708,7 @@ CSS_IMPORTS = {
   # billboard modules width CDN links
   'billboard': {
     'modules': [
-      {'script': 'billboard.min.css', 'version': '1.7.1', 'path': 'billboard.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}],
+      {'script': 'billboard.min.css', 'version': '1.11.1', 'path': 'billboard.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}],
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/'},
 
   #'epyk': {'req': ['bootstrap'], 'modules': ['bdi.css'], 'website': 'internal lib', 'version': '0'},

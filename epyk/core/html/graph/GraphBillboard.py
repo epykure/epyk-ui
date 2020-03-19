@@ -31,44 +31,8 @@ from epyk.core.data import DataClass
 from epyk.core.html import Html
 
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsObject
 
 from epyk.core.js.packages import JsD3
-
-# The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsCharts
-
-
-CHART_ATTRS = {
-  # Legend
-  'legend': {'key': 'show', 'category': 'legend'},
-  'legendPosition': {"key": "position", "category": "legend"},
-  'legendFontColor': False,  # devrived from the CSS Style
-
-  # Title
-  'title': {"key": "text", "category": "title"},
-  'titleDisplay': False,
-  'titleFontColor': False,  # devrived from the CSS Style
-
-  # Points
-  'pointDisplay': {"key": "show", 'tree': ['point'], "category": "line"},
-
-  # Axes
-  'grid': [
-    {"key": 'show', 'tree': ['x'], 'category': 'grid'},
-    {"key": 'show', 'tree': ['y'], 'category': 'grid'},
-  ],
-
-  # x Axis
-  'xLabel': {"key": "label", "tree": ['x'], "category": "axis"},
-  'xGrid': {"key": 'show', 'tree': ['x'], 'category': 'grid'},
-  'xFontColor': False,  # devrived from the CSS Style
-
-  # y Axis
-  'yLabel': {"key": "label", "tree": ['y'], "category": "axis"},
-  'yGrid': {"key": 'show', 'tree': ['y'], 'category': 'grid'},
-  'yFontColor': False,  # devrived from the CSS Style
-}
 
 
 class Chart(Html.Html):
@@ -95,9 +59,8 @@ class Chart(Html.Html):
       self._d3 = JsD3.D3Select(self._report, id="#%s" % self.htmlId)
     return self._d3
 
-  @property
-  def _js__builder__(self):
-    return '''%s = bb.generate(%s)''' % (self.chartId, self.getCtx())
+  def build(self, data=None, options=None, profile=False):
+    return '%s = bb.generate(%s)' % (self.chartId, self.getCtx())
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -105,10 +68,17 @@ class Chart(Html.Html):
 
 
 class JsTick(DataClass):
-  pass
+
+  @property
+  def format(self):
+    return self._attrs["format"]
+
+  @format.setter
+  def format(self, val):
+    self._attrs["format"] = val
 
 
-class C3Axis(DataClass):
+class BBAxis(DataClass):
 
   @property
   def type(self):
@@ -126,8 +96,12 @@ class C3Axis(DataClass):
   def show(self, val):
     self._attrs["show"] = val
 
+  @property
+  def tick(self):
+    return self.sub_data("x", JsTick)
 
-class C3Selection(DataClass):
+
+class BBSelection(DataClass):
   @property
   def enabled(self):
     """
@@ -229,6 +203,12 @@ class JsData(DataClass):
   @type.setter
   def type(self, val): self._attrs["type"] = val
 
+  def add_type(self, alias, type):
+    if "types" not in self._attrs:
+      self.types = {}
+    self.types[alias] = type
+    return self
+
   @property
   def types(self):
     """
@@ -280,7 +260,7 @@ class JsData(DataClass):
 
   @property
   def selection(self):
-    return self.sub_data("selection", C3Selection)
+    return self.sub_data("selection", BBSelection)
 
 
 class JsScales(DataClass):
@@ -295,11 +275,11 @@ class JsScales(DataClass):
 
   @property
   def x(self):
-    return self.sub_data("x", C3Axis)
+    return self.sub_data("x", BBAxis)
 
   @property
   def y(self):
-    return self.sub_data("y", C3Axis)
+    return self.sub_data("y", BBAxis)
 
   @property
   def y2(self):
@@ -309,10 +289,10 @@ class JsScales(DataClass):
 
     :rtype: C3Axis
     """
-    return self.sub_data("y2", C3Axis)
+    return self.sub_data("y2", BBAxis)
 
 
-class C3GridLine(DataClass):
+class BBGridLine(DataClass):
   @property
   def value(self):
     return self._attrs["value"]
@@ -358,10 +338,10 @@ class C3GridAxis(DataClass):
 
   @property
   def lines(self):
-    return self.sub_data_enum("lines", C3GridLine)
+    return self.sub_data_enum("lines", BBGridLine)
 
 
-class C3Grid(DataClass):
+class BBGrid(DataClass):
 
   @property
   def x(self):
@@ -418,7 +398,7 @@ class JsZoom(DataClass):
     self._attrs["extent"] = val
 
 
-class C3Points(DataClass):
+class BBPoints(DataClass):
 
   @property
   def show(self):
@@ -455,6 +435,7 @@ class C3Points(DataClass):
 
 class ChartLine(Chart):
   __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'line'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
@@ -464,9 +445,11 @@ class ChartLine(Chart):
     self.data.x = series_id
     self.data.columns.append([series_id] + labels)
 
-  def add_dataset(self, name, data):
+  def add_dataset(self, name, data, type=None):
     self.data.columns.append([name] + data)
     self.data.colors[name] = self._report.theme.colors[len(self.data.colors)]
+    if type is None:
+      self.data.add_type(name, self._type)
     return self._attrs
 
   @property
@@ -487,7 +470,7 @@ class ChartLine(Chart):
     :rtype: C3Points
     """
     if not 'point' in self._attrs:
-      self._attrs['point'] = C3Points(self._report)
+      self._attrs['point'] = BBPoints(self._report)
     return self._attrs['point']
 
   @property
@@ -519,10 +502,72 @@ class ChartLine(Chart):
     :return:
     """
     if not 'grid' in self._attrs:
-      self._attrs['grid'] = C3Grid(self._report)
+      self._attrs['grid'] = BBGrid(self._report)
     return self._attrs['grid']
 
   def getCtx(self):
     str_ctx = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
-    print(str_ctx)
     return str_ctx
+
+
+class ChartSpline(ChartLine):
+  __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'spline'
+
+
+class ChartArea(ChartLine):
+  __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'area'
+
+
+class ChartBar(ChartLine):
+  __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'bar'
+
+
+class ChartScatter(ChartLine):
+  __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'scatter'
+
+
+class ChartPie(ChartLine):
+  __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'pie'
+
+  def add_dataset(self, name, value, type=None):
+    self.data.columns.append([name, value])
+    if type is None:
+      self.data.add_type(name, self._type)
+    return self._attrs
+
+
+class ChartDonut(ChartPie):
+  __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'donut'
+
+
+class ChartGauge(ChartPie):
+  __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'gauge'
+
+
+class ChartBubble(ChartLine):
+  __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'bubble'
+
+  def add_dataset(self, name, data, type=None):
+    self.data.columns.append([name] + data)
+    if type is None:
+      self.data.type = self._type
+    return self._attrs
+
+
+class ChartRadar(ChartLine):
+  __reqJs, __reqCss = ['billboard'], ['billboard']
+  _type = 'radar'
+
+  def add_dataset(self, name, data, type=None):
+    self.data.columns.append([name] + data)
+    if type is None:
+      self.data.type = self._type
+    return self._attrs

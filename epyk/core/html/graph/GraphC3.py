@@ -31,9 +31,8 @@ class Chart(Html.Html):
       self._d3 = JsD3.D3Select(self._report, id="#%s" % self.htmlId)
     return self._d3
 
-  @property
-  def _js__builder__(self):
-    return '''%s = c3.generate(%s)''' % (self.chartId, self.getCtx())
+  def build(self, data=None, options=None, profile=False):
+    return '%s = c3.generate(%s)' % (self.chartId, self.getCtx())
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -41,7 +40,14 @@ class Chart(Html.Html):
 
 
 class JsTick(DataClass):
-  pass
+
+  @property
+  def format(self):
+    return self._attrs["format"]
+
+  @format.setter
+  def format(self, val):
+    self._attrs["format"] = val
 
 
 class C3Axis(DataClass):
@@ -61,6 +67,10 @@ class C3Axis(DataClass):
   @show.setter
   def show(self, val):
     self._attrs["show"] = val
+
+  @property
+  def tick(self):
+    return self.sub_data("x", JsTick)
 
 
 class C3Selection(DataClass):
@@ -165,6 +175,12 @@ class JsData(DataClass):
   @type.setter
   def type(self, val): self._attrs["type"] = val
 
+  def add_type(self, alias, type):
+    if "types" not in self._attrs:
+      self.types = {}
+    self.types[alias] = type
+    return self
+
   @property
   def types(self):
     """
@@ -217,6 +233,19 @@ class JsData(DataClass):
   @property
   def selection(self):
     return self.sub_data("selection", C3Selection)
+
+
+class JsDataEpochs(JsData):
+
+  @property
+  def epochs(self):
+    """
+    """
+    return self._attrs["epochs"]
+
+  @epochs.setter
+  def epochs(self, val):
+    self._attrs["epochs"] = val
 
 
 class JsScales(DataClass):
@@ -391,6 +420,7 @@ class C3Points(DataClass):
 
 class ChartLine(Chart):
   __reqJs, __reqCss = ['c3'], ['c3']
+  _type = 'line'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
@@ -400,9 +430,11 @@ class ChartLine(Chart):
     self.data.x = series_id
     self.data.columns.append([series_id] + labels)
 
-  def add_dataset(self, name, data):
+  def add_dataset(self, name, data, type=None):
     self.data.columns.append([name] + data)
     self.data.colors[name] = self._report.theme.colors[len(self.data.colors)]
+    if type is None:
+      self.data.add_type(name, self._type)
     return self._attrs
 
   @property
@@ -441,7 +473,6 @@ class ChartLine(Chart):
     """
 
     :rtype: JsScales
-    :return:
     """
     if not 'data' in self._attrs:
       self._attrs['data'] = JsData(self._report)
@@ -461,3 +492,69 @@ class ChartLine(Chart):
   def getCtx(self):
     str_ctx = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
     return str_ctx
+
+
+class ChartSpline(ChartLine):
+  __reqJs, __reqCss = ['c3'], ['c3']
+  _type = 'spline'
+
+
+class ChartArea(ChartLine):
+  __reqJs, __reqCss = ['c3'], ['c3']
+  _type = 'area'
+
+
+class ChartBar(ChartLine):
+  __reqJs, __reqCss = ['c3'], ['c3']
+  _type = 'bar'
+
+
+class ChartScatter(ChartLine):
+  __reqJs, __reqCss = ['c3'], ['c3']
+  _type = 'scatter'
+
+
+class ChartPie(ChartLine):
+  __reqJs, __reqCss = ['c3'], ['c3']
+  _type = 'pie'
+
+  def add_dataset(self, name, value, type=None):
+    self.data.columns.append([name, value])
+    if type is None:
+      self.data.add_type(name, self._type)
+    return self._attrs
+
+
+class ChartDonut(ChartPie):
+  __reqJs, __reqCss = ['c3'], ['c3']
+  _type = 'donut'
+
+
+class ChartGauge(ChartPie):
+  __reqJs, __reqCss = ['c3'], ['c3']
+  _type = 'gauge'
+
+
+class ChartStanford(ChartPie):
+  __reqJs, __reqCss = ['c3'], ['c3']
+  _type = 'stanford'
+
+  @property
+  def data(self):
+    """
+
+    :rtype: JsScales
+    """
+    if not 'data' in self._attrs:
+      self._attrs['data'] = JsDataEpochs(self._report)
+    return self._attrs['data']
+
+  def epoch(self, series, name):
+    self.data.epochs = JsUtils.jsConvertData(str(name), None)
+    self.data.columns.append([str(name)] + series)
+
+  def add_dataset(self, name, data, type=None):
+    self.data.columns.append([name]+ data)
+    if type is None:
+      self.data.type = self._type
+    return self._attrs

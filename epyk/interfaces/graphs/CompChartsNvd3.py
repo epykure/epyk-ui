@@ -559,8 +559,8 @@ class Nvd3(object):
       candle_chart.add_trace(s)
     return candle_chart
 
-  def ohlc(self, records, closes, highs, lows, opens, x_axis, title=None, profile=None,
-                  options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def ohlc(self, records, closes, highs, lows, opens, x_axis, title=None, profile=None, options=None, width=(100, "%"),
+           height=(330, "px"), htmlCode=None):
 
     all_series = []
     js_date_start = datetime.datetime(1970, 1, 1)
