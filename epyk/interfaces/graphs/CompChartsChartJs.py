@@ -42,6 +42,11 @@ class ChartJs(object):
     self.parent.context.register(line_chart)
     return line_chart
 
+  def timeseries(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
+                 width=(100, "%"), height=(330, "px"), htmlCode=None):
+    line = self.line(record, y_columns, x_axis, profile, width, height, options, htmlCode)
+    return line
+
   def pie(self, record=None, y_column=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
 

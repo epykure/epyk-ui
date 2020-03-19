@@ -233,7 +233,21 @@ class C3(object):
     self.parent.context.register(g_chart)
     return g_chart
 
-  def stanford(self, record, y_columns=None, x_axis=None, epoch_col=None, title=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def stanford(self, record, y_columns=None, x_axis=None, epoch_col=None, title=None, profile=None, width=(100, "%"),
+               height=(330, "px"), options=None, htmlCode=None):
+    """
+
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param epoch_col:
+    :param title:
+    :param profile:
+    :param width:
+    :param height:
+    :param options:
+    :param htmlCode:
+    """
     epoch, labels, series = [], [], []
     for rec in record:
       epoch.append(rec[epoch_col])
@@ -245,6 +259,5 @@ class C3(object):
     line_chart.epoch(epoch, epoch_col)
     for i, y in enumerate(y_columns):
       line_chart.add_dataset(y, series[i])
-    print(line_chart.getCtx())
     self.parent.context.register(line_chart)
     return line_chart

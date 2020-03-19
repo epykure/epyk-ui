@@ -5,6 +5,39 @@ from epyk.core.data import DataClass
 class OptionAxesTicks(DataClass):
 
   @property
+  def fontColor(self):
+    """
+    https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._attrs["fontColor"]
+
+  @fontColor.setter
+  def fontColor(self, val):
+    self._attrs["fontColor"] = val
+
+  @property
+  def fontSize(self):
+    """
+    https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._attrs["fontSize"]
+
+  @fontSize.setter
+  def fontSize(self, val):
+    self._attrs["fontSize"] = val
+
+  @property
+  def beginAtZero(self):
+    """
+    https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._attrs["beginAtZero"]
+
+  @beginAtZero.setter
+  def beginAtZero(self, val):
+    self._attrs["beginAtZero"] = val
+
+  @property
   def max(self):
     """
     https://www.chartjs.org/docs/latest/charts/line.html
@@ -58,6 +91,19 @@ class OptionAxesTicks(DataClass):
   @stepSize.setter
   def stepSize(self, val):
     self._attrs["stepSize"] = val
+
+
+class OptionLabels(DataClass):
+
+  @property
+  def fontColor(self):
+    """
+    """
+    return self._attrs["fontColor"]
+
+  @fontColor.setter
+  def fontColor(self, val):
+    self._attrs["fontColor"] = val
 
 
 class OptionAxesGridLine(DataClass):
@@ -239,7 +285,50 @@ class OptionAxesGridLine(DataClass):
     self._attrs["z"] = val
 
 
+class OptionAxesScaleLabel(DataClass):
+
+  @property
+  def display(self):
+    return self._attrs["display"]
+
+  @display.setter
+  def display(self, val):
+    self._attrs["display"] = val
+
+  @property
+  def fontColor(self):
+    return self._attrs["fontColor"]
+
+  @fontColor.setter
+  def fontColor(self, val):
+    self._attrs["fontColor"] = val
+
+  @property
+  def labelString(self):
+    return self._attrs["labelString"]
+
+  @labelString.setter
+  def labelString(self, val):
+    self._attrs["labelString"] = val
+
+
 class OptionAxes(DataClass):
+
+  @property
+  def display(self):
+    return self._attrs["display"]
+
+  @display.setter
+  def display(self, val):
+    self._attrs["display"] = val
+
+  @property
+  def type(self):
+    return self._attrs["type"]
+
+  @type.setter
+  def type(self, val):
+    self._attrs["type"] = val
 
   @property
   def stacked(self):
@@ -297,6 +386,17 @@ class OptionAxes(DataClass):
   def gridLines(self):
     return self.sub_data("gridLines", OptionAxesGridLine)
 
+  @property
+  def scaleLabel(self):
+    return self.sub_data("scaleLabel", OptionAxesScaleLabel)
+
+  def add_label(self, text, color=None):
+    self.scaleLabel.display = True
+    self.scaleLabel.labelString = text
+    if color is not None:
+      self.scaleLabel.fontColor = color
+    return self
+
   def category(self, vals):
     """
 
@@ -326,12 +426,12 @@ class OptionScales(DataClass):
 
     return self._attrs["yAxes"][i]
 
-  def add_x_axes(self):
+  def add_x_axis(self):
     return self.sub_data_enum("xAxes", OptionAxes)
 
   def x_axes(self, i=None):
     if "xAxes" not in self._attrs:
-      self.add_x_axes()
+      self.add_x_axis()
 
     if i is None:
       return self._attrs["xAxes"][-1]
@@ -391,6 +491,13 @@ class OptionLayout(DataClass):
   @property
   def padding(self):
     return self.sub_data("padding", OptionPadding)
+
+
+class OptionLegend(DataClass):
+
+  @property
+  def labels(self):
+    return self.sub_data("labels", OptionLabels)
 
 
 class OptionTitle(DataClass):
@@ -484,6 +591,22 @@ class Options(DataClass):
   @property
   def title(self):
     return self.sub_data("title", OptionTitle)
+
+  @property
+  def legend(self):
+    return self.sub_data("legend", OptionLegend)
+
+  def add_title(self, text, color=None):
+    """
+
+    :param text:
+    :param color:
+    """
+    self.title.display = True
+    self.title.text = text
+    if color is not None:
+      self.title.fontColor = color
+    return self
 
 
 class OptionPieAnimation(DataClass):

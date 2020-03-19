@@ -62,6 +62,10 @@ class Chart(Html.Html):
 
     return self._datasets[i]
 
+  @property
+  def datasets(self):
+    return self._datasets
+
   def getCtx(self):
     obj_datasets = "[%s]" % ", ".join([d.toStr() for d in self._datasets])
     self._data_attrs['datasets'] = JsObject.JsObject.get(obj_datasets)
@@ -201,7 +205,7 @@ class ChartPolar(Chart):
       self._options = OptChartJs.OptionsPolar(self._report, attrs=self._options_init)
     return self._options
 
-  def add_dataset(self, data, type=None, colors=None, opacity=0.2):
+  def add_dataset(self, data, type=None, colors=None, opacity=0.4):
     """
 
     :return:
@@ -212,8 +216,8 @@ class ChartPolar(Chart):
       data = JsChartJs.DataSetPolar(self._report, attrs={"data": data})
     self._datasets.append(data)
     data.label = self._data_attrs['labels'][len(self._datasets)]
-    if colors is None:
-      data.backgroundColor = self._report.theme.charts[len(self._datasets)]
+    #if colors is None:
+    data.backgroundColor = self._report.theme.charts
     data.fillOpacity = opacity
     return data
 
@@ -264,7 +268,7 @@ class ChartRadar(Chart):
     super(ChartRadar, self).__init__(report, width, height, htmlCode, options, profile)
     self._attrs['type'] = 'radar'
 
-  def add_dataset(self, data, colors=None, opacity=0.2):
+  def add_dataset(self, data, colors=None, opacity=0.4):
     """
 
     :return:
