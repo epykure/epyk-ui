@@ -518,7 +518,7 @@ class Nvd3(object):
     self.parent.context.register(chart)
     return chart
 
-  def candlestick(self, records, closes, highs, lows, opens, x_axis, title=None, filters=None, profile=None,
+  def candlestick(self, records, closes, highs, lows, opens, x_axis, title=None, profile=None,
                   options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
 
     """
@@ -558,3 +558,57 @@ class Nvd3(object):
     for s in all_series:
       candle_chart.add_trace(s)
     return candle_chart
+
+  def ohlc(self, records, closes, highs, lows, opens, x_axis, title=None, profile=None,
+                  options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+
+    all_series = []
+    js_date_start = datetime.datetime(1970, 1, 1)
+    for i, c in enumerate(closes):
+      data_set = []
+      for rec in records:
+        dt = datetime.datetime.strptime(rec[x_axis], "%Y-%m-%d") - js_date_start
+        data_set.append(
+          {'date': dt.days, 'close': float(rec[c]), 'high': float(rec[highs[i]]), 'low': float(rec[lows[i]]),
+           'open': float(rec[opens[i]])})
+      all_series.append(data_set)
+
+    ohlc_chart = graph.GraphNVD3.ChartOhlcBar(self.parent.context.rptObj, width, height, title, options or {},
+                                                    htmlCode, None, profile)
+    ohlc_chart.dom.x(column='date').y(column='close')
+    ohlc_chart.dom.xAxis.tickDateFormat()
+    self.parent.context.register(ohlc_chart)
+    for s in all_series:
+      ohlc_chart.add_trace(s)
+    return ohlc_chart
+
+  def group_box(self, title="", profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    box_chart = graph.GraphNVD3.ChartBoxPlot(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, None, profile)
+    box_chart.dom.q1('q1').q2('median').q3('q3').wh('maxRegularValue').wl('minRegularValue').outliers('outliers').staggerLabels(True)
+    box_chart.dom.itemColor("seriesColor").x('title')
+    self.parent.context.register(box_chart)
+    return box_chart
+
+  def forceDirected(self, title="", profile=None, options=None, width=(400, "px"), height=(330, "px"), htmlCode=None):
+    """
+
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    force_chart = graph.GraphNVD3.ChartForceDirected(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, None, profile)
+    force_chart.dom.width(width[0]).height(height[0]).nodeExtras("name").color('color')
+    self.parent.context.register(force_chart)
+    return force_chart

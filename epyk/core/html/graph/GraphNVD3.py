@@ -251,7 +251,7 @@ class ChartSunbrust(Chart):
     :param name:
     """
     for i, rec in enumerate(data):
-      rec['color'] = self._report.theme.colors[i+3]
+      rec['color'] = self._report.theme.colors[i+1]
       self.set_rcolors(rec['color'], rec['children'])
     self._vals = [{'name': name, 'children': data, 'color': self._report.theme.colors[0]}]
     return self
@@ -268,6 +268,44 @@ class ChartBoxPlot(Chart):
       self._dom = JsNvd3.JsNvd3BoxPlot(self._report, varName=self.chartId)
     return self._dom
 
+  def add_box(self, q1, q3=None, outliers=None, maxRegularValue=None, mean=None, median=None, minRegularValue=None,
+              minOutlier=None, maxOutlier=None, title=None):
+    """
+
+    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
+
+    :param q1:
+    :param q3:
+    :param outliers:
+    :param maxRegularValue:
+    :param mean:
+    :param median:
+    :param minRegularValue:
+    :param minOutlier:
+    :param maxOutlier:
+    """
+    names = ['q1', 'median', 'q3', 'outlData', 'maxRegularValue', 'mean', 'minRegularValue', 'minOutlier', 'maxOutlier']
+    row = {}
+    for i, val in enumerate([q1, median, q3, outliers, maxRegularValue, mean, minRegularValue, minOutlier, maxOutlier]):
+      if val is not None:
+        row[names[i]] = val
+      elif names[i] == 'outlData':
+        row['outlData'] = []
+    series_id = len(self._vals) - 1
+    row['seriesColor'] = self._report.theme.colors[series_id]
+    row['title'] = title or "Series %s" % series_id
+    self._vals.append(row)
+    return self
+
+  def add_trace(self, data, name=""):
+    """
+
+    :param data:
+    :param name:
+    """
+    self._vals = data
+    return self
+
 
 class ChartCandlestick(Chart):
 
@@ -279,3 +317,38 @@ class ChartCandlestick(Chart):
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3CandlestickBar(self._report, varName=self.chartId)
     return self._dom
+
+
+class ChartOhlcBar(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3OhlcBar
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3OhlcBar(self._report, varName=self.chartId)
+    return self._dom
+
+
+class ChartForceDirected(Chart):
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsNvd3.JsNvd3BoxPlot
+    """
+    if self._dom is None:
+      self._dom = JsNvd3.JsNvd3ForceDirectedGraph(self._report, varName=self.chartId)
+    return self._dom
+
+  def add_trace(self, data, name=""):
+    """
+
+    :param data:
+    :param name:
+    """
+    for d in data.get('nodes', []):
+      d['color'] = self._report.theme.colors[d.get('group', 1)]
+    self._vals = data
+    return self

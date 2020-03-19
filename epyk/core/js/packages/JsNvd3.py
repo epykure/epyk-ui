@@ -151,8 +151,7 @@ class JsNvd3(JsPackage):
 
     :return:
     """
-    self._js.append("width(%s)" % value)
-    return self
+    return self.fnc("width(%s)" % value)
 
   def height(self, value):
     """
@@ -166,8 +165,7 @@ class JsNvd3(JsPackage):
 
     :return:
     """
-    self._js.append("height(%s)" % value)
-    return self
+    return self.fnc("height(%s)" % value)
 
   def margin(self, options):
     """
@@ -371,6 +369,20 @@ class JsNvd3CandlestickBar(JsNvd3):
 class JsNvd3OhlcBar(JsNvd3):
   chartFnc = "ohlcBarChart"
 
+  def x(self, column=None, jsFnc=None):
+    if column is not None:
+      self.fnc("x(function(d){return d.%s})" % column)
+    elif jsFnc is not None:
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
+    return self
+
+  def y(self, column=None, jsFnc=None):
+    if column is not None:
+      self.fnc("y(function(d){return d.%s})" % column)
+    elif jsFnc is not None:
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc))
+    return self
+
 
 class JsNvd3Sunburst(JsNvd3):
   chartFnc = "sunburstChart"
@@ -378,6 +390,13 @@ class JsNvd3Sunburst(JsNvd3):
 
 class JsNvd3BoxPlot(JsNvd3):
   chartFnc = "boxPlotChart"
+
+  def x(self, column=None, jsFnc=None):
+    if column is not None:
+      self.fnc("x(function(d){return d.%s})" % column)
+    elif jsFnc is not None:
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc))
+    return self
 
   def staggerLabels(self, flag):
     """
@@ -387,16 +406,6 @@ class JsNvd3BoxPlot(JsNvd3):
     :param flag:
     """
     self.fnc("staggerLabels(%s)" % JsUtils.jsConvertData(flag, None))
-    return self
-
-  def maxBoxWidth(self, value):
-    """
-
-    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlot.html
-
-    :param value:
-    """
-    self.fnc("maxBoxWidth(%s)" % JsUtils.jsConvertData(value, None))
     return self
 
   def yDomain(self, range):
@@ -1044,11 +1053,21 @@ class JsNvd3Pie(JsNvd3):
 class JsNvd3ForceDirectedGraph(JsNvd3Bar):
   chartFnc = "forceDirectedGraph"
 
-  def nodeExtras(self, node):
+  def color(self, column):
+    """
+
+    :param column:
+    """
+    self.fnc("color(function(d) { return d.%s })" % column)
+    return self
+
+  def nodeExtras(self, text):
     """
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/forceDirected.html
 
     :param node:
     """
-    pass
+
+    self.fnc("nodeExtras(function(node) {node.append('text').attr('dx', 12).attr('dy', '.35em').text(function(d) { return d.%s }) })" % text)
+    return self
