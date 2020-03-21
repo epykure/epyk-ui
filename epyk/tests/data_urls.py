@@ -39,3 +39,5 @@ DATATABLE_OBJECTS_NESTED_URL = 'https://datatables.net/examples/ajax/data/object
 DATATABLE_ORTHOGONAL_URL = 'https://datatables.net/examples/ajax/data/orthogonal.txt'
 DATATABLE_OBJECT_ARRAY_URL = 'https://datatables.net/examples/ajax/data/objects_root_array.txt'
 COVID_ECDC_URL = 'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-03-21.xlsx'
+COVID_TIME_SERIES = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series'
+COVID_DAILY_DATA = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports'
