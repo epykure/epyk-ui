@@ -1,5 +1,7 @@
-from . import Data
 
+import sys
+
+from epyk.core.data import Data
 from epyk.core.js import JsUtils
 
 
@@ -49,11 +51,23 @@ class DataClass(object):
     self._attrs[name] = value
     return self
 
+  def has_attribute(self, clsObj):
+    """
+    Description:
+    ------------
+    Add an extra sub layer to the data structure.
+    The key in the object representation will be the function name
+
+    Attributes:
+    ----------
+    :param clsObj: Class. The sub data class used in the structure definition
+    """
+    return self.sub_data(sys._getframe().f_back.f_code.co_name, clsObj)
+
   def sub_data(self, name, clsObj):
     """
 
     :param data:
-    :return:
     """
     if name in self._attrs:
       return self._attrs[name]
@@ -66,7 +80,6 @@ class DataClass(object):
     """
 
     :param data:
-    :return:
     """
     #if name in self._attrs:
     #  return self._attrs[name]
@@ -84,3 +97,30 @@ class DataClass(object):
       result.append("%s: [%s]" % (s, ",".join([str(k) for k in self._attrs[s]])))
     result.extend(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items() if k not in self.__sub_levels and k not in self.__sub__enum_levels])
     return "{%s}" % ", ".join(result)
+
+
+class DataEnum(object):
+
+  dflt = None
+
+  def __init__(self, report, value=None):
+    self._report, self.__value = report, value or self.dflt
+
+  def set(self, value=None):
+    """
+    Description:
+    ------------
+    Set the selected value in this enumeration.
+    The last function call will be persisted
+
+    Attributes:
+    ----------
+    :param value: Optional. The value to be set (default is the function name)
+    """
+    if value is None:
+      value = sys._getframe().f_back.f_code.co_name
+    self.__value = value
+
+  def __str__(self):
+    return self.__value
+

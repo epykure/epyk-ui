@@ -9,6 +9,8 @@ Modules wrapped as part of this script
   - https://docs.python.org/2/library/urllib2.html
 """
 
+import hashlib
+import os
 import json
 import socket
 
@@ -205,7 +207,7 @@ class PyRest(object):
     except Exception as err:
       return err
 
-  def csv(self, url, delimiter=",", encoding='utf-8', with_header=True):
+  def csv(self, url, delimiter=",", encoding='utf-8', with_header=True, store_location=None):
     """
     Description:
     ------------
@@ -216,7 +218,14 @@ class PyRest(object):
     :param delimiter:
     :param encoding:
     :param with_header:
+    :param store_location:
     """
+    has_file = str(hashlib.sha1(url.encode()).hexdigest())
+    if store_location is not None:
+      file_path = os.path.join(store_location, has_file)
+      if os.path.isfile(file_path):
+        return json.load(open(file_path))
+
     raw_data = self.webscrapping(url).decode(encoding).splitlines()#.split("\n")
     if url.endswith(".tsv"):
       delimiter = "\t"
@@ -229,9 +238,13 @@ class PyRest(object):
         records.append(dict(zip(header, line)))
       for line in raw_data[1:]:
         records.append(dict(zip(header, line.split(delimiter))))
+
+    if store_location is not None:
+      with open(file_path, "w") as f:
+        json.dump(records, f)
     return records
 
-  def json(self, url, encoding='utf-8'):
+  def json(self, url, encoding='utf-8', store_location=None):
     """
     Description:
     ------------
@@ -239,9 +252,7 @@ class PyRest(object):
     Attributes:
     ----------
     :param url:
-    :param delimiter:
     :param encoding:
-    :param with_header:
     """
     return json.loads(self.webscrapping(url).decode(encoding))
 

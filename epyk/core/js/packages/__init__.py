@@ -16,6 +16,7 @@ class JsPackage(object):
     self.varName, self.setVar, self._parent = varName, self.lib_set_var if setVar is None else setVar, parent
     self._data = data
     self._js, self._u, self._js_enums = [[]], {}, {} # a list of list of object definition
+    self.__js_uniq_fncs = {}
     if self.lib_alias is not None:
       if 'css' in self.lib_alias:
         self.src.cssImport.add(self.lib_alias['css'])
@@ -48,7 +49,7 @@ class JsPackage(object):
     self.src._props.setdefault("packages", {})[self.lib_alias] = ver
     return self
 
-  def fnc(self, data):
+  def fnc(self, data, unique=False):
     """
     Description:
     ------------
@@ -58,10 +59,17 @@ class JsPackage(object):
 
     Attributes:
     ----------
-    :param data: THe Javascript fragment to be added
+    :param data: String. THe Javascript fragment to be added
+    :param unique: Boolean. Ensure the function is available one time in the chain. If not the last call we will present
 
     :return: "Self" to allow the chains
     """
+    if unique:
+      fnc_name = data.split("(")[0]
+      if fnc_name in self.__js_uniq_fncs:
+        i, j = self.__js_uniq_fncs[fnc_name]
+        self._js[i].pop(j)
+      self.__js_uniq_fncs[fnc_name] = (len(self._js)-1, self._js[-1])
     self._js[-1].append(data)
     return self
 
@@ -85,7 +93,7 @@ class JsPackage(object):
     self._js_enums[index][name].append(data_class(self.src))
     return self._js_enums[index][name][-1]
 
-  def fnc_closure(self, data, checkUndefined=False):
+  def fnc_closure(self, data, checkUndefined=False, unique=False):
     """
     Description:
     ------------
@@ -99,9 +107,17 @@ class JsPackage(object):
     ----------
     :param data: String. The Javascript fragment to be added
     :param checkUndefined: Boolean. Add a check on the variable definition
+    :param unique: Boolean. Ensure the function is available one time in the chain. If not the last call we will present
 
     :return: The "self" to allow the chains
     """
+    if unique:
+      fnc_name = data.split("(")[0]
+      if fnc_name in self.__js_uniq_fncs:
+        i, j = self.__js_uniq_fncs[fnc_name]
+        self._js[i].pop(j)
+      self.__js_uniq_fncs[fnc_name] = (len(self._js)-1, self._js[-1])
+
     self._js[-1].append(data)
     if checkUndefined:
       self._u[len(self._js) - 1] = checkUndefined

@@ -44,22 +44,6 @@ class Table(Html.Html):
       self.__config = TableConfig(self._report)
     return self.__config
 
-  # @property
-  # def dom(self):
-  #   """
-  #   Javascript Functions
-  #
-  #   Return all the Javascript functions defined for an HTML Component.
-  #   Those functions will use plain javascript by default.
-  #
-  #   :return: A Javascript Dom object
-  #
-  #   :rtype: JsDatatable.JsDatatable
-  #   """
-  #   if self._dom is None:
-  #     self._dom = JsDatatable.DatatableAPI(self, selector=self.tableId)
-  #   return self._dom
-
   def get_column(self, by_title):
     for c in self.config._attrs.get('columns', []):
       if c.title == by_title:
@@ -67,9 +51,21 @@ class Table(Html.Html):
 
     return None
 
+  @property
+  def js(self):
+    """
+    Return the Javascript internal object
+
+    :return: A Javascript object
+
+    :rtype: JsDatatable.DatatableAPI
+    """
+    if self._js is None:
+      self._js = JsDatatable.DatatableAPI(self._report, selector=self.tableId, setVar=False, parent=self)
+    return self._js
+
   def build(self, data=None, options=None, profile=False):
-    print(self.config)
-    return '%s = %s.DataTable(%s)' % (self.tableId, self.dom.jquery.varId, self.config)
+    return 'var %s = %s.DataTable(%s)' % (self.tableId, self.dom.jquery.varId, self.config)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

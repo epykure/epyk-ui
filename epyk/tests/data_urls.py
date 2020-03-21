@@ -30,6 +30,7 @@ CAUSE_OF_DEATH = 'https://perso.telecom-paristech.fr/eagan/class/igr204/data/Cau
 BABY_NAMES = 'https://perso.telecom-paristech.fr/eagan/class/igr204/data/nat1900-2017.tsv'
 HAPPINESS_STATS = "https://perso.telecom-paristech.fr/eagan/class/igr204/data/happiness.csv"
 
+TABULATOR_DATA = 'http://tabulator.info/sample_data/file_load/data.json'
 
 DATATABLE_ARRAY_URL = 'https://datatables.net/examples/ajax/data/arrays.txt'
 DATATABLE_ARRAY_NESTED_URL = 'https://datatables.net/examples/ajax/data/objects_subarrays.txt'
