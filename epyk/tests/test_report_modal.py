@@ -3,6 +3,7 @@
 """
 
 from epyk.core.Page import Report
+from epyk.tests import data_urls
 from epyk.core.css.themes import ThemeBlue
 from epyk.core.css.themes import ThemeDark
 from epyk.core.css.themes import ThemeRed
@@ -53,16 +54,22 @@ imp = rptObj.ui.buttons.important('Get Started for Free')
 #########FOOTER#########
 nav = rptObj.ui.navigation.bar(title="test")
 nav.add_text("This is a huge text that I don't know what to do with")
-# nav + button
-# nav + imp
+nav + button
+nav + imp
 # nav.add_text("Test text")
 # nav + rptObj.ui.button("Click").css({"margin": '0 0 20px 5px'})
 # rptObj.ui.navigation.banner("", "test", "google")
-footer = rptObj.ui.navigation.footer([button, imp])
-# footer = rptObj.
+# footer = rptObj.ui.navigation.footer([button, imp])
+
+# footer = rptObj.ui.navigation.complex_footer(4, {1: [button, imp], 2: [rptObj.ui.texts.text('toto')]})
 # footer + button
 # footer + imp
-footer + rptObj.ui.texts.paragraph('This is the end')
+# footer + rptObj.ui.texts.paragraph('This is the end')
+# import time
+# start = time.time()
+# data_rest = rptObj.py.requests.csv(data_urls.DATA_EARTHQUAKE)
+# print(data_rest)
+# print(time.time() - start)
 
 print(rptObj.outs.html_file(name='test'))
 

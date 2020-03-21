@@ -76,7 +76,6 @@ class Buttons(object):
     """
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
                                          tooltip=tooltip, profile=profile, options=options)
-    html_button.style.no_class()
     html_button.style.add_classes.button.important()
     self.context.register(html_button)
     return html_button

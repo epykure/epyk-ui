@@ -23,15 +23,8 @@ from epyk.core import data
 
 from epyk.core.html import symboles
 from epyk.core.html import entities
+from epyk.core.py import OrderedSet
 
-
-class OrderedSet(list):
-  def __init__(self):
-    super(OrderedSet, self).__init__()
-
-  def add(self, key):
-    if key not in self:
-      self.append(key)
 
 
 class ContextRun(object):

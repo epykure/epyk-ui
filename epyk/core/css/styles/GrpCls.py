@@ -6,12 +6,12 @@ from epyk.core.css.styles.effects import Effects
 from epyk.core.css.styles.attributes import Attrs
 from epyk.core.css.styles.attributes import Commons, Body
 from epyk.core.css.styles.classes import CssStyle
-
+from epyk.core.py import OrderedSet
 
 class ClassPage(object):
   def __init__(self, htmlObj):
     self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
-    self.classList, self.__cls_defined, self.__cls_catalog = {"main": set(), 'other': set()}, None, None
+    self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
 
   @property
   def css(self):
@@ -120,7 +120,7 @@ class ClassPage(object):
 class ClassHtml(Properties.CssMixin):
   def __init__(self, htmlObj):
     self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
-    self.classList, self.__cls_defined, self.__cls_catalog = {"main": set(), 'other': set()}, None, None
+    self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
     self.__cls_effects = None
     self.classList['main'].add(self.css_class)
 
@@ -229,7 +229,7 @@ class ClassHtml(Properties.CssMixin):
     Clear all the Style, Classes and CSS attrubites for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog
     """
-    self.classList['main'] = set()
+    self.classList['main'] = OrderedSet()
     self._css_class = None
     return self
 
@@ -243,7 +243,7 @@ class ClassHtml(Properties.CssMixin):
     Set the default style to no marging and no padding
     """
     self.htmlObj.attr['css'] = {}
-    self.classList['main'] = set()
+    self.classList['main'] = OrderedSet()
     self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_margin()
     return self
 
@@ -253,7 +253,7 @@ class ClassHtml(Properties.CssMixin):
     ------------
     Remove the predefined class and set the default one for the div components
     """
-    self.classList['main'] = set()
+    self.classList['main'] = OrderedSet()
     self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
     return self
 
