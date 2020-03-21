@@ -1,5 +1,4 @@
 
-
 from epyk.core.css.catalogs import Catalog
 
 from epyk.core.css.styles.classes import CssStylesPivot, CssStylesTableExcel, CssStylesTable, CssStylesTabulator, CssStylesDiv

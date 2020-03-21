@@ -5,7 +5,7 @@ from epyk.core.js.packages import JsDatatable
 from epyk.core.data import DataClass
 
 # The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsTable
+from epyk.core.css.styles import GrpClsTable
 
 
 # External Datatable extensions added on demand to add some extra features
@@ -30,6 +30,12 @@ class Table(Html.Html):
     super(Table, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     if records is not None:
       self.config.data = records
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsTable.Datatable(self)
+    return self._styleObj
 
   @property
   def tableId(self):
