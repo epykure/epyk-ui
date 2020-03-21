@@ -1,6 +1,3 @@
-"""
-
-"""
 
 # Check if pandas is available in the current environment
 # if it is the case this module can handle DataFrame directly
@@ -19,7 +16,8 @@ class Datatables(object):
   def __init__(self, context):
     self.parent = context
 
-  def table(self, records, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+  def table(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None,
+            options=None, profile=None):
     """
 
     :param records:
@@ -30,11 +28,21 @@ class Datatables(object):
     :param htmlCode:
     :param options:
     :param profile:
-
-    :return:
     """
-    table = html_tables.HtlmTableDatatable.DataTable(self.parent.context.rptObj, records, cols, rows, header or {},
+    data = []
+    cols = cols or []
+    rows = rows or []
+    if not cols and not rows:
+      cols = list(records[0].keys())
+    for rec in records:
+      data.append([rec.get(c) for c in cols + rows])
+
+    table = html_tables.HtlmTableDatatable.Table(self.parent.context.rptObj, data,
                                                      width, height, htmlCode, options, profile)
+
+    for c in cols + rows:
+      col_def = table.config.columns
+      col_def.title = c
     self.parent.context.register(table)
     return table
 

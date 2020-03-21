@@ -5,6 +5,7 @@ http://dc-js.github.io/dc.js/docs/html/
 """
 
 from epyk.core.js import JsUtils
+from epyk.core.js.primitives import JsObject
 from epyk.core.js.packages import JsPackage
 
 
@@ -21,6 +22,17 @@ class DC(JsPackage):
 
   def x(self):
     return self.fnc("x(d3.scaleLinear().domain([0,20]))")
+
+  def chartGroup(self, group_name):
+    return self.fnc("chartGroup(%s)" % JsUtils.jsConvertFncs(group_name, toStr=True))
+
+  def redrawGroup(self):
+    """
+    Redraws all charts in the same group as this chart, typically in reaction to a filter change. If the chart has a commitHandler, it will be executed and waited for.
+
+    http://dc-js.github.io/dc.js/docs/html/BaseMixin.html#redrawGroup__anchor
+    """
+    return JsObject.JsObject.get("%s.redrawGroup()" % self.varId)
 
   def width(self, n):
     """
@@ -113,8 +125,11 @@ class DC(JsPackage):
 class Line(DC):
   chartFnc = "lineChart"
 
-  def curve(self):
-    pass
+  def curve(self, fnc):
+    return self.fnc("curve(%s)" % fnc)
+
+  def curveStepBefore(self):
+    return self.fnc("curve(d3.curveStepBefore)")
 
   def renderArea(self, flag):
     """
@@ -143,12 +158,29 @@ class Line(DC):
 class Bar(DC):
   chartFnc = "barChart"
 
+  def controlsUseVisibility(self, flag):
+    """
+
+    https://dc-js.github.io/dc.js/examples/bar-single-select.html
+
+    :param flag:
+    """
+    return self.fnc("controlsUseVisibility(%s)" % JsUtils.jsConvertData(flag, None))
+
+  def singleSelection(self):
+    self.xUnitsOridinal()
+    self.scaleBand()
+    return self.fnc("addFilterHandler(function(filters, filter) {return [filter]; })")
+
+  def xUnitsOridinal(self):
+    return self.fnc("xUnits(dc.units.ordinal)")
+
+  def scaleBand(self):
+    return self.fnc("x(d3.scaleBand())")
+
 
 class Row(DC):
-  chartFnc = "RowChart"
-
-  def x(self):
-    pass
+  chartFnc = "rowChart"
 
   def elasticY(self, flag):
     """
@@ -158,6 +190,18 @@ class Row(DC):
     :param flag:
     """
     return self.fnc("elasticY(%s)" % JsUtils.jsConvertData(flag, None))
+
+  def elasticX(self, flag):
+    """
+
+    https://github.com/dc-js/dc.js/blob/master/web-src/examples/row-targets.html
+
+    :param flag:
+    """
+    return self.fnc("elasticX(%s)" % JsUtils.jsConvertData(flag, None))
+
+  def yAxisLabel(self, text):
+    raise Exception("")
 
 
 class Pie(DC):
@@ -215,11 +259,39 @@ class Pie(DC):
 class Series(DC):
   chartFnc = "seriesChart"
 
-  def chart(self):
-    pass
+  def line(self):
+    return self.fnc("chart(function(c) { return new dc.lineChart(c).curve(d3.curveCardinal).renderArea(true); })")
 
-  def x(self):
-    pass
+  def scatter(self):
+    return self.fnc("chart(function(c) { return new dc.scatterPlot(c); })")
+
+  def bar(self):
+    return self.fnc("chart(function(c) { return new dc.barChart(c); })")
+
+  def seriesAccessor(self, jsFncs):
+    """
+
+    :param jsFncs:
+    """
+    return self.fnc("seriesAccessor(function(d) {%s;})" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+
+  def seriesAccessorByKey(self, index, str_format=None):
+    """
+
+    :param index:
+    :param str_format:
+    """
+    if str_format is not None:
+      key = str_format % ("d.key[%s]" % index)
+      return self.fnc("seriesAccessor(function(d) {return %s;})" % key)
+
+    return self.fnc("seriesAccessor(function(d) {return d.key[%s];})" % JsUtils.jsConvertData(index, None))
+
+  def keyAccessor(self, index):
+    return self.fnc("keyAccessor(function(d) {return +d.key[%s];})" % index)
+
+  def valueAccessor(self):
+    return self.fnc("valueAccessor(function(d) {return d.value;})")
 
   def elasticY(self, flag):
     """
@@ -242,12 +314,36 @@ class Series(DC):
     """
     return self.fnc("shareTitle(%s)" % JsUtils.jsConvertData(flag, None))
 
+  def controlsUseVisibility(self, flag):
+    """
+
+    https://dc-js.github.io/dc.js/examples/bar-single-select.html
+
+    :param flag:
+    """
+    return self.fnc("controlsUseVisibility(%s)" % JsUtils.jsConvertData(flag, None))
+
+  def singleSelection(self):
+    self.xUnitsOridinal()
+    self.scaleBand()
+    return self.fnc("addFilterHandler(function(filters, filter) {return [filter]; })")
+
+  def xUnitsOridinal(self):
+    return self.fnc("xUnits(dc.units.ordinal)")
+
+  def scaleBand(self):
+    return self.fnc("x(d3.scaleBand())")
+
+  def renderArea(self, flag):
+    """
+
+    :param flag:
+    """
+    return self.fnc("renderArea(%s)" % JsUtils.jsConvertData(flag, None))
+
 
 class Scatter(DC):
-  chartFnc = "ScatterPlot"
-
-  def x(self):
-    pass
+  chartFnc = "scatterPlot"
 
   def elasticX(self, flag):
     """
@@ -276,9 +372,26 @@ class Scatter(DC):
     """
     return self.fnc("excludedColor(%s)" % JsUtils.jsConvertData(color, None))
 
+  def symbolSize(self, size):
+    """
+
+    https://github.com/dc-js/dc.js/blob/master/web-src/examples/scatter-brushing.html
+
+    :param color:
+    """
+    return self.fnc("symbolSize(%s)" % JsUtils.jsConvertData(size, None))
+
+  def clipPadding(self, value):
+    """
+
+    :param value:
+    :return:
+    """
+    return self.fnc("clipPadding(%s)" % JsUtils.jsConvertData(value, None))
+
 
 class Sunburst(DC):
-  chartFnc = "SunburstChart"
+  chartFnc = "sunburstChart"
 
   def innerRadius(self, value):
     """
@@ -361,3 +474,7 @@ class BoxPlot(DC):
     :param flag:
     """
     return self.fnc("elasticX(%s)" % JsUtils.jsConvertData(flag, None))
+
+
+class GeoChoropleth(DC):
+  chartFnc = "geoChoroplethChart"

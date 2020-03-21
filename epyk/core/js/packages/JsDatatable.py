@@ -5,6 +5,7 @@ https://datatables.net/reference/api/
 """
 
 from epyk.core.js import JsUtils
+
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.packages import JsQuery

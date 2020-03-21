@@ -484,6 +484,13 @@ JS_IMPORTS = {
       'modules': [
         {'reqAlias': 'ChartDataLabel', 'script': 'chartjs-plugin-datalabels.min.js', 'version': '0.5.0', 'path': 'chartjs-plugin-datalabels@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
 
+  # ChartJs addon to add some Geo charts
+  'chartjs-chart-geo': {
+      'website': 'https://github.com/sgratzl/chartjs-chart-geo',
+      'req': [{'alias': 'Chart.js'}],
+      'modules': [
+        {'script': 'Chart.Geo.min.js', 'version': '1.1.4', 'path': 'chartjs-chart-geo@1.1.4/build/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
+
   # Cannot add properly the dependency in this one as my algorithm does not work for shared dependencies ....
   # 'meter': {'req': ['d3'], 'modules': ['d3.meter.js'], 'website': '', 'version': '', "status": 'deprecated'},
 

@@ -1,5 +1,7 @@
 
 from epyk.interfaces.geo import CompGeoPlotly
+from epyk.interfaces.geo import CompGeoDc
+from epyk.interfaces.geo import CompGeoChartJs
 
 
 class Geo(object):
@@ -16,6 +18,22 @@ class Geo(object):
     :return: A Python Plolty object
     """
     return CompGeoPlotly.Plotly(self)
+
+  @property
+  def dc_choropleth(self):
+    """
+
+    :return:
+    """
+    return CompGeoDc.Dc(self)
+
+  @property
+  def chartjs_choropleth(self):
+    """
+
+    :return:
+    """
+    return CompGeoChartJs.ChartJs(self)
 
   @property
   def plotly_choropleth(self):

@@ -19,6 +19,18 @@ PLOTLY_WEBGL_POLAR = 'https://raw.githubusercontent.com/plotly/datasets/master/h
 #https://earthquake.usgs.gov/earthquakes/feed/v1.0/csv.php
 DATA_EARTHQUAKE = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.csv'
 
+AIRLINE_SAFETY = r"https://raw.githubusercontent.com/fivethirtyeight/data/master/airline-safety/airline-safety.csv"
+MURDEERS_2015 = r"https://raw.githubusercontent.com/fivethirtyeight/data/master/murder_2016/murder_2015_final.csv"
+US_BIRTHS = r"https://raw.githubusercontent.com/fivethirtyeight/data/master/births/US_births_2000-2014_SSA.csv"
+ZIKA_VIRUS = "https://raw.githubusercontent.com/BuzzFeedNews/zika-data/master/data/raw/paho-who/paho-who-cases-reported-latest.csv"
+FIREARM_STATS_US = "https://raw.githubusercontent.com/BuzzFeedNews/nics-firearm-background-checks/master/data/nics-firearm-background-checks.csv"
+
+CARS = 'https://perso.telecom-paristech.fr/eagan/class/igr204/data/cars.csv'
+CAUSE_OF_DEATH = 'https://perso.telecom-paristech.fr/eagan/class/igr204/data/CausesOfDeath_France_2001-2008.csv'
+BABY_NAMES = 'https://perso.telecom-paristech.fr/eagan/class/igr204/data/nat1900-2017.tsv'
+HAPPINESS_STATS = "https://perso.telecom-paristech.fr/eagan/class/igr204/data/happiness.csv"
+
+
 DATATABLE_ARRAY_URL = 'https://datatables.net/examples/ajax/data/arrays.txt'
 DATATABLE_ARRAY_NESTED_URL = 'https://datatables.net/examples/ajax/data/objects_subarrays.txt'
 DATATABLE_OBJECTS_URL = 'https://datatables.net/examples/ajax/data/objects.txt'

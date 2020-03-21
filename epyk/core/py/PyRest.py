@@ -217,7 +217,9 @@ class PyRest(object):
     :param encoding:
     :param with_header:
     """
-    raw_data = self.webscrapping(url).decode(encoding).strip().split("\n")
+    raw_data = self.webscrapping(url).decode(encoding).splitlines()#.split("\n")
+    if url.endswith(".tsv"):
+      delimiter = "\t"
     records = []
     if raw_data:
       header = raw_data[0].split(delimiter)
@@ -228,6 +230,20 @@ class PyRest(object):
       for line in raw_data[1:]:
         records.append(dict(zip(header, line.split(delimiter))))
     return records
+
+  def json(self, url, encoding='utf-8'):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param url:
+    :param delimiter:
+    :param encoding:
+    :param with_header:
+    """
+    return json.loads(self.webscrapping(url).decode(encoding))
 
   def query(self, service_name, function_name="getData", report_name=None, data=None, encoding='utf-8'):
     """
