@@ -1,5 +1,3 @@
-"""
-"""
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.css.styles.attributes import Attrs

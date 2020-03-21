@@ -5,7 +5,7 @@ from epyk.core.js.packages import JsDatatable
 from epyk.core.data import DataClass
 
 # The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsTable
+from epyk.core.css.styles import GrpClsTable
 
 
 # External Datatable extensions added on demand to add some extra features
@@ -30,6 +30,12 @@ class Table(Html.Html):
     super(Table, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     if records is not None:
       self.config.data = records
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsTable.Datatable(self)
+    return self._styleObj
 
   @property
   def tableId(self):
@@ -229,6 +235,60 @@ class Language(DataClass):
 class TableConfig(DataClass):
 
   @property
+  def autoWidth(self):
+    """
+    Description:
+    -----------
+    Enable or disable automatic column width calculation.
+    This can be disabled as an optimisation (it takes a finite amount of time to calculate the widths) if the tables widths are passed in using
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/autoWidth
+    """
+    return self._attrs["autoWidth"]
+
+  @autoWidth.setter
+  def autoWidth(self, val):
+    self._attrs["autoWidth"] = val
+
+  @property
+  def deferRender(self):
+    """
+    Description:
+    -----------
+    By default, when DataTables loads data from an Ajax or Javascript data source (ajax and data respectively)
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/deferRender
+
+    """
+    return self._attrs["deferRender"]
+
+  @deferRender.setter
+  def deferRender(self, val):
+    self._attrs["deferRender"] = val
+
+  @property
+  def lengthChange(self):
+    """
+    Description:
+    -----------
+    When pagination is enabled, this option will control the display of an option for the end user to change the number of records to be shown per page.
+    The options shown in the list are controlled by the lengthMenu configuration option.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/lengthChange
+    """
+    return self._attrs["lengthChange"]
+
+  @lengthChange.setter
+  def lengthChange(self, val):
+    self._attrs["lengthChange"] = val
+
+  @property
   def columnDefs(self):
     return self.sub_data_enum("columnDefs", ColumnDef)
 
@@ -242,6 +302,16 @@ class TableConfig(DataClass):
 
   @property
   def ajax(self):
+    """
+    Description:
+    -----------
+    DataTables can obtain the data that it is to display in the table body from a number of sources, including from an Ajax data source, using this initialisation parameter.
+    As with other dynamic data sources, arrays or objects can be used for the data source for each row, with columns.data employed to read from specific object properties.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/ajax
+    """
     return self._attrs["ajax"]
 
   @ajax.setter
@@ -250,6 +320,16 @@ class TableConfig(DataClass):
 
   @property
   def processing(self):
+    """
+    Description:
+    -----------
+    Enable or disable the display of a 'processing' indicator when the table is being processed (e.g. a sort).
+    This is particularly useful for tables with large amounts of data where it can take a noticeable amount of time to sort the entries.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/processing
+    """
     return self._attrs["processing"]
 
   @processing.setter
@@ -258,6 +338,16 @@ class TableConfig(DataClass):
 
   @property
   def serverSide(self):
+    """
+    Description:
+    -----------
+    By default DataTables operates in client-side processing mode, but can be switched to server-side processing mode using this option.
+    Server-side processing is useful when working with large data sets (typically >50'000 records) as it means a database engine can be used to perform the sorting etc calculations - operations that modern database engines are highly optimised for, allowing use of DataTables with massive data sets (millions of rows).
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/serverSide
+    """
     return self._attrs["serverSide"]
 
   @serverSide.setter
@@ -267,9 +357,9 @@ class TableConfig(DataClass):
   @property
   def deferLoading(self):
     """
+    Related Pages:
+    --------------
     https://datatables.net/examples/server_side/defer_loading.html
-
-    :return:
     """
     return self._attrs["deferLoading"]
 
@@ -279,6 +369,16 @@ class TableConfig(DataClass):
 
   @property
   def data(self):
+    """
+    Description:
+    -----------
+    DataTables can obtain the data it is to display in the table's body from a number of sources, including being passed in as an array of row data using this initialisation parameter.
+    As with other dynamic data sources, arrays or objects can be used for the data source for each row, with columns.data employed to read from specific object properties.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/data
+    """
     return self._attrs["data"]
 
   @data.setter
@@ -287,6 +387,17 @@ class TableConfig(DataClass):
 
   @property
   def paging(self):
+    """
+    Description:
+    -----------
+    DataTables can split the rows in tables into individual pages, which is an efficient method of showing a large number of records in a small space.
+    The end user is provided with controls to request the display of different data as the navigate through the data.
+    This feature is enabled by default, but if you wish to disable it, you may do so with this parameter.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/paging
+    """
     return self._attrs["paging"]
 
   @paging.setter
@@ -295,6 +406,16 @@ class TableConfig(DataClass):
 
   @property
   def info(self):
+    """
+    Description:
+    -----------
+    When this option is enabled, Datatables will show information about the table including information about filtered data if that action is being performed.
+    This option allows that feature to be enabled or disabled.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/info
+    """
     return self._attrs["info"]
 
   @info.setter
@@ -303,6 +424,16 @@ class TableConfig(DataClass):
 
   @property
   def ordering(self):
+    """
+    Description:
+    -----------
+    Enable or disable ordering of columns - it is as simple as that! DataTables, by default, allows end users to click on the header cell for each column, ordering the table by the data in that column.
+    The ability to order data can be disabled using this option.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/ordering
+    """
     return self._attrs["ordering"]
 
   @ordering.setter
@@ -321,6 +452,17 @@ class TableConfig(DataClass):
 
   @property
   def stateSave(self):
+    """
+    Description:
+    -----------
+    Enable or disable state saving.
+    When enabled aDataTables will store state information such as pagination position, display length, filtering and sorting.
+    When the end user reloads the page the table's state will be altered to match what they had previously set up.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/stateSave
+    """
     return self._attrs["stateSave"]
 
   @stateSave.setter
@@ -337,6 +479,16 @@ class TableConfig(DataClass):
 
   @property
   def scrollY(self):
+    """
+    Description:
+    -----------
+    Enable vertical scrolling.
+    Vertical scrolling will constrain the DataTable to the given height, and enable scrolling for any data which overflows the current viewport. This can be used as an alternative to paging to display a lot of data in a small area (although paging and scrolling can both be enabled at the same time if desired).
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/scrollY
+    """
     return self._attrs["scrollY"]
 
   @scrollY.setter
@@ -345,6 +497,16 @@ class TableConfig(DataClass):
 
   @property
   def scrollX(self):
+    """
+    Description:
+    -----------
+    Enable horizontal scrolling.
+    When a table is too wide to fit into a certain layout, or you have a large number of columns in the table, you can enable horizontal (x) scrolling to show the table in a viewport, which can be scrolled.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/scrollX
+    """
     return self._attrs["scrollX"]
 
   @scrollX.setter
