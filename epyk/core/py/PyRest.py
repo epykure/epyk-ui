@@ -173,8 +173,9 @@ class PyRest(object):
 
     :return: The content of the REST call as a String
     """
-    request = Request(url, json.dumps(data or {}).encode(encoding=encoding), method=method, headers={} if headers is None else headers,
-                      unverifiable=unverifiable)
+    if data:
+      data = json.dumps(data).encode(encoding=encoding)
+    request = Request(url, data, method=method, headers={} if headers is None else headers, unverifiable=unverifiable)
     return urlopen(request).read()
 
   def webscrapping(self, url, data=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
@@ -226,7 +227,7 @@ class PyRest(object):
       if os.path.isfile(file_path):
         return json.load(open(file_path))
 
-    raw_data = self.webscrapping(url).decode(encoding).splitlines()#.split("\n")
+    raw_data = self.webscrapping(url).decode(encoding).splitlines()
     if url.endswith(".tsv"):
       delimiter = "\t"
     records = []
