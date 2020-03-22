@@ -102,6 +102,7 @@ class DataClass(object):
 class DataEnum(object):
 
   dflt = None
+  js_conversion = False
 
   def __init__(self, report, value=None):
     self._report, self.__value = report, value or self.dflt
@@ -119,8 +120,66 @@ class DataEnum(object):
     """
     if value is None:
       value = sys._getframe().f_back.f_code.co_name
+    if self.js_conversion:
+      value = JsUtils.jsConvertData(value, None).toStr()
+    self.__value = value
+
+  def custom(self, value):
+    """
+    Description:
+    ------------
+    Set a custom value.This will not use any specific conversion
+
+    Attributes:
+    ----------
+    :param value: String. The value to be set
+    """
     self.__value = value
 
   def __str__(self):
     return self.__value
 
+
+class DataEnumMulti(object):
+  dflt = None
+  js_conversion = False
+  delimiter = ","
+
+  def __init__(self, report, value=None):
+    self._report = report
+    value = value or self.dflt
+    self.__value = set() if value is None else set([value])
+
+  def set(self, value=None):
+    """
+    Description:
+    ------------
+    Set the selected value in this enumeration.
+    The last function call will be persisted
+
+    Attributes:
+    ----------
+    :param value: Optional. The value to be set (default is the function name)
+    """
+    if value is None:
+      value = sys._getframe().f_back.f_code.co_name
+    self.__value.add(value)
+
+  def custom(self, value):
+    """
+    Description:
+    ------------
+    Set a custom value.This will not use any specific conversion
+
+    Attributes:
+    ----------
+    :param value: String. The value to be set
+    """
+    self.__value.add(value)
+
+  def __str__(self):
+    result = self.delimiter.join(list(self.__value))
+    if self.js_conversion:
+      return JsUtils.jsConvertData(result, None).toStr()
+
+    return result

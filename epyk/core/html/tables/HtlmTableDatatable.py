@@ -3,6 +3,7 @@ from epyk.core.html import Html
 from epyk.core.js.packages import JsDatatable
 
 from epyk.core.data import DataClass
+from epyk.core.data import DataEnum
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable
@@ -13,11 +14,6 @@ from epyk.core.css.styles import GrpClsTable
 # https://datatables.net/extensions/
 extensions = {
   'rowsGroup': {'jsImports': ['datatables-rows-group']},
-  'rowGroup': {'jsImports': ['datatables-row-group'], 'cssImport': ['datatables-row-group']},
-  'fixedHeader': {'jsImports': ['datatables-fixed-header'], 'cssImport': ['datatables-fixed-header']},
-  'colReorder': {'jsImports': ['datatables-col-order'], 'cssImport': ['datatables-col-order'] },
-  'colResize': {'jsImports': ['datatables-col-resizable'], 'cssImport': ['datatables-col-resizable']},
-  'fixedColumns': {'jsImports': ['datatables-fixed-columns'], 'cssImport': ['datatables-fixed-columns']}
 }
 
 
@@ -78,10 +74,71 @@ class Table(Html.Html):
     return "<table %s></table>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
+class EnumStyleOptions(DataEnum):
+  js_conversion = True
+
+  def __wrap(self, name,  header_only=False, body_only=False):
+    """
+
+    https://datatables.net/manual/styling/classes
+    """
+    if header_only:
+      return self.set('dt-head-%s' % name)
+
+    if body_only:
+      return self.set('dt-body-%s' % name)
+
+    return self.set('dt-%s' % name)
+
+  def left(self, header_only=False, body_only=False):
+    """
+
+    https://datatables.net/manual/styling/classes
+    """
+    return self.__wrap('left', header_only, body_only)
+
+  def right(self, header_only=False, body_only=False):
+    """
+
+    https://datatables.net/manual/styling/classes
+    """
+    return self.__wrap('right', header_only, body_only)
+
+  def center(self, header_only=False, body_only=False):
+    """
+
+    https://datatables.net/manual/styling/classes
+    """
+    return self.__wrap('center', header_only, body_only)
+
+  def justify(self, header_only=False, body_only=False):
+    """
+
+    https://datatables.net/manual/styling/classes
+    """
+    return self.__wrap('justify', header_only, body_only)
+
+  def nowrap(self, header_only=False, body_only=False):
+    """
+
+    https://datatables.net/manual/styling/classes
+    """
+    return self.__wrap('nowrap', header_only, body_only)
+
+
 class ColumnDef(DataClass):
 
   @property
   def targets(self):
+    """
+    Description:
+    -----------
+    The columnDefs option allows a column definition object to be defined and then assigned to one or more columns in a DataTable, regardless of the order of the column definitions array, or the order of the columns in the table.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columnDefs.targets
+    """
     return self._attrs["targets"]
 
   @targets.setter
@@ -90,6 +147,15 @@ class ColumnDef(DataClass):
 
   @property
   def visible(self):
+    """
+    Description:
+    -----------
+    Enable or disable the display of this column.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.visible
+    """
     return self._attrs["visible"]
 
   @visible.setter
@@ -98,6 +164,15 @@ class ColumnDef(DataClass):
 
   @property
   def searchable(self):
+    """
+    Description:
+    -----------
+    Enable or disable search on the data in this column.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.searchable
+    """
     return self._attrs["searchable"]
 
   @searchable.setter
@@ -107,10 +182,13 @@ class ColumnDef(DataClass):
   @property
   def orderData(self):
     """
+    Description:
+    -----------
+    Define multiple column ordering as the default order for a column.
 
-    https://datatables.net/examples/basic_init/multi_col_sort.html
-
-    :return:
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.orderData
     """
     return self._attrs["orderData"]
 
@@ -122,7 +200,100 @@ class ColumnDef(DataClass):
 class Column(DataClass):
 
   @property
+  def cellType(self):
+    """
+    Description:
+    -----------
+    Change the cell type created for the column - either TD cells or TH cells.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.cellType
+    """
+    return self._attrs["cellType"]
+
+  @cellType.setter
+  def cellType(self, val):
+    self._attrs["cellType"] = val
+
+  @property
+  def className(self):
+    """
+    Description:
+    -----------
+    Quite simply this option adds a class to each cell in a column, regardless of if the table source is from DOM, Javascript or Ajax. This can be useful for styling columns.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.className
+    https://datatables.net/manual/styling/classes
+
+    :rtype: EnumStyleOptions
+    """
+    return self.has_attribute(EnumStyleOptions)
+
+  @property
+  def contentPadding(self):
+    """
+    Description:
+    -----------
+    Add padding to the text content used when calculating the optimal width for a table.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.contentPadding
+    """
+    return self._attrs["contentPadding"]
+
+  @contentPadding.setter
+  def contentPadding(self, val):
+    self._attrs["contentPadding"] = val
+
+  @property
+  def defaultContent(self):
+    """
+    Description:
+    -----------
+    Set default, static, content for a column.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.defaultContent
+    """
+    return self._attrs["defaultContent"]
+
+  @defaultContent.setter
+  def defaultContent(self, val):
+    self._attrs["defaultContent"] = val
+
+  @property
+  def name(self):
+    """
+    Description:
+    -----------
+    When working with DataTables' API, it is very common to want to be able to address individual columns so you can work with them (you wish to sum the numeric content of a column for example). DataTables has two basic methods of addressing columns:
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.name
+    """
+    return self._attrs["name"]
+
+  @name.setter
+  def name(self, val):
+    self._attrs["name"] = val
+
+  @property
   def title(self):
+    """
+    Description:
+    -----------
+    Set the column title.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.title
+    """
     return self._attrs["title"]
 
   @title.setter
@@ -139,11 +310,89 @@ class Column(DataClass):
 
   @property
   def orderable(self):
+    """
+    Description:
+    -----------
+    Using this parameter, you can remove the end user's ability to order upon a column.
+    This might be useful for generated content columns, for example if you have 'Edit' or 'Delete' buttons in the table.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.orderable
+    """
     return self._attrs["orderable"]
 
   @orderable.setter
   def orderable(self, val):
     self._attrs["orderable"] = val
+
+  @property
+  def orderData(self):
+    """
+    Description:
+    -----------
+    Define multiple column ordering as the default order for a column.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.orderData
+    """
+    return self._attrs["orderData"]
+
+  @orderData.setter
+  def orderData(self, val):
+    self._attrs["orderData"] = val
+
+  @property
+  def orderDataType(self):
+    """
+    Description:
+    -----------
+    Live DOM sorting type assignment.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.orderDataType
+    """
+    return self._attrs["orderDataType"]
+
+  @orderDataType.setter
+  def orderDataType(self, val):
+    self._attrs["orderDataType"] = val
+
+  @property
+  def orderSequence(self):
+    """
+    Description:
+    -----------
+    You can control the default ordering direction, and even alter the behaviour of the order handler (i.e. only allow ascending sorting etc) using this parameter.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.orderSequence
+    """
+    return self._attrs["orderSequence"]
+
+  @orderSequence.setter
+  def orderSequence(self, val):
+    self._attrs["orderSequence"] = val
+
+  @property
+  def render(self):
+    """
+    Description:
+    -----------
+    This property will modify the data that is used by DataTables for various operations as it is read from the data source. columns.render can be considered to be the the read only companion to columns.data which is read / write (and therefore more complex)
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.render
+    """
+    return self._attrs["render"]
+
+  @render.setter
+  def render(self, val):
+    self._attrs["render"] = val
 
   @property
   def data(self):
@@ -154,12 +403,55 @@ class Column(DataClass):
     self._attrs["data"] = val
 
   @property
-  def defaultContent(self):
-    return self._attrs["defaultContent"]
+  def searchable(self):
+    """
+    Description:
+    -----------
+    Using this parameter, you can define if DataTables should include this column in the filterable data in the table. You may want to use this option to disable search on generated columns such as 'Edit' and 'Delete' buttons for example.
 
-  @defaultContent.setter
-  def defaultContent(self, val):
-    self._attrs["defaultContent"] = val
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.searchable
+    """
+    return self._attrs["searchable"]
+
+  @searchable.setter
+  def searchable(self, val):
+    self._attrs["searchable"] = val
+
+  @property
+  def visible(self):
+    """
+    Description:
+    -----------
+    Enable or disable the display of this column.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.visible
+    """
+    return self._attrs["visible"]
+
+  @visible.setter
+  def visible(self, val):
+    self._attrs["visible"] = val
+
+  @property
+  def width(self):
+    """
+    Description:
+    -----------
+    Column width assignment.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns.width
+    """
+    return self._attrs["width"]
+
+  @width.setter
+  def width(self, val):
+    self._attrs["width"] = val
 
 
 class AOColumns(DataClass):
@@ -204,6 +496,15 @@ class Language(DataClass):
 
   @property
   def decimal(self):
+    """
+    Description:
+    -----------
+    Decimal place character.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/language.decimal
+    """
     return self._attrs["decimal"]
 
   @decimal.setter
@@ -232,7 +533,87 @@ class Language(DataClass):
     self._attrs["thousands"] = val
 
 
+class Search(DataClass):
+
+  @property
+  def caseInsensitive(self):
+    """
+    Description:
+    -----------
+    Flag to indicate if the filtering should be case insensitive or not.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/search.caseInsensitive
+    """
+    return self._attrs["caseInsensitive"]
+
+  @caseInsensitive.setter
+  def caseInsensitive(self, val):
+    self._attrs["caseInsensitive"] = val
+
+  @property
+  def search(self):
+    """
+    Description:
+    -----------
+    The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an initial global filter.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/search
+    """
+    return self._attrs["search"]
+
+  @search.setter
+  def search(self, val):
+    self._attrs["search"] = val
+
+  @property
+  def regex(self):
+    """
+    Description:
+    -----------
+    Regular expressions can be used to build fantastically complex filtering terms, but also it is perfectly valid for users to enter characters such as * into the filter, so a decision needs to be made if you wish to escape regular expression special characters or not.
+    This option controls that ability in DataTables.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/search.regex
+    """
+    return self._attrs["regex"]
+
+  @regex.setter
+  def regex(self, val):
+    self._attrs["regex"] = val
+
+  @property
+  def smart(self):
+    """
+    Description:
+    -----------
+    DataTables' built-in filtering is "smart" in that it breaks the user's input into individual words and then matches those words in any position and in any order in the table (rather than simple doing a simple string compare).
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/search.smart
+    """
+    return self._attrs["smart"]
+
+  @smart.setter
+  def smart(self, val):
+    self._attrs["smart"] = val
+
+
 class TableConfig(DataClass):
+
+  @property
+  def autoFill(self):
+    from epyk.core.html.tables.exts import DtAutoFill
+
+    self._report.jsImports.add('datatables-autoFill')
+    self._report.cssImport.add('datatables-autoFill')
+    return self.sub_data("autoFill", DtAutoFill.AutoFill)
 
   @property
   def autoWidth(self):
@@ -253,6 +634,18 @@ class TableConfig(DataClass):
     self._attrs["autoWidth"] = val
 
   @property
+  def colReorder(self):
+    """
+
+    :return:
+    """
+    from epyk.core.html.tables.exts import DtColReorder
+
+    self._report.jsImports.add('datatables-col-order')
+    self._report.cssImport.add('datatables-col-order')
+    return self.sub_data("colReorder", DtColReorder.ColReorder)
+
+  @property
   def deferRender(self):
     """
     Description:
@@ -269,6 +662,48 @@ class TableConfig(DataClass):
   @deferRender.setter
   def deferRender(self, val):
     self._attrs["deferRender"] = val
+
+  @property
+  def fixedHeader(self):
+    """
+    Description:
+    -----------
+    When displaying tables with a particularly large amount of data shown on each page, it can be useful to have the table's header and / or footer fixed to the top or bottom of the scrolling window.
+    This lets your users quickly determine what each column refers to rather than needing to scroll back to the top of the table.
+
+    Related Pages:
+    --------------
+    https://datatables.net/extensions/fixedheader/
+    """
+    from epyk.core.html.tables.exts import DtFixedHeader
+
+    self._report.jsImports.add('datatables-fixed-header')
+    self._report.cssImport.add('datatables-fixed-header')
+    return self.sub_data("fixedHeader", DtFixedHeader.FixedHeater)
+
+  @property
+  def fixedColumns(self):
+    """
+
+    :return:
+    """
+    from epyk.core.html.tables.exts import DtFixedColumns
+
+    self._report.jsImports.add('datatables-fixed-columns')
+    self._report.cssImport.add('datatables-fixed-columns')
+    return self.sub_data("fixedColumns", DtFixedColumns.FixedColumns)
+
+  @property
+  def keys(self):
+    """
+
+    :return:
+    """
+    from epyk.core.html.tables.exts import DtFixedColumns
+
+    self._report.jsImports.add('datatables-keytable')
+    self._report.cssImport.add('datatables-keytable')
+    return self.sub_data("keys", DtFixedColumns.FixedColumns)
 
   @property
   def lengthChange(self):
@@ -290,14 +725,41 @@ class TableConfig(DataClass):
 
   @property
   def columnDefs(self):
+    """
+    Description:
+    -----------
+    Very similar to columns, this parameter allows you to assign specific options to columns in the table, although in this case the column options defined can be applied to one or more columns. Additionally, not every column need be specified, unlike columns.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columnDefs
+    """
     return self.sub_data_enum("columnDefs", ColumnDef)
 
   @property
   def columns(self):
+    """
+    Description:
+    -----------
+    The columns option in the initialisation parameter allows you to define details about the way individual columns behave. For a full list of column options that can be set, please see the related parameters below.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/columns
+    """
     return self.sub_data_enum("columns", Column)
 
   @property
   def language(self):
+    """
+    Description:
+    -----------
+    Language configuration options for DataTables
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/
+    """
     return self.sub_data("language", Language)
 
   @property
@@ -337,6 +799,19 @@ class TableConfig(DataClass):
     self._attrs["processing"] = val
 
   @property
+  def search(self):
+    """
+    Description:
+    -----------
+    The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an initial global filter.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/search
+    """
+    return self.sub_data_enum("search", Search)
+
+  @property
   def serverSide(self):
     """
     Description:
@@ -357,15 +832,75 @@ class TableConfig(DataClass):
   @property
   def deferLoading(self):
     """
+    Description:
+    -----------
+    When using server-side processing, the default mode of operation for DataTables is to simply throw away any data that currently exists in the table and make a request to the server to get the first page of data to display.
+    This is fine for an empty table, but if you already have the first page of data displayed in the plain HTML, it is a waste of resources.
+    As such, this option exists to allow you to instruct DataTables to not make that initial request, rather it will use the data already on the page (no sorting etc will be applied to it).
+
     Related Pages:
     --------------
-    https://datatables.net/examples/server_side/defer_loading.html
+    https://datatables.net/reference/option/deferLoading
     """
     return self._attrs["deferLoading"]
 
   @deferLoading.setter
   def deferLoading(self, val):
     self._attrs["deferLoading"] = val
+
+  @property
+  def destroy(self):
+    """
+    Description:
+    -----------
+    Initialise a new DataTable as usual, but if there is an existing DataTable which matches the selector, it will be destroyed and replaced with the new table.
+    This can be useful if you want to change a property of the table which cannot be altered through the API.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/destroy
+    """
+    return self._attrs["destroy"]
+
+  @destroy.setter
+  def destroy(self, val):
+    self._attrs["destroy"] = val
+
+  @property
+  def displayStart(self):
+    """
+    Description:
+    -----------
+    Define the starting point for data display when using DataTables with pagination
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/displayStart
+    """
+    return self._attrs["displayStart"]
+
+  @displayStart.setter
+  def displayStart(self, val):
+    self._attrs["displayStart"] = val
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    DataTables will add a number of elements around the table to both control the table and show additional information about it.
+    The position of these elements on screen are controlled by a combination of their order in the document (DOM) and the CSS applied to the elements.
+    This parameter is used to control their ordering and additional mark-up surrounding them in the DOM.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/dom
+    """
+    return self._attrs["dom"]
+
+  @dom.setter
+  def dom(self, val):
+    self._attrs["dom"] = val
 
   @property
   def data(self):
@@ -423,6 +958,77 @@ class TableConfig(DataClass):
     self._attrs["info"] = val
 
   @property
+  def orderCellsTop(self):
+    """
+    Description:
+    -----------
+    Allows control over whether DataTables should use the top (true) unique cell that is found for a single column, or the bottom (false - default) to attach the default order listener.
+    This is useful when using complex headers.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/orderCellsTop
+    """
+    return self._attrs["orderCellsTop"]
+
+  @orderCellsTop.setter
+  def orderCellsTop(self, val):
+    self._attrs["orderCellsTop"] = val
+
+  @property
+  def orderClasses(self):
+    """
+    Description:
+    -----------
+    DataTables highlight the columns which are used to order the content in the table's body by adding a class to the cells in that column, which in turn has CSS applied to those classes to highlight those cells.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/orderClasses
+    """
+    return self._attrs["orderClasses"]
+
+  @orderClasses.setter
+  def orderClasses(self, val):
+    self._attrs["orderClasses"] = val
+
+  @property
+  def orderFixed(self):
+    """
+    Description:
+    -----------
+    The option works in tandem with the order option which provides an initial ordering state for the table which can then be modified by the user clicking on column headings, while the ordering specified by this option will always be applied to the table, regardless of user interaction.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/orderFixed
+    """
+    return self._attrs["orderFixed"]
+
+  @orderFixed.setter
+  def orderFixed(self, val):
+    self._attrs["orderFixed"] = val
+
+  @property
+  def orderMulti(self):
+    """
+    Description:
+    -----------
+    When ordering is enabled (ordering), by default DataTables allows users to sort multiple columns by shift clicking upon the header cell for each column.
+    Although this can be quite useful for users, it can also increase the complexity of the order, potentiality increasing the processing time of ordering the data.
+    Therefore, this option is provided to allow this shift-click multiple column ability.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/orderMulti
+    """
+    return self._attrs["orderMulti"]
+
+  @orderMulti.setter
+  def orderMulti(self, val):
+    self._attrs["orderMulti"] = val
+
+  @property
   def ordering(self):
     """
     Description:
@@ -441,6 +1047,22 @@ class TableConfig(DataClass):
     self._attrs["ordering"] = val
 
   def order(self, column, direction):
+    """
+    Description:
+    -----------
+    If ordering is enabled (ordering), then DataTables will perform a first pass order during initialisation.
+    Using this parameter you can define which column(s) the order is performed upon, and the ordering direction.
+    The order must be an array of arrays, each inner array comprised of two elements:
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/order
+
+    Attributes:
+    ----------
+    :param column: String. The column name
+    :param direction: String the direction (asc, desc)
+    """
     if not 'order' in self._attrs:
       self._attrs["order"] = []
     self._attrs["order"].append([column, direction])
@@ -515,6 +1137,16 @@ class TableConfig(DataClass):
 
   @property
   def scrollCollapse(self):
+    """
+    Description:
+    -----------
+    When vertical (y) scrolling is enabled through the use of the scrollY option, DataTables will force the height of the table's viewport to the given height at all times (useful for layout).
+    However, this can look odd when filtering data down to a small data set, and the footer is left "floating" further down.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/scrollCollapse
+    """
     return self._attrs["scrollCollapse"]
 
   @scrollCollapse.setter
@@ -540,10 +1172,13 @@ class TableConfig(DataClass):
   @property
   def lengthMenu(self):
     """
+    Description:
+    -----------
+    This parameter allows you to readily specify the entries in the length drop down select list that DataTables shows when pagination is enabled. It can be either:
 
-    https://datatables.net/examples/advanced_init/length_menu.html
-    :return:
-
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/lengthMenu
     """
     return self._attrs["lengthMenu"]
 
@@ -563,3 +1198,209 @@ class TableConfig(DataClass):
   @select.setter
   def select(self, val):
     self._attrs["select"] = val
+
+  @property
+  def pageLength(self):
+    """
+    Description:
+    -----------
+    Number of rows to display on a single page when using pagination.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/pageLength
+    """
+    return self._attrs["pageLength"]
+
+  @pageLength.setter
+  def pageLength(self, val):
+    self._attrs["pageLength"] = val
+
+  @property
+  def pagingType(self):
+    """
+    Description:
+    -----------
+    The pagination option of DataTables will display a pagination control below the table (by default, its position can be changed using dom and CSS) with buttons that the end user can use to navigate the pages of the table.
+    Which buttons are shown in the pagination control are defined by the option given here.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/pagingType
+    """
+    return self._attrs["pagingType"]
+
+  @pagingType.setter
+  def pagingType(self, val):
+    self._attrs["pagingType"] = val
+
+  @property
+  def renderer(self):
+    """
+    Description:
+    -----------
+    DataTables adds complex components to your HTML page, such as the pagination control.
+    The business logic used to calculate what information should be displayed (what buttons in the case of the pagination buttons) is core to DataTables and generally doesn't vary how the buttons are actually displayed based on the styling requirements of the page.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/renderer
+    """
+    return self._attrs["renderer"]
+
+  @renderer.setter
+  def renderer(self, val):
+    self._attrs["renderer"] = val
+
+  @property
+  def retrieve(self):
+    """
+    Description:
+    -----------
+    Retrieve the DataTables object for the given selector.
+    Note that if the table has already been initialised, this parameter will cause DataTables to simply return the object that has already been set up - it will not take account of any changes you might have made to the initialisation object passed to DataTables
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/retrieve
+    """
+    return self._attrs["retrieve"]
+
+  @retrieve.setter
+  def retrieve(self, val):
+    self._attrs["retrieve"] = val
+
+  @property
+  def rowId(self):
+    """
+    Description:
+    -----------
+    It can often be useful to have a id attribute on each tr element in a DataTable for row selection and data source identification, particularly when using events.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/rowId
+    """
+    return self._attrs["rowId"]
+
+  @rowId.setter
+  def rowId(self, val):
+    self._attrs["rowId"] = val
+
+  @property
+  def rowGroup(self):
+    """
+
+    :return:
+    """
+    from epyk.core.html.tables.exts import DtFixedColumns
+
+    self._report.jsImports.add('datatables-row-group')
+    self._report.cssImport.add('datatables-row-group')
+    return self.sub_data("rowGroup", DtFixedColumns.FixedColumns)
+
+  @property
+  def rowsGroup(self):
+    """
+    The Datatables feature plugin that groups rows (merge cells vertically) in according to specified columns.
+    It's inspired by [fnFakeRowspan] (https://datatables.net/plug-ins/api/fnFakeRowspan) DataTables plugin.
+
+    https://github.com/ashl1/datatables-rowsgroup
+    """
+    return self._attrs["rowsGroup"]
+
+  @rowsGroup.setter
+  def rowsGroup(self, val):
+    """
+
+    :param val:
+    """
+    from epyk.core.html.tables.exts import DtFixedColumns
+
+    self._report.jsImports.add('datatables-rows-group')
+    self._attrs["rowsGroup"] = val
+
+  @property
+  def searchCols(self):
+    """
+    Description:
+    -----------
+    Basically the same as the search option, but in this case for individual columns, rather than the global filter, this option defined the filtering to apply to the table during initialisation.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/searchCols
+    """
+    return self._attrs["searchCols"]
+
+  @searchCols.setter
+  def searchCols(self, val):
+    self._attrs["searchCols"] = val
+
+  @property
+  def searchDelay(self):
+    """
+    Description:
+    -----------
+    The built-in DataTables global search (by default at the top right of every DataTable) will instantly search the table on every keypress when in client-side processing mode and reduce the search call frequency automatically to 400mS when in server-side processing mode.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/searchDelay
+    """
+    return self._attrs["searchDelay"]
+
+  @searchDelay.setter
+  def searchDelay(self, val):
+    self._attrs["searchDelay"] = val
+
+  @property
+  def stateDuration(self):
+    """
+    Description:
+    -----------
+    Duration for which the saved state information is considered valid. After this period has elapsed the state will be returned to the default.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/stateDuration
+    """
+    return self._attrs["stateDuration"]
+
+  @stateDuration.setter
+  def stateDuration(self, val):
+    self._attrs["stateDuration"] = val
+
+  @property
+  def stripeClasses(self):
+    """
+    Description:
+    -----------
+    An array of CSS classes that should be applied to displayed rows, in sequence. This array may be of any length, and DataTables will apply each class sequentially, looping when required.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/stripeClasses
+    """
+    return self._attrs["stripeClasses"]
+
+  @stripeClasses.setter
+  def stripeClasses(self, val):
+    self._attrs["stripeClasses"] = val
+
+  @property
+  def tabIndex(self):
+    """
+    Description:
+    -----------
+    By default DataTables allows keyboard navigation of the table (sorting, paging, and filtering) by adding a tabindex attribute to the required elements.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/tabIndex
+    """
+    return self._attrs["tabIndex"]
+
+  @tabIndex.setter
+  def tabIndex(self, val):
+    self._attrs["tabIndex"] = val

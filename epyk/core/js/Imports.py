@@ -169,8 +169,8 @@ JS_IMPORTS = {
     ],
     'modules': [
       # core only needed for Jupyter for some reasons
-      {'reqAlias': 'tabulator_core', 'script': 'tabulator_core.min.js', 'version': '4.4.1', 'path': '%(version)s/js/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs/tabulator'},
-      {'reqAlias': 'tabulator', 'script': 'tabulator.min.js', 'version': '4.4.1', 'path': '%(version)s/js/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs/tabulator'}
+      {'reqAlias': 'tabulator_core', 'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': '%(version)s/js/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs/tabulator'},
+      {'reqAlias': 'tabulator', 'script': 'tabulator.min.js', 'version': '4.4.3', 'path': '%(version)s/js/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs/tabulator'}
     ],
     'website': 'http://tabulator.info/'
   },
@@ -187,11 +187,25 @@ JS_IMPORTS = {
   'datatables': {
     'req': [
       {'alias': 'jquery'},
-      {'alias': 'bootstrap'}],
+    ],
     'modules': [
       {'reqAlias': 'datatables', 'script': 'jquery.dataTables.min.js', 'version': '1.10.19', 'path': 'datatables/%(version)s/js/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
       {'script': 'dataTables.buttons.min.js', 'version': '1.0.1', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
       {'script': 'dataTables.responsive.min.js', 'version': '2.1.1', 'path': 'responsive/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
+  # Datatable KeyTable
+  'datatables-keytable': {
+    'website': 'https://datatables.net/extensions/keytable/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'dataTables.keyTable.min.js', 'version': '2.5.1', 'path': 'keytable/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
+  # Datatable autoFill
+  'datatables-autoFill': {
+    'website': 'https://datatables.net/extensions/autofill/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'dataTables.autoFill.min.js', 'version': '2.1.0', 'path': 'autofill/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable group rows
   'datatables-rows-group': {
@@ -204,7 +218,7 @@ JS_IMPORTS = {
   'datatables-row-group': {
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'dataTables.rowGroup.min.js', 'version': '1.0.4', 'path': 'rowgroup/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
+      {'script': 'dataTables.rowGroup.min.js', 'version': '1.1.1', 'path': 'rowgroup/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}],
     'website': 'https://datatables.net/extensions/rowgroup/'},
 
   # Datatable fixed column
@@ -622,7 +636,6 @@ CSS_IMPORTS = {
   'tabulator': {
     'website': 'http://tabulator.info',
     'modules': [
-      # '4.1.5'
       {'script': 'tabulator.min.css', 'version': '4.4.3', 'path': 'tabulator/%(version)s/css/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
     ]
   },
@@ -635,11 +648,26 @@ CSS_IMPORTS = {
       {'script': 'responsive.dataTables.min.css', 'version': '2.1.1', 'path': 'responsive/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'},
       {'script': 'buttons.dataTables.min.css', 'version': '1.5.2', 'path': 'buttons/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
+  # Datatable KeyTable
+  'datatables-keytable': {
+    'website': 'https://datatables.net/extensions/keytable/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'keyTable.dataTables.min.css', 'version': '2.5.1', 'path': 'keytable/%(version)s/css/',
+       'cdnjs': 'https://cdn.datatables.net'}]},
+
+  # Datatable autoFill
+  'datatables-autoFill': {
+    'website': 'https://datatables.net/extensions/autofill/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'autoFill.dataTables.min.css', 'version': '2.1.0', 'path': 'autofill/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
   # Datatable group row
   'datatables-row-group': {
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'rowGroup.dataTables.min.css', 'version': '1.0.4', 'path': 'rowgroup/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'rowGroup.dataTables.min.css', 'version': '1.1.1', 'path': 'rowgroup/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable fixed column
   'datatables-fixed-columns': {
@@ -671,13 +699,6 @@ CSS_IMPORTS = {
     'req': [{'alias': 'datatables'}],
     'modules': [
       {'script': 'select.bootstrap4.min.css', 'version': '1.2.5', 'path': 'select/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
-
-  # # Datatable column resizable
-  # 'dataTables-colResizable': {
-  #   'req': [{'alias': 'dataTables'}],
-  #   'modules': ['dataTables.colResize.css'], 'version': '2.6',
-  #                             'cdnjs': ['https://cdn.rawgit.com/smasala/ColResize/v2.6.0/css/'],
-  #                             'website': 'https://smasala.github.io/ColResize/', "status": 'deprecated'},
 
   # Bootstrap style width CDN links
   'bootstrap': {

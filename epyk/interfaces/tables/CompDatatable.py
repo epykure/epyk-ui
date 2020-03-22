@@ -1,14 +1,4 @@
 
-# Check if pandas is available in the current environment
-# if it is the case this module can handle DataFrame directly
-try:
-  import pandas as pd
-  has_pandas = True
-
-except:
-  has_pandas = False
-
-
 from epyk.core.html import tables as html_tables
 
 
@@ -37,12 +27,12 @@ class Datatables(object):
     for rec in records:
       data.append([rec.get(c) for c in cols + rows])
 
-    table = html_tables.HtlmTableDatatable.Table(self.parent.context.rptObj, data,
-                                                     width, height, htmlCode, options, profile)
-
+    table = html_tables.HtlmTableDatatable.Table(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
     for c in cols + rows:
       col_def = table.config.columns
       col_def.title = c
+      col_def.className.center()
+    table.style.themes.compact()
     self.parent.context.register(table)
     return table
 

@@ -1,16 +1,3 @@
-"""
-
-"""
-
-# Check if pandas is available in the current environment
-# if it is the case this module can handle DataFrame directly
-try:
-  import pandas as pd
-  has_pandas = True
-
-except:
-  has_pandas = False
-
 
 from epyk.core.html import tables as html_tables
 
@@ -19,29 +6,38 @@ class Tabulators(object):
   def __init__(self, context):
     self.parent = context
 
-  def table(self, records, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+  def table(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
 
     :param records:
     :param cols:
     :param rows:
-    :param header:
     :param width:
     :param height:
     :param htmlCode:
     :param options:
     :param profile:
-
-    :rtype: html_tables.HtmlTableTabulator.DataTabulator
-    :return:
     """
+    cols = cols or []
+    rows = rows or []
+    if not cols and not rows:
+      cols = list(records[0].keys())
+
     table_options_dflts = {'selectable': False, 'index': '_row', 'layout': 'fitColumns', 'pagination': 'local',
                            'paginationSize': 25, 'resizableRows': False, 'movableColumns': True}
     if options is not None:
       table_options_dflts.update(options)
-    return self.parent.context.register(
-      html_tables.HtmlTableTabulator.DataTabulator(self.parent.context.rptObj, records, cols, rows, header or {}, width, height,
-                                                      htmlCode, table_options_dflts, profile))
+
+    table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode, options, profile)
+    for c in cols + rows:
+      col_def = table.config.columns
+      col_def.title = c
+      col_def.field = c
+      col_def.cssClass.center() # = "dt-center, dt-test"
+
+
+    self.parent.context.register(table)
+    return table
 
   def heatmap(self):
     pass

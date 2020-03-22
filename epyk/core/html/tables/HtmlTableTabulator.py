@@ -1,24 +1,34 @@
 
+import hashlib
+
 from epyk.core.html import Html
 
 from epyk.core.js.packages import JsTabulator
 
 from epyk.core.data import DataClass
 from epyk.core.data import DataEnum
+from epyk.core.data import DataEnumMulti
 
 # The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsTable
+from epyk.core.css.styles import GrpClsTable
 
 
 class Table(Html.Html):
   name, category, callFnc = 'Table', 'Tables', 'table'
-  __reqCss, __reqJs = ['datatables'], ['datatables']
+  __reqCss, __reqJs = ['tabulator'], ['tabulator']
 
   def __init__(self, report, records, width, height, htmlCode, options, profile):
     data, columns, self.__config = [], [], None
     super(Table, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     if records is not None:
       self.config.data = records
+    self.style.css.background = None
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsTable.Tabulator(self)
+    return self._styleObj
 
   @property
   def tableId(self):
@@ -55,7 +65,7 @@ class Table(Html.Html):
 
   def build(self, data=None, options=None, profile=False):
     print(self.config)
-    return 'var %s =  new Tabulator("%s", %s)' % (self.tableId, self.dom.varId, self.config)
+    return 'var %s =  new Tabulator("#%s", %s)' % (self.tableId, self.htmlId, self.config)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -160,6 +170,46 @@ class EnumEditor(DataEnum):
     :return:
     """
     return self.set()
+
+
+class EnumColCss(DataEnumMulti):
+  js_conversion = True
+  delimiter = " "
+
+  def center(self):
+    """
+
+    """
+    self._report.body.style.custom_class({'_attrs': {'text-align': 'center'}}, classname="tb-center")
+    return self.set("tb-center")
+
+  def color(self, color):
+    """
+
+    :param color:
+    """
+    self._report.body.style.custom_class({'_attrs': {'color': color}}, classname="tb-color-%s" % color)
+    return self.set("tb-color-%s" % color)
+
+  def background(self, color):
+    """
+
+    :param color:
+    """
+    self._report.body.style.custom_class({'_attrs': {'background-color': color}}, classname="tb-background-%s" % color)
+    return self.set("tb-background-%s" % color)
+
+  def css(self, css_attrs, css_attrs_hover=None):
+    """
+
+    col_def.cssClass.css({'background': 'orange'}, {'background': 'white', 'color': 'blue'})
+
+    :param css_attrs:
+    :param css_attrs_hover:
+    """
+    has_style = str(hashlib.sha1(str(css_attrs).encode()).hexdigest())
+    self._report.body.style.custom_class({'_attrs': css_attrs, '_hover': css_attrs_hover}, classname="tb-style-%s" % has_style)
+    return self.set("tb-style-%s" % has_style)
 
 
 class EnumFormatter(DataEnum):
@@ -388,6 +438,10 @@ class Column(DataClass):
   @property
   def bottomCalcParams(self):
     return self.sub_data("bottomCalcParams", BottomCalcParams)
+
+  @property
+  def cssClass(self):
+    return self.has_attribute(EnumColCss)
 
   @property
   def editable(self):
@@ -664,6 +718,14 @@ class TableConfig(DataClass):
   @columnVertAlign.setter
   def columnVertAlign(self, val):
     self._attrs["columnVertAlign"] = val
+
+  @property
+  def data(self):
+    return self._attrs["data"]
+
+  @data.setter
+  def data(self, val):
+    self._attrs["data"] = val
 
   @property
   def groupBy(self):

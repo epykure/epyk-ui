@@ -20,6 +20,16 @@ class DataTableThemes(object):
     self.classlist.add("cell-border")
     return self
 
+  def compact(self):
+    """
+    Reduce the amount of white-space the default styling for the DataTable uses, increasing the information density on screen, as shown below.
+    Note that this style requires DataTables 1.10.1 or newer.
+
+    https://datatables.net/manual/styling/classes
+    """
+    self.classlist.add("compact")
+    return self
+
   def display_compact(self):
     """
 
@@ -44,14 +54,26 @@ class DataTableThemes(object):
 
   def order_column(self):
     """
+    Highlight the ordering column
 
     https://datatables.net/examples/styling/order-column.html
     """
     self.classlist.add("order-column")
     return self
 
+  def nowrap(self):
+    """
+    Disable line wrapping of content in the table cells, so the text will always appear on one line.
+    Note that this style requires DataTables 1.10.1 or newer.
+
+    https://datatables.net/manual/styling/classes
+    """
+    self.classlist.add("nowrap")
+    return self
+
   def row_border(self):
     """
+    Border on the rows only
 
     https://datatables.net/examples/styling/row-border.html
     """
@@ -60,6 +82,7 @@ class DataTableThemes(object):
 
   def stripe(self):
     """
+    Row striping.
 
     https://datatables.net/examples/styling/stripe.html
     """
@@ -147,3 +170,185 @@ class Datatable(GrpCls.ClassHtml):
     if self._css_datatable_footer is None:
       self._css_datatable_footer = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['main']).datatable_footer()
     return self._css_datatable_footer
+
+
+class Tabulator(GrpCls.ClassHtml):
+
+
+
+  def __init__(self, htmlObj):
+    super(Tabulator, self).__init__(htmlObj)
+    self._css_tabulator, self._css_tabulator_row, self._css_tabulator_header = None, None, None
+    self._css_tabulator_even_row, self._css_tabulator_cell, self._css_tabulator_headers = None, None, None
+    self._css_tabulator_col, self._css_tabulator_col_content, self._css_tabulator_selected = None, None, None
+    self._css_tb_odd_row, self._css_tb_groups, self._css_tb_footer = None, None, None
+    self._css_tb_footer_pg, self._css_tb_tree, self._css_tb_tree_exp = None, None, None
+    self.classList['main'].add(self.cls_tabulator)
+    self.classList['other'].add(self.cls_tabulator_row)
+    self.classList['other'].add(self.cls_tabulator_header)
+    self.classList['other'].add(self.cls_tabulator_even_row)
+    self.classList['other'].add(self.cls_tabulator_cell)
+    self.classList['other'].add(self.cls_tabulator_headers)
+    self.classList['other'].add(self.cls_tabulator_col)
+    self.classList['other'].add(self._css_tabulator_col_content)
+    self.classList['other'].add(self.cls_tabulator_selected)
+    self.classList['other'].add(self.cls_tb_even_row)
+    self.classList['other'].add(self.cls_tb_groups)
+    self.classList['other'].add(self.cls_tb_footer)
+    self.classList['other'].add(self.cls_tb_footer_pg)
+    self.classList['other'].add(self.cls_tb_tree)
+    self.classList['other'].add(self.cls_tb_tree_exp)
+
+  @property
+  def cls_tabulator(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator is None:
+      self._css_tabulator = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                                  self.classList['main']).tabulator()
+    return self._css_tabulator
+
+  @property
+  def cls_tabulator_row(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_row is None:
+      self._css_tabulator_row = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_rows()
+    return self._css_tabulator_row
+
+  @property
+  def cls_tabulator_cell(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_cell is None:
+      self._css_tabulator_cell = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_cell()
+    return self._css_tabulator_cell
+
+  @property
+  def cls_tabulator_col(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_col is None:
+      self._css_tabulator_col = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_col()
+    return self._css_tabulator_col
+
+  @property
+  def cls_tabulator_col_content(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_col_content is None:
+      self._css_tabulator_col_content = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_col_content()
+    return self._css_tabulator_col_content
+
+  @property
+  def cls_tabulator_selected(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_selected is None:
+      self._css_tabulator_selected = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList[
+        'other']).tabulator_selected()
+    return self._css_tabulator_selected
+
+  @property
+  def cls_tabulator_even_row(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_even_row is None:
+      self._css_tabulator_even_row = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_even_rows()
+    return self._css_tabulator_even_row
+
+  @property
+  def cls_tb_even_row(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tb_odd_row is None:
+      self._css_tb_odd_row = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_odd_rows()
+    return self._css_tb_odd_row
+
+  @property
+  def cls_tb_groups(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tb_groups is None:
+      self._css_tb_groups = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                               self.classList['other']).tabulator_groups()
+    return self._css_tb_groups
+
+  @property
+  def cls_tb_footer(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tb_footer is None:
+      self._css_tb_footer = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_footer()
+    return self._css_tb_footer
+
+  @property
+  def cls_tb_footer_pg(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tb_footer_pg is None:
+      self._css_tb_footer_pg = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_footer_pagination()
+    return self._css_tb_footer_pg
+
+  @property
+  def cls_tb_tree(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tb_tree is None:
+      self._css_tb_tree = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_tree_control()
+    return self._css_tb_tree
+
+  @property
+  def cls_tb_tree_exp(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tb_tree_exp is None:
+      self._css_tb_tree_exp = Classes.CatalogTable.CatalogTable(self.htmlObj._report,
+                                                            self.classList['other']).tabulator_tree_control_expand()
+    return self._css_tb_tree_exp
+
+  @property
+  def cls_tabulator_header(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_header is None:
+      self._css_tabulator_header = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_header()
+    return self._css_tabulator_header
+
+  @property
+  def cls_tabulator_headers(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_headers is None:
+      self._css_tabulator_headers = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_headers()
+    return self._css_tabulator_headers
