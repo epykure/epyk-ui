@@ -545,10 +545,10 @@ class D3Band(object):
     return strData
 
 
-class D3Csv(object):
+class D3File(object):
 
-  def __init__(self, src, filename):
-    self._f, self.src = filename, src
+  def __init__(self, src, filename, selector):
+    self._f, self.src, self._selector = filename, src, selector
     self._js_frg, self._js_ids = [], set()
 
   def records(self, jsId):
@@ -604,7 +604,7 @@ class D3Csv(object):
 
   def toStr(self):
     file = JsUtils.jsConvertData(self._f, None)
-    return "%s; d3.csv(%s, function(row, err){%s})" % (";".join(["var %s = []" % i for i in self._js_ids]), file, ";".join(self._js_frg))
+    return "%s; %s(%s, function(row, err){%s})" % (";".join(["var %s = []" % i for i in self._js_ids]), self._selector, file, ";".join(self._js_frg))
 
 
 class D3Svg(object):
@@ -647,7 +647,31 @@ class JsD3(JsPackage):
     """
     #url = JsUtils.jsConvertData(url, None)
     #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
-    return D3Csv(self.src, url)
+    return D3File(self.src, url, selector="%s.csv" % self._selector)
+
+  def tsv(self, url):
+    """
+
+    """
+    #url = JsUtils.jsConvertData(url, None)
+    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
+    return D3File(self.src, url, selector="%s.tsv" % self._selector)
+
+  def json(self, url):
+    """
+
+    """
+    #url = JsUtils.jsConvertData(url, None)
+    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
+    return D3File(self.src, url, selector="%s.json" % self._selector)
+
+  def dsv(self, url, delimiter):
+    """
+
+    """
+    #url = JsUtils.jsConvertData(url, None)
+    #return JsFncs.JsFunction("d3.csv(%s)" % (url, JsUtils.jsConvertFncs(callback, toStr=True)))
+    return D3File(self.src, url, selector="%s.tsv" % self._selector)
 
   def min(self, dataset, jsFnc):
     return JsNumber.JsNumber("d3.min(%s, %s)" % (dataset, jsFnc))

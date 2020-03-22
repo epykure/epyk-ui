@@ -634,6 +634,24 @@ class TableConfig(DataClass):
     self._attrs["autoWidth"] = val
 
   @property
+  def buttons(self):
+    """
+    Description:
+    -----------
+    A common UI paradigm to use with interactive tables is to present buttons that will trigger some action - that may be to alter the table's state, modify the data in the table, gather the data from the table or even to activate some external process.
+    Showing such buttons is an interface that end users are comfortable with, making them feel at home with the table.
+
+    Related Pages:
+    --------------
+    https://datatables.net/extensions/buttons/
+    """
+    from epyk.core.html.tables.exts import DtButtons
+
+    self._report.jsImports.add('datatables-buttons')
+    self._report.cssImport.add('datatables-buttons')
+    return self.sub_data("buttons", DtButtons.Buttons)
+
+  @property
   def colReorder(self):
     """
 
@@ -697,13 +715,13 @@ class TableConfig(DataClass):
   def keys(self):
     """
 
-    :return:
+    :rtype: DtFixedColumns.FixedColumns
     """
-    from epyk.core.html.tables.exts import DtFixedColumns
+    from epyk.core.html.tables.exts import DtKeyTable
 
     self._report.jsImports.add('datatables-keytable')
     self._report.cssImport.add('datatables-keytable')
-    return self.sub_data("keys", DtFixedColumns.FixedColumns)
+    return self.sub_data("keys", DtKeyTable.KeyTable)
 
   @property
   def lengthChange(self):
@@ -1073,6 +1091,26 @@ class TableConfig(DataClass):
     return self.sub_data_enum("aoColumns", AOColumns)
 
   @property
+  def responsive(self):
+    """
+    Description:
+    -----------
+    In the modern world of responsive web design tables can often cause a particular problem for designers due to their row based layout.
+    Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different screen sizes through the dynamic insertion and removal of columns from the table.
+
+    Related Pages:
+    --------------
+    https://datatables.net/extensions/responsive/
+
+    :rtype: DtResponsive.Responsive
+    """
+    from epyk.core.html.tables.exts import DtResponsive
+
+    self._report.jsImports.add('datatables-responsive')
+    self._report.cssImport.add('datatables-responsive')
+    return self.sub_data("responsive", DtResponsive.Responsive)
+
+  @property
   def stateSave(self):
     """
     Description:
@@ -1315,10 +1353,43 @@ class TableConfig(DataClass):
 
     :param val:
     """
-    from epyk.core.html.tables.exts import DtFixedColumns
-
     self._report.jsImports.add('datatables-rows-group')
     self._attrs["rowsGroup"] = val
+
+  @property
+  def select(self):
+    """
+    Description:
+    -----------
+    Select adds item selection capabilities to a DataTable. Items can be rows, columns or cells, which can be selected independently, or together. Item selection can be particularly useful in interactive tables where users can perform some action on the table, such as editing rows or marking items to perform an action on.
+
+    Related Pages:
+    --------------
+    https://datatables.net/reference/option/select
+    """
+    from epyk.core.html.tables.exts import DtSelect
+
+    self._report.jsImports.add('datatables-select')
+    self._report.cssImport.add('datatables-select')
+    return self.sub_data("select", DtSelect.Select)
+
+  @property
+  def scroller(self):
+    """
+    Description:
+    -----------
+    Scroller is a virtual rendering plug-in for DataTables which allows large datasets to be drawn on screen very quickly.
+    What the virtual rendering means is that only the visible portion of the table (and a bit to either side to make the scrolling smooth) is drawn, while the scrolling container gives the visual impression that the whole table is visible.
+
+    Related Pages:
+    --------------
+    https://datatables.net/extensions/scroller/
+    """
+    from epyk.core.html.tables.exts import DtScroller
+
+    self._report.jsImports.add('datatables-scroller')
+    self._report.cssImport.add('datatables-scroller')
+    return self.sub_data("scroller", DtScroller.Scroller)
 
   @property
   def searchCols(self):

@@ -708,6 +708,44 @@ class RowComponent(JsPackage):
 class Tabulator(JsPackage):
   lib_alias = {"js": "tabulator", 'css': "tabulator"}
 
+  def previousPage(self):
+    """
+
+    http://tabulator.info/docs/4.1/page
+
+    :return:
+    """
+    return JsObjects.JsPromise("previousPage()")
+
+  def nextPage(self):
+    """
+
+    http://tabulator.info/docs/4.1/page
+
+    :return:
+    """
+    return JsObjects.JsPromise("nextPage()")
+
+  def setPage(self, i):
+    """
+
+    http://tabulator.info/docs/4.1/page
+
+    :param i:
+    :return:
+    """
+    return JsObjects.JsPromise("setPage(%s)" % i)
+
+  def setPageSize(self, i):
+    """
+
+    http://tabulator.info/docs/4.1/page
+
+    :param i:
+    :return:
+    """
+    return self.fnc_closure("setPageSize(%s)" % i)
+
   def setGroupBy(self, column):
     """
     You can use the setGroupBy function to change the fields that rows are grouped by.
@@ -866,6 +904,32 @@ class Tabulator(JsPackage):
     :return:
     """
     return JsObjects.JsNumber.JsNumber("%s.getRowPosition(%s, %s)" % (self.toStr(), row, bool))
+
+  def getPageSize(self):
+    """
+
+    http://tabulator.info/docs/4.1/page
+
+    :return:
+    """
+    return JsObjects.JsNumber.JsNumber("%s.getPageSize()")
+
+  def getPage(self):
+    """
+
+    http://tabulator.info/docs/4.1/page
+
+    :return:
+    """
+    return JsObjects.JsNumber.JsNumber("%s.getPage()")
+
+  def getPageMax(self):
+    """
+    http://tabulator.info/docs/4.1/page
+
+    :return:
+    """
+    return JsObjects.JsNumber.JsNumber("%s.getPageMax()")
 
   def getRowFromPosition(self, n, bool=True):
     """

@@ -7,7 +7,11 @@ class DataBreakPoints(DataClass):
   @property
   def name(self):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     https://datatables.net/reference/option/responsive.breakpoints
     """
     return self._attrs["name"]
@@ -19,7 +23,11 @@ class DataBreakPoints(DataClass):
   @property
   def width(self):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     https://datatables.net/reference/option/responsive.breakpoints
     """
     return self._attrs["width"]
@@ -34,7 +42,11 @@ class DataDetails(DataClass):
   @property
   def type(self):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     https://datatables.net/reference/option/responsive.details
     """
     return self._attrs["type"]
@@ -46,8 +58,12 @@ class DataDetails(DataClass):
   @property
   def display(self):
     """
+    Description:
+    -----------
     Responsive provides the ability to show information about the columns it has hidden using DataTables child rows feature (row().child()), but you may wish to display the data in a different manner (potentially so you can use the child rows for other actions such as editing) - this parameter provides that ability.
 
+    Related Pages:
+    --------------
     https://datatables.net/reference/option/responsive.details.display
     """
     return self._attrs["display"]
@@ -59,7 +75,12 @@ class DataDetails(DataClass):
   @property
   def renderer(self):
     """
+    Description:
+    -----------
 
+
+    Related Pages:
+    --------------
     https://datatables.net/reference/option/responsive.details.renderer
     """
     return self._attrs["renderer"]
@@ -71,7 +92,11 @@ class DataDetails(DataClass):
   @property
   def target(self):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     https://datatables.net/reference/option/responsive.details.target
     """
     return self._attrs["target"]
@@ -90,8 +115,12 @@ class Responsive(DataClass):
   @property
   def details(self):
     """
+    Description:
+    -----------
     Responsive has the ability to use DataTables' child rows feature to show information about any columns which have been removed from the display as a child row, which can be particularly useful for displaying complex information on small screen devices. Please see the Responsive manual on the details rows for further information.
 
+    Related Pages:
+    --------------
     https://datatables.net/reference/option/responsive.details
 
     :rtype: DataDetails
@@ -101,9 +130,13 @@ class Responsive(DataClass):
   @property
   def breakpoints(self):
     """
+    Description:
+    -----------
     The visibility of columns in a DataTable with Responsive enabled can be controlled by breakpoints and class names matching those breakpoints (and other logical operations) .
     This provides the ability to exactly control which columns in a table will be visible for each device type. See the Responsive manual for more information.
 
+    Related Pages:
+    --------------
     https://datatables.net/reference/option/responsive.breakpoints
 
     :rtype: DataBreakPoints
@@ -113,8 +146,12 @@ class Responsive(DataClass):
   @property
   def orthogonal(self):
     """
+    Description:
+    -----------
     When Responsive is asked to show the hidden information about a DataTable row, it uses the cell().render() method to access this data for each cell in the row. This method provides DataTables ability to make use of orthogonal data - that is, the same data but formatted in a different way for different uses.
 
+    Related Pages:
+    --------------
     https://datatables.net/reference/option/responsive.details.target
     """
     return self._attrs["orthogonal"]

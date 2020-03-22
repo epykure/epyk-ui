@@ -1,26 +1,15 @@
 
 from epyk.core.html import Html
 
-from epyk.core.html.graph import GraphFabric
-from epyk.core.js.objects import JsChartDC
-
-# The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsCharts
+from epyk.core.js.packages import JsDc
 
 
 class Chart(Html.Html):
   name, category, callFnc = 'DC', 'Charts', 'dc'
   __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
-  # _grpCls = CssGrpClsCharts.CssClassCharts
 
   def __init__(self,  report, width, height, title, options, htmlCode, profile):
-    self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
-    super(Chart, self).__init__(report, [], code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                heightUnit=height[1], profile=profile)
-    resolvedOptions, self._chart = {}, None
-    self.chart.rAttr(options, resolvedOptions)
-    self.chart.update(resolvedOptions)
-    #self.chart.data.attach(self)
+    super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
 
   @property
   def chartId(self):
@@ -29,55 +18,100 @@ class Chart(Html.Html):
     """
     return "chart_%s" % self.htmlId
 
-  @property
-  def chart(self):
-    return self._chart
-
-  @chart.setter
-  def chart(self, js_chart):
-    self._chart = js_chart
-
-  # -----------------------------------------------------------------------------------------
-  #                                STANDARD HTML METHODS
-  # -----------------------------------------------------------------------------------------
-  def onDocumentLoadVar(self): pass  # Data should be registered externally
-  def onDocumentLoadFnc(self): return True
-
-  def onDocumentReady(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.jsGenerate(jsData=None))
-
-  def jsDataSrc(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=None, jsFnc=None):
-    jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
-    return '%(dataId)s = %(jsData)s' % {"dataId": self.chart.data._jqId, 'jsData': jsData}
-
-  def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsId=None):
-    return '''
-      var data = crossfilter(%(data)s);
-      var runDimension = data.dimension(function(d) {return d.name});
-      var speedSumGroup = runDimension.group().reduceSum(function(d) {return d.count});
-      
-      window['%(htmlId)s_chart'] = dc.%(jsCls)s('#%(htmlId)s')
-        .x(d3.scaleBand()).xUnits(dc.units.ordinal)
-        .keyAccessor(function (p) {return p.key })
-        .valueAccessor(function (p) { return p.value })
-        .radiusValueAccessor(function (p) { return 1 })
-        .dimension(runDimension).group(speedSumGroup);
-      window['%(htmlId)s_chart'].render()
-      ''' % {'htmlId': self.htmlId, 'jsCls': self.chart.jsCls, 'data': self.chart.data}
+  def build(self, data=None, options=None, profile=False):
+    return self.dom.render().toStr()
 
   def __str__(self):
-    strChart = '<div id="%s" style="height:%spx;width:100%%"></div>' % (self.htmlId, self.height-30)
-    return GraphFabric.Chart.html(self, self.get_attrs(withId=False, pyClassNames=self.style.get_classes()), strChart)
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class ChartLine(Chart):
   __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
 
   @property
-  def chart(self):
+  def dom(self):
     """
-    :rtype: JsNvd3.JsNvd3Line
+    :rtype: JsChartDC.JsLine
     """
-    if self._chart is None:
-      self._chart = JsChartDC.JsLine(self._report, [], {'static': {}, 'dynamic': {}})
-    return self._chart
+    if self._dom is None:
+      self._dom = JsDc.Line(self._report, varName=self.chartId, parent=self)
+    return self._dom
+
+
+class ChartBar(Chart):
+  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsChartDC.JsLine
+    """
+    if self._dom is None:
+      self._dom = JsDc.Bar(self._report, varName=self.chartId, parent=self)
+    return self._dom
+
+
+class ChartRow(Chart):
+  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsChartDC.JsLine
+    """
+    if self._dom is None:
+      self._dom = JsDc.Row(self._report, varName=self.chartId, parent=self)
+    return self._dom
+
+
+class ChartScatter(Chart):
+  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsDc.Scatter
+    """
+    if self._dom is None:
+      self._dom = JsDc.Scatter(self._report, varName=self.chartId, parent=self)
+    return self._dom
+
+
+class ChartPie(Chart):
+  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsDc.Sunburst
+    """
+    if self._dom is None:
+      self._dom = JsDc.Pie(self._report, varName=self.chartId, parent=self)
+    return self._dom
+
+
+class ChartSunburst(Chart):
+  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsDc.Sunburst
+    """
+    if self._dom is None:
+      self._dom = JsDc.Sunburst(self._report, varName=self.chartId, parent=self)
+    return self._dom
+
+
+class ChartSeries(Chart):
+  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
+
+  @property
+  def dom(self):
+    """
+    :rtype: JsDc.Series
+    """
+    if self._dom is None:
+      self._dom = JsDc.Series(self._report, varName=self.chartId, parent=self)
+    return self._dom

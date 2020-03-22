@@ -1,13 +1,3 @@
-"""
-CrossFilter API
-
-https://github.com/square/crossfilter/wiki/API-Reference
-
-Example
-https://jsfiddle.net/LouisNicolle/k4h8rpmb/2/
-https://gist.github.com/phoebebright/3822981
-
-"""
 
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage

@@ -1,16 +1,6 @@
-"""
-Interface to the Javascript DC Chart library
 
-https://dc-js.github.io/dc.js/docs/html/
-
-Example
-https://bl.ocks.org/jun9/raw/5631952/
-https://jsfiddle.net/LouisNicolle/k4h8rpmb/
-
-"""
-
-from epyk.core.js.configs import JsConfig
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsPackage
 
 
 class JsChartDCLinks(object):
@@ -40,13 +30,10 @@ class JsChartDCLinks(object):
     pass
 
 
-class JsBase(JsConfig.JsConfig):
+class JsBase(JsPackage):
   """
   Base Class for the DC Charts
   """
-  listAttributes = []
-  jsCls = None
-
   def version(self, no=None):
     """
     Return or change the underlying Javascript package version
@@ -274,16 +261,6 @@ class JsBase(JsConfig.JsConfig):
     self._js.append("render()")
     return self
 
-  def toStr(self):
-    """
-    Returns the Javascript String representation
-
-    :return:
-    """
-    ctx = []
-    self.resolveDict(dict([(key, val) for key, val in self.items() if val]), ctx)
-    return "{%s}" % ", ".join(ctx)
-
 
 class JsLine(JsBase):
   """
@@ -303,7 +280,6 @@ class JsBar(JsBase):
   name = 'Bars'
   jsCls = 'barChart'
   _attrs = {}
-
 
   def xAxisLabel(self, labelText=None, padding=None):
     """
@@ -380,5 +356,4 @@ class JsRow(JsBase):
   name = 'Horizontal Bar Chart'
   jsCls = 'rowChart'
   _attrs = {}
-
 

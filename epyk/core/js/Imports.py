@@ -190,8 +190,35 @@ JS_IMPORTS = {
     ],
     'modules': [
       {'reqAlias': 'datatables', 'script': 'jquery.dataTables.min.js', 'version': '1.10.19', 'path': 'datatables/%(version)s/js/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'dataTables.buttons.min.js', 'version': '1.0.1', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'dataTables.responsive.min.js', 'version': '2.1.1', 'path': 'responsive/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+  ]},
+
+  # Datatable Buttons
+  'datatables-buttons': {
+    'website': 'https://datatables.net/extensions/buttons/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'dataTables.buttons.min.js', 'version': '1.6.1', 'path': 'buttons/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
+  # Datatable Select
+  'datatables-select': {
+    'website': 'https://datatables.net/extensions/select/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'dataTables.select.min.js', 'version': '1.3.1', 'path': 'select/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
+  # Datatable Scroller
+  'datatables-scroller': {
+    'website': 'https://datatables.net/extensions/scroller/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'dataTables.scroller.min.js', 'version': '2.0.1', 'path': 'scroller/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
+  # Datatable responsive
+  'datatables-responsive': {
+    'website': 'https://datatables.net/extensions/responsive/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'dataTables.responsive.min.js', 'version': '2.2.3', 'path': 'responsive/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable KeyTable
   'datatables-keytable': {
@@ -644,17 +671,44 @@ CSS_IMPORTS = {
     'website': 'https://datatables.net/',
     'req': [{'alias': 'bootstrap'}],
     'modules': [
-      {'script': 'jquery.dataTables.min.css', 'version': '1.10.19', 'path': '%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'responsive.dataTables.min.css', 'version': '2.1.1', 'path': 'responsive/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'},
-      {'script': 'buttons.dataTables.min.css', 'version': '1.5.2', 'path': 'buttons/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'jquery.dataTables.min.css', 'version': '1.10.19', 'path': '%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}
+  ]},
+
+  # Datatable Buttons
+  'datatables-buttons': {
+    'website': 'https://datatables.net/extensions/buttons/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'buttons.dataTables.min.css', 'version': '1.6.1', 'path': 'buttons/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
+  # Datatable Select
+  'datatables-select': {
+    'website': 'https://datatables.net/extensions/select/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'select.dataTables.min.css', 'version': '1.3.1', 'path': 'select/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
+  # Datatable Scroller
+  'datatables-scroller': {
+    'website': 'https://datatables.net/extensions/scroller/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'scroller.dataTables.min.css', 'version': '2.0.1', 'path': 'scroller/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
+  # Datatable Responsive
+  'datatables-responsive': {
+    'website': 'https://datatables.net/extensions/responsive/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'responsive.dataTables.min.css', 'version': '2.2.3', 'path': 'responsive/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
 
   # Datatable KeyTable
   'datatables-keytable': {
     'website': 'https://datatables.net/extensions/keytable/',
     'req': [{'alias': 'datatables'}],
     'modules': [
-      {'script': 'keyTable.dataTables.min.css', 'version': '2.5.1', 'path': 'keytable/%(version)s/css/',
-       'cdnjs': 'https://cdn.datatables.net'}]},
+      {'script': 'keyTable.dataTables.min.css', 'version': '2.5.1', 'path': 'keytable/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Datatable autoFill
   'datatables-autoFill': {
