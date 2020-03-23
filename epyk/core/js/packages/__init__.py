@@ -2,6 +2,27 @@ from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
+def jsImport(jsPackage):
+  def wrap(func):
+    def inner(rptObj, *args, **kwargs):
+      rptObj.jsImports.add(jsPackage)
+      return func(rptObj, *args, **kwargs)
+
+    return inner
+
+  return wrap
+
+def cssImport(cssPackage):
+  def wrap(func):
+    def inner(rptObj, *args, **kwargs):
+      rptObj.jsImports.add(cssPackage)
+      return func(rptObj, *args, **kwargs)
+
+    return inner
+
+  return wrap
+
+
 
 class JsPackage(object):
   lib_alias, lib_selector, lib_set_var = None, None, True
