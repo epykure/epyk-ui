@@ -392,11 +392,11 @@ class Column(DataClass):
   def field(self, val):
     self._attrs["field"] = val
 
-  def formatter_star(self, starts, **kwargs):
+  def formatter_text(self, **kwargs):
     """
     Description:
     -----------
-    The star formater displays a graphical star rating based on integer values.
+    The plaintext formater is the default formatter for all cells and will simply dispay the value of the cell as text.
 
     Related Pages:
     --------------
@@ -404,47 +404,110 @@ class Column(DataClass):
 
     Attributes:
     ----------
-    :param starts: maximum number of stars to be displayed (default 5)
+    :param kwargs:
     """
-    self._attrs["formatter"] = 'star'
-    formatParams = {"starts": starts}
-    for k, v in kwargs.items():
-      formatParams[k] = v
-    self._attrs["formatterParams"] = formatParams
+    self._attrs["formatter"] = 'plaintext'
     return self
 
-  def formatter_lookup(self, data):
+  def formatter_textarea(self, **kwargs):
     """
+    Description:
+    -----------
+    The textarea formater shows text with carriage returns intact (great for multiline text), this formatter will also adjust the height of rows to fit the cells contents when columns are resized.
 
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param kwargs:
     """
-    self._attrs["formatter"] = 'lookup'
-    self._attrs['formatterParams'] = data
+    self._attrs["formatter"] = 'textarea'
     return self
 
-  @jsImport('tabulator-inputs')
-  def formatter_lookup_pivot(self, lookups, pivot, css=None, **kwargs):
+  def formatter_html(self, **kwargs):
+    """
+    Description:
+    -----------
+    he html formater displays un-sanitized html.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'html'
+    return self
+
+  def formatter_money(self, decimal=",", thousand=".", precision=False, symbol=None, symbolAfter=None, **kwargs):
+    """
+    Description:
+    -----------
+    The money formater formats a number into currency notation (eg. 1234567.8901 -> 1,234,567.89).
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param decimal: Symbol to represent the decimal point (default ".")
+    :param thousand: Symbol to represent the thousands seperator (default ",")
+    :param precision: the number of decimals to display (default is 2), setting this value to false will display however many decimals are provided with the number
+    :param symbol: currency symbol (no default)
+    :param symbolAfter: position the symbol after the number (default false)
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'formatterParams'
+    return self
+
+  def formatter_icon(self, css=None, tags=None, **kwargs):
     """
 
-    :param lookups:
-    :param pivot:
     :param css:
+    :param tags:
+    :param kwargs:
     """
-    self._attrs["formatter"] = 'lookupPivot'
-    formatParams = {'lookups': lookups, "pivot": pivot}
+    self._report.jsImports.add('tabulator-icons')
+    self._attrs["formatter"] = 'icon'
+    self._attrs["formatterParams"] = {}
     if css is not None:
-      formatParams['css'] = css
+      self._attrs["css"] = css
+    if tags is not None:
+      self._attrs["tags"] = tags
     for k, v in kwargs.items():
-      formatParams[k] = v
-    self._attrs['formatterParams'] = formatParams
+      self._attrs["formatterParams"][k] = v
     return self
 
-  def formatter_progress(self, colors):
+  def formatter_image(self, height=None, width=None, **kwargs):
     """
+    Description:
+    -----------
+    The image formater creates an img element with the src set as the value. (triggers the normalizeHeight function on the row on image load).
 
-    :param colors:
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param height: a CSS value for the height of the image
+    :param width: a CSS value for the width of the image
+    :param kwargs:
     """
-    self.formatter.progress()
-    self.formatterParams.color = colors
+    self._attrs["formatter"] = 'image'
+    formatParams = {}
+    if height is not None:
+      formatParams['height'] = height
+    if width is not None:
+      formatParams['width'] = width
+    self._attrs["formatterParams"] = formatParams
+    for k, v in kwargs.items():
+      self._attrs["formatterParams"][k] = v
     return self
 
   def formatter_link(self, label=None, url=None, target='_blank', urlPrefix=None, labelField=None, urlField=None, **kwargs):
@@ -469,6 +532,260 @@ class Column(DataClass):
     self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self'}
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     self._attrs["formatter"] = 'link'
+    return self
+
+  def formatter_datetime(self, inputFormat="YYYY-MM-DD", outputFormat="YYYY-MM-DD", invalidPlaceholder="(invalid date)"):
+    """
+    Description:
+    -----------
+    The datetime formater transforms on format of date or time into another.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param inputFormat:
+    :param outputFormat:
+    :param invalidPlaceholder:
+    """
+    self._attrs["formatter"] = 'datetime'
+    self._attrs["formatterParams"] = {"inputFormat": inputFormat, "outputFormat": outputFormat, "invalidPlaceholder": invalidPlaceholder}
+    return self
+
+  def formatter_tickcross(self, allowEmpty=True, allowTruthy=True, tickElement="<i class='fa fa-check'></i>", crossElement="<i class='fa fa-times'></i>"):
+    """
+    Description:
+    -----------
+    The tickCross formatter displays a green tick if the value is (true|'true'|'True'|1) and a red cross if not.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param allowEmpty: set to true to cause empty values (undefined, null, "") to display an empty cell instead of a cross (default false)
+    :param allowTruthy: set to true to allow any truthy value to show a tick (default false)
+    :param tickElement: custom HTML for the tick element, if set to false the tick element will not be shown (it will only show crosses)
+    :param crossElement: custom HTML for the cross element, if set to false the cross element will not be shown (it will only show ticks)
+    """
+    self._attrs["formatter"] = 'tickCross'
+    self._attrs["formatterParams"] = {'allowEmpty': allowEmpty, 'allowTruthy': allowTruthy, 'tickElement': tickElement,
+                                      'crossElement': crossElement}
+    return self
+
+  def formatter_color(self):
+    """
+    Description:
+    -----------
+    The color formater sets the background colour of the cell to the value. The cell's value can be any valid CSS color eg. #ff0000, #f00, rgb(255,0,0), red, rgba(255,0,0,0), hsl(0, 100%, 50%)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+    """
+    self._attrs["formatter"] = 'color'
+    return self
+
+  def formatter_star(self, starts, **kwargs):
+    """
+    Description:
+    -----------
+    The star formater displays a graphical star rating based on integer values.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param starts: maximum number of stars to be displayed (default 5)
+    """
+    self._attrs["formatter"] = 'star'
+    formatParams = {"starts": starts}
+    for k, v in kwargs.items():
+      formatParams[k] = v
+    self._attrs["formatterParams"] = formatParams
+    return self
+
+  def formatter_password(self, css=None, **kwargs):
+    """
+    Description:
+    -----------
+    Change the content of the cell to ****
+
+    Attributes:
+    ----------
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """
+    self._report.jsImports.add('tabulator-inputs')
+    self._attrs["formatter"] = 'password'
+    formatParams = {}
+    if css is not None:
+      formatParams['css'] = css
+    for k, v in kwargs.items():
+      formatParams[k] = v
+    return self
+
+  def formatter_progress(self, min, max, color, legend, legendColor, legendAlign, **kwargs):
+    """
+
+    :param min:
+    :param max:
+    :param color:
+    :param legend:
+    :param legendColor:
+    :param legendAlign:
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'progress'
+
+  def formatter_label_thresholds(self, thresholds, labels, css=None, **kwargs):
+    """
+    Description:
+    -----------
+    Set a label based on a list of values
+
+    Attributes:
+    ----------
+    :param thresholds: List. The different values to compare to deduce the category
+    :param labels: List. The resulting category
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """
+    self._report.jsImports.add('tabulator-inputs')
+    self._attrs["formatter"] = 'labelThresholds'
+    formatParams = {'thresholds': thresholds, 'labels': labels}
+    if css is not None:
+      formatParams['css'] = css
+    return self
+
+  def formatter_label_thresholds_pivot(self, pivot, thresholds, labels, css=None, **kwargs):
+    """
+    Description:
+    -----------
+    Set a label based on a list of values from another column
+
+    Attributes:
+    ----------
+    :param pivot: String. The column name to use to get the data to lookup from te row
+    :param thresholds: List. The different values to compare to deduce the category
+    :param labels: List. The resulting category
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """
+    self._report.jsImports.add('tabulator-inputs')
+    self._attrs["formatter"] = 'flagThresholdsPivot'
+    formatParams = {'thresholds': thresholds, 'labels': labels, 'pivot': pivot}
+    if css is not None:
+      formatParams['css'] = css
+    return self
+
+  def formatter_lookup(self, data):
+    """
+    Description:
+    -----------
+    The lookup formater looks up the value to display from a object passed into the formatterParams property, if not present it displays the current cell value
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param data: Dictionary for the lookup
+    """
+    self._attrs["formatter"] = 'lookup'
+    self._attrs['formatterParams'] = data
+    return self
+
+  @jsImport('tabulator-inputs')
+  def formatter_lookup_pivot(self, lookups, pivot, css=None, **kwargs):
+    """
+    Description:
+    -----------
+    Set a label based on a list of values
+
+    Attributes:
+    ----------
+    :param lookups:
+    :param pivot:
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    """
+    self._attrs["formatter"] = 'lookupPivot'
+    formatParams = {'lookups': lookups, "pivot": pivot}
+    if css is not None:
+      formatParams['css'] = css
+    for k, v in kwargs.items():
+      formatParams[k] = v
+    self._attrs['formatterParams'] = formatParams
+    return self
+
+  def formatter_buttonTick(self):
+    """
+    Description:
+    -----------
+    The buttonTick formater displays a tick icon on each row (for use as a button)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+    """
+    self._attrs["formatter"] = 'buttonTick'
+    return self
+
+  def formatter_buttonCross(self):
+    """
+    Description:
+    -----------
+    The buttonCross formater displays a cross icon on each row (for use as a button)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+    """
+    self._attrs["formatter"] = 'buttonCross'
+    return self
+
+  def formatter_rownum(self):
+    """
+    Description:
+    -----------
+    The rownum formatter shows an incrementing row number for each row as it is displayed
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+    """
+    self._attrs["formatter"] = 'rownum'
+    return self
+
+  def formatter_handle(self):
+    """
+    Description:
+    -----------
+    The handle formatter fills the cell with hamburger bars, to be used as a row handle
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+    """
+    self._attrs["formatter"] = 'handle'
+    return self
+
+  def formatter(self, formatter, formatterParams, moduleAlias):
+    """
+
+    :param formatter:
+    :param formatterParams:
+    :param moduleAlias:
+    """
+    self._report.jsImports.add(moduleAlias)
+    self._attrs["formatter"] = formatter
+    self._attrs['formatterParams'] = formatterParams
     return self
 
   @property
