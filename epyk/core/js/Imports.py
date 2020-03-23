@@ -125,6 +125,14 @@ def installed_packages():
 
 
 JS_IMPORTS = {
+  # numbers formmatting
+  'accounting': {
+    'modules': [
+      # Better to use the bundle version to avoid the import issue with popper.js
+      {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+    ],
+    'website': 'https://openexchangerates.github.io/accounting.js/'},
+
   # Plolyfill
   'promise-polyfill': {
     'modules': [
@@ -174,6 +182,40 @@ JS_IMPORTS = {
     ],
     'website': 'http://tabulator.info/'
   },
+
+  'tabulator-inputs': {
+    'req': [
+      {'alias': 'tabulator'},
+    ],
+    'modules': [
+      {'script': 'formatters-inputs.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+    ],
+    'website': 'http://tabulator.info/'
+  },
+
+  'tabulator-icons': {
+    'req': [
+      {'alias': 'tabulator'},
+    ],
+    'modules': [
+      # core only needed for Jupyter for some reasons
+      {'script': 'formatters-icons.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+    ],
+    'website': 'http://tabulator.info/'
+  },
+
+  'tabulator-numbers': {
+      'req': [
+        {'alias': 'tabulator'},
+        {'alias': 'accounting'},
+        {'alias': 'd3-packages'},
+      ],
+      'modules': [
+        # core only needed for Jupyter for some reasons
+        {'script': 'formatters-numbers.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+      ],
+      'website': 'http://tabulator.info/'
+    },
 
   # module for the awesome icons
   'font-awesome': {
