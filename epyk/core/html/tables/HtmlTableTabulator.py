@@ -576,13 +576,25 @@ class Column(DataClass):
     """
     return self.has_attribute(EnumFormatter)
 
-  def formatter_star(self, starts):
+  def formatter_star(self, starts, **kwargs):
     """
+    Description:
+    -----------
+    The star formater displays a graphical star rating based on integer values.
 
-    :param starts:
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param starts: maximum number of stars to be displayed (default 5)
     """
-    self.formatter.star()
-    self.formatterParams.stars = starts
+    self._attrs["formatter"] = 'star'
+    formatParams = {"starts": starts}
+    for k, v in kwargs.items():
+      formatParams[k] = v
+    self._attrs["formatterParams"] = formatParams
     return self
 
   def formatter_lookup(self, data):
