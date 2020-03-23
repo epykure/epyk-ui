@@ -16,24 +16,21 @@ class CssTabulatorFooter(CssStyle.Style):
   classname = "tabulator-footer"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'border': 'none',
-              'background': self.rptObj.theme.greys[0]}, important=True)
+    self.css({'color': self.rptObj.theme.greys[-1], 'border': 'none', 'background': self.rptObj.theme.greys[0]}, important=True)
 
 
 class CssTabulatorHeader(CssStyle.Style):
   classname = "tabulator-header"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[0], 'border': 'none',
-              'background': 'none'}, important=True)
+    self.css({'color': self.rptObj.theme.greys[0], 'border': 'none', 'background': 'none'}, important=True)
 
 
 class CssTabulatorHeaders(CssStyle.Style):
   classname = 'tabulator-headers'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[0], 'border': 'none',
-              'background': 'none'}, important=True)
+    self.css({'color': self.rptObj.theme.greys[0], 'border': 'none', 'background': 'none'}, important=True)
 
 
 class CssTabulatorSelected(CssStyle.Style):
@@ -63,8 +60,7 @@ class CssTabulatorFooterPagination(CssStyle.Style):
   classname = 'tabulator-page:not(.disabled)'
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[-1], 'border': 'none',
-              'background': self.rptObj.theme.greys[0]}, important=True)
+    self.css({'color': self.rptObj.theme.greys[-1], 'border': 'none', 'background': self.rptObj.theme.greys[0]}, important=True)
     self.hover.css({'color': self.rptObj.theme.colors[0], 'background': self.rptObj.theme.colors[-1]}, important=True)
 
 

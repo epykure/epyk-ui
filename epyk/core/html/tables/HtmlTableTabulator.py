@@ -56,7 +56,22 @@ class Table(Html.Html):
       self._js = JsTabulator.Tabulator(self._report, selector=self.tableId, setVar=False, parent=self)
     return self._js
 
+  def add_column(self, field, title=None):
+    """
+
+    :param field:
+    :param title:
+    """
+    col_def = self.config.columns
+    col_def.field = field
+    col_def.title = field if title is None else title
+    return col_def
+
   def get_column(self, by_title):
+    """
+
+    :param by_title:
+    """
     for c in self.config._attrs.get('columns', []):
       if c.title == by_title:
         return c
@@ -74,13 +89,13 @@ class Table(Html.Html):
 
 class EnumLayout(DataEnum):
 
-  def fitDataStretch(self): return self.set("fitDataStretch")
+  def fitDataStretch(self): return self.set()
 
-  def fitColumns(self): return self.set("fitColumns")
+  def fitColumns(self): return self.set()
 
-  def fitDataStretch(self): return self.set("fitDataStretch")
+  def fitDataStretch(self): return self.set()
 
-  def fitDataFill(self): return self.set("fitDataFill")
+  def fitDataFill(self): return self.set()
 
 
 class EnumSorter(DataEnum):
@@ -213,6 +228,7 @@ class EnumColCss(DataEnumMulti):
 
 
 class EnumFormatter(DataEnum):
+  js_conversion = True
 
   def money(self):
     """
@@ -235,6 +251,13 @@ class EnumFormatter(DataEnum):
     Renders data as an anchor with a link to the given value
 
     http://tabulator.info/examples/4.5#formatters
+    """
+    return self.set()
+
+  def lookup(self):
+    """
+
+    :return:
     """
     return self.set()
 
@@ -309,6 +332,10 @@ class EnumFormatter(DataEnum):
     """
     return self.set()
 
+  def extension(self, name, module_alias):
+    self._report.jsImports.add(module_alias)
+    return self.set(name)
+
 
 class FormatterParams(DataClass):
 
@@ -327,6 +354,54 @@ class FormatterParams(DataClass):
   @stars.setter
   def stars(self, val):
     self._attrs["stars"] = val
+
+  @property
+  def thresholds(self):
+    return self._attrs["thresholds"]
+
+  @thresholds.setter
+  def thresholds(self, val):
+    self._attrs["thresholds"] = val
+
+  @property
+  def labels(self):
+    return self._attrs["labels"]
+
+  @thresholds.setter
+  def labels(self, val):
+    self._attrs["labels"] = val
+
+  @property
+  def pivot(self):
+    return self._attrs["pivot"]
+
+  @pivot.setter
+  def pivot(self, val):
+    self._attrs["pivot"] = val
+
+  @property
+  def data(self):
+    return self._attrs
+
+  @data.setter
+  def data(self, val):
+    self._attrs = val
+
+  @property
+  def tags(self):
+    return self._attrs["tags"]
+
+  @tags.setter
+  def tags(self, val):
+    self._attrs["tags"] = val
+
+  @property
+  def css(self):
+    return self._attrs["css"]
+
+  @css.setter
+  def css(self, val):
+    self._attrs["css"] = val
 
 
 class Persistence(DataClass):
@@ -510,6 +585,14 @@ class Column(DataClass):
     self.formatterParams.stars = starts
     return self
 
+  def formatter_lookup(self, data):
+    """
+
+    """
+    self.formatter.lookup()
+    self._attrs['formatterParams'] = FormatterParams(self._report, attrs=data)
+    return self
+
   def formatter_progress(self, colors):
     """
 
@@ -517,6 +600,37 @@ class Column(DataClass):
     """
     self.formatter.progress()
     self.formatterParams.color = colors
+    return self
+
+  def formatter_link(self, label=None, url=None, target='_blank', urlPrefix=None, labelField=None, urlField=None, **kwargs):
+    """
+    Description:
+    -----------
+    The link formater renders data as an anchor with a link to the given value (by default the value will be used as both the url and the label of the tag).
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param label: a string representing the lable, or a function which must return the string for the label, the function is passed the Cell Component as its first argument
+    :param url:  a string representing the url, or a function which must return the string for the url, the function is passed the Cell Component as its first argument
+    :param target: a string representing the value of the anchor tags target artibute (eg. set to "_blank" to open link in new tab)
+    :param urlPrefix: a prefix to put before the url value (eg. to turn a emaill address into a clickable mailto link you should set this to "mailto:")
+    :param labelField: the field in the row data that should be used for the link lable
+    :param urlField: the field in the row data that should be used for the link url
+    """
+    self._attrs["formatter"] = 'link'
+    formatParams = {}
+    args = ["label", "url", "target", "urlPrefix", "labelField", "urlField"]
+    args_vals = [label, url, target, urlPrefix, labelField, urlField]
+    for i, a in enumerate(args):
+      if a is not None:
+        formatParams[a] = args_vals[i]
+    for k, v in kwargs.items():
+      formatParams[k] = v
+    self._attrs["formatterParams"] = formatParams
     return self
 
   @property
