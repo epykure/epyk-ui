@@ -227,183 +227,6 @@ class EnumColCss(DataEnumMulti):
     return self.set("tb-style-%s" % has_style)
 
 
-class EnumFormatter(DataEnum):
-  js_conversion = True
-
-  def money(self):
-    """
-    Formats a number into a currency notation (eg. 1234567.8901 -> 1,234,567.89)
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def image(self):
-    """
-    Creates an img element with the src set as the value. (triggers the normalizeHeight function on the row on image load)
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def link(self):
-    """
-    Renders data as an anchor with a link to the given value
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def lookup(self):
-    """
-
-    :return:
-    """
-    return self.set()
-
-  def textarea(self):
-    """
-
-    """
-    return self.set()
-
-  def tick(self):
-    """
-    Displays a green tick if the value is (true|'true'|'True'|1) and an empty cell if not
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def tickCross(self):
-    """
-    Displays a green tick if the value is (true|'true'|'True'|1) and a red cross if not
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def color(self):
-    """
-    Sets the background color of the cell to the value.
-    Can be any valid css colour eg. #ff0000, #f00, rgb(255,0,0), red, rgba(255,0,0,0), hsl(0, 100%, 50%)
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def star(self):
-    """
-    Displays a graphical 0-5 star rating based on integer values from 0-5
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def progress(self):
-    """
-    Displays a progress bar that fills the cell from left to right, using values 0-100 as a percentage of width
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def buttonTick(self):
-    """
-    displays a tick icon on each row (for use as a button)
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def buttonCross(self):
-    """
-    Displays a cross icon on each row (for use as a button)
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def rownum(self):
-    """
-    Shows an incrementing row number for each row.
-
-    http://tabulator.info/examples/4.5#formatters
-    """
-    return self.set()
-
-  def extension(self, name, module_alias):
-    self._report.jsImports.add(module_alias)
-    return self.set(name)
-
-
-class FormatterParams(DataClass):
-
-  @property
-  def color(self):
-    return self._attrs["color"]
-
-  @color.setter
-  def color(self, val):
-    self._attrs["color"] = val
-
-  @property
-  def stars(self):
-    return self._attrs["stars"]
-
-  @stars.setter
-  def stars(self, val):
-    self._attrs["stars"] = val
-
-  @property
-  def thresholds(self):
-    return self._attrs["thresholds"]
-
-  @thresholds.setter
-  def thresholds(self, val):
-    self._attrs["thresholds"] = val
-
-  @property
-  def labels(self):
-    return self._attrs["labels"]
-
-  @thresholds.setter
-  def labels(self, val):
-    self._attrs["labels"] = val
-
-  @property
-  def pivot(self):
-    return self._attrs["pivot"]
-
-  @pivot.setter
-  def pivot(self, val):
-    self._attrs["pivot"] = val
-
-  @property
-  def data(self):
-    return self._attrs
-
-  @data.setter
-  def data(self, val):
-    self._attrs = val
-
-  @property
-  def tags(self):
-    return self._attrs["tags"]
-
-  @tags.setter
-  def tags(self, val):
-    self._attrs["tags"] = val
-
-  @property
-  def css(self):
-    return self._attrs["css"]
-
-  @css.setter
-  def css(self, val):
-    self._attrs["css"] = val
-
-
 class Persistence(DataClass):
 
   @property
@@ -568,14 +391,6 @@ class Column(DataClass):
   def field(self, val):
     self._attrs["field"] = val
 
-  @property
-  def formatter(self):
-    """
-
-    :rtype: EnumFormatter
-    """
-    return self.has_attribute(EnumFormatter)
-
   def formatter_star(self, starts, **kwargs):
     """
     Description:
@@ -590,6 +405,7 @@ class Column(DataClass):
     ----------
     :param starts: maximum number of stars to be displayed (default 5)
     """
+    self._report.jsImports.add('tabulator-inputs')
     self._attrs["formatter"] = 'star'
     formatParams = {"starts": starts}
     for k, v in kwargs.items():
@@ -601,8 +417,25 @@ class Column(DataClass):
     """
 
     """
-    self.formatter.lookup()
-    self._attrs['formatterParams'] = FormatterParams(self._report, attrs=data)
+    self._attrs["formatter"] = 'lookup'
+    self._attrs['formatterParams'] = data
+    return self
+
+  def formatter_lookup_pivot(self, lookups, pivot, css=None, **kwargs):
+    """
+
+    :param lookups:
+    :param pivot:
+    :param css:
+    """
+
+    self._attrs["formatter"] = 'lookupPivot'
+    formatParams = {'lookups': lookups, "pivot": pivot}
+    if css is not None:
+      formatParams['css'] = css
+    for k, v in kwargs.items():
+      formatParams[k] = v
+    self._attrs['formatterParams'] = formatParams
     return self
 
   def formatter_progress(self, colors):
@@ -644,14 +477,6 @@ class Column(DataClass):
       formatParams[k] = v
     self._attrs["formatterParams"] = formatParams
     return self
-
-  @property
-  def formatterParams(self):
-    """
-
-    :rtype: FormatterParams
-    """
-    return self.has_attribute(FormatterParams)
 
   @property
   def frozen(self):
