@@ -528,16 +528,9 @@ class Column(DataClass):
     :param labelField: the field in the row data that should be used for the link lable
     :param urlField: the field in the row data that should be used for the link url
     """
+    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self'}
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     self._attrs["formatter"] = 'link'
-    formatParams = {}
-    args = ["label", "url", "target", "urlPrefix", "labelField", "urlField"]
-    args_vals = [label, url, target, urlPrefix, labelField, urlField]
-    for i, a in enumerate(args):
-      if a is not None:
-        formatParams[a] = args_vals[i]
-    for k, v in kwargs.items():
-      formatParams[k] = v
-    self._attrs["formatterParams"] = formatParams
     return self
 
   def formatter_datetime(self, inputFormat="YYYY-MM-DD", outputFormat="YYYY-MM-DD", invalidPlaceholder="(invalid date)"):
