@@ -405,7 +405,6 @@ class Column(DataClass):
     ----------
     :param starts: maximum number of stars to be displayed (default 5)
     """
-    self._report.jsImports.add('tabulator-inputs')
     self._attrs["formatter"] = 'star'
     formatParams = {"starts": starts}
     for k, v in kwargs.items():
@@ -428,7 +427,7 @@ class Column(DataClass):
     :param pivot:
     :param css:
     """
-
+    self._report.jsImports.add('tabulator-inputs')
     self._attrs["formatter"] = 'lookupPivot'
     formatParams = {'lookups': lookups, "pivot": pivot}
     if css is not None:
