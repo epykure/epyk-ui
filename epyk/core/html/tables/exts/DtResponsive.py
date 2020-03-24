@@ -148,7 +148,10 @@ class Responsive(DataClass):
     """
     Description:
     -----------
-    When Responsive is asked to show the hidden information about a DataTable row, it uses the cell().render() method to access this data for each cell in the row. This method provides DataTables ability to make use of orthogonal data - that is, the same data but formatted in a different way for different uses.
+    When Responsive is asked to show the hidden information about a DataTable row,
+    it uses the cell().render() method to access this data for each cell in the row.
+    This method provides DataTables ability to make use of orthogonal data - that is,
+    the same data but formatted in a different way for different uses.
 
     Related Pages:
     --------------

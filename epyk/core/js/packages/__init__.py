@@ -5,10 +5,11 @@ from epyk.core.js import JsUtils
 def packageImport(jsPackage=None, cssPackage=None):
   def wrap(func):
     def inner(rptObj, *args, **kwargs):
+      report = getattr(rptObj, '_report') if getattr(rptObj, '_report', None) else rptObj
       if jsPackage:
-        rptObj.jsImports.add(jsPackage)
+        report.jsImports.add(jsPackage)
       if cssPackage:
-        rptObj.jsImports.add(cssPackage)
+        report.cssImport.add(cssPackage)
       return func(rptObj, *args, **kwargs)
 
     return inner
