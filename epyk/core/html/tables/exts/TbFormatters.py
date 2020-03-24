@@ -23,6 +23,32 @@ class ExtsFormattors(DataGroup):
       self._attrs["formatterParams"][k] = v
     return self
 
+  @packageImport('tabulator-icons')
+  def icon_pivot(self, iconMapping, pivot=None, cssMapping=None, tags=None, **kwargs):
+    """
+    Description:
+    -----------
+    Set an icon in the cell based on a lookup table based on another value in the row
+    Default will take the cell value as icon classname
+
+    Attributes:
+    ----------
+    :param pivot: String. The column field in the row
+    :param iconMapping: Dictionary. A Icon classname mapping
+    :param cssMapping: Dictionary. A CSS mapping for the icons containers
+    :param tags: Optional. A dictionary with the different Dom tags to be addeed
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'iconMapPivot'
+    self._attrs["formatterParams"] = {'pivot': pivot or self._attrs["field"], 'iconMapping': iconMapping}
+    if cssMapping is not None:
+      self._attrs["cssMapping"] = cssMapping
+    if tags is not None:
+      self._attrs["tags"] = tags
+    for k, v in kwargs.items():
+      self._attrs["formatterParams"][k] = v
+    return self
+
   @packageImport('tabulator-inputs')
   def password(self, css=None, **kwargs):
     """
