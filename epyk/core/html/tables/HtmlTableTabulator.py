@@ -456,6 +456,8 @@ class Column(DataClass):
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
+
+
   def editor_autocomplete(self, values, showListOnEmpty=None, freetext=None, allowEmpty=None, searchFunc=None,
                           listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
                           verticalNavigation=None, **kwargs):
@@ -575,6 +577,7 @@ class Column(DataClass):
       self._attrs["editorParams"] = kwargs
     return self
 
+  @packageImport('tabulator-icons')
   def formatter_icon(self, css=None, tags=None, **kwargs):
     """
 
@@ -582,7 +585,6 @@ class Column(DataClass):
     :param tags:
     :param kwargs:
     """
-    self._report.jsImports.add('tabulator-icons')
     self._attrs["formatter"] = 'icon'
     self._attrs["formatterParams"] = {}
     if css is not None:
@@ -730,6 +732,7 @@ class Column(DataClass):
     self._attrs["formatterParams"] = formatParams
     return self
 
+  @packageImport('tabulator-inputs')
   def formatter_password(self, css=None, **kwargs):
     """
     Description:
@@ -741,7 +744,6 @@ class Column(DataClass):
     :param css: Dictionary. The CSS attributes for the cell (Optional)
     :param kwargs:
     """
-    self._report.jsImports.add('tabulator-inputs')
     self._attrs["formatter"] = 'password'
     formatParams = {}
     if css is not None:
@@ -766,6 +768,7 @@ class Column(DataClass):
       self._attrs["formatterParams"] = kwargs
     return self
 
+  @packageImport('tabulator-numbers')
   def formatter_label_thresholds(self, thresholds, labels, css=None, **kwargs):
     """
     Description:
@@ -778,8 +781,7 @@ class Column(DataClass):
     :param labels: List. The resulting category
     :param css: Dictionary. The CSS attributes for the cell (Optional)
     :param kwargs:
-    """
-    self._report.jsImports.add('tabulator-inputs')
+    """#
     self._attrs["formatter"] = 'labelThresholds'
     formatParams = {'thresholds': thresholds, 'labels': labels}
     if css is not None:
@@ -788,6 +790,7 @@ class Column(DataClass):
       self._attrs["formatterParams"].update(kwargs)
     return self
 
+  @packageImport('tabulator-numbers')
   def formatter_label_thresholds_pivot(self, pivot, thresholds, labels, css=None, **kwargs):
     """
     Description:
@@ -801,8 +804,7 @@ class Column(DataClass):
     :param labels: List. The resulting category
     :param css: Dictionary. The CSS attributes for the cell (Optional)
     :param kwargs:
-    """
-    self._report.jsImports.add('tabulator-inputs')
+    """#
     self._attrs["formatter"] = 'flagThresholdsPivot'
     formatParams = {'thresholds': thresholds, 'labels': labels, 'pivot': pivot}
     if css is not None:
@@ -811,6 +813,7 @@ class Column(DataClass):
       self._attrs["formatterParams"].update(kwargs)
     return self
 
+  @packageImport('tabulator-numbers')
   def formatter_number(self, decimal=None, thousand=None, precision=None, symbol=None, format=None, css=None, **kwargs):
     """
 
@@ -821,13 +824,13 @@ class Column(DataClass):
     :param format:
     :param css: Dictionary. The CSS attributes for the cell (Optional)
     :param kwargs:
-    """
-    self._report.jsImports.add('tabulator-numbers')
+    """#
     self._attrs["formatter"] = 'numbers'
     self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self'}
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
+  @packageImport('tabulator-numbers')
   def formatter_number_format(self, decimal, thousand, precision, symbol, format, colors=None, threshold=0, css=None, **kwargs):
     """
 
@@ -838,8 +841,7 @@ class Column(DataClass):
     :param format: String. "%s%v" controls output: %s = symbol, %v = value/number (can be object: see below)
     :param css: Dictionary. The CSS attributes for the cell (Optional)
     :param kwargs:
-    """
-    self._report.jsImports.add('tabulator-numbers')
+    """#
     if colors is None:
       colors = [self._report.theme.danger[1], self._report.theme.success[1]]
     self._attrs["formatter"] = 'numbersFormat'
@@ -847,6 +849,7 @@ class Column(DataClass):
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
+  @packageImport('tabulator-numbers')
   def formatter_number_difference(self, decimal=None, thousand=None, precision=None, symbol=None, format=None,
                                   colors=None, threshold=0, css=None, **kwargs):
     """
@@ -860,8 +863,7 @@ class Column(DataClass):
     :param threshold: Integer. The threshold number
     :param css: Dictionary. The CSS attributes for the cell (Optional)
     :param kwargs:
-    """
-    self._report.jsImports.add('tabulator-numbers')
+    """#
     if colors is None:
       colors = [self._report.theme.danger[1], self._report.theme.success[1]]
     self._attrs["formatter"] = 'numbersDifference'
@@ -869,19 +871,20 @@ class Column(DataClass):
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
+  @packageImport('tabulator-numbers')
   def formatter_number_thresholds(self, thresholds, css, **kwargs):
     """
 
     :param thresholds:
     :param css:
     :param kwargs:
-    """
-    self._report.jsImports.add('tabulator-numbers')
+    """#
     self._attrs["formatter"] = 'numbersThreshold'
     self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css}
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
+  @packageImport('tabulator-numbers')
   def formatter_number_thresholds_pivot(self, pivot, thresholds, css, **kwargs):
     """
 
@@ -891,12 +894,12 @@ class Column(DataClass):
     :param kwargs:
     :return:
     """
-    self._report.jsImports.add('tabulator-numbers')
     self._attrs["formatter"] = 'numbersThresholdPivot'
     self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css, 'pivot': pivot}
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
+  @packageImport('tabulator-numbers')
   def formatter_intensity(self, steps, colors, intensity, css=None, **kwargs):
     """
 
@@ -906,7 +909,6 @@ class Column(DataClass):
     :param css:
     :param kwargs:
     """
-    self._report.jsImports.add('tabulator-numbers')
     self._attrs["formatter"] = 'numbersIntensity'
     self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity}
     if css is not None:
@@ -914,6 +916,7 @@ class Column(DataClass):
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
+  @packageImport('tabulator-numbers')
   def formatter_quality(self, steps, colors, intensity, quality, css=None, **kwargs):
     """
 
@@ -924,7 +927,6 @@ class Column(DataClass):
     :param css:
     :param kwargs:
     """
-    self._report.jsImports.add('tabulator-numbers')
     self._attrs["formatter"] = 'numbersIntensity'
     self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity, 'quality': quality}
     if css is not None:
