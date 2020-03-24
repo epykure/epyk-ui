@@ -3,6 +3,7 @@ import hashlib
 
 from epyk.core.html import Html
 
+from epyk.core.js.packages import packageImport
 from epyk.core.js.packages import JsTabulator
 
 from epyk.core.data import DataClass
@@ -822,6 +823,7 @@ class Column(DataClass):
     self._attrs['formatterParams'] = data
     return self
 
+  @packageImport('tabulator-inputs')
   def formatter_lookup_pivot(self, lookups, pivot, css=None, **kwargs):
     """
     Description:
@@ -834,7 +836,6 @@ class Column(DataClass):
     :param pivot:
     :param css: Dictionary. The CSS attributes for the cell (Optional)
     """
-    self._report.jsImports.add('tabulator-inputs')
     self._attrs["formatter"] = 'lookupPivot'
     formatParams = {'lookups': lookups, "pivot": pivot}
     if css is not None:
