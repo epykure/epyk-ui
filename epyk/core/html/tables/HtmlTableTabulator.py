@@ -3,7 +3,6 @@ import hashlib
 
 from epyk.core.html import Html
 
-from epyk.core.js.packages import packageImport
 from epyk.core.js.packages import JsTabulator
 
 from epyk.core.data import DataClass
@@ -272,6 +271,75 @@ class EnumColCss(DataEnumMulti):
     return self.set("tb-style-%s" % has_style)
 
 
+class PersistenceGroup(DataClass):
+
+  @property
+  def groupBy(self):
+    """
+    persist only the groupBy setting
+
+    :return:
+    """
+    return self._attrs["groupBy"]
+
+  @groupBy.setter
+  def groupBy(self, val):
+    self._attrs["groupBy"] = val
+
+  @property
+  def groupStartOpen(self):
+    return self._attrs["groupStartOpen"]
+
+  @groupStartOpen.setter
+  def groupStartOpen(self, val):
+    self._attrs["groupStartOpen"] = val
+
+  @property
+  def groupHeader(self):
+    return self._attrs["groupHeader"]
+
+  @groupHeader.setter
+  def groupHeader(self, val):
+    self._attrs["groupHeader"] = val
+
+
+class PersistencePage(DataClass):
+
+  @property
+  def size(self):
+    """
+    Description:
+    -----------
+    persist the current page size
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/release#persistence
+    """
+    return self._attrs["size"]
+
+  @size.setter
+  def size(self, val):
+    self._attrs["size"] = val
+
+  @property
+  def page(self):
+    """
+    Description:
+    -----------
+    do not persist the current page
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/release#persistence
+    """
+    return self._attrs["page"]
+
+  @page.setter
+  def page(self, val):
+    self._attrs["page"] = val
+
+
 class Persistence(DataClass):
 
   @property
@@ -307,6 +375,36 @@ class Persistence(DataClass):
   @filter.setter
   def filter(self, val):
     self._attrs["filter"] = val
+
+  @property
+  def group(self):
+    """
+    Description:
+    -----------
+    You can ensure the row grouping settings are stored for the next page load by setting the group property of the persistence option to true
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/release#persistence
+
+    :rtype: PersistenceGroup
+    """
+    return self.has_attribute(PersistenceGroup)
+
+  @property
+  def page(self):
+    """
+    Description:
+    -----------
+    You can ensure the pagination settings are stored for the next page load by setting the page property of the persistence option to true
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/release#persistence
+
+    :rtype: PersistencePage
+    """
+    return self.has_attribute(PersistencePage)
 
   @property
   def columns(self):
@@ -819,467 +917,136 @@ class Formattors(DataGroup):
     return self
 
 
-class ExtsEditors(DataGroup):
+class Validators(DataGroup):
 
-  def text(self, cssMapping, search=True, elementAttributes=None, **kwargs):
+  def required(self):
     """
     Description:
     -----------
-    The input editor allows entering of a single line of plain text
+    The required validator allows values that are not null or an empty string
 
     Related Pages:
     --------------
-    http://tabulator.info/docs/4.5/edit#edit-builtin
-
-    Attributes:
-    ----------
-    :param search: use search type input element with clear button
-    :param elementAttributes: set attributes directly on the input element
+    http://tabulator.info/docs/4.5/validate
     """
-    self._attrs["editor"] = 'input'
-    self._attrs["editorParams"] = {'search': search}
-    if elementAttributes is not None:
-      self._attrs["editorParams"][elementAttributes] = elementAttributes
-    if kwargs:
-      self._attrs["editorParams"].update(kwargs)
-    self._parent.mutators.text(cssMapping)
+    self._attrs["validator"].append('required')
     return self
 
-  def number(self, red=None, green=None, search=True, elementAttributes=None, **kwargs):
+  def unique(self):
     """
     Description:
     -----------
-    The input editor allows entering of a single line of plain text
+    The unique validator allows values that do not match the value of any other cell in this column
 
     Related Pages:
     --------------
-    http://tabulator.info/docs/4.5/edit#edit-builtin
-
-    Attributes:
-    ----------
-    :param search: use search type input element with clear button
-    :param elementAttributes: set attributes directly on the input element
+    http://tabulator.info/docs/4.5/validate
     """
-    self._attrs["editor"] = 'input'
-    self._attrs["editorParams"] = {'search': search}
-    if elementAttributes is not None:
-      self._attrs["editorParams"][elementAttributes] = elementAttributes
-    if kwargs:
-      self._attrs["editorParams"].update(kwargs)
-    self._parent.mutators.number(red, green)
+    self._attrs["validator"].append('unique')
     return self
 
-  def custom(self, formatter, formatterParams, moduleAlias):
-    """
-
-    :param formatter:
-    :param formatterParams:
-    :param moduleAlias:
-    """
-    self._report.jsImports.add(moduleAlias)
-    self._attrs["editor"] = formatter
-    self._attrs['editorParams'] = formatterParams
-    return self
-
-
-class ExtsFormattors(DataGroup):
-
-  @packageImport('tabulator-icons')
-  def icon(self, css=None, tags=None, **kwargs):
-    """
-
-    :param css:
-    :param tags:
-    :param kwargs:
-    """
-    self._attrs["formatter"] = 'icon'
-    self._attrs["formatterParams"] = {}
-    if css is not None:
-      self._attrs["css"] = css
-    if tags is not None:
-      self._attrs["tags"] = tags
-    for k, v in kwargs.items():
-      self._attrs["formatterParams"][k] = v
-    return self
-
-  @packageImport('tabulator-inputs')
-  def password(self, css=None, **kwargs):
+  def integer(self):
     """
     Description:
     -----------
-    Change the content of the cell to ****
-
-    Attributes:
-    ----------
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """
-    self._attrs["formatter"] = 'password'
-    formatParams = {}
-    if css is not None:
-      formatParams['css'] = css
-    for k, v in kwargs.items():
-      formatParams[k] = v
-    return self
-
-  @packageImport('tabulator-numbers')
-  def label_thresholds(self, thresholds, labels, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Set a label based on a list of values
-
-    Attributes:
-    ----------
-    :param thresholds: List. The different values to compare to deduce the category
-    :param labels: List. The resulting category
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """  #
-    self._attrs["formatter"] = 'labelThresholds'
-    formatParams = {'thresholds': thresholds, 'labels': labels}
-    if css is not None:
-      formatParams['css'] = css
-    if kwargs:
-      self._attrs["formatterParams"].update(kwargs)
-    return self
-
-  @packageImport('tabulator-numbers')
-  def label_thresholds_pivot(self, pivot, thresholds, labels, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Set a label based on a list of values from another column
-
-    Attributes:
-    ----------
-    :param pivot: String. The column name to use to get the data to lookup from te row
-    :param thresholds: List. The different values to compare to deduce the category
-    :param labels: List. The resulting category
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """  #
-    self._attrs["formatter"] = 'flagThresholdsPivot'
-    formatParams = {'thresholds': thresholds, 'labels': labels, 'pivot': pivot}
-    if css is not None:
-      formatParams['css'] = css
-    if kwargs:
-      self._attrs["formatterParams"].update(kwargs)
-    return self
-
-  @packageImport('tabulator-numbers')
-  def number(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
-    """
-
-    :param decimal: String. decimal point separator default "."
-    :param thousand: String. thousands separator default ","
-    :param precision: Integer. decimal places default 0
-    :param symbol: default currency symbol is ''
-    :param format:
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """  #
-    self._attrs["formatter"] = 'numbers'
-    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def number_format(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", colors=None,
-                              threshold=0, css=None, **kwargs):
-    """
-
-    :param decimal: String. decimal point separator default "."
-    :param thousand: String. thousands separator default ","
-    :param precision: Integer. decimal places default 0
-    :param symbol: default currency symbol is ''
-    :param format: String. "%s%v" controls output: %s = symbol, %v = value/number (can be object: see below)
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """  #
-    if colors is None:
-      colors = [self._report.theme.danger[1], self._report.theme.success[1]]
-    self._attrs["formatter"] = 'numbersFormat'
-    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def number_difference(self, decimal=None, thousand=None, precision=None, symbol=None, format=None,
-                                  colors=None, threshold=0, css=None, **kwargs):
-    """
-
-    :param decimal: String. decimal point separator default "."
-    :param thousand: String. thousands separator default ","
-    :param precision: Integer. decimal places default 0
-    :param symbol: default currency symbol is ''
-    :param format: String. "%s%v" controls output: %s = symbol, %v = value/number (can be object: see below)
-    :param colors: List. Color before and after the threshold (default red and green according to the theme)
-    :param threshold: Integer. The threshold number
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """  #
-    if colors is None:
-      colors = [self._report.theme.danger[1], self._report.theme.success[1]]
-    self._attrs["formatter"] = 'numbersDifference'
-    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def number_thresholds(self, thresholds, css, **kwargs):
-    """
-
-    :param thresholds:
-    :param css:
-    :param kwargs:
-    """  #
-    self._attrs["formatter"] = 'numbersThreshold'
-    self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def number_thresholds_pivot(self, pivot, thresholds, css, **kwargs):
-    """
-
-    :param pivot:
-    :param thresholds:
-    :param css:
-    :param kwargs:
-    :return:
-    """
-    self._attrs["formatter"] = 'numbersThresholdPivot'
-    self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css, 'pivot': pivot}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def intensity(self, steps, colors, intensity, css=None, **kwargs):
-    """
-
-    :param steps:
-    :param colors:
-    :param intensity: String, The column used to deduce the intensity. Default the cell value
-    :param css:
-    :param kwargs:
-    """
-    self._attrs["formatter"] = 'numbersIntensity'
-    self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity}
-    if css is not None:
-      self._attrs["formatterParams"]['css'] = css
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def quality(self, steps, colors, intensity, quality, css=None, **kwargs):
-    """
-
-    :param steps:
-    :param colors:
-    :param intensity:
-    :param quality:
-    :param css:
-    :param kwargs:
-    """
-    self._attrs["formatter"] = 'numbersIntensity'
-    self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity, 'quality': quality}
-    if css is not None:
-      self._attrs["formatterParams"]['css'] = css
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-inputs')
-  def lookup_pivot(self, lookups, pivot, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Set a label based on a list of values
-
-    Attributes:
-    ----------
-    :param lookups:
-    :param pivot:
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    """
-    self._attrs["formatter"] = 'lookupPivot'
-    formatParams = {'lookups': lookups, "pivot": pivot}
-    if css is not None:
-      formatParams['css'] = css
-    for k, v in kwargs.items():
-      formatParams[k] = v
-    self._attrs['formatterParams'] = formatParams
-    return self
-
-  def buttonTick(self, **kwargs):
-    """
-    Description:
-    -----------
-    The buttonTick formater displays a tick icon on each row (for use as a button)
+    The integer validator allows values that are valid integers
 
     Related Pages:
     --------------
-    http://tabulator.info/docs/4.1/format
+    http://tabulator.info/docs/4.5/validate
     """
-    self._attrs["formatter"] = 'buttonTick'
-    if kwargs:
-      self._attrs["editorParams"] = kwargs
+    self._attrs["validator"].append('integer')
     return self
 
-  def buttonCross(self, **kwargs):
+  def float(self):
     """
     Description:
     -----------
-    The buttonCross formater displays a cross icon on each row (for use as a button)
+    The float validator allows values that are valid floats
 
     Related Pages:
     --------------
-    http://tabulator.info/docs/4.1/format
+    http://tabulator.info/docs/4.5/validate
     """
-    self._attrs["formatter"] = 'buttonCross'
-    if kwargs:
-      self._attrs["editorParams"] = kwargs
+    self._attrs["validator"].append('float')
     return self
 
-  def rownum(self, **kwargs):
+  def numeric(self):
     """
     Description:
     -----------
-    The rownum formatter shows an incrementing row number for each row as it is displayed
+    The float validator allows values that are valid floats
 
     Related Pages:
     --------------
-    http://tabulator.info/docs/4.1/format
+    http://tabulator.info/docs/4.5/validate
     """
-    self._attrs["formatter"] = 'rownum'
-    if kwargs:
-      self._attrs["editorParams"] = kwargs
+    self._attrs["validator"].append('numeric')
     return self
 
-  def handle(self, **kwargs):
+  def min(self, val):
     """
     Description:
     -----------
-    The handle formatter fills the cell with hamburger bars, to be used as a row handle
+    The min validator allows numeric values that are greater than or equal to parameter
 
     Related Pages:
     --------------
-    http://tabulator.info/docs/4.1/format
+    http://tabulator.info/docs/4.5/validate
     """
-    self._attrs["formatter"] = 'handle'
-    if kwargs:
-      self._attrs["editorParams"] = kwargs
+    self._attrs["validator"].append('min:%s' % val)
     return self
 
-  @packageImport('tabulator-inputs')
-  def style(self, css=None, valField=None, cssField=None, **kwargs):
+  def max(self, val):
     """
     Description:
     -----------
+    The max validator allows numeric values that are less than or equal to parameter
 
     Related Pages:
     --------------
-    http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
-    :param css: Dictionary for the css style to apply
-    :param cssField: Dictionary for the css style to apply
-    :param valField:
+    http://tabulator.info/docs/4.5/validate
     """
-    if css is None and cssField is None:
-      raise Exception("Both CSS and CSSField cannot be empty")
-
-    self._attrs["formatter"] = 'cssStyle'
-    self._attrs['formatterParams'] = {}
-    if css is not None:
-      self._attrs['formatterParams']['css'] = css
-    if cssField is not None:
-      self._attrs['formatterParams']['cssField'] = cssField
-      self._attrs['formatterParams']['valField'] = valField
-    if kwargs:
-      self._attrs["formatterParams"].update(kwargs)
+    self._attrs["validator"].append('max:%s' % val)
     return self
 
-  @packageImport('tabulator-inputs')
-  def style_pivot(self, cssMapping, pivot=None, **kwargs):
-    self._attrs["formatter"] = 'cssStylePivot'
-    self._attrs['formatterParams'] = {'cssMapping': cssMapping}
-    if pivot is not None:
-      self._attrs['formatterParams']['pivot'] = pivot
-    if kwargs:
-      self._attrs["formatterParams"].update(kwargs)
-    return self
-
-  def custom(self, formatter, formatterParams, moduleAlias):
-    """
-
-    :param formatter:
-    :param formatterParams:
-    :param moduleAlias:
-    """
-    self._report.jsImports.add(moduleAlias)
-    self._attrs["formatter"] = formatter
-    self._attrs['formatterParams'] = formatterParams
-    return self
-
-
-class ExtsMutators(DataGroup):
-
-  @packageImport('tabulator-editors')
-  def number(self, green=None, red=None, threshold=0, cssMapping=None, **kwargs):
+  def maxLength(self, val):
     """
     Description:
     -----------
+    The maxLength validator allows string values that have a length less than or equal to parameter
 
-    :param green:
-    :param red:
-    :param css:
-    :param kwargs:
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/validate
     """
-    self._attrs["mutator"] = 'formatNumbers'
-    if cssMapping is None:
-      self._attrs["mutatorParams"] = {True: {}, False: {}}
-    else:
-      self._attrs["mutatorParams"] = cssMapping
-    self._attrs["mutatorParams"]['threshold'] = threshold
-    self._attrs["mutatorParams"][False]['color'] = red or self._report.theme.danger[0]
-    self._attrs["mutatorParams"][True]['color'] = green or self._report.theme.success[0]
-    if kwargs:
-      self._attrs["mutatorParams"].update(kwargs)
+    self._attrs["validator"].append('maxLength:%s' % val)
     return self
 
-  @packageImport('tabulator-editors')
-  def text(self, cssMapping, **kwargs):
+  def list(self, vals):
     """
     Description:
     -----------
+    The in validator allows that values that match a value from the | delimieted string in the parameter
 
-    :param green:
-    :param red:
-    :param css:
-    :param kwargs:
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/validate
     """
-    self._attrs["mutator"] = 'formatStrings'
-    self._attrs["mutatorParams"] = {'cssMapping': cssMapping}
-    if kwargs:
-      self._attrs["mutatorParams"].update(kwargs)
+    self._attrs["validator"].append('in:%s' % "".join(map(lambda  x: str(), vals)))
     return self
 
-  def custom(self, mutator, mutatorParams, moduleAlias):
+  def regex(self, val):
     """
     Description:
     -----------
+    The regex validator allows values that match the supplied regex
 
-    http://tabulator.info/docs/4.0/mutators
-
-    :param mutator:
-    :param mutatorParams:
-    :param moduleAlias:
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/validate
     """
-    self._report.jsImports.add(moduleAlias)
-    self._attrs["mutator"] = mutator
-    self._attrs['mutatorParams'] = mutatorParams
+    self._attrs["validator"].append('regex:%s' % val)
     return self
 
 
@@ -1288,13 +1055,22 @@ class Extensions(DataGroup):
   @property
   def editors(self):
     """
+    Description:
+    -----------
+    The edit module allows the user to change data in cells, header filters are also dependant on this module.
 
-    :return:
+    More information on these functions can be found in the Editing Data Documentation.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.0/modules
     """
-    return ExtsEditors(self._report, self._attrs, parent=self)
+    from epyk.core.html.tables.exts import TbEditors
+
+    return TbEditors.ExtsEditors(self._report, self._attrs, parent=self)
 
   @property
-  def formattors(self):
+  def formatters(self):
     """
     Description:
     -----------
@@ -1306,7 +1082,9 @@ class Extensions(DataGroup):
     --------------
     http://tabulator.info/docs/4.0/format
     """
-    return ExtsFormattors(self._report, self._attrs, parent=self)
+    from epyk.core.html.tables.exts import TbFormatters
+
+    return TbFormatters.ExtsFormattors(self._report, self._attrs, parent=self)
 
   @property
   def mutators(self):
@@ -1320,7 +1098,26 @@ class Extensions(DataGroup):
     --------------
     http://tabulator.info/docs/4.0/mutators
     """
-    return ExtsMutators(self._report, self._attrs, parent=self)
+    from epyk.core.html.tables.exts import TbMutators
+
+    return TbMutators.ExtsMutators(self._report, self._attrs, parent=self)
+
+  @property
+  def validators(self):
+    """
+    Description:
+    -----------
+    The validate module allows for validation of editied data before it is stored in the table.
+    More information on these functions can be found in the Validation Documentation.
+    This can be extended to add custom validator functions to the default list:
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.0/modules
+    """
+    from epyk.core.html.tables.exts import TbValidators
+
+    return TbValidators.ExtsValidators(self._report, self._attrs, parent=self)
 
 
 class Column(DataClass):
@@ -1675,13 +1472,10 @@ class Column(DataClass):
 
     Related Pages:
     --------------
-    http://tabulator.info/docs/4.5/columns
+    http://tabulator.info/docs/4.5/validate
     """
-    return self._attrs["validator"]
-
-  @validator.setter
-  def validator(self, val):
-    self._attrs["validator"] = val
+    self._attrs["validator"] = []
+    return Validators(self, self._attrs)
 
 
 class TableConfig(DataClass):
