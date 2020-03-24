@@ -8,6 +8,7 @@ from epyk.core.js.packages import JsTabulator
 
 from epyk.core.data import DataClass
 from epyk.core.data import DataEnum
+from epyk.core.data import DataGroup
 from epyk.core.data import DataEnumMulti
 
 # The list of CSS classes
@@ -90,61 +91,125 @@ class Table(Html.Html):
 
 class EnumLayout(DataEnum):
 
-  def fitDataStretch(self): return self.set()
+  def fitDataStretch(self):
+    """
+    Description:
+    -----------
+    The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the empty row to fill the table it stretches the last visible column.
 
-  def fitColumns(self): return self.set()
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/layout
+    """
+    return self.set()
 
-  def fitDataStretch(self): return self.set()
+  def fitColumns(self):
+    """
+    Description:
+    -----------
+    As an alternative to the default data fit, you can use the fitColumns layout mode to cause Tabulator to resize columns so they fit perfectly in the available table width.
 
-  def fitDataFill(self): return self.set()
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/layout
+    """
+    return self.set()
+
+  def fitDataStretch(self):
+    """
+    Description:
+    -----------
+    The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the empty row to fill the table it stretches the last visible column.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/layout
+    """
+    return self.set()
+
+  def fitDataFill(self):
+    """
+    Description:
+    -----------
+    The fitDataFill layout mode functions in the same way as the fitData mode, but ensures that rows are always at least the full width of the table.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/layout
+    """
+    return self.set()
 
 
 class EnumSorter(DataEnum):
 
   def string(self):
     """
+    Description:
+    -----------
     Sorts column as strings of characters
 
+    Related Pages:
+    --------------
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("string")
 
   def number(self):
     """
+    Description:
+    -----------
     Sorts column as numbers (integer or float, will also handle numbers using "," separators)
 
+    Related Pages:
+    --------------
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("number")
 
   def alphanum(self):
     """
+    Description:
+    -----------
     Sorts column as alpha numeric code
 
+    Related Pages:
+    --------------
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("alphanum")
 
   def boolean(self):
     """
+    Description:
+    -----------
     Sorts column as booleans
 
+    Related Pages:
+    --------------
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("boolean")
 
   def date(self):
     """
+    Description:
+    -----------
     Sorts column as dates
 
+    Related Pages:
+    --------------
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("date")
 
   def time(self):
     """
+    Description:
+    -----------
     Sorts column as dates
 
+    Related Pages:
+    --------------
     sorts column as times
     """
     return self.set("time")
@@ -156,34 +221,51 @@ class EnumColCss(DataEnumMulti):
 
   def center(self):
     """
-
+    Description:
+    -----------
+    CSS Class to center the results
     """
     self._report.body.style.custom_class({'_attrs': {'text-align': 'center'}}, classname="tb-center")
     return self.set("tb-center")
 
   def color(self, color):
     """
+    Description:
+    -----------
+    CSS Class to change the font color
 
-    :param color:
+    Attributes:
+    ----------
+    :param color: String. The CSS Color
     """
     self._report.body.style.custom_class({'_attrs': {'color': color}}, classname="tb-color-%s" % color)
     return self.set("tb-color-%s" % color)
 
   def background(self, color):
     """
+    Description:
+    -----------
+    CSS Class to change the background color
 
-    :param color:
+    Attributes:
+    ----------
+    :param color: String. The CSS Color
     """
     self._report.body.style.custom_class({'_attrs': {'background-color': color}}, classname="tb-background-%s" % color)
     return self.set("tb-background-%s" % color)
 
   def css(self, css_attrs, css_attrs_hover=None):
     """
+    Description:
+    -----------
+    CSS class for bespoke style
 
     col_def.cssClass.css({'background': 'orange'}, {'background': 'white', 'color': 'blue'})
 
-    :param css_attrs:
-    :param css_attrs_hover:
+    Attributes:
+    ----------
+    :param css_attrs: Dictionary. The CSS attributes for the class
+    :param css_attrs_hover: Dictionary. The CSS Hover attributes for the class
     """
     has_style = str(hashlib.sha1(str(css_attrs).encode()).hexdigest())
     self._report.body.style.custom_class({'_attrs': css_attrs, '_hover': css_attrs_hover}, classname="tb-style-%s" % has_style)
@@ -194,6 +276,15 @@ class Persistence(DataClass):
 
   @property
   def sort(self):
+    """
+    Description:
+    -----------
+    You can ensure the data sorting is stored for the next page load by setting the sort property of the persistence option to true
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/release#persistence
+    """
     return self._attrs["sort"]
 
   @sort.setter
@@ -202,6 +293,15 @@ class Persistence(DataClass):
 
   @property
   def filter(self):
+    """
+    Description:
+    -----------
+    You can ensure the data filtering is stored for the next page load by setting the filter property of the persistence option to true
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/release#persistence
+    """
     return self._attrs["filter"]
 
   @filter.setter
@@ -210,6 +310,15 @@ class Persistence(DataClass):
 
   @property
   def columns(self):
+    """
+    Description:
+    -----------
+    You can ensure the layout of columns is stored for the next page load by setting the columns property of the persistence option to true
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/release#persistence
+    """
     return self._attrs["columns"]
 
   @columns.setter
@@ -221,6 +330,11 @@ class BottomCalcParams(DataClass):
 
   @property
   def precision(self):
+    """
+    the number of decimals to display (default is 2), setting this value to false will display however many decimals are provided with the number
+
+    http://tabulator.info/docs/4.5/column-calcs#func-builtin
+    """
     return self._attrs["precision"]
 
   @precision.setter
@@ -243,49 +357,9 @@ class ColumnsGroup(DataClass):
     return self.sub_data_enum("columns", Column)
 
 
-class Column(DataClass):
+class Editor(DataGroup):
 
-  @property
-  def align(self):
-    return self._attrs["align"]
-
-  @align.setter
-  def align(self, val):
-    self._attrs["align"] = val
-
-  @property
-  def autoColumns(self):
-    return self._attrs["autoColumns"]
-
-  @autoColumns.setter
-  def autoColumns(self, val):
-    self._attrs["autoColumns"] = val
-
-  @property
-  def bottomCalc(self):
-    return self._attrs["bottomCalc"]
-
-  @bottomCalc.setter
-  def bottomCalc(self, val):
-    self._attrs["bottomCalc"] = val
-
-  @property
-  def bottomCalcParams(self):
-    return self.sub_data("bottomCalcParams", BottomCalcParams)
-
-  @property
-  def cssClass(self):
-    return self.has_attribute(EnumColCss)
-
-  @property
-  def editable(self):
-    return self._attrs["editable"]
-
-  @editable.setter
-  def editable(self, val):
-    self._attrs["editable"] = val
-
-  def editor_input(self, search=True, elementAttributes=None, **kwargs):
+  def input(self, search=True, elementAttributes=None, **kwargs):
     """
     Description:
     -----------
@@ -304,10 +378,11 @@ class Column(DataClass):
     self._attrs["editorParams"] = {'search': search}
     if elementAttributes is not None:
       self._attrs["editorParams"][elementAttributes] = elementAttributes
-    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
+    if kwargs:
+      self._attrs["editorParams"].update(kwargs)
     return self
 
-  def editor_textarea(self, verticalNavigation="editor", elementAttributes=None, **kwargs):
+  def textarea(self, verticalNavigation="editor", elementAttributes=None, **kwargs):
     """
     Description:
     -----------
@@ -327,7 +402,7 @@ class Column(DataClass):
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-  def editor_number(self, min=None, max=None, step=1, elementAttributes=None, verticalNavigation="table", **kwargs):
+  def number(self, min=None, max=None, step=1, elementAttributes=None, verticalNavigation="table", **kwargs):
     """
     Description:
     -----------
@@ -355,7 +430,7 @@ class Column(DataClass):
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-  def editor_range(self, min=None, max=None, step=1, elementAttributes=None, **kwargs):
+  def range(self, min=None, max=None, step=1, elementAttributes=None, **kwargs):
     """
     Description:
     -----------
@@ -382,7 +457,7 @@ class Column(DataClass):
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-  def editor_tick(self, tristate=False, indeterminateValue=None, elementAttributes=None, **kwargs):
+  def tick(self, tristate=False, indeterminateValue=None, elementAttributes=None, **kwargs):
     """
     Description:
     -----------
@@ -406,7 +481,7 @@ class Column(DataClass):
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-  def editor_stars(self, elementAttributes=None, **kwargs):
+  def stars(self, elementAttributes=None, **kwargs):
     """
     Description:
     -----------
@@ -430,7 +505,7 @@ class Column(DataClass):
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-  def editor_select(self, values, listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
+  def select(self, values, listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
                     verticalNavigation="hybrid", **kwargs):
     """
     Description:
@@ -456,9 +531,7 @@ class Column(DataClass):
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-
-
-  def editor_autocomplete(self, values, showListOnEmpty=None, freetext=None, allowEmpty=None, searchFunc=None,
+  def autocomplete(self, values, showListOnEmpty=None, freetext=None, allowEmpty=None, searchFunc=None,
                           listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
                           verticalNavigation=None, **kwargs):
     """
@@ -488,15 +561,10 @@ class Column(DataClass):
     self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-  @property
-  def field(self):
-    return self._attrs["field"]
 
-  @field.setter
-  def field(self, val):
-    self._attrs["field"] = val
+class Formattors(DataGroup):
 
-  def formatter_text(self, **kwargs):
+  def text(self, **kwargs):
     """
     Description:
     -----------
@@ -515,7 +583,7 @@ class Column(DataClass):
       self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter_textarea(self, **kwargs):
+  def textarea(self, **kwargs):
     """
     Description:
     -----------
@@ -534,7 +602,7 @@ class Column(DataClass):
       self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter_html(self, **kwargs):
+  def html(self, **kwargs):
     """
     Description:
     -----------
@@ -553,7 +621,7 @@ class Column(DataClass):
       self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter_money(self, decimal=",", thousand=".", precision=False, symbol=None, symbolAfter=None, **kwargs):
+  def money(self, decimal=",", thousand=".", precision=False, symbol=None, symbolAfter=None, **kwargs):
     """
     Description:
     -----------
@@ -577,25 +645,7 @@ class Column(DataClass):
       self._attrs["editorParams"] = kwargs
     return self
 
-  @packageImport('tabulator-icons')
-  def formatter_icon(self, css=None, tags=None, **kwargs):
-    """
-
-    :param css:
-    :param tags:
-    :param kwargs:
-    """
-    self._attrs["formatter"] = 'icon'
-    self._attrs["formatterParams"] = {}
-    if css is not None:
-      self._attrs["css"] = css
-    if tags is not None:
-      self._attrs["tags"] = tags
-    for k, v in kwargs.items():
-      self._attrs["formatterParams"][k] = v
-    return self
-
-  def formatter_image(self, height=None, width=None, **kwargs):
+  def image(self, height=None, width=None, **kwargs):
     """
     Description:
     -----------
@@ -622,7 +672,7 @@ class Column(DataClass):
       self._attrs["formatterParams"][k] = v
     return self
 
-  def formatter_link(self, label=None, url=None, target='_blank', urlPrefix=None, labelField=None, urlField=None, **kwargs):
+  def link(self, label=None, url=None, target='_blank', urlPrefix=None, labelField=None, urlField=None, **kwargs):
     """
     Description:
     -----------
@@ -642,12 +692,12 @@ class Column(DataClass):
     :param urlField: the field in the row data that should be used for the link url
     :param kwargs:
     """
-    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self'}
+    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     self._attrs["formatter"] = 'link'
     return self
 
-  def formatter_datetime(self, inputFormat="YYYY-MM-DD", outputFormat="YYYY-MM-DD", invalidPlaceholder="(invalid date)", **kwargs):
+  def datetime(self, inputFormat="YYYY-MM-DD", outputFormat="YYYY-MM-DD", invalidPlaceholder="(invalid date)", **kwargs):
     """
     Description:
     -----------
@@ -670,7 +720,7 @@ class Column(DataClass):
       self._attrs["formatterParams"].update(kwargs)
     return self
 
-  def formatter_tickcross(self, allowEmpty=True, allowTruthy=True, tickElement="<i class='fa fa-check'></i>",
+  def tickcross(self, allowEmpty=True, allowTruthy=True, tickElement="<i class='fa fa-check'></i>",
                           crossElement="<i class='fa fa-times'></i>", **kwargs):
     """
     Description:
@@ -696,7 +746,7 @@ class Column(DataClass):
       self._attrs["formatterParams"].update(kwargs)
     return self
 
-  def formatter_color(self, **kwargs):
+  def color(self, **kwargs):
     """
     Description:
     -----------
@@ -711,7 +761,7 @@ class Column(DataClass):
       self._attrs["formatterParams"] = kwargs
     return self
 
-  def formatter_star(self, starts, **kwargs):
+  def star(self, starts, **kwargs):
     """
     Description:
     -----------
@@ -732,27 +782,7 @@ class Column(DataClass):
     self._attrs["formatterParams"] = formatParams
     return self
 
-  @packageImport('tabulator-inputs')
-  def formatter_password(self, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Change the content of the cell to ****
-
-    Attributes:
-    ----------
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """
-    self._attrs["formatter"] = 'password'
-    formatParams = {}
-    if css is not None:
-      formatParams['css'] = css
-    for k, v in kwargs.items():
-      formatParams[k] = v
-    return self
-
-  def formatter_progress(self, min, max, color, legend, legendColor, legendAlign, **kwargs):
+  def progress(self, min, max, color, legend, legendColor, legendAlign, **kwargs):
     """
 
     :param min:
@@ -768,173 +798,7 @@ class Column(DataClass):
       self._attrs["formatterParams"] = kwargs
     return self
 
-  @packageImport('tabulator-numbers')
-  def formatter_label_thresholds(self, thresholds, labels, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Set a label based on a list of values
-
-    Attributes:
-    ----------
-    :param thresholds: List. The different values to compare to deduce the category
-    :param labels: List. The resulting category
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """#
-    self._attrs["formatter"] = 'labelThresholds'
-    formatParams = {'thresholds': thresholds, 'labels': labels}
-    if css is not None:
-      formatParams['css'] = css
-    if kwargs:
-      self._attrs["formatterParams"].update(kwargs)
-    return self
-
-  @packageImport('tabulator-numbers')
-  def formatter_label_thresholds_pivot(self, pivot, thresholds, labels, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Set a label based on a list of values from another column
-
-    Attributes:
-    ----------
-    :param pivot: String. The column name to use to get the data to lookup from te row
-    :param thresholds: List. The different values to compare to deduce the category
-    :param labels: List. The resulting category
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """#
-    self._attrs["formatter"] = 'flagThresholdsPivot'
-    formatParams = {'thresholds': thresholds, 'labels': labels, 'pivot': pivot}
-    if css is not None:
-      formatParams['css'] = css
-    if kwargs:
-      self._attrs["formatterParams"].update(kwargs)
-    return self
-
-  @packageImport('tabulator-numbers')
-  def formatter_number(self, decimal=None, thousand=None, precision=None, symbol=None, format=None, css=None, **kwargs):
-    """
-
-    :param decimal: String. decimal point separator default "."
-    :param thousand: String. thousands separator default ","
-    :param precision: Integer. decimal places default 0
-    :param symbol: default currency symbol is ''
-    :param format:
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """#
-    self._attrs["formatter"] = 'numbers'
-    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self'}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def formatter_number_format(self, decimal, thousand, precision, symbol, format, colors=None, threshold=0, css=None, **kwargs):
-    """
-
-    :param decimal: String. decimal point separator default "."
-    :param thousand: String. thousands separator default ","
-    :param precision: Integer. decimal places default 0
-    :param symbol: default currency symbol is ''
-    :param format: String. "%s%v" controls output: %s = symbol, %v = value/number (can be object: see below)
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """#
-    if colors is None:
-      colors = [self._report.theme.danger[1], self._report.theme.success[1]]
-    self._attrs["formatter"] = 'numbersFormat'
-    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self'}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def formatter_number_difference(self, decimal=None, thousand=None, precision=None, symbol=None, format=None,
-                                  colors=None, threshold=0, css=None, **kwargs):
-    """
-
-    :param decimal: String. decimal point separator default "."
-    :param thousand: String. thousands separator default ","
-    :param precision: Integer. decimal places default 0
-    :param symbol: default currency symbol is ''
-    :param format: String. "%s%v" controls output: %s = symbol, %v = value/number (can be object: see below)
-    :param colors: List. Color before and after the threshold (default red and green according to the theme)
-    :param threshold: Integer. The threshold number
-    :param css: Dictionary. The CSS attributes for the cell (Optional)
-    :param kwargs:
-    """#
-    if colors is None:
-      colors = [self._report.theme.danger[1], self._report.theme.success[1]]
-    self._attrs["formatter"] = 'numbersDifference'
-    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self'}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def formatter_number_thresholds(self, thresholds, css, **kwargs):
-    """
-
-    :param thresholds:
-    :param css:
-    :param kwargs:
-    """#
-    self._attrs["formatter"] = 'numbersThreshold'
-    self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def formatter_number_thresholds_pivot(self, pivot, thresholds, css, **kwargs):
-    """
-
-    :param pivot:
-    :param thresholds:
-    :param css:
-    :param kwargs:
-    :return:
-    """
-    self._attrs["formatter"] = 'numbersThresholdPivot'
-    self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css, 'pivot': pivot}
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def formatter_intensity(self, steps, colors, intensity, css=None, **kwargs):
-    """
-
-    :param steps:
-    :param colors:
-    :param intensity: String, The column used to deduce the intensity. Default the cell value
-    :param css:
-    :param kwargs:
-    """
-    self._attrs["formatter"] = 'numbersIntensity'
-    self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity}
-    if css is not None:
-      self._attrs["formatterParams"]['css'] = css
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  @packageImport('tabulator-numbers')
-  def formatter_quality(self, steps, colors, intensity, quality, css=None, **kwargs):
-    """
-
-    :param steps:
-    :param colors:
-    :param intensity:
-    :param quality:
-    :param css:
-    :param kwargs:
-    """
-    self._attrs["formatter"] = 'numbersIntensity'
-    self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity, 'quality': quality}
-    if css is not None:
-      self._attrs["formatterParams"]['css'] = css
-    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
-    return self
-
-  def formatter_lookup(self, data, **kwargs):
+  def lookup(self, data, **kwargs):
     """
     Description:
     -----------
@@ -954,8 +818,279 @@ class Column(DataClass):
       self._attrs["formatterParams"].update(kwargs)
     return self
 
+
+class ExtsEditors(DataGroup):
+
+  def text(self, cssMapping, search=True, elementAttributes=None, **kwargs):
+    """
+    Description:
+    -----------
+    The input editor allows entering of a single line of plain text
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param search: use search type input element with clear button
+    :param elementAttributes: set attributes directly on the input element
+    """
+    self._attrs["editor"] = 'input'
+    self._attrs["editorParams"] = {'search': search}
+    if elementAttributes is not None:
+      self._attrs["editorParams"][elementAttributes] = elementAttributes
+    if kwargs:
+      self._attrs["editorParams"].update(kwargs)
+    self._parent.mutators.text(cssMapping)
+    return self
+
+  def number(self, red=None, green=None, search=True, elementAttributes=None, **kwargs):
+    """
+    Description:
+    -----------
+    The input editor allows entering of a single line of plain text
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param search: use search type input element with clear button
+    :param elementAttributes: set attributes directly on the input element
+    """
+    self._attrs["editor"] = 'input'
+    self._attrs["editorParams"] = {'search': search}
+    if elementAttributes is not None:
+      self._attrs["editorParams"][elementAttributes] = elementAttributes
+    if kwargs:
+      self._attrs["editorParams"].update(kwargs)
+    self._parent.mutators.number(red, green)
+    return self
+
+  def custom(self, formatter, formatterParams, moduleAlias):
+    """
+
+    :param formatter:
+    :param formatterParams:
+    :param moduleAlias:
+    """
+    self._report.jsImports.add(moduleAlias)
+    self._attrs["editor"] = formatter
+    self._attrs['editorParams'] = formatterParams
+    return self
+
+
+class ExtsFormattors(DataGroup):
+
+  @packageImport('tabulator-icons')
+  def icon(self, css=None, tags=None, **kwargs):
+    """
+
+    :param css:
+    :param tags:
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'icon'
+    self._attrs["formatterParams"] = {}
+    if css is not None:
+      self._attrs["css"] = css
+    if tags is not None:
+      self._attrs["tags"] = tags
+    for k, v in kwargs.items():
+      self._attrs["formatterParams"][k] = v
+    return self
+
   @packageImport('tabulator-inputs')
-  def formatter_lookup_pivot(self, lookups, pivot, css=None, **kwargs):
+  def password(self, css=None, **kwargs):
+    """
+    Description:
+    -----------
+    Change the content of the cell to ****
+
+    Attributes:
+    ----------
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'password'
+    formatParams = {}
+    if css is not None:
+      formatParams['css'] = css
+    for k, v in kwargs.items():
+      formatParams[k] = v
+    return self
+
+  @packageImport('tabulator-numbers')
+  def label_thresholds(self, thresholds, labels, css=None, **kwargs):
+    """
+    Description:
+    -----------
+    Set a label based on a list of values
+
+    Attributes:
+    ----------
+    :param thresholds: List. The different values to compare to deduce the category
+    :param labels: List. The resulting category
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """  #
+    self._attrs["formatter"] = 'labelThresholds'
+    formatParams = {'thresholds': thresholds, 'labels': labels}
+    if css is not None:
+      formatParams['css'] = css
+    if kwargs:
+      self._attrs["formatterParams"].update(kwargs)
+    return self
+
+  @packageImport('tabulator-numbers')
+  def label_thresholds_pivot(self, pivot, thresholds, labels, css=None, **kwargs):
+    """
+    Description:
+    -----------
+    Set a label based on a list of values from another column
+
+    Attributes:
+    ----------
+    :param pivot: String. The column name to use to get the data to lookup from te row
+    :param thresholds: List. The different values to compare to deduce the category
+    :param labels: List. The resulting category
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """  #
+    self._attrs["formatter"] = 'flagThresholdsPivot'
+    formatParams = {'thresholds': thresholds, 'labels': labels, 'pivot': pivot}
+    if css is not None:
+      formatParams['css'] = css
+    if kwargs:
+      self._attrs["formatterParams"].update(kwargs)
+    return self
+
+  @packageImport('tabulator-numbers')
+  def number(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
+    """
+
+    :param decimal: String. decimal point separator default "."
+    :param thousand: String. thousands separator default ","
+    :param precision: Integer. decimal places default 0
+    :param symbol: default currency symbol is ''
+    :param format:
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """  #
+    self._attrs["formatter"] = 'numbers'
+    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-numbers')
+  def number_format(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", colors=None,
+                              threshold=0, css=None, **kwargs):
+    """
+
+    :param decimal: String. decimal point separator default "."
+    :param thousand: String. thousands separator default ","
+    :param precision: Integer. decimal places default 0
+    :param symbol: default currency symbol is ''
+    :param format: String. "%s%v" controls output: %s = symbol, %v = value/number (can be object: see below)
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """  #
+    if colors is None:
+      colors = [self._report.theme.danger[1], self._report.theme.success[1]]
+    self._attrs["formatter"] = 'numbersFormat'
+    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-numbers')
+  def number_difference(self, decimal=None, thousand=None, precision=None, symbol=None, format=None,
+                                  colors=None, threshold=0, css=None, **kwargs):
+    """
+
+    :param decimal: String. decimal point separator default "."
+    :param thousand: String. thousands separator default ","
+    :param precision: Integer. decimal places default 0
+    :param symbol: default currency symbol is ''
+    :param format: String. "%s%v" controls output: %s = symbol, %v = value/number (can be object: see below)
+    :param colors: List. Color before and after the threshold (default red and green according to the theme)
+    :param threshold: Integer. The threshold number
+    :param css: Dictionary. The CSS attributes for the cell (Optional)
+    :param kwargs:
+    """  #
+    if colors is None:
+      colors = [self._report.theme.danger[1], self._report.theme.success[1]]
+    self._attrs["formatter"] = 'numbersDifference'
+    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-numbers')
+  def number_thresholds(self, thresholds, css, **kwargs):
+    """
+
+    :param thresholds:
+    :param css:
+    :param kwargs:
+    """  #
+    self._attrs["formatter"] = 'numbersThreshold'
+    self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css}
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-numbers')
+  def number_thresholds_pivot(self, pivot, thresholds, css, **kwargs):
+    """
+
+    :param pivot:
+    :param thresholds:
+    :param css:
+    :param kwargs:
+    :return:
+    """
+    self._attrs["formatter"] = 'numbersThresholdPivot'
+    self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css, 'pivot': pivot}
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-numbers')
+  def intensity(self, steps, colors, intensity, css=None, **kwargs):
+    """
+
+    :param steps:
+    :param colors:
+    :param intensity: String, The column used to deduce the intensity. Default the cell value
+    :param css:
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'numbersIntensity'
+    self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity}
+    if css is not None:
+      self._attrs["formatterParams"]['css'] = css
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-numbers')
+  def quality(self, steps, colors, intensity, quality, css=None, **kwargs):
+    """
+
+    :param steps:
+    :param colors:
+    :param intensity:
+    :param quality:
+    :param css:
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'numbersIntensity'
+    self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity, 'quality': quality}
+    if css is not None:
+      self._attrs["formatterParams"]['css'] = css
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-inputs')
+  def lookup_pivot(self, lookups, pivot, css=None, **kwargs):
     """
     Description:
     -----------
@@ -976,7 +1111,7 @@ class Column(DataClass):
     self._attrs['formatterParams'] = formatParams
     return self
 
-  def formatter_buttonTick(self, **kwargs):
+  def buttonTick(self, **kwargs):
     """
     Description:
     -----------
@@ -991,7 +1126,7 @@ class Column(DataClass):
       self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter_buttonCross(self, **kwargs):
+  def buttonCross(self, **kwargs):
     """
     Description:
     -----------
@@ -1006,7 +1141,7 @@ class Column(DataClass):
       self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter_rownum(self, **kwargs):
+  def rownum(self, **kwargs):
     """
     Description:
     -----------
@@ -1021,7 +1156,7 @@ class Column(DataClass):
       self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter_handle(self, **kwargs):
+  def handle(self, **kwargs):
     """
     Description:
     -----------
@@ -1036,7 +1171,47 @@ class Column(DataClass):
       self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter(self, formatter, formatterParams, moduleAlias):
+  @packageImport('tabulator-inputs')
+  def style(self, css=None, valField=None, cssField=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/format
+
+    Attributes:
+    ----------
+    :param css: Dictionary for the css style to apply
+    :param cssField: Dictionary for the css style to apply
+    :param valField:
+    """
+    if css is None and cssField is None:
+      raise Exception("Both CSS and CSSField cannot be empty")
+
+    self._attrs["formatter"] = 'cssStyle'
+    self._attrs['formatterParams'] = {}
+    if css is not None:
+      self._attrs['formatterParams']['css'] = css
+    if cssField is not None:
+      self._attrs['formatterParams']['cssField'] = cssField
+      self._attrs['formatterParams']['valField'] = valField
+    if kwargs:
+      self._attrs["formatterParams"].update(kwargs)
+    return self
+
+  @packageImport('tabulator-inputs')
+  def style_pivot(self, cssMapping, pivot=None, **kwargs):
+    self._attrs["formatter"] = 'cssStylePivot'
+    self._attrs['formatterParams'] = {'cssMapping': cssMapping}
+    if pivot is not None:
+      self._attrs['formatterParams']['pivot'] = pivot
+    if kwargs:
+      self._attrs["formatterParams"].update(kwargs)
+    return self
+
+  def custom(self, formatter, formatterParams, moduleAlias):
     """
 
     :param formatter:
@@ -1048,8 +1223,241 @@ class Column(DataClass):
     self._attrs['formatterParams'] = formatterParams
     return self
 
+
+class ExtsMutators(DataGroup):
+
+  @packageImport('tabulator-editors')
+  def number(self, green=None, red=None, threshold=0, cssMapping=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    :param green:
+    :param red:
+    :param css:
+    :param kwargs:
+    """
+    self._attrs["mutator"] = 'formatNumbers'
+    if cssMapping is None:
+      self._attrs["mutatorParams"] = {True: {}, False: {}}
+    else:
+      self._attrs["mutatorParams"] = cssMapping
+    self._attrs["mutatorParams"]['threshold'] = threshold
+    self._attrs["mutatorParams"][False]['color'] = red or self._report.theme.danger[0]
+    self._attrs["mutatorParams"][True]['color'] = green or self._report.theme.success[0]
+    if kwargs:
+      self._attrs["mutatorParams"].update(kwargs)
+    return self
+
+  @packageImport('tabulator-editors')
+  def text(self, cssMapping, **kwargs):
+    """
+    Description:
+    -----------
+
+    :param green:
+    :param red:
+    :param css:
+    :param kwargs:
+    """
+    self._attrs["mutator"] = 'formatStrings'
+    self._attrs["mutatorParams"] = {'cssMapping': cssMapping}
+    if kwargs:
+      self._attrs["mutatorParams"].update(kwargs)
+    return self
+
+  def custom(self, mutator, mutatorParams, moduleAlias):
+    """
+    Description:
+    -----------
+
+    http://tabulator.info/docs/4.0/mutators
+
+    :param mutator:
+    :param mutatorParams:
+    :param moduleAlias:
+    """
+    self._report.jsImports.add(moduleAlias)
+    self._attrs["mutator"] = mutator
+    self._attrs['mutatorParams'] = mutatorParams
+    return self
+
+
+class Extensions(DataGroup):
+
+  @property
+  def editors(self):
+    """
+
+    :return:
+    """
+    return ExtsEditors(self._report, self._attrs, parent=self)
+
+  @property
+  def formattors(self):
+    """
+    Description:
+    -----------
+    You can set cell formatters on a per column basis using the formatter option in the column definition object.
+
+    You can pass an optional additional parameter with the formatter, formatterParams that should contain an object with additional information for configuring the formatter.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.0/format
+    """
+    return ExtsFormattors(self._report, self._attrs, parent=self)
+
+  @property
+  def mutators(self):
+    """
+    Description:
+    -----------
+    Mutators are used to alter data as it is parsed into Tabulator.
+    For example if you wanted to convert a numeric column into a boolean based on its value, before the data is used to build the table.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.0/mutators
+    """
+    return ExtsMutators(self._report, self._attrs, parent=self)
+
+
+class Column(DataClass):
+
+  @property
+  def align(self):
+    """
+    Description:
+    -----------
+    sets the text alignment for this column (left|center|right)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
+    return self._attrs["align"]
+
+  @align.setter
+  def align(self, val):
+    self._attrs["align"] = val
+
+  @property
+  def bottomCalc(self):
+    """
+    Description:
+    -----------
+    the column calculation to be displayed at the bottom of this column(see Column Calculations for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
+    return self._attrs["bottomCalc"]
+
+  @bottomCalc.setter
+  def bottomCalc(self, val):
+    self._attrs["bottomCalc"] = val
+
+  @property
+  def bottomCalcParams(self):
+    """
+    Description:
+    -----------
+    additional parameters you can pass to the bottomCalc calculation function(see Column Calculations for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
+    return self.sub_data("bottomCalcParams", BottomCalcParams)
+
+  @property
+  def cssClass(self):
+    return self.has_attribute(EnumColCss)
+
+  @property
+  def editable(self):
+    """
+    Description:
+    -----------
+    callback to check if the cell is editable (see Manipulating Data for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
+    return self._attrs["editable"]
+
+  @editable.setter
+  def editable(self, val):
+    self._attrs["editable"] = val
+
+  @property
+  def exts(self):
+    """
+    Description:
+    -----------
+    Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a series of modules that provide all of its wonderfull features.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.0/modules
+    """
+    return Extensions(self, self._attrs)
+
+  @property
+  def editors(self):
+    """
+    Description:
+    -----------
+    Tabulator comes with a number of built-in editors including:
+
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+    """
+    return Editor(self, self._attrs)
+
+  @property
+  def field(self):
+    """
+    Description:
+    -----------
+    Required (not required in icon/button columns) this is the key for this column in the data array
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
+    return self._attrs["field"]
+
+  @field.setter
+  def field(self, val):
+    self._attrs["field"] = val
+
+  @property
+  def formatters(self):
+    """
+    Description:
+    -----------
+    You can set cell formatters on a per column basis using the formatter option in the column definition object.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5
+    """
+    return Formattors(self, self._attrs)
+
   @property
   def frozen(self):
+    """
+    Description:
+    -----------
+    freezes the column in place when scrolling (see Frozen Columns for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["frozen"]
 
   @frozen.setter
@@ -1058,6 +1466,15 @@ class Column(DataClass):
 
   @property
   def headerVertical(self):
+    """
+    Description:
+    -----------
+    change the orientation of the column header to vertical (see Vertical Column Headers for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["headerVertical"]
 
   @headerVertical.setter
@@ -1066,6 +1483,15 @@ class Column(DataClass):
 
   @property
   def headerSort(self):
+    """
+    Description:
+    -----------
+    user can sort by clicking on the header (see Sorting Data for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["headerSort"]
 
   @headerSort.setter
@@ -1074,6 +1500,15 @@ class Column(DataClass):
 
   @property
   def headerVisible(self):
+    """
+    Description:
+    -----------
+    By setting the headerVisible option to false you can hide the column headers and present the table as a simple list if needed.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["headerVisible"]
 
   @headerVisible.setter
@@ -1083,8 +1518,12 @@ class Column(DataClass):
   @property
   def sorter(self):
     """
+    Description:
+    -----------
     By default Tabulator will attempt to guess which sorter should be applied to a column based on the data contained in the first row.
 
+    Related Pages:
+    --------------
     http://tabulator.info/examples/4.5#sorters
 
     :rtype: EnumSorter
@@ -1093,6 +1532,15 @@ class Column(DataClass):
 
   @property
   def width(self):
+    """
+    Description:
+    -----------
+    sets the width of this column, this can be set in pixels or as a percentage of total table width (if not set the system will determine the best)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["width"]
 
   @width.setter
@@ -1101,6 +1549,15 @@ class Column(DataClass):
 
   @property
   def minwidth(self):
+    """
+    Description:
+    -----------
+    sets the minimum width of this column, this should be set in pixels (this takes priority over the global option of columnMinWidth)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.1/columns
+    """
     return self._attrs["minwidth"]
 
   @minwidth.setter
@@ -1109,6 +1566,15 @@ class Column(DataClass):
 
   @property
   def widthGrow(self):
+    """
+    Description:
+    -----------
+    when using fitColumns layout mode, determines how much the column should grow to fill available space (see Table Layout for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["widthGrow"]
 
   @widthGrow.setter
@@ -1117,6 +1583,15 @@ class Column(DataClass):
 
   @property
   def responsive(self):
+    """
+    Description:
+    -----------
+    an integer to determine when the column should be hidden in responsive mode (see Responsive Layout for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["responsive"]
 
   @responsive.setter
@@ -1125,6 +1600,15 @@ class Column(DataClass):
 
   @property
   def resizable(self):
+    """
+    Description:
+    -----------
+    set whether column can be resized by user dragging its edges (see Table Layout for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["resizable"]
 
   @resizable.setter
@@ -1133,6 +1617,15 @@ class Column(DataClass):
 
   @property
   def title(self):
+    """
+    Description:
+    -----------
+    Required This is the title that will be displayed in the header for this column
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["title"]
 
   @title.setter
@@ -1141,6 +1634,15 @@ class Column(DataClass):
 
   @property
   def titleFormatter(self):
+    """
+    Description:
+    -----------
+    formatter function for header title (see Formatting Data for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["titleFormatter"]
 
   @titleFormatter.setter
@@ -1149,6 +1651,15 @@ class Column(DataClass):
 
   @property
   def topCalc(self):
+    """
+    Description:
+    -----------
+    the column calculation to be displayed at the top of this column(see Column Calculations for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["topCalc"]
 
   @topCalc.setter
@@ -1157,6 +1668,15 @@ class Column(DataClass):
 
   @property
   def validator(self):
+    """
+    Description:
+    -----------
+    set the validator to be used to approve data when a user edits a cell. (see Manipulating Data for more details)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/columns
+    """
     return self._attrs["validator"]
 
   @validator.setter
@@ -1168,6 +1688,14 @@ class TableConfig(DataClass):
 
   @property
   def ajaxURL(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.0/data
+    """
     return self._attrs["ajaxURL"]
 
   @ajaxURL.setter
@@ -1176,6 +1704,14 @@ class TableConfig(DataClass):
 
   @property
   def ajaxProgressiveLoad(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.0/data
+    """
     return self._attrs["ajaxProgressiveLoad"]
 
   @ajaxProgressiveLoad.setter
@@ -1184,6 +1720,15 @@ class TableConfig(DataClass):
 
   @property
   def autoColumns(self):
+    """
+    Description:
+    -----------
+    If you set the autoColumns option to true, every time data is loaded into the table through the data option or through the setData function, Tabulator will examine the first row of the data and build columns to match that data.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/columns
+    """
     return self._attrs["autoColumns"]
 
   @autoColumns.setter
@@ -1192,6 +1737,15 @@ class TableConfig(DataClass):
 
   @property
   def addRowPos(self):
+    """
+    Description:
+    -----------
+    The position in the table for new rows to be added, "bottom" or "top"
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["addRowPos"]
 
   @addRowPos.setter
@@ -1200,6 +1754,15 @@ class TableConfig(DataClass):
 
   @property
   def clipboard(self):
+    """
+    Description:
+    -----------
+    Enable clipboard module
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["clipboard"]
 
   @clipboard.setter
@@ -1208,6 +1771,15 @@ class TableConfig(DataClass):
 
   @property
   def clipboardPasteAction(self):
+    """
+    Description:
+    -----------
+    Clipboard paste action function
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["clipboardPasteAction"]
 
   @clipboardPasteAction.setter
@@ -1217,6 +1789,13 @@ class TableConfig(DataClass):
   @property
   def columns(self):
     """
+    Description:
+    -----------
+    Holder for column definition array
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
 
     :rtype: Column
     """
@@ -1224,15 +1803,26 @@ class TableConfig(DataClass):
 
   @property
   def columns_group(self):
+    """
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+
+    :rtype: ColumnsGroup
+    """
     return self.sub_data_enum("columns", ColumnsGroup)
 
   @property
   def columnVertAlign(self):
     """
+    Description:
+    -----------
+    Vertical alignment for contents of column header (used in column grouping)
 
-    To align header contents to bottom of cell
-    columnVertAlign = "bottom"
-    :return:
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
     """
     return self._attrs["columnVertAlign"]
 
@@ -1242,6 +1832,15 @@ class TableConfig(DataClass):
 
   @property
   def data(self):
+    """
+    Description:
+    -----------
+    Array to hold data that should be loaded on table creation
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["data"]
 
   @data.setter
@@ -1250,6 +1849,15 @@ class TableConfig(DataClass):
 
   @property
   def groupBy(self):
+    """
+    Description:
+    -----------
+    String/function to select field to group rows by
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["groupBy"]
 
   @groupBy.setter
@@ -1257,7 +1865,52 @@ class TableConfig(DataClass):
     self._attrs["groupBy"] = val
 
   @property
+  def groupToggleElement(self, val):
+    """
+    Description:
+    -----------
+    By default Tabulator allows users to toggle a group open or closed by clicking on the arrow icon in the left of the group header. If you would prefer a different behaviour you can use the groupToggleElement option to choose a different option:
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.0/group
+
+    :param val:
+    """
+    self._attrs["groupToggleElement"] = val
+
+  @groupToggleElement.setter
+  def groupToggleElement(self, val):
+    self._attrs["groupToggleElement"] = val
+
+  @property
+  def groupStartOpen(self):
+    """
+    Description:
+    -----------
+    You can set the default open state of groups using the groupStartOpen property.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.0/group
+    """
+    return self._attrs["groupStartOpen"]
+
+  @groupStartOpen.setter
+  def groupStartOpen(self, val):
+    self._attrs["groupStartOpen"] = val
+
+  @property
   def groupValues(self):
+    """
+    Description:
+    -----------
+    Array of values for groups
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["groupValues"]
 
   @groupValues.setter
@@ -1266,6 +1919,16 @@ class TableConfig(DataClass):
 
   @property
   def height(self):
+    """
+    Description:
+    -----------
+    Sets the height of the containing element, can be set to any valid height css value.
+    If set to false (the default), the height of the table will resize to fit the table data.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["height"]
 
   @height.setter
@@ -1276,6 +1939,15 @@ class TableConfig(DataClass):
 
   @property
   def history(self):
+    """
+    Description:
+    -----------
+    Enable user interaction history functionality
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["history"]
 
   @history.setter
@@ -1284,6 +1956,15 @@ class TableConfig(DataClass):
 
   @property
   def lang(self):
+    """
+    Description:
+    -----------
+    hold localization templates
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["lang"]
 
   @lang.setter
@@ -1293,6 +1974,13 @@ class TableConfig(DataClass):
   @property
   def layout(self):
     """
+    Description:
+    -----------
+    Layout mode for the table columns
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
 
     :rtype: EnumLayout
     """
@@ -1300,6 +1988,15 @@ class TableConfig(DataClass):
 
   @property
   def movableColumns(self):
+    """
+    Description:
+    -----------
+    Allow users to move and reorder columns
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["movableColumns"]
 
   @movableColumns.setter
@@ -1308,6 +2005,15 @@ class TableConfig(DataClass):
 
   @property
   def movableRows(self):
+    """
+    Description:
+    -----------
+    Allow users to move and reorder rows
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["movableRows"]
 
   @movableRows.setter
@@ -1316,6 +2022,15 @@ class TableConfig(DataClass):
 
   @property
   def movableRowsConnectedTables(self):
+    """
+    Description:
+    -----------
+    Connection selector for receving tables
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["movableRowsConnectedTables"]
 
   @movableRowsConnectedTables.setter
@@ -1324,6 +2039,15 @@ class TableConfig(DataClass):
 
   @property
   def movableRowsReceiver(self):
+    """
+    Description:
+    -----------
+    Sender function to be executed when row has been received
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["movableRowsReceiver"]
 
   @movableRowsReceiver.setter
@@ -1332,6 +2056,15 @@ class TableConfig(DataClass):
 
   @property
   def movableRowsSender(self):
+    """
+    Description:
+    -----------
+    Sender function to be executed when row has been sent
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["movableRowsSender"]
 
   @movableRowsSender.setter
@@ -1340,6 +2073,15 @@ class TableConfig(DataClass):
 
   @property
   def pagination(self):
+    """
+    Description:
+    -----------
+    Choose pagination method, "local" or "remote"
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["pagination"]
 
   @pagination.setter
@@ -1348,6 +2090,15 @@ class TableConfig(DataClass):
 
   @property
   def paginationSize(self):
+    """
+    Description:
+    -----------
+    Set the number of rows in each page
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["paginationSize"]
 
   @paginationSize.setter
@@ -1356,6 +2107,15 @@ class TableConfig(DataClass):
 
   @property
   def paginationSizeSelector(self):
+    """
+    Description:
+    -----------
+    Add page size selection select element to the table footer
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["paginationSizeSelector"]
 
   @paginationSizeSelector.setter
@@ -1364,6 +2124,15 @@ class TableConfig(DataClass):
 
   @property
   def persistenceID(self):
+    """
+    Description:
+    -----------
+    ID tag used to identify persistent storage information
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["persistenceID"]
 
   @persistenceID.setter
@@ -1372,10 +2141,30 @@ class TableConfig(DataClass):
 
   @property
   def persistence(self):
+    """
+    Description:
+    -----------
+    The persistence system has received an overhaul in this release, providing a more consistent way to configure table persistence and allow even more table options to be persisted between sessions.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/release#persistence
+
+    :rtype: Persistence
+    """
     return self.sub_data("persistence", Persistence)
 
   @property
   def placeholder(self):
+    """
+    Description:
+    -----------
+    placeholder element to display on empty table
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["placeholder"]
 
   @placeholder.setter
@@ -1408,6 +2197,15 @@ class TableConfig(DataClass):
 
   @property
   def reactiveData(self):
+    """
+    Description:
+    -----------
+    enable data reactivity
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["reactiveData"]
 
   @reactiveData.setter
@@ -1416,6 +2214,15 @@ class TableConfig(DataClass):
 
   @property
   def responsiveLayout(self):
+    """
+    Description:
+    -----------
+    Automatically hide/show columns to fit the width of the Tabulator element
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["responsiveLayout"]
 
   @responsiveLayout.setter
@@ -1424,6 +2231,15 @@ class TableConfig(DataClass):
 
   @property
   def resizableColumns(self):
+    """
+    Description:
+    -----------
+    Allow user to resize columns (via handles on the left and right edges of the column header)
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["resizableColumns"]
 
   @resizableColumns.setter
@@ -1432,6 +2248,15 @@ class TableConfig(DataClass):
 
   @property
   def selectable(self):
+    """
+    Description:
+    -----------
+    Enable/Disable row selection
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.2/options
+    """
     return self._attrs["selectable"]
 
   @selectable.setter
