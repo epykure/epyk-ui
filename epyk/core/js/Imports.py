@@ -193,6 +193,46 @@ JS_IMPORTS = {
     'website': 'http://tabulator.info/'
   },
 
+  'tabulator-mutators-inputs': {
+    'req': [
+      {'alias': 'tabulator'},
+    ],
+    'modules': [
+      {'script': 'mutators-inputs.js', 'version': 'NA', 'path': 'mutators/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+    ],
+    'website': 'http://tabulator.info/'
+  },
+
+  'editors-inputs': {
+    'req': [
+      {'alias': 'tabulator'},
+    ],
+    'modules': [
+      {'script': 'editors-inputs.js', 'version': 'NA', 'path': 'editors/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+    ],
+    'website': 'http://tabulator.info/'
+  },
+
+  'editors-dates': {
+    'req': [
+      {'alias': 'tabulator'},
+    ],
+    'modules': [
+      {'script': 'editors-dates.js', 'version': 'NA', 'path': 'editors/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+    ],
+    'website': 'http://tabulator.info/'
+  },
+
+  'editors-selects': {
+    'req': [
+      {'alias': 'tabulator'},
+    ],
+    'modules': [
+      {'script': 'editors-selects.js', 'version': 'NA', 'path': 'editors/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+    ],
+    'website': 'http://tabulator.info/'
+  },
+
   'tabulator-icons': {
     'req': [
       {'alias': 'tabulator'},
@@ -203,6 +243,17 @@ JS_IMPORTS = {
     ],
     'website': 'http://tabulator.info/'
   },
+
+  'tabulator-editors': {
+      'req': [
+        {'alias': 'tabulator'},
+      ],
+      'modules': [
+        # core only needed for Jupyter for some reasons
+        {'script': 'editors-bespoke.js', 'version': 'NA', 'path': 'editors/', 'cdnjs': 'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
+      ],
+      'website': 'http://tabulator.info/'
+    },
 
   'tabulator-numbers': {
       'req': [

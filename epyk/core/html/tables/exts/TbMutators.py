@@ -5,7 +5,7 @@ from epyk.core.data import DataGroup
 
 class ExtsMutators(DataGroup):
 
-  @packageImport('tabulator-editors')
+  @packageImport('tabulator-mutators-inputs')
   def number(self, green=None, red=None, threshold=0, cssMapping=None, **kwargs):
     """
     Description:
@@ -28,7 +28,7 @@ class ExtsMutators(DataGroup):
       self._attrs["mutatorParams"].update(kwargs)
     return self
 
-  @packageImport('tabulator-editors')
+  @packageImport('tabulator-mutators-inputs')
   def text(self, cssMapping, **kwargs):
     """
     Description:

@@ -53,6 +53,41 @@ class ExtsEditors(DataGroup):
     self._parent.mutators.number(red, green)
     return self
 
+  @packageImport('editors-inputs')
+  def input(self):
+    self._attrs["editor"] = 'inputPlus'
+    return self
+
+  @packageImport('editors-inputs')
+  def input_excel(self):
+    self._attrs["editor"] = 'inputExcel'
+    return self
+
+  @packageImport('editors-dates')
+  def date(self):
+    self._attrs["editor"] = 'datePlus'
+    return self
+
+  @packageImport('editors-dates')
+  def date(self):
+    self._attrs["editor"] = 'datePlus'
+    return self
+
+  @packageImport('editors-selects')
+  def select(self):
+    self._attrs["editor"] = 'datePlus'
+    return self
+
+  @packageImport('editors-selects')
+  def select_rule(self):
+    self._attrs["editor"] = 'selectConditiions'
+    return self
+
+  @packageImport('editors-selects')
+  def select_multi_rules(self):
+    self._attrs["editor"] = 'selectMultiConditions'
+    return self
+
   def custom(self, formatter, formatterParams, moduleAlias):
     """
 
