@@ -608,8 +608,8 @@ class Search(DataClass):
 
 class TableConfig(DataClass):
 
-  @packageImport('datatables-autoFill', 'datatables-autoFill')
   @property
+  @packageImport('datatables-autoFill', 'datatables-autoFill')
   def autoFill(self):
     from epyk.core.html.tables.exts import DtAutoFill
 
@@ -633,8 +633,8 @@ class TableConfig(DataClass):
   def autoWidth(self, val):
     self._attrs["autoWidth"] = val
 
-  @packageImport('datatables-buttons', 'datatables-buttons')
   @property
+  @packageImport('datatables-buttons', 'datatables-buttons')
   def buttons(self):
     """
     Description:
@@ -650,8 +650,8 @@ class TableConfig(DataClass):
 
     return self.sub_data("buttons", DtButtons.Buttons)
 
-  @packageImport('datatables-buttons', 'datatables-buttons')
   @property
+  @packageImport('datatables-buttons', 'datatables-buttons')
   def colReorder(self):
     """
 
@@ -679,8 +679,8 @@ class TableConfig(DataClass):
     self._attrs["deferRender"] = val
 
 
-  @packageImport('datatables-fixed-header', 'datatables-fixed-header')
   @property
+  @packageImport('datatables-fixed-header', 'datatables-fixed-header')
   def fixedHeader(self):
     """
     Description:
@@ -695,8 +695,8 @@ class TableConfig(DataClass):
     from epyk.core.html.tables.exts import DtFixedHeader
     return self.sub_data("fixedHeader", DtFixedHeader.FixedHeater)
 
-  @packageImport('datatables-fixed-columns','datatables-fixed-columns')
   @property
+  @packageImport('datatables-fixed-columns','datatables-fixed-columns')
   def fixedColumns(self):
     """
 
@@ -705,8 +705,8 @@ class TableConfig(DataClass):
     from epyk.core.html.tables.exts import DtFixedColumns
     return self.sub_data("fixedColumns", DtFixedColumns.FixedColumns)
 
-  @packageImport('datatables-keytable', 'datatables-keytable')
   @property
+  @packageImport('datatables-keytable', 'datatables-keytable')
   def keys(self):
     """
 
@@ -1082,8 +1082,8 @@ class TableConfig(DataClass):
   def aoColumns(self):
     return self.sub_data_enum("aoColumns", AOColumns)
 
-  @packageImport('datatables-responsive', 'datatables-responsive')
   @property
+  @packageImport('datatables-responsive', 'datatables-responsive')
   def responsive(self):
     """
     Description:
@@ -1315,8 +1315,8 @@ class TableConfig(DataClass):
   def rowId(self, val):
     self._attrs["rowId"] = val
 
-  @packageImport('datatables-row-group', 'datatables-row-group')
   @property
+  @packageImport('datatables-row-group', 'datatables-row-group')
   def rowGroup(self):
     """
 
@@ -1344,8 +1344,8 @@ class TableConfig(DataClass):
     self._report.jsImports.add('datatables-rows-group')
     self._attrs["rowsGroup"] = val
 
-  @packageImport('datatables-select', 'datatables-select')
   @property
+  @packageImport('datatables-select', 'datatables-select')
   def select(self):
     """
     Description:
@@ -1359,8 +1359,8 @@ class TableConfig(DataClass):
     from epyk.core.html.tables.exts import DtSelect
     return self.sub_data("select", DtSelect.Select)
 
-  @packageImport('datatables-scroller', 'datatables-scroller')
   @property
+  @packageImport('datatables-scroller', 'datatables-scroller')
   def scroller(self):
     """
     Description:
