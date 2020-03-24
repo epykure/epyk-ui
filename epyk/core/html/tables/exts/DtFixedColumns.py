@@ -6,6 +6,8 @@ class FixedColumns(DataClass):
 
   def activate(self):
     """
+    Description:
+    -----------
 
     https://datatables.net/reference/option/fixedColumns
     """
@@ -15,6 +17,8 @@ class FixedColumns(DataClass):
   @property
   def heightMatch(self):
     """
+    Description:
+    -----------
     FixedColumns operates by cloning the cells from the original table and then inserting them into the document, positioned visually above the DataTable - thus allowing them to appear fixed.
 
     https://datatables.net/reference/option/fixedColumns.heightMatch

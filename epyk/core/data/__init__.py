@@ -13,7 +13,7 @@ class DataClass(object):
   def __getitem__(self, i):
     return self._attrs[i]
 
-  def items(self):
+  def attrs(self):
     return self._attrs.items()
 
   def custom(self, name, value):
@@ -99,6 +99,12 @@ class DataClass(object):
     return "{%s}" % ", ".join(result)
 
 
+class DataGroup(object):
+
+  def __init__(self, report, attrs, parent=None):
+    self._attrs, self._report, self._parent = attrs, report, parent
+
+
 class DataEnum(object):
 
   dflt = None
@@ -141,6 +147,7 @@ class DataEnum(object):
 
 
 class DataEnumMulti(object):
+
   dflt = None
   js_conversion = False
   delimiter = ","
