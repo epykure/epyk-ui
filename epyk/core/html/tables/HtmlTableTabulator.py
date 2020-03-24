@@ -2281,16 +2281,3 @@ class TableTreeConfig(TableConfig):
   @dataTreeStartExpanded.setter
   def dataTreeStartExpanded(self, val):
     self._attrs["dataTreeStartExpanded"] = val
-
-
-if __name__ == '__main__':
-  t = TableConfig({})
-  t.layout.fitColumns()
-  t.layout.fitDataFill()
-
-  c = t.columns
-  c.sorter.number()
-  c.title = "test"
-  c.formatter.color()
-  c.editor_select([1, 2, 4])
-  print(t)
