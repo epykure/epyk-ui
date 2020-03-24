@@ -150,44 +150,6 @@ class EnumSorter(DataEnum):
     return self.set("time")
 
 
-class EnumEditor(DataEnum):
-
-  def autocomplete(self):
-    """
-
-    http://tabulator.info/examples/4.5#editable
-    """
-    return self.set()
-
-  def input(self):
-    """
-
-    http://tabulator.info/examples/4.5#editable
-    """
-    return self.set()
-
-  def select(self):
-    """
-
-    http://tabulator.info/examples/4.5#editable
-    """
-    return self.set()
-
-  def star(self):
-    """
-    """
-    return self.set()
-
-  def true(self):
-    """
-
-    http://tabulator.info/examples/4.5#editable
-
-    :return:
-    """
-    return self.set()
-
-
 class EnumColCss(DataEnumMulti):
   js_conversion = True
   delimiter = " "
@@ -266,33 +228,6 @@ class BottomCalcParams(DataClass):
     self._attrs["precision"] = val
 
 
-class EditorParams(DataClass):
-
-  @property
-  def allowEmpty(self):
-    return self._attrs["allowEmpty"]
-
-  @allowEmpty.setter
-  def allowEmpty(self, val):
-    self._attrs["allowEmpty"] = val
-
-  @property
-  def showListOnEmpty(self):
-    return self._attrs["showListOnEmpty"]
-
-  @showListOnEmpty.setter
-  def showListOnEmpty(self, val):
-    self._attrs["showListOnEmpty"] = val
-
-  @property
-  def values(self):
-    return self._attrs["values"]
-
-  @values.setter
-  def values(self, val):
-    self._attrs["values"] = val
-
-
 class ColumnsGroup(DataClass):
 
   @property
@@ -350,39 +285,206 @@ class Column(DataClass):
   def editable(self, val):
     self._attrs["editable"] = val
 
-  def editor_autocomplete(self, allowEmpty=True, showListOnEmpty=True, values=True):
+  def editor_input(self, search=True, elementAttributes=None, **kwargs):
     """
+    Description:
+    -----------
+    The input editor allows entering of a single line of plain text
 
-    :param allowEmpty:
-    :param showListOnEmpty:
-    :param values:
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param search: use search type input element with clear button
+    :param elementAttributes: set attributes directly on the input element
     """
-    self.editor.autocomplete()
-    self.editorParams.allowEmpty = allowEmpty
-    self.editorParams.showListOnEmpty = showListOnEmpty
-    self.editorParams.values = values
+    self._attrs["editor"] = 'input'
+    self._attrs["editorParams"] = {'search': search}
+    if elementAttributes is not None:
+      self._attrs["editorParams"][elementAttributes] = elementAttributes
+    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-  def editor_select(self, values):
+  def editor_textarea(self, verticalNavigation="editor", elementAttributes=None, **kwargs):
     """
+    Description:
+    -----------
+    The textarea editor allows entering of multiple lines of plain text
 
-    :param values:
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param verticalNavigation: set attributes directly on the textarea element
+    :param elementAttributes: determine how use of the up/down arrow keys will affect the editor,
     """
-    self.editor.select()
-    self.editorParams.values = values
+    self._attrs["editor"] = 'textarea'
+    self._attrs["editorParams"] = {'verticalNavigation': verticalNavigation, "elementAttributes": elementAttributes}
+    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
     return self
 
-  @property
-  def editor(self):
+  def editor_number(self, min=None, max=None, step=1, elementAttributes=None, verticalNavigation="table", **kwargs):
     """
+    Description:
+    -----------
+    The number editor allows for numeric entry with a number type input element with increment and decrement buttons.
 
-    :rtype: EnumEditor
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param min: the maximum allowed value
+    :param max: the minimum allowed value
+    :param step: the step size when incrementing/decrementingthe value (default 1)
+    :param elementAttributes: set attributes directly on the input element
+    :param verticalNavigation: determine how use of the up/down arrow keys will affect the editor,
+    :param kwargs:
     """
-    return self.has_attribute(EnumEditor)
+    self._attrs["editor"] = 'number'
+    self._attrs["editorParams"] = {'step': step, 'verticalNavigation': verticalNavigation, "elementAttributes": elementAttributes}
+    if min is not None:
+      self._attrs["editorParams"]['min'] = min
+    if max is not None:
+      self._attrs["editorParams"]['max'] = max
+    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
+    return self
 
-  @property
-  def editorParams(self):
-    return self.sub_data("editorParams", EditorParams)
+  def editor_range(self, min=None, max=None, step=1, elementAttributes=None, **kwargs):
+    """
+    Description:
+    -----------
+    The range editor allows for numeric entry with a range type input element.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param min: the maximum allowed value
+    :param max: the minimum allowed value
+    :param step: the step size when incrementing/decrementingthe value (default 1)
+    :param elementAttributes: set attributes directly on the input element
+    :param kwargs:
+    """
+    self._attrs["editor"] = 'range'
+    self._attrs["editorParams"] = {'step': step, "elementAttributes": elementAttributes}
+    if min is not None:
+      self._attrs["editorParams"]['min'] = min
+    if max is not None:
+      self._attrs["editorParams"]['max'] = max
+    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
+    return self
+
+  def editor_tick(self, tristate=False, indeterminateValue=None, elementAttributes=None, **kwargs):
+    """
+    Description:
+    -----------
+    The tick editor allows for boolean values using a checkbox type input element.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param tristate: allow tristate tickbox (default false)
+    :param indeterminateValue:  when using tristate tickbox what value should the third indeterminate state have (default null)
+    :param elementAttributes: set attributes directly on the input element
+    :param kwargs:
+    """
+    self._attrs["editor"] = 'tick'
+    self._attrs["editorParams"] = {'tristate': tristate, 'indeterminateValue': indeterminateValue}
+    if elementAttributes is not None:
+      self._attrs["editorParams"]['elementAttributes'] = elementAttributes
+    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
+    return self
+
+  def editor_stars(self, elementAttributes=None, **kwargs):
+    """
+    Description:
+    -----------
+    The star editor allows entering of numeric value using a star rating indicator.
+
+    This editor will automatically detect the correct number of stars to use if it is used on the same column as the star formatter.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param elementAttributes: set attributes directly on the star holder elemen
+    :param kwargs:
+    """
+    self._attrs["editor"] = 'star'
+    self._attrs["editorParams"] = {}
+    if elementAttributes is not None:
+      self._attrs["editorParams"]['elementAttributes'] = elementAttributes
+    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
+    return self
+
+  def editor_select(self, values, listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
+                    verticalNavigation="hybrid", **kwargs):
+    """
+    Description:
+    -----------
+    The select editor creates a dropdown select box to allow the user to select from some predefined options passed into the values property of the editorParams option.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param values: a list of values to be displayed to the user
+    :param listItemFormatter: a function that should return the HTML contents for each item in the value list
+    :param sortValuesList: if values property is set to true this option can be used to set how the generated list should be sorted
+    :param defaultValue: set the value that should be selected by default if the cells value is undefined
+    :param elementAttributes: set attributes directly on the input element
+    :param verticalNavigation: determine how use of the up/down arrow keys will affect the editor,
+    :param kwargs:
+    """
+    self._attrs["editor"] = 'select'
+    self._attrs["editorParams"] = {k: v for k, v in locals().items() if k != 'self'}
+    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
+    return self
+
+  def editor_autocomplete(self, values, showListOnEmpty=None, freetext=None, allowEmpty=None, searchFunc=None,
+                          listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
+                          verticalNavigation=None, **kwargs):
+    """
+    Description:
+    -----------
+    The autocomplete editor allows users to search a list of predefined options passed into the values property of the editorParams option.
+
+    Related Pages:
+    --------------
+    http://tabulator.info/docs/4.5/edit#edit-builtin
+
+    Attributes:
+    ----------
+    :param values: a list of values to be displayed to the user
+    :param showListOnEmpty: show all values in the list when the input element is empty (default false)
+    :param freetext: allow the user to press enter to save a value to the cell that is not in the list (default false)
+    :param allowEmpty: allow the user to save an empty value to the cell (default false)
+    :param searchFunc: unction to search through array of value objects and return those that match the search term
+    :param listItemFormatter: a function that should return the HTML contents for each item in the value list
+    :param sortValuesList:  if values property is set to true this option can be used to set how the generated list should be sorted
+    :param defaultValue: set the value that should be selected by default if the cells value is undefined
+    :param elementAttributes: set attributes directly on the input element
+    :param verticalNavigation: determine how use of the up/down arrow keys will affect the editor,
+    """
+    self._attrs["editor"] = 'autocomplete'
+    self._attrs["editorParams"] = {k: v for k, v in locals().items() if k != 'self'}
+    self._attrs["editorParams"].update(self._attrs["editorParams"].pop('kwargs'))
+    return self
 
   @property
   def field(self):
@@ -407,6 +509,8 @@ class Column(DataClass):
     :param kwargs:
     """
     self._attrs["formatter"] = 'plaintext'
+    if kwargs:
+      self._attrs["editorParams"] = kwargs
     return self
 
   def formatter_textarea(self, **kwargs):
@@ -424,6 +528,8 @@ class Column(DataClass):
     :param kwargs:
     """
     self._attrs["formatter"] = 'textarea'
+    if kwargs:
+      self._attrs["editorParams"] = kwargs
     return self
 
   def formatter_html(self, **kwargs):
@@ -441,6 +547,8 @@ class Column(DataClass):
     :param kwargs:
     """
     self._attrs["formatter"] = 'html'
+    if kwargs:
+      self._attrs["editorParams"] = kwargs
     return self
 
   def formatter_money(self, decimal=",", thousand=".", precision=False, symbol=None, symbolAfter=None, **kwargs):
@@ -463,6 +571,8 @@ class Column(DataClass):
     :param kwargs:
     """
     self._attrs["formatter"] = 'formatterParams'
+    if kwargs:
+      self._attrs["editorParams"] = kwargs
     return self
 
   def formatter_icon(self, css=None, tags=None, **kwargs):
@@ -528,13 +638,14 @@ class Column(DataClass):
     :param urlPrefix: a prefix to put before the url value (eg. to turn a emaill address into a clickable mailto link you should set this to "mailto:")
     :param labelField: the field in the row data that should be used for the link lable
     :param urlField: the field in the row data that should be used for the link url
+    :param kwargs:
     """
     self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self'}
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     self._attrs["formatter"] = 'link'
     return self
 
-  def formatter_datetime(self, inputFormat="YYYY-MM-DD", outputFormat="YYYY-MM-DD", invalidPlaceholder="(invalid date)"):
+  def formatter_datetime(self, inputFormat="YYYY-MM-DD", outputFormat="YYYY-MM-DD", invalidPlaceholder="(invalid date)", **kwargs):
     """
     Description:
     -----------
@@ -549,12 +660,16 @@ class Column(DataClass):
     :param inputFormat:
     :param outputFormat:
     :param invalidPlaceholder:
+    :param kwargs:
     """
     self._attrs["formatter"] = 'datetime'
     self._attrs["formatterParams"] = {"inputFormat": inputFormat, "outputFormat": outputFormat, "invalidPlaceholder": invalidPlaceholder}
+    if kwargs:
+      self._attrs["formatterParams"].update(kwargs)
     return self
 
-  def formatter_tickcross(self, allowEmpty=True, allowTruthy=True, tickElement="<i class='fa fa-check'></i>", crossElement="<i class='fa fa-times'></i>"):
+  def formatter_tickcross(self, allowEmpty=True, allowTruthy=True, tickElement="<i class='fa fa-check'></i>",
+                          crossElement="<i class='fa fa-times'></i>", **kwargs):
     """
     Description:
     -----------
@@ -570,13 +685,16 @@ class Column(DataClass):
     :param allowTruthy: set to true to allow any truthy value to show a tick (default false)
     :param tickElement: custom HTML for the tick element, if set to false the tick element will not be shown (it will only show crosses)
     :param crossElement: custom HTML for the cross element, if set to false the cross element will not be shown (it will only show ticks)
+    :param kwargs:
     """
     self._attrs["formatter"] = 'tickCross'
     self._attrs["formatterParams"] = {'allowEmpty': allowEmpty, 'allowTruthy': allowTruthy, 'tickElement': tickElement,
                                       'crossElement': crossElement}
+    if kwargs:
+      self._attrs["formatterParams"].update(kwargs)
     return self
 
-  def formatter_color(self):
+  def formatter_color(self, **kwargs):
     """
     Description:
     -----------
@@ -587,6 +705,8 @@ class Column(DataClass):
     http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'color'
+    if kwargs:
+      self._attrs["formatterParams"] = kwargs
     return self
 
   def formatter_star(self, starts, **kwargs):
@@ -642,6 +762,9 @@ class Column(DataClass):
     :param kwargs:
     """
     self._attrs["formatter"] = 'progress'
+    if kwargs:
+      self._attrs["formatterParams"] = kwargs
+    return self
 
   def formatter_label_thresholds(self, thresholds, labels, css=None, **kwargs):
     """
@@ -661,6 +784,8 @@ class Column(DataClass):
     formatParams = {'thresholds': thresholds, 'labels': labels}
     if css is not None:
       formatParams['css'] = css
+    if kwargs:
+      self._attrs["formatterParams"].update(kwargs)
     return self
 
   def formatter_label_thresholds_pivot(self, pivot, thresholds, labels, css=None, **kwargs):
@@ -682,6 +807,8 @@ class Column(DataClass):
     formatParams = {'thresholds': thresholds, 'labels': labels, 'pivot': pivot}
     if css is not None:
       formatParams['css'] = css
+    if kwargs:
+      self._attrs["formatterParams"].update(kwargs)
     return self
 
   def formatter_number(self, decimal=None, thousand=None, precision=None, symbol=None, format=None, css=None, **kwargs):
@@ -805,7 +932,7 @@ class Column(DataClass):
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
-  def formatter_lookup(self, data):
+  def formatter_lookup(self, data, **kwargs):
     """
     Description:
     -----------
@@ -821,6 +948,8 @@ class Column(DataClass):
     """
     self._attrs["formatter"] = 'lookup'
     self._attrs['formatterParams'] = data
+    if kwargs:
+      self._attrs["formatterParams"].update(kwargs)
     return self
 
   @packageImport('tabulator-inputs')
@@ -845,7 +974,7 @@ class Column(DataClass):
     self._attrs['formatterParams'] = formatParams
     return self
 
-  def formatter_buttonTick(self):
+  def formatter_buttonTick(self, **kwargs):
     """
     Description:
     -----------
@@ -856,9 +985,11 @@ class Column(DataClass):
     http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'buttonTick'
+    if kwargs:
+      self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter_buttonCross(self):
+  def formatter_buttonCross(self, **kwargs):
     """
     Description:
     -----------
@@ -869,9 +1000,11 @@ class Column(DataClass):
     http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'buttonCross'
+    if kwargs:
+      self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter_rownum(self):
+  def formatter_rownum(self, **kwargs):
     """
     Description:
     -----------
@@ -882,9 +1015,11 @@ class Column(DataClass):
     http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'rownum'
+    if kwargs:
+      self._attrs["editorParams"] = kwargs
     return self
 
-  def formatter_handle(self):
+  def formatter_handle(self, **kwargs):
     """
     Description:
     -----------
@@ -895,6 +1030,8 @@ class Column(DataClass):
     http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'handle'
+    if kwargs:
+      self._attrs["editorParams"] = kwargs
     return self
 
   def formatter(self, formatter, formatterParams, moduleAlias):
