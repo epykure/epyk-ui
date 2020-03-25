@@ -215,7 +215,7 @@ class SearchPanes(DataClass):
     return self._attrs['orderable']
 
   @orderable.setter
-  def layout(self, val):
+  def orderable(self, val):
     self._attrs['orderable'] = val
 
 
