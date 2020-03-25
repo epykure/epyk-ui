@@ -647,7 +647,7 @@ class TableConfig(DataClass):
     https://datatables.net/extensions/buttons/
     """
     from epyk.core.html.tables.exts import DtButtons
-
+    self._attrs['dom'] = 'B<"clear">lfrtip'
     return self.sub_data("buttons", DtButtons.Buttons)
 
   @property
