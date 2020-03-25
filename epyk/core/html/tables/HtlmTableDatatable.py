@@ -1376,6 +1376,26 @@ class TableConfig(DataClass):
     return self.sub_data("scroller", DtScroller.Scroller)
 
   @property
+  @packageImport('datatables-searchPanes', 'datatables-searchPanes')
+  def searchPanes(self):
+    """
+    Description:
+    -----------
+    SearchPanes adds panes to the DataTable with the capability to search the DataTable by selecting rows in the panes.
+    This is very useful when it comes to adding a more accessible searching feature and custom search capabilities.
+    SearchPanes can search DataTables for multiple values that have been selected across multiple panes.
+    They also provide the ability to define custom search functions which cannot be achieved through a simple searchBox.
+
+
+    Related Pages:
+    --------------
+    https://datatables.net/extensions/searchpanes
+    """
+    from epyk.core.html.tables.exts import DtSearchPanes
+    self._attrs['dom'] = 'Prftip'
+    return self.sub_data('searchPanes', DtSearchPanes.SearchPanes)
+
+  @property
   def searchCols(self):
     """
     Description:

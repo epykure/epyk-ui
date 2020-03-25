@@ -306,6 +306,13 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'dataTables.scroller.min.js', 'version': '2.0.1', 'path': 'scroller/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
+  # Datatable SearchPanes
+  'datatables-searchPanes': {
+    'website': 'https://datatables.net/extensions/searchPanes/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'dataTables.searchPanes.min.js', 'version': '1.0.1', 'path': 'searchpanes/%(version)s/js/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
   # Datatable responsive
   'datatables-responsive': {
     'website': 'https://datatables.net/extensions/responsive/',
@@ -788,13 +795,19 @@ CSS_IMPORTS = {
     'modules': [
       {'script': 'scroller.dataTables.min.css', 'version': '2.0.1', 'path': 'scroller/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
+  # Datatable SearchPanes
+  'datatables-searchPanes': {
+    'website': 'https://datatables.net/extensions/searchpanes/',
+    'req': [{'alias': 'datatables'}],
+    'modules': [
+      {'script': 'searchPanes.dataTables.min.css', 'version': '1.0.1', 'path': 'searchpanes/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
+
   # Datatable Responsive
   'datatables-responsive': {
     'website': 'https://datatables.net/extensions/responsive/',
     'req': [{'alias': 'datatables'}],
     'modules': [
       {'script': 'responsive.dataTables.min.css', 'version': '2.2.3', 'path': 'responsive/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
-
 
   # Datatable KeyTable
   'datatables-keytable': {
