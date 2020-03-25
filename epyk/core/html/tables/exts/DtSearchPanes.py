@@ -29,6 +29,69 @@ class SearchPanes(DataClass):
     def searching(self, val):
       self._attrs['searching'] = val
 
+  class Panes(DataClass):
+
+    class Options(DataClass):
+      @property
+      def label(self):
+        return self._attrs['label']
+
+      @label.setter
+      def label(self, val):
+        self._attrs['label'] = val
+
+
+    class DtOps(DataClass):
+      @property
+      def paging(self):
+        return self._attrs['paging']
+
+      @paging.setter
+      def paging(self, val):
+        self._attrs['paging'] = val
+
+      @property
+      def pagingType(self):
+        return self._attrs['pagingType']
+
+      @pagingType.setter
+      def pagingType(self, val):
+        self._attrs['pagingType'] = val
+
+      @property
+      def searching(self):
+        return self._attrs['searching']
+
+      @searching.setter
+      def searching(self, val):
+        self._attrs['searching'] = val
+
+
+    @property
+    def className(self):
+      return self._attrs['className']
+
+    @className.setter
+    def className(self, val):
+      self._attrs['className'] = val
+
+    @property
+    def header(self):
+      return self._attrs['header']
+
+    @header.setter
+    def header(self, val):
+      self._attrs['header'] = val
+
+    @property
+    def options(self):
+      return self.sub_data_enum('options', self.Options)
+
+    @property
+    def dtOpts(self):
+      return self.sub_data('dtOpts', self.DtOps)
+
+
   @property
   def cascadePanes(self):
     """
@@ -218,11 +281,41 @@ class SearchPanes(DataClass):
   def orderable(self, val):
     self._attrs['orderable'] = val
 
+  @property
+  def threshold(self):
+    """
+    Description:
+    -----------
+    Set the minimum number of unique values needed in the columns to display that pane.
+    As standard, columns must have a uniqueness ratio of 0.6. This is the ratio of different values throughout the column to the number of total rows.
+    If all rows are unique, this will be 1; as the value drops towards 0, this means values are more often repeated.
+    --------------
+    https://datatables.net/reference/option/searchPanes.threshold
+    """
+    return self._attrs['threshold']
 
+  @threshold.setter
+  def threshold(self, val):
+    self._attrs['threshold'] = val
 
+  @property
+  def viewTotal(self):
+    """
+    Description:
+    -----------
+    Update the count column when searching to show visible count.
+    By setting the searchPanes.viewTotal parameter to true, the message displayed in the count column will change when a search is applied to the DataTable.
 
+    As standard, SearchPanes will set the count column to display the total number of different values visible in the column when no filtering is applied.
+    When filtering is active the count column will display the number of entries that satisfy this condition currently on display followed in brackets by the total in the table which satisfy the condition.
+    --------------
+    https://datatables.net/reference/option/searchPanes.viewTotal
+    """
+    return self._attrs['viewTotal']
 
-  """!!!!!!!!!!!!!!! TODO All composite options !!!!!!!!!!!!!!!!!"""
+  @viewTotal.setter
+  def viewTotal(self, val):
+    self._attrs['viewTotal'] = val
 
   @property
   def dtOpts(self):
@@ -237,3 +330,13 @@ class SearchPanes(DataClass):
     """
     return self.sub_data('dtOps', self.DtOps)
 
+  @property
+  def panes(self):
+    """
+    Description:
+    -----------
+    Define custom panes to filter across all columns.
+    --------------
+    https://datatables.net/reference/option/searchPanes.panes
+    """
+    return self.sub_data_enum('panes', self.Panes)
