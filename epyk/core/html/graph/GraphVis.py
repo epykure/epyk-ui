@@ -33,24 +33,15 @@ class Chart(Html.Html):
       self._options = OptVis.Options2D(self._report, attrs=self._options_init)
     return self._options
 
-  @property
-  def _js__builder__(self):
-    return '''%s = %s''' % (self.chartId, self.getCtx())
+  def build(self, data=None, options=None, profile=False):
+    return '''%s; var %s = %s''' % (self.groups.toStr(), self.chartId, self.getCtx())
+
+  def getCtx(self):
+    raise Exception("")
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
-
-
-class VisGroups(object):
-
-  def add(self, id, content):
-    content = JsUtils.jsConvertData(content, None)
-    self._js.append("groups.add({id: %s, content: %s})" % (id, content))
-
-
-class VsDataSet(object):
-  pass
 
 
 class ChartLine(Chart):
@@ -58,18 +49,23 @@ class ChartLine(Chart):
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
-    self.items = []
+    self.items, self.__grps = [], None
     self.options.style = "line"
 
   @property
-  def dom(self):
+  def js(self):
     """
+    Javascript base function
 
-    :rtype: JsCanvas.Canvas
+    Return all the Javascript functions defined in the framework.
+    THis is an entry point to the full Javascript ecosystem.
+
+    :return: A Javascript object
+    :rtype: Js.JsBase
     """
-    if self._dom is None:
-      self._dom = JsVis.VisTimeline(self, report=self._report)
-    return self._dom
+    if self._js is None:
+      self._js = JsVis.VisTimeline(self._report, varName=self.chartId)
+    return self._js
 
   @property
   def groups(self):
@@ -77,7 +73,9 @@ class ChartLine(Chart):
 
     :return:
     """
-    return VisGroups(self._report)
+    if self.__grps is None:
+      self.__grps = JsVis.VisGroups(self._report, setVar=True, varName="%s_group" % self.chartId)
+    return self.__grps
 
   def add_item(self, x, y, group, label=None, end=None):
     """
@@ -91,8 +89,14 @@ class ChartLine(Chart):
     self.items.append({"x": x, "y": y, "group": group})
     return self
 
+  def add_items(self, records):
+    for rec in records:
+      self.add_item(rec['x'], rec['y'], rec.get('group', 0))
+    return self
+
   def getCtx(self):
-    return "new vis.Graph2d(%s, items, groups, options)" % self.dom.varId
+    print(self.options)
+    return "new vis.Graph2d(%s, %s, %s, %s)" % (self.dom.varId, self.items, self.groups.varId, self.options)
 
 
 class Chart3D(Chart):
@@ -136,3 +140,108 @@ class Chart3D(Chart):
 
   def getCtx(self):
     return "new vis.Graph3d(%s, data, options)" % self.dom.varId
+
+
+class ChartNetwork(Chart):
+  __reqJs, __reqCss = ['vis'], ['vis']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartNetwork, self).__init__(report, width, height, htmlCode, options, profile)
+    self.items, self.__grps = [], None
+
+  @property
+  def options(self):
+    """
+
+    :rtype: Options2D
+    """
+    if self._options is None:
+      self._options = OptVis.OptionsNetwork(self._report, attrs=self._options_init)
+    return self._options
+
+  @property
+  def js(self):
+    """
+    Javascript base function
+
+    Return all the Javascript functions defined in the framework.
+    THis is an entry point to the full Javascript ecosystem.
+
+    :return: A Javascript object
+    :rtype: Js.JsBase
+    """
+    if self._js is None:
+      self._js = JsVis.VisNetwork(self._report, varName=self.chartId)
+    return self._js
+
+  def add_node(self, label, id=None):
+    pass
+
+  def add_edge(self, fromId, toId, title=None, relation=None):
+    pass
+
+  def getCtx(self):
+    return "new vis.Network(%s, %s, %s, %s)" % (self.dom.varId, self.items, self.groups.varId, self.options)
+
+
+class ChartTimeline(Chart):
+  __reqJs, __reqCss = ['vis'], ['vis']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartTimeline, self).__init__(report, width, height, htmlCode, options, profile)
+    self.items, self.__grps = [], None
+
+  @property
+  def options(self):
+    """
+
+    :rtype: Options2D
+    """
+    if self._options is None:
+      self._options = OptVis.OptionsTimeline(self._report, attrs=self._options_init)
+    return self._options
+
+  @property
+  def js(self):
+    """
+    Javascript base function
+
+    Return all the Javascript functions defined in the framework.
+    THis is an entry point to the full Javascript ecosystem.
+
+    :return: A Javascript object
+    :rtype: Js.JsBase
+    """
+    if self._js is None:
+      self._js = JsVis.VisTimeline(self._report, varName=self.chartId)
+    return self._js
+
+  @property
+  def groups(self):
+    """
+
+    :return:
+    """
+    if self.__grps is None:
+      self.__grps = JsVis.VisGroups(self._report, setVar=True, varName="%s_group" % self.chartId)
+    return self.__grps
+
+  def add_item(self, start, content, style=None, end=None):
+    """
+
+    :param start:
+    :param content:
+    :param group:
+    :param label:
+    :param end:
+    """
+    self.items.append({"start": start, "content": "ok", "group": 0})
+    return self
+
+  def add_items(self, records):
+    for rec in records:
+      self.add_item(rec['x'], rec['y'], rec.get('group', 0))
+    return self
+
+  def getCtx(self):
+    return "new vis.Timeline(%s, %s, %s, %s)" % (self.dom.varId, self.items, self.groups.varId, self.options)

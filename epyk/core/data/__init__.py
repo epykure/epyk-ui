@@ -66,8 +66,17 @@ class DataClass(object):
 
   def sub_data(self, name, clsObj):
     """
+    Description:
+    ------------
+    Add an extra sub layer to the data structure.
+    The key in the object representation will be the function name
 
-    :param data:
+    Should use has_attribute is the name can be deduced from the parent function
+
+    Attributes:
+    ----------
+    :param name: String. The key to be added to the internal data dictionary
+    :param clsObj: Object. The object which will be added to the nexted data structure
     """
     if name in self._attrs:
       return self._attrs[name]
@@ -78,8 +87,13 @@ class DataClass(object):
 
   def sub_data_enum(self, name, clsObj):
     """
+    Description:
+    ------------
 
-    :param data:
+    Attributes:
+    ----------
+    :param name: String. The key to be added to the internal data dictionary
+    :param clsObj: Object. The object which will be added to the nexted data structure
     """
     #if name in self._attrs:
     #  return self._attrs[name]

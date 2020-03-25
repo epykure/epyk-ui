@@ -1,8 +1,3 @@
-"""
-Wrapper to the Viz package
-
-https://visjs.org/
-"""
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -16,17 +11,24 @@ class VisDataSet(JsPackage):
   @property
   def length(self):
     """
+    Description:
+    -----------
     The number of items in the DataSet.
     """
     return JsObjects.JsNumber.JsNumber("%s.length" % self.getStr())
 
   def add(self, jsData):
     """
+    Description:
+    -----------
     Add one or multiple items to the DataSet. data can be a single item or an array with items.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataset.html
 
+    Attributes:
+    ----------
     :param jsData: data can be a single item or an array with items.
 
     :return: The function returns an array with the ids of the added items. See section Data Manipulation.
@@ -36,20 +38,34 @@ class VisDataSet(JsPackage):
 
   def clear(self, senderId=None):
     """
+    Description:
+    -----------
     Clear all data from the DataSet
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataset.html
+
+    Attributes:
+    ----------
+    :param senderId: The record ID to be removed
 
     :return: The function returns an array with the ids of the removed items.
     """
-    return JsObjects.JsArray.JsArray("%s.clear()" % (self.getStr()))
+    if senderId is None:
+      return JsObjects.JsArray.JsArray("%s.clear()" % (self.getStr()))
+
+    senderId = JsUtils.jsConvertData(senderId, None)
+    return JsObjects.JsArray.JsArray("%s.clear(%s)" % (self.getStr(), senderId))
 
   def distinct(self, field):
     """
+    Description:
+    -----------
     Find all distinct values of a specified field
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataset.html
 
     :param field:
@@ -61,17 +77,24 @@ class VisDataSet(JsPackage):
 
   def flush(self):
     """
+    Description:
+    -----------
     Flush queued changes. Only available when the DataSet is configured with the option queue, see section Construction.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataset.html
     """
     return JsObjects.JsObject.JsObject("%s.flush()" % self.getStr())
 
   def forEach(self, callback, options=None):
     """
+    Description:
+    -----------
     Execute a callback function for every item in the dataset.
 
+    Attributes:
+    ----------
     :param callback:
     :param options:
 
@@ -84,31 +107,39 @@ class VisDataSet(JsPackage):
 
   def max(self, field):
     """
+    Description:
+    -----------
     Find the item with maximum value of specified field
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataset.html
 
+    Attributes:
+    ----------
     :param field:
 
     :return: Returns null if no item is found.
     """
-    field = JsUtils.jsConvertData(field, None)
-    return JsObjects.JsObject.JsObject("%s.max(%s)" % (self.getStr(), field))
+    return JsObjects.JsObject.JsObject("%s.max(%s)" % (self.getStr(), JsUtils.jsConvertData(field, None)))
 
   def min(self, field):
     """
+    Description:
+    -----------
     Find the item with minimum value of specified field
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataset.html
 
+    Attributes:
+    ----------
     :param field:
 
     :return: Returns null if no item is found.
     """
-    field = JsUtils.jsConvertData(field, None)
-    return JsObjects.JsObject.JsObject("%s.min(%s)" % (self.getStr(), field))
+    return JsObjects.JsObject.JsObject("%s.min(%s)" % (self.getStr(), JsUtils.jsConvertData(field, None)))
 
   def update(self):
     pass
@@ -121,11 +152,16 @@ class VisDataSet(JsPackage):
 
   def remove(self, ids, senderId=None):
     """
+    Description:
+    -----------
     Remove a data item or an array with items
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataset.html
 
+    Attributes:
+    ----------
     :param ids:
     :param senderId:
 
@@ -136,14 +172,17 @@ class VisDataSet(JsPackage):
 
   def setOptions(self, options):
     """
+    Description:
+    -----------
     Set options for the DataSet.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataset.html
 
+    Attributes:
+    ----------
     :param options:
-
-    :return:
     """
     return self.fnc_closure("setOptions(%s)" % options)
 
@@ -152,16 +191,19 @@ class VisDataSet(JsPackage):
 
   def getIds(self, options=None):
     """
+    Description:
+    -----------
     Get ids of all items or of a filtered set of items
 
     Available options are described in section Data Selection, except that options fields and type are not applicable in case of getIds
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataset.html
 
+    Attributes:
+    ----------
     :param options:
-
-    :return:
     """
     if options is not None:
       options = JsUtils.jsConvertData(options, None)
@@ -171,6 +213,8 @@ class VisDataSet(JsPackage):
 
   def options(self):
     """
+    Description:
+    -----------
     Create a new option object on the Python side for DataViz
     """
     return VisDataOptions(self.src)
@@ -179,18 +223,24 @@ class VisDataSet(JsPackage):
 class VisDataOptions(DataAttrs):
   def align(self, position):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param position:
-    :return:
     """
     return self.attr("align", JsUtils.jsConvertData(position, None))
 
   def queue_delay(self, n=None):
     """
+    Description:
+    -----------
     The queue will be flushed automatically after an inactivity of this delay in milliseconds. Default value is null
 
+    Related Pages:
+    --------------
     :param n:
-    :return:
     """
     if n is None:
       n = self._report.js.data.null
@@ -198,11 +248,13 @@ class VisDataOptions(DataAttrs):
 
   def queue_max(self, n=None):
     """
+    Description:
+    -----------
     When the queue exceeds the given maximum number of entries, the queue is flushed automatically. Default value is
 
+    Related Pages:
+    --------------
     :param n:
-
-    :return:
     """
     if n is None:
       n = self._report.js.number.POSITIVE_INFINITY
@@ -210,40 +262,49 @@ class VisDataOptions(DataAttrs):
 
   def autoResize(self, flag):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param flag:
-
-    :return:
     """
     return self.attr("autoResize", JsUtils.jsConvertData(flag, None))
 
   def clickToUse(self, flag):
     """
+    Description:
+    -----------
 
-    Example
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-timeline/examples/timeline/interaction/clickToUse.html
 
+    Related Pages:
+    --------------
     :param flag:
-
-    :return:
     """
     return self.attr("clickToUse", JsUtils.jsConvertData(flag, None))
 
   def configure(self, flag):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param flag:
-
-    :return:
     """
     return self.attr("configure", JsUtils.jsConvertData(flag, None))
 
   def dataAttributes(self, strings):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param strings:
-
-    :return:
     """
     return self.attr("dataAttributes", JsUtils.jsConvertData(strings, None))
 
@@ -253,17 +314,23 @@ class VisDataOptions(DataAttrs):
 
   def end(self, object):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param object:
-    :return:
     """
     return self.attr("end", JsUtils.jsConvertData(object, None))
 
   def format(self, object):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param object:
-    :return:
     """
     return self.attr("format", JsUtils.jsConvertData(object, None))
 
@@ -273,54 +340,75 @@ class VisDataOptions(DataAttrs):
 
   def groupHeightMode(self, text):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param text:
-    :return:
     """
     return self.attr("groupHeightMode", JsUtils.jsConvertData(text, None))
 
   def groupOrder(self, text):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param text:
-    :return:
     """
     return self.attr("groupOrder", JsUtils.jsConvertData(text, None))
 
   def groupOrderSwap(self, fnc):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param fnc:
-    :return:
     """
 
   def groupTemplate(self, fnc):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param fnc:
-    :return:
     """
 
   def height(self, n):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param n:
-    :return:
     """
     return self.attr("height", JsUtils.jsConvertData(n, None))
 
   def hiddenDates(self, object):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param object:
-    :return:
     """
 
   def horizontalScroll(self, flag):
     """
+    Description:
+    -----------
 
+    Related Pages:
+    --------------
     :param flag:
-    :return:
     """
     return self.attr("horizontalScroll", JsUtils.jsConvertData(flag, None))
 
@@ -332,18 +420,21 @@ class VisDataView(JsPackage):
   @property
   def length(self):
     """
+    Description:
+    -----------
     The number of items in the DataSet.
     """
     return JsObjects.JsNumber.JsNumber("%s.length" % self.getStr())
 
   def get(self, options=None, data=None):
     """
+    Description:
+    -----------
     Get a single item, multiple items, or all items from the DataView.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataview.html
-
-    :return:
     """
     if data is None:
       if options is None:
@@ -358,15 +449,19 @@ class VisDataView(JsPackage):
 
   def getByIds(self, ids, options=None, data=None):
     """
+    Description:
+    -----------
     Get a single item, multiple items, or all items from the DataView.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataview.html
 
+    Attributes:
+    ----------
     :param ids:
     :param options:
     :param data:
-    :return:
     """
     ids = JsUtils.jsConvertData(ids, None)
     if data is None:
@@ -382,26 +477,30 @@ class VisDataView(JsPackage):
 
   def getDataSet(self):
     """
+    Description:
+    -----------
     Get the DataSet to which the DataView is connected.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataview.html
-
-    :return:
     """
     return VisDataSet(src=self.src, selector="%s.getDataSet()" % self.getStr())
 
   def getIds(self, options=None):
     """
+    Description:
+    -----------
     Get ids of all items or of a filtered set of items.
     Available options are described in section Data Selection, except that options fields and type are not applicable in case of getIds.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataview.html
 
+    Attributes:
+    ----------
     :param options:
-
-    :return:
     """
     if options is not None:
       options = JsUtils.jsConvertData(options, None)
@@ -411,83 +510,123 @@ class VisDataView(JsPackage):
 
   def off(self, event, callback):
     """
+    Description:
+    -----------
     Unsubscribe from an event, remove an event listener.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataview.html
     https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
 
+    Attributes:
+    ----------
     :param event:
     :param callback:
-    :return:
     """
 
   def on(self, event, callback):
     """
+    Description:
+    -----------
     Subscribe to an event, add an event listener.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataview.html
     https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
 
+    Attributes:
+    ----------
     :param event:
     :param callback:
-
-    :return:
     """
 
   def refresh(self):
     """
+    Description:
+    -----------
     Refresh the filter results of a DataView.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataview.html
-
-    :return:
     """
     return self.fnc_closure("refresh()")
 
   def setData(self, data):
     """
+    Description:
+    -----------
     Replace the DataSet of the DataView. Parameter data can be a DataSet or a DataView.
 
+    Attributes:
+    ----------
     :param data:
-
-    :return:
     """
     data = JsUtils.jsConvertData(data, None)
     return self.fnc("setData(%s)" % data)
 
   def options(self):
     """
+    Description:
+    -----------
     Create a new option object on the Python side for DataViz
     """
     return VisDataOptions(self.src)
 
 
 class VisDataGroups(DataAttrs):
+
   def className(self, value):
     """
+    Description:
+    -----------
     This field is optional. A className can be used to give groups an individual css style. For example, when a group has className 'red', one can define a css style .red { color: red; } .
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-timeline/docs/timeline/
 
+    Attributes:
+    ----------
     :param value:
-
-    :return:
     """
     return self.attr("className", JsUtils.jsConvertData(value, None))
 
-  def content(self, item):
+  @property
+  def content(self):
     """
+    Description:
+    -----------
     The contents of the group. This can be plain text, html code or an html element.
 
+    Attributes:
+    ----------
     :param item:
-
-    :return:
     """
+    return self._attrs["content"]
+
+  @content.setter
+  def content(self, item):
     return self.attr("content", item)
+
+  def options(self):
+    pass
+
+
+class VisGroups(JsPackage):
+  lib_selector = "new vis.DataSet()"
+
+  def add_group(self):
+    return VisDataGroups(self.src)
+
+  def add(self, groups):
+    for name in groups:
+      grp = self.add_group()
+      grp.content = name
+      self.fnc_closure("add(%s)" % grp.toStr())
+    return self
 
 
 class VisNetworkNode(JsPackage):
@@ -497,29 +636,38 @@ class VisNetworkNode(JsPackage):
 class VisNetworkEdge(JsPackage):
   def getPositions(self, nodeIds):
     """
+    Description:
+    -----------
     Returns the x y positions in canvas space of the nodes with the supplied nodeIds as an object
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-network/docs/network/
 
+    Attributes:
+    ----------
     :param nodeIds:
-    :return:
     """
 
   def storePositions(self):
     """
+    Description:
+    -----------
     When using the vis.DataSet to load your nodes into the network, this method will put the X and Y positions of all nodes into that dataset.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-network/docs/network/
-
-    :return:
     """
 
   def moveNode(self, nodeId, x, y):
     """
+    Description:
+    -----------
     You can use this to programatically move a node. The supplied x and y positions have to be in canvas space!
 
+    Attributes:
+    ----------
     :param nodeId:
     :param x:
     :param y:
@@ -527,25 +675,35 @@ class VisNetworkEdge(JsPackage):
 
   def getBoundingBox(self, nodeId):
     """
+    Description:
+    -----------
     Returns a bounding box for the node including label in the format:
     {top: Number, left: Number, right: Number, bottom: Number}
 
+    Attributes:
+    ----------
     :param nodeId:
     """
 
   def getConnectedNodes(self, nodeId, direction=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param nodeId:
     :param direction:
-    :return:
     """
 
   def getConnectedEdges(self, nodeId):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param nodeId:
-    :return:
     """
 
 
@@ -562,87 +720,100 @@ class VisGraph3D(JsPackage):
 
   def animationStart(self):
     """
+    Description:
+    -----------
     Start playing the animation.
     Only applicable when animation data is available.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/
-
-    :return:
     """
     return self.fnc_closure("animationStart()")
 
   def animationStop(self):
     """
+    Description:
+    -----------
     Stop playing the animation.
     Only applicable when animation data is available.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/
-
-    :return:
     """
     return self.fnc_closure("animationStop()")
 
   def getCameraPosition(self):
     """
+    Description:
+    -----------
     Returns an object with parameters horizontal, vertical and distance, which each one of them is a number, representing the rotation and position of the camera.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/
-
-    :return:
     """
     return "getCameraPosition()"
 
   def redraw(self):
     """
+    Description:
+    -----------
     Redraw the graph. Useful after the camera position is changed externally, when data is changed, or when the layout of the webpage changed.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/
-
-    :return:
     """
     return self.fnc_closure("redraw()")
 
   def setData(self, data):
     """
+    Description:
+    -----------
     Replace the data in the Graph3d.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
+    Attributes:
+    ----------
     :param data:
-
-    :return:
     """
     return self.fnc_closure("setData(%s)" % JsUtils.jsConvertData(data, None))
 
   def setOptions(self, options):
     """
+    Description:
+    -----------
     Update options of Graph3d. The provided options will be merged with current options.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
+    Attributes:
+    ----------
     :param options:
-
-    :return:
     """
     return self.fnc_closure("setOptions(%s)" % JsUtils.jsConvertData(options, None))
 
   def setSize(self, width, height):
     """
+    Description:
+    -----------
     Parameters width and height are strings, containing a new size for the graph. Size can be provided in pixels or in percentages.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
+    Attributes:
+    ----------
     :param width:
     :param height:
-
-    :return:
     """
     width = JsUtils.jsConvertData(width, None)
     height = JsUtils.jsConvertData(height, None)
@@ -650,28 +821,34 @@ class VisGraph3D(JsPackage):
 
   def setCameraPosition(self, pos):
     """
+    Description:
+    -----------
     Set the rotation and position of the camera.
     Parameter pos is an object which contains three parameters: horizontal, vertical, and distance.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
+    Attributes:
+    ----------
     :param pos:
-
-    :return:
     """
     pos = JsUtils.jsConvertData(pos)
     return self.fnc_closure("setCameraPosition(%s)" % pos)
 
   def onCameraPositionChange(self, jsFnc):
     """
+    Description:
+    -----------
     The camera position changed. Fired after the user modified the camera position by moving (dragging) the graph, or by zooming (scrolling), but not after a call to setCameraPosition method.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
+    Attributes:
+    ----------
     :param jsFnc:
-
-    :return:
     """
     return self.fnc_closure("on('cameraPositionChange', %s)" % jsFnc)
