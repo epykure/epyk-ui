@@ -4,6 +4,31 @@ from epyk.core.data import DataClass
 
 class SearchPanes(DataClass):
 
+  class DtOps(DataClass):
+    @property
+    def paging(self):
+      return self._attrs['paging']
+
+    @paging.setter
+    def paging(self, val):
+      self._attrs['paging'] = val
+
+    @property
+    def pagingType(self):
+      return self._attrs['pagingType']
+
+    @pagingType.setter
+    def pagingType(self, val):
+      self._attrs['pagingType'] = val
+
+    @property
+    def searching(self):
+      return self._attrs['searching']
+
+    @searching.setter
+    def searching(self, val):
+      self._attrs['searching'] = val
+
   @property
   def cascadePanes(self):
     """
@@ -210,8 +235,5 @@ class SearchPanes(DataClass):
     --------------
     https://datatables.net/reference/option/searchPanes.dtOpts
     """
-    return self._attrs['dtOpts']
+    return self.sub_data('dtOps', self.DtOps)
 
-  @dtOpts.setter
-  def dtOpts(self, val):
-    self._attrs['dtOpts'] = val
