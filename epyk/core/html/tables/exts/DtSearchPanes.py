@@ -84,7 +84,7 @@ class SearchPanes(DataClass):
       self._attrs['header'] = val
 
     @property
-    def options(self):
+    def panes_options(self):
       return self.sub_data_enum('options', self.Options)
 
     @property
