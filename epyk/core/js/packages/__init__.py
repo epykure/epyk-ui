@@ -3,6 +3,19 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
 def packageImport(jsPackage=None, cssPackage=None):
+  """
+  Description
+  ---------------
+  Simple decorator to allow people to declare packages that need to be imported when they are manipulating HTML compponents
+  The alias for the package needs to be defined in the Import.py module
+
+  Usage:
+  ------
+  import epyk.core.js.packages
+  @packageImport('myJsPackage', 'myCssPackage')
+  def myHtmlComponent()
+    pass
+  """
   def wrap(func):
     def inner(rptObj, *args, **kwargs):
       report = getattr(rptObj, '_report') if getattr(rptObj, '_report', None) else rptObj
