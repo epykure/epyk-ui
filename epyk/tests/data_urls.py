@@ -18,6 +18,7 @@ PLOTLY_WEBGL_POLAR = 'https://raw.githubusercontent.com/plotly/datasets/master/h
 
 #https://earthquake.usgs.gov/earthquakes/feed/v1.0/csv.php
 DATA_EARTHQUAKE = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.csv'
+WORLD_INDEX = 'https://visjs.github.io/vis-graph3d/examples/graph3d/rotateAxisLabels/world_index_data_small.json'
 
 AIRLINE_SAFETY = r"https://raw.githubusercontent.com/fivethirtyeight/data/master/airline-safety/airline-safety.csv"
 MURDEERS_2015 = r"https://raw.githubusercontent.com/fivethirtyeight/data/master/murder_2016/murder_2015_final.csv"

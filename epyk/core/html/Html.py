@@ -245,6 +245,28 @@ class Html(object):
     self._report.js.addOnLoad([self.dom.appendChild(htmlObj.dom)])
     return self
 
+  def onReady(self, jsFncs):
+    """
+    Description:
+    -----------
+    Add set of event / actions whihc will be triggered after the build of the object.
+    usually this can be used to add js functions on a chart or a table
+
+    Usage:
+    ------
+    network = rptObj.ui.charts.vis.network()
+    network.onReady([
+      network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
+    ])
+
+    Attributes:
+    ----------
+    :param jsFncs: List. Javascript function to be added once the object is built
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._report.js.addOnReady(jsFncs)
+
   def add_menu(self, context_menu):
     """
     Attach a context menu to an existing component. A context menu must have a component attached to otherwise
