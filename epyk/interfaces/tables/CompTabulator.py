@@ -30,12 +30,8 @@ class Tabulators(object):
 
     table = html_tables.HtmlTableTabulator.Table(self.parent.context.rptObj, records, width, height, htmlCode, options, profile)
     for c in cols + rows:
-      col_def = table.config.columns
-      col_def.title = c
-      col_def.field = c
-      col_def.cssClass.center() # = "dt-center, dt-test"
-
-
+      table.add_column(c)
+      #col_def.cssClass.center() # = "dt-center, dt-test"
     self.parent.context.register(table)
     return table
 

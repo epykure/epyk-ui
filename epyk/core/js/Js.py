@@ -813,7 +813,8 @@ class JsBase(object):
 
     Tip: Put a variable result to your service return in order to change the icon according to the status of your asynchronous call
 
-    Example
+    Usage:
+    ------
     report.preload([{'url': "Test.py", 'success': 'test.csv'}])
 
     :param ajaxParams:
