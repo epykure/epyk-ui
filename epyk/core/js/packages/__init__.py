@@ -311,6 +311,21 @@ class DataAttrs(object):
     self._attrs[name] = value
     return self
 
+  def attrs(self, values):
+    """
+    Description:
+    ------------
+    Set multiple attributes to the underlying data directly from a dictionary
+
+    Attributes:
+    ----------
+    :param values: Dictionary. The data to set
+
+    :return: "Self" to allow the chains on the Python side
+    """
+    self._attrs.update(values)
+    return self
+
   def __str__(self):
     """
     Description:

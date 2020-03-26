@@ -212,14 +212,15 @@ class PyRest(object):
     """
     Description:
     ------------
+    Retrieve tabular data from an external REST service
 
     Attributes:
     ----------
-    :param url:
-    :param delimiter:
-    :param encoding:
-    :param with_header:
-    :param store_location:
+    :param url: String. The url with the data to request
+    :param delimiter: String. The line delimiter
+    :param encoding: String. The encoding format
+    :param with_header: Boolean. A flag to mention if the header is available. (it will be used for the keys)
+    :param store_location: Optional. String. The temp folder to cache the data locally
     """
     has_file = str(hashlib.sha1(url.encode()).hexdigest())
     if store_location is not None:
@@ -249,13 +250,25 @@ class PyRest(object):
     """
     Description:
     ------------
+    Retrieve Json data from an external REST service
 
     Attributes:
     ----------
-    :param url:
-    :param encoding:
+    :param url: String. The url with the data to request
+    :param encoding: String. The encoding format
+    :param store_location: Optional. String. The temp folder to cache the data locally
     """
-    return json.loads(self.webscrapping(url).decode(encoding))
+    has_file = str(hashlib.sha1(url.encode()).hexdigest())
+    if store_location is not None:
+      file_path = os.path.join(store_location, has_file)
+      if os.path.isfile(file_path):
+        return json.load(open(file_path))
+
+    raw_data = json.loads(self.webscrapping(url).decode(encoding))
+    if store_location is not None:
+      with open(file_path, "w") as f:
+        json.dump(raw_data, f)
+    return raw_data
 
   def query(self, service_name, function_name="getData", report_name=None, data=None, encoding='utf-8'):
     """

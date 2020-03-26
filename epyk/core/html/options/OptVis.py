@@ -160,10 +160,18 @@ class OptionAxis(DataClass):
 
   @property
   def left(self):
+    """
+
+    :rtype: OptionRange
+    """
     return self.has_attribute(OptionRange)
 
   @property
   def right(self):
+    """
+
+    :rtype: OptionRange
+    """
     return self.has_attribute(OptionRange)
 
   @property
@@ -214,6 +222,10 @@ class OptionAxisPosition(DataClass):
 
   @property
   def range(self):
+    """
+
+    :rtype: OptionRange
+    """
     return self.has_attribute(OptionRange)
 
 
@@ -417,14 +429,26 @@ class OptionsTooltipStyle(DataClass):
 
   @property
   def content(self):
+    """
+
+    :rtype: OptionContent
+    """
     return self.has_attribute(OptionContent)
 
   @property
   def line(self):
+    """
+
+    :rtype: OptionLine
+    """
     return self.has_attribute(OptionLine)
 
   @property
   def dot(self):
+    """
+
+    :rtype: OptionDot
+    """
     return self.has_attribute(OptionDot)
 
 
@@ -477,6 +501,10 @@ class OptionsdrawPoints(DataClass):
 
   @property
   def style(self):
+    """
+
+    :rtype: EnumPointsStyle
+    """
     return self.has_attribute(EnumPointsStyle)
 
 
@@ -614,6 +642,8 @@ class OptionsLegend(DataClass):
     -----------
 
     :https://visjs.github.io/vis-timeline/docs/graph2d/
+
+    :rtype: OptionsLegendPosition
     """
     return self.has_attribute(OptionsLegendPosition)
 
@@ -624,6 +654,8 @@ class OptionsLegend(DataClass):
     -----------
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
+
+    :rtype: OptionsLegendPosition
     """
     return self.has_attribute(OptionsLegendPosition)
 
@@ -632,6 +664,10 @@ class Options2D(DataClass):
 
   @property
   def barChart(self):
+    """
+
+    :rtype: OptionBarChart
+    """
     return self.has_attribute(OptionBarChart)
 
   @property
@@ -732,14 +768,25 @@ class Options2D(DataClass):
 
   @property
   def height(self):
+    """
+
+    :return:
+    """
     return self._attrs["height"]
 
   @height.setter
   def height(self, val):
+    if isinstance(val, int):
+      val = "%spx" % val
+    # self.graphHeight = val
     self._attrs["height"] = val
 
   @property
   def legend(self):
+    """
+
+    :rtype: OptionsLegend
+    """
     return self.has_attribute[OptionsLegend]
 
   @property
@@ -792,10 +839,18 @@ class Options2D(DataClass):
 
   @property
   def orientation(self):
+    """
+
+    :rtype: EnumOrientation
+    """
     return self.has_attribute(EnumOrientation)
 
   @property
   def shaded(self):
+    """
+
+    :rtype: EnumOrientation
+    """
     return self.has_attribute(EnumOrientation)
 
   @property
@@ -884,6 +939,8 @@ class Options3D(DataClass):
     -----------
     The animation interval in milliseconds. This determines how fast the animation runs.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["animationInterval"]
@@ -900,6 +957,8 @@ class Options3D(DataClass):
     If false, the animation frames are loaded as soon as they are requested.
     if animationPreload is true, the graph will automatically load all frames in the background, resulting in a smoother animation as soon as all frames are loaded. The load progress is shown on screen.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["animationPreload"]
@@ -915,6 +974,8 @@ class Options3D(DataClass):
     -----------
     If true, the animation starts playing automatically after the graph is created.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["animationAutoStart"]
@@ -930,6 +991,8 @@ class Options3D(DataClass):
     -----------
     The color of the axis lines and the text along the axis.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["axisColor"]
@@ -952,6 +1015,10 @@ class Options3D(DataClass):
 
   @property
   def cameraPosition(self):
+    """
+
+    :rtype: OptionsCameraPosition
+    """
     return self.has_attribute(OptionsCameraPosition)
 
   @property
@@ -973,6 +1040,8 @@ class Options3D(DataClass):
     -----------
     Ratio of the size of the dots with respect to the width of the graph.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["dotSizeRatio"]
@@ -988,6 +1057,8 @@ class Options3D(DataClass):
     -----------
     Size of minimum-value dot as a fraction of dotSizeRatio. Applicable when using style dot-size.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["dotSizeMinFraction"]
@@ -1003,6 +1074,8 @@ class Options3D(DataClass):
     -----------
     Size of maximum-value dot as a fraction of dotSizeRatio. Applicable when using style dot-size.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["dotSizeMaxFraction"]
@@ -1026,6 +1099,8 @@ class Options3D(DataClass):
     -----------
     The color of the grid lines.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["gridColor"]
@@ -1041,6 +1116,8 @@ class Options3D(DataClass):
     -----------
     The height of the graph in pixels or as a percentage.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["height"]
@@ -1059,6 +1136,8 @@ class Options3D(DataClass):
     If keepAspectRatio is true, the x-axis and the y-axis keep their aspect ratio.
     If false, the axes are scaled such that they both have the same, maximum width.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["keepAspectRatio"]
@@ -1074,6 +1153,8 @@ class Options3D(DataClass):
     -----------
     If rotateAxisLabels is true, the x-axis and y-axis labels will rotate with the graph. Useful with long label values.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["rotateAxisLabels"]
@@ -1091,6 +1172,8 @@ class Options3D(DataClass):
     The animation controls consists of buttons previous, start/stop, next, and a slider showing the current frame.
     Only applicable when the provided data contains an animation.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showAnimationControls"]
@@ -1106,6 +1189,8 @@ class Options3D(DataClass):
     -----------
     If true, draw the bottom side of the surface in gray.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showGrayBottom"]
@@ -1121,6 +1206,8 @@ class Options3D(DataClass):
     -----------
     If true, grid lines are drawn in the x-y surface (the bottom of the 3d graph).
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showGrid"]
@@ -1136,6 +1223,8 @@ class Options3D(DataClass):
     -----------
     If true, X axis and X axis labels are drawn
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showXAxis"]
@@ -1151,6 +1240,8 @@ class Options3D(DataClass):
     -----------
     If true, Y axis and Y axis labels are drawn.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showYAxis"]
@@ -1166,6 +1257,8 @@ class Options3D(DataClass):
     -----------
     If true, Z axis and Z axis labels are drawn.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showZAxis"]
@@ -1182,6 +1275,8 @@ class Options3D(DataClass):
     If true, the graph is drawn in perspective: points and lines which are further away are drawn smaller.
     Note that the graph currently does not support a gray colored bottom side when drawn in perspective.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showPerspective"]
@@ -1198,6 +1293,8 @@ class Options3D(DataClass):
     If true, a legend is drawn for the graph (if the graph type supports it).
     By default a legend is drawn for dot and dot-color style graphs.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showLegend"]
@@ -1213,6 +1310,8 @@ class Options3D(DataClass):
     -----------
     Show shadow on the graph.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showShadow"]
@@ -1228,6 +1327,8 @@ class Options3D(DataClass):
     -----------
     If true, grid lines are drawn on the surface of the graph itself (only effective if style: 'surface'.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showSurfaceGrid"]
@@ -1243,7 +1344,11 @@ class Options3D(DataClass):
     -----------
     The style of the 3d graph
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+
+    :rtype: Enum3dStyles
     """
     return self.has_attribute(Enum3dStyles)
 
@@ -1256,6 +1361,8 @@ class Options3D(DataClass):
     The contents of the tooltip can be customized by providing a callback function as tooltip.
     In this case the function is called with an object containing parameters x, y, z, and data (the source JS object for the point) as an argument, and must return a string which may contain HTML.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["tooltip"]
@@ -1271,6 +1378,8 @@ class Options3D(DataClass):
     -----------
     The delay time (in ms) for the tooltip to appear when the mouse cursor hovers over an x-y grid tile.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["tooltipDelay"]
@@ -1281,6 +1390,10 @@ class Options3D(DataClass):
 
   @property
   def tooltipStyle(self):
+    """
+
+    :rtype: OptionsTooltipStyle
+    """
     return self.has_attribute(OptionsTooltipStyle)
 
   @property
@@ -1290,6 +1403,8 @@ class Options3D(DataClass):
     -----------
     The maximum value for the value-axis. Only available in combination with the styles dot-color and dot-size.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["valueMax"]
@@ -1305,6 +1420,8 @@ class Options3D(DataClass):
     -----------
     The minimum value for the value-axis. Only available in combination with the styles dot-color and dot-size.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["valueMin"]
@@ -1321,6 +1438,8 @@ class Options3D(DataClass):
     A value between 0.1 and 1.0.
     This scales the vertical size of the graph When keepAspectRatio is set to false, and verticalRatio is set to 1.0, the graph will be a cube.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["verticalRatio"]
@@ -1336,6 +1455,8 @@ class Options3D(DataClass):
     -----------
     The width of the graph in pixels or as a percentage.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["width"]
@@ -1347,24 +1468,14 @@ class Options3D(DataClass):
     self._attrs["width"] = val
 
   @property
-  def xBarWidth(self):
-    """
-    Description:
-    -----------
-    The width of bars in x direction. By default, the width is equal to the smallest distance between the data points.
-    Only applicable for styles 'bar' and 'bar-color'.
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
-    """
-    return self._attrs["xBarWidth"]
-
-  @property
   def xCenter(self):
     """
     Description:
     -----------
     The horizontal center position of the graph, as a percentage or in pixels.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xCenter"]
@@ -1380,6 +1491,8 @@ class Options3D(DataClass):
     -----------
     The maximum value for the x-axis. If not set, the largest value for x in the data set is used.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xMax"]
@@ -1395,6 +1508,8 @@ class Options3D(DataClass):
     -----------
     The minimum value for the x-axis. If not set, the smallest value for x in the data set is used.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xMin"]
@@ -1402,6 +1517,20 @@ class Options3D(DataClass):
   @xMin.setter
   def xMin(self, val):
     self._attrs["xMin"] = val
+
+  @property
+  def xBarWidth(self):
+    """
+    Description:
+    -----------
+    The width of bars in x direction. By default, the width is equal to the smallest distance between the data points.
+    Only applicable for styles 'bar' and 'bar-color'.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+    """
+    return self._attrs["xBarWidth"]
 
   @xBarWidth.setter
   def xBarWidth(self, val):
@@ -1414,6 +1543,8 @@ class Options3D(DataClass):
     -----------
     A function for custom formatting of the labels along the x-axis, for example function (x) {return (x * 100) + '%'}.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xValueLabel"]
@@ -1429,6 +1560,8 @@ class Options3D(DataClass):
     -----------
     Step size for the grid on the x-axis.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xStep"]
@@ -1445,6 +1578,8 @@ class Options3D(DataClass):
     The width of bars in y direction. By default, the width is equal to the smallest distance between the data points.
     Only applicable for styles 'bar' and 'bar-color'.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yBarWidth"]
@@ -1460,6 +1595,8 @@ class Options3D(DataClass):
     -----------
     The vertical center position of the graph, as a percentage or in pixels.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yCenter"]
@@ -1475,6 +1612,8 @@ class Options3D(DataClass):
     -----------
     The maximum value for the y-axis. If not set, the largest value for y in the data set is used.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yMax"]
@@ -1490,6 +1629,8 @@ class Options3D(DataClass):
     -----------
     The minimum value for the y-axis. If not set, the smallest value for y in the data set is used.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yMin"]
@@ -1505,6 +1646,8 @@ class Options3D(DataClass):
     -----------
     A function for custom formatting of the labels along the y-axis, for example function (y) {return (y * 100) + '%'}.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yValueLabel"]
@@ -1520,6 +1663,8 @@ class Options3D(DataClass):
     -----------
     Step size for the grid on the y-axis.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yStep"]
@@ -1535,6 +1680,8 @@ class Options3D(DataClass):
     -----------
     A function for custom formatting of the labels along the z-axis, for example function (z) {return (z * 100) + '%'}
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["zValueLabel"]
@@ -1550,6 +1697,8 @@ class Options3D(DataClass):
     -----------
     The maximum value for the z-axis. If not set, the largest value for z in the data set is used.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["zMax"]
@@ -1565,6 +1714,8 @@ class Options3D(DataClass):
     -----------
     The minimum value for the z-axis. If not set, the smallest value for z in the data set is used.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["zMin"]
@@ -1572,6 +1723,94 @@ class Options3D(DataClass):
   @zMin.setter
   def zMin(self, val):
     self._attrs["zMin"] = val
+
+
+class OptionsEditable(DataClass):
+
+  @property
+  def add(self):
+    """
+    Description:
+    -----------
+    If true, new items can be created by double tapping an empty space in the Timeline. See section Editing Items for a detailed explanation.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["add"]
+
+  @add.setter
+  def add(self, val):
+    self._attrs["add"] = val
+
+  @property
+  def remove(self):
+    """
+    Description:
+    -----------
+    If true, items can be deleted by first selecting them, and then clicking the delete button on the top right of the item. See section Editing Items for a detailed explanation.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["remove"]
+
+  @remove.setter
+  def remove(self, val):
+    self._attrs["remove"] = val
+
+  @property
+  def updateGroup(self):
+    """
+    Description:
+    -----------
+    If true, items can be dragged from one group to another. Only applicable when the Timeline has groups. See section Editing Items for a detailed explanation.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["updateGroup"]
+
+  @updateGroup.setter
+  def updateGroup(self, val):
+    self._attrs["updateGroup"] = val
+
+  @property
+  def updateTime(self):
+    """
+    Description:
+    -----------
+    If true, items can be dragged to another moment in time. See section Editing Items for a detailed explanation.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["updateTime"]
+
+  @updateTime.setter
+  def updateTime(self, val):
+    self._attrs["updateTime"] = val
+
+  @property
+  def overrideItems(self):
+    """
+    Description:
+    -----------
+    If true, item specific editable properties are overridden by timeline settings
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["overrideItems"]
+
+  @overrideItems.setter
+  def overrideItems(self, val):
+    self._attrs["overrideItems"] = val
 
 
 class OptionsTimeline(DataClass):
@@ -1583,6 +1822,8 @@ class OptionsTimeline(DataClass):
     -----------
     If true, the Timeline will automatically detect when its container is resized, and redraw itself accordingly.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["autoResize"]
@@ -1593,11 +1834,138 @@ class OptionsTimeline(DataClass):
 
   @property
   def editable(self):
-    return self._attrs["editable"]
+    """
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+
+    :rtype: OptionsEditable
+    """
+    return self.has_attribute(OptionsEditable)
 
   @editable.setter
   def editable(self, val):
     self._attrs["editable"] = val
+
+  @property
+  def end(self):
+    """
+    Description:
+    -----------
+    The initial end date for the axis of the timeline. If not provided, the latest date present in the items set is taken as end date.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/graph2d/
+    """
+    return self._attrs["end"]
+
+  @end.setter
+  def end(self, val):
+    self._attrs["end"] = val
+
+  @property
+  def clickToUse(self):
+    """
+    Description:
+    -----------
+    When a Timeline is configured to be clickToUse, it will react to mouse and touch events only when active. When active, a blue shadow border is displayed around the Timeline. The Timeline is set active by clicking on it, and is changed to inactive again by clicking outside the Timeline or by pressing the ESC key.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["clickToUse"]
+
+  @clickToUse.setter
+  def clickToUse(self, val):
+    self._attrs["clickToUse"] = val
+
+  @property
+  def start(self):
+    """
+    Description:
+    -----------
+    The initial start date for the axis of the timeline. If not provided, the earliest date present in the events is taken as start date.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["start"]
+
+  @start.setter
+  def start(self, val):
+    self._attrs["start"] = val
+
+  @property
+  def stack(self):
+    """
+    Description:
+    -----------
+    If true (default), items will be stacked on top of each other such that they do not overlap.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["stack"]
+
+  @stack.setter
+  def stack(self, val):
+    self._attrs["stack"] = val
+
+  @property
+  def stackSubgroups(self):
+    """
+    Description:
+    -----------
+    If true (default), subgroups will be stacked on top of each other such that they do not overlap.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["stackSubgroups"]
+
+  @stackSubgroups.setter
+  def stackSubgroups(self, val):
+    self._attrs["stackSubgroups"] = val
+
+  @property
+  def multiselect(self):
+    """
+    Description:
+    -----------
+    If true, multiple items can be selected using ctrl+click, shift+click, or by holding items. Only applicable when option selectable is true.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["multiselect"]
+
+  @multiselect.setter
+  def multiselect(self, val):
+    self._attrs["multiselect"] = val
+
+  @property
+  def sequentialSelection(self):
+    """
+    Description:
+    -----------
+    If true, then only sequential items are allowed to be selected (no gaps) when multiselect is true
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-timeline/docs/timeline/
+    """
+    return self._attrs["sequentialSelection"]
+
+  @sequentialSelection.setter
+  def sequentialSelection(self, val):
+    self._attrs["sequentialSelection"] = val
 
 
 class OptionLabel(DataClass):
@@ -1609,6 +1977,8 @@ class OptionLabel(DataClass):
     -----------
     Toggle the scaling of the label on or off. If this option is not defined, it is set to true if any of the properties in this object are defined.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["enabled"]
@@ -1624,6 +1994,8 @@ class OptionLabel(DataClass):
     -----------
     The minimum font-size used for labels when scaling.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["min"]
@@ -1639,6 +2011,8 @@ class OptionLabel(DataClass):
     -----------
     The maximum font-size used for labels when scaling.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["max"]
@@ -1656,6 +2030,8 @@ class OptionLabel(DataClass):
     You can limit the perceived font size using this option.
     If set to 30, the font will never look larger than size 30 zoomed at 100%.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["maxVisible"]
@@ -1672,6 +2048,8 @@ class OptionLabel(DataClass):
     When zooming out, the font will be drawn smaller. This defines a lower limit for when the font is drawn.
     When using font scaling, you can use this together with the maxVisible to first show labels of important edges when zoomed out and only show the rest when zooming in.
 
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["drawThreshold"]
@@ -1701,6 +2079,10 @@ class OptionNodeScaling(DataClass):
 
   @property
   def label(self):
+    """
+
+    :rtype: OptionLabel
+    """
     return self.has_attribute(OptionLabel)
 
 
@@ -1727,14 +2109,26 @@ class OptionNode(DataClass):
 
   @property
   def shape(self):
+    """
+
+    :rtype: EnumNodeShapes
+    """
     return self.has_attribute(EnumNodeShapes)
 
   @property
   def scaling(self):
+    """
+
+    :rtype: OptionNodeScaling
+    """
     return self.has_attribute(OptionNodeScaling)
 
   @property
   def font(self):
+    """
+
+    :rtype: OptionFont
+    """
     return self.has_attribute(OptionFont)
 
 
@@ -1761,6 +2155,10 @@ class OptionPhysics(DataClass):
 
   @property
   def physics(self):
+    """
+
+    :rtype: OptionPhysicsBarnesHut
+    """
     return self.has_attribute(OptionPhysicsBarnesHut)
 
 
@@ -1909,6 +2307,10 @@ class OptionEdge(DataClass):
 
   @property
   def color(self):
+    """
+
+    :rtype: OptionColor
+    """
     return self.has_attribute(OptionColor)
 
   @property
@@ -1921,6 +2323,10 @@ class OptionEdge(DataClass):
 
   @property
   def interaction(self):
+    """
+
+    :rtype: OptionInteraction
+    """
     return self.has_attribute(OptionInteraction)
 
   @property
@@ -1933,10 +2339,18 @@ class OptionEdge(DataClass):
 
   @property
   def smooth(self):
+    """
+
+    :rtype: OptionSmooth
+    """
     return self.has_attribute(OptionSmooth)
 
   @property
   def shadow(self):
+    """
+
+    :rtype: OptionShadow
+    """
     return self.has_attribute(OptionShadow)
 
 
@@ -2205,6 +2619,8 @@ class OptionsNetwork(DataClass):
     All options in this object are explained in the nodes module.
 
     https://visjs.github.io/vis-network/docs/network/
+
+    :rtype: OptionNode
     """
     return self.has_attribute(OptionNode)
 
@@ -2216,6 +2632,8 @@ class OptionsNetwork(DataClass):
     All options in this object are explained in the edges module.
 
     https://visjs.github.io/vis-network/docs/network/
+
+    :rtype: OptionEdge
     """
     return self.has_attribute(OptionEdge)
 
@@ -2227,6 +2645,8 @@ class OptionsNetwork(DataClass):
     https://visjs.github.io/vis-network/docs/network/
 
     All options in this object are explained in the layout module.
+
+    :rtype: OptionLayout
     """
     return self.has_attribute(OptionLayout)
 
@@ -2238,6 +2658,8 @@ class OptionsNetwork(DataClass):
     All options in this object are explained in the physics module.
 
     https://visjs.github.io/vis-network/docs/network/
+
+    :rtype: OptionPhysics
     """
     return self.has_attribute(OptionPhysics)
 
@@ -2249,6 +2671,8 @@ class OptionsNetwork(DataClass):
     All options in this object are explained in the interaction module.
 
     https://visjs.github.io/vis-network/docs/network/
+
+    :rtype: OptionInteraction
     """
     return self.has_attribute(OptionInteraction)
 
@@ -2260,5 +2684,7 @@ class OptionsNetwork(DataClass):
     All options in this object are explained in the manipulation module.
 
     https://visjs.github.io/vis-network/docs/network/
+
+    :rtype: OptionManipulation
     """
     return self.has_attribute(OptionManipulation)

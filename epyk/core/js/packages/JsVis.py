@@ -710,6 +710,87 @@ class VisNetworkEdge(JsPackage):
 class VisNetwork(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
 
+  def destroy(self):
+    """
+    Description:
+    -----------
+    Remove the network from the DOM and remove all Hammer bindings and references.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-network/docs/network/
+    """
+    return self.fnc_closure("destroy()")
+
+  def setData(self, data):
+    """
+    Description:
+    -----------
+    Override all the data in the network.
+    If stabilization is enabled in the physics module, the network will stabilize again.
+    This method is also performed when first initializing the network.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-network/docs/network/
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    return self.fnc_closure("setData(%s)" % JsUtils.jsConvertData(data, None))
+
+  def setOptions(self, options):
+    """
+    Description:
+    -----------
+    Set the options. All available options can be found in the modules above.
+    Each module requires it's own container with the module name to contain its options.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-network/docs/network/
+
+    Attributes:
+    ----------
+    :param options:
+    """
+    return self.fnc_closure("setOptions(%s)" % JsUtils.jsConvertData(options, None))
+
+  def redraw(self):
+    """
+    Description:
+    -----------
+    Redraw the network.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-network/docs/network/
+    """
+    return self.fnc_closure("redraw()")
+
+  def setSize(self, width, height):
+    """
+    Description:
+    -----------
+    Set the size of the canvas. This is automatically done on a window resize.
+
+    Related Pages:
+    --------------
+    https://visjs.github.io/vis-network/docs/network/
+
+    Attributes:
+    ----------
+    :param width:
+    :param height:
+    """
+    if isinstance(width, int):
+      width = "%spx" % width
+
+    if isinstance(height, int):
+      height = "%spx" % height
+    return self.fnc_closure("setSize(%s, %s)" % (JsUtils.jsConvertData(width, None), JsUtils.jsConvertData(height, None)))
+
 
 class VisTimeline(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
