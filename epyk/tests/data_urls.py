@@ -4,17 +4,21 @@ PLOTLY_POLAR = r'https://raw.githubusercontent.com/plotly/datasets/master/polar_
 PLOTLY_POINTS = r'https://raw.githubusercontent.com/plotly/datasets/master/3d-line1.csv'
 
 data_line_3d = r'https://raw.githubusercontent.com/plotly/datasets/master/_3d-line-plot.csv'
-data_line_3d = r'https://raw.githubusercontent.com/plotly/datasets/master/mesh_dataset.txt'
+data_mesh_3d = r'https://raw.githubusercontent.com/plotly/datasets/master/mesh_dataset.txt'
 
 PLOTLY_APPLE_PRICES = r'https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv'
 'https://raw.githubusercontent.com/plotly/datasets/master/2014_us_cities.csv'
 'https://raw.githubusercontent.com/plotly/datasets/master/2015_06_30_precipitation.csv'
 'https://raw.githubusercontent.com/plotly/datasets/master/earthquakes-23k.csv'
 'https://raw.githubusercontent.com/plotly/datasets/master/2015_06_30_precipitation.csv'
-'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv'
+AIRPORT_TRAFFIC = 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv'
 PLOTLY_WEBGL_POLAR = 'https://raw.githubusercontent.com/plotly/datasets/master/hobbs-pearson-trials.csv'
 
 'https://raw.githubusercontent.com/juliencohensolal/BankMarketing/master/rawData/bank-additional-full.csv'
+
+
+# https://bl.ocks.org/d3noob
+DC_QUAKES = 'http://bl.ocks.org/d3noob/raw/6077996/45425ba06fc3c30ed3c7492d1042352d3dad0f18/quakes.csv'
 
 #https://earthquake.usgs.gov/earthquakes/feed/v1.0/csv.php
 DATA_EARTHQUAKE = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.csv'
