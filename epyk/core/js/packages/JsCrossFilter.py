@@ -98,7 +98,7 @@ class CrossFilter(JsPackage):
     :param column: The column name on which the dimension will be defined
     :param varName:
     """
-    # self.fnc("dimension(function(d) { return d.%s })" % column)
+    ools = {}
     if varName is None:
       return Dimension(selector=self.toStr(), setVar=False)
 
@@ -107,9 +107,19 @@ class CrossFilter(JsPackage):
 
     if len(columns) == 1:
       js_columns = "d['%s']" % columns[0][0]
+      ools[columns[0][0]] = 0
     else:
-      js_columns = "[%s]" % ", ".join(["d['%s']" % d if v == str else "+d['%s']" % d for d, v in columns])
-    return Dimension(varName=varName, selector="%s.dimension(function(d) { return %s })" % (self.varId, js_columns), setVar=True)
+      js_frg = []
+      for i, col_def in enumerate(columns):
+        ools[col_def[0]] = i
+        if col_def[1] == str:
+          js_frg.append("d['%s']" % col_def[0])
+        else:
+          js_frg.append("+d['%s']" % col_def[0])
+      js_columns = "[%s]" % ", ".join(js_frg)
+    dim = Dimension(varName=varName, selector="%s.dimension(function(d) { return %s })" % (self.varId, js_columns), setVar=True)
+    dim.cols = ools
+    return dim
 
 
 class Bissect(object):
@@ -312,16 +322,16 @@ class Dimension(JsPackage):
     self._js.append("filterRange([%s, %s])" % (min, max))
     return self
 
-  def filterOnColumn(self, value, column_index=None):
+  def filterOnColumn(self, value, column):
     """
 
     :param column_index:
     :param value:
     """
-    if column_index is None:
-      return self.fnc("filter(function(d) { return d === %(value)s} )" % {'value': JsUtils.jsConvertData(value, None)})
+    if column is None:
+      return JsObjects.JsObject.JsObject("%(id)s.filter(function(d) { return d === %(value)s} )" % {'id': self.varId, 'value': JsUtils.jsConvertData(value, None)})
 
-    return self.fnc("filter(function(d) {console.log(d[%(column)s]=== %(value)s) ; return d[%(column)s] === %(value)s} )" % {'column': column_index, 'value': JsUtils.jsConvertData(value, None)})
+    return JsObjects.JsObject.JsObject("%(id)s.filter(function(d) { return d[%(column)s] === %(value)s} )" % {'id': self.varId, 'column': self.cols[column], 'value': JsUtils.jsConvertData(value, None)})
 
   def filterFunction(function):
     """
@@ -495,7 +505,7 @@ class Group(JsPackage):
 
     :return: returns this group
     """
-    return self.fnc("reduceSum(function(d) {console.log(d) ; return d['%s'] ;})" % value)
+    return self.fnc("reduceSum(function(d) { return d['%s'] ;})" % value)
 
   def order(self, orderValue):
     """

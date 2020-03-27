@@ -228,7 +228,7 @@ class JsData(object):
   def all(self):
     return DataAll()
 
-  def crossfilter(self, data, var_name=None):
+  def crossfilter(self, data=None, var_name=None, crossDimension=None):
     """
     Description:
     -----------
@@ -246,6 +246,9 @@ class JsData(object):
     :param data:
     """
     from epyk.core.js.packages.JsCrossFilter import CrossFilter
+
+    if data is None:
+      data = "%s.top(Infinity)" % crossDimension.toStr()
 
     if var_name is None:
       return CrossFilter(self._src, varName=var_name, data=data, setVar=False)
