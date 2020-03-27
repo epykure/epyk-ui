@@ -6,7 +6,9 @@ from epyk.core.js.packages import JsPackage, DataAttrs
 
 class VisDataSet(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
-  lib_selector = "dataSet"
+
+  def __init__(self, src, varName, data, setVar=True):
+    super(VisDataSet, self).__init__(src=src, varName=varName, selector="new vis.DataSet(%s)" % data, setVar=setVar)
 
   @property
   def length(self):
@@ -34,7 +36,7 @@ class VisDataSet(JsPackage):
     :return: The function returns an array with the ids of the added items. See section Data Manipulation.
     """
     jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsArray.JsArray("%s.add(%s)" % (self.getStr(), jsData))
+    return JsObjects.JsArray.JsArray("%s.add(%s)" % (self.varId, jsData))
 
   def clear(self, senderId=None):
     """
@@ -53,10 +55,10 @@ class VisDataSet(JsPackage):
     :return: The function returns an array with the ids of the removed items.
     """
     if senderId is None:
-      return JsObjects.JsArray.JsArray("%s.clear()" % (self.getStr()))
+      return JsObjects.JsArray.JsArray("%s.clear()" % (self.varId))
 
     senderId = JsUtils.jsConvertData(senderId, None)
-    return JsObjects.JsArray.JsArray("%s.clear(%s)" % (self.getStr(), senderId))
+    return JsObjects.JsArray.JsArray("%s.clear(%s)" % (self.varId, senderId))
 
   def distinct(self, field):
     """
@@ -68,12 +70,13 @@ class VisDataSet(JsPackage):
     --------------
     https://visjs.github.io/vis-data/data/dataset.html
 
+    Attributes:
+    ----------
     :param field:
 
     :return: Returns an unordered array containing all distinct values. If data items do not contain the specified field are ignored.
     """
-    field = JsUtils.jsConvertData(field, None)
-    return JsObjects.JsArray.JsArray("%s.distinct(%s)" % (self.getStr(), field))
+    return JsObjects.JsArray.JsArray("%s.distinct(%s)" % (self.varId, JsUtils.jsConvertData(field, None)))
 
   def flush(self):
     """
@@ -85,7 +88,7 @@ class VisDataSet(JsPackage):
     --------------
     https://visjs.github.io/vis-data/data/dataset.html
     """
-    return JsObjects.JsObject.JsObject("%s.flush()" % self.getStr())
+    return JsObjects.JsObject.JsObject("%s.flush()" % self.varId)
 
   def forEach(self, callback, options=None):
     """
@@ -100,7 +103,7 @@ class VisDataSet(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.forEach()" % self.getStr())
+    return JsObjects.JsObject.JsObject("%s.forEach()" % self.varId)
 
   def map(self, callback):
     pass
@@ -121,7 +124,7 @@ class VisDataSet(JsPackage):
 
     :return: Returns null if no item is found.
     """
-    return JsObjects.JsObject.JsObject("%s.max(%s)" % (self.getStr(), JsUtils.jsConvertData(field, None)))
+    return JsObjects.JsObject.JsObject("%s.max(%s)" % (self.varId, JsUtils.jsConvertData(field, None)))
 
   def min(self, field):
     """
@@ -139,7 +142,7 @@ class VisDataSet(JsPackage):
 
     :return: Returns null if no item is found.
     """
-    return JsObjects.JsObject.JsObject("%s.min(%s)" % (self.getStr(), JsUtils.jsConvertData(field, None)))
+    return JsObjects.JsObject.JsObject("%s.min(%s)" % (self.varId, JsUtils.jsConvertData(field, None)))
 
   def update(self):
     pass
@@ -168,7 +171,7 @@ class VisDataSet(JsPackage):
     :return:
     """
     ids = JsUtils.jsConvertData(ids, None)
-    return JsObjects.JsArray.JsArray("%s.remove(%s)" % (self.getStr(), ids))
+    return JsObjects.JsArray.JsArray("%s.remove(%s)" % (self.varId, ids))
 
   def setOptions(self, options):
     """
@@ -186,8 +189,8 @@ class VisDataSet(JsPackage):
     """
     return self.fnc_closure("setOptions(%s)" % options)
 
-  def get(self):
-    pass
+  def get(self, i):
+    return JsObjects.JsObject.JsObject("%s.get(%s)" % (self.varId, i))
 
   def getIds(self, options=None):
     """
@@ -209,7 +212,7 @@ class VisDataSet(JsPackage):
       options = JsUtils.jsConvertData(options, None)
       return JsObjects.JsArray.JsArray("%s.getIds(%s)" % (self.getStr(), options))
 
-    return JsObjects.JsArray.JsArray("%s.getIds()" % self.getStr())
+    return JsObjects.JsArray.JsArray("%s.getIds()" % self.varId)
 
   def options(self):
     """
@@ -221,6 +224,7 @@ class VisDataSet(JsPackage):
 
 
 class VisDataOptions(DataAttrs):
+
   def align(self, position):
     """
     Description:
@@ -415,7 +419,9 @@ class VisDataOptions(DataAttrs):
 
 class VisDataView(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
-  lib_selector = "dataView"
+
+  def __init__(self, src, varName, data, setVar=True):
+    super(VisDataView, self).__init__(src=src, varName=varName, selector="new vis.DataView(%s)" % data, setVar=setVar)
 
   @property
   def length(self):
@@ -424,7 +430,7 @@ class VisDataView(JsPackage):
     -----------
     The number of items in the DataSet.
     """
-    return JsObjects.JsNumber.JsNumber("%s.length" % self.getStr())
+    return JsObjects.JsNumber.JsNumber("%s.length" % self.varId)
 
   def get(self, options=None, data=None):
     """
@@ -445,7 +451,7 @@ class VisDataView(JsPackage):
 
     options = JsUtils.jsConvertData(options, None)
     data = JsUtils.jsConvertData(data, None)
-    return JsObjects.JsObject.JsObject("%s.get(%s, %s)" % (self.getStr(), options, data))
+    return JsObjects.JsObject.JsObject("%s.get(%s, %s)" % (self.varId, options, data))
 
   def getByIds(self, ids, options=None, data=None):
     """
@@ -466,16 +472,16 @@ class VisDataView(JsPackage):
     ids = JsUtils.jsConvertData(ids, None)
     if data is None:
       if options is None:
-        return JsObjects.JsObject.JsObject("%s.get(%s)" % (self.getStr(), ids))
+        return JsObjects.JsObject.JsObject.get("%s.get(%s)" % (self.varId, ids))
 
       options = JsUtils.jsConvertData(options, None)
-      return JsObjects.JsObject.JsObject("%s.get(%s, %s)" % (self.getStr(), ids, options))
+      return JsObjects.JsObject.JsObject.get("%s.get(%s, %s)" % (self.varId, ids, options))
 
     options = JsUtils.jsConvertData(options, None)
     data = JsUtils.jsConvertData(data, None)
-    return JsObjects.JsObject.JsObject("%s.get(%s, %s, %s)" % (self.getStr(), ids, options, data))
+    return JsObjects.JsObject.JsObject.get("%s.get(%s, %s, %s)" % (self.varId, ids, options, data))
 
-  def getDataSet(self):
+  def getDataSet(self, vanName):
     """
     Description:
     -----------
@@ -485,7 +491,7 @@ class VisDataView(JsPackage):
     --------------
     https://visjs.github.io/vis-data/data/dataview.html
     """
-    return VisDataSet(src=self.src, selector="%s.getDataSet()" % self.getStr())
+    return VisDataSet(src=self.src, data="%s.getDataSet()" % self.varId, varName=vanName)
 
   def getIds(self, options=None):
     """
@@ -504,9 +510,9 @@ class VisDataView(JsPackage):
     """
     if options is not None:
       options = JsUtils.jsConvertData(options, None)
-      return JsObjects.JsArray.JsArray("%s.getIds(%s)" % (self.getStr(), options))
+      return JsObjects.JsArray.JsArray("%s.getIds(%s)" % (self.varId, options))
 
-    return JsObjects.JsArray.JsArray("%s.getIds()" % self.getStr())
+    return JsObjects.JsArray.JsArray("%s.getIds()" % self.varId)
 
   def off(self, event, callback):
     """
@@ -564,8 +570,7 @@ class VisDataView(JsPackage):
     ----------
     :param data:
     """
-    data = JsUtils.jsConvertData(data, None)
-    return self.fnc("setData(%s)" % data)
+    return self.fnc("setData(%s)" % JsUtils.jsConvertData(data, None))
 
   def options(self):
     """

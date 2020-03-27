@@ -255,35 +255,51 @@ class JsData(object):
 
     return CrossFilter(self._src, varName=var_name, data=data)
 
-  def dataset(self, data, var_name=None):
+  def dataset(self, data, var_name=None, options=None):
     """
+    Description:
+    -----------
     One of the starting points of the visualizations of vis.js is that they can deal with dynamic data, and allow manipulation of the data.
     To enable this, vis.js includes a flexible key/value based DataSet and DataView to handle unstructured JSON data.
 
-    Documentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/index.html
 
+    Attributes:
+    ----------
     :param data:
-
-    :return:
+    :param var_name:
+    :param options:
     """
-    return VisDataSet(self._src, data=data, varName=var_name)
+    vis_obj = VisDataSet(self._src, data=data, varName=var_name)
+    if options is not None:
+      vis_obj.setOptions(options)
+    return vis_obj
 
-  def dataview(self, data, var_name=None):
+  def dataview(self, dataset, var_name=None, options=None):
     """
+    Description:
+    -----------
     A DataView offers a filtered and/or formatted view on a DataSet.
     One can subscribe to changes in a DataView, and easily get filtered or formatted data without having to specify filters and field types all the time.
 
     Viz.Js module
 
-    DOcumentation
+    Related Pages:
+    --------------
     https://visjs.github.io/vis-data/data/dataview.html
 
-    :param data:
+    Attributes:
+    ----------
+    :param dataset:
+    :param options:
     :param var_name:
-
     """
-    return VisDataView(self._src, data=data, varName=var_name)
+    vis_obj = VisDataView(self._src, data=dataset.varId, varName=var_name)
+    if options is not None:
+      vis_obj.setOptions(options)
+    return vis_obj
 
   def records(self, data):
     """
