@@ -2,6 +2,7 @@ from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
+
 def packageImport(jsPackage=None, cssPackage=None):
   """
   Description
@@ -28,8 +29,6 @@ def packageImport(jsPackage=None, cssPackage=None):
     return inner
 
   return wrap
-
-
 
 
 class JsPackage(object):

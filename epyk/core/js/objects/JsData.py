@@ -228,14 +228,27 @@ class JsData(object):
   def all(self):
     return DataAll()
 
-  def crossfilter(self, data, var_name):
+  def crossfilter(self, data, var_name=None):
     """
+    Description:
+    -----------
+    A crossfilter represents a multi-dimensional dataset.
 
+    Constructs a new crossfilter. If records is specified, simultaneously adds the specified records.
+    Records can be any array of JavaScript objects or primitives.
+
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference
+
+    Attributes:
+    ----------
     :param data:
-
-    :return:
     """
     from epyk.core.js.packages.JsCrossFilter import CrossFilter
+
+    if var_name is None:
+      return CrossFilter(self._src, varName=var_name, data=data, setVar=False)
 
     return CrossFilter(self._src, varName=var_name, data=data)
 
