@@ -780,16 +780,3 @@ class JsD3(JsPackage):
     strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
     return strData
-
-
-if __name__ == '__main__':
-  columns = ["A", "B"]
-  data = [["1", 12], ["2", 30], ["2", 33]]
-  rptObj = None
-
-  rptObj.body.dom.d3.append('table').attr("style", "margin-left: 250px"),
-  rptObj.body.dom.d3.var('table').append("thead"),
-  rptObj.body.dom.d3.var('thead').rappend("tr").selectAll("th").data(columns).enter().rappend("th").text("test"),
-  rptObj.body.dom.d3.var('table').append("tbody"),
-  rptObj.body.dom.d3.var('tbody').selectAll("tr").data(data).enter().append("tr"),
-  rptObj.body.dom.d3.var('tr').selectAll("td").dataFncRows(columns).enter().rappend("td").html("")
