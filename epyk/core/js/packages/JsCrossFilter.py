@@ -102,13 +102,13 @@ class CrossFilter(JsPackage):
     if varName is None:
       return Dimension(selector=self.toStr(), setVar=False)
 
-    if not isinstance(columns, dict):
-      columns = {columns: int}
+    if not isinstance(columns, list):
+      columns = [(columns, int)]
 
     if len(columns) == 1:
-      js_columns = "d['%s']" % list(columns.keys())[0]
+      js_columns = "d['%s']" % columns[0][0]
     else:
-      js_columns = "[%s]" % ", ".join(["d['%s']" % d if v == str else "+d['%s']" % d for d, v in columns.items()])
+      js_columns = "[%s]" % ", ".join(["d['%s']" % d if v == str else "+d['%s']" % d for d, v in columns])
     return Dimension(varName=varName, selector="%s.dimension(function(d) { return %s })" % (self.varId, js_columns), setVar=True)
 
 
