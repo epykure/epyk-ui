@@ -45,9 +45,9 @@ class CrossFilter(JsPackage):
     ----------
     :param records:
     """
-    self.fnc_closure("add(%s)" % JsUtils.jsConvertData(records, None))
+    return self.fnc_closure("add(%s)" % JsUtils.jsConvertData(records, None))
 
-  def remove(self):
+  def removeByValue(self, column, value):
     """
     Description:
     -----------
@@ -56,7 +56,13 @@ class CrossFilter(JsPackage):
     Related Pages:
     --------------
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
+
+    Attributes:
+    ----------
+    :param column: String. The column name in the underlying data
+    :param value: Object. The value
     """
+    return self.fnc_closure("remove(function (d,i) { return d[%s] === %s;})" % (JsUtils.jsConvertData(column, None), JsUtils.jsConvertData(value, None)))
 
   def size(self):
     """
@@ -71,7 +77,7 @@ class CrossFilter(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber("%s.size()" % self.varId)
 
-  def groupAll(self):
+  def groupAll(self, varName):
     """
     Description:
     -----------
@@ -81,7 +87,13 @@ class CrossFilter(JsPackage):
     Related Pages:
     --------------
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
+
+    Attributes:
+    ----------
+    :param varName: String. The Javascript variable name
     """
+    groupObj = GroupAll(selector="%s.groupAll()" % self.varId, varName=varName, setVar=True)
+    return groupObj
 
   def dimension(self, columns, varName=None):
     """
@@ -95,8 +107,8 @@ class CrossFilter(JsPackage):
 
     Attributes:
     ----------
-    :param column: The column name on which the dimension will be defined
-    :param varName:
+    :param column: String. The column name on which the dimension will be defined
+    :param varName: String. The Javascript variable name
     """
     ools = {}
     if varName is None:
@@ -122,22 +134,7 @@ class CrossFilter(JsPackage):
     return dim
 
 
-class Bissect(object):
-
-  def __init__(self, array, value, lo, hi):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
-    :param array:
-    :param value:
-    :param lo:
-    :param hi:
-    """
-    self.array, self.value, self.lo, self.hi = array, value, lo, hi
-    self._js = []
+class Bissect(JsPackage):
 
   def by(self, value):
     """
@@ -149,8 +146,7 @@ class Bissect(object):
     ----------
     :param value:
     """
-    return JsObjects.JsObject.JsObject(
-      "%s.bisect.by(%s)(%s, %s, %s, %s)" % (self.toStr(), value, self.array, self.value, self.lo, self.hi))
+    raise Exception("Not implemented yet !")
 
   @property
   def right(self):
@@ -160,33 +156,19 @@ class Bissect(object):
     Similar to bisect.left, but returns an insertion point which comes after (to the right of) any existing entries of value in array.
 
     """
-    return JsObjects.JsObject.JsObject("%s.bisect.right(%s, %s, %s, %s)" % (self.toStr(), self.array, self.value, self.lo, self.hi))
+    raise Exception("Not implemented yet !")
 
   @property
   def left(self):
     """
 
     """
-    return JsObjects.JsObject.JsObject("%s.bisect.left(%s, %s, %s, %s)" % (self.toStr(), self.array, self.value, self.lo, self.hi))
+    raise Exception("Not implemented yet !")
 
 
-class Heap(object):
+class Heap(JsPackage):
 
-  def __init__(self, array, lo, hi):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
-    :param array:
-    :param lo:
-    :param hi:
-    """
-    self.array, self.lo, self.hi = array, lo, hi
-    self._js = []
-
-  def by(self, value):
+  def byColumn(self, name):
     """
     Description:
     -----------
@@ -195,83 +177,59 @@ class Heap(object):
     ----------
     :param value:
     """
-
-  @property
-  def sort(self):
-    """
-
-    """
+    return self.fnc("function(d) { return d['%s']; }" % name)
 
 
-class Heapselect(object):
+class Heapselect(JsPackage):
 
-  def __init__(self, array, lo, hi, k):
+  def byColumn(self, name):
     """
     Description:
     -----------
+    Constructs a new heapselect function using the specified value accessor function, which must return a naturally-ordered value.
+    For example, to create a heapselect function for objects based on their property
 
     Attributes:
     ----------
-    :param array:
-    :param lo:
-    :param hi:
-    :param k:
+    :param name:
     """
-
-  def by(self, value):
-    """
-
-    """
+    return self.fnc("function(d) { return d['%s']; }" % name)
 
 
-class Insertionsort(object):
+class Insertionsort(JsPackage):
 
-  def __init__(self, array, lo, hi):
+  def byColumn(self, name):
     """
     Description:
     -----------
+    Constructs a new insertionsort function using the specified value accessor function, which must return a naturally-ordered value.
+    For example, to create a insertionsort function for objects based on their property
 
     Attributes:
     ----------
-    :param array:
-    :param lo:
-    :param hi:
+    :param name:
     """
+    return self.fnc("function(d) { return d['%s']; }" % name)
 
-  def by(self, accessor):
+
+class Quicksort(JsPackage):
+
+  def byColumn(self, name):
     """
     Description:
     -----------
+    Constructs a new quicksort function using the specified value accessor function, which must return a naturally-ordered value.
+    For example, to create a quicksort function for objects based on their property
+
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
-    :param accessor:
+    :param name: String. The column name
     """
-
-
-class Quicksort(object):
-
-  def __init__(self, array, lo, hi):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
-    :param array:
-    :param lo:
-    :param hi:
-    """
-
-  def by(self, accessor):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
-    :param accessor:
-    """
+    return self.fnc("function(d) { return d['%s']; }" % name)
 
 
 class Dimension(JsPackage):
@@ -324,6 +282,8 @@ class Dimension(JsPackage):
 
   def filterOnColumn(self, value, column):
     """
+    Description:
+    -----------
 
     :param column_index:
     :param value:
@@ -359,6 +319,18 @@ class Dimension(JsPackage):
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return self.fnc("filterAll()")
+
+  def id(self):
+    """
+    Description:
+    -----------
+    Returns the numeric id of the dimension. For use with crossfilter.isElementFiltered.
+
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+    """
+    return JsObjects.JsNumber.JsNumber("%s.id()" % self.varId)
 
   def top(self, k=None):
     """
@@ -411,7 +383,7 @@ class Dimension(JsPackage):
     --------------
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
-    return JsObjects.JsObject.JsObject("%s.dispose()" % self.toStr())
+    return self.fnc_closure("dispose()")
 
   def group(self, varName):
     """
@@ -424,6 +396,19 @@ class Dimension(JsPackage):
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     groupObj = Group(selector="%s.group()" % self.varId, varName=varName, setVar=True)
+    return groupObj
+
+  def GroupAll(self, varName):
+    """
+    Description:
+    -----------
+    Constructs a new grouping for the given dimension, according to the specified groupValue function, which takes a dimension value as input and returns the corresponding rounded value.
+
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference
+    """
+    groupObj = GroupAll(selector="%s.groupAll()" % self.varId, varName=varName, setVar=True)
     return groupObj
 
   def groupFunction(self, varName, Fnc):
@@ -445,6 +430,72 @@ class Dimension(JsPackage):
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.hasCurrentFilter()" % self.varId)
+
+  def quicksort(self, varName):
+    """
+    Description:
+    -----------
+    Sorts the specified subset of the array in-place, returning the array; the lower bound lo is an inclusive index, and the upper bound hi is an exclusive index.
+    To sort the entire array, specify a lo of 0 and a hi of array.length.
+
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+
+    Attributes:
+    ----------
+    :param varName:
+    """
+    return Quicksort(selector="%s.quicksort" % self.varId, varName=varName, setVar=True)
+
+  def insertionsort(self, varName):
+    """
+    Description:
+    -----------
+    Sorts the specified subset of the array in-place, returning the array; the lower bound lo is an inclusive index, and the upper bound hi is an exclusive index.
+    To sort the entire array, specify a lo of 0 and a hi of array.length.
+
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+
+    Attributes:
+    ----------
+    :param varName:
+    """
+    return Insertionsort(selector="%s.insertionsort" % self.varId, varName=varName, setVar=True)
+
+  def heapselect(self, varName):
+    """
+    Description:
+    -----------
+    The identity heapselect function; suitable for numbers, dates, strings, and other naturally-comparable objects.
+
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+
+    Attributes:
+    ----------
+    :param varName:
+    """
+    return Heapselect(selector="%s.heapselect" % self.varId, varName=varName, setVar=True)
+
+  def heap(self, varName):
+    """
+    Description:
+    -----------
+    The identity heapselect function; suitable for numbers, dates, strings, and other naturally-comparable objects.
+
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+
+    Attributes:
+    ----------
+    :param varName:
+    """
+    return Heap(selector="%s.heap" % self.varId, varName=varName, setVar=True)
 
 
 class Group(JsPackage):
@@ -478,16 +529,25 @@ class Group(JsPackage):
     :param remove:
     :param initial:
     """
+    raise Exception("Not implemented yet !")
 
-  def reduceCount(self):
+  def reduceCount(self, value):
     """
     Description:
     -----------
     A convenience method for setting the reduce functions to count records; returns this group.
 
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+
+    Attributes:
+    ----------
+    :param value: String. The column name
+
     :return: returns this group
     """
-    return self.fnc("reduceCount()")
+    return self.fnc("reduceCount(function(d) { return d['%s'] ;})" % value)
 
   def reduceSum(self, value):
     """
@@ -501,7 +561,7 @@ class Group(JsPackage):
 
     Attributes:
     ----------
-    :param value:
+    :param value: String. The column name
 
     :return: returns this group
     """
@@ -518,6 +578,7 @@ class Group(JsPackage):
 
     :param orderValue:
     """
+    raise Exception("Not implemented yet !")
 
   def orderNatural(self):
     """
@@ -573,15 +634,31 @@ class Group(JsPackage):
     return JsObjects.JsObject.JsObject("%s.dispose()" % self.toStr())
 
 
-class GroupAll(object):
-  def __init__(self, selector):
-    self._selector = selector
-    self._js = []
+class GroupAll(JsPackage):
 
-  def reduce(self, add, remove, initial):
+  def reduceCount(self, value):
     """
     Description:
     -----------
+    A convenience method for setting the reduce functions to count records; returns this group.
+
+    Related Pages:
+    --------------
+    https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+
+    Attributes:
+    ----------
+    :param value: String. The column name
+
+    :return: returns this group
+    """
+    return self.fnc("reduceCount(function(d) { return d['%s'] ;})" % value)
+
+  def reduceSum(self, value):
+    """
+    Description:
+    -----------
+    A convenience method for setting the reduce functions to sum records using the specified value accessor function;
 
     Related Pages:
     --------------
@@ -589,11 +666,11 @@ class GroupAll(object):
 
     Attributes:
     ----------
-    :param add:
-    :param remove:
-    :param initial:
+    :param value: String. The column name
+
+    :return: returns this group
     """
-    return JsObjects.JsNumber.JsNumber("%s.all()" % self.toStr())
+    return self.fnc("reduceSum(function(d) { return d['%s'] ;})" % value)
 
   def value(self):
     """
@@ -605,26 +682,5 @@ class GroupAll(object):
     --------------
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
-    return JsObjects.JsNumber.JsNumber("%s.all()" % self.toStr())
+    return JsObjects.JsNumber.JsNumber("%s.value()" % self.varId)
 
-  def toStr(self):
-    """
-    Description:
-    -----------
-    Javascript representation
-
-    Related Pages:
-    --------------
-    https://github.com/crossfilter/crossfilter/wiki/API-Reference
-
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return JsObjects.JsObject.JsObject.get(strData)
