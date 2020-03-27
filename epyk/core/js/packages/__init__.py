@@ -280,6 +280,7 @@ class JsPackage(object):
     else:
       if self.setVar:
         obj_content = ["var %s = %s" % (self.varId, self._selector)]
+        self.setVar = False
     self._js = [[]] # empty the stack
     return "; ".join(obj_content)
 

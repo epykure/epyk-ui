@@ -1,6 +1,3 @@
-"""
-
-"""
 
 
 class D3(object):

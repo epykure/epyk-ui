@@ -1,6 +1,3 @@
-"""
-Common interface for the tables components
-"""
 
 # Check if pandas is available in the current environment
 # if it is the case this module can handle DataFrame directly
@@ -18,6 +15,7 @@ from epyk.core import js
 from epyk.interfaces.tables import CompTabulator
 from epyk.interfaces.tables import CompDatatable
 from epyk.interfaces.tables import CompTablesPlotly
+from epyk.interfaces.tables import CompTableD3
 
 
 class Tables(object):
@@ -27,9 +25,12 @@ class Tables(object):
   @property
   def tabulators(self):
     """
+    Description:
+    -----------
     Interface to the different Tabulator configurations
 
-    Documentation
+    Related Pages:
+    --------------
     http://tabulator.info/
 
     :rtype: CompTabulator.Tabulators
@@ -37,11 +38,27 @@ class Tables(object):
     return CompTabulator.Tabulators(self)
 
   @property
+  def d3(self):
+    """
+    Description:
+    -----------
+    Interface to the different Tabulator configurations
+
+    Related Pages:
+    --------------
+    https://github.com/d3/d3/wiki/Gallery
+
+    :rtype: CompTableD3.D3
+    """
+    return CompTableD3.D3(self)
+
+  @property
   def plotlys(self):
     """
     Interface to the different Tabulator configurations
 
-    Documentation
+    Related Pages:
+    --------------
     http://tabulator.info/
 
     :rtype: CompTabulator.Tabulators
@@ -51,9 +68,12 @@ class Tables(object):
   @property
   def datatables(self):
     """
+    Description:
+    -----------
     Interface to the different Datatable configurations
 
-    Documentation
+    Related Pages:
+    --------------
     https://datatables.net/
 
     :rtype: CompDatatable.Datatables
@@ -63,11 +83,14 @@ class Tables(object):
   def pivot(self, recordSet=None, rows=None, cols=None, vals=None, title='', aggOptions=None, rendererName="Table",
             tableOptions=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, dataSrc=None, helper=None, profile=False):
     """
+    Description:
+    -----------
     Create a HTML Pivot table
 
     Example
 
-    Documentation
+    Related Pages:
+    --------------
     https://pivottable.js.org/examples/
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
@@ -90,13 +113,16 @@ class Tables(object):
             width=(100, '%'), height=(None, 'px'), options=None, htmlCode=None,
             profile=None):
     """
+    Description:
+    -----------
     The python interface to the javascript Datatable framework. Not all the functions have been wrapped here but you should be able to
     do the most frequent events and interactions with this component from the available function.
     Please keep in mind that the javascript is only trigger on the web browser (namely not with the Python code)
 
     Example
 
-    Documentation
+    Related Pages:
+    --------------
     https://datatables.net/reference/index
     https://datatables.net/reference/option/
     https://datatables.net/reference/option/ajax.data
@@ -189,11 +215,14 @@ class Tables(object):
   def tabulator(self, recordSet=None, header=None, cols=None, rows=None, title=None, align="left", width=(100, '%'),
                 height=(None, 'px'), options=None, htmlCode=None, profile=None):
     """
+    Description:
+    -----------
 
     Example
 
 
-    Documentation
+    Related Pages:
+    --------------
     http://tabulator.info/
 
     :param recordSet:
@@ -284,6 +313,8 @@ class Tables(object):
 
   def config(self, htmlCode, visible=False, profile=None):
     """
+    Description:
+    -----------
 
     :param htmlCode:
     :param visible:
@@ -295,6 +326,8 @@ class Tables(object):
 
   def basic(self, records, cols, rows, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
+    Description:
+    -----------
 
     Example
     simple_table = rptObj.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])

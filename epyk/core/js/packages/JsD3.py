@@ -20,108 +20,122 @@ class D3ScaleLinear(object):
     pass
 
 
-class D3Html(object):
-  def __init__(self, src, selector, tag, setVar=False):
-    self.src, self._selector, self.setVar, self.tag = src, selector, setVar, tag
-    self._js = []
+# class D3Html(JsPackage):
+#   lib_alias = {"js": 'd3'}
+#
+#   def __init__(self, src, selector, tag, setVar=False):
+#     self.src, self._selector, self.setVar, self.tag = src, selector, setVar, tag
+#     self.__js_uniq_fncs, self.varName, self.setVar, self.src = {}, None, setVar, src
+#     self._js, self._u, self._js_enums = [[]], {}, {} # a list of list of object definition
+#
+#   def append(self, htmlType, setVar=True):
+#     """
+#     If the specified type is a string, appends a new element of this type (tag name) as the last child of each selected element, or before the next following sibling in the update selection if this is an enter selection.
+#
+#     Documentation
+#     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
+#
+#     :param htmlType:
+#     """
+#     cnv_htmlType = JsUtils.jsConvertData(htmlType, None)
+#     return D3Html(self.src, "%s.append(%s)" % (self.toStr(), cnv_htmlType), htmlType, setVar=setVar)
+#
+#   def rappend(self, htmlType):
+#     return self.append(htmlType, setVar=False)
+#
+#   def attr(self, key, val):
+#     """
+#
+#     :param key:
+#     :param val:
+#     """
+#     return self.fnc("attr(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None)))
+#
+#   def text(self, data):
+#     return self.fnc("text(function(column) { return column; })")
+#
+#   def html(self, data):
+#     return self.fnc("html(function(d) { return d.value; })")
+#
+#   def selectAll(self, d3Type):
+#     self.fnc("selectAll(%s)" % JsUtils.jsConvertData(d3Type, None))
+#     return D3Select(self.src, selector=self.toStr())
 
-  def attr(self, key, val):
-    """
 
-    :param key:
-    :param val:
-    """
-    key = JsUtils.jsConvertData(key, None)
-    val = JsUtils.jsConvertData(val, None)
-    self._js.append("attr(%s, %s)" % (key, val))
-    return self
-
-  def text(self, data):
-    self._js.append("text(function(column) { return column; })")
-    return self
-
-  def html(self, data):
-    self._js.append("html(function(d) { return d.value; })")
-    return self
-
-  def selectAll(self, d3Type):
-    d3Type = JsUtils.jsConvertData(d3Type, None)
-    self._js.append("selectAll(%s)" % d3Type)
-    return D3Select(self.src, selector=self.toStr())
-
-  def toStr(self):
-    content = [self._selector] + self._js
-    if self.setVar:
-      self.setVar = False
-      return "var %s = %s" % (self.tag, ".".join(content))
-
-    return ".".join(content)
-
-
-class D3Select(object):
-  class __internal(object):
-    # By default it will attach eveything to the body
-    jqId, jsImports = 'd3.select("body")', set([])
-
-  def __init__(self, src=None, id=None, d3Type=None, selector=None):
-    self.src = src if src is not None else self.__internal()
-    if id is None and d3Type is None and selector is None:
-      raise Exception()
-
-    if selector is not None:
-      self._selector = selector
-    elif id is not None:
-      self._selector = self.select(id)
-    else:
-      self._selector = self.selectAll(d3Type)
-    self.src.jsImports.add('d3')
-    self._js = []
+class D3Select(JsPackage):
+  lib_alias = {"js": 'd3'}
 
   def data(self, datasets=None):
     """
+    Description:
+    -----------
     Binds the specified array of data with the selected elements,
     returning a new selection that represents the update selection: the elements successfully bound to data.
 
     The data is specified for each group in the selection.
     If the selection has multiple groups (such as d3.selectAll followed by selection.selectAll), then data should typically be specified as a function.
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_data
 
+    Attributes:
+    ----------
     :param datasets:
     """
     if datasets is None:
-      self._js.append("data()")
+      self.fnc("data()")
     else:
       #datasets = JsUtils.jsConvertData(datasets, None)
-      self._js.append("data(%s)" % datasets)
+      self.fnc("data(%s)" % datasets)
     return self
+
+  def dataRecord(self, columns):
+    """
+    Description:
+    -----------
+    Convert a list of dictionaries to an iteractor which will return ordered arrays based on the columns definition
+
+    Related Pages:
+    --------------
+    http://bl.ocks.org/gka/17ee676dc59aa752b4e6
+
+    Attributes:
+    ----------
+    :param columns: List. The columns to be retrieve for each row
+    """
+    return self.fnc('''data(function(row, i) { var cell = []; %s.forEach(function(k) { cell.push(row[k]);
+        }); return cell; }) ''' % JsUtils.jsConvertData(columns, None))
 
   def dataFncRows(self, columns):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param columns:
     """
-    self._js.append("data(function(row) {return %s.map(function(c, i) {return {column: c, value: row[i]}; }); })" % columns)
+    self.fnc("data(function(row) {return %s.map(function(c, i) {return {column: c, value: row[i]}; }); })" % columns)
     return self
 
   def datum(self, datasets=None):
     """
+    Description:
+    -----------
     Gets or sets the bound data for each selected element.
     Unlike selection.data, this method does not compute a join and does not affect indexes or the enter and exit selections.
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_datum
 
     :param datasets: If a value is not specified, returns the bound datum for the first (non-null) element in the selection.
-
-    :return:
     """
     if datasets is None:
-      self._js.append("datum()")
+      self.fnc("datum()")
     else:
-      datasets = JsUtils.jsConvertData(datasets, None)
-      self._js.append("datum(%s)" % datasets)
+      self.fnc("datum(%s)" % JsUtils.jsConvertData(datasets, None))
     return self
 
   def filter(self, fnc):
@@ -129,43 +143,57 @@ class D3Select(object):
 
   def enter(self):
     """
+    Description:
+    -----------
     Returns the enter selection: placeholder nodes for each datum that had no corresponding DOM element in the selection.
     (The enter selection is empty for selections not returned by selection.data.)
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_enter
-
-    :return:
     """
-    self._js.append("enter()")
-    return self
+    return self.fnc("enter()")
 
   def exit(self):
     """
+    Description:
+    -----------
     Returns the exit selection: existing DOM elements in the selection for which no new datum was found.
     (The exit selection is empty for selections not returned by selection.data.)
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_exit
-
-    :return:
     """
-    self._js.append("exit()")
-    return self
+    return self.fnc("exit()")
 
   def append(self, htmlType, setVar=True):
     """
+    Description:
+    -----------
     If the specified type is a string, appends a new element of this type (tag name) as the last child of each selected element, or before the next following sibling in the update selection if this is an enter selection.
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
 
+    Attributes:
+    ----------
     :param htmlType:
     """
-    cnv_htmlType = JsUtils.jsConvertData(htmlType, None)
-    return D3Html(self.src, "%s.append(%s)" % (self.toStr(), cnv_htmlType), htmlType, setVar=setVar)
+    return self.fnc("append(%s)" % JsUtils.jsConvertData(htmlType, None))
+    #return D3Html(self.src, "%s.append(%s)" % (self.toStr(), JsUtils.jsConvertData(htmlType, None)), htmlType, setVar=setVar)
 
   def rappend(self, htmlType):
+    """
+    Description:
+    -----------
+    Recursive append function without defining the variable on the javascript side
+
+    Attributes:
+    ----------
+    :param htmlType:
+    """
     return self.append(htmlType, setVar=False)
 
   def insert(self, htmlType, id):
@@ -176,101 +204,115 @@ class D3Select(object):
 
   def attr(self, key, val):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param key:
     :param val:
     """
-    key = JsUtils.jsConvertData(key, None)
-    val = JsUtils.jsConvertData(val, None)
-    self._js.append("attr(%s, %s)" % (key, val))
-    return self
+    return self.fnc("attr(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None)))
+
+  def text(self, data):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    return self.fnc("text(function(column) { return column; })")
+
+  def html(self, jsData=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsData:
+    """
+    if jsData is None:
+      return self.fnc("html(function(d) { return d; })")
+
+    return self.fnc("html(function(d) { return %s; })" % jsData)
+
+  def htmlByKey(self, data):
+    return self.fnc("html(function(d) {console.log('rrr'+ d); return d[%s]; })" % JsUtils.jsConvertData(data, None))
 
   def call(self, fnc_name):
     """
 
+    Attributes:
+    ----------
     :param fnc_name:
-
-    :return:
     """
-    fnc_name = JsUtils.jsConvertData(fnc_name, None)
-    self._js.append("call(%s)" % fnc_name)
-    return self
+    return self.fnc("call(%s)" % JsUtils.jsConvertData(fnc_name, None))
 
   def on(self, eventType, fnc):
     pass
 
   def remove(self):
     """
+    Description:
+    -----------
     Removes the selected elements from the document. Returns this selection (the removed elements) which are now detached from the DOM.
     There is not currently a dedicated API to add removed elements back to the document; however, you can pass a function to selection.append or selection.insert to re-add elements.
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
-
-    :return:
     """
-    self._js.append("remove()")
-    return self
+    return self.fnc("remove()")
 
   def clone(self, deep=False):
     """
+    Description:
+    -----------
     Inserts clones of the selected elements immediately following the selected elements and returns a selection of the newly added clones.
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
 
+    Attributes:
+    ----------
     :param deep: If deep is truthy, the descendant nodes of the selected elements will be cloned as well
-
-    :return:
     """
-    deep = JsUtils.jsConvertData(deep, None)
-    self._js.append("clone(%s)" % deep)
-    return self
+    return self.fnc("clone(%s)" % JsUtils.jsConvertData(deep, None))
 
   def order(self):
     """
+    Description:
+    -----------
     Re-inserts elements into the document such that the document order of each group matches the selection order.
     This is equivalent to calling selection.sort if the data is already sorted, but much faster.
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_append
-
-    :return:
     """
-    self._js.append("order()")
-    return self
-
-  def select(self, id):
-    return 'd3.select("%s")' % id
+    return self.fnc("order()")
+  #
+  # def select(self, id):
+  #   return 'd3.select("%s")' % id
 
   def selectAll(self, d3Type):
-    d3Type = JsUtils.jsConvertData(d3Type, None)
-    self._js.append("selectAll(%s)" % d3Type)
-    return self
-
-  def var(self, varName):
     """
 
-    :param variable_name:
-    :return:
+    :param d3Type:
     """
-    return D3Select(self.src, selector=varName)
+    return self.fnc("selectAll(%s)" % JsUtils.jsConvertData(d3Type, None))
 
-  def toStr(self):
-    """
-    Javascript representation
-
-    :return: Return the Javascript String
-    """
-    if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
-
-    if len(self._js) == 0:
-      return self._selector
-
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
-    self._js = [] # empty the stack
-    return strData
+  # def var(self, varName):
+  #   """
+  #
+  #   :param variable_name:
+  #   :return:
+  #   """
+  #   return D3Select(self.src, selector=varName)
 
 
 class D3ForceSimulation(object):
@@ -679,11 +721,14 @@ class JsD3(JsPackage):
   def max(self, dataset, jsFnc):
     return JsNumber.JsNumber("d3.max(%s, %s)" % (dataset, jsFnc))
 
-  def select(self, id):
-    return D3Select(self.src, id)
+  def select(self, id, varName=None):
+    if varName is not None:
+      return D3Select(self.src, selector="d3.select('%s')" % id, varName=varName, setVar=True)
 
-  def selectAll(self, d3Type):
-    return D3Select(d3Type=d3Type)
+    return D3Select(self.src, selector="d3.select('%s')" % id, setVar=False)
+
+  def selectAll(self, d3Type, setVar=False):
+    return D3Select(d3Type=d3Type, setVar=setVar)
 
   def scaleLinear(self, range):
     return D3ScaleLinear(range)
