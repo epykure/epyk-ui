@@ -78,7 +78,7 @@ class Chart(Html.Html):
   def build(self, data=None, options=None, profile=False):
     str_traces = []
     for t in self._traces:
-      str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in t.items()]))
+      str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in t.attrs()]))
     obj_datasets = JsObject.JsObject.get("[%s]" % ", ".join(str_traces))
     return JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).newPlot(self.htmlId, obj_datasets, self.layout, self.options)], toStr=True)
 

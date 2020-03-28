@@ -1,7 +1,3 @@
-"""
-Wrapper to the Bootstrap Layout library
-"""
-
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptPanel
@@ -9,9 +5,8 @@ from epyk.core.html.options import OptPanel
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlPanels
 
-from epyk.core.css import Defaults
-# The list of CSS classes
-from epyk.core.css.styles.classes import CssStyle
+# The list of CSS classes#
+from epyk.core.css import Defaults as css_defaults
 from epyk.core.css.styles import GrpClsContainer
 
 
@@ -118,7 +113,7 @@ class PanelSplit(Html.Html):
         <div style="%(css_right)s" id="%(htmlId)s_right" class="panel-right">%(right)s</div>
       </div>
       ''' % {"attrs": self.get_attrs(pyClassNames=self.style.get_classes()), "htmlId": self.htmlId, 'left': self.html_left.html(),
-             'right': self.html_right.html(), 'css_left': CssStyle.get_style(self.css_left), 'css_right': CssStyle.get_style(self.css_right)}
+             'right': self.html_right.html(), 'css_left': css_defaults.inline(self.css_left), 'css_right': css_defaults.inline(self.css_right)}
 
 
 class PanelSlide(Panel):
@@ -604,8 +599,7 @@ class Tabs(Html.Html):
     self.__panels.append(name)
     if icon is not None:
       tab = self._report.ui.div([
-        self._report.ui.icon(icon).css({"display": 'block', "width": '100%',
-                                        "font-size": '%spx' % (Defaults.Font.header_size + 4)}),
+        self._report.ui.icon(icon).css({"display": 'block', "width": '100%', "font-size": css_defaults.font(4)}),
         name], width=("100", "px"))
     else:
       tab = self._report.ui.div(name, width=("100", "px"))

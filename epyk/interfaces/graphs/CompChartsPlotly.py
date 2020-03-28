@@ -595,8 +595,8 @@ class Plotly(object):
         series['r'].append(rec[c])
         series['theta'].append(rec[theta_axis])
       all_series.append(series)
-    spolar_chart = graph.GraphPlotly.ScatterPolar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                                  profile)
+    spolar_chart = graph.GraphPlotly.ScatterPolar(self.parent.context.rptObj, width, height, title, options or {},
+                                                  htmlCode, profile)
     self.parent.context.register(spolar_chart)
     for d in all_series:
       spolar_chart.add_trace(d, mode="line")

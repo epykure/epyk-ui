@@ -1,6 +1,3 @@
-"""
-Module in charge of all the Text components
-"""
 
 from epyk.core import html
 from epyk.core.html import Defaults

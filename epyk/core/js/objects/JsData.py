@@ -250,7 +250,7 @@ class JsData(object):
     if var_name is None:
       return CrossFilter(self._src, varName=var_name, data=data, setVar=False)
 
-    return CrossFilter(self._src, varName=var_name, data=data)
+    return CrossFilter(self._src, varName=JsUtils.getJsValid(var_name), data=data)
 
   def dataset(self, data, var_name=None, options=None):
     """
@@ -269,7 +269,7 @@ class JsData(object):
     :param var_name:
     :param options:
     """
-    vis_obj = VisDataSet(self._src, data=data, varName=var_name)
+    vis_obj = VisDataSet(self._src, data=data, varName=JsUtils.getJsValid(var_name))
     if options is not None:
       vis_obj.setOptions(options)
     return vis_obj
@@ -293,7 +293,7 @@ class JsData(object):
     :param options:
     :param var_name:
     """
-    vis_obj = VisDataView(self._src, data=dataset.varId, varName=var_name)
+    vis_obj = VisDataView(self._src, data=dataset.varId, varName=JsUtils.getJsValid(var_name))
     if options is not None:
       vis_obj.setOptions(options)
     return vis_obj

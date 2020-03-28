@@ -9,6 +9,7 @@ except:
 
 from epyk.core import html
 
+
 class Buttons(object):
   def __init__(self, context):
     self.context = context

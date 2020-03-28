@@ -99,10 +99,10 @@ class BlockText(Html.Html):
 
   def __str__(self):
     items = ['<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
-    items.append('<div id="%s_title" %s style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlId, self._report.style.getClsTag(['CssTitle']), Defaults_css.font(3)))
-    items.append('<div id="%s_p" %s style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % (self.htmlId, self._report.style.getClsTag(['CssText'])))
-    if self.val.get('button') is not None:
-      items.append('<a href="#" %s><i></i></a>' % (self._report.style.getClsTag(['CssHrefNoDecoration', 'CssButtonBasic'])))
+    items.append('<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlId, Defaults_css.font(3)))
+    items.append('<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.htmlId)
+    #if self.val.get('button') is not None:
+    #  items.append('<a href="#" %s><i></i></a>' % (self._report.style.getClsTag(['CssHrefNoDecoration', 'CssButtonBasic'])))
     items.append('</div>')
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return ''.join(items)
