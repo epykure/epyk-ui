@@ -270,6 +270,20 @@ class Icons(object):
 
   def facebook(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
                htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param url:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
     icon = self.awesome('fab fa-facebook-f', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
@@ -279,6 +293,20 @@ class Icons(object):
 
   def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="Twitter", width=(25, 'px'),
               htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param url:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
     icon = self.awesome('fab fa-twitter', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
@@ -288,6 +316,20 @@ class Icons(object):
 
   def linkedIn(self, text=None, url="https://www.linkedin.com/home/?originalSubdomain=uk", position=None, tooltip="linkedIn",
                width=(25, 'px'), htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param url:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
     icon = self.awesome('fab fa-linkedin-in', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
@@ -297,6 +339,20 @@ class Icons(object):
 
   def youtube(self, text=None, url="https://www.youtube.com/", position=None, tooltip="Follow us on Youtube",
               width=(25, 'px'), htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param url:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
     icon = self.awesome('fab fa-youtube', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
@@ -315,6 +371,20 @@ class Icons(object):
 
   def python(self, text=None, url="https://pypi.org/", position=None, tooltip="Like or package",
              width=(25, 'px'), htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param url:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
     icon = self.awesome("fab fa-python", text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
@@ -324,11 +394,48 @@ class Icons(object):
 
   def stackoverflow(self, text=None, url="https://stackoverflow.com/", position=None, tooltip="Share your comments",
                     width=(25, 'px'), htmlCode=None, profile=None):
-    icon = self.awesome("fab fa-stack-overflow", text, position, tooltip, width, width, htmlCode, profile)
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param url:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
+    icon = self.awesome("fab fa-stack-overflow", text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
+    return icon
+
+  def tick(self, text=None, icon=JsFontAwesome.ICON_CHECK, position=None, tooltip="", width=(None, 'px'), htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param icon:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
+    icon = self.awesome(icon, text, tooltip, position, width, width, htmlCode, profile)
+    icon.css({"text-align": "center"})
+    icon.span.css({"line-height": '%spx' % 25, 'vertical-align': 'middle'})
+    icon.icon.css({"border-radius": "%spx" % 25, "width": "%spx" % 25, "margin-right": "auto", "margin": "auto",
+                   "color": 'blue', "line-height": '%s%s' % (25, width[1])})
+    icon.icon.style.add_classes.div.background_hover()
     return icon
 
   def epyk(self, align="center", format='logo'):
@@ -370,7 +477,7 @@ class Icons(object):
 
     Attributes:
     ----------
-    :return:
+
     """
     bar = html.HtmlEvent.SignIn(self.context.rptObj, text, width, icon)
     self.context.register(bar)
