@@ -14,8 +14,7 @@ class MesuredText(object):
   @property
   def width(self):
     """
-
-    :return:
+#
     """
     return JsNumber.JsNumber("%s.width" % self.varId, isPyData=False)
 
@@ -42,8 +41,7 @@ class RadialGradient(object):
     :param stop: Float. A value between 0.0 and 1.0 that represents the position between start and end in a gradient
     :param color: String. A CSS color value to display at the stop position
     """
-    color = JsUtils.jsConvertData(color, None)
-    self._js.append("%s.addColorStop(%s, %s)" % (self.varId, stop, color))
+    self._js.append("%s.addColorStop(%s, %s)" % (self.varId, stop, JsUtils.jsConvertData(color, None)))
     return self
 
   def toStr(self):
@@ -170,7 +168,7 @@ class Context2D(object):
 
     Attributes:
     ----------
-    :param image: 	Specifies the image, canvas, or video element of the pattern to use
+    :param image: Specifies the image, canvas, or video element of the pattern to use
     :param repeatType: Default. The pattern repeats both horizontally and vertically
     """
     image = JsUtils.jsConvertData(image, None)
@@ -621,8 +619,7 @@ class Context2D(object):
     ----------
     :param color: A CSS color value that indicates the stroke color of the drawing. Default value is #000000
     """
-    color = JsUtils.jsConvertData(color, None)
-    return "%s.strokeStyle = %s" % (self.varId, color)
+    return "%s.strokeStyle = %s" % (self.varId, JsUtils.jsConvertData(color, None))
 
   def strokeRect(self):
     """
@@ -672,8 +669,7 @@ class Context2D(object):
     ----------
     :param position: String. The context align
     """
-    position = JsUtils.jsConvertData(position, None)
-    return "%s.textAlign = %s" % (self.varId, position)
+    return "%s.textAlign = %s" % (self.varId, JsUtils.jsConvertData(position, None))
 
   def translate(self, x, y):
     """
@@ -706,8 +702,7 @@ class Context2D(object):
     ----------
     :param position: String. The context baseline
     """
-    position = JsUtils.jsConvertData(position, None)
-    return "%s.textBaseline = %s" % (self.varId, position)
+    return "%s.textBaseline = %s" % (self.varId, JsUtils.jsConvertData(position, None))
 
   def drawImage(self, img, x, y, width, height):
     """

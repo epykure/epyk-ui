@@ -31,6 +31,8 @@ class Graphs(object):
   def skillbars(self, records=None, y_column=None, x_axis=None, title=None, width=(100, '%'),
                 height=(None, 'px'), htmlCode=None, colUrl=None, colTooltip=None, filters=None, profile=False):
     """
+    Description:
+    ------------
     Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS
 
     Example
@@ -40,9 +42,12 @@ class Graphs(object):
       {"label": 'Javascript', 'value': 80}]
     rptObj.ui.charts.skillbars(records, y_column=['value'], x_axis=['label']).css({"width": '100px'})
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/howto/howto_css_skill_bar.asp
 
+    Attributes:
+    ----------
     :param records:
     :param y_column:
     :param x_axis:
@@ -68,6 +73,8 @@ class Graphs(object):
   def _data(self, data, seriesNames, xAxis, otherDims, dataFncs, xAxisOrder, chartFam, chartType, profile):
     """
 
+    Attributes:
+    ----------
     :param data:
     :param seriesNames:
     :param xAxis:
@@ -77,7 +84,6 @@ class Graphs(object):
     :param chartFam:
     :param chartType:
     :param profile:
-    :return:
     """
     if data is None:
       data = []
@@ -140,21 +146,28 @@ class Graphs(object):
 
   def sparkline(self, chart_type, data, title=None, options=None, column=None):
     """
+    Description:
+    ------------
     Display a sparkline component
 
-    Example
+    Usage:
+    --------------
     rptObj.ui.charts.sparkline("box", [1, 2, 3, 4, 5, 4, 3, 2, 1])
     rptObj.ui.charts.sparkline("bar", [1, 2, 3, 4, 5, 4, 3, 2, 10])
 
-    Documentation
+    Related Pages:
+    --------------
     https://omnipotent.net/jquery.sparkline/#s-about
 
+    Attributes:
+    ----------
     :param chart_type: The type of chart (bullet, line, bar, tristate, discrete, pie, box)
     :param data: A list of values
     :param options: The chart options
     :param column:
 
     :rtype: graph.GraphSparklines.Sparklines
+
     :return: A python Sparkline object
     """
     if column is not None:
@@ -173,9 +186,12 @@ class Graphs(object):
   @property
   def plotly(self):
     """
+    Description:
+    ------------
     Interface for the Plotly library
 
-    Documentation
+    Related Pages:
+    --------------
 
     :return: A Python Plolty object
     """
@@ -184,9 +200,12 @@ class Graphs(object):
   @property
   def chartJs(self):
     """
+    Description:
+    ------------
     Interface for the ChartJs library
 
-    Documentation
+    Related Pages:
+    --------------
 
     :return: A Python ChartJs object
     """
@@ -195,9 +214,12 @@ class Graphs(object):
   @property
   def c3(self):
     """
+    Description:
+    ------------
     Interface to the Javsacript C3 module
 
-    Documentation
+    Related Pages:
+    --------------
 
     :return: A Python C3 object
     """
@@ -206,12 +228,15 @@ class Graphs(object):
   @property
   def billboard(self):
     """
+    Description:
+    ------------
     Interface to the Javascript Billboard module
 
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from C3.js
 
-    Documentation
+    Related Pages:
+    --------------
     https://naver.github.io/billboard.js/
 
     :return: A Python Billboard Object
@@ -221,9 +246,12 @@ class Graphs(object):
   @property
   def vis(self):
     """
+    Description:
+    ------------
     Interface to the Javascript Vis module
 
-    Documentation
+    Related Pages:
+    --------------
 
     :return: A Python Vis object
     """
@@ -232,9 +260,12 @@ class Graphs(object):
   @property
   def nvd3(self):
     """
+    Description:
+    ------------
     Interface to the Javascript NVD3 library
 
-    Documentation
+    Related Pages:
+    --------------
     http://nvd3.org/
 
     :return: A Python NVD3 object
@@ -244,26 +275,42 @@ class Graphs(object):
   @property
   def dc(self):
     """
+    Description:
+    ------------
     """
     return CompChartsDc.DC(self)
 
   @property
   def d3(self):
     """
+    Description:
+    ------------
+
+    Related Pages:
+    --------------
     """
     return CompChartsD3.D3(self)
 
   @property
   def svg(self):
     """
+    Description:
+    ------------
     SVG defines vector-based graphics in XML format
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/graphics/svg_intro.asp
     """
     return CompChartsSvg.SVG(self)
 
   @property
   def canvas(self):
-    """ """
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    --------------
+    """
     return CompChartsCanvas.Canvas(self)

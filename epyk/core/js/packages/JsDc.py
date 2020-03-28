@@ -13,8 +13,10 @@ class DC(JsPackage):
   lib_alias = {'css': 'dc', 'js': 'dc'}
 
   def __init__(self, src=None, varName=None, setVar=True, parent=None):
-    self.src = src if src is not None else self.__internal()
-    self._selector = "new dc.%s('#%s')" % (self.chartFnc, parent.htmlId)
+    self.src, self._sub_chart = src, None
+    if parent is not None:
+      # for series chart the selector is specific
+      self._selector = "new dc.%s('#%s')" % (self.chartFnc, parent.htmlId)
     self.varName, self.setVar = varName, setVar
     self.src.jsImports.add(self.lib_alias['js'])
     self.src.cssImport.add(self.lib_alias['css'])
@@ -92,6 +94,13 @@ class DC(JsPackage):
 
     :return: Return the Javascript String
     """
+    str_chart = ""
+    if self._sub_chart is not None:
+      if self._sub_chart._js != [[]]:
+        str_chart = ".chart(function(c) { return %s; })" % self._sub_chart.toStr()
+      else:
+        str_chart = ".chart(function(c) { return %s; })" % self._sub_chart._selector
+
     if self._selector is None:
       raise Exception("Selector not defined, use this() or new() first")
 
@@ -103,7 +112,7 @@ class DC(JsPackage):
       str_fnc = ".".join([d.toStr() if hasattr(d, "toStr") else d for d in js])
       if self.setVar:
         if str_fnc:
-          str_fnc = "var %s = %s; %s.%s" % (self.varId, self._selector, self.varId, str_fnc)
+          str_fnc = "var %s = %s; %s%s.%s" % (self.varId, self._selector, self.varId, str_chart, str_fnc)
         else:
           str_fnc = "var %s = %s" % (self.varId, self._selector)
         self.setVar = False
@@ -260,22 +269,33 @@ class Series(DC):
   chartFnc = "seriesChart"
 
   def line(self):
-    return self.fnc("chart(function(c) { return new dc.lineChart(c).curve(d3.curveCardinal).renderArea(true); })")
+    self._sub_chart = Line(src=self.src, setVar=False)
+    self._sub_chart._selector = "new dc.lineChart(c)"
+    return self
 
   def scatter(self):
-    return self.fnc("chart(function(c) { return new dc.scatterPlot(c); })")
+    self._sub_chart = Scatter(src=self.src, setVar=False)
+    self._sub_chart._selector = "new dc.scatterPlot(c)"
+    return self
+
+  def bubble(self):
+    self._sub_chart = Bubble(src=self.src, setVar=False)
+    self._sub_chart._selector = "new dc.bubbleChart(c)"
+    return self
 
   def bar(self):
-    return self.fnc("chart(function(c) { return new dc.barChart(c); })")
+    self._sub_chart = Bar(src=self.src, setVar=False)
+    self._sub_chart._selector = "new dc.barChart(c)"
+    return self
 
   def seriesAccessor(self, jsFncs):
     """
 
     :param jsFncs:
     """
-    return self.fnc("seriesAccessor(function(d) {%s;})" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    return self.fnc("seriesAccessor(function(d) {%s; })" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
 
-  def seriesAccessorByKey(self, index, str_format=None):
+  def seriesAccessorByKey(self, index=None, str_format=None):
     """
 
     :param index:
@@ -283,15 +303,21 @@ class Series(DC):
     """
     if str_format is not None:
       key = str_format % ("d.key[%s]" % index)
-      return self.fnc("seriesAccessor(function(d) {return %s;})" % key)
+      return self.fnc("seriesAccessor(function(d) {return %s; })" % key)
 
-    return self.fnc("seriesAccessor(function(d) {return d.key[%s];})" % JsUtils.jsConvertData(index, None))
+    if index is None:
+      return self.fnc("seriesAccessor(function(d) { return d.key; })")
 
-  def keyAccessor(self, index):
-    return self.fnc("keyAccessor(function(d) {return +d.key[%s];})" % index)
+    return self.fnc("seriesAccessor(function(d) { return d.key[%s]; })" % JsUtils.jsConvertData(index, None))
+
+  def keyAccessor(self, index=None):
+    if index is None:
+      return self.fnc("keyAccessor(function(d) {return +d.key; })")
+
+    return self.fnc("keyAccessor(function(d) {return +d.key[%s]; })" % index)
 
   def valueAccessor(self):
-    return self.fnc("valueAccessor(function(d) {return d.value;})")
+    return self.fnc("valueAccessor(function(d) {return d.value; })")
 
   def elasticY(self, flag):
     """
@@ -345,6 +371,21 @@ class Series(DC):
 class Scatter(DC):
   chartFnc = "scatterPlot"
 
+  def radiusValueAccessorByKey(self, index=None, str_format=None):
+    """
+
+    :param index:
+    :param str_format:
+    """
+    if str_format is not None:
+      key = str_format % ("d.key[%s]" % index)
+      return self.fnc("radiusValueAccessor(function(d) {return %s; })" % key)
+
+    if index is None:
+      return self.fnc("radiusValueAccessor(function(d) { return d.key; })")
+
+    return self.fnc("radiusValueAccessor(function(d) { return d.key[%s]; })" % JsUtils.jsConvertData(index, None))
+
   def elasticX(self, flag):
     """
 
@@ -388,6 +429,32 @@ class Scatter(DC):
     :return:
     """
     return self.fnc("clipPadding(%s)" % JsUtils.jsConvertData(value, None))
+
+
+class Bubble(Scatter):
+  chartFnc = "bubbleChart"
+
+  def keyAccessor(self, index=None):
+    if index is None:
+      return self.fnc("keyAccessor(function(d) {return +d.key; })")
+
+    return self.fnc("keyAccessor(function(d) {return +d.key[%s]; })" % index)
+
+  def radiusValueAccessorByKey(self, index=None, str_format=None, statc_factor=None):
+    """
+
+    :param index:
+    :param str_format:
+    """
+    if str_format is not None:
+      key = str_format % ("d.key[%s]" % index)
+      return self.fnc("radiusValueAccessor(function(d) {return %s; })" % key)
+
+    str_k = "d.key" if index is None else "d.key[%s]" % JsUtils.jsConvertData(index, None)
+    if statc_factor is not None:
+      str_k = "%s %s" % (str_k, statc_factor)
+
+    return self.fnc("radiusValueAccessor(function(d) { return %s; })" % str_k)
 
 
 class Sunburst(DC):

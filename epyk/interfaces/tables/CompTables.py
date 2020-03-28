@@ -87,7 +87,8 @@ class Tables(object):
     -----------
     Create a HTML Pivot table
 
-    Example
+    Usage:
+    --------------
 
     Related Pages:
     --------------
@@ -119,7 +120,8 @@ class Tables(object):
     do the most frequent events and interactions with this component from the available function.
     Please keep in mind that the javascript is only trigger on the web browser (namely not with the Python code)
 
-    Example
+    Usage:
+    --------------
 
     Related Pages:
     --------------
@@ -218,13 +220,16 @@ class Tables(object):
     Description:
     -----------
 
-    Example
+    Usage:
+    --------------
 
 
     Related Pages:
     --------------
     http://tabulator.info/
 
+    Attributes:
+    ----------
     :param recordSet:
     :param header:
     :param cols:
@@ -316,10 +321,11 @@ class Tables(object):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param htmlCode:
     :param visible:
     :param profile:
-    :return:
     """
     return self.context.register(
       html_tables.HtmlTableConfig.ConfigTable(self.context.rptObj, htmlCode, visible, profile))
@@ -329,10 +335,13 @@ class Tables(object):
     Description:
     -----------
 
-    Example
+    Usage:
+    --------------
     simple_table = rptObj.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
     simple_table.add({"COL1": "Value"})
 
+    Attributes:
+    ----------
     :param records:
     :param cols:
     :param rows:
@@ -351,7 +360,9 @@ class Tables(object):
   def grid(self, records, cols, rows, width=(None, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
 
-    :return:
+    Usage:
+    --------------
+
     """
     width_cells, width_rows_header = 50, 100
     for rec in records:

@@ -12,7 +12,6 @@ class ChartJs(object):
     """
     """
     geo_chart = geo.GeoChartJs.Choropleth(self.parent.context.rptObj, width, height, htmlCode, options or {}, profile)
-    print(geo_chart)
     self.parent.context.register(geo_chart)
     return geo_chart
 
@@ -21,6 +20,5 @@ class ChartJs(object):
     """
     """
     geo_chart = geo.GeoChartJs.Choropleth(self.parent.context.rptObj, width, height, htmlCode, options or {}, profile)
-    print(geo_chart)
     self.parent.context.register(geo_chart)
     return geo_chart

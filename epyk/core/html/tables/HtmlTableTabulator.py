@@ -80,7 +80,6 @@ class Table(Html.Html):
     return None
 
   def build(self, data=None, options=None, profile=False):
-    print(self.config)
     return 'var %s =  new Tabulator("#%s", %s)' % (self.tableId, self.htmlId, self.config)
 
   def __str__(self):

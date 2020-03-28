@@ -107,7 +107,7 @@ class CrossFilter(JsPackage):
 
     Attributes:
     ----------
-    :param column: String. The column name on which the dimension will be defined
+    :param columns: String. The column name on which the dimension will be defined
     :param varName: String. The Javascript variable name
     """
     ools = {}
@@ -118,16 +118,16 @@ class CrossFilter(JsPackage):
       columns = [(columns, int)]
 
     if len(columns) == 1:
-      js_columns = "d['%s']" % columns[0][0]
+      js_columns = "d[%s]" % JsUtils.jsConvertData(columns[0][0], None)
       ools[columns[0][0]] = 0
     else:
       js_frg = []
       for i, col_def in enumerate(columns):
         ools[col_def[0]] = i
         if col_def[1] == str:
-          js_frg.append("d['%s']" % col_def[0])
+          js_frg.append("d[%s]" % JsUtils.jsConvertData(col_def[0], None))
         else:
-          js_frg.append("+d['%s']" % col_def[0])
+          js_frg.append("+d[%s]" % JsUtils.jsConvertData(col_def[0], None))
       js_columns = "[%s]" % ", ".join(js_frg)
     dim = Dimension(varName=varName, selector="%s.dimension(function(d) { return %s })" % (self.varId, js_columns), setVar=True)
     dim.cols = ools

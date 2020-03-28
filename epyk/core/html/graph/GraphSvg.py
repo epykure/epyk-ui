@@ -269,7 +269,6 @@ class SVG(Html.Html):
     :rtype: Path
     """
     if from_origin:
-      print(self.origine)
       x += self.origine[0]
       y += self.origine[1]
     self.html_objs.append(Path(self._report, x, y, fill, self.origine))

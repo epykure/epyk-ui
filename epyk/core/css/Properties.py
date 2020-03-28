@@ -1054,7 +1054,7 @@ class CssMixin(object):
 
   @float.setter
   def float(self, val):
-    val = val if val is not None else 'None'
+    val = val if val is not None else 'none'
     defined_vals = set(['none', 'left', 'right', 'initial', 'inherit'])
     if Defaults_css.CSS_EXCEPTIONS and val not in defined_vals:
       raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("float", val))

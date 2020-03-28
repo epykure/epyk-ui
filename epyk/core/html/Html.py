@@ -171,6 +171,8 @@ class Html(object):
   @property
   def js(self):
     """
+    Description:
+    -----------
     Javascript base function
 
     Return all the Javascript functions defined in the framework.
@@ -201,16 +203,22 @@ class Html(object):
 
   def prepend_child(self, htmlObj):
     """
+    Description:
+    -----------
     Wrapper to the Javascript method insertChild to add an HTML component
 
-    Example
+    Usage:
+    ------
     for i in range(10):
       encore = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
       select.prepend_child(encore)
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_node_insertbefore.asp
 
+    Attributes:
+    ----------
     :param htmlObj: The html component
     :return: The htmlObj
     """
@@ -224,17 +232,24 @@ class Html(object):
 
   def append_child(self, htmlObj):
     """
+    Description:
+    -----------
     Wrapper to the Javascript method appendChild to append an HTML component
 
-    Example
+    Usage:
+    ------
     for i in range(10):
       encore = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
       select.append_child(encore)
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_node_appendchild.asp
 
+    Attributes:
+    ----------
     :param htmlObj: The html component
+
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
@@ -269,9 +284,13 @@ class Html(object):
 
   def add_menu(self, context_menu):
     """
+    Description:
+    -----------
     Attach a context menu to an existing component. A context menu must have a component attached to otherwise
     the report will not be triggered
 
+    Attributes:
+    ----------
     :param context_menu: A Python context menu object
     """
     context_menu.source = self
@@ -284,14 +303,19 @@ class Html(object):
     ------------
     Add an icon to the HTML object
 
-    Example
+    Usage:
+    ------
     checks.title.add_icon("fas fa-align-center")
 
-    Documentation
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param text: The icon reference from font awsome website
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
+
     :return: The Html object
     """
     self.icon = ""
@@ -308,13 +332,19 @@ class Html(object):
 
   def add_label(self, text, css=None, position="before", for_=None):
     """
+    Description:
+    -----------
     Add an elementary label component
 
-    Example
+    Usage:
+    ------
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/tags/tag_label.asp
 
+    Attributes:
+    ----------
     :param text: The label content
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
@@ -338,13 +368,19 @@ class Html(object):
 
   def add_span(self, text, css=None, position="before", i=None):
     """
+    Description:
+    -----------
     Add an elementary span component
 
-    Example
+    Usage:
+    ------
 
-    Documentation
+    Related Pages:
+    --------------
     https://fontawesome.com/how-to-use/on-the-web/styling/layering
 
+    Attributes:
+    ----------
     :param text: The Span content
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
@@ -370,12 +406,17 @@ class Html(object):
 
   def add_link(self, text, url=None, script_name=None, report_name=None, name=None, icon=None, css=None, position="before"):
     """
+    Description:
+    -----------
     Add an elementary label component
 
-    Example
+    Usage:
+    ------
     div = rptObj.ui.div()
     div.add_link("test.py", name="Click to go to the test report")
 
+    Attributes:
+    ----------
     :param text:
     :param url:
     :param script_name:
@@ -402,10 +443,15 @@ class Html(object):
 
   def add_title(self, text, level=None, css=None, position="before"):
     """
+    Description:
+    -----------
     Add an elementary title component
 
-    Example
+    Usage:
+    ------
 
+    Attributes:
+    ----------
     :param text: The title content
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
@@ -426,10 +472,15 @@ class Html(object):
 
   def add_input(self, text, css=None, attrs=None, position="before"):
     """
+    Description:
+    -----------
     Add an elementary input component
 
-    Example
+    Usage:
+    ------
 
+    Attributes:
+    ----------
     :param text: The title content
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param attrs: Optional
@@ -450,10 +501,15 @@ class Html(object):
 
   def add_checkbox(self, flag, css=None, attrs=None, position="before"):
     """
+    Description:
+    -----------
     Add an elementary checkbox component
 
-    Example
+    Usage:
+    ------
 
+    Attributes:
+    ----------
     :param flag: Boolean. The state of the checkbox component
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param attrs: Optional
@@ -474,16 +530,19 @@ class Html(object):
 
   def add_helper(self, text, css=None):
     """
+    Description:
+    -----------
     Add an elementary helper icon
 
-    Example
+    Usage:
+    ------
 
+    Attributes:
+    ----------
     :param text: The helper content
     :param css: Optional. A dictionary with the CSS style to be added to the component
 
     :rtype: self._report.ui.rich.info
-
-    :return:
     """
     if text is not None:
       self.helper = self._report.ui.rich.info(text)
@@ -495,6 +554,8 @@ class Html(object):
   @property
   def val(self):
     """
+    Description:
+    -----------
     Property to get the jquery value of the HTML object in a python HTML object.
     This method can be used in any jsFunction to get the value of a component in the browser.
     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
@@ -512,6 +573,8 @@ class Html(object):
 
   def move(self):
     """
+    Description:
+    -----------
     Move the component to this position in the page
     """
     comp_id = id(self)
@@ -520,11 +583,16 @@ class Html(object):
 
   def css(self, key, value=None, reset=False):
     """
+    Description:
+    -----------
     Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function
 
-    Documentation
+    Related Pages:
+    --------------
     http://api.jquery.com/css/
 
+    Attributes:
+    ----------
     :param key: The key style in the CSS attributes (Can also be a dictionary)
     :param value: The value corresponding to the key style
     :param reset: Boolean
@@ -560,15 +628,21 @@ class Html(object):
 
   def tooltip(self, value, location='top'):
     """
+    Description:
+    -----------
     Add the Tooltip feature when the mouse is over the component.
     This tooltip version is coming from Bootstrap
 
-    Example
+    Usage:
+    ------
     htmlObj.tooltip("My tooltip", location="bottom")
 
-    Documentation
+    Related Pages:
+    --------------
     https://getbootstrap.com/docs/4.1/components/tooltips/
 
+    Attributes:
+    ----------
     :param value:
     :param location:
 
@@ -580,9 +654,13 @@ class Html(object):
 
   def add_options(self, options=None, name=None, value=None):
     """
+    Description:
+    -----------
     Change the Javascript options of the component.
     This will change the options sent to the Javascript
 
+    Attributes:
+    ----------
     :param options: Dictionary with the options
     :param name: String. The key
     :param value: String. The value
@@ -600,6 +678,8 @@ class Html(object):
 
   def set_attrs(self, attrs=None, name=None, value=None):
     """
+    Description:
+    -----------
     Function to update the internal dictionary of object attributes. Those attributes will be used when the HTML component will be defined.
     Basically all sort of attributes can be defined here: CSS attributes, but also data, name...
     Either the attrs or the tuple (name, value) can be used to add information to the dom object.
@@ -609,13 +689,14 @@ class Html(object):
 
     Tips: It is possible to use the data- attributes to store any kind of information in the dom.
 
-    Documentation
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param attrs: A python dictionary with the attributes
     :param name: A python string with the name of the attribute
     :param value: A python string with the value of the attribute
-
-    :return:
     """
     if attrs is None and name is None:
       raise Exception("Either the attrs or the name should be specified")
@@ -637,11 +718,15 @@ class Html(object):
 
   def get_attrs(self, withId=True, pyClassNames=None):
     """
+    Description:
+    -----------
     Return the string line with all the attributes
 
     All the attributes in the div should use double quote and not simple quote to be consistent everywhere in the framework
     and also in the javascript. If there is an inconsistency, the aggregation of the string fragments will not work
 
+    Attributes:
+    ----------
     :param withId:
     :param pyClassNames:
 
@@ -677,14 +762,19 @@ class Html(object):
   #
   def on(self, event, jsFncs, profile=False):
     """
+    Description:
+    -----------
     Add an event to the document ready function.
     This is to mimic the Jquery on function.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jquery/event_on.asp
     https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/dom_obj_event.asp
 
+    Attributes:
+    ----------
     :param event: A string with the Javascript event type from the dom_obj_event.asp
     :param jsFncs: A Javascript Python function
     :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console
@@ -702,12 +792,17 @@ class Html(object):
 
   def drop(self, jsFncs, preventDefault=True, profile=False):
     """
+    Description:
+    -----------
     Add a drag and drop property to the element
 
-    Example
+    Usage:
+    ------
     d = rptObj.ui.div()
     d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
+    Attributes:
+    ----------
     :param jsFncs:
     :param preventDefault: Boolean.
     :param profile:
@@ -729,19 +824,25 @@ class Html(object):
 
   def mouse(self, on_fncs=None, out_fncs=None):
     """
+    Description:
+    -----------
     Wrapper function fot the mouse event.
     This function will cover the on mouse hover event and mouse out.
 
     More specific events are possible using the generic out function
 
-    Example
+    Usage:
+    ------
       span.mouse([
         span.dom.css("color", "red"),
         span.dom.css("cursor", "pointer").r],
         span.dom.css("color", "blue").r)
 
-    Documentation
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param on_fncs: Array or String of Javascript events
     :param out_fncs: Array or String of Javascript events
 
@@ -847,6 +948,8 @@ class Html(object):
   # -------------------------------------------------------------------------------------------------------------------
   def __str__(self):
     """
+    Description:
+    -----------
     Apply the corresponding function to build the HTML result.
     This function is very specific and it has to be defined in each class.
     """
@@ -854,10 +957,13 @@ class Html(object):
 
   def to_word(self, document):
     """
+    Description:
+    -----------
     Apply the corresponding function to produce the same result in a word document.
     This function is very specific and it has to be defined in each class.
 
-    Documentation:
+    Related Pages:
+    --------------
     http://python-docx.readthedocs.io/en/latest/
     """
     raise NotImplementedError('''
@@ -867,10 +973,13 @@ class Html(object):
 
   def to_xls(self, workbook, worksheet, cursor):
     """
+    Description:
+    -----------
     Apply the corresponding function to produce the same result in a word document.
     This function is very specific and it has to be defined in each class.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://xlsxwriter.readthedocs.io/
     """
     raise NotImplementedError('''
@@ -927,6 +1036,19 @@ class Body(Html):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._report.js.addOnReady(jsFncs)
+
+  def onLoad(self, jsFncs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(JsUtils.jsConvertFncs(jsFncs, toStr=True))
 
   def set_content(self, report, page_content):
     """
