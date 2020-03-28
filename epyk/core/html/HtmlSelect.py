@@ -97,7 +97,7 @@ class Select(Html.Html):
     Description:
     -----------
     Javascript event triggered when the value has changed
-    
+
     Attributes:
     ----------
     :param jsFncs: List. Set of Javascript function to trigger on this event
