@@ -3,10 +3,11 @@ from epyk.core.css import Classes
 from epyk.core.css import Defaults_css
 from epyk.core.css import Properties
 from epyk.core.css.styles.effects import Effects
-from epyk.core.css.styles.attributes import Attrs
-from epyk.core.css.styles.attributes import Commons, Body
+from epyk.core.css.styles.attributes import Attrs # for the rtype in the documentation
+from epyk.core.css.styles.attributes import Commons, Body, Empty
 from epyk.core.css.styles.classes import CssStyle
 from epyk.core.py import OrderedSet
+
 
 class ClassPage(object):
   def __init__(self, htmlObj):
@@ -284,3 +285,17 @@ class ClassHtml(Properties.CssMixin):
     return css_frgs
 
 
+class ClassHtmlEmpty(ClassHtml):
+
+  @property
+  def css(self):
+    """
+    Description:
+    ------------
+    Property to the underlying CSS definition to be added to the style HTML tag of a component
+
+    :rtype: Commons
+    """
+    if self._css_struct is None:
+      self._css_struct = Empty(self.htmlObj)
+    return self._css_struct

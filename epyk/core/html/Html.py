@@ -1,10 +1,3 @@
-"""
-Base class for all the HTML components
-
-HTML components are complex structured mixin Javascript and HTML in order to create valid objects to be added
-to the final page. Page.py will create report objects in charge of collecting all those components
-"""
-
 
 import re
 import json

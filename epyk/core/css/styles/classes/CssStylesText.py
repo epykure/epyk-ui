@@ -1,6 +1,3 @@
-"""
-CSS Style module for the Text components
-"""
 
 from epyk.core.css.styles.classes import CssStyle
 
@@ -27,7 +24,7 @@ class CssTitle1(CssStyle.Style):
 
   def customize(self):
     self.css({"color": self.rptObj.theme.greys[7], "border-color": self.rptObj.theme.greys[9],
-              'font-size': '%s%s' % (Defaults_css.Font.header_size + 10, Defaults_css.Font.unit)})
+              'font-size': Defaults_css.font(10)})
 
 
 class CssTitle2(CssStyle.Style):
@@ -35,8 +32,7 @@ class CssTitle2(CssStyle.Style):
             'white-space': 'pre-wrap'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.colors[7],
-              'font-size': '%s%s' % (Defaults_css.Font.header_size + 8, Defaults_css.Font.unit)})
+    self.css({"color": self.rptObj.theme.colors[7], 'font-size': Defaults_css.font(8)})
 
 
 class CssTitle3(CssStyle.Style):
@@ -45,24 +41,21 @@ class CssTitle3(CssStyle.Style):
 
   def customize(self):
     self.css({"color": self.rptObj.theme.colors[7], 'font-family': Defaults_css.Font.family,
-              'font-size': '%s%s' % (Defaults_css.Font.header_size + 2, Defaults_css.Font.unit)})
+              'font-size': Defaults_css.font(2)})
 
 
 class CssTitle4(CssStyle.Style):
   _attrs = {'padding': 0, 'margin': '5px 0 0 0', 'font-weight': 'bold', 'width': '100%', 'white-space': 'pre-wrap'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.greys[5],
-              'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit)})
+    self.css({"color": self.rptObj.theme.greys[5], 'font-size': Defaults_css.font(1)})
 
 
 class CssTitle(CssStyle.Style):
-  _attrs = {'padding': 0, 'margin-bottom': 0, 'white-space': 'pre-wrap',
-            'font-weight': 'bold'}
+  _attrs = {'padding': 0, 'margin-bottom': 0, 'white-space': 'pre-wrap', 'font-weight': 'bold'}
 
   def customize(self):
-    self.css({'font-size': '%s%s' % (Defaults_css.Font.header_size, Defaults_css.Font.unit),
-              'font-family': Defaults_css.Font.family})
+    self.css({'font-size': Defaults_css.font(10), 'font-family': Defaults_css.Font.family})
 
 
 class CssNumberCenter(CssStyle.Style):

@@ -11,6 +11,7 @@ from epyk.core.html import Defaults as Default_html
 # The list of Javascript classes
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.html import JsHtml
+from epyk.core.css.styles import GrpCls
 
 
 class Label(Html.Html):
@@ -375,7 +376,7 @@ class Pre(Html.Html):
 
 
 class Paragraph(Html.Html):
-  # _grpCls = CssGrpClsText.CssClassTextNoBorder
+
   name, category, callFnc = 'Paragraph', 'Texts', 'paragraph'
 
   def __init__(self, report, text, color, background_color, border, width, height, htmlCode, encoding, dataSrc,
@@ -448,7 +449,7 @@ class Paragraph(Html.Html):
     :param workbook:
     :param worksheet:
     :param cursor:
-    :return:
+
     :link xlxWritter Documentation: https://xlsxwriter.readthedocs.io/format.html
     """
     worksheet.write(cursor['row'], 0, "\n".join(self.vals))
@@ -539,16 +540,27 @@ class Title(Html.Html):
         self.dom.transition(["color", "font-size"], ['red', '102%'], duration=[0.5, 0.5], reverse=True)])
 
   @property
+  def style(self):
+    """
+    Description:
+    ------------
+
+    :rtype: GrpCls.ClassHtmlEmpty
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpCls.ClassHtmlEmpty(self)
+    return self._styleObj
+
+  @property
   def dom(self):
     """
     Description:
     ------------
-    Javascript Functions
-
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
