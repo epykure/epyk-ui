@@ -1,6 +1,3 @@
-"""
-CSS Styles for all the select components
-"""
 
 from epyk.core.css.styles.classes import CssStyle
 from epyk.core.html import Defaults as Defaults_html

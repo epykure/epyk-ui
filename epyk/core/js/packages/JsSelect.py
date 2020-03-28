@@ -1,8 +1,3 @@
-"""
-Wrapper to the Jquery UI package
-
-https://api.jqueryui.com/
-"""
 
 import json
 

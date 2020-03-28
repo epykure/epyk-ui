@@ -1,14 +1,12 @@
-"""
-Module for the HTML Selects components
-"""
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptSelect
 
 # The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsList
+from epyk.core.css.styles import GrpClsList
 
 #
+from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsSelect
 
@@ -45,23 +43,34 @@ class Optgroup(Html.Html):
 class Select(Html.Html):
   __reqCss, __reqJs = ['select'], ['select']
   name, category, callFnc = 'Select', 'Lists', 'select'
-  # _grpCls = CssGrpClsList.CssClassListSelectMin
 
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
     super(Select, self).__init__(report, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
                                  globalFilter=filter, profile=profile)
     self.selected = None
+    if multiple:
+      self.attr['multiple'] = None
     #self.attr['class'].add(self.defined.clsAltMap)
     self._jsStyles = options
 
   @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsList.ClassSelect(self)
+    return self._styleObj
+
+  @property
   def dom(self):
     """
+    Description:
+    -----------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
+    Attributes:
+    ----------
     :return: A Javascript Dom object
     :rtype: JsSelect.JSelect
     """
@@ -76,9 +85,31 @@ class Select(Html.Html):
 
   @property
   def _js__builder__(self):
-    return '''%s.selectpicker(options).selectpicker('refresh')''' % JsQuery.decorate_var("htmlObj", convert_var=False)
+    return '''
+      var selectObj = %s; selectObj.empty();
+      for (var idx in data) {
+          const text = (typeof data[idx].text !== 'undefined')? data[idx].text : data[idx].value;
+          selectObj.append('<option value=' + data[idx].value + '>' + text + '</option>'); }
+      selectObj.selectpicker(options).val(data).selectpicker('refresh')''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
-  def change(self, jsFncs, profile=False):
+  def change(self, jsFncs, emtpyFncs=None, profile=False):
+    """
+    Description:
+    -----------
+    Javascript event triggered when the value has changed
+    
+    Attributes:
+    ----------
+    :param jsFncs: List. Set of Javascript function to trigger on this event
+    :param emtpyFncs: ist. Set of Js function to trigger if the value is empty
+    :param profile: Boolean. To set the profiling
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    if emtpyFncs is not None:
+      if not isinstance(emtpyFncs, list):
+        emtpyFncs = [emtpyFncs]
+      jsFncs.append("if (%s === ''){ %s }" % (self.dom.content, JsUtils.jsConvertFncs(emtpyFncs, toStr=True)))
     return self.on("change", jsFncs, profile)
 
   def __str__(self):
@@ -95,7 +126,7 @@ class Select(Html.Html):
       opt_rp = Optgroup(self._report, opt_groups[k], k)
       opt_rp.inReport = False
       data.append(opt_rp.html())
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker().selectpicker('refresh')" % JsQuery.decorate_var(self.dom.varId, convert_var=False))
     return "<select %s>%s</select>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(data))
 
   # -----------------------------------------------------------------------------------------
@@ -119,3 +150,40 @@ class Select(Html.Html):
         selected = rec['value']
     runner = p.add_run(selected)
     runner.bold = True
+
+
+class Lookup(Select):
+  __reqCss, __reqJs = ['select'], ['select']
+
+  def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
+    super(Lookup, self).__init__(report, records, htmlCode, width, height, filter, profile, multiple, options)
+    self._jsStyles['lookups'] = records
+
+  @property
+  def _js__builder__(self):
+    return '''
+        var selectObj = %s; selectObj.empty(); const lookupData = options.lookups[data];
+        if (typeof lookupData !== 'undefined') {
+          for (var idx in lookupData) {
+              const text = (typeof lookupData[idx].text !== 'undefined')? lookupData[idx].text : lookupData[idx].value;
+              selectObj.append('<option value=' + lookupData[idx].value + '>' + text + '</option>'); }
+          selectObj.selectpicker(options).val(lookupData).selectpicker('refresh')}
+        else {selectObj.selectpicker(options).selectpicker('refresh')} ''' % JsQuery.decorate_var("htmlObj", convert_var=False)
+
+  def __str__(self):
+    options, opt_groups = [], {}
+    # for val in self.val:
+    #   opt = Option(self._report, val['value'], val['name'], None,
+    #                self.selected is not None and self.selected == val['value'])
+    #   opt.inReport = False
+    #   if 'group' in val:
+    #     opt_groups.setdefault(val['group'], []).append(opt)
+    #   else:
+    #     options.append(opt.html())
+    # data = options
+    # for k in sorted(opt_groups):
+    #   opt_rp = Optgroup(self._report, opt_groups[k], k)
+    #   opt_rp.inReport = False
+    #   data.append(opt_rp.html())
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker().selectpicker('refresh')" % JsQuery.decorate_var(self.dom.varId, convert_var=False))
+    return "<select %s></select>" % (self.get_attrs(pyClassNames=self.style.get_classes()))

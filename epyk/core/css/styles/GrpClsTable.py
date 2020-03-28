@@ -174,8 +174,6 @@ class Datatable(GrpCls.ClassHtml):
 
 class Tabulator(GrpCls.ClassHtml):
 
-
-
   def __init__(self, htmlObj):
     super(Tabulator, self).__init__(htmlObj)
     self._css_tabulator, self._css_tabulator_row, self._css_tabulator_header = None, None, None

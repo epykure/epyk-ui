@@ -864,11 +864,11 @@ class Html(object):
 
     if isinstance(data, dict):
       # check if there is no nested HTML components in the data
-      tmp_data = ["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
       js_data = "{%s}" % ",".join(tmp_data)
     else:
       js_data = JsUtils.jsConvertData(data, None)
-    options, js_options = options or {}, []
+    options, js_options = options or self._jsStyles, []
     for k, v in options.items():
       if isinstance(v, dict):
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
