@@ -1037,17 +1037,25 @@ class JsDoms(JsObject.JsObject):
 
   def switchClass(self, clsName1, clsName2):
     """
+    Description:
+    ------------
     Switch from one CSS class to another.
 
-    Example
-    l2[-1].icon.dom.switchClass("fa-folder", "fa-folder-open")
+    Usage:
+    ------
+    icon.dom.switchClass("fa-folder", "fa-folder-open")
 
-    :param clsName1:
-    :param clsName2:
-    :return:
+    Attributes:
+    ----------
+    :param clsName1: String. A class name or a string with a list of classname space separated
+    :param clsName2: String. A class name or a string with a list of classname space separated
+
+    :return: Self to allow the chaining
     """
-    self.toggleClass(clsName1)
-    self.toggleClass(clsName2)
+    for cls in clsName1.split(" "):
+      self.toggleClass(cls)
+    for cls in clsName2.split(" "):
+      self.toggleClass(cls)
     return self
 
   @property

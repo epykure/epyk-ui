@@ -255,6 +255,8 @@ class Lists(object):
   def groups(self, data=None, categories=None, color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -281,6 +283,8 @@ class Lists(object):
   def checklist(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
                 htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -394,6 +398,27 @@ class Lists(object):
 
     self.context.register(html_obj)
     return html_obj
+
+  def radios(self, records, group_name=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None,
+             options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    :param records:
+    :param group_name:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    container = self.context.rptObj.ui.div(width=width, height=height, htmlCode=htmlCode, helper=helper, profile=profile)
+    group_name = group_name or container.htmlId
+    for rec in records:
+      container += self.context.rptObj.ui.fields.radio(rec.get("value", False), rec.get('label', ''), rec.get("group_name", group_name))
+    return container
 
   def brackets(self, recordSet=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))

@@ -30,22 +30,29 @@ from epyk.core.js.objects import JsData
 
 class JsConsole(object):
   """
+  Description:
+  ------------
   This is a wrapper to the Console
 
-  Documentation
+  Related Pages:
+  --------------
   https://medium.freecodecamp.org/how-to-get-the-most-out-of-the-javascript-console-b57ca9db3e6d
   """
 
   @property
   def debugger(self):
     """
+    Description:
+    ------------
     Trigger a Javascript debugger from this point.
     The Javascript will be stopped and it will be possible to check the process step by step in the browser using F12
 
-    Example
+    Usage:
+    ------
     rptObj.js.console.debugger
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_debugger.asp
 
     :return: The Javascript Keyword to trigger the browser debugger
@@ -55,12 +62,16 @@ class JsConsole(object):
   @property
   def clear(self):
     """
+    Description:
+    ------------
     The console.clear() method clears the console.
 
-    Example
+    Usage:
+    ------
     rptObj.js.console.clear
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_console_clear.asp
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
@@ -69,17 +80,24 @@ class JsConsole(object):
 
   def log(self, jsData, jsFnc=None, skip_data_convert=False):
     """
+    Description:
+    ------------
     The console.log() method writes a message to the console.
 
-    Example
+    Usage:
+    ------
     rptObj.js.console.log("Test")
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_console_log.asp
 
+    Attributes:
+    ----------
     :param jsData: The Javascript fragment
     :param jsFnc:
     :param skip_data_convert:
+
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     if skip_data_convert:
@@ -89,50 +107,73 @@ class JsConsole(object):
 
   def info(self, jsData, jsFnc=None):
     """
+    Description:
+    ------------
     The console.info() method writes a message to the console.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_console_info.asp
 
+    Attributes:
+    ----------
     :param data: The Javascript fragment
     :param jsFnc:
+
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     return JsFncs.JsFunction("console.info(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
 
   def warn(self, jsData, jsFnc=None):
     """
+    Description:
+    ------------
     The console.warn() method writes a warning to the console.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_console_warn.asp
 
+    Attributes:
+    ----------
     :param data: The Javascript fragment
     :param jsFnc:
+
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     return JsFncs.JsFunction("console.warn(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
 
   def error(self, jsData, jsFnc=None):
     """
+    Description:
+    ------------
     The console.error() method writes an error message to the console.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_console_error.asp
 
+    Attributes:
+    ----------
     :param data: The Javascript fragment
     :param isPyData:
+
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     return JsFncs.JsFunction("console.error(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
 
   def table(self, jsData, jsHeader=None):
     """
+    Description:
+    ------------
     The console.table() method writes a table in the console view.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_console_table.asp
 
+    Attributes:
+    ----------
     :param jsData: Required. The data to fill the table with
     :param jsHeader: Optional. An array containing the names of the columns to be included in the table
     :return: The Javascript String used to clear the console (F12 in standard browsers)
@@ -144,11 +185,16 @@ class JsConsole(object):
 
   def time(self, htmlId):
     """
+    Description:
+    ------------
     The console.time() method starts a timer in the console view
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_console_time.asp
 
+    Attributes:
+    ----------
     :param htmlId: Use the label parameter to give the timer a name
     :return: A Python Javascript Number
     """
@@ -156,11 +202,16 @@ class JsConsole(object):
 
   def timeEnd(self, htmlId):
     """
+    Description:
+    ------------
     The console.timeEnd() method ends a timer, and writes the result in the console view.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_console_timeend.asp
 
+    Attributes:
+    ----------
     :param htmlId: The name of the timer to end
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
@@ -168,27 +219,37 @@ class JsConsole(object):
 
   def _assert(self, jsData, strInfo, jsFnc=None):
     """
+    Description:
+    ------------
     The console.assert() method writes a message to the console, but only if an expression evaluates to false.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_console_assert.asp
 
+    Attributes:
+    ----------
     :param jsData:
     :param strInfo:
     :param isPyData:
-    :return:
     """
     return JsFncs.JsFunction("console.assert('%s', '%s')" % (JsUtils.jsConvertData(jsData, jsFnc), strInfo))
 
   def tryCatch(self, jsFncs, jsFncsErrs="console.warn(err.message)"):
     """
+    Description:
+    ------------
     Javascript Try Catch Exceptions
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_obj_error.asp
 
+    Attributes:
+    ----------
     :param jsFncs:
     :param jsFncsErrs:
+
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     if not isinstance(jsFncs, list):
@@ -198,25 +259,33 @@ class JsConsole(object):
 
 class JsJson(object):
   """
+  Description:
+  ------------
   Wrapper around the Javascript Json module
   This wrapper will only wrapper the different functions available in the underlying library.
   The documentation can be found in each function or are available on the Javascript Official documentation
 
-  Documentation:
+  Related Pages:
+  --------------
   https://www.w3schools.com/js/js_json_intro.asp
-
   """
 
   def parse(self, jsData, jsResultFnc=None, jsFnc=None):
     """
+    Description:
+    ------------
     Parses a JSON string and returns a JavaScript object
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/js_json_parse.asp
     https://www.w3schools.com/jsref/jsref_parse_json.asp
 
+    Attributes:
+    ----------
     :param jsData: Required. A string written in JSON format
     :param jsResultFnc: Optional. A function used to transform the result. The function is called for each item. Any nested objects are transformed before the parent.
+
     :return: The Javascript string method
     """
     jsData = JsUtils.jsConvertData(jsData, jsFnc)
@@ -227,46 +296,57 @@ class JsJson(object):
 
   def stringify(self, jsData, replacer=None, space=0, jsFnc=None):
     """
+    Description:
+    ------------
     The JSON.stringify() method converts JavaScript objects into strings.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/js_json_stringify.asp
 
+    Attributes:
+    ----------
     :param jsData: Required. The value to convert to a string
     :param replacer: Optional. Either a function or an array used to transform the result. The replacer is called for each item.
     :param space: Optional. Either a String or a Number. A string to be used as white space (max 10 characters),
       or a Number, from 0 to 10, to indicate how many space characters to use as white space.
+
     :return: The Javascript string method
     """
     return JsString.JsString("JSON.stringify(%s, %s, %s)" % (JsUtils.jsConvertData(jsData, jsFnc), json.dumps(replacer), space), isPyData=False)
 
 
 class JsBreadCrumb(object):
-  class __internal(object):
-    _props, http = {}, {}
 
   def __init__(self, src=None):
-    self._src = src if src else self.__internal() # The underlying source object is not supposed to be touched in the underlying classes
+    self._src = src
     self._selector = "breadcrumb"
     self._anchor = None
     self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = {pmts: %s}" % (self._selector, json.dumps(self._src.http)))
 
   def add(self, key, jsData):
     """
+    Description:
+    ------------
     Add an entry to the Javascript breadcrumb dictionary
 
+    Attributes:
+    ----------
     :param key: The key in the Breadcrumb dictionary
     :param jsData:
 
     :return: Nothing
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (self._selector, key, jsData))
+    return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (self._selector, key, JsUtils.jsConvertData(jsData, None)))
 
   def get(self, key=None):
     """
+    Description:
+    ------------
     returns the object stored in the breadcrumb dictionary
 
+    Attributes:
+    ----------
     :param key: Optinal. The key in the Breadcrumb dictionary
 
     :return: A Python object
@@ -278,21 +358,22 @@ class JsBreadCrumb(object):
 
   def hash(self, jsData):
     """
+    Description:
+    ------------
     Add an anchor to the URL after the hash tag
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/prop_loc_hash.asp
-
-    :return:
     """
     return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, None)))
 
   @property
   def url(self):
     """
+    Description:
+    ------------
     Get the full URL
-
-    :return:
     """
     js_location = JsLocation.JsLocation()
     origin = js_location.origin
@@ -300,8 +381,7 @@ class JsBreadCrumb(object):
     return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
 
   def toStr(self):
-    fncToUrl = JsFncs.FncOnRecords(self._src._props['js']).url()
-    return '%s(%s)' % (fncToUrl, self._selector)
+    return '%s(%s)' % (JsFncs.FncOnRecords(self._src._props['js']).url(), self._selector)
 
 
 class JsScreen(object):
@@ -443,6 +523,8 @@ class JsBase(object):
   @property
   def navigator(self):
     """
+    Description:
+    ------------
     The information from the navigator object can often be misleading, and should not be used to detect browser versions because:
 
       - Different browsers can use the same name
@@ -455,10 +537,15 @@ class JsBase(object):
   @property
   def location(self):
     """
+    Description:
+    ------------
     Property to the Javascript Location functions
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/obj_location.asp
+
+    :rtype: JsLocation.JsLocation
     """
     if self.__location is None:
       self.__location = JsLocation.JsLocation()
@@ -467,9 +554,9 @@ class JsBase(object):
   @property
   def objects(self):
     """
+    Description:
+    ------------
     Interface to the main Javascript Classes and Primitives
-
-    Documentation
 
     :rtypw: JsObjects.JsObjects
     """
@@ -478,8 +565,15 @@ class JsBase(object):
   @property
   def jquery(self):
     """
+    Description:
+    ------------
+    jQuery is a fast, small, and feature-rich JavaScript library.
+    It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
+    With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
 
-    :return:
+    Related Pages:
+    --------------
+    https://jquery.com/
     """
     from epyk.core.js.packages import JsQuery
 
@@ -488,8 +582,15 @@ class JsBase(object):
   @property
   def d3(self):
     """
+    Description:
+    ------------
+    D3.js is a JavaScript library for manipulating documents based on data.
+    D3 helps you bring data to life using HTML, SVG, and CSS.
+    D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
 
-    :return:
+    Related Pages:
+    --------------
+    https://d3js.org/
     """
     from epyk.core.js.packages import JsD3
 
@@ -497,32 +598,41 @@ class JsBase(object):
 
   def not_(self, data):
     """
+    Description:
+    ------------
     Add the Symbol (!) for the boolean negation.
     This feature is also available directly to any JsBoolean objects
 
-    Example
+    Usage:
+    ------
     jsObj.not_(jsObj.objects.boolean.get("weekend"))
 
-    Documentation
+    Related Pages:
+    --------------
     https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
 
+    Attributes:
+    ----------
     :param data: The Javascript Object considered as a boolean
+
     :return: The Javascript fragment string
     """
-    jsData = JsUtils.jsConvertData(data, None)
-    return JsFncs.JsFunction("!%s" % jsData)
+    return JsFncs.JsFunction("!%s" % JsUtils.jsConvertData(data, None))
 
   def if_(self, jsCond, jsFnc):
     """
+    Description:
+    ------------
     Conditional statements are used to perform different actions based on different conditions.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/js_if_else.asp
 
+    Attributes:
+    ----------
     :param jsCond:
     :param jsFnc:
-
-    :return:
     """
     if isinstance(jsCond, list):
       jsCond = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(jsCond))
@@ -531,21 +641,28 @@ class JsBase(object):
 
   def return_(self, jsData):
     """
+    Description:
+    ------------
     Javascript return keyword
 
+    Related Pages:
+    --------------
     :param jsData: The Javascript expression
-    :return:
     """
     return JsFncs.JsFunction("return %s" % jsData)
 
   def switch(self, jsObj):
     """
+    Description:
+    ------------
 
-    Documentation:
-      - https://www.w3schools.com/js/js_switch.asp
+    Related Pages:
+    --------------
+    https://www.w3schools.com/js/js_switch.asp
 
+    Attributes:
+    ----------
     :param jsFnc:
-    :return:
     """
     if not hasattr(jsObj, 'varName'):
       if isinstance(jsObj, list):
@@ -557,9 +674,10 @@ class JsBase(object):
 
   def while_(self, pivot, jsFnc=None, iterVar='i', start=0, step=1):
     """
+    Description:
+    ------------
 
     :param jsCond:
-    :return:
     """
     jsPivot = JsUtils.jsConvertData(pivot, jsFnc)
     if isPyData and isinstance(pivot, (list, range)):
@@ -572,9 +690,10 @@ class JsBase(object):
 
   def for_(self, iterable, jsDataKey=None, isPyData=False, jsFnc=None, iterVar='i', start=0, step=1):
     """
+    Description:
+    ------------
 
     :param iterable:
-    :return:
     """
     jsIterable = JsUtils.jsConvert(iterable, jsDataKey, isPyData, jsFnc)
     self.__for = JsFor.JsFor(jsIterable, iterVar, start, step, self._context)
@@ -582,11 +701,9 @@ class JsBase(object):
 
   def custom(self, jsData, jsDataKey=None, isPyData=False, jsFnc=None):
     """
+    Description:
+    ------------
     Allow the definition of bespoke javascript strings
-
-    Example:
-      -
-
     """
     jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
     self._src._props.setdefault('js', {}).setdefault('bespoke', []).append(jsData)
@@ -596,24 +713,30 @@ class JsBase(object):
 
   def _addImport(self, importAlias):
     """
+    Description:
+    ------------
 
     :param importAlias:
-    :return:
     """
     self._src._props.setdefault('js', {}).setdefault('imports', set([])).add(importAlias)
     return self
 
   def extendProto(self, pyClass, fncName, jsFncs, pmts=None):
     """
+    Description:
+    ------------
     Javascript Framework extension
 
     Hook in the base class to allow the definition of specific function to add extra primitive features.
     Usual this function should be used in a wrapper function with the same name in order to have a coherent bridge between
     Python and Javascript.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/js_object_prototypes.asp
 
+    Attributes:
+    ----------
     :param pyClass: The PyJs Classname
     :param fncName: The Javascript function name
     :param jsFncs: The Javascript function definition
@@ -685,9 +808,12 @@ class JsBase(object):
   @property
   def fncs(self):
     """
+    Description:
+    ------------
     Property to the predefined Javascript functions
 
     :rtype: JsFncs.JsRegisteredFunctions
+
     :return: The predefined functions
     """
     return JsFncs.JsRegisteredFunctions(self._src)
@@ -695,10 +821,15 @@ class JsBase(object):
   @property
   def breadcrumb(self):
     """
+    Description:
+    ------------
     Create a internal Breadcrumb to keep track of the user journey within your page.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
+
+    :rtype: JsBreadCrumb
 
     :return: A Python breadcumb object
     """
@@ -708,30 +839,36 @@ class JsBase(object):
 
   def navigateTo(self, url, options=None):
     """
+    Description:
+    ------------
     Navigator to another URL like NodeJs
 
-    Example
+    Usage:
+    ------
     icon.click([self.context.rptObj.js.navigateTo(url)])
 
-    Documentation
+    Related Pages:
+    --------------
     https://redfin.github.io/react-server/annotated-src/navigateTo.html
 
+    Attributes:
+    ----------
     :param url:
     :param options:
-    :return:
     """
     return self.location.open_new_tab(url=url)
 
   def registerFunction(self, fncName, jsFncs, pmts=None):
     """
+    Description:
+    ------------
     Javascript Framework extension
 
     Register a predefined Javascript function
     This is only dedicated to specific Javascript transformation functions
 
-    Example
-
-
+    Description:
+    ------------
     :param fncName: The function name
     :param jsFncs: Optional. The Javascript function definition
     :param pmts: Optional
@@ -744,12 +881,13 @@ class JsBase(object):
 
   def clipboard(self, jsData):
     """
+    Description:
+    ------------
     Copy the full URL to rhe clipboard
 
-    Documentation
+    Related Pages:
+    --------------
     https://isabelcastillo.com/hidden-input-javascript
-
-    :return:
     """
     return JsFncs.JsFunction('''
         var elInput = document.createElement('input'); 
@@ -759,13 +897,13 @@ class JsBase(object):
 
   def addOnLoad(self, jsFncs):
     """
+    Description:
+    ------------
     Add javascript fragment dedicated to build the HTML page during the onLoad event.
 
-    Documentation
-
+    Attributes:
+    ----------
     :param jsFncs: The Javascript functions to be added to this section
-
-    :return:
     """
     self._src._props.setdefault('js', {}).setdefault('builders', []).append(";".join(JsUtils.jsConvertFncs(jsFncs)))
     return self
@@ -817,6 +955,8 @@ class JsBase(object):
     ------
     report.preload([{'url': "Test.py", 'success': 'test.csv'}])
 
+    Attributes:
+    ----------
     :param ajaxParams:
 
     :return: The Python object itself
@@ -842,13 +982,15 @@ class JsBase(object):
 
   def profile(self, type, htmlId, mark, recordsCount=""):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param type:
     :param htmlId:
     :param mark:
     :param recordsCount:
-
-    :return:
     """
     return "profileObj.push({type: '%s', htmlId: '%s', mark: '%s', records: %s})" % (type, htmlId, mark, recordsCount)
 
@@ -940,11 +1082,16 @@ class JsBase(object):
 
   def createTextNode(self, jsString=None):
     """
+    Description:
+    ------------
     The createTextNode() method creates a Text Node with the specified text.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_document_createtextnode.asp
 
+    Attributes:
+    ----------
     :param jsString: Required. The text of the Text node
 
     :return: A Text Node object with the created Text Node
@@ -953,11 +1100,16 @@ class JsBase(object):
 
   def encodeURIComponent(self, uri):
     """
+    Description:
+    ------------
     The encodeURIComponent() function encodes a URI component
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp
 
+    Attributes:
+    ----------
     :param uri: Required. The URI to be encoded
 
     :return: A String, representing the encoded URI
@@ -966,11 +1118,16 @@ class JsBase(object):
 
   def decodeURIComponent(self, url_enc):
     """
+    Description:
+    ------------
     The decodeURIComponent() function decodes a URI component.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
 
+    Attributes:
+    ----------
     :param url_enc: Required. The URI to be decoded
 
     :return: A String, representing the decoded URI
@@ -983,14 +1140,22 @@ class JsBase(object):
 
   @property
   def data(self):
+    """
+
+    :rtype: JsData.JsData
+    """
     if self.__data is None:
       self.__data = JsData.JsData(self._src)
     return self.__data
 
   def string(self, data, varName=None, setVar=False, isPyData=True):
     """
+    Description:
+    ------------
     Shortcut to the Javascript String primitives
 
+    Attributes:
+    ----------
     :param data:
     :param varName:
     :param setVar:
@@ -1000,8 +1165,12 @@ class JsBase(object):
 
   def number(self, data, varName=None, setVar=False, isPyData=True):
     """
+    Description:
+    ------------
     Shortcut to the Javascript Number primitives
 
+    Attributes:
+    ----------
     :param data:
     :param varName:
     :param setVar:
@@ -1011,8 +1180,12 @@ class JsBase(object):
 
   def object(self, data, varName=None, setVar=False, isPyData=True):
     """
+    Description:
+    ------------
     Shortcut to the Javascript Object primitives
 
+    Attributes:
+    ----------
     :param data:
     :param varName:
     :param setVar:
@@ -1022,9 +1195,12 @@ class JsBase(object):
 
   def activeElement(self):
     """
+    Description:
+    ------------
     The activeElement property returns the currently focused element in the document.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/prop_document_activeelement.asp
 
     :return: A reference to the element object in the document that has focus
@@ -1033,14 +1209,17 @@ class JsBase(object):
 
   def title(self, text=None):
     """
+    Description:
+    ------------
     The title property sets or returns the title of the current document (the text inside the HTML title element).
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/prop_doc_title.asp
 
+    Attributes:
+    ----------
     :param text: A String, representing the title of the document
-
-    :return:
     """
     if text is None:
       return JsString.JsString(text)
@@ -1049,11 +1228,16 @@ class JsBase(object):
 
   def getElementsByClassName(self, clsName):
     """
+    Description:
+    ------------
     The getElementsByClassName() method returns a collection of all elements in the document with the specified class name, as a NodeList object.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
 
+    Attributes:
+    ----------
     :param clsName: Required. The class name of the elements you want to get.
 
     :return: A NodeList object, representing a collection of elements with the specified class name.
@@ -1063,9 +1247,12 @@ class JsBase(object):
 
   def hasFocus(self):
     """
+    Description:
+    ------------
     The hasFocus() method returns a Boolean value indicating whether the document (or any element inside the document) has focus.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_document_hasfocus.asp
 
     :return: A Boolean value, incidating whether the document or any element in the document has focus:
@@ -1074,11 +1261,16 @@ class JsBase(object):
 
   def execCommand(self, command, showUI, value):
     """
+    Description:
+    ------------
     The execCommand() method executes the specified command for the selected part of an editable section.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_document_execcommand.asp
 
+    Attributes:
+    ----------
     :param command:	 Specifies the name of the command to execute on the selected section
     :param showUI: A Boolean, specifies if the UI should be shown or not
     :param value: Some commands need a value to be completed
@@ -1089,13 +1281,18 @@ class JsBase(object):
 
   def createEvent(self, type):
     """
+    Description:
+    ------------
     The createEvent() method creates an event object.
 
     The event can be of any legal event type, and must be initialized before use.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/event_createevent.asp
 
+    Attributes:
+    ----------
     :param type: Required. A String that specifies the type of the event.
 
     :return: An Event object
@@ -1107,11 +1304,16 @@ class JsBase(object):
 
   def createAttribute(self, attributename):
     """
+    Description:
+    ------------
     The createAttribute() method creates an attribute with the specified name, and returns the attribute as an Attr object.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_document_createattribute.asp
 
+    Attributes:
+    ----------
     :param attributename: Required. The name of the attribute you want to create
 
     :return: A Node object, representing the created attribute
@@ -1120,9 +1322,12 @@ class JsBase(object):
 
   def writeln(self, jsString):
     """
+    Description:
+    ------------
     The writeln() method is identical to the document.write() method, with the addition of writing a newline character after each statement.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_doc_writeln.asp
 
     :param jsString: Optional. What to write to the output stream.
@@ -1218,36 +1423,54 @@ class JsBase(object):
 
   def parseFloat(self, jsString):
     """
+    Description:
+    ------------
     The parseFloat() function parses a string and returns a floating point number.
 
-    Documentation:
-      - https://www.w3schools.com/jsref/jsref_parseint.asp
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/jsref_parseint.asp
 
+    Attributes:
+    ----------
     :param jsString: Required. The string to be parsed
+
     :return: A Number. If the first character cannot be converted to a number, NaN is returned
     """
     return JsNumber.JsNumber("parseFloat(%s)" % jsString, isPyData=False)
 
   def parseInt(self, jsString):
     """
+    Description:
+    ------------
     The parseInt() function parses a string and returns an integer.
 
-    Documentation:
-      - https://www.w3schools.com/jsref/jsref_parseint.asp
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/jsref_parseint.asp
 
+    Attributes:
+    ----------
     :param jsString: Required. The string to be parsed
+
     :return: A Number. If the first character cannot be converted to a number, NaN is returned
     """
     return JsNumber.JsNumber("parseInt(%s)" % jsString, isPyData=False)
 
   def parseDate(self, jsString):
     """
+    Description:
+    ------------
     The parse() method parses a date string and returns the number of milliseconds between the date string and midnight of January 1, 1970.
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_parse.asp
 
+    Attributes:
+    ----------
     :param jsString: Required. A string representing a date
+
     :return: A Number, representing the number of milliseconds between the specified date-time and midnight January 1, 1970
 
     """
@@ -1255,8 +1478,12 @@ class JsBase(object):
 
   def getVar(self, varName, varType="var"):
     """
+    Description:
+    ------------
     Get the Javascript Variable name
 
+    Attributes:
+    ----------
     :param varName: The Variable name
     :param varType: The scope of the variable
 
@@ -1270,6 +1497,8 @@ class JsBase(object):
   def addToDataDict(self, key, jsVal, jsDataKey=None, isPyData=True, jsFnc=None, jsData="data"):
     """
 
+    Attributes:
+    ----------
     :param key:
     :param jsVal:
     :param varType:
@@ -1277,8 +1506,6 @@ class JsBase(object):
     :param isPyData:
     :param jsFnc:
     :param jsData:
-
-    :return:
     """
     jsVal = JsUtils.jsConvert(jsVal, jsDataKey, isPyData, jsFnc)
     return "%s['%s'] = %s" % (jsData, key, jsVal)
@@ -1306,19 +1533,21 @@ class JsBase(object):
 
   def info(self, jsData, cssStyle=None, icon="fas fa-spinner fa-spin", seconds=10000):
     """
+    Description:
+    ------------
     Display a message
 
-    Documentation
+    Related Pages:
+    --------------
     https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
 
+    Attributes:
+    ----------
     :param jsData:
     :param cssStyle:
     :param icon:
     :param seconds:
-
-    :return:
     """
-
     if cssStyle is None:
       cssStyle = {"position": "fixed", "bottom": "5px", "right": "10px", "padding": '2px 7px', "border": "1px solid black"}
     if icon is not None:
