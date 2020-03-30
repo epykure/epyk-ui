@@ -200,6 +200,26 @@ class Table(GraphPlotly.Chart):
   def data(self):
     return self._traces[-1]
 
+  def headers_color(self, colors):
+    """
+    Description:
+    ------------
+    Set the background color of the header
+
+
+    :param colors:
+    """
+    self.data.header.fill.color = colors
+    return self
+
+  def headers_font_color(self, colors):
+    """
+
+    :param colors:
+    """
+    self.data.header.font.color = colors
+    return self
+
   def columns_color(self, colors):
     """
 

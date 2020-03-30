@@ -9,9 +9,19 @@ class Plotly(object):
   def table(self, records, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None,
             profile=None):
     """
+    Description:
+    ------------
 
+    Usage:
+    ------
+
+
+    Related Pages:
+    --------------
     https://plot.ly/javascript/table-subplots/
 
+    Attributes:
+    ----------
     :param records:
     :param cols:
     :param rows:

@@ -8,6 +8,7 @@ https://www.rapidtables.com/web/color/RGB_Color.html
 import random
 import math
 
+
 defined = {
   'MAROON': {'hex': '#800000', 'rgb': '(128,0,0)'},
   'DARK RED': {'hex': '#8B0000', 'rgb': '(139,0,0)'},
@@ -153,13 +154,19 @@ defined = {
 
 def getHexToRgb(hexColor):
   """
+  Description:
+  ------------
   Convert a hexadecimal color to a rgb code
 
-  Examples
+  Usage:
+  ------
   >>> ColorMaker().getHexToRgb('#213B68')
   [33, 59, 104]
 
+  Attributes:
+  ----------
   :param hexColor: A String with a hexadecimal code color
+
   :return: The list with the rgb code color
   """
   if not hexColor.startswith("#"):
@@ -173,13 +180,19 @@ def getHexToRgb(hexColor):
 
 def getRgbToHex(rgbColor):
   """
+  Description:
+  ------------
   Convert a RGB color to a hexadecimal code
 
-  Examples
+  Usage:
+  ------
   >>> ColorMaker().getRgbToHex([255, 0, 0])
   '#ff0000'
 
+  Attributes:
+  ----------
   :param rgbColor: A list corresponding to the RGB color code
+
   :return: String object defining the hexadecimal color code
   """
   color = []
@@ -194,13 +207,19 @@ def getRgbToHex(rgbColor):
 
 def randColor(seedNo=None):
   """
+  Description:
+  ------------
   Generate a random hexadecimal color code
 
-  Example
+  Usage:
+  ------
   >>> ColorMaker.randColor(10)
   '#9693DD'
 
+  Attributes:
+  ----------
   :param seedNo: Optional, The seed number used to generate random numbers
+
   :return: String with Hexadecimal color code
   """
   letters = '0123456789ABCDEF'
@@ -216,15 +235,21 @@ def randColor(seedNo=None):
 
 def gradient(start, end, factor):
   """
+  Description:
+  ------------
   Deduce the color from a factor in a range of colors
 
-  Examples
+  Usage:
+  ------
   >>> ColorMaker().gradient("#ffffff", "#FF0000", 0.2)
   '#ffcccc'
 
+  Attributes:
+  ----------
   :param start: The start hexadecimal color code
   :param end: The end hexadecimal color code
   :param factor: A factor in the range [0, 1]
+
   :return: The hexadecimal color code
   """
   if factor > 1:
@@ -237,15 +262,21 @@ def gradient(start, end, factor):
 
 def colors(start, end, steps):
   """
+  Description:
+  ------------
   Generate a list of colors between two color codes.
 
-  Example
+  Usage:
+  ------
   >>> ColorMaker().colors("#ffffff", "#FF0000", 10)
   ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
 
+  Attributes:
+  ----------
   :param start: The start hexadecimal color code
   :param end: The end hexadecimal color code
   :param steps: The number of colors in the array
+
   :return: A list of hexadecimal color codes
   """
   colors = [start]
@@ -393,6 +424,7 @@ class HexColors(object):
 
 
 class RgbColors(object):
+  TRANSPARENT = "rgba(0, 0, 0, 0)"
   MAROON = 'rgb(128,0,0)'
   DARK_RED = 'rgb(139,0,0)'
   BROWN = 'rgb(165,42,42)'
@@ -534,9 +566,12 @@ class DefinedColors(object):
   @property
   def hex(self):
     """
+    Description:
+    ------------
     Returns the Hexadecimal predefined color codes
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.rapidtables.com/web/color/RGB_Color.html
     """
     return HexColors
@@ -544,9 +579,12 @@ class DefinedColors(object):
   @property
   def rgb(self):
     """
+    Description:
+    ------------
     Returns the RGB predefined color codes
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.rapidtables.com/web/color/RGB_Color.html
     """
     return RgbColors

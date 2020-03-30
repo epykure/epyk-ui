@@ -20,6 +20,8 @@ class Chart(Html.Html):
   @property
   def chartId(self):
     """
+    Description:
+    ------------
     Return the Javascript variable of the chart
     """
     return "%s_obj" % self.htmlId
@@ -48,6 +50,12 @@ class Chart(Html.Html):
 
   @property
   def d3(self):
+    """
+
+    :rtype: JsD3.D3Select
+
+    :return:
+    """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
     return self._d3
