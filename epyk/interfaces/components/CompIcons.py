@@ -55,7 +55,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-edit', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('far fa-edit', text, tooltip, position, width, height, htmlCode, profile)
 
   def clock(self, text=None, position=None, tooltip="Last Updated Time", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
@@ -72,7 +72,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-clock', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('fas fa-clock', text, tooltip, position, width, height, htmlCode, profile)
 
   def refresh(self, text=None, position=None, tooltip="Refresh Component", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, profile=None):
@@ -89,7 +89,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-sync-alt', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('fas fa-sync-alt', text, tooltip, position, width, height, htmlCode, profile)
 
   def pdf(self, text=None, position=None, tooltip="Convert to PDF", width=(None, 'px'), height=(None, 'px'),
           htmlCode=None,  profile=None):
@@ -110,7 +110,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-file-pdf', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('far fa-file-pdf', text, tooltip, position, width, height, htmlCode, profile)
 
   def plus(self, text=None, position=None, tooltip="Add line", width=(None, 'px'), height=(None, 'px'),
            htmlCode=None, profile=None):
@@ -127,7 +127,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-plus-square', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('fas fa-plus-square', text, tooltip, position, width, height, htmlCode, profile)
 
   def excel(self, text=None, position=None, tooltip="Convert to Excel", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
@@ -144,7 +144,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-file-excel', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('far fa-file-excel', text, tooltip, position, width, height, htmlCode, profile)
 
   def download(self, text=None, position=None, tooltip="Download", width=(None, 'px'), height=(None, 'px'),
                htmlCode=None, profile=None):
@@ -161,7 +161,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-download', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('fas fa-download', text, tooltip, position, width, height, htmlCode, profile)
 
   def delete(self, text=None, position=None, tooltip="Delete Component on the page", width=(None, 'px'),
              height=(None, 'px'), htmlCode=None, profile=None):
@@ -178,7 +178,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-trash-alt', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('far fa-trash-alt', text, tooltip, position, width, height, htmlCode, profile)
 
   def zoom(self, text=None, position=None, tooltip="Zoom on Component", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
     """
@@ -194,7 +194,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-search-plus', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('fas fa-search-plus', text, tooltip, position, width, height, htmlCode, profile)
 
   def capture(self, text=None, position=None, tooltip="Save to clipboard", width=(None, 'px'), height=(None, 'px'),
               htmlCode=None, profile=None):
@@ -211,7 +211,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('far fa-clipboard', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('far fa-clipboard', text, tooltip, position, width, height, htmlCode, profile)
 
   def remove(self, text=None, position=None, tooltip="Remove Item", width=(None, 'px'), height=(None, 'px'),
              htmlCode=None, profile=None):
@@ -228,7 +228,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-times-circle', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('fas fa-times-circle', text, tooltip, position, width, height, htmlCode, profile)
 
   def table(self, text=None, position=None, tooltip="Convert to Table", width=(None, 'px'), height=(None, 'px'),
             htmlCode=None, profile=None):
@@ -249,7 +249,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-table', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('fas fa-table', text, tooltip, position, width, height, htmlCode, profile)
 
   def wrench(self, text=None, position=None, tooltip="Processing Time", width=(None, 'px'), height=(None, 'px'),
              htmlCode=None, profile=None):
@@ -266,7 +266,7 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    return self.awesome('fas fa-wrench', text, position, tooltip, width, height, htmlCode, profile)
+    return self.awesome('fas fa-wrench', text, tooltip, position, width, height, htmlCode, profile)
 
   def facebook(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
                htmlCode=None, profile=None):
