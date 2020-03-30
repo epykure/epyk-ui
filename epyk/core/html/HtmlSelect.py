@@ -1,4 +1,6 @@
 
+import json
+
 from epyk.core.html import Html
 from epyk.core.html.options import OptSelect
 
@@ -52,7 +54,16 @@ class Select(Html.Html):
     if multiple:
       self.attr['multiple'] = None
     #self.attr['class'].add(self.defined.clsAltMap)
-    self._jsStyles = options
+    self.__options = OptSelect.OptionsSelect(self, options)
+
+  @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+
+    :rtype: OptSelect.OptionsSelect
+    """
+    return self.__options
 
   @property
   def style(self):
@@ -101,11 +112,6 @@ class Select(Html.Html):
     return self._js
 
   @property
-  def options(self):
-    """ Add options to the selection component """
-    return
-
-  @property
   def _js__builder__(self):
     return '''
       var selectObj = %s; selectObj.empty();
@@ -148,7 +154,7 @@ class Select(Html.Html):
       opt_rp = Optgroup(self._report, opt_groups[k], k)
       opt_rp.inReport = False
       data.append(opt_rp.html())
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker().selectpicker('refresh')" % JsQuery.decorate_var(self.dom.varId, convert_var=False))
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker(%s).selectpicker('refresh')" % (JsQuery.decorate_var(self.dom.varId, convert_var=False), json.dumps(self._jsStyles)))
     return "<select %s>%s</select>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(data))
 
   # -----------------------------------------------------------------------------------------

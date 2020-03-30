@@ -15,7 +15,7 @@ class OptionsText(DataClass):
 
   @reset.setter
   def reset(self, bool):
-    self.src._jsStyles["reset"] = bool
+    self._report._jsStyles["reset"] = bool
     return self.set(bool)
 
   @property
@@ -29,7 +29,7 @@ class OptionsText(DataClass):
 
   @markdown.setter
   def markdown(self, bool):
-    self.src._jsStyles["markdown"] = bool
+    self._report._jsStyles["markdown"] = bool
     return self.set(bool)
 
   @property
@@ -43,7 +43,7 @@ class OptionsText(DataClass):
 
   @limit_char.setter
   def limit_char(self, value):
-    self.src._jsStyles["maxlength"] = value
+    self._report._jsStyles["maxlength"] = value
     return self.set(value)
 
 
