@@ -504,8 +504,10 @@ class Title(Html.Html):
   name, category, callFnc = 'Title', 'texts', 'title'
 
   def __init__(self, report, text, level, name, contents, color, picture, icon, marginTop, htmlCode, width,
-               height, align, dflt_options, profile):
-    cssStyles, jsStyles = re.search(" css\{(.*)\}", text), dflt_options
+               height, align, options, profile):
+
+    self.__options = OptText.OptionsTitle(self, options)
+    cssStyles, jsStyles = re.search(" css\{(.*)\}", text), options
     if cssStyles is not None:
       text = text.replace(cssStyles.group(0), '')
       for cssAttr in cssStyles.group(1).split(","):
@@ -529,7 +531,7 @@ class Title(Html.Html):
       self.css({'margin': '5px auto 10px auto', 'display': 'block', 'text-align': align})
     else:
       self.css({'display': 'block', "margin-right": "10px"})
-    if hasattr(report, '_content_table'):
+    if hasattr(report, '_content_table') and self.__options.content_table:
       # Special attribute set in the base component interface
       div = self._report.ui.div(htmlCode="%s_anchor" % self.htmlId)
       if self._report.body.css('padding-top') is None:
@@ -569,6 +571,15 @@ class Title(Html.Html):
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
+
+  @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
 
   @property
   def _js__builder__(self):
@@ -666,7 +677,7 @@ class Numeric(Html.Html):
     self.add_label(label, css={"float": None, "width": 'none'})
     self.add_icon(icon)
     self.add_helper(helper, css={"line-height": '20px'})
-    self.add_title(title, level=4, css={"margin-bottom": 0})
+    self.add_title(title, level=4, css={"margin-bottom": 0}, options={'content_table': False})
 
     # Update the CSS Style of the component
     self.css({'text-align': 'center', 'display': 'inline-block'})
@@ -694,7 +705,7 @@ class Highlights(Html.Html):
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
     # Add the components title and icon
-    self.add_title(title, css={"width": "none", "font-weight": 'bold'})
+    self.add_title(title, css={"width": "none", "font-weight": 'bold'}, options={'content_table': False})
     self.add_icon(icon, {"float": "left"})
     # Change the style of the component
     self.css({"margin": "5px", 'padding': "5px"})
@@ -724,8 +735,8 @@ class Fieldset(Html.Html):
   def add_label(self, text, css=None, position="after", for_=None):
     return super(Fieldset, self).add_label(text, css, position, for_)
 
-  def add_title(self, text, css=None, position="after"):
-    return super(Fieldset, self).add_title(text, css, position)
+  def add_title(self, text, level=None, css=None, position="after", options=None):
+    return super(Fieldset, self).add_title(text, level, css, position, options={'content_table': False} if options is None else options)
 
   def __str__(self):
     return '<fieldset %s>%s</fieldset>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)

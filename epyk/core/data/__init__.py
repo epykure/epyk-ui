@@ -6,6 +6,7 @@ from epyk.core.js import JsUtils
 
 
 class DataClass(object):
+
   def __init__(self, report, attrs=None, options=None):
     self._report, self.options, self._attrs = report, options, attrs or {}
     self.__sub_levels, self.__sub__enum_levels = set(), set()
@@ -63,6 +64,20 @@ class DataClass(object):
     :param clsObj: Class. The sub data class used in the structure definition
     """
     return self.sub_data(sys._getframe().f_back.f_code.co_name, clsObj)
+
+  def set(self, value):
+    """
+    Description:
+    ------------
+    Add an attribute to the Javascript underlying dictionary
+
+    Attributes:
+    ----------
+    :param value: Object. The attribute value
+
+    :return: "Self" to allow the chains on the Python side
+    """
+    return self.attr(sys._getframe().f_back.f_code.co_name, value)
 
   def sub_data(self, name, clsObj):
     """

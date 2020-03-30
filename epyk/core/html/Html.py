@@ -434,7 +434,7 @@ class Html(object):
         self.link.css(css)
     return self
 
-  def add_title(self, text, level=None, css=None, position="before"):
+  def add_title(self, text, level=None, css=None, position="before", options=None):
     """
     Description:
     -----------
@@ -451,7 +451,7 @@ class Html(object):
     """
     self.title = ""
     if text is not None:
-      self.title = self._report.ui.texts.title(text, level=level)
+      self.title = self._report.ui.texts.title(text, level=level, options=options)
       if position == "before":
         self.prepend_child(self.title)
       else:

@@ -186,7 +186,7 @@ class Checkbox(Html.Html):
     super(Checkbox, self).__init__(rptObj, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
                                    globalFilter=filters, profile=profile)
     # Add the component title
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
     self.css({'text-align': align, 'color': 'inherit' if color is None else color, 'padding': '5px'})
     self._jsStyles = {"tooltip": tooltip, "icon": icon} # fas fa-circle fas fa-check
     self.selectAll = options.get("all_selected", False)

@@ -161,7 +161,7 @@ class Excel(Html.Html):
     super(Excel, self).__init__(report, [], code=htmlCode, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
     self._jsStyles = {'header': rows + cols, 'cellwidth': cellwidth}
     self.css({'display': 'inline-block', 'overflow': 'auto', 'padding': 0, 'vertical-align': 'top'})
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
 
   @property
   def tableId(self):

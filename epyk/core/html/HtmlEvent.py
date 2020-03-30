@@ -136,7 +136,7 @@ class SkillBar(Html.Html):
   def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, colUrl, colTooltip, filters, profile):
     super(SkillBar, self).__init__(report, "", css_attrs={"width": width, "height": height}, htmlCode=htmlCode,
                                    globalFilter=filters, profile=profile)
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
     self.innerPyHTML = report.ui.layouts.table(data, y_column, x_axis)
     self.innerPyHTML.inReport = False
     for c in self.innerPyHTML.col(i=1):
@@ -377,7 +377,7 @@ class Filters(Html.Html):
 
   def __init__(self, report, items, title, width, height, htmlCode, helper, profile):
     super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
     self._jsStyles = {'items': {'display': 'inline-block', 'padding': '1px 4px',
                                 'color': self._report.theme.colors[-1], 'margin': '2px', 'border-radius': '5px', 'background-color': self._report.theme.colors[0]}}
     self.style.addCls('scroll_content')
