@@ -7,7 +7,7 @@ class Plotly(object):
     self.parent = context
     self.chartFamily = "Plotly"
 
-  def line(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def line(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None,
            width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -33,19 +33,19 @@ class Plotly(object):
     data = []
     for c in y_columns:
       series = {'x': [], 'y': []}
-      for x, y in agg_data[c].items():
+      for x, y in agg_data.get(c, {}).items():
         series['x'].append(x)
         series['y'].append(y)
       data.append(series)
 
-    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     line_chart.options.responsive = True
     self.parent.context.register(line_chart)
     for d in data:
       line_chart.add_trace(d)
     return line_chart
 
-  def bar(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def bar(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None,
           width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -71,18 +71,18 @@ class Plotly(object):
     data = []
     for c in y_columns:
       series = {'x': [], 'y': []}
-      for x, y in agg_data[c].items():
+      for x, y in agg_data.get(c, {}).items():
         series['x'].append(x)
         series['y'].append(y)
       data.append(series)
 
-    bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(bar_chart)
     for d in data:
       bar_chart.add_trace(d)
     return bar_chart
 
-  def hbar(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def hbar(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
           width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -105,19 +105,19 @@ class Plotly(object):
     data = []
     for c in y_columns:
       series = {'x': [], 'y': []}
-      for x, y in agg_data[c].items():
+      for x, y in agg_data.get(c, {}).items():
         series['x'].append(x)
         series['y'].append(y)
       data.append(series)
 
-    bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(bar_chart)
     for d in data:
       bar_chart.add_trace(d, type='bar')
       bar_chart.data.orientation = 'h'
     return bar_chart
 
-  def scatter(self, record=None, y_columns=None, x_axis=None, texts=None, title=None, filters=None, profile=None, options=None,
+  def scatter(self, record=None, y_columns=None, x_axis=None, texts=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -145,7 +145,7 @@ class Plotly(object):
       data = []
       for c in y_columns:
         series = {'x': [], 'y': [], 'text': []}
-        for x, y in agg_data[c].items():
+        for x, y in agg_data.get(c, {}).items():
           series['x'].append(x)
           series['y'].append(y)
           if texts is not None:
@@ -159,7 +159,7 @@ class Plotly(object):
     sc_chart.layout.no_background()
     return sc_chart
 
-  def timeseries(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def timeseries(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
                  width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -188,13 +188,13 @@ class Plotly(object):
       data.append(series)
 
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                      filters, profile)
+                                      profile)
     self.parent.context.register(sc_chart)
     for d in data:
       sc_chart.add_trace(d, mode='lines', type="scatter")
     return sc_chart
 
-  def scattergl(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def scattergl(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -222,13 +222,13 @@ class Plotly(object):
         series['y'].append(y)
       data.append(series)
 
-    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for d in data:
       sc_chart.add_trace(d, type="scattergl", mode='markers')
     return sc_chart
 
-  def histogram(self, record, y_columns=None, x_columns=None, title=None, filters=None, profile=None, options=None,
+  def histogram(self, record, y_columns=None, x_columns=None, title=None, profile=None, options=None,
                 width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -255,14 +255,14 @@ class Plotly(object):
         if y in rec:
           series[histo_axis[0]].append(float(rec[y]))
         data.append(series)
-    histo_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    histo_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(histo_chart)
 
     for d in data:
       histo_chart.add_trace(d, type='histogram')
     return histo_chart
 
-  def pie(self, record=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def pie(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -288,18 +288,18 @@ class Plotly(object):
     data = []
     for c in y_columns:
       series = {'labels': [], 'values': []}
-      for x, y in agg_data[c].items():
+      for x, y in agg_data.get(c, {}).items():
         series['labels'].append(x)
         series['values'].append(y)
       data.append(series)
 
-    pie_chart = graph.GraphPlotly.Pie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    pie_chart = graph.GraphPlotly.Pie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(pie_chart)
     for d in data:
       pie_chart.add_trace(d)
     return pie_chart
 
-  def area(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def area(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -322,12 +322,12 @@ class Plotly(object):
     data = []
     for c in y_columns:
       series = {'x': [], 'y': []}
-      for x, y in agg_data[c].items():
+      for x, y in agg_data.get(c, {}).items():
         series['x'].append(x)
         series['y'].append(y)
       data.append(series)
 
-    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(line_chart)
     for d in data:
       line_chart.add_trace(d)
@@ -335,7 +335,7 @@ class Plotly(object):
       line_chart.data.fill = "tozeroy"
     return line_chart
 
-  def bubble(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def bubble(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -358,18 +358,18 @@ class Plotly(object):
     data = []
     for c in y_columns:
       series = {'x': [], 'y': []}
-      for x, y in agg_data[c].items():
+      for x, y in agg_data.get(c, {}).items():
         series['x'].append(x)
         series['y'].append(y)
       data.append(series)
 
-    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(line_chart)
     for d in data:
       line_chart.add_trace(d, mode="markers")
     return line_chart
 
-  def ribbon(self, record, y_columns=None, x_axis=None, z_axis=None, title=None, filters=None, profile=None, options=None,
+  def ribbon(self, record, y_columns=None, x_axis=None, z_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
     Create ribbons on the x axis
@@ -381,7 +381,6 @@ class Plotly(object):
     :param x_axis:
     :param z_axis:
     :param title:
-    :param filters:
     :param profile:
     :param options:
     :param width:
@@ -397,20 +396,20 @@ class Plotly(object):
     data = []
     for c in y_columns:
       series = {'x': [], 'y': [], 'z': []}
-      for x, y in agg_data[c].items():
+      for x, y in agg_data.get(c, {}).items():
         series['x'].append([x, x+1])
         series['y'].append([y, y])
         series['z'].append([z_data[c][x], z_data[c][x]])
       data.append(series)
     line_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                            filters, profile)
+                                          profile)
     self.parent.context.register(line_chart)
     for d in data:
       line_chart.add_trace(d)
       line_chart.data.showscale = False
     return line_chart
 
-  def surface(self, record, y_columns=None, x_axis=None, z_axis=None, title=None, filters=None, profile=None,
+  def surface(self, record, y_columns=None, x_axis=None, z_axis=None, title=None, profile=None,
              options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -419,7 +418,6 @@ class Plotly(object):
     :param x_axis:
     :param z_axis:
     :param title:
-    :param filters:
     :param profile:
     :param options:
     :param width:
@@ -448,14 +446,14 @@ class Plotly(object):
       naps.append(nap)
 
     surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                           filters, profile)
+                                           profile)
     self.parent.context.register(surf_chart)
     for d in naps:
       surf_chart.add_trace({'z': d})
       surf_chart.data.showscale = False
     return surf_chart
 
-  def scatter3d(self, record, y_columns=None, x_columns=None, z_columns=None, title=None, filters=None, profile=None,
+  def scatter3d(self, record, y_columns=None, x_columns=None, z_columns=None, title=None, profile=None,
              options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -466,7 +464,6 @@ class Plotly(object):
     :param x_columns:
     :param z_columns:
     :param title:
-    :param filters:
     :param profile:
     :param options:
     :param width:
@@ -485,24 +482,24 @@ class Plotly(object):
       z_series.append(zs)
 
     sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                             filters, profile)
+                                          profile)
     self.parent.context.register(sc_chart)
     for i, y_series in enumerate(y_all_series):
       sc_chart.add_trace({'x': x_series[i], 'y': y_series, 'z': z_series[i]})
       sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
     return sc_chart
 
-  def maps(self, records, title=None, filters=None, profile=None, options=None, width=(100, "%"),
+  def maps(self, records, title=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):
 
     surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                           filters, profile)
+                                           profile)
     self.parent.context.register(surf_chart)
     for d in records:
       surf_chart.add_trace({'z': d})
     return surf_chart
 
-  def mesh3d(self, records, intensity, x, y, z, i=None, j=None, k=None, title=None, filters=None, profile=None,
+  def mesh3d(self, records, intensity, x, y, z, i=None, j=None, k=None, title=None, profile=None,
              options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -517,7 +514,6 @@ class Plotly(object):
     :param j:
     :param k:
     :param title:
-    :param filters:
     :param profile:
     :param options:
     :param width:
@@ -543,26 +539,26 @@ class Plotly(object):
       if k is not None:
         data["k"].append(rec[k])
     mesh_chart = graph.GraphPlotly.Mesh3d(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                           filters, profile)
+                                          profile)
     self.parent.context.register(mesh_chart)
     mesh_chart.add_trace(data)
     return mesh_chart
 
-  def number(self, value, title=None, filters=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
+  def number(self, value, title=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
              htmlCode=None):
-    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(ind)
     ind.add_trace({'value': value}, mode="number")
     return ind
 
-  def number_with_delta(self, value, title=None, filters=None, profile=None, options=None, width=(100, "%"),
+  def number_with_delta(self, value, title=None, profile=None, options=None, width=(100, "%"),
                         height=(330, "px"), htmlCode=None):
-    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(ind)
     ind.add_trace({'value': value}, mode="number+delta")
     return ind
 
-  def gauge(self, value, title=None, filters=None, profile=None, options=None, width=(100, "%"),
+  def gauge(self, value, title=None, profile=None, options=None, width=(100, "%"),
                         height=(330, "px"), htmlCode=None):
     """
 
@@ -573,14 +569,13 @@ class Plotly(object):
 
     :param value:
     :param title:
-    :param filters:
     :param profile:
     :param options:
     :param width:
     :param height:
     :param htmlCode:
     """
-    gau = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    gau = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(gau)
     gau.add_trace({'value': value}, mode="gauge+number")
     return gau
@@ -603,7 +598,7 @@ class Plotly(object):
       spolar_chart.data.marker.color = None
     return spolar_chart
 
-  def box(self, records, y_columns=None, x_columns=None, title=None, filters=None, profile=None,
+  def box(self, records, y_columns=None, x_columns=None, title=None, profile=None,
              options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
 
     axis, cols = ('y', y_columns) if y_columns is not None else ('x', x_columns)
@@ -611,13 +606,13 @@ class Plotly(object):
     for c in cols:
       series.append([rec.get(c) for rec in records])
 
-    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(box_chart)
     for s in series:
       box_chart.add_trace({axis: s})
     return box_chart
 
-  def group_box(self, records, y_columns=None, x_axis=None, title=None, filters=None, profile=None,
+  def group_box(self, records, y_columns=None, x_axis=None, title=None, profile=None,
              options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
 
     """
@@ -627,7 +622,6 @@ class Plotly(object):
     :param y_columns:
     :param x_axis:
     :param title:
-    :param filters:
     :param profile:
     :param options:
     :param width:
@@ -639,13 +633,13 @@ class Plotly(object):
       for i, c in enumerate(y_columns):
         series[i].append(rec.get(c))
       x.append(rec.get(x_axis))
-    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, filters, profile)
+    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(box_chart)
     for s in series:
       box_chart.add_trace({'y': s, 'x': x})
     return box_chart
 
-  def candlestick(self, records, closes, highs, lows, opens, x_axis, title=None, filters=None, profile=None,
+  def candlestick(self, records, closes, highs, lows, opens, x_axis, title=None, profile=None,
                   options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
 
     """
@@ -660,7 +654,6 @@ class Plotly(object):
     :param opens:
     :param x_axis:
     :param title:
-    :param filters:
     :param profile:
     :param options:
     :param width:

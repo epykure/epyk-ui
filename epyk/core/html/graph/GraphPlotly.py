@@ -29,6 +29,11 @@ class Chart(Html.Html):
 
   @property
   def data(self):
+    """
+
+    :rtype: JsChartJs.DataSetPie
+    :return:
+    """
     if not self._traces:
       self.add_trace([])
     return self._traces[-1]
@@ -37,7 +42,7 @@ class Chart(Html.Html):
   def options(self):
     """
 
-    :rtype: Options
+    :rtype: OptPlotly.OptionConfig
     :return:
     """
     if self._options is None:
@@ -56,14 +61,24 @@ class Chart(Html.Html):
 
   @property
   def layout(self):
+    """
+
+    :rtype: Layout
+    :return:
+    """
     if self._layout is None:
       self._layout = Layout(self._report)
     return self._layout
 
   @property
   def d3(self):
+    """
+
+    :rtype: JsD3.D3Select
+    :return:
+    """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, id="#%s" % self.htmlId)
+      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
     return self._d3
 
   def add_trace(self, data, type=None, mode=None):
@@ -362,6 +377,11 @@ class LayoutShape(DataClass):
 
   @property
   def line(self):
+    """
+
+    :rtype: DataMarkersLine
+    :return:
+    """
     return self.sub_data("line", DataMarkersLine)
 
 
@@ -479,6 +499,8 @@ class LayoutRangeSelector(DataClass):
 
     https://plot.ly/javascript/time-series/
     https://plot.ly/javascript/range-slider/
+
+    :rtype: LayoutButtons
     """
     return self.sub_data_enum("buttons", LayoutButtons)
 
@@ -559,10 +581,22 @@ class LayoutAxis(DataClass):
 
   @property
   def titlefont(self):
+    """
+
+    :rtype: LayoutFont
+
+    :return:
+    """
     return self.sub_data("titlefont", LayoutFont)
 
   @property
   def tickfont(self):
+    """
+
+    :rtype: LayoutFont
+
+    :return:
+    """
     return self.sub_data("tickfont", LayoutFont)
 
   def set_color(self, color):
@@ -715,6 +749,8 @@ class LayoutAxis(DataClass):
     """
 
     https://plot.ly/javascript/time-series/
+
+    :rtype: LayoutRangeSelector
     """
     return self.sub_data("rangeselector", LayoutRangeSelector)
 
@@ -723,6 +759,8 @@ class LayoutAxis(DataClass):
     """
 
     https://plot.ly/javascript/time-series/
+
+    :rtype: LayoutRangeSlider
     """
     return self.sub_data("rangeslider", LayoutRangeSlider)
 
@@ -793,6 +831,12 @@ class LayoutCamera(DataClass):
 
   @property
   def eye(self):
+    """
+
+    :rtype: LayoutEye
+
+    :return:
+    """
     return self.sub_data("eye", LayoutEye)
 
 
@@ -800,18 +844,42 @@ class LayoutScene(DataClass):
 
   @property
   def camera(self):
+    """
+
+    :rtype: LayoutCamera
+
+    :return:
+    """
     return self.sub_data("scene", LayoutCamera)
 
   @property
   def xaxis(self):
+    """
+
+    :rtype: LayoutAxis
+
+    :return:
+    """
     return self.sub_data("xaxis", LayoutAxis)
 
   @property
   def yaxis(self):
+    """
+
+    :rtype: LayoutAxis
+
+    :return:
+    """
     return self.sub_data("yaxis", LayoutAxis)
 
   @property
   def zaxis(self):
+    """
+
+    :rtype: LayoutAxis
+
+    :return:
+    """
     return self.sub_data("zaxis", LayoutAxis)
 
 
@@ -885,6 +953,7 @@ class LayoutLegend(DataClass):
   def font(self):
     """
 
+    :rtype: LayoutFont
     """
     return self.sub_data("font", LayoutFont)
 
@@ -943,6 +1012,7 @@ class Layout(DataClass):
   def scene(self):
     """
 
+    :rtype: LayoutScene
     """
     return self.sub_data("scene", LayoutScene)
 
@@ -951,6 +1021,8 @@ class Layout(DataClass):
     """
 
     https://plot.ly/javascript/legend/
+
+    :rtype: LayoutLegend
     """
     return self.sub_data("legend", LayoutLegend)
 
@@ -959,6 +1031,8 @@ class Layout(DataClass):
     """
 
     https://plot.ly/javascript/time-series/
+
+    :rtype: LayoutAxis
     """
     return self.sub_data("xaxis", LayoutAxis)
 
@@ -967,6 +1041,8 @@ class Layout(DataClass):
     """
 
     https://plot.ly/javascript/time-series/
+
+    :rtype: LayoutAxis
     """
     return self.sub_data("xaxis2", LayoutAxis)
 
@@ -975,6 +1051,8 @@ class Layout(DataClass):
     """
 
     https://plot.ly/javascript/subplots/
+
+    :rtype: LayoutGrid
     """
     return self.sub_data("grid", LayoutGrid)
 
@@ -983,6 +1061,8 @@ class Layout(DataClass):
     """
 
     https://plot.ly/javascript/time-series/
+
+    :rtype: LayoutAxis
     """
     return self.sub_data("yaxis", LayoutAxis)
 
@@ -991,6 +1071,8 @@ class Layout(DataClass):
     """
 
     https://plot.ly/javascript/time-series/
+
+    :rtype: LayoutAxis
     """
     return self.sub_data("yaxis2", LayoutAxis)
 
@@ -999,6 +1081,8 @@ class Layout(DataClass):
     """
 
     https://plot.ly/javascript/3d-surface-plots/
+
+    :rtype: LayoutMargin
     """
     return self.sub_data("margin", LayoutMargin)
 
@@ -1083,6 +1167,8 @@ class Layout(DataClass):
     """
 
     https://plot.ly/javascript/shapes/
+
+    :rtype: LayoutShape
     """
     return self.sub_data_enum("shapes", LayoutShape)
 
@@ -1091,6 +1177,8 @@ class Layout(DataClass):
     """
 
     https://plot.ly/javascript/shapes/
+
+    :rtype: LayoutAnnotation
     """
     return self.sub_data_enum("annotations", LayoutAnnotation)
 
@@ -1101,6 +1189,7 @@ class Layout3D(Layout):
   def scene(self):
     """
 
+    :rtype: LayoutScene
     """
     return self.sub_data("scene", LayoutScene)
 
@@ -1291,6 +1380,8 @@ class DataMarkers(DataClass):
     """
 
     https://plot.ly/javascript/webgl-vs-svg/
+
+    :rtype: DataMarkersLine
     """
     return self.sub_data("line", DataMarkersLine)
 
@@ -1424,6 +1515,8 @@ class DataChart(DataClass):
     """
 
     https://plot.ly/javascript/bubble-charts/
+
+    :rtype: DataMarkers
     """
     return self.sub_data("marker", DataMarkers)
 
@@ -1496,6 +1589,7 @@ class DataPie(DataChart):
 
     https://plot.ly/javascript/reference/#pie-outsidetextfont-family
 
+    :rtype: DataFont
     """
     return self.sub_data("outsidetextfont", DataFont)
 
@@ -1566,6 +1660,8 @@ class DataZ(DataChart):
     """
 
     https://plot.ly/javascript/3d-surface-plots/
+
+    :rtype: DataProject
     """
     return self.sub_data("project", DataProject)
 
@@ -1577,6 +1673,8 @@ class DataContours(DataChart):
     """
 
     https://plot.ly/javascript/3d-surface-plots/
+
+    :rtype: DataZ
     """
     return self.sub_data("z", DataZ)
 
@@ -1596,6 +1694,12 @@ class DataMove(DataChart):
 
   @property
   def line(self):
+    """
+
+    :rtype: DataLine
+
+    :return:
+    """
     return self.sub_data("line", DataLine)
 
 
@@ -1614,11 +1718,19 @@ class DataSurface(DataChart):
     """
 
     https://plot.ly/javascript/3d-surface-plots/
+
+    :rtype: DataContours
     """
     return self.sub_data("contours", DataContours)
 
   @property
   def line(self):
+    """
+
+    :rtype: DataLine
+
+    :return:
+    """
     return self.sub_data("line", DataLine)
 
 
@@ -1694,6 +1806,8 @@ class DataGauge(DataChart):
     """
 
     https://plot.ly/javascript/indicator/
+
+    :rtype: LayoutAxis
     """
     return self.sub_data("axis", LayoutAxis)
 
@@ -1723,6 +1837,8 @@ class DataIndicator(DataChart):
     """
 
     https://plot.ly/javascript/indicator/
+
+    :rtype: DataTitle
     """
     return self.sub_data("title", DataTitle)
 
@@ -1731,6 +1847,8 @@ class DataIndicator(DataChart):
     """
 
     https://plot.ly/javascript/indicator/
+
+    :rtype: DataNumber
     """
     return self.sub_data("number", DataNumber)
 
@@ -1739,6 +1857,8 @@ class DataIndicator(DataChart):
     """
 
     https://plot.ly/javascript/indicator/
+
+    :rtype: DataGauge
     """
     if not 'gauge' in self.mode:
       self.mode = "%s+gauge" % self.mode
@@ -1756,6 +1876,7 @@ class DataIndicator(DataChart):
     https://plot.ly/javascript/indicator/
 
     :param text:
+
     :return:
     """
     self.title.text = text
@@ -1766,6 +1887,8 @@ class DataIndicator(DataChart):
     """
 
     https://plot.ly/javascript/3d-surface-plots/
+
+    :rtype: DataDelta
     """
     return self.sub_data("delta", DataDelta)
 
@@ -1849,10 +1972,22 @@ class DataCandle(DataChart):
 
   @property
   def increasing(self):
+    """
+
+    :rtype: DataMove
+
+    :return:
+    """
     return self.sub_data("increasing", DataMove)
 
   @property
   def decreasing(self):
+    """
+
+    :rtype: DataMove
+
+    :return:
+    """
     return self.sub_data("decreasing", DataMove)
 
 
@@ -1863,7 +1998,7 @@ class Pie(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -1871,6 +2006,12 @@ class Pie(Chart):
 
   @property
   def data(self):
+    """
+
+    :rtype: DataPie
+
+    :return:
+    """
     if not self._traces:
       self._traces.append(DataPie(self._report))
     return self._traces[-1]
@@ -1891,7 +2032,7 @@ class Surface(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -1917,7 +2058,7 @@ class Scatter3D(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -1949,7 +2090,7 @@ class Mesh3d(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -2030,6 +2171,12 @@ class Box(Chart):
 
   @property
   def layout(self):
+    """
+
+    :rtype: LayoutBox
+
+    :return:
+    """
     if self._layout is None:
       self._layout = LayoutBox(self._report)
     return self._layout
@@ -2058,6 +2205,12 @@ class CandleStick(Chart):
 
   @property
   def layout(self):
+    """
+
+    :rtype: LayoutBox
+
+    :return:
+    """
     if self._layout is None:
       self._layout = LayoutBox(self._report)
     return self._layout

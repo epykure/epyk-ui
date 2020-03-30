@@ -27,6 +27,8 @@ class DataHeader(GraphPlotly.DataChart):
     """
 
     https://plot.ly/javascript/bubble-maps/
+
+    :rtype: GraphPlotly.DataMarkersLine
     """
     return self.sub_data("line", GraphPlotly.DataMarkersLine)
 
@@ -35,8 +37,20 @@ class DataHeader(GraphPlotly.DataChart):
     """
 
     https://plot.ly/javascript/bubble-maps/
+
+    :rtype: GraphPlotly.DataFont
     """
     return self.sub_data("font", GraphPlotly.DataFont)
+
+  @property
+  def fill(self):
+    """
+
+    https://plot.ly/javascript/bubble-maps/
+
+    :rtype: GraphPlotly.DataFill
+    """
+    return self.sub_data("fill", GraphPlotly.DataFill)
 
 
 class DataCells(GraphPlotly.DataChart):
@@ -62,6 +76,8 @@ class DataCells(GraphPlotly.DataChart):
     """
 
     https://plot.ly/javascript/bubble-maps/
+
+    :rtype: GraphPlotly.DataMarkersLine
     """
     return self.sub_data("line", GraphPlotly.DataMarkersLine)
 
@@ -70,6 +86,8 @@ class DataCells(GraphPlotly.DataChart):
     """
 
     https://plot.ly/javascript/bubble-maps/
+
+    :rtype: GraphPlotly.DataFont
     """
     return self.sub_data("font", GraphPlotly.DataFont)
 
@@ -78,6 +96,8 @@ class DataCells(GraphPlotly.DataChart):
     """
 
     https://plot.ly/javascript/bubble-maps/
+
+    :rtype: GraphPlotly.DataFill
     """
     return self.sub_data("fill", GraphPlotly.DataFill)
 
@@ -107,6 +127,7 @@ class DataTable(GraphPlotly.DataChart):
   def domain(self):
     """
 
+    :rtype: DataDomain
     """
     return self.sub_data("domain", DataDomain)
 
@@ -135,6 +156,8 @@ class DataTable(GraphPlotly.DataChart):
     """
 
     https://plot.ly/javascript/bubble-maps/
+
+    :rtype: DataHeader
     """
     return self.sub_data("header", DataHeader)
 
@@ -143,6 +166,8 @@ class DataTable(GraphPlotly.DataChart):
     """
 
     https://plot.ly/javascript/bubble-maps/
+
+    :rtype: DataCells
     """
     return self.sub_data("cells", DataCells)
 
@@ -154,7 +179,8 @@ class Table(GraphPlotly.Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -164,6 +190,7 @@ class Table(GraphPlotly.Chart):
   def layout(self):
     """
 
+    :rtype: GraphPlotly.Layout
     """
     if self._layout is None:
       self._layout = GraphPlotly.Layout(self._report)
@@ -190,7 +217,12 @@ class Table(GraphPlotly.Chart):
     return self
 
   def add_trace(self, data, type='table', mode=None):
+    """
 
+    :param data:
+    :param type:
+    :param mode:
+    """
     if type != 'table':
       c_data = dict(data)
       if type is not None:
