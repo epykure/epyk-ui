@@ -532,7 +532,10 @@ class Title(Html.Html):
     if hasattr(report, '_content_table'):
       # Special attribute set in the base component interface
       div = self._report.ui.div(htmlCode="%s_anchor" % self.htmlId)
-      div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
+      if self._report.body.css('padding-top') is None:
+        div.style.css.margin_top = - 10
+      else:
+        div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
       div.style.css.position = "absolute"
       div.style.css.z_index = -1
       report._content_table.add(text, level or 4, "#%s_anchor" % self.htmlId)
