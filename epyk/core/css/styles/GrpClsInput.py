@@ -90,14 +90,14 @@ class ClassInputRange(GrpCls.ClassHtml):
   def __init__(self, htmlObj):
     super(ClassInputRange, self).__init__(htmlObj)
     self._css_class_rg, self._css_class_rg_tb = None, None
-    #self.classList['main'].add(self.cls_range)
+    self.classList['main'].add(self.cls_range)
     self.classList['main'].add(self.cls_range_thumb)
 
   @property
   def cls_range(self):
     """
 
-    :rtype: Classes.CatalogInput.CatalogDate
+    :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_class_rg is None:
       self._css_class_rg = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).range()
@@ -107,7 +107,7 @@ class ClassInputRange(GrpCls.ClassHtml):
   def cls_range_thumb(self):
     """
 
-    :rtype: Classes.CatalogInput.CatalogDate
+    :rtype:Classes.CatalogInput.CatalogInput
     """
     if self._css_class_rg_tb is None:
       self._css_class_rg_tb = Classes.CatalogInput.CatalogInput(self.htmlObj._report, self.classList['main']).range_thumb()

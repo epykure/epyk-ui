@@ -149,11 +149,11 @@ class Inputs(object):
     return html_integer
 
   def d_range(self, value, min=0, max=100, step=1, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
-            options=None, attrs=None, profile=None):
+              options=None, attrs=None, profile=None):
     attrs = attrs or {}
     attrs.update({"type": 'range'})
     html_range = html.HtmlInput.InputRange(self.context.rptObj, value, min, max, step, placeholder, width, height,
-                                           htmlCode, filter, options, attrs, profile)
+                                           htmlCode, filter, options or {}, attrs, profile)
     self.context.register(html_range)
     return html_range
 

@@ -28,6 +28,7 @@ class CssInputRange(CssStyle.Style):
   _attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'outline': 'none', 'opacity': 0.7,
             '-webkit-transition': '.2s', 'transition': 'opacity .2s', 'cursor': 'pointer'}
   _hover = {'opacity': 1}
+  _selectors = {'child': 'input'}
 
   def customize(self):
     self.attrs.css({"background": self.rptObj.theme.colors[0]})
@@ -37,8 +38,9 @@ class CssInputRangeThumb(CssStyle.Style):
   """
   CSS Style for the thumb of the input range component
   """
-  _attrs = {'-webkit-appearance': 'none', 'appearance': 'none'}
+  _attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
   _webkit_slider_thumb = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
+  _selectors = {'child': 'input'}
 
   def customize(self):
     self.webkit_slider_thumb.css({"background": self.rptObj.theme.success[1],
