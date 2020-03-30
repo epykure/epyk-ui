@@ -164,6 +164,20 @@ class InputTime(Input):
       text['options'] = {'timeFormat': 'HH:mm:ss'}
       text['options']["_change"] = []
     super(InputTime, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    self.__options = OptInputs.OptionsTimePicker(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the input timepicker component properties
+
+    https://timepicker.co/options/
+
+    :rtype: OptInputs.OptionsTimePicker
+    """
+    return self.__options
 
   @property
   def style(self):
