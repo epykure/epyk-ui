@@ -7,6 +7,7 @@ from epyk.core.css.styles import GrpClsList
 
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtmlSelect
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsSelect
 
@@ -75,8 +76,29 @@ class Select(Html.Html):
     :rtype: JsSelect.JSelect
     """
     if self._dom is None:
-      self._dom = JsSelect.JSelect(self, report=self._report)
+      self._dom = JsHtmlSelect.DomSelect(self, report=self._report)
     return self._dom
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    https://developer.snapappointments.com/bootstrap-select/methods/
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+    :rtype: JsSelect.JSelect
+    """
+    if self._js is None:
+      self._js = JsSelect.JSelect(self, report=self._report)
+    return self._js
 
   @property
   def options(self):
@@ -90,7 +112,7 @@ class Select(Html.Html):
       for (var idx in data) {
           const text = (typeof data[idx].text !== 'undefined')? data[idx].text : data[idx].value;
           selectObj.append('<option value=' + data[idx].value + '>' + text + '</option>'); }
-      selectObj.selectpicker(options).val(data).selectpicker('refresh')''' % JsQuery.decorate_var("htmlObj", convert_var=False)
+      selectObj.selectpicker(options).val().selectpicker('refresh')''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def change(self, jsFncs, emtpyFncs=None, profile=False):
     """
