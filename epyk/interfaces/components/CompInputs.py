@@ -106,8 +106,10 @@ class Inputs(object):
     :param attrs:
     :param profile:
     """
+    dflt_options = {'timeFormat': 'HH:mm:ss'}
+    dflt_options.update(options or {})
     html_input_t = html.HtmlInput.InputTime(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
-                                            options, attrs or {}, profile)
+                                            dflt_options, attrs or {}, profile)
     self.context.register(html_input_t)
     return html_input_t
 

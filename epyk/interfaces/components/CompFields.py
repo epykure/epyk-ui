@@ -1,6 +1,5 @@
-"""
 
-"""
+import datetime
 
 # Check if pandas is available in the current environment
 # if it is the case this module can handle DataFrame directly
@@ -20,7 +19,7 @@ class Fields(object):
     self.context = context
 
   def today(self, value=None, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
-            profile=None, options=None, filters=None, helper=None):
+            profile=None, options=None, helper=None):
     """
     Description:
     ------------
@@ -53,7 +52,7 @@ class Fields(object):
     return html_dt
 
   def cob(self, value=None, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
-          profile=None, options=None, filters=None, helper=None):
+          profile=None, options=None, helper=None):
     """
     Description:
     ------------
@@ -86,8 +85,8 @@ class Fields(object):
     self.context.register(html_cob)
     return html_cob
 
-  def now(self, value=None, label=None, icon="far fa-clock", color=None, htmlCode=None, profile=None,
-          options=None, filters=None, helper=None):
+  def now(self, deltatime=0, label=None, icon="far fa-clock", color=None, htmlCode=None, profile=None,
+          options=None, helper=None):
     """
     Description:
     ------------
@@ -104,6 +103,38 @@ class Fields(object):
 
     Attributes:
     ----------
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param color: Optional. The font color in the component. Default inherit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
+    """
+    date = datetime.datetime.now() + datetime.timedelta(minutes=deltatime)
+    html_dt = html.HtmlDates.TimePicker(self.context.rptObj, str(date).split(" ")[1].split(".")[0], label, icon, color,
+                                        htmlCode, profile, options or {}, helper)
+    self.context.register(html_dt)
+    return html_dt
+
+  def time(self, value=None, label=None, icon="far fa-clock", color=None, htmlCode=None, profile=None,
+          options=None, helper=None):
+    """
+    Description:
+    ------------
+    This component is based on the Jquery Time Picker object.
+
+    Usage:
+    ------
+    rptObj.ui.fields.time(label="timestamp", color="red", helper="This is the report timestamp")
+    rptObj.ui.fields.time(label="Time field")
+
+    Related Pages:
+    --------------
+    https://github.com/jonthornton/jquery-timepicker
+
+    Attributes:
+    ----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -111,10 +142,9 @@ class Fields(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
-    :param filters: Optional. The filtering properties for this component
     :param helper: Optional. A tooltip helper
     """
-    html_dt = html.HtmlDates.TimePicker(self.context.rptObj, value or "", label, icon, color, htmlCode, profile, options or {}, helper)
+    html_dt = html.HtmlDates.TimePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options or {}, helper)
     self.context.register(html_dt)
     return html_dt
 

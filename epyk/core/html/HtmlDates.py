@@ -1,7 +1,8 @@
 import time
 
 from epyk.core.html import Html
-from epyk.core.js.packages import JsQuery
+
+from epyk.core.html.options import OptInputs
 
 
 class DatePicker(Html.Html):
@@ -34,6 +35,22 @@ class DatePicker(Html.Html):
     self._vals['options']["selectedDts"] = dts
     return self
 
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    The progress bar is designed to display the current percent complete for a process.
+    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu
+
+    :rtype: OptInputs.OptionsDatePicker
+    """
+    return self.input.options
+
   def add_options(self, options=None, name=None, value=None):
     """
     Add TimePicker options
@@ -55,21 +72,21 @@ class DatePicker(Html.Html):
       self.vals['options'][k] = v
     return self
 
-  @property
-  def _js__builder__(self):
-    return '''
-        if ((typeof data.options.selectedDts !== "undefined") && (data.options.selectedDts.length > 0)){
-          var selectedDt = {};
-          data.options.selectedDts.forEach(function(dt){var jsDt = new Date(dt); selectedDt[jsDt.toISOString().split('T')[0]] = jsDt}) ;
-          if (data.options.excludeDts === true){ 
-            function renderCalendarCallbackExc(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [false, '', '']} else {return [true, '', '']}}; 
-            data.options.beforeShowDay = renderCalendarCallbackExc;
-          } else{ 
-            function renderCalendarCallback(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [true, "%s", '']} else {return [false, '', '']}};
-            data.options.beforeShowDay = renderCalendarCallback;};
-          delete data.options.selectedDts};
-        %s.datepicker(data.options).datepicker('setDate', data.value)
-      ''' % JsQuery.decorate_var("htmlObj.querySelector('input')", convert_var=False)
+  # @property
+  # def _js__builder__(self):
+  #   return '''
+  #       if ((typeof data.options.selectedDts !== "undefined") && (data.options.selectedDts.length > 0)){
+  #         var selectedDt = {};
+  #         data.options.selectedDts.forEach(function(dt){var jsDt = new Date(dt); selectedDt[jsDt.toISOString().split('T')[0]] = jsDt}) ;
+  #         if (data.options.excludeDts === true){
+  #           function renderCalendarCallbackExc(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [false, '', '']} else {return [true, '', '']}};
+  #           data.options.beforeShowDay = renderCalendarCallbackExc;
+  #         } else{
+  #           function renderCalendarCallback(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [true, "%s", '']} else {return [false, '', '']}};
+  #           data.options.beforeShowDay = renderCalendarCallback;};
+  #         delete data.options.selectedDts};
+  #       %s.datepicker(data.options).datepicker('setDate', data.value)
+  #     ''' % JsQuery.decorate_var("htmlObj.querySelector('input')", convert_var=False)
 
   def __str__(self):
     return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
@@ -80,9 +97,9 @@ class TimePicker(Html.Html):
   name, category, callFnc = 'Time Picker', 'Dates', 'date'
 
   def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
-    super(TimePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
+    super(TimePicker, self).__init__(report, None, htmlCode=htmlCode, profile=profile)
     # Add the internal components (label, icon)
-    self.input = self._report.ui.inputs.d_time(value)
+    self.input = self._report.ui.inputs.d_time(value, options=options)
     self.input.set_attrs(name="class", value='time').css({"padding": 0})
     self.prepend_child(self.input)
     self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
@@ -91,52 +108,44 @@ class TimePicker(Html.Html):
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", 'margin-top': '2px'})
-    self.options = options
 
   @property
-  def _js__builder__(self):
-    return '''
-      if (typeof data == "string"){jQuery(htmlObj).timepicker('setTime', data)
-      } else {
-        if (data.time == ''){data.time = new Date()};
-        if (data.options._change.length > 0) {data.options.change = function(time){
-            let data = {event_val: time.getHours() +':'+ time.getMinutes() +':'+ time.getSeconds(), event_code: htmlId}; 
-            eval(data.options._change.join(";"))}};
-        %(jqId)s.timepicker(data.options); %(jqId)s.timepicker('setTime', data.time)}
-      ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
-
-  def add_options(self, options=None, name=None, value=None):
+  def options(self):
     """
-    Add TimePicker options
+    Description:
+    -----------
+    The progress bar is designed to display the current percent complete for a process.
+    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
-    Documentation
-    https://timepicker.co/options/
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu
 
-    :param key: A string or a Python dictionary with the options to set
-    :param val: Optional.
-
-    :return:
+    :rtype: OptInputs.OptionsTimePicker
     """
-    if options is None and name is None:
-      raise Exception("Either the attrs or the name should be specified")
-
-    if options is None:
-      options = {name: value}
-    for k, v in options.items():
-      self.vals['options'][k] = v
-    return self
+    return self.input.options
 
   def change(self, jsFnc):
     """
+    Description:
+    -----------
+    Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
+    Note: the variable time is a function parameter received in the Javascript side
+
+    Usage:
+    ------
+    morning = rptObj.ui.fields.time("8:13:00", label="Time field")
+    morning.change([
+      rptObj.js.alert("time", skip_data_convert=True)
+    ])
+
+    Related Pages:
+    --------------
+    https://timepicker.co/options/
 
     :param jsFnc:
-
-    :return:
     """
-    if isinstance(jsFnc, list):
-      self.vals['options']['_change'] += jsFnc
-    else:
-      self.vals['options']['_change'].append(jsFnc)
+    self.input.change(jsFnc)
     return self
 
   def __str__(self):

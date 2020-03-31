@@ -8,6 +8,8 @@ from epyk.core.html.options import OptInputs
 
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsTimepicker
+from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.html import JsHtmlField
 from epyk.core.js.html import JsHtmlJqueryUI
 
@@ -157,12 +159,7 @@ class InputTime(Input):
 
   def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     if text is None:
-      text = {"value": str(datetime.datetime.now()).split(" ")[1].split(".")[0]}
-    elif isinstance(text, str):
-      text = {"value": text}
-    if 'options' not in text:
-      text['options'] = {'timeFormat': 'HH:mm:ss'}
-      text['options']["_change"] = []
+      text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
     super(InputTime, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
     self.__options = OptInputs.OptionsTimePicker(self, options)
 
@@ -173,6 +170,8 @@ class InputTime(Input):
     ------------
     Property to set all the input timepicker component properties
 
+    Related Pages:
+    --------------
     https://timepicker.co/options/
 
     :rtype: OptInputs.OptionsTimePicker
@@ -206,18 +205,56 @@ class InputTime(Input):
     return self._dom
 
   @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsTimepicker.Timepicker
+    """
+    if self._js is None:
+      self._js = JsTimepicker.Timepicker(self, report=self._report)
+    return self._js
+
+  @property
   def _js__builder__(self):
-    return '''
-      if (typeof data == "string"){jQuery(htmlObj).timepicker('setTime', data)
-      } else {
+    """
+    else {
         if (data.value == ''){data.time = new Date()} else{data.time = data.value};
         if (data.options._change.length > 0) {data.options.change = function(time){
-            let data = {event_val: time.getHours() +':'+ time.getMinutes() +':'+ time.getSeconds(), event_code: htmlId}; 
+            let data = {event_val: time.getHours() +':'+ time.getMinutes() +':'+ time.getSeconds(), event_code: htmlId};
             eval(data.options._change.join(";"))}};
-        jQuery(htmlObj).timepicker(data.options); jQuery(htmlObj).timepicker('setTime', data.time)}'''
+        jQuery(htmlObj).timepicker(data.options); jQuery(htmlObj).timepicker('setTime', data.time)}
+
+    :return:
+    """
+    return '''
+      if (typeof data == "string"){jQuery(htmlObj).timepicker('setTime', data)} 
+      jQuery(htmlObj).timepicker(options); '''
+
+  def change(self, jsFnc):
+    """
+    Description:
+    -----------
+    Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
+    Note: the variable time is a function parameter received in the Javascript side
+
+    Related Pages:
+    --------------
+    https://timepicker.co/options/
+
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["change"] = "function(time){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
 
   def __str__(self):
-    # Javascript builder is mandatory for this object
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
@@ -228,6 +265,38 @@ class InputDate(Input):
 
   def __init__(self, report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    self.__options = OptInputs.OptionsDatePicker(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the input Datepicker component properties
+
+    Related Pages:
+    --------------
+    https://timepicker.co/options/
+
+    :rtype: OptInputs.OptionsDatePicker
+    """
+    return self.__options
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.Datepicker
+    """
+    if self._js is None:
+      self._js = JsQueryUi.Datepicker(self, report=self._report)
+    return self._js
 
   @property
   def style(self):

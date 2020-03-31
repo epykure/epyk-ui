@@ -64,6 +64,7 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
 
 
 class JsHtmlSlider(JsHtml.JsHtml):
+
   @property
   def val(self):
     return JsObjects.JsObjects.get(
@@ -73,3 +74,42 @@ class JsHtmlSlider(JsHtml.JsHtml):
   @property
   def content(self):
     return JsObjects.JsObjects.get('%s.slider("value")' % self._src.dom.jquery.varId)
+
+
+class JsHtmlSliderRange(JsHtml.JsHtml):
+
+  @property
+  def val(self):
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.slider('values'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlId, self._src.dom.jquery.varId))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get('%s.slider("values")' % self._src.dom.jquery.varId)
+
+
+class JsHtmlSliderDate(JsHtml.JsHtml):
+
+  @property
+  def val(self):
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlId, self.content))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get('new Date(%s.slider("value") * 1000).toISOString().split("T")[0]' % self._src.dom.jquery.varId)
+
+
+class JsHtmlSliderDates(JsHtml.JsHtml):
+
+  @property
+  def val(self):
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlId, self.content))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get('function() {return [new Date(%s.slider("values")[0] * 1000).toISOString().split("T")[0], new Date(%s.slider("values")[1] * 1000).toISOString().split("T")[0]]}()' % (self._src.dom.jquery.varId, self._src.dom.jquery.varId))

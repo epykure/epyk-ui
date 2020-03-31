@@ -26,9 +26,8 @@ class Sliders(object):
   def __init__(self, context):
     self.context = context
 
-  def slider(self, value=0, type="integer", range=None, animate=True, step=1, min=0, max=100, width=(100, '%'),
-             height=(None, 'px'), htmlCode=None, globalFilter=None, recordSet=None, column=None,
-             color=None, attrs=None, helper=None, profile=None):
+  def slider(self, number=0, min=0, max=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+             helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -36,7 +35,7 @@ class Sliders(object):
 
     Usage:
     ------
-    rptObj.ui.slider(recordSet=[1, 2, 3, 4, 5, 6, 7])
+    rptObj.ui.slider(40)
 
     Related Pages:
     --------------
@@ -61,27 +60,79 @@ class Sliders(object):
     :param helper:
     :param profile:
     """
-    if recordSet is not None:
-      is_converted = False
-      if column is not None:
-        if has_pandas:
-          if isinstance(recordSet, pd.DataFrame):
-            recordSet = sorted(recordSet[column].unique().tolist())
-            is_converted = True
-        if not is_converted:
-          result = set([])
-          for rec in recordSet:
-            result.add(rec[column])
-          recordSet = sorted(list(result))
-    attrs = {} if attrs is None else attrs
-    if htmlCode is not None:
-      attrs.update({"htmlCode": htmlCode, "changeUrl": False})
-    html_slider = html.HtmlEvent.Slider(self.context.rptObj, value, type, range, animate, step, min,
-                                        max, width, height, globalFilter, recordSet, color, attrs, helper, profile)
+    html_slider = html.HtmlEvent.Slider(self.context.rptObj, number, min, max, width, height,  attrs or {}, helper,
+                                         options or {}, htmlCode, profile)
     self.context.register(html_slider)
     return html_slider
 
-  def progressbar(self, number=None, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+  def date(self, value, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+             helper=None, options=None, profile=None):
+    """
+
+    :param value:
+    :param min:
+    :param max:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param attrs:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    options = options or {}
+    html_slider = html.HtmlEvent.SliderDate(self.context.rptObj, value, min, max, width, height, attrs or {}, helper,
+                                            options or {}, htmlCode, profile)
+    self.context.register(html_slider)
+    return html_slider
+
+  def date_range(self, value1, value2, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+                 helper=None, options=None, profile=None):
+    """
+
+    :param value1:
+    :param value2:
+    :param min:
+    :param max:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param attrs:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    options = options or {}
+    options['range'] = True
+    html_slider = html.HtmlEvent.SliderDates(self.context.rptObj, [value1, value2], min, max, width, height, attrs or {}, helper,
+                                             options or {}, htmlCode, profile)
+    self.context.register(html_slider)
+    return html_slider
+
+  def range(self, values, min=0, max=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+             helper=None, options=None, profile=None):
+    """
+
+    :param values:
+    :param min:
+    :param max:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param attrs:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    options = options or {}
+    options['range'] = True
+    html_slider = html.HtmlEvent.Range(self.context.rptObj, values, min, max, width, height, attrs or {}, helper,
+                                         options or {}, htmlCode, profile)
+    self.context.register(html_slider)
+    return html_slider
+
+
+  def progressbar(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
                   helper=None, options=None, profile=None):
     """
     Description:
@@ -107,8 +158,7 @@ class Sliders(object):
     :param helper:
     :param profile:
     """
-    if htmlCode is not None:
-      attrs.update({"htmlCode": htmlCode, "changeUrl": False})
-    html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper, options, profile)
+    html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper,
+                                         options or {}, htmlCode, profile)
     self.context.register(html_pr)
     return html_pr
