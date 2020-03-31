@@ -484,6 +484,13 @@ class FieldInput(Field):
     super(FieldInput, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
+class FieldAutocomplete(Field):
+
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
+    input = report.ui.inputs.autocomplete(value, width=(None, "%"), placeholder=placeholder)
+    super(FieldAutocomplete, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+
+
 class FieldRange(Field):
 
   def __init__(self, report, value, min, max, step, label, placeholder, icon, width, height, htmlCode, helper, options, profile):

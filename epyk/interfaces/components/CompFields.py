@@ -173,6 +173,31 @@ class Fields(object):
     self.context.register(html_input)
     return html_input
 
+  def autocomplete(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
+            height=(None, "px"), htmlCode=None, helper=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+    rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param placeholder:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    html_input = html.HtmlInput.FieldAutocomplete(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    self.context.register(html_input)
+    return html_input
+
   def static(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
              helper=None, profile=None):
     """
