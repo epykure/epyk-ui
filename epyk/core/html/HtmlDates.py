@@ -2,8 +2,6 @@ import time
 
 from epyk.core.html import Html
 
-from epyk.core.js.packages import JsQuery
-
 from epyk.core.html.options import OptInputs
 
 
@@ -37,6 +35,22 @@ class DatePicker(Html.Html):
     self._vals['options']["selectedDts"] = dts
     return self
 
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    The progress bar is designed to display the current percent complete for a process.
+    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu
+
+    :rtype: OptInputs.OptionsDatePicker
+    """
+    return self.input.options
+
   def add_options(self, options=None, name=None, value=None):
     """
     Add TimePicker options
@@ -58,21 +72,21 @@ class DatePicker(Html.Html):
       self.vals['options'][k] = v
     return self
 
-  @property
-  def _js__builder__(self):
-    return '''
-        if ((typeof data.options.selectedDts !== "undefined") && (data.options.selectedDts.length > 0)){
-          var selectedDt = {};
-          data.options.selectedDts.forEach(function(dt){var jsDt = new Date(dt); selectedDt[jsDt.toISOString().split('T')[0]] = jsDt}) ;
-          if (data.options.excludeDts === true){ 
-            function renderCalendarCallbackExc(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [false, '', '']} else {return [true, '', '']}}; 
-            data.options.beforeShowDay = renderCalendarCallbackExc;
-          } else{ 
-            function renderCalendarCallback(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [true, "%s", '']} else {return [false, '', '']}};
-            data.options.beforeShowDay = renderCalendarCallback;};
-          delete data.options.selectedDts};
-        %s.datepicker(data.options).datepicker('setDate', data.value)
-      ''' % JsQuery.decorate_var("htmlObj.querySelector('input')", convert_var=False)
+  # @property
+  # def _js__builder__(self):
+  #   return '''
+  #       if ((typeof data.options.selectedDts !== "undefined") && (data.options.selectedDts.length > 0)){
+  #         var selectedDt = {};
+  #         data.options.selectedDts.forEach(function(dt){var jsDt = new Date(dt); selectedDt[jsDt.toISOString().split('T')[0]] = jsDt}) ;
+  #         if (data.options.excludeDts === true){
+  #           function renderCalendarCallbackExc(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [false, '', '']} else {return [true, '', '']}};
+  #           data.options.beforeShowDay = renderCalendarCallbackExc;
+  #         } else{
+  #           function renderCalendarCallback(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [true, "%s", '']} else {return [false, '', '']}};
+  #           data.options.beforeShowDay = renderCalendarCallback;};
+  #         delete data.options.selectedDts};
+  #       %s.datepicker(data.options).datepicker('setDate', data.value)
+  #     ''' % JsQuery.decorate_var("htmlObj.querySelector('input')", convert_var=False)
 
   def __str__(self):
     return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}

@@ -16,15 +16,14 @@ from epyk.core.css.styles import GrpClsJqueryUI
 
 
 class ProgressBar(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
+  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Progress Bar', 'Sliders', 'progressbar'
 
   def __init__(self, report, number, total, width, height, attrs, helper, options, profile):
-    value = number / total * 100
-    super(ProgressBar, self).__init__(report, value, css_attrs={"width": width, "height": height}, profile=profile)
+    options['max'] = total
+    super(ProgressBar, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
-    self._jsStyles = {"background": self._report.theme.success[1]}
-    self.attr["title"] = "%.2f%% (%s / %s)" % (value, number, total)
+    self._jsStyles = {'css': {"background": self._report.theme.success[1]}}
     self.__options = OptSliders.OptionsProgBar(self, options)
 
   @property
@@ -45,7 +44,10 @@ class ProgressBar(Html.Html):
 
   @property
   def _js__builder__(self):
-    return "jQuery(htmlObj).progressbar({value: parseFloat(data)}).find('div').css(options)"
+    return '''
+      options.value = parseFloat(data); jQuery(htmlObj).progressbar(options).find('div').css(options.css);
+      jQuery(htmlObj).progressbar(options).find('div').attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"% ("+ parseFloat(data) +" / "+ options.max +")");
+      '''
 
   @property
   def js(self):
@@ -74,12 +76,15 @@ class ProgressBar(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtml.JsHtmlProgressBar
     """
     if self._dom is None:

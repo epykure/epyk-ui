@@ -81,7 +81,7 @@ class Sliders(object):
     self.context.register(html_slider)
     return html_slider
 
-  def progressbar(self, number=None, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+  def progressbar(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
                   helper=None, options=None, profile=None):
     """
     Description:
@@ -109,6 +109,7 @@ class Sliders(object):
     """
     if htmlCode is not None:
       attrs.update({"htmlCode": htmlCode, "changeUrl": False})
-    html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper, options, profile)
+    html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper,
+                                         options or {}, profile)
     self.context.register(html_pr)
     return html_pr

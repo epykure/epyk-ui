@@ -1,8 +1,8 @@
 
-from epyk.core.data import DataClass
+from epyk.core.html.options import Options
 
 
-class OptionsSlider(DataClass):
+class OptionsSlider(Options):
 
   @property
   def animate(self):
@@ -191,7 +191,7 @@ class OptionsSlider(DataClass):
     return self
 
 
-class OptionsProgBar(DataClass):
+class OptionsProgBar(Options):
 
   @property
   def classes(self):
@@ -212,7 +212,31 @@ class OptionsProgBar(DataClass):
     return self
 
   @property
-  def disabled (self):
+  def background(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._report._jsStyles['css'].get('background')
+
+  @background.setter
+  def background(self, value):
+    self._report._jsStyles['css']["background"] = value
+    return self
+
+  def css(self, attrs):
+    """
+    Description:
+    ------------
+
+    :param attrs:
+    """
+    self._report._jsStyles['css'].update(attrs)
+    return self
+
+  @property
+  def disabled(self):
     """
     Description:
     ------------
@@ -222,11 +246,11 @@ class OptionsProgBar(DataClass):
     --------------
     https://api.jqueryui.com/progressbar/#option-disabled
     """
-    return self._report._jsStyles('disabled ', False)
+    return self._report._jsStyles('disabled', False)
 
-  @disabled .setter
-  def disabled (self, bool):
-    self._report._jsStyles["disabled "] = bool
+  @disabled.setter
+  def disabled(self, bool):
+    self._report._jsStyles["disabled"] = bool
     return self
 
   @property
@@ -240,7 +264,7 @@ class OptionsProgBar(DataClass):
     --------------
     https://api.jqueryui.com/progressbar/#option-max
     """
-    return self._report._jsStyles('max', False)
+    return self._report._jsStyles('max', 100)
 
   @max.setter
   def max(self, bool):
@@ -266,7 +290,7 @@ class OptionsProgBar(DataClass):
     return self
 
 
-class OptionsMenu(DataClass):
+class OptionsMenu(Options):
   @property
   def classes(self):
     """
@@ -344,7 +368,7 @@ class OptionsMenu(DataClass):
     return self
 
 
-class OptionDialog(DataClass):
+class OptionDialog(Options):
   @property
   def appendTo(self):
     """
@@ -651,7 +675,7 @@ class OptionDialog(DataClass):
     return self
 
 
-class OptionAutoComplete(DataClass):
+class OptionAutoComplete(Options):
 
   @property
   def appendTo(self):

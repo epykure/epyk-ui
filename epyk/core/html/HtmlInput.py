@@ -9,6 +9,7 @@ from epyk.core.html.options import OptInputs
 #
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsTimepicker
+from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.html import JsHtmlField
 from epyk.core.js.html import JsHtmlJqueryUI
 
@@ -264,6 +265,38 @@ class InputDate(Input):
 
   def __init__(self, report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    self.__options = OptInputs.OptionsDatePicker(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the input Datepicker component properties
+
+    Related Pages:
+    --------------
+    https://timepicker.co/options/
+
+    :rtype: OptInputs.OptionsDatePicker
+    """
+    return self.__options
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.Datepicker
+    """
+    if self._js is None:
+      self._js = JsQueryUi.Datepicker(self, report=self._report)
+    return self._js
 
   @property
   def style(self):

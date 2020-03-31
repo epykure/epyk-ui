@@ -1,9 +1,9 @@
 
 from epyk.core.js.packages import packageImport
-from epyk.core.data import DataClass
+from epyk.core.html.options import Options
 
 
-class OptionsInput(DataClass):
+class OptionsInput(Options):
 
   def css(self, attrs):
     """
@@ -74,11 +74,6 @@ class OptionsInput(DataClass):
     """
     self._report._jsStyles["toFixed"] = digit
     return self
-
-  def __init__(self, report, attrs=None, options=None):
-    super(OptionsInput, self).__init__(report, attrs, options)
-    if attrs is not None:
-      self._report._jsStyles.update(attrs)
 
 
 class OptionsInputRange(OptionsInput):
@@ -353,3 +348,7 @@ class OptionsTimePicker(OptionsInput):
   def zindex(self, number):
     self._report._jsStyles["zindex"] = number
     return self
+
+
+class OptionsDatePicker(OptionsInput):
+  pass
