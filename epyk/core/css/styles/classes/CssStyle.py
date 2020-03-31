@@ -850,7 +850,7 @@ class Style(object):
     if self.__media:
       for name, m_attrs in self.__media.items():
         style.append("@media %s {" % name)
-        for k, v_dict in k_attrs.items():
+        for k, v_dict in m_attrs.items():
           style.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, ", ".join(j)) if isinstance(j, list) else "%s: %s" % (i, j) for i, j in v_dict.items()])))
         style.append("}")
     return "\n".join(style)
