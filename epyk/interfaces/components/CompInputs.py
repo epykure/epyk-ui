@@ -234,6 +234,31 @@ class Inputs(object):
     """
     return self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
 
+  def hidden(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+            options=None, attrs=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param placeholder:
+    :param size:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param filter:
+    :param options:
+    :param attrs:
+    :param profile:
+
+    :rtype: html.HtmlInput.Input
+    """
+    input = self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    input.style.css.display = None
+    return input
+
   def checkbox(self, flag, label=None, group_name=None, width=(None, "%"), height=(None, "px"),
                htmlCode=None, filter=None, options=None, attrs=None, profile=None):
     """
