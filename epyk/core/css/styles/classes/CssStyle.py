@@ -747,11 +747,21 @@ class Style(object):
     """
     return self.attrs.css(key, value, important, change)
 
-  def media(self, style, events_styles):
+  def media(self, attrs, rule=None, media_type=None, mediafeature=None):
     """
+    The @media is used in media queries to apply different styles for different media types/devices.
 
-    :param style:
-    :param events_styles:
+    Example
+    rptObj.style.media('only', 'screen', {body {
+        background-color: lightblue;
+        }
+    })
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
+    :param rule: not or only or and see documentation for more inf
+    :param media_type:
+    :param mediafeature:
     :return:
     """
 
