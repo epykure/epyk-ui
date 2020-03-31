@@ -61,7 +61,6 @@ class Input(Html.Html):
   def _js__builder__(self):
     return '''
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
-      
       if(typeof options.formatMoney !== 'undefined'){ htmlObj.value = accounting.formatMoney(data, 
         options.formatMoney.symbol, options.formatMoney.digit, 
         options.formatMoney.thousand, options.formatMoney.decimal)}
@@ -87,16 +86,6 @@ class Input(Html.Html):
       if options.get("reset", False):
         jsFncs.append(self.dom.empty())
     return self.on("focus", jsFncs, profile)
-
-  def autocomplete(self, source):
-    """
-
-    :param source:
-
-    :return: Self to allow the chaining
-    """
-    self._report.js.addOnLoad(['%s.autocomplete({"source": %s})' % (self.dom.jquery.varId, source)])
-    return self
 
   def validation(self, pattern, required=True):
     """
@@ -150,6 +139,56 @@ class Input(Html.Html):
   def __str__(self):
     if 'css' in self._jsStyles:
       self.css(self._jsStyles['css'])
+    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+
+
+class AutoComplete(Input):
+  name, callFnc = 'Input Time', 'input'
+  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
+
+  def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+    if text is None:
+      text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
+    super(AutoComplete, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    self.__options = OptInputs.OptionAutoComplete(self, options)
+
+  @property
+  def _js__builder__(self):
+    return "jQuery(htmlObj).autocomplete(options)"
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the input timepicker component properties
+
+    Related Pages:
+    --------------
+    https://timepicker.co/options/
+
+    :rtype: OptInputs.OptionAutoComplete
+    """
+    return self.__options
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.Autocomplete
+    """
+    if self._js is None:
+      self._js = JsQueryUi.Autocomplete(self, report=self._report)
+    return self._js
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
