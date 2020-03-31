@@ -3,11 +3,13 @@ import re
 import json
 
 from epyk.core.html import Html
+from epyk.core.html.options import OptSliders
 from epyk.core.html.entities import EntHtml4
 
 from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
+from epyk.core.js.packages import JsQueryUi
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsJqueryUI
@@ -23,10 +25,51 @@ class ProgressBar(Html.Html):
     self.add_helper(helper)
     self._jsStyles = {"background": self._report.theme.success[1]}
     self.attr["title"] = "%.2f%% (%s / %s)" % (value, number, total)
+    self.__options = OptSliders.OptionsProgBar(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    The progress bar is designed to display the current percent complete for a process.
+    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/progressbar
+
+    :rtype: OptSliders.OptionsProgBar
+    """
+    return self.__options
 
   @property
   def _js__builder__(self):
     return "jQuery(htmlObj).progressbar({value: parseFloat(data)}).find('div').css(options)"
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/progressbar
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.ProgressBar
+    """
+    if self._js is None:
+      self._js = JsQueryUi.ProgressBar(self, report=self._report)
+    return self._js
 
   @property
   def dom(self):
@@ -75,6 +118,15 @@ class Slider(Html.Html):
     super(Slider, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1],
                                  globalFilter=globalFilter, profile=profile)
+    self.__options = OptSliders.OptionsSlider(self, options)
+
+  @property
+  def options(self):
+    """
+
+    :rtype: OptSliders.OptionsSlider
+    """
+    return self.__options
 
   @property
   def style(self):
@@ -88,6 +140,30 @@ class Slider(Html.Html):
     if self._styleObj is None:
       self._styleObj = GrpClsJqueryUI.ClassSlider(self)
     return self._styleObj
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.Slider
+    """
+    if self._js is None:
+      self._js = JsQueryUi.Slider(self, report=self._report)
+    return self._js
 
   @property
   def dom(self):
@@ -136,7 +212,7 @@ class SkillBar(Html.Html):
   def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, colUrl, colTooltip, filters, profile):
     super(SkillBar, self).__init__(report, "", css_attrs={"width": width, "height": height}, htmlCode=htmlCode,
                                    globalFilter=filters, profile=profile)
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
     self.innerPyHTML = report.ui.layouts.table(data, y_column, x_axis)
     self.innerPyHTML.inReport = False
     for c in self.innerPyHTML.col(i=1):
@@ -377,7 +453,7 @@ class Filters(Html.Html):
 
   def __init__(self, report, items, title, width, height, htmlCode, helper, profile):
     super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
     self._jsStyles = {'items': {'display': 'inline-block', 'padding': '1px 4px',
                                 'color': self._report.theme.colors[-1], 'margin': '2px', 'border-radius': '5px', 'background-color': self._report.theme.colors[0]}}
     self.style.addCls('scroll_content')

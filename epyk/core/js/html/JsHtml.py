@@ -85,10 +85,11 @@ class JsHtml(JsNodeDom.JsDoms):
     """
 
     :return:
+
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(src=self._src, id=self._src.htmlId)
+      self._d3 = JsD3.D3Select(src=self._src, selector="d3.select('#%s')" % self._src.htmlId)
     return self._d3
 
   @property

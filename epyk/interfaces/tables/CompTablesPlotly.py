@@ -9,9 +9,19 @@ class Plotly(object):
   def table(self, records, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None,
             profile=None):
     """
+    Description:
+    ------------
 
+    Usage:
+    ------
+
+
+    Related Pages:
+    --------------
     https://plot.ly/javascript/table-subplots/
 
+    Attributes:
+    ----------
     :param records:
     :param cols:
     :param rows:
@@ -22,16 +32,27 @@ class Plotly(object):
     :param options:
     :param profile: 
     """
+    #
+    data_rows, _header = [], []
+    for r in rows:
+      data_rows.append([])
+      _header.append(r)
+    data_cols = []
+    for r in cols:
+      data_cols.append([])
+      _header.append(r)
+    for rec in records:
+      for i, r in enumerate(rows):
+        data_rows[i].append(rec.get(r, ''))
+      for i, r in enumerate(cols):
+        data_cols[i].append(rec.get(r, ''))
+
+    header = header or _header
     h_table = html_tables.HtmlTablePlotly.Table(self.parent.context.rptObj, width, height, "", options or {}, htmlCode,
-                                                None, profile)
+                                                profile)
     self.parent.context.register(h_table)
-    h_table.add_trace([
-      ['Salaries', 'Office', 'Merchandise', 'Legal', '<b>TOTAL</b>'],
-      [1200000, 20000, 80000, 2000, 12120000],
-      [1300000, 20000, 70000, 2000, 130902000],
-      [1300000, 20000, 120000, 2000, 131222000],
-      [1400000, 20000, 90000, 2000, 14102000]])
+    h_table.add_trace(data_rows + data_cols)
     h_table.options.responsive = True
-    h_table.data.header.values = [["<b>EXPENSES</b>"], ["<b>Q1</b>"],
-				 ["<b>Q2</b>"], ["<b>Q3</b>"], ["<b>Q4</b>"]]
+    h_table.data.header.values = [[h] for h in header]
+    h_table.layout.no_background()
     return h_table

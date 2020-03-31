@@ -14,6 +14,28 @@ class Buttons(object):
   def __init__(self, context):
     self.context = context
 
+  def _recordSet(self, recordSet, column):
+    """
+    Attributes:
+    ----------
+    :param recordSet:
+    :param column:
+    :return:
+    """
+    data = None
+    is_converted = False
+    if has_pandas:
+      if isinstance(recordSet, pd.DataFrame):
+        data = [{'name': r, 'value': r} for r in recordSet[column].unique().tolist()]
+        is_converted = True
+
+    if not is_converted:
+      result = {}
+      for rec in recordSet:
+        result[rec[column]] = {'name': rec[column], 'value': rec[column]}
+      data = [result[k] for k in sorted(result.keys())]
+    return data
+
   def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
@@ -237,18 +259,11 @@ class Buttons(object):
     :param radioType:
     :param profile:
     """
-    if column is not None:
-      if filters is not None:
-        if filters:
-          dataId = id(recordSet)
-          dataCode = "df_code_%s" % dataId
-          filters = {'jsId': dataCode, 'colName': column, 'allSelected': allSelected, 'operation': 'in'}
-          if not dataCode in self.context.rptObj.jsSources:
-            self.context.rptObj.jsSources[dataCode] = {'dataId': dataId, 'containers': [], 'data': recordSet}
-            self.context.rptObj.jsSources[dataCode]['containers'].append(self)
-      recordSet = recordSet[column].unique().tolist()
+    recordSet = recordSet or []
 
-    if isinstance(recordSet, list) and not isinstance(recordSet[0], dict):
+    if column is not None:
+      recordSet = self._recordSet(recordSet, column)
+    if isinstance(recordSet, list) and recordSet and not isinstance(recordSet[0], dict):
       tmpVals = [{'value': str(v)} for v in recordSet]
       tmpVals[0]['checked'] = True
       recordSet = tmpVals

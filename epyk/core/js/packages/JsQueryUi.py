@@ -8,12 +8,18 @@ import json
 
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
+from epyk.core.js.primitives import JsObjects
 
 
 class JQueryUI(JsPackage):
   lib_alias = {"js": 'jqueryui', 'css': 'jqueryui'}
-  lib_selector = 'jQuery("body")'
   lib_set_var = False
+
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    self.htmlId = varName if varName is not None else htmlObj.htmlId
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
+    self._src, self._report = htmlObj, report
+    self._js, self._jquery = [], None
 
   def labels(self):
     """
@@ -321,49 +327,206 @@ class JQueryUiDatePicker(JQueryUI):
     """
 
 
-class JQueryUiSlider(JQueryUI):
-  """
-
-  Documentation
-  https://api.jqueryui.com/slider/
-
-  """
+class Slider(JQueryUI):
 
   def destroy(self):
     """
+    Description:
+    ------------
+    Removes the slider functionality completely. This will return the element back to its pre-init state.
 
-    :return:
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#method-destroy
     """
+    return JsObjects.JsObjects.get('%s.slider("destroy")' % self._src.dom.jquery.varId)
 
   def disable(self):
     """
+    Description:
+    ------------
+    Disables the slider
 
-    :return:
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#method-disable
     """
-
-  def option(self, name, value):
-    """
-
-    :return:
-    """
+    return JsObjects.JsObjects.get('%s.slider("disable")' % self._src.dom.jquery.varId)
 
   def enable(self):
-    pass
+    """
+    Description:
+    ------------
+    Enables the slider.
 
-  def value(self):
-    pass
-
-  def values(self):
-    pass
-
-  def widget(self):
-    pass
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#method-enable
+    """
+    return JsObjects.JsObjects.get('%s.slider("enable")' % self._src.dom.jquery.varId)
 
   def instance(self):
-    pass
+    """
+    Description:
+    ------------
+    Retrieves the slider's instance object. If the element does not have an associated instance, undefined is returned.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#method-instance
+    """
+    return JsObjects.JsObjects.get('%s.slider("instance")' % self._src.dom.jquery.varId)
+
+  def option(self, jsData=None):
+    """
+    Description:
+    ------------
+    Retrieves the slider's instance object. If the element does not have an associated instance, undefined is returned.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#method-instance
+
+    Attributes:
+    ----------
+    :param jsData:
+    """
+    if jsData is None:
+      return JsObjects.JsObjects.get('%s.slider("option")' % self._src.dom.jquery.varId)
+
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsObjects.get('%s.slider("option", %s)' % (self._src.dom.jquery.varId, jsData))
+
+  def value(self, jsData=None):
+    """
+    Description:
+    ------------
+    Get the value of the slider.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#method-value
+
+    Attributes:
+    ----------
+    :param jsData:
+    """
+    if jsData is None:
+      return JsObjects.JsObjects.get('%s.slider("value")' % self._src.dom.jquery.varId)
+
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsObjects.get('%s.slider("value", %s)' % (self._src.dom.jquery.varId, jsData))
+
+  def values(self, index=0, jsData=None):
+    """
+    Description:
+    ------------
+    Get the value for the specified handle.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#method-value
+    """
+    if jsData is None:
+      return JsObjects.JsObjects.get('%s.slider("values", %s)' % (self._src.dom.jquery.varId, index))
+
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsObjects.get('%s.slider("value", %s, %s)' % (self._src.dom.jquery.varId, index, jsData))
 
 
-class JQueryUiProgressBar(JQueryUI):
-  """
+class ProgressBar(JQueryUI):
 
-  """
+  def destroy(self):
+    """
+    Description:
+    ------------
+    Removes the progressbar functionality completely. This will return the element back to its pre-init state.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/progressbar/#method-destroy
+    """
+    return JsObjects.JsObjects.get('%s.progressbar("destroy")' % self._src.dom.jquery.varId)
+
+  def disable(self):
+    """
+    Description:
+    ------------
+    Disables the progressbar.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/progressbar/#method-disable
+    """
+    return JsObjects.JsObjects.get('%s.progressbar("disable")' % self._src.dom.jquery.varId)
+
+  def enable(self):
+    """
+    Description:
+    ------------
+    Enables the progressbar.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/progressbar/#method-enable
+    """
+    return JsObjects.JsObjects.get('%s.progressbar("enable")' % self._src.dom.jquery.varId)
+
+  def instance(self):
+    """
+    Description:
+    ------------
+    Retrieves the progressbar's instance object. If the element does not have an associated instance, undefined is returned.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/progressbar/#method-instance
+    """
+    return JsObjects.JsObjects.get('%s.progressbar("instance")' % self._src.dom.jquery.varId)
+
+  def option(self, jsData=None, jsValue=None):
+    """
+    Description:
+    ------------
+    Gets the value currently associated with the specified optionName.
+    Gets an object containing key/value pairs representing the current progressbar options hash.
+    Sets the value of the progressbar option associated with the specified optionName.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/progressbar/#method-instance
+
+    Attributes:
+    ----------
+    :param jsData:
+    :param jsValue:
+    """
+    if jsData is None:
+      return JsObjects.JsObjects.get('%s.progressbar("option")' % self._src.dom.jquery.varId)
+
+    jsData = JsUtils.jsConvertData(jsData, None)
+    if jsValue is None:
+      return JsObjects.JsObjects.get('%s.progressbar("option", %s)' % (self._src.dom.jquery.varId, jsData))
+
+    jsValue = JsUtils.jsConvertData(jsValue, None)
+    return JsObjects.JsObjects.get('%s.progressbar("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+
+  def value(self, jsValue=None):
+    """
+    Description:
+    ------------
+    Retrieves the progressbar's instance object. If the element does not have an associated instance, undefined is returned.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/progressbar/#method-instance
+
+    Attributes:
+    ----------
+    :param jsValue:
+    """
+    if jsValue is None:
+      return JsObjects.JsObjects.get('%s.progressbar("value")' % self._src.dom.jquery.varId)
+
+    jsValue = JsUtils.jsConvertData(jsValue, None)
+    return JsObjects.JsObjects.get('%s.progressbar("value", %s)' % (self._src.dom.jquery.varId, jsValue))

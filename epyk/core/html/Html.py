@@ -434,7 +434,7 @@ class Html(object):
         self.link.css(css)
     return self
 
-  def add_title(self, text, level=None, css=None, position="before"):
+  def add_title(self, text, level=None, css=None, position="before", options=None):
     """
     Description:
     -----------
@@ -451,7 +451,7 @@ class Html(object):
     """
     self.title = ""
     if text is not None:
-      self.title = self._report.ui.texts.title(text, level=level)
+      self.title = self._report.ui.texts.title(text, level=level, options=options)
       if position == "before":
         self.prepend_child(self.title)
       else:
@@ -864,11 +864,11 @@ class Html(object):
 
     if isinstance(data, dict):
       # check if there is no nested HTML components in the data
-      tmp_data = ["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
       js_data = "{%s}" % ",".join(tmp_data)
     else:
       js_data = JsUtils.jsConvertData(data, None)
-    options, js_options = options or {}, []
+    options, js_options = options or self._jsStyles, []
     for k, v in options.items():
       if isinstance(v, dict):
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]

@@ -28,7 +28,7 @@ class PivotTable(Html.Html):
     super(PivotTable, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
                                      code=htmlCode, dataSrc=dataSrc, profile=profile)
     # Add the extra HTML components
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
     self.add_helper(helper)
     # to add all the columns in the table if nothing defined
     self.aggOptions, self.dsc, self.tableOptions, self.addinOptions = aggOptions, '', dict(tableOptions), []

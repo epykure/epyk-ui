@@ -4,6 +4,7 @@ import json
 
 from epyk.core.html import Html
 from epyk.core.html import Defaults
+from epyk.core.html.options import OptInputs
 
 #
 from epyk.core.js import JsUtils
@@ -30,6 +31,16 @@ class Input(Html.Html):
     value = text['value'] if isinstance(text, dict) else text
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
     self.set_attrs(attrs=attrs)
+    self.__options = OptInputs.OptionsInput(self, options)
+
+  @property
+  def options(self):
+    """
+    Property to set all the input component properties
+
+    :rtype: OptSelect.OptionsSelect
+    """
+    return self.__options
 
   @property
   def style(self):
@@ -46,8 +57,17 @@ class Input(Html.Html):
 
   @property
   def _js__builder__(self):
-    return '''htmlObj.value = data;
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
+    return '''
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
+      
+      if(typeof options.formatMoney !== 'undefined'){ htmlObj.value = accounting.formatMoney(data, 
+        options.formatMoney.symbol, options.formatMoney.digit, 
+        options.formatMoney.thousand, options.formatMoney.decimal)}
+      else if(typeof options.formatNumber !== 'undefined'){ htmlObj.value = accounting.formatNumber(data,
+        options.formatNumber.digit, options.formatNumber.thousand)}
+      else if(typeof options.toFixed !== 'undefined'){ htmlObj.value = accounting.toFixed(data, options.toFixed) }
+      else { htmlObj.value = data; }
+      '''
 
   def focus(self, jsFncs=None, profile=False, options=None):
     """
@@ -126,6 +146,8 @@ class Input(Html.Html):
     return self
 
   def __str__(self):
+    if 'css' in self._jsStyles:
+      self.css(self._jsStyles['css'])
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
@@ -142,6 +164,20 @@ class InputTime(Input):
       text['options'] = {'timeFormat': 'HH:mm:ss'}
       text['options']["_change"] = []
     super(InputTime, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    self.__options = OptInputs.OptionsTimePicker(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the input timepicker component properties
+
+    https://timepicker.co/options/
+
+    :rtype: OptInputs.OptionsTimePicker
+    """
+    return self.__options
 
   @property
   def style(self):
@@ -257,22 +293,46 @@ class InputRange(Input):
 
   def __init__(self, report, text, min, max, step, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
-
+    self.__options = OptInputs.OptionsInputRange(self, options)
     #
-    self.input = report.ui.inputs.input(text, width=(None, "%"), placeholder=placeholder).css({"vertical-align": 'middle'})
+    self.input = report.ui.inputs.input(text, width=(None, "px"), placeholder=placeholder).css({"vertical-align": 'middle'})
     self.input.inReport = False
-    # self.input.pyStyle = CssGrpClsInput.CssClassInputRange(self)
     self.append_child(self.input)
     #
-    self.output = self._report.ui.inputs._output(text).css({"margin-left": '5px', 'color': self._report.theme.success[1]})
-    self.output.inReport = False
-    self.append_child(self.output)
-    self.input.set_attrs(attrs={"type": "range", "min": min, "max": max, "step": step,
-                                "oninput": "%s.value=this.value" % self.output.htmlId})
+    self.input.set_attrs(attrs={"type": "range", "min": min, "max": max, "step": step})
+    if self.options.output:
+      self.output = self._report.ui.inputs._output(text).css({
+        "width": '15px', "text-align": 'center', "margin-left": '2px', 'color': self._report.theme.success[1]})
+      self.output.inReport = False
+      self.append_child(self.output)
+      self.input.set_attrs(attrs={"oninput": "%s.value=this.value" % self.output.htmlId})
     self.css({"display": 'inline-block', "vertical-align": 'middle', "line-height": '%spx' % Defaults.LINE_HEIGHT})
 
+  @property
+  def options(self):
+    """
+    Property to set input range properties
+
+    :rtype: OptSelect.OptionsInputRange
+    """
+    return self.__options
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Property to the CSS Style of the component
+
+    :rtype: GrpClsInput.ClassInputRange
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsInput.ClassInputRange(self)
+    return self._styleObj#
+
   def __str__(self):
-    self.output.css({"display": 'inline-block'})
+    if hasattr(self, 'output'):
+      self.output.css({"display": 'inline-block'})
     return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
@@ -318,22 +378,9 @@ class FieldInput(Field):
 
 class FieldRange(Field):
 
-  def __init__(self, report, value, min, max, step, label, placeholder, icon, width, height, htmlCode, helper, profile):
-    input = report.ui.inputs.d_range(value, min=min, max=max, step=step, width=(None, "%"), placeholder=placeholder)
+  def __init__(self, report, value, min, max, step, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.inputs.d_range(value, min=min, max=max, step=step, width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldRange, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
-
-  @property
-  def style(self):
-    """
-    Description:
-    ------------
-    Property to the CSS Style of the component
-
-    :rtype: GrpClsInput.ClassInputRange
-    """
-    if self._styleObj is None:
-      self._styleObj = GrpClsInput.ClassInputRange(self)
-    return self._styleObj
 
 
 class FieldCheckBox(Field):

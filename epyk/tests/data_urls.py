@@ -7,14 +7,17 @@ data_line_3d = r'https://raw.githubusercontent.com/plotly/datasets/master/_3d-li
 data_mesh_3d = r'https://raw.githubusercontent.com/plotly/datasets/master/mesh_dataset.txt'
 
 PLOTLY_APPLE_PRICES = r'https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv'
-'https://raw.githubusercontent.com/plotly/datasets/master/2014_us_cities.csv'
-'https://raw.githubusercontent.com/plotly/datasets/master/2015_06_30_precipitation.csv'
-'https://raw.githubusercontent.com/plotly/datasets/master/earthquakes-23k.csv'
-'https://raw.githubusercontent.com/plotly/datasets/master/2015_06_30_precipitation.csv'
+
+GEO_US_CITIES = 'https://raw.githubusercontent.com/plotly/datasets/master/2014_us_cities.csv'
+GEO_US_RAINS = 'https://raw.githubusercontent.com/plotly/datasets/master/2015_06_30_precipitation.csv'
+GEO_EARTHQUAKES = 'https://raw.githubusercontent.com/plotly/datasets/master/earthquakes-23k.csv'
+
+GEO_COVID19_COUNTRIES = "'https://covid.ourworldindata.org/data/total_cases.csv'"
+
 AIRPORT_TRAFFIC = 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv'
 PLOTLY_WEBGL_POLAR = 'https://raw.githubusercontent.com/plotly/datasets/master/hobbs-pearson-trials.csv'
 
-'https://raw.githubusercontent.com/juliencohensolal/BankMarketing/master/rawData/bank-additional-full.csv'
+BANKING_DATA = 'https://raw.githubusercontent.com/juliencohensolal/BankMarketing/master/rawData/bank-additional-full.csv'
 
 
 # https://bl.ocks.org/d3noob
@@ -43,6 +46,7 @@ DATATABLE_OBJECTS_URL = 'https://datatables.net/examples/ajax/data/objects.txt'
 DATATABLE_OBJECTS_NESTED_URL = 'https://datatables.net/examples/ajax/data/objects_deep.txt'
 DATATABLE_ORTHOGONAL_URL = 'https://datatables.net/examples/ajax/data/orthogonal.txt'
 DATATABLE_OBJECT_ARRAY_URL = 'https://datatables.net/examples/ajax/data/objects_root_array.txt'
+
 COVID_ECDC_URL = 'https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-2020-03-21.xlsx'
 COVID_TIME_SERIES = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series'
 COVID_DAILY_DATA = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports'

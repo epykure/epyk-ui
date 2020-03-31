@@ -52,13 +52,13 @@ class Lists(object):
         is_converted = True
 
     if not is_converted:
-      result = set([])
+      result = {}
       for rec in recordSet:
-        result.add({'name': rec[column], 'value': rec[column]})
-      data = list(result)
+        result[rec[column]] = {'name': rec[column], 'value': rec[column]}
+      data = [result[k] for k in sorted(result.keys())]
     return data
 
-  def select(self, records, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
+  def select(self, records=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
              column=None, filter=None, profile=None, multiple=False, options=None):
     """
     Description:
@@ -91,8 +91,11 @@ class Lists(object):
     :param multiple: Boolean. To set if the component can handle multiple selections
     :param options: The select options as defined https://developer.snapappointments.com/bootstrap-select/options/
     """
+    records = records or []
     options = {} if options is None else options
+
     all_selected = options.get("allSelected", False)
+    empty_selected = options.get("empty_selected", True)
     if column is not None:
       if filter is not None:
         if filter == True:
@@ -102,6 +105,8 @@ class Lists(object):
       records = [{'name': rec, 'value': rec} for rec in records]
     if all_selected:
       records = [{'name': 'All', 'value': ''}] + records
+    if empty_selected:
+      records = [{'name': '', 'value': ''}] + records
     if multiple:
       if not isinstance(multiple, dict):
         multiple = {"max": 2}
@@ -117,6 +122,40 @@ class Lists(object):
         if rec["value"] == selected:
           rec["selected"] = True
     html_select = html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height, filter, profile, multiple, options)
+    self.context.register(html_select)
+    return html_select
+
+  def lookup(self, lookupData=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
+             column=None, filter=None, profile=None, multiple=False, options=None):
+    """
+    Description:
+    ------------
+    HTML Select component
+
+    Usage:
+    ------
+
+    Documentation
+    https://silviomoreto.github.io/bootstrap-select/examples/
+    https://www.npmjs.com/package/bootstrap-select-v4
+    https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
+
+    Attributes:
+    ----------
+    :param records: The input data. Can be a list or a dataFrame
+    :param htmlCode: Optional. The component identifier code (for bot
+    :param label: Optional. The HTML label attached to the component
+    :param selected: The selected values
+    :param width: Optional. Integer for the component width
+    :param height: Optional. Integer for the component height
+    :param column:
+    :param filter:
+    :param profile: Optional. A flag to set the component performance storage
+    :param multiple: Boolean. To set if the component can handle multiple selections
+    :param options: The select options as defined https://developer.snapappointments.com/bootstrap-select/options/
+    """
+    options = {} if options is None else options
+    html_select = html.HtmlSelect.Lookup(self.context.rptObj, lookupData, htmlCode, width, height, filter, profile, multiple, options)
     self.context.register(html_select)
     return html_select
 
@@ -216,6 +255,8 @@ class Lists(object):
   def groups(self, data=None, categories=None, color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, profile=None):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -242,6 +283,8 @@ class Lists(object):
   def checklist(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
                 htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
     Usage:
     ------
@@ -355,6 +398,27 @@ class Lists(object):
 
     self.context.register(html_obj)
     return html_obj
+
+  def radios(self, records, group_name=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None,
+             options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    :param records:
+    :param group_name:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    container = self.context.rptObj.ui.div(width=width, height=height, htmlCode=htmlCode, helper=helper, profile=profile)
+    group_name = group_name or container.htmlId
+    for rec in records:
+      container += self.context.rptObj.ui.fields.radio(rec.get("value", False), rec.get('label', ''), rec.get("group_name", group_name))
+    return container
 
   def brackets(self, recordSet=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))

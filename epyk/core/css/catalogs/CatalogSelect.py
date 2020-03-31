@@ -1,5 +1,3 @@
-"""
-"""
 
 from epyk.core.css.catalogs import Catalog
 

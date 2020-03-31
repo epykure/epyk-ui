@@ -304,7 +304,7 @@ class Fields(object):
     return html_input
 
   def range(self, value="", min=0, max=100, step=1, label=None, placeholder="", icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, profile=None):
+              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -338,7 +338,7 @@ class Fields(object):
     :param profile:
     """
     html_input = html.HtmlInput.FieldRange(self.context.rptObj, value, min, max, step, label, placeholder, icon, width,
-                                           height, htmlCode, helper, profile)
+                                           height, htmlCode, helper, options, profile)
     self.context.register(html_input)
     return html_input
 

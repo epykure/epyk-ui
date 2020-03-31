@@ -80,7 +80,7 @@ class Comments(Html.Html):
     super(Comments, self).__init__(report, recordset, width=width[0], widthUnit=width[1], code=htmlCode, profile=profile)
     self.css({"clear": 'both', "display": "inline-block", 'margin': '5px 0', 'padding': '0'})
     self.pmts, self._height, self.readonly = pmts, "%s%s" % (height[0], height[1]), readonly
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
     if db_service is not None:
       if 'db' not in db_service:
         raise Exception('The db keyword needs to be defined with a proper epyk db Object (report.db.public)')
@@ -232,7 +232,7 @@ class Chat(Html.Html):
     self.privacy = 'public' if not dbService else dbService.get('privacy', 'public')
     super(Chat, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], code=htmlCode, profile=profile)
     # Add internal HTML components
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
     self._report.jsImports.add('socket.io')
     self._report.jsOnLoadFnc.add("var socket = io.connect('%s')" % self._report.run.url_root)
     self._report.jsOnLoadFnc.add("socket.on('message_%s_%s_%s', function(data) {%s})" % (
@@ -389,7 +389,7 @@ class News(Html.Html):
               "background": self._report.theme.greys[0], 'bottom': '20px', 'right': '20px'})
     # Add internal HTML component to the new feed
     self.add_label(label)
-    self.add_title(title)
+    self.add_title(title, options={'content_table': False})
     self.add_link(link_script, position="after")
 
   def onDocumentLoadFnc(self):
