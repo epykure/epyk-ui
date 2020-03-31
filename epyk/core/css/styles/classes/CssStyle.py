@@ -772,8 +772,10 @@ class Style(object):
 
       media_props.extend([rule, mediatype])
       if mediafeature:
-        for op, features in mediafeature.items():
-          media_props.extend([op, ('%s ' % op).join(features)])
+        for op, m_features in mediafeature.items():
+          for feature in m_features:
+            features = ['%s: %s' % (k, v) for k, v in feature.items()]
+          media_props.extend([op, ('(%s) ' % op).join(features)])
     name = ' '.join(media_props)
     self.__media[name] = attrs
     return name
