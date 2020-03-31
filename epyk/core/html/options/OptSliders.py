@@ -15,7 +15,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-animate
     """
-    return self._report._jsStyles('animate', False)
+    return self._report._jsStyles.get('animate', False)
 
   @animate.setter
   def animate(self, value):
@@ -35,7 +35,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-classes
     """
-    return self._report._jsStyles('classes')
+    return self._report._jsStyles.get('classes')
 
   @classes.setter
   def classes(self, value):
@@ -53,7 +53,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-disabled
     """
-    return self._report._jsStyles('disabled', False)
+    return self._report._jsStyles.get('disabled', False)
 
   @disabled.setter
   def disabled(self, value):
@@ -71,7 +71,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-max
     """
-    return self._report._jsStyles('max', 100)
+    return self._report._jsStyles.get('max', 100)
 
   @max.setter
   def max(self, value):
@@ -89,7 +89,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-min
     """
-    return self._report._jsStyles('min', 0)
+    return self._report._jsStyles.get('min', 0)
 
   @min.setter
   def min(self, value):
@@ -108,7 +108,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-orientation
     """
-    return self._report._jsStyles('orientation', "horizontal")
+    return self._report._jsStyles.get('orientation', "horizontal")
 
   @orientation.setter
   def orientation(self, value):
@@ -126,7 +126,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-range
     """
-    return self._report._jsStyles('range', False)
+    return self._report._jsStyles.get('range', False)
 
   @range.setter
   def range(self, value):
@@ -145,7 +145,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-step
     """
-    return self._report._jsStyles('step', 1)
+    return self._report._jsStyles.get('step', 1)
 
   @step.setter
   def step(self, value):
@@ -164,7 +164,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-value
     """
-    return self._report._jsStyles('value', 0)
+    return self._report._jsStyles.get('value', 0)
 
   @value.setter
   def value(self, value):
@@ -183,7 +183,7 @@ class OptionsSlider(Options):
     --------------
     https://api.jqueryui.com/slider/#option-values
     """
-    return self._report._jsStyles('values', 0)
+    return self._report._jsStyles.get('values', 0)
 
   @values.setter
   def values(self, value):

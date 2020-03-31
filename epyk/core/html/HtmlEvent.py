@@ -6,6 +6,7 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptSliders
 from epyk.core.html.entities import EntHtml4
 
+from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
@@ -19,7 +20,7 @@ class ProgressBar(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Progress Bar', 'Sliders', 'progressbar'
 
-  def __init__(self, report, number, total, width, height, attrs, helper, options, profile):
+  def __init__(self, report, number, total, width, height, attrs, helper, options, htmlCode, profile):
     options['max'] = total
     super(ProgressBar, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
@@ -187,13 +188,11 @@ class Slider(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Slider', 'Sliders', 'slider'
 
-  def __init__(self, report, value, typeObj, range, animate, step, min, max, width, height,
-               globalFilter, recordSet, color, attrs, helper, profile):
-    data = {'animate': animate, 'min': min, 'max': max, 'step': step}
-    super(Slider, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
-                                 heightUnit=height[1],
-                                 globalFilter=globalFilter, profile=profile)
-    #self.__options = OptSliders.OptionsSlider(self, options)
+  def __init__(self, report, number, min, max, width, height, attrs, helper, options, htmlCode, profile):
+    options.update({'max': max, 'min': min})
+    super(Slider, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
+    self._jsStyles = {'css': {"background": self._report.theme.success[0]}}
+    self.__options = OptSliders.OptionsSlider(self, options)
 
   @property
   def options(self):
@@ -240,6 +239,82 @@ class Slider(Html.Html):
       self._js = JsQueryUi.Slider(self, report=self._report)
     return self._js
 
+  def change(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Triggered after the user slides a handle, if the value has changed; or if the value is changed programmatically via the value method.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#event-change
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["change"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
+
+  def start(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Triggered when the user starts sliding.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#event-start
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["start"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
+
+  def slide(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Triggered when the user starts sliding.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#event-slide
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["slide"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
+
+  def stop(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Triggered after the user slides a handle.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/slider/#event-stop
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["stop"] = "function(event, ui){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
+
   @property
   def dom(self):
     """
@@ -255,8 +330,8 @@ class Slider(Html.Html):
 
   @property
   def _js__builder__(self):
-    return '''
-      if (options.type == 'date'){
+    """
+    if (options.type == 'date'){
         data.step = data.step * 86400000; data.min = DateToTimeStamp(data.min); data.max = DateToTimeStamp(data.max);
         if (data.values != undefined) {data.values = [DateToTimeStamp(data.values[0]), DateToTimeStamp(data.values[1])]}
         else if(data.value != 0) {data.value = DateToTimeStamp(data.value)}};
@@ -265,7 +340,11 @@ class Slider(Html.Html):
       $('#'+ %(jqId)s.attr('id') +' .ui-slider-range').css("background-color", options.backgroundColor);
       $('#'+ %(jqId)s.attr('id') +' .ui-slider-handle').css({"outline": 0, "white-space": "nowrap"});
       $('#'+ %(jqId)s.attr('id') +' .ui-slider-handle').css("color", options.backgroundColor);
-      $('#'+ %(jqId)s.attr('id') +' .ui-state-default, .ui-widget-content .ui-state-default' ).css("background-color", options.backgroundDotColor)
+      $('#'+ %(jqId)s.attr('id') +' .ui-state-default, .ui-widget-content .ui-state-default' )
+
+    :return:
+    """
+    return ''' options.value = data; %(jqId)s.slider(options).css(options.css)
       ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
 
   def __str__(self):
@@ -277,8 +356,76 @@ class Slider(Html.Html):
           <span style="float:right;display:inline-block">%(max)s</span>
         </div>
         <div id="%(htmlId)s"></div>
-      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.val['min'], "htmlId": self.htmlId,
-                        "max": self.val['max'], "helper": self.helper}
+      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min, "htmlId": self.htmlId,
+                             "max": self.options.max, "helper": self.helper}
+
+
+class Range(Slider):
+
+  @property
+  def _js__builder__(self):
+    return '''options.values = [Math.min(...data), Math.max(...data)]; %(jqId)s.slider(options).css(options.css)
+        ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
+
+
+class SliderDate(Slider):
+
+  def __init__(self, report, number, min, max, width, height, attrs, helper, options, htmlCode, profile):
+    super(SliderDate, self).__init__(report, number, min, max, width, height, attrs, helper, options, htmlCode, profile)
+    self.options.min = min
+    self.options.max = max
+    self.options.step = 86400
+
+  @property
+  def _js__builder__(self):
+    return '''
+      const minDt = new Date(options.min).getTime() / 1000;
+      const maxDt = new Date(options.max).getTime() / 1000;
+      
+      options.min = minDt; options.max = maxDt;
+      options.value = new Date(data).getTime() / 1000;
+      %(jqId)s.slider(options).css(options.css)
+      ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    The Javascript Dom object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlSlider
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlSliderDate(self, report=self._report)
+    return self._dom
+
+
+class SliderDates(SliderDate):
+
+  @property
+  def _js__builder__(self):
+    return ''' console.log(options);
+      const minDt = new Date(options.min).getTime() / 1000;
+      const maxDt = new Date(options.max).getTime() / 1000;
+
+      options.min = minDt; options.max = maxDt;
+      options.values = [new Date(data[0]).getTime() / 1000, new Date(data[1]).getTime() / 1000];
+      %(jqId)s.slider(options).css(options.css)
+      ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    The Javascript Dom object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlSlider
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, report=self._report)
+    return self._dom
 
 
 class SkillBar(Html.Html):
