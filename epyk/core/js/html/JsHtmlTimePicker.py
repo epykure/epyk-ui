@@ -1,11 +1,16 @@
-"""
 
-"""
-
-from epyk.core.js.objects import JsNodeDom
+from epyk.core.js.html import JsHtml
+from epyk.core.js.primitives import JsObjects
 
 
-class JsHtmlTimePicker(JsNodeDom.JsDoms):
-  def __init__(self, htmlObj):
-    super(JsHtmlTimePicker, self).__init__(htmlObj)
-    self._jqueryui = None
+class TimePicker(JsHtml.JsHtml):
+
+  @property
+  def val(self):
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.timepicker('getTime'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlId, self._src.dom.jquery.varId))
+
+  @property
+  def content(self):
+    return JsObjects.JsObjects.get("%s.timepicker('getTime')" % self._src.dom.jquery.varId)

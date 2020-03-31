@@ -75,6 +75,11 @@ class OptionsInput(DataClass):
     self._report._jsStyles["toFixed"] = digit
     return self
 
+  def __init__(self, report, attrs=None, options=None):
+    super(OptionsInput, self).__init__(report, attrs, options)
+    if attrs is not None:
+      self._report._jsStyles.update(attrs)
+
 
 class OptionsInputRange(OptionsInput):
 
@@ -104,11 +109,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('timeFormat', True)
+    return self._report._jsStyles.get('timeFormat', True)
 
   @timeFormat.setter
   def timeFormat(self, value):
-    return self.set(value)
+    self._report._jsStyles["timeFormat"] = value
+    return self
 
   @property
   def minTime(self):
@@ -122,11 +128,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('minTime', True)
+    return self._report._jsStyles.get('minTime', True)
 
   @minTime.setter
   def minTime(self, value):
-    return self.set(value)
+    self._report._jsStyles["minTime"] = value
+    return self
 
   @property
   def minHour(self):
@@ -139,11 +146,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('minHour', True)
+    return self._report._jsStyles.get('minHour', True)
 
   @minHour.setter
   def minHour(self, number):
-    return self.set(number)
+    self._report._jsStyles["minHour"] = number
+    return self
 
   @property
   def minMinutes(self):
@@ -156,11 +164,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('minMinutes', True)
+    return self._report._jsStyles.get('minMinutes', True)
 
   @minMinutes.setter
   def minMinutes(self, number):
-    return self.set(number)
+    self._report._jsStyles["minMinutes"] = number
+    return self
 
   @property
   def maxTime(self):
@@ -173,11 +182,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('maxTime', True)
+    return self._report._jsStyles.get('maxTime', True)
 
   @maxTime.setter
   def maxTime(self, number):
-    return self.set(number)
+    self._report._jsStyles["maxTime"] = number
+    return self
 
   @property
   def maxHour(self):
@@ -190,11 +200,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('maxHour', True)
+    return self._report._jsStyles.get('maxHour', True)
 
   @maxHour.setter
   def maxHour(self, number):
-    return self.set(number)
+    self._report._jsStyles["maxHour"] = number
+    return self
 
   @property
   def maxMinutes(self):
@@ -207,11 +218,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('maxMinutes', True)
+    return self._report._jsStyles.get('maxMinutes', True)
 
   @maxMinutes.setter
   def maxMinutes(self, number):
-    return self.set(number)
+    self._report._jsStyles["maxMinutes"] = number
+    return self
 
   @property
   def startTime(self):
@@ -225,11 +237,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('startTime', True)
+    return self._report._jsStyles.get('startTime', True)
 
   @startTime.setter
   def startTime(self, value):
-    return self.set(value)
+    self._report._jsStyles["startTime"] = value
+    return self
 
   @property
   def startHour(self):
@@ -243,11 +256,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('startHour', True)
+    return self._report._jsStyles.get('startHour', True)
 
   @startHour.setter
   def startHour(self, number):
-    return self.set(number)
+    self._report._jsStyles["startHour"] = number
+    return self
 
   @property
   def startMinutes(self):
@@ -261,11 +275,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('startMinutes', True)
+    return self._report._jsStyles.get('startMinutes', True)
 
   @startMinutes.setter
   def startMinutes(self, number):
-    return self.set(number)
+    self._report._jsStyles["startMinutes"] = number
+    return self
 
   @property
   def interval(self):
@@ -278,11 +293,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('interval', True)
+    return self._report._jsStyles.get('interval', 15)
 
   @interval.setter
   def interval(self, value):
-    return self.set(value)
+    self._report._jsStyles["interval"] = value
+    return self
 
   @property
   def dynamic(self):
@@ -295,11 +311,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('dynamic', True)
+    return self._report._jsStyles.get('dynamic', True)
 
   @dynamic.setter
   def dynamic(self, bool):
-    return self.set(bool)
+    self._report._jsStyles["dynamic"] = bool
+    return self
 
   @property
   def scrollbar(self):
@@ -312,11 +329,12 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('scrollbar', True)
+    return self._report._jsStyles.get('scrollbar', True)
 
   @scrollbar.setter
   def scrollbar(self, bool):
-    return self.set(bool)
+    self._report._jsStyles["scrollbar"] = bool
+    return self
 
   @property
   def zindex(self):
@@ -329,8 +347,9 @@ class OptionsTimePicker(OptionsInput):
     --------------
     https://timepicker.co/options/
     """
-    return self._attrs.get('zindex', True)
+    return self._report._jsStyles.get('zindex', True)
 
   @zindex.setter
   def zindex(self, number):
-    return self.set(number)
+    self._report._jsStyles["zindex"] = number
+    return self

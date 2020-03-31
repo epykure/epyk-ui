@@ -47,16 +47,18 @@ class Console(Html.Html):
     mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
     return "var content = %s; %s.innerHTML = %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
 
-  def write(self, data, timestamp=None, profile=False, stringify=False):
+  def write(self, data, timestamp=None, profile=False, stringify=False, skip_data_convert=False):
     """
 
     :param data:
     :param timestamp:
     :param profile:
+    :param stringify:
+    :param skip_data_convert:
     """
     var_id = "content_%s" % self.htmlId # to avoid infinite loops in the Javascript
     mark_up = self._report.js.string(var_id, isPyData=False).toStringMarkup()
-    js_data = JsUtils.jsConvertData(data, None)
+    js_data = data if skip_data_convert else JsUtils.jsConvertData(data, None)
     if stringify:
       js_data = "JSON.stringify(%s)" % js_data
     if timestamp or (self.options.timestamp and timestamp != False):

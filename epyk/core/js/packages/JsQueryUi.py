@@ -530,3 +530,559 @@ class ProgressBar(JQueryUI):
 
     jsValue = JsUtils.jsConvertData(jsValue, None)
     return JsObjects.JsObjects.get('%s.progressbar("value", %s)' % (self._src.dom.jquery.varId, jsValue))
+
+
+class Menu(JQueryUI):
+
+  def blur(self):
+    """
+    Description:
+    ------------
+    Removes focus from a menu, resets any active element styles and triggers the menu's blur event.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-blur
+    """
+    return JsObjects.JsObjects.get('%s.menu("blur")' % self._src.dom.jquery.varId)
+
+  def collapse(self):
+    """
+    Description:
+    ------------
+    Closes the currently active sub-menu.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-collapse
+    """
+    return JsObjects.JsObjects.get('%s.menu("collapse")' % self._src.dom.jquery.varId)
+
+  def collapseAll(self):
+    """
+    Description:
+    ------------
+    Closes all open sub-menus.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-collapseAll
+    """
+    return JsObjects.JsObjects.get('%s.menu("collapseAll", null, true)' % self._src.dom.jquery.varId)
+
+  def destroy(self):
+    """
+    Description:
+    ------------
+    Removes the menu functionality completely. This will return the element back to its pre-init state.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-destroy
+    """
+    return JsObjects.JsObjects.get('%s.menu("destroy")' % self._src.dom.jquery.varId)
+
+  def disable(self):
+    """
+    Description:
+    ------------
+    Disables the menu.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-disable
+    """
+    return JsObjects.JsObjects.get('%s.menu("disable")' % self._src.dom.jquery.varId)
+
+  def enable(self):
+    """
+    Description:
+    ------------
+    Enables the menu.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-disable
+    """
+    return JsObjects.JsObjects.get('%s.menu("enable")' % self._src.dom.jquery.varId)
+
+  def expand(self):
+    """
+    Description:
+    ------------
+    Opens the sub-menu below the currently active item, if one exists.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-expand
+    """
+    return JsObjects.JsObjects.get('%s.menu("expand")' % self._src.dom.jquery.varId)
+
+  def instance(self):
+    """
+    Description:
+    ------------
+    Retrieves the menu's instance object. If the element does not have an associated instance, undefined is returned.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-instance
+    """
+    return JsObjects.JsObjects.get('%s.menu("instance")' % self._src.dom.jquery.varId)
+
+  def isFirstItem(self):
+    """
+    Description:
+    ------------
+    Returns a boolean value stating whether or not the currently active item is the first item in the menu.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-isFirstItem
+    """
+    return JsObjects.JsBoolean.JsBoolean('%s.menu("isFirstItem")' % self._src.dom.jquery.varId)
+
+  def isLastItem(self):
+    """
+    Description:
+    ------------
+    Returns a boolean value stating whether or not the currently active item is the last item in the menu
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-isLastItem
+    """
+    return JsObjects.JsBoolean.JsBoolean('%s.menu("isLastItem")' % self._src.dom.jquery.varId)
+
+  def next(self):
+    """
+    Description:
+    ------------
+    Moves active state to next menu item.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-next
+    """
+    return JsObjects.JsObjects.get('%s.menu("next")' % self._src.dom.jquery.varId)
+
+  def nextPage(self):
+    """
+    Description:
+    ------------
+    Moves active state to first menu item below the bottom of a scrollable menu or the last item if not scrollable.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-nextPage
+    """
+    return JsObjects.JsObjects.get('%s.menu("nextPage")' % self._src.dom.jquery.varId)
+
+  def option(self, jsData=None, jsValue=None):
+    """
+    Description:
+    ------------
+    Gets an object containing key/value pairs representing the current menu options hash.
+    Sets the value of the menu option associated with the specified optionName.
+    Sets one or more options for the menu.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/progressbar/#method-option
+
+    Attributes:
+    ----------
+    :param jsData:
+    :param jsValue:
+    """
+    if jsData is None:
+      return JsObjects.JsObjects.get('%s.menu("option")' % self._src.dom.jquery.varId)
+
+    jsData = JsUtils.jsConvertData(jsData, None)
+    if jsValue is None:
+      return JsObjects.JsObjects.get('%s.menu("option", %s)' % (self._src.dom.jquery.varId, jsData))
+
+    jsValue = JsUtils.jsConvertData(jsValue, None)
+    return JsObjects.JsObjects.get('%s.menu("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+
+  def previous(self):
+    """
+    Description:
+    ------------
+    Moves active state to previous menu item.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-previous
+    """
+    return JsObjects.JsObjects.get('%s.menu("previous")' % self._src.dom.jquery.varId)
+
+  def previousPage(self):
+    """
+    Description:
+    ------------
+    Moves active state to first menu item above the top of a scrollable menu or the first item if not scrollable.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-previousPage
+    """
+    return JsObjects.JsObjects.get('%s.menu("previousPage")' % self._src.dom.jquery.varId)
+
+  def refresh(self):
+    """
+    Description:
+    ------------
+    nitializes sub-menus and menu items that have not already been initialized.
+    New menu items, including sub-menus can be added to the menu or all of the contents of the menu can be replaced and then initialized with the refresh() method.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-refresh
+    """
+    return JsObjects.JsObjects.get('%s.menu("refresh")' % self._src.dom.jquery.varId)
+
+  def select(self):
+    """
+    Description:
+    ------------
+    Selects the currently active menu item, collapses all sub-menus and triggers the menu's select event.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu/#method-select
+    """
+    return JsObjects.JsObjects.get('%s.menu("select")' % self._src.dom.jquery.varId)
+
+
+class Dialog(JQueryUI):
+
+  def close(self):
+    """
+    Description:
+    ------------
+    Closes the dialog.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/dialog/#method-close
+    """
+    return JsObjects.JsObjects.get('%s.dialog("close")' % self._src.dom.jquery.varId)
+
+  def destroy(self):
+    """
+    Description:
+    ------------
+    Removes the dialog functionality completely. This will return the element back to its pre-init state.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/dialog/#method-destroy
+    """
+    return JsObjects.JsObjects.get('%s.dialog("destroy")' % self._src.dom.jquery.varId)
+
+  def instance(self):
+    """
+    Description:
+    ------------
+    Retrieves the dialog's instance object. If the element does not have an associated instance, undefined is returned.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/dialog/#method-instance
+    """
+    return JsObjects.JsObjects.get('%s.dialog("instance")' % self._src.dom.jquery.varId)
+
+  def isOpen(self):
+    """
+    Description:
+    ------------
+    Whether the dialog is currently open.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/dialog/#method-isOpen
+    """
+    return JsObjects.JsObjects.get('%s.dialog("isOpen")' % self._src.dom.jquery.varId)
+
+  def moveToTop(self):
+    """
+    Description:
+    ------------
+    Moves the dialog to the top of the dialog stack.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/dialog/#method-moveToTop
+    """
+    return JsObjects.JsObjects.get('%s.dialog("moveToTop")' % self._src.dom.jquery.varId)
+
+  def open(self):
+    """
+    Description:
+    ------------
+    Opens the dialog.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/dialog/#method-open
+    """
+    return JsObjects.JsObjects.get('%s.dialog("open")' % self._src.dom.jquery.varId)
+
+  def option(self, jsData=None, jsValue=None):
+    """
+    Description:
+    ------------
+    Gets the value currently associated with the specified optionName.
+    Gets an object containing key/value pairs representing the current dialog options hash.
+    Sets the value of the dialog option associated with the specified optionName.
+    Sets one or more options for the dialog.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/dialog/#method-option
+
+    Attributes:
+    ----------
+    :param jsData:
+    :param jsValue:
+    """
+    if jsData is None:
+      return JsObjects.JsObjects.get('%s.dialog("option")' % self._src.dom.jquery.varId)
+
+    jsData = JsUtils.jsConvertData(jsData, None)
+    if jsValue is None:
+      return JsObjects.JsObjects.get('%s.dialog("option", %s)' % (self._src.dom.jquery.varId, jsData))
+
+    jsValue = JsUtils.jsConvertData(jsValue, None)
+    return JsObjects.JsObjects.get('%s.dialog("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+
+
+class Autocomplete(JQueryUI):
+
+  def close(self):
+    """
+    Description:
+    ------------
+    Closes the dialog.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#method-close
+    """
+    return JsObjects.JsObjects.get('%s.autocomplete("close")' % self._src.dom.jquery.varId)
+
+  def destroy(self):
+    """
+    Description:
+    ------------
+    Removes the autocomplete functionality completely. This will return the element back to its pre-init state.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#method-destroy
+    """
+    return JsObjects.JsObjects.get('%s.autocomplete("destroy")' % self._src.dom.jquery.varId)
+
+  def disable(self):
+    """
+    Description:
+    ------------
+    Disables the autocomplete.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#method-disable
+    """
+    return JsObjects.JsObjects.get('%s.autocomplete("disable")' % self._src.dom.jquery.varId)
+
+  def enable(self):
+    """
+    Description:
+    ------------
+    Enables the autocomplete.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#method-enable
+    """
+    return JsObjects.JsObjects.get('%s.autocomplete("enable")' % self._src.dom.jquery.varId)
+
+  def instance(self):
+    """
+    Description:
+    ------------
+    Retrieves the autocomplete's instance object. If the element does not have an associated instance, undefined is returned.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#method-enable
+    """
+    return JsObjects.JsObjects.get('%s.autocomplete("instance")' % self._src.dom.jquery.varId)
+
+  def option(self, jsData=None, jsValue=None):
+    """
+    Description:
+    ------------
+    Gets the value currently associated with the specified optionName.
+    Gets an object containing key/value pairs representing the current dialog options hash.
+    Sets the value of the dialog option associated with the specified optionName.
+    Sets one or more options for the dialog.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#method-option
+
+    Attributes:
+    ----------
+    :param jsData:
+    :param jsValue:
+    """
+    if jsData is None:
+      return JsObjects.JsObjects.get('%s.autocomplete("option")' % self._src.dom.jquery.varId)
+
+    jsData = JsUtils.jsConvertData(jsData, None)
+    if jsValue is None:
+      return JsObjects.JsObjects.get('%s.autocomplete("option", %s)' % (self._src.dom.jquery.varId, jsData))
+
+    jsValue = JsUtils.jsConvertData(jsValue, None)
+    return JsObjects.JsObjects.get('%s.autocomplete("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+
+  def search(self, jsData=None):
+    """
+    Description:
+    ------------
+    Triggers a search event and invokes the data source if the event is not canceled.
+    Can be used by a selectbox-like button to open the suggestions when clicked. When invoked with no parameters, the current input's value is used. Can be called with an empty string and minLength: 0 to display all items.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#method-close
+
+    Attributes:
+    ----------
+    :param jsData:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsObjects.get('%s.autocomplete("search", %s)' % (self._src.dom.jquery.varId, jsData))
+
+
+class Datepicker(JQueryUI):
+  # TODO add dialog
+
+  def destroy(self):
+    """
+    Description:
+    ------------
+    Removes the datepicker functionality completely. This will return the element back to its pre-init state.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#method-destroy
+    """
+    return JsObjects.JsObjects.get('%s.datepicker("destroy")' % self._src.dom.jquery.varId)
+
+  def getDate(self):
+    """
+    Description:
+    ------------
+    Returns the current date for the datepicker or null if no date has been selected.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#method-getDate
+    """
+    return JsObjects.JsObjects.get('%s.datepicker("getDate")' % self._src.dom.jquery.varId)
+
+  def hide(self):
+    """
+    Description:
+    ------------
+    Close a previously opened date picker.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#method-hide
+    """
+    return JsObjects.JsObjects.get('%s.datepicker("hide")' % self._src.dom.jquery.varId)
+
+  def isDisabled(self):
+    """
+    Description:
+    ------------
+    Determine whether a date picker has been disabled.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#method-isDisabled
+    """
+    return JsObjects.JsObjects.get('%s.datepicker("isDisabled")' % self._src.dom.jquery.varId)
+
+  def option(self, jsData=None, jsValue=None):
+    """
+    Description:
+    ------------
+    Gets the value currently associated with the specified optionName.
+    Gets an object containing key/value pairs representing the current dialog options hash.
+    Sets the value of the dialog option associated with the specified optionName.
+    Sets one or more options for the dialog.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#method-option
+
+    Attributes:
+    ----------
+    :param jsData:
+    :param jsValue:
+    """
+    if jsData is None:
+      return JsObjects.JsObjects.get('%s.datepicker("option")' % self._src.dom.jquery.varId)
+
+    jsData = JsUtils.jsConvertData(jsData, None)
+    if jsValue is None:
+      return JsObjects.JsObjects.get('%s.datepicker("option", %s)' % (self._src.dom.jquery.varId, jsData))
+
+    jsValue = JsUtils.jsConvertData(jsValue, None)
+    return JsObjects.JsObjects.get('%s.datepicker("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+
+  def refresh(self):
+    """
+    Description:
+    ------------
+    Redraw the date picker, after having made some external modifications.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#method-refresh
+    """
+    return JsObjects.JsObjects.get('%s.datepicker("refresh")' % self._src.dom.jquery.varId)
+
+  def setDate(self, jsData=None,):
+    """
+    Description:
+    ------------
+    Sets the date for the datepicker. The new date may be a Date object or a string in the current date format (e.g., "01/26/2009"), a number of days from today (e.g., +7) or a string of values and periods ("y" for years, "m" for months, "w" for weeks, "d" for days, e.g., "+1m +7d"), or null to clear the selected date.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#method-setDate
+
+    Attributes:
+    ----------
+    :param jsData:
+    """
+    jsData = JsUtils.jsConvertData(jsData, None)
+    return JsObjects.JsObjects.get('%s.datepicker("setDate", %s)' % (self._src.dom.jquery.varId, jsData))
+
+  def show(self):
+    """
+    Description:
+    ------------
+    Open the date picker. If the datepicker is attached to an input, the input must be visible for the datepicker to be shown.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#method-show
+    """
+    return JsObjects.JsObjects.get('%s.datepicker("show")' % self._src.dom.jquery.varId)

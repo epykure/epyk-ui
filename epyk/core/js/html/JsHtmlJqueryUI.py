@@ -64,6 +64,7 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
 
 
 class JsHtmlSlider(JsHtml.JsHtml):
+
   @property
   def val(self):
     return JsObjects.JsObjects.get(

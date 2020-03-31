@@ -108,6 +108,76 @@ class ProgressBar(Html.Html):
     return "%%%%" + str(vals) + "%"
 
 
+class Menu(Html.Html):
+  __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
+  name, category, callFnc = 'Menu', 'Sliders', 'menu'
+
+  def __init__(self, report, records, width, height, attrs, helper, options, profile):
+    super(Menu, self).__init__(report, records, css_attrs={"width": width, "height": height}, profile=profile)
+    self.add_helper(helper)
+    self.__options = OptSliders.OptionsMenu(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    The progress bar is designed to display the current percent complete for a process.
+    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu
+
+    :rtype: OptSliders.OptionsMenu
+    """
+    return self.__options
+
+  @property
+  def _js__builder__(self):
+    return "jQuery(htmlObj).menu({value: parseFloat(data)}).find('div').css(options)"
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript Functions
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/menu
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.Menu
+    """
+    if self._js is None:
+      self._js = JsQueryUi.Menu(self, report=self._report)
+    return self._js
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+    :rtype: JsHtml.JsHtmlProgressBar
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self._report)
+    return self._dom
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+
+
 class Slider(Html.Html):
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
   name, category, callFnc = 'Slider', 'Sliders', 'slider'
@@ -118,7 +188,7 @@ class Slider(Html.Html):
     super(Slider, self).__init__(report, data, width=width[0], widthUnit=width[1], height=height[0],
                                  heightUnit=height[1],
                                  globalFilter=globalFilter, profile=profile)
-    self.__options = OptSliders.OptionsSlider(self, options)
+    #self.__options = OptSliders.OptionsSlider(self, options)
 
   @property
   def options(self):
