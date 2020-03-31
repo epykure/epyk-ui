@@ -430,7 +430,7 @@ class Style(object):
   def __init__(self, rptObj, css_ovrs=None, selector_ovrs=None, html_id=None):
     self.rptObj, self.html_id, self.cls_ref = rptObj, html_id, None
     css_ovrs = css_ovrs or {}
-    self.__keyframes = {}
+    self.__keyframes, self.__media = {}, {}
     selector_ids = dict(getattr(self, '_selectors', {}))
     if self.classname is None:
       self.classname = self.__class__.__name__.lower()
@@ -747,13 +747,40 @@ class Style(object):
     """
     return self.attrs.css(key, value, important, change)
 
-  def media(self, style, events_styles):
+  def media(self, attrs, rule=None, mediatype=None, mediafeature=None, change=True):
+    """
+    The @media is used in media queries to apply different styles for different media types/devices.
+
+    Example
+    rptObj.style.media({body {
+        background-color: lightblue;
+        }
+    }, only, screen,
+    {'and': ['height': '100px', 'min-width': '600px']})
+
+    Documentation
+    https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
+    :param attrs: String. Required. Percentage of the animation duration.
+    :param rule: not or only or and see documentation for more info
+    :param media_type: the media to which the rule will need to be applied
+    :param mediafeature: Media features provide more specific details to media queries
     """
 
-    :param style:
-    :param events_styles:
-    :return:
-    """
+    if change:
+      self.__has_changed = True
+    media_props = []
+    if rule:
+      if rule in ['only', 'not'] and not mediatype:
+        raise Exception('You need to specify a mediatype when using rules not or only')
+
+      media_props.extend([rule, mediatype])
+      if mediafeature:
+        for op, features in mediafeature.items():
+          media_props.extend(op, ('%s ' % op).join(features))
+    name = ' '.join(media_props)
+    self.__media[name] = attrs
+    return name
+
 
   def keyframes(self, name, attrs, effects=None, change=True):
     """
