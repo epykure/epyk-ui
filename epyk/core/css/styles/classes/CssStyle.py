@@ -747,7 +747,7 @@ class Style(object):
     """
     return self.attrs.css(key, value, important, change)
 
-  def media(self, attrs, rule=None, media_type=None, mediafeature=None):
+  def media(self, attrs, rule=None, media_type=None, mediafeature=None, change=True):
     """
     The @media is used in media queries to apply different styles for different media types/devices.
 
@@ -759,11 +759,15 @@ class Style(object):
 
     Documentation
     https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
-    :param rule: not or only or and see documentation for more inf
-    :param media_type:
-    :param mediafeature:
-    :return:
+    :param attrs: String. Required. Percentage of the animation duration.
+    :param rule: not or only or and see documentation for more info
+    :param media_type: the media to which the rule will need to be applied
+    :param mediafeature: Media features provide more specific details to media queries
     """
+
+    if change:
+      self.__has_changed = True
+
 
   def keyframes(self, name, attrs, effects=None, change=True):
     """
