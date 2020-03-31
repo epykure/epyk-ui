@@ -752,10 +752,7 @@ class Style(object):
     The @media is used in media queries to apply different styles for different media types/devices.
 
     Example
-    rptObj.style.media({body {
-        background-color: lightblue;
-        }
-    }, only, screen,
+    rptObj.style.media({"body": {"background-color": "lightblue"}}, only, screen,
     {'and': ['height': '100px', 'min-width': '600px']})
 
     Documentation
@@ -775,8 +772,10 @@ class Style(object):
 
       media_props.extend([rule, mediatype])
       if mediafeature:
-        for op, features in mediafeature.items():
-          media_props.extend(op, ('%s ' % op).join(features))
+        for op, m_features in mediafeature.items():
+          for feature in m_features:
+            features = ['%s: %s' % (k, v) for k, v in feature.items()]
+          media_props.extend([op, ('(%s) ' % op).join(features)])
     name = ' '.join(media_props)
     self.__media[name] = attrs
     return name
@@ -846,6 +845,12 @@ class Style(object):
       for name, k_attrs in self.__keyframes.items():
         style.append("@keyframes %s {" % name)
         for k, v_dict in k_attrs.items():
+          style.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, ", ".join(j)) if isinstance(j, list) else "%s: %s" % (i, j) for i, j in v_dict.items()])))
+        style.append("}")
+    if self.__media:
+      for name, m_attrs in self.__media.items():
+        style.append("@media %s {" % name)
+        for k, v_dict in m_attrs.items():
           style.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, ", ".join(j)) if isinstance(j, list) else "%s: %s" % (i, j) for i, j in v_dict.items()])))
         style.append("}")
     return "\n".join(style)
