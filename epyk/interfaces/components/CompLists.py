@@ -305,8 +305,8 @@ class Lists(object):
     self.context.register(html_obj)
     return html_obj
 
-  def tree(self, data=None, size=(None, "px"), color=None, width=(100, "%"), height=(None, 'px'),
-           htmlCode=None, helper=None, profile=None):
+  def tree(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+           htmlCode=None, helper=None, options=None, profile=None):
     """
 
     Usage:
@@ -322,7 +322,7 @@ class Lists(object):
     :param htmlCode:
     :param profile:
     """
-    html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], size, color, width, height, htmlCode, helper, profile)
+    html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options, profile)
     self.context.register(html_tree)
     return html_tree
 
