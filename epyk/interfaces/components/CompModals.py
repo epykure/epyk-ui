@@ -1,8 +1,6 @@
-"""
-
-"""
 
 from epyk.core import html
+
 
 class Modal(object):
   def __init__(self, context):
@@ -73,7 +71,6 @@ class Modal(object):
     self.context.register(modal)
     return modal
 
-
   def disclaimer(self, disc_text, submit=True, validation_text='AGREE', to_html=True, helper=None):
     title = self.context.rptObj.ui.title('DISCLAIMER').css({'text-align': 'center', 'display': 'inline-block', 'maring': 0, 'background-color': 'rgb(0,0,0,0.4)'})
     disc_text = disc_text.replace('\n', '<br/>') if to_html else disc_text
@@ -83,3 +80,33 @@ class Modal(object):
     #   modal.submit.val = validation_text
     self.context.register(modal)
     return modal
+
+  def dialog(self, text, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+                  helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Simple Jquery UI modal with a text
+
+    Usage:
+    ------
+
+    Related Pages:
+    --------------
+    https://jqueryui.com/dialog/
+
+    Attributes:
+    ----------
+    :param text:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param attrs:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    html_pr = html.HtmlEvent.Dialog(self.context.rptObj, text, width, height,  attrs or {}, helper,
+                                         options or {}, htmlCode, profile)
+    self.context.register(html_pr)
+    return html_pr

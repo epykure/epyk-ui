@@ -210,6 +210,33 @@ class Inputs(object):
     self.context.register(html_t_area)
     return html_t_area
 
+  def autocomplete(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+                    options=None, attrs=None, profile=None):
+    """
+    Description:
+    ------------
+    Enables users to quickly find and select from a pre-populated list of values as they type, leveraging searching and filtering.
+
+    https://jqueryui.com/autocomplete/
+
+    Attributes:
+    ----------
+    :param text:
+    :param placeholder:
+    :param size:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param filter:
+    :param options:
+    :param attrs:
+    :param profile:
+    """
+    html_input = html.HtmlInput.AutoComplete(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
+                                             options or {}, attrs or {}, profile)
+    self.context.register(html_input)
+    return html_input
+
   def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
@@ -233,6 +260,31 @@ class Inputs(object):
     :return:
     """
     return self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+
+  def hidden(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+            options=None, attrs=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param placeholder:
+    :param size:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param filter:
+    :param options:
+    :param attrs:
+    :param profile:
+
+    :rtype: html.HtmlInput.Input
+    """
+    input = self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    input.style.css.display = None
+    return input
 
   def checkbox(self, flag, label=None, group_name=None, width=(None, "%"), height=(None, "px"),
                htmlCode=None, filter=None, options=None, attrs=None, profile=None):

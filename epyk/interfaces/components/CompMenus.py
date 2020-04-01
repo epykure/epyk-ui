@@ -14,7 +14,8 @@ class Menus(object):
     ------
     l = rptObj.ui.lists.list(["A", "B"])
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
@@ -47,7 +48,8 @@ class Menus(object):
     ------
     l = rptObj.ui.lists.list(["A", "B"])
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
@@ -91,7 +93,8 @@ class Menus(object):
     ------
     l = rptObj.ui.lists.list(["A", "B"])
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
@@ -264,3 +267,10 @@ class Menus(object):
       div += self.context.rptObj.ui.images.badge(icon=d, text="", options={"badge_position": 'right'})
       div[-1].style.css.cursor = 'pointer'
     return div
+
+  def selections(self, data, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+                  helper=None, options=None, profile=None):
+    html_pr = html.HtmlEvent.Menu(self.context.rptObj, data, width, height,  attrs or {}, helper,
+                                         options or {}, htmlCode, profile)
+    self.context.register(html_pr)
+    return html_pr

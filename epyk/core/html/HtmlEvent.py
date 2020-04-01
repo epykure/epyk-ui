@@ -115,10 +115,10 @@ class ProgressBar(Html.Html):
 
 
 class Menu(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['jquery', 'jqueryui']
-  name, category, callFnc = 'Menu', 'Sliders', 'menu'
+  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
+  name, category, callFnc = 'Menu', 'Menus', 'menu'
 
-  def __init__(self, report, records, width, height, attrs, helper, options, profile):
+  def __init__(self, report, records, width, height, attrs, helper, options, htmlCode, profile):
     super(Menu, self).__init__(report, records, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.__options = OptSliders.OptionsMenu(self, options)
@@ -128,8 +128,6 @@ class Menu(Html.Html):
     """
     Description:
     -----------
-    The progress bar is designed to display the current percent complete for a process.
-    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
     Related Pages:
     --------------
@@ -182,6 +180,76 @@ class Menu(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+
+
+
+class Dialog(Html.Html):
+  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
+  name, category, callFnc = 'Menu', 'Menus', 'menu'
+
+  def __init__(self, report, text, width, height, attrs, helper, options, htmlCode, profile):
+    super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, profile=profile)
+    self.add_helper(helper)
+    self.__options = OptSliders.OptionDialog(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Open content in an interactive overlay.
+
+    Related Pages:
+    --------------
+    https://jqueryui.com/dialog/
+
+    :rtype: OptSliders.OptionDialog
+    """
+    return self.__options
+
+  @property
+  def _js__builder__(self):
+    return "jQuery(htmlObj).empty(); jQuery(htmlObj).append('<p>'+ data +'</p>'); jQuery(htmlObj).dialog(options)"
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Open content in an interactive overlay.
+
+    Related Pages:
+    --------------
+    https://jqueryui.com/dialog/
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.Dialog
+    """
+    if self._js is None:
+      self._js = JsQueryUi.Dialog(self, report=self._report)
+    return self._js
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+    :rtype: JsHtml.JsHtmlProgressBar
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self._report)
+    return self._dom
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Slider(Html.Html):
