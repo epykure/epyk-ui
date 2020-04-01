@@ -779,6 +779,7 @@ class Form(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
+    print(htmlObj)
     htmlObj.inReport = False # Has to be defined here otherwise it is set too late
     self.val.append(htmlObj)
     return self
@@ -843,6 +844,9 @@ class Modal(Html.Html):
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassModal(self)
     return self._styleObj
+
+  def show(self):
+    return self._report.js.getElementById(self.htmlId).css({'display': 'block'})
 
   def __add__(self, htmlObj):
     """ Add items to a container """
