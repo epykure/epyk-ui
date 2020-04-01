@@ -753,7 +753,7 @@ class Style(object):
 
     Example
     rptObj.style.media({"body": {"background-color": "lightblue"}}, only, screen,
-    {'and': ['height': '100px', 'min-width': '600px']})
+    {'and': [{'height': '100px'}, {'min-width': '600px'}]})
 
     Documentation
     https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
@@ -774,12 +774,11 @@ class Style(object):
       if mediafeature:
         for op, m_features in mediafeature.items():
           for feature in m_features:
-            features = ['%s: %s' % (k, v) for k, v in feature.items()]
-          media_props.extend([op, ('(%s) ' % op).join(features)])
+            features = ['(%s: %s)' % (k, v) for k, v in feature.items()]
+          media_props.extend([op, ('%s ' % op).join(features)])
     name = ' '.join(media_props)
     self.__media[name] = attrs
     return name
-
 
   def keyframes(self, name, attrs, effects=None, change=True):
     """
@@ -851,6 +850,8 @@ class Style(object):
       for name, m_attrs in self.__media.items():
         style.append("@media %s {" % name)
         for k, v_dict in m_attrs.items():
+          if not type(k) == str:
+            k = '.%s' % k.style.css_class.get_ref()
           style.append("  %s {%s; }" % (k, "; ".join(["%s: %s" % (i, ", ".join(j)) if isinstance(j, list) else "%s: %s" % (i, j) for i, j in v_dict.items()])))
         style.append("}")
     return "\n".join(style)
