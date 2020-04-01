@@ -755,7 +755,7 @@ class Style(object):
     rptObj.style.media({"body": {"background-color": "lightblue"}}, only, screen,
     {'and': [{'height': '100px'}, {'min-width': '600px'}]})
 
-    The first key of the attribute can be an Epyk html object
+    The first key of the attributes can be an Epyk html object
 
     Documentation
     https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
