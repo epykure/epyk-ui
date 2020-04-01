@@ -12,9 +12,9 @@ class DatePicker(Html.Html):
   def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
     dfltOptions = {'dateFormat': 'yy-mm-dd'}
     dfltOptions.update(options)
-    super(DatePicker, self).__init__(report, {"value": value, "options": dfltOptions}, htmlCode=htmlCode, profile=profile)
+    super(DatePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
     # Add all the internal components input, label, icon and helper
-    self.input = self._report.ui.inputs.d_date(self.val).css({"padding": 0})
+    self.input = self._report.ui.inputs.d_date(self.val, options=dfltOptions).css({"padding": 0})
     self.prepend_child(self.input)
     self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
     if self.icon is not None:
@@ -23,17 +23,6 @@ class DatePicker(Html.Html):
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto',
               'margin-top': '2px'})
-
-  def selectable(self, dts):
-    """
-    Restrict the selection on a list of dates
-
-    :param dts: A Python list of dates in the format YYYY-MM-DD
-
-    :return: The Python date object
-    """
-    self._vals['options']["selectedDts"] = dts
-    return self
 
   @property
   def options(self):
@@ -51,17 +40,42 @@ class DatePicker(Html.Html):
     """
     return self.input.options
 
+  def excluded_dates(self, dts=None, jsFncs=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param dts:
+    :param jsFncs:
+    """
+    return self.input.excluded_dates(dts, jsFncs)
+
+  def included_dates(self, dts=None, jsFncs=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param dts:
+    :param jsFncs:
+    """
+    return self.input.included_dates(dts, jsFncs)
+
   def add_options(self, options=None, name=None, value=None):
     """
     Add TimePicker options
 
-    Documentation
+    Related Pages:
+    --------------
     https://timepicker.co/options/
 
+    Attributes:
+    ----------
     :param key: A string or a Python dictionary with the options to set
     :param val: Optional.
-
-    :return:
     """
     if options is None and name is None:
       raise Exception("Either the attrs or the name should be specified")
@@ -71,22 +85,6 @@ class DatePicker(Html.Html):
     for k, v in options.items():
       self.vals['options'][k] = v
     return self
-
-  # @property
-  # def _js__builder__(self):
-  #   return '''
-  #       if ((typeof data.options.selectedDts !== "undefined") && (data.options.selectedDts.length > 0)){
-  #         var selectedDt = {};
-  #         data.options.selectedDts.forEach(function(dt){var jsDt = new Date(dt); selectedDt[jsDt.toISOString().split('T')[0]] = jsDt}) ;
-  #         if (data.options.excludeDts === true){
-  #           function renderCalendarCallbackExc(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [false, '', '']} else {return [true, '', '']}};
-  #           data.options.beforeShowDay = renderCalendarCallbackExc;
-  #         } else{
-  #           function renderCalendarCallback(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [true, "%s", '']} else {return [false, '', '']}};
-  #           data.options.beforeShowDay = renderCalendarCallback;};
-  #         delete data.options.selectedDts};
-  #       %s.datepicker(data.options).datepicker('setDate', data.value)
-  #     ''' % JsQuery.decorate_var("htmlObj.querySelector('input')", convert_var=False)
 
   def __str__(self):
     return '<div %(attr)s>%(helper)s</div>' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}

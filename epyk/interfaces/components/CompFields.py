@@ -18,7 +18,7 @@ class Fields(object):
   def __init__(self, context):
     self.context = context
 
-  def today(self, value=None, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
+  def date(self, value, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
             profile=None, options=None, helper=None):
     """
     Description:
@@ -42,16 +42,43 @@ class Fields(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
-    :param filters: Optional. The filtering properties for this component
     :param helper: Optional. A tooltip helper
     """
-    if value is None:
-      value = self.context.rptObj.py.dates.today
     html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options or {}, helper)
     self.context.register(html_dt)
     return html_dt
 
-  def cob(self, value=None, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
+  def today(self, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
+            profile=None, options=None, helper=None):
+    """
+    Description:
+    ------------
+    This component is based on the Jquery Date Picker object.
+
+    Usage:
+    ------
+    rptObj.ui.fields.today(label="Date").selectable(["2019-09-01", "2019-09-06"])
+
+    Related Pages:
+    --------------
+    https://jqueryui.com/datepicker/
+
+    Attributes:
+    ----------
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param color: Optional. The font color in the component. Default inherit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
+    """
+    value = self.context.rptObj.py.dates.today
+    html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options or {}, helper)
+    self.context.register(html_dt)
+    return html_dt
+
+  def cob(self, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
           profile=None, options=None, helper=None):
     """
     Description:
@@ -69,7 +96,6 @@ class Fields(object):
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
     :param color: Optional. The font color in the component. Default inherit
@@ -79,8 +105,7 @@ class Fields(object):
     :param filters: Optional. The filtering properties for this component
     :param helper: Optional. A tooltip helper
     """
-    if value is None:
-      value = self.context.rptObj.py.dates.cob
+    value = self.context.rptObj.py.dates.cob
     html_cob = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options or {}, helper)
     self.context.register(html_cob)
     return html_cob

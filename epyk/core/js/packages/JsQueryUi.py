@@ -1018,6 +1018,23 @@ class Datepicker(JQueryUI):
     """
     return JsObjects.JsObjects.get('%s.datepicker("isDisabled")' % self._src.dom.jquery.varId)
 
+  def disable(self):
+    """
+    Description:
+    ------------
+    Disable the datepicker component
+
+    """
+    return JsObjects.JsObjects.get('%s.datepicker("option", "disabled", true )' % self._src.dom.jquery.varId)
+
+  def enable(self):
+    """
+    Description:
+    ------------
+    Enable the datepciker component
+    """
+    return JsObjects.JsObjects.get('%s.datepicker("option", "disabled", false )' % self._src.dom.jquery.varId)
+
   def option(self, jsData=None, jsValue=None):
     """
     Description:

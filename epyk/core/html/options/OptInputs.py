@@ -500,5 +500,904 @@ class OptionAutoComplete(Options):
 
 
 class OptionsDatePicker(OptionsInput):
-  pass
+
+  @property
+  def altField(self):
+    """
+    Description:
+    ------------
+    An input element that is to be updated with the selected date from the datepicker. Use the altFormat option to change the format of the date within this field. Leave as blank for no alternate field.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-altField
+    """
+    return self._report._jsStyles('altField', "")
+
+  @altField.setter
+  def altField(self, value):
+    self._report._jsStyles["altField"] = value
+    return self
+
+  @property
+  def altFormat(self):
+    """
+    Description:
+    ------------
+    The dateFormat to be used for the altField option. This allows one date format to be shown to the user for selection purposes, while a different format is actually sent behind the scenes. For a full list of the possible formats see the formatDate function
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-altFormat
+    """
+    return self._report._jsStyles('altFormat', "")
+
+  @altFormat.setter
+  def altFormat(self, value):
+    self._report._jsStyles["altFormat"] = value
+    return self
+
+  @property
+  def appendText(self):
+    """
+    Description:
+    ------------
+    The text to display after each date field, e.g., to show the required format.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-appendText
+    """
+    return self._report._jsStyles('appendText', "")
+
+  @appendText.setter
+  def appendText(self, value):
+    self._report._jsStyles["appendText"] = value
+    return self
+
+  @property
+  def autoSize(self):
+    """
+    Description:
+    ------------
+    Set to true to automatically resize the input field to accommodate dates in the current dateFormat.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-autoSize
+    """
+    return self._report._jsStyles('autoSize', False)
+
+  @autoSize.setter
+  def autoSize(self, value):
+    self._report._jsStyles["autoSize"] = value
+    return self
+
+  @property
+  def beforeShow(self):
+    """
+    Description:
+    ------------
+    A function that takes an input field and current datepicker instance and returns an options object to update the datepicker with. It is called just before the datepicker is displayed.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-beforeShow
+    """
+    return self._report._jsStyles('beforeShow', None)
+
+  @beforeShow.setter
+  def beforeShow(self, value):
+    self._report._jsStyles["beforeShow"] = value
+    return self
+
+  @property
+  def beforeShowDay(self):
+    """
+    Description:
+    ------------
+    A function that takes a date as a parameter and must return an array with:
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-beforeShowDay
+    """
+    return self._report._jsStyles('beforeShowDay', None)
+
+  @beforeShowDay.setter
+  def beforeShowDay(self, value):
+    self._report._jsStyles["beforeShowDay"] = value
+    return self
+
+  @property
+  def buttonImage(self):
+    """
+    Description:
+    ------------
+    A URL of an image to use to display the datepicker when the showOn option is set to "button" or "both". If set, the buttonText option becomes the alt value and is not directly displayed.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-buttonImage
+    """
+    return self._report._jsStyles('buttonImage', "")
+
+  @buttonImage.setter
+  def buttonImage(self, value):
+    self._report._jsStyles["buttonImage"] = value
+    return self
+
+  @property
+  def buttonImageOnly(self):
+    """
+    Description:
+    ------------
+    Whether the button image should be rendered by itself instead of inside a button element. This option is only relevant if the buttonImage option has also been set.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-buttonImageOnly
+    """
+    return self._report._jsStyles('buttonImageOnly', False)
+
+  @buttonImageOnly.setter
+  def buttonImageOnly(self, value):
+    self._report._jsStyles["buttonImageOnly"] = value
+    return self
+
+  @property
+  def buttonText(self):
+    """
+    Description:
+    ------------
+    The text to display on the trigger button. Use in conjunction with the showOn option set to "button" or "both".
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-buttonText
+    """
+    return self._report._jsStyles('buttonText', "...")
+
+  @buttonText.setter
+  def buttonText(self, value):
+    self._report._jsStyles["buttonText"] = value
+    return self
+
+  @property
+  def calculateWeek(self):
+    """
+    Description:
+    ------------
+    A function to calculate the week of the year for a given date. The default implementation uses the ISO 8601 definition: weeks start on a Monday; the first week of the year contains the first Thursday of the year.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-calculateWeek
+    """
+    return self._report._jsStyles('calculateWeek', None)
+
+  @calculateWeek.setter
+  def calculateWeek(self, value):
+    self._report._jsStyles["calculateWeek"] = value
+    return self
+
+  @property
+  def changeMonth(self):
+    """
+    Description:
+    ------------
+    Whether the month should be rendered as a dropdown instead of text.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-changeMonth
+    """
+    return self._report._jsStyles('changeMonth', False)
+
+  @changeMonth.setter
+  def changeMonth(self, value):
+    self._report._jsStyles["changeMonth"] = value
+    return self
+
+  @property
+  def changeYear(self):
+    """
+    Description:
+    ------------
+    Whether the year should be rendered as a dropdown instead of text. Use the yearRange option to control which years are made available for selection.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-changeYear
+    """
+    return self._report._jsStyles('changeYear', False)
+
+  @changeYear.setter
+  def changeYear(self, value):
+    self._report._jsStyles["changeYear"] = value
+    return self
+
+  @property
+  def closeText(self):
+    """
+    Description:
+    ------------
+    The text to display for the close link. Use the showButtonPanel option to display this button.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-closeText
+    """
+    return self._report._jsStyles('closeText', "Done")
+
+  @closeText.setter
+  def closeText(self, value):
+    self._report._jsStyles["closeText"] = value
+    return self
+
+  @property
+  def constrainInput(self):
+    """
+    Description:
+    ------------
+    When true, entry in the input field is constrained to those characters allowed by the current dateFormat option.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-constrainInput
+    """
+    return self._report._jsStyles('constrainInput', True)
+
+  @constrainInput.setter
+  def constrainInput(self, value):
+    self._report._jsStyles["constrainInput"] = value
+    return self
+
+  @property
+  def currentText(self):
+    """
+    Description:
+    ------------
+    The text to display for the current day link. Use the showButtonPanel option to display this button.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-currentText
+    """
+    return self._report._jsStyles('currentText', "Today")
+
+  @currentText.setter
+  def currentText(self, value):
+    self._report._jsStyles["currentText"] = value
+    return self
+
+  @property
+  def dateFormat(self):
+    """
+    Description:
+    ------------
+    The format for parsed and displayed dates. For a full list of the possible formats see the formatDate function.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-dateFormat
+    """
+    return self._report._jsStyles('dateFormat', "mm/dd/yy")
+
+  @dateFormat.setter
+  def dateFormat(self, value):
+    self._report._jsStyles["dateFormat"] = value
+    return self
+
+  @property
+  def dayNames(self):
+    """
+    Description:
+    ------------
+    The list of long day names, starting from Sunday, for use as requested via the dateFormat option.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-dayNames
+    """
+    return self._report._jsStyles('dayNames', [])
+
+  @dayNames.setter
+  def dayNames(self, value):
+    self._report._jsStyles["dayNames"] = value
+    return self
+
+  @property
+  def dayNamesMin(self):
+    """
+    Description:
+    ------------
+    The list of minimised day names, starting from Sunday, for use as column headers within the datepicker.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-dayNamesMin
+    """
+    return self._report._jsStyles('dayNamesMin', [])
+
+  @dayNamesMin.setter
+  def dayNamesMin(self, value):
+    self._report._jsStyles["dayNamesMin"] = value
+    return self
+
+  @property
+  def dayNamesShort(self):
+    """
+    Description:
+    ------------
+    The list of abbreviated day names, starting from Sunday, for use as requested via the dateFormat option.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-dayNamesShort
+    """
+    return self._report._jsStyles('dayNamesShort', [])
+
+  @dayNamesShort.setter
+  def dayNamesShort(self, value):
+    self._report._jsStyles["dayNamesShort"] = value
+    return self
+
+  @property
+  def defaultDate(self):
+    """
+    Description:
+    ------------
+    Set the date to highlight on first opening if the field is blank. Specify either an actual date via a Date object or as a string in the current dateFormat, or a number of days from today (e.g. +7) or a string of values and periods ('y' for years, 'm' for months, 'w' for weeks, 'd' for days, e.g. '+1m +7d'), or null for today.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-defaultDate
+    """
+    return self._report._jsStyles('defaultDate', None)
+
+  @defaultDate.setter
+  def defaultDate(self, value):
+    self._report._jsStyles["defaultDate"] = value
+    return self
+
+  @property
+  def duration(self):
+    """
+    Description:
+    ------------
+    Control the speed at which the datepicker appears, it may be a time in milliseconds or a string representing one of the three predefined speeds ("slow", "normal", "fast").
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-duration
+    """
+    return self._report._jsStyles('duration', "normal")
+
+  @duration.setter
+  def duration(self, value):
+    self._report._jsStyles["duration"] = value
+    return self
+
+  @property
+  def firstDay(self):
+    """
+    Description:
+    ------------
+    Set the first day of the week: Sunday is 0, Monday is 1, etc.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-firstDay
+    """
+    return self._report._jsStyles('firstDay', 0)
+
+  @firstDay.setter
+  def firstDay(self, value):
+    self._report._jsStyles["firstDay"] = value
+    return self
+
+  @property
+  def gotoCurrent(self):
+    """
+    Description:
+    ------------
+    When true, the current day link moves to the currently selected date instead of today.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-gotoCurrent
+    """
+    return self._report._jsStyles('gotoCurrent', False)
+
+  @gotoCurrent.setter
+  def gotoCurrent(self, value):
+    self._report._jsStyles["gotoCurrent"] = value
+    return self
+
+  @property
+  def hideIfNoPrevNext(self):
+    """
+    Description:
+    ------------
+    Normally the previous and next links are disabled when not applicable (see the minDate and maxDate options). You can hide them altogether by setting this attribute to true.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-hideIfNoPrevNext
+    """
+    return self._report._jsStyles('hideIfNoPrevNext', False)
+
+  @hideIfNoPrevNext.setter
+  def hideIfNoPrevNext(self, value):
+    self._report._jsStyles["hideIfNoPrevNext"] = value
+    return self
+
+  @property
+  def isRTL(self):
+    """
+    Description:
+    ------------
+    Whether the current language is drawn from right to left.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-isRTL
+    """
+    return self._report._jsStyles('isRTL', False)
+
+  @isRTL.setter
+  def isRTL(self, value):
+    self._report._jsStyles["isRTL"] = value
+    return self
+
+  @property
+  def maxDate(self):
+    """
+    Description:
+    ------------
+    The maximum selectable date. When set to null, there is no maximum.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-maxDate
+    """
+    return self._report._jsStyles('maxDate', None)
+
+  @maxDate.setter
+  def maxDate(self, value):
+    self._report._jsStyles["maxDate"] = value
+    return self
+
+  @property
+  def minDate(self):
+    """
+    Description:
+    ------------
+    The minimum selectable date. When set to null, there is no minimum.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-minDate
+    """
+    return self._report._jsStyles('minDate', None)
+
+  @minDate.setter
+  def minDate(self, value):
+    self._report._jsStyles["minDate"] = value
+    return self
+
+  @property
+  def monthNames(self):
+    """
+    Description:
+    ------------
+    The list of full month names, for use as requested via the dateFormat option.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-monthNames
+    """
+    return self._report._jsStyles('monthNames', [])
+
+  @monthNames.setter
+  def monthNames(self, value):
+    self._report._jsStyles["monthNames"] = value
+    return self
+
+  @property
+  def monthNamesShort(self):
+    """
+    Description:
+    ------------
+    The list of abbreviated month names, as used in the month header on each datepicker and as requested via the dateFormat option.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-monthNamesShort
+    """
+    return self._report._jsStyles('monthNamesShort', [])
+
+  @monthNamesShort.setter
+  def monthNamesShort(self, value):
+    self._report._jsStyles["monthNamesShort"] = value
+    return self
+
+  @property
+  def navigationAsDateFormat(self):
+    """
+    Description:
+    ------------
+    Whether the currentText, prevText and nextText options should be parsed as dates by the formatDate function, allowing them to display the target month names for example.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-navigationAsDateFormat
+    """
+    return self._report._jsStyles('navigationAsDateFormat', False)
+
+  @navigationAsDateFormat.setter
+  def navigationAsDateFormat(self, value):
+    self._report._jsStyles["navigationAsDateFormat"] = value
+    return self
+
+  @property
+  def nextText(self):
+    """
+    Description:
+    ------------
+    The text to display for the next month link. With the standard ThemeRoller styling, this value is replaced by an icon.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-nextText
+    """
+    return self._report._jsStyles('nextText', "Next")
+
+  @nextText.setter
+  def nextText(self, value):
+    self._report._jsStyles["nextText"] = value
+    return self
+
+  @property
+  def numberOfMonths(self):
+    """
+    Description:
+    ------------
+    The number of months to show at once.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-numberOfMonths
+    """
+    return self._report._jsStyles('numberOfMonths', 1)
+
+  @numberOfMonths.setter
+  def numberOfMonths(self, value):
+    self._report._jsStyles["numberOfMonths"] = value
+    return self
+
+  @property
+  def onChangeMonthYear(self):
+    """
+    Description:
+    ------------
+    Called when the datepicker moves to a new month and/or year. The function receives the selected year, month (1-12), and the datepicker instance as parameters. this refers to the associated input field.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-onChangeMonthYear
+    """
+    return self._report._jsStyles('onChangeMonthYear', None)
+
+  @onChangeMonthYear.setter
+  def onChangeMonthYear(self, value):
+    self._report._jsStyles["onChangeMonthYear"] = value
+    return self
+
+  @property
+  def onClose(self):
+    """
+    Description:
+    ------------
+    Called when the datepicker is closed, whether or not a date is selected. The function receives the selected date as text ("" if none) and the datepicker instance as parameters. this refers to the associated input field.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-onClose
+    """
+    return self._report._jsStyles('onClose', None)
+
+  @onClose.setter
+  def onClose(self, value):
+    self._report._jsStyles["onClose"] = value
+    return self
+
+  @property
+  def onSelect(self):
+    """
+    Description:
+    ------------
+    Called when the datepicker is selected. The function receives the selected date as text and the datepicker instance as parameters. this refers to the associated input field.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-onSelect
+    """
+    return self._report._jsStyles('onSelect', None)
+
+  @onSelect.setter
+  def onSelect(self, value):
+    self._report._jsStyles["onSelect"] = value
+    return self
+
+  @property
+  def prevText(self):
+    """
+    Description:
+    ------------
+    The text to display for the previous month link. With the standard ThemeRoller styling, this value is replaced by an icon.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-prevText
+    """
+    return self._report._jsStyles('prevText', "Prev")
+
+  @prevText.setter
+  def prevText(self, value):
+    self._report._jsStyles["prevText"] = value
+    return self
+
+  @property
+  def selectOtherMonths(self):
+    """
+    Description:
+    ------------
+    Whether days in other months shown before or after the current month are selectable. This only applies if the showOtherMonths option is set to true.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-selectOtherMonths
+    """
+    return self._report._jsStyles('selectOtherMonths', False)
+
+  @selectOtherMonths.setter
+  def selectOtherMonths(self, value):
+    self._report._jsStyles["selectOtherMonths"] = value
+    return self
+
+  @property
+  def shortYearCutoff(self):
+    """
+    Description:
+    ------------
+    The cutoff year for determining the century for a date (used in conjunction with dateFormat 'y'). Any dates entered with a year value less than or equal to the cutoff year are considered to be in the current century, while those greater than it are deemed to be in the previous century.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-shortYearCutoff
+    """
+    return self._report._jsStyles('shortYearCutoff', "+10")
+
+  @shortYearCutoff.setter
+  def shortYearCutoff(self, value):
+    self._report._jsStyles["shortYearCutoff"] = value
+    return self
+
+  @property
+  def showAnim(self):
+    """
+    Description:
+    ------------
+    The name of the animation used to show and hide the datepicker. Use "show" (the default), "slideDown", "fadeIn", any of the jQuery UI effects. Set to an empty string to disable animation.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-showAnim
+    """
+    return self._report._jsStyles('showAnim', "show")
+
+  @showAnim.setter
+  def showAnim(self, value):
+    self._report._jsStyles["showAnim"] = value
+    return self
+
+  @property
+  def showButtonPanel(self):
+    """
+    Description:
+    ------------
+    Whether to display a button pane underneath the calendar. The button pane contains two buttons, a Today button that links to the current day, and a Done button that closes the datepicker. The buttons' text can be customized using the currentText and closeText options respectively.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-showButtonPanel
+    """
+    return self._report._jsStyles('showButtonPanel', False)
+
+  @showButtonPanel.setter
+  def showButtonPanel(self, value):
+    self._report._jsStyles["showButtonPanel"] = value
+    return self
+
+  @property
+  def showCurrentAtPos(self):
+    """
+    Description:
+    ------------
+    When displaying multiple months via the numberOfMonths option, the showCurrentAtPos option defines which position to display the current month in.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-showCurrentAtPos
+    """
+    return self._report._jsStyles('showCurrentAtPos', 0)
+
+  @showCurrentAtPos.setter
+  def showCurrentAtPos(self, value):
+    self._report._jsStyles["showCurrentAtPos"] = value
+    return self
+
+  @property
+  def showMonthAfterYear(self):
+    """
+    Description:
+    ------------
+    Whether to show the month after the year in the header.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-showMonthAfterYear
+    """
+    return self._report._jsStyles('showMonthAfterYear', False)
+
+  @showMonthAfterYear.setter
+  def showMonthAfterYear(self, value):
+    self._report._jsStyles["showMonthAfterYear"] = value
+    return self
+
+  @property
+  def showOn(self):
+    """
+    Description:
+    ------------
+    When the datepicker should appear. The datepicker can appear when the field receives focus ("focus"), when a button is clicked ("button"), or when either event occurs ("both").
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-showOn
+    """
+    return self._report._jsStyles('showOn', "focus")
+
+  @showOn.setter
+  def showOn(self, value):
+    self._report._jsStyles["showOn"] = value
+    return self
+
+  @property
+  def showOptions(self):
+    """
+    Description:
+    ------------
+    If using one of the jQuery UI effects for the showAnim option, you can provide additional properties for that animation using this option.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-showOptions
+    """
+    return self._report._jsStyles('showOptions', {})
+
+  @showOptions.setter
+  def showOptions(self, value):
+    self._report._jsStyles["showOptions"] = value
+    return self
+
+  @property
+  def showOtherMonths(self):
+    """
+    Description:
+    ------------
+    Whether to display dates in other months (non-selectable) at the start or end of the current month. To make these days selectable use the selectOtherMonths option.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-showOtherMonths
+    """
+    return self._report._jsStyles('showOtherMonths', False)
+
+  @showOtherMonths.setter
+  def showOtherMonths(self, value):
+    self._report._jsStyles["showOtherMonths"] = value
+    return self
+
+  @property
+  def showWeek(self):
+    """
+    Description:
+    ------------
+    When true, a column is added to show the week of the year. The calculateWeek option determines how the week of the year is calculated. You may also want to change the firstDay option.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-showWeek
+    """
+    return self._report._jsStyles('showWeek', False)
+
+  @showWeek.setter
+  def showWeek(self, value):
+    self._report._jsStyles["showWeek"] = value
+    return self
+
+  @property
+  def stepMonths(self):
+    """
+    Description:
+    ------------
+    Set how many months to move when clicking the previous/next links.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-stepMonths
+    """
+    return self._report._jsStyles('stepMonths', 1)
+
+  @stepMonths.setter
+  def stepMonths(self, value):
+    self._report._jsStyles["stepMonths"] = value
+    return self
+
+  @property
+  def weekHeader(self):
+    """
+    Description:
+    ------------
+    The text to display for the week of the year column heading. Use the showWeek option to display this column.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-weekHeader
+    """
+    return self._report._jsStyles('weekHeader', "wk")
+
+  @weekHeader.setter
+  def weekHeader(self, value):
+    self._report._jsStyles["weekHeader"] = value
+    return self
+
+  @property
+  def yearRange(self):
+    """
+    Description:
+    ------------
+    The range of years displayed in the year drop-down: either relative to today's year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the minDate and/or maxDate options.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-yearRange
+    """
+    return self._report._jsStyles('yearRange', "c-10:c+10")
+
+  @yearRange.setter
+  def yearRange(self, value):
+    self._report._jsStyles["yearRange"] = value
+    return self
+
+  @property
+  def yearSuffix(self):
+    """
+    Description:
+    ------------
+    Additional text to display after the year in the month headers.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/datepicker/#option-yearSuffix
+    """
+    return self._report._jsStyles('yearSuffix', "")
+
+  @yearSuffix.setter
+  def yearSuffix(self, value):
+    self._report._jsStyles["yearSuffix"] = value
+    return self
 

@@ -363,20 +363,49 @@ class InputDate(Input):
       self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, report=self._report)
     return self._dom
 
+  def excluded_dates(self, dts=None, jsFncs=None):
+    """
+
+    Attributes:
+    ----------
+    :param dts:
+    :param jsFncs:
+    """
+    self._jsStyles['beforeShowDay'] = '''function (date) {
+            var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
+            %(jsFnc)s; if(dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} else {return [true, '', '']}
+          }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(jsFncs, toStr=True)}
+
+  def included_dates(self, dts=None, jsFncs=None):
+    """
+
+    Attributes:
+    ----------
+    :param dts:
+    :param jsFncs:
+    """
+    self._jsStyles['beforeShowDay'] = '''function (date) {
+        var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
+        %(jsFnc)s; if(!dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} else {return [true, '', '']}
+      }''' % {"dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(jsFncs, toStr=True)}
+
   @property
   def _js__builder__(self):
-    return '''
-      if ((typeof data.options.selectedDts !== "undefined") && (data.options.selectedDts.length > 0)){
+    '''
+    if ((typeof data.options.selectedDts !== "undefined") && (data.options.selectedDts.length > 0)){
         var selectedDt = {};
         data.options.selectedDts.forEach(function(dt){var jsDt = new Date(dt); selectedDt[jsDt.toISOString().split('T')[0]] = jsDt}) ;
-        if (data.options.excludeDts === true){ 
-          function renderCalendarCallbackExc(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [false, '', '']} else {return [true, '', '']}}; 
+        if (data.options.excludeDts === true){
+          function renderCalendarCallbackExc(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [false, '', '']} else {return [true, '', '']}};
           data.options.beforeShowDay = renderCalendarCallbackExc;
-        } else{ 
+        } else{
           function renderCalendarCallback(intDate) {var utc = intDate.getTime() - intDate.getTimezoneOffset()*60000; var newDate = new Date(utc); var Highlight = selectedDt[newDate.toISOString().split('T')[0]]; if(Highlight){return [true, "%s", '']} else {return [false, '', '']}};
           data.options.beforeShowDay = renderCalendarCallback;};
         delete data.options.selectedDts};
-      jQuery(htmlObj).datepicker(data.options).datepicker('setDate', data.value)'''
+      jQuery(htmlObj).datepicker(data.options).datepicker('setDate', data.value)
+    :return:
+    '''
+    return '''jQuery(htmlObj).datepicker(options).datepicker('setDate', data)'''
 
   def __str__(self):
     # Javascript builder is mandatory for this object
@@ -490,6 +519,116 @@ class FieldAutocomplete(Field):
     input = report.ui.inputs.autocomplete(value, width=(None, "%"), placeholder=placeholder)
     super(FieldAutocomplete, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
+  def change(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Event triggerd when the value of the input field changes.
+    A Date object containing the selected time is passed as the first argument of the callback.
+    Note: the variable time is a function parameter received in the Javascript side
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#event-change
+
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["change"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
+
+  def search(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Triggered before a search is performed, after minLength and delay are met.
+    If canceled, then no request will be started and no items suggested.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#event-search
+
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["search"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
+
+  def focus(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Triggered when focus is moved to an item (not selecting).
+    The default action is to replace the text field's value with the value of the focused item, though only if the event was triggered by a keyboard interaction.
+    Canceling this event prevents the value from being updated, but does not prevent the menu item from being focused.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#event-focus
+
+    :param focus:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["focus"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
+
+  def close(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Triggered when the menu is hidden. Not every close event will be accompanied by a change event.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#event-close
+
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["close"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
+
+  def select(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Triggered when an item is selected from the menu.
+    The default action is to replace the text field's value with the value of the selected item.
+    Canceling this event prevents the value from being updated, but does not prevent the menu from closing.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#event-select
+
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["select"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+    return self
+
+  def response(self, jsFnc, profile=None):
+    """
+    Description:
+    -----------
+    Triggered after a search completes, before the menu is shown.
+    Useful for local manipulation of suggestion data, where a custom source option callback is not required.
+    This event is always triggered when a search completes, even if the menu will not be shown because there are no results or the Autocomplete is disabled.
+
+    Related Pages:
+    --------------
+    https://api.jqueryui.com/autocomplete/#event-response
+
+    :param jsFnc:
+    """
+    if not isinstance(jsFnc, list):
+      jsFnc = [jsFnc]
+    self._jsStyles["response"] = "function( event, ui ){ %s }" % JsUtils.jsConvertFncs(jsFnc, toStr=True)
+
 
 class FieldRange(Field):
 
@@ -499,6 +638,7 @@ class FieldRange(Field):
 
 
 class FieldCheckBox(Field):
+
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.checkbox(value, width=(None, "%"))
     super(FieldCheckBox, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, profile)
@@ -512,18 +652,21 @@ class FieldInteger(Field):
 
 
 class FieldPassword(Field):
+
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.password(value, width=(None, "%"), placeholder=placeholder)
     super(FieldPassword, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldTextArea(Field):
+
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.textarea(value, width=(100, "%"), placeholder=placeholder)
     super(FieldTextArea, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldSelect(Field):
+
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, profile):
     input = report.ui.select(value, width=(100, "%"))
     super(FieldSelect, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, profile)

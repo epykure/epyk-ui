@@ -4,6 +4,7 @@ import hashlib
 from epyk.core.html import Html
 
 from epyk.core.js.packages import JsTabulator
+from epyk.core.js.primitives import JsObjects
 
 from epyk.core.data import DataClass
 from epyk.core.data import DataEnum
@@ -72,6 +73,8 @@ class Table(Html.Html):
     """
 
     :param by_title:
+
+    :rtype: Column
     """
     for c in self.config._attrs.get('columns', []):
       if c.title == by_title:
@@ -677,7 +680,7 @@ class Formattors(DataGroup):
     """
     self._attrs["formatter"] = 'plaintext'
     if kwargs:
-      self._attrs["editorParams"] = kwargs
+      self._attrs["formatterParams"] = kwargs
     return self
 
   def textarea(self, **kwargs):
@@ -696,7 +699,7 @@ class Formattors(DataGroup):
     """
     self._attrs["formatter"] = 'textarea'
     if kwargs:
-      self._attrs["editorParams"] = kwargs
+      self._attrs["formatterParams"] = kwargs
     return self
 
   def html(self, **kwargs):
@@ -715,7 +718,7 @@ class Formattors(DataGroup):
     """
     self._attrs["formatter"] = 'html'
     if kwargs:
-      self._attrs["editorParams"] = kwargs
+      self._attrs["formatterParams"] = kwargs
     return self
 
   def money(self, decimal=",", thousand=".", precision=False, symbol=None, symbolAfter=None, **kwargs):
@@ -739,7 +742,7 @@ class Formattors(DataGroup):
     """
     self._attrs["formatter"] = 'formatterParams'
     if kwargs:
-      self._attrs["editorParams"] = kwargs
+      self._attrs["formatterParams"] = kwargs
     return self
 
   def image(self, height=None, width=None, **kwargs):
@@ -879,7 +882,7 @@ class Formattors(DataGroup):
     self._attrs["formatterParams"] = formatParams
     return self
 
-  def progress(self, min, max, color, legend, legendColor, legendAlign, **kwargs):
+  def progress(self, min=0, max=100, color=None, legend=None, legendColor=None, legendAlign=None, **kwargs):
     """
 
     :param min:
@@ -913,6 +916,34 @@ class Formattors(DataGroup):
     self._attrs['formatterParams'] = data
     if kwargs:
       self._attrs["formatterParams"].update(kwargs)
+    return self
+
+  def custom(self, value):
+    """
+
+    :param value:
+    """
+    self._attrs["formatter"] = JsObjects.JsObjects.get(value)
+    return self
+
+  def wrapper(self, formatter, css_attrs, formatterParams=None):
+    """
+
+    .formatters.wrapper("progress", {"height": '6px'}, {'color': ['orange', 'green']})
+    
+    :param formatter:
+    :param css_attrs:
+    :param formatterParams:
+    """
+    self._attrs["formatter"] = JsObjects.JsObjects.get('''
+      function(cell, formatterParams){ 
+        const cssAttrs = formatterParams.css;
+        var cell = cell.getTable().modules.format.getFormatter('%s').call(cell.getTable().modules.format, cell, formatterParams);
+        let frag = document.createRange().createContextualFragment(cell).firstChild;
+        Object.keys(cssAttrs).forEach(function(key){frag.style[key] = cssAttrs[key]}); 
+        return frag; }''' % formatter)
+    self._attrs['formatterParams'] = formatterParams or {}
+    self._attrs['formatterParams']['css'] = css_attrs
     return self
 
 
@@ -1165,11 +1196,17 @@ class Column(DataClass):
     Related Pages:
     --------------
     http://tabulator.info/docs/4.5/columns
+
+    :rtype: BottomCalcParams
     """
     return self.sub_data("bottomCalcParams", BottomCalcParams)
 
   @property
   def cssClass(self):
+    """
+
+    :rtype: EnumColCss
+    """
     return self.has_attribute(EnumColCss)
 
   @property
@@ -1896,6 +1933,9 @@ class TableConfig(DataClass):
 
   @paginationSize.setter
   def paginationSize(self, val):
+    if val is not None:
+      #
+      self._attrs["pagination"]= 'local'
     self._attrs["paginationSize"] = val
 
   @property
