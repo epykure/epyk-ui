@@ -7,6 +7,7 @@ from epyk.interfaces.components import CompIcons
 from epyk.interfaces.components import CompInputs
 from epyk.interfaces.components import CompMedia
 from epyk.interfaces.components import CompLists
+from epyk.interfaces.components import CompNumbers
 from epyk.interfaces.tables import CompTables
 from epyk.interfaces.graphs import CompCharts
 from epyk.interfaces.geo import CompGeo
@@ -114,6 +115,15 @@ class Components(object):
     This category will take into account very specific and bespoke components.
     """
     return CompVignets.Vignet(self)
+
+  @property
+  def numbers(self):
+    """
+    Group all the UI components dedicated to produce Numbers components.
+
+    The items in this category will not be editable and they will only provide nice number renderings
+    """
+    return CompNumbers.Number(self)
 
   @property
   def texts(self):
