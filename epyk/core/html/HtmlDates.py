@@ -40,7 +40,7 @@ class DatePicker(Html.Html):
     """
     return self.input.options
 
-  def excluded_dt(self, dts=None, jsFncs=None):
+  def excluded_dates(self, dts=None, jsFncs=None):
     """
     Description:
     -----------
@@ -50,7 +50,7 @@ class DatePicker(Html.Html):
     :param dts:
     :param jsFncs:
     """
-    return self.input.excluded_dt(dts, jsFncs)
+    return self.input.excluded_dates(dts, jsFncs)
 
   def included_dates(self, dts=None, jsFncs=None):
     """

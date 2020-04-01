@@ -363,7 +363,7 @@ class InputDate(Input):
       self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, report=self._report)
     return self._dom
 
-  def excluded_dt(self, dts=None, jsFncs=None):
+  def excluded_dates(self, dts=None, jsFncs=None):
     """
 
     Attributes:
