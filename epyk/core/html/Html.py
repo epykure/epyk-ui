@@ -874,7 +874,7 @@ class Html(object):
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
         js_options.append("'%s': {%s}" % (k, ", ".join(row)))
       else:
-        if str(v).startswith("function"):
+        if str(v).strip().startswith("function"):
           js_options.append("%s: %s" % (k, v))
         else:
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
