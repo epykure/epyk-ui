@@ -43,7 +43,7 @@ class Modal(object):
     self.context.register(modal)
     return modal
 
-  def forms(self, html_objs, action, method, helper=None, htmlCodes=None):
+  def forms(self, html_objs, helper=None):
     """
     Simple interface to create an html form within a modal
 
@@ -60,10 +60,9 @@ class Modal(object):
     :param helper:
     :return:
     """
-    htmlCodes = [] if htmlCodes is None else htmlCodes
     if not type(html_objs) == list:
       html_objs = [html_objs]
-    form = html.HtmlContainer.Form(self.context.rptObj, html_objs, action, method, helper)
+    form = html.HtmlContainer.Form(self.context.rptObj, html_objs, helper)
     form += form.submit
     modal = html.HtmlContainer.Modal(self.context.rptObj, [], False, helper)
     modal += form
