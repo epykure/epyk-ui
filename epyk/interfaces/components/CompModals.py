@@ -6,13 +6,6 @@ class Modal(object):
   def __init__(self, context):
     self.context = context
 
-  def __mandatory_js__(self, required_fields):
-    """
-    Tempoary function to allow action on missing mandatory fields
-    TODO: Check if necessary
-    :param required_fields: list of html Code that we need to check for when submit button is clicked
-    :return: js string
-    """
 
   def inputs(self, records, submit=False, helper=None):
     """
@@ -43,7 +36,7 @@ class Modal(object):
     self.context.register(modal)
     return modal
 
-  def forms(self, html_objs, helper=None):
+  def forms(self, html_objs, action, method, helper=None):
     """
     Simple interface to create an html form within a modal
 
@@ -63,7 +56,7 @@ class Modal(object):
     if not type(html_objs) == list:
       html_objs = [html_objs]
     form = html.HtmlContainer.Form(self.context.rptObj, html_objs, helper)
-    form += form.submit
+    form.submit(method, action)
     modal = html.HtmlContainer.Modal(self.context.rptObj, [], False, helper)
     modal += form
     modal.form = form
