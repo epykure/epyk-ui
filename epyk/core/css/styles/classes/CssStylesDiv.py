@@ -206,22 +206,16 @@ class CssDivFilterItems(CssStyle.Style):
     self.hover.css({'border': '1px solid %s' % self.rptObj.theme.success[1]})
 
 
-class CssDivModalTest(CssStyle.Style):
-  _attrs = {'display': 'block', 'z-index': 100, 'position': 'fixed', 'padding-top': '100px', 'left': 0, 'top': 0,
-            'width': '100%', 'height': '100%', 'overflow': 'auto', 'background-color': 'rgb(0,0,0,0.4)',
-            'text-align': 'center'}
-
-
 class CssDivModal(CssStyle.Style):
   _attrs = {'z-index': 100, 'position': 'fixed', 'padding-top': '100px', 'left': 0, 'top': 0,
             'width': '100%', 'height': '100%', 'overflow': 'auto', 'text-align': 'center'}
 
 
 class CssDivModalContent(CssStyle.Style):
-  _attrs = {'margin': '15%', 'padding': '20px', 'border': '1px solid #888', 'width': '75%',
+  _attrs = {'margin': '15%', 'padding': '5px 5px 5px 5px', 'border': '1px solid #888', 'width': '75%',
             'box-shadow': '0 19px 38px rgba(0, 0, 0, 0.12), 0 15px 12px rgba(0, 0, 0, 0.22)',
             'position': 'relative'}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.colors[0]})
+    self.css({'background-color': self.rptObj.theme.greys[0]})
     self.animation('epyk_modal_animatetop', {'0%': {'top': '-300px', 'opacity': '0'}, '100%': {'top': '0px', 'opacity': '1'}}, 0.5, iteration=1)

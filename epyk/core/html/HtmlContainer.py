@@ -821,7 +821,7 @@ class Modal(Html.Html):
     if self.doSubmit:
       self.submit = report.ui.button("Submit").set_attrs({"type": 'submit'})
       self.submit.inReport = False
-    self.col = report.ui.col([]).css({'width': 'auto', 'background-color': report.theme.colors[0]})
+    self.col = report.ui.col([]).css({'width': 'auto'})
     # self.col.css(None, reset=True)
     self.col.style.add_classes.div.modal_content()
     self.closeBtn = report.ui.texts.span('&times', width='auto')
