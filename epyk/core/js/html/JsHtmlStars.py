@@ -1,9 +1,11 @@
+
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
 
 
 class Stars(JsHtml.JsHtmlRich):
+
   @property
   def val(self):
     """
@@ -21,4 +23,4 @@ class Stars(JsHtml.JsHtmlRich):
     ------------
     The Javascript value of the component. This returned only a value corresponding to the state of the component
     """
-    return JsObjects.JsObjects.get("%s.dataset.level" % self.varName)
+    return JsHtml.ContentFormatters(self._report, "%s.dataset.level" % self.varName)

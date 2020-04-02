@@ -1,6 +1,3 @@
-"""
-
-"""
 
 from epyk.core.js.html import JsHtml
 

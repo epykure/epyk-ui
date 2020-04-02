@@ -1,12 +1,10 @@
-"""
-
-"""
 
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.packages import JsTabulator
 
 
 class JsHtmlTabulator(JsNodeDom.JsDoms):
+
   def __init__(self, htmlObj):
     super(JsHtmlTabulator, self).__init__(htmlObj)
     self._tabulator = None

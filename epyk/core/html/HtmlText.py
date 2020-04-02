@@ -166,6 +166,71 @@ class Span(Html.Html):
     return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
 
 
+class Position(Span):
+
+  def digits(self, flag):
+    """
+    Description:
+    ------------
+    Specify if the count should be done from the commas
+
+    Attributes:
+    ----------
+    :param flag: Boolean (default false)
+    """
+    self._jsStyles["digits"] = flag
+    return self
+
+  def position(self, index, style):
+    """
+    Description:
+    ------------
+    Set the CSS format for a specific character at a given position
+
+    Attributes:
+    ----------
+    :param index: Integer. A number
+    :param style: Dictionary. The CSS Style to be used
+    """
+    self._jsStyles.setdefault("positions", {})[index] = style
+    return self
+
+  @property
+  def _js__builder__(self):
+    return ''' htmlObj.innerHTML = ""; 
+        var prevCursor = 0; var content = ""+ data; var shift = 0;
+        if (options.digits === true){ shift = content.indexOf(".") + 1; }
+        if (typeof options.positions !== 'undefined'){
+          const keys = Object.keys(options.positions).sort();
+          keys.forEach(function(k){
+            var cursor = parseInt(k) + shift;
+            var span = document.createElement("span");
+            span.innerHTML = content.slice(prevCursor, cursor);
+            span.style.display = "inline-block";
+            htmlObj.appendChild(span);
+            
+            var span2 = document.createElement("span");
+            span2.innerHTML = content.slice(cursor, cursor+1);
+            span2.style.display = "inline-block";
+            Object.keys(options.positions[k]).forEach(function(key){
+                span2.style[key] = options.positions[k][key]});
+            htmlObj.appendChild(span2);
+            prevCursor = cursor+1;
+          });
+          if (content.length > prevCursor){
+            var span = document.createElement("span");
+            span.innerHTML = content.slice(prevCursor, content.length);
+            span.style.display = "inline-block";
+            htmlObj.appendChild(span);
+          }
+        }
+        '''
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+
+
 class Text(Html.Html):
   name, category, callFnc = 'Text', 'Texts', 'text'
 

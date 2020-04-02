@@ -13,9 +13,142 @@ from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsD3
 from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.packages import JsCrossFilter
+from epyk.core.js.packages import packageImport
+
+
+class FmtNumber(object):
+
+  def __init__(self, report, selector, value):
+    self._report, self._val = report, value
+    self.selector = selector
+
+  def toFixed(self, value=None):
+    """
+    The toFixed() method converts a number into a string, keeping a specified number of decimals.
+
+    https://www.w3schools.com/jsref/jsref_tofixed.asp
+
+    :param value: Integer.
+    """
+    if value is None:
+      return JsObjects.JsObjects.get("%s = %s.toFixed()" % (self.selector, self._val))
+
+    return JsObjects.JsObjects.get("%s = %s.toFixed(%s)" % (self.selector, self._val, value))
+
+  def toPrecision(self, value=None):
+    """
+    The toPrecision() method formats a number to a specified length.
+
+    https://www.w3schools.com/jsref/jsref_toprecision.asp
+
+    :param value: Integer.
+    """
+    if value is None:
+      return JsObjects.JsObjects.get("%s = %s.toPrecision()" % (self.selector, self._val))
+
+    return JsObjects.JsObjects.get("%s = %s.toPrecision(%s)" % (self.selector, self._val, value))
+
+  def toExponential(self):
+    """
+    The toExponential() method converts a number into an exponential notation.
+
+    https://www.w3schools.com/jsref/jsref_toexponential.asp
+    """
+    return JsObjects.JsObjects.get("%s = %s.toExponential()" % (self.selector, self._val))
+
+
+class Formatters(object):
+
+  def __init__(self, report, selector):
+    self._report = report
+    self.selector = selector
+
+  @property
+  def number(self):
+    """
+
+    https://www.w3schools.com/jsref/jsref_obj_number.asp
+
+    """
+    return FmtNumber(self._report, self.selector, "parseFloat(%s)" % self.selector)
+
+  @packageImport("accounting")
+  def toNumber(self, digit=0, thousand_sep="."):
+    """
+
+    https://openexchangerates.github.io/accounting.js/
+
+    :param digit:
+    :param thousand_sep:
+    """
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    return JsObjects.JsObjects.get("%s = accounting.formatNumber(%s, %s, %s)" % (self.selector, self.selector, digit, thousand_sep))
+
+  @packageImport("accounting")
+  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+    """
+
+    https://openexchangerates.github.io/accounting.js/
+
+    :param symbol:
+    :param digit:
+    :param thousand_sep:
+    :param decimal_sep:
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    return JsObjects.JsObjects.get("%s = accounting.formatMoney(%s,%s, %s, %s, %s)" % (self.selector, self.selector, symbol, digit, thousand_sep, decimal_sep))
+
+
+class ContentFormatters(object):
+
+  def __init__(self, report, selector):
+    self._report = report
+    self.selector = selector
+
+  @packageImport("accounting")
+  def toNumber(self, digit=0, thousand_sep="."):
+    """
+
+    https://openexchangerates.github.io/accounting.js/
+
+    :param digit:
+    :param thousand_sep:
+    """
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    return JsObjects.JsObjects.get("accounting.formatNumber(%s, %s, %s)" % (self.selector, digit, thousand_sep))
+
+  @packageImport("accounting")
+  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+    """
+
+    https://openexchangerates.github.io/accounting.js/
+
+    :param symbol:
+    :param digit:
+    :param thousand_sep:
+    :param decimal_sep:
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    return JsObjects.JsObjects.get("accounting.formatMoney(%s,%s, %s, %s, %s)" % (self.selector, symbol, digit, thousand_sep, decimal_sep))
+
+  @property
+  def number(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsNumber.JsNumber("parseFloat(%s)" % self.selector)
+
+  def toStr(self):
+    return self.selector
 
 
 class JsHtml(JsNodeDom.JsDoms):
+
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
     self.htmlId = varName if varName is not None else htmlObj.htmlId
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
@@ -29,7 +162,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     :return:
     """
-    return JsObjects.JsObjects.get("{%s: {value: %s.value, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.varName))
+    return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.content.toStr()))
 
   @property
   def by_name(self):
@@ -56,7 +189,11 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def content(self):
-    return JsObjects.JsObjects.get("%s.value" % self.varName)
+    """
+
+    :return:
+    """
+    return ContentFormatters(self._report, "%s.value" % self.varName)
 
   def empty(self): return '%s.value = ""' % self.varName
 
@@ -125,6 +262,13 @@ class JsHtml(JsNodeDom.JsDoms):
     :return:
     """
     return JsCrossFilter.CrossFilter
+
+  @property
+  def format(self):
+    """
+    Specific formatters for the HTML components
+    """
+    return Formatters(self._report, self.content.toStr())
 
   def style(self, attrs):
     """
@@ -293,6 +437,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
 
 class JsHtmlRich(JsHtml):
+
   @property
   def val(self):
     """
@@ -300,11 +445,11 @@ class JsHtmlRich(JsHtml):
     :return:
     """
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s.innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlId, self.varName))
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlId, self.content.toStr()))
 
   @property
   def content(self):
-    return JsObjects.JsObjects.get("%s.innerHTML" % self.varName)
+    return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
 
   def append(self, text, new_line=False):
     """
@@ -325,6 +470,7 @@ class JsHtmlRich(JsHtml):
 
 
 class JsHtmlButton(JsHtml):
+
   @property
   def val(self):
     """
@@ -337,7 +483,7 @@ class JsHtmlButton(JsHtml):
 
   @property
   def content(self):
-    return JsObjects.JsObjects.get("%s.innerHTML" % self.varName)
+    return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
 
   def loading(self, flag, multiple=False):
     """
@@ -414,6 +560,7 @@ class JsHtmlButton(JsHtml):
 
 
 class JsHtmlIcon(JsHtml):
+
   @property
   def val(self):
     """
@@ -429,6 +576,7 @@ class JsHtmlIcon(JsHtml):
 
 
 class JsHtmlList(JsHtml):
+
   @property
   def val(self):
     """

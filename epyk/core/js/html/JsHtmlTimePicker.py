@@ -13,4 +13,4 @@ class TimePicker(JsHtml.JsHtml):
 
   @property
   def content(self):
-    return JsObjects.JsObjects.get("%s.timepicker('getTime')" % self._src.dom.jquery.varId)
+    return JsHtml.ContentFormatters(self._report, "%s.timepicker('getTime')" % self._src.dom.jquery.varId)
