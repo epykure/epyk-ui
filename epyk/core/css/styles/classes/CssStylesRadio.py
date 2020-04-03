@@ -24,15 +24,13 @@ class CssRadioButtonSelected(CssStyle.Style):
 
 class CssRadioSwitch(CssStyle.Style):
   _attrs = {'height': 0, 'width': 0, 'visibility': 'hidden'}
-  #_selectors = {'child': 'input'}
 
 
 class CssRadioSwitchLabel(CssStyle.Style):
-  _attrs = {'cursor': 'pointer', 'margin': '2px', 'text-indent': '-9999px', 'display': 'block', 'border-radius': '100px',
-            'position': 'relative'}
-  _after = {'content': "''", 'position': 'absolute', 'left': '5px', 'width': '20px', 'height': '100%',
-            'border-radius': '20px', 'transition': '0.3s'}
-  #_selectors = {'child': 'label'}
+  _attrs = {'cursor': 'pointer', 'margin': '2px', 'text-indent': '-9999px', 'display': 'block', 'border-radius': '50px',
+            'position': 'relative', 'top': '5px'}
+  _after = {'content': "''", 'position': 'absolute', 'left': '5px', 'width': '15px', 'height': '15px',
+            'border-radius': '20px', 'transition': '0.3s', 'margin': 'auto', 'top': '-2.5px'}
 
   def customize(self):
     self.css({'background': self.rptObj.theme.greys[3]})

@@ -6,6 +6,10 @@ from epyk.core.js.primitives import JsObjects
 
 class JsHtmlSwitch(JsHtml.JsHtmlRich):
 
+  @property
+  def content(self):
+    return JsHtml.ContentFormatters(self._report, "%s.checked" % self._src.checkbox.dom.varName)
+
   def set_text(self, value, is_on_val=True):
     """
     Description:
@@ -24,10 +28,10 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
     :param is_on_val: Boolean. Change either the on or the off value displayed
     """
     value = JsUtils.jsConvertData(value, None)
-    return ''' if(%(text)s == %(htmlId)s_data.%(switch_type)s){ %(htmlObj)s };
+    return JsObjects.JsObjects.get(''' if(%(text)s == %(htmlId)s_data.%(switch_type)s){ %(htmlObj)s };
        %(htmlId)s_data.%(switch_type)s = %(value)s
-       ''' % {'htmlId': self._src.htmlCode, 'switch_type': 'on' if is_on_val else 'off', 'value': value,
-              'text': self._src.switch_text.dom.content, 'htmlObj': self._src.switch_text.build(value)}
+       ''' % {'htmlId': self._src.htmlId, 'switch_type': 'on' if is_on_val else 'off', 'value': value,
+              'text': self._src.switch_text.dom.content.toStr(), 'htmlObj': self._src.switch_text.build(value)})
 
 
 class DomSelect(JsHtml.JsHtmlRich):

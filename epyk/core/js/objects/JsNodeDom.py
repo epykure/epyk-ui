@@ -1326,8 +1326,10 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.insertBefore(%s, %s)" % (self.varId, newnode, existingnode))
     return self
 
-  def click(self, jsFncs):
+  def click(self, jsFncs=None):
     """
+    Description:
+    -----------
     Trigger a click event.
     This function will not set the event
 
@@ -1335,11 +1337,16 @@ class JsDoms(JsObject.JsObject):
 
     :return:
     """
+    if jsFncs is None:
+      return JsObject.JsObject("%s.click()" % self.varId)
+
     self._js.append("%s.click(%s)" % (self.varId, ";".join(JsUtils.jsConvertFncs(jsFncs))))
     return self
 
   def onclick(self, jsFncs, autoStyle=True):
     """
+    Description:
+    -----------
     Execute a JavaScript when a button is clicked
 
     Documentation
