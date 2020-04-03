@@ -143,6 +143,22 @@ class ContentFormatters(object):
     """
     return JsObjects.JsNumber.JsNumber("parseFloat(%s)" % self.selector)
 
+  @property
+  def string(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsString.JsString("String(%s)" % self.selector)
+
+  @property
+  def date(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsDate.JsDate("new Date(%s)" % self.selector)
+
   def toStr(self):
     return self.selector
 

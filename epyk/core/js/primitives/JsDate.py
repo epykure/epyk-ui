@@ -10,6 +10,8 @@ import json
 from epyk.core.js.primitives import JsObject
 from epyk.core.js import JsUtils
 
+MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
 
 class JsDate(JsObject.JsObject):
   _jsClass = "Date"
@@ -184,6 +186,22 @@ class JsDate(JsObject.JsObject):
     from epyk.core.js.primitives import JsNumber
     return JsNumber.JsNumber("%s.getMonth()" % self.varId, isPyData=False)
 
+  def getMonthName(self):
+    """
+    Use getMonth() method returns the month the month name from the definition in the module .
+
+    Example
+    jsObj.objects.date.new("2019-01-01", varName="dateTest")
+    jsObj.objects.date.get("dateTest").getMonthName()
+
+    Documentation:
+    https://www.w3schools.com/jsref/jsref_getmonth.asp
+
+    :return: A Number, from 0 to 11, representing the month
+    """
+    from epyk.core.js.primitives import JsNumber
+    return JsNumber.JsNumber("(function(x){return %s[x]})(%s.getMonth())" % (MONTHS, self.varId), isPyData=False)
+
   def setDate(self, day):
     """
     The setDate() method sets the day of the month to the date object.
@@ -288,6 +306,20 @@ class JsDate(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsString
     return JsString.JsString("%s.toISOString().replace('T', ' ').slice(0, 19)" % self.varId, isPyData=False)
+
+  def getTime(self, in_seconds=True):
+    """
+    To get the unix timestamp using JavaScript you need to use the getTime() function of the build in Date object.
+    As this returns the number of milliseconds then we must divide the number by 1000 and round it in order to get the timestamp in seconds.
+
+    :param in_seconds: Boolean. In second conversion of the Javascript timestamp
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    if in_seconds:
+      return JsNumber.JsNumber("%s.getTime()/1000" % self.varId, isPyData=False)
+
+    return JsNumber.JsNumber("%s.getTime()" % self.varId, isPyData=False)
 
   def add(self, n):
     """
