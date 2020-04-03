@@ -5,9 +5,12 @@ from epyk.core.js.primitives import JsObjects
 
 
 class JsHtmlFields(JsHtml.JsHtmlRich):
+
   @property
   def val(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -15,6 +18,19 @@ class JsHtmlFields(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
     return self._src.input.dom.content
 
-  def empty(self): return '%s.innerHTML = ""' % self.varName
+  def empty(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
+    return JsObjects.JsObjects.get('%s = ""' % self.content.toStr())

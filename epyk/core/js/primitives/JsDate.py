@@ -18,10 +18,15 @@ class JsDate(JsObject.JsObject):
 
   def __init__(self, data=None, varName=None, setVar=False, isPyData=False):
     """
+    Description:
+    -----------
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_obj_date.asp
 
+    Attributes:
+    ----------
     :param data: Required,
     :param varName: Optional,
     :param setVar: Optional,
@@ -41,15 +46,21 @@ class JsDate(JsObject.JsObject):
   @classmethod
   def get(cls, varName):
     """
+    Description:
+    -----------
     Get the Javascript Object by its reference
 
-    Example
+    Usage:
+    ------
     JsDate.new("2019-05-03", varName="MyDate")
     JsDate.get("MyDate")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_obj_date.asp
 
+    Attributes:
+    ----------
     :param varName: The Javascript object reference
 
     :return: The python Javascript object
@@ -64,11 +75,12 @@ class JsDate(JsObject.JsObject):
   @property
   def isWeedend(self):
     """
+    Description:
+    -----------
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.get("dateTest").isWeedend
-
-    :return:
     """
     from epyk.core.js.primitives import JsBoolean
     return JsBoolean.JsBoolean("(%(varId)s.getDay() === 6) || (%(varId)s.getDay() === 0)" % {"varId": self.varId}, isPyData=False)
@@ -76,12 +88,16 @@ class JsDate(JsObject.JsObject):
   @staticmethod
   def now():
     """
+    Description:
+    -----------
     The Date.now() method returns the number of milliseconds since January 1, 1970 00:00:00 UTC.
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.now()
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_now.asp
 
     :return: A Number, representing the number of milliseconds since midnight January 1, 1970
@@ -93,12 +109,16 @@ class JsDate(JsObject.JsObject):
   @staticmethod
   def today():
     """
+    Description:
+    -----------
     Return the String date in the standard format YYYY-MM-DD
 
-    Example
+    Usage:
+    ------
     rptObj.js.objects.date.today()
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A Python / Javascript object
@@ -108,9 +128,12 @@ class JsDate(JsObject.JsObject):
 
   def getDate(self):
     """
+    Description:
+    -----------
     The getDate() method returns the day of the month (from 1 to 31) for the specified date.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_getdate.asp
 
     :return:
@@ -119,9 +142,12 @@ class JsDate(JsObject.JsObject):
 
   def getDay(self):
     """
+    Description:
+    -----------
     The getDay() method returns the day of the week (from 0 to 6) for the specified date.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_getday.asp
 
     :return:
@@ -131,9 +157,12 @@ class JsDate(JsObject.JsObject):
 
   def getFullYear(self):
     """
+    Description:
+    -----------
     The getFullYear() method returns the year (four digits for dates between year 1000 and 9999) of the specified date.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_getfullyear.asp
 
     :return: A Number, representing the year of the specified date
@@ -144,9 +173,12 @@ class JsDate(JsObject.JsObject):
 
   def getHours(self):
     """
+    Description:
+    -----------
     The getHours() method returns the hour (from 0 to 23) of the specified date and time.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_gethours.asp
 
     :return: A Number, from 0 to 23, representing the hour
@@ -157,11 +189,15 @@ class JsDate(JsObject.JsObject):
 
   def getMilliseconds(self):
     """
+    Description:
+    -----------
     The getMilliseconds() method returns the milliseconds (from 0 to 999) of the specified date and time.
 
-    Example
+    Usage:
+    ------
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_getmilliseconds.asp
 
     :return: A Number, from 0 to 999, representing milliseconds
@@ -172,13 +208,17 @@ class JsDate(JsObject.JsObject):
 
   def getMonth(self):
     """
+    Description:
+    -----------
     The getMonth() method returns the month (from 0 to 11) for the specified date, according to local time.
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.new("2019-01-01", varName="dateTest")
     jsObj.objects.date.get("dateTest").getMonth()
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_getmonth.asp
 
     :return: A Number, from 0 to 11, representing the month
@@ -188,13 +228,17 @@ class JsDate(JsObject.JsObject):
 
   def getMonthName(self):
     """
+    Description:
+    -----------
     Use getMonth() method returns the month the month name from the definition in the module .
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.new("2019-01-01", varName="dateTest")
     jsObj.objects.date.get("dateTest").getMonthName()
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_getmonth.asp
 
     :return: A Number, from 0 to 11, representing the month
@@ -204,15 +248,21 @@ class JsDate(JsObject.JsObject):
 
   def setDate(self, day):
     """
+    Description:
+    -----------
     The setDate() method sets the day of the month to the date object.
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.new("2019-01-01", varName="dateTest")
     jsObj.objects.date.get("dateTest").setDate(5)
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_setdate.asp
 
+    Attributes:
+    ----------
     :param day: Required. An integer representing the day of a month.
 
     :return: A Number, representing the number of milliseconds between the date object and midnight January 1 1970
@@ -221,16 +271,22 @@ class JsDate(JsObject.JsObject):
 
   def setMonth(self, month, day=None):
     """
+    Description:
+    -----------
     The setMonth() method sets the month of a date object.
     Return a new date object
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.new("2019-01-01", varName="dateTest")
     jsObj.objects.date.get("dateTest").setMonth(5)
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_setmonth.asp
 
+    Attributes:
+    ----------
     :param month: Required. An integer representing the month
     :param day: Optional. An integer representing the day of month
 
@@ -243,13 +299,17 @@ class JsDate(JsObject.JsObject):
 
   def toDateString(self):
     """
+    Description:
+    -----------
     The toDateString() method converts the date (not the time) of a Date object into a readable string.
 
-    Example
+    Usage:
+    ------
     jsType.date.new(varName="Test")
     jsType.date.get("Test").toDateString()
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_todatestring.asp
 
     :return: A String, representing the date as a string
@@ -260,13 +320,17 @@ class JsDate(JsObject.JsObject):
 
   def toISOString(self):
     """
+    Description:
+    -----------
     The toISOString() method converts a Date object into a string, using the ISO standard.
 
-    Example
+    Usage:
+    ------
     jsType.date.new(varName="Test")
     jsType.date.get("Test").toISOString()
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A String, representing the date and time using the ISO standard format
@@ -277,13 +341,17 @@ class JsDate(JsObject.JsObject):
 
   def getStrDate(self):
     """
+    Description:
+    -----------
     Return the String date in the standard format YYYY-MM-DD
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.new("2019-01-01", varName="dateTest")
     jsType.date.get("dateTest").getStrDate()
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A Python / Javascript object
@@ -293,13 +361,17 @@ class JsDate(JsObject.JsObject):
 
   def getStrTimeStamp(self):
     """
+    Description:
+    -----------
     The toISOString() method converts a Date object into a string, using the ISO standard.
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.new("2019-01-01", varName="dateTest")
     jsType.date.get("dateTest").getStrTimeStamp()
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A Python / Javascript object
@@ -309,9 +381,13 @@ class JsDate(JsObject.JsObject):
 
   def getTime(self, in_seconds=True):
     """
+    Description:
+    -----------
     To get the unix timestamp using JavaScript you need to use the getTime() function of the build in Date object.
     As this returns the number of milliseconds then we must divide the number by 1000 and round it in order to get the timestamp in seconds.
 
+    Attributes:
+    ----------
     :param in_seconds: Boolean. In second conversion of the Javascript timestamp
     """
     from epyk.core.js.primitives import JsNumber
@@ -323,14 +399,19 @@ class JsDate(JsObject.JsObject):
 
   def add(self, n):
     """
+    Description:
+    -----------
     Simple wrapper to the Javascript add method.
     This will just return the Js string corresponding to the add
 
     This function is used in the addDays method
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.this().getDate().add(1)
 
+    Attributes:
+    ----------
     :param n: Integer the number of days
 
     :return: A Python Js object
@@ -340,20 +421,25 @@ class JsDate(JsObject.JsObject):
 
   def addDays(self, jsObj, n, weekend=False):
     """
+    Description:
+    -----------
     Add some days to a Javascript date
 
-    Example
+    Usage:
+    ------
     jsObj.objects.date.get("MyDate").addDays(jsObj, 6).getStrDate()
 
-    Documentation
+    Related Pages:
+    --------------
     https://stackoverflow.com/questions/563406/add-days-to-javascript-date
 
-    :type jsObj: epyk.Lib.js.Js.JsBase
+    Attributes:
+    ----------
     :param jsObj: The internal JS object used to store the prototype extension
     :param n: The number of days to be added
     :param weekend: Boolean flag to specify if the weekends should be considered in the count. Default False
 
-    :return:
+    :type jsObj: epyk.Lib.js.Js.JsBase
     """
     jsObj.extendProto(self, "addDays", [
       jsObj.objects.date.this().setDate(jsObj.objects.date.this().getDate().add(jsObj.parseInt(jsObj.objects.get("n")))),

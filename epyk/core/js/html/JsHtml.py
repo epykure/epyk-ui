@@ -354,6 +354,13 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else 'block'), None)
 
+  def select(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get("%s.select()" % self._src.input.dom.varName)
+
   def toggle(self, attr="display", jsVal1="inline-block", jsVal2="none"):
     """
     Description:

@@ -38,6 +38,8 @@ class Input(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    -----------
     Property to set all the input component properties
 
     :rtype: OptSelect.OptionsSelect
@@ -72,8 +74,12 @@ class Input(Html.Html):
 
   def focus(self, jsFncs=None, profile=False, options=None):
     """
+    Description:
+    -----------
     Action on focus
 
+    Attributes:
+    ----------
     :param jsFncs: List or String with the Javascript events
     :param profile: Boolean to add the Javascript fragment to profile
     :param options: Python dictionary with special options (shortcuts) for the component
@@ -89,11 +95,16 @@ class Input(Html.Html):
 
   def validation(self, pattern, required=True):
     """
+    Description:
+    -----------
     Add validation rules on the input component
 
-    Example
+    Usage:
+    ------
     input.validation(pattern="[0-9]{5}")
 
+    Attributes:
+    ----------
     :param pattern: String.
     :return: Self to allow the chaining
     """
@@ -110,9 +121,12 @@ class Input(Html.Html):
     ------------
     Add an javascript action when the key enter is pressed on the keyboard
 
-    Example
+    Usage:
+    ------
     htmlObj.input(placeholder="Put your tag").enter("alert()")
 
+    Attributes:
+    ----------
     :param jsFncs:
     :param profile:
 
@@ -488,6 +502,8 @@ class Field(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    -----------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -568,7 +584,10 @@ class FieldAutocomplete(Field):
     --------------
     https://api.jqueryui.com/autocomplete/#event-focus
 
+    Attributes:
+    ----------
     :param focus:
+    :param profile:
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -585,7 +604,10 @@ class FieldAutocomplete(Field):
     --------------
     https://api.jqueryui.com/autocomplete/#event-close
 
+    Attributes:
+    ----------
     :param jsFnc:
+    :param profile:
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -604,7 +626,10 @@ class FieldAutocomplete(Field):
     --------------
     https://api.jqueryui.com/autocomplete/#event-select
 
+    Attributes:
+    ----------
     :param jsFnc:
+    :param profile:
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -623,7 +648,10 @@ class FieldAutocomplete(Field):
     --------------
     https://api.jqueryui.com/autocomplete/#event-response
 
+    Attributes:
+    ----------
     :param jsFnc:
+    :param profile:
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -789,12 +817,17 @@ class Search(Html.Html):
 
   def enter(self, jsFncs, profile=False):
     """
+    Description:
+    -----------
     Add an javascript action when the key enter is pressed on the keyboard
 
     Example
     htmlObj.enter(" alert() ")
 
+    Attributes:
+    ----------
     :param jsFncs:
+
     :return: The python object itself
     """
     self.click(jsFncs)
