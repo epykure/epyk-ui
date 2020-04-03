@@ -2,6 +2,7 @@
 Entry point for the different Javascript primitives
 
 """
+
 import json
 
 from epyk.core.js.primitives import JsArray
@@ -25,6 +26,8 @@ class JsObjects(object):
   @property
   def this(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Object primitive
 
     :return: The Javascript "this" object (which is a dom object very often)
@@ -34,6 +37,8 @@ class JsObjects(object):
   @property
   def result(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Object primitive
 
     :return: The Javascript result object from a post or any other AJAX calls
@@ -43,9 +48,12 @@ class JsObjects(object):
   @property
   def request(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Object primitive
 
     :return: The Javascript result object from a post or any other AJAX calls
+
     :rtype: XMLHttpRequest
     """
     return XMLHttpRequest.get("result")
@@ -53,6 +61,8 @@ class JsObjects(object):
   @property
   def data(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Object primitive
 
     :return: The Javascript data object from a post or any other AJAX calls
@@ -62,9 +72,12 @@ class JsObjects(object):
   @property
   def mouseEvent(self):
     """
+    Description:
+    -----------
     Interface to the JavaScript MouseEvents
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/obj_mouseevent.asp
     """
     return JsEvents.MouseEvent()
@@ -72,9 +85,12 @@ class JsObjects(object):
   @property
   def event(self):
     """
+    Description:
+    -----------
     Interface to the JavaScript Events
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/obj_event.asp
     """
     return JsEvents.Event()
@@ -82,6 +98,8 @@ class JsObjects(object):
   @property
   def jqThis(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Object primitive
 
     :return: The Javascript "this" object
@@ -92,6 +110,8 @@ class JsObjects(object):
   @classmethod
   def get(cls, varName):
     """
+    Description:
+    -----------
     Interface to the Javascript Object primitive
 
     :return: The requested Python JsObject primitive
@@ -101,6 +121,8 @@ class JsObjects(object):
   @classmethod
   def new(cls, data=None, varName=None, isPyData=False):
     """
+    Description:
+    -----------
     Interface to the Javascript Object primitive
 
     :return: A Python generic JsObject primitive
@@ -110,9 +132,12 @@ class JsObjects(object):
   @property
   def number(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Number primitive
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_number.asp
 
     :return: A Python JsNumber primitive
@@ -122,9 +147,12 @@ class JsObjects(object):
   @property
   def string(self):
     """
+    Description:
+    -----------
     Interface to the Javascript String primitive
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_obj_string.asp
 
     :return: A Python JsString primitive
@@ -134,9 +162,12 @@ class JsObjects(object):
   @property
   def array(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Array primitive
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_obj_array.asp
 
     :return: A Python JsArray primitive
@@ -146,9 +177,12 @@ class JsObjects(object):
   @property
   def date(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Date primitive
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     :return: A Python JsDate object
@@ -158,9 +192,12 @@ class JsObjects(object):
   @property
   def boolean(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Boolean primitive
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_obj_boolean.asp
 
     :return: A Python JsBoolean primitive
@@ -170,9 +207,9 @@ class JsObjects(object):
   @property
   def dom(self):
     """
+    Description:
+    -----------
     Interface to the Javascript Dom class
-
-    Documentation
 
     :return: A Python Document
     """
@@ -181,9 +218,12 @@ class JsObjects(object):
   @property
   def null(self):
     """
+    Description:
+    -----------
     Similar as None in Python
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/js_datatypes.asp
 
     :return: A Python Js Null object
@@ -193,9 +233,12 @@ class JsObjects(object):
   @property
   def undefined(self):
     """
+    Description:
+    -----------
     Similar as the None in Python
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_undefined.asp
 
     :return: A Python Js undefined object
@@ -205,28 +248,28 @@ class JsObjects(object):
   @property
   def NaN(self):
     """
+    Description:
+    -----------
     The NaN property represents "Not-a-Number" value. This property indicates that a value is not a legal number.
 
     The NaN property is the same as the Number.Nan property.
 
-    Example
-
-    Documentation:
+    Related Pages:
+    --------------:
     https://www.w3schools.com/jsref/jsref_number_nan.asp
     https://www.w3schools.com/jsref/jsref_isnan.asp
-
-    :return:
     """
     return JsNumber.JsNumber("Number.NaN")
 
   @property
   def true(self):
     """
+    Description:
+    -----------
     Similar as True in Python
 
-    Example
-
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/js_booleans.asp
 
     :return: A Python Js True object
@@ -236,9 +279,12 @@ class JsObjects(object):
   @property
   def false(self):
     """
+    Description:
+    -----------
     Similar as False in Python
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/js_booleans.asp
     
     :return: A Python Js False object
@@ -247,22 +293,16 @@ class JsObjects(object):
 
   def record(self, varName):
     """
+    Description:
+    -----------
     Get a record object
 
     :param varName: A string with of the existing variable name
-
-    :return:
     """
     return JsData.RawData.get(self._jsObj, varName)
 
 
 class JsPromise(object):
-  """
-
-  https://promisesaplus.com/
-  https://www.geeksforgeeks.org/javascript-promises/
-
-  """
 
   def __init__(self, jsObj):
     self._jsObj = jsObj
@@ -270,9 +310,10 @@ class JsPromise(object):
 
   def then(self, jsFnc):
     """
+    Description:
+    -----------
 
     :param jsFnc:
-    :return:
     """
     if not isinstance(jsFnc, list):
       jsFnc = []
@@ -281,9 +322,10 @@ class JsPromise(object):
 
   def catch(self, jsFnc):
     """
+    Description:
+    -----------
 
     :param jsFnc:
-    :return:
     """
     if not isinstance(jsFnc, list):
       jsFnc = []
@@ -321,6 +363,8 @@ class XMLHttpRequest(object):
   @classmethod
   def get(cls, varName):
     """
+    Description:
+    ------------
     Interface to the Javascript Object primitive
 
     :return: The requested Python JsObject primitive
@@ -411,6 +455,8 @@ class XMLHttpRequest(object):
     --------------
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/error_event
 
+    Attributes:
+    ----------
     :param event:
     :param jsFncs:
     """
@@ -534,8 +580,6 @@ class XMLHttpRequest(object):
       jsonData.update(self.data)
     else:
       jsonData = self.data
-
-
     if jsonData:
       self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, json.dumps(jsonData))
     elif encodeURIData is not None:
