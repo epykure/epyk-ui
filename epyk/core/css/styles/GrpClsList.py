@@ -115,4 +115,3 @@ class ClassDropDown(GrpCls.ClassHtml):
     if self._css_menu_pull_left is None:
       self._css_menu_pull_left = Classes.CatalogTree.CatalogDropDown(self.htmlObj._report, self.classList['main']).menu_pull_left()
     return self._css_menu_pull_left
-
