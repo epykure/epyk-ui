@@ -366,7 +366,7 @@ class OptionAutoComplete(Options):
     --------------
     https://api.jqueryui.com/autocomplete/#option-appendTo
     """
-    return self._report._jsStyles('appendTo', None)
+    return self._report._jsStyles.get('appendTo', None)
 
   @appendTo.setter
   def appendTo(self, value):
@@ -384,7 +384,7 @@ class OptionAutoComplete(Options):
     --------------
     https://api.jqueryui.com/autocomplete/#option-autoFocus
     """
-    return self._report._jsStyles('autoFocus', False)
+    return self._report._jsStyles.get('autoFocus', False)
 
   @autoFocus.setter
   def autoFocus(self, value):
@@ -404,7 +404,7 @@ class OptionAutoComplete(Options):
     --------------
     https://api.jqueryui.com/autocomplete/#option-classes
     """
-    return self._report._jsStyles('classes', {})
+    return self._report._jsStyles.get('classes', {})
 
   @classes.setter
   def classes(self, value):
@@ -423,7 +423,7 @@ class OptionAutoComplete(Options):
     --------------
     https://api.jqueryui.com/autocomplete/#option-delay
     """
-    return self._report._jsStyles('delay', 300)
+    return self._report._jsStyles.get('delay', 300)
 
   @delay.setter
   def delay(self, value):
@@ -441,7 +441,7 @@ class OptionAutoComplete(Options):
     --------------
     https://api.jqueryui.com/autocomplete/#option-delay
     """
-    return self._report._jsStyles('disabled', True)
+    return self._report._jsStyles.get('disabled', True)
 
   @disabled.setter
   def disabled(self, value):
@@ -460,7 +460,7 @@ class OptionAutoComplete(Options):
     --------------
     https://api.jqueryui.com/autocomplete/#option-minLength
     """
-    return self._report._jsStyles('minLength', 0)
+    return self._report._jsStyles.get('minLength', 0)
 
   @minLength.setter
   def minLength(self, value):
@@ -491,7 +491,7 @@ class OptionAutoComplete(Options):
     --------------
     https://api.jqueryui.com/autocomplete/#option-source
     """
-    return self._report._jsStyles('source', [])
+    return self._report._jsStyles.get('source', [])
 
   @source.setter
   def source(self, value):
@@ -512,7 +512,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-altField
     """
-    return self._report._jsStyles('altField', "")
+    return self._report._jsStyles.get('altField', "")
 
   @altField.setter
   def altField(self, value):
@@ -530,7 +530,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-altFormat
     """
-    return self._report._jsStyles('altFormat', "")
+    return self._report._jsStyles.get('altFormat', "")
 
   @altFormat.setter
   def altFormat(self, value):
@@ -548,7 +548,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-appendText
     """
-    return self._report._jsStyles('appendText', "")
+    return self._report._jsStyles.get('appendText', "")
 
   @appendText.setter
   def appendText(self, value):
@@ -566,7 +566,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-autoSize
     """
-    return self._report._jsStyles('autoSize', False)
+    return self._report._jsStyles.get('autoSize', False)
 
   @autoSize.setter
   def autoSize(self, value):
@@ -584,7 +584,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-beforeShow
     """
-    return self._report._jsStyles('beforeShow', None)
+    return self._report._jsStyles.get('beforeShow', None)
 
   @beforeShow.setter
   def beforeShow(self, value):
@@ -602,7 +602,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-beforeShowDay
     """
-    return self._report._jsStyles('beforeShowDay', None)
+    return self._report._jsStyles.get('beforeShowDay', None)
 
   @beforeShowDay.setter
   def beforeShowDay(self, value):
@@ -620,7 +620,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-buttonImage
     """
-    return self._report._jsStyles('buttonImage', "")
+    return self._report._jsStyles.get('buttonImage', "")
 
   @buttonImage.setter
   def buttonImage(self, value):
@@ -638,7 +638,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-buttonImageOnly
     """
-    return self._report._jsStyles('buttonImageOnly', False)
+    return self._report._jsStyles.get('buttonImageOnly', False)
 
   @buttonImageOnly.setter
   def buttonImageOnly(self, value):
@@ -656,7 +656,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-buttonText
     """
-    return self._report._jsStyles('buttonText', "...")
+    return self._report._jsStyles.get('buttonText', "...")
 
   @buttonText.setter
   def buttonText(self, value):
@@ -674,7 +674,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-calculateWeek
     """
-    return self._report._jsStyles('calculateWeek', None)
+    return self._report._jsStyles.get('calculateWeek', None)
 
   @calculateWeek.setter
   def calculateWeek(self, value):
@@ -692,7 +692,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-changeMonth
     """
-    return self._report._jsStyles('changeMonth', False)
+    return self._report._jsStyles.get('changeMonth', False)
 
   @changeMonth.setter
   def changeMonth(self, value):
@@ -710,7 +710,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-changeYear
     """
-    return self._report._jsStyles('changeYear', False)
+    return self._report._jsStyles.get('changeYear', False)
 
   @changeYear.setter
   def changeYear(self, value):
@@ -728,7 +728,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-closeText
     """
-    return self._report._jsStyles('closeText', "Done")
+    return self._report._jsStyles.get('closeText', "Done")
 
   @closeText.setter
   def closeText(self, value):
@@ -746,7 +746,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-constrainInput
     """
-    return self._report._jsStyles('constrainInput', True)
+    return self._report._jsStyles.get('constrainInput', True)
 
   @constrainInput.setter
   def constrainInput(self, value):
@@ -764,7 +764,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-currentText
     """
-    return self._report._jsStyles('currentText', "Today")
+    return self._report._jsStyles.get('currentText', "Today")
 
   @currentText.setter
   def currentText(self, value):
@@ -782,7 +782,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-dateFormat
     """
-    return self._report._jsStyles('dateFormat', "mm/dd/yy")
+    return self._report._jsStyles.get('dateFormat', "mm/dd/yy")
 
   @dateFormat.setter
   def dateFormat(self, value):
@@ -800,7 +800,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-dayNames
     """
-    return self._report._jsStyles('dayNames', [])
+    return self._report._jsStyles.get('dayNames', [])
 
   @dayNames.setter
   def dayNames(self, value):
@@ -818,7 +818,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-dayNamesMin
     """
-    return self._report._jsStyles('dayNamesMin', [])
+    return self._report._jsStyles.get('dayNamesMin', [])
 
   @dayNamesMin.setter
   def dayNamesMin(self, value):
@@ -836,7 +836,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-dayNamesShort
     """
-    return self._report._jsStyles('dayNamesShort', [])
+    return self._report._jsStyles.get('dayNamesShort', [])
 
   @dayNamesShort.setter
   def dayNamesShort(self, value):
@@ -854,7 +854,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-defaultDate
     """
-    return self._report._jsStyles('defaultDate', None)
+    return self._report._jsStyles.get('defaultDate', None)
 
   @defaultDate.setter
   def defaultDate(self, value):
@@ -872,7 +872,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-duration
     """
-    return self._report._jsStyles('duration', "normal")
+    return self._report._jsStyles.get('duration', "normal")
 
   @duration.setter
   def duration(self, value):
@@ -890,7 +890,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-firstDay
     """
-    return self._report._jsStyles('firstDay', 0)
+    return self._report._jsStyles.get('firstDay', 0)
 
   @firstDay.setter
   def firstDay(self, value):
@@ -908,7 +908,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-gotoCurrent
     """
-    return self._report._jsStyles('gotoCurrent', False)
+    return self._report._jsStyles.get('gotoCurrent', False)
 
   @gotoCurrent.setter
   def gotoCurrent(self, value):
@@ -926,7 +926,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-hideIfNoPrevNext
     """
-    return self._report._jsStyles('hideIfNoPrevNext', False)
+    return self._report._jsStyles.get('hideIfNoPrevNext', False)
 
   @hideIfNoPrevNext.setter
   def hideIfNoPrevNext(self, value):
@@ -944,7 +944,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-isRTL
     """
-    return self._report._jsStyles('isRTL', False)
+    return self._report._jsStyles.get('isRTL', False)
 
   @isRTL.setter
   def isRTL(self, value):
@@ -962,7 +962,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-maxDate
     """
-    return self._report._jsStyles('maxDate', None)
+    return self._report._jsStyles.get('maxDate', None)
 
   @maxDate.setter
   def maxDate(self, value):
@@ -980,7 +980,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-minDate
     """
-    return self._report._jsStyles('minDate', None)
+    return self._report._jsStyles.get('minDate', None)
 
   @minDate.setter
   def minDate(self, value):
@@ -998,7 +998,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-monthNames
     """
-    return self._report._jsStyles('monthNames', [])
+    return self._report._jsStyles.get('monthNames', [])
 
   @monthNames.setter
   def monthNames(self, value):
@@ -1016,7 +1016,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-monthNamesShort
     """
-    return self._report._jsStyles('monthNamesShort', [])
+    return self._report._jsStyles.get('monthNamesShort', [])
 
   @monthNamesShort.setter
   def monthNamesShort(self, value):
@@ -1034,7 +1034,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-navigationAsDateFormat
     """
-    return self._report._jsStyles('navigationAsDateFormat', False)
+    return self._report._jsStyles.get('navigationAsDateFormat', False)
 
   @navigationAsDateFormat.setter
   def navigationAsDateFormat(self, value):
@@ -1052,7 +1052,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-nextText
     """
-    return self._report._jsStyles('nextText', "Next")
+    return self._report._jsStyles.get('nextText', "Next")
 
   @nextText.setter
   def nextText(self, value):
@@ -1070,7 +1070,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-numberOfMonths
     """
-    return self._report._jsStyles('numberOfMonths', 1)
+    return self._report._jsStyles.get('numberOfMonths', 1)
 
   @numberOfMonths.setter
   def numberOfMonths(self, value):
@@ -1088,7 +1088,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-onChangeMonthYear
     """
-    return self._report._jsStyles('onChangeMonthYear', None)
+    return self._report._jsStyles.get('onChangeMonthYear', None)
 
   @onChangeMonthYear.setter
   def onChangeMonthYear(self, value):
@@ -1106,7 +1106,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-onClose
     """
-    return self._report._jsStyles('onClose', None)
+    return self._report._jsStyles.get('onClose', None)
 
   @onClose.setter
   def onClose(self, value):
@@ -1124,7 +1124,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-onSelect
     """
-    return self._report._jsStyles('onSelect', None)
+    return self._report._jsStyles.get('onSelect', None)
 
   @onSelect.setter
   def onSelect(self, value):
@@ -1142,7 +1142,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-prevText
     """
-    return self._report._jsStyles('prevText', "Prev")
+    return self._report._jsStyles.get('prevText', "Prev")
 
   @prevText.setter
   def prevText(self, value):
@@ -1160,7 +1160,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-selectOtherMonths
     """
-    return self._report._jsStyles('selectOtherMonths', False)
+    return self._report._jsStyles.get('selectOtherMonths', False)
 
   @selectOtherMonths.setter
   def selectOtherMonths(self, value):
@@ -1178,7 +1178,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-shortYearCutoff
     """
-    return self._report._jsStyles('shortYearCutoff', "+10")
+    return self._report._jsStyles.get('shortYearCutoff', "+10")
 
   @shortYearCutoff.setter
   def shortYearCutoff(self, value):
@@ -1196,7 +1196,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-showAnim
     """
-    return self._report._jsStyles('showAnim', "show")
+    return self._report._jsStyles.get('showAnim', "show")
 
   @showAnim.setter
   def showAnim(self, value):
@@ -1214,7 +1214,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-showButtonPanel
     """
-    return self._report._jsStyles('showButtonPanel', False)
+    return self._report._jsStyles.get('showButtonPanel', False)
 
   @showButtonPanel.setter
   def showButtonPanel(self, value):
@@ -1232,7 +1232,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-showCurrentAtPos
     """
-    return self._report._jsStyles('showCurrentAtPos', 0)
+    return self._report._jsStyles.get('showCurrentAtPos', 0)
 
   @showCurrentAtPos.setter
   def showCurrentAtPos(self, value):
@@ -1250,7 +1250,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-showMonthAfterYear
     """
-    return self._report._jsStyles('showMonthAfterYear', False)
+    return self._report._jsStyles.get('showMonthAfterYear', False)
 
   @showMonthAfterYear.setter
   def showMonthAfterYear(self, value):
@@ -1268,7 +1268,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-showOn
     """
-    return self._report._jsStyles('showOn', "focus")
+    return self._report._jsStyles.get('showOn', "focus")
 
   @showOn.setter
   def showOn(self, value):
@@ -1286,7 +1286,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-showOptions
     """
-    return self._report._jsStyles('showOptions', {})
+    return self._report._jsStyles.get('showOptions', {})
 
   @showOptions.setter
   def showOptions(self, value):
@@ -1304,7 +1304,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-showOtherMonths
     """
-    return self._report._jsStyles('showOtherMonths', False)
+    return self._report._jsStyles.get('showOtherMonths', False)
 
   @showOtherMonths.setter
   def showOtherMonths(self, value):
@@ -1322,7 +1322,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-showWeek
     """
-    return self._report._jsStyles('showWeek', False)
+    return self._report._jsStyles.get('showWeek', False)
 
   @showWeek.setter
   def showWeek(self, value):
@@ -1340,7 +1340,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-stepMonths
     """
-    return self._report._jsStyles('stepMonths', 1)
+    return self._report._jsStyles.get('stepMonths', 1)
 
   @stepMonths.setter
   def stepMonths(self, value):
@@ -1358,7 +1358,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-weekHeader
     """
-    return self._report._jsStyles('weekHeader', "wk")
+    return self._report._jsStyles.get('weekHeader', "wk")
 
   @weekHeader.setter
   def weekHeader(self, value):
@@ -1376,7 +1376,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-yearRange
     """
-    return self._report._jsStyles('yearRange', "c-10:c+10")
+    return self._report._jsStyles.get('yearRange', "c-10:c+10")
 
   @yearRange.setter
   def yearRange(self, value):
@@ -1394,7 +1394,7 @@ class OptionsDatePicker(OptionsInput):
     --------------
     https://api.jqueryui.com/datepicker/#option-yearSuffix
     """
-    return self._report._jsStyles('yearSuffix', "")
+    return self._report._jsStyles.get('yearSuffix', "")
 
   @yearSuffix.setter
   def yearSuffix(self, value):

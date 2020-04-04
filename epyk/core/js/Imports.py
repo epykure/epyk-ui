@@ -722,8 +722,8 @@ CSS_IMPORTS = {
     'website': 'http://jquery.com/',
     'modules': [
       {'script': 'jquery-ui.min.css', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'jquery-ui.structure.min.css', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'jquery-ui.theme.min.css', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+    ]
+  },
 
   # QUnit package width CDN links
   'qunit': {

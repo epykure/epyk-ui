@@ -20,6 +20,9 @@ class Trees(object):
     Description:
     ------------
 
+    Related Pages:
+    --------------
+
     Usage:
     ------
     data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
@@ -46,6 +49,9 @@ class Trees(object):
     Usage:
     ------
 
+    Related Pages:
+    --------------
+
     Attributes:
     ----------
     :param data:
@@ -67,6 +73,9 @@ class Trees(object):
     Usage:
     ------
 
+    Related Pages:
+    --------------
+
     Attributes:
     ----------
     :param data:
@@ -82,11 +91,14 @@ class Trees(object):
     self.context.register(html_tree)
     return html_tree
 
-  def dropdown(self, recordSet=None, color=None, width=(100, "%"), height=(32, 'px'), htmlCode=None,
+  def dropdown(self, recordSet=None, text="", width=(100, "%"), height=(32, 'px'), htmlCode=None,
                helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Documentation
+    Related Pages:
+    --------------
     http://getbootstrap.com/docs/4.0/components/dropdowns/
     https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
     https://codepen.io/svnt/pen/beEgre
@@ -103,7 +115,9 @@ class Trees(object):
     :param htmlCode:
     :param profile:
     """
-    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, color, width, height, htmlCode, helper,
-                                     options or {}, profile)
+    dftl_options = {"width": 70}
+    dftl_options.update(options or {})
+    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, text, width, height, htmlCode, helper,
+                                     dftl_options, profile)
     self.context.register(html_d)
     return html_d

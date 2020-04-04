@@ -416,7 +416,7 @@ class Icons(object):
     return icon
 
   def tick(self, flag=True, text=None, icons=(JsFontAwesome.ICON_CHECK, JsFontAwesome.ICON_TIMES), position=None,
-           tooltip="", width=(None, 'px'), htmlCode=None, profile=None):
+           tooltip="", width=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -431,16 +431,16 @@ class Icons(object):
     :param htmlCode:
     :param profile:
     """
-    icon = self.awesome(icons[0] if flag else icons[1], text, tooltip, position, width, width, htmlCode, profile)
-    icon.css({"text-align": "center"})
-    icon.span.css({"line-height": '%spx' % 25, 'vertical-align': 'middle'})
-    icon.icon.css({"border-radius": "%spx" % 25, "width": "%spx" % 25, "margin-right": "auto", "margin": "auto",
-                   "color": 'blue', "line-height": '%s%s' % (25, width[1])})
-    icon.icon.style.add_classes.div.background_hover()
+    dftl_options = {"true": icons[0], "false": icons[1]}
+    dftl_options.update(options or {})
+    # report, position, icon, text, tooltip, width, height, htmlCode, profile
+    icon = html.HtmlRadio.Tick(self.context.rptObj, position, icons[0] if flag else icons[1], text, tooltip, width, width,
+                               htmlCode, dftl_options, profile)
     icon.click([
       icon.icon.dom.switchClass(icons[0] if flag else icons[1], icons[1] if flag else icons[0]),
       icon.icon.dom.transition('background', self.context.rptObj.theme.success[0], duration=.2, reverse=True)
     ])
+    self.context.register(icon)
     return icon
 
   def epyk(self, align="center", format='logo'):

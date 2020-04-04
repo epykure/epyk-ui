@@ -66,14 +66,11 @@ class CssButtonSuccess(CssStyle.Style):
 
 
 class CssButtonContentHover(CssStyle.Style):
-
   _hover = {'display': 'block !IMPORTANT'}
-
   _selectors = {'suffix': ".dropdown-content"}
 
 
 class CssButtonContentAHover(CssStyle.Style):
-
   _selectors = {'child': ".dropdown-content a"}
 
   def customize(self):
