@@ -1,7 +1,9 @@
+
 from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlSelect
 from epyk.core.js import JsUtils
+from epyk.core.css import Defaults_css
 from epyk.core.js.objects import JsComponents
 
 
@@ -56,6 +58,44 @@ class Radio(Html.Html):
     row.css({"width": 'none'})
     row.inReport = False
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), row.html(), self.helper)
+
+
+class Tick(Html.Html):
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  name, category, callFnc = 'Tick', 'Icons', 'tick'
+
+  def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, options, profile):
+    self._options = options
+    super(Tick, self).__init__(report, '', code=htmlCode, profile=profile,
+                               css_attrs={"width": width, 'height': height, 'float': 'left' if position is None else position})
+    if tooltip is not None:
+      self.tooltip(tooltip)
+    # Add the internal components icons and helper
+    self.add_span(text, css={"float": 'right'})
+    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()})
+    self.icon.style.add_classes.div.background_hover()
+    self.css({"margin": "5px 0", 'cursor': 'pointer'})
+    self.style.css.float = position
+    self.style.css.display = "inline-block"
+    self.css({"text-align": "center"})
+    self.span.css({"line-height": '%spx' % 25, 'vertical-align': 'middle'})
+    self.icon.css({"border-radius": "%spx" % 25, "width": "%spx" % 25, "margin-right": "auto", "margin": "auto",
+                   "color": 'blue', "line-height": '%s%s' % (25, width[1])})
+
+  @property
+  def dom(self):
+    """
+    HTML Dom object
+
+    :rtype: JsHtmlSelect.Tick
+    """
+    if self._dom is None:
+      self._dom = JsHtmlSelect.Tick(self, report=self._report)
+      self._dom.options = self._options
+    return self._dom
+
+  def __str__(self):
+    return "<span %s></span>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
 class Switch(Html.Html):

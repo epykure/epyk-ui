@@ -12,6 +12,22 @@ class Radio(JsPackage):
     self._src, self._report = htmlObj, report
     self._js, self._jquery = [], None
 
+  def check(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsObjects.JsObjects.get("%s.checked = true" % self._src.input.dom.varName)
+
+  def uncheck(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsObjects.JsObjects.get("%s.checked = false" % self._src.input.dom.varName)
+
 
 class CheckButton(JsPackage):
 

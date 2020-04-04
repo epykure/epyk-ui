@@ -34,6 +34,30 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
               'text': self._src.switch_text.dom.content.toStr(), 'htmlObj': self._src.switch_text.build(value)})
 
 
+class Tick(JsHtml.JsHtmlRich):
+
+  @property
+  def val(self):
+    """
+    Description:
+    ------------
+
+    """
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s, label: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+        self.htmlId, self.content.toStr(), self._src.span.dom.content.toStr()))
+
+  @property
+  def content(self):
+    """
+    Description:
+    ------------
+    Get the selected content from the Select component
+    """
+    # the option variable is coming from the Tick class to get the icon details
+    return JsHtml.ContentFormatters(self._report, "%s.classList.contains('%s')" % (self._src.icon.dom.varName, self.options['true'].split(" ")[-1]))
+
+
 class DomSelect(JsHtml.JsHtmlRich):
 
   @property
