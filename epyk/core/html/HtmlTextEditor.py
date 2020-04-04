@@ -1,6 +1,3 @@
-"""
-Wrapper to the HTML Editor components
-"""
 
 import json
 
@@ -20,6 +17,8 @@ class OptionsConsole(object):
   @property
   def timestamp(self):
     """
+    Description:
+    ------------
     """
     return self._timestamp
 
@@ -38,7 +37,11 @@ class Console(Html.Html):
 
   def build(self, data=None, options=None, profile=False):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param data:
     :param options:
     :param profile:
@@ -47,20 +50,27 @@ class Console(Html.Html):
     mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
     return "var content = %s; %s.innerHTML = %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
 
-  def write(self, data, timestamp=None, profile=False, stringify=False, skip_data_convert=False):
+  def write(self, data, timestamp=None, profile=False, stringify=False, skip_data_convert=False, format=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param data:
     :param timestamp:
     :param profile:
     :param stringify:
     :param skip_data_convert:
+    :param format: String. A string output format using %s to define the data in the string
     """
     var_id = "content_%s" % self.htmlId # to avoid infinite loops in the Javascript
     mark_up = self._report.js.string(var_id, isPyData=False).toStringMarkup()
     js_data = data if skip_data_convert else JsUtils.jsConvertData(data, None)
     if stringify:
       js_data = "JSON.stringify(%s)" % js_data
+    if format is not None:
+      js_data = JsUtils.jsConvertData(format, None).toStr().replace("%s", '"+ %s +"') % js_data
     if timestamp or (self.options.timestamp and timestamp != False):
       return "var %s = %s; %s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (var_id, js_data, self.dom.varId, mark_up)
 
