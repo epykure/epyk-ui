@@ -5,6 +5,30 @@ from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 
 
+class CheckButton(JsPackage):
+
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    self.varName, self.varData, self.__var_def = varName, "", None
+    self._src, self._report = htmlObj, report
+    self._js, self._jquery = [], None
+
+  def checked(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('fa-times', 'fa-check'); %s.querySelector('i').style.color = '%s'" % (self._src.dom.varName, self._src.dom.varName, self._report.theme.success[1]))
+
+  def unchecked(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('fa-check', 'fa-times'); %s.querySelector('i').style.color = '%s'" % (self._src.dom.varName, self._src.dom.varName, self._report.theme.danger[1]))
+
+
 class Menu(JsPackage):
 
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):

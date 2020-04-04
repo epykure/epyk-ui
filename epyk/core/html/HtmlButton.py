@@ -390,6 +390,35 @@ class CheckButton(Html.Html):
       self.tooltip(tooltip)
 
   @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    The Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlButtonMenu
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlButtonMenu(self, report=self._report)
+    return self._dom
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.Autocomplete
+    """
+    if self._js is None:
+      self._js = JsComponents.CheckButton(self, report=self._report)
+    return self._js
+
+  @property
   def _js__builder__(self):
     return ''' htmlObj.empty();
       if (data === true || data == 'Y'){

@@ -548,6 +548,8 @@ class JsHtmlButton(JsHtml):
 
   def release(self, by_name=False):
     """
+    Description:
+    -----------
 
     :param by_name:
     :return:
@@ -566,6 +568,8 @@ class JsHtmlButton(JsHtml):
 
   def lock(self, not_allowed=True):
     """
+    Description:
+    -----------
 
     :param lock:
     """
@@ -580,6 +584,25 @@ class JsHtmlButton(JsHtml):
     return fncs
 
   def empty(self): return '%s.innerHTML = ""' % self.varName
+
+
+class JsHtmlButtonMenu(JsHtmlButton):
+
+  @property
+  def val(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
+    return JsObjects.JsObjects.get('''
+        {%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), label: %s.innerHTML, name: %s}}
+        ''' % (self.htmlId, self.content.toStr(), self._src.label.dom.varName, self.getAttribute('name')))
+
+  @property
+  def content(self):
+    return ContentFormatters(self._report, "%s.querySelector('i').classList.contains('fa-check')" % self.varName)
 
 
 class JsHtmlIcon(JsHtml):
