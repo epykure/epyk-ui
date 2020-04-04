@@ -5,6 +5,14 @@ from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 
 
+class Radio(JsPackage):
+
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    self.varName, self.varData, self.__var_def = varName, "", None
+    self._src, self._report = htmlObj, report
+    self._js, self._jquery = [], None
+
+
 class CheckButton(JsPackage):
 
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):

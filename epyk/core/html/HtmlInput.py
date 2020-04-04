@@ -8,6 +8,7 @@ from epyk.core.html.options import OptInputs
 
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.objects import JsComponents
 from epyk.core.js.packages import JsTimepicker
 from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.html import JsHtmlField
@@ -712,6 +713,7 @@ class Checkbox(Html.Html):
     self.set_attrs(attrs={"type": "checkbox"})
     self.set_attrs(attrs=attrs)
     self.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'margin-left': '2px'})
+    self.style.css.line_height = Defaults.LINE_HEIGHT
 
   @property
   def dom(self):
@@ -749,15 +751,47 @@ class Radio(Html.Html):
     self.add_input("", position="before", css={"width": 'none', "vertical-align": 'middle'})
     self.add_label(label, position="after", css={"display": 'inline-block', "width": "None", 'float': 'none'})
     self.input.inReport = False
+    self.input.set_attrs(name="data-content", value=label)
     if flag:
       self.input.set_attrs({"checked": json.dumps(flag)})
     self.input.style.clear()
     if group_name is not None:
       self.input.set_attrs(name="name", value=group_name)
+    else:
+      self.input.set_attrs(name="name", value=self.htmlId)
     self.input.set_attrs(attrs={"type": "radio"})
     self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
     self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlField.Radio
+    """
+    if self._dom is None:
+      self._dom = JsHtmlField.Radio(self, report=self._report)
+    return self._dom
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript Functions
+
+    :rtype: JsComponents.Radio
+    """
+    if self._js is None:
+      self._js = JsComponents.Radio(self, report=self._report)
+    return self._js
 
   @property
   def _js__builder__(self):
