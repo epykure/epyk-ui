@@ -8,6 +8,7 @@ from epyk.core.html.options import OptButton
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
 from epyk.core.js.statements import JsIf
+from epyk.core.js.objects import JsComponents
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsButton
@@ -498,3 +499,112 @@ class Buttons(Html.Html):
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.row])
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)
+
+
+class ButtonMenuItem(object):
+
+  def __init__(self, report, selector, parent):
+    self._report, self._selector = report, selector
+    self._src, self._js, self._events = parent, None, []
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript module of the items in the menu
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.Autocomplete
+    """
+    if self._js is None:
+      self._js = JsComponents.Menu(self._src, varName=self._selector, report=self._report)
+    return self._js
+
+  def on(self, event, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+    Javascript generic events of the items in the menu
+
+    Attributes:
+    ----------
+    :param event: String. The JavaScript event
+    :param jsFncs: List: The Javascript fragments
+    :param profile: Boolean.
+    """
+    self._events.append("%s.addEventListener('%s', function (event) { %s })" % (self._selector, event, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self._src
+
+  def click(self, jsFncs):
+    """
+    Description:
+    -----------
+    Javascript click events of the items in the menu
+
+    :param jsFncs: List: The Javascript fragments
+    """
+    self._events.append("%s.addEventListener('click', function (event) { %s })" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self._src
+
+
+class ButtonMenu(Html.Html):
+  name, category, callFnc = 'ButtonMenu', 'buttons', 'menu'
+
+  def __init__(self, report, record, text, icon, width, height, htmlCode, tooltip, profile, options):
+    super(ButtonMenu, self).__init__(report, record, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+    self.button = report.ui.button(text, icon, width, height, htmlCode, tooltip, profile, options)
+    self.__items = {}
+    self.button.inReport = False
+    self.set_attrs(name="data-count", value=0)
+    self.style.css.position = "relative"
+    self.style.css.display = "inline-block"
+    self.container = report.ui.div()
+    self.container.inReport = False
+    self.container.attr['class'].add("dropdown-content")
+    self.container.style.css.display = "none"
+    self.container.style.css.position = "absolute"
+    self.container.style.css.z_index = 5
+    self._jsStyles = {"padding": '5px', 'cursor': 'pointer', 'display': 'block'}
+
+  def __getitem__(self, i):
+    if i not in self.__items:
+      self.__items[i] = ButtonMenuItem(self._report, "document.getElementById('%s').querySelectorAll('a')[%s]" % (self.htmlId, i), self)
+    return self.__items[i]
+
+  @property
+  def _js__builder__(self):
+    return '''
+      var panel = htmlObj.querySelector("div");
+      data.forEach(function(rec){
+        var href = document.createElement("a"); href.innerHTML = rec;
+        Object.keys(options).forEach(function(key){href.style[key] = options[key]});
+        panel.appendChild(href)})'''
+
+  @property
+  def style(self):
+    """
+    Description:
+    -----------
+    Property to the CSS Style of the component
+
+    Usage:
+    ------
+    self.style.css.margin = "5px"
+
+    :rtype: GrpClsButton.ClassButton
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsButton.ClassButtonMenu(self)
+    return self._styleObj
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    events = []
+    for comp in self.__items.values():
+      events.extend(comp._events)
+    self.onReady(events)
+    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.button.html(), self.container.html())

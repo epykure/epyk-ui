@@ -53,7 +53,7 @@ class Data(Properties.CssMixin):
 class Selector(object):
   def __init__(self, selector_ovrs):
     map_fncs = {"parent": "parent_element", "child": "sub_element"}
-    self.__this = selector_ovrs["classname"]
+    self.__this, self._suffix = selector_ovrs["classname"], ''
     del selector_ovrs["classname"]
     for k, v in selector_ovrs.items():
       getattr(self, map_fncs.get(k, k))(v)
@@ -419,6 +419,9 @@ class Selector(object):
     """
     self.__this = "%s:read-write" % self.__this
     return self
+
+  def suffix(self, data):
+    self._suffix = "%s " % data.strip()
 
   def __str__(self):
     return self.__this
@@ -833,9 +836,9 @@ class Style(object):
       css_id = str(s.selector) % cls_reference
       if str(s):
         if e == "attrs":
-          style.append("%s %s" % (css_id.strip(), s))
+          style.append("%s %s%s" % (css_id.strip(), s.selector._suffix, s))
         else:
-          style.append("%s:%s %s" % (css_id.strip(), e, s))
+          style.append("%s:%s %s%s" % (css_id.strip(), e, s.selector._suffix, s))
     map_cls_ref = {'-webkit-slider-thumb': 'webkit_slider_thumb'}
     for e in ['after', 'before', '-webkit-slider-thumb']:
       s = getattr(self, map_cls_ref.get(e, e))

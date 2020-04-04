@@ -2,7 +2,7 @@ from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlSelect
 from epyk.core.js import JsUtils
-from epyk.core.js.objects import JsSwitch
+from epyk.core.js.objects import JsComponents
 
 
 class Radio(Html.Html):
@@ -122,7 +122,7 @@ class Switch(Html.Html):
     :rtype: JsQueryUi.Autocomplete
     """
     if self._js is None:
-      self._js = JsSwitch.Switch(self, report=self._report)
+      self._js = JsComponents.Switch(self, report=self._report)
     return self._js
 
   def click(self, onFncs=None, offFncs=None):

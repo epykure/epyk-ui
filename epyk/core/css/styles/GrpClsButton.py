@@ -7,6 +7,7 @@ from epyk.core.css import Classes
 
 
 class ClassButton(GrpCls.ClassHtml):
+
   @property
   def css(self):
     """
@@ -36,6 +37,7 @@ class ClassButton(GrpCls.ClassHtml):
 
 
 class ClassBadge(GrpCls.ClassHtml):
+
   @property
   def css(self):
     """
@@ -65,6 +67,44 @@ class ClassButtonCheckBox(GrpCls.ClassHtml):
       self._css_struct = AttrClsButtons.AttrButton(self.htmlObj)
     return self._css_struct
 
+
+class ClassButtonMenu(GrpCls.ClassHtml):
+
+  def __init__(self, htmlObj):
+    super(ClassButtonMenu, self).__init__(htmlObj)
+    self._css_btn_content_hover, self._css_btn_link_hover = None, None
+    self.classList['main'].add(self.css_btn_content)
+    self.classList['main'].add(self.css_btn_link_hover)
+
+  @property
+  def css_btn_content(self):
+    """
+    Description:
+    -----------
+    The CSS property of the underlying items panel.
+    This component will have a dedicated CSS class for the hover event
+
+    :rtype: Classes.CatalogButton.CatalogButton
+    """
+    if self._css_btn_content_hover is None:
+      self._css_btn_content_hover = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'],
+                                                            html_id=self.htmlObj.htmlId).content()
+    return self._css_btn_content_hover
+
+  @property
+  def css_btn_link_hover(self):
+    """
+    Description:
+    -----------
+    The CSS property of the underlying item.
+    This component will have a dedicated CSS class for the hover event
+
+    :rtype: Classes.CatalogButton.CatalogButton
+    """
+    if self._css_btn_link_hover is None:
+      self._css_btn_link_hover = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'],
+                                                                        html_id=self.htmlObj.htmlId).content_link()
+    return self._css_btn_link_hover
 
 # class CssClassButtonCheckBox(CssGrpCls.CssGrpClass):
 #   """

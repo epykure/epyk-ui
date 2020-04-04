@@ -63,3 +63,18 @@ class CssButtonSuccess(CssStyle.Style):
     self.css({'color': self.rptObj.theme.colors[9], 'background-color': self.rptObj.theme.greys[0],
               'border': '1px solid %s' % self.rptObj.theme.colors[9]})
     self.hover.css({'color': self.rptObj.theme.greys[0], 'background-color': self.rptObj.theme.colors[9]})
+
+
+class CssButtonContentHover(CssStyle.Style):
+
+  _hover = {'display': 'block !IMPORTANT'}
+
+  _selectors = {'suffix': ".dropdown-content"}
+
+
+class CssButtonContentAHover(CssStyle.Style):
+
+  _selectors = {'child': ".dropdown-content a"}
+
+  def customize(self):
+    self.hover.css({'background-color': self.rptObj.theme.success[0]})
