@@ -16,11 +16,26 @@ from epyk.interfaces.tables import CompTabulator
 from epyk.interfaces.tables import CompDatatable
 from epyk.interfaces.tables import CompTablesPlotly
 from epyk.interfaces.tables import CompTableD3
+from epyk.interfaces.tables import CompAgGrid
 
 
 class Tables(object):
   def __init__(self, context):
     self.context = context
+
+  @property
+  def aggrid(self):
+    """
+    Description:
+    -----------
+    ag-Grid is the industry standard for JavaScript Enterprise Applications.
+    Developers using ag-Grid are building applications that would not be possible if ag-Grid did not exist.
+
+    Related Pages:
+    --------------
+    https://www.ag-grid.com/javascript-grid/
+    """
+    return CompAgGrid.AgGrid(self)
 
   @property
   def tabulators(self):
@@ -32,8 +47,6 @@ class Tables(object):
     Related Pages:
     --------------
     http://tabulator.info/
-
-    :rtype: CompTabulator.Tabulators
     """
     return CompTabulator.Tabulators(self)
 
