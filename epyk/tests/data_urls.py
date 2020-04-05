@@ -20,6 +20,24 @@ PLOTLY_WEBGL_POLAR = 'https://raw.githubusercontent.com/plotly/datasets/master/h
 BANKING_DATA = 'https://raw.githubusercontent.com/juliencohensolal/BankMarketing/master/rawData/bank-additional-full.csv'
 
 
+#####################################################################################################################
+# AG GRID
+# website: https://github.com/ag-grid
+#
+OLYMPIC_WINNERS_SMALL = 'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/olympicWinnersSmall.json'
+OLYMPIC_WINNERS_FULL = 'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/olympicWinners.json'
+MONTLY_SALES = 'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/sample-data/monthlySales.json'
+STOCKS = 'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/stocks.json'
+BLOG_OBJECT = 'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/blogs.json'
+WEATHER_ENGLAND = 'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/weather_se_england.json'
+AGGRID_OBJECTS_NESTED = 'https://raw.githubusercontent.com/ag-grid/ag-grid/master/grid-packages/ag-grid-docs/src/feature-overlays.json'
+
+SP500W_DATA = 'https://raw.githubusercontent.com/ag-grid/ag-grid-charts-example/master/data/sp500w.csv'
+GE_SHARE_DATA = 'https://raw.githubusercontent.com/ag-grid/ag-grid-charts-example/master/data/GE.csv'
+MSFT_DATA = 'https://raw.githubusercontent.com/ag-grid/ag-grid-charts-example/master/data/MSFT.csv'
+BODY_DATA = 'https://raw.githubusercontent.com/ag-grid/ag-grid-charts-example/master/data/body-data.csv'
+
+
 # https://bl.ocks.org/d3noob
 DC_QUAKES = 'http://bl.ocks.org/d3noob/raw/6077996/45425ba06fc3c30ed3c7492d1042352d3dad0f18/quakes.csv'
 
