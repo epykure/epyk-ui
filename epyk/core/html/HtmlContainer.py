@@ -779,8 +779,8 @@ class Form(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    print(htmlObj)
     htmlObj.inReport = False # Has to be defined here otherwise it is set too late
+    htmlObj.css({'text-align': 'left'})
     self.val.append(htmlObj)
     return self
 

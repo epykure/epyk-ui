@@ -21,7 +21,7 @@ class Label(Html.Html):
     super(Label, self).__init__(report, text, css_attrs={"width": width, "height": height, 'color': color, 'text-align': align},
                                 code=htmlCode, profile=profile)
     self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block', 'line-height': '23px',
-              'vertical-align': 'middle'})
+              'vertical-align': 'middle', 'text-align': 'left'})
     self._jsStyles = dflt_options
     if tooltip:
       self.set_attrs(name='title', value=tooltip)
