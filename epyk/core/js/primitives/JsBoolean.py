@@ -21,13 +21,17 @@ class JsBoolean(JsObject.JsObject):
   @property
   def not_(self):
     """
+    Description:
+    -----------
     Add the Symbol (!) for the boolean negation.
     This feature is also available directly to the JsObj
 
-    Example
+    Usage:
+    ------
     jsObj.objects.boolean.get("weekend").not_
 
-    Documentation
+    Related Pages:
+    --------------
     https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
 
     :return: The Python Javascript Boolean Object
@@ -37,14 +41,18 @@ class JsBoolean(JsObject.JsObject):
 
   def valueOf(self):
     """
+    Description:
+    -----------
     The valueOf() method returns the primitive value of a boolean.
 
-    Example
+    Usage:
+    ------
     jsObj.objects.boolean.new(False, "testBool")
     jsObj.objects.boolean.get("testBool").valueOf()
 
-    Documentation:
-      - https://www.w3schools.com/jsref/jsref_valueof_boolean.asp
+    Related Pages:
+    --------------:
+    https://www.w3schools.com/jsref/jsref_valueof_boolean.asp
 
     :return: A Boolean, either "true" or "false"
     """

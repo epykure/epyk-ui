@@ -26,7 +26,7 @@ class Sliders(object):
   def __init__(self, context):
     self.context = context
 
-  def slider(self, number=0, min=0, max=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+  def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
              helper=None, options=None, profile=None):
     """
     Description:
@@ -43,25 +43,21 @@ class Sliders(object):
 
     Attributes:
     ----------
-    :param value:
-    :param type:
-    :param range:
-    :param animate:
-    :param step:
-    :param min:
-    :param max:
+    :param number:
+    :param minimum:
+    :param maximum:
     :param width:
     :param height:
     :param htmlCode:
-    :param globalFilter:
-    :param recordSet:
-    :param column:
-    :param color:
     :param helper:
+    :param options:
     :param profile:
     """
-    html_slider = html.HtmlEvent.Slider(self.context.rptObj, number, min, max, width, height,  attrs or {}, helper,
-                                         options or {}, htmlCode, profile)
+    if isinstance(number, list):
+      minimum, maximum = min(number), max(number)
+      number = min
+    html_slider = html.HtmlEvent.Slider(self.context.rptObj, number, minimum, maximum, width, height,  attrs or {}, helper,
+                                        options or {}, htmlCode, profile)
     self.context.register(html_slider)
     return html_slider
 

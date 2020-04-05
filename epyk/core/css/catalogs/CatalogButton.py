@@ -43,3 +43,23 @@ class CatalogButton(Catalog.CatalogGroup):
     -----------
     """
     return self._set_class(CssStylesButton.CssButtonSuccess)
+
+  def content(self):
+    """
+    Description:
+    -----------
+    CSS Class for the underlying item panel.
+    By default this item is not visible and this will change when the mouse is hover
+    """
+    return self._set_class(CssStylesButton.CssButtonContentHover)
+
+  def content_link(self):
+    """
+    Description:
+    -----------
+    CSS Class for the item link.
+    This will set the background color when the mouse is hover.
+
+    The color is deduced from the defined theme
+    """
+    return self._set_class(CssStylesButton.CssButtonContentAHover)

@@ -2,6 +2,7 @@ from epyk.core.css.catalogs import CatalogButton
 from epyk.core.css.catalogs import CatalogInput
 from epyk.core.css.catalogs import CatalogChart
 from epyk.core.css.catalogs import CatalogDiv
+from epyk.core.css.catalogs import CatalogTree
 from epyk.core.css.catalogs import CatalogIcons
 from epyk.core.css.catalogs import CatalogLayout
 from epyk.core.css.catalogs import CatalogLink
@@ -39,6 +40,17 @@ class Catalog(object):
     if "button" not in self.__ctx:
       self.__ctx['button'] = CatalogButton.CatalogButton(self.__rptObj, self.__class_list_type)
     return self.__ctx['button']
+
+  @property
+  def dropdown(self):
+    """
+    CSS Classes specific to the dropdown components
+
+    :rtype: CatalogTree.CssStyleDropdown
+    """
+    if "dropdown" not in self.__ctx:
+      self.__ctx['dropdown'] = CatalogTree.CatalogDropDown(self.__rptObj, self.__class_list_type)
+    return self.__ctx['dropdown']
 
   @property
   def table(self):

@@ -8,6 +8,7 @@ from epyk.core.html.options import OptInputs
 
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.objects import JsComponents
 from epyk.core.js.packages import JsTimepicker
 from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.html import JsHtmlField
@@ -38,6 +39,8 @@ class Input(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    -----------
     Property to set all the input component properties
 
     :rtype: OptSelect.OptionsSelect
@@ -72,8 +75,12 @@ class Input(Html.Html):
 
   def focus(self, jsFncs=None, profile=False, options=None):
     """
+    Description:
+    -----------
     Action on focus
 
+    Attributes:
+    ----------
     :param jsFncs: List or String with the Javascript events
     :param profile: Boolean to add the Javascript fragment to profile
     :param options: Python dictionary with special options (shortcuts) for the component
@@ -89,11 +96,16 @@ class Input(Html.Html):
 
   def validation(self, pattern, required=True):
     """
+    Description:
+    -----------
     Add validation rules on the input component
 
-    Example
+    Usage:
+    ------
     input.validation(pattern="[0-9]{5}")
 
+    Attributes:
+    ----------
     :param pattern: String.
     :return: Self to allow the chaining
     """
@@ -110,9 +122,12 @@ class Input(Html.Html):
     ------------
     Add an javascript action when the key enter is pressed on the keyboard
 
-    Example
+    Usage:
+    ------
     htmlObj.input(placeholder="Put your tag").enter("alert()")
 
+    Attributes:
+    ----------
     :param jsFncs:
     :param profile:
 
@@ -488,6 +503,8 @@ class Field(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    -----------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -568,7 +585,10 @@ class FieldAutocomplete(Field):
     --------------
     https://api.jqueryui.com/autocomplete/#event-focus
 
+    Attributes:
+    ----------
     :param focus:
+    :param profile:
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -585,7 +605,10 @@ class FieldAutocomplete(Field):
     --------------
     https://api.jqueryui.com/autocomplete/#event-close
 
+    Attributes:
+    ----------
     :param jsFnc:
+    :param profile:
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -604,7 +627,10 @@ class FieldAutocomplete(Field):
     --------------
     https://api.jqueryui.com/autocomplete/#event-select
 
+    Attributes:
+    ----------
     :param jsFnc:
+    :param profile:
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -623,7 +649,10 @@ class FieldAutocomplete(Field):
     --------------
     https://api.jqueryui.com/autocomplete/#event-response
 
+    Attributes:
+    ----------
     :param jsFnc:
+    :param profile:
     """
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
@@ -642,6 +671,7 @@ class FieldCheckBox(Field):
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, profile):
     input = report.ui.inputs.checkbox(value, width=(None, "%"))
     super(FieldCheckBox, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, profile)
+    self.style.css.line_height = Defaults.LINE_HEIGHT
 
 
 class FieldInteger(Field):
@@ -676,13 +706,30 @@ class Checkbox(Html.Html):
   name, category, callFnc = 'Checkbox', 'Inputs', 'checkbox'
   # _grpCls = CssGrpClsInput.CssClassInput
 
-  def __init__(self, report, flag, label, group_name, width, height, htmlCode, filter, options, attrs, profile):
-    super(Checkbox, self).__init__(report, {"value": flag, 'text': label}, htmlCode=htmlCode,
+  def __init__(self, report, flag, group_name, width, height, htmlCode, filter, options, attrs, profile):
+    super(Checkbox, self).__init__(report, {"value": flag}, htmlCode=htmlCode,
                                    css_attrs={"width": width, "height": height}, globalFilter=filter,
                                    profile=profile, options=options)
     self.set_attrs(attrs={"type": "checkbox"})
     self.set_attrs(attrs=attrs)
     self.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'margin-left': '2px'})
+    self.style.css.line_height = Defaults.LINE_HEIGHT
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlField.Check
+    """
+    if self._dom is None:
+      self._dom = JsHtmlField.Check(self, report=self._report)
+    return self._dom
 
   @property
   def _js__builder__(self):
@@ -704,15 +751,47 @@ class Radio(Html.Html):
     self.add_input("", position="before", css={"width": 'none', "vertical-align": 'middle'})
     self.add_label(label, position="after", css={"display": 'inline-block', "width": "None", 'float': 'none'})
     self.input.inReport = False
+    self.input.set_attrs(name="data-content", value=label)
     if flag:
       self.input.set_attrs({"checked": json.dumps(flag)})
     self.input.style.clear()
     if group_name is not None:
       self.input.set_attrs(name="name", value=group_name)
+    else:
+      self.input.set_attrs(name="name", value=self.htmlId)
     self.input.set_attrs(attrs={"type": "radio"})
     self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
     self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlField.Radio
+    """
+    if self._dom is None:
+      self._dom = JsHtmlField.Radio(self, report=self._report)
+    return self._dom
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript Functions
+
+    :rtype: JsComponents.Radio
+    """
+    if self._js is None:
+      self._js = JsComponents.Radio(self, report=self._report)
+    return self._js
 
   @property
   def _js__builder__(self):
@@ -789,12 +868,17 @@ class Search(Html.Html):
 
   def enter(self, jsFncs, profile=False):
     """
+    Description:
+    -----------
     Add an javascript action when the key enter is pressed on the keyboard
 
     Example
     htmlObj.enter(" alert() ")
 
+    Attributes:
+    ----------
     :param jsFncs:
+
     :return: The python object itself
     """
     self.click(jsFncs)

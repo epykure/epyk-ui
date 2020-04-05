@@ -11,21 +11,20 @@ from epyk.core import html
 
 
 class Lists(object):
-  """
-
-  """
 
   def __init__(self, context):
     self.context = context
 
   def _filter(self, recordSet, column, options=None):
     """
+    Description:
+    ------------
+
     Attributes:
     ----------
     :param recordSet:
     :param column:
     :param options: A dictionary with specific filtering options e.g {'allSelected': True, 'operation': 'in'}
-    :return:
     """
     dataId = id(recordSet)
     dataCode = "df_code_%s" % dataId
@@ -38,11 +37,13 @@ class Lists(object):
 
   def _recordSet(self, recordSet, column):
     """
+    Description:
+    ------------
+
     Attributes:
     ----------
     :param recordSet:
     :param column:
-    :return:
     """
     data = None
     is_converted = False
@@ -72,7 +73,8 @@ class Lists(object):
     s.selected = "B"
     s.change(rptObj.js.console.log(s.dom.val))
 
-    Documentation
+    Related Pages:
+    --------------
     https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
     https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
@@ -135,7 +137,8 @@ class Lists(object):
     Usage:
     ------
 
-    Documentation
+    Related Pages:
+    --------------
     https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
     https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
@@ -162,11 +165,15 @@ class Lists(object):
   def list(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
+
     Usage:
     ------
     l = rptObj.ui.lists.list(["A", "B"])
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
@@ -179,11 +186,15 @@ class Lists(object):
   def numbers(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
+
     Usage:
     ------
     rptObj.ui.lists.numbers(["A", "B"])
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/html/html_lists.asp
     https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
@@ -214,9 +225,23 @@ class Lists(object):
   def points(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/html/html_lists.asp
+
+    Attributes:
+    ----------
+    :param data:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options or {}, profile)
@@ -224,12 +249,26 @@ class Lists(object):
     html_list.css({"list-style-type": 'circle'})
     return html_list
 
-  def disc(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
-             htmlCode=None, helper=None, options=None, profile=None):
+  def disc(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None,
+           options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_list-style-type.asp
+
+    Attributes:
+    ----------
+    :param data:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options or {}, profile)
@@ -240,11 +279,27 @@ class Lists(object):
   def squares(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
              htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Usage:
+    ------
     rptObj.ui.lists.squares(["A", "B"])
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/cssref/pr_list-style-type.asp
+
+    Attributes:
+    ----------
+    :param data:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options or {}, profile)
@@ -263,9 +318,21 @@ class Lists(object):
     l = rptObj.ui.lists.groups(["AWW", "B"])
     l.add_list(["D", "E"], category="Test")
 
-    Documentation
+    Related Pages:
+    --------------
     http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
     http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
+
+    Attributes:
+    ----------
+    :param data:
+    :param categories:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param profile:
     """
     data = data or []
     categories = categories or [""]
@@ -291,6 +358,9 @@ class Lists(object):
     data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
     checks = rptObj.ui.lists.checklist(data)
 
+    Related Pages:
+    --------------
+
     Attributes:
     ----------
     :param data:
@@ -308,11 +378,16 @@ class Lists(object):
   def tree(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
     Usage:
     ------
     data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
     rptObj.ui.lists.tree(data)
+
+    Related Pages:
+    --------------
 
     Attributes:
     ----------
@@ -326,9 +401,11 @@ class Lists(object):
     self.context.register(html_tree)
     return html_tree
 
-  def dropdown(self, recordSet=None, color=None, width=(100, "%"), height=(32, 'px'), htmlCode=None,
+  def dropdown(self, recordSet=None, text="", width=(100, "%"), height=(32, 'px'), htmlCode=None,
                helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
     Documentation
     http://getbootstrap.com/docs/4.0/components/dropdowns/
@@ -343,8 +420,10 @@ class Lists(object):
     :param htmlCode:
     :param profile:
     """
-    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, color, width, height, htmlCode, helper,
-                                     options or {}, profile)
+    dftl_options = {"width": 70}
+    dftl_options.update(options or {})
+    html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, text, width, height, htmlCode, helper,
+                                     dftl_options, profile)
     self.context.register(html_d)
     return html_d
 
@@ -356,7 +435,8 @@ class Lists(object):
     ------
     rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     https://v4-alpha.getbootstrap.com/components/list-group/
 
@@ -382,7 +462,8 @@ class Lists(object):
     ------
     rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     https://v4-alpha.getbootstrap.com/components/list-group/
 
@@ -405,6 +486,11 @@ class Lists(object):
     Description:
     ------------
 
+    Related Pages:
+    --------------
+
+    Attributes:
+    ----------
     :param records:
     :param group_name:
     :param width:

@@ -1,16 +1,68 @@
-"""
-
-"""
 
 from epyk.core.js.html import JsHtml
 
 from epyk.core.js.primitives import JsObjects
 
 
-class JsHtmlFields(JsHtml.JsHtmlRich):
+class Radio(JsHtml.JsHtmlRich):
+
   @property
   def val(self):
     """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s, selected: %s}}
+        ''' % (self.htmlId, self.content.toStr(), self.getAttribute('name'), self.selected.toStr()))
+
+  @property
+  def content(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
+    return JsHtml.ContentFormatters(self._report, "%s.checked" % self._src.input.dom.varName)
+
+  @property
+  def selected(self):
+    """
+
+    :return:
+    """
+    return JsHtml.ContentFormatters(self._report, "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self._src.input.dom.getAttribute('name'))
+
+
+class Check(JsHtml.JsHtmlRich):
+
+  @property
+  def val(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s}}
+        ''' % (self.htmlId, self.content.toStr(), self.getAttribute('name')))
+
+  @property
+  def content(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
+    return JsHtml.ContentFormatters(self._report, "%s.checked" % self.varName)
+
+
+class JsHtmlFields(JsHtml.JsHtmlRich):
+
+  @property
+  def val(self):
+    """
+    Description:
+    -----------
 
     :return:
     """
@@ -18,6 +70,19 @@ class JsHtmlFields(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
     return self._src.input.dom.content
 
-  def empty(self): return '%s.innerHTML = ""' % self.varName
+  def empty(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
+    return JsObjects.JsObjects.get('%s = ""' % self.content.toStr())

@@ -1,7 +1,10 @@
+
 from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlSelect
 from epyk.core.js import JsUtils
+from epyk.core.css import Defaults_css
+from epyk.core.js.objects import JsComponents
 
 
 class Radio(Html.Html):
@@ -57,6 +60,44 @@ class Radio(Html.Html):
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), row.html(), self.helper)
 
 
+class Tick(Html.Html):
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  name, category, callFnc = 'Tick', 'Icons', 'tick'
+
+  def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, options, profile):
+    self._options = options
+    super(Tick, self).__init__(report, '', code=htmlCode, profile=profile,
+                               css_attrs={"width": width, 'height': height, 'float': 'left' if position is None else position})
+    if tooltip is not None:
+      self.tooltip(tooltip)
+    # Add the internal components icons and helper
+    self.add_span(text, css={"float": 'right'})
+    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()})
+    self.icon.style.add_classes.div.background_hover()
+    self.css({"margin": "5px 0", 'cursor': 'pointer'})
+    self.style.css.float = position
+    self.style.css.display = "inline-block"
+    self.css({"text-align": "center"})
+    self.span.css({"line-height": '%spx' % 25, 'vertical-align': 'middle'})
+    self.icon.css({"border-radius": "%spx" % 25, "width": "%spx" % 25, "margin-right": "auto", "margin": "auto",
+                   "color": 'blue', "line-height": '%s%s' % (25, width[1])})
+
+  @property
+  def dom(self):
+    """
+    HTML Dom object
+
+    :rtype: JsHtmlSelect.Tick
+    """
+    if self._dom is None:
+      self._dom = JsHtmlSelect.Tick(self, report=self._report)
+      self._dom.options = self._options
+    return self._dom
+
+  def __str__(self):
+    return "<span %s></span>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+
+
 class Switch(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
   name, category, callFnc = 'Switch Buttons', 'Buttons', 'switch'
@@ -78,9 +119,9 @@ class Switch(Html.Html):
     self.switch_label.style.clear()
     self.switch_label.style.add_classes.radio.switch_label()
     self.switch_label.inReport = False
-    self.switch_label.style.css.line_height = "18px"
+    self.switch_label.style.css.line_height = "10px"
 
-    self.switch_text = report.ui.tags.p(self.val['on'])
+    self.switch_text = report.ui.tags.p(self.val['off'])
     self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold"})
     self.switch_text.tooltip(self.val.get('text', ''))
     self.switch_text.inReport = False
@@ -88,7 +129,7 @@ class Switch(Html.Html):
     # self.css({"display": 'inline-block'})
     self.switch = self.dom.querySelector("label")
     # data should be stored for this object
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append("var %s_data = %s" % (self.htmlCode, records))
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append("var %s_data = %s" % (self.htmlId, records))
 
   @property
   def dom(self):
@@ -105,7 +146,24 @@ class Switch(Html.Html):
   def _js__builder__(self):
     return '''
       if (data.off == data.checked){htmlObj.querySelector("input").checked = false; htmlObj.querySelector("p").innerHTML = data.off}
-      else {htmlObj.querySelector("input").checked = true; htmlObj.querySelector("p").innerHTML = data.on}'''
+      else {htmlObj.querySelector("input").checked = true; htmlObj.querySelector("p").innerHTML = data.on};
+      window[htmlObj.getAttribute('id') +"_data"] = data '''
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsQueryUi.Autocomplete
+    """
+    if self._js is None:
+      self._js = JsComponents.Switch(self, report=self._report)
+    return self._js
 
   def click(self, onFncs=None, offFncs=None):
     """
@@ -138,10 +196,10 @@ class Switch(Html.Html):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(
       self.switch.onclick('''
         var input_check = this.parentNode.querySelector('input');
-        if(input_check.checked){%(clickOn)s; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.on; input_check.checked = false}
-        else {%(clickOff)s; input_check.checked = true; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.off}
-        ''' % {'clickOn': JsUtils.jsConvertFncs(self._clicks["on"], toStr=True), "htmlCode": self.htmlCode,
-               'clickOff': JsUtils.jsConvertFncs(self._clicks["off"], toStr=True)}).toStr())
+        if(input_check.checked){%(clickOn)s; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.off; input_check.checked = false}
+        else {%(clickOff)s; input_check.checked = true; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.on}
+        ''' % {'clickOn': JsUtils.jsConvertFncs(self._clicks["off"], toStr=True), "htmlCode": self.htmlId,
+               'clickOff': JsUtils.jsConvertFncs(self._clicks["on"], toStr=True)}).toStr())
     return '''
       <div %s>%s %s %s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()),
                                    self.checkbox.html(), self.switch_label.html(), self.switch_text.html())

@@ -1,8 +1,11 @@
+
 from epyk.core.html import HtmlList
+from epyk.core.html import Html
+from epyk.core.html import Defaults
+
 from epyk.core.html.options import OptTrees
 
-# The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsList
+from epyk.core.css.styles import GrpClsList
 
 
 class Tree(HtmlList.List):
@@ -40,7 +43,7 @@ class Tree(HtmlList.List):
         sub_l = self._report.ui.list()
         sub_l.inReport = False
         ul.add_item(sub_l)[-1].no_decoration
-        ul[-1].add_label(l['label'], css={"color": l.get('color', 'none')})
+        ul[-1].add_label(l.get('label', l.get('value', '')), css={"color": l.get('color', 'none')})
         ul[-1].add_icon(self.options.icon_open if self.options.expanded else self.options.icon_close)
         if not self.options.expanded:
           sub_l.css({"display": 'none'})
@@ -49,7 +52,7 @@ class Tree(HtmlList.List):
           ul[-1].icon.dom.switchClass(self.options.icon_close.split(" ")[-1], self.options.icon_open.split(" ")[-1])])
         self.set(sub_l, l.get('items'))
       else:
-        ul.add_item(l['label'])[-1].no_decoration
+        ul.add_item(l.get('label', l.get('value', '')))[-1].no_decoration
         ul[-1].css({"color": l.get('color', 'none')})
     return self
 
@@ -99,95 +102,61 @@ class TreeInput(Tree):
     return self
 
 
-class DropDown(HtmlList.List):
-  alias, cssCls = 'dropdown', ['btn', 'dropdown-toggle']
+class DropDown(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
-  # _grpCls = CssGrpClsList.CssClassListDropDown
+  #__reqJs = ['jquery']
   name, category, callFnc = 'DropDown Select', 'Lists', 'dropdown'
 
-  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
-    super(DropDown, self).__init__(report, [], color, width, height, htmlCode, helper, options, profile)
-    self.allowTableFilter, self._jsStyles = [], {"clearDropDown": True, 'dropdown_submenu': {},
-      'a_dropdown_item': {'text-decoration': 'none', "color": 'inherit'}, # {"width": "100%", 'font-size': '12px', 'text-decoration': 'none', 'padding-left': "10px"},
-      "li_dropdown_item": {"text-align": "left"}}
-    self._vals = data
-    self.css({"margin-top": "5px", "display": "inline-block"})
-    self.set(self, self.val)
-    #self.set_attrs(attrs={"class": ["dropdown-menu"], 'id': self.htmlId, 'aria-labelledby': 'dropdownMenu'})
+  def __init__(self, report, data, text, width, height, htmlCode, helper, options, profile):
+    self.__options = {}
+    super(DropDown, self).__init__(report, text, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+    self._vals, self.text = data, text
+    self.css({'padding': 0, 'margin': "1px", "display": "block", "z-index": 10, 'cursor': 'pointer', 'position': 'relative'})
+    self._jsStyles = {"a": {'text-decoration': 'none', 'line-height': '%spx' % Defaults.LINE_HEIGHT, 'padding': '0 10px', "width": '%spx' % options.get("width")},
+                      "ul": {"left": "%spx" % options.get("width")}}
+    self.__options = OptTrees.OptDropDown(self, options)
 
-  def set(self, ul, data):
+  @property
+  def style(self):
     """
+    Description:
+    -----------
 
-    :param ul:
-    :param data:
+    :rtype: GrpClsList.ClassDropDown
     """
-    for v in data:
-      if v.get('items') is not None:
-        sub_l = self._report.ui.list([]).set_attrs(attrs={"class": ["dropdown-menu"]})
-        sub_l.inReport = False
-        ul.add_item(sub_l)[-1].no_decoration
-        ul[-1].set_attrs({"class": "dropdown-submenu"})
-        ul[-1].add_link(v['label'], url="#", css={"width": "none"})
-        #for i in v['items']:
-        #  sub_l.add_item(i["label"])
-        #  sub_l[-1].set_attrs({"class": ["dropdown-submenu", 'dropdown-menu-right']})
-        self.set(sub_l, v.get('items'))
-        #children.append("<a class='dropdown-item' tabindex='-1' href='#'>%s</a> %s" % (v['value'], sub_l))
-      else:
-        a = self._report.ui.link(v['label'], url="#")
-        a.no_decoration
-        ul.add_item(a)[-1].no_decoration
-    #l.set_items(data=children, attrs={"class": ['dropdown-submenu', 'dropdown-menu-right']})
-    return self
+    if self._styleObj is None:
+      self._styleObj = GrpClsList.ClassDropDown(self)
+    return self._styleObj
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the possible object for a Dropdown
+
+    :rtype: OptTrees.OptDropDown
+    """
+    return self.__options
 
   @property
   def _js__builder__(self):
     return ''' 
-        var jqHtmlObj = jQuery(htmlObj);
-        if (options.clearDropDown) {jqHtmlObj.empty()};
+        var jqHtmlObj = jQuery(htmlObj); if(options.clearDropDown) {jqHtmlObj.empty()};
         data.forEach(function(rec){
-          if (rec._children != undefined) {
-            var li = $('<li class="dropdown-submenu dropdown-menu-right"></li>').css(options.dropdown_submenu);
-            var a = $('<a class="dropdown-item" tabindex="-1" href="#" style="display:inline-block"><span style="display:inline-block;float:left">'+ rec.value +'</span></a>').css(options.a_dropdown_item);
-            li.append(a); var ul = $('<ul class="dropdown-menu"></ul>'); li.append(ul); options.clearDropDown = false;
-            jqHtmlObj.append(li); %(pyCls)s(ul, rec._children, options)
+          if (rec.items != undefined) {
+            var li = $('<li class="dropdown" style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); var a = $('<a>'+ rec.value +'</a>');
+            li.append(a); var ul = $('<ul class="submenu"></ul>'); ul.css(options.ul); options.clearDropDown = false; a.css(options.a);
+            %(pyCls)s(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
           } else {
-            if (rec.disable == true){jqHtmlObj.append('<li class="disabled"><a href="#">'+ rec.value +'</a></li>')}
-            else {
               if (rec.url == undefined){var a = $('<a href="#">'+ rec.value +'</a>')}
-              else {var a = $('<a href="'+ rec.url +'">'+ rec.value +'</a>')}
-              a.css(options.a_dropdown_item);
-              var li = $('<li class="dropdown-item"></li>').css(options.dropdown_submenu);
-              li.append(a); jqHtmlObj.append(li)}}
+              else {var a = $('<a href="'+ rec.url +'">'+ rec.value +'</a>')}; a.css(options.a);
+              var li = $('<li style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); li.append(a); jqHtmlObj.append(li)}
         })''' % {"pyCls": self.__class__.__name__}
 
-  # def __str__(self):
-  #   # [s for s in self.defined if not s.startswith("CssDropDown")]
-  #   items, children = [], []
-  #   l = self._report.ui.list([])
-  #   l.inReport = False
-  #   for v in self.val:
-  #     if v.get('items') is not None:
-  #       sub_l = self._report.ui.list([])
-  #       sub_l.inReport = False
-  #       a = self._report.ui.link("test 2", url="#").set_attrs({"class": ["dropdown-item"], 'tabindex': -1})
-  #       a.inReport = False
-  #       for i in v['items']:
-  #         sub_l.add_item(i["label"], attrs={"class": ["dropdown-submenu", 'dropdown-menu-right']})
-  #       sub_l.set_attrs(attrs={"class": ["dropdown-menu"]})
-  #       children.append("<a class='dropdown-item' tabindex='-1' href='#'>%s</a> %s" % (v['value'], sub_l))
-  #     else:
-  #       children.append(v['label'])
-  #   l.set_items(data=children, attrs={"class": ['dropdown-submenu', 'dropdown-menu-right']})
-  #   l.set_attrs(attrs={"class": ["dropdown-menu"], 'id': self.htmlId, 'aria-labelledby': 'dropdownMenu'})
-  #   items.append(l)
-  #   return '''
-  #     <div class="dropdown" %(cssAttr)s>
-  #       <button id="%(htmlId)s_button" style="font-size:%(size)s;width:100%%;height:100%%;background-color:%(darkBlue)s;color:%(color)s" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">%(title)s<span class="caret"></span></button>
-  #       %(val)s
-  #     </div> ''' % {'cssAttr': self.get_attrs(withId=False, pyClassNames=self.defined), 'title': self.title, 'htmlId': self.htmlId,
-  #                   'darkBlue': self.getColor('colors', 7), 'color': self.getColor('greys', 0), 'size': self.size,
-  #                   'val': "".join([str(l) for l in items])}
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return "<ul %s></ul>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
   def to_word(self, document):
     p = document.add_paragraph()

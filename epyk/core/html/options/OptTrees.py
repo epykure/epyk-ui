@@ -1,4 +1,7 @@
 
+from epyk.core.html.options import Options
+
+
 class OptionsTree(object):
 
   def __init__(self, src, options):
@@ -46,3 +49,23 @@ class OptionsTree(object):
     self._icon_close = icon
     self.src.items = []
     self.src.set(self.src, self.src.val)
+
+
+class OptDropDown(Options):
+
+  @property
+  def width(self):
+    """
+    Description:
+    ------------
+    """
+    return self._report._jsStyles.get('autoFocus', False)
+
+  @width.setter
+  def width(self, value):
+    if isinstance(value, int):
+      value = "%spx" % value
+    #
+    self._report._jsStyles["a"]["width"] = value
+    self._report._jsStyles["ul"]["left"] = value
+    return self

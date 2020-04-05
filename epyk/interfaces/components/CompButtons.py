@@ -406,3 +406,34 @@ class Buttons(object):
     html_file = html.HtmlFiles.DownloadMemoryZip(self.context.rptObj, text, fileName, css_cls, css_attr, profile)
     self.context.register(html_file)
     return html_file
+
+  def menu(self, record, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    -----------
+    Button with an underlying items menu
+
+    Usage:
+    ------
+    tree5 = rptObj.ui.buttons.menu(["A", "B", "C"], 'Menu')
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
+
+    Attributes:
+    ----------
+    :param record:
+    :param text:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
+    html_button = html.HtmlButton.ButtonMenu(self.context.rptObj, record, text, icon, width, height, htmlCode=htmlCode,
+                                              tooltip=tooltip, profile=profile, options=options)
+    self.context.register(html_button)
+    return html_button

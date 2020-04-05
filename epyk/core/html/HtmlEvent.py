@@ -122,6 +122,7 @@ class Menu(Html.Html):
     super(Menu, self).__init__(report, records, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.__options = OptSliders.OptionsMenu(self, options)
+    self.css({"display": 'block', 'position': 'relative'})
 
   @property
   def options(self):
@@ -139,7 +140,17 @@ class Menu(Html.Html):
 
   @property
   def _js__builder__(self):
-    return "jQuery(htmlObj).menu({value: parseFloat(data)}).find('div').css(options)"
+    return '''
+          var jqHtmlObj = jQuery(htmlObj); if (options.clearDropDown) {jqHtmlObj.empty()};
+          data.forEach(function(rec){
+            if (rec.items != undefined) {
+              var li = $('<li></li>'); var div = $('<div>'+ rec.value +'</div>').css({"width": '150px'});
+              li.append(div); var ul = $('<ul aria-hidden="true"></ul>'); options.clearDropDown = false;
+              %(pyCls)s(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
+            } else {
+              var div = $('<div>'+ rec.value +'</div>').css({"width": '150px'}); var li = $('<li></li>');
+              li.append(div); jqHtmlObj.append(li)};
+          }); jqHtmlObj.menu(options)''' % {"pyCls": self.__class__.__name__}
 
   @property
   def js(self):
@@ -179,8 +190,7 @@ class Menu(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
-
+    return '<ul %s></ul>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Dialog(Html.Html):
