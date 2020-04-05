@@ -170,6 +170,12 @@ JS_IMPORTS = {
     'website': 'https://momentjs.com/',
   },
 
+  # AG Grid tables
+  'ag-grid': {
+    'website': 'https://www.ag-grid.com/javascript-grid/',
+    'modules': [
+      {'script': 'ag-grid-community.min.js', 'version': '23.0.2', 'path': 'ag-grid/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+
   # module for tabulator
   'tabulator': {
     'req': [
@@ -853,12 +859,6 @@ CSS_IMPORTS = {
     'req': [{'alias': 'datatables'}],
     'modules': [
       {'script': 'colReorder.bootstrap4.min.css', 'version': '1.5.1', 'path': 'colreorder/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
-
-  # Datatable column reordering modules
-  'datatables-select': {
-    'req': [{'alias': 'datatables'}],
-    'modules': [
-      {'script': 'select.bootstrap4.min.css', 'version': '1.2.5', 'path': 'select/%(version)s/css/', 'cdnjs': 'https://cdn.datatables.net'}]},
 
   # Bootstrap style width CDN links
   'bootstrap': {
