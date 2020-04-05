@@ -788,20 +788,22 @@ class Fieldset(Html.Html):
     super(Fieldset, self).__init__(report, legend, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.css({'padding': '5px', 'border': '1px groove %s' % self._report.theme.greys[3], 'display': 'block', 'margin': '5px 0'})
+    self.components = []
 
   @property
   def _js__builder__(self):
-    return '''
-      htmlObj.firstChild.remove();
-      var eltLegend = document.createElement('legend');
-      eltLegend.style.fontSize = 'inherit'; eltLegend.innerHTML = data; htmlObj.prepend(eltLegend);
-      if(typeof options.css !== 'undefined'){for(var k in options.css){firstChild.style[k] = options.css[k]}}'''
+    return '''htmlObj.firstChild.innerHTML = data; 
+      if(typeof options.css !== 'undefined'){Object.keys(options.css).forEach(function(key){htmlObj.firstChild.style[key] = options.css[key]})}'''
 
-  def add_label(self, text, css=None, position="after", for_=None):
-    return super(Fieldset, self).add_label(text, css, position, for_)
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.components.append(htmlObj)
+    return self
 
-  def add_title(self, text, level=None, css=None, position="after", options=None):
-    return super(Fieldset, self).add_title(text, level, css, position, options={'content_table': False} if options is None else options)
+  def __getitem__(self, i):
+    return self.components[i]
 
   def __str__(self):
-    return '<fieldset %s>%s</fieldset>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.components])
+    return '<fieldset %s><legend style="width:auto">%s</legend>%s</fieldset>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, str_div, self.helper)
