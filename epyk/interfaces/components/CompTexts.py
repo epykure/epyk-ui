@@ -372,7 +372,7 @@ class Texts(object):
     :param helper:
     :param profile:
     """
-    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
+    dflt_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.'}
     if options is not None:
       dflt_options.update(options)
     html_number = html.HtmlText.Numeric(self.context.rptObj, number, title, label, icon, color, tooltip, htmlCode,

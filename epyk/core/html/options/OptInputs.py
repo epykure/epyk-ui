@@ -18,7 +18,7 @@ class OptionsInput(Options):
     return self
 
   @packageImport("accounting")
-  def formatMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+  def formatMoney(self, symbol="", digits=0, thousand_sep=".", decimal_sep=","):
     """
     Description:
     -----------
@@ -35,7 +35,7 @@ class OptionsInput(Options):
     :param thousand_sep: String. The thousand separator
     :param decimal_sep: String. The decimal separator
     """
-    self._report._jsStyles["formatMoney"] = {"symbol": symbol, 'digit': digit, "thousand": thousand_sep, "decimal": decimal_sep}
+    self._report._jsStyles["formatMoney"] = {"symbol": symbol, 'digit': digits, "thousand": thousand_sep, "decimal": decimal_sep}
     return self
 
   @packageImport("accounting")

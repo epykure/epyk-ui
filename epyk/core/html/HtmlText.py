@@ -735,6 +735,7 @@ class Title(Html.Html):
 
 class Numeric(Html.Html):
   name, category, callFnc = 'Number', 'Number', 'number'
+  __reqJs = ['accounting']
 
   def __init__(self, report, number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile):
     super(Numeric, self).__init__(report, number, code=htmlCode, profile=profile, css_attrs={"width": width, "color": color})
@@ -747,14 +748,68 @@ class Numeric(Html.Html):
     # Update the CSS Style of the component
     self.css({'text-align': 'center', 'display': 'inline-block'})
     self.tooltip(tooltip)
-    self._jsStyles = options
+    self.__options = OptText.OptionsNumber(self, options)
+
+  def money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", format="%s%v"):
+    """
+    Description:
+    -----------
+    Format any number into currency
+
+    Related Pages:
+    --------------
+    http://openexchangerates.github.io/accounting.js/
+
+    Attributes:
+    ----------
+    :param symbol: String. custom symbol
+    :param digit: Integer. Number of digit
+    :param thousand_sep: String. The thousand separator
+    :param decimal_sep: String. The decimal separator
+    """
+    self.options.symbol = symbol
+    self.options.format = format
+    self.options.digit = digit
+    self.options.thousand_sep = thousand_sep
+    self.options.decimal_sep = decimal_sep
+    return self
+
+  def number(self, digits=0, thousand_sep=',', decimal_sep=","):
+    """
+    Description:
+    -----------
+    Format a number with custom precision and localisation
+
+    Related Pages:
+    --------------
+    http://openexchangerates.github.io/accounting.js/
+
+    Attributes:
+    ----------
+    :param digits: Integer. Number of digit
+    :param thousand_sep: String. The thousand separator
+    """
+    self._jsStyles["type_number"] = "number"
+    self.options.digits = digits
+    self.options.thousand_sep = thousand_sep
+    self.options.decimal_sep = decimal_sep
+    return self
+
+  @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsNumber
+    """
+    return self.__options
 
   @property
   def _js__builder__(self):
-    return "htmlObj.querySelector('font').innerHTML = %s" % (self.js.string("data", isPyData=False).toFormattedNumber(
-              decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
-              thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
-              decSeparator=self._report.js.number("options.decSeparator", isPyData=False)))
+    return '''
+      if (options.type_number == 'money'){ htmlObj.querySelector('font').innerHTML = accounting.formatMoney(data, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format) }
+      else { htmlObj.querySelector('font').innerHTML = accounting.formatNumber(data, options.digits, options.thousand_sep, options.decimal_sep) }      
+      '''
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
