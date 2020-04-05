@@ -492,7 +492,7 @@ class JsHistory(object):
 
 
 class JsWindowEvent(object):
-  def addEventListener(self, eventType, jsFncs, windowId="window"):
+  def addEventListener(self, eventType, jsFncs, windowId="window", subEvents=None):
     """
     Description:
     ------------
@@ -502,10 +502,12 @@ class JsWindowEvent(object):
     :param eventType:
     :param jsFncs:
     :param windowId:
+    :param subEvents: List of names you want your underlying function to have as arguments
     """
+    subEvents = '' if not subEvents else ','.join(subEvents)
     eventType = JsUtils.jsConvertData(eventType, None)
     jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True)
-    return JsFncs.JsFunction("%s.addEventListener(%s, function(){%s})" % (windowId, eventType, jsFncs))
+    return JsFncs.JsFunction("%s.addEventListener(%s, function(%s){%s})" % (windowId, eventType, subEvents, jsFncs))
 
   def addScrollListener(self, jsFncs, windowId="window"):
     """
@@ -542,7 +544,7 @@ class JsWindowEvent(object):
     """
     return self.addEventListener("DOMContentLoaded", jsFncs, windowId)
 
-  def addClickListener(self, jsFncs, windowId="window"):
+  def addClickListener(self, jsFncs, windowId="window", subEvents=None):
     """
     Description:
     ------------
@@ -552,7 +554,7 @@ class JsWindowEvent(object):
     :param jsFncs:
     :param windowId:
     """
-    return self.addEventListener("click", jsFncs, windowId)
+    return self.addEventListener("click", jsFncs, windowId, subEvents)
 
 
 class JsWindow(object):

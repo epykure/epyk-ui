@@ -831,8 +831,17 @@ class Modal(Html.Html):
     self.col += self.closeBtn
     self.col.inReport = False
     self.val.append(self.col)
+    self.__outOfScopeClose = True
     for htmlObj in htmlObjs:
       self.__add__(htmlObj)
+
+  @property
+  def outOfScopeClose(self):
+    return self.__outOfScopeClose
+
+  @outOfScopeClose.setter
+  def outOfScopeClose(self, val):
+    self.__outOfScopeClose = val
 
   @property
   def style(self):
@@ -848,6 +857,17 @@ class Modal(Html.Html):
   def show(self):
     return self._report.js.getElementById(self.htmlId).css({'display': 'block'})
 
+  def close_on_background(self):
+    """
+    Description:
+    ------------
+    Will allow an event to close the modal if a click event is detected anywhere outside the modal
+    """
+    modal = self._report.js.getElementById(self.htmlId)
+    self._report.js.addOnReady(self._report.js.window.events.
+                                      addClickListener(self._report.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})),
+                                                       subEvents=['event']))
+
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set too late
@@ -855,6 +875,8 @@ class Modal(Html.Html):
     return self
 
   def __str__(self):
+    if self.__outOfScopeClose:
+      self.close_on_background()
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
     self.set_attrs({'css': self.style.css.attrs})
     if self.doSubmit:
