@@ -60,17 +60,21 @@ class Label(Html.Html):
     self.on("click", jsFncs)
     return self
 
-  def no_selectable(self, flag=True):
+  def selectable(self, flag=False):
     """
+    Description:
+    ------------
     Make the label component not selectable.
 
     This will be done by adding the class CssTextNotSelectable to the component
 
+    Attributes:
+    ----------
     :param flag: Boolean.
 
     :return: self to allow the chains
     """
-    if flag:
+    if not flag:
       self.style.add_classes.text.no_selection()
     return self
 
@@ -421,13 +425,21 @@ class Pre(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  def no_selectable(self, flag=True):
+  def selectable(self, flag=False):
     """
+    Description:
+    ------------
+    Make the label component not selectable.
 
+    This will be done by adding the class CssTextNotSelectable to the component
+
+    Attributes:
+    ----------
     :param flag: Boolean.
-    :return:
+
+    :return: self to allow the chains
     """
-    if flag:
+    if not flag:
       self.style.add_classes.text.no_selection()
     return self
 
@@ -475,14 +487,6 @@ class Paragraph(Html.Html):
       self.css('border', '1px solid %s' % self._report.theme.greys[9])
     self.css({'text-align': 'justify', 'margin-top': '3px', "text-justify": 'distribute'})
 
-  # @property
-  # def val(self):
-  #   self._report.jsOnLoadFnc.add('''
-  #     function paraGrapVal(htmlId){
-  #       var result = []; $('#'+ htmlId).find('p').each(function(){result.push($(this).html())});
-  #       return result.join('\\n');}''')
-  #   return "paraGrapVal('%s') " % self.htmlId
-
   @property
   def _js__builder__(self):
     markdown = self._report.js.string("line", isPyData=False).toStringMarkup()
@@ -494,6 +498,22 @@ class Paragraph(Html.Html):
         htmlObj.appendChild(p)});
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
       ''' % {"markdown": markdown}
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlRich
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
