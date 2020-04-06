@@ -846,16 +846,23 @@ class JsDoms(JsObject.JsObject):
 
   def css(self, type, jsObject=None):
     """
+    Description:
+    -----------
     Replicate in plain Js the Jquery CSS function
 
-    Example
+    Usage:
+    ------
     select.label.dom.css({"color": "red"})
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
+    Attributes:
+    ----------
     :param type: A String with the type of parameter or a python dictionary
     :param jsObject: A JsObj with the value to be set
+
     :return: A JsObj
     """
     if jsObject is None and isinstance(type, dict):
@@ -874,6 +881,32 @@ class JsDoms(JsObject.JsObject):
         split_css = type.split("-")
         type = "%s%s" % (split_css[0], split_css[1].title())
       self._js.append("%s.style.%s = %s" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+    return self
+
+  def position(self, x=None, y=None):
+    """
+    Description:
+    -----------
+    Set the position of the component in the page.
+    By default the component will be fixed at the mouse level (this should be used in an event).
+
+    Usage:
+    ------
+    rptObj.js.createElement("div", "popup").innerHTML("uygk,k,kj..kj.kjyf").attr('id', 'popup').css({
+        'color': 'red', 'display': 'block'}).position()
+
+    Attributes:
+    ----------
+    :param x: Integer. The positinn from the top of the page
+    :param y: Integer. The position from the left
+
+    :return: A JsObj
+    """
+    if x is None and y is None:
+      self.css({"position": 'absolute', 'top': JsObject.JsObject.get("(event.clientY + window.scrollY) + 'px'"),
+                'left': JsObject.JsObject.get("(event.clientX + window.scrollX) + 'px'")})
+    else:
+      self.css({"position": 'absolute', 'top': "%spx" % x or 0, 'left': "%spx" % x or 0})
     return self
 
   def transition(self, attribute, value, duration=2, delay=None, reverse=False):

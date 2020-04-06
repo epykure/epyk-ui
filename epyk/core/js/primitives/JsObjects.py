@@ -352,7 +352,7 @@ class XMLHttpRequest(object):
 
   def __init__(self, report, varName, method_type, url, data=None):
     self.data = {} if data is None else data
-    self._src, self.__headers, self.url, self.init_params = report, {}, url, init_params
+    self._src, self.__headers, self.url = report, {}, url
     self.__mod_name, self.__mod_path, self.method = None, None, method_type
     self.__req_success, self.__req_fail, self.__req_send = None, None, None
     self.__url_prefix = ""
@@ -591,7 +591,7 @@ class XMLHttpRequest(object):
 
   def toStr(self):
     request = ["var %s = new XMLHttpRequest()" % self.varId]
-    request.append("%s.open('%s', '%s%s')" % (self.varId, self.method, self.url, self.__url_prefix))
+    request.append("%s.open(%s, '%s%s')" % (self.varId, self.method, self.url, self.__url_prefix))
     for k, v in self.__headers.items():
       request.append("%s.setRequestHeader('%s', '%s')" % (self.varId, k, v))
     if self.__req_success is not None:
@@ -599,5 +599,8 @@ class XMLHttpRequest(object):
         request.append("%s.onload = function() {}" % self.varId)
       else:
         request.append("%s.onload = function() {%s}" % (self.varId, JsUtils.jsConvertFncs(self.__req_success, toStr=True)))
+    if self.__req_send is None:
+      raise Exception("The send method must be called")
+
     request.append(self.__req_send)
     return ";".join(request)

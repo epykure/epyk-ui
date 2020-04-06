@@ -1011,6 +1011,23 @@ class Body(Html):
   def htmlId(self):
     return "body"
 
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtml(self, report=self._report)
+      self._dom.varName = "document.body"
+    return self._dom
+
   def onReady(self, jsFncs):
     """
     Description:
