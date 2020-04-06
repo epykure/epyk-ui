@@ -1,6 +1,8 @@
 
 
 from epyk.core import html
+from epyk.core.html import graph
+
 from epyk.core.html import Defaults as defaults_html
 from epyk.core.css import Defaults as defaults_css
 
@@ -204,3 +206,17 @@ class Number(object):
     html_number = self.number(number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile)
     html_number.money(symbol, format="%v %s")
     return html_number
+
+  def plotly(self, value, title=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
+             htmlCode=None):
+    ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    self.context.register(ind)
+    ind.add_trace({'value': value}, mode="number")
+    return ind
+
+  def plotly_with_delta(self, value, title=None, profile=None, options=None, width=(100, "%"),
+                        height=(330, "px"), htmlCode=None):
+    ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    self.context.register(ind)
+    ind.add_trace({'value': value}, mode="number+delta")
+    return ind
