@@ -68,7 +68,7 @@ class Modal(object):
       obj.css({'margin': '40px', 'width': 'auto', 'text-align': 'justify'})
 
     modal = html.HtmlContainer.Modal(self.context.rptObj, disc_list, False, helper)
-    modal.col.css({'width': '450px'})
+    modal.col.css({'width': '450px', 'height':'700px'})
     if add_buttons or submit:
       submitRow = self.context.rptObj.ui.row([]) if not add_buttons else self.context.rptObj.ui.row(add_buttons)
       if submit:
