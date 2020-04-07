@@ -55,7 +55,7 @@ class Sliders(object):
     """
     if isinstance(number, list):
       minimum, maximum = min(number), max(number)
-      number = min
+      number = minimum
     html_slider = html.HtmlEvent.Slider(self.context.rptObj, number, minimum, maximum, width, height,  attrs or {}, helper,
                                         options or {}, htmlCode, profile)
     self.context.register(html_slider)

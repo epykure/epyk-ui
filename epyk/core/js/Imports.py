@@ -683,7 +683,7 @@ JS_IMPORTS = {
   'prism': {
     'website': 'https://prismjs.com/',
     'modules': [
-      {'reqAlias': 'prism', 'script': 'prism.js', 'version': '1.11.0', 'path': 'prism/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'reqAlias': 'prism', 'script': 'prism.js', 'version': '1.20.0', 'path': 'prism/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # Javascript package to display mathematical formulas
   # https://codingislove.com/display-maths-formulas-webpage/
@@ -939,7 +939,7 @@ CSS_IMPORTS = {
   'prism': {
     'website': 'https://prismjs.com/',
     'modules': [
-      {'script': 'prism.css', 'version': '1.11.0', 'path': 'prism/%(version)s/themes/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'prism.css', 'version': '1.20.0', 'path': 'prism/%(version)s/themes/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # Code mirror
   'codemirror': {
