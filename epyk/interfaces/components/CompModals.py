@@ -63,13 +63,22 @@ class Modal(object):
     self.context.register(modal)
     return modal
 
-  def disclaimer(self, disc_text, submit=True, validation_text='AGREE', to_html=True, helper=None):
-    title = self.context.rptObj.ui.title('DISCLAIMER').css({'text-align': 'center', 'display': 'inline-block', 'maring': 0, 'background-color': 'rgb(0,0,0,0.4)'})
-    disc_text = disc_text.replace('\n', '<br/>') if to_html else disc_text
-    text = self.context.rptObj.ui.texts.paragraph(disc_text)
-    modal = html.HtmlContainer.Modal(self.context.rptObj, [title, text], submit, helper)
-    # if submit:
-    #   modal.submit.val = validation_text
+  def disclaimer(self, disc_list, submit=True, validation_text='AGREE', action=None, add_buttons=None, to_html=True, helper=None):
+    for obj in disc_list:
+      obj.css({'margin': '40px', 'width': 'auto', 'text-align': 'justify'})
+
+    modal = html.HtmlContainer.Modal(self.context.rptObj, disc_list, False, helper)
+    modal.col.css({'width': '450px'})
+    if add_buttons or submit:
+      submitRow = self.context.rptObj.ui.row([]) if not add_buttons else self.context.rptObj.ui.row(add_buttons)
+      if submit:
+        submitBtn = self.context.rptObj.ui.button(validation_text)
+        if action:
+          submitBtn.click(action)
+        else:
+          submitBtn.click(modal.close())
+        submitRow + submitBtn
+      modal.col + submitRow
     self.context.register(modal)
     return modal
 
