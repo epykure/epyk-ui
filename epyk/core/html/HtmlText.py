@@ -358,47 +358,6 @@ class Text(Html.Html):
     document.add_paragraph(self.vals)
 
 
-class Code(Html.Html):
-  name, category, callFnc = 'Code', 'Text', 'code'
-  scriptTitle = ''
-
-  def __init__(self, report, vals, color, width, height, htmlCode, options, helper, profile):
-    super(Code, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
-    self.add_helper(helper)
-    self._jsStyles, self.__editable = options, None
-    #self.color = color if color is not None else self._report.theme.greys[9]
-    self.css({'display': 'block', 'margin': '5px 0'})
-
-  @property
-  def _js__builder__(self):
-    return ''' htmlObj.empty();
-      if(jsStyles.edit){
-        htmlObj.append('<div style="position:relative;float:right;padding:2px 5px 2px 5px;cursor:pointer;background-color:%(blackColor)s;color:%(whiteColor)s">Edit</div>')}
-      data.forEach(function(rec){htmlObj.append('<code>'+ rec +'</code><br />')})
-      ''' % {"blackColor": self._report.theme.greys[9], "whiteColor": self._report.theme.greys[0]}
-
-  def editable(self, urlPost, title=None):
-    self.__editable = urlPost
-    self.scriptTitle = title
-
-  def __str__(self):
-    if self.__editable is not None:
-      self._report.jsOnLoadFnc.add(
-        '''
-        $('#%(htmlId)s div').on('click', function(event){
-          %(jqId)s.empty();
-          %(jqId)s.append('<span style="position:relative;float:right;padding:2px 5px 2px 5px;cursor:pointer;background-color:%(backGroundColor)s;color:%(whiteColor)s">Save</span>');
-          %(jqId)s.attr('contenteditable','true'); %(jqId)s.css('padding', '0 0 0 5px');
-          recordSet_%(htmlId)s.forEach(function(rec) { %(jqId)s.append(rec + "\\n")});
-          %(jqId)s.append( "<br />");
-          $('#%(htmlId)s span').on('click', function(event){
-            var content = %(jqId)s.text();
-            $.post("/%(url)s", {content: content.slice(4, content.length), title: '%(title)s'}, function(data){location.reload()})});   
-          })''' % {'jqId': self.jqId, "url": self.editable, 'htmlId': self.htmlId, 'backGroundColor': self._report.theme.colors[5],
-                   'whiteColor': self._report.theme.greys[0], 'title': self.scriptTitle})
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
-
-
 class Pre(Html.Html):
   name, category, callFnc = 'Pre formatted text', 'Texts', 'preformat'
 

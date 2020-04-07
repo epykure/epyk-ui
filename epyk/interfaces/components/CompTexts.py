@@ -209,8 +209,7 @@ class Texts(object):
     dflt_options = {"edit": True}
     if options is not None:
       dflt_options.update(options)
-    html_code = html.HtmlText.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options,
-                                   helper, profile)
+    html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
     self.context.register(html_code)
     return html_code
 

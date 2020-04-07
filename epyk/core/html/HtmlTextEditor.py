@@ -4,6 +4,8 @@ import json
 from epyk.core.js import JsUtils
 from epyk.core.html import Html
 
+from epyk.core.html.options import OptCodeMirror
+
 # The list of CSS classes
 from epyk.core.css.styles import GrpCls
 # from epyk.core.css.styles import CssGrpClsText
@@ -258,12 +260,12 @@ class Cell(Html.Html):
   name, category, callFnc = 'Python Cell Runner', 'Text', 'pytestcell'
   __reqCss, __reqJs = ['codemirror'], ['codemirror']
 
-  def __init__(self, report, vals, size, width, height, isEditable, htmlCode, profile):
-    super(Cell, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
-    self.size, self.isEditable = "%s%s" % (size[0], size[1]), isEditable
+  def __init__(self, report, vals, width, height, isEditable, htmlCode, options, profile):
+    super(Cell, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.isEditable = isEditable
     self._jsRun, self._jsSave = '', ''
     # self.addGlobalVar("%s_count" % self.htmlId, "0")
-    self.css({'font-size': self.size, 'padding': '10px', "min-height": "30px", "font-family": "Arial, monospace"})
+    self.css({'padding': '10px', "min-height": "30px", "font-family": "Arial, monospace"})
 
   @property
   def val(self):
@@ -323,7 +325,7 @@ class Cell(Html.Html):
         "htmlId": self.htmlId, "save": self._jsSave[0], 'data': self.jsQueryData})
       self._report.style.cssCls('CssOutIcon')
       saveButton = '<i title="%(tooltip)s" id="%(htmlId)s_run" class="%(iconCss)s far fa-save"></i>' % {'tooltip': self._jsSave[1], "htmlId": self.htmlId, "iconCss": self._report.style.cssName('CssOutIcon')}
-    self._report.style.cssCls('CssTdEditor')
+    #self._report.style.cssCls('CssTdEditor')
     return '''
       <table style="width:100%%;margin-top:10px;padding:5px 0 5px 10px">
         <tr>
@@ -331,7 +333,7 @@ class Cell(Html.Html):
             <span title="count number of runs" id="%(htmlId)s_counter" >In [ 0 ]</span> 
             %(runButton)s
           </td>
-          <td class="%(tdRunCss)s"><textarea %(attr)s></textarea></td>
+          <td><textarea %(attr)s></textarea></td>
         </tr>
         <tr style="height:3px;display:inline-block"></tr>
         <tr style="display:none" id="%(htmlId)s_result">
@@ -339,7 +341,7 @@ class Cell(Html.Html):
             <span title="Number of store results">Out [ 0 ]</span>  
             %(saveButton)s
           </td>
-          <td class="%(tdRunCss)s" id="%(htmlId)s_result_data"></td>
+          <td id="%(htmlId)s_result_data"></td>
         </tr>
         <tr style="display:none;" id="%(htmlId)s_print">
           <td colspan=2 style="height:100px;">
@@ -349,9 +351,37 @@ class Cell(Html.Html):
           </td>
         </tr>
       </table>
-      ''' % {'attr': self.get_attrs(), 'htmlId': self.htmlId, 'runButton': runButton, 'tdRunCss': self._report.style.cssName('CssTdEditor'), 'saveButton': saveButton,
-             'blackColor': self._report.theme.greys[9], 'whiteColor': self._report.theme.greys[0],
+      ''' % {'attr': self.get_attrs(), 'htmlId': self.htmlId, 'runButton': runButton, #'tdRunCss': self._report.style.cssName('CssTdEditor'),
+             'saveButton': saveButton, 'blackColor': self._report.theme.greys[9], 'whiteColor': self._report.theme.greys[0],
              'redColor': self._report.theme.danger[1], 'blueColor': self._report.theme.colors[6]}
+
+
+class Code(Html.Html):
+  name, category, callFnc = 'Code', 'Text', 'code'
+  __reqCss, __reqJs = ['codemirror'], ['codemirror']
+
+  def __init__(self, report, vals, color, width, height, htmlCode, options, helper, profile):
+    super(Code, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
+    self.add_helper(helper)
+    self.__options = OptCodeMirror.OptionsCode(self, options)
+    self.css({'display': 'block', 'margin': '5px 0'})
+
+  @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+
+    :rtype: OptCodeMirror.OptionsCode
+    """
+    return self.__options
+
+  @property
+  def _js__builder__(self):
+    return ''' htmlObj.innerHTML = data; CodeMirror.fromTextArea( htmlObj, options ) '''
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<textarea %s></textarea>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Tags(Html.Html):

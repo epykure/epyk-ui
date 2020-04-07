@@ -2,6 +2,7 @@
 from epyk.core import html
 
 from epyk.interfaces.components import CompLayouts
+from epyk.interfaces.components import CompCodes
 from epyk.interfaces.components import CompButtons
 from epyk.interfaces.components import CompIcons
 from epyk.interfaces.components import CompInputs
@@ -66,8 +67,25 @@ class Components(object):
     self.rptObj._props.setdefault("css", {})["container"] = cssAttrs
 
   @property
+  def codes(self):
+    """
+    Description:
+    ------------
+    Group all the UI Components dedicated to display code fragments
+
+    This will wrap the Javascript module codemirror
+
+    Related Pages:
+    --------------
+    https://codemirror.net/doc/manual.html
+    """
+    return CompCodes.Code(self)
+
+  @property
   def messaging(self):
     """
+    Description:
+    ------------
     Group all the UI Components dedicated to display messaging services.
 
     This category will group (chat, RSS streams, forum, bot ...).

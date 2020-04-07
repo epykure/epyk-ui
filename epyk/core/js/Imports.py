@@ -708,11 +708,13 @@ JS_IMPORTS = {
   'codemirror': {
     'website': 'https://codemirror.net/',
     'modules': [
-      {'script': 'codemirror.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'python.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/mode/python/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'r.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/mode/r/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'markdown.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/mode/markdown/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'placeholder.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'codemirror.min.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
+      #{'script': 'python.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/mode/python/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      #{'script': 'r.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/mode/r/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      #{'script': 'markdown.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/mode/markdown/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      #{'script': 'placeholder.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]
+    ]
+  },
 
   # Leaflet
   'leaflet': {
@@ -943,7 +945,8 @@ CSS_IMPORTS = {
   'codemirror': {
     'website': 'https://codemirror.net/',
     'modules': [
-      {'script': 'codemirror.css', 'version': '5.39.2', 'path': 'codemirror/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'codemirror.min.css', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
+    ]},
 
   # Leaflet
   'leaflet': {
