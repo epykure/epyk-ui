@@ -377,7 +377,43 @@ class Code(Html.Html):
 
   @property
   def _js__builder__(self):
-    return ''' htmlObj.innerHTML = data; CodeMirror.fromTextArea( htmlObj, options ) '''
+    return '''
+       htmlObj.setValue(data); Object.keys(options).forEach(function(key){ htmlObj.setOption(key, options[key])}); 
+       htmlObj.refresh()'''
+
+  def build(self, data=None, options=None, profile=False):
+    if not self.builder_name:
+      raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
+
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+
+    if isinstance(data, dict):
+      # check if there is no nested HTML components in the data
+      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      js_data = "{%s}" % ",".join(tmp_data)
+    else:
+      js_data = JsUtils.jsConvertData(data, None)
+    options, js_options = options or self._jsStyles, []
+    for k, v in options.items():
+      if isinstance(v, dict):
+        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
+      else:
+        if str(v).strip().startswith("function"):
+          js_options.append("%s: %s" % (k, v))
+        else:
+          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    #
+    constructors[self.builder_name] = "var %s = CodeMirror.fromTextArea(%s, {%s}); function %s(htmlObj, data, options){%s}" % (
+      self.editorId, self.dom.varName, ",".join(js_options), self.builder_name, self._js__builder__)
+    return "%s(%s, %s, %s)" % (self.builder_name, self.editorId, js_data, "{%s}" % ",".join(js_options))
+
+  @property
+  def editorId(self):
+    """
+    Return the Javascript variable of the bespoke
+    """
+    return "editor_%s" % self.htmlId
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
