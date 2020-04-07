@@ -98,6 +98,8 @@ class List(Html.Html):
     self.color = color if color is not None else self._report.theme.greys[9]
     self.css({'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
     self.items = None
+    for item in data:
+      self.add_item(item)
     if len(data) > 0:
       self.set_items()
 

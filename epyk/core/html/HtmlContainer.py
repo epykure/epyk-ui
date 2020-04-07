@@ -857,6 +857,9 @@ class Modal(Html.Html):
   def show(self):
     return self._report.js.getElementById(self.htmlId).css({'display': 'block'})
 
+  def close(self):
+    return self._report.js.getElementById(self.htmlId).css({'display': 'none'})
+
   def close_on_background(self):
     """
     Description:
