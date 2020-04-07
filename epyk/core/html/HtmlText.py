@@ -511,19 +511,18 @@ class BlockQuote(Html.Html):
 
   @property
   def _js__builder__(self):
-      return '''var div = htmlObj.querySelector('div'); div.innerHTML = ''; console.log(data);
-          data.text.split("\\n").forEach(function(rec) {
-            var p = document.createElement("p");
-            p.style.margin = 0; p.style.padding = 0; p.innerHTML = rec; div.appendChild(p) });
-          if(data.author != null){htmlObj.querySelector('div:last-child').innerHTML = '<small>by '+ data.author +'<cite></cite></small>'}'''
+      return '''var div = htmlObj.querySelector('div'); div.innerHTML = '';
+        data.text.split("\\n").forEach(function(rec) {
+          var p = document.createElement("p"); p.style.margin = 0; p.style.padding = 0; p.innerHTML = rec; div.appendChild(p) });
+        if(data.author != null){htmlObj.querySelector('div:last-child').innerHTML = '<small>by '+ data.author +'<cite></cite></small>'}'''
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '''
       <blockquote %s>
-          <div style="padding:5px;border-left:4px solid %s"></div>
+          <div style="padding:5px;border-left:2px solid %s"></div>
           <div style="text-align:right"></div>
-      </blockquote>%s''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self._report.theme.colors[9], self.helper)
+      </blockquote>%s''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self._report.theme.colors[3], self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
