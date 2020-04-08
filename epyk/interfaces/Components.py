@@ -355,6 +355,23 @@ class Components(object):
     self.rptObj._content_table = html_contents
     return html_contents
 
+  def bespoke(self, htmlCls, *args, **kwargs):
+    """
+    Description:
+    ------------
+    Hook to allow the creation of bespoke component using specific configurations.
+    Components can be self contained in a module and rely on external packages
+
+    Tip: Look at the Import.extend function in order to add external Js and CSS modules to your environment
+
+    Related Pages:
+    --------------
+    :param htmlCls: Class. The bespoke HTML component
+    :param args: The python attributes used in the HTML component contructor
+    :param kwargs: The python attributes used in the HTML component contructor
+    """
+    return self.register(htmlCls(self.rptObj, *args, **kwargs))
+
   def _tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
     Description:

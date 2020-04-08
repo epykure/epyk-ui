@@ -124,12 +124,15 @@ def installed_packages():
   subprocess.call(["pip", 'list', '-o'])
 
 
+CDNJS_REPO = 'https://cdnjs.cloudflare.com/ajax/libs'
+
+
 JS_IMPORTS = {
   # numbers formmatting
   'accounting': {
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://openexchangerates.github.io/accounting.js/'},
 
@@ -956,6 +959,33 @@ CSS_IMPORTS = {
        'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
 }
+
+
+def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None):
+  """
+  Description:
+  ------------
+  Function to extend the internal CSS and JS registered modules.
+
+  Related Pages:
+  --------------
+  :param reference: String. The internal reference in the framework
+  :param module_path: List of tuple. The different modules and location
+  :param version: String. The version number. Can be an internal module reference to point to follow its version number
+  :param cdnjs_url: String. The CDNJS reference path
+  :param required: List. The list of dependency modules
+  """
+  mapped_modules = {"modules": []}
+  if required is not None:
+    mapped_modules['req'] = [{'alias': req} for req in required]
+  for module, path in module_path:
+    config = JS_IMPORTS if module.endswith(".js") else CSS_IMPORTS
+    if not reference in config:
+      config[reference] = mapped_modules
+    if version in config:
+      # take the version from another registered module
+      version = config[version]['modules'][0]['version']
+    config[reference]["modules"].append({'script': module, 'version': version, 'path': path, 'cdnjs': cdnjs_url})
 
 
 class ImportManager(object):

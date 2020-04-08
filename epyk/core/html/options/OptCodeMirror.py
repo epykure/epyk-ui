@@ -41,12 +41,7 @@ class OptionsCode(Options):
 
   @mode.setter
   def mode(self, value):
-    Imports.JS_IMPORTS['codemirror-%s' % value] = {
-      'req': [{'alias': 'codemirror'}],
-      'modules': [
-        {'script': '%s.min.js' % value, 'version': Imports.JS_IMPORTS['codemirror']['modules'][0]['version'],
-         'path': 'codemirror/%%(version)s/mode/%s/' % value, 'cdnjs': Imports.JS_IMPORTS['codemirror']['modules'][0]['cdnjs']}
-    ]}
+    Imports.extend('codemirror-%s' % value, [('%s.min.js' % value, 'codemirror/%%(version)s/mode/%s/' % value)], version="codemirror")
     self._report.jsImports.add('codemirror-%s' % value)
     self._config(value)
 
@@ -595,12 +590,7 @@ class OptionsCode(Options):
 
   @matchBrackets.setter
   def matchBrackets(self, value): # matchbrackets.js
-    Imports.JS_IMPORTS['codemirror-matchbrackets'] = {
-      'req': [{'alias': 'codemirror'}],
-      'modules': [
-        {'script': 'matchbrackets.min.js', 'version': Imports.JS_IMPORTS['codemirror']['modules'][0]['version'],
-         'path': 'codemirror/%(version)s/addon/edit/', 'cdnjs': Imports.JS_IMPORTS['codemirror']['modules'][0]['cdnjs']}
-    ]}
+    Imports.extend('codemirror-matchbrackets', [('matchbrackets.min.js', 'codemirror/%(version)s/addon/edit/')], version="codemirror")
     self._report.jsImports.add('codemirror-matchbrackets')
     self._config(value)
 
@@ -621,11 +611,12 @@ class OptionsCode(Options):
 
   @styleActiveLine.setter
   def styleActiveLine(self, value):
-    Imports.JS_IMPORTS['codemirror-active-line'] = {
-      'req': [{'alias': 'codemirror'}],
-      'modules': [
-        {'script': 'active-line.min.js', 'version': Imports.JS_IMPORTS['codemirror']['modules'][0]['version'],
-         'path': 'codemirror/%(version)s/addon/selection/', 'cdnjs': Imports.JS_IMPORTS['codemirror']['modules'][0]['cdnjs']}
-    ]}
+    Imports.extend('codemirror-active-line', [('active-line.min.js', 'codemirror/%(version)s/addon/selection/')], version="codemirror")
+    # Imports.JS_IMPORTS['codemirror-active-line'] = {
+    #   'req': [{'alias': 'codemirror'}],
+    #   'modules': [
+    #     {'script': 'active-line.min.js', 'version': Imports.JS_IMPORTS['codemirror']['modules'][0]['version'],
+    #      'path': 'codemirror/%(version)s/addon/selection/', 'cdnjs': Imports.JS_IMPORTS['codemirror']['modules'][0]['cdnjs']}
+    # ]}
     self._report.jsImports.add('codemirror-active-line')
     self._config(value)
