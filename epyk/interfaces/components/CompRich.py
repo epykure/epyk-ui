@@ -232,8 +232,7 @@ class Rich(object):
     self.context.register(html_dt)
     return html_dt
 
-  def console(self, content="", color=None, width=(100, "%"), height=(200, "px"), htmlCode=None,
-              options=None, profile=None):
+  def console(self, content="", color=None, width=(100, "%"), height=(200, "px"), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -248,8 +247,10 @@ class Rich(object):
     :param options:
     :param profile:
     """
-    options = options or {}
-    html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, color, width, height, htmlCode, None, options, profile)
+    dflt_options = {"markdown": True, "timestamp": True}
+    if options is not None:
+      dflt_options.update(options)
+    html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, color, width, height, htmlCode, None, dflt_options, profile)
     html_div.css({"border": "1px solid %s" % html_div._report.theme.greys[4], "background": html_div._report.theme.greys[2],
                   'padding': '5px'})
     self.context.register(html_div)

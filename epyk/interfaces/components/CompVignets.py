@@ -97,7 +97,7 @@ class Vignet(object):
     pass
 
   def block(self, recordSet=None, color=None, border='auto', width=(300, 'px'), height=(None, 'px'),
-            helper=None, profile=None):
+            helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -123,7 +123,7 @@ class Vignet(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_blocktext = html.HtmlTextComp.BlockText(self.context.rptObj, recordSet, color, border, width, height, helper, profile)
+    html_blocktext = html.HtmlTextComp.BlockText(self.context.rptObj, recordSet, color, border, width, height, helper, options, profile)
     self.context.register(html_blocktext)
     return html_blocktext
 

@@ -5,28 +5,11 @@ from epyk.core.js import JsUtils
 from epyk.core.html import Html
 
 from epyk.core.html.options import OptCodeMirror
+from epyk.core.html.options import OptText
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpCls
 # from epyk.core.css.styles import CssGrpClsText
-
-
-class OptionsConsole(object):
-  def __init__(self, src, options):
-    self.src = src
-    self._timestamp = options.get('timestamp', False)
-
-  @property
-  def timestamp(self):
-    """
-    Description:
-    ------------
-    """
-    return self._timestamp
-
-  @timestamp.setter
-  def timestamp(self, bool):
-    self._timestamp = bool
 
 
 class Console(Html.Html):
@@ -35,22 +18,24 @@ class Console(Html.Html):
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
     super(Console, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow": 'auto'})
-    self.options = OptionsConsole(self, options)
+    self.__options = OptText.OptionsConsole(self, options)
 
-  def build(self, data=None, options=None, profile=False):
+  @property
+  def options(self):
     """
     Description:
     ------------
+    Property to set all the possible object for a button
 
-    Attributes:
-    ----------
-    :param data:
-    :param options:
-    :param profile:
+    :rtype: OptText.OptionsConsole
     """
-    js_data = JsUtils.jsConvertData(data, None)
-    mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
-    return "var content = %s; %s.innerHTML = %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
+    return self.__options
+
+  @property
+  def _js__builder__(self):
+    return ''' 
+      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
+      htmlObj.innerHTML = data +'<br/>' '''
 
   def write(self, data, timestamp=None, profile=False, stringify=False, skip_data_convert=False, format=None):
     """
@@ -66,17 +51,17 @@ class Console(Html.Html):
     :param skip_data_convert:
     :param format: String. A string output format using %s to define the data in the string
     """
-    var_id = "content_%s" % self.htmlId # to avoid infinite loops in the Javascript
-    mark_up = self._report.js.string(var_id, isPyData=False).toStringMarkup()
     js_data = data if skip_data_convert else JsUtils.jsConvertData(data, None)
     if stringify:
       js_data = "JSON.stringify(%s)" % js_data
+    if self.options.showdown is not False:
+      js_data = "(function(d){ var conv = new showdown.Converter(%s); return conv.makeHtml(d)})(%s)" % (json.dumps(self.options.showdown), js_data)
     if format is not None:
       js_data = JsUtils.jsConvertData(format, None).toStr().replace("%s", '"+ %s +"') % js_data
     if timestamp or (self.options.timestamp and timestamp != False):
-      return "var %s = %s; %s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (var_id, js_data, self.dom.varId, mark_up)
+      return "%s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (self.dom.varId, js_data)
 
-    return "var %s = %s; %s.innerHTML += ' > '+ %s +'<br/>'" % (var_id, js_data, self.dom.varId, mark_up)
+    return "%s.innerHTML += ' > '+ %s +'<br/>'" % (self.dom.varId, js_data)
 
   def clear(self):
     return "%s.innerHTML = ''" % self.dom.varId

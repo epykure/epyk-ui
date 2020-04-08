@@ -17,12 +17,12 @@ from epyk.core.css.styles import GrpCls
 class Label(Html.Html):
   name, category, callFnc = 'Label', 'Text', 'label'
 
-  def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, profile, dflt_options):
+  def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, profile, options):
     super(Label, self).__init__(report, text, css_attrs={"width": width, "height": height, 'color': color, 'text-align': align},
                                 code=htmlCode, profile=profile)
+    self.__options = OptText.OptionsText(self, options)
     self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block', 'line-height': '23px',
               'vertical-align': 'middle', 'text-align': 'left'})
-    self._jsStyles = dflt_options
     if tooltip:
       self.set_attrs(name='title', value=tooltip)
 
@@ -36,6 +36,17 @@ class Label(Html.Html):
     :return:
     """
     return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlId)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
 
   def click(self, jsFncs, profile=False):
     """
@@ -80,12 +91,11 @@ class Label(Html.Html):
 
   @property
   def _js__builder__(self):
-    mark_up = self._report.js.string("data", isPyData=False).toStringMarkup()
     return '''
-      var content = options.markdown > 0 ? %(markUp)s : data
+      if(options.showdown){var converter = new showdown.Converter(options.showdown); var content = converter.makeHtml(data)}  else {var content = data}
       if(options._children > 0){htmlObj.insertAdjacentHTML('beforeend', '<div style="display:inline-block;vertical-align:middle">'+ content +'</div>')}
       else{htmlObj.innerHTML = content};
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}''' % {"markUp": mark_up}
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
     
   def __str__(self):
     return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
@@ -94,10 +104,11 @@ class Label(Html.Html):
 class Span(Html.Html):
   name, category, callFnc = 'Span', 'Texts', 'span'
 
-  def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, profile):
+  def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, options, profile):
     super(Span, self).__init__(report, text, css_attrs={"width": width, "height": height, "color": color, 'text-align': align},
                                code=htmlCode, profile=profile)
     self.css({'line-height': '%spx' % Default_html.LINE_HEIGHT, 'margin': '0 5px', 'display': 'inline-block', 'vertical-align': 'middle'})
+    self.__options = OptText.OptionsText(self, options)
     if tooltip is not None:
       self.tooltip(tooltip)
 
@@ -112,6 +123,8 @@ class Span(Html.Html):
   @property
   def id_html(self):
     """
+    Description:
+    ------------
 
     Documentation
     https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
@@ -123,6 +136,8 @@ class Span(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -138,18 +153,24 @@ class Span(Html.Html):
 
   def click(self, jsFncs, profile=False):
     """
+    Description:
+    ------------
     Add a click event for a component
 
     The event will be automatically added to the onload section to be activated once the component
     has been build
 
-    Example
+    Usage:
+    ------
     select.label.click(str(rptObj.js.console.log("test")))
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/event_onload.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
     :param profile:
 
@@ -162,6 +183,7 @@ class Span(Html.Html):
   @property
   def _js__builder__(self):
     return ''' 
+      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
       if(options._children > 0){htmlObj.appendChild(document.createTextNode(data))}
       else{htmlObj.innerHTML = data}
       '''
@@ -364,7 +386,7 @@ class Pre(Html.Html):
   def __init__(self, report, vals, color, width, height, htmlCode, dataSrc, options, helper, profile):
     super(Pre, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, 'height': height, 'color': color},
                               profile=profile, dataSrc=dataSrc)
-    self._jsStyles = options
+    self.__options = OptText.OptionsText(self, options)
     self.css({"text-align": 'left'})
     self.add_helper(helper)
 
@@ -403,21 +425,33 @@ class Pre(Html.Html):
     return self
 
   @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
+
+  @property
   def _js__builder__(self):
-    markdown = self._report.js.string("data", isPyData=False).toStringMarkup()
-    return '''if(options.markdown){htmlObj.innerHTML = %(markdown)s} else{htmlObj.innerHTML = data}''' % {"markdown": markdown}
+    return '''
+        if(options.showdown){var converter = new showdown.Converter(options.showdown); htmlObj.innerHTML = converter.makeHtml(data)} 
+        else{htmlObj.innerHTML = data}'''
 
   def __str__(self):
+    if self.options.showdown:
+      self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<pre %s>%s</pre>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
 
 
 class Paragraph(Html.Html):
-
   name, category, callFnc = 'Paragraph', 'Texts', 'paragraph'
 
-  def __init__(self, report, text, color, background_color, border, width, height, htmlCode, encoding, dataSrc,
-               helper, profile):
-    jsStyles, tmpText = {"reset": True, 'markdown': True, "classes": []}, []
+  def __init__(self, report, text, color, background_color, border, width, height, htmlCode, encoding, dataSrc, helper, options, profile):
+    tmpText = []
     if not isinstance(text, list):
       content = []
       for line in text.strip().split("\n"):
@@ -437,26 +471,26 @@ class Paragraph(Html.Html):
           tmpText.append(t.decode(encoding))
         else:
           tmpText.append(t)
-      jsStyles["classes"].append(jsAttr)
+      options["classes"].append(jsAttr)
     super(Paragraph, self).__init__(report, tmpText, code=htmlCode, css_attrs={'color': color, "width": width,
            "height": height, "background-color": background_color}, dataSrc=dataSrc, profile=profile)
     self.add_helper(helper)
-    self._jsStyles = jsStyles
+    self.__options = OptText.OptionsText(self, options)
     if border:
       self.css('border', '1px solid %s' % self._report.theme.greys[9])
     self.css({'text-align': 'justify', 'margin-top': '3px', "text-justify": 'distribute'})
 
   @property
   def _js__builder__(self):
-    markdown = self._report.js.string("line", isPyData=False).toStringMarkup()
     return '''
       if (typeof options.reset === 'undefined' || options.reset){htmlObj.innerHTML = ''};
       if (typeof data === 'string' || data instanceof String){data = data.split('\\n')}; 
       data.forEach(function(line, i){
-        var p = document.createElement('p'); p.innerHTML = %(markdown)s;
+        if(options.showdown){var converter = new showdown.Converter(options.showdown); line = converter.makeHtml(line)} 
+        var p = document.createElement('p'); p.innerHTML = line;
         htmlObj.appendChild(p)});
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
-      ''' % {"markdown": markdown}
+      '''
 
   @property
   def dom(self):
@@ -503,16 +537,17 @@ class Paragraph(Html.Html):
 class BlockQuote(Html.Html):
   name, category, callFnc = 'Block quotation', 'Texts', 'blockquote'
 
-  def __init__(self, report, text, author, color, width, height, htmlCode, helper, profile):
+  def __init__(self, report, text, author, color, width, height, htmlCode, helper, options, profile):
     super(BlockQuote, self).__init__(report, {'text': text, 'author': author}, code=htmlCode, profile=profile,
                                      css_attrs={"width": width, "height": height, 'color': color, "white-space": 'nowrap'})
     self.add_helper(helper)
-    self._jsStyles = {"reset": True, 'markdown': True}
+    self.__options = OptText.OptionsText(self, options)
 
   @property
   def _js__builder__(self):
       return '''var div = htmlObj.querySelector('div'); div.innerHTML = '';
         data.text.split("\\n").forEach(function(rec) {
+          if(options.showdown){var converter = new showdown.Converter(options.showdown); rec = converter.makeHtml(rec)} 
           var p = document.createElement("p"); p.style.margin = 0; p.style.padding = 0; p.innerHTML = rec; div.appendChild(p) });
         if(data.author != null){htmlObj.querySelector('div:last-child').innerHTML = '<small>by '+ data.author +'<cite></cite></small>'}'''
 
@@ -549,15 +584,14 @@ class Title(Html.Html):
   def __init__(self, report, text, level, name, contents, color, picture, icon, marginTop, htmlCode, width,
                height, align, options, profile):
 
-    self.__options = OptText.OptionsTitle(self, options)
-    cssStyles, jsStyles = re.search(" css\{(.*)\}", text), options
+    cssStyles = re.search(" css\{(.*)\}", text)
     if cssStyles is not None:
       text = text.replace(cssStyles.group(0), '')
       for cssAttr in cssStyles.group(1).split(","):
         cssKey, cssVal = cssAttr.split(":")
-        jsStyles[cssKey.strip()] = cssVal.strip()
+        options[cssKey.strip()] = cssVal.strip()
     super(Title, self).__init__(report, text, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self._jsStyles = jsStyles
+    self.__options = OptText.OptionsTitle(self, options)
     self._name, self.level, self.picture = name, level, picture
     self.add_icon(icon)
     if contents is not None:
@@ -620,16 +654,15 @@ class Title(Html.Html):
     """
     Property to set all the possible object for a button
 
-    :rtype: OptText.OptionsText
+    :rtype: OptText.OptionsTitle
     """
     return self.__options
 
   @property
   def _js__builder__(self):
-    markdown = self._report.js.string("data", isPyData=False).toStringMarkup()
     return '''
-      if(options.markdown){htmlObj.innerHTML = %(markdown)s} else{htmlObj.innerHTML = data};
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}''' % {"markdown": markdown}
+      if(options.showdown){var converter = new showdown.Converter(options.showdown); htmlObj.innerHTML = converter.makeHtml(data)} else{htmlObj.innerHTML = data}
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
     anchor_name = ' name="%s"' % self._name if self._name is not None else ''

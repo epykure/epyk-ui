@@ -4,6 +4,8 @@ import json
 from epyk.core.html import Html
 from epyk.core.css import Colors
 
+from epyk.core.html.options import OptText
+
 # The list of CSS classes
 from epyk.core.css import Defaults_css
 
@@ -75,27 +77,36 @@ class BlockText(Html.Html):
   name, category, callFnc = 'Block text', 'Rich', 'blocktext'
   # _grpCls = CssGrpClsText.CssClassTextBlock
 
-  def __init__(self, report, recordSet, color, border, width, height, helper, profile):
+  def __init__(self, report, recordSet, color, border, width, height, helper, options, profile):
     super(BlockText, self).__init__(report, recordSet, css_attrs={'color': color, "width": width, "height": height}, profile=profile)
     self.add_helper(helper)
-    self._jsStyles = {"reset": True, 'markdown': True}
+    self.__options = OptText.OptionsText(self, options)
     self.css({'padding': '5px'})
     if border != 'auto':
       self.css('border', str(border))
 
   @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
+
+  @property
   def _js__builder__(self):
-    mark_up = self._report.js.string("data.text", isPyData=False).toStringMarkup()
     return '''
       htmlObj.find('div').first().html(data.title); htmlObj.find('div').last().empty(); var content;
       if (typeof data.text === 'string' || data.text instanceof String) {content = data.text.split("\\n")}
       else {content = data.text}
       content.forEach(function(line){htmlObj.find('div').last().append('<p class="py_csstext">'+ line +'</a>')});
-      htmlObj.find('div').last().html(%(markUp)s);
+      if(options.showdown){var converter = new showdown.Converter(options.showdown); data.text = converter.makeHtml(data.text)} 
+      htmlObj.find('div').last().html(data.text);
       if (data.color != undefined) {htmlObj.find('div').last().css('color', data.color)};
       if(typeof data.button != 'undefined'){
         htmlObj.find("a").html(data.button.text); htmlObj.find("a").attr('href', data.button.url)}
-      ''' % {"markUp": mark_up}
+      '''
 
   def __str__(self):
     items = ['<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]

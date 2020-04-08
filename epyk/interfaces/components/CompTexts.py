@@ -83,7 +83,7 @@ class Texts(object):
     return html_label
 
   def span(self, text=None, color=None, align='center', width=None, height=None, htmlCode=None,
-           tooltip=None, profile=None):
+           tooltip=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -116,7 +116,7 @@ class Texts(object):
       width = (Defaults.TEXTS_SPAN_WIDTH, 'px')
     if height is None:
       height = (Defaults.LINE_HEIGHT, 'px')
-    html_label = html.HtmlText.Span(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, profile)
+    html_label = html.HtmlText.Span(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options, profile)
     self.context.register(html_label)
     return html_label
 
@@ -214,7 +214,7 @@ class Texts(object):
     return html_code
 
   def paragraph(self, text="", color=None, background_color=None, border=False, width=(100, "%"),
-                height=(None, 'px'), htmlCode=None, encoding="UTF-8", dataSrc=None, helper=None, profile=None):
+                height=(None, 'px'), htmlCode=None, encoding="UTF-8", dataSrc=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -241,8 +241,11 @@ class Texts(object):
     :param dataSrc:
     :param profile:
     """
-    html_paragraph = html.HtmlText.Paragraph(self.context.rptObj, text, color, background_color, border,
-                                                         width, height, htmlCode, encoding, dataSrc, helper, profile)
+    dflt_options = {"reset": True, 'markdown': False, "classes": []}
+    if options is not None:
+      dflt_options.update(options)
+    html_paragraph = html.HtmlText.Paragraph(self.context.rptObj, text, color, background_color, border, width, height,
+                                             htmlCode, encoding, dataSrc, helper, dflt_options, profile)
     self.context.register(html_paragraph)
     return html_paragraph
 
@@ -276,7 +279,7 @@ class Texts(object):
     :param helper:
     :param profile:
     """
-    dflt_options = {"reset": True, 'markdown': True}
+    dflt_options = {"reset": True, 'markdown': False}
     if options is not None:
       dflt_options.update(options)
     html_pre = html.HtmlText.Pre(self.context.rptObj, text, color, width, height, htmlCode, dataSrc, dflt_options, helper, profile)
@@ -284,7 +287,7 @@ class Texts(object):
     return html_pre
 
   def blockquote(self, text=None, author=None, color=None, width=(None, '%'), height=(None, 'px'),
-                 htmlCode=None, helper=None, profile=None):
+                 htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -311,7 +314,7 @@ class Texts(object):
     :param helper:
     :param profile:
     """
-    html_blockquote = html.HtmlText.BlockQuote(self.context.rptObj, text, author, color, width, height, htmlCode, helper, profile)
+    html_blockquote = html.HtmlText.BlockQuote(self.context.rptObj, text, author, color, width, height, htmlCode, helper, options, profile)
     self.context.register(html_blockquote)
     return html_blockquote
 
