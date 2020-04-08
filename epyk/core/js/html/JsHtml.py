@@ -112,13 +112,19 @@ class ContentFormatters(object):
     """
     Description:
     ------------
+    Convert markwdown to HTML string
 
     Usage:
     ------
+    t.dom.content.fromMarkdown()
+
+    Related Pages:
+    --------------
+    https://github.com/showdownjs/showdown
 
     Attributes:
     ----------
-    :param options:
+    :param options: Dictionary. Options allowed in the showdown module
     """
     options = JsUtils.jsConvertData(options or {}, None)
     return JsObjects.JsObjects.get(
