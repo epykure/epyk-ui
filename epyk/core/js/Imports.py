@@ -723,8 +723,15 @@ JS_IMPORTS = {
   'leaflet': {
     'website': 'https://leafletjs.com/',
     'modules': [
-      {'script': 'leaflet.js', 'version': '1.6.0', 'path': 'leaflet/%(version)s/',
-       'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'leaflet.js', 'version': '1.6.0', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # showdown
+  'showdown': {
+    'website': 'https://github.com/showdownjs/showdown',
+    'modules': [
+      {'script': 'showdown.min.js', 'path': 'showdown/%(version)s/', 'version': '1.9.1', 'cdnjs': CDNJS_REPO}
+    ]
+  }
 }
 
 

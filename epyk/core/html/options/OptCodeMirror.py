@@ -612,11 +612,5 @@ class OptionsCode(Options):
   @styleActiveLine.setter
   def styleActiveLine(self, value):
     Imports.extend('codemirror-active-line', [('active-line.min.js', 'codemirror/%(version)s/addon/selection/')], version="codemirror")
-    # Imports.JS_IMPORTS['codemirror-active-line'] = {
-    #   'req': [{'alias': 'codemirror'}],
-    #   'modules': [
-    #     {'script': 'active-line.min.js', 'version': Imports.JS_IMPORTS['codemirror']['modules'][0]['version'],
-    #      'path': 'codemirror/%(version)s/addon/selection/', 'cdnjs': Imports.JS_IMPORTS['codemirror']['modules'][0]['cdnjs']}
-    # ]}
     self._report.jsImports.add('codemirror-active-line')
     self._config(value)

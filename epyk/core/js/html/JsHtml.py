@@ -98,7 +98,7 @@ class Formatters(object):
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    return JsObjects.JsObjects.get("%s = accounting.formatMoney(%s,%s, %s, %s, %s)" % (self.selector, self.selector, symbol, digit, thousand_sep, decimal_sep))
+    return JsObjects.JsObjects.get("%s = accounting.formatMoney(%s, %s, %s, %s, %s)" % (self.selector, self.selector, symbol, digit, thousand_sep, decimal_sep))
 
 
 class ContentFormatters(object):
@@ -107,12 +107,39 @@ class ContentFormatters(object):
     self._report = report
     self.selector = selector
 
+  @packageImport("showdown")
+  def fromMarkdown(self, options=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+
+    Attributes:
+    ----------
+    :param options:
+    """
+    options = JsUtils.jsConvertData(options or {}, None)
+    return JsObjects.JsObjects.get(
+      "%s = (function(){ var conv = new showdown.Converter(%s); return conv.makeHtml(%s)})()" % (
+        self.selector, options, self.selector))
+
   @packageImport("accounting")
   def toNumber(self, digit=0, thousand_sep="."):
     """
+    Description:
+    ------------
 
+    Usage:
+    ------
+
+    Related Pages:
+    --------------
     https://openexchangerates.github.io/accounting.js/
 
+    Attributes:
+    ----------
     :param digit:
     :param thousand_sep:
     """
@@ -122,9 +149,15 @@ class ContentFormatters(object):
   @packageImport("accounting")
   def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
     """
+    Description:
+    ------------
 
+    Related Pages:
+    --------------
     https://openexchangerates.github.io/accounting.js/
 
+    Attributes:
+    ----------
     :param symbol:
     :param digit:
     :param thousand_sep:
@@ -138,24 +171,27 @@ class ContentFormatters(object):
   @property
   def number(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsObjects.JsNumber.JsNumber("parseFloat(%s)" % self.selector)
 
   @property
   def string(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsObjects.JsString.JsString("String(%s)" % self.selector)
 
   @property
   def date(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     return JsObjects.JsDate.JsDate("new Date(%s)" % self.selector)
 
@@ -175,6 +211,8 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def val(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -183,6 +221,8 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def by_name(self):
     """
+    Description:
+    -----------
 
     :rtype: JsNodeDom.JsDomsList
     """
@@ -206,6 +246,8 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def content(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -216,17 +258,19 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def events(self):
     """
+    Description:
+    -----------
 
     :rtype: JsNodeDom.JsDomEvents
-    :return:
     """
     return JsNodeDom.JsDomEvents(self._src)
 
   @property
   def jquery(self):
     """
+    Description:
+    -----------
 
-    :return:
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
@@ -236,8 +280,8 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def d3(self):
     """
-
-    :return:
+    Description:
+    -----------
 
     :rtype: JsD3.D3Select
     """
@@ -248,8 +292,9 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def jquery_ui(self):
     """
+    Description:
+    -----------
 
-    :return:
     :rtype: JsQuery.JQuery
     """
     if self._jquery_ui is None:
@@ -259,9 +304,12 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def objects(self):
     """
+    Description:
+    -----------
     Interface to the main Javascript Classes and Primitives
 
-    Documentation
+    Related Pages:
+    --------------
 
     :return:
     """
@@ -270,9 +318,12 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def crossfilter(self):
     """
+    Description:
+    -----------
     Interface to CrossFilter package
 
-    Documentation
+    Related Pages:
+    --------------
     https://github.com/square/crossfilter/wiki/API-Reference#group_all
 
     :return:
@@ -288,17 +339,22 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def style(self, attrs):
     """
+    Description:
+    -----------
     Style property to change from the javascript the CSS attributes of an HTML object.
 
-    Examples
+    Usage:
+    ------
     button.js.style({"backgroundColor": 'red'})
     button.js.style({"backgroundColor": None})
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style
 
+    Attributes:
+    ----------
     :param attrs:
-    :return:
     """
     styles = []
     for k, v in attrs.items():
@@ -307,16 +363,21 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def registerFunction(self, fncName, jsFncs, pmts=None):
     """
+    Description:
+    -----------
     Javascript Framework extension
 
     Register a predefined Javascript function
     This is only dedicated to specific Javascript transformation functions
 
-    Example
+    Usage:
+    ------
 
-
+    Attributes:
+    ----------
     :param fncName: The function name
     :param jsFncs: The Javascript function definition
+
     :return: The JsObject
     """
     jsData = JsUtils.jsConvertFncs(jsFncs)
@@ -325,19 +386,24 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def hide(self):
     """
+    Description:
+    -----------
 
-    Example
+    Usage:
+    ------
     input.js.hide()
 
-    Documentation
+    Related Pages:
+    --------------
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
-
-    :return:
     """
     return self.css("display", "none")
 
   def show(self, inline=True):
     """
+    Description:
+    -----------
+
     Usage:
     ------
     input.js.show()
@@ -349,15 +415,13 @@ class JsHtml(JsNodeDom.JsDoms):
     Attributes:
     ----------
     :param inline: String
-
-    :return:
     """
     return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else 'block'), None)
 
   def select(self):
     """
-
-    :return:
+    Description:
+    -----------
     """
     return JsObjects.JsObjects.get("%s.select()" % self._src.input.dom.varName)
 
@@ -464,8 +528,9 @@ class JsHtmlRich(JsHtml):
   @property
   def val(self):
     """
+    Description:
+    -----------
 
-    :return:
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlId, self.content.toStr()))
@@ -476,6 +541,8 @@ class JsHtmlRich(JsHtml):
 
   def append(self, text, new_line=False):
     """
+    Description:
+    -----------
 
     Example
     pre.dom.append("ok", new_line=True)
@@ -497,6 +564,8 @@ class JsHtmlButton(JsHtml):
   @property
   def val(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -510,6 +579,8 @@ class JsHtmlButton(JsHtml):
 
   def loading(self, flag, multiple=False):
     """
+    Description:
+    -----------
     Add a loading icon to the button
 
     Example
@@ -535,6 +606,8 @@ class JsHtmlButton(JsHtml):
 
   def error(self, time, color="red"):
     """
+    Description:
+    -----------
 
     :param time:
     :param color:

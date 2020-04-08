@@ -62,6 +62,8 @@ class Components(object):
 
   def css(self, cssAttrs):
     """
+    Description:
+    ------------
     Change the CSS Style of the main container in the page
     """
     self.rptObj._props.setdefault("css", {})["container"] = cssAttrs
@@ -96,6 +98,8 @@ class Components(object):
   @property
   def sliders(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce slider items.
 
     Those components are interactive and can be used to filter the data on other items in the dashboard.
@@ -106,6 +110,8 @@ class Components(object):
   @property
   def links(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce links to another page or website.
     """
     return CompLinks.Links(self)
@@ -119,6 +125,8 @@ class Components(object):
   @property
   def rich(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce rich HTML Components.
 
     This category will take into account very specific and bespoke components.
@@ -128,6 +136,8 @@ class Components(object):
   @property
   def vignets(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce rich HTML Components.
 
     This category will take into account very specific and bespoke components.
@@ -137,6 +147,8 @@ class Components(object):
   @property
   def numbers(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce Numbers components.
 
     The items in this category will not be editable and they will only provide nice number renderings
@@ -146,6 +158,8 @@ class Components(object):
   @property
   def texts(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce text components.
 
     The items in this category will not be editable and they will only provide nice text structure like paragraph,
@@ -156,6 +170,8 @@ class Components(object):
   @property
   def images(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce image or collection of images.
     """
     return CompImages.Images(self)
@@ -163,6 +179,8 @@ class Components(object):
   @property
   def lists(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce list or selection items.
 
     Simple list, trees or dropdown boxes will be part of this category of items
@@ -172,6 +190,8 @@ class Components(object):
   @property
   def trees(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce Trees or selection items.
 
     """
@@ -180,6 +200,8 @@ class Components(object):
   @property
   def geo(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce Trees or selection items.
 
     """
@@ -188,6 +210,8 @@ class Components(object):
   @property
   def buttons(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce button or checkbox.
     """
     return CompButtons.Buttons(self)
@@ -195,6 +219,8 @@ class Components(object):
   @property
   def tables(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce tables or pivot tables.
 
     Different kind of tables are available in the framework (Tabulator, Datatable, PivotTable or even a bespoke
@@ -205,6 +231,8 @@ class Components(object):
   @property
   def media(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce media (video and audio) items.
 
     Plain Vanilla HTML5 components
@@ -214,6 +242,8 @@ class Components(object):
   @property
   def inputs(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce input items.
 
     Those components are editable items which need to be updated by the user of the dashboard.
@@ -224,6 +254,8 @@ class Components(object):
   @property
   def fields(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce input items.
 
     Those components are editable items which need to be updated by the user of the dashboard.
@@ -234,6 +266,8 @@ class Components(object):
   @property
   def icons(self):
     """
+    Description:
+    ------------
     Group all the UI components dedicated to produce icon items.
 
     This category of component will rely on the font-awesome library for the final display.
@@ -243,12 +277,16 @@ class Components(object):
   @property
   def menus(self):
     """
+    Description:
+    ------------
     """
     return CompMenus.Menus(self)
 
   @property
   def panels(self):
     """
+    Description:
+    ------------
     """
     return CompPanels.Panels(self)
 
@@ -364,8 +402,8 @@ class Components(object):
 
     Tip: Look at the Import.extend function in order to add external Js and CSS modules to your environment
 
-    Related Pages:
-    --------------
+    Attributes:
+    ----------
     :param htmlCls: Class. The bespoke HTML component
     :param args: The python attributes used in the HTML component contructor
     :param kwargs: The python attributes used in the HTML component contructor
@@ -377,8 +415,8 @@ class Components(object):
     Description:
     ------------
 
-    Related Pages:
-    --------------
+    Attributes:
+    ----------
     :param vals: Optional.
     :param title: Optional.
     :param icon: Optional. A string with the value of the icon to display from font-awesome
@@ -388,21 +426,26 @@ class Components(object):
     :param profile: Optional. A flag to set the component performance storage
 
     :rtype: html.HtmlTextEditor.Tags
-    :return: 
     """
     return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile))
 
   def context_menu(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None, profile=None):
     """
+    Description:
+    ------------
     Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
     This component is generic is need to be added to a component to work
 
-    Example
+    Usage:
+    ------
     menu = rptObj.ui.context_menu([{"text": 'text', 'event': 'alert("ok")'}])
     rptObj.ui.title("Test").attach_menu(menu)
 
-    Documentation
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param records: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -416,12 +459,18 @@ class Components(object):
   def options_bar(self, records=None, color=None, border_color=None, width=(None, 'px'),
                   height=(None, 'px'), options=None):
     """
+    Description:
+    ------------
     Add a bespoke options / actions bar with icons
 
-    Example
+    Usage:
+    ------
 
-    Documentation
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param records:
     :param color:
     :param border_color:
@@ -441,11 +490,16 @@ class Components(object):
 
   def side_bar(self, links=None, color=None, servers=None, position="right"):
     """
+    Description:
+    ------------
     Add a side Bar to the report.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav
 
+    Attributes:
+    ----------
     :param links:
     :param color:
     :param servers:
@@ -457,12 +511,16 @@ class Components(object):
 
   def loading(self, text="Loading", color=None, options=None):
     """
+    Description:
+    ------------
     Entry point to the loading component
 
     This component will create a
       - label component for the text
       - icon component for the loading icon
 
+    Attributes:
+    ----------
     :param text:
     :param color:
     :param options:
@@ -498,15 +556,19 @@ class Components(object):
 
   def form(self, action=None, method=None, helper=None):
     """
+    Description:
+    ------------
     Creates an new empty form
 
-    Example
+    Usage:
+    ------
     f = rptObj.ui.form()
 
+    Attributes:
+    ----------
     :param action:
     :param method:
     :param helper:
-    :return:
     """
     form = html.HtmlContainer.Form(self.rptObj, [], action, method, helper)
     self.register(form)
