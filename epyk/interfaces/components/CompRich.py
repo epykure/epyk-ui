@@ -150,32 +150,6 @@ class Rich(object):
     self.context.register(html_help)
     return html_help
 
-  def script(self, title, scriptName, clssName=None, functionName=None, docType='documentation',
-             width=(100, "%"), height=(None, "px"),  color=None, profile=None):
-    """
-    Description:
-    ------------
-    Entry point to the source code component.
-
-    Usage:
-    ------
-    rptObj.ui.rich.script("Documentation", "test.py")
-
-    Attributes:
-    ----------
-    :param title:
-    :param scriptName:
-    :param clssName:
-    :param functionName:
-    :param docType:
-    :param color:
-    :param profile:
-    """
-    html_script = html.HtmlTextComp.DocScript(self.context.rptObj, title, scriptName, clssName, functionName,
-                                            docType, width, height, color, profile)
-    self.context.register(html_script)
-    return html_script
-
   def countdown(self, yyyy_mm_dd, label=None, icon="fas fa-stopwatch", timeInMilliSeconds=1000, width=(100, '%'), height=(None, 'px'),
                 htmlCode=None, helper=None, profile=None):
     """

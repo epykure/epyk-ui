@@ -123,9 +123,10 @@ class TextWithBorder(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   name, category, callFnc = 'Text with Border and Icon', 'Rich', 'textborder'
 
-  def __init__(self, report, recordSet, width, height, align, helper, profile):
+  def __init__(self, report, recordSet, width, height, align, helper, options, profile):
     super(TextWithBorder, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
+    self.__options = OptText.OptionsText(self, options)
     self.align = align
     if not 'colorTitle' in self.val:
       self.val['colorTitle'] = self._report.theme.colors[9]
@@ -134,10 +135,20 @@ class TextWithBorder(Html.Html):
     self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px'})
 
   @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
+
+  @property
   def _js__builder__(self):
     return '''
-      var legendElt = htmlObj.querySelector('legend'); legendElt.innerHTML = data.title; 
-      htmlObj.querySelector('span').innerHTML = data.value'''
+      if(options.showdown){var converter = new showdown.Converter(options.showdown); 
+        data.title = converter.makeHtml(data.title); data.value = converter.makeHtml(data.value)} 
+      htmlObj.querySelector('legend').innerHTML = data.title; htmlObj.querySelector('span').innerHTML = data.value'''
 
   def __str__(self):
     item = ['<fieldset %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
@@ -247,52 +258,6 @@ class Delta(Html.Html):
   def jsMarkDown(self, vals): return "@delta %s:%s" % (vals['number'], vals['prevNumber'])
 
 
-class DocScript(Html.Html):
-  """
-  Python Wrapper for a Static view of the scripts
-
-  This interface is a bit special in the way it is supposed to interact with the production code.
-  Indeed it will:
-    - In production read a text file and display the data that will be produced from the system (Python, R, ....)
-    - In test mode try to get it from the code directly using a REST Service
-
-  Security checks are done in the script to ensure they are TAGS as open
-  """
-  docTypes = set(['documentation', 'code'])
-  __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'jquery']
-  name, category, callFnc = 'Script Documentation', 'Text', 'doc'
-
-  def __init__(self, report, title, scriptName, clssName, functionName, docType, width, height, color, profile):
-    if not docType in self.docTypes:
-      raise Exception('The docType %s does not exist' % docType)
-
-    clssName = clssName if clssName is not None else 'NOT_SET'
-    super(DocScript, self).__init__(report, {'title': title, 'clssName': clssName, 'functionName': functionName,
-                                             'docType': docType, 'scriptName': scriptName.replace('.py', '')},
-                                    css_attrs={"width": width, "height": height}, profile=profile)
-    self.color = self._report.theme.colors[-1] if color is None else color
-
-  @property
-  def _js__builder__(self):
-    return '''
-      var request = "/reports/doc/"+ data.docType +"/"+ data.scriptName +"/"+ data.clssName +"/"+ data.functionName;
-      if(data.functionName == ''){request = "/reports/doc/"+ data.docType +"/"+ data.scriptName +"/"+ data.clssName};
-      $.post(request, function(data){JSON.parse(data).forEach(function(rec){htmlObj.querySelector('pre').append('<code>'+ rec +'</code><br />')})})'''
-
-  def __str__(self):
-    label = "from script <b>%s</b>" % self.val['scriptName']
-    if self.val['clssName'] != 'NOT_SET':
-      label = "%s, class <b>%s</b>" % (label, self.val['clssName'])
-    if self.val['functionName'] != '':
-      label = "%s, function <b>%s</b>" % (label, self.val['functionName'])
-    return '''
-      <div %s>
-        <div style="color:%s;font-weight:bold;">%s</div>
-        <pre style="padding:5px"></pre>
-        <span style="font-style:italic;width:100%%;text-align:right;display:block;margin-top:-15px">%s</span>
-      </div> ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.color, self.val['title'], label)
-
-
 class Prism(Html.Html):
   __reqCss, __reqJs = ['prism'], ['prism', 'jqueryui']
   name, category, callFnc = 'Code Viewer', 'Rich', 'prism'
@@ -375,7 +340,6 @@ class Prism(Html.Html):
 class Formula(Html.Html):
   __reqJs = ['mathjs']
   name, category, callFnc = 'Latex Formula', 'Texts', 'formula'
-  # _grpCls = CssGrpClsText.CssClassFormulas
 
   def __init__(self, report, text, width, color, helper, profile):
     super(Formula, self).__init__(report, text, css_attrs={"color": color, "width": width}, profile=profile)

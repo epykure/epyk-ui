@@ -127,7 +127,7 @@ class Vignet(object):
     self.context.register(html_blocktext)
     return html_blocktext
 
-  def text(self, recordSet=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, profile=None):
+  def text(self, recordSet=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -149,7 +149,7 @@ class Vignet(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_text = html.HtmlTextComp.TextWithBorder(self.context.rptObj, recordSet, width, height, align, helper, profile)
+    html_text = html.HtmlTextComp.TextWithBorder(self.context.rptObj, recordSet, width, height, align, helper, options, profile)
     self.context.register(html_text)
     return html_text
 
