@@ -1,6 +1,7 @@
 
 from epyk.core import html
-from epyk.core.html import Defaults
+from epyk.core.html import Defaults_html
+from epyk.core.css import Defaults_css
 
 
 class Texts(object):
@@ -113,9 +114,9 @@ class Texts(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     if width is None:
-      width = (Defaults.TEXTS_SPAN_WIDTH, 'px')
+      width = (Defaults_html.TEXTS_SPAN_WIDTH, 'px')
     if height is None:
-      height = (Defaults.LINE_HEIGHT, 'px')
+      height = (Defaults_html.LINE_HEIGHT, 'px')
     html_label = html.HtmlText.Span(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options, profile)
     self.context.register(html_label)
     return html_label
@@ -341,7 +342,7 @@ class Texts(object):
     :param helper:
     :param profile:
     """
-    dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".", 'font_size': '12px',
+    dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".", 'font_size': Defaults_css.font(),
                     'red': self.context.rptObj.theme.danger[1], 'green': self.context.rptObj.theme.success[1],
                     'orange': self.context.rptObj.theme.warning[1]}
     if options is not None:

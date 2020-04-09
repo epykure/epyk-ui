@@ -42,6 +42,16 @@ class Catalog(object):
     return self.__ctx['button']
 
   @property
+  def layout(self):
+    """
+
+    :rtype: CatalogLayout.CatalogLayout
+    """
+    if "layout" not in self.__ctx:
+      self.__ctx['layout'] = CatalogLayout.CatalogLayout(self.__rptObj, self.__class_list_type)
+    return self.__ctx['layout']
+
+  @property
   def dropdown(self):
     """
     CSS Classes specific to the dropdown components

@@ -1,6 +1,3 @@
-"""
-Interface to the rich HTML components
-"""
 
 from epyk.core import html
 from epyk.core.css import Defaults as Defaults_css
@@ -201,3 +198,52 @@ class Rich(object):
                   'padding': '5px'})
     self.context.register(html_div)
     return html_div
+
+  def search_input(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
+                   tooltip=None, extensible=False, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+    rptObj.ui.inputs.search()
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
+
+    Attributes:
+    ----------
+    :param text:
+    :param placeholder:
+    :param color:
+    :param height:
+    :param htmlCode:
+    :param tooltip:
+    :param extensible:
+    :param profile:
+    """
+    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
+                                   extensible, profile)
+    self.context.register(html_s)
+    return html_s
+
+  def search_results(self, records=None, results_per_page=20, width=(100, "%"), height=(None, "px"), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+
+    Related Pages:
+    --------------
+
+    Attributes:
+    ----------
+    """
+    records = records or []
+    html_help = html.HtmlTextComp.SearchResult(self.context.rptObj, records, pageNumber=results_per_page, width=width, height=height, profile=profile, options=options or {})
+    self.context.register(html_help)
+    return html_help

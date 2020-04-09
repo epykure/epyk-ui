@@ -482,64 +482,66 @@ class ContentsTable(Html.Html):
 
 class SearchResult(Html.Html):
   name, category, callFnc = 'Search Result', 'Text', 'searchr'
+  __reqJs = ['jquery']
 
-  def __init__(self, report, recordSet, pageNumber, width, height):
+  def __init__(self, report, recordSet, pageNumber, width, height, options, profile):
     super(SearchResult, self).__init__(report, recordSet, css_attrs={"width": width, "height": height})
     self._jsStyles = {'title': {'color': self._report.theme.colors[7], 'font-size': '18px'}, 'dsc': {'color': self._report.theme.greys[6]},
                       'url': {'color': self._report.theme.success[1], 'font-size': '14px'}, 'visited': {'color': self._report.theme.greys[5]},
-                      'link': {'color': self._report.theme.colors[7], 'cursor': 'pointer'}, 'pageNumber': pageNumber}
+                      'link': {'color': self._report.theme.colors[7], 'cursor': 'pointer'}, 'pageNumber': pageNumber,
+                      'currPage': 0, "greyColor": self._report.theme.colors[9], "whiteColor": self._report.theme.greys[0]}
 
-  def onDocumentLoadFnc(self):
-    self.addGlobalFnc("%s(htmlObj, data, jsStyles, currPage)" % self.__class__.__name__, ''' htmlObj.empty() ; 
-      if (typeof currPage == 'undefined'){currPage = 0};
-      var pageNumber = jsStyles.pageNumber;
-      data.slice(currPage * pageNumber).forEach( function(rec){
+  # self.addGlobalFnc("%s(htmlObj, data, jsStyles, currPage)" % self.__class__.__name__, ''' htmlObj.empty() ;
+  @property
+  def _js__builder__(self):
+    return '''
+      jHtmlObj = jQuery(htmlObj);
+      if (typeof options.currPage == 'undefined'){options.currPage = 0}; var pageNumber = options.pageNumber;
+      data.slice(options.currPage * pageNumber).forEach( function(rec){
         var newItem = $('<div style="margin:5px 10px 5px 10px;"></div>') ; 
-        var title = $('<div>'+ rec['title'] + '</div>').css( jsStyles.title );
+        var title = $('<div>'+ rec['title'] + '</div>').css( options.title );
         if (rec['urlTitle'] != undefined){
-          title.css({'cursor': 'pointer'});
-          title.click(function(e){GoToReport(rec['urlTitle'], true, false)})}
+          title.css({'cursor': 'pointer'}); title.click(function(e){window.open(rec['urlTitle'], '_blank')})}
         newItem.append(title);
         if (rec.icon != undefined){
-          var item = $('<div></div>').css( jsStyles.url);
+          var item = $('<div></div>').css(options.url);
           item.append( $('<i class="'+ rec['icon'] +'" style="margin-right:5px"></i>')).append(rec['url']);
           newItem.append(item)} 
-        else {newItem.append($('<div>'+ rec['url'] +'</div>').css(jsStyles.url))}
-        newItem.append( $('<div>'+ rec['dsc'] +'</div>').css(jsStyles.dsc));
-        if(rec.visited != undefined){newItem.append($('<div>'+ rec.visited +'</div>').css(jsStyles.visited))}
+        else if(rec.url != undefined) {newItem.append($('<div>'+ rec['url'] +'</div>').css(options.url))}
+        newItem.append( $('<div>'+ rec['dsc'] +'</div>').css(options.dsc));
+        if(rec.visited != undefined){newItem.append($('<div>'+ rec.visited +'</div>').css(options.visited))}
         if(rec.links != undefined){
           rec.links.forEach(function(link){ 
             if (link.url == undefined) {link.url = link.val};
-            newItem.append($('<a href='+ link.url +' target="_blank">'+ link.val +'</a><br>').css(jsStyles.link))})};
-        htmlObj.append(newItem);
+            newItem.append($('<a href='+ link.url +' target="_blank">'+ link.val +'</a><br>').css(options.link))})};
+        jHtmlObj.append(newItem);
       }); 
-      if( data.length > 0) {
-        var reste = data.length/ pageNumber; var currIndex = currPage+1;
-        var roundRest = Math.trunc(reste);
+      if(data.length > 0) {
+        var reste = data.length/ pageNumber; var currIndex = options.currPage+1; var roundRest = Math.trunc(reste);
         if (roundRest > reste) {reste ++};
         var paginate = $('<div style="display:inline-block;height:35px;padding:0;width:100%%;text-align:center;margin-top:10px" class="py_cssdivpagination"></div>');
         if (currIndex > 1){
           var href = $('<a href="#">&laquo;</a>');
-          href.click({page: currPage-1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
+          href.click({page: options.currPage-1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, options, e.data.page)});
           paginate.append(href)};
         for (var i = 0; i < reste; i++){
           var indexPage = i + 1;
-          if (currPage == i) { 
-            var href = $('<a href="#" style="background-color:%(greyColor)s;color:%(whiteColor)s">'+ indexPage +'</a>');
-            href.click({page: i, rec: data}, function(e) { %(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
+          if (options.currPage == i) { 
+            var href = $('<a href="#" style="background-color:'+ options.greyColor +';color:'+ options.whiteColor +'">'+ indexPage +'</a>');
+            href.click({page: i, rec: data}, function(e) { %(class)s(htmlObj, e.data.rec, options, e.data.page)});
             paginate.append(href)}
           else{
             var href = $('<a href="#">'+ indexPage +'</a>') ;
-            href.click({page: i, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
+            href.click({page: i, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, options, e.data.page)});
             paginate.append(href)}}
         if(currIndex < reste){
           var href = $('<a href="#">&raquo;</a>');
-          href.click({page: currPage+1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, jsStyles, e.data.page)});
+          href.click({page: options.currPage+1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, options, e.data.page)});
           paginate.append(href)};
-        htmlObj.append(paginate)
-      } ''' % {"breadCrumb": self._report.jsGlobal.breadCrumVar, "class": self.__class__.__name__,
-               "greyColor": self._report.theme.colors[9], "whiteColor": self._report.theme.greys[0]})
+        jHtmlObj.append(paginate)
+      } ''' % {"class": self.__class__.__name__}
 
   def __str__(self):
-    self._report.style.cssCls('CssDivPagination')
-    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(pyClassNames=self.defined)
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    #self._report.style.cssCls('CssDivPagination')
+    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(pyClassNames=self.style.get_classes())
