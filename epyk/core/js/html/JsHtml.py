@@ -716,4 +716,17 @@ class JsHtmlList(JsHtml):
     return self._src.dom.getAttribute("class")
 
 
+class JsHtmlBackground(JsHtml):
 
+  @property
+  def val(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+      self.htmlId, self.content.toStr()))
+
+  @property
+  def content(self):
+    return ContentFormatters(self._report, self._src.dom.querySelector("div").css("backgroundColor").toStr())

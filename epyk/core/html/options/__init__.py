@@ -23,7 +23,7 @@ class Options(DataClass):
 
     :param name: String. The attribute name
     """
-    return self._report._jsStyles.get(name, dflt)
+    return self._report._jsStyles.get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
   def _config(self, value, name=None):
     """
@@ -34,4 +34,5 @@ class Options(DataClass):
     :param value: Object. The value for the name
     :param name: String. The attribute name
     """
-    self._report._jsStyles[sys._getframe().f_back.f_code.co_name] = value
+    self._report._jsStyles[name or sys._getframe().f_back.f_code.co_name] = value
+

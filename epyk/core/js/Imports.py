@@ -695,7 +695,7 @@ JS_IMPORTS = {
     'website': 'https://www.mathjax.org/',
     'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s', 'folder': 'mathjax'},
     'modules': [
-      {'reqAlias': 'mathjax', 'script': 'MathJax.js', 'version': '2.7.5', 'path': 'mathjax/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}],
+      {'reqAlias': 'mathjax', 'script': 'MathJax.js', 'version': '2.7.7', 'path': 'mathjax/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}],
     # To use the full module online
     #'url': 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/',
     'config': "config=TeX-AMS-MML_HTMLorMML"},

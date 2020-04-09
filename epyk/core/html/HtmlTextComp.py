@@ -5,6 +5,7 @@ from epyk.core.html import Html
 from epyk.core.css import Colors
 
 from epyk.core.html.options import OptText
+from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css import Defaults_css
@@ -388,6 +389,24 @@ class TrafficLight(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlRich
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlBackground(self, report=self._report)
+    return self._dom
+
   def colors(self, green=None, red=None, neutral=None):
     """
     Description:
@@ -453,7 +472,7 @@ class TrafficLight(Html.Html):
       if(data === false){htmlObj.querySelector('div').style.backgroundColor = options.red}
       else if (data === true){htmlObj.querySelector('div').style.backgroundColor = options.green}
       else if (data === null){htmlObj.querySelector('div').style.backgroundColor = options.orange}
-      else {htmlObj.style.backgroundColor =data}'''
+      else {htmlObj.style.backgroundColor = data}'''
 
   def __str__(self):
     if self.action is not None:

@@ -26,7 +26,7 @@ class Sliders(object):
   def __init__(self, context):
     self.context = context
 
-  def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+  def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(None, 'px'), htmlCode=None, attrs=None,
              helper=None, options=None, profile=None):
     """
     Description:
@@ -36,6 +36,7 @@ class Sliders(object):
     Usage:
     ------
     rptObj.ui.slider(40)
+    rptObj.ui.slider([1, 2, 3, 4, 5, 6, 7])
 
     Related Pages:
     --------------
