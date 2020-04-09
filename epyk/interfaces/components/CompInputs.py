@@ -358,8 +358,8 @@ class Inputs(object):
     :param htmlCode:
     :param options:
     :param profile:
+
     :rtype: html.HtmlTextEditor.Editor
-    :return:
     """
     return self.context.register(html.HtmlTextEditor.Editor(self.context.rptObj, text, title, language, width,
               height, isEditable, htmlCode, options, profile))
