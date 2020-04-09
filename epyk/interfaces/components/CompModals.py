@@ -72,7 +72,7 @@ class Modal(object):
     if add_buttons or submit:
       submitRow = self.context.rptObj.ui.row([]) if not add_buttons else self.context.rptObj.ui.row(add_buttons)
       if submit:
-        submitBtn = self.context.rptObj.ui.button(validation_text)
+        submitBtn = self.context.rptObj.ui.buttons.important(validation_text)
         if action:
           submitBtn.click(action)
         else:
