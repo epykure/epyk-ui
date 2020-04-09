@@ -247,6 +247,7 @@ class Cell(Html.Html):
   def __init__(self, report, vals, width, height, isEditable, htmlCode, options, profile):
     super(Cell, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.isEditable = isEditable
+    self.style.add_classes.input.textarea()
     self._jsRun, self._jsSave = '', ''
     # self.addGlobalVar("%s_count" % self.htmlId, "0")
     self.css({'padding': '10px', "min-height": "30px", "font-family": "Arial, monospace", 'box-sizing': 'border-box'})
@@ -311,9 +312,9 @@ class Cell(Html.Html):
       saveButton = '<i title="%(tooltip)s" id="%(htmlId)s_run" class="%(iconCss)s far fa-save"></i>' % {'tooltip': self._jsSave[1], "htmlId": self.htmlId, "iconCss": self._report.style.cssName('CssOutIcon')}
     #self._report.style.cssCls('CssTdEditor')
     return '''
-      <table style="width:100%%;margin-top:10px;padding:5px 0 5px 10px">
+      <table style="width:100%%;margin-top:10px;padding:5px 5px 5px 10px">
         <tr>
-          <td style="height:100%%;width:100px;border-left:5px solid %(blueColor)s;vertical-align:middle;color:%(blueColor)s"> 
+          <td style="height:100%%;width:80px;border-left:3px solid %(blueColor)s;vertical-align:middle;color:%(blueColor)s;padding-left:5px"> 
             <span title="count number of runs" id="%(htmlId)s_counter" >In [ 0 ]</span> 
             %(runButton)s
           </td>
@@ -335,7 +336,7 @@ class Cell(Html.Html):
           </td>
         </tr>
       </table>
-      ''' % {'attr': self.get_attrs(), 'htmlId': self.htmlId, 'runButton': runButton, #'tdRunCss': self._report.style.cssName('CssTdEditor'),
+      ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlId': self.htmlId, 'runButton': runButton, #'tdRunCss': self._report.style.cssName('CssTdEditor'),
              'saveButton': saveButton, 'blackColor': self._report.theme.greys[9], 'whiteColor': self._report.theme.greys[0],
              'redColor': self._report.theme.danger[1], 'blueColor': self._report.theme.colors[6]}
 
