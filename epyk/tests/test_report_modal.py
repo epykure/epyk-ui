@@ -30,9 +30,9 @@ list_2 = rptObj.ui.lists.list([l3, l4, l5, l6, l7])
 combining = rptObj.ui.texts.title('''Combining data''')
 p4 = rptObj.ui.texts.paragraph('''We also combine data among our services and across your devices for these purposes. For example, we use data from trillions of search queries to build spell-correction models that we use across all of our services, and we combine data to alert you and other users to potential security risks.''')
 control = rptObj.ui.texts.title('''Privacy Controls''')
-p4 = rptObj.ui.texts.paragraph('''There are many privacy controls you can use, even when you're signed out, to get the Google experience you want.''')
+p5 = rptObj.ui.texts.paragraph('''There are many privacy controls you can use, even when you're signed out, to get the Google experience you want.''')
 disc = rptObj.ui.modal.disclaimer([privacy_title, p1, stroke, p2, data_protect,
-                            list_1, process, p3, list_2, combining, p4])
+                            list_1, process, p3, list_2, combining, p4, control, p5])
 button_show = rptObj.ui.buttons.button('Disclaimer')
 button_show.click(disc.show())
 

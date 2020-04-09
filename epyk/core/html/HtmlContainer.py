@@ -818,26 +818,28 @@ class Modal(Html.Html):
     self.add_helper(helper)
     self.doSubmit = submit
     if self.doSubmit:
-      self.submit = report.ui.button("Submit").set_attrs({"type": 'submit'})
+      self.submit = report.ui.buttons.important("Submit").set_attrs({"type": 'submit'})
       self.submit.inReport = False
     self.closeBtn = report.ui.texts.span('&times', width='auto')
     self.closeBtn.css(None, reset=True)
     self.closeBtn.style.add_classes.div.span_close()
     self.closeBtn.click(report.js.getElementById(self.htmlId).css({'display': "none"}))
-    self.__header = report.ui.row([]).css({'position': 'fixed'})
+    self.__header = report.ui.row([])
+    self.__header.inReport = False
     if header:
       for obj in header:
         self.__header + obj
-    self.__header + self.closeBtn
+    self.__header += self.closeBtn
     if footer:
       for obj in footer:
         self.__footer + obj
     self.__footer = report.ui.row([])
-    self.__body = report.ui.col([])
-    self.col = report.ui.col([]).css({'width': 'auto'})
+    self.__footer.inReport = False
+    self.__body = report.ui.col([]).css({'position': 'relative',  'overflow-y': 'scroll'})
+    self.__body.inReport = False
+    self.col = report.ui.col([self.__header, self.__body, self.__footer]).css({'width': 'auto'}, reset=True)
     # self.col.css(None, reset=True)
     self.col.style.add_classes.div.modal_content()
-    self.col += self.closeBtn
     self.col.inReport = False
     self.val.append(self.col)
     self.__outOfScopeClose = True
@@ -883,7 +885,7 @@ class Modal(Html.Html):
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set too late
-    self.col += htmlObj
+    self.__body += htmlObj
     return self
 
   def __str__(self):

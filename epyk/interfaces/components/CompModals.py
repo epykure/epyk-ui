@@ -7,7 +7,7 @@ class Modal(object):
     self.context = context
 
 
-  def inputs(self, records, submit=False, helper=None):
+  def inputs(self, records, header=None, footer=None, submit=False, helper=None):
     """
     Usage:
     ------
@@ -31,12 +31,12 @@ class Modal(object):
       inp.label.css({'float': ''})
       inp.input.set_attrs({"name": rec["htmlCode"]})
       modal.col += inp
-    modal = html.HtmlContainer.Modal(self.context.rptObj, [], submit, helper)
+    modal = html.HtmlContainer.Modal(self.context.rptObj, [], header, footer, submit, helper)
     modal.col += modal.submit
     self.context.register(modal)
     return modal
 
-  def forms(self, html_objs, action, method, helper=None):
+  def forms(self, html_objs, action, method, header=None, footer=None, helper=None):
     """
     Simple interface to create an html form within a modal
 
@@ -57,17 +57,17 @@ class Modal(object):
       html_objs = [html_objs]
     form = html.HtmlContainer.Form(self.context.rptObj, html_objs, helper)
     form.submit(method, action)
-    modal = html.HtmlContainer.Modal(self.context.rptObj, [], False, helper)
+    modal = html.HtmlContainer.Modal(self.context.rptObj, [], header, footer, False, helper)
     modal += form
     modal.form = form
     self.context.register(modal)
     return modal
 
-  def disclaimer(self, disc_list, submit=True, validation_text='AGREE', action=None, add_buttons=None, to_html=True, helper=None):
+  def disclaimer(self, disc_list, header=None, footer=None, submit=True, validation_text='AGREE', action=None, add_buttons=None, to_html=True, helper=None):
     for obj in disc_list:
       obj.css({'margin': '40px', 'width': 'auto', 'text-align': 'justify'})
 
-    modal = html.HtmlContainer.Modal(self.context.rptObj, disc_list, False, helper)
+    modal = html.HtmlContainer.Modal(self.context.rptObj, disc_list, header, footer, False, helper)
     modal.col.css({'width': '450px', 'height':'700px'})
     if add_buttons or submit:
       submitRow = self.context.rptObj.ui.row([]) if not add_buttons else self.context.rptObj.ui.row(add_buttons)
