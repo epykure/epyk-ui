@@ -126,3 +126,4 @@ class PyExt(object):
       if c in text:
         text = text.replace(c, t)
     return text
+

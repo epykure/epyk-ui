@@ -1,6 +1,3 @@
-"""
-Interface to the rich HTML components
-"""
 
 from epyk.core import html
 from epyk.core.css import Defaults as Defaults_css
@@ -30,8 +27,9 @@ class Rich(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
-    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.',
-                    'colors': {'green': 'green', 'red': 'red', 'orange': 'orange'}}
+    dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
+                    'red': self.context.rptObj.theme.danger[1], 'green': self.context.rptObj.theme.success[1],
+                    'orange': self.context.rptObj.theme.warning[1]}
     if options is not None:
       dflt_options.update(options)
     html_delta = html.HtmlTextComp.Delta(self.context.rptObj, rec or {}, width, height, dflt_options, helper, profile)
@@ -97,35 +95,6 @@ class Rich(object):
     self.context.register(html_traffic)
     return html_traffic
 
-  def prism(self, text=None, language='python', width=(100, "%"), height=(None, "px"),
-            isEditable=False, trimSpaces=True, align=None, helper=None, profile=None):
-    """
-    Description:
-    ------------
-
-    Usage:
-    ------
-    rptObj.ui.rich.prism("print('test')")
-
-    Related Pages:
-    --------------
-    https://www.w3schools.com/tags/tag_font.asp
-
-    Attributes:
-    ----------
-    :param text:
-    :param language: Optional, The language format used. Default Python
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param isEditable:
-    :param trimSpaces:
-    :param align:
-    :param profile: Optional. A flag to set the component performance storage
-    """
-    html_prism = html.HtmlTextComp.Prism(self.context.rptObj, text, language, width, height, isEditable, trimSpaces, align, helper, profile)
-    self.context.register(html_prism)
-    return html_prism
-
   def info(self, text=None, options=None, profile=None):
     """
     Description:
@@ -149,32 +118,6 @@ class Rich(object):
     html_help = html.HtmlOthers.Help(self.context.rptObj, text, width=(10, "px"), profile=profile, options=options or {})
     self.context.register(html_help)
     return html_help
-
-  def script(self, title, scriptName, clssName=None, functionName=None, docType='documentation',
-             width=(100, "%"), height=(None, "px"),  color=None, profile=None):
-    """
-    Description:
-    ------------
-    Entry point to the source code component.
-
-    Usage:
-    ------
-    rptObj.ui.rich.script("Documentation", "test.py")
-
-    Attributes:
-    ----------
-    :param title:
-    :param scriptName:
-    :param clssName:
-    :param functionName:
-    :param docType:
-    :param color:
-    :param profile:
-    """
-    html_script = html.HtmlTextComp.DocScript(self.context.rptObj, title, scriptName, clssName, functionName,
-                                            docType, width, height, color, profile)
-    self.context.register(html_script)
-    return html_script
 
   def countdown(self, yyyy_mm_dd, label=None, icon="fas fa-stopwatch", timeInMilliSeconds=1000, width=(100, '%'), height=(None, 'px'),
                 htmlCode=None, helper=None, profile=None):
@@ -232,8 +175,7 @@ class Rich(object):
     self.context.register(html_dt)
     return html_dt
 
-  def console(self, content="", color=None, width=(100, "%"), height=(200, "px"), htmlCode=None,
-              options=None, profile=None):
+  def console(self, content="", color=None, width=(100, "%"), height=(200, "px"), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -248,9 +190,60 @@ class Rich(object):
     :param options:
     :param profile:
     """
-    options = options or {}
-    html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, color, width, height, htmlCode, None, options, profile)
+    dflt_options = {"markdown": True, "timestamp": True}
+    if options is not None:
+      dflt_options.update(options)
+    html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, color, width, height, htmlCode, None, dflt_options, profile)
     html_div.css({"border": "1px solid %s" % html_div._report.theme.greys[4], "background": html_div._report.theme.greys[2],
                   'padding': '5px'})
     self.context.register(html_div)
     return html_div
+
+  def search_input(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
+                   tooltip=None, extensible=False, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+    rptObj.ui.inputs.search()
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
+
+    Attributes:
+    ----------
+    :param text:
+    :param placeholder:
+    :param color:
+    :param height:
+    :param htmlCode:
+    :param tooltip:
+    :param extensible:
+    :param profile:
+    """
+    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
+                                   extensible, profile)
+    self.context.register(html_s)
+    return html_s
+
+  def search_results(self, records=None, results_per_page=20, width=(100, "%"), height=(None, "px"), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage:
+    ------
+
+    Related Pages:
+    --------------
+
+    Attributes:
+    ----------
+    """
+    records = records or []
+    html_help = html.HtmlTextComp.SearchResult(self.context.rptObj, records, pageNumber=results_per_page, width=width, height=height, profile=profile, options=options or {})
+    self.context.register(html_help)
+    return html_help

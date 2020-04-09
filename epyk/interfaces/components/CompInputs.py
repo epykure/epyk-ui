@@ -365,7 +365,7 @@ class Inputs(object):
               height, isEditable, htmlCode, options, profile))
 
   def cell(self, text=None, width=(100, "%"), height=(None, "px"), isEditable=False,
-           htmlCode=None, profile=None):
+           htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -379,7 +379,7 @@ class Inputs(object):
     :param htmlCode:
     :param profile:
     """
-    html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, width, height, isEditable, htmlCode, profile)
+    html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, width, height, isEditable, htmlCode, options, profile)
     self.context.register(html_cell)
     return html_cell
 

@@ -20,7 +20,7 @@ class OptionsSelect(DataClass):
   @actionsBox.setter
   def actionsBox(self, bool):
     self._report._jsStyles["actionsBox"] = bool
-    return self.set(bool)
+    self.set(bool)
 
   @property
   def container(self):

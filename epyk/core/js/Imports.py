@@ -124,12 +124,15 @@ def installed_packages():
   subprocess.call(["pip", 'list', '-o'])
 
 
+CDNJS_REPO = 'https://cdnjs.cloudflare.com/ajax/libs'
+
+
 JS_IMPORTS = {
   # numbers formmatting
   'accounting': {
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://openexchangerates.github.io/accounting.js/'},
 
@@ -683,7 +686,7 @@ JS_IMPORTS = {
   'prism': {
     'website': 'https://prismjs.com/',
     'modules': [
-      {'reqAlias': 'prism', 'script': 'prism.js', 'version': '1.11.0', 'path': 'prism/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'reqAlias': 'prism', 'script': 'prism.js', 'version': '1.20.0', 'path': 'prism/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
   # Javascript package to display mathematical formulas
   # https://codingislove.com/display-maths-formulas-webpage/
@@ -692,7 +695,7 @@ JS_IMPORTS = {
     'website': 'https://www.mathjax.org/',
     'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s', 'folder': 'mathjax'},
     'modules': [
-      {'reqAlias': 'mathjax', 'script': 'MathJax.js', 'version': '2.7.5', 'path': 'mathjax/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}],
+      {'reqAlias': 'mathjax', 'script': 'MathJax.js', 'version': '2.7.7', 'path': 'mathjax/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}],
     # To use the full module online
     #'url': 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/',
     'config': "config=TeX-AMS-MML_HTMLorMML"},
@@ -708,18 +711,27 @@ JS_IMPORTS = {
   'codemirror': {
     'website': 'https://codemirror.net/',
     'modules': [
-      {'script': 'codemirror.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'python.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/mode/python/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'r.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/mode/r/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'markdown.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/mode/markdown/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-      {'script': 'placeholder.js', 'version': '5.42.2', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'codemirror.min.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
+      #{'script': 'python.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/mode/python/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      #{'script': 'r.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/mode/r/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      #{'script': 'markdown.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/mode/markdown/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+      #{'script': 'placeholder.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/addon/display/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]
+    ]
+  },
 
   # Leaflet
   'leaflet': {
     'website': 'https://leafletjs.com/',
     'modules': [
-      {'script': 'leaflet.js', 'version': '1.6.0', 'path': 'leaflet/%(version)s/',
-       'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'leaflet.js', 'version': '1.6.0', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # showdown
+  'showdown': {
+    'website': 'https://github.com/showdownjs/showdown',
+    'modules': [
+      {'script': 'showdown.min.js', 'path': 'showdown/%(version)s/', 'version': '1.9.1', 'cdnjs': CDNJS_REPO}
+    ]
+  }
 }
 
 
@@ -933,17 +945,12 @@ CSS_IMPORTS = {
     'modules': [
       {'script': 'vis.min.css', 'version': '4.21.0', 'path': 'vis/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
-  # Prism style with CDN Links
-  'prism': {
-    'website': 'https://prismjs.com/',
-    'modules': [
-      {'script': 'prism.css', 'version': '1.11.0', 'path': 'prism/%(version)s/themes/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
-
   # Code mirror
   'codemirror': {
     'website': 'https://codemirror.net/',
     'modules': [
-      {'script': 'codemirror.css', 'version': '5.39.2', 'path': 'codemirror/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
+      {'script': 'codemirror.min.css', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}
+    ]},
 
   # Leaflet
   'leaflet': {
@@ -953,6 +960,33 @@ CSS_IMPORTS = {
        'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
 }
+
+
+def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None):
+  """
+  Description:
+  ------------
+  Function to extend the internal CSS and JS registered modules.
+
+  Related Pages:
+  --------------
+  :param reference: String. The internal reference in the framework
+  :param module_path: List of tuple. The different modules and location
+  :param version: String. The version number. Can be an internal module reference to point to follow its version number
+  :param cdnjs_url: String. The CDNJS reference path
+  :param required: List. The list of dependency modules
+  """
+  mapped_modules = {"modules": []}
+  if required is not None:
+    mapped_modules['req'] = [{'alias': req} for req in required]
+  for module, path in module_path:
+    config = JS_IMPORTS if module.endswith(".js") else CSS_IMPORTS
+    if not reference in config:
+      config[reference] = mapped_modules
+    if version in config:
+      # take the version from another registered module
+      version = config[version]['modules'][0]['version']
+    config[reference]["modules"].append({'script': module, 'version': version, 'path': path, 'cdnjs': cdnjs_url})
 
 
 class ImportManager(object):

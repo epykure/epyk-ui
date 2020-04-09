@@ -4,27 +4,12 @@ import json
 from epyk.core.js import JsUtils
 from epyk.core.html import Html
 
+from epyk.core.html.options import OptCodeMirror
+from epyk.core.html.options import OptText
+
 # The list of CSS classes
 from epyk.core.css.styles import GrpCls
 # from epyk.core.css.styles import CssGrpClsText
-
-
-class OptionsConsole(object):
-  def __init__(self, src, options):
-    self.src = src
-    self._timestamp = options.get('timestamp', False)
-
-  @property
-  def timestamp(self):
-    """
-    Description:
-    ------------
-    """
-    return self._timestamp
-
-  @timestamp.setter
-  def timestamp(self, bool):
-    self._timestamp = bool
 
 
 class Console(Html.Html):
@@ -33,22 +18,24 @@ class Console(Html.Html):
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
     super(Console, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow": 'auto'})
-    self.options = OptionsConsole(self, options)
+    self.__options = OptText.OptionsConsole(self, options)
 
-  def build(self, data=None, options=None, profile=False):
+  @property
+  def options(self):
     """
     Description:
     ------------
+    Property to set all the possible object for a button
 
-    Attributes:
-    ----------
-    :param data:
-    :param options:
-    :param profile:
+    :rtype: OptText.OptionsConsole
     """
-    js_data = JsUtils.jsConvertData(data, None)
-    mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
-    return "var content = %s; %s.innerHTML = %s +'<br/>'" % (js_data, self.dom.varId, mark_up)
+    return self.__options
+
+  @property
+  def _js__builder__(self):
+    return ''' 
+      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
+      htmlObj.innerHTML = data +'<br/>' '''
 
   def write(self, data, timestamp=None, profile=False, stringify=False, skip_data_convert=False, format=None):
     """
@@ -64,17 +51,17 @@ class Console(Html.Html):
     :param skip_data_convert:
     :param format: String. A string output format using %s to define the data in the string
     """
-    var_id = "content_%s" % self.htmlId # to avoid infinite loops in the Javascript
-    mark_up = self._report.js.string(var_id, isPyData=False).toStringMarkup()
     js_data = data if skip_data_convert else JsUtils.jsConvertData(data, None)
     if stringify:
       js_data = "JSON.stringify(%s)" % js_data
+    if self.options.showdown is not False:
+      js_data = "(function(d){ var conv = new showdown.Converter(%s); return conv.makeHtml(d)})(%s)" % (json.dumps(self.options.showdown), js_data)
     if format is not None:
       js_data = JsUtils.jsConvertData(format, None).toStr().replace("%s", '"+ %s +"') % js_data
     if timestamp or (self.options.timestamp and timestamp != False):
-      return "var %s = %s; %s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (var_id, js_data, self.dom.varId, mark_up)
+      return "%s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (self.dom.varId, js_data)
 
-    return "var %s = %s; %s.innerHTML += ' > '+ %s +'<br/>'" % (var_id, js_data, self.dom.varId, mark_up)
+    return "%s.innerHTML += ' > '+ %s +'<br/>'" % (self.dom.varId, js_data)
 
   def clear(self):
     return "%s.innerHTML = ''" % self.dom.varId
@@ -258,12 +245,12 @@ class Cell(Html.Html):
   name, category, callFnc = 'Python Cell Runner', 'Text', 'pytestcell'
   __reqCss, __reqJs = ['codemirror'], ['codemirror']
 
-  def __init__(self, report, vals, size, width, height, isEditable, htmlCode, profile):
-    super(Cell, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
-    self.size, self.isEditable = "%s%s" % (size[0], size[1]), isEditable
+  def __init__(self, report, vals, width, height, isEditable, htmlCode, options, profile):
+    super(Cell, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.isEditable = isEditable
     self._jsRun, self._jsSave = '', ''
     # self.addGlobalVar("%s_count" % self.htmlId, "0")
-    self.css({'font-size': self.size, 'padding': '10px', "min-height": "30px", "font-family": "Arial, monospace"})
+    self.css({'padding': '10px', "min-height": "30px", "font-family": "Arial, monospace"})
 
   @property
   def val(self):
@@ -323,7 +310,7 @@ class Cell(Html.Html):
         "htmlId": self.htmlId, "save": self._jsSave[0], 'data': self.jsQueryData})
       self._report.style.cssCls('CssOutIcon')
       saveButton = '<i title="%(tooltip)s" id="%(htmlId)s_run" class="%(iconCss)s far fa-save"></i>' % {'tooltip': self._jsSave[1], "htmlId": self.htmlId, "iconCss": self._report.style.cssName('CssOutIcon')}
-    self._report.style.cssCls('CssTdEditor')
+    #self._report.style.cssCls('CssTdEditor')
     return '''
       <table style="width:100%%;margin-top:10px;padding:5px 0 5px 10px">
         <tr>
@@ -331,7 +318,7 @@ class Cell(Html.Html):
             <span title="count number of runs" id="%(htmlId)s_counter" >In [ 0 ]</span> 
             %(runButton)s
           </td>
-          <td class="%(tdRunCss)s"><textarea %(attr)s></textarea></td>
+          <td><textarea %(attr)s></textarea></td>
         </tr>
         <tr style="height:3px;display:inline-block"></tr>
         <tr style="display:none" id="%(htmlId)s_result">
@@ -339,7 +326,7 @@ class Cell(Html.Html):
             <span title="Number of store results">Out [ 0 ]</span>  
             %(saveButton)s
           </td>
-          <td class="%(tdRunCss)s" id="%(htmlId)s_result_data"></td>
+          <td id="%(htmlId)s_result_data"></td>
         </tr>
         <tr style="display:none;" id="%(htmlId)s_print">
           <td colspan=2 style="height:100px;">
@@ -349,9 +336,73 @@ class Cell(Html.Html):
           </td>
         </tr>
       </table>
-      ''' % {'attr': self.get_attrs(), 'htmlId': self.htmlId, 'runButton': runButton, 'tdRunCss': self._report.style.cssName('CssTdEditor'), 'saveButton': saveButton,
-             'blackColor': self._report.theme.greys[9], 'whiteColor': self._report.theme.greys[0],
+      ''' % {'attr': self.get_attrs(), 'htmlId': self.htmlId, 'runButton': runButton, #'tdRunCss': self._report.style.cssName('CssTdEditor'),
+             'saveButton': saveButton, 'blackColor': self._report.theme.greys[9], 'whiteColor': self._report.theme.greys[0],
              'redColor': self._report.theme.danger[1], 'blueColor': self._report.theme.colors[6]}
+
+
+class Code(Html.Html):
+  name, category, callFnc = 'Code', 'Text', 'code'
+  __reqCss, __reqJs = ['codemirror'], ['codemirror']
+
+  def __init__(self, report, vals, color, width, height, htmlCode, options, helper, profile):
+    super(Code, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
+    self.add_helper(helper)
+    self.__options = OptCodeMirror.OptionsCode(self, options)
+    self.css({'display': 'block', 'margin': '5px 0'})
+
+  @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+
+    :rtype: OptCodeMirror.OptionsCode
+    """
+    return self.__options
+
+  @property
+  def _js__builder__(self):
+    return '''
+       htmlObj.setValue(data); Object.keys(options).forEach(function(key){ htmlObj.setOption(key, options[key])}); 
+       htmlObj.refresh()'''
+
+  def build(self, data=None, options=None, profile=False):
+    if not self.builder_name:
+      raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
+
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+
+    if isinstance(data, dict):
+      # check if there is no nested HTML components in the data
+      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      js_data = "{%s}" % ",".join(tmp_data)
+    else:
+      js_data = JsUtils.jsConvertData(data, None)
+    options, js_options = options or self._jsStyles, []
+    for k, v in options.items():
+      if isinstance(v, dict):
+        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
+      else:
+        if str(v).strip().startswith("function"):
+          js_options.append("%s: %s" % (k, v))
+        else:
+          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    #
+    constructors[self.builder_name] = "var %s = CodeMirror.fromTextArea(%s, {%s}); function %s(htmlObj, data, options){%s}" % (
+      self.editorId, self.dom.varName, ",".join(js_options), self.builder_name, self._js__builder__)
+    return "%s(%s, %s, %s)" % (self.builder_name, self.editorId, js_data, "{%s}" % ",".join(js_options))
+
+  @property
+  def editorId(self):
+    """
+    Return the Javascript variable of the bespoke
+    """
+    return "editor_%s" % self.htmlId
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<textarea %s></textarea>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Tags(Html.Html):

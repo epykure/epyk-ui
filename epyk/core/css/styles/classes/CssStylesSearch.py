@@ -6,27 +6,23 @@ from epyk.core.css.styles.classes import CssStyle
 
 
 class CssSearchExt(CssStyle.Style):
-  _attrs = {'box-sizing': 'border-box', 'border-radius': '4px', 'font-size': '12px',
+  _attrs = {'box-sizing': 'border-box', 'border-radius': '4px', 'width': '120px',
             'background-repeat': 'no-repeat', 'padding': '5px 20px 5px 40px',
             '-webkit-transition': 'width 0.4s ease-in-out', 'transition': 'width 0.4s ease-in-out'}
   _focus = {'width': '100%', 'outline': 0}
 
   def customize(self):
     self.css({"background-color": self.rptObj.theme.greys[0]})
-    self.hover.css({'color': self.rptObj.theme.greys[-1]})
+    self.hover.css({'color': self.rptObj.theme.greys[-1], 'width': '100%'})
 
 
 class CssSearch(CssStyle.Style):
-  """
-
-  """
-  _attrs = {'width': '100%', 'display': 'inline-block', 'border': 'none', 'font-size': '12px',
-            'background-repeat': 'no-repeat', 'padding': '5px 20px 5px 40px'}
+  _attrs = {'width': 'auto', 'display': 'inline-block', 'border': 'none', 'background-repeat': 'no-repeat',
+            'padding': '5px 20px 5px 40px'}
   _focus = {'outline': 0}
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.greys[0],
-              "border-bottom": '1px solid %s' % self.rptObj.theme.greys[3], 'color': self.rptObj.theme.greys[-1]})
+    self.css({"background-color": self.rptObj.theme.greys[0], "border-bottom": '1px solid %s' % self.rptObj.theme.greys[3], 'color': self.rptObj.theme.greys[-1]})
     self.hover.css({'color': self.rptObj.theme.greys[-1], 'border-bottom-color': self.rptObj.theme.success[1]})
 
 

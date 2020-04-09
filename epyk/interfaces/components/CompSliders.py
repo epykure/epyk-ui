@@ -26,7 +26,7 @@ class Sliders(object):
   def __init__(self, context):
     self.context = context
 
-  def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+  def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(None, 'px'), htmlCode=None, attrs=None,
              helper=None, options=None, profile=None):
     """
     Description:
@@ -36,6 +36,7 @@ class Sliders(object):
     Usage:
     ------
     rptObj.ui.slider(40)
+    rptObj.ui.slider([1, 2, 3, 4, 5, 6, 7])
 
     Related Pages:
     --------------
@@ -55,7 +56,7 @@ class Sliders(object):
     """
     if isinstance(number, list):
       minimum, maximum = min(number), max(number)
-      number = min
+      number = minimum
     html_slider = html.HtmlEvent.Slider(self.context.rptObj, number, minimum, maximum, width, height,  attrs or {}, helper,
                                         options or {}, htmlCode, profile)
     self.context.register(html_slider)

@@ -29,7 +29,7 @@ class Input(Html.Html):
   name, category, callFnc = 'Input', 'Inputs', 'input'
 
   def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
-    super(Input, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
+    super(Input, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'},
                                 globalFilter=filter, profile=profile, options=options)
     value = text['value'] if isinstance(text, dict) else text
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
@@ -834,24 +834,22 @@ class TextArea(Html.Html):
 
 class Search(Html.Html):
   name, category, callFnc = 'Search', 'Inputs', 'search'
-  # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, text, placeholder, color, height, htmlCode, tooltip, extensible, profile):
     super(Search, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"height": height}, profile=profile)
     self.color = self._report.theme.colors[-1] if color is None else color
-    self.css({"display": "inline-block", "margin-bottom": '2px'})
+    self.css({"display": "inline-block", "margin-bottom": '2px', 'box-sizing': 'border-box'})
     #
     if not extensible:
-      self.attr["class"].add('CssSearch')
-      self.css({"width": "100%"})
+      self.style.add_classes.layout.search()
+      self.style.css.width = "100%"
     else:
-      self._report.style.cssCls('CssSearchExt')
+      self.style.add_classes.layout.search_extension()
     self.add_input(text).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
     self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
     self.add_icon("fas fa-search").icon.attr['id'] = "%s_button" % self.htmlId
     self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute'})
-    if tooltip != '':
-      self.tooltip(tooltip)
+    self.tooltip(tooltip)
 
   @property
   def dom(self):
