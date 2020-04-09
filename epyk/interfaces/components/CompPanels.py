@@ -1,6 +1,3 @@
-"""
-Module dedicated to produce Menus components
-"""
 
 from epyk.core import html
 
