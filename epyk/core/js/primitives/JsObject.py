@@ -556,39 +556,6 @@ class JsObject(object):
     decSeparator = JsUtils.jsConvertData(decSeparator, None)
     return JsString.JsString("toFormatNumber(%s, %s, %s, %s)" % (self.varId, decPlaces, thouSeparator, decSeparator), isPyData=False)
 
-  def toStringMarkup(self, report=None):
-    """
-    Convert a markdown string to a markup (HTML) string
-
-    :param report: The internal report object
-
-    :return:
-    """
-    report = report or self._report
-    if report is None:
-      raise Exception("The report object must be defined")
-
-    # Add the Javascript function to convert a markdown to markup
-    if 'toMarkUp' not in self._report._props.setdefault('js', {}).setdefault('functions', {}):
-      self._report._props.setdefault('js', {}).setdefault('functions', {})["toMarkUp"] = {
-        'content': JsUtils.cleanFncs('''var result = []; data = ""+data;
-              data = data.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
-              data = data.replace(/\*\*\*(.*?)\*\*\*/g, "<b><i>$1</i></b>");
-              data = data.replace(/\*(.*?)\*/g, "<i>$1</i>");
-              data = data.replace(/__(.*?)__/g, "<u>$1</u>");
-              data = data.replace(/~~(.*?)~~/g, "<i>$1</i>");
-              data = data.replace(/--(.*?)--/g, "<del>$1</del>");
-              data = data.replace(/<<(.*?)>>/g, "<a href='$1'>Link</a>");
-              data = data.replace(/\!\((.*?)\)/g, "<i class='$1'></i>");
-              data = data.replace(/\[(.*?)\]\(https\\\:(.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
-              data = data.replace(/\[(.*?)\]\(http\\\:(.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
-              data = data.replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2'>$1</a>");
-              if ((data == '') || (data == '__')){data = '<br />'};
-              result = data; return result'''), 'pmt': ['data']}
-
-    from epyk.core.js.primitives import JsString
-    return JsString.JsString("toMarkUp(%s)" % self.varId, isPyData=False)
-
   def toString(self, explicit=True):
     """
     Converts a Object to a string, and returns the result

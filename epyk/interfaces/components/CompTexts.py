@@ -423,7 +423,7 @@ class Texts(object):
     self.context.register(html_title)
     return html_title
 
-  def fieldset(self, legend="", width=(100, "%"), height=(None, "px"), helper=None, profile=None):
+  def fieldset(self, legend="", width=(100, "%"), height=(None, "px"), helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -444,9 +444,10 @@ class Texts(object):
     :param legend:
     :param width:
     :param height:
+    :param options:
     :param profile:
     """
     html_fieldset = html.HtmlText.Fieldset(self.context.rptObj, legend, width=width, height=height, helper=helper,
-                                           profile=profile)
+                                           options=options, profile=profile)
     self.context.register(html_fieldset)
     return html_fieldset

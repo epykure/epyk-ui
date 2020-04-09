@@ -98,7 +98,8 @@ class Label(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
     
   def __str__(self):
-    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
 
 
 class Span(Html.Html):
@@ -111,6 +112,17 @@ class Span(Html.Html):
     self.__options = OptText.OptionsText(self, options)
     if tooltip is not None:
       self.tooltip(tooltip)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
 
   @property
   def id_container(self):
@@ -189,7 +201,8 @@ class Span(Html.Html):
       '''
 
   def __str__(self):
-    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
 
 
 class Position(Span):
@@ -343,19 +356,19 @@ class Text(Html.Html):
 
   @property
   def _js__builder__(self):
-    mark_up = self._report.js.string("content", isPyData=False).toStringMarkup()
     return '''
       var content = data;
       if(options.reset){htmlObj.innerHTML = ""}; 
       if(data != ''){ 
+        if(options.showdown){var converter = new showdown.Converter(options.showdown); content = converter.makeHtml(data)} 
         if((options.maxlength != undefined) && (data.length > options.maxlength)){
           content = data.slice(0, options.maxlength); 
-          if(options.markdown){htmlObj.innerHTML = %(markUp)s +"..."} else {htmlObj.innerHTML = content +"..."}; 
+          if(options.markdown){htmlObj.innerHTML = content +"..."} else {htmlObj.innerHTML = content +"..."}; 
           htmlObj.title = data} 
         else{
-          if(options.markdown){htmlObj.innerHTML = %(markUp)s} else {htmlObj.innerHTML = content}}};
+          if(options.markdown){htmlObj.innerHTML = content} else {htmlObj.innerHTML = content}}};
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}};
-      ''' % {"markUp": mark_up}
+      '''
 
   def __str__(self):
     if self.options.limit_char and len(self.content) > self.options.limit_char:
@@ -442,9 +455,8 @@ class Pre(Html.Html):
         else{htmlObj.innerHTML = data}'''
 
   def __str__(self):
-    if self.options.showdown:
-      self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return '<pre %s>%s</pre>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    return '<pre %s>%s</pre>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
 
 
 class Paragraph(Html.Html):
@@ -666,6 +678,7 @@ class Title(Html.Html):
 
   def __str__(self):
     anchor_name = ' name="%s"' % self._name if self._name is not None else ''
+    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
     if self.picture is not None:
       path = "/img/%s" % self._report.run.report_name
       # Check if the file is available in the default directory
@@ -674,9 +687,9 @@ class Title(Html.Html):
       if not os.path.exists(filePath):
         raise Exception("Missing file %s in %s" % (self.picture, os.path.join(self._report.run.local_path, "static")))
 
-      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), path, self.picture, anchor_name, self.val, self.helper)
+      return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), path, self.picture, anchor_name, val, self.helper)
 
-    return '<div %s><a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), anchor_name, self.val, self.helper)
+    return '<div %s><a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), anchor_name, val, self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    MARKDOWN SECTION
@@ -850,16 +863,28 @@ class Highlights(Html.Html):
 class Fieldset(Html.Html):
   name, category, callFnc = 'Fieldset', 'Texts', 'fieldset'
 
-  def __init__(self, report, legend, width, height, helper, profile):
+  def __init__(self, report, legend, width, height, helper, options, profile):
     super(Fieldset, self).__init__(report, legend, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.css({'padding': '5px', 'border': '1px groove %s' % self._report.theme.greys[3], 'display': 'block', 'margin': '5px 0'})
     self.components = []
+    self.__options = OptText.OptionsText(self, options)
 
   @property
   def _js__builder__(self):
     return '''htmlObj.firstChild.innerHTML = data; 
       if(typeof options.css !== 'undefined'){Object.keys(options.css).forEach(function(key){htmlObj.firstChild.style[key] = options.css[key]})}'''
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
 
   def __add__(self, htmlObj):
     """ Add items to a container """
@@ -872,4 +897,5 @@ class Fieldset(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.components])
-    return '<fieldset %s><legend style="width:auto">%s</legend>%s</fieldset>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, str_div, self.helper)
+    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    return '<fieldset %s><legend style="width:auto">%s</legend>%s</fieldset>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, str_div, self.helper)
