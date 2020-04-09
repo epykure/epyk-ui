@@ -15,9 +15,9 @@ from epyk.core.css.styles import GrpCls
 class Console(Html.Html):
   name, category = 'Console', 'Rich'
 
-  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
+  def __init__(self, report, data, width, height, htmlCode, helper, options, profile):
     super(Console, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.css({"overflow": 'auto'})
+    self.css({"overflow": 'auto', 'box-sizing': 'border-box'})
     self.__options = OptText.OptionsConsole(self, options)
 
   @property
@@ -34,7 +34,10 @@ class Console(Html.Html):
   @property
   def _js__builder__(self):
     return ''' 
-      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
+      if(options.showdown){var converter = new showdown.Converter(options.showdown);
+        let frag = document.createRange().createContextualFragment(converter.makeHtml(data)); 
+        frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0 ;  
+        data = frag.firstChild.outerHTML} 
       htmlObj.innerHTML = data +'<br/>' '''
 
   def write(self, data, timestamp=None, profile=False, stringify=False, skip_data_convert=False, format=None):
@@ -55,7 +58,11 @@ class Console(Html.Html):
     if stringify:
       js_data = "JSON.stringify(%s)" % js_data
     if self.options.showdown is not False:
-      js_data = "(function(d){ var conv = new showdown.Converter(%s); return conv.makeHtml(d)})(%s)" % (json.dumps(self.options.showdown), js_data)
+      js_data = '''
+        (function(d){ var conv = new showdown.Converter(%s); 
+            let frag = document.createRange().createContextualFragment(conv.makeHtml(d)); 
+            frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0 ;  
+            return frag.firstChild.outerHTML})(%s) ''' % (json.dumps(self.options.showdown), js_data)
     if format is not None:
       js_data = JsUtils.jsConvertData(format, None).toStr().replace("%s", '"+ %s +"') % js_data
     if timestamp or (self.options.timestamp and timestamp != False):
@@ -68,7 +75,7 @@ class Console(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    return "<div %s></div>%s" % (self.get_attrs(pyClassNames=self.pyStyle), self.helper)
+    return "<div %s></div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Editor(Html.Html):
@@ -77,9 +84,9 @@ class Editor(Html.Html):
   __reqCss, __reqJs = ['codemirror', 'font-awesome'], ['codemirror', 'font-awesome']
   cssTitle = "CssTitle4"
 
-  def __init__(self, report, vals, title, size, language, width, height, isEditable, htmlCode, options, profile):
+  def __init__(self, report, vals, title, language, width, height, isEditable, htmlCode, options, profile):
     super(Editor, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
-    self.size, self.isEditable, self.strTime, self.title = "%s%s" % (size[0], size[1]), isEditable, None, title
+    self.isEditable, self.strTime, self.title = isEditable, None, title
     dflOptions, dftActions = {'lineNumbers': True, 'mode': language}, []
     if not options is None:
       if 'visible' in options:
@@ -90,8 +97,7 @@ class Editor(Html.Html):
     if not isEditable:
       dflOptions['readOnly'] = 'true'
     self._jsStyles, self._jsActions, self._definedActions = {'language': language, 'options': dflOptions, 'actions': dftActions}, {}, ['run', 'load', 'auto', 'clone', 'save', 'delete']
-    self.css({'font-size': self.size})
-    self.addGlobalVar('%s_editor' % self.htmlId)
+    #self.addGlobalVar('%s_editor' % self.htmlId)
 
   @property
   def val(self):
@@ -220,25 +226,18 @@ class Editor(Html.Html):
     for action in self._definedActions:
       if action in self._jsActions:
         events.append(self._jsActions[action])
-
-    cssMod, title4 = self._report.style.get(self.cssTitle), ""
-    if cssMod is not None:
-      self._report.style.cssCls(self.cssTitle)
-      title4 = cssMod.classname
-    self._report.style.cssCls("CssSmallIcon")
     return '''
       <div style="display:inline-block;width:100%%;padding:5px">
         %(events)s
-        <span class="%(title4)s" style="display:inline-block;width:200px;padding-left:10px">%(title)s</span>
+        <span style="display:inline-block;width:200px;padding-left:10px">%(title)s</span>
         <span id='%(htmlId)s_updated' style='float:right;font-style:italic;margin:7px 10px 0 0;display:inline-block:width:100%%'>
-            <i style="margin:0 5px 0 0" class="fas fa-clock %(cssStyle)s"></i>
+            <i style="margin:0 5px 0 0" class="fas fa-clock"></i>
             Last update: <p style="display:inline-block">%(strTime)s</p>
         </span>
       </div>
       <textarea %(attr)s>%(vals)s</textarea>
-    ''' % {'attr': self.get_attrs(pyClassNames=self.defined), "vals": self.vals, 'htmlId': self.htmlId,
-           "cssStyle": self._report.style.cssName("CssSmallIcon"),
-           'strTime': self.strTime, 'events': "".join(events), "title": self.title, "title4": title4}
+    ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), "vals": self.val, 'htmlId': self.htmlId,
+           'strTime': self.strTime, 'events': "".join(events), "title": self.title}
 
 
 class Cell(Html.Html):
@@ -250,7 +249,7 @@ class Cell(Html.Html):
     self.isEditable = isEditable
     self._jsRun, self._jsSave = '', ''
     # self.addGlobalVar("%s_count" % self.htmlId, "0")
-    self.css({'padding': '10px', "min-height": "30px", "font-family": "Arial, monospace"})
+    self.css({'padding': '10px', "min-height": "30px", "font-family": "Arial, monospace", 'box-sizing': 'border-box'})
 
   @property
   def val(self):

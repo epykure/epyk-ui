@@ -33,6 +33,14 @@ class HtmlNavBar(Html.Html):
       self._styleObj = GrpClsMenu.ClassNav(self)
     return self._styleObj
 
+  def move(self):
+    """
+
+    """
+    super(HtmlNavBar, self).move()
+    self.style.css.position = None
+    self._report.body.style.css.padding_top = 0
+
   def __add__(self, htmlObj):
     """ Add items to the footer """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
