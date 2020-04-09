@@ -812,22 +812,31 @@ class Form(Html.Html):
 
 class Modal(Html.Html):
   name, category, callFnc = 'Modal Popup',  'Container', 'modal'
-  # _grpCls = CssGrpContainers.CssGrpClassModal
 
-  def __init__(self, report, htmlObjs, submit, helper):
+  def __init__(self, report, htmlObjs, header, footer, submit, helper):
     super(Modal, self).__init__(report, [])
     self.add_helper(helper)
     self.doSubmit = submit
     if self.doSubmit:
       self.submit = report.ui.button("Submit").set_attrs({"type": 'submit'})
       self.submit.inReport = False
-    self.col = report.ui.col([]).css({'width': 'auto'})
-    # self.col.css(None, reset=True)
-    self.col.style.add_classes.div.modal_content()
     self.closeBtn = report.ui.texts.span('&times', width='auto')
     self.closeBtn.css(None, reset=True)
     self.closeBtn.style.add_classes.div.span_close()
     self.closeBtn.click(report.js.getElementById(self.htmlId).css({'display': "none"}))
+    self.__header = report.ui.row([]).css({'position': 'fixed'})
+    if header:
+      for obj in header:
+        self.__header + obj
+    self.__header + self.closeBtn
+    if footer:
+      for obj in footer:
+        self.__footer + obj
+    self.__footer = report.ui.row([])
+    self.__body = report.ui.col([])
+    self.col = report.ui.col([]).css({'width': 'auto'})
+    # self.col.css(None, reset=True)
+    self.col.style.add_classes.div.modal_content()
     self.col += self.closeBtn
     self.col.inReport = False
     self.val.append(self.col)
