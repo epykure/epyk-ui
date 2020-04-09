@@ -945,12 +945,6 @@ CSS_IMPORTS = {
     'modules': [
       {'script': 'vis.min.css', 'version': '4.21.0', 'path': 'vis/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
 
-  # Prism style with CDN Links
-  'prism': {
-    'website': 'https://prismjs.com/',
-    'modules': [
-      {'script': 'prism.css', 'version': '1.20.0', 'path': 'prism/%(version)s/themes/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'}]},
-
   # Code mirror
   'codemirror': {
     'website': 'https://codemirror.net/',

@@ -97,35 +97,6 @@ class Rich(object):
     self.context.register(html_traffic)
     return html_traffic
 
-  def prism(self, text=None, language='python', width=(100, "%"), height=(None, "px"),
-            isEditable=False, trimSpaces=True, align=None, helper=None, profile=None):
-    """
-    Description:
-    ------------
-
-    Usage:
-    ------
-    rptObj.ui.rich.prism("print('test')")
-
-    Related Pages:
-    --------------
-    https://www.w3schools.com/tags/tag_font.asp
-
-    Attributes:
-    ----------
-    :param text:
-    :param language: Optional, The language format used. Default Python
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param isEditable:
-    :param trimSpaces:
-    :param align:
-    :param profile: Optional. A flag to set the component performance storage
-    """
-    html_prism = html.HtmlTextComp.Prism(self.context.rptObj, text, language, width, height, isEditable, trimSpaces, align, helper, profile)
-    self.context.register(html_prism)
-    return html_prism
-
   def info(self, text=None, options=None, profile=None):
     """
     Description:
