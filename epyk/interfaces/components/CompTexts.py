@@ -341,7 +341,9 @@ class Texts(object):
     :param helper:
     :param profile:
     """
-    dflt_options = {"decPlaces": 0, "thouSeparator": ',', "decSeparator": '.'}
+    dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".", 'font_size': '12px',
+                    'red': self.context.rptObj.theme.danger[1], 'green': self.context.rptObj.theme.success[1],
+                    'orange': self.context.rptObj.theme.warning[1]}
     if options is not None:
       dflt_options.update(options)
     html_up_down = html.HtmlTextComp.UpDown(self.context.rptObj, rec, color, label, dflt_options, helper, profile)

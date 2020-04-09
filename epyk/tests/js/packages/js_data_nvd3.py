@@ -23,7 +23,6 @@ record = jsObj.data.records(data)
 #record.f.count("B").o.nvd3.pie("count", "column") #.top("count_distinct", n=2, order="asc")
 #record.f.count("B").o.billboard.line("count", "column") #.top("count_distinct", n=2, order="asc")
 
-text = jsObj.string("1234455").toFormattedNumber()
 data_fnc = record.fnc.count_with_kpi(["origin", "destination"], ["distance", "delay"])
 
 # Write the Javascript fragments to the file

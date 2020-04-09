@@ -75,6 +75,66 @@ class OptionsText(Options):
   def limit_char(self, value):
     self._config(value, "maxlength")
 
+  @property
+  def red(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    --------------
+    """
+    return self._config_get(self._report.theme.danger[1])
+
+  @red.setter
+  def red(self, value):
+    self._config(value)
+
+  @property
+  def green(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    --------------
+    """
+    return self._config_get(self._report.theme.success[1])
+
+  @green.setter
+  def green(self, value):
+    self._config(value)
+
+  @property
+  def orange(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    --------------
+    """
+    return self._config_get(self._report.theme.warning[1])
+
+  @orange.setter
+  def orange(self, value):
+    self._config(value)
+
+  @property
+  def font_size(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    --------------
+    """
+    return self._config_get('none')
+
+  @font_size.setter
+  def font_size(self, value):
+    self._config(value)
+
 
 class OptionsTitle(OptionsText):
 
@@ -95,6 +155,7 @@ class OptionsTitle(OptionsText):
 
 
 class OptionsNumber(OptionsText):
+
   @property
   def digits(self):
     """

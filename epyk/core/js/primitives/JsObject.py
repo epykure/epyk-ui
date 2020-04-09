@@ -522,40 +522,6 @@ class JsObject(object):
       jsObj._addImport("babel-polyfill")
     return "try{Object.assign({}, %s, %s)} catch(err){console.warn('Assign not supported by the browser')}" % (self.varId, dico)
 
-  def toFormattedNumber(self, decPlaces=0, thouSeparator=',', decSeparator='.', report=None):
-    """
-
-    :param decPlaces: Float, the number of decimal to be displayed
-    :param thouSeparator: String. The delimiter used for thousand
-    :param decSeparator: String. The delimiter used for decimals
-    :param report: The internal report object
-
-    :return:
-    """
-    report = report or self._report
-    if report is None:
-      raise Exception("The report object must be defined")
-
-    # Add the javascript internal function used to format numbers
-    # THis function can be used from numbers but also from string
-    if 'toFormatNumber' not in self._report._props.setdefault('js', {}).setdefault('functions', {}):
-      self._report._props.setdefault('js', {}).setdefault('functions', {})["toFormatNumber"] = {
-        'content': JsUtils.cleanFncs('''
-          decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-          decSeparator = decSeparator == undefined ? "." : decSeparator,
-          thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-          sign = n < 0 ? "-" : "",
-          i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-          j = (j = i.length) > 3 ? j % 3 : 0;
-          result = sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1"+ thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
-          return result'''), 'pmt': ['n', "decPlaces", "thouSeparator", "decSeparator"]}
-    from epyk.core.js.primitives import JsString
-
-    decPlaces = JsUtils.jsConvertData(decPlaces, None)
-    thouSeparator = JsUtils.jsConvertData(thouSeparator, None)
-    decSeparator = JsUtils.jsConvertData(decSeparator, None)
-    return JsString.JsString("toFormatNumber(%s, %s, %s, %s)" % (self.varId, decPlaces, thouSeparator, decSeparator), isPyData=False)
-
   def toString(self, explicit=True):
     """
     Converts a Object to a string, and returns the result

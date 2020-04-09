@@ -1,5 +1,4 @@
 import re
-import json
 
 from epyk.core.html import Html
 from epyk.core.css import Colors
@@ -16,7 +15,7 @@ from epyk.core.css.styles import GrpClsText
 
 class UpDown(Html.Html):
   name, category, callFnc = 'Up and Down', 'Texts', 'updown'
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  __reqCss, __reqJs = ['font-awesome'], ['accounting', 'font-awesome']
 
   def __init__(self, report, rec, color, label, options, helper, profile):
     if rec is None:
@@ -26,7 +25,16 @@ class UpDown(Html.Html):
     super(UpDown, self).__init__(report, rec, profile=profile)
     self.add_helper(helper)
     self.val['color'] = self._report.theme.colors[9] if color is None else color
-    self._jsStyles = options
+    self.__options = OptText.OptionsNumber(self, options)
+
+  @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsNumber
+    """
+    return self.__options
 
   @property
   def _js__builder__(self):
@@ -34,39 +42,27 @@ class UpDown(Html.Html):
       var delta = data.value - data.previous; 
       if(data.previous == 0) {var relMove = 'N/A'} else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
       if(data.digits == undefined){data.digits = 0};
-      if(data.label != undefined){htmlObj.append("<span style='padding:5px;font-size:%(size)spx'>"+ data.label +"</span>")};
-      var valueElt = document.createElement('span');
-      valueElt.setAttribute('style', 'padding:5px')
-      valueElt.innerHTML = %(value)s;
-      htmlObj.appendChild(valueElt);
-      var deltaElt = document.createElement('span');
-      var relMoveElt = document.createElement('span');
-      var icon = document.createElement('i');
+      if(data.label != undefined){htmlObj.append("<span style='padding:5px;font-size:"+ options.font_size+"'>"+ data.label +"</span>")};
+      var valueElt = document.createElement('span'); valueElt.setAttribute('style', 'padding:5px'); 
+      valueElt.innerHTML = accounting.formatNumber(data.value, options.digits, options.thousand_sep, options.decimal_sep); 
+      htmlObj.appendChild(valueElt); var deltaElt = document.createElement('span');
+      var relMoveElt = document.createElement('span'); var icon = document.createElement('i');
       if (delta < 0){
-        deltaElt.setAttribute('style', 'padding:5px;color:%(redColor)s;font-size:%(size)s');
-        deltaElt.innerHTML = "(+"+ %(delta)s +")";
-        relMoveElt.setAttribute('style', 'padding:5px;color:%(redColor)s;font-size:%(size)s')
-        relMoveElt.innerHTML = "("+ %(relMove)s +"%%)";
+        deltaElt.setAttribute('style', 'padding:5px;color:'+ options.red +';font-size:'+ options.font_size);
+        deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
+        relMoveElt.setAttribute('style', 'padding:5px;color:'+ options.red +';font-size:'+ options.font_size)
+        relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, 2, options.thousand_sep, options.decimal_sep) +"%)";
         icon.className = 'fas fa-arrow-down';
-        icon.setAttribute('style', 'color:%(redColor)s;font-size:%(size)s')}
+        icon.setAttribute('style', 'color:'+ options.red +';font-size:'+ options.font_size)}
       else{  
-        deltaElt.setAttribute('style', 'padding:5px;color:%(greenColor)s;font-size:%(size)s');
-        deltaElt.innerHTML = "(+"+ %(delta)s +")";
-        relMoveElt.setAttribute('style', 'padding:5px;color:%(greenColor)s;font-size:%(size)s')
-        relMoveElt.innerHTML = "("+ %(relMove)s +"%%)";
+        deltaElt.setAttribute('style', 'padding:5px;color:'+ options.green +';font-size:'+ options.font_size);
+        deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
+        relMoveElt.setAttribute('style', 'padding:5px;color:'+ options.green +';font-size:'+ options.font_size)
+        relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, 2, options.thousand_sep, options.decimal_sep) +"%)";
         icon.className = 'fas fa-arrow-up';
-        icon.setAttribute('style', 'color:%(greenColor)s;font-size:%(size)spx')};
+        icon.setAttribute('style', 'color:'+ options.green +';font-size:'+ options.font_size)};
       htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
-      ''' % {"greenColor": self._report.theme.success[1], "redColor": self._report.theme.danger[1], "size": Defaults_css.font(-2),
-             'value': self._report.js.number("data.value", isPyData=False).toFormattedNumber(
-              decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
-              thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
-              decSeparator=self._report.js.number("options.decSeparator", isPyData=False)),
-             'delta': self._report.js.number("delta", isPyData=False).toFormattedNumber(
-               decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
-               thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
-               decSeparator=self._report.js.number("options.decSeparator", isPyData=False)),
-             'relMove': self._report.js.number("relMove", isPyData=False).toFormattedNumber(decPlaces=2)}
+      '''
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -191,7 +187,7 @@ class Number(Html.Html):
 
 
 class Delta(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui'] # jquery ui for progressbar
+  __reqCss, __reqJs = ['jqueryui'], ['accounting', 'jqueryui']
   name, category, callFnc = 'Delta Figures', 'Rich', 'delta'
 
   def __init__(self, report, records, width, height, options, helper, profile):
@@ -204,31 +200,34 @@ class Delta(Html.Html):
     if not 'thresold2' in self.val:
       self.val['thresold2'] = 50
     self.css({"color": self.val['color']})
-    self._jsStyles = options
+    self.__options = OptText.OptionsNumber(self, options)
+
+  @property
+  def options(self):
+    """
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsNumber
+    """
+    return self.__options
 
   @property
   def _js__builder__(self):
     return '''
        jHtmlObj = jQuery(htmlObj);
-       var variation = 100 * (data.number - data.prevNumber) / data.prevNumber; var warning = ''; var currVal = %(number)s; 
-       if(variation > data.thresold1){warning = '<i style="color:%(recColod)s;" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;'};
+       var variation = 100 * (data.number - data.prevNumber) / data.prevNumber; var warning = ''; 
+       var currVal = accounting.formatNumber(data.number, options.digits, options.thousand_sep, options.decimal_sep); 
+       if(variation > data.thresold1){warning = '<i style="color:'+ options.red +';" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;'};
        if(data.url != null){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
        if(data.label != undefined){currVal = data.label +" "+ currVal};
        var progressElt = jHtmlObj.find('#progress');
        progressElt.progressbar({value: variation});
-       if(variation > data.thresold1){progressElt.children().css({'background': options.colors.red})} 
-       else if(variation > data.thresold2){progressElt.children().css({'background': options.colors.orange})} 
-       else{progressElt.children().css({'background': options.colors.green})}
+       if(variation > data.thresold1){progressElt.children().css({'background': options.red})} 
+       else if(variation > data.thresold2){progressElt.children().css({'background': options.orange})} 
+       else{progressElt.children().css({'background': options.green})}
        jHtmlObj.find('div').first().html(warning + currVal);
-       jHtmlObj.find('div').last().html('Previous number: '+ %(prev_number)s);
-      ''' % {"recColod": self._report.theme.danger[1], 'number': self._report.js.number("data.number", isPyData=False).toFormattedNumber(
-        decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
-        thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
-        decSeparator=self._report.js.number("options.decSeparator", isPyData=False)),
-             'prev_number': self._report.js.number("data.prevNumber", isPyData=False).toFormattedNumber(
-        decPlaces=self._report.js.number("options.decPlaces", isPyData=False),
-        thouSeparator=self._report.js.number("options.thouSeparator", isPyData=False),
-        decSeparator=self._report.js.number("options.decSeparator", isPyData=False))}
+       jHtmlObj.find('div').last().html('Previous number: '+ accounting.formatNumber(data.prevNumber, options.digits, options.thousand_sep, options.decimal_sep));
+      '''
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
