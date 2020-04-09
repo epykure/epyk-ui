@@ -1499,6 +1499,8 @@ class CssMixin(object):
   @margin_bottom.setter
   def margin_bottom(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"margin-bottom": val})
 
   @property

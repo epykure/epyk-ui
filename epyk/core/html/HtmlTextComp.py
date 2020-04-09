@@ -547,6 +547,11 @@ class ContentsTable(Html.Html):
       href.style.css.padding_left = (level - 1) * 5
     return self
 
+  def move(self):
+    super(ContentsTable, self).move()
+    self.style.css.position = None
+    self.style.css.margin = 5
+
   def __str__(self):
     div_link = self._report.ui.div(self.val)
     div_link.inReport = False
