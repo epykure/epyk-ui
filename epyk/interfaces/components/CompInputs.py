@@ -203,7 +203,7 @@ class Inputs(object):
     :param options:
     :param profile:
     """
-    dfltOptions = {"spellcheck": True, 'selectable': True}
+    dfltOptions = {"spellcheck": True, 'selectable': False}
     dfltOptions.update(options or {})
     html_t_area = html.HtmlInput.TextArea(self.context.rptObj, text, width, rows, placeholder, background_color,
                                           htmlCode, dfltOptions, profile)

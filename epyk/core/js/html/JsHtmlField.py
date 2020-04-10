@@ -86,3 +86,16 @@ class JsHtmlFields(JsHtml.JsHtmlRich):
     :return:
     """
     return JsObjects.JsObjects.get('%s = ""' % self.content.toStr())
+
+
+class Textarea(JsHtml.JsHtmlRich):
+
+  @property
+  def content(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
+    return JsHtml.ContentFormatters(self._report, "%s.value" % self.varName)

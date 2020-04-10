@@ -40,7 +40,7 @@ class Console(Html.Html):
         data = frag.firstChild.outerHTML} 
       htmlObj.innerHTML = data +'<br/>' '''
 
-  def write(self, data, timestamp=None, profile=False, stringify=False, skip_data_convert=False, format=None):
+  def write(self, data, timestamp=None, stringify=False, skip_data_convert=False, format=None, profile=False):
     """
     Description:
     ------------
@@ -59,19 +59,17 @@ class Console(Html.Html):
       js_data = "JSON.stringify(%s)" % js_data
     if self.options.showdown is not False:
       js_data = '''
-        (function(d){ var conv = new showdown.Converter(%s); 
+        (function(d){ var conv = new showdown.Converter(%s);
             let frag = document.createRange().createContextualFragment(conv.makeHtml(d)); 
-            frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0 ;  
-            return frag.firstChild.outerHTML})(%s) ''' % (json.dumps(self.options.showdown), js_data)
+            if((frag.firstChild === null) || (typeof frag.firstChild.style == "undefined")){return d}
+            else{frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0 ;  
+                 return frag.firstChild.outerHTML}})(%s) ''' % (json.dumps(self.options.showdown), js_data)
     if format is not None:
       js_data = JsUtils.jsConvertData(format, None).toStr().replace("%s", '"+ %s +"') % js_data
     if timestamp or (self.options.timestamp and timestamp != False):
       return "%s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (self.dom.varId, js_data)
 
     return "%s.innerHTML += ' > '+ %s +'<br/>'" % (self.dom.varId, js_data)
-
-  def clear(self):
-    return "%s.innerHTML = ''" % self.dom.varId
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -80,12 +78,10 @@ class Console(Html.Html):
 
 class Editor(Html.Html):
   name, category, callFnc = 'Code Editor', 'Text', 'editor'
-  # _grpCls = CssGrpClsText.CssClassEditor
   __reqCss, __reqJs = ['codemirror', 'font-awesome'], ['codemirror', 'font-awesome']
-  cssTitle = "CssTitle4"
 
   def __init__(self, report, vals, title, language, width, height, isEditable, htmlCode, options, profile):
-    super(Editor, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
+    super(Editor, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.isEditable, self.strTime, self.title = isEditable, None, title
     dflOptions, dftActions = {'lineNumbers': True, 'mode': language}, []
     if not options is None:
@@ -98,10 +94,6 @@ class Editor(Html.Html):
       dflOptions['readOnly'] = 'true'
     self._jsStyles, self._jsActions, self._definedActions = {'language': language, 'options': dflOptions, 'actions': dftActions}, {}, ['run', 'load', 'auto', 'clone', 'save', 'delete']
     #self.addGlobalVar('%s_editor' % self.htmlId)
-
-  @property
-  def val(self):
-    return '%(htmlId)s_editor.getValue()' % {"htmlId": self.htmlId}
 
   @property
   def jsQueryData(self):
@@ -246,51 +238,37 @@ class Cell(Html.Html):
 
   def __init__(self, report, vals, width, height, isEditable, htmlCode, options, profile):
     super(Cell, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.isEditable = isEditable
     self.style.add_classes.input.textarea()
     self._jsRun, self._jsSave = '', ''
     # self.addGlobalVar("%s_count" % self.htmlId, "0")
     self.css({'padding': '10px', "min-height": "30px", "font-family": "Arial, monospace", 'box-sizing': 'border-box'})
+    self.buttons, self.actions = {}, {}
 
-  @property
-  def val(self):
-    return '%(htmlId)s_editor.getValue()' % {"htmlId": self.htmlId}
+  #@property
+  #def val(self):
+  # return '%(htmlId)s_editor.getValue()' % {"htmlId": self.htmlId}
 
   @property
   def jsQueryData(self):
     return "{ event_out: $('#%(htmlId)s_result_data').text(), event_val: %(htmlId)s_editor.getValue(), event_code: '%(htmlId)s' }" % {'htmlId': self.htmlId}
 
-
-  # --------------------------------------------------------------------------------------------------------------
-  #                                   EDITOR STANDARD EVENTS
-  #
-  # Those are already embedding an ajax call as b default the return of those call will change the display
-  # Make sure you are not calling a Ajax call within an AJax call, event engine should remain simple
-  # Remember PEP20: Simple is better than complex.
-  def run(self, url=None, jsData=None, jsFncs=None, httpCodes=None, tooltip="Run the line"):
+  def run(self, jsFncs):
     """
     Add an event action to the console object.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs] if jsFncs is not None else []
-    jsFncs = [
-      "if (!data.status){$('#%(htmlId)s_result_data').css('color', '%(redColor)s')} else {$('#%(htmlId)s_result_data').css('color', '%(blackColor)s')}" % {"htmlId": self.htmlId, 'redColor': self._report.theme.danger[1], 'blackColor': self._report.theme.greys[8]},
-      "%(htmlId)s_count ++; $('#%(htmlId)s_counter').text( 'In [ '+ %(htmlId)s_count +']')" % {"htmlId": self.htmlId},
-      "$('#%(htmlId)s_result_data').text(data.output); $('#%(htmlId)s_print_data').text(data.print);" % {"htmlId": self.htmlId}] + jsFncs + ["$('#%(htmlId)s_result').show();$('#%(htmlId)s_print').show();" % {"htmlId": self.htmlId}]
-    self._jsRun = (self._report.jsPost(url=url, jsData=jsData, jsFnc=jsFncs, httpCodes=httpCodes) if url is not None else ";".join(jsFncs), tooltip)
+    self.actions['run'] = self._report.ui.icon("fas fa-play").click(jsFncs)
+    self.actions['run'].inReport = False
     return self
 
-  def save(self, url=None, js_data=None, js_fncs=None, httpCodes=None, tooltip="Save the run"):
+  def save(self, jsFncs):
     """
     Add an event action to the console object to save the result of the In and out.
     """
-    if not isinstance(js_fncs, list):
-      js_fncs = [js_fncs] if js_fncs is not None else []
-    self._jsSave = (self._report.jsPost(url=url, jsData=js_data, jsFnc=js_fncs, httpCodes=httpCodes) if url is not None else ";".join(js_fncs), tooltip)
+    self.buttons['save'] = self._report.ui.icon("fas fa-save").click(jsFncs)
+    self.buttons['save'].inReport = False
     return self
 
   def __str__(self):
-    runButton, saveButton = '', ''
     if self._jsRun != '':
       self._report.jsOnLoadFnc.add('''
         var %(htmlId)s_editor = CodeMirror.fromTextArea( $('#%(htmlId)s').get(0), {placeholder: "report.myFncs()", lineNumbers: true, mode: 'python'} ) ;
@@ -302,42 +280,32 @@ class Cell(Html.Html):
               $('#%(htmlId)s_result').hide(); $('#%(htmlId)s_print').hide();}
         });
         $('#%(htmlId)s_run').on('click', function(event) {  var data = %(data)s ; %(run)s ; })''' % {"htmlId": self.htmlId, "run": self._jsRun[0], 'data': self.jsQueryData})
-      self._report.style.cssCls('CssStdIcon')
-      runButton = '<i title="%(tooltip)s" id="%(htmlId)s_run" class="%(iconCss)s fas fa-caret-right"></i>' % {'tooltip': self._jsRun[1], "htmlId": self.htmlId, "iconCss": self._report.style.cssName('CssStdIcon')}
-    if self._jsSave != '':
-      self._report.jsOnLoadFnc.add('''
-        $('#%(htmlId)s_save').on('click', function(event) {  var data = %(data)s ; %(save)s ; })''' % {
-        "htmlId": self.htmlId, "save": self._jsSave[0], 'data': self.jsQueryData})
-      self._report.style.cssCls('CssOutIcon')
-      saveButton = '<i title="%(tooltip)s" id="%(htmlId)s_run" class="%(iconCss)s far fa-save"></i>' % {'tooltip': self._jsSave[1], "htmlId": self.htmlId, "iconCss": self._report.style.cssName('CssOutIcon')}
-    #self._report.style.cssCls('CssTdEditor')
+    buttons = "".join([b.html() for b in self.buttons.values()])
+    actions = "".join([b.html() for b in self.actions.values()])
     return '''
       <table style="width:100%%;margin-top:10px;padding:5px 5px 5px 10px">
         <tr>
           <td style="height:100%%;width:80px;border-left:3px solid %(blueColor)s;vertical-align:middle;color:%(blueColor)s;padding-left:5px"> 
-            <span title="count number of runs" id="%(htmlId)s_counter" >In [ 0 ]</span> 
-            %(runButton)s
+            <span title="count number of runs" id="%(htmlId)s_counter" style="display:block;margin-bottom:2px">In [ 0 ]</span>%(actions)s
           </td>
           <td><textarea %(attr)s></textarea></td>
         </tr>
-        <tr style="height:3px;display:inline-block"></tr>
-        <tr style="display:none" id="%(htmlId)s_result">
-          <td style="padding-top:10px;padding-bottom:10px;height:100%%;width:100px;border-left:5px solid blue;vertical-align:middle;color:red"> 
-            <span title="Number of store results">Out [ 0 ]</span>  
-            %(saveButton)s
+        <tr style="display:block" id="%(htmlId)s_result">
+          <td style="padding-top:10px;padding-bottom:10px;height:100%%;width:100px;border-left:3px solid blue;vertical-align:middle;color:red;padding-left:5px"> 
+            <span title="Number of store results" style="display:block;margin-bottom:2px">Out [ 0 ]</span>%(buttons)s
           </td>
           <td id="%(htmlId)s_result_data"></td>
         </tr>
-        <tr style="display:none;" id="%(htmlId)s_print">
-          <td colspan=2 style="height:100px;">
-            <div style="width:100%%;height:100%%;background-color:%(blackColor)s;color:%(whiteColor)s;text-align:left;padding:5px;margin-top:10px" id="%(htmlId)s_print_data" >
+        <tr>
+          <td colspan="2" style="width:100%%">
+            <div id="%(htmlId)s_print" style="box-sizing:border-box;width:100%%;height:100%%;background-color:%(blackColor)s;color:%(whiteColor)s;text-align:left;padding:5px;margin-top:10px" id="%(htmlId)s_print_data" >
               Server logs generated from the print command
             </div>
           </td>
         </tr>
       </table>
-      ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlId': self.htmlId, 'runButton': runButton, #'tdRunCss': self._report.style.cssName('CssTdEditor'),
-             'saveButton': saveButton, 'blackColor': self._report.theme.greys[9], 'whiteColor': self._report.theme.greys[0],
+      ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlId': self.htmlId, 'actions': actions, #'tdRunCss': self._report.style.cssName('CssTdEditor'),
+             'buttons': buttons, 'blackColor': self._report.theme.greys[9], 'whiteColor': self._report.theme.greys[0],
              'redColor': self._report.theme.danger[1], 'blueColor': self._report.theme.colors[6]}
 
 

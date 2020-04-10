@@ -545,24 +545,35 @@ class JsHtmlRich(JsHtml):
   def content(self):
     return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
 
-  def append(self, text, new_line=False):
+  def append(self, value, new_line=True, options=None):
     """
     Description:
-    -----------
+    ------------
 
-    Example
-    pre.dom.append("ok", new_line=True)
+    Attributes:
+    ----------
+    :param value:
+    :param options:
+    """
+    value = JsUtils.jsConvertData(value, None)
+    if options is not None and options.get('showdown') is not None:
+      self._report.jsImports.add("showdown")
+      value = '''(function(d){ var conv = new showdown.Converter(%s); 
+                    let frag = document.createRange().createContextualFragment(conv.makeHtml(d)); 
+                    frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0;  
+                    return frag.firstChild.outerHTML})(%s)''' % (json.dumps({}), value)
+    if new_line:
+      return JsObjects.JsObjects.get("%s.innerHTML += (%s+'\\r\\n')" % (self.htmlId, value))
 
-    :param text:
-    :param new_line: Boolean
+    return JsObjects.JsObjects.get("%s.innerHTML += %s)" % (self.htmlId, value))
+
+  def empty(self):
+    """
+    Description:
+    ------------
 
     """
-    if new_line:
-      return ";".join(JsUtils.jsConvertFncs("%s.append('\\n' + %s)" % (self.varName, JsUtils.jsConvertData(text, None))))
-
-    return ";".join(JsUtils.jsConvertFncs("%s.append(%s)" % (self.varName, JsUtils.jsConvertData(text, None))))
-
-  def empty(self): return '%s.innerHTML = ""' % self.varName
+    return '%s.innerHTML = ""' % self.varName
 
 
 class JsHtmlButton(JsHtml):

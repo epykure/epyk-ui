@@ -17,6 +17,27 @@ class OptionsInput(Options):
     self._report._jsStyles["css"] = attrs
     return self
 
+  @property
+  def disabled(self):
+    """
+    Description:
+    ------------
+    The rows attribute specifies the visible height of a text area, in lines.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_rows.asp
+    """
+    return self._report.attr.get('disabled', False)
+
+  @disabled.setter
+  def disabled(self, value):
+    if not value and "disabled" in self._report.attr:
+      del self._report.attr["disabled"]
+
+    else:
+      self._report.set_attrs({"disabled": value})
+
   @packageImport("accounting")
   def formatMoney(self, symbol="", digits=0, thousand_sep=".", decimal_sep=","):
     """
@@ -74,6 +95,133 @@ class OptionsInput(Options):
     """
     self._report._jsStyles["toFixed"] = digit
     return self
+
+  @property
+  def maxlength(self):
+    """
+    Description:
+    ------------
+    Specifies the maximum number of characters allowed in the text area
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_textarea_maxlength.asp
+    """
+    return self._report.attr.get('maxlength')
+
+  @maxlength.setter
+  def maxlength(self, num):
+    self._report.set_attrs({"maxlength": num})
+
+  @property
+  def name(self):
+    """
+    Description:
+    ------------
+    Specifies a name for a text area
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_textarea_name.asp
+    """
+    return self._report.attr.get('name')
+
+  @name.setter
+  def name(self, num):
+    self._report.set_attrs({"name": num})
+
+  @property
+  def placeholder(self):
+    """
+    Description:
+    ------------
+    The placeholder attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format).
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_input_placeholder.asp
+    """
+    return self._report.attr.get('placeholder', "")
+
+  @placeholder.setter
+  def placeholder(self, value):
+    self._report.set_attrs({"placeholder": value})
+
+  @property
+  def required(self):
+    """
+    Description:
+    ------------
+    Specifies that a text area is required/must be filled out
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_textarea_required.asp
+    """
+    return self._report.attr.get('required')
+
+  @required.setter
+  def required(self, value):
+    if not value and "required" in self._report.attr:
+      del self._report.attr["required"]
+
+    else:
+      self._report.set_attrs({"required": value})
+
+  @property
+  def wrap(self):
+    """
+    Description:
+    ------------
+    Specifies how the text in a text area is to be wrapped when submitted in a form
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_textarea_wrap.asp
+    """
+    return self._report.attr.get('wrap', "")
+
+  @wrap.setter
+  def wrap(self, value):
+    self._report.set_attrs({"wrap": value})
+
+  @property
+  def spellcheck(self):
+    """
+    Description:
+    ------------
+    The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_global_spellcheck.asp
+    """
+    return self._report.attr.get('spellcheck', False)
+
+  @spellcheck.setter
+  def spellcheck(self, value):
+    self._report.set_attrs({"spellcheck": value})
+
+  @property
+  def readonly(self):
+    """
+    Description:
+    ------------
+    The readonly attribute is a boolean attribute.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_input_readonly.asp
+    """
+    return self._report.attr.get('readOnly', False)
+
+  @readonly.setter
+  def readonly(self, value):
+    if not value and "readOnly" in self._report.attr:
+      del self._report.attr["readOnly"]
+
+    else:
+      self._report.set_attrs({"readOnly": value})
 
 
 class OptionsInputRange(OptionsInput):
@@ -1400,4 +1548,24 @@ class OptionsDatePicker(OptionsInput):
   def yearSuffix(self, value):
     self._report._jsStyles["yearSuffix"] = value
     return self
+
+
+class OptionsTextarea(OptionsInput):
+
+  @property
+  def rows(self):
+    """
+    Description:
+    ------------
+    The rows attribute specifies the visible height of a text area, in lines.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_rows.asp
+    """
+    return self._report.attr.get('rows', "")
+
+  @rows.setter
+  def rows(self, value):
+    self._report.set_attrs({"rows": value})
 
