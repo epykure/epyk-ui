@@ -718,7 +718,7 @@ class JsDoms(JsObject.JsObject):
     """
     self._report._props.setdefault('js', {}).setdefault('onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(jsFncs))
 
-  def innerText(self, jsString=None, append=False):
+  def innerText(self, jsString=None, append=False, valType=None):
     """
     The innerText property sets or returns the text content of the specified node, and all its descendants.
 
@@ -729,20 +729,26 @@ class JsDoms(JsObject.JsObject):
     https://www.w3schools.com/jsref/prop_node_innertext.asp
 
     :param jsString: Optional, The Javascript String to be added
-    :param append:
+    :param append: Boolean. Mention if the component should replace or append the data
+    :param valType: Type: The type of data expected in the component
 
-    :return: THe JsObj
+    :return: The JsObj to allow the chaining
     """
     if jsString is None:
       return "%s.innerText" % self.varId
 
     if append:
-      self._js.append("%s.innerText += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+      if valType == int:
+        self._js.append("%s.innerText = parseInt(%s.innerText) + %s" % (self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+      elif valType == float:
+        self._js.append("%s.innerText = parseFloat(%s.innerText) + %s" % (self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+      else:
+        self._js.append("%s.innerText += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     else:
       self._js.append("%s.innerText = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     return self
 
-  def innerHTML(self, jsString=None, append=False):
+  def innerHTML(self, jsString=None, append=False, valType=None):
     """
     Description:
     ------------
@@ -760,6 +766,7 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param jsString: Optional, The Javascript String to be added
     :param append: Boolean. Mention if the component should replace or append the data
+    :param valType: Type: The type of data expected in the component
 
     :return: The JsObj
     """
@@ -767,7 +774,12 @@ class JsDoms(JsObject.JsObject):
       return JsString.JsString("%s.innerHTML" % self.varId, isPyData=False)
 
     if append:
-      self._js.append("%s.innerHTML += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+      if valType == int:
+        self._js.append("%s.innerHTML = parseInt(%s.innerHTML) + %s" % (self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+      elif valType == int:
+        self._js.append("%s.innerHTML = parseFloat(%s.innerHTML) + %s" % (self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+      else:
+        self._js.append("%s.innerHTML += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     else:
       self._js.append("%s.innerHTML = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     return self

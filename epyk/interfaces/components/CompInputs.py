@@ -203,7 +203,7 @@ class Inputs(object):
     :param options:
     :param profile:
     """
-    dfltOptions = {"spellcheck": True, 'selectable': False}
+    dfltOptions = {"spellcheck": False, 'selectable': False}
     dfltOptions.update(options or {})
     html_t_area = html.HtmlInput.TextArea(self.context.rptObj, text, width, rows, placeholder, background_color,
                                           htmlCode, dfltOptions, profile)
@@ -341,8 +341,7 @@ class Inputs(object):
     self.context.register(html_radio)
     return html_radio
 
-  def editor(self, text="", title="", language='python', width=(100, "%"), height=(None, "px"), isEditable=True,
-             htmlCode=None, options=None, profile=None):
+  def editor(self, text="", language='python', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -350,22 +349,21 @@ class Inputs(object):
     Attributes:
     ----------
     :param text:
-    :param title:
     :param language:
     :param width:
     :param height:
-    :param isEditable:
     :param htmlCode:
     :param options:
     :param profile:
-
-    :rtype: html.HtmlTextEditor.Editor
     """
-    return self.context.register(html.HtmlTextEditor.Editor(self.context.rptObj, text, title, language, width,
-              height, isEditable, htmlCode, options, profile))
+    dflt_options = {"lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
+    if options is not None:
+      dflt_options.update(options)
+    editor = html.HtmlTextEditor.Editor(self.context.rptObj, text, language, width, height, htmlCode, dflt_options, profile)
+    self.context.register(editor)
+    return editor
 
-  def cell(self, text=None, width=(100, "%"), height=(None, "px"), isEditable=False,
-           htmlCode=None, options=None, profile=None):
+  def cell(self, text=None, language='python', width=(100, "%"), height=(100, "px"), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -375,11 +373,13 @@ class Inputs(object):
     :param text:
     :param width:
     :param height:
-    :param isEditable:
     :param htmlCode:
     :param profile:
     """
-    html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, width, height, isEditable, htmlCode, options, profile)
+    dflt_options = {"lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
+    if options is not None:
+      dflt_options.update(options)
+    html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, language, width, height, htmlCode, dflt_options, profile)
     self.context.register(html_cell)
     return html_cell
 
