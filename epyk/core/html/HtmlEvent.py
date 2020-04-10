@@ -22,7 +22,7 @@ class ProgressBar(Html.Html):
 
   def __init__(self, report, number, total, width, height, attrs, helper, options, htmlCode, profile):
     options['max'] = total
-    super(ProgressBar, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
+    super(ProgressBar, self).__init__(report, number, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'}, profile=profile)
     self.add_helper(helper)
     self._jsStyles = {'css': {"background": self._report.theme.success[1]}}
     self.__options = OptSliders.OptionsProgBar(self, options)
