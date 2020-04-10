@@ -189,7 +189,7 @@ class Rich(object):
     :param options:
     :param profile:
     """
-    dflt_options = {"markdown": True, "timestamp": True}
+    dflt_options = {"markdown": False, "timestamp": True}
     if options is not None:
       dflt_options.update(options)
     html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, width, height, htmlCode, None, dflt_options, profile)
