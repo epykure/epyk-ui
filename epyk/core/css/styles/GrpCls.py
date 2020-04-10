@@ -12,10 +12,11 @@ from epyk.core.py import OrderedSet
 class ClassPage(object):
   def __init__(self, htmlObj):
     self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
+    self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb = None, None, None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
-    self.classList['other'].add(CssStyleScrollbar.CssWebkitScrollbar(self.htmlObj._report))
-    self.classList['other'].add(CssStyleScrollbar.CssWebkitScrollbarThumb(self.htmlObj._report))
-    self.classList['other'].add(CssStyleScrollbar.CssWebkitScrollbarTrack(self.htmlObj._report))
+    self.classList['other'].add(self.scrollbar_webkit)
+    self.classList['other'].add(self.scrollbar_webkit_thumb)
+    self.classList['other'].add(self.scrollbar_webkit_track)
 
   @property
   def css(self):
@@ -30,6 +31,23 @@ class ClassPage(object):
       self._css_struct = Body(self.htmlObj)
     return self._css_struct
 
+  @property
+  def scrollbar_webkit(self):
+    if not self.__webkitscrollbar:
+      self.__webkitscrollbar = CssStyleScrollbar.CssWebkitScrollbar(self.htmlObj._report)
+    return  self.__webkitscrollbar
+
+  @property
+  def scrollbar_webkit_thumb(self):
+    if not self.__webkitscrollbar_thumb:
+      self.__webkitscrollbar_thumb = CssStyleScrollbar.CssWebkitScrollbarThumb(self.htmlObj._report)
+    return  self.__webkitscrollbar_thumb
+
+  @property
+  def scrollbar_webkit_track(self):
+    if not self.__webkitscrollbar_track:
+      self.__webkitscrollbar_track = CssStyleScrollbar.CssWebkitScrollbarTrack(self.htmlObj._report)
+    return  self.__webkitscrollbar_track
 
   @property
   def defaults(self):
