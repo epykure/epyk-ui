@@ -439,7 +439,12 @@ class Style(object):
       self.classname = self.__class__.__name__.lower()
     if self.classnames is not None:
       self.classname = " .".join(self.classnames)
-    selector_ids["classname"], self.classname = ("%s", "") if self.classname == False else (".%s", self.classname)
+    if self.classname == False:
+      selector_ids["classname"], self.classname = ("%s", "")
+    elif self.classname.startswith('::'):
+      selector_ids["classname"], self.classname = ("%s", self.classname)
+    else:
+      selector_ids["classname"], self.classname = (".%s", self.classname)
     if getattr(self, '_selector', None) is not None:
       self.classname = self._selector
     if selector_ovrs is not None:

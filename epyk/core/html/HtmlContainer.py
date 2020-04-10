@@ -785,14 +785,6 @@ class Form(Html.Html):
     return self
 
   def submit(self, method, action="#", text="Submit"):
-    """
-
-    :param action:
-    :param method:
-    :param text:
-
-    :return:
-    """
     if action is not None and method is not None:
       self.attr.update({"action": action, "method": method})
 
@@ -814,6 +806,14 @@ class Modal(Html.Html):
   name, category, callFnc = 'Modal Popup',  'Container', 'modal'
 
   def __init__(self, report, htmlObjs, header, footer, submit, helper):
+    """
+    Description:
+    -----------
+    Constructor for the modal item.
+    This object is composed of three parts:  a header, which is a row of object, a body which is a column and a footer which is a row
+    they all accept collections of html objects and are configurable just like the normal rows and column objects
+
+    """
     super(Modal, self).__init__(report, [])
     self.add_helper(helper)
     self.doSubmit = submit
@@ -838,7 +838,6 @@ class Modal(Html.Html):
     self.__body = report.ui.col([]).css({'position': 'relative',  'overflow-y': 'scroll'})
     self.__body.inReport = False
     self.col = report.ui.col([self.__header, self.__body, self.__footer]).css({'width': 'auto'}, reset=True)
-    # self.col.css(None, reset=True)
     self.col.style.add_classes.div.modal_content()
     self.col.inReport = False
     self.val.append(self.col)
@@ -864,6 +863,18 @@ class Modal(Html.Html):
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassModal(self)
     return self._styleObj
+
+  @property
+  def header(self):
+    return self.__header
+
+  @property
+  def footer(self):
+    return self.__footer
+
+  @property
+  def body(self):
+    return self.__body
 
   def show(self):
     return self._report.js.getElementById(self.htmlId).css({'display': 'block'})
