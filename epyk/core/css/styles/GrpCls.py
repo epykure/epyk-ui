@@ -5,7 +5,7 @@ from epyk.core.css import Properties
 from epyk.core.css.styles.effects import Effects
 from epyk.core.css.styles.attributes import Attrs # for the rtype in the documentation
 from epyk.core.css.styles.attributes import Commons, Body, Empty
-from epyk.core.css.styles.classes import CssStyle
+from epyk.core.css.styles.classes import CssStyle, CssStyleScrollbar
 from epyk.core.py import OrderedSet
 
 
@@ -13,6 +13,9 @@ class ClassPage(object):
   def __init__(self, htmlObj):
     self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
+    self.classList['other'].add(CssStyleScrollbar.CssWebkitScrollbar(self.htmlObj._report))
+    self.classList['other'].add(CssStyleScrollbar.CssWebkitScrollbarThumb(self.htmlObj._report))
+    self.classList['other'].add(CssStyleScrollbar.CssWebkitScrollbarTrack(self.htmlObj._report))
 
   @property
   def css(self):
@@ -26,6 +29,7 @@ class ClassPage(object):
     if self._css_struct is None:
       self._css_struct = Body(self.htmlObj)
     return self._css_struct
+
 
   @property
   def defaults(self):
