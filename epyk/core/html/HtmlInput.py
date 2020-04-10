@@ -43,7 +43,7 @@ class Input(Html.Html):
     -----------
     Property to set all the input component properties
 
-    :rtype: OptSelect.OptionsSelect
+    :rtype: OptInputs.OptionsInput
     """
     return self.__options
 
@@ -806,30 +806,65 @@ class Radio(Html.Html):
 
 class TextArea(Html.Html):
   name, category, callFnc = 'Text Area', 'Inputs', 'textArea'
-  # _grpCls = CssGrpClsInput.CssClassTextArea
 
   def __init__(self, report, text, width, rows, placeholder, background_color, htmlCode, options, profile):
-    super(TextArea, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width}, profile=profile)
-    self.width, self.rows, self.backgroundColor = width, rows, background_color
-    if not options.get("selectable", True):
-      self.attr['onclick'] = "this.blur();this.select()"
-      options["readOnly"] = True
-      del options["selectable"]
+    super(TextArea, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, 'box-sizing': 'border-box'}, profile=profile)
+    self.rows, self.backgroundColor = rows, background_color
+    self.style.add_classes.input.textarea()
+    self.set_attrs({"rows": rows, "placeholder": placeholder or ""})
+    self.__options = OptInputs.OptionsTextarea(self, options)
 
-    options.update({"rows": rows, "placeholder": placeholder or ""})
-    self.set_attrs(attrs=options)
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the input component properties
 
-  def jsAppend(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsStyles=None, jsFnc=None):
-    return "%s.append(%s+ '\\r\\n')" % (self.jqId, self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc))
+    :rtype: OptInputs.OptionsTextarea
+    """
+    return self.__options
+
+  def selectable(self, jsFncs=None, profile=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+
+    :return: self. to allow the function chaining
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.attr['onclick'] = "this.blur();this.select();%s" % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self
+
+  @property
+  def dom(self):
+    """
+    Description:
+    -----------
+    Return the HTML DOM object
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/js/js_htmldom.asp
+
+    :rtype: JsHtmlField.JsHtmlTextarea
+    """
+    if self._dom is None:
+      self._dom = JsHtmlField.Textarea(self, report=self._report)
+    return self._dom
 
   @property
   def _js__builder__(self):
     return 'htmlObj.innerHTML = data'
 
-  def empty(self): return 'document.getElementById("%s").value = ""' % self.htmlId
-
   def __str__(self):
-    return '<textarea %(strAttr)s></textarea>' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '<textarea %(strAttr)s>%(val)s</textarea>' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val}
 
 
 class Search(Html.Html):
