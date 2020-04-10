@@ -134,32 +134,32 @@ class Layouts(object):
     self.context.register(html_col)
     return html_col
 
-  def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), aresData=None, align='left',
-          valign='top', colsWith=None, closable=False, resizable=False, titles=None, helper=None, profile=None):
-    """
-    Description:
-    ------------
-    Python wrapper for a row of HTML items
-
-    Attributes:
-    ----------
-    :param htmlObjs:
-    :param width:
-    :param height:
-    :param aresData:
-    :param align:
-    :param valign:
-    :param colsWith:
-    :param closable:
-    :param resizable:
-    :param titles:
-    :param helper:
-    :param profile:
-    """
-    html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, aresData, align, valign, colsWith,
-                                        closable, resizable, titles, helper, profile)
-    self.context.register(html_row)
-    return html_row
+  # def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), aresData=None, align='left',
+  #         valign='top', colsWith=None, closable=False, resizable=False, titles=None, helper=None, profile=None):
+  #   """
+  #   Description:
+  #   ------------
+  #   Python wrapper for a row of HTML items
+  #
+  #   Attributes:
+  #   ----------
+  #   :param htmlObjs:
+  #   :param width:
+  #   :param height:
+  #   :param aresData:
+  #   :param align:
+  #   :param valign:
+  #   :param colsWith:
+  #   :param closable:
+  #   :param resizable:
+  #   :param titles:
+  #   :param helper:
+  #   :param profile:
+  #   """
+  #   html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, aresData, align, valign, colsWith,
+  #                                       closable, resizable, titles, helper, profile)
+  #   self.context.register(html_row)
+  #   return html_row
 
   def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
     """

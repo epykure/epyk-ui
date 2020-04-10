@@ -13,7 +13,7 @@ class Number(object):
     self.context = context
 
   def digits(self, text=None, color=None, align='center', width=None, height=None, htmlCode=None,
-           tooltip=None, profile=None):
+           tooltip=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -46,7 +46,7 @@ class Number(object):
       width = (defaults_html.TEXTS_SPAN_WIDTH, 'px')
     if height is None:
       height = (defaults_html.LINE_HEIGHT, 'px')
-    html_label = html.HtmlText.Position(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, profile)
+    html_label = html.HtmlText.Position(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options, profile)
     html_label.position(3, {"font-size": defaults_css.font(5), "font-weight": "bold"})
     html_label.position(4, {"font-size": defaults_css.font(5), "font-weight": "bold"})
     html_label.digits(True)
