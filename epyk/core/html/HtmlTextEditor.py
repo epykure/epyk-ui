@@ -15,8 +15,10 @@ class Console(Html.Html):
 
   def __init__(self, report, data, width, height, htmlCode, helper, options, profile):
     super(Console, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.css({"overflow": 'auto', 'box-sizing': 'border-box'})
+    self.css({"overflow": 'auto', 'box-sizing': 'border-box', 'color': self._report.theme.greys[-1],
+              'background': self._report.theme.colors[0]})
     self.__options = OptText.OptionsConsole(self, options)
+    self.add_helper(helper)
 
   @property
   def dom(self):
@@ -52,7 +54,7 @@ class Console(Html.Html):
     return ''' 
       if(options.showdown){var converter = new showdown.Converter(options.showdown);
         let frag = document.createRange().createContextualFragment(converter.makeHtml(data)); 
-        frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0 ;  
+        frag.firstChild.style.display = 'inline-block'; frag.firstChild.style.margin = 0;  
         data = frag.firstChild.outerHTML} 
       htmlObj.innerHTML = data +'<br/>' '''
 
