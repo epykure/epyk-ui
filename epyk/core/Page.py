@@ -78,7 +78,7 @@ class Report(object):
     self.interruptReport, self._propagate = (False, None), []
 
     self.sourceDef, self.localFiles, self.libDef, self._run, self._scroll, self._contextMenu = {}, {}, {}, {}, set(), {}
-    self.logo, self._dbSettings, self.dbsDef, self._cssText = None, None, {}, []
+    self.logo, self._dbSettings, self.dbsDef, self._cssText, self._jsText = None, None, {}, [], []
 
     #
     self.jsOnLoadFnc, self.jsWindowLoadFnc = OrderedSet(), OrderedSet()

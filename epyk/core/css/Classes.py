@@ -219,6 +219,7 @@ class Catalog(object):
     :return:
     """
     self.__rptObj._cssText.append(text)
+    return self
 
   def anonymous_cls(self, attrs):
     pass

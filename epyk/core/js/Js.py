@@ -711,17 +711,32 @@ class JsBase(object):
     self._src._props.setdefault('js', {}).setdefault('bespoke', []).append(jsData)
 
   def customText(self, text):
-    pass
+    """
+    Description:
+    ------------
+    Javascript fragment added at the begining of the page.
+    This will be called before any function in the framework
+
+    Attributes:
+    ----------
+    :param text: String. The Javascript fragment
+
+    :return: self to allow the chaning
+    """
+    self._src._jsText.append(text)
+    return self
 
   def customFile(self, filename, path=None):
     """
+    Description:
+    ------------
     This will load your local javascript file when the report will be built.
     Then you will be able to use the new features in the different Javascript wrappers
 
     Attributes:
     ----------
-    :param filename:
-    :param path:
+    :param filename: String. The file name
+    :param path: String. optional. The file path
 
     :return:
     """

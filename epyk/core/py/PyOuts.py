@@ -84,7 +84,7 @@ class PyOuts(object):
           htmlParts.append(self._report.htmlItems[objId].html())
         #
         cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
-    onloadParts = []
+    onloadParts = list(self._report._jsText)
     for data_id, data in self._report._props.get("data", {}).get('sources', {}).items():
       onloadParts.append("var data_%s = %s" % (data_id, json.dumps(data)))
 
