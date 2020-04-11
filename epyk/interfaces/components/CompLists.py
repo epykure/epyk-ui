@@ -162,7 +162,7 @@ class Lists(object):
     self.context.register(html_select)
     return html_select
 
-  def list(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -183,7 +183,7 @@ class Lists(object):
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def numbers(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def numbers(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -204,7 +204,7 @@ class Lists(object):
     html_list.css({"list-style-type": 'decimal'})
     return html_list
 
-  def alpha(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def alpha(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
 
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
@@ -213,7 +213,7 @@ class Lists(object):
     html_list.css({"list-style-type": 'lower-alpha'})
     return html_list
 
-  def roman(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def roman(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
 
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
@@ -222,7 +222,7 @@ class Lists(object):
     html_list.css({"list-style-type": 'lower-roman'})
     return html_list
 
-  def points(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def points(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
              htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -249,7 +249,7 @@ class Lists(object):
     html_list.css({"list-style-type": 'circle'})
     return html_list
 
-  def disc(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None,
+  def disc(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None,
            options=None, profile=None):
     """
     Description:
@@ -276,7 +276,7 @@ class Lists(object):
     html_list.css({"list-style-type": 'disc'})
     return html_list
 
-  def squares(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def squares(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
              htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -307,7 +307,7 @@ class Lists(object):
     html_list.css({"list-style-type": 'square'})
     return html_list
 
-  def groups(self, data=None, categories=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'),
              htmlCode=None, helper=None, profile=None):
     """
     Description:
@@ -347,7 +347,7 @@ class Lists(object):
     self.context.register(html_obj)
     return html_obj
 
-  def checklist(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def checklist(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
                 htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -375,7 +375,7 @@ class Lists(object):
     self.context.register(html_obj)
     return html_obj
 
-  def tree(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def tree(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -401,7 +401,7 @@ class Lists(object):
     self.context.register(html_tree)
     return html_tree
 
-  def dropdown(self, recordSet=None, text="", width=(100, "%"), height=(32, 'px'), htmlCode=None,
+  def dropdown(self, recordSet=None, text="", width=('auto', ""), height=(32, 'px'), htmlCode=None,
                helper=None, options=None, profile=None):
     """
     Description:
@@ -427,7 +427,7 @@ class Lists(object):
     self.context.register(html_d)
     return html_d
 
-  def badges(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def badges(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
              htmlCode=None, helper=None, options=None, profile=None):
     """
 
@@ -454,7 +454,7 @@ class Lists(object):
     self.context.register(html_obj)
     return html_obj
 
-  def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
+  def buttons(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
               htmlCode=None, helper=None, options=None, profile=None):
     """
 
@@ -480,7 +480,7 @@ class Lists(object):
     self.context.register(html_obj)
     return html_obj
 
-  def radios(self, records, group_name=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None,
+  def radios(self, records, group_name=None, width=('auto', ""), height=(None, "px"), htmlCode=None, helper=None,
              options=None, profile=None):
     """
     Description:
@@ -506,5 +506,5 @@ class Lists(object):
       container += self.context.rptObj.ui.fields.radio(rec.get("value", False), rec.get('label', ''), rec.get("group_name", group_name))
     return container
 
-  def brackets(self, recordSet=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
+  def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))

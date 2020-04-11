@@ -1,6 +1,7 @@
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptPanel
+from epyk.core.html.options import OptText
 #
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlPanels
@@ -217,79 +218,188 @@ class Div(Html.Html):
         self.vals.to_word(document)
 
 
-class Table(Html.Html):
-  name, category, callFnc = 'Row', 'Layouts', 'row'
+class Td(Html.Html):
+  name, category, callFnc = 'Column', 'Layouts', 'col'
 
-  def __init__(self, report, htmlObjs, width, height, data, align, valign, colsWith, closable, resizable, titles,
-               helper, profile):
-    if data is not None:
-      # Load the different HTML components from a static list
-      # This mode will automatically add the inReport to the new components
-      htmlObjs = []
-      for component in data:
-        fnc = getattr(report, component['htmlComponent'])
-        parameters = dict(component)
-        del parameters['htmlComponent']
-
-        htmlObjs.append(fnc(**parameters))
-    self.colsWith, self.htmlMaps = [] if colsWith is None else colsWith, {}
-    super(Table, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
-    for htmlObj in htmlObjs:
-      self.__add__(htmlObj)
-    self.align, self.valign, self.closable, self.resizable, self.titles = align, valign, closable, resizable, titles
-    self.css({"margin-top": '5px', "padding": "5px 0 5px 0", "border-collapse": "collapse", 'table-layout': 'fixed'})
+  def __init__(self, report, htmlObjs, header, position, width, height, align, profile):
+    self.position, self.rows_css, self.row_css_dflt, self.header = position, {}, {}, header
+    super(Td, self).__init__(report, [], css_attrs={"width": width, "height": height, 'white-space': 'nowrap'}, profile=profile)
+    if htmlObjs is not None:
+      for htmlObj in htmlObjs:
+        self.__add__(htmlObj)
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    if hasattr(htmlObj, 'inReport'):
+      htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
-    self.htmlMaps[htmlObj.htmlId] = htmlObj
     return self
 
-  def get(self, htmlCode):
+  def __getitem__(self, i):
+    return self.val[i]
+
+  def __str__(self):
+    content = [htmlObj.html() if hasattr(htmlObj, 'inReport') else htmlObj for htmlObj in self.val]
+    if self.header:
+      return '<th %s>%s</th>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
+
+    return '<td %s>%s</td>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
+
+
+class Tr(Html.Html):
+  name, category, callFnc = 'Column', 'Layouts', 'col'
+
+  def __init__(self, report, htmlObjs, header, position, width, height, align, options, profile):
+    self.position, self.header = position, header
+    super(Tr, self).__init__(report, [], css_attrs={"width": width, "height": height, 'text-align': align}, profile=profile)
+    if htmlObjs is not None:
+      for htmlObj in htmlObjs:
+        self.__add__(htmlObj)
+    self.style.justify_content = self.position
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    if not isinstance(htmlObj, Td):
+      if not isinstance(htmlObj, list):
+        htmlObj = [htmlObj]
+      htmlObj = Td(self._report, htmlObj, self.header, None, (None, "%"), (None, "%"), None, False)
+    self.val.append(htmlObj)
+    return self
+
+  def __getitem__(self, i):
+    """
+    Return the internal column in the row for the given index
+
+    :param i: the column index
+    :rtype: Td
+    """
+    return self.val[i]
+
+  def __str__(self):
+    cols = [htmlObj.html() for i, htmlObj in enumerate(self.val)]
+    return '<tr %s>%s</tr>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(cols))
+
+
+class Caption(Html.Html):
+
+  def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, options, profile):
+    super(Caption, self).__init__(report, text, css_attrs={"width": width, "height": height, "color": color, 'text-align': align},
+                               code=htmlCode, profile=profile)
+    self.__options = OptText.OptionsText(self, options)
+    if tooltip is not None:
+      self.tooltip(tooltip)
+
+  @property
+  def options(self):
     """
     Description:
     ------------
-    Return the Html component in the parameter bar
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
+
+  def __str__(self):
+    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
+    return '<caption %s>%s</caption>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
+
+
+class TSection(Html.Html):
+
+  def __init__(self, report, type, rows=None):
+    super(TSection, self).__init__(report, [])
+    self.__section = type
+    if rows is not None:
+      for row in rows:
+        self.__add__(row)
+
+  def __getitem__(self, i):
+    """
+
+    :param i: Integer. The internal row based on the index
+
+    :rtype: Tr
+    """
+    return self.val[i]
+
+  def __add__(self, row_data):
+    """ Add items to a container """
+    self.val.append(row_data)
+    return self
+
+  def __str__(self):
+    cols = "".join([htmlObj.html() for i, htmlObj in enumerate(self.val)])
+    return '<%(section)s %(attr)s>%(cols)s</%(section)s>' % {'section': self.__section, 'cols': cols,
+                  'attr': self.get_attrs(pyClassNames=self.style.get_classes())}
+
+
+class Table(Html.Html):
+  name, category, callFnc = 'Table', 'Layouts', 'table'
+
+  def __init__(self, report, rows, width, height, align, helper, options, profile):
+    super(Table, self).__init__(report, [], css_attrs={"width": width, "height": height, 'table-layout': 'auto',
+            'white-space': 'nowrap', 'border-collapse': 'collapse', 'box-sizing': 'border-box'}, profile=profile)
+    self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
+    self.header, self.body, self.footer = TSection(self._report, 'thead'), TSection(self._report, 'tbody'), TSection(self._report, 'tfoot')
+    self.caption = None
+    if rows is not None:
+      for row in rows:
+        self.__add__(row)
+
+  def __add__(self, row_data):
+    """ Add items to a container """
+    if isinstance(row_data, Tr):
+      row = row_data
+    else:
+      if not self.header.val and not self.body.val:
+        row = Tr(self._report, row_data, True, None, (100, "%"), (100, "%"), 'center', None, False)
+      else:
+        row = Tr(self._report, row_data, False, None, (100, "%"), (100, "%"), 'left', None, False)
+    if row.header:
+      self.header += row
+    else:
+      self.body += row
+    return self
+
+  def add_caption(self, text, color=None, align=None, width=(100, "%"), height=(100, "%"), htmlCode=None, tooltip=None,
+                  options=None, profile=False):
+    """
+    Description:
+    ------------
+    The <caption> tag defines a table caption.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/tag_caption.asp
 
     Attributes:
     ----------
-    :param htmlCode: The htmlCode for the component as a String
+    :param text:
+    :param color:
+    :param align:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param tooltip:
+    :param options:
+    :param profile:
     """
-    return self.htmlMaps[htmlCode]
+    self.caption = Caption(self._report, text, color, align, width, height, htmlCode, tooltip, options, profile)
+    return self.caption
+
+  def __getitem__(self, i):
+    """
+
+    :param i: Integer. The internal row based on the index
+
+    :rtype: Tr
+    """
+    return self.body[i]
 
   def __str__(self):
-    """ Return the HTML display of a split container"""
-    items = ['<div style="width:100%%;display:block;"><table %s><tr>' % self.get_attrs(pyClassNames=self.pyStyle)]
-    widths = {}
-    if self.colsWith:
-      for i, _ in enumerate(self.vals):
-        widths[i] = 'width:%s' % self.colsWith[i]
-    if self.closable:
-      if self.titles:
-        for i, htmlObj in enumerate(self.vals):
-          onclickEvent = "ResizableRow(this, 'col_%s_%s')" % (self.htmlId, i)  # if self.colsWith else "$(\'#col_%s_%s\').children().toggle()" % ( self.htmlId, i)
-          items.append('<th style="text-align:left;padding:5px 0 5px 0;%s"><i onclick="%s" style="cursor:pointer;" class="far fa-minus-square"></i>&nbsp;<p style="color:%s;display:inline">%s</p></th>' % (widths.get(i, ''), onclickEvent, self._report.theme.danger[1], self.titles[i].upper()))
-      else:
-        for i, htmlObj in enumerate(self.vals):
-          onclickEvent = "ResizableRow(this, 'col_%s_%s'))" % (self.htmlId, i)  # if self.colsWith else "$(\'#col_%s_%s\').children().toggle()" % ( self.htmlId, i)
-          items.append( '<th style="text-align:left;%s"><i onclick="%s" style="cursor:pointer;" class="far fa-minus-square"></i></th>' % (
-            widths.get(i, ''), onclickEvent))
-      items.append('</tr><tr>')  # $(htmlId).parent().width()
-      self.addGlobalFnc("ResizableRow(htmlId, targetId)", '''
-         if ( $(htmlId).parent().data('size') == undefined) { $(htmlId).parent().data('size', $(this).parent().width() ) } ; 
-         $('#' + targetId).children().toggle(); var styleDisplay = $('#' + targetId).children().css('display') ;
-         if ( styleDisplay == 'block') { $(htmlId).parent().width($(htmlId).parent().data('size')) ; }
-         else { $(htmlId).parent().width(10) ; } ''')
-
-    for i, htmlObj in enumerate(self.val):
-      extraStyle = 'padding:0 0 0 10px' if i != 0 else 'padding:0'
-      items.append( '<td id="col_%s_%s" style="font-size:inherit;line-height:inherit;vertical-align:%s;text-align:%s;%s;%s">%s</td>' % (self.htmlId, i, self.valign, self.align, widths.get(i, ''), extraStyle, htmlObj.html()))
-    items.append('</tr></table></div>')
-    if self.resizable:
-      self._report.jsImports.add('datatables-col-resizable')
-      self._report.jsOnLoadFnc.add("%s.colResizable({ liveDrag:true });" % self.jqId)
-    return "".join(items)
+    caption = "" if self.caption is None else self.caption.html()
+    return '<table %s>%s%s%s%s</table>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), caption, self.header.html(), self.body.html(), self.footer.html(), self.helper)
 
 
 class Col(Html.Html):

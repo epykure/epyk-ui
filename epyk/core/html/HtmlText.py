@@ -138,7 +138,8 @@ class Span(Html.Html):
     Description:
     ------------
 
-    Documentation
+    Related Pages:
+    --------------
     https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
 
     :return:
