@@ -182,7 +182,10 @@ class Catalog(object):
     """
     Description:
     ------------
+    Register a bespoke external class to the report object
 
+    Attributes:
+    ----------
     :param cssClass:
 
     :return:
@@ -196,12 +199,14 @@ class Catalog(object):
     """
     Description:
     ------------
+    Add an external CSS file to the final HTML report
 
     Attributes:
     ----------
-    :param filename:
+    :param filename: String. The file name
     :param path: String. Optional. The full path of the external CSS file. If None the user part in Imports.STATIC_PATH
                  will be used
+
     :return:
     """
     if path is None:
@@ -214,15 +219,44 @@ class Catalog(object):
     """
     Description:
     ------------
+    Add a bespoke CSS fragment
 
-    :param text:
+    Attributes:
+    ----------
+    :param text: String. The CSS fragment to be added to the HTML report. THis can be a class or a group of class
+
     :return:
     """
     self.__rptObj._cssText.append(text)
     return self
 
   def anonymous_cls(self, attrs):
-    pass
+    """
+    Description:
+    ------------
+    Create a bespoke class based on the various attributes.
+    This will internal build the class and return it
+
+    Usage:
+    ------
+    v_cls = rptObj.css.anonymous_cls({
+      '_attrs': {'color': 'green', 'cursor': 'pointer'},
+      '_hover': {'color': 'red'}})
+
+    Attributes:
+    ----------
+    :param attrs: Dictionary. The expected class attributes
+
+    :return: The Python class
+    """
+    import hashlib
+
+    from epyk.core.css.styles.classes import CssStyle
+
+    has_style = str(hashlib.sha1(str(attrs).encode()).hexdigest())
+    attrs['classname'] = "style_%s" % has_style
+    meta_cls = type('Style%s' % has_style, (CssStyle.Style,), attrs)
+    return meta_cls
 
   def external(self, classname):
     """
