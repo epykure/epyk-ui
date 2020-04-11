@@ -233,7 +233,7 @@ class Table(Html.Html):
 
         htmlObjs.append(fnc(**parameters))
     self.colsWith, self.htmlMaps = [] if colsWith is None else colsWith, {}
-    super(Table, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1], profile=profile)
+    super(Table, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     for htmlObj in htmlObjs:
       self.__add__(htmlObj)
     self.align, self.valign, self.closable, self.resizable, self.titles = align, valign, closable, resizable, titles
@@ -248,8 +248,12 @@ class Table(Html.Html):
 
   def get(self, htmlCode):
     """
+    Description:
+    ------------
     Return the Html component in the parameter bar
 
+    Attributes:
+    ----------
     :param htmlCode: The htmlCode for the component as a String
     """
     return self.htmlMaps[htmlCode]
