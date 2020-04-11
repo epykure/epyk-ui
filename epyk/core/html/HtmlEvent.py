@@ -22,7 +22,7 @@ class ProgressBar(Html.Html):
 
   def __init__(self, report, number, total, width, height, attrs, helper, options, htmlCode, profile):
     options['max'] = total
-    super(ProgressBar, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
+    super(ProgressBar, self).__init__(report, number, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'}, profile=profile)
     self.add_helper(helper)
     self._jsStyles = {'css': {"background": self._report.theme.success[1]}}
     self.__options = OptSliders.OptionsProgBar(self, options)
@@ -268,9 +268,10 @@ class Slider(Html.Html):
 
   def __init__(self, report, number, min, max, width, height, attrs, helper, options, htmlCode, profile):
     options.update({'max': max, 'min': min})
-    super(Slider, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Slider, self).__init__(report, number, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self._jsStyles = {'css': {"background": self._report.theme.success[0]}}
     self.__options = OptSliders.OptionsSlider(self, options)
+    self.style.css.padding = "0 10px"
 
   @property
   def options(self):

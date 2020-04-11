@@ -285,11 +285,11 @@ class Badge(Html.Html):
     self.link = None
     if url is not None:
       self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "2px 0px 0 6px", "border-radius": "20px", "width": "auto", "font-size": Defaults_css.font(-2)})
+          "padding": "2px", "border-radius": "20px", "width": "auto", "font-size": Defaults_css.font(-2)})
       self.link.inReport = False
     else:
       self.link = self._report.ui.text(text).css({'display': 'inline-block',
-          "padding": "2px 0px 0 6px", "border-radius": "20px", "width": "auto", "font-size": Defaults_css.font(-2)})
+          "padding": "2px", "border-radius": "20px", "width": "auto", "font-size": Defaults_css.font(-2)})
     self.link.css(self.options.badge_css)
     self.link.inReport = False
     self.attr['class'].add("badge") # From bootstrap

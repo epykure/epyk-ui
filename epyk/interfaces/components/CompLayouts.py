@@ -134,30 +134,23 @@ class Layouts(object):
     self.context.register(html_col)
     return html_col
 
-  def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), aresData=None, align='left',
-          valign='top', colsWith=None, closable=False, resizable=False, titles=None, helper=None, profile=None):
+  def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), align='left', helper=None, options=None, profile=None):
     """
     Description:
     ------------
-    Python wrapper for a row of HTML items
+    table layout for HTML components
 
     Attributes:
     ----------
     :param htmlObjs:
     :param width:
     :param height:
-    :param aresData:
     :param align:
-    :param valign:
-    :param colsWith:
-    :param closable:
-    :param resizable:
-    :param titles:
     :param helper:
+    :param options:
     :param profile:
     """
-    html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, aresData, align, valign, colsWith,
-                                        closable, resizable, titles, helper, profile)
+    html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, align, helper, options, profile)
     self.context.register(html_row)
     return html_row
 
@@ -341,42 +334,6 @@ class Layouts(object):
     """
     items = items or []
     return self.context.register(html.HtmlEvent.Filters(self.context.rptObj, items, title, width, height, htmlCode, helper, profile))
-
-  def table(self, records, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
-    """
-    Description:
-    ------------
-
-    Usage:
-    ------
-    simple_table = rptObj.ui.layouts.table(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
-    simple_table.add_row({"COL1": "Value"})
-
-    Attributes:
-    ----------
-    :param records:
-    :param cols:
-    :param rows:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
-    """
-    if len(records) > 0:
-      if isinstance(records[0], list):
-        header = records[0]
-        tmp_records = [dict(zip(header, rec)) for rec in records[1:]]
-        if rows is None:
-          rows = [header[0]]
-        if cols is None:
-          cols = header[1:]
-        records = tmp_records
-    if width is None:
-      width = (None, "px")
-    table = html.tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
-    self.context.register(table)
-    return table
 
   def form(self, htmlObj=None, helper=None):
     """

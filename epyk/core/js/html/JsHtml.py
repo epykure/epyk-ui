@@ -428,8 +428,9 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     Description:
     -----------
+    Select the content of the HTMl component
     """
-    return JsObjects.JsObjects.get("%s.select()" % self._src.input.dom.varName)
+    return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
   def toggle(self, attr="display", jsVal1="inline-block", jsVal2="none"):
     """

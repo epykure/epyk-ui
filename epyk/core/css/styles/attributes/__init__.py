@@ -36,6 +36,7 @@ class Commons(Attrs):
     super(Commons, self).__init__(htmlObj)
     self.font_size = 'inherit'
     self.font_family = 'inherit'
+    self.box_sizing = 'border-box'
 
 
 class Empty(Attrs):

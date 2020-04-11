@@ -180,7 +180,8 @@ class Texts(object):
     self.context.register(html_formula)
     return html_formula
 
-  def code(self, text="", color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None, options=None, helper=None, profile=None):
+  def code(self, text="", language='python', color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None,
+           options=None, helper=None, profile=None):
     """
     Description:
     ------------
@@ -205,9 +206,7 @@ class Texts(object):
     :param helper:
     :param profile:
     """
-    if not isinstance(text, list):
-      text = [text]
-    dflt_options = {"edit": True}
+    dflt_options = {"lineNumbers": True, 'mode': language, 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
