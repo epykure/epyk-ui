@@ -1232,9 +1232,8 @@ class ImportManager(object):
         else:
           js.append('<script language="javascript" type="text/javascript" src="%s%s"></script>' % (url_module, extra_configs))
     if local_js is not None and len(local_js) > 0:
-      extra_configs = "?%s" % self.moduleConfigs[js_alias] if js_alias in self.moduleConfigs else ""
       for local_js_file in local_js:
-        js.append('<script language="javascript" type="text/javascript" src="%s%s"></script>' % (local_js_file, extra_configs))
+        js.append('<script language="javascript" type="text/javascript" src="%s"></script>' % local_js_file)
     return "\n".join(js)
 
   def jsURLs(self, js_str):
