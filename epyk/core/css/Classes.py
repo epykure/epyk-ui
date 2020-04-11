@@ -187,7 +187,10 @@ class Catalog(object):
 
     :return:
     """
-    pass
+    cssObj = cssClass(self.__rptObj)
+    cssObj.customize()
+    self.__class_list_type.add(cssObj)
+    return self
 
   def customFile(self, filename, path=None):
     """
@@ -208,6 +211,13 @@ class Catalog(object):
     return self
 
   def customText(self, text):
+    """
+    Description:
+    ------------
+
+    :param text:
+    :return:
+    """
     self.__rptObj._cssText.append(text)
 
   def anonymous_cls(self, attrs):
