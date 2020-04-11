@@ -212,9 +212,9 @@ class CssDivModal(CssStyle.Style):
 
 
 class CssDivModalContent(CssStyle.Style):
-  _attrs = {'margin': '15%', 'padding': '5px 5px 5px 5px', 'border': '1px solid #888', 'width': '75%',
+  _attrs = {'margin': '10%', 'padding': '5px 5px 5px 5px', 'border': '1px solid #888', 'width': '75%',
             'box-shadow': '0 19px 38px rgba(0, 0, 0, 0.12), 0 15px 12px rgba(0, 0, 0, 0.22)',
-            'display': 'flex', 'flex-direction': 'column'}
+            'display': 'inline-flex', 'flex-direction': 'column'}
 
   def customize(self):
     self.css({'background-color': self.rptObj.theme.greys[0]})
