@@ -1,3 +1,6 @@
+
+from epyk.core.js import Imports
+
 from epyk.core.css.catalogs import CatalogButton
 from epyk.core.css.catalogs import CatalogInput
 from epyk.core.css.catalogs import CatalogChart
@@ -23,8 +26,11 @@ class Catalog(object):
 
   def _class_type(self, type):
     """
+    Description:
+    ------------
 
     :param type:
+
     :return:
     """
     self.__class_list_type = self.__class_list[type]
@@ -33,6 +39,8 @@ class Catalog(object):
   @property
   def button(self):
     """
+    Description:
+    ------------
     CSS Classes specific to the buttons components
 
     :rtype: CatalogButton.CatalogButton
@@ -44,6 +52,8 @@ class Catalog(object):
   @property
   def layout(self):
     """
+    Description:
+    ------------
 
     :rtype: CatalogLayout.CatalogLayout
     """
@@ -54,6 +64,8 @@ class Catalog(object):
   @property
   def dropdown(self):
     """
+    Description:
+    ------------
     CSS Classes specific to the dropdown components
 
     :rtype: CatalogTree.CssStyleDropdown
@@ -65,6 +77,8 @@ class Catalog(object):
   @property
   def table(self):
     """
+    Description:
+    ------------
     CSS Classes specific to the Table components
 
     :rtype: CatalogTable.CatalogTable
@@ -76,6 +90,8 @@ class Catalog(object):
   @property
   def chart(self):
     """
+    Description:
+    ------------
     CSS Classes specific to the buttons components
 
     :rtype: CatalogButton.CatalogButton
@@ -87,6 +103,8 @@ class Catalog(object):
   @property
   def link(self):
     """
+    Description:
+    ------------
 
     :rtype: CatalogLink.CatalogLink
     """
@@ -97,6 +115,8 @@ class Catalog(object):
   @property
   def date(self):
     """
+    Description:
+    ------------
 
     :rtype: CatalogInput.CatalogDate
     """
@@ -107,6 +127,8 @@ class Catalog(object):
   @property
   def text(self):
     """
+    Description:
+    ------------
 
     :rtype: CatalogText.CatalogText
     """
@@ -117,6 +139,8 @@ class Catalog(object):
   @property
   def input(self):
     """
+    Description:
+    ------------
     """
     if "inputs" not in self.__ctx:
       self.__ctx['inputs'] = CatalogInput.CatalogInput(self.__rptObj, self.__class_list_type)
@@ -145,6 +169,8 @@ class Catalog(object):
   @property
   def radio(self):
     """
+    Description:
+    ------------
 
     :rtype: CatalogRadio.CatalogRadio
     """
@@ -152,16 +178,51 @@ class Catalog(object):
       self.__ctx['radio'] = CatalogRadio.CatalogRadio(self.__rptObj, self.__class_list_type)
     return self.__ctx['radio']
 
-  def custom(self, classname, attrs):
-    """ """
+  def custom(self, cssClass):
+    """
+    Description:
+    ------------
+
+    :param cssClass:
+
+    :return:
+    """
     pass
 
   def customFile(self, filename, path=None):
-    pass
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param filename:
+    :param path: String. Optional. The full path of the external CSS file. If None the user part in Imports.STATIC_PATH
+                 will be used
+    :return:
+    """
+    if path is None:
+      self.__rptObj.cssLocalImports.add("%s/css/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
+    else:
+      self.__rptObj.cssLocalImports.add("%s/%s" % (path, filename))
+    return self
+
+  def customText(self, text):
+    self.__rptObj._cssText.append(text)
 
   def anonymous_cls(self, attrs):
     pass
 
   def external(self, classname):
-    """ Add external CSS classes to a component """
+    """
+    Description:
+    ------------
+    Add external CSS classes to a component
+
+    :param classname: String or array
+
+    :return:
+    """
+    if isinstance(classname, list):
+      classname = " ".join(classname)
     self.__class_list_type.add(classname)

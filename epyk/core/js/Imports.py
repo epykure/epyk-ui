@@ -22,11 +22,15 @@ STATIC_PATH = "/static"
 
 def requires(name, reason='Missing Package', install=None, package=None, raise_except=False, source_script=None, pip_attrs=None):
   """
+  Description:
+  ------------
   System module
 
   Import the necessary external packages and provide explicit message to find a way to solve this error message.
   This method should also explain why this module is required to make sure this is really expected to get an error.
 
+  Attributes:
+  ----------
   :param name:
   :param reason:
   :param install:
@@ -87,6 +91,8 @@ def requires(name, reason='Missing Package', install=None, package=None, raise_e
 
 def load_package(package_name, pip_attrs=None, action='install'):
   """
+  Description:
+  ------------
   Force the package to be installed manually to the currently python distribution.
   This will run a pip command to the running python set up
 
@@ -96,6 +102,8 @@ def load_package(package_name, pip_attrs=None, action='install'):
   Documentation
   https://pypi.org/
 
+  Attributes:
+  ----------
   :param package_name: The external package reference (e.g. pandas)
   :param pip_attrs: Optional. The pip attributes  https://packaging.python.org/tutorials/installing-packages/
   :param action: Optional. The pip command (default install)
@@ -112,6 +120,8 @@ def load_package(package_name, pip_attrs=None, action='install'):
 
 def installed_packages():
   """
+  Description:
+  ------------
   Returns the list of packages installed on the running Python distribution
 
   This will require an internet connection as it will run the pip command behind the scene.
@@ -991,6 +1001,8 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
 
 class ImportManager(object):
   """
+  Description:
+  ------------
   The main class in charge of defining the order of the imports in the header.
 
   There is no check on the presence of the modules on the server. The only purpose of this module is to produce the
@@ -999,6 +1011,8 @@ class ImportManager(object):
 
   def __init__(self, online=False, report=None):
     """
+    Description:
+    ------------
     Load the hierarchy of modules.
     This module will define the import section in the header of the final HTML page.
 
@@ -1006,6 +1020,8 @@ class ImportManager(object):
     available. To run a report using the online mode to False it is requires to get all the packages locally
     saved with the expected structured (basically the one of the CDNJ repository)
 
+    Attributes:
+    ----------
     :param online: Optional. A flag to specify if the report can use an internet connection. Default False
     :param report: Optional. The internal report object with all the required external modules
     """
@@ -1044,13 +1060,18 @@ class ImportManager(object):
 
   def getModules(self, modules, alias, folder=None, module_details=None):
     """
+    Description:
+    ------------
     Return the list of modules for a given entry.
     This will be used recursively to resolve all the dependencies
 
-    Example
+    Usage:
+    ------
     modules = collections.OrderedDict()
     ImportManager().getModules(modules, 'c3')
 
+    Attributes:
+    ----------
     :param modules: The list of modules
     :param alias: The module reference in the above JS and CSS dictionaries
     :param folder: Optional. The folder name
@@ -1074,8 +1095,12 @@ class ImportManager(object):
 
   def getReq(self, mod, modules, import_hierarchy):
     """
+    Description:
+    ------------
     Returns the list pf required modules for a given alias
 
+    Attributes:
+    ----------
     :param mod:
     :param modules:
     :param import_hierarchy:
@@ -1103,12 +1128,17 @@ class ImportManager(object):
 
   def cleanImports(self, imports, import_hierarchy):
     """
+    Description:
+    ------------
     Remove the underlying imports to avoid duplicated entries
 
-    Example
+    Usage:
+    ------
     >>> ImportManager().cleanImports(['c3'], JS_IMPORTS)
     ['jquery', 'd3', 'c3']
 
+    Attributes:
+    ----------
     :param imports: An array with the list of aliases for the external packages
     :param import_hierarchy: The package definition (Javascript or CSS) from the above import lists
 
@@ -1126,12 +1156,17 @@ class ImportManager(object):
 
   def cssResolve(self, css_aliases, local_css=None, excluded=None):
     """
+    Description:
+    ------------
     Return the list of CSS modules to add to the header
 
-    Example
+    Usage:
+    ------
     >>> ImportManager().cssResolve(['c3'])
     '<link rel="stylesheet" href="/static/c3/0.6.12/c3.min.css" type="text/css">'
 
+    Attributes:
+    ----------
     :param css_aliases: An array with the list of aliases for the external packages
     :param local_css: Optional. The file overrides
     :param excluded: Optional. Packages excluded from the result object (mandatory for some frameworks already emboarding modules)
@@ -1148,13 +1183,17 @@ class ImportManager(object):
         css.append('<link rel="stylesheet" href="%s" type="text/css">' % urlModule)
     if local_css is not None:
       for localCssFile in local_css:
-        css.append('<link rel="stylesheet" href="%s/users/%s)" type="text/css">' % (STATIC_PATH.replace("\\", "/"), localCssFile))
+        css.append('<link rel="stylesheet" href="%s" type="text/css">' % localCssFile)
     return "\n".join(css)
 
   def cssURLs(self, css_str):
     """
+    Description:
+    ------------
     Retrieve the list of CSS dependencies URL from a header
 
+    Attributes:
+    ----------
     :param css_str: The CSS String in the page
 
     :return: A Python list with all the CSS external URL to be imported
@@ -1163,12 +1202,17 @@ class ImportManager(object):
 
   def jsResolve(self, js_aliases, local_js=None, excluded=None):
     """
+    Description:
+    ------------
     Return the list of Javascript modules to add to the header
 
-    Example
+    Usage:
+    ------
     >>> ImportManager().jsResolve(['c3'])
     '<script language="javascript" type="text/javascript" src="/static/jquery/3.4.1/jquery.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/d3/5.9.7/d3.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/c3/0.6.12/c3.min.js"></script>'
 
+    Attributes:
+    ----------
     :param js_aliases: An array with the list of aliases for the external packages
     :param local_js: Optional. The file overrides
     :param excluded: Optional. Packages excluded from the result object (mandatory for some frameworks already emboarding modules)
@@ -1190,13 +1234,17 @@ class ImportManager(object):
     if local_js is not None and len(local_js) > 0:
       extra_configs = "?%s" % self.moduleConfigs[js_alias] if js_alias in self.moduleConfigs else ""
       for local_js_file in local_js:
-        js.append('<script language="javascript" type="text/javascript" src="%s/users/%s%s"></script>' % (STATIC_PATH.replace("\\", "/"), local_js_file, extra_configs))
+        js.append('<script language="javascript" type="text/javascript" src="%s%s"></script>' % (local_js_file, extra_configs))
     return "\n".join(js)
 
   def jsURLs(self, js_str):
     """
+    Description:
+    ------------
     Retrieve the list of Javascript dependencies URL from a header
 
+    Attributes:
+    ----------
     :param js_str: The Javascript String in the page
 
     :return: A Python list with all the Javascript external URL to be imported
@@ -1205,12 +1253,17 @@ class ImportManager(object):
 
   def getFiles(self, cssAlias, jsAlias):
     """
+    Description:
+    ------------
     retrieve the package definition from the list of module aliases
 
-    Example
+    Usage:
+    ------
     >>> ImportManager().getFiles(['c3'], ['c3'])
     f['css'][0]['file']['script']
 
+    Attributes:
+    ----------
     :param cssAlias: An array with the list of aliases for the CSS external packages
     :param jsAlias: An array with the list of aliases for the Js external packages
 
@@ -1235,22 +1288,35 @@ class ImportManager(object):
     return files
 
   def cssGetAll(self):
-    """ To retrieve the full list of available modules on the server """
+    """
+    Description:
+    ------------
+    To retrieve the full list of available modules on the server
+    """
     return self.cssResolve(set(CSS_IMPORTS.keys()))
 
   def jsGetAll(self):
-    """ To retrieve the full list of available modules on the server """
+    """
+    Description:
+    ------------
+    To retrieve the full list of available modules on the server
+    """
     return self.jsResolve(set(JS_IMPORTS.keys()))
 
   def getPackage(self, alias, version=None, static_path=None, with_dep=False, reload=True):
     """
+    Description:
+    ------------
     Function in charge of downloading the different external CSS and JS packages locally.
     This will guarantee the install without having to get any extra features saved on a repository.
     Saved copies of the modules can be done in order to guarantee a offline mode
 
-    Example
+    Usage:
+    ------
     Imports.ImportManager(report=Report()).getPackage('jqueryui')
 
+    Attributes:
+    ----------
     :param alias: The package reference in the above list
     :param version: Optional. The package version to retrieve
     :param static_path: Optional. The path in which the files should be copied to
@@ -1313,11 +1379,16 @@ class ImportManager(object):
 
   def getFullPackage(self, alias, version=None, static_path=None, reload=False):
     """
+    Description:
+    ------------
     Download a full package (CSS and JS) locally for a server or full offline mode
 
-    Example
+    Usage:
+    ------
     Imports.ImportManager(report=Report()).getFullPackage('font-awesome')
 
+    Attributes:
+    ----------
     :param alias: The package reference in the above list
     :param version: Optional. The package version to retrieve
     :param static_path: Optional. The path in which the files should be copied to
@@ -1372,12 +1443,17 @@ class ImportManager(object):
 
   def package(self, alias):
     """
+    Description:
+    ------------
     Returns the packages used in the Framework for both Js and CSS perimeters
 
-    Example
+    Usage:
+    ------
     >>> len(ImportManager().package('jqueryui')['modules'])
     4
 
+    Attributes:
+    ----------
     :param alias: The package reference in the above lists
 
     :return: A dictionary with the package details
@@ -1396,10 +1472,14 @@ class ImportManager(object):
 
   def setVersion(self, alias, version):
     """
+    Description:
+    ------------
     Allow the use of different version of a package.
 
     This will change the Import important to the Python env
 
+    Attributes:
+    ----------
     :param alias: The package reference in the above list
     :param version: The new version to be used globally
 
@@ -1412,10 +1492,13 @@ class ImportManager(object):
 
   def addPackage(self, alias, config):
     """
+    Description:
+    ------------
     Add a new package or update an existing one with new parameters.
     Only few parameters are available here in order to limit the changes
 
-    Example
+    Usage:
+    ------
     i.addPackage('test',
       {
         'req': [{'alias': 'd3'}],
@@ -1425,6 +1508,8 @@ class ImportManager(object):
         ]},
       )
 
+    Attributes:
+    ----------
     :param alias: The package alias
     :param config: The Python dictionary with the package details
 
@@ -1456,9 +1541,13 @@ class ImportManager(object):
 
   def getPackages(self, static_path=None, reload=False, exclude=None):
     """
+    Description:
+    ------------
     Download all the CSS and Js packages from the official CDNJS configured in the configuration.
     It is possible to get the configuration settings by calling the function getPackageInfo(aliasName) attached to the report
 
+    Attributes:
+    ----------
     :param static_path: The package reference in the above list
     :param reload: Optional. Flag to force the package reloading if the folder already exists. Default False
 

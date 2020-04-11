@@ -120,7 +120,7 @@ class PyOuts(object):
 
     importMng = Imports.ImportManager(online=True, report=self._report)
     results = {
-      'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), self._report._cssText),
+      'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), "\n".join(self._report._cssText)),
       'cssContainer': ";".join(["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
       'content': "\n".join(htmlParts),
       'jsFrgs': ";".join(onloadParts),

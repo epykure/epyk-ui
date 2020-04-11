@@ -15,6 +15,7 @@ except NameError:
 from epyk.core.js import Imports
 from epyk.interfaces import Components
 from epyk.core.css.themes import Theme
+from epyk.core.css import Classes
 
 from epyk.core import html
 from epyk.core import js
@@ -31,7 +32,8 @@ class ContextRun(object):
   __slots__ = ['mac_address', 'host_name', 'current_user', 'report_name', 'script_name', 'local_path', 'url_root', 'title', 'is_local', 'url', 'username']
   __internals_attrs = ['mac_address', 'local_path', 'is_local', 'url', 'username']
 
-  def __init__(self, report_name=None, script_name=None, current_user="local", host_name="script", url_root='http://127.0.0.1', title=None, urlMaps=None):
+  def __init__(self, report_name=None, script_name=None, current_user="local", host_name="script",
+               url_root='http://127.0.0.1', title=None, urlMaps=None):
     self.report_name, self.script_name = report_name, script_name
     self.current_user, self.host_name, self.mac_address, self.url_root = current_user, host_name, "", None
     self.url = "#"
@@ -66,30 +68,24 @@ class Report(object):
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
     self._props, self._tags, self._header_obj, self.__import_manage = {}, None, None, None
     self.run = self.run_context(run_options if run_options is not None else {})
-    #self.useSideBar, self.preferredTheme = sideBar, None
-    # self.cache, self._urlsApp = appCache, {'incidents': '/incidents', 'index': '/', 'questions': '/questions',
-    #                                        'admin': '/admin', 'report': '/reports', 'transfer': '/transfer', 'search': '/search'} if urlsApp is None else dict(urlsApp)
-    #self._system = dict(context) if context is not None else {}
-    #if urlsApp is not None:
-    #  self._urlsApp.update(urlsApp)
+
     self.timestamp, self.runTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'), time.time() * 100
-    #self.countItems, self.countNotif, self.userGroups = 0, 0, {}
     self.content, self.shortcuts, self.exportCsv, self.jsSources = [], {}, {}, {}
     self._dbBindings, self._dbErrors = {}, collections.defaultdict(int)
     self.currentTitleObj, self.navBarContent, self.sideBarActions = {}, {'content': []}, []
     self.htmlItems, self.jsOnLoad, self.http, self.htmlCodes, self.htmlRefs = {}, [], {}, {}, {}
     self.notifications = collections.defaultdict(list)
     self.interruptReport, self._propagate = (False, None), []
-    # self.dataSourceMonitor = {}
+
     self.sourceDef, self.localFiles, self.libDef, self._run, self._scroll, self._contextMenu = {}, {}, {}, {}, set(), {}
-    self.logo, self._dbSettings, self._cssText, self.dbsDef = None, None, "", {}
+    self.logo, self._dbSettings, self.dbsDef, self._cssText = None, None, {}, []
 
     #
     self.jsOnLoadFnc, self.jsWindowLoadFnc = OrderedSet(), OrderedSet()
     self.jsOnLoadEvtsFnc = OrderedSet()
     self.jsFnc = OrderedSet()
 
-    self.jsImports, self.cssImport = set(['jquery', 'font-awesome']), set(['font-awesome'])
+    self.jsImports, self.cssImport = set(), set()
     self.jsLocalImports, self.cssLocalImports = set(), set()
 
   def run_context(self, run_options):
@@ -101,6 +97,12 @@ class Report(object):
 
   @property
   def body(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
     if self.__body is None:
       self.__body = html.Html.Body(self, None)
     return self.__body
@@ -111,18 +113,20 @@ class Report(object):
 
   @property
   def theme(self):
-    """ """
+    """
+    Description:
+    ------------
+
+    :param theme:
+
+    :return:
+    """
     if self._theme is None:
       self._theme = Theme.ThemeDefault()
     return self._theme
 
   @theme.setter
   def theme(self, theme):
-    """
-
-    :param theme:
-    :return:
-    """
     if isinstance(theme, dict):
       self._theme = Theme.ThemeCustome()
       self._theme = theme
@@ -131,6 +135,8 @@ class Report(object):
 
   def imports(self, online=False):
     """
+    Description:
+    ------------
 
     :param online:
     """
@@ -141,9 +147,12 @@ class Report(object):
   @property
   def symbols(self):
     """
+    Description:
+    ------------
     Shortcut to the HTML symbols
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/html/html_symbols.asp
     https://www.w3schools.com/charsets/ref_utf_math.asp
 
@@ -154,9 +163,12 @@ class Report(object):
   @property
   def entities(self):
     """
+    Description:
+    ------------
     Shortcut to the HTML Entities
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/html/html_entities.asp
 
     Those can be added in string in order to improve the render of a text.
@@ -186,6 +198,16 @@ class Report(object):
     return self._ui
 
   @property
+  def css(self):
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    return Classes.Catalog(self, {'other': set()})._class_type('other')
+
+  @property
   def js(self):
     """
     Description:
@@ -210,10 +232,12 @@ class Report(object):
   @property
   def py(self):
     """
+    Description:
+    ------------
     Python external module section.
 
-
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/js/default.asp
 
     :return: Python HTML object
@@ -271,34 +295,6 @@ class Report(object):
                     data=urlencode({'data': json.dumps(data)}).encode('utf-8')))
     response.read()
 
-  # def getCss(self, clsName, ovrData=None):
-  #   """
-  #   Retrieve the CSS Class definition from the Python framework.
-  #   This will also allow the definition update by defining some overrides.
-  #   Overrides might be temporary changes in the class but the right practice will be to get them push to the core style framework
-  #   """
-  #   return self.style.cssCls(clsName, ovrData)
-
-  # #
-  # def addCss(self, filename):
-  #   """
-  #   This will load your local CSS file when the report will be built. Then you will be able to use the new Styles in the different HTML Components
-  #   """
-  #   self.cssLocalImports.add("%s/css/%s" % (self.run.report_name, filename))
-  #   return self
-
-  def addCssText(self, cssText):
-    self._cssText = cssText
-    return self
-
-  def addJs(self, filename):
-    """
-    This will load your local javascript file when the report will be built. Then you will be able to use the new features in the different Javascript wrappers
-    """
-    self.jsLocalImports.add("%s/js/%s" % (self.run.report_name, filename))
-    return self
-
-
   # -----------------------------------------------------------------------------------------
   #                                    LOGGING AND DEBUGGING FUNCTIONS
   # -----------------------------------------------------------------------------------------
@@ -324,7 +320,9 @@ class Report(object):
 
   @property
   def headers(self):
-    """ Property to the HTML page header """
+    """
+    Property to the HTML page header
+    """
     if self._header_obj is None:
       self._header_obj = html.Header.Header(self)
     return self._header_obj
@@ -391,112 +389,3 @@ class Report(object):
     :return: The serialised data
     """
     return json.dumps(data, cls=js.JsEncoder.Encoder, allow_nan=False)
-
-  # def html(self, online=False, mode=None):
-  #   """
-  #   Special output function used by the framework to export the report to a isoldated HTML document
-  #   This function cannot be used directly as it will write the report on the server but some buttons are available on the top to trigger it
-  #   """
-  #   if mode is None:
-  #     self.style.add('CssBody', cssRef='body')
-  #     self.style.add('CssBodyContent', htmlId='page_content')
-  #   self.style.add('CssBodyLoadingBack', htmlId='popup_loading_back')
-  #   self.style.add('CssBodyLoading', htmlId='popup_loading')
-  #   self.style.add('CssStandardLinks')
-  #   self.style.add('CssTextSelection', cssRef='::selection')
-  #   self.style.add('CssTextSelection', cssRef='::-moz-selection')
-  #
-  #   if getattr(self, 'DEBUG', False):
-  #     print("Debug mode activated, please press F12 in your browser to get Javascript details")
-  #
-  #   # Add directly to the main page only components that are attached to the report
-  #   # All the components added to a container are not considered here.
-  #   # The framework assume that the containers should take care of them
-  #   if len(self.localFiles) > 0:
-  #     self.jsGlobal.fnc('RemoveFile(src, fileName)', '$(src).parent().empty();%s' % self.jsPost("%s/remove/file/OUTPUTS/%s" % (self._urlsApp['transfer'], self.run.report_name), "filename: fileName", isPyData=False))
-  #     self.jsGlobal.fnc("RemoveLocalFiles(src, fileNames)", '$(src).parent().remove();%s' % self.jsPost('%s/locals/clean/%s' % (self._urlsApp['transfer'], self.run.report_name), "filenames: fileNames", isPyData=False))
-  #     self.jsGlobal.fnc("DownloadCachedFiles(filePath)", "NO_UNLOAD = true; %s " % self.jsSubmitForm('"%s/download/OUTPUTS/%s"' % (self._urlsApp['transfer'], self.run.report_name), isPyData=False, method='POST'))
-  #     filesUsed, maxLenght, usedFileNames = [], 18, []
-  #     for fileInfo in self.localFiles.values():
-  #       fileInfo['full_path'] = "%(subFolder)s/%(filename)s" % fileInfo
-  #       fileInfo['full_path_red'] = "%(subFolder)s/%(filename)s" % fileInfo
-  #       usedFileNames.append(fileInfo['full_path'])
-  #       if len(fileInfo['full_path']) > maxLenght:
-  #         fileInfo['full_path_short'] = fileInfo['full_path'][-maxLenght:]
-  #         fileInfo['full_path_red'] = "<div style='cursor:pointer;display:inline-block' title='%(full_path)s'>...%(full_path_short)s</div>" % fileInfo
-  #       if self.user == 'anonymous':
-  #         filesUsed.append(
-  #           "<div>&nbsp;&nbsp;&bull; %(full_path_red)s - <b>%(timestamp)s</b> </div>" % fileInfo)
-  #       else:
-  #         filesUsed.append( "<div>&nbsp;&nbsp;&bull; %(full_path_red)s - <b>%(timestamp)s</b>&nbsp;&nbsp;<i style='color:#C00000;cursor:pointer;margin-right:5px' class='fas fa-times' onclick='RemoveFile(this, \"%(full_path)s\")'></i> <i onclick='DownloadCachedFiles(\"%(full_path)s\")' style='cursor:pointer;' class='fas fa-file-download'></i> </div>" % fileInfo)
-  #     self.notification('WARNING', "<b>%s</b> Cached Data Source Used" % len(self.localFiles),
-  #                       '''
-  #                       <br>Remove folder outputs/ to update your data <a href="%(urlTransfer)s/viewer/files/%(reportName)s" class="far fa-copy" style="color:#293846;margin-left:5px" target="_blank" title="Files management"></a>
-  #                       <br>%(filesUsed)s<br>
-  #                       <div style='color:#C00000;cursor:pointer' onclick='RemoveLocalFiles(this, %(usedFileNames)s)' ><b>&times;</b> Remove all temporary local files</div>''' % {"urlTransfer": self._urlsApp['transfer'], "reportName": self.run.report_name, "filesUsed": "".join(filesUsed), "usedFileNames": json.dumps(usedFileNames) } )
-  #
-  #   if len(self._dbErrors) > 0:
-  #     errors = []
-  #     for dbType, dbVals in self._dbErrors.items():
-  #       errors.append("<div><strong>%s</strong>&nbsp;&nbsp;%s</div>" % (dbVals, dbType))
-  #     self.notification('DANGER', 'Database errors', "".join(errors))
-  #
-  #   onloadParts, windowLoadParts, htmlParts, result = [], [], [], {}
-  #   for htmlCode, src in self.jsSources.items():
-  #     # TODO add a check regarding the volume of data
-  #     if len(src['containers']) > 0:
-  #       self.jsGlobal.add(htmlCode, json.dumps(src['data'], cls=js.JsEncoder.Encoder))
-  #       #htmlParts.append(src['data'].html())
-  #
-  #   # Add the extra function defined in the Javascript framework
-  #   for fnc, details in self._props.get('js', {}).get('functions', {}).items():
-  #     self.jsGlobal.fnc("%s(%s)" % (fnc, ",".join(details.get('pmt', []))), details["content"])
-  #
-  #   for fnc, details in self._props.get('js', {}).get('prototypes', {}).items():
-  #     self.jsGlobal.addJs("%s = function(%s){%s};" % (fnc, ",".join(details.get('pmts', [])), details["content"]))
-  #
-  #   # 'functions'
-  #   for objId in self.content:
-  #     if self.htmlItems[objId].inReport:
-  #       htmlParts.append(self.htmlItems[objId].html())
-  #
-  #   for jsFnc in self.jsOnLoadFnc:
-  #     onloadParts.append(str(jsFnc))
-  #
-  #   for jsFnc in self.jsFnc:
-  #     onloadParts.append(str(jsFnc))
-  #
-  #   for jsFnc in self.jsOnLoadEvtsFnc:
-  #     onloadParts.append(str(jsFnc))
-  #
-  #   if len(self._scroll) > 0:
-  #     onloadParts.append('''
-  #       $(window).scroll(function(event) {var screenPos = $(window).scrollTop() + $(window).height();%s})''' % ";".join(self._scroll))
-  #
-  #   for jsFnc in self.jsWindowLoadFnc:
-  #     windowLoadParts.append(str(jsFnc))
-  #
-  #   #
-  #   if self.shortcuts:
-  #     onloadParts.append("$(document).on('keydown', 'body', function(e){var code = e.keyCode || e.which")
-  #     for key, action in self.shortcuts.items():
-  #       onloadParts.append("if(%s) {%s}" % (key, action))
-  #     onloadParts.append("});")
-  #
-  #   # Add imports
-  #   self.jsImports |= self._props.get("js", {}).get('imports', set([]))
-  #   self.cssImport |= self._props.get("css", {}).get('imports', set([]))
-  #
-  #   # Section dedicated to the javascript for all the charts
-  #   importMng = self.imports(online=online)
-  #   result['cssImports'] = importMng.cssResolve(self.cssImport, self.cssLocalImports)
-  #   result['jsImports'] = importMng.jsResolve(self.jsImports, self.jsLocalImports)
-  #   result['jsDocumentReady'] = ";".join(onloadParts)
-  #   result['jsWindowLoad'] = "\n".join(windowLoadParts)
-  #   result['content'] = "\n".join(htmlParts)
-  #   result['title'] = self.run.title
-  #   result['mailTo'] = ""
-  #   result['exportData'] = self.exportCsv
-  #   result['cssStyle'] = "%s%s" % (self._css.toCss(), self._cssText)
-  #   result['favicon'] = "" if self.logo is None else '<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="../../../img/%s/%s" />' % (self.run.report_name, self.logo)
-  #   return result

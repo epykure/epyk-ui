@@ -2,6 +2,8 @@
 import os
 import json
 
+from epyk.core.js import Imports
+
 from epyk.core.js import JsUtils
 from epyk.core.js import JsNavigator
 from epyk.core.js import JsWindow
@@ -708,8 +710,26 @@ class JsBase(object):
     jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
     self._src._props.setdefault('js', {}).setdefault('bespoke', []).append(jsData)
 
-  def customFile(self, filename, path=None):
+  def customText(self, text):
     pass
+
+  def customFile(self, filename, path=None):
+    """
+    This will load your local javascript file when the report will be built.
+    Then you will be able to use the new features in the different Javascript wrappers
+
+    Attributes:
+    ----------
+    :param filename:
+    :param path:
+
+    :return:
+    """
+    if path is None:
+      self._src.jsLocalImports.add("%s/js/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
+    else:
+      self._src.jsLocalImports.add("%s/%s" % (path, filename))
+    return self
 
   def _addImport(self, importAlias):
     """
