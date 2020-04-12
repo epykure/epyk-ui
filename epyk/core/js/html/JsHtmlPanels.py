@@ -1,7 +1,3 @@
-"""
-
-"""
-
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
@@ -10,6 +6,10 @@ from epyk.core.js.fncs import JsFncs
 
 class JsHtmlPanel(JsHtml.JsHtml):
   pass
+
+
+class JsHtmlTr(JsHtml.JsHtml):
+  display_value = "table-row"
 
 
 class JsHtmlGrid(JsHtml.JsHtml):

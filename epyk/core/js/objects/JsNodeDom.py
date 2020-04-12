@@ -640,6 +640,7 @@ class JsDomsTransforms(object):
 
 class JsDoms(JsObject.JsObject):
   _id = None
+  display_value = 'block'
 
   @classmethod
   def new(cls, tagName=None, varName=None, isPyData=True, setVar=True, report=None):
@@ -999,9 +1000,9 @@ class JsDoms(JsObject.JsObject):
 
     :return:
     """
-    return self.css("display", "block")
+    return self.css("display", self.display_value)
 
-  def toggle(self, attr="display", jsVal1="block", jsVal2="none"):
+  def toggle(self, attr="display", jsVal1=None, jsVal2="none"):
     """
     Description:
     ------------
@@ -1014,6 +1015,8 @@ class JsDoms(JsObject.JsObject):
     :param jsVal1:
     :param jsVal2:
     """
+    if attr == 'display' and jsVal1 is None:
+      jsVal1 = self.display_value
     if "-" in attr:
       split_css = attr.split("-")
       attr = "%s%s" % (split_css[0], split_css[1].title())

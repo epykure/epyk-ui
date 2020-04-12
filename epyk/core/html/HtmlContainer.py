@@ -317,6 +317,22 @@ class Tr(Html.Html):
     self.val.append(htmlObj)
     return self
 
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlPanels.JsHtmlTr
+    """
+    if self._dom is None:
+      self._dom = JsHtmlPanels.JsHtmlTr(self, report=self._report)
+    return self._dom
+
   def __getitem__(self, i):
     """
     Description:

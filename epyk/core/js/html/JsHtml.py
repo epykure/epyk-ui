@@ -206,6 +206,7 @@ class ContentFormatters(object):
 
 
 class JsHtml(JsNodeDom.JsDoms):
+  display_value = "inline-block"
 
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
     self.htmlId = varName if varName is not None else htmlObj.htmlId
@@ -422,7 +423,7 @@ class JsHtml(JsNodeDom.JsDoms):
     ----------
     :param inline: String
     """
-    return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else 'block'), None)
+    return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else self.display_value), None)
 
   def select(self):
     """
@@ -432,7 +433,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
-  def toggle(self, attr="display", jsVal1="inline-block", jsVal2="none"):
+  def toggle(self, attr="display", jsVal1=None, jsVal2="none"):
     """
     Description:
     ------------
@@ -454,6 +455,8 @@ class JsHtml(JsNodeDom.JsDoms):
 
     :return: A Javascript if statement
     """
+    if attr == 'display' and jsVal1 is None:
+      jsVal1 = self.display_value
     return JsIf.JsIf(self.css(attr) == jsVal2, [self.css(attr, jsVal1)]).else_([self.css(attr, jsVal2)])
 
   def highlight(self, css_attrs=None, time_event=1000):
