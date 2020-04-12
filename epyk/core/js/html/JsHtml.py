@@ -546,6 +546,20 @@ class JsHtmlRich(JsHtml):
   def content(self):
     return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
 
+  def select(self):
+    """
+    Description:
+    -----------
+    Select the content of the HTMl component
+    """
+    return JsObjects.JsObjects.get('''
+     (function(node){
+      if (document.body.createTextRange) {const range = document.body.createTextRange(); range.moveToElementText(node); range.select();
+      } else if (window.getSelection) {
+        const selection = window.getSelection(); const range = document.createRange(); range.selectNodeContents(node);
+        selection.removeAllRanges(); selection.addRange(range); }
+     }(%s))''' % self.varName)
+
   def append(self, value, new_line=True, options=None):
     """
     Description:

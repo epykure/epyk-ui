@@ -4,6 +4,7 @@ from epyk.core.html.options import OptPanel
 from epyk.core.html.options import OptText
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlPanels
 
 # The list of CSS classes#
@@ -164,6 +165,22 @@ class Div(Html.Html):
     if editable:
       self.set_attrs(name='contenteditable', value="true")
       self.css('overflow', 'auto')
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlRich
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
 
   def __add__(self, htmlObj):
     """ Add items to a container """
