@@ -411,6 +411,10 @@ class CssMixin(object):
     - border-style (required)
     - border-color
 
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_border.asp
+
     Usage:
     ------
     https://www.w3schools.com/cssref/pr_border.asp
@@ -471,7 +475,17 @@ class CssMixin(object):
     self.htmlObj.css({"border-bottom-width": val})
 
   @property
-  def border_collapse(self): return self.htmlObj.css("border-collapse")
+  def border_collapse(self):
+    """
+    Description:
+    ------------
+    The border-collapse property sets whether table borders should collapse into a single border or be separated as in standard HTML.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_border-collapse.asp
+    """
+    return self.htmlObj.css("border-collapse")
 
   @border_collapse.setter
   def border_collapse(self, val):
@@ -622,7 +636,17 @@ class CssMixin(object):
     self.htmlObj.css({"border-right-width": val})
 
   @property
-  def border_spacing(self): return self.htmlObj.css("border-spacing")
+  def border_spacing(self):
+    """
+    Description:
+    ------------
+    The border-spacing property sets the distance between the borders of adjacent cells.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/pr_border-spacing.asp
+    """
+    return self.htmlObj.css("border-spacing")
 
   @border_spacing.setter
   def border_spacing(self, val):
@@ -635,6 +659,8 @@ class CssMixin(object):
   @border_style.setter
   def border_style(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"border-style": val})
 
   @property

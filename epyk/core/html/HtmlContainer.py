@@ -252,11 +252,45 @@ class Td(Html.Html):
     self.val.append(htmlObj)
     return self
 
+  def colspan(self, i):
+    """
+    Description:
+    ------------
+    The colspan attribute defines the number of columns a cell should span.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_td_colspan.asp
+
+    Attributes:
+    ----------
+    :param i:
+    """
+    self.attr['colspan'] = i
+    return self
+
+  def rowspan(self, i):
+    """
+    Description:
+    ------------
+    The rowspan attribute specifies the number of rows a cell should span.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_td_rowspan.asp
+
+    Attributes:
+    ----------
+    :param i:
+    """
+    self.attr['rowspan'] = i
+    return self
+
   def __getitem__(self, i):
     return self.val[i]
 
   def __str__(self):
-    content = [htmlObj.html() if hasattr(htmlObj, 'inReport') else htmlObj for htmlObj in self.val]
+    content = [htmlObj.html() if hasattr(htmlObj, 'inReport') else str(htmlObj) for htmlObj in self.val]
     if self.header:
       return '<th %s>%s</th>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
 
@@ -285,9 +319,14 @@ class Tr(Html.Html):
 
   def __getitem__(self, i):
     """
+    Description:
+    ------------
     Return the internal column in the row for the given index
 
+    Attributes:
+    ----------
     :param i: the column index
+
     :rtype: Td
     """
     return self.val[i]
@@ -333,7 +372,11 @@ class TSection(Html.Html):
 
   def __getitem__(self, i):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param i: Integer. The internal row based on the index
 
     :rtype: Tr
@@ -342,6 +385,9 @@ class TSection(Html.Html):
 
   def __add__(self, row_data):
     """ Add items to a container """
+    if not isinstance(row_data, Tr):
+      row_data = Tr(self._report, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"), 'center', None, False)
+
     self.val.append(row_data)
     return self
 
@@ -405,14 +451,47 @@ class Table(Html.Html):
     self.caption = Caption(self._report, text, color, align, width, height, htmlCode, tooltip, options, profile)
     return self.caption
 
+  def get_header(self, i=0):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param i: Integer.
+
+    :return:
+    """
+    return self.header.val[i]
+
+  def get_footer(self, i=0):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param i: Integer.
+
+    :return:
+    """
+    return self.footer.val[i]
+
   def __getitem__(self, i):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param i: Integer. The internal row based on the index
 
     :rtype: Tr
     """
-    return self.body[i]
+    if not self.body.val:
+      return []
+
+    return self.body.val[i]
 
   def __str__(self):
     caption = "" if self.caption is None else self.caption.html()
