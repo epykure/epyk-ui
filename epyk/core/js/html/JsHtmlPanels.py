@@ -12,7 +12,12 @@ class JsHtmlTr(JsHtml.JsHtml):
   display_value = "table-row"
 
 
+class JsHtmlRow(JsHtml.JsHtml):
+  display_value = "flex"
+
+
 class JsHtmlGrid(JsHtml.JsHtml):
+
   @property
   def val(self):
     """
@@ -26,8 +31,16 @@ class JsHtmlGrid(JsHtml.JsHtml):
     return self._src.input.dom.content
 
   def panel(self, i):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param i:
+    """
     panel = JsHtmlPanel(self._src, report=self._report)
-    panel.varName = "%s.querySelector('.row').querySelector('div:nth-child(%s)')" % (self.varId, i)
+    panel.varName = "%s.querySelector('.row').querySelector('div:nth-child(%s)')" % (self.varId, i+1)
     return panel
 
   @property
@@ -39,13 +52,22 @@ class JsHtmlGrid(JsHtml.JsHtml):
 
   def togglePanel(self, i):
     """
+    Description:
+    ------------
+    Toggle the display of the column in a grid component.
+    Teh other columns will be resized accordingly
 
-    :param i:
+    Attributes:
+    ----------
+    :param i: Integer. The column number (start at 0)
+
     :return:
     """
     return '''
-      %(compId)s.querySelector('.row').querySelector('div:nth-child(%(i)s)').style.display = 'none'
-      ''' % {'compId': self.varId, 'i': i}
+      if(%(compId)s.querySelector('.row').querySelector('div:nth-child(%(i)s)').style.display == 'none'){
+        %(compId)s.querySelector('.row').querySelector('div:nth-child(%(i)s)').style.display = 'block'
+      } else {%(compId)s.querySelector('.row').querySelector('div:nth-child(%(i)s)').style.display = 'none'}
+      ''' % {'compId': self.varId, 'i': i+1}
 
 
 class JsHtmlTabs(JsHtml.JsHtml):

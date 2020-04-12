@@ -71,9 +71,8 @@ class PanelSplit(Html.Html):
   name, category, callFnc = 'Panel Split', 'Layouts', 'panelsplit'
 
   def __init__(self, report, width, height, left_width, left_obj, right_obj, resizable, helper, profile):
-    super(PanelSplit, self).__init__(report, None, width=width[0], widthUnit=width[1], height=height[0],
-                                     heightUnit=height[1], profile=profile)
-    self.left_width, self.htmlMaps, self.resizable = left_width, {}, resizable
+    super(PanelSplit, self).__init__(report, None, css_attrs={"width": width, "height": height, 'white-space': 'nowrap'}, profile=profile)
+    self.left_width, self.resizable = left_width, resizable
     if left_obj is not None:
       self.left(left_obj)
     if right_obj is not None:
@@ -153,7 +152,7 @@ class Div(Html.Html):
       htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     super(Div, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"color": color, "width": width, "height": height},
                               profile=profile)
-    self.htmlMaps, self.tag = {}, tag
+    self.tag = tag
     # Add the component predefined elements
     self.add_icon(icon)
     self.add_label(label)
@@ -518,7 +517,7 @@ class Col(Html.Html):
   name, category, callFnc = 'Column', 'Layouts', 'col'
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
-    self.position, self.htmlMaps, self.rows_css, self.row_css_dflt = position, {}, {}, {}
+    self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
     super(Col, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
@@ -531,35 +530,54 @@ class Col(Html.Html):
     self.style.justify_content = self.position
 
   def __add__(self, htmlObj):
-    """ Add items to a container """
+    """
+    Description:
+    ------------
+    Add items to a container
+
+    Attributes:
+    ----------
+    :param htmlObj:
+
+    :return:
+    """
     if not hasattr(htmlObj, 'inReport'):
       htmlObj = self._report.ui.div(htmlObj)
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
-    self.htmlMaps[htmlObj.htmlId] = htmlObj
     return self
+
+  def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
+    return self.val[0].build(data, options, profile)
 
   def set_size(self, n):
     """
+    Description:
+    ------------
     Set the column size
 
-    Example
+    Usage:
+    ------
     ps = rptObj.ui.layouts.grid()
     ps += [rptObj.ui.text("test %s" % i) for i in range(5)]
     ps[0][0].set_size(10)
 
-    :return:
+    Attributes:
+    ----------
+
     """
     self.attr["class"].add("col-%s" % n)
     return self
-
-  def get(self, htmlCode):
-    """
-    Return the Html component in the parameter bar
-
-    :param htmlCode: The htmlCode for the component as a String
-    """
-    return self.htmlMaps[htmlCode]
 
   def __getitem__(self, i):
     return self.val[i]
@@ -590,7 +608,7 @@ class Row(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
-    self.position, self.htmlMaps = position, {}
+    self.position = position
     super(Row, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
@@ -598,6 +616,22 @@ class Row(Html.Html):
     self.attr["class"].add('row')
     self.attr["class"].add('no-gutters')
     self.style.justify_content = self.position
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlPanels.JsHtmlRow
+    """
+    if self._dom is None:
+      self._dom = JsHtmlPanels.JsHtmlRow(self, report=self._report)
+    return self._dom
 
   def __add__(self, htmlObj):
     """ Add items to a container """
@@ -607,16 +641,7 @@ class Row(Html.Html):
       htmlObj = self._report.ui.layouts.col(htmlObj)
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
-    # self.htmlMaps[htmlObj.htmlId] = htmlObj
     return self
-
-  def get(self, htmlCode):
-    """
-    Return the Html component in the parameter bar
-
-    :param htmlCode: The htmlCode for the component as a String
-    """
-    return self.htmlMaps[htmlCode]
 
   def __getitem__(self, i):
     """
@@ -642,7 +667,6 @@ class Grid(Html.Html):
     super(Grid, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'overflow-x': 'hidden', 'padding': 0})
     self.attr["class"].add("container-fluid")
-    self.htmlMaps = {}
     if align == 'center':
       self.css({'margin': 'auto'})
     if rows is not None:
@@ -664,15 +688,19 @@ class Grid(Html.Html):
         if dim is not None:
           row[-1].attr["class"].add("col-%s" % dim)
     row.inReport = False
-    self.htmlMaps[row.htmlId] = row
     self.val.append(row)
     #self.colsAlign.append("left")
     return self
 
   def __getitem__(self, i):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param i: Integer. The internal row based on the index
+
     :rtype: Row
     """
     return self.val[i]
@@ -680,28 +708,25 @@ class Grid(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtmlPanels.JsHtmlGrid
     """
     if self._dom is None:
       self._dom = JsHtmlPanels.JsHtmlGrid(self, report=self._report)
     return self._dom
 
-  def get(self, htmlCode):
-    """
-    Return the Html component in the parameter bar
-
-    :param htmlCode: The htmlCode for the component as a String
-    """
-    return self.htmlMaps[htmlCode]
-
   def resize(self):
     """
+    Description:
+    ------------
     For the resizing of the space for the containers.
 
     This will rescale based on the number of items and the fact that the max per row is 12
@@ -770,6 +795,7 @@ class Tabs(Html.Html):
     self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self._report.theme.success[1]}
     self.tabs_container = self._report.ui.div([])
     self.tabs_container.inReport = False
+    self.add_helper(helper)
 
   @property
   def dom(self):
@@ -884,13 +910,14 @@ class IFrame(Html.Html):
   def __init__(self, report, url, width, height, helper, profile):
     super(IFrame, self).__init__(report, url, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow-x": 'hidden'})
+    self.add_helper(helper)
 
   @property
   def _js__builder__(self):
     return 'htmlObj.src = data'
 
   def __str__(self):
-    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>" % (self.val, self.get_attrs(pyClassNames=self.style.get_classes()))
+    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>%s" % (self.val, self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Dialog(Html.Html):
