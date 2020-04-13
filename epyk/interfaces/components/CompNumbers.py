@@ -7,7 +7,7 @@ from epyk.core.html import Defaults as defaults_html
 from epyk.core.css import Defaults as defaults_css
 
 
-class Number(object):
+class Numbers(object):
 
   def __init__(self, context):
     self.context = context

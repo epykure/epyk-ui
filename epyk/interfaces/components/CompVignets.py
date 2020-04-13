@@ -3,7 +3,7 @@ from epyk.core import html
 from epyk.core.css import Defaults as Defaults_css
 
 
-class Vignet(object):
+class Vignets(object):
   def __init__(self, context):
     self.context = context
 
