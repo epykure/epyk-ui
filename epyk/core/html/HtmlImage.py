@@ -152,8 +152,9 @@ class Icon(Html.Html):
   name, category, callFnc = 'Icon', 'Images', 'icon'
 
   def __init__(self, report, value, width, height, color, tooltip, profile):
-    super(Icon, self).__init__(report, value, css_attrs={"color": color, "width": width, "height": height}, profile=profile)
-    self.attr['class'].add(value)
+    super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height}, profile=profile)
+    if value is not None:
+      self.attr['class'].add(value)
     self.attr['aria-hidden'] = 'true'
     if tooltip is not None:
       self.set_attrs(name="title", value=tooltip)
@@ -188,6 +189,16 @@ class Icon(Html.Html):
     if self._styleObj is None:
       self._styleObj = GrpClsImage.ClassIcon(self)
     return self._styleObj
+
+  def set_icon(self, value):
+    """
+
+    :param value:
+
+    :return:
+    """
+    self.attr['class'].add(value)
+    return self
 
   def hover_colors(self, color_hover, color_out=None):
     """

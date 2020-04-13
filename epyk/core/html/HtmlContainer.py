@@ -1,5 +1,6 @@
 
 from epyk.core.html import Html
+from epyk.core.html import Defaults
 from epyk.core.html.options import OptPanel
 from epyk.core.html.options import OptText
 #
@@ -15,7 +16,7 @@ from epyk.core.css.styles import GrpClsContainer
 class Panel(Html.Html):
   name, category, callFnc = 'Panel', 'Layouts', 'panel'
 
-  def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, profile):
+  def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
     if isinstance(htmlObj, list) and htmlObj:
       for obj in htmlObj:
         if hasattr(obj, 'inReport'):
@@ -30,12 +31,19 @@ class Panel(Html.Html):
     container = report.ui.div(htmlObj)
     container.inReport = False
     component.append(container)
+    self.add_helper(helper)
     super(Panel, self).__init__(report, component, code=htmlCode, profile=profile,
                                 css_attrs={"color": color, "width": width, "height": height})
     container.set_attrs(name="name", value="panel_%s" % self.htmlId)
 
   @property
   def style(self):
+    """
+    Description:
+    ------------
+
+    :rtype: GrpClsContainer.ClassDiv
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassDiv(self)
     return self._styleObj
@@ -49,12 +57,15 @@ class Panel(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtmlPanels.JsHtmlPanel
     """
     if self._dom is None:
@@ -77,16 +88,20 @@ class PanelSplit(Html.Html):
       self.left(left_obj)
     if right_obj is not None:
       self.right(right_obj)
-    self.css_left = {'flex': '0 0 auto', 'padding': '5px', 'min-width': '100px', 'width': self.left_width,
+    self.css_left = {'flex': '0 0 auto', 'overflow': 'auto', 'padding': '5px', 'min-width': '100px', 'width': "%s%s" % (self.left_width[0], self.left_width[1]),
                      'white-space': 'nowrap'}
-    self.css_right = {'flex': '0 1 auto', 'padding': '5px', 'width': '100%', 'background': self._report.theme.greys[0],
-                     'border-left': '3px solid %s' % self._report.theme.success[1]}
+    self.css_right = {'flex': '0 1 auto', 'overflow': 'auto', 'padding': '5px', 'width': '100%', 'background': self._report.theme.greys[0],
+                      'border-left': '3px solid %s' % self._report.theme.success[1]}
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
 
   def left(self, html_obj):
     """
+    Description:
+    ------------
     Add the left component to the panel
 
+    Attributes:
+    ----------
     :param html_obj:
     """
     html_obj.inReport = False
@@ -95,8 +110,12 @@ class PanelSplit(Html.Html):
 
   def right(self, html_obj):
     """
+    Description:
+    ------------
     Add the right component to the panel
 
+    Attributes:
+    ----------
     :param html_obj:
     """
     html_obj.inReport = False
@@ -122,12 +141,64 @@ class PanelSlide(Panel):
   name, category, callFnc = 'Slide Panel', 'Panels', 'slide'
 
   def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
-    super(PanelSlide, self).__init__(report, htmlObj, title, color, width, height, htmlCode, helper, profile)
-    self.title._vals = "<i style='float:left;margin:4px 5px 0 0' name='icon_%s' class='fas fa-caret-down'></i>%s" % (self.htmlId, self.title._vals)
-    self.title.click([
-      report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
-      report.js.getElementsByName("icon_%s" % self.htmlId).first.toggleClass("fa-caret-up")])
+    super(PanelSlide, self).__init__(report, htmlObj, None, color, width, height, htmlCode, helper, options, profile)
+    self.add_helper(helper)
+    self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 2px',
+                                              'line-height': "%spx" % Defaults.LINE_HEIGHT, 'font-size': "%spx" % Defaults.BIG_ICONS})
+    self.text = self._report.ui.title(title).css({"display": 'inline-block', 'margin': 0})
+    self.title = self._report.ui.div([self.icon, self.text])
+    self.title.inReport = False
     self.title.css({"cursor": 'pointer', "padding": "0 2px 0 0"})
+    self._vals, self.__clicks = [self.title] + self._vals, []
+    self.__options = OptPanel.OptionPanelSliding(report, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptPanel.OptionPanelSliding
+    """
+    return self.__options
+
+  def click(self, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+    Event added to the title bar.
+    This will be triggered first
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__clicks = jsFncs
+    return self
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    self.val[1] += htmlObj
+    return self
+
+  def __str__(self):
+    if self.options.expanded:
+      icon_change = self.options.icon_closed
+      icon_current = self.options.icon_expanded
+      self.icon.set_icon(self.options.icon_expanded)
+    else:
+      icon_change = self.options.icon_expanded
+      icon_current = self.options.icon_closed
+      self._vals[1].style.css.display = 'none'
+      self.icon.set_icon(self.options.icon_closed)
+    self.title.click(self.__clicks + [
+      self._report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
+      self.icon.dom.switchClass(icon_current, icon_change)])
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
+    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
 
 
 class Div(Html.Html):
@@ -168,6 +239,8 @@ class Div(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.

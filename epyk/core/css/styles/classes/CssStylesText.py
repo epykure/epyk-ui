@@ -55,7 +55,7 @@ class CssTitle(CssStyle.Style):
   _attrs = {'padding': 0, 'margin-bottom': 0, 'white-space': 'pre-wrap', 'font-weight': 'bold'}
 
   def customize(self):
-    self.css({'font-size': Defaults_css.font(10), 'font-family': Defaults_css.Font.family})
+    self.css({'font-size': Defaults_css.font(2)})
 
 
 class CssNumberCenter(CssStyle.Style):

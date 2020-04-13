@@ -1,9 +1,9 @@
-"""
 
-"""
+from epyk.core.html.options import Options
 
 
 class OptionsPanelPoints(object):
+
   def __init__(self, src, options):
     self.src = src
     self.__background_color = options.get("background-color", src.theme.success[1])
@@ -33,3 +33,42 @@ class OptionsPanelPoints(object):
   @selected.setter
   def selected(self, num):
     self.__selected = num
+
+
+class OptionPanelSliding(Options):
+
+  @property
+  def expanded(self):
+    """
+
+    :return:
+    """
+    return self.get(True)
+
+  @expanded.setter
+  def expanded(self, boool):
+    self.set(boool)
+
+  @property
+  def icon_expanded(self):
+    """
+
+    :return:
+    """
+    return self.get("fas fa-caret-down")
+
+  @icon_expanded.setter
+  def icon_expanded(self, icon):
+    self.set(icon)
+
+  @property
+  def icon_closed(self):
+    """
+
+    :return:
+    """
+    return self.get("fas fa-caret-up")
+
+  @icon_closed.setter
+  def icon_closed(self, icon):
+    self.set(icon)

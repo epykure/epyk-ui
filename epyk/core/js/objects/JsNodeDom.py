@@ -645,33 +645,49 @@ class JsDoms(JsObject.JsObject):
   @classmethod
   def new(cls, tagName=None, varName=None, isPyData=True, setVar=True, report=None):
     """
+    Description:
+    ------------
     Create a new dom object to be added to the HTML page
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/jsref_obj_date.asp
 
+    Attributes:
+    ----------
     :param tagName: The tag name to be created
     :param varName: Optional,
     :param isPyData: Optional,
+
     :return: The Python Javascript Date primitive
     """
     return cls(data="document.createElement('%s')" % tagName, varName=varName, setVar=setVar, isPyData=isPyData, report=report)
 
   def querySelector(self, tag):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param tag:
+
     :return:
     """
     return JsDoms("%s.querySelector('%s')" % (self.toStr(), tag))
 
   def querySelectorAll(self, tag, varName):
     """
+    Description:
+    ------------
     The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_document_queryselectorall.asp
 
+    Attributes:
+    ----------
     :param tag: String. The tag name
     :param varName: String. The variable name on the javascript side
 
@@ -682,6 +698,8 @@ class JsDoms(JsObject.JsObject):
   @property
   def transform(self):
     """
+    Description:
+    ------------
     The transform property applies a 2D or 3D transformation to an element.
     This property allows you to rotate, scale, move, skew, etc., elements.
 
@@ -695,6 +713,8 @@ class JsDoms(JsObject.JsObject):
   @property
   def jquery(self):
     """
+    Description:
+    ------------
     Link to the Jquery package
 
     THe id attribute must be defined
@@ -710,25 +730,36 @@ class JsDoms(JsObject.JsObject):
 
   def addOnReady(self, jsFncs):
     """
+    Description:
+    ------------
     The ready event occurs when the DOM (document object model) has been loaded.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jquery/event_ready.asp
 
+    Attributes:
+    ----------
     :param jsFncs: The Javascript functions to be added to this section
     """
     self._report._props.setdefault('js', {}).setdefault('onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(jsFncs))
 
   def innerText(self, jsString=None, append=False, valType=None):
     """
+    Description:
+    ------------
     The innerText property sets or returns the text content of the specified node, and all its descendants.
 
-    Example
+    Usage:
+    ------
     select.label.dom.innerText("test Change")
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/prop_node_innertext.asp
 
+    Attributes:
+    ----------
     :param jsString: Optional, The Javascript String to be added
     :param append: Boolean. Mention if the component should replace or append the data
     :param valType: Type: The type of data expected in the component
@@ -787,18 +818,25 @@ class JsDoms(JsObject.JsObject):
 
   def attr(self, type, jsObject=None):
     """
+    Description:
+    -----------
     The attr() method adds the specified attribute to an element, and gives it the specified value.
     It will use the underlying setAttribute() method
 
-    Example
+    Usage:
+    ------
     select.label.dom.attr("title", "Tooltip")
     select.label.dom.attr({"title": "Tooltip"})
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
+    Attributes:
+    ----------
     :param type: A String with the type of parameter or a python dictionary
     :param jsObject: A JsObj with the value to be set
+
     :return: A JsObj
     """
     if jsObject is None and isinstance(type, dict):
@@ -814,33 +852,44 @@ class JsDoms(JsObject.JsObject):
 
   def setAttribute(self, attributename, attributevalue):
     """
+    Description:
+    -----------
     The setAttribute() method adds the specified attribute to an element, and gives it the specified value.
 
-    Example
+    Usage:
+    ------
     select.label.dom.setAttribute("title", "Tooltip")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
+    Attributes:
+    ----------
     :param attributename: Required. The name of the attribute you want to add
     :param attributevalue: Required. The value of the attribute you want to add
-    :return:
     """
     self._js.append("%s.setAttribute('%s', %s)" % (self.varId, attributename, JsUtils.jsConvertData(attributevalue, None)))
     return self
 
   def addClass(self, clsName, attrs=None, eventAttrs=None, extend=True):
     """
+    Description:
+    -----------
     Adds the specified class(es) to each element in the set of matched elements.
 
     This function can either use an existing class or create one if the attrs or eventAttrs are defined
 
-    Example
+    Usage:
+    ------
     table.dom.addClass("red", {"border": "1px solid green"}, extend=False)
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
+    Attributes:
+    ----------
     :param clsName: The Css classname
     :param attrs: A python dictionary with the css attributes
     :param eventAttrs: A nested python dictionary with the css attributes for each events
@@ -978,27 +1027,31 @@ class JsDoms(JsObject.JsObject):
 
   def hide(self):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     input.js.hide()
 
-    Documentation
+    Related Pages:
+    --------------
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
-
-    :return:
     """
     return self.css("display", "none")
 
   def show(self):
     """
+    Description:
+    ------------
 
-    Example
+    Usage:
+    ------
     input.js.hide()
 
-    Documentation
+    Related Pages:
+    --------------
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
-
-    :return:
     """
     return self.css("display", self.display_value)
 
@@ -1025,14 +1078,16 @@ class JsDoms(JsObject.JsObject):
 
   def toggleAttrs(self, pivot_key, pivot_val, attrs_off, attrs_on):
     """
+    Description:
+    ------------
     Toggle some CSS attributes
 
+    Attributes:
+    ----------
     :param pivot_key:
     :param pivot_val:
     :param attrs_on: A python dictionary with CSS attributes
     :param attrs_off: A python dictionary with CSS attributes
-
-    :return:
     """
     if pivot_key in ["color"] and not pivot_val.startswith("rgb"):
       colors_def = Colors.defined[pivot_val.upper()]
@@ -1044,7 +1099,11 @@ class JsDoms(JsObject.JsObject):
 
   def toggleText(self, jsString1, jsString2):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param jsString:
     """
     str1 = JsUtils.jsConvertData(jsString1, None)
@@ -1072,15 +1131,20 @@ class JsDoms(JsObject.JsObject):
 
   def toggleClass(self, clsName, propagate=False):
     """
+    Description:
+    ------------
     Toggle a class name
 
+    Attributes:
+    ----------
     :param clsName: The classname to be toggle
 
     :return:
     """
+    clsName = JsUtils.jsConvertData(clsName, None)
     if propagate:
-      self._js.append('%(varId)s.parentNode.childNodes.forEach(function(e){e.classList.remove("%(data)s")})' % {"varId": self.varId, 'data': clsName})
-    self._js.append('%(varId)s.classList.toggle("%(data)s")' % {"varId": self.varId, 'data': clsName})
+      self._js.append('%(varId)s.parentNode.childNodes.forEach(function(e){e.classList.remove(%(data)s)})' % {"varId": self.varId, 'data': clsName})
+    self._js.append('var classes = %(data)s.split(" "); classes.forEach(function(cls){ %(varId)s.classList.toggle(cls); })' % {"varId": self.varId, 'data': clsName})
     return self
 
   def switchClass(self, clsName1, clsName2):
@@ -1100,22 +1164,24 @@ class JsDoms(JsObject.JsObject):
 
     :return: Self to allow the chaining
     """
-    for cls in clsName1.split(" "):
-      self.toggleClass(cls)
-    for cls in clsName2.split(" "):
-      self.toggleClass(cls)
+    self.toggleClass(clsName1)
+    self.toggleClass(clsName2)
     return self
 
   @property
   def firstChild(self):
     """
+    Description:
+    ------------
     The firstChild property returns the first child node of the specified node, as a Node object.
 
-    Example
+    Usage:
+    ------
     select.dom.firstChild
     select.dom.firstChild.css({"color": "yellow"})
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/prop_node_firstchild.asp
 
     :return: A new JsDom python object
@@ -1125,55 +1191,81 @@ class JsDoms(JsObject.JsObject):
   @property
   def nextSibling(self):
     """
+    Description:
+    ------------
     The nextSibling property returns the node immediately following the specified node, in the same tree level.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/prop_node_nextsibling.asp
     """
     return JsDoms("%s.nextSibling" % self.varId)
 
   def contains(self, node):
     """
+    Description:
+    ------------
     The contains() method returns a Boolean value indicating whether a node is a descendant of a specified node.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_node_contains.asp
 
+    Attributes:
+    ----------
     :param node: Required. Specifies the node that may be contained by (a descendant of) a specified node
+
     :return: A Boolean
     """
     return JsBoolean.JsBoolean('%s.contains(%s)' % (self.varId, node))
 
   def getAttribute(self, attributename):
     """
+    Description:
+    ------------
     The getAttribute() method returns the value of the attribute with the specified name, of an element.
 
-    Example
+    Usage:
+    ------
     select.dom.getAttribute("class")
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_element_getattribute.asp
 
+    Attributes:
+    ----------
     :param attributename: Required. The name of the attribute you want to get the value from
+
     :return: A String, representing the specified attribute's value.
     """
     return JsObject.JsObject("%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attributename, None)), isPyData=False)
 
   def getAttributeNode(self, attributename):
     """
+    Description:
+    ------------
     The getAttributeNode() method returns the attribute node with the specified name of an element, as an Attr object.
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_element_getattributenode.asp
 
+    Attributes:
+    ----------
     :param attributename: Required. The name of the attribute you want to return
+
     :return: An Attr object, representing the specified attribute node.
     """
     return JsString.JsString(varId="%s.getAttributeNode('%s')" % (self.varId, attributename))
 
   def getComputedStyle(self, attributename=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param attributename:
     """
     if attributename is None:
@@ -1190,22 +1282,26 @@ class JsDoms(JsObject.JsObject):
     -----------
     The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
 
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_element_getboundingclientrect.asp
     https://developer.mozilla.org/en-US/docs/Web/API/DOMRect
-
-    :return:
     """
     return JsNodeDomRect.JsDOMRect("%s.getBoundingClientRect()" % self.varId)
 
   @property
   def hasChildNodes(self):
     """
+    Description:
+    ------------
     Returns true if an element has any child nodes, otherwise false
 
-    Example
+    Usage:
+    ------
     select.dom.hasChildNodes
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_node_haschildnodes.asp
 
     :return: A Boolean, returns true if the node has child nodes, false otherwise
@@ -1214,8 +1310,13 @@ class JsDoms(JsObject.JsObject):
 
   def hasClass(self, className):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param className:
+
     :return:
     """
     className = JsUtils.jsConvertData(className, None)
@@ -1223,13 +1324,19 @@ class JsDoms(JsObject.JsObject):
 
   def text(self, jsString):
     """
+    Description:
+    ------------
     Javascript Function
 
     Shortcut in charge oa creating a text node object and adding the text.
 
-    Documentation
+    Related Pages:
+    --------------
 
+    Attributes:
+    ----------
     :param jsString: The Javascript String of the text node component
+
     :return: The main Python Dom Object
     """
     return self.appendChild(JsFncs.JsFunction("document.createTextNode(%s)" % JsUtils.jsConvertData(jsString, None)))
@@ -1237,12 +1344,15 @@ class JsDoms(JsObject.JsObject):
   @property
   def childNodes(self):
     """
+    Description:
+    ------------
     The childNodes property returns a collection of a node's child nodes, as a NodeList object.
 
     The nodes in the collection are sorted as they appear in the source code and can be accessed by index numbers. The index starts at 0.
 
-    Documentation:
-      - https://www.w3schools.com/jsref/prop_node_childnodes.asp
+    Related Pages:
+    --------------
+    https://www.w3schools.com/jsref/prop_node_childnodes.asp
 
     :return: A NodeList object, representing a collection of nodes. The nodes in the returned collection are sorted as they appear in the source code
     """
@@ -1252,12 +1362,16 @@ class JsDoms(JsObject.JsObject):
   @property
   def tagName(self):
     """
+    Description:
+    ------------
     The tagName property returns the tag name of the element
 
-    Example
+    Usage:
+    ------
     select.dom.tagName
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/prop_element_tagname.asp
 
     :return: A String, representing the tag name of the element in uppercase
@@ -1266,27 +1380,40 @@ class JsDoms(JsObject.JsObject):
 
   def contentEditable(self, bool):
     """
+    Description:
+    ------------
     Set content editable
 
-    Example
+    Usage:
+    ------
     rptObj.ui.text("This is a text").dom.contentEditable(True)
 
+    Attributes:
+    ----------
     :param bool: Boolean. Set the content editable flag to the Dom object
+
     :return: Return a JsBoolean object
     """
     return JsBoolean.JsBoolean.get("%s.contentEditable = %s" % (self.varId, JsUtils.jsConvertData(bool, None)))
 
   def className(self, className=None):
     """
+    Description:
+    ------------
     The className property sets or returns the class name of an element (the value of an element's class attribute).
 
-    Example
+    Usage:
+    ------
     select.dom.className()
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/prop_html_classname.asp
 
+    Attributes:
+    ----------
     :param className: Specifies the class name of an element. To apply multiple classes, separate them with spaces, like "test demo"
+
     :return: A String, representing the class, or a space-separated list of classes, of an element
     """
     if className is None:
@@ -1297,58 +1424,80 @@ class JsDoms(JsObject.JsObject):
 
   def cloneNode(self, deep=True):
     """
+    Description:
+    ------------
     The cloneNode() method creates a copy of a node, and returns the clone.
 
     The cloneNode() method clones all attributes and their values.
 
-    Example
+    Usage:
+    ------
     select.dom.cloneNode()
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_node_clonenode.asp
 
+    Attributes:
+    ----------
     :param deep: Optional. Specifies whether all descendants of the node should be cloned.
+
     :return: A Node object, representing the cloned node
     """
     return JsDoms("%s.cloneNode(%s)" % (self.varId, JsUtils.jsConvertData(deep, None)))
 
   def remove(self):
     """
+    Description:
+    ------------
     Remove the current dom object from the page
 
-    Example
+    Usage:
+    ------
     select.dom.remove()
 
-    Documentation
+    Related Pages:
+    --------------
     https://developer.mozilla.org/fr/docs/Web/API/ChildNode/remove
-
-    :return:
     """
     return JsFncs.JsFunction("%s.remove()" % self.varId)
 
   def removeChild(self, jsDom):
     """
+    Description:
+    ------------
     Removes a child node from an element
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_node_removechild.asp
 
+    Attributes:
+    ----------
     :param jsDom: Required. The node object you want to remove
+
     :return: A Node object, representing the removed node, or null if the node does not exist
     """
     return JsDoms("%s.removeChild(%s)" % (self.varId, jsDom))
 
   def appendChild(self, jsDom):
     """
+    Description:
+    ------------
     The appendChild() method appends a node as the last child of a node.
 
-    Example
+    Usage:
+    ------
     select.dom.appendChild(select.label.dom.cloneNode())
 
-    Documentation:
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_node_appendchild.asp
 
+    Attributes:
+    ----------
     :param jsDom: Required. The node object you want to append
+
     :return: 	A Node Object, representing the appended node
     """
     self._js.append("%s.appendChild(%s)" % (self.varId, JsUtils.jsConvertData(jsDom, None)))
@@ -1356,17 +1505,22 @@ class JsDoms(JsObject.JsObject):
 
   def insertBefore(self, newnode, existingnode=None):
     """
+    Description:
+    ------------
     The insertBefore() method inserts a node as a child, right before an existing child, which you specify.
 
-    Example
+    Usage:
+    ------
     select.dom.insertBefore(select.label.dom.cloneNode())
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/met_node_insertbefore.asp
 
+    Attributes:
+    ----------
     :param newnode: Required. The node object you want to insert
     :param existingnode: Optional. The child node you want to insert the new node before. If set to null, the insertBefore method will insert the newnode at the end
-    :return:
     """
     if existingnode is None:
       self._js.append("%s.insertBefore(%s, %s)" % (self.varId, newnode, self.firstChild))
@@ -1381,9 +1535,9 @@ class JsDoms(JsObject.JsObject):
     Trigger a click event.
     This function will not set the event
 
+    Attributes:
+    ----------
     :param jsFncs:
-
-    :return:
     """
     if jsFncs is None:
       return JsObject.JsObject("%s.click()" % self.varId)
@@ -1397,9 +1551,12 @@ class JsDoms(JsObject.JsObject):
     -----------
     Execute a JavaScript when a button is clicked
 
-    Documentation
+    Related Pages:
+    --------------
     https://www.w3schools.com/jsref/event_onclick.asp
 
+    Attributes:
+    ----------
     :param jsFncs: The Javascript function
     :param autoStyle: Some predefined style attributes added to this event (self.css({"cursor": "pointer"}))
 
@@ -1413,6 +1570,14 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def onVisible(self, jsFncs):
+    """
+    Description:
+    ------------
+
+    :param jsFncs:
+
+    :return:
+    """
     self._js.append("var rect = elm.getBoundingClientRect()" % self.varId)
     return self
 
@@ -1422,9 +1587,12 @@ class JsDoms(JsObject.JsObject):
 
     The HTMLCanvasElement.getContext() method returns a drawing context on the canvas, or null if the context identifier is not supported.
 
-    Documentation
+    Related Pages:
+    --------------
     https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
 
+    Attributes:
+    ----------
     :param contextType: Is a DOMString containing the context identifier defining the drawing context associated to the canvas
     :param contextAttributes: Dictionary with specific context attributes (depending on the type
 

@@ -262,7 +262,7 @@ class Images(object):
     self.context.register(html_emoji)
     return html_emoji
 
-  def icon(self, text=None, width=(None, 'px'), height=(None, "px"), color=None, tooltip=None, profile=None):
+  def icon(self, icon=None, width=(None, 'px'), height=(None, "px"), color=None, tooltip=None, profile=None):
     """
     Description:
     ------------
@@ -277,14 +277,14 @@ class Images(object):
 
     Attributes:
     ----------
-    :param text:
+    :param icon:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param color:
     :param tooltip:
     :param profile:
     """
-    html_icon = html.HtmlImage.Icon(self.context.rptObj, text, width=width, height=height, color=color, tooltip=tooltip,
+    html_icon = html.HtmlImage.Icon(self.context.rptObj, icon, width=width, height=height, color=color, tooltip=tooltip,
                                     profile=profile)
     self.context.register(html_icon)
     return html_icon

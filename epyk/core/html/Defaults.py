@@ -11,6 +11,7 @@ ENTITIES_ADD_ON = ""
 
 # Constant for all the input components
 LINE_HEIGHT = 23
+BIG_ICONS = 15
 
 #
 HTML_HIGHLIGHT = {"border": {'attr': "1px solid %(color)s", 'color': ("success", 1)}}

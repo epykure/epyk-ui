@@ -145,7 +145,6 @@ class Panels(object):
     :param helper:
     :param options:
     :param profile:
-    :return:
     """
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
@@ -154,7 +153,7 @@ class Panels(object):
     self.context.register(html_slide)
     return html_slide
 
-  def split(self, width=(100, '%'), height=(None, 'px'), leftWidth=50, left=None, right=None, resizable=True,
+  def split(self, left=None, right=None, width=(100, '%'), height=(200, 'px'), left_width=(160, 'px'), resizable=True,
             helper=None, profile=None):
     """
     Description:
@@ -174,13 +173,13 @@ class Panels(object):
     ----------
     :param width:
     :param height:
-    :param leftWidth:
+    :param left_width:
     :param left:
     :param right:
     :param resizable:
     :param helper:
     :param profile:
     """
-    html_split = html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, leftWidth, left, right, resizable, helper, profile)
+    html_split = html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, left_width, left, right, resizable, helper, profile)
     self.context.register(html_split)
     return html_split

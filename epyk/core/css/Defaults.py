@@ -59,7 +59,7 @@ def inline(cssAttrs):
   ----------
   :param cssAttrs: Dictionary. The CSS Attributes
   """
-  return ",".join(["%s: %s" % (k, v) for k, v in cssAttrs.items()])
+  return ";".join(["%s: %s" % (k, v) for k, v in cssAttrs.items()])
 
 
 # Default CSS Styles

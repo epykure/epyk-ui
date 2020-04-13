@@ -665,6 +665,8 @@ class Title(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
     Property to set all the possible object for a button
 
     :rtype: OptText.OptionsTitle
@@ -823,6 +825,8 @@ class Numeric(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
     Property to set all the possible object for a button
 
     :rtype: OptText.OptionsNumber

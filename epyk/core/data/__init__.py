@@ -65,7 +65,22 @@ class DataClass(object):
     """
     return self.sub_data(sys._getframe().f_back.f_code.co_name, clsObj)
 
-  def set(self, value):
+  def get(self, dflt=None, name=None):
+    """
+    Description:
+    ------------
+    Get tje attribute to the underlying attributes dictionary
+
+    Attributes:
+    ----------
+    :param dflt: Optional. The default value of this attribute
+    :param name: Optional. The attribute name. default the name of the function
+
+    :return:
+    """
+    return self._attrs.get(name or sys._getframe().f_back.f_code.co_name, dflt)
+
+  def set(self, value, name=None):
     """
     Description:
     ------------
@@ -74,10 +89,11 @@ class DataClass(object):
     Attributes:
     ----------
     :param value: Object. The attribute value
+    :param name: Optional. The attribute name. default the name of the function
 
     :return: "Self" to allow the chains on the Python side
     """
-    return self.attr(sys._getframe().f_back.f_code.co_name, value)
+    return self.attr(name or sys._getframe().f_back.f_code.co_name, value)
 
   def sub_data(self, name, clsObj):
     """
