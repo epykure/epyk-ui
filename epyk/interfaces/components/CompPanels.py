@@ -73,10 +73,11 @@ class Panels(object):
                                 "border-bottom": "1px solid white"}}
     if options is not None:
       dflt_options.update(options)
-    # options or {"tab_class": 'CssPanelArrowUp'}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
+    html_tabs = html.HtmlContainer.TabsArrowsUp(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
+    for t in html_tabs.tabs():
+      t.style.add_classes.layout.panel_arrow_up()
     html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
-    html_tabs.options.css_tab["height"] = "60px"
+    html_tabs.options.css_tab["height"] = "30px"
     html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.success[1], "color": "white"}
     self.context.register(html_tabs)
     return html_tabs
@@ -97,10 +98,11 @@ class Panels(object):
                  "border-bottom": "1px solid white"}}
     if options is not None:
       dflt_options.update(options)
-    # options or {"tab_class": 'CssPanelArrowDown'}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
+    html_tabs = html.HtmlContainer.TabsArrowsDown(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
+    for t in html_tabs.tabs():
+      t.style.add_classes.layout.panel_arrow_down()
     html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
-    html_tabs.options.css_tab["height"] = "60px"
+    html_tabs.options.css_tab["height"] = "30px"
     html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.success[1], "color": "white"}
     self.context.register(html_tabs)
     return html_tabs

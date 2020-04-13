@@ -939,6 +939,35 @@ class Tabs(Html.Html):
     """
     return self.__panel_objs[name]["tab"][0]
 
+  def tab_holder(self, name):
+    """
+    Description:
+    ------------
+    Get the tab container
+
+    Attributes:
+    ----------
+    :param name: String. The tab name
+
+    :rtype: Div
+    """
+    return self.__panel_objs[name]["tab"]
+
+  def tabs(self):
+    """
+    Description:
+    ------------
+    Get the tab container
+
+    Attributes:
+    ----------
+    :param name: String. The tab name
+
+    :rtype: Div
+    """
+    for tab_obj in self.__panel_objs.values():
+      yield tab_obj["tab"]
+
   def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
     """
     Description:
@@ -997,6 +1026,23 @@ class Tabs(Html.Html):
       content.append(self.__panel_objs[p]["content"].html())
     return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.tabs_container.html(), "".join(content), self.helper)
 
+
+class TabsArrowsDown(Tabs):
+  name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
+
+  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
+    super(TabsArrowsDown, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked)
+    self.tab_holder(name).style.add_classes.layout.panel_arrow_down()
+    return self
+
+
+class TabsArrowsUp(Tabs):
+  name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
+
+  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
+    super(TabsArrowsUp, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked)
+    self.tab_holder(name).style.add_classes.layout.panel_arrow_up()
+    return self
 
 class IFrame(Html.Html):
   name, category, callFnc = 'IFrame', 'Container', 'iframe'
