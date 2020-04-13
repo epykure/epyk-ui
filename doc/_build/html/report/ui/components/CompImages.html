@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Images Interface &mdash; Epyk 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Epyk
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../js_builtins.html">Javascript Built-Ins</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Epyk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Images Interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/report/ui/components/CompImages.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="images-interface">
+<h1>Images Interface<a class="headerlink" href="#images-interface" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="epyk.interfaces.components.CompImages.Images">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.interfaces.components.CompImages.</code><code class="sig-name descname">Images</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.animated">
+<code class="sig-name descname">animated</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.animated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Advance image with mask and gallery link.
+This will display some details when the mouse is on the container</p>
+<p>c = rptObj.ui.images.animated(“epykIcon.PNG”, text=”This is a comment”, title=”Title”, url=”#”, path=r”../../../static/images”)
+c.style.css.borders()</p>
+<p>Documentation
+<a class="reference external" href="https://tympanus.net/Tutorials/OriginalHoverEffects/">https://tympanus.net/Tutorials/OriginalHoverEffects/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – String. The image file name</p></li>
+<li><p><strong>text</strong> – Optional. String. The image file path</p></li>
+<li><p><strong>title</strong> – String. The image title displayed in to the mask on mouse hover the container</p></li>
+<li><p><strong>url</strong> – String. The link to the gallery</p></li>
+<li><p><strong>path</strong> – Optional. String. The image file path</p></li>
+<li><p><strong>width</strong> – Optional. Tuple. The component width in pixel or percentage</p></li>
+<li><p><strong>height</strong> – Optional. Tuple. The component height in pixel or percentage</p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.avatar">
+<code class="sig-name descname">avatar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">image</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">status</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">30, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">30, 'px'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.avatar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate or load an avatar</p>
+<p>rptObj.ui.images.avatar(“Epyk”, status=’out’)
+rptObj.ui.images.avatar(image=”epykIcon.PNG”, path=config.IMG_PATH, status=False)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – </p></li>
+<li><p><strong>path</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>align</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.badge">
+<code class="sig-name descname">badge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.badge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a badge component using Bootstrap</p>
+<p>rptObj.ui.images.badge(“Test badge”, “Label”, icon=”fas fa-align-center”)
+rptObj.ui.images.badge(“This is a badge”, background_color=”red”, color=”white”)
+rptObj.ui.images.badge(12, icon=”far fa-bell”, options={“badge_position”: ‘right’})</p>
+<p>b = rptObj.ui.images.badge(7688, icon=”fab fa-python”, options={‘badge_css’: {‘color’: ‘white’, “background”: ‘red’}})
+b.options.badge_css = {“background”: ‘green’}</p>
+<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/badge/">https://getbootstrap.com/docs/4.0/components/badge/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – The content of the badge</p></li>
+<li><p><strong>label</strong> – Optional, The label to display close to the badge</p></li>
+<li><p><strong>icon</strong> – Optional, A String with the icon to display from font-awesome</p></li>
+<li><p><strong>background_color</strong> – Optional, The background color of the badge</p></li>
+<li><p><strong>color</strong> – Optional, The text color of the badge</p></li>
+<li><p><strong>url</strong> – </p></li>
+<li><p><strong>tooltip</strong> – Optional, The text to display in the tooltip</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>profile</strong> – Optional, A boolean to store the performances for each components</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.carrousel">
+<code class="sig-name descname">carrousel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">images</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">300, 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.carrousel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Carousel component for pictures</p>
+<dl class="simple">
+<dt>car = rptObj.ui.images.carrousel([“epykIcon.PNG”, “epyklogo.ico”, “epyklogo_whole_big.png”],</dt><dd><p>path=r”../../../static/images”, height=(200, ‘px’))</p>
+</dd>
+</dl>
+<p>car.click([rptObj.js.console.log(‘data’, skip_data_convert=True)])</p>
+<p><a class="reference external" href="https://www.cssscript.com/basic-pure-css-slideshow-carousel/">https://www.cssscript.com/basic-pure-css-slideshow-carousel/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>images</strong> – List. With the different picture file names</p></li>
+<li><p><strong>path</strong> – String. The common path for the pictures</p></li>
+<li><p><strong>width</strong> – Optional. Tuple. The component width in pixel or percentage</p></li>
+<li><p><strong>height</strong> – Optional. Tuple. The component height in pixel</p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.circular">
+<code class="sig-name descname">circular</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">'auto', ''</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.circular" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an HTML image to the page. The path can be defined either in a absolute or relative format.</p>
+<p>Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server</p>
+<p>rptObj.ui.circular(“epykIcon.PNG”, path=r”../../../static/images”, height=(50, “px”))</p>
+<p><a class="reference external" href="https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp">https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp</a>
+<a class="reference external" href="https://www.w3schools.com/cssref/css3_pr_border-radius.asp">https://www.w3schools.com/cssref/css3_pr_border-radius.asp</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – String. The image file name</p></li>
+<li><p><strong>path</strong> – Optional. String. The image file path</p></li>
+<li><p><strong>width</strong> – Optional. Tuple. The component width in pixel or percentage</p></li>
+<li><p><strong>height</strong> – Optional. Tuple. The component height in pixel or percentage</p></li>
+<li><p><strong>align</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.emoji">
+<code class="sig-name descname">emoji</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">symbole</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">top</span><span class="o">=</span><span class="default_value">20, 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.emoji" title="Permalink to this definition">¶</a></dt>
+<dd><p>rptObj.ui.images.emoji(rptObj.symbols.smileys.DISAPPOINTED_FACE)</p>
+<p><a class="reference external" href="https://github.com/wedgies/jquery-emoji-picker">https://github.com/wedgies/jquery-emoji-picker</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symbole</strong> – </p></li>
+<li><p><strong>top</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.icon">
+<code class="sig-name descname">icon</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>rptObj.ui.images.icon(“fab fa-angellist”)</p>
+<p><a class="reference external" href="https://fontawesome.com/icons?m=free">https://fontawesome.com/icons?m=free</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>icon</strong> – </p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>tooltip</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.img">
+<code class="sig-name descname">img</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an HTML image to the page. The path can be defined either in a absolute or relative format.</p>
+<p>Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server</p>
+<p>rptObj.ui.img(“epykIcon.PNG”, path=r”../../../static/images”, height=(50, “px”))</p>
+<p><a class="reference external" href="https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp">https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp</a>
+<a class="reference external" href="https://www.w3schools.com/cssref/css3_pr_border-radius.asp">https://www.w3schools.com/cssref/css3_pr_border-radius.asp</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – String. The image file name</p></li>
+<li><p><strong>path</strong> – Optional. String. The image file path</p></li>
+<li><p><strong>width</strong> – Optional. Tuple. The component width in pixel or percentage</p></li>
+<li><p><strong>height</strong> – Optional. Tuple. The component height in pixel or percentage</p></li>
+<li><p><strong>align</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.section">
+<code class="sig-name descname">section</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">200, 'px'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.section" title="Permalink to this definition">¶</a></dt>
+<dd><p>rptObj.ui.images.section(“epykIcon.PNG”, “# Test”, “Epyk Test”, ‘This is a test’, path=r”../../../static/images”)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> – </p></li>
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>title</strong> – </p></li>
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>url</strong> – </p></li>
+<li><p><strong>path</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Epykure
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

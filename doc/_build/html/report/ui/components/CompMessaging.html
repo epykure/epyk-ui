@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Messaging Interface &mdash; Epyk 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Epyk
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../js_builtins.html">Javascript Built-Ins</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Epyk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Messaging Interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/report/ui/components/CompMessaging.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="messaging-interface">
+<h1>Messaging Interface<a class="headerlink" href="#messaging-interface" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="epyk.interfaces.components.CompMessaging.Messaging">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.interfaces.components.CompMessaging.</code><code class="sig-name descname">Messaging</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.interfaces.components.CompMessaging.Messaging.alert">
+<code class="sig-name descname">alert</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">category</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">close_button</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">320, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">'black'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.alert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to add when the python run some tags to put on the top of your report messages.</p>
+<p>The type of the messages can be different according to its criticallity.
+This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
+<p>All the notification can be hidden directly from the report by setting the flag alerts = False
+e.g: rptObj.alerts = False</p>
+<p>report.ui.messaging.alert(‘WARNING’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> – The title of the notification</p></li>
+<li><p><strong>value</strong> – The content of the notification</p></li>
+<li><p><strong>category</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>background_color</strong> – Optional. The background color. Can be also overridden from the .css function</p></li>
+<li><p><strong>close_button</strong> – Optional. Boolean, add a close button to the notification</p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>dataSrc</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>html.HtmlMessaging.Alert</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompMessaging.Messaging.comments">
+<code class="sig-name descname">comments</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">recordset</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">pmts</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dbService</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">httpCodes</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">readonly</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.comments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python wrapper to a div item composed to several sub html items to display message</p>
+<p>db = report.db(database=”test.db”)
+report.comments(‘Test’, dbService={‘db’: db, ‘com_table’: ‘comments’, ‘reply_table’: ‘replyComments’, ‘reply_service’: ‘post_reply/url’, ‘user_coms’: ‘user_comments’, ‘privacy’: ‘public’, ‘service’: your/url})</p>
+<p><a class="reference external" href="https://leaverou.github.io/bubbly/">https://leaverou.github.io/bubbly/</a>
+<a class="reference external" href="http://manos.malihu.gr/jquery-custom-content-scroller/">http://manos.malihu.gr/jquery-custom-content-scroller/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>recordset</strong> – </p></li>
+<li><p><strong>title</strong> – </p></li>
+<li><p><strong>pmts</strong> – </p></li>
+<li><p><strong>dbService</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>httpCodes</strong> – </p></li>
+<li><p><strong>readonly</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompMessaging.Messaging.danger">
+<code class="sig-name descname">danger</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">close_button</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">320, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">'black'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.danger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Description:
+————Function to add when the python run some tags to put on the top of your report messages.</p>
+<p>The type of the messages can be different according to its criticallity.
+This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
+<p>All the notification can be hidden directly from the report by setting the flag alerts = False
+e.g: rptObj.alerts = False</p>
+<p>rptObj.ui.messaging.alert(‘danger’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> – The title of the notification</p></li>
+<li><p><strong>value</strong> – The content of the notification</p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>close_button</strong> – Optional. Boolean, add a close button to the notification</p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>dataSrc</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>html.HtmlMessaging.Alert</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompMessaging.Messaging.info">
+<code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">close_button</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">320, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">'black'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to add when the python run some tags to put on the top of your report messages.
+The type of the messages can be different according to its criticallity.
+This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
+<p>rptObj.ui.messaging.alert(‘info’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>html.HtmlMessaging.Alert</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompMessaging.Messaging.news">
+<code class="sig-name descname">news</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">link_script</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">320, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.news" title="Permalink to this definition">¶</a></dt>
+<dd><p>b = rptObj.ui.button(“Display”)
+n = rptObj.ui.messaging.news(“This is a title”, “This is the content”, link_script=”TestSlider”)
+b.click(n.jsGenerate(“Updated content”, isPyData=True))</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompMessaging.Messaging.success">
+<code class="sig-name descname">success</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">close_button</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">320, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'black'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">'black'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.success" title="Permalink to this definition">¶</a></dt>
+<dd><p>unction to add when the python run some tags to put on the top of your report messages.
+The type of the messages can be different according to its criticallity.
+This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
+<p>rptObj.ui.messaging.alert(‘success’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>html.HtmlMessaging.Alert</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.components.CompMessaging.Messaging.warning">
+<code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">close_button</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">320, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">'black'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to add when the python run some tags to put on the top of your report messages.
+The type of the messages can be different according to its criticallity.
+This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
+<p>rptObj.ui.messaging.alert(‘warning’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>html.HtmlMessaging.Alert</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Epykure
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
