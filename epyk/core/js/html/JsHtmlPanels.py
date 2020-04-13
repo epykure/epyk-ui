@@ -109,9 +109,13 @@ class JsHtmlTabs(JsHtml.JsHtml):
     ------------
     Return the index of the selected tab
 
-    :return:
+    :return: The index or -1
     """
-    return JsObjects.JsObjects.get("%s.querySelector('div[data-selected=true').getAttribute('data-index')" % self.varId)
+    return JsObjects.JsObjects.get('''
+      (function(node){ var selectedTab = node.querySelector('div[data-selected=true'); 
+        if(selectedTab == null){ return -1; }
+        else{ return selectedTab.getAttribute('data-index')}
+      })(%s)''' % self.varId)
 
   @property
   def selected_name(self):
@@ -120,9 +124,13 @@ class JsHtmlTabs(JsHtml.JsHtml):
     ------------
     Return the name of the selected tab
 
-    :return:
+    :return: The HTML content or an emtpy string
     """
-    return JsObjects.JsObjects.get("%s.querySelector('div[data-selected=true').innerHTML" % self.varId)
+    return JsObjects.JsObjects.get('''
+          (function(node){ var selectedTab = node.querySelector('div[data-selected=true'); 
+            if(selectedTab == null){ return ""; }
+            else{ return selectedTab.innerHTML}
+          })(%s)''' % self.varId)
 
   def deselect_tabs(self):
     """
