@@ -1,5 +1,5 @@
-Modal Interface
+Modals Interface
 ===============
 
-.. autoclass:: epyk.interfaces.components.CompModals.Modal
+.. autoclass:: epyk.interfaces.components.CompModals.Modals
 	:members:
