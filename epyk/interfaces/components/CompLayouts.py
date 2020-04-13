@@ -14,9 +14,9 @@ class Layouts(object):
 
     The <br> tag inserts a single line break.
 
-    Usage:
-    ------
-    rptObj.ui.layouts.new_line(10)
+    Usage::
+
+      rptObj.ui.layouts.new_line(10)
 
     Related Pages:
     --------------
@@ -39,9 +39,9 @@ class Layouts(object):
 
     The <hr> tag defines a thematic break in an HTML page (e.g. a shift of topic).
 
-    Usage:
-    ------
-    rptObj.ui.layouts.hr(10)
+    Usage::
+
+      rptObj.ui.layouts.hr(10)
 
     Related Pages:
     --------------
@@ -72,12 +72,12 @@ class Layouts(object):
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
 
-    Usage:
-    ------
-    rptObj.ui.layouts.col([
+    Usage::
+
+      rptObj.ui.layouts.col([
       rptObj.ui.text("test C"),
       rptObj.ui.text("test D"),
-    ])
+      ])
 
     Related Pages:
     --------------
@@ -107,13 +107,13 @@ class Layouts(object):
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
 
-    Usage:
-    ------
-    row = rptObj.ui.layouts.row()
-    row += rptObj.ui.layouts.col([
+    Usage::
+
+      row = rptObj.ui.layouts.row()
+      row += rptObj.ui.layouts.col([
       rptObj.ui.text("test A"),
       rptObj.ui.text("test B"),
-    ])
+      ])
 
     Related Pages:
     --------------
@@ -160,10 +160,10 @@ class Layouts(object):
     ------------
     Python wrapper to the HTML Bootstrap Grid
 
-    Usage:
-    ------
-    gr = rptObj.ui.layouts.grid()
-    gr += [rptObj.ui.text("test %s" % i) for i in range(5)]
+    Usage::
+
+      gr = rptObj.ui.layouts.grid()
+      gr += [rptObj.ui.text("test %s" % i) for i in range(5)]
 
     Related Pages:
     --------------
@@ -208,10 +208,10 @@ class Layouts(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    div = rptObj.ui.div([html])
-    div += html_2
+    Usage::
+
+      div = rptObj.ui.div([html])
+      div += html_2
 
     Related Pages:
     --------------
@@ -245,10 +245,10 @@ class Layouts(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    popup = report.popup(report.title('Test'), color="red")
-    popup + report.paragraph('Test')
+    Usage::
+
+      popup = report.popup(report.title('Test'), color="red")
+      popup + report.paragraph('Test')
 
     Related Pages:
     --------------
@@ -276,9 +276,9 @@ class Layouts(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.layouts.iframe("http://www.google.com")
+    Usage::
+
+      rptObj.ui.layouts.iframe("http://www.google.com")
 
     Attributes:
     ----------
@@ -303,11 +303,11 @@ class Layouts(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    menu = rptObj.ui.layouts.icons(["fas fa-bell", "fas fa-calendar-check"])
-    menu.icon.click([menu.icon.dom.css({"color": 'red'})])
-    menu[0].click([menu[0].dom.css({"color": 'red'})])
+    Usage::
+
+      menu = rptObj.ui.layouts.icons(["fas fa-bell", "fas fa-calendar-check"])
+      menu.icon.click([menu.icon.dom.css({"color": 'red'})])
+      menu[0].click([menu[0].dom.css({"color": 'red'})])
 
     Attributes:
     ----------

@@ -66,9 +66,9 @@ class Button(Html.Html):
     -----------
     Property to the CSS Style of the component
 
-    Usage:
-    ------
-    self.style.css.margin = "5px"
+    Usage::
+
+      self.style.css.margin = "5px"
 
     :rtype: GrpClsButton.ClassButton
     """
@@ -103,10 +103,9 @@ class Button(Html.Html):
     -----------
     Special click event to keep in memory the state of the component
 
-    Usage:
-    ------
+    Usage::
 
-    Attributes:
+      Attributes:
     ----------
     :param jsPressFncs:
     :param jsReleaseFncs:
@@ -136,9 +135,9 @@ class Button(Html.Html):
     -----------
     Change the color of the button background when the mouse is hover
 
-    Usage:
-    ------
-    rptObj.ui.buttons.remove("remove").color("blue")
+    Usage::
+
+      rptObj.ui.buttons.remove("remove").color("blue")
 
     Attributes:
     ----------
@@ -448,9 +447,9 @@ class CheckButton(Html.Html):
     ------------
     Click even on the checkbox item
 
-    Usage:
-    ------
-    ch = rptObj.ui.buttons.check(label="Label")
+    Usage::
+
+      ch = rptObj.ui.buttons.check(label="Label")
     ch.click(rptObj.js.alert("true"), rptObj.js.alert("false"))
 
     Attributes:
@@ -620,9 +619,9 @@ class ButtonMenu(Html.Html):
     -----------
     Property to the CSS Style of the component
 
-    Usage:
-    ------
-    self.style.css.margin = "5px"
+    Usage::
+
+      self.style.css.margin = "5px"
 
     :rtype: GrpClsButton.ClassButton
     """

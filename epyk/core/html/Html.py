@@ -200,9 +200,9 @@ class Html(object):
     -----------
     Wrapper to the Javascript method insertChild to add an HTML component
 
-    Usage:
-    ------
-    for i in range(10):
+    Usage::
+
+      for i in range(10):
       encore = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
       select.prepend_child(encore)
 
@@ -229,9 +229,9 @@ class Html(object):
     -----------
     Wrapper to the Javascript method appendChild to append an HTML component
 
-    Usage:
-    ------
-    for i in range(10):
+    Usage::
+
+      for i in range(10):
       encore = rptObj.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
       select.append_child(encore)
 
@@ -260,9 +260,9 @@ class Html(object):
     Add set of event / actions whihc will be triggered after the build of the object.
     usually this can be used to add js functions on a chart or a table
 
-    Usage:
-    ------
-    network = rptObj.ui.charts.vis.network()
+    Usage::
+
+      network = rptObj.ui.charts.vis.network()
     network.onReady([
       network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
     ])
@@ -296,9 +296,9 @@ class Html(object):
     ------------
     Add an icon to the HTML object
 
-    Usage:
-    ------
-    checks.title.add_icon("fas fa-align-center")
+    Usage::
+
+      checks.title.add_icon("fas fa-align-center")
 
     Related Pages:
     --------------
@@ -329,10 +329,9 @@ class Html(object):
     -----------
     Add an elementary label component
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/tags/tag_label.asp
 
@@ -365,10 +364,9 @@ class Html(object):
     -----------
     Add an elementary span component
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://fontawesome.com/how-to-use/on-the-web/styling/layering
 
@@ -403,9 +401,9 @@ class Html(object):
     -----------
     Add an elementary label component
 
-    Usage:
-    ------
-    div = rptObj.ui.div()
+    Usage::
+
+      div = rptObj.ui.div()
     div.add_link("test.py", name="Click to go to the test report")
 
     Attributes:
@@ -440,10 +438,9 @@ class Html(object):
     -----------
     Add an elementary title component
 
-    Usage:
-    ------
+    Usage::
 
-    Attributes:
+      Attributes:
     ----------
     :param text: The title content
     :param css: Optional. A dictionary with the CSS style to be added to the component
@@ -469,10 +466,9 @@ class Html(object):
     -----------
     Add an elementary input component
 
-    Usage:
-    ------
+    Usage::
 
-    Attributes:
+      Attributes:
     ----------
     :param text: The title content
     :param css: Optional. A dictionary with the CSS style to be added to the component
@@ -498,10 +494,9 @@ class Html(object):
     -----------
     Add an elementary checkbox component
 
-    Usage:
-    ------
+    Usage::
 
-    Attributes:
+      Attributes:
     ----------
     :param flag: Boolean. The state of the checkbox component
     :param css: Optional. A dictionary with the CSS style to be added to the component
@@ -527,10 +522,9 @@ class Html(object):
     -----------
     Add an elementary helper icon
 
-    Usage:
-    ------
+    Usage::
 
-    Attributes:
+      Attributes:
     ----------
     :param text: The helper content
     :param css: Optional. A dictionary with the CSS style to be added to the component
@@ -626,9 +620,9 @@ class Html(object):
     Add the Tooltip feature when the mouse is over the component.
     This tooltip version is coming from Bootstrap
 
-    Usage:
-    ------
-    htmlObj.tooltip("My tooltip", location="bottom")
+    Usage::
+
+      htmlObj.tooltip("My tooltip", location="bottom")
 
     Related Pages:
     --------------
@@ -789,9 +783,9 @@ class Html(object):
     -----------
     Add a drag and drop property to the element
 
-    Usage:
-    ------
-    d = rptObj.ui.div()
+    Usage::
+
+      d = rptObj.ui.div()
     d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
     Attributes:
@@ -824,8 +818,8 @@ class Html(object):
 
     More specific events are possible using the generic out function
 
-    Usage:
-    ------
+    Usage::
+
       span.mouse([
         span.dom.css("color", "red"),
         span.dom.css("cursor", "pointer").r],
@@ -1035,9 +1029,9 @@ class Body(Html):
     Add set of event / actions whihc will be triggered after the build of the object.
     usually this can be used to add js functions on a chart or a table
 
-    Usage:
-    ------
-    network = rptObj.ui.charts.vis.network()
+    Usage::
+
+      network = rptObj.ui.charts.vis.network()
     network.onReady([
       network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
     ])
@@ -1086,9 +1080,9 @@ class Body(Html):
     ------------
     Change the body background color
 
-    Usage:
-    ------
-    rptObj.body.set_background("#101626", "#374F67")
+    Usage::
+
+      rptObj.body.set_background("#101626", "#374F67")
 
     Attributes:
     ----------

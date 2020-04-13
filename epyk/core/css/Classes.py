@@ -237,9 +237,9 @@ class Catalog(object):
     Create a bespoke class based on the various attributes.
     This will internal build the class and return it
 
-    Usage:
-    ------
-    v_cls = rptObj.css.anonymous_cls({
+    Usage::
+
+      v_cls = rptObj.css.anonymous_cls({
       '_attrs': {'color': 'green', 'cursor': 'pointer'},
       '_hover': {'color': 'red'}})
 

@@ -114,9 +114,9 @@ class ContentFormatters(object):
     ------------
     Convert markwdown to HTML string
 
-    Usage:
-    ------
-    t.dom.content.fromMarkdown()
+    Usage::
+
+      t.dom.content.fromMarkdown()
 
     Related Pages:
     --------------
@@ -137,10 +137,9 @@ class ContentFormatters(object):
     Description:
     ------------
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://openexchangerates.github.io/accounting.js/
 
@@ -350,9 +349,9 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Style property to change from the javascript the CSS attributes of an HTML object.
 
-    Usage:
-    ------
-    button.js.style({"backgroundColor": 'red'})
+    Usage::
+
+      button.js.style({"backgroundColor": 'red'})
     button.js.style({"backgroundColor": None})
 
     Related Pages:
@@ -377,10 +376,9 @@ class JsHtml(JsNodeDom.JsDoms):
     Register a predefined Javascript function
     This is only dedicated to specific Javascript transformation functions
 
-    Usage:
-    ------
+    Usage::
 
-    Attributes:
+      Attributes:
     ----------
     :param fncName: The function name
     :param jsFncs: The Javascript function definition
@@ -396,9 +394,9 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    Usage:
-    ------
-    input.js.hide()
+    Usage::
+
+      input.js.hide()
 
     Related Pages:
     --------------
@@ -411,9 +409,9 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    Usage:
-    ------
-    input.js.show()
+    Usage::
+
+      input.js.show()
 
     Related Pages:
     --------------
@@ -438,9 +436,9 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    ------
-    input.js.toggle()
+    Usage::
+
+      input.js.toggle()
     input.js.toggle("background", "red", "blue")
 
     Related Pages:
@@ -464,9 +462,9 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    Usage:
-    ------
-    s.dom.highlight()
+    Usage::
+
+      s.dom.highlight()
     s.dom.highlight(css_attrs={"background": "red"}),
 
     Attributes:
@@ -506,9 +504,9 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Tip: It is possible to add a break point to debug in the browser by adding
 
-    Usage:
-    ------
-    d = rptObj.ui.div().css({"border": "1px solid black"})
+    Usage::
+
+      d = rptObj.ui.div().css({"border": "1px solid black"})
     b = rptObj.ui.button("test")
     b.click([
       rptObj.js.console.debugger,

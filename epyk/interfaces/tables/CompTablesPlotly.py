@@ -12,11 +12,9 @@ class Plotly(object):
     Description:
     ------------
 
-    Usage:
-    ------
+    Usage::
 
-
-    Related Pages:
+      Related Pages:
     --------------
     https://plot.ly/javascript/table-subplots/
 

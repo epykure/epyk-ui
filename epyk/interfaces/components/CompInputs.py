@@ -48,9 +48,9 @@ class Inputs(object):
     ------------
     One of the new types of inputs in HTML5 is search
 
-    Usage:
-    ------
-    rptObj.ui.inputs.d_search("")
+    Usage::
+
+      rptObj.ui.inputs.d_search("")
 
     Related Pages:
     --------------
@@ -89,9 +89,9 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    date = rptObj.ui.dates.now(label="date")
+    Usage::
+
+      date = rptObj.ui.dates.now(label="date")
     date.label.css({"width": "auto"})
 
     Attributes:
@@ -119,9 +119,9 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    date = rptObj.ui.dates.now(label="date")
+    Usage::
+
+      date = rptObj.ui.dates.now(label="date")
     date.label.css({"width": "auto"})
 
     Attributes:
@@ -165,9 +165,9 @@ class Inputs(object):
     ------------
     Create a HTML output object
 
-    Usage:
-    ------
-    rptObj.ui.inputs._output("test output")
+    Usage::
+
+      rptObj.ui.inputs._output("test output")
 
     Attributes:
     ----------
@@ -185,9 +185,9 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.inputs.textarea("Test")
+    Usage::
+
+      rptObj.ui.inputs.textarea("Test")
 
     Related Pages:
     --------------
@@ -292,9 +292,9 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.inputs.checkbox(False)
+    Usage::
+
+      rptObj.ui.inputs.checkbox(False)
 
     Attributes:
     ----------
@@ -322,9 +322,9 @@ class Inputs(object):
     --------------
     https://www.w3schools.com/tags/att_input_type_radio.asp
 
-    Usage:
-    ------
-    rptObj.ui.inputs.radio(False, label="radio")
+    Usage::
+
+      rptObj.ui.inputs.radio(False, label="radio")
 
     Attributes:
     ----------
@@ -389,9 +389,9 @@ class Inputs(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.inputs.search()
+    Usage::
+
+      rptObj.ui.inputs.search()
 
     Related Pages:
     --------------

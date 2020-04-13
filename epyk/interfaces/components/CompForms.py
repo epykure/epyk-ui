@@ -11,9 +11,9 @@ class Forms(object):
     ------------
     Creates an new empty form
 
-    Usage:
-    ------
-    f = rptObj.ui.form()
+    Usage::
+
+      f = rptObj.ui.form()
 
     Attributes:
     ----------
@@ -30,9 +30,9 @@ class Forms(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.forms.date("http://127.0.0.1:5000", "POST")
+    Usage::
+
+      rptObj.ui.forms.date("http://127.0.0.1:5000", "POST")
 
     Attributes:
     ----------
@@ -56,9 +56,9 @@ class Forms(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.forms.dates("http://127.0.0.1:5000", "POST")
+    Usage::
+
+      rptObj.ui.forms.dates("http://127.0.0.1:5000", "POST")
 
     Attributes:
     ----------
@@ -101,9 +101,9 @@ class Forms(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.forms.inputs([
+    Usage::
+
+      rptObj.ui.forms.inputs([
       {"label": "name", "htmlCode": "input"},
       {"label": "name 2", "htmlCode": "input2"},
     ])

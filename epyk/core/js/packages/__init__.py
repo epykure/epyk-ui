@@ -10,9 +10,9 @@ def packageImport(jsPackage=None, cssPackage=None):
   Simple decorator to allow people to declare packages that need to be imported when they are manipulating HTML compponents
   The alias for the package needs to be defined in the Import.py module
 
-  Usage:
-  ------
-  import epyk.core.js.packages
+  Usage::
+
+      import epyk.core.js.packages
   @packageImport('myJsPackage', 'myCssPackage')
   def myHtmlComponent()
     pass
@@ -66,9 +66,9 @@ class JsPackage(object):
     ------------
     Change the package version number
 
-    Usage:
-    ------
-    bar.chart.version("1.11.0")
+    Usage::
+
+      bar.chart.version("1.11.0")
 
     Attributes:
     ----------

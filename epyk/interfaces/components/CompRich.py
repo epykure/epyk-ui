@@ -12,9 +12,9 @@ class Rich(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
+    Usage::
+
+      rptObj.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
 
     Related Pages:
     --------------
@@ -42,9 +42,9 @@ class Rich(object):
     ------------
     Entry point for the Stars component
 
-    Usage:
-    ------
-    rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
+    Usage::
+
+      rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
 
     stars = rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
     stars.click()
@@ -73,9 +73,9 @@ class Rich(object):
     ------------
     Add a traffic light component to give a visual status of a given process
 
-    Usage:
-    ------
-    rptObj.ui.rich.light("red", label="label", tooltip="Tooltip", helper="Helper")
+    Usage::
+
+      rptObj.ui.rich.light("red", label="label", tooltip="Tooltip", helper="Helper")
     rptObj.ui.rich.light(True)
 
     Attributes:
@@ -101,9 +101,9 @@ class Rich(object):
     ------------
     Display an info icon with a tooltip
 
-    Usage:
-    ------
-    rptObj.ui.info("Test")
+    Usage::
+
+      rptObj.ui.info("Test")
 
     Related Pages:
     --------------
@@ -126,9 +126,9 @@ class Rich(object):
     ------------
     Add a countdown to the page and remove the content if the page has expired.
 
-    Usage:
-    ------
-    rptObj.ui.rich.countdown("2050-09-24")
+    Usage::
+
+      rptObj.ui.rich.countdown("2050-09-24")
 
     Related Pages:
     --------------
@@ -158,9 +158,9 @@ class Rich(object):
     ------------
     Last Update time component
 
-    Usage:
-    ------
-    rptObj.ui.rich.update("Last update: ")
+    Usage::
+
+      rptObj.ui.rich.update("Last update: ")
 
     Attributes:
     ----------
@@ -204,9 +204,9 @@ class Rich(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.inputs.search()
+    Usage::
+
+      rptObj.ui.inputs.search()
 
     Related Pages:
     --------------
@@ -233,10 +233,9 @@ class Rich(object):
     Description:
     ------------
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
 
     Attributes:

@@ -206,9 +206,9 @@ class Icon(Html.Html):
     ------------
     Change the color of the button background when the mouse is hover
 
-    Usage:
-    ------
-    rptObj.ui.icons.capture().icon.hover_colors("red", "yellow")
+    Usage::
+
+      rptObj.ui.icons.capture().icon.hover_colors("red", "yellow")
 
     Attributes:
     ----------

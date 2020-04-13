@@ -66,12 +66,12 @@ class Lists(object):
     ------------
     HTML Select component
 
-    Usage:
-    ------
-    rptObj.ui.select(["A", "B", "C"], label="label", selected="C", multiple=True,
+    Usage::
+
+      rptObj.ui.select(["A", "B", "C"], label="label", selected="C", multiple=True,
                       options={"title": "ttle", 'showTick': True, 'maxOptions': 2})
-    s.selected = "B"
-    s.change(rptObj.js.console.log(s.dom.val))
+      s.selected = "B"
+      s.change(rptObj.js.console.log(s.dom.val))
 
     Related Pages:
     --------------
@@ -134,10 +134,9 @@ class Lists(object):
     ------------
     HTML Select component
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
@@ -168,9 +167,9 @@ class Lists(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    l = rptObj.ui.lists.list(["A", "B"])
+    Usage::
+
+      l = rptObj.ui.lists.list(["A", "B"])
 
     Related Pages:
     --------------
@@ -189,9 +188,9 @@ class Lists(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.lists.numbers(["A", "B"])
+    Usage::
+
+      rptObj.ui.lists.numbers(["A", "B"])
 
     Related Pages:
     --------------
@@ -282,9 +281,9 @@ class Lists(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.lists.squares(["A", "B"])
+    Usage::
+
+      rptObj.ui.lists.squares(["A", "B"])
 
     Related Pages:
     --------------
@@ -313,10 +312,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    l = rptObj.ui.lists.groups(["AWW", "B"])
-    l.add_list(["D", "E"], category="Test")
+    Usage::
+
+      l = rptObj.ui.lists.groups(["AWW", "B"])
+      l.add_list(["D", "E"], category="Test")
 
     Related Pages:
     --------------
@@ -353,10 +352,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
-    checks = rptObj.ui.lists.checklist(data)
+    Usage::
+
+      data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
+      checks = rptObj.ui.lists.checklist(data)
 
     Related Pages:
     --------------
@@ -381,10 +380,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
-    rptObj.ui.lists.tree(data)
+    Usage::
+
+      data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
+      rptObj.ui.lists.tree(data)
 
     Related Pages:
     --------------
@@ -431,9 +430,9 @@ class Lists(object):
              htmlCode=None, helper=None, options=None, profile=None):
     """
 
-    Usage:
-    ------
-    rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
+    Usage::
+
+      rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Related Pages:
     --------------
@@ -458,9 +457,9 @@ class Lists(object):
               htmlCode=None, helper=None, options=None, profile=None):
     """
 
-    Usage:
-    ------
-    rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
+    Usage::
+
+      rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Related Pages:
     --------------

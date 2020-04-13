@@ -127,9 +127,9 @@ class Stars(Html.Html):
     Add the event click and double click to the starts item
     The Javascript function will be triggered after the change of content of the component
 
-    Usage:
-    ------
-    stars = rptObj.ui.rich.stars(3, label="test Again")
+    Usage::
+
+      stars = rptObj.ui.rich.stars(3, label="test Again")
     stars.click(rptObj.js.console.log("test").toStr())
 
     Attributes:

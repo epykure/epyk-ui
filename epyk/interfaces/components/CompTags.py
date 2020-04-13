@@ -222,9 +222,9 @@ class Tags(object):
     BDI stands for Bi-Directional Isolation.
     The <bdi> tag is new in HTML5.
 
-    Usage:
-    ------
-    bdi = rptObj.ui.tags.bdi("bdi tag")
+    Usage::
+
+      bdi = rptObj.ui.tags.bdi("bdi tag")
     bdi.click(rptObj.js.alert("test"))
     bdi.css({'cursor': 'pointer'})
 

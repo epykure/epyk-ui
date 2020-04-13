@@ -173,9 +173,9 @@ class Span(Html.Html):
     The event will be automatically added to the onload section to be activated once the component
     has been build
 
-    Usage:
-    ------
-    select.label.click(str(rptObj.js.console.log("test")))
+    Usage::
+
+      select.label.click(str(rptObj.js.console.log("test")))
 
     Related Pages:
     --------------

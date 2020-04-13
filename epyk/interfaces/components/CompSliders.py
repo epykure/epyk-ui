@@ -33,9 +33,9 @@ class Sliders(object):
     ------------
     Add a Jquery UI slider object to the page
 
-    Usage:
-    ------
-    rptObj.ui.slider(40)
+    Usage::
+
+      rptObj.ui.slider(40)
     rptObj.ui.slider([1, 2, 3, 4, 5, 6, 7])
 
     Related Pages:
@@ -136,9 +136,9 @@ class Sliders(object):
     ------------
     Add a progress bar component to the page
 
-    Usage:
-    ------
-    rptObj.ui.sliders.progressbar(300)
+    Usage::
+
+      rptObj.ui.sliders.progressbar(300)
 
     Related Pages:
     --------------

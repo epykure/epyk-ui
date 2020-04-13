@@ -23,9 +23,9 @@ class Numbers(object):
 
     The <span> tag provides a way to add a hook to a part of a text or a part of a document.
 
-    Usage:
-    ------
-    rptObj.ui.texts.span("Test")
+    Usage::
+
+      rptObj.ui.texts.span("Test")
 
     Related Pages:
     --------------
@@ -59,9 +59,9 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+    Usage::
+
+      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Related Pages:
     --------------
@@ -93,9 +93,9 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+    Usage::
+
+      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Related Pages:
     --------------
@@ -123,9 +123,9 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+    Usage::
+
+      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Related Pages:
     --------------
@@ -153,9 +153,9 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+    Usage::
+
+      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Related Pages:
     --------------
@@ -183,9 +183,9 @@ class Numbers(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+    Usage::
+
+      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Related Pages:
     --------------

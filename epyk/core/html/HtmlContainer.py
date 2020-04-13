@@ -639,9 +639,9 @@ class Col(Html.Html):
     ------------
     Set the column size
 
-    Usage:
-    ------
-    ps = rptObj.ui.layouts.grid()
+    Usage::
+
+      ps = rptObj.ui.layouts.grid()
     ps += [rptObj.ui.text("test %s" % i) for i in range(5)]
     ps[0][0].set_size(10)
 

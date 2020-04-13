@@ -49,9 +49,9 @@ class JsConsole(object):
     Trigger a Javascript debugger from this point.
     The Javascript will be stopped and it will be possible to check the process step by step in the browser using F12
 
-    Usage:
-    ------
-    rptObj.js.console.debugger
+    Usage::
+
+      rptObj.js.console.debugger
 
     Related Pages:
     --------------
@@ -68,9 +68,9 @@ class JsConsole(object):
     ------------
     The console.clear() method clears the console.
 
-    Usage:
-    ------
-    rptObj.js.console.clear
+    Usage::
+
+      rptObj.js.console.clear
 
     Related Pages:
     --------------
@@ -86,9 +86,9 @@ class JsConsole(object):
     ------------
     The console.log() method writes a message to the console.
 
-    Usage:
-    ------
-    rptObj.js.console.log("Test")
+    Usage::
+
+      rptObj.js.console.log("Test")
 
     Related Pages:
     --------------
@@ -605,9 +605,9 @@ class JsBase(object):
     Add the Symbol (!) for the boolean negation.
     This feature is also available directly to any JsBoolean objects
 
-    Usage:
-    ------
-    jsObj.not_(jsObj.objects.boolean.get("weekend"))
+    Usage::
+
+      jsObj.not_(jsObj.objects.boolean.get("weekend"))
 
     Related Pages:
     --------------
@@ -793,9 +793,9 @@ class JsBase(object):
     --------------
     https://www.w3schools.com/xml/xml_http.asp
 
-    Usage:
-    ------
-    rptObj.js.request_http("ajax", "POST", "https://api.cdnjs.com/libraries").setHeaders(header).onSuccess([
+    Usage::
+
+      rptObj.js.request_http("ajax", "POST", "https://api.cdnjs.com/libraries").setHeaders(header).onSuccess([
       rptObj.js.alert(rptObj.js.objects.request.get("ajax").responseText)]).send(encodeURIData={"search": 'ractive'})
 
     Attributes:
@@ -878,9 +878,9 @@ class JsBase(object):
     ------------
     Navigator to another URL like NodeJs
 
-    Usage:
-    ------
-    icon.click([self.context.rptObj.js.navigateTo(url)])
+    Usage::
+
+      icon.click([self.context.rptObj.js.navigateTo(url)])
 
     Related Pages:
     --------------
@@ -986,9 +986,9 @@ class JsBase(object):
 
     Tip: Put a variable result to your service return in order to change the icon according to the status of your asynchronous call
 
-    Usage:
-    ------
-    report.preload([{'url': "Test.py", 'success': 'test.csv'}])
+    Usage::
+
+      report.preload([{'url': "Test.py", 'success': 'test.csv'}])
 
     Attributes:
     ----------

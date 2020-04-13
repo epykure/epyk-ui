@@ -467,10 +467,9 @@ class Components(object):
     ------------
     Add a bespoke options / actions bar with icons
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
 
     Attributes:

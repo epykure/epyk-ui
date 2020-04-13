@@ -1065,9 +1065,9 @@ class ImportManager(object):
     Return the list of modules for a given entry.
     This will be used recursively to resolve all the dependencies
 
-    Usage:
-    ------
-    modules = collections.OrderedDict()
+    Usage::
+
+      modules = collections.OrderedDict()
     ImportManager().getModules(modules, 'c3')
 
     Attributes:
@@ -1132,9 +1132,9 @@ class ImportManager(object):
     ------------
     Remove the underlying imports to avoid duplicated entries
 
-    Usage:
-    ------
-    >>> ImportManager().cleanImports(['c3'], JS_IMPORTS)
+    Usage::
+
+      >>> ImportManager().cleanImports(['c3'], JS_IMPORTS)
     ['jquery', 'd3', 'c3']
 
     Attributes:
@@ -1160,9 +1160,9 @@ class ImportManager(object):
     ------------
     Return the list of CSS modules to add to the header
 
-    Usage:
-    ------
-    >>> ImportManager().cssResolve(['c3'])
+    Usage::
+
+      >>> ImportManager().cssResolve(['c3'])
     '<link rel="stylesheet" href="/static/c3/0.6.12/c3.min.css" type="text/css">'
 
     Attributes:
@@ -1206,9 +1206,9 @@ class ImportManager(object):
     ------------
     Return the list of Javascript modules to add to the header
 
-    Usage:
-    ------
-    >>> ImportManager().jsResolve(['c3'])
+    Usage::
+
+      >>> ImportManager().jsResolve(['c3'])
     '<script language="javascript" type="text/javascript" src="/static/jquery/3.4.1/jquery.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/d3/5.9.7/d3.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/c3/0.6.12/c3.min.js"></script>'
 
     Attributes:
@@ -1256,9 +1256,9 @@ class ImportManager(object):
     ------------
     retrieve the package definition from the list of module aliases
 
-    Usage:
-    ------
-    >>> ImportManager().getFiles(['c3'], ['c3'])
+    Usage::
+
+      >>> ImportManager().getFiles(['c3'], ['c3'])
     f['css'][0]['file']['script']
 
     Attributes:
@@ -1310,9 +1310,9 @@ class ImportManager(object):
     This will guarantee the install without having to get any extra features saved on a repository.
     Saved copies of the modules can be done in order to guarantee a offline mode
 
-    Usage:
-    ------
-    Imports.ImportManager(report=Report()).getPackage('jqueryui')
+    Usage::
+
+      Imports.ImportManager(report=Report()).getPackage('jqueryui')
 
     Attributes:
     ----------
@@ -1382,9 +1382,9 @@ class ImportManager(object):
     ------------
     Download a full package (CSS and JS) locally for a server or full offline mode
 
-    Usage:
-    ------
-    Imports.ImportManager(report=Report()).getFullPackage('font-awesome')
+    Usage::
+
+      Imports.ImportManager(report=Report()).getFullPackage('font-awesome')
 
     Attributes:
     ----------
@@ -1446,9 +1446,9 @@ class ImportManager(object):
     ------------
     Returns the packages used in the Framework for both Js and CSS perimeters
 
-    Usage:
-    ------
-    >>> len(ImportManager().package('jqueryui')['modules'])
+    Usage::
+
+      >>> len(ImportManager().package('jqueryui')['modules'])
     4
 
     Attributes:
@@ -1496,9 +1496,9 @@ class ImportManager(object):
     Add a new package or update an existing one with new parameters.
     Only few parameters are available here in order to limit the changes
 
-    Usage:
-    ------
-    i.addPackage('test',
+    Usage::
+
+      i.addPackage('test',
       {
         'req': [{'alias': 'd3'}],
         'modules': [

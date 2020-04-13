@@ -120,9 +120,9 @@ class ClassPage(object):
 
     The CSS style of the body can only be done using predefined classes or inline CSS
 
-    Usage:
-    ------
-    rptObj.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
+    Usage::
+
+      rptObj.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
 
     Attributes:
     ----------
@@ -229,9 +229,9 @@ class ClassHtml(Properties.CssMixin):
     -----------
     This will create dynamic CSS class which will then be added to the component
 
-    Usage:
-    ------
-    text = rptObj.ui.text("toto")
+    Usage::
+
+      text = rptObj.ui.text("toto")
     text.style.add_custom_class("css_class", {"_attrs": {"color": 'red'}})
 
     Attributes:

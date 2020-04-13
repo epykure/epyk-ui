@@ -48,9 +48,9 @@ class Buttons(object):
     ------------
     Standard button
 
-    Usage:
-    ------
-    rptObj.ui.button("Test")
+    Usage::
+
+      rptObj.ui.button("Test")
 
     Related Pages:
     --------------
@@ -81,9 +81,9 @@ class Buttons(object):
     ------------
     Same as Standard button but used to attract user attention
 
-    Usage:
-    ------
-    rptObj.ui.buttons.important("Important")
+    Usage::
+
+      rptObj.ui.buttons.important("Important")
 
     Related Pages:
     --------------
@@ -114,9 +114,9 @@ class Buttons(object):
     Description:
     -----------
 
-    Usage:
-    ------
-    rptObj.ui.buttons.validate()
+    Usage::
+
+      rptObj.ui.buttons.validate()
 
     Related Pages:
     --------------
@@ -144,9 +144,9 @@ class Buttons(object):
     -----------
     Button with cross icon
 
-    Usage:
-    ------
-    rptObj.ui.buttons.remove()
+    Usage::
+
+      rptObj.ui.buttons.remove()
 
     Related Pages:
     --------------
@@ -175,9 +175,9 @@ class Buttons(object):
     Description:
     -----------
 
-    Usage:
-    -----
-    rptObj.ui.buttons.phone()
+    Usage::
+
+      rptObj.ui.buttons.phone()
 
     Related Pages:
     --------------
@@ -206,9 +206,9 @@ class Buttons(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.buttons.mail()
+    Usage::
+
+      rptObj.ui.buttons.mail()
 
     Related Pages:
     --------------
@@ -238,9 +238,9 @@ class Buttons(object):
     ------------
     Creates a radio HTML component
 
-    Usage:
-    ------
-    rptObj.ui.buttons.radio(df, dfColumn="A", htmlCode="test")
+    Usage::
+
+      rptObj.ui.buttons.radio(df, dfColumn="A", htmlCode="test")
 
     Related Pages:
     --------------
@@ -283,9 +283,9 @@ class Buttons(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.buttons.toggle({'on': "true", 'off': 'false'})
+    Usage::
+
+      rptObj.ui.buttons.toggle({'on': "true", 'off': 'false'})
 
     Related Pages:
     --------------
@@ -313,10 +313,9 @@ class Buttons(object):
     ------------
     Python wrapper to the HTML checkbox elements
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
 
@@ -363,9 +362,9 @@ class Buttons(object):
     ------------
     Wrapper to the check box button object
 
-    Usage:
-    ------
-    rptObj.ui.buttons.check(label="Label")
+    Usage::
+
+      rptObj.ui.buttons.check(label="Label")
     rptObj.ui.buttons.check(True, label="Label")
     rptObj.ui.buttons.check(True, label="Label", icon="fas fa-align-center")
 
@@ -393,10 +392,9 @@ class Buttons(object):
     Description:
     -----------
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://newseasandbeyond.wordpress.com/2014/01/27/creating-in-memory-zip-file-with-python/
 
@@ -419,9 +417,9 @@ class Buttons(object):
     -----------
     Button with an underlying items menu
 
-    Usage:
-    ------
-    tree5 = rptObj.ui.buttons.menu(["A", "B", "C"], 'Menu')
+    Usage::
+
+      tree5 = rptObj.ui.buttons.menu(["A", "B", "C"], 'Menu')
 
     Related Pages:
     --------------

@@ -16,10 +16,9 @@ class Messaging(object):
     ------------
     Python wrapper to a div item composed to several sub html items to display message
 
-    Usage:
-    ------
+    Usage::
 
-    db = report.db(database="test.db")
+      db = report.db(database="test.db")
     report.comments('Test', dbService={'db': db, 'com_table': 'comments', 'reply_table': 'replyComments', 'reply_service': 'post_reply/url', 'user_coms': 'user_comments', 'privacy': 'public', 'service': your/url})
 
     Related Pages:
@@ -69,9 +68,9 @@ class Messaging(object):
     All the notification can be hidden directly from the report by setting the flag alerts = False
     e.g: rptObj.alerts = False
 
-    Usage:
-    ------
-    report.ui.messaging.alert('WARNING', 'Server URL not recognized', 'Please check')
+    Usage::
+
+      report.ui.messaging.alert('WARNING', 'Server URL not recognized', 'Please check')
 
     Related Pages:
     --------------
@@ -114,9 +113,9 @@ class Messaging(object):
     All the notification can be hidden directly from the report by setting the flag alerts = False
     e.g: rptObj.alerts = False
 
-    Usage:
-    ------
-    rptObj.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
+    Usage::
+
+      rptObj.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
 
     Related Pages:
     --------------
@@ -152,9 +151,9 @@ class Messaging(object):
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage:
-    ------
-    rptObj.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
+    Usage::
+
+      rptObj.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
 
     Related Pages:
     --------------
@@ -181,9 +180,9 @@ class Messaging(object):
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage:
-    ------
-    rptObj.ui.messaging.alert('success', 'Server URL not recognized', 'Please check')
+    Usage::
+
+      rptObj.ui.messaging.alert('success', 'Server URL not recognized', 'Please check')
 
     Related Pages:
     --------------
@@ -212,9 +211,9 @@ class Messaging(object):
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage:
-    ------
-    rptObj.ui.messaging.alert('warning', 'Server URL not recognized', 'Please check')
+    Usage::
+
+      rptObj.ui.messaging.alert('warning', 'Server URL not recognized', 'Please check')
 
     Related Pages:
     --------------
@@ -238,9 +237,9 @@ class Messaging(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    b = rptObj.ui.button("Display")
+    Usage::
+
+      b = rptObj.ui.button("Display")
     n = rptObj.ui.messaging.news("This is a title", "This is the content", link_script="TestSlider")
     b.click(n.jsGenerate("Updated content", isPyData=True))
 

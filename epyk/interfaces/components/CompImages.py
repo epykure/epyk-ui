@@ -15,9 +15,9 @@ class Images(object):
 
     Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server
 
-    Usage:
-    ------
-    rptObj.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
+    Usage::
+
+      rptObj.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
     Related Pages:
     --------------
@@ -50,9 +50,9 @@ class Images(object):
 
     Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server
 
-    Usage:
-    ------
-    rptObj.ui.circular("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
+    Usage::
+
+      rptObj.ui.circular("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
     Related Pages:
     --------------
@@ -87,9 +87,9 @@ class Images(object):
     ------------
     Generate or load an avatar
 
-    Usage:
-    ------
-    rptObj.ui.images.avatar("Epyk", status='out')
+    Usage::
+
+      rptObj.ui.images.avatar("Epyk", status='out')
     rptObj.ui.images.avatar(image="epykIcon.PNG", path=config.IMG_PATH, status=False)
 
     Attributes:
@@ -148,9 +148,9 @@ class Images(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.images.section("epykIcon.PNG", "# Test", "Epyk Test", 'This is a test', path=r"../../../static/images")
+    Usage::
+
+      rptObj.ui.images.section("epykIcon.PNG", "# Test", "Epyk Test", 'This is a test', path=r"../../../static/images")
 
     Attributes:
     ----------
@@ -185,9 +185,9 @@ class Images(object):
     Advance image with mask and gallery link.
     This will display some details when the mouse is on the container
 
-    Usage:
-    ------
-    c = rptObj.ui.images.animated("epykIcon.PNG", text="This is a comment", title="Title", url="#", path=r"../../../static/images")
+    Usage::
+
+      c = rptObj.ui.images.animated("epykIcon.PNG", text="This is a comment", title="Title", url="#", path=r"../../../static/images")
     c.style.css.borders()
 
     Documentation
@@ -214,9 +214,9 @@ class Images(object):
     ------------
     Carousel component for pictures
 
-    Usage:
-    ------
-    car = rptObj.ui.images.carrousel(["epykIcon.PNG", "epyklogo.ico", "epyklogo_whole_big.png"],
+    Usage::
+
+      car = rptObj.ui.images.carrousel(["epykIcon.PNG", "epyklogo.ico", "epyklogo_whole_big.png"],
                                  path=r"../../../static/images", height=(200, 'px'))
     car.click([rptObj.js.console.log('data', skip_data_convert=True)])
 
@@ -244,9 +244,9 @@ class Images(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.images.emoji(rptObj.symbols.smileys.DISAPPOINTED_FACE)
+    Usage::
+
+      rptObj.ui.images.emoji(rptObj.symbols.smileys.DISAPPOINTED_FACE)
 
     Related Pages:
     --------------
@@ -267,9 +267,9 @@ class Images(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.images.icon("fab fa-angellist")
+    Usage::
+
+      rptObj.ui.images.icon("fab fa-angellist")
     
     Related Pages:
     --------------
@@ -296,9 +296,9 @@ class Images(object):
     ------------
     Display a badge component using Bootstrap
 
-    Usage:
-    ------
-    rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
+    Usage::
+
+      rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
     rptObj.ui.images.badge("This is a badge", background_color="red", color="white")
     rptObj.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
 

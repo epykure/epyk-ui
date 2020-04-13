@@ -9,9 +9,9 @@ class Modal(object):
 
   def inputs(self, records, header=None, footer=None, submit=False, helper=None):
     """
-    Usage:
-    ------
-    rptObj.ui.forms.inputs([
+    Usage::
+
+      rptObj.ui.forms.inputs([
       {"label": "name", "htmlCode": "input"},
       {"label": "name 2", "htmlCode": "input2"},
     ], "http://127.0.0.1:5000", "POST")
@@ -40,10 +40,9 @@ class Modal(object):
     """
     Simple interface to create an html form within a modal
 
-    Usage:
-    ------
+    Usage::
 
-    Documentation
+      Documentation
 
     Attributes:
     ----------
@@ -89,10 +88,9 @@ class Modal(object):
     ------------
     Simple Jquery UI modal with a text
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://jqueryui.com/dialog/
 

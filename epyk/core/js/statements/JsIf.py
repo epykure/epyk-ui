@@ -9,9 +9,9 @@ class JsIf(object):
     ------------
     Create a JavaScript If statement
 
-    Usage:
-    ------
-    JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue)
+    Usage::
+
+      JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue)
 
     Attributes:
     ----------
@@ -30,10 +30,9 @@ class JsIf(object):
     ------------
     Add a Javascript elif statement to the loop
 
-    Usage:
-    ------
+    Usage::
 
-    Attributes:
+      Attributes:
     ----------
     :param jsCondition: The Javascript condition. Can be a JsBoolean object
     :param jsFncs: The Javascript functions
@@ -49,9 +48,9 @@ class JsIf(object):
     ------------
     Add the Javascript else statement to the loop
 
-    Usage:
-    ------
-    JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue).else_(jsFncFalse)
+    Usage::
+
+      JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue).else_(jsFncFalse)
 
     Attributes:
     ----------

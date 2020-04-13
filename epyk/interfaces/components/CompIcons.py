@@ -17,9 +17,9 @@ class Icons(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.icons.awesome(icon="fas fa-align-center")
+    Usage::
+
+      rptObj.ui.icons.awesome(icon="fas fa-align-center")
 
     Attributes:
     ----------
@@ -41,9 +41,9 @@ class Icons(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.icons.edit()
+    Usage::
+
+      rptObj.ui.icons.edit()
     rptObj.ui.icons.edit().color("red")
 
     Attributes:
@@ -97,9 +97,9 @@ class Icons(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.icons.pdf(tooltip="helper")
+    Usage::
+
+      rptObj.ui.icons.pdf(tooltip="helper")
 
     Attributes:
     ----------
@@ -236,9 +236,9 @@ class Icons(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.icons.table(tooltip="helper")
+    Usage::
+
+      rptObj.ui.icons.table(tooltip="helper")
 
     Attributes:
     ----------
@@ -449,9 +449,9 @@ class Icons(object):
     ------------
     Add the Epyk Icon
 
-    Usage:
-    ------
-    rptObj.ui.icons.epyk()
+    Usage::
+
+      rptObj.ui.icons.epyk()
 
     Attributes:
     ----------
@@ -476,9 +476,9 @@ class Icons(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.icons.signin("test")
+    Usage::
+
+      rptObj.ui.icons.signin("test")
 
     Attributes:
     ----------

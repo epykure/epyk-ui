@@ -56,10 +56,9 @@ class JsArray(JsObject.JsObject):
     -----------
     The some() method checks if any of the elements in an array pass a test (provided as a function).
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/jsref/jsref_some.asp
 
@@ -80,10 +79,9 @@ class JsArray(JsObject.JsObject):
     The every() method checks if all elements in an array pass a test (provided as a function).
     Data Structure used in this method is like obj(val, index, arra)
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/jsref/jsref_every.asp
 
@@ -106,10 +104,9 @@ class JsArray(JsObject.JsObject):
     -----------
     The filter() method creates an array filled with all array elements that pass a test (provided as a function)
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/jsref/jsref_filter.asp
 
@@ -132,10 +129,9 @@ class JsArray(JsObject.JsObject):
     -----------
     The find() method returns the value of the first element in an array that pass a test (provided as a function)
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/jsref/jsref_find.asp
 
@@ -153,12 +149,12 @@ class JsArray(JsObject.JsObject):
     -----------
     The find() method returns the value of the first element in an array that pass a test (provided as a function)
 
-    Usage:
-    ------
-    jsObj.console.log(jsObj.objects.array.get("MyArray").findIndex([
+    Usage::
+
+      jsObj.console.log(jsObj.objects.array.get("MyArray").findIndex([
       jsObj.if_(jsObj.data.loop.val <= 0, [jsObj.return_(jsObj.objects.true)]),
       jsObj.return_(jsObj.objects.false)
-    ]))
+      ]))
 
     Related Pages:
     --------------
@@ -179,9 +175,9 @@ class JsArray(JsObject.JsObject):
     -----------
     The forEach() method calls a provided function once for each element in an array, in order.
 
-    Usage:
-    ------
-    jsObj.objects.get("MyObject").keys().forEach([
+    Usage::
+
+      jsObj.objects.get("MyObject").keys().forEach([
       jsObj.console.log(jsObj.data.loop.val)])
 
     Related Pages:
@@ -203,9 +199,9 @@ class JsArray(JsObject.JsObject):
     -----------
     The map() method creates a new array with the results of calling a function for every array element.
 
-    Usage:
-    ------
-    jsObj.console.log(jsObj.objects.array.get("MyArray").map([
+    Usage::
+
+      jsObj.console.log(jsObj.objects.array.get("MyArray").map([
       jsObj.data.loop.val * jsObj.math.max(jsObj.data.loop.arr.toArgs()),
       jsObj.return_(jsObj.data.loop.val)]))
 
@@ -231,10 +227,10 @@ class JsArray(JsObject.JsObject):
     -----------
     The sort() method sorts an array alphabetically:
 
-    Usage:
-    ------
-    jsObj.console.log(jsObj.objects.array.new([2, 5, 12, -3], "MyArray").shift()),
-    jsObj.objects.array.get("MyArray").sort()
+    Usage::
+
+      jsObj.console.log(jsObj.objects.array.new([2, 5, 12, -3], "MyArray").shift()),
+      jsObj.objects.array.get("MyArray").sort()
 
     Related Pages:
     --------------
@@ -253,11 +249,11 @@ class JsArray(JsObject.JsObject):
     -----------
     The reduce() method reduces the array to a single value.
 
-    Usage:
-    ------
-    jsObj.console.log(jsObj.objects.array.get("MyArray").reduce([
-        jsObj.data.reduce.val + jsObj.data.reduce.rVal,
-        jsObj.return_(jsObj.data.reduce.val)]))
+    Usage::
+
+      jsObj.console.log(jsObj.objects.array.get("MyArray").reduce([
+      jsObj.data.reduce.val + jsObj.data.reduce.rVal,
+      jsObj.return_(jsObj.data.reduce.val)]))
 
     Related Pages:
     --------------
@@ -284,10 +280,10 @@ class JsArray(JsObject.JsObject):
     -----------
     The shift() method removes the first item of an array.
 
-    Usage:
-    ------
-    jsObj.console.log(jsObj.objects.array.new([2, 5, 12, -3], "MyArray").shift()),
-    jsObj.console.log(jsObj.objects.array.get("MyArray")),
+    Usage::
+
+      jsObj.console.log(jsObj.objects.array.new([2, 5, 12, -3], "MyArray").shift()),
+      jsObj.console.log(jsObj.objects.array.get("MyArray")),
 
     Related Pages:
     --------------
@@ -303,10 +299,10 @@ class JsArray(JsObject.JsObject):
     -----------
     The numbers in the table specify the first browser version that fully supports the method
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").slice(3, 5)
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+      jsObj.objects.array.get("MyArray").slice(3, 5)
 
     Related Pages:
     --------------
@@ -329,10 +325,10 @@ class JsArray(JsObject.JsObject):
     -----------
     The pop() method removes the last element of an array, and returns that element.
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").pop()
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+      jsObj.objects.array.get("MyArray").pop()
 
     Related Pages:
     --------------
@@ -349,10 +345,10 @@ class JsArray(JsObject.JsObject):
     Since JavaScript arrays are objects, elements can be deleted by using the JavaScript operator
     Using delete may leave undefined holes in the array. Use pop() or shift() instead.
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").delete(2)
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+      jsObj.objects.array.get("MyArray").delete(2)
 
     Related Pages:
     --------------
@@ -373,9 +369,9 @@ class JsArray(JsObject.JsObject):
     -----------
     The join() method joins the elements of an array into a string, and returns the string.
 
-    Usage:
-    ------
-    rptObj.js.array(varName="newUrl").join("&")
+    Usage::
+
+      rptObj.js.array(varName="newUrl").join("&")
 
     Related Pages:
     --------------
@@ -397,9 +393,9 @@ class JsArray(JsObject.JsObject):
     -----------
     The copyWithin() method copies array elements within the array, to and from specified positions.
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
 
     Related Pages:
     --------------
@@ -423,10 +419,10 @@ class JsArray(JsObject.JsObject):
     The fill() method fills the specified elements in an array with a static value.
     The fill() method is not supported in Internet Explorer 11 and earlier versions.
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").fill("test", 0, 2)
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+      jsObj.objects.array.get("MyArray").fill("test", 0, 2)
 
     Related Pages:
     --------------
@@ -463,12 +459,12 @@ class JsArray(JsObject.JsObject):
     The concat() method is used to join two or more arrays.
     This method does not change the existing arrays, but returns a new array, containing the values of the joined arrays.
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray"),
-    jsObj.objects.array.new([3, -9, 2, -6], "MyArray2"),
-    jsObj.objects.array.new([], "MyArray3"),
-    jsObj.console.log(jsObj.objects.array.get("MyArray3").concat(jsObj.objects.array.get("MyArray"), jsObj.objects.array.get("MyArray2"))),
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray"),
+      jsObj.objects.array.new([3, -9, 2, -6], "MyArray2"),
+      jsObj.objects.array.new([], "MyArray3"),
+      jsObj.console.log(jsObj.objects.array.get("MyArray3").concat(jsObj.objects.array.get("MyArray"), jsObj.objects.array.get("MyArray2"))),
 
     Related Pages:
     --------------
@@ -488,10 +484,10 @@ class JsArray(JsObject.JsObject):
     -----------
     Equivalent to the append Python function for the Javascript
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").append(jsObj, 34).append(jsObj, -47)
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+      jsObj.objects.array.get("MyArray").append(jsObj, 34).append(jsObj, -47)
 
     Related Pages:
     --------------
@@ -516,10 +512,10 @@ class JsArray(JsObject.JsObject):
     -----------
     The push() method adds new items to the end of an array, and returns the new length.
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").push(55, -17)
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+      jsObj.objects.array.get("MyArray").push(55, -17)
 
     Related Pages:
     --------------
@@ -541,10 +537,10 @@ class JsArray(JsObject.JsObject):
     -----------
     The reverse() method reverses the elements in an array.
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").reverse()
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+      jsObj.objects.array.get("MyArray").reverse()
 
     Related Pages:
     --------------
@@ -560,9 +556,9 @@ class JsArray(JsObject.JsObject):
     -----------
     The unshift() method adds a new element to an array (at the beginning), and "unshifts" older elements
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+    Usage::
+
+      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
     jsObj.objects.array.get("MyArray").unshift(22)
 
     Related Pages:
@@ -584,10 +580,9 @@ class JsArray(JsObject.JsObject):
     The splice() method can be used to add new items to an array
     With clever parameter setting, you can use splice() to remove elements without leaving "holes" in the array
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/js/js_array_methods.asp
 
@@ -611,9 +606,9 @@ class JsArray(JsObject.JsObject):
     -----------
     Prototype Extension
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 2, -3, -3], "MyArray")
+    Usage::
+
+      jsObj.objects.array.new([2, 2, -3, -3], "MyArray")
     jsObj.objects.array.get("MyArray").unique()
 
     Attributes:
@@ -635,9 +630,9 @@ class JsArray(JsObject.JsObject):
 
     Alternative to the includes function and compatible with all the browsers
 
-    Usage:
-    ------
-    jsObj.objects.array.new([2, 2, -3, -3], "MyArray")
+    Usage::
+
+      jsObj.objects.array.new([2, 2, -3, -3], "MyArray")
     jsObj.objects.array.get("MyArray").contains(2)
 
     Attributes:

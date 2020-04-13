@@ -171,9 +171,9 @@ class Switch(Html.Html):
     ------------
     Set the click property for the Switch
 
-    Usage:
-    ------
-    sw = rptObj.ui.buttons.switch({'on': "true", 'off': 'false'})
+    Usage::
+
+      sw = rptObj.ui.buttons.switch({'on': "true", 'off': 'false'})
     sw.click([
       rptObj.js.console.log(sw.content)
     ])

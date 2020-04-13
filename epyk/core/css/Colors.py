@@ -158,9 +158,9 @@ def getHexToRgb(hexColor):
   ------------
   Convert a hexadecimal color to a rgb code
 
-  Usage:
-  ------
-  >>> ColorMaker().getHexToRgb('#213B68')
+  Usage::
+
+      >>> ColorMaker().getHexToRgb('#213B68')
   [33, 59, 104]
 
   Attributes:
@@ -184,9 +184,9 @@ def getRgbToHex(rgbColor):
   ------------
   Convert a RGB color to a hexadecimal code
 
-  Usage:
-  ------
-  >>> ColorMaker().getRgbToHex([255, 0, 0])
+  Usage::
+
+      >>> ColorMaker().getRgbToHex([255, 0, 0])
   '#ff0000'
 
   Attributes:
@@ -211,9 +211,9 @@ def randColor(seedNo=None):
   ------------
   Generate a random hexadecimal color code
 
-  Usage:
-  ------
-  >>> ColorMaker.randColor(10)
+  Usage::
+
+      >>> ColorMaker.randColor(10)
   '#9693DD'
 
   Attributes:
@@ -239,9 +239,9 @@ def gradient(start, end, factor):
   ------------
   Deduce the color from a factor in a range of colors
 
-  Usage:
-  ------
-  >>> ColorMaker().gradient("#ffffff", "#FF0000", 0.2)
+  Usage::
+
+      >>> ColorMaker().gradient("#ffffff", "#FF0000", 0.2)
   '#ffcccc'
 
   Attributes:
@@ -266,9 +266,9 @@ def colors(start, end, steps):
   ------------
   Generate a list of colors between two color codes.
 
-  Usage:
-  ------
-  >>> ColorMaker().colors("#ffffff", "#FF0000", 10)
+  Usage::
+
+      >>> ColorMaker().colors("#ffffff", "#FF0000", 10)
   ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
 
   Attributes:

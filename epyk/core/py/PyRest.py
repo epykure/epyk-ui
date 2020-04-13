@@ -78,9 +78,9 @@ class PyRest(object):
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Usage:
-    ------
-    rptObj.py.requests.post("https://jsonplaceholder.typicode.com/todos/1")
+    Usage::
+
+      rptObj.py.requests.post("https://jsonplaceholder.typicode.com/todos/1")
 
     Related Pages:
     --------------
@@ -113,9 +113,9 @@ class PyRest(object):
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Usage:
-    ------
-    rptObj.py.requests.get("https://api.cdnjs.com/libraries")
+    Usage::
+
+      rptObj.py.requests.get("https://api.cdnjs.com/libraries")
     pyrest.get(r"https://jsonplaceholder.typicode.com/todos/1")
 
     Related Pages:
@@ -152,9 +152,9 @@ class PyRest(object):
     This should be used to retrieve data from external services. If data should be extracted using
     an existing internal service the method query is better as it will embedded the security aspects
 
-    Usage:
-    ------
-    json.loads(PyRest().request(r"https://jsonplaceholder.typicode.com/todos/1", method="GET"))
+    Usage::
+
+      json.loads(PyRest().request(r"https://jsonplaceholder.typicode.com/todos/1", method="GET"))
 
     Related Pages:
     --------------
@@ -184,9 +184,9 @@ class PyRest(object):
     ------------
     Create a REST request with the appropriate header to mimic a browser GET request
 
-    Usage:
-    ------
-    PyRest().webscrapping(r"https://doc.scrapy.org/en/latest/topics/request-response.html")
+    Usage::
+
+      PyRest().webscrapping(r"https://doc.scrapy.org/en/latest/topics/request-response.html")
 
     Attributes:
     ----------
@@ -273,9 +273,9 @@ class PyRest(object):
   def query(self, service_name, function_name="getData", report_name=None, data=None, encoding='utf-8'):
     """
 
-    Usage:
-    ------
-    rptObj.py.requests.query("SrcTest", "textbubble")
+    Usage::
+
+      rptObj.py.requests.query("SrcTest", "textbubble")
 
     Attributes:
     ----------

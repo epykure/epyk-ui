@@ -204,10 +204,9 @@ class PyOuts(object):
     Description:
     ------------
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://codepen.io/
 
@@ -231,10 +230,9 @@ class PyOuts(object):
 
     The output is always in a sub directory jsfiddle
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://jsfiddle.net/
 
@@ -276,10 +274,9 @@ class PyOuts(object):
     ------------
     Function used to generate a static HTML page for the report
 
-    Usage:
-    ------
+    Usage::
 
-    Attributes:
+      Attributes:
     ----------
     :param path: The path in which the output files will be created
     :param name: The filename without the extension

@@ -16,9 +16,9 @@ class Texts(object):
     ------------
     Add the HTML text component to the page
 
-    Usage:
-    ------
-    rptObj.ui.text("this is a test")
+    Usage::
+
+      rptObj.ui.text("this is a test")
 
     Related Pages:
     --------------
@@ -55,10 +55,10 @@ class Texts(object):
 
     The for attribute of the <label> tag should be equal to the id attribute of the related element to bind them together.
 
-    Usage:
-    ------
-    rptObj.ui.texts.label("Test")
-    rptObj.ui.texts.label("this is a test", color="red")
+    Usage::
+
+      rptObj.ui.texts.label("Test")
+      rptObj.ui.texts.label("this is a test", color="red")
 
     Related Pages:
     --------------
@@ -94,9 +94,9 @@ class Texts(object):
 
     The <span> tag provides a way to add a hook to a part of a text or a part of a document.
 
-    Usage:
-    ------
-    rptObj.ui.texts.span("Test")
+    Usage::
+
+      rptObj.ui.texts.span("Test")
 
     Related Pages:
     --------------
@@ -128,9 +128,9 @@ class Texts(object):
     ------------
     Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
 
-    Usage:
-    ------
-    rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
+    Usage::
+
+      rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
 
     Related Pages:
     --------------
@@ -161,9 +161,9 @@ class Texts(object):
     ------------
     Interface to the mathjs Formulas object
 
-    Usage:
-    ------
-    rptObj.ui.texts.formula("$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$", helper="This is a formula")
+    Usage::
+
+      rptObj.ui.texts.formula("$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$", helper="This is a formula")
 
     Related Pages:
     --------------
@@ -187,9 +187,9 @@ class Texts(object):
     ------------
     Python Wrapper to the Bootstrap CODE Tag
 
-    Usage:
-    ------
-    rptObj.ui.texts.code("This is a code")
+    Usage::
+
+      rptObj.ui.texts.code("This is a code")
 
     Related Pages:
     --------------
@@ -220,9 +220,9 @@ class Texts(object):
     ------------
     Python Wrapper to the HTML P Tag
 
-    Usage:
-    ------
-    rptObj.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
+    Usage::
+
+      rptObj.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
 
     Related Pages:
     --------------
@@ -258,9 +258,9 @@ class Texts(object):
     The <pre> tag defines preformatted text.
     Text in a <pre> element is displayed in a fixed-width font (usually Courier), and it preserves both spaces and line breaks.
 
-    Usage:
-    ------
-    rptObj.ui.texts.preformat("This is a pre formatted text")
+    Usage::
+
+      rptObj.ui.texts.preformat("This is a pre formatted text")
 
     Related Pages:
     --------------
@@ -294,9 +294,9 @@ class Texts(object):
     The <blockquote> tag specifies a section that is quoted from another source.
     Browsers usually indent <blockquote> elements.
 
-    Usage:
-    ------
-    rptObj.ui.texts.blockquote("This is a code")
+    Usage::
+
+      rptObj.ui.texts.blockquote("This is a code")
 
     Related Pages:
     --------------
@@ -324,9 +324,9 @@ class Texts(object):
     ------------
     Up and down Text component
 
-    Usage:
-    ------
-    rptObj.ui.texts.up_down({'previous': 240885, 'value': 240985})
+    Usage::
+
+      rptObj.ui.texts.up_down({'previous': 240885, 'value': 240985})
 
     Related Pages:
     --------------
@@ -356,9 +356,9 @@ class Texts(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+    Usage::
+
+      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Related Pages:
     --------------
@@ -391,10 +391,10 @@ class Texts(object):
     ------------
     Add a title
 
-    Usage:
-    ------
-    rptObj.ui.title("Test")
-    rptObj.ui.title("Test", level=2)
+    Usage::
+
+      rptObj.ui.title("Test")
+      rptObj.ui.title("Test", level=2)
 
     Related Pages:
     --------------
@@ -432,9 +432,9 @@ class Texts(object):
     The <fieldset> tag is used to group related elements in a form.
     The <fieldset> tag draws a box around the related elements.
 
-    Usage:
-    ------
-    rptObj.ui.texts.fieldset("legend")
+    Usage::
+
+      rptObj.ui.texts.fieldset("legend")
 
     Related Pages:
     --------------

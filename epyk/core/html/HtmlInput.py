@@ -100,9 +100,9 @@ class Input(Html.Html):
     -----------
     Add validation rules on the input component
 
-    Usage:
-    ------
-    input.validation(pattern="[0-9]{5}")
+    Usage::
+
+      input.validation(pattern="[0-9]{5}")
 
     Attributes:
     ----------
@@ -122,9 +122,9 @@ class Input(Html.Html):
     ------------
     Add an javascript action when the key enter is pressed on the keyboard
 
-    Usage:
-    ------
-    htmlObj.input(placeholder="Put your tag").enter("alert()")
+    Usage::
+
+      htmlObj.input(placeholder="Put your tag").enter("alert()")
 
     Attributes:
     ----------

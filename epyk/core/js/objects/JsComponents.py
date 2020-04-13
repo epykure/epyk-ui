@@ -88,9 +88,9 @@ class Menu(JsPackage):
     -----------
     Set the URL information of the item component
 
-    Usage:
-    ------
-    item.js.set_url("https://stackoverflow.com")
+    Usage::
+
+      item.js.set_url("https://stackoverflow.com")
 
     Related Pages:
     --------------

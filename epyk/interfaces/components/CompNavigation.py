@@ -12,9 +12,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.navigation.up()
+    Usage::
+
+      rptObj.ui.navigation.up()
 
     Attributes:
     ----------
@@ -50,9 +50,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.navigation.down()
+    Usage::
+
+      rptObj.ui.navigation.down()
 
     Attributes:
     ----------
@@ -88,9 +88,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.navigation.to(100, tooltip="test")
+    Usage::
+
+      rptObj.ui.navigation.to(100, tooltip="test")
 
     Attributes:
     ----------
@@ -129,9 +129,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.navigation.pin("anchor", tooltip="test", bottom=20)
+    Usage::
+
+      rptObj.ui.navigation.pin("anchor", tooltip="test", bottom=20)
 
     Attributes:
     ----------
@@ -169,9 +169,9 @@ class Navigation(object):
     ------------
     Add a horizontal progressbar to display the status of the page scrollbar.
 
-    Usage:
-    ------
-    rptObj.ui.navigation.scroll()
+    Usage::
+
+      rptObj.ui.navigation.scroll()
 
     Attributes:
     ----------
@@ -191,9 +191,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.navigation.indices(10)
+    Usage::
+
+      rptObj.ui.navigation.indices(10)
 
     Attributes:
     ----------
@@ -215,9 +215,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    p = rptObj.ui.navigation.points(10)
+    Usage::
+
+      p = rptObj.ui.navigation.points(10)
     for i, _ in enumerate(p):
       p.click_item(i, [])
 
@@ -242,9 +242,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    d = rptObj.ui.navigation.dots(10)
+    Usage::
+
+      d = rptObj.ui.navigation.dots(10)
 
     Attributes:
     ----------
@@ -267,9 +267,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    record = [{"text": "Lin 1", 'url': 'report_list.html'}, {"text": "Link 2"}]
+    Usage::
+
+      record = [{"text": "Lin 1", 'url': 'report_list.html'}, {"text": "Link 2"}]
     rptObj.ui.navigation.path(record)
 
     Attributes:
@@ -295,9 +295,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    nav = rptObj.ui.navigation.bar(title="test")
+    Usage::
+
+      nav = rptObj.ui.navigation.bar(title="test")
     nav.add_text("Test text")
     nav + rptObj.ui.button("Click")
 

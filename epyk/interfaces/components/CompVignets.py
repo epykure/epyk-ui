@@ -19,9 +19,9 @@ class Vignets(object):
     If no event handler is set for that object, the event bubbles up (like a bubble in water) to the objects parent
     The event bubbles up from parent to parent until it is handled, or until it reaches the document object.
 
-    Usage:
-    ------
-    rptObj.ui.vignets.bubble({"value": 23, "title": "Title"}, helper="This is a helper")
+    Usage::
+
+      rptObj.ui.vignets.bubble({"value": 23, "title": "Title"}, helper="This is a helper")
 
     Related Pages:
     --------------
@@ -71,9 +71,9 @@ class Vignets(object):
     step - specifies the legal number intervals
     value - Specifies the default value
 
-    Usage:
-    ------
-    number = rptObj.ui.vignets.number(500, "Test")
+    Usage::
+
+      number = rptObj.ui.vignets.number(500, "Test")
     number_2 = rptObj.ui.vignets.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
     number.span.add_icon(rptObj.ui.icons.get.ICON_ENVELOPE)
 
@@ -104,9 +104,9 @@ class Vignets(object):
     Every HTML element has a default display value depending on what type of element it is.
     The two display values are: block and inline.
 
-    Usage:
-    ------
-    rptObj.ui.vignets.block({"text": 'This is a brand new python framework', "title": 'New Python Web Framework',
+    Usage::
+
+      rptObj.ui.vignets.block({"text": 'This is a brand new python framework', "title": 'New Python Web Framework',
                              "button": {"text": 'Get Started', 'url': "/getStarted"}, 'color': 'green'})
 
     Related Pages:
@@ -132,9 +132,9 @@ class Vignets(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.vignets.text({"title": "New Python Framework", 'value': "A new Python Web Framework", 'color': 'green',
+    Usage::
+
+      rptObj.ui.vignets.text({"title": "New Python Framework", 'value': "A new Python Web Framework", 'color': 'green',
                             'icon': 'fab fa-python', 'colorTitle': 'darkgreen'})
 
     Related Pages:

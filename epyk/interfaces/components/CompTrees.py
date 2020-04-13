@@ -23,9 +23,9 @@ class Trees(object):
     Related Pages:
     --------------
 
-    Usage:
-    ------
-    data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
+    Usage::
+
+      data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
     rptObj.ui.lists.tree(data)
 
     Attributes:
@@ -46,10 +46,9 @@ class Trees(object):
     Description:
     ------------
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
 
     Attributes:
@@ -70,10 +69,9 @@ class Trees(object):
     Description:
     ------------
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
 
     Attributes:

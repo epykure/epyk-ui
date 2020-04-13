@@ -22,9 +22,9 @@ class SVG(Html.Html):
     Objects created inside a <defs> element are not rendered directly.
     To display them you have to reference them (with a <use> element for exampl
 
-    Usage:
-    ------
-    defs = poly.defs()
+    Usage::
+
+      defs = poly.defs()
 
     Related Pages:
     --------------
@@ -40,10 +40,9 @@ class SVG(Html.Html):
     The <text> element can be arranged in any number of sub-groups with the <tspan> element.
     Each <tspan> element can contain different formatting and position.
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/graphics/svg_text.asp
 
@@ -64,10 +63,9 @@ class SVG(Html.Html):
     ------------
     The <rect> element is used to create a rectangle and variations of a rectangle shape
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/graphics/svg_rect.asp
 
@@ -90,10 +88,9 @@ class SVG(Html.Html):
     ------------
     The <line> element is used to create a line
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/graphics/svg_line.asp
 
@@ -115,10 +112,9 @@ class SVG(Html.Html):
     ------------
     The <circle> element is used to create a circle
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/graphics/svg_circle.asp
 
@@ -139,10 +135,9 @@ class SVG(Html.Html):
     ------------
     The <ellipse> element is used to create an ellipse
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/graphics/svg_ellipse.asp
 
@@ -164,10 +159,9 @@ class SVG(Html.Html):
     ------------
     The <polygon> element is used to create a graphic that contains at least three sides.
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/graphics/svg_polygon.asp
 
@@ -186,10 +180,9 @@ class SVG(Html.Html):
     ------------
     The <polyline> element is used to create any shape that consists of only straight lines (that is connected at several points)
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/graphics/svg_polyline.asp
 
@@ -209,10 +202,9 @@ class SVG(Html.Html):
     ------------
     A polyline element with three points
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/graphics/svg_polyline.asp
 
@@ -232,10 +224,9 @@ class SVG(Html.Html):
     ------------
     The <g> SVG element is a container used to group other SVG elements.
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g
 
@@ -280,10 +271,9 @@ class SVG(Html.Html):
     ------------
     The <foreignObject> SVG element includes elements from a different XML namespace. In the context of a browser, it is most likely (X)HTML.
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
 

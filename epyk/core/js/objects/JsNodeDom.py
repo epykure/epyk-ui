@@ -338,10 +338,9 @@ class JsDomsTransforms(object):
     ------------
     Defines a 2D transformation, using a matrix of six values
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
 
@@ -362,10 +361,9 @@ class JsDomsTransforms(object):
     ------------
     The translateX() CSS function repositions an element horizontally on the 2D plane. Its result is a <transform-function> data type.
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX
     https://www.w3schools.com/jsref/prop_style_transform.asp
@@ -508,9 +506,9 @@ class JsDomsTransforms(object):
     The skewX() CSS function defines a transformation that skews an element in the horizontal direction on the 2D plane.
     Its result is a <transform-function> data type.
 
-    Usage:
-    ------
-    i.label.dom.transform.skewX(20),
+    Usage::
+
+      i.label.dom.transform.skewX(20),
 
     Related Pages:
     --------------
@@ -548,9 +546,9 @@ class JsDomsTransforms(object):
     The rotate() CSS function defines a transformation that rotates an element around a fixed point on the 2D plane, without deforming it.
     Its result is a <transform-function> data type.
 
-    Usage:
-    ------
-    i.label.dom.transform.rotate(90)
+    Usage::
+
+      i.label.dom.transform.rotate(90)
 
     Related Pages:
     --------------
@@ -750,9 +748,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     The innerText property sets or returns the text content of the specified node, and all its descendants.
 
-    Usage:
-    ------
-    select.label.dom.innerText("test Change")
+    Usage::
+
+      select.label.dom.innerText("test Change")
 
     Related Pages:
     --------------
@@ -786,9 +784,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     Sets or returns the content of an element
 
-    Usage:
-    ------
-    select.label.dom.innerHTML("<p style='color:red'>Changed !</p>")
+    Usage::
+
+      select.label.dom.innerHTML("<p style='color:red'>Changed !</p>")
 
     Related Pages:
     --------------
@@ -823,9 +821,9 @@ class JsDoms(JsObject.JsObject):
     The attr() method adds the specified attribute to an element, and gives it the specified value.
     It will use the underlying setAttribute() method
 
-    Usage:
-    ------
-    select.label.dom.attr("title", "Tooltip")
+    Usage::
+
+      select.label.dom.attr("title", "Tooltip")
     select.label.dom.attr({"title": "Tooltip"})
 
     Related Pages:
@@ -856,9 +854,9 @@ class JsDoms(JsObject.JsObject):
     -----------
     The setAttribute() method adds the specified attribute to an element, and gives it the specified value.
 
-    Usage:
-    ------
-    select.label.dom.setAttribute("title", "Tooltip")
+    Usage::
+
+      select.label.dom.setAttribute("title", "Tooltip")
 
     Related Pages:
     --------------
@@ -880,9 +878,9 @@ class JsDoms(JsObject.JsObject):
 
     This function can either use an existing class or create one if the attrs or eventAttrs are defined
 
-    Usage:
-    ------
-    table.dom.addClass("red", {"border": "1px solid green"}, extend=False)
+    Usage::
+
+      table.dom.addClass("red", {"border": "1px solid green"}, extend=False)
 
     Related Pages:
     --------------
@@ -912,9 +910,9 @@ class JsDoms(JsObject.JsObject):
     -----------
     Replicate in plain Js the Jquery CSS function
 
-    Usage:
-    ------
-    select.label.dom.css({"color": "red"})
+    Usage::
+
+      select.label.dom.css({"color": "red"})
 
     Related Pages:
     --------------
@@ -952,9 +950,9 @@ class JsDoms(JsObject.JsObject):
     Set the position of the component in the page.
     By default the component will be fixed at the mouse level (this should be used in an event).
 
-    Usage:
-    ------
-    rptObj.js.createElement("div", "popup").innerHTML("uygk,k,kj..kj.kjyf").attr('id', 'popup').css({
+    Usage::
+
+      rptObj.js.createElement("div", "popup").innerHTML("uygk,k,kj..kj.kjyf").attr('id', 'popup').css({
         'color': 'red', 'display': 'block'}).position()
 
     Attributes:
@@ -981,9 +979,9 @@ class JsDoms(JsObject.JsObject):
       - transition-timing-function
       - transition-delay
 
-    Usage:
-    ------
-    i.label.dom.transition('margin-left', '100px', 2, reverse=True),
+    Usage::
+
+      i.label.dom.transition('margin-left', '100px', 2, reverse=True),
     i.label.dom.transition('color', 'red', 5, reverse=True),
 
     Related Pages:
@@ -1030,9 +1028,9 @@ class JsDoms(JsObject.JsObject):
     Description:
     ------------
 
-    Usage:
-    ------
-    input.js.hide()
+    Usage::
+
+      input.js.hide()
 
     Related Pages:
     --------------
@@ -1045,9 +1043,9 @@ class JsDoms(JsObject.JsObject):
     Description:
     ------------
 
-    Usage:
-    ------
-    input.js.hide()
+    Usage::
+
+      input.js.hide()
 
     Related Pages:
     --------------
@@ -1119,9 +1117,9 @@ class JsDoms(JsObject.JsObject):
     The Element.clientHeight read-only property is zero for elements with no CSS or inline layout boxes; otherwise, it's the inner height of an element in pixels.
     It includes padding but excludes borders, margins, and horizontal scrollbars (if present).
 
-    Usage:
-    ------
-    rptObj.js.alert(rptObj.js.body.clientHeight)
+    Usage::
+
+      rptObj.js.alert(rptObj.js.body.clientHeight)
 
     Related Pages:
     --------------
@@ -1153,9 +1151,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     Switch from one CSS class to another.
 
-    Usage:
-    ------
-    icon.dom.switchClass("fa-folder", "fa-folder-open")
+    Usage::
+
+      icon.dom.switchClass("fa-folder", "fa-folder-open")
 
     Attributes:
     ----------
@@ -1175,9 +1173,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     The firstChild property returns the first child node of the specified node, as a Node object.
 
-    Usage:
-    ------
-    select.dom.firstChild
+    Usage::
+
+      select.dom.firstChild
     select.dom.firstChild.css({"color": "yellow"})
 
     Related Pages:
@@ -1225,9 +1223,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     The getAttribute() method returns the value of the attribute with the specified name, of an element.
 
-    Usage:
-    ------
-    select.dom.getAttribute("class")
+    Usage::
+
+      select.dom.getAttribute("class")
 
     Related Pages:
     --------------
@@ -1296,9 +1294,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     Returns true if an element has any child nodes, otherwise false
 
-    Usage:
-    ------
-    select.dom.hasChildNodes
+    Usage::
+
+      select.dom.hasChildNodes
 
     Related Pages:
     --------------
@@ -1366,9 +1364,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     The tagName property returns the tag name of the element
 
-    Usage:
-    ------
-    select.dom.tagName
+    Usage::
+
+      select.dom.tagName
 
     Related Pages:
     --------------
@@ -1384,9 +1382,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     Set content editable
 
-    Usage:
-    ------
-    rptObj.ui.text("This is a text").dom.contentEditable(True)
+    Usage::
+
+      rptObj.ui.text("This is a text").dom.contentEditable(True)
 
     Attributes:
     ----------
@@ -1402,9 +1400,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     The className property sets or returns the class name of an element (the value of an element's class attribute).
 
-    Usage:
-    ------
-    select.dom.className()
+    Usage::
+
+      select.dom.className()
 
     Related Pages:
     --------------
@@ -1430,9 +1428,9 @@ class JsDoms(JsObject.JsObject):
 
     The cloneNode() method clones all attributes and their values.
 
-    Usage:
-    ------
-    select.dom.cloneNode()
+    Usage::
+
+      select.dom.cloneNode()
 
     Related Pages:
     --------------
@@ -1452,9 +1450,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     Remove the current dom object from the page
 
-    Usage:
-    ------
-    select.dom.remove()
+    Usage::
+
+      select.dom.remove()
 
     Related Pages:
     --------------
@@ -1486,9 +1484,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     The appendChild() method appends a node as the last child of a node.
 
-    Usage:
-    ------
-    select.dom.appendChild(select.label.dom.cloneNode())
+    Usage::
+
+      select.dom.appendChild(select.label.dom.cloneNode())
 
     Related Pages:
     --------------
@@ -1509,9 +1507,9 @@ class JsDoms(JsObject.JsObject):
     ------------
     The insertBefore() method inserts a node as a child, right before an existing child, which you specify.
 
-    Usage:
-    ------
-    select.dom.insertBefore(select.label.dom.cloneNode())
+    Usage::
+
+      select.dom.insertBefore(select.label.dom.cloneNode())
 
     Related Pages:
     --------------
@@ -1641,9 +1639,9 @@ class JsDomsList(JsArray.JsArray):
     ------------
     Replicate in plain Js the Jquery CSS function
 
-    Usage:
-    ------
-    select.label.dom.css({"color": "red"})
+    Usage::
+
+      select.label.dom.css({"color": "red"})
 
     Related Pages:
     --------------
@@ -1681,9 +1679,9 @@ class JsDomsList(JsArray.JsArray):
     The attr() method adds the specified attribute to an element, and gives it the specified value.
     It will use the underlying setAttribute() method
 
-    Usage:
-    ------
-    select.label.dom.attr("title", "Tooltip")
+    Usage::
+
+      select.label.dom.attr("title", "Tooltip")
     select.label.dom.attr({"title": "Tooltip"})
 
     Related Pages:

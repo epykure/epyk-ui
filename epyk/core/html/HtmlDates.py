@@ -130,9 +130,9 @@ class TimePicker(Html.Html):
     Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side
 
-    Usage:
-    ------
-    morning = rptObj.ui.fields.time("8:13:00", label="Time field")
+    Usage::
+
+      morning = rptObj.ui.fields.time("8:13:00", label="Time field")
     morning.change([
       rptObj.js.alert("time", skip_data_convert=True)
     ])

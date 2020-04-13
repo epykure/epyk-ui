@@ -249,9 +249,9 @@ class JSelect(JsPackage):
     ------------
     Get the selected content from the Select component
 
-    Usage:
-    ------
-    b.click([rptObj.js.console.log(s.dom.content)])
+    Usage::
+
+      b.click([rptObj.js.console.log(s.dom.content)])
     """
     return JsObjects.JsObjects.get("this.plugin.query")
 
@@ -292,9 +292,9 @@ class JSelect(JsPackage):
     --------------
     https://github.com/truckingsim/Ajax-Bootstrap-Select
 
-    Usage:
-    ------
-    s.dom.ajaxSelectPicker({"values": "a, b, c", "ajax": {
+    Usage::
+
+      s.dom.ajaxSelectPicker({"values": "a, b, c", "ajax": {
     "url": 'https://jsonplaceholder.typicode.com/posts', "type": "POST", "dataType": "json",
     "data": {"q": "{{{q}}}"}}, 'preserveSelected': False, 'log': 2, 'preprocessData':
         'function(data) {return [{text: "C", value: "C"}, {text: "D", value: "D"}]}', "locale": {

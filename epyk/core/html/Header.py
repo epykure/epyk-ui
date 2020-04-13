@@ -15,9 +15,9 @@ class Meta(object):
     ------------
     Setting the viewport to make your website look good on all devices
 
-    Usage:
-    ------
-    rptObj.headers.meta.viewport("test")
+    Usage::
+
+      rptObj.headers.meta.viewport("test")
 
     Related Pages:
     --------------
@@ -36,9 +36,9 @@ class Meta(object):
     ------------
     Define the character set used
 
-    Usage:
-    ------
-    rptObj.headers.meta.charset("test")
+    Usage::
+
+      rptObj.headers.meta.charset("test")
 
     Related Pages:
     --------------
@@ -57,9 +57,9 @@ class Meta(object):
     ------------
     Refresh document every X seconds
 
-    Usage:
-    ------
-    rptObj.headers.meta.refresh(10)
+    Usage::
+
+      rptObj.headers.meta.refresh(10)
 
     Related Pages:
     --------------
@@ -80,9 +80,9 @@ class Meta(object):
     ------------
     Define the author of the page
 
-    Usage:
-    ------
-    rptObj.headers.meta.author('epykure')
+    Usage::
+
+      rptObj.headers.meta.author('epykure')
 
     Attributes:
     ----------
@@ -99,9 +99,9 @@ class Meta(object):
     ------------
     Define a description of your web page
 
-    Usage:
-    ------
-    rptObj.headers.meta.description('This is a description')
+    Usage::
+
+      rptObj.headers.meta.description('This is a description')
 
     Related Pages:
     --------------
@@ -122,9 +122,9 @@ class Meta(object):
     ------------
     Define keywords for search engine
 
-    Usage:
-    ------
-    rptObj.headers.meta.keywords(['python', 'javascript'])
+    Usage::
+
+      rptObj.headers.meta.keywords(['python', 'javascript'])
 
     Related Pages:
     --------------
@@ -147,9 +147,9 @@ class Meta(object):
     ------------
     Bespoke function to add other meta tags
 
-    Usage:
-    ------
-    rptObj.headers.meta.custom('language', 'python')
+    Usage::
+
+      rptObj.headers.meta.custom('language', 'python')
 
     Attributes:
     ----------
@@ -167,9 +167,9 @@ class Meta(object):
     ------------
     Bespoke function to add other http-equiv tags to the meta section
 
-    Usage:
-    ------
-    rptObj.headers.meta.http_equiv('language', 'python')
+    Usage::
+
+      rptObj.headers.meta.http_equiv('language', 'python')
 
     Attributes:
     ----------
@@ -211,9 +211,9 @@ class Header(object):
     The <meta> tag provides metadata about the HTML document.
     Metadata will not be displayed on the page, but will be machine parsable.
 
-    Usage:
-    ------
-    rptObj.headers.meta
+    Usage::
+
+      rptObj.headers.meta
 
     Related Pages:
     --------------
@@ -231,9 +231,9 @@ class Header(object):
     ------------
     The <title> tag is required in all HTML documents and it defines the title of the document.
 
-    Usage:
-    ------
-    rptObj.headers.title("title")
+    Usage::
+
+      rptObj.headers.title("title")
 
     Related Pages:
     --------------
@@ -253,10 +253,9 @@ class Header(object):
     Specify a dedicated path for the relative paths in the page.
     Basically the images will use this path as base if present in the page
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://www.w3schools.com/tags/tag_base.asp
 
@@ -277,9 +276,9 @@ class Header(object):
 
     The <link> tag is used to link to external style sheets.
 
-    Usage:
-    ------
-    rptObj.headers.favicon('https://github.com/favicon.ico')
+    Usage::
+
+      rptObj.headers.favicon('https://github.com/favicon.ico')
 
     Related Pages:
     --------------

@@ -382,9 +382,9 @@ class CssMixin(object):
     ------------
     The background-repeat property sets if/how a background image will be repeated.
 
-    Usage:
-    ------
-    https://www.w3schools.com/cssref/pr_background-repeat.asp
+    Usage::
+
+      https://www.w3schools.com/cssref/pr_background-repeat.asp
     """
     return self.htmlObj.css("background-repeat")
 
@@ -415,9 +415,9 @@ class CssMixin(object):
     --------------
     https://www.w3schools.com/cssref/pr_border.asp
 
-    Usage:
-    ------
-    https://www.w3schools.com/cssref/pr_border.asp
+    Usage::
+
+      https://www.w3schools.com/cssref/pr_border.asp
     """
     return self.htmlObj.css("border")
 
@@ -2383,9 +2383,9 @@ class CssMixin(object):
     ------------
     An element with position: sticky; is positioned based on the user's scroll position
 
-    Usage:
-    ------
-    htmlObj.style.css.sticky()
+    Usage::
+
+      htmlObj.style.css.sticky()
 
     Related Pages:
     --------------
@@ -2417,9 +2417,9 @@ class CssMixin(object):
     ------------
     Add a default dark shadow to the container
 
-    Usage:
-    ------
-    .style.css.shadow()
+    Usage::
+
+      .style.css.shadow()
 
     Related Pages:
     --------------
@@ -2474,9 +2474,9 @@ class CssMixin(object):
     ------------
     Fix the component on the top of the page
 
-    Usage:
-    ------
-    p.style.css.fixed_top()
+    Usage::
+
+      p.style.css.fixed_top()
 
     Attributes:
     ----------
@@ -2493,9 +2493,9 @@ class CssMixin(object):
     ------------
     Fix the component at the bottom of the page
 
-    Usage:
-    ------
-    p.style.css.fixed_bottom()
+    Usage::
+
+      p.style.css.fixed_bottom()
 
     Attributes:
     ----------
@@ -2512,9 +2512,9 @@ class CssMixin(object):
     ------------
     Shortcut function to set the border color for a defined HTML component
 
-    Usage:
-    ------
-    a.style.css.borders()
+    Usage::
+
+      a.style.css.borders()
 
     Attributes:
     ----------
@@ -2533,9 +2533,9 @@ class CssMixin(object):
     ------------
     Shortcut function to set the light border color for a defined HTML component
 
-    Usage:
-    ------
-    a.style.css.borders_light()
+    Usage::
+
+      a.style.css.borders_light()
 
     Attributes:
     ----------

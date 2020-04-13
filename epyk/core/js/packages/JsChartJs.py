@@ -112,9 +112,9 @@ class ChartJs(JsPackage):
     Reset the chart to it's state before the initial animation.
     A new animation can then be triggered using update.
 
-    Usage:
-    ------
-    myLineChart.reset()
+    Usage::
+
+      myLineChart.reset()
 
     Related Pages:
     --------------
@@ -128,9 +128,9 @@ class ChartJs(JsPackage):
     ------------
     Use this to stop any current animation loop. This will pause the chart during any current animation frame.
 
-    Usage:
-    ------
-    chart.stop()
+    Usage::
+
+      chart.stop()
 
     Related Pages:
     --------------
@@ -164,9 +164,9 @@ class ChartJs(JsPackage):
     ------------
     Will clear the chart canvas. Used extensively internally between animation frames, but you might find it useful.
 
-    Usage:
-    ------
-    chart.clear()
+    Usage::
+
+      chart.clear()
 
     Related Pages:
     --------------
@@ -266,9 +266,9 @@ class ChartJs(JsPackage):
     ------------
     Looks for the dataset that matches the current index and returns that metadata.
 
-    Usage:
-    ------
-    chart.getDatasetMeta(0)
+    Usage::
+
+      chart.getDatasetMeta(0)
 
     Related Pages:
     --------------
@@ -286,9 +286,9 @@ class ChartJs(JsPackage):
     ------------
     Triggers a redraw of all chart elements. Note, this does not update elements for new data. Use .update() in that case.
 
-    Usage:
-    ------
-    chart.render({duration: 800, lazy: false, easing: 'easeOutBounce'})
+    Usage::
+
+      chart.render({duration: 800, lazy: false, easing: 'easeOutBounce'})
 
     Related Pages:
     --------------

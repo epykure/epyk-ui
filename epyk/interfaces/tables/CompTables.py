@@ -100,10 +100,9 @@ class Tables(object):
     -----------
     Create a HTML Pivot table
 
-    Usage:
-    --------------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://pivottable.js.org/examples/
     https://react-pivottable.js.org/
@@ -133,10 +132,9 @@ class Tables(object):
     do the most frequent events and interactions with this component from the available function.
     Please keep in mind that the javascript is only trigger on the web browser (namely not with the Python code)
 
-    Usage:
-    --------------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
     https://datatables.net/reference/index
     https://datatables.net/reference/option/
@@ -233,11 +231,9 @@ class Tables(object):
     Description:
     -----------
 
-    Usage:
-    --------------
+    Usage::
 
-
-    Related Pages:
+      Related Pages:
     --------------
     http://tabulator.info/
 
@@ -348,9 +344,9 @@ class Tables(object):
     Description:
     -----------
 
-    Usage:
-    --------------
-    simple_table = rptObj.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
+    Usage::
+
+      simple_table = rptObj.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
     simple_table.add({"COL1": "Value"})
 
     Attributes:
@@ -373,10 +369,9 @@ class Tables(object):
   def grid(self, records, cols, rows, width=(None, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
 
-    Usage:
-    --------------
+    Usage::
 
-    """
+      """
     width_cells, width_rows_header = 50, 100
     for rec in records:
       for c in cols:

@@ -13,9 +13,9 @@ class Links(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.links.external('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
+    Usage::
+
+      rptObj.ui.links.external('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
 
     Related Pages:
     --------------
@@ -80,9 +80,9 @@ class Links(object):
     This is only dedicated to move between reports internally.
     If the target is to move between nodes, the function to use is rather bridge
 
-    Usage:
-    ------
-    rptObj.ui.links.script("TestParams")
+    Usage::
+
+      rptObj.ui.links.script("TestParams")
 
     Attributes:
     ----------
@@ -113,9 +113,9 @@ class Links(object):
     ------------
     Python interface to the common Hyperlink
 
-    Usage:
-    ------
-    rptObj.ui.link({"text": "Profiling results", "url": '#'})
+    Usage::
+
+      rptObj.ui.link({"text": "Profiling results", "url": '#'})
 
     l = rptObj.ui.links.link('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
     b = rptObj.ui.images.badge("new")
@@ -146,9 +146,9 @@ class Links(object):
     ------------
     Python interface to the Hyperlink to retrieve data
 
-    Usage:
-    ------
-    data_link = rptObj.ui.links.data("link", "test#data")
+    Usage::
+
+      data_link = rptObj.ui.links.data("link", "test#data")
     data_link.build({"text": 'new link Name', 'data': "new content"})
 
     Attributes:
@@ -169,10 +169,9 @@ class Links(object):
     Description:
     ------------
 
-    Usage:
-    ------
+    Usage::
 
-    Related Pages:
+      Related Pages:
     --------------
 
     Attributes:

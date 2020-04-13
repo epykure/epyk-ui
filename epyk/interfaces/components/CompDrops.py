@@ -17,9 +17,9 @@ class DropData(object):
     Files will also be recorded in the database in order to ensure that those data will not be shared.
     The data sharing is and should be defined only by the user from the UI.
 
-    Usage:
-    ------
-    rptObj.ui.drops.dropfile()
+    Usage::
+
+      rptObj.ui.drops.dropfile()
 
     Related Pages:
     --------------

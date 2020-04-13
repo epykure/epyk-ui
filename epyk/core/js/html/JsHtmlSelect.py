@@ -16,9 +16,9 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
     ------------
     Change the value of the text component
 
-    Usage:
-    ------
-    sw = rptObj.ui.buttons.switch()
+    Usage::
+
+      sw = rptObj.ui.buttons.switch()
     rptObj.ui.button("test").click([
       sw.dom.set_text("ok")])
 

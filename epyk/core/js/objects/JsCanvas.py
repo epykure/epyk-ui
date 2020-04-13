@@ -206,9 +206,9 @@ class Context2D(object):
 
     The gradient can be used to fill rectangles, circles, lines, text, etc.
 
-    Usage:
-    ------
-    canvas.ctx.createLinearGradient(0, 0, canvas.dom.width, 0, "test").
+    Usage::
+
+      canvas.ctx.createLinearGradient(0, 0, canvas.dom.width, 0, "test").
     addColorStop("0", "magenta").addColorStop("0.5", "blue").addColorStop("1.0", "red"),
     canvas.ctx.strokeStyle(rptObj.js.object("test")),
     canvas.ctx.strokeText("Hello World!", 10, 50),

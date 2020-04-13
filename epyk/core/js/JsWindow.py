@@ -27,9 +27,9 @@ class JsLocalStorage(object):
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage:
-    ------
-    jsObj.localStorage.key(0)
+    Usage::
+
+      jsObj.localStorage.key(0)
 
     Related Pages:
     --------------
@@ -49,9 +49,9 @@ class JsLocalStorage(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    :param key:
+    Usage::
+
+      :param key:
     :param data:
 
     :return:
@@ -64,9 +64,9 @@ class JsLocalStorage(object):
     ------------
     Python wrapper to getItem
 
-    Usage:
-    ------
-    jsObj.console.log(jsObj.sessionStorage["lastname"])
+    Usage::
+
+      jsObj.console.log(jsObj.sessionStorage["lastname"])
 
     Attributes:
     ----------
@@ -83,9 +83,9 @@ class JsLocalStorage(object):
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage:
-    ------
-    jsObj.localStorage.getItem("lastname", "test")
+    Usage::
+
+      jsObj.localStorage.getItem("lastname", "test")
 
     Related Pages:
     --------------
@@ -111,9 +111,9 @@ class JsLocalStorage(object):
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage:
-    ------
-    jsObj.localStorage.getItem("lastname")
+    Usage::
+
+      jsObj.localStorage.getItem("lastname")
 
     Related Pages:
     --------------
@@ -137,9 +137,9 @@ class JsLocalStorage(object):
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage:
-    ------
-    jsObj.localStorage.removeItem("lastname")
+    Usage::
+
+      jsObj.localStorage.removeItem("lastname")
 
     Related Pages:
     --------------
@@ -163,9 +163,9 @@ class JsLocalStorage(object):
     The localStorage object stores data with no expiration date.
     The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
-    Usage:
-    ------
-    jsObj.localStorage.clear()
+    Usage::
+
+      jsObj.localStorage.clear()
 
     Related Pages:
     --------------
@@ -220,9 +220,9 @@ class JsSessionStorage(object):
     ------------
     Python wrapper to getItem
 
-    Usage:
-    ------
-    jsObj.console.log(jsObj.sessionStorage["lastname"])
+    Usage::
+
+      jsObj.console.log(jsObj.sessionStorage["lastname"])
 
     Attributes:
     ----------
@@ -238,10 +238,10 @@ class JsSessionStorage(object):
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
-    Usage:
-    ------
-    sessionStorage.setItem("lastname", "Smith")
-    jsObj.sessionStorage.setItem("lastname", jsObj.objects.get("bin")),
+    Usage::
+
+      jsObj.sessionStorage.setItem("lastname", "Smith")
+      jsObj.sessionStorage.setItem("lastname", jsObj.objects.get("bin")),
 
     Related Pages:
     --------------
@@ -264,10 +264,10 @@ class JsSessionStorage(object):
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
-    Usage:
-    ------
-    sessionStorage.getItem("lastname")
-    jsObj.console.log(jsObj.sessionStorage.getItem("lastname"))
+    Usage::
+
+      jsObj.sessionStorage.getItem("lastname")
+      jsObj.console.log(jsObj.sessionStorage.getItem("lastname"))
 
     Attributes:
     ----------
@@ -284,9 +284,9 @@ class JsSessionStorage(object):
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
-    Usage:
-    ------
-    jsObj.sessionStorage.removeItem("lastname")
+    Usage::
+
+      jsObj.sessionStorage.removeItem("lastname")
 
     Related Pages:
     --------------
@@ -338,9 +338,9 @@ class JsHistory(object):
     ------------
     The length property returns the number of URLs in the history list of the current browser window.
 
-    Usage:
-    ------
-    rptObj.js.window.history.length
+    Usage::
+
+      rptObj.js.window.history.length
 
     Related Pages:
     --------------
@@ -356,9 +356,9 @@ class JsHistory(object):
     ------------
     The back() method loads the previous URL in the history list.
 
-    Usage:
-    ------
-    rptObj.js.window.history.back()
+    Usage::
+
+      rptObj.js.window.history.back()
 
     Related Pages:
     --------------
@@ -455,9 +455,9 @@ class JsHistory(object):
     This function is a simple wrapping function on top of the pushState history method.
     The purpose of this method is to make easier the update of the url whenever a component in the framework is updated.
 
-    Usage:
-    ------
-    htmlObj.js.js.window.history.updateState(self.htmlId, self.val)
+    Usage::
+
+      htmlObj.js.js.window.history.updateState(self.htmlId, self.val)
 
     Related Pages:
     --------------
@@ -527,11 +527,11 @@ class JsWindowEvent(object):
     ------------
     The DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
 
-    Usage:
-    ------
-    rptObj.js.addOnLoad(
+    Usage::
+
+      rptObj.js.addOnLoad(
       rptObj.js.window.events.addContentLoaded(rptObj.js.alert("DOM fully loaded and parsed"))
-    )
+      )
 
     Related Pages:
     --------------
@@ -765,9 +765,9 @@ class JsWindow(object):
     ------------
     Download the data from a flat file
 
-    Usage:
-    ------
-    rptObj.js.window.download(rptObj.js.window.btoa(rptObj.js.objects.get("test")), fileName="test.txt")
+    Usage::
+
+      rptObj.js.window.download(rptObj.js.window.btoa(rptObj.js.objects.get("test")), fileName="test.txt")
 
     Attributes:
     ----------
@@ -891,10 +891,10 @@ class JsWindow(object):
     ------------
     The alert() method displays an alert box with a specified message and an OK button.
 
-    Usage:
-    ------
-    rptObj.js.window.alert("Test")
-    rptObj.js.alert("Test 2")
+    Usage::
+
+      rptObj.js.window.alert("Test")
+      rptObj.js.alert("Test 2")
 
     Related Pages:
     --------------
@@ -917,10 +917,10 @@ class JsWindow(object):
     ------------
     Decodes a base-64 encoded string
 
-    Usage:
-    ------
-    jsObj.window.btoa("Test").setVar("bin")
-    jsObj.window.atob(jsObj.objects.get("bin"))
+    Usage::
+
+      jsObj.window.btoa("Test").setVar("bin")
+      jsObj.window.atob(jsObj.objects.get("bin"))
 
     Related Pages:
     --------------
@@ -940,9 +940,9 @@ class JsWindow(object):
     ------------
     Encodes a string in base-64
 
-    Usage:
-    ------
-    jsObj.window.btoa("Test").setVar("bin")
+    Usage::
+
+      jsObj.window.btoa("Test").setVar("bin")
 
     Related Pages:
     --------------
@@ -964,9 +964,9 @@ class JsWindow(object):
 
     The setInterval() method will continue calling the function until clearInterval() is called, or the window is closed.
 
-    Usage:
-    ------
-    jsObj.window.setInterval([jsObj.console.log(jsObj.math.random())], 5000)
+    Usage::
+
+      jsObj.window.setInterval([jsObj.console.log(jsObj.math.random())], 5000)
 
     Related Pages:
     --------------
@@ -996,10 +996,10 @@ class JsWindow(object):
 
     The ID value returned by setInterval() is used as the parameter for the clearInterval() method.
 
-    Usage:
-    ------
-    jsObj.window.setInterval([jsObj.console.log(jsObj.math.random())], 500).setVar("interva1"),
-    jsObj.window.clearInterval(jsObj.objects.get("interva1"))
+    Usage::
+
+      jsObj.window.setInterval([jsObj.console.log(jsObj.math.random())], 500).setVar("interva1"),
+      jsObj.window.clearInterval(jsObj.objects.get("interva1"))
 
     Related Pages:
     --------------
@@ -1022,9 +1022,9 @@ class JsWindow(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    rptObj.ui.button("Interval Toggle").click([
+    Usage::
+
+      rptObj.ui.button("Interval Toggle").click([
       rptObj.js.window.toggleInterval(rptObj.js.console.log('Print called'), 'test', 400),
     ])
 

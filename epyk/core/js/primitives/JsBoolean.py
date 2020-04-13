@@ -26,9 +26,9 @@ class JsBoolean(JsObject.JsObject):
     Add the Symbol (!) for the boolean negation.
     This feature is also available directly to the JsObj
 
-    Usage:
-    ------
-    jsObj.objects.boolean.get("weekend").not_
+    Usage::
+
+      jsObj.objects.boolean.get("weekend").not_
 
     Related Pages:
     --------------
@@ -45,10 +45,10 @@ class JsBoolean(JsObject.JsObject):
     -----------
     The valueOf() method returns the primitive value of a boolean.
 
-    Usage:
-    ------
-    jsObj.objects.boolean.new(False, "testBool")
-    jsObj.objects.boolean.get("testBool").valueOf()
+    Usage::
+
+      jsObj.objects.boolean.new(False, "testBool")
+      jsObj.objects.boolean.get("testBool").valueOf()
 
     Related Pages:
     --------------:

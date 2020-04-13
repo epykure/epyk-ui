@@ -12,9 +12,9 @@ class Panels(object):
     ------------
     Python wrapper to the Bootstrap Pills interface
 
-    Usage:
-    ------
-    tab = rptObj.ui.panels.pills()
+    Usage::
+
+      tab = rptObj.ui.panels.pills()
     for i in range(5):
       tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
 
@@ -37,9 +37,9 @@ class Panels(object):
     ------------
     Python wrapper for a multi Tabs component
 
-    Usage:
-    ------
-    tab = rptObj.ui.panels.tabs()
+    Usage::
+
+      tab = rptObj.ui.panels.tabs()
     for i in range(5):
       tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
 
@@ -160,9 +160,9 @@ class Panels(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    number = rptObj.ui.rich.number(500, "Test", height=(150, 'px'))
+    Usage::
+
+      number = rptObj.ui.rich.number(500, "Test", height=(150, 'px'))
     number_2 = rptObj.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
     div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)
 

@@ -14,9 +14,9 @@ class Media(object):
     Add a video from the server to the page.
     The format for the video must be MP4
 
-    Usage:
-    ------
-    rptObj.ui.media.video("CWWB3673.MP4")
+    Usage::
+
+      rptObj.ui.media.video("CWWB3673.MP4")
 
     Documentation
     https://www.w3schools.com/html/html5_video.asp
@@ -43,9 +43,9 @@ class Media(object):
     Add a audio track from the server to the page.
     The format for the video must be mpeg
 
-    Usage:
-    ------
-    rptObj.ui.media.video("CWWB3673.mpeg")
+    Usage::
+
+      rptObj.ui.media.video("CWWB3673.mpeg")
 
     Documentation
     https://www.w3schools.com/html/html5_video.asp
@@ -71,9 +71,9 @@ class Media(object):
     """
     This will add a youtube video using the shared line to embedded to a website.
 
-    Usage:
-    ------
-    rptObj.ui.media.youtube("https://www.youtube.com/embed/dfiHMtih5Ac")
+    Usage::
+
+      rptObj.ui.media.youtube("https://www.youtube.com/embed/dfiHMtih5Ac")
 
     Documentation
     https://www.w3schools.com/html/html5_video.asp

@@ -69,9 +69,9 @@ def untilVersion(data, newFeature):
   are not compatible anymore.
   This decorator will also propose an alternative with the new feature to.
 
-  Usage:
-  ------
-  .untilVersion({'jqueryui': '1.12.0'}, "new function")
+  Usage::
+
+      .untilVersion({'jqueryui': '1.12.0'}, "new function")
 
   :param data: String. The maximum version number of a package to use this function
   :param newFeature: String. The new function name

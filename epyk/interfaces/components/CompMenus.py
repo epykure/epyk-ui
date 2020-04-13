@@ -10,9 +10,9 @@ class Menus(object):
   def top(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
-    Usage:
-    ------
-    l = rptObj.ui.lists.list(["A", "B"])
+    Usage::
+
+      l = rptObj.ui.lists.list(["A", "B"])
 
     Related Pages:
     --------------
@@ -44,9 +44,9 @@ class Menus(object):
   def bottom(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
-    Usage:
-    ------
-    l = rptObj.ui.lists.list(["A", "B"])
+    Usage::
+
+      l = rptObj.ui.lists.list(["A", "B"])
 
     Related Pages:
     --------------
@@ -89,9 +89,9 @@ class Menus(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    l = rptObj.ui.lists.list(["A", "B"])
+    Usage::
+
+      l = rptObj.ui.lists.list(["A", "B"])
 
     Related Pages:
     --------------
@@ -141,9 +141,9 @@ class Menus(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    bs = rptObj.ui.buttons.buttons(["Button", "Button 2", "Button 3"])
+    Usage::
+
+      bs = rptObj.ui.buttons.buttons(["Button", "Button 2", "Button 3"])
     bs[2].click([
       rptObj.js.alert(bs[2].dom.content)
     ])
@@ -178,9 +178,9 @@ class Menus(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    record = []
+    Usage::
+
+      record = []
     rptObj.ui.menus.divisor(record)
 
     Attributes:
@@ -207,9 +207,9 @@ class Menus(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    mb = rptObj.ui.menus.button("Value", rptObj.ui.button("sub button"))
+    Usage::
+
+      mb = rptObj.ui.menus.button("Value", rptObj.ui.button("sub button"))
     mb.item.click([rptObj.js.alert(mb.item.dom.content)])
 
     Attributes:
@@ -247,9 +247,9 @@ class Menus(object):
     Description:
     ------------
 
-    Usage:
-    ------
-    tb = rptObj.ui.menus.toolbar(["fas fa-paint-brush", "fas fa-code"])
+    Usage::
+
+      tb = rptObj.ui.menus.toolbar(["fas fa-paint-brush", "fas fa-code"])
     tb[1].link.val = 4589
     tb[1].tooltip("This is a tooltip")
     tb[0].style.css.color = 'red'

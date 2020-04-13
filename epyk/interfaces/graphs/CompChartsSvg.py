@@ -14,9 +14,9 @@ class SVG(object):
 
     SVG defines vector-based graphics in XML format.
 
-    Usage:
-    ------
-    svg = rptObj.ui.charts.svg.new(width=200)
+    Usage::
+
+      svg = rptObj.ui.charts.svg.new(width=200)
     svg.add_text("I love SVG!", x=0, y=15, options={"fill": 'red'})
 
     Related Pages:
@@ -41,9 +41,9 @@ class SVG(object):
     ------------
     Entry point to the basic line definition in a SVG HTML Tag
 
-    Usage:
-    ------
-    rptObj.ui.charts.svg.line(10, 30, 40, 69)
+    Usage::
+
+      rptObj.ui.charts.svg.line(10, 30, 40, 69)
 
     Related Pages:
     --------------
@@ -113,9 +113,9 @@ class SVG(object):
     ------------
     SVG Ellipse - <ellipse>
 
-    Usage:
-    ------
-    rptObj.ui.charts.svg.ellipse(100, 100, 40, 69)
+    Usage::
+
+      rptObj.ui.charts.svg.ellipse(100, 100, 40, 69)
 
     Related Pages:
     --------------
@@ -141,9 +141,9 @@ class SVG(object):
     Description:
     ------------
 
-    Usage:
-    --------------
-    rptObj.ui.charts.svg.polyline([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])
+    Usage::
+
+      rptObj.ui.charts.svg.polyline([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])
 
     Related Pages:
     --------------
@@ -166,9 +166,9 @@ class SVG(object):
     Description:
     ------------
 
-    Usage:
-    --------------
-    rptObj.ui.charts.svg.polygone([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])
+    Usage::
+
+      rptObj.ui.charts.svg.polygone([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])
 
     Related Pages:
     --------------
@@ -191,9 +191,9 @@ class SVG(object):
     Description:
     ------------
 
-    Usage:
-    --------------
-    rptObj.ui.charts.svg.triangle((50, 100))
+    Usage::
+
+      rptObj.ui.charts.svg.triangle((50, 100))
 
     Related Pages:
     --------------
@@ -223,9 +223,9 @@ class SVG(object):
     Description:
     ------------
 
-    Usage:
-    --------------
-    svg = rptObj.ui.charts.svg.axes()
+    Usage::
+
+      svg = rptObj.ui.charts.svg.axes()
     m = svg.defs().marker("circle", "0 0 10 10", 5, 5)
     m.circle(5, 5, 5, 'red')
     m.markerWidth(10).markerHeight(10)

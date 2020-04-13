@@ -150,9 +150,9 @@ class Graphs(object):
     ------------
     Display a sparkline component
 
-    Usage:
-    --------------
-    rptObj.ui.charts.sparkline("box", [1, 2, 3, 4, 5, 4, 3, 2, 1])
+    Usage::
+
+      rptObj.ui.charts.sparkline("box", [1, 2, 3, 4, 5, 4, 3, 2, 1])
     rptObj.ui.charts.sparkline("bar", [1, 2, 3, 4, 5, 4, 3, 2, 10])
 
     Related Pages:
