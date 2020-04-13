@@ -101,17 +101,19 @@ class Report(object):
 
   @property
   def body(self):
+    """ Property that returns the body of the HTML report"""
     if self.__body is None:
       self.__body = html.Html.Body(self, None)
     return self.__body
 
   @body.setter
   def body(self, calc):
+    """"""
     self.__body = calc(self, None)
 
   @property
   def theme(self):
-    """ """
+    """ Returns the current used theme for the report """
     if self._theme is None:
       self._theme = Theme.ThemeDefault()
     return self._theme
@@ -119,7 +121,7 @@ class Report(object):
   @theme.setter
   def theme(self, theme):
     """
-
+    SEts the theme of the report
     :param theme:
     :return:
     """
