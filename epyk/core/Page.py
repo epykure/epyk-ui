@@ -111,7 +111,7 @@ class Report(object):
   @property
   def theme(self):
     """
-    Return the currently used theme for the report
+    Return the currently used :doc:`report/theme` for the report
     """
     if self._theme is None:
       self._theme = Theme.ThemeDefault()
@@ -171,7 +171,7 @@ class Report(object):
     ------------
     User Interface section.
 
-    All the components which can be used in the dashboard to display the data.
+    All the :doc:`components <report/ui>` which can be used in the dashboard to display the data.
     Within this object different categories of items can be used like (list, simple text, charts...)
 
     Related Pages:
