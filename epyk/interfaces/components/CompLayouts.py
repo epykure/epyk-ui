@@ -182,11 +182,23 @@ class Layouts(object):
     self.context.register(html_grid)
     return html_grid
 
-  def panel(self, htmlObjs=None, title=None, color=None, width=(100, "%"), height=(None, "px"),
-            htmlCode=None, helper=None, profile=False):
+  def panel(self, htmlObjs=None, title=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+            helper=None, options=None, profile=False):
+    """
+
+    :param htmlObjs:
+    :param title:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
-    html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs, title, color, width, height, htmlCode, helper, profile)
+    html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs or [], title, color, width, height, htmlCode, helper, options, profile)
     self.context.register(html_panel)
     return html_panel
 

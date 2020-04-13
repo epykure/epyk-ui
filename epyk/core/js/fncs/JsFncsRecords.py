@@ -145,7 +145,6 @@ class JsPercentage(JsRecFunc):
   @staticmethod
   def extendColumns(jsSchema, params):
     if params[0] is not None and params[1] is not None:
-      print(params)
       jsSchema['keys'] |= set(params[0])
       jsSchema['values'] |= set(params[1])
 

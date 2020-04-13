@@ -251,11 +251,24 @@ class ClassHtml(Properties.CssMixin):
     ------------
     Clear all the Style, Classes and CSS attrubites for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog
+
+    :return: self to allow the chaining
     """
     self.classList['main'] = OrderedSet()
     self._css_class = None
     return self
 
+  def clear_style(self):
+    """
+    Description:
+    ------------
+    Clear all the inline CSS styles defined for the component
+
+    :return: self to allow the chaining
+    """
+    self.htmlObj.attr['css'] = {}
+    self.css.attrs = {}
+    return self
 
   def clear_all(self):
     """
@@ -264,8 +277,10 @@ class ClassHtml(Properties.CssMixin):
     Clear all the Style, Classes and CSS attrubites for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog
     Set the default style to no marging and no padding
+
+    :return: self to allow the chaining
     """
-    self.htmlObj.attr['css'] = {}
+    self.clear_style()
     self.classList['main'] = OrderedSet()
     self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_margin()
     return self
@@ -275,6 +290,8 @@ class ClassHtml(Properties.CssMixin):
     Description:
     ------------
     Remove the predefined class and set the default one for the div components
+
+    :return: self to allow the chaining
     """
     self.classList['main'] = OrderedSet()
     self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()

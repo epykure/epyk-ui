@@ -8,6 +8,8 @@ class AttrDiv(Attrs):
     super(AttrDiv, self).__init__(rptObj)
     self.font_size = Defaults_css.font()
     self.vertical_align = "middle"
+    self.box_sizing = 'border-box'
+
 
 class AttrModal(Attrs):
   def __init__(self, rptObj):

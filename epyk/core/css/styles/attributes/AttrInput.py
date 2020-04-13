@@ -11,3 +11,4 @@ class AttrInput(Attrs):
     super(AttrInput, self).__init__(rptObj)
     self.font_size = Defaults_css.font()
     self.font_family = Defaults_css.Font.family
+    self.box_sizing = 'border-box'

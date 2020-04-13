@@ -1,9 +1,11 @@
 
 from epyk.core.html import Html
+from epyk.core.html import Defaults
 from epyk.core.html.options import OptPanel
 from epyk.core.html.options import OptText
 #
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlPanels
 
 # The list of CSS classes#
@@ -14,7 +16,7 @@ from epyk.core.css.styles import GrpClsContainer
 class Panel(Html.Html):
   name, category, callFnc = 'Panel', 'Layouts', 'panel'
 
-  def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, profile):
+  def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
     if isinstance(htmlObj, list) and htmlObj:
       for obj in htmlObj:
         if hasattr(obj, 'inReport'):
@@ -29,12 +31,19 @@ class Panel(Html.Html):
     container = report.ui.div(htmlObj)
     container.inReport = False
     component.append(container)
+    self.add_helper(helper)
     super(Panel, self).__init__(report, component, code=htmlCode, profile=profile,
                                 css_attrs={"color": color, "width": width, "height": height})
     container.set_attrs(name="name", value="panel_%s" % self.htmlId)
 
   @property
   def style(self):
+    """
+    Description:
+    ------------
+
+    :rtype: GrpClsContainer.ClassDiv
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassDiv(self)
     return self._styleObj
@@ -48,12 +57,15 @@ class Panel(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtmlPanels.JsHtmlPanel
     """
     if self._dom is None:
@@ -70,23 +82,26 @@ class PanelSplit(Html.Html):
   name, category, callFnc = 'Panel Split', 'Layouts', 'panelsplit'
 
   def __init__(self, report, width, height, left_width, left_obj, right_obj, resizable, helper, profile):
-    super(PanelSplit, self).__init__(report, None, width=width[0], widthUnit=width[1], height=height[0],
-                                     heightUnit=height[1], profile=profile)
-    self.left_width, self.htmlMaps, self.resizable = left_width, {}, resizable
+    super(PanelSplit, self).__init__(report, None, css_attrs={"width": width, "height": height, 'white-space': 'nowrap'}, profile=profile)
+    self.left_width, self.resizable = left_width, resizable
     if left_obj is not None:
       self.left(left_obj)
     if right_obj is not None:
       self.right(right_obj)
-    self.css_left = {'flex': '0 0 auto', 'padding': '5px', 'min-width': '100px', 'width': self.left_width,
+    self.css_left = {'flex': '0 0 auto', 'overflow': 'auto', 'padding': '5px', 'min-width': '100px', 'width': "%s%s" % (self.left_width[0], self.left_width[1]),
                      'white-space': 'nowrap'}
-    self.css_right = {'flex': '0 1 auto', 'padding': '5px', 'width': '100%', 'background': self._report.theme.greys[0],
-                     'border-left': '3px solid %s' % self._report.theme.success[1]}
+    self.css_right = {'flex': '0 1 auto', 'overflow': 'auto', 'padding': '5px', 'width': '100%', 'background': self._report.theme.greys[0],
+                      'border-left': '3px solid %s' % self._report.theme.success[1]}
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
 
   def left(self, html_obj):
     """
+    Description:
+    ------------
     Add the left component to the panel
 
+    Attributes:
+    ----------
     :param html_obj:
     """
     html_obj.inReport = False
@@ -95,8 +110,12 @@ class PanelSplit(Html.Html):
 
   def right(self, html_obj):
     """
+    Description:
+    ------------
     Add the right component to the panel
 
+    Attributes:
+    ----------
     :param html_obj:
     """
     html_obj.inReport = False
@@ -122,12 +141,64 @@ class PanelSlide(Panel):
   name, category, callFnc = 'Slide Panel', 'Panels', 'slide'
 
   def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
-    super(PanelSlide, self).__init__(report, htmlObj, title, color, width, height, htmlCode, helper, profile)
-    self.title._vals = "<i style='float:left;margin:4px 5px 0 0' name='icon_%s' class='fas fa-caret-down'></i>%s" % (self.htmlId, self.title._vals)
-    self.title.click([
-      report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
-      report.js.getElementsByName("icon_%s" % self.htmlId).first.toggleClass("fa-caret-up")])
+    super(PanelSlide, self).__init__(report, htmlObj, None, color, width, height, htmlCode, helper, options, profile)
+    self.add_helper(helper)
+    self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 2px',
+                                              'line-height': "%spx" % Defaults.LINE_HEIGHT, 'font-size': "%spx" % Defaults.BIG_ICONS})
+    self.text = self._report.ui.title(title).css({"display": 'inline-block', 'margin': 0})
+    self.title = self._report.ui.div([self.icon, self.text])
+    self.title.inReport = False
     self.title.css({"cursor": 'pointer', "padding": "0 2px 0 0"})
+    self._vals, self.__clicks = [self.title] + self._vals, []
+    self.__options = OptPanel.OptionPanelSliding(report, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptPanel.OptionPanelSliding
+    """
+    return self.__options
+
+  def click(self, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+    Event added to the title bar.
+    This will be triggered first
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__clicks = jsFncs
+    return self
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    self.val[1] += htmlObj
+    return self
+
+  def __str__(self):
+    if self.options.expanded:
+      icon_change = self.options.icon_closed
+      icon_current = self.options.icon_expanded
+      self.icon.set_icon(self.options.icon_expanded)
+    else:
+      icon_change = self.options.icon_expanded
+      icon_current = self.options.icon_closed
+      self._vals[1].style.css.display = 'none'
+      self.icon.set_icon(self.options.icon_closed)
+    self.title.click(self.__clicks + [
+      self._report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
+      self.icon.dom.switchClass(icon_current, icon_change)])
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
+    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
 
 
 class Div(Html.Html):
@@ -152,7 +223,7 @@ class Div(Html.Html):
       htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     super(Div, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"color": color, "width": width, "height": height},
                               profile=profile)
-    self.htmlMaps, self.tag = {}, tag
+    self.tag = tag
     # Add the component predefined elements
     self.add_icon(icon)
     self.add_label(label)
@@ -164,6 +235,24 @@ class Div(Html.Html):
     if editable:
       self.set_attrs(name='contenteditable', value="true")
       self.css('overflow', 'auto')
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtmlRich
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlRich(self, report=self._report)
+    return self._dom
 
   def __add__(self, htmlObj):
     """ Add items to a container """
@@ -235,11 +324,45 @@ class Td(Html.Html):
     self.val.append(htmlObj)
     return self
 
+  def colspan(self, i):
+    """
+    Description:
+    ------------
+    The colspan attribute defines the number of columns a cell should span.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_td_colspan.asp
+
+    Attributes:
+    ----------
+    :param i:
+    """
+    self.attr['colspan'] = i
+    return self
+
+  def rowspan(self, i):
+    """
+    Description:
+    ------------
+    The rowspan attribute specifies the number of rows a cell should span.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/tags/att_td_rowspan.asp
+
+    Attributes:
+    ----------
+    :param i:
+    """
+    self.attr['rowspan'] = i
+    return self
+
   def __getitem__(self, i):
     return self.val[i]
 
   def __str__(self):
-    content = [htmlObj.html() if hasattr(htmlObj, 'inReport') else htmlObj for htmlObj in self.val]
+    content = [htmlObj.html() if hasattr(htmlObj, 'inReport') else str(htmlObj) for htmlObj in self.val]
     if self.header:
       return '<th %s>%s</th>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
 
@@ -266,11 +389,32 @@ class Tr(Html.Html):
     self.val.append(htmlObj)
     return self
 
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlPanels.JsHtmlTr
+    """
+    if self._dom is None:
+      self._dom = JsHtmlPanels.JsHtmlTr(self, report=self._report)
+    return self._dom
+
   def __getitem__(self, i):
     """
+    Description:
+    ------------
     Return the internal column in the row for the given index
 
+    Attributes:
+    ----------
     :param i: the column index
+
     :rtype: Td
     """
     return self.val[i]
@@ -316,7 +460,11 @@ class TSection(Html.Html):
 
   def __getitem__(self, i):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param i: Integer. The internal row based on the index
 
     :rtype: Tr
@@ -325,6 +473,9 @@ class TSection(Html.Html):
 
   def __add__(self, row_data):
     """ Add items to a container """
+    if not isinstance(row_data, Tr):
+      row_data = Tr(self._report, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"), 'center', None, False)
+
     self.val.append(row_data)
     return self
 
@@ -388,14 +539,47 @@ class Table(Html.Html):
     self.caption = Caption(self._report, text, color, align, width, height, htmlCode, tooltip, options, profile)
     return self.caption
 
+  def get_header(self, i=0):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param i: Integer.
+
+    :return:
+    """
+    return self.header.val[i]
+
+  def get_footer(self, i=0):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param i: Integer.
+
+    :return:
+    """
+    return self.footer.val[i]
+
   def __getitem__(self, i):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param i: Integer. The internal row based on the index
 
     :rtype: Tr
     """
-    return self.body[i]
+    if not self.body.val:
+      return []
+
+    return self.body.val[i]
 
   def __str__(self):
     caption = "" if self.caption is None else self.caption.html()
@@ -406,7 +590,7 @@ class Col(Html.Html):
   name, category, callFnc = 'Column', 'Layouts', 'col'
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
-    self.position, self.htmlMaps, self.rows_css, self.row_css_dflt = position, {}, {}, {}
+    self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
     super(Col, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
@@ -419,35 +603,54 @@ class Col(Html.Html):
     self.style.justify_content = self.position
 
   def __add__(self, htmlObj):
-    """ Add items to a container """
+    """
+    Description:
+    ------------
+    Add items to a container
+
+    Attributes:
+    ----------
+    :param htmlObj:
+
+    :return:
+    """
     if not hasattr(htmlObj, 'inReport'):
       htmlObj = self._report.ui.div(htmlObj)
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
-    self.htmlMaps[htmlObj.htmlId] = htmlObj
     return self
+
+  def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    """
+    return self.val[0].build(data, options, profile)
 
   def set_size(self, n):
     """
+    Description:
+    ------------
     Set the column size
 
-    Example
+    Usage:
+    ------
     ps = rptObj.ui.layouts.grid()
     ps += [rptObj.ui.text("test %s" % i) for i in range(5)]
     ps[0][0].set_size(10)
 
-    :return:
+    Attributes:
+    ----------
+
     """
     self.attr["class"].add("col-%s" % n)
     return self
-
-  def get(self, htmlCode):
-    """
-    Return the Html component in the parameter bar
-
-    :param htmlCode: The htmlCode for the component as a String
-    """
-    return self.htmlMaps[htmlCode]
 
   def __getitem__(self, i):
     return self.val[i]
@@ -478,7 +681,7 @@ class Row(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
-    self.position, self.htmlMaps = position, {}
+    self.position = position
     super(Row, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
@@ -486,6 +689,22 @@ class Row(Html.Html):
     self.attr["class"].add('row')
     self.attr["class"].add('no-gutters')
     self.style.justify_content = self.position
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlPanels.JsHtmlRow
+    """
+    if self._dom is None:
+      self._dom = JsHtmlPanels.JsHtmlRow(self, report=self._report)
+    return self._dom
 
   def __add__(self, htmlObj):
     """ Add items to a container """
@@ -495,16 +714,7 @@ class Row(Html.Html):
       htmlObj = self._report.ui.layouts.col(htmlObj)
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
-    # self.htmlMaps[htmlObj.htmlId] = htmlObj
     return self
-
-  def get(self, htmlCode):
-    """
-    Return the Html component in the parameter bar
-
-    :param htmlCode: The htmlCode for the component as a String
-    """
-    return self.htmlMaps[htmlCode]
 
   def __getitem__(self, i):
     """
@@ -530,7 +740,6 @@ class Grid(Html.Html):
     super(Grid, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'overflow-x': 'hidden', 'padding': 0})
     self.attr["class"].add("container-fluid")
-    self.htmlMaps = {}
     if align == 'center':
       self.css({'margin': 'auto'})
     if rows is not None:
@@ -552,15 +761,19 @@ class Grid(Html.Html):
         if dim is not None:
           row[-1].attr["class"].add("col-%s" % dim)
     row.inReport = False
-    self.htmlMaps[row.htmlId] = row
     self.val.append(row)
     #self.colsAlign.append("left")
     return self
 
   def __getitem__(self, i):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param i: Integer. The internal row based on the index
+
     :rtype: Row
     """
     return self.val[i]
@@ -568,28 +781,25 @@ class Grid(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtmlPanels.JsHtmlGrid
     """
     if self._dom is None:
       self._dom = JsHtmlPanels.JsHtmlGrid(self, report=self._report)
     return self._dom
 
-  def get(self, htmlCode):
-    """
-    Return the Html component in the parameter bar
-
-    :param htmlCode: The htmlCode for the component as a String
-    """
-    return self.htmlMaps[htmlCode]
-
   def resize(self):
     """
+    Description:
+    ------------
     For the resizing of the space for the containers.
 
     This will rescale based on the number of items and the fact that the max per row is 12
@@ -649,25 +859,37 @@ class Grid(Html.Html):
 class Tabs(Html.Html):
   name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
 
-  def __init__(self, report, color, width, height, htmlCode, helper, css_tab, options, profile):
+  def __init__(self, report, color, width, height, htmlCode, helper, options, profile):
     super(Tabs, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
-    self.__panels, self.__panel_objs = [], {}
+    self.__panels, self.__panel_objs, self.__selected = [], {}, None
     self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
-    self.css_tab = css_tab
-    self.options = options
-    self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self._report.theme.success[1]}
     self.tabs_container = self._report.ui.div([])
     self.tabs_container.inReport = False
+    self.add_helper(helper)
+    self.__options = OptPanel.OptionPanelTabs(report, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptPanel.OptionPanelTabs
+    """
+    return self.__options
 
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtmlPanels.JsHtmlTabs
     """
     if self._dom is None:
@@ -677,35 +899,57 @@ class Tabs(Html.Html):
   def __getitem__(self, name):
     return self.__panel_objs[name]
 
+  def select(self, name):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    """
+    self.__selected = name
+    return self
+
   def panel(self, name):
     """
+    Description:
+    ------------
+    Get the panel obkect
 
-    :param name:
+    Attributes:
+    ----------
+    :param name: String. The tab name
 
     :rtype: Div
-    :return:
     """
-    return self[name]["content"]
+    return self.__panel_objs[name]["content"]
 
   def tab(self, name):
     """
+    Description:
+    ------------
+    Get the tab container
 
-    :param name:
+    Attributes:
+    ----------
+    :param name: String. The tab name
 
     :rtype: Div
-    :return:
     """
-    return self[name]["tab"]
+    return self.__panel_objs[name]["tab"][0]
 
   def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param name:
     :param div:
-    :param selected:
+    :param selected: Boolean. Flag to set the selected panel
     :param css_tab:
-
-    :return:
     """
     div.css({"display": 'none'})
     div.inReport = False
@@ -717,48 +961,36 @@ class Tabs(Html.Html):
         name], width=("100", "px"))
     else:
       tab = self._report.ui.div(name, width=("100", "px"))
-    css_tab = dict(self.css_tab)
-    dflt_css_clicked, css_not_clicked = dict(self.css_tab_clicked_dflt), {}
-    if css_tab is not None:
-      css_tab.update(css_tab)
-    if css_tab_clicked is not None:
-      dflt_css_clicked = css_tab_clicked
-    for key, val in dflt_css_clicked.items():
-      if key in css_tab:
-        css_not_clicked[key] = css_tab[key]
-      else:
-        css_not_clicked[key] = 'none'
-    tab.css(css_tab).css({"padding": '5px 0'})
+    tab_style = self.options.tab_style(name, css_tab)
+    tab_style_clicked = self.options.tab_clicked_style(name, css_tab_clicked)
+    tab.css(tab_style).css({"padding": '5px 0'})
     tab.set_attrs(name="name", value=self.tabs_name)
     tab.set_attrs(name="data-index", value=len(self.__panels) - 1)
     tab_container = self._report.ui.div(tab, width=("100", "px"))
     tab_container.inReport = False
     tab_container.css({'display': 'inline-block'})
     css_cls_name = None
-    # if self.options.get("tab_class") is not None:
-    #   tab_container.defined.add(self.options.get("tab_class"), toMain=False)
-    #   css_cls_name = CssStyle.cssName(self.options.get("tab_class"))
     tab.click([
-      self.dom.deselect_tabs,
+      self.dom.deselect_tabs(),
       tab.dom.setAttribute("data-selected", True).r,
       self._report.js.getElementsByName(self.panels_name).all([
-        self._report.js.getElementsByName(self.tabs_name).all([
-          self._report.js.data.all.element.css(css_not_clicked)]),
-        tab.dom.css(dflt_css_clicked),
+        #self._report.js.getElementsByName(self.tabs_name).all([
+        #  self._report.js.data.all.element.css(self.options.tab_not_clicked_style(name))]),
+        tab.dom.css(tab_style_clicked),
         self._report.js.data.all.element.hide(),
         tab_container.dom.toggleClass(css_cls_name, propagate=True) if css_cls_name is not None else "",
-        div.dom.show()
-      ])
-    ])
+        div.dom.show()])])
     tab.inReport = False
-
     self.__panel_objs[name] = {"tab": tab_container, "content": div}
     if selected:
-      # simulate a click on the tab
-      pass
+      self.__selected = name
     return self
 
   def __str__(self):
+    if self.__selected is not None:
+      self.__panel_objs[self.__selected]["content"].style.css.display = 'block'
+      self.__panel_objs[self.__selected]["tab"][0].css(self.options.tab_clicked_style(self.__selected))
+      self.__panel_objs[self.__selected]["tab"][0].attr["data-selected"] = 'true'
     content = []
     for p in self.__panels:
       self.tabs_container += self.__panel_objs[p]["tab"]
@@ -772,13 +1004,14 @@ class IFrame(Html.Html):
   def __init__(self, report, url, width, height, helper, profile):
     super(IFrame, self).__init__(report, url, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow-x": 'hidden'})
+    self.add_helper(helper)
 
   @property
   def _js__builder__(self):
     return 'htmlObj.src = data'
 
   def __str__(self):
-    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>" % (self.val, self.get_attrs(pyClassNames=self.style.get_classes()))
+    return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>%s" % (self.val, self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class Dialog(Html.Html):

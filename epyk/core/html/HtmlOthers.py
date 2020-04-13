@@ -284,12 +284,12 @@ class Workflow(Html.Html):
     step.css({"border": '1px solid %s' % colors["border"], "border-radius": "20px", "width": '20px', "height": '20px',
               'padding': '2px', "background": colors["background"]})
     step.inReport = False
-    divs.append("<div style='display:inline-block;width:auto;height:auto'>%s<span>%s</span></div>" % (step, self.val[0].get("label", EntHtml4.NO_BREAK_SPACE)))
+    divs.append("<div style='display:inline-block;width:auto;height:auto;vertical-align:top'>%s<span>%s</span></div>" % (step, self.val[0].get("label", EntHtml4.NO_BREAK_SPACE)))
 
     for v in self.val[1:]:
       colors = self.status_colors.get(v.get('status', 'default'), self.status_colors['default'])
       # Add the link to the next step
-      line = self._report.ui.charts.svg.line(y1=10, y2=10, width=(40, "px"), height=(60, "px"), options={"stroke": colors["stroke"], "stroke-width": colors["stroke-width"]})
+      line = self._report.ui.charts.svg.line(y1=13, y2=13, width=(40, "px"), height=(60, "px"), options={"stroke": colors["stroke"], "stroke-width": colors["stroke-width"]})
       line.inReport = False
       divs.append(str(line))
 
@@ -298,5 +298,5 @@ class Workflow(Html.Html):
       step.css({"border": '1px solid %s' % colors["border"], "border-radius": "20px", "width": '20px', "height": '20px',
                 'padding': '2px', "background": colors["background"]})
       step.inReport = False
-      divs.append("<div style='display:inline-block;width:auto;height:auto'>%s<span>%s</span></div>" % (step, v.get("label", EntHtml4.NO_BREAK_SPACE)))
+      divs.append("<div style='display:inline-block;width:auto;height:auto;vertical-align:top'>%s<span>%s</span></div>" % (step, v.get("label", EntHtml4.NO_BREAK_SPACE)))
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(divs))

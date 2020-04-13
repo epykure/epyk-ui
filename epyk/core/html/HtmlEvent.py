@@ -409,20 +409,6 @@ class Slider(Html.Html):
 
   @property
   def _js__builder__(self):
-    """
-    if (options.type == 'date'){
-        data.step = data.step * 86400000; data.min = DateToTimeStamp(data.min); data.max = DateToTimeStamp(data.max);
-        if (data.values != undefined) {data.values = [DateToTimeStamp(data.values[0]), DateToTimeStamp(data.values[1])]}
-        else if(data.value != 0) {data.value = DateToTimeStamp(data.value)}};
-      if(!isNaN(data)){data = {value: data}};
-      %(jqId)s.slider(data);
-      $('#'+ %(jqId)s.attr('id') +' .ui-slider-range').css("background-color", options.backgroundColor);
-      $('#'+ %(jqId)s.attr('id') +' .ui-slider-handle').css({"outline": 0, "white-space": "nowrap"});
-      $('#'+ %(jqId)s.attr('id') +' .ui-slider-handle').css("color", options.backgroundColor);
-      $('#'+ %(jqId)s.attr('id') +' .ui-state-default, .ui-widget-content .ui-state-default' )
-
-    :return:
-    """
     return ''' options.value = data; %(jqId)s.slider(options).css(options.css)
       ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
 
