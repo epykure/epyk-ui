@@ -178,7 +178,7 @@ class Report(object):
     --------------
     https://www.w3schools.com/html/default.asp
 
-    :rtype: Components.Components
+    :rtype: :doc:`Components.Components <report/ui>`
 
     :return: Python HTML object
     """
@@ -189,10 +189,7 @@ class Report(object):
   @property
   def css(self):
     """
-    Description:
-    ------------
-
-    :return:
+    Returns the set of :doc:`CSS Classes <css>` for the HTML report
     """
     return Classes.Catalog(self, {'other': set()})._class_type('other')
 
@@ -204,12 +201,12 @@ class Report(object):
     Go to the Javascript section. Property to get all the JavaScript features.
     Most of the standard modules will be available in order to add event and interaction to the Js transpiled
 
-    Usage:
-    ------
-    js.console.log("test")
+    Usage::
+
+      js.console.log("test")
 
     Related Pages:
-    --------------
+
     https://www.w3schools.com/js/default.asp
 
     :return: Python HTML object
@@ -368,8 +365,9 @@ class Report(object):
     As NaN is not valid on the Json side those object are not allowed during the dump.
     It is advised to use fillna() in your script before returning the data to the framework to avoid this issue.
 
-    Example
-    report.dumps(result)
+    Example::
+
+      report.dumps(result)
 
     Documentation
     https://docs.python.org/2/library/json.html
