@@ -35,30 +35,30 @@ class Components(object):
     self.rptObj = rptObj
 
     # Special shortcut for some components
-    self.button = self.buttons.button
-    self.input = self.inputs.input
-    self.div = self.layouts.div
-    self.grid = self.layouts.grid
-    self.row = self.layouts.row
-    self.col = self.layouts.col
-    self.table = self.tables.tabulator
-    self.pivot = self.tables.pivot
-    self.text = self.texts.text
-    self.title = self.texts.title
-    self.icon = self.images.icon
-    self.img = self.images.img
-    self.list = self.lists.list
-    self.link = self.links.link
-    self.check = self.buttons.check
-    self.slider = self.sliders.slider
-    self.select = self.lists.select
-    self.lookup = self.lists.lookup
-    self.date = self.fields.cob
-    self.tree = self.lists.tree
-    self.info = self.rich.info
-    self.radio = self.buttons.radio
-    self.navbar = self.navigation.bar
-    self.footer = self.navigation.footer
+    self.button = self.buttons.button #: shortcut for button :func:`epyk.interfaces.components.CompButtons.Buttons.button`
+    self.input = self.inputs.input #: shortcut for input :func:`epyk.interfaces.components.CompInputs.Inputs.input`
+    self.div = self.layouts.div #: shortcut for div :func:`epyk.interfaces.components.CompLayouts.Layouts.div`
+    self.grid = self.layouts.grid #: shortcut for grid :func:`epyk.interfaces.components.CompLayouts.Layouts.grid`
+    self.row = self.layouts.row #: shortcut for row :func:`epyk.interfaces.components.CompLayouts.Layouts.row`
+    self.col = self.layouts.col #: shortcut for column :func:`epyk.interfaces.components.CompLayouts.Layouts.col`
+    self.table = self.tables.tabulator #: shortcut for tabulator :func:`epyk.interfaces.components.CompTables.Tables.tabulator`
+    self.pivot = self.tables.pivot #: shortcut for pivot :func:`epyk.interfaces.components.CompTables.Tables.pivot`
+    self.text = self.texts.text #: shortcut for text :func:`epyk.interfaces.components.CompTexts.Texts.text`
+    self.title = self.texts.title #: shortcut for title :func:`epyk.interfaces.components.CompTexts.Texts.title`
+    self.icon = self.images.icon #: shortcut for icon :func:`epyk.interfaces.components.CompImages.Images.icon`
+    self.img = self.images.img #: shortcut for img :func:`epyk.interfaces.components.CompImages.Images.img`
+    self.list = self.lists.list #: shortcut for list :func:`epyk.interfaces.components.CompLists.Lists.list`
+    self.link = self.links.link #: shortcut for link :func:`epyk.interfaces.components.CompLinks.Links.link`
+    self.check = self.buttons.check #: shortcut for check :func:`epyk.interfaces.components.CompButtons.Buttons.check`
+    self.slider = self.sliders.slider #: shortcut for slider :func:`epyk.interfaces.components.CompSliders.Sliders.slider`
+    self.select = self.lists.select #: shortcut for select :func:`epyk.interfaces.components.CompLists.Lists.select`
+    self.lookup = self.lists.lookup #: shortcut for lookup :func:`epyk.interfaces.components.CompLists.Lists.lookup`
+    self.date = self.fields.cob #: shortcut for date :func:`epyk.interfaces.components.CompFields.Fields.cob`
+    self.tree = self.lists.tree #: shortcut for tree :func:`epyk.interfaces.components.CompLists.Lists.tree`
+    self.info = self.rich.info #: shortcut for info :func:`epyk.interfaces.components.CompRich.Rich.input`
+    self.radio = self.buttons.radio #: shortcut for radio :func:`epyk.interfaces.components.CompButtons.Buttons.radio`
+    self.navbar = self.navigation.bar #: shortcut for bar :func:`epyk.interfaces.components.CompNavigation.Navigation.bar`
+    self.footer = self.navigation.footer #: shortcut for footer :func:`epyk.interfaces.components.CompNavigation.Navigation.footer`
 
   def css(self, cssAttrs):
     """
@@ -145,7 +145,7 @@ class Components(object):
 
     This category will take into account very specific and bespoke components.
     """
-    return CompVignets.Vignet(self)
+    return CompVignets.Vignets(self)
 
   @property
   def numbers(self):
@@ -156,7 +156,7 @@ class Components(object):
 
     The items in this category will not be editable and they will only provide nice number renderings
     """
-    return CompNumbers.Number(self)
+    return CompNumbers.Numbers(self)
 
   @property
   def texts(self):
@@ -536,7 +536,7 @@ class Components(object):
   def workflow(self, records, width=(None, '%'), height=(40, 'px'), color=None, options=None):
     """
     Description:
-    ------------
+
     Entry point for the workflow object
 
     Usage::
@@ -569,7 +569,7 @@ class Components(object):
       f = rptObj.ui.form()
 
     Attributes:
-    ----------
+
     :param action:
     :param method:
     :param helper:
