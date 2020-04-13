@@ -98,10 +98,7 @@ class Report(object):
   @property
   def body(self):
     """
-    Description:
-    ------------
-
-    :return:
+    Property that returns the Body element of the HTML page
     """
     if self.__body is None:
       self.__body = html.Html.Body(self, None)
@@ -114,12 +111,7 @@ class Report(object):
   @property
   def theme(self):
     """
-    Description:
-    ------------
-
-    :param theme:
-
-    :return:
+    Return the currently used theme for the report
     """
     if self._theme is None:
       self._theme = Theme.ThemeDefault()
@@ -135,10 +127,7 @@ class Report(object):
 
   def imports(self, online=False):
     """
-    Description:
-    ------------
-
-    :param online:
+    Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to run.
     """
     if self.__import_manage is None:
       self.__import_manage = Imports.ImportManager(online, report=self)
