@@ -26,6 +26,7 @@ Get Started
 In the following sections you will learn how to build complex HTML/JS reports using only python through the followings concepts:
 
 .. toctree::
+    :glob:
     :maxdepth: 5
     
     report
@@ -34,7 +35,7 @@ In the following sections you will learn how to build complex HTML/JS reports us
     html_builtins
     css_builtins
     js_builtins
-
+    
 
 Those are the basics of the Epyk framework, then you can move to using complex objects relying on Javascript Libraries such as:
 
