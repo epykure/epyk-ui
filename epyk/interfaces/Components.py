@@ -119,6 +119,9 @@ class Components(object):
   @property
   def navigation(self):
     """
+    Description:
+    ------------
+    Group all the UI components dedicated to produce navigation components such as navigation bar, footer, banner...
     """
     return CompNavigation.Navigation(self)
 
@@ -327,8 +330,9 @@ class Components(object):
   @property
   def modal(self):
     """
-
-    :return:
+    Description:
+    ------------
+    Group all the UI components dedicated to produce modal components.
     """
     return CompModals.Modal(self)
 
@@ -436,10 +440,10 @@ class Components(object):
     Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
     This component is generic is need to be added to a component to work
 
-    Usage:
-    ------
-    menu = rptObj.ui.context_menu([{"text": 'text', 'event': 'alert("ok")'}])
-    rptObj.ui.title("Test").attach_menu(menu)
+    Usage::
+
+      menu = rptObj.ui.context_menu([{"text": 'text', 'event': 'alert("ok")'}])
+      rptObj.ui.title("Test").attach_menu(menu)
 
     Related Pages:
     --------------
@@ -535,12 +539,12 @@ class Components(object):
     ------------
     Entry point for the workflow object
 
-    Usage:
-    ------
-    rptObj.ui.workflow([
-      {"value": 'test 1', "status": 'success', 'label': 'test'},
-      {"value": 'test 2', "status": 'error'},
-      {"value": 'test 3', "status": 'pending'}])
+    Usage::
+
+      rptObj.ui.workflow([
+        {"value": 'test 1', "status": 'success', 'label': 'test'},
+        {"value": 'test 2', "status": 'error'},
+        {"value": 'test 3', "status": 'pending'}])
 
     Attributes:
     ----------
@@ -560,9 +564,9 @@ class Components(object):
     ------------
     Creates an new empty form
 
-    Usage:
-    ------
-    f = rptObj.ui.form()
+    Usage::
+
+      f = rptObj.ui.form()
 
     Attributes:
     ----------
