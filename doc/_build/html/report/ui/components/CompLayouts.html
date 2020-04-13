@@ -160,12 +160,13 @@
 <dd><p>Python wrapper for a column of HTML elements from Bootstrap</p>
 <p>This component is a container and it is used to display multiple Ares components in column.
 You can first add a component in the data list then add the + operator to add more.</p>
-<dl class="simple">
-<dt>rptObj.ui.layouts.col([</dt><dd><p>rptObj.ui.text(“test C”),
-rptObj.ui.text(“test D”),</p>
-</dd>
-</dl>
-<p>])</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">col</span><span class="p">([</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;test C&quot;</span><span class="p">),</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;test D&quot;</span><span class="p">),</span>
+<span class="p">])</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/layout/grid/">https://getbootstrap.com/docs/4.0/layout/grid/</a>
 <a class="reference external" href="https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html">https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html</a></p>
 <dl class="field-list simple">
@@ -186,8 +187,11 @@ rptObj.ui.text(“test D”),</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompLayouts.Layouts.div">
 <code class="sig-name descname">div</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">htmlObjs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">editable</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'left'</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tag</span><span class="o">=</span><span class="default_value">'div'</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLayouts.Layouts.div" title="Permalink to this definition">¶</a></dt>
-<dd><p>div = rptObj.ui.div([html])
-div += html_2</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">div</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">div</span><span class="p">([</span><span class="n">html</span><span class="p">])</span>
+<span class="n">div</span> <span class="o">+=</span> <span class="n">html_2</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/tags/tag_div.asp">https://www.w3schools.com/tags/tag_div.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -229,8 +233,11 @@ div += html_2</p>
 <dt id="epyk.interfaces.components.CompLayouts.Layouts.grid">
 <code class="sig-name descname">grid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLayouts.Layouts.grid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Python wrapper to the HTML Bootstrap Grid</p>
-<p>gr = rptObj.ui.layouts.grid()
-gr += [rptObj.ui.text(“test %s” % i) for i in range(5)]</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gr</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">gr</span> <span class="o">+=</span> <span class="p">[</span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;test </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/layout/grid/">https://getbootstrap.com/docs/4.0/layout/grid/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -251,7 +258,10 @@ gr += [rptObj.ui.text(“test %s” % i) for i in range(5)]</p>
 <code class="sig-name descname">hr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLayouts.Layouts.hr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper around the HT html tag.</p>
 <p>The &lt;hr&gt; tag defines a thematic break in an HTML page (e.g. a shift of topic).</p>
-<p>rptObj.ui.layouts.hr(10)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">hr</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/tags/tag_hr.asp">https://www.w3schools.com/tags/tag_hr.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -270,9 +280,12 @@ gr += [rptObj.ui.text(“test %s” % i) for i in range(5)]</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompLayouts.Layouts.icons">
 <code class="sig-name descname">icons</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">icon_names</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLayouts.Layouts.icons" title="Permalink to this definition">¶</a></dt>
-<dd><p>menu = rptObj.ui.layouts.icons([“fas fa-bell”, “fas fa-calendar-check”])
-menu.icon.click([menu.icon.dom.css({“color”: ‘red’})])
-menu[0].click([menu[0].dom.css({“color”: ‘red’})])</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">menu</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">icons</span><span class="p">([</span><span class="s2">&quot;fas fa-bell&quot;</span><span class="p">,</span> <span class="s2">&quot;fas fa-calendar-check&quot;</span><span class="p">])</span>
+<span class="n">menu</span><span class="o">.</span><span class="n">icon</span><span class="o">.</span><span class="n">click</span><span class="p">([</span><span class="n">menu</span><span class="o">.</span><span class="n">icon</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">css</span><span class="p">({</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">})])</span>
+<span class="n">menu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">click</span><span class="p">([</span><span class="n">menu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">css</span><span class="p">({</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">})])</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -290,7 +303,10 @@ menu[0].click([menu[0].dom.css({“color”: ‘red’})])</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompLayouts.Layouts.iframe">
 <code class="sig-name descname">iframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLayouts.Layouts.iframe" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.layouts.iframe(“<a class="reference external" href="http://www.google.com">http://www.google.com</a>”)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">iframe</span><span class="p">(</span><span class="s2">&quot;http://www.google.com&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -333,7 +349,10 @@ menu[0].click([menu[0].dom.css({“color”: ‘red’})])</p>
 <code class="sig-name descname">new_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">count</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLayouts.Layouts.new_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper around the Br html tag.</p>
 <p>The &lt;br&gt; tag inserts a single line break.</p>
-<p>rptObj.ui.layouts.new_line(10)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">new_line</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/tags/tag_br.asp">https://www.w3schools.com/tags/tag_br.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -368,8 +387,11 @@ menu[0].click([menu[0].dom.css({“color”: ‘red’})])</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompLayouts.Layouts.popup">
 <code class="sig-name descname">popup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">htmlObj</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">withBackground</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">draggable</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">margin</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLayouts.Layouts.popup" title="Permalink to this definition">¶</a></dt>
-<dd><p>popup = report.popup(report.title(‘Test’), color=”red”)
-popup + report.paragraph(‘Test’)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">popup</span> <span class="o">=</span> <span class="n">report</span><span class="o">.</span><span class="n">popup</span><span class="p">(</span><span class="n">report</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+<span class="n">popup</span> <span class="o">+</span> <span class="n">report</span><span class="o">.</span><span class="n">paragraph</span><span class="p">(</span><span class="s1">&#39;Test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/tags/tag_div.asp">https://www.w3schools.com/tags/tag_div.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -400,13 +422,14 @@ popup + report.paragraph(‘Test’)</p>
 <dd><p>Python wrapper for a column of HTML elements from Bootstrap</p>
 <p>This component is a container and it is used to display multiple Ares components in column.
 You can first add a component in the data list then add the + operator to add more.</p>
-<p>row = rptObj.ui.layouts.row()
-row += rptObj.ui.layouts.col([</p>
-<blockquote>
-<div><p>rptObj.ui.text(“test A”),
-rptObj.ui.text(“test B”),</p>
-</div></blockquote>
-<p>])</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">row</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">row</span><span class="p">()</span>
+<span class="n">row</span> <span class="o">+=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">col</span><span class="p">([</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;test A&quot;</span><span class="p">),</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;test B&quot;</span><span class="p">),</span>
+<span class="p">])</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/layout/grid/">https://getbootstrap.com/docs/4.0/layout/grid/</a>
 <a class="reference external" href="https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html">https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html</a></p>
 <dl class="field-list simple">

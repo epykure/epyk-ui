@@ -157,7 +157,10 @@
 <dd><dl class="py method">
 <dt id="epyk.interfaces.components.CompMenus.Menus.bottom">
 <code class="sig-name descname">bottom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMenus.Menus.bottom" title="Permalink to this definition">¶</a></dt>
-<dd><p>l = rptObj.ui.lists.list([“A”, “B”])</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lists</span><span class="o">.</span><span class="n">list</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp">https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp</a>
 <a class="reference external" href="http://astronautweb.co/snippet/font-awesome/">http://astronautweb.co/snippet/font-awesome/</a></p>
 </dd></dl>
@@ -165,8 +168,11 @@
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompMenus.Menus.button">
 <code class="sig-name descname">button</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">object</span></em>, <em class="sig-param"><span class="n">symbol</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">'auto', ''</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMenus.Menus.button" title="Permalink to this definition">¶</a></dt>
-<dd><p>mb = rptObj.ui.menus.button(“Value”, rptObj.ui.button(“sub button”))
-mb.item.click([rptObj.js.alert(mb.item.dom.content)])</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mb</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">menus</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Value&quot;</span><span class="p">,</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;sub button&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>mb.item.click([rptObj.js.alert(mb.item.dom.content)])</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -185,11 +191,14 @@ mb.item.click([rptObj.js.alert(mb.item.dom.content)])</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompMenus.Menus.buttons">
 <code class="sig-name descname">buttons</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMenus.Menus.buttons" title="Permalink to this definition">¶</a></dt>
-<dd><p>bs = rptObj.ui.buttons.buttons([“Button”, “Button 2”, “Button 3”])
-bs[2].click([</p>
-<blockquote>
-<div><p>rptObj.js.alert(bs[2].dom.content)</p>
-</div></blockquote>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bs</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">buttons</span><span class="p">([</span><span class="s2">&quot;Button&quot;</span><span class="p">,</span> <span class="s2">&quot;Button 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Button 3&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>bs[2].click([</dt><dd><p>rptObj.js.alert(bs[2].dom.content)</p>
+</dd>
+</dl>
 <p>])</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -209,8 +218,11 @@ bs[2].click([</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompMenus.Menus.divisor">
 <code class="sig-name descname">divisor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">divider</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMenus.Menus.divisor" title="Permalink to this definition">¶</a></dt>
-<dd><p>record = []
-rptObj.ui.menus.divisor(record)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">record</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>rptObj.ui.menus.divisor(record)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -227,7 +239,10 @@ rptObj.ui.menus.divisor(record)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompMenus.Menus.menu">
 <code class="sig-name descname">menu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">position</span><span class="o">=</span><span class="default_value">'bottom'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMenus.Menus.menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>l = rptObj.ui.lists.list([“A”, “B”])</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lists</span><span class="o">.</span><span class="n">list</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp">https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp</a>
 <a class="reference external" href="http://astronautweb.co/snippet/font-awesome/">http://astronautweb.co/snippet/font-awesome/</a></p>
 </dd></dl>
@@ -235,8 +250,11 @@ rptObj.ui.menus.divisor(record)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompMenus.Menus.toolbar">
 <code class="sig-name descname">toolbar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">'auto', ''</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMenus.Menus.toolbar" title="Permalink to this definition">¶</a></dt>
-<dd><p>tb = rptObj.ui.menus.toolbar([“fas fa-paint-brush”, “fas fa-code”])
-tb[1].link.val = 4589
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tb</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">menus</span><span class="o">.</span><span class="n">toolbar</span><span class="p">([</span><span class="s2">&quot;fas fa-paint-brush&quot;</span><span class="p">,</span> <span class="s2">&quot;fas fa-code&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>tb[1].link.val = 4589
 tb[1].tooltip(“This is a tooltip”)
 tb[0].style.css.color = ‘red’</p>
 <dl class="field-list simple">
@@ -255,7 +273,10 @@ tb[0].style.css.color = ‘red’</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompMenus.Menus.top">
 <code class="sig-name descname">top</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMenus.Menus.top" title="Permalink to this definition">¶</a></dt>
-<dd><p>l = rptObj.ui.lists.list([“A”, “B”])</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">lists</span><span class="o">.</span><span class="n">list</span><span class="p">([</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp">https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp</a>
 <a class="reference external" href="http://astronautweb.co/snippet/font-awesome/">http://astronautweb.co/snippet/font-awesome/</a></p>
 </dd></dl>

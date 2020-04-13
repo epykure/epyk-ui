@@ -193,8 +193,11 @@
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsSvg.SVG.axes">
 <code class="sig-name descname">axes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">size</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">500, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">300, 'px'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsSvg.SVG.axes" title="Permalink to this definition">¶</a></dt>
-<dd><p>svg = rptObj.ui.charts.svg.axes()
-m = svg.defs().marker(“circle”, “0 0 10 10”, 5, 5)
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">svg</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">charts</span><span class="o">.</span><span class="n">svg</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>m = svg.defs().marker(“circle”, “0 0 10 10”, 5, 5)
 m.circle(5, 5, 5, ‘red’)
 m.markerWidth(10).markerHeight(10)
 p = svg.path(0, 0, from_origin=True).line_to(50, 100).horizontal_line_to(300).line_to(400, 200)
@@ -214,7 +217,10 @@ p.markers(m.url)</p>
 <dt id="epyk.interfaces.graphs.CompChartsSvg.SVG.ellipse">
 <code class="sig-name descname">ellipse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cx</span></em>, <em class="sig-param"><span class="n">cy</span></em>, <em class="sig-param"><span class="n">rx</span></em>, <em class="sig-param"><span class="n">ry</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">500, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">300, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsSvg.SVG.ellipse" title="Permalink to this definition">¶</a></dt>
 <dd><p>SVG Ellipse - &lt;ellipse&gt;</p>
-<p>rptObj.ui.charts.svg.ellipse(100, 100, 40, 69)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">charts</span><span class="o">.</span><span class="n">svg</span><span class="o">.</span><span class="n">ellipse</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">69</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_ellipse.asp">https://www.w3schools.com/graphics/svg_ellipse.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -253,7 +259,10 @@ c[0].transform(“transform”, “rotate”, “0 100 100”, “360 100 10”)
 <dt id="epyk.interfaces.graphs.CompChartsSvg.SVG.line">
 <code class="sig-name descname">line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">y1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">500, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">300, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsSvg.SVG.line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Entry point to the basic line definition in a SVG HTML Tag</p>
-<p>rptObj.ui.charts.svg.line(10, 30, 40, 69)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">charts</span><span class="o">.</span><span class="n">svg</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">69</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_line.asp">https://www.w3schools.com/graphics/svg_line.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -275,8 +284,11 @@ c[0].transform(“transform”, “rotate”, “0 100 100”, “360 100 10”)
 <code class="sig-name descname">new</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">500, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">300, 'px'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsSvg.SVG.new" title="Permalink to this definition">¶</a></dt>
 <dd><p>SVG stands for Scalable Vector Graphics.</p>
 <p>SVG defines vector-based graphics in XML format.</p>
-<p>svg = rptObj.ui.charts.svg.new(width=200)
-svg.add_text(“I love SVG!”, x=0, y=15, options={“fill”: ‘red’})</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">svg</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">charts</span><span class="o">.</span><span class="n">svg</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>svg.add_text(“I love SVG!”, x=0, y=15, options={“fill”: ‘red’})</p>
 <p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG">https://developer.mozilla.org/en-US/docs/Web/SVG</a>
 <a class="reference external" href="https://www.w3schools.com/graphics/svg_intro.asp">https://www.w3schools.com/graphics/svg_intro.asp</a></p>
 <dl class="field-list simple">
@@ -292,7 +304,10 @@ svg.add_text(“I love SVG!”, x=0, y=15, options={“fill”: ‘red’})</p>
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsSvg.SVG.polygone">
 <code class="sig-name descname">polygone</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">500, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">300, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsSvg.SVG.polygone" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.charts.svg.polygone([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">charts</span><span class="o">.</span><span class="n">svg</span><span class="o">.</span><span class="n">polygone</span><span class="p">([(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">80</span><span class="p">),</span> <span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">43</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="p">(</span><span class="mi">57</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="p">(</span><span class="mi">71</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="mi">85</span><span class="p">,</span> <span class="mi">15</span><span class="p">)])</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/tryit.asp?filename=trysvg_polygon">https://www.w3schools.com/graphics/tryit.asp?filename=trysvg_polygon</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -309,7 +324,10 @@ svg.add_text(“I love SVG!”, x=0, y=15, options={“fill”: ‘red’})</p>
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsSvg.SVG.polyline">
 <code class="sig-name descname">polyline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">500, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">300, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsSvg.SVG.polyline" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.charts.svg.polyline([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">charts</span><span class="o">.</span><span class="n">svg</span><span class="o">.</span><span class="n">polyline</span><span class="p">([(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">80</span><span class="p">),</span> <span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mi">43</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="p">(</span><span class="mi">57</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="p">(</span><span class="mi">71</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="mi">85</span><span class="p">,</span> <span class="mi">15</span><span class="p">)])</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_polyline.asp">https://www.w3schools.com/graphics/svg_polyline.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -361,7 +379,10 @@ svg.add_text(“I love SVG!”, x=0, y=15, options={“fill”: ‘red’})</p>
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsSvg.SVG.triangle">
 <code class="sig-name descname">triangle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point1</span></em>, <em class="sig-param"><span class="n">point2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">point3</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fill</span><span class="o">=</span><span class="default_value">'None'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">500, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">300, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsSvg.SVG.triangle" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.charts.svg.triangle((50, 100))</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">charts</span><span class="o">.</span><span class="n">svg</span><span class="o">.</span><span class="n">triangle</span><span class="p">((</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_polyline.asp">https://www.w3schools.com/graphics/svg_polyline.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

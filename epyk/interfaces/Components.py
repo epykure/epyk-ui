@@ -59,6 +59,8 @@ class Components(object):
     self.radio = self.buttons.radio #: shortcut for radio :func:`epyk.interfaces.components.CompButtons.Buttons.radio`
     self.navbar = self.navigation.bar #: shortcut for bar :func:`epyk.interfaces.components.CompNavigation.Navigation.bar`
     self.footer = self.navigation.footer #: shortcut for footer :func:`epyk.interfaces.components.CompNavigation.Navigation.footer`
+    self.modal = self.modals.forms #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.forms`
+    self.disclaimer = self.modals.disclaimer #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.disclaimer`
 
   def css(self, cssAttrs):
     """
@@ -328,13 +330,13 @@ class Components(object):
     return CompForms.Forms(self)
 
   @property
-  def modal(self):
+  def modals(self):
     """
     Description:
     ------------
     Group all the UI components dedicated to produce modal components.
     """
-    return CompModals.Modal(self)
+    return CompModals.Modals(self)
 
   @property
   def charts(self):

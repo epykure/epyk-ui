@@ -157,7 +157,11 @@
 <dd><dl class="py method">
 <dt id="epyk.interfaces.components.CompLinks.Links.bridge">
 <code class="sig-name descname">bridge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">script_name</span></em>, <em class="sig-param"><span class="n">report_name</span></em>, <em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">jsData</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">context</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLinks.Links.bridge" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>text</strong> – </p></li>
@@ -197,8 +201,11 @@
 <dt id="epyk.interfaces.components.CompLinks.Links.data">
 <code class="sig-name descname">data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'txt'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLinks.Links.data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Python interface to the Hyperlink to retrieve data</p>
-<p>data_link = rptObj.ui.links.data(“link”, “test#data”)
-data_link.build({“text”: ‘new link Name’, ‘data’: “new content”})</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_link</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s2">&quot;link&quot;</span><span class="p">,</span> <span class="s2">&quot;test#data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>data_link.build({“text”: ‘new link Name’, ‘data’: “new content”})</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -216,7 +223,10 @@ data_link.build({“text”: ‘new link Name’, ‘data’: “new content”}
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompLinks.Links.external">
 <code class="sig-name descname">external</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">decoration</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLinks.Links.external" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.links.external(‘data’, ‘www.google.fr’, icon=”fas fa-align-center”, options={“target”: “_blank”})</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">external</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;www.google.fr&#39;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;fas fa-align-center&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;target&quot;</span><span class="p">:</span> <span class="s2">&quot;_blank&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/TagS/att_a_href.asp">https://www.w3schools.com/TagS/att_a_href.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -238,7 +248,10 @@ data_link.build({“text”: ‘new link Name’, ‘data’: “new content”}
 <dt id="epyk.interfaces.components.CompLinks.Links.link">
 <code class="sig-name descname">link</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">decoration</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompLinks.Links.link" title="Permalink to this definition">¶</a></dt>
 <dd><p>Python interface to the common Hyperlink</p>
-<p>rptObj.ui.link({“text”: “Profiling results”, “url”: ‘#’})</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">link</span><span class="p">({</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Profiling results&quot;</span><span class="p">,</span> <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s1">&#39;#&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
 <p>l = rptObj.ui.links.link(‘data’, ‘www.google.fr’, icon=”fas fa-align-center”, options={“target”: “_blank”})
 b = rptObj.ui.images.badge(“new”)
 l.append_child(b)</p>
@@ -264,7 +277,10 @@ l.append_child(b)</p>
 <dd><p>Direct link to another report within the server.</p>
 <p>This is only dedicated to move between reports internally.
 If the target is to move between nodes, the function to use is rather bridge</p>
-<p>rptObj.ui.links.script(“TestParams”)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="s2">&quot;TestParams&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

@@ -175,8 +175,11 @@
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.bar">
 <code class="sig-name descname">bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">40, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.bar" title="Permalink to this definition">¶</a></dt>
-<dd><p>nav = rptObj.ui.navigation.bar(title=”test”)
-nav.add_text(“Test text”)
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nav</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>nav.add_text(“Test text”)
 nav + rptObj.ui.button(“Click”)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -195,7 +198,10 @@ nav + rptObj.ui.button(“Click”)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.dots">
 <code class="sig-name descname">dots</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">count</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">position</span><span class="o">=</span><span class="default_value">'right'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.dots" title="Permalink to this definition">¶</a></dt>
-<dd><p>d = rptObj.ui.navigation.dots(10)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">dots</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -214,7 +220,10 @@ nav + rptObj.ui.button(“Click”)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.down">
 <code class="sig-name descname">down</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">'fas fa-arrow-down'</span></em>, <em class="sig-param"><span class="n">top</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">right</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">bottom</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.down" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.navigation.down()</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">down</span><span class="p">()</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -234,7 +243,10 @@ nav + rptObj.ui.button(“Click”)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.indices">
 <code class="sig-name descname">indices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">count</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.indices" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.navigation.indices(10)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -252,8 +264,11 @@ nav + rptObj.ui.button(“Click”)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.path">
 <code class="sig-name descname">path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">divider</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.path" title="Permalink to this definition">¶</a></dt>
-<dd><p>record = [{“text”: “Lin 1”, ‘url’: ‘report_list.html’}, {“text”: “Link 2”}]
-rptObj.ui.navigation.path(record)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">record</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Lin 1&quot;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;report_list.html&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Link 2&quot;</span><span class="p">}]</span>
+</pre></div>
+</div>
+<p>rptObj.ui.navigation.path(record)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -271,7 +286,10 @@ rptObj.ui.navigation.path(record)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.pin">
 <code class="sig-name descname">pin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">'#'</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">'fas fa-map-pin'</span></em>, <em class="sig-param"><span class="n">top</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">right</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">bottom</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.pin" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.navigation.pin(“anchor”, tooltip=”test”, bottom=20)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">pin</span><span class="p">(</span><span class="s2">&quot;anchor&quot;</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -293,11 +311,14 @@ rptObj.ui.navigation.path(record)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.points">
 <code class="sig-name descname">points</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">count</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.points" title="Permalink to this definition">¶</a></dt>
-<dd><p>p = rptObj.ui.navigation.points(10)
-for i, _ in enumerate(p):</p>
-<blockquote>
-<div><p>p.click_item(i, [])</p>
-</div></blockquote>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">points</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>for i, _ in enumerate(p):</dt><dd><p>p.click_item(i, [])</p>
+</dd>
+</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -316,7 +337,10 @@ for i, _ in enumerate(p):</p>
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.scroll">
 <code class="sig-name descname">scroll</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">position</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">3, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.scroll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a horizontal progressbar to display the status of the page scrollbar.</p>
-<p>rptObj.ui.navigation.scroll()</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">scroll</span><span class="p">()</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -332,7 +356,10 @@ for i, _ in enumerate(p):</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.to">
 <code class="sig-name descname">to</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">x</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">'fas fa-map-pin'</span></em>, <em class="sig-param"><span class="n">top</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">right</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">bottom</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.to" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.navigation.to(100, tooltip=”test”)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -357,7 +384,10 @@ for i, _ in enumerate(p):</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.up">
 <code class="sig-name descname">up</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">'fas fa-arrow-up'</span></em>, <em class="sig-param"><span class="n">top</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">right</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">bottom</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.up" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.navigation.up()</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">up</span><span class="p">()</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

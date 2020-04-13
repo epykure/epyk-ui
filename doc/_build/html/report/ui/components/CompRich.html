@@ -175,7 +175,10 @@
 <dt id="epyk.interfaces.components.CompRich.Rich.countdown">
 <code class="sig-name descname">countdown</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">yyyy_mm_dd</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">'fas fa-stopwatch'</span></em>, <em class="sig-param"><span class="n">timeInMilliSeconds</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.countdown" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a countdown to the page and remove the content if the page has expired.</p>
-<p>rptObj.ui.rich.countdown(“2050-09-24”)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">countdown</span><span class="p">(</span><span class="s2">&quot;2050-09-24&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/js/js_date_methods.asp">https://www.w3schools.com/js/js_date_methods.asp</a>
 <a class="reference external" href="https://www.w3schools.com/howto/howto_js_countdown.asp">https://www.w3schools.com/howto/howto_js_countdown.asp</a>
 <a class="reference external" href="https://fontawesome.com/icons/stopwatch?style=solid">https://fontawesome.com/icons/stopwatch?style=solid</a></p>
@@ -199,7 +202,10 @@
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.delta">
 <code class="sig-name descname">delta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">80, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.delta" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.rich.delta({‘number’: 100, ‘prevNumber’: 60, ‘thresold1’: 100, ‘thresold2’: 50}, helper=”test”)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">delta</span><span class="p">({</span><span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;prevNumber&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;thresold1&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;thresold2&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -217,7 +223,10 @@
 <dt id="epyk.interfaces.components.CompRich.Rich.info">
 <code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display an info icon with a tooltip</p>
-<p>rptObj.ui.info(“Test”)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://fontawesome.com/icons/question-circle?style=solid">https://fontawesome.com/icons/question-circle?style=solid</a>
 <a class="reference external" href="https://api.jqueryui.com/tooltip/">https://api.jqueryui.com/tooltip/</a></p>
 <dl class="field-list simple">
@@ -234,8 +243,11 @@
 <dt id="epyk.interfaces.components.CompRich.Rich.light">
 <code class="sig-name descname">light</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.light" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a traffic light component to give a visual status of a given process</p>
-<p>rptObj.ui.rich.light(“red”, label=”label”, tooltip=”Tooltip”, helper=”Helper”)
-rptObj.ui.rich.light(True)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">light</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Tooltip&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;Helper&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>rptObj.ui.rich.light(True)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -253,7 +265,10 @@ rptObj.ui.rich.light(True)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.search_input">
 <code class="sig-name descname">search_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">placeholder</span><span class="o">=</span><span class="default_value">'Search..'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extensible</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.search_input" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.inputs.search()</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">search</span><span class="p">()</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search">https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -274,13 +289,20 @@ rptObj.ui.rich.light(True)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.search_results">
 <code class="sig-name descname">search_results</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">results_per_page</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.search_results" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.stars">
 <code class="sig-name descname">stars</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'left'</span></em>, <em class="sig-param"><span class="n">best</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.stars" title="Permalink to this definition">¶</a></dt>
 <dd><p>Entry point for the Stars component</p>
-<p>rptObj.ui.rich.stars(3, label=”test”, helper=”This is a helper”)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">stars</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;This is a helper&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>stars = rptObj.ui.rich.stars(3, label=”test”, helper=”This is a helper”)
 stars.click()</p>
 <p><a class="reference external" href="https://www.w3schools.com/howto/howto_css_star_rating.asp">https://www.w3schools.com/howto/howto_css_star_rating.asp</a></p>
@@ -303,7 +325,10 @@ stars.click()</p>
 <dt id="epyk.interfaces.components.CompRich.Rich.update">
 <code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Last Update time component</p>
-<p>rptObj.ui.rich.update(“Last update: “)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;Last update: &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

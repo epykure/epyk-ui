@@ -2,7 +2,7 @@
 from epyk.core import html
 
 
-class Modal(object):
+class Modals(object):
   def __init__(self, context):
     self.context = context
 

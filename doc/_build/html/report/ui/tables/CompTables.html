@@ -165,8 +165,11 @@ Developers using ag-Grid are building applications that would not be possible if
 <dl class="py method">
 <dt id="epyk.interfaces.tables.CompTables.Tables.basic">
 <code class="sig-name descname">basic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">cols</span></em>, <em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.basic" title="Permalink to this definition">¶</a></dt>
-<dd><p>simple_table = rptObj.ui.tables.basic(df.to_dict(“records”), cols=[“COL1”], rows=[“COL2”])
-simple_table.add({“COL1”: “Value”})</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">simple_table</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">basic</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s2">&quot;records&quot;</span><span class="p">),</span> <span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;COL1&quot;</span><span class="p">],</span> <span class="n">rows</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;COL2&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>simple_table.add({“COL1”: “Value”})</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -218,6 +221,10 @@ simple_table.add({“COL1”: “Value”})</p>
 <dd><p>The python interface to the javascript Datatable framework. Not all the functions have been wrapped here but you should be able to
 do the most frequent events and interactions with this component from the available function.
 Please keep in mind that the javascript is only trigger on the web browser (namely not with the Python code)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://datatables.net/reference/index">https://datatables.net/reference/index</a>
 <a class="reference external" href="https://datatables.net/reference/option/">https://datatables.net/reference/option/</a>
 <a class="reference external" href="https://datatables.net/reference/option/ajax.data">https://datatables.net/reference/option/ajax.data</a>
@@ -245,12 +252,17 @@ Please keep in mind that the javascript is only trigger on the web browser (name
 <dl class="py method">
 <dt id="epyk.interfaces.tables.CompTables.Tables.grid">
 <code class="sig-name descname">grid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">cols</span></em>, <em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.grid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Usage:</p>
+</dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.tables.CompTables.Tables.pivot">
 <code class="sig-name descname">pivot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">vals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">aggOptions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rendererName</span><span class="o">=</span><span class="default_value">'Table'</span></em>, <em class="sig-param"><span class="n">tableOptions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.pivot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a HTML Pivot table</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://pivottable.js.org/examples/">https://pivottable.js.org/examples/</a>
 <a class="reference external" href="https://react-pivottable.js.org/">https://react-pivottable.js.org/</a>
 <a class="reference external" href="https://jsfiddle.net/nicolaskruchten/w86bgq9o/">https://jsfiddle.net/nicolaskruchten/w86bgq9o/</a></p>
@@ -279,7 +291,11 @@ Please keep in mind that the javascript is only trigger on the web browser (name
 <dl class="py method">
 <dt id="epyk.interfaces.tables.CompTables.Tables.tabulator">
 <code class="sig-name descname">tabulator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">header</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'left'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.tabulator" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://tabulator.info/">http://tabulator.info/</a></p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="http://tabulator.info/">http://tabulator.info/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

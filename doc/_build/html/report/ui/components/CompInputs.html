@@ -196,7 +196,10 @@
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompInputs.Inputs.checkbox">
 <code class="sig-name descname">checkbox</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">flag</span></em>, <em class="sig-param"><span class="n">group_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">attrs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompInputs.Inputs.checkbox" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.inputs.checkbox(False)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">checkbox</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -216,8 +219,11 @@
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompInputs.Inputs.d_date">
 <code class="sig-name descname">d_date</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">placeholder</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">140, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">attrs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompInputs.Inputs.d_date" title="Permalink to this definition">¶</a></dt>
-<dd><p>date = rptObj.ui.dates.now(label=”date”)
-date.label.css({“width”: “auto”})</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">dates</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>date.label.css({“width”: “auto”})</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -239,7 +245,10 @@ date.label.css({“width”: “auto”})</p>
 <dt id="epyk.interfaces.components.CompInputs.Inputs.d_search">
 <code class="sig-name descname">d_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">placeholder</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">attrs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompInputs.Inputs.d_search" title="Permalink to this definition">¶</a></dt>
 <dd><p>One of the new types of inputs in HTML5 is search</p>
-<p>rptObj.ui.inputs.d_search(“”)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">d_search</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search">https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search</a>
 <a class="reference external" href="https://css-tricks.com/webkit-html5-search-inputs/">https://css-tricks.com/webkit-html5-search-inputs/</a></p>
 <dl class="field-list simple">
@@ -282,8 +291,11 @@ date.label.css({“width”: “auto”})</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompInputs.Inputs.d_time">
 <code class="sig-name descname">d_time</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">placeholder</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">139, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">attrs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompInputs.Inputs.d_time" title="Permalink to this definition">¶</a></dt>
-<dd><p>date = rptObj.ui.dates.now(label=”date”)
-date.label.css({“width”: “auto”})</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">dates</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>date.label.css({“width”: “auto”})</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -384,7 +396,10 @@ date.label.css({“width”: “auto”})</p>
 <dt id="epyk.interfaces.components.CompInputs.Inputs.radio">
 <code class="sig-name descname">radio</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">flag</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">group_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompInputs.Inputs.radio" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="https://www.w3schools.com/tags/att_input_type_radio.asp">https://www.w3schools.com/tags/att_input_type_radio.asp</a></p>
-<p>rptObj.ui.inputs.radio(False, label=”radio”)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">radio</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;radio&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -403,7 +418,10 @@ date.label.css({“width”: “auto”})</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompInputs.Inputs.search">
 <code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">placeholder</span><span class="o">=</span><span class="default_value">'Search..'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">extensible</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompInputs.Inputs.search" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.inputs.search()</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">search</span><span class="p">()</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search">https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -424,7 +442,10 @@ date.label.css({“width”: “auto”})</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompInputs.Inputs.textarea">
 <code class="sig-name descname">textarea</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">placeholder</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompInputs.Inputs.textarea" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.inputs.textarea(“Test”)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">textarea</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/tags/tag_textarea.asp">https://www.w3schools.com/tags/tag_textarea.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

@@ -159,10 +159,11 @@
 <code class="sig-name descname">block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">border</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">300, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompVignets.Vignets.block" title="Permalink to this definition">¶</a></dt>
 <dd><p>Every HTML element has a default display value depending on what type of element it is.
 The two display values are: block and inline.</p>
-<dl class="simple">
-<dt>rptObj.ui.vignets.block({“text”: ‘This is a brand new python framework’, “title”: ‘New Python Web Framework’,</dt><dd><p>“button”: {“text”: ‘Get Started’, ‘url’: “/getStarted”}, ‘color’: ‘green’})</p>
-</dd>
-</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">vignets</span><span class="o">.</span><span class="n">block</span><span class="p">({</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s1">&#39;This is a brand new python framework&#39;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s1">&#39;New Python Web Framework&#39;</span><span class="p">,</span>
+                       <span class="s2">&quot;button&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s1">&#39;Get Started&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s2">&quot;/getStarted&quot;</span><span class="p">},</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/htmL/html_blocks.asp">https://www.w3schools.com/htmL/html_blocks.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -188,7 +189,10 @@ A button is clicked and the event is directed to the button
 If an event handler is set for that object, the event is triggered
 If no event handler is set for that object, the event bubbles up (like a bubble in water) to the objects parent
 The event bubbles up from parent to parent until it is handled, or until it reaches the document object.</p>
-<p>rptObj.ui.vignets.bubble({“value”: 23, “title”: “Title”}, helper=”This is a helper”)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">vignets</span><span class="o">.</span><span class="n">bubble</span><span class="p">({</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Title&quot;</span><span class="p">},</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;This is a helper&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/jsref/event_bubbles.asp">https://www.w3schools.com/jsref/event_bubbles.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -214,8 +218,11 @@ max - specifies the maximum value allowed
 min - specifies the minimum value allowed
 step - specifies the legal number intervals
 value - Specifies the default value</p>
-<p>number = rptObj.ui.vignets.number(500, “Test”)
-number_2 = rptObj.ui.vignets.number(500, “Test 2 “, options={“url”: “<a class="reference external" href="http://www.google.fr">http://www.google.fr</a>”})
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">number</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">vignets</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>number_2 = rptObj.ui.vignets.number(500, “Test 2 “, options={“url”: “<a class="reference external" href="http://www.google.fr">http://www.google.fr</a>”})
 number.span.add_icon(rptObj.ui.icons.get.ICON_ENVELOPE)</p>
 <p><a class="reference external" href="https://www.w3schools.com/tags/att_input_type_number.asp">https://www.w3schools.com/tags/att_input_type_number.asp</a></p>
 <dl class="field-list simple">
@@ -234,10 +241,11 @@ number.span.add_icon(rptObj.ui.icons.get.ICON_ENVELOPE)</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompVignets.Vignets.text">
 <code class="sig-name descname">text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompVignets.Vignets.text" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>rptObj.ui.vignets.text({“title”: “New Python Framework”, ‘value’: “A new Python Web Framework”, ‘color’: ‘green’,</dt><dd><p>‘icon’: ‘fab fa-python’, ‘colorTitle’: ‘darkgreen’})</p>
-</dd>
-</dl>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">vignets</span><span class="o">.</span><span class="n">text</span><span class="p">({</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;New Python Framework&quot;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s2">&quot;A new Python Web Framework&quot;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+                      <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s1">&#39;fab fa-python&#39;</span><span class="p">,</span> <span class="s1">&#39;colorTitle&#39;</span><span class="p">:</span> <span class="s1">&#39;darkgreen&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

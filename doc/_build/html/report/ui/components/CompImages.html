@@ -159,8 +159,11 @@
 <code class="sig-name descname">animated</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.animated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Advance image with mask and gallery link.
 This will display some details when the mouse is on the container</p>
-<p>c = rptObj.ui.images.animated(“epykIcon.PNG”, text=”This is a comment”, title=”Title”, url=”#”, path=r”../../../static/images”)
-c.style.css.borders()</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">animated</span><span class="p">(</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;This is a comment&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>c.style.css.borders()</p>
 <p>Documentation
 <a class="reference external" href="https://tympanus.net/Tutorials/OriginalHoverEffects/">https://tympanus.net/Tutorials/OriginalHoverEffects/</a></p>
 <dl class="field-list simple">
@@ -183,8 +186,11 @@ c.style.css.borders()</p>
 <dt id="epyk.interfaces.components.CompImages.Images.avatar">
 <code class="sig-name descname">avatar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">image</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">status</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">30, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">30, 'px'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.avatar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate or load an avatar</p>
-<p>rptObj.ui.images.avatar(“Epyk”, status=’out’)
-rptObj.ui.images.avatar(image=”epykIcon.PNG”, path=config.IMG_PATH, status=False)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">avatar</span><span class="p">(</span><span class="s2">&quot;Epyk&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>rptObj.ui.images.avatar(image=”epykIcon.PNG”, path=config.IMG_PATH, status=False)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -205,8 +211,11 @@ rptObj.ui.images.avatar(image=”epykIcon.PNG”, path=config.IMG_PATH, status=F
 <dt id="epyk.interfaces.components.CompImages.Images.badge">
 <code class="sig-name descname">badge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.badge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display a badge component using Bootstrap</p>
-<p>rptObj.ui.images.badge(“Test badge”, “Label”, icon=”fas fa-align-center”)
-rptObj.ui.images.badge(“This is a badge”, background_color=”red”, color=”white”)
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">badge</span><span class="p">(</span><span class="s2">&quot;Test badge&quot;</span><span class="p">,</span> <span class="s2">&quot;Label&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;fas fa-align-center&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>rptObj.ui.images.badge(“This is a badge”, background_color=”red”, color=”white”)
 rptObj.ui.images.badge(12, icon=”far fa-bell”, options={“badge_position”: ‘right’})</p>
 <p>b = rptObj.ui.images.badge(7688, icon=”fab fa-python”, options={‘badge_css’: {‘color’: ‘white’, “background”: ‘red’}})
 b.options.badge_css = {“background”: ‘green’}</p>
@@ -232,10 +241,11 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <dt id="epyk.interfaces.components.CompImages.Images.carrousel">
 <code class="sig-name descname">carrousel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">images</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">300, 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.carrousel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Carousel component for pictures</p>
-<dl class="simple">
-<dt>car = rptObj.ui.images.carrousel([“epykIcon.PNG”, “epyklogo.ico”, “epyklogo_whole_big.png”],</dt><dd><p>path=r”../../../static/images”, height=(200, ‘px’))</p>
-</dd>
-</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">car</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">carrousel</span><span class="p">([</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="s2">&quot;epyklogo.ico&quot;</span><span class="p">,</span> <span class="s2">&quot;epyklogo_whole_big.png&quot;</span><span class="p">],</span>
+                           <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;px&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
 <p>car.click([rptObj.js.console.log(‘data’, skip_data_convert=True)])</p>
 <p><a class="reference external" href="https://www.cssscript.com/basic-pure-css-slideshow-carousel/">https://www.cssscript.com/basic-pure-css-slideshow-carousel/</a></p>
 <dl class="field-list simple">
@@ -256,7 +266,10 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <code class="sig-name descname">circular</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">'auto', ''</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.circular" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add an HTML image to the page. The path can be defined either in a absolute or relative format.</p>
 <p>Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server</p>
-<p>rptObj.ui.circular(“epykIcon.PNG”, path=r”../../../static/images”, height=(50, “px”))</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">circular</span><span class="p">(</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;px&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp">https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp</a>
 <a class="reference external" href="https://www.w3schools.com/cssref/css3_pr_border-radius.asp">https://www.w3schools.com/cssref/css3_pr_border-radius.asp</a></p>
 <dl class="field-list simple">
@@ -278,7 +291,10 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompImages.Images.emoji">
 <code class="sig-name descname">emoji</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">symbole</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">top</span><span class="o">=</span><span class="default_value">20, 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.emoji" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.images.emoji(rptObj.symbols.smileys.DISAPPOINTED_FACE)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">emoji</span><span class="p">(</span><span class="n">rptObj</span><span class="o">.</span><span class="n">symbols</span><span class="o">.</span><span class="n">smileys</span><span class="o">.</span><span class="n">DISAPPOINTED_FACE</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://github.com/wedgies/jquery-emoji-picker">https://github.com/wedgies/jquery-emoji-picker</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -294,7 +310,10 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompImages.Images.icon">
 <code class="sig-name descname">icon</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.icon" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.images.icon(“fab fa-angellist”)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">icon</span><span class="p">(</span><span class="s2">&quot;fab fa-angellist&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://fontawesome.com/icons?m=free">https://fontawesome.com/icons?m=free</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -315,7 +334,10 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <code class="sig-name descname">img</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.img" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add an HTML image to the page. The path can be defined either in a absolute or relative format.</p>
 <p>Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server</p>
-<p>rptObj.ui.img(“epykIcon.PNG”, path=r”../../../static/images”, height=(50, “px”))</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">img</span><span class="p">(</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;px&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp">https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp</a>
 <a class="reference external" href="https://www.w3schools.com/cssref/css3_pr_border-radius.asp">https://www.w3schools.com/cssref/css3_pr_border-radius.asp</a></p>
 <dl class="field-list simple">
@@ -337,7 +359,10 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompImages.Images.section">
 <code class="sig-name descname">section</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">image</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">200, 'px'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.section" title="Permalink to this definition">¶</a></dt>
-<dd><p>rptObj.ui.images.section(“epykIcon.PNG”, “# Test”, “Epyk Test”, ‘This is a test’, path=r”../../../static/images”)</p>
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">section</span><span class="p">(</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="s2">&quot;# Test&quot;</span><span class="p">,</span> <span class="s2">&quot;Epyk Test&quot;</span><span class="p">,</span> <span class="s1">&#39;This is a test&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

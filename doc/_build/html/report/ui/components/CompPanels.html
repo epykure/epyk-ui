@@ -179,11 +179,14 @@
 <dt id="epyk.interfaces.components.CompPanels.Panels.pills">
 <code class="sig-name descname">pills</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompPanels.Panels.pills" title="Permalink to this definition">¶</a></dt>
 <dd><p>Python wrapper to the Bootstrap Pills interface</p>
-<p>tab = rptObj.ui.panels.pills()
-for i in range(5):</p>
-<blockquote>
-<div><p>tab.add_panel(“Panel %s” % i, rptObj.ui.text(“test %s” % i))</p>
-</div></blockquote>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tab</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">panels</span><span class="o">.</span><span class="n">pills</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>for i in range(5):</dt><dd><p>tab.add_panel(“Panel %s” % i, rptObj.ui.text(“test %s” % i))</p>
+</dd>
+</dl>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/navs/">https://getbootstrap.com/docs/4.0/components/navs/</a></p>
 </dd></dl>
 
@@ -210,8 +213,11 @@ for i in range(5):</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompPanels.Panels.split">
 <code class="sig-name descname">split</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">left</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">right</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">left_width</span><span class="o">=</span><span class="default_value">160, 'px'</span></em>, <em class="sig-param"><span class="n">resizable</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompPanels.Panels.split" title="Permalink to this definition">¶</a></dt>
-<dd><p>number = rptObj.ui.rich.number(500, “Test”, height=(150, ‘px’))
-number_2 = rptObj.ui.rich.number(500, “Test 2 “, options={“url”: “<a class="reference external" href="http://www.google.fr">http://www.google.fr</a>”})
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">number</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="s1">&#39;px&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>number_2 = rptObj.ui.rich.number(500, “Test 2 “, options={“url”: “<a class="reference external" href="http://www.google.fr">http://www.google.fr</a>”})
 div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)</p>
 <p><a class="reference external" href="https://codepen.io/rstrahl/pen/eJZQej">https://codepen.io/rstrahl/pen/eJZQej</a></p>
 <dl class="field-list simple">
@@ -234,11 +240,14 @@ div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)</p>
 <dt id="epyk.interfaces.components.CompPanels.Panels.tabs">
 <code class="sig-name descname">tabs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompPanels.Panels.tabs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Python wrapper for a multi Tabs component</p>
-<p>tab = rptObj.ui.panels.tabs()
-for i in range(5):</p>
-<blockquote>
-<div><p>tab.add_panel(“Panel %s” % i, rptObj.ui.text(“test %s” % i))</p>
-</div></blockquote>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tab</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">panels</span><span class="o">.</span><span class="n">tabs</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>for i in range(5):</dt><dd><p>tab.add_panel(“Panel %s” % i, rptObj.ui.text(“test %s” % i))</p>
+</dd>
+</dl>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/navs/">https://getbootstrap.com/docs/4.0/components/navs/</a></p>
 </dd></dl>
 

@@ -162,7 +162,10 @@
 This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
 <p>All the notification can be hidden directly from the report by setting the flag alerts = False
 e.g: rptObj.alerts = False</p>
-<p>report.ui.messaging.alert(‘WARNING’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">report</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">messaging</span><span class="o">.</span><span class="n">alert</span><span class="p">(</span><span class="s1">&#39;WARNING&#39;</span><span class="p">,</span> <span class="s1">&#39;Server URL not recognized&#39;</span><span class="p">,</span> <span class="s1">&#39;Please check&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -190,8 +193,11 @@ e.g: rptObj.alerts = False</p>
 <dt id="epyk.interfaces.components.CompMessaging.Messaging.comments">
 <code class="sig-name descname">comments</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">recordset</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">pmts</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dbService</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">httpCodes</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">readonly</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.comments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Python wrapper to a div item composed to several sub html items to display message</p>
-<p>db = report.db(database=”test.db”)
-report.comments(‘Test’, dbService={‘db’: db, ‘com_table’: ‘comments’, ‘reply_table’: ‘replyComments’, ‘reply_service’: ‘post_reply/url’, ‘user_coms’: ‘user_comments’, ‘privacy’: ‘public’, ‘service’: your/url})</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">db</span> <span class="o">=</span> <span class="n">report</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;test.db&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>report.comments(‘Test’, dbService={‘db’: db, ‘com_table’: ‘comments’, ‘reply_table’: ‘replyComments’, ‘reply_service’: ‘post_reply/url’, ‘user_coms’: ‘user_comments’, ‘privacy’: ‘public’, ‘service’: your/url})</p>
 <p><a class="reference external" href="https://leaverou.github.io/bubbly/">https://leaverou.github.io/bubbly/</a>
 <a class="reference external" href="http://manos.malihu.gr/jquery-custom-content-scroller/">http://manos.malihu.gr/jquery-custom-content-scroller/</a></p>
 <dl class="field-list simple">
@@ -224,7 +230,10 @@ report.comments(‘Test’, dbService={‘db’: db, ‘com_table’: ‘comment
 This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
 <p>All the notification can be hidden directly from the report by setting the flag alerts = False
 e.g: rptObj.alerts = False</p>
-<p>rptObj.ui.messaging.alert(‘danger’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">messaging</span><span class="o">.</span><span class="n">alert</span><span class="p">(</span><span class="s1">&#39;danger&#39;</span><span class="p">,</span> <span class="s1">&#39;Server URL not recognized&#39;</span><span class="p">,</span> <span class="s1">&#39;Please check&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -252,7 +261,10 @@ e.g: rptObj.alerts = False</p>
 <dd><p>Function to add when the python run some tags to put on the top of your report messages.
 The type of the messages can be different according to its criticallity.
 This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
-<p>rptObj.ui.messaging.alert(‘info’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">messaging</span><span class="o">.</span><span class="n">alert</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;Server URL not recognized&#39;</span><span class="p">,</span> <span class="s1">&#39;Please check&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -264,8 +276,11 @@ This is fully defined and #driven in the Python and visible in the browser when 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompMessaging.Messaging.news">
 <code class="sig-name descname">news</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">link_script</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">320, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.news" title="Permalink to this definition">¶</a></dt>
-<dd><p>b = rptObj.ui.button(“Display”)
-n = rptObj.ui.messaging.news(“This is a title”, “This is the content”, link_script=”TestSlider”)
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Display&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>n = rptObj.ui.messaging.news(“This is a title”, “This is the content”, link_script=”TestSlider”)
 b.click(n.jsGenerate(“Updated content”, isPyData=True))</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -280,7 +295,10 @@ b.click(n.jsGenerate(“Updated content”, isPyData=True))</p>
 <dd><p>unction to add when the python run some tags to put on the top of your report messages.
 The type of the messages can be different according to its criticallity.
 This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
-<p>rptObj.ui.messaging.alert(‘success’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">messaging</span><span class="o">.</span><span class="n">alert</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="s1">&#39;Server URL not recognized&#39;</span><span class="p">,</span> <span class="s1">&#39;Please check&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -295,7 +313,10 @@ This is fully defined and #driven in the Python and visible in the browser when 
 <dd><p>Function to add when the python run some tags to put on the top of your report messages.
 The type of the messages can be different according to its criticallity.
 This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
-<p>rptObj.ui.messaging.alert(‘warning’, ‘Server URL not recognized’, ‘Please check’)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">messaging</span><span class="o">.</span><span class="n">alert</span><span class="p">(</span><span class="s1">&#39;warning&#39;</span><span class="p">,</span> <span class="s1">&#39;Server URL not recognized&#39;</span><span class="p">,</span> <span class="s1">&#39;Please check&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
