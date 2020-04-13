@@ -18,14 +18,9 @@ from epyk.core.css.styles.classes import CssStyle
 
 
 class CssPanelArrowDown(CssStyle.Style):
-  _after = {"content": '" "', "border-left": "15px solid transparent",
-           "border-right": "15px solid transparent",
-           "position": "relative",
-           #"top": "25px",
-           "width": "10px", "margin": "auto",
-           "display": "block", "bottom": "2px"
-           #"right": '15px'
-           }
+  _after = {"content": '" "', "border-left": "50px solid transparent",
+         "border-right": "50px solid transparent", "position": "relative",
+         "width": 0, "margin": "auto", "display": "block", "bottom": "2px"}
 
   def customize(self):
     self.after.css({"border-top": "15px solid %s" % self.rptObj.theme.success[1]})
@@ -51,12 +46,9 @@ class CssPanelArrowDown(CssStyle.Style):
 
 
 class CssPanelArrowUp(CssStyle.Style):
-  _after = {"content": '" "', "border-left": "15px solid transparent",
-           "border-right": "15px solid transparent",
-           "position": "relative",
-           "width": "10px", "left": "37px",
-           "display": "block", "bottom": '74px'
-           }
+  _after = {"content": '" "', "border-left": "50px solid transparent",
+         "border-right": "50px solid transparent", "position": "relative",
+         "width": 0, "display": "block", "bottom": '45px'}
 
   def customize(self):
     self.after.css({"border-bottom": "15px solid %s" % self.rptObj.theme.success[1]})
