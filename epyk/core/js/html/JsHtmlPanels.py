@@ -76,18 +76,22 @@ class JsHtmlTabs(JsHtml.JsHtml):
     return JsFncs.JsFunctions([
       JsObjects.JsNodeDom.JsDoms.new("div", varName="new_table"),
       JsObjects.JsNodeDom.JsDoms.new("div", varName="new_table_content"),
-      JsObjects.JsNodeDom.JsDoms.get("new_table").css({"width": "100px", "display": 'inline-block'}),
+      JsObjects.JsNodeDom.JsDoms.get("new_table").css({"width": "100px", "display": 'inline-block', "vertical-align": "middle", "box-sizing": 'border-box',
+                                                       'text-align': 'left'}),
       JsObjects.JsNodeDom.JsDoms.get("new_table_content").innerText(name),
       JsObjects.JsNodeDom.JsDoms.get("new_table_content").setAttribute("name", self._src.tabs_name),
-      JsObjects.JsNodeDom.JsDoms.get("new_table_content").css(self._src.css_tab),
+      JsObjects.JsNodeDom.JsDoms.get("new_table_content").css({"width": "100px"}),
+      JsObjects.JsNodeDom.JsDoms.get("new_table_content").css(self._src.options.css_tab),
       JsObjects.JsNodeDom.JsDoms.get("new_table_content").css({"padding": '5px 0'}),
       JsObjects.JsNodeDom.JsDoms.get("new_table").appendChild(JsObjects.JsObjects.get("new_table_content")),
+      JsObjects.JsNodeDom.JsDoms.new("div", varName="tab_container"),
       self.querySelector("div").appendChild(JsObjects.JsObjects.get("new_table")),
      ])
-    #return self._report.js.console.log( self._report.js.getElementsByName(self._src.tabs_name).length )
 
   def tab(self, i):
     """
+    Description:
+    ------------
     Return the Javascript tab object
 
     Example
@@ -101,6 +105,8 @@ class JsHtmlTabs(JsHtml.JsHtml):
   @property
   def selected_index(self):
     """
+    Description:
+    ------------
     Return the index of the selected tab
 
     :return:
@@ -110,20 +116,26 @@ class JsHtmlTabs(JsHtml.JsHtml):
   @property
   def selected_name(self):
     """
+    Description:
+    ------------
     Return the name of the selected tab
+
     :return:
     """
     return JsObjects.JsObjects.get("%s.querySelector('div[data-selected=true').innerHTML" % self.varId)
 
-  @property
   def deselect_tabs(self):
     """
+    Description:
+    ------------
     Deselect all the tabs in the component
 
     :return:
     """
     return JsFncs.JsFunctions([
       self._report.js.getElementsByName(self._src.tabs_name).all([
-        self._report.js.data.all.element.setAttribute("data-selected", False)
+        self._report.js.data.all.element.setAttribute("data-selected", False),
+        self._report.js.getElementsByName(self._src.tabs_name).all([
+          self._report.js.data.all.element.css(self._src.options.tab_not_clicked_style())])
       ])
     ])

@@ -6,8 +6,7 @@ class Panels(object):
   def __init__(self, context):
     self.context = context
 
-  def pills(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-            css_tab=None, options=None, profile=False):
+  def pills(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -23,18 +22,16 @@ class Panels(object):
     --------------
     https://getbootstrap.com/docs/4.0/components/navs/
     """
-    if css_tab is None:
-      css_tab = {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 'border-radius': '5px'}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
-                                        options or {}, profile)
-    html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
-    html_tabs.css_tab["background"] = html_tabs._report.theme.greys[0]
-    html_tabs.css_tab_clicked_dflt = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
+    dflt_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0', 'border-radius': '5px',
+                                'color': self.context.rptObj.theme.greys[-1], "background": self.context.rptObj.theme.greys[0]}}
+    if options is not None:
+      dflt_options.update(options)
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
+    html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
     self.context.register(html_tabs)
     return html_tabs
 
-  def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, css_tab=None, options=None, profile=False):
+  def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -51,16 +48,17 @@ class Panels(object):
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
-    if css_tab is None:
-      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
-                 "border-bottom": "1px solid white"}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
-                                        options or {}, profile)
+    dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
+                                "border-bottom": "1px solid white"}}
+    if options is not None:
+      dflt_options.update(options)
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper,
+                                        dflt_options, profile)
     self.context.register(html_tabs)
     return html_tabs
 
   def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-                css_tab=None, options=None, profile=False):
+                options=None, profile=False):
     """
     Description:
     ------------
@@ -71,19 +69,20 @@ class Panels(object):
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
-    if css_tab is None:
-      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 "border-bottom": "1px solid white"}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
-                                        options or {"tab_class": 'CssPanelArrowUp'}, profile)
-    html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
-    html_tabs.css_tab["height"] = "60px"
-    html_tabs.css_tab_clicked_dflt = {"background": html_tabs._report.theme.success[1], "color": "white"}
+    dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
+                                "border-bottom": "1px solid white"}}
+    if options is not None:
+      dflt_options.update(options)
+    # options or {"tab_class": 'CssPanelArrowUp'}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
+    html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
+    html_tabs.options.css_tab["height"] = "60px"
+    html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.success[1], "color": "white"}
     self.context.register(html_tabs)
     return html_tabs
 
   def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-                  css_tab=None, options=None, profile=False):
+                  options=None, profile=False):
     """
     Description:
     ------------
@@ -92,21 +91,21 @@ class Panels(object):
     Related Pages:
     --------------
     https://getbootstrap.com/docs/4.0/components/navs/
-
     """
-    if css_tab is None:
-      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 "border-bottom": "1px solid white"}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
-                                        options or {"tab_class": 'CssPanelArrowDown'}, profile)
-    html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
-    html_tabs.css_tab["height"] = "60px"
-    html_tabs.css_tab_clicked_dflt = {"background": html_tabs._report.theme.success[1], "color": "white"}
+    dflt_options = {
+      "css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
+                 "border-bottom": "1px solid white"}}
+    if options is not None:
+      dflt_options.update(options)
+    # options or {"tab_class": 'CssPanelArrowDown'}
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
+    html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
+    html_tabs.options.css_tab["height"] = "60px"
+    html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.success[1], "color": "white"}
     self.context.register(html_tabs)
     return html_tabs
 
-  def menu(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-           css_tab=None, options=None, profile=False):
+  def menu(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -116,14 +115,14 @@ class Panels(object):
     --------------
     https://getbootstrap.com/docs/4.0/components/navs/
     """
-    if css_tab is None:
-      css_tab = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                 'border-radius': '10px 10px 0 0'}
-    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, css_tab,
-                                        options or {}, profile)
-    html_tabs.css_tab["color"] = html_tabs._report.theme.greys[-1]
-    html_tabs.css_tab["background"] = html_tabs._report.theme.greys[0]
-    html_tabs.css_tab_clicked_dflt = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
+    dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
+                 'border-radius': '10px 10px 0 0'}}
+    if options is not None:
+      dflt_options.update(options)
+    html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
+    html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
+    html_tabs.options.css_tab["background"] = html_tabs._report.theme.greys[0]
+    html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
     html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs._report.theme.success[1]})
     self.context.register(html_tabs)
     return html_tabs

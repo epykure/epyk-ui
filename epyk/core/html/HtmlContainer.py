@@ -859,26 +859,37 @@ class Grid(Html.Html):
 class Tabs(Html.Html):
   name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
 
-  def __init__(self, report, color, width, height, htmlCode, helper, css_tab, options, profile):
+  def __init__(self, report, color, width, height, htmlCode, helper, options, profile):
     super(Tabs, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
-    self.__panels, self.__panel_objs = [], {}
+    self.__panels, self.__panel_objs, self.__selected = [], {}, None
     self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
-    self.css_tab = css_tab
-    self.options = options
-    self.css_tab_clicked_dflt = {"border-bottom": "1px solid %s" % self._report.theme.success[1]}
     self.tabs_container = self._report.ui.div([])
     self.tabs_container.inReport = False
     self.add_helper(helper)
+    self.__options = OptPanel.OptionPanelTabs(report, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptPanel.OptionPanelTabs
+    """
+    return self.__options
 
   @property
   def dom(self):
     """
+    Description:
+    ------------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
+
     :rtype: JsHtmlPanels.JsHtmlTabs
     """
     if self._dom is None:
@@ -888,35 +899,57 @@ class Tabs(Html.Html):
   def __getitem__(self, name):
     return self.__panel_objs[name]
 
+  def select(self, name):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    """
+    self.__selected = name
+    return self
+
   def panel(self, name):
     """
+    Description:
+    ------------
+    Get the panel obkect
 
-    :param name:
+    Attributes:
+    ----------
+    :param name: String. The tab name
 
     :rtype: Div
-    :return:
     """
-    return self[name]["content"]
+    return self.__panel_objs[name]["content"]
 
   def tab(self, name):
     """
+    Description:
+    ------------
+    Get the tab container
 
-    :param name:
+    Attributes:
+    ----------
+    :param name: String. The tab name
 
     :rtype: Div
-    :return:
     """
-    return self[name]["tab"]
+    return self.__panel_objs[name]["tab"][0]
 
   def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param name:
     :param div:
-    :param selected:
+    :param selected: Boolean. Flag to set the selected panel
     :param css_tab:
-
-    :return:
     """
     div.css({"display": 'none'})
     div.inReport = False
@@ -928,48 +961,36 @@ class Tabs(Html.Html):
         name], width=("100", "px"))
     else:
       tab = self._report.ui.div(name, width=("100", "px"))
-    css_tab = dict(self.css_tab)
-    dflt_css_clicked, css_not_clicked = dict(self.css_tab_clicked_dflt), {}
-    if css_tab is not None:
-      css_tab.update(css_tab)
-    if css_tab_clicked is not None:
-      dflt_css_clicked = css_tab_clicked
-    for key, val in dflt_css_clicked.items():
-      if key in css_tab:
-        css_not_clicked[key] = css_tab[key]
-      else:
-        css_not_clicked[key] = 'none'
-    tab.css(css_tab).css({"padding": '5px 0'})
+    tab_style = self.options.tab_style(name, css_tab)
+    tab_style_clicked = self.options.tab_clicked_style(name, css_tab_clicked)
+    tab.css(tab_style).css({"padding": '5px 0'})
     tab.set_attrs(name="name", value=self.tabs_name)
     tab.set_attrs(name="data-index", value=len(self.__panels) - 1)
     tab_container = self._report.ui.div(tab, width=("100", "px"))
     tab_container.inReport = False
     tab_container.css({'display': 'inline-block'})
     css_cls_name = None
-    # if self.options.get("tab_class") is not None:
-    #   tab_container.defined.add(self.options.get("tab_class"), toMain=False)
-    #   css_cls_name = CssStyle.cssName(self.options.get("tab_class"))
     tab.click([
-      self.dom.deselect_tabs,
+      self.dom.deselect_tabs(),
       tab.dom.setAttribute("data-selected", True).r,
       self._report.js.getElementsByName(self.panels_name).all([
-        self._report.js.getElementsByName(self.tabs_name).all([
-          self._report.js.data.all.element.css(css_not_clicked)]),
-        tab.dom.css(dflt_css_clicked),
+        #self._report.js.getElementsByName(self.tabs_name).all([
+        #  self._report.js.data.all.element.css(self.options.tab_not_clicked_style(name))]),
+        tab.dom.css(tab_style_clicked),
         self._report.js.data.all.element.hide(),
         tab_container.dom.toggleClass(css_cls_name, propagate=True) if css_cls_name is not None else "",
-        div.dom.show()
-      ])
-    ])
+        div.dom.show()])])
     tab.inReport = False
-
     self.__panel_objs[name] = {"tab": tab_container, "content": div}
     if selected:
-      # simulate a click on the tab
-      pass
+      self.__selected = name
     return self
 
   def __str__(self):
+    if self.__selected is not None:
+      self.__panel_objs[self.__selected]["content"].style.css.display = 'block'
+      self.__panel_objs[self.__selected]["tab"][0].css(self.options.tab_clicked_style(self.__selected))
+      self.__panel_objs[self.__selected]["tab"][0].attr["data-selected"] = 'true'
     content = []
     for p in self.__panels:
       self.tabs_container += self.__panel_objs[p]["tab"]
