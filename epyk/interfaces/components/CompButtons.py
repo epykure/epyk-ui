@@ -315,7 +315,9 @@ class Buttons(object):
 
     Usage::
 
-      Related Pages:
+      rptObj.ui.buttons.checkboxes(data)
+
+    Related Pages:
     --------------
     https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
 
@@ -394,7 +396,9 @@ class Buttons(object):
 
     Usage::
 
-      Related Pages:
+      rptObj.ui.buttons.zipfile('zip', 'C:\pathname')
+
+    Related Pages:
     --------------
     https://newseasandbeyond.wordpress.com/2014/01/27/creating-in-memory-zip-file-with-python/
 
