@@ -1,4 +1,6 @@
 
+from epyk.core.js import JsUtils
+
 
 class Effects(object):
 
@@ -129,7 +131,8 @@ class Effects(object):
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self
 
-  def animate(self, name, css_attrs, duration=1):
+  def animate(self, name, targ_css_attrs, orig_css_attrs=None, delay=0, duration=1, timing_function="ease-in-out",
+              iteration_count="infinite", directions="alternate"):
     """
     Description:
     ------------
@@ -144,11 +147,20 @@ class Effects(object):
     https://www.w3schools.com/cssref/css_animatable.asp
 
     :param name: String. The animation name
-    :param css_attrs: Dictionary. The different CSS attributes to animate
+    :param targ_css_attrs: Dictionary. The different CSS attributes to animate
+    :param orig_css_attrs: Dictionary. The initial state of the attributes to animate
+    :param delay: Integer. The delay in second before starting the animation
+    :param timing_function: String. The animation-timing-function property specifies the speed curve of the animation.
     :param duration: Integer. The animation duration in second
+    :param iteration_count: Integer. The animation count
+    :param directions: String. The animation-direction property specifies whether an animation should be played forwards, backwards or in alternate cycles.
     """
+    name = JsUtils.getJsValid(name, fail=False)
     keyframe_name = "animate_%s" % name
-    self._htmlObj.style.css.animation = "%s %ss ease-in-out infinite alternate" % (keyframe_name, duration)
-    attrs = {"from": css_attrs, "to": css_attrs}
+    self._htmlObj.style.css.animation = "%s %ss %s %ss %s %s" % (keyframe_name, duration, timing_function, delay, iteration_count, directions)
+    if orig_css_attrs is None:
+      attrs = {"to": targ_css_attrs}
+    else:
+      attrs = {"from": orig_css_attrs, "to": targ_css_attrs}
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self

@@ -76,10 +76,12 @@ class CatalogText(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesText.CssMarkRed)
 
-  def blue(self):
+  def colored(self):
     """
     Description:
     ------------
+    This class will change the font color to the 7th color of the colors theme.
+    The font weight will be set to bold also.
     """
     return self._set_class(CssStylesText.CssMarkBlue)
 

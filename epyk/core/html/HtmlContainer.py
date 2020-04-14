@@ -310,9 +310,10 @@ class Div(Html.Html):
 class Td(Html.Html):
   name, category, callFnc = 'Column', 'Layouts', 'col'
 
-  def __init__(self, report, htmlObjs, header, position, width, height, align, profile):
+  def __init__(self, report, htmlObjs, header, position, width, height, align, options, profile):
     self.position, self.rows_css, self.row_css_dflt, self.header = position, {}, {}, header
     super(Td, self).__init__(report, [], css_attrs={"width": width, "height": height, 'white-space': 'nowrap'}, profile=profile)
+    self.attr["align"] = align
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
@@ -385,7 +386,7 @@ class Tr(Html.Html):
     if not isinstance(htmlObj, Td):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
-      htmlObj = Td(self._report, htmlObj, self.header, None, (None, "%"), (None, "%"), None, False)
+      htmlObj = Td(self._report, htmlObj, self.header, None, (None, "%"), (None, "%"), 'center', None, False)
     self.val.append(htmlObj)
     return self
 
@@ -488,22 +489,33 @@ class TSection(Html.Html):
 class Table(Html.Html):
   name, category, callFnc = 'Table', 'Layouts', 'table'
 
-  def __init__(self, report, rows, width, height, align, helper, options, profile):
+  def __init__(self, report, rows, width, height, helper, options, profile):
     super(Table, self).__init__(report, [], css_attrs={"width": width, "height": height, 'table-layout': 'auto',
             'white-space': 'nowrap', 'border-collapse': 'collapse', 'box-sizing': 'border-box'}, profile=profile)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
+    self.__options = OptPanel.OptionPanelTable(report, options)
     self.header, self.body, self.footer = TSection(self._report, 'thead'), TSection(self._report, 'tbody'), TSection(self._report, 'tfoot')
     self.caption = None
     if rows is not None:
       for row in rows:
         self.__add__(row)
 
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptPanel.OptionPanelTable
+    """
+    return self.__options
+
   def __add__(self, row_data):
     """ Add items to a container """
     if isinstance(row_data, Tr):
       row = row_data
     else:
-      if not self.header.val and not self.body.val:
+      if not self.header.val and not self.body.val and self.options.header:
         row = Tr(self._report, row_data, True, None, (100, "%"), (100, "%"), 'center', None, False)
       else:
         row = Tr(self._report, row_data, False, None, (100, "%"), (100, "%"), 'left', None, False)
@@ -512,6 +524,42 @@ class Table(Html.Html):
     else:
       self.body += row
     return self
+
+  def from_array(self, data, dim):
+    """
+    Description:
+    ------------
+    Load data from a 2D array
+
+    Attributes:
+    ----------
+    :param data: Array. The list of data
+    :param dim: Integer. The number of columns in the table
+    """
+    v_count = len(data)
+    modulo_rest = v_count % dim
+    modulo_result = v_count // dim
+    for i in range(0, modulo_result):
+      row = [data[i * dim + j] for j in range(0, dim)]
+      self += row
+    if modulo_rest:
+      self += data[-modulo_rest:]
+
+  def line(self, text="&nbsp;", align="left", dim=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param align:
+    :param dim: Integer. The number of columns in the table
+    """
+    cell = Td(self._report, [text], False, None, (None, "%"), (None, "%"), align, None, False)
+    cell.colspan(dim or len(self.body.val[0].val))
+    self += Tr(self._report, [cell], False, None, (100, "%"), (100, "%"), align, None, False)
+    return cell
 
   def add_caption(self, text, color=None, align=None, width=(100, "%"), height=(100, "%"), htmlCode=None, tooltip=None,
                   options=None, profile=False):
@@ -1043,6 +1091,7 @@ class TabsArrowsUp(Tabs):
     super(TabsArrowsUp, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked)
     self.tab_holder(name).style.add_classes.layout.panel_arrow_up()
     return self
+
 
 class IFrame(Html.Html):
   name, category, callFnc = 'IFrame', 'Container', 'iframe'
