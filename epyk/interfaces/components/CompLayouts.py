@@ -134,7 +134,7 @@ class Layouts(object):
     self.context.register(html_col)
     return html_col
 
-  def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), align='left', helper=None, options=None, profile=None):
+  def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -145,12 +145,11 @@ class Layouts(object):
     :param htmlObjs:
     :param width:
     :param height:
-    :param align:
     :param helper:
     :param options:
     :param profile:
     """
-    html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, align, helper, options, profile)
+    html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, helper, options, profile)
     self.context.register(html_row)
     return html_row
 

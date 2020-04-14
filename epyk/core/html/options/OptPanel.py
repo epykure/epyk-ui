@@ -164,3 +164,18 @@ class OptionPanelTabs(Options):
     if css_style is not None:
      tab_not_clicked.update(css_style)
     return tab_not_clicked
+
+
+class OptionPanelTable(Options):
+
+  @property
+  def header(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @header.setter
+  def header(self, bool):
+    self.set(bool)

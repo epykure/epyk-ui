@@ -144,7 +144,7 @@ class ClassHtml(Properties.CssMixin):
   def __init__(self, htmlObj):
     self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
-    self.__cls_effects = None
+    self.__cls_effects, self.__css_virtual = None, {}
     self.classList['main'].add(self.css_class)
 
   @property
@@ -222,6 +222,73 @@ class ClassHtml(Properties.CssMixin):
     if self.__cls_catalog is None:
       self.__cls_catalog = Classes.Catalog(self.htmlObj._report, self.classList)
     return self.__cls_catalog._class_type('other')
+
+  def attr(self, key, name, dflt=None, suffix="temp"):
+    """
+    Description:
+    ------------
+    The attr() function returns the value of an attribute of the selected elements.
+
+    Related Pages:
+    --------------
+    https://www.w3schools.com/cssref/func_attr.asp
+
+    Attributes:
+    ----------
+    :param key:
+    :param name:
+    :param suffix:
+    """
+    key_selector = "_%s" % suffix
+    if not key_selector in self.__css_virtual:
+      self.__css_virtual[key_selector] = {}
+    if dflt is not None:
+      self.__css_virtual[key_selector].update({key: "attr(%s, %s)" % (name, dflt)})
+    else:
+      self.__css_virtual[key_selector].update({key: "attr(%s)" % name})
+
+  def attr_content(self, name):
+    """
+    Description:
+    ------------
+    Use of the attr function for the before content value.
+    This is the unique valid use of this CSS function in most of the browser
+
+    Related Pages:
+    --------------
+    https://gomakethings.com/how-to-access-and-use-data-attributes-in-your-css/
+
+    Attributes:
+    ----------
+    :param name:
+    """
+    self.attr("content", name, suffix='before')
+
+  def hover(self, attrs):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param attrs:
+    """
+    self.selector("hover", attrs)
+
+  def selector(self, suffix, attrs):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param suffix:
+    :param attrs:
+    """
+    key_selector = "_%s" % suffix
+    if not key_selector in self.__css_virtual:
+      self.__css_virtual[key_selector] = {}
+    self.__css_virtual[key_selector].update(attrs)
 
   def add_custom_class(self, classname, css_attrs):
     """
@@ -303,6 +370,14 @@ class ClassHtml(Properties.CssMixin):
     ------------
     Returns the list of Internal and bespoke classes to be added to the class HTML table on the component
     """
+    if self.__css_virtual and not '_attrs' in self.__css_virtual:
+      self.__css_virtual["_attrs"] = self.__css_virtual.get('_temp', {})
+      self.__css_virtual["_attrs"].update(dict(self.css.attrs))
+      self.__css_virtual['classname'] = "style_%s" % self.htmlObj.htmlId
+      meta_cls = type('Style%s' % self.htmlObj.htmlId, (CssStyle.Style,), self.__css_virtual)
+      self.css.attrs = {} # empty the css inline section
+      self.classList['main'].add(meta_cls(self.htmlObj._report))
+      self.htmlObj.attr['css'] = {}
     for css_cls in self.classList.values():
       for c in css_cls:
         if hasattr(c, 'get_ref'):

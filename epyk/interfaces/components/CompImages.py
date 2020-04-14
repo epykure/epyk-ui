@@ -1,3 +1,4 @@
+
 from epyk.core import html
 from epyk.core.css import Colors
 
@@ -325,3 +326,28 @@ class Images(object):
                                       tooltip, options or {}, profile)
     self.context.register(html_badge)
     return html_badge
+
+  def color(self, code, color=None, width=(110, 'px'), height=(25, 'px'), options=None, helper=None, profile=None):
+    """
+    Description:
+    ------------
+    Simple vignette to display a color with it is code
+
+    Attributes:
+    ----------
+    :param code: String. The color code
+    :param color: String. The font color
+    :param width: Tuple. The size with its unit
+    :param height: Tuple. The size with its unit
+    :param options: Dictionary. The object options
+    :param helper:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(code, width=width, height=height, options=options, helper=helper, profile=profile)
+    div.style.css.background_color = code
+    div.style.css.line_height = "%s%s" % (height[0], height[1])
+    div.style.css.color = color or self.context.rptObj.theme.greys[0]
+    div.style.css.text_align = "center"
+    div.style.css.border = "1px solid black"
+    div.style.css.vertical_align = "middle"
+    return div

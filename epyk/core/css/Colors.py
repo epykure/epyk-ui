@@ -158,10 +158,18 @@ def getHexToRgb(hexColor):
   ------------
   Convert a hexadecimal color to a rgb code
 
-  Usage::
+  An RGB color value is specified with the rgb() function, which has the following syntax:
+  rgb(red, green, blue)
+  Each parameter (red, green, and blue) defines the intensity of the color and can be an integer between 0 and 255 or a percentage value (from 0% to 100%).
+  For example, the rgb(0,0,255) value is rendered as blue, because the blue parameter is set to its highest value (255) and the others are set to 0.
+  Also, the following values define equal color: rgb(0,0,255) and rgb(0%,0%,100%).
 
-      >>> ColorMaker().getHexToRgb('#213B68')
+  Usage::
+  -------
+  ColorMaker().getHexToRgb('#213B68')
   [33, 59, 104]
+
+  https://www.w3schools.com/cssref/css_colors_legal.asp
 
   Attributes:
   ----------
@@ -176,6 +184,25 @@ def getHexToRgb(hexColor):
     raise Exception("Color should have a length of 7")
 
   return [int(hexColor[1:3], 16), int(hexColor[3:5], 16), int(hexColor[5:7], 16)]
+
+
+def rgba(red, green, blue, alpha):
+  """
+  RGBA color values are an extension of RGB color values with an alpha channel - which specifies the opacity of the object.
+
+  An RGBA color is specified with the rgba() function, which has the following syntax:
+  rgba(red, green, blue, alpha)
+  The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
+
+  https://www.w3schools.com/cssref/css_colors_legal.asp
+
+  :param red:
+  :param green:
+  :param blue:
+  :param alpha:
+  :return:
+  """
+  return "rgba(%s, %s, %s, %s)" % (red, green, blue, alpha)
 
 
 def getRgbToHex(rgbColor):
@@ -268,7 +295,7 @@ def colors(start, end, steps):
 
   Usage::
 
-      >>> ColorMaker().colors("#ffffff", "#FF0000", 10)
+      >>> colors("#ffffff", "#FF0000", 10)
   ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
 
   Attributes:
