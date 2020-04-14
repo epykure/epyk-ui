@@ -322,7 +322,7 @@ class Navigation(object):
     components.append(self.context.rptObj.ui.navigation.scroll())
     html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
     html_nav.style.css.line_height = height[0]
-    html_nav.val[-1].style.css.display = 'block' # scroll object must be block to keep the height
+    #html_nav.val[-1].style.css.display = 'block' # scroll object must be block to keep the height, this screws up the display
     self.context.rptObj.body.style.css.padding_top = height[0]
     self.context.register(html_nav)
     return html_nav
