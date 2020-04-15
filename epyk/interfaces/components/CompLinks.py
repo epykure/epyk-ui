@@ -17,8 +17,13 @@ class Links(object):
 
       rptObj.ui.links.external('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlLinks.ExternalLink`
+
     Related Pages:
     --------------
+
     https://www.w3schools.com/TagS/att_a_href.asp
 
     Attributes:
@@ -46,6 +51,10 @@ class Links(object):
     """
     Description:
     ------------
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlLinks.ExternalLink`
 
     Attributes:
     ----------
@@ -84,8 +93,13 @@ class Links(object):
 
       rptObj.ui.links.script("TestParams")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlLinks.ExternalLink`
+
     Attributes:
     ----------
+
     :param script_name: The destination script name
     :param report_name: Optional, the report name. Default current one
     :param options: Optional, the link properties
@@ -116,10 +130,13 @@ class Links(object):
     Usage::
 
       rptObj.ui.link({"text": "Profiling results", "url": '#'})
+      l = rptObj.ui.links.link('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
+      b = rptObj.ui.images.badge("new")
+      l.append_child(b)
 
-    l = rptObj.ui.links.link('data', 'www.google.fr', icon="fas fa-align-center", options={"target": "_blank"})
-    b = rptObj.ui.images.badge("new")
-    l.append_child(b)
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlLinks.ExternalLink`
 
     Related Pages:
     --------------
@@ -149,7 +166,11 @@ class Links(object):
     Usage::
 
       data_link = rptObj.ui.links.data("link", "test#data")
-    data_link.build({"text": 'new link Name', 'data': "new content"})
+      data_link.build({"text": 'new link Name', 'data': "new content"})
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlLinks.DataLink`
 
     Attributes:
     ----------
@@ -169,9 +190,11 @@ class Links(object):
     Description:
     ------------
 
-    Usage::
+    Underlying HTML Objects:
 
-      Related Pages:
+      - :py:class:`epyk.core.html.HtmlLinks.Bridge`
+
+    Related Pages:
     --------------
 
     Attributes:
