@@ -300,6 +300,11 @@ class Navigation(object):
       nav.add_text("Test text")
       nav + rptObj.ui.button("Click")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlMenu.HtmlNavBar`
+
+
     Attributes:
     ----------
     :param icon:
@@ -354,28 +359,25 @@ class Navigation(object):
     return div
 
   def footer(self, components=None, width=(100, '%'), height=('120', 'px'), profile=False):
-    footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
-    self.context.register(footer)
-    return footer
-
-  def complex_footer(self, nbcols, obj_map=None, width=(100, '%'), height=('120', 'px'), profile=False):
     """
     Description:
     ------------
 
-    :param nbcols:
-    :param obj_map:
-    :param width:
-    :param height:
-    :param profile:
-    """
-    if not obj_map:
-      obj_map = {}
-    self.context.rptObj.ui.div()
-    col_lst = [self.context.rptObj.ui.div(self.context.rptObj, [obj_map.get(i, [])]).css('display', 'inline-block') for i in range(nbcols)]
-    footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, col_lst, width=width, height=height, profile=profile)
-    footer.sections = col_lst
+    Will create a footer object in the body of the report
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlMenu.HtmlFooter`
+
+    :param components: list of html components
+    :param width: the width of the object
+    :param height: the height of the object
+    :param profile: get profiling info
+    :return:
+    """
+    footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
+    self.context.register(footer)
+    return footer
 
 class Banners(object):
 

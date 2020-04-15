@@ -52,6 +52,11 @@ class Buttons(object):
 
       rptObj.ui.button("Test")
 
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.Button`
+
     Related Pages:
     --------------
     https://www.w3schools.com/tags/tag_button.asp
@@ -84,6 +89,10 @@ class Buttons(object):
     Usage::
 
       rptObj.ui.buttons.important("Important")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.Button`
 
     Related Pages:
     --------------
@@ -118,6 +127,10 @@ class Buttons(object):
 
       rptObj.ui.buttons.validate()
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.Button`
+
     Related Pages:
     --------------
     https://www.w3schools.com/tags/tag_button.asp
@@ -147,6 +160,10 @@ class Buttons(object):
     Usage::
 
       rptObj.ui.buttons.remove()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.Button`
 
     Related Pages:
     --------------
@@ -179,6 +196,10 @@ class Buttons(object):
 
       rptObj.ui.buttons.phone()
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.Button`
+
     Related Pages:
     --------------
     https://www.w3schools.com/tags/tag_button.asp
@@ -209,6 +230,10 @@ class Buttons(object):
     Usage::
 
       rptObj.ui.buttons.mail()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.Button`
 
     Related Pages:
     --------------
@@ -241,6 +266,10 @@ class Buttons(object):
     Usage::
 
       rptObj.ui.buttons.radio(df, dfColumn="A", htmlCode="test")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlRadio.Radio`
 
     Related Pages:
     --------------
@@ -287,6 +316,10 @@ class Buttons(object):
 
       rptObj.ui.buttons.toggle({'on': "true", 'off': 'false'})
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlRadio.Switch`
+
     Related Pages:
     --------------
     http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
@@ -316,6 +349,10 @@ class Buttons(object):
     Usage::
 
       rptObj.ui.buttons.checkboxes(data)
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.Checkbox`
 
     Related Pages:
     --------------
@@ -367,8 +404,12 @@ class Buttons(object):
     Usage::
 
       rptObj.ui.buttons.check(label="Label")
-    rptObj.ui.buttons.check(True, label="Label")
-    rptObj.ui.buttons.check(True, label="Label", icon="fas fa-align-center")
+      rptObj.ui.buttons.check(True, label="Label")
+      rptObj.ui.buttons.check(True, label="Label", icon="fas fa-align-center")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.CheckButton`
 
     Related Pages:
     --------------
@@ -398,15 +439,19 @@ class Buttons(object):
 
       rptObj.ui.buttons.zipfile('zip', 'C:\pathname')
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlFiles.DownloadMemoryZip`
+
     Related Pages:
     --------------
     https://newseasandbeyond.wordpress.com/2014/01/27/creating-in-memory-zip-file-with-python/
 
     Attributes:
     ----------
-    :param text:
-    :param fileName:
-    :param css_cls:
+    :param text: String. The text
+    :param fileName: String. The filename
+    :param css_cls: CSS Class Object. The CSS class to attach to the object
     :param css_attr:
     :param profile:
 
@@ -424,6 +469,10 @@ class Buttons(object):
     Usage::
 
       tree5 = rptObj.ui.buttons.menu(["A", "B", "C"], 'Menu')
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.ButtonMenu`
 
     Related Pages:
     --------------
