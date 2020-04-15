@@ -806,6 +806,9 @@ class Html(object):
     self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     return self
 
+  def hover(self, jsFncs, profile=False):
+    return self.on("mouseover", jsFncs, profile)
+
   def click(self, jsFncs, profile=False):
     return self.on("click", jsFncs, profile)
 
