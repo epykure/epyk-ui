@@ -17,6 +17,10 @@ class CatalogSelect(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesSelect.CssSelectSearchBox)
 
+  def toggle(self):
+    """  """
+    return self._set_class(CssStylesSelect.CssSelectToggle)
+
   def search_box_input(self):
     """  """
     return self._set_class(CssStylesSelect.CssSelectSearchBoxInput)
@@ -36,6 +40,10 @@ class CatalogSelect(Catalog.CatalogGroup):
   def active(self):
     """  """
     return self._set_class(CssStylesSelect.CssSelectOptionActive)
+
+  def selected(self):
+    """  """
+    return self._set_class(CssStylesSelect.CssSelectOptionSelected)
 
   def option_filter(self):
     """  """

@@ -460,7 +460,7 @@ class Style(object):
 
     # More bespoke items
     self.__webkit_slider_thumb = dict(getattr(self, '_webkit_slider_thumb', {}))
-    self.__internal_props = ["attrs", "hover", "focus", "checked", "valid", "disabled", "empty", "enabled", "invalid"]
+    self.__internal_props = ["attrs", "hover", "focus", "checked", "valid", "disabled", "empty", "enabled", "invalid", "active"]
     self.customize()
     for k in self.__internal_props:
       s = getattr(self, k)

@@ -448,6 +448,6 @@ class Fields(object):
     if options is not None and 'align' in options:
       self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, profile)
-    html_input.input.options.width = 20
+    html_input.input.attr['data-width'] = '140px'
     self.context.register(html_input)
     return html_input

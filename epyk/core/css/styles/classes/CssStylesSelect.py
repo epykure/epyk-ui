@@ -11,14 +11,16 @@ class CssSelectStyle(CssStyle.Style):
   def customize(self):
     self.css({"background": self.rptObj.theme.greys[0], "color": self.rptObj.theme.greys[-1],
               'font-family': Defaults_css.Font.family, 'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-              'font-size': '%spx' % Defaults_css.Font.size, 'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH})
+              'font-size': '%spx' % Defaults_css.Font.size, #'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH
+              })
     self.css({'display': 'inline-block', 'margin': 0}, important=True)
 
 
 class CssSelectButton(CssStyle.Style):
   _attrs = {'padding': '0 5px', 'outline': 'none', 'border-color': 'none', 'box-shadow': 'none'}
   _focus = {'outline': 'none', 'border-color': 'none', 'box-shadow': 'none'}
-  classname = 'btn'
+
+  _selectors = {"child": '.btn'}
 
   def customize(self):
     self.css({"background-color": self.rptObj.theme.colors[0], "border": 'none', 'color': self.rptObj.theme.colors[-1]})
@@ -41,34 +43,48 @@ class CssSelectSearchBoxInput(CssStyle.Style):
     self.focus.css({"box-shadow": "0 0 0 0.2em %s" % self.rptObj.theme.colors[0]})
 
 
+class CssSelectToggle(CssStyle.Style):
+  classname = "dropdown-toggle"
+
+  def customize(self):
+    self.css({"background-color": self.rptObj.theme.colors[0], 'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)}, important=True)
+
+
 class CssSelectOption(CssStyle.Style):
   classname = "dropdown-menu"
 
   def customize(self):
-    self.css({"background": self.rptObj.theme.greys[0],
-              'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+    self.css({"background": self.rptObj.theme.greys[-1], 'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
 
 
 class CssSelectOptionItems(CssStyle.Style):
-  attrs = {"margin": 0, "padding": "0 5px"}
+  _attrs = {"margin": 0, "padding": "0 5px"}
   classname = "dropdown-item"
+  _focus = {'outline': 0}
 
 
 class CssSelectOptionHover(CssStyle.Style):
-  classname = "dropdown-menu"
-  _selectors = {"child": "li a"}
+  _selectors = {"child": "dropdown-menu li a"}
+  _focus = {'outline': 0}
+  _active = {'outline': 0}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.greys[-1]})
-    self.css({"border-radius": 0}, important=True)
-    self.hover.css({'background': self.rptObj.theme.success[0], "color": "black"})
+    self.active.css({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1], 'outline': 'none'}, important=True)
+    self.focus.css({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1], 'outline': 'none'}, important=True)
 
 
 class CssSelectOptionActive(CssStyle.Style):
   classname = "active"
 
   def customize(self):
-    self.css({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1]})
+    self.css({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1]}, important=True)
+
+
+class CssSelectOptionSelected(CssStyle.Style):
+  classname = "selected"
+
+  def customize(self):
+    self.css({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1]}, important=True)
 
 
 class CssSelectFilterOption(CssStyle.Style):
@@ -85,5 +101,4 @@ class CssSelectStatus(CssStyle.Style):
   classnames = ["dropdown-menu", "status"]
 
   def customize(self):
-    self.css({"background-color": self.rptObj.theme.greys[0],
-              'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
+    self.css({"background-color": self.rptObj.theme.greys[0], 'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
