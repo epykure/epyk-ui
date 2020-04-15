@@ -45,7 +45,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a :html:`far fa-edit` icon
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-edit <https://fontawesome.com/icons/edit>`_ icon
 
     Usage::
 
@@ -73,7 +73,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a :html:`fas fa-clock` icon
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-clock <https://fontawesome.com/icons/clock>`_ icon
 
     Usage::
 
