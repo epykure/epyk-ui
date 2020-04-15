@@ -29,6 +29,10 @@ class Fields(object):
 
       rptObj.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
+
     Related Pages:
     --------------
     https://jqueryui.com/datepicker/
@@ -59,6 +63,10 @@ class Fields(object):
 
       rptObj.ui.fields.today(label="Date").included_dates(["2019-09-01", "2019-09-06"])
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
+
     Related Pages:
     --------------
     https://jqueryui.com/datepicker/
@@ -88,6 +96,10 @@ class Fields(object):
     Usage::
 
       rptObj.ui.fields.cob(label="COB Date")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
 
     Related Pages:
     --------------
@@ -121,6 +133,10 @@ class Fields(object):
       rptObj.ui.fields.now(label="timestamp", color="red", helper="This is the report timestamp")
       rptObj.ui.fields.now(label="Time field")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlDates.TimePicker`
+
     Related Pages:
     --------------
     https://github.com/jonthornton/jquery-timepicker
@@ -153,6 +169,10 @@ class Fields(object):
       rptObj.ui.fields.time(label="timestamp", color="red", helper="This is the report timestamp")
       rptObj.ui.fields.time(label="Time field")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlDates.TimePicker`
+
     Related Pages:
     --------------
     https://github.com/jonthornton/jquery-timepicker
@@ -182,6 +202,10 @@ class Fields(object):
 
       rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.FieldInput`
+
     Attributes:
     ----------
     :param value:
@@ -207,6 +231,10 @@ class Fields(object):
 
       rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.FieldAutocomplete`
+
     Attributes:
     ----------
     :param value:
@@ -231,6 +259,10 @@ class Fields(object):
     Usage::
 
       rptObj.ui.fields.static(label="readonly field")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.FieldInput`
 
     Attributes:
     ----------
@@ -258,6 +290,10 @@ class Fields(object):
 
       rptObj.ui.fields.integer(label="test")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.FieldInteger`
+
     Attributes:
     ----------
     :param value:
@@ -282,6 +318,10 @@ class Fields(object):
     Usage::
 
       rptObj.ui.fields.password(label="password")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.FieldPassword`
 
     Attributes:
     ----------
@@ -309,6 +349,10 @@ class Fields(object):
 
       rptObj.ui.fields.textarea(label="Date")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.FieldTextArea`
+
     Attributes:
     ----------
     :param value:
@@ -334,6 +378,10 @@ class Fields(object):
     Usage::
 
       rptObj.ui.fields.checkbox(True, label="Check")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.FieldCheckBox`
 
     Related Pages:
     --------------
@@ -362,9 +410,11 @@ class Fields(object):
     Radio buttons are normally presented in radio groups (a collection of radio buttons describing a set of related options).
     Only one radio button in a group can be selected at the same time.
 
-    Usage::
+    Underlying HTML Objects:
 
-      Related Pages:
+      - :py:class:`epyk.core.html.HtmlInput.Radio`
+
+    Related Pages:
     --------------
     https://www.w3schools.com/tags/att_input_type_radio.asp
 
@@ -401,6 +451,10 @@ class Fields(object):
 
       rptObj.ui.fields.range(54, min=20, label="Range Example", icon="fas fa-unlock-alt")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.FieldRange`
+
     Related Pages:
     --------------
     https://www.w3schools.com/tags/att_input_type_range.asp
@@ -433,6 +487,10 @@ class Fields(object):
     Usage::
 
       rptObj.ui.fields.select(["a", "b"], label="Check")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.FieldSelect`
 
     Attributes:
     ----------
