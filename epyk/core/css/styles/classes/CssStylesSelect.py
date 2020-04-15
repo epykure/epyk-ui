@@ -26,20 +26,15 @@ class CssSelectButton(CssStyle.Style):
     self.css({"background-color": self.rptObj.theme.colors[0], "border": 'none', 'color': self.rptObj.theme.colors[-1]})
 
 
-class CssSelectSearchBox(CssStyle.Style):
-  _attrs = {"padding": "0 2px 1px 2px"}
-  classname = "bs-searchbox"
-
-
 class CssSelectSearchBoxInput(CssStyle.Style):
-  _attrs = {"outline": 0, "margin-bottom": "10px"}
+  _attrs = {"outline": 0, "margin-bottom": "5px"}
   _focus = {'outline': 0}
 
   classname = 'bs-searchbox'
   _selectors = {"child": 'input.form-control'}
 
   def customize(self):
-    self.css({"border-color": self.rptObj.theme.colors[0], "height": "%spx" % Defaults_html.LINE_HEIGHT})
+    self.css({"border-color": self.rptObj.theme.colors[5], "height": "%spx" % Defaults_html.LINE_HEIGHT})
     self.focus.css({"box-shadow": "0 0 0 0.2em %s" % self.rptObj.theme.colors[0]})
 
 
@@ -62,15 +57,8 @@ class CssSelectOptionItems(CssStyle.Style):
   classname = "dropdown-item"
   _focus = {'outline': 0}
 
-
-class CssSelectOptionHover(CssStyle.Style):
-  _selectors = {"child": "dropdown-menu li a"}
-  _focus = {'outline': 0}
-  _active = {'outline': 0}
-
   def customize(self):
-    self.active.css({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1], 'outline': 'none'}, important=True)
-    self.focus.css({'background': self.rptObj.theme.success[0], "color": self.rptObj.theme.success[1], 'outline': 'none'}, important=True)
+    self.active.css({"background-color": self.rptObj.theme.success[1]})
 
 
 class CssSelectOptionActive(CssStyle.Style):

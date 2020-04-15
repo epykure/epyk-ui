@@ -13,10 +13,6 @@ class CatalogSelect(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesSelect.CssSelectButton)
 
-  def search_box(self):
-    """  """
-    return self._set_class(CssStylesSelect.CssSelectSearchBox)
-
   def toggle(self):
     """  """
     return self._set_class(CssStylesSelect.CssSelectToggle)
@@ -32,10 +28,6 @@ class CatalogSelect(Catalog.CatalogGroup):
   def item(self):
     """  """
     return self._set_class(CssStylesSelect.CssSelectOptionItems)
-
-  def menu_hover(self):
-    """  """
-    return self._set_class(CssStylesSelect.CssSelectOptionHover)
 
   def active(self):
     """  """
