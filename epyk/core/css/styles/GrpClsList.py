@@ -9,7 +9,7 @@ class ClassSelect(GrpCls.ClassHtml):
     super(ClassSelect, self).__init__(htmlObj)
     self._css_class_dt, self._css_class_dt_ui, self._css_select = None, None, None
     self._css_select_input, self._css_item_option, self._css_item_selected = None, None, None
-    self._css_menu_li = None
+    self._css_menu_li, self._css_select_search, self._css_select_menu_hover = None, None, None
     self.classList['main'].add(self.cls_select)
     self.classList['main'].add(self.cls_select_button)
     self.classList['main'].add(self.cls_select_outline)
