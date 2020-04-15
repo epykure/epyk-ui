@@ -12,9 +12,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.navigation.up()
+    Usage:
+    ------------
+    rptObj.ui.navigation.up()
 
     Attributes:
     ----------
@@ -50,9 +50,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.navigation.down()
+    Usage:
+    -------
+    rptObj.ui.navigation.down()
 
     Attributes:
     ----------
@@ -88,9 +88,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.navigation.to(100, tooltip="test")
+    Usage:
+    ------
+    rptObj.ui.navigation.to(100, tooltip="test")
 
     Attributes:
     ----------
@@ -104,7 +104,6 @@ class Navigation(object):
     :param width:
     :param options:
     :param profile:
-    :return:
     """
     dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
                                                 "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
@@ -129,9 +128,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.navigation.pin("anchor", tooltip="test", bottom=20)
+    Usage:
+    ------
+    rptObj.ui.navigation.pin("anchor", tooltip="test", bottom=20)
 
     Attributes:
     ----------
@@ -169,9 +168,9 @@ class Navigation(object):
     ------------
     Add a horizontal progressbar to display the status of the page scrollbar.
 
-    Usage::
-
-      rptObj.ui.navigation.scroll()
+    Usage:
+    -------
+    rptObj.ui.navigation.scroll()
 
     Attributes:
     ----------
@@ -191,9 +190,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.navigation.indices(10)
+    Usage:
+    ------------
+    rptObj.ui.navigation.indices(10)
 
     Attributes:
     ----------
@@ -215,8 +214,8 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
-
+    Usage:
+    ------------
       p = rptObj.ui.navigation.points(10)
     for i, _ in enumerate(p):
       p.click_item(i, [])
@@ -242,9 +241,9 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
-
-      d = rptObj.ui.navigation.dots(10)
+    Usage:
+    ------------
+    d = rptObj.ui.navigation.dots(10)
 
     Attributes:
     ----------
@@ -267,8 +266,8 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
-
+    Usage:
+    ------------
       record = [{"text": "Lin 1", 'url': 'report_list.html'}, {"text": "Link 2"}]
     rptObj.ui.navigation.path(record)
 
@@ -295,8 +294,8 @@ class Navigation(object):
     Description:
     ------------
 
-    Usage::
-
+    Usage:
+    ------
       nav = rptObj.ui.navigation.bar(title="test")
     nav.add_text("Test text")
     nav + rptObj.ui.button("Click")
@@ -329,6 +328,8 @@ class Navigation(object):
 
   def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
+    Description:
+    ------------
 
     :param image:
     :param text:
@@ -358,10 +359,94 @@ class Navigation(object):
     return footer
 
   def complex_footer(self, nbcols, obj_map=None, width=(100, '%'), height=('120', 'px'), profile=False):
-    """"""
+    """
+    Description:
+    ------------
+
+    :param nbcols:
+    :param obj_map:
+    :param width:
+    :param height:
+    :param profile:
+    """
     if not obj_map:
       obj_map = {}
     self.context.rptObj.ui.div()
     col_lst = [self.context.rptObj.ui.div(self.context.rptObj, [obj_map.get(i, [])]).css('display', 'inline-block') for i in range(nbcols)]
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, col_lst, width=width, height=height, profile=profile)
     footer.sections = col_lst
+
+
+class Banners(object):
+
+  def __init__(self, context):
+    self.context = context
+
+  def top(self, data, background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :param data:
+    :param background:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
+    div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
+    div.style.css.color = "white"
+    div.style.css.position = "fixed"
+    div.style.css.top = 0
+    div.style.css.padding = "5px 15px"
+    return div
+
+  def bottom(self, data, background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :param data:
+    :param background:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
+    div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
+    div.style.css.color = "white"
+    div.style.css.position = "fixed"
+    div.style.css.padding = "5px 15px"
+    div.style.css.bottom = 0
+    return div
+
+  def corner(self, data, background=None, position="bottom", width=(120, 'px'), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :param data:
+    :param background:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
+    div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
+    div.style.css.color = "white"
+    div.style.css.position = "fixed"
+    div.style.css.padding = "5px 15px"
+    div.style.css.text_align = "center"
+    div.style.css.right = 0
+    if position == 'bottom':
+      div.style.css.bottom = 0
+      div.style.css.transform = "rotate(-40deg)"
+      div.style.css.margin = "0 -30px 15px 0"
+    else:
+      div.style.css.top = 0
+      div.style.css.transform = "rotate(40deg)"
+      div.style.css.margin = "15px -30px 0 0"
+    return div

@@ -128,6 +128,15 @@ class Components(object):
     return CompNavigation.Navigation(self)
 
   @property
+  def banners(self):
+    """
+    Description:
+    ------------
+    Group all the available banners
+    """
+    return CompNavigation.Banners(self)
+
+  @property
   def rich(self):
     """
     Description:

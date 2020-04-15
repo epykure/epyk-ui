@@ -205,16 +205,17 @@ class Div(Html.Html):
   name, category, callFnc = 'Simple Container', 'Layouts', 'div'
 
   def __init__(self, report, htmlObj, label, color, width, icon, height, editable, align, padding, htmlCode, tag,
-               helper, profile):
+               helper, options, profile):
     if isinstance(htmlObj, list) and htmlObj:
       newHtmlObj = []
       for obj in htmlObj:
         if isinstance(obj, list) and obj:
-          newHtmlObj.append(report.ui.div(obj, label, color, width, icon, height, editable, align, padding,
-                                          htmlCode, tag, helper, profile))
+          newHtmlObj.append(report.ui.div(obj, label, color, width, icon, height, editable, align, padding, htmlCode, tag, helper, profile))
         else:
           newHtmlObj.append(obj)
         if hasattr(newHtmlObj[-1], 'inReport'):
+          if options.get('inline'):
+            newHtmlObj[-1].style.css.display = 'inline-block'
           newHtmlObj[-1].inReport = False
           #if newHtmlObj[-1].css("display") != 'None':
           #  newHtmlObj[-1].css({"display": 'inline-block'})
@@ -224,6 +225,7 @@ class Div(Html.Html):
     super(Div, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"color": color, "width": width, "height": height},
                               profile=profile)
     self.tag = tag
+    self.__options = OptPanel.OptionsDiv(self, options)
     # Add the component predefined elements
     self.add_icon(icon)
     self.add_label(label)
@@ -257,10 +259,23 @@ class Div(Html.Html):
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    if self.options.inline:
+      htmlObj.style.css.display = 'inline-block'
     if not isinstance(self.val, list):
       self.val = [self.val]
     self.val.append(htmlObj)
     return self
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptPanel.OptionsDiv
+    """
+    return self.__options
 
   def __getitem__(self, i):
     return self.val[i]

@@ -179,3 +179,18 @@ class OptionPanelTable(Options):
   @header.setter
   def header(self, bool):
     self.set(bool)
+
+
+class OptionsDiv(Options):
+
+  @property
+  def inline(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @inline.setter
+  def inline(self, bool):
+    self.set(bool)
