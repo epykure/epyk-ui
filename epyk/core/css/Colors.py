@@ -165,8 +165,8 @@ def getHexToRgb(hexColor):
   Also, the following values define equal color: rgb(0,0,255) and rgb(0%,0%,100%).
 
   Usage::
-  -------
-  ColorMaker().getHexToRgb('#213B68')
+
+      ColorMaker().getHexToRgb('#213B68')
   [33, 59, 104]
 
   https://www.w3schools.com/cssref/css_colors_legal.asp
