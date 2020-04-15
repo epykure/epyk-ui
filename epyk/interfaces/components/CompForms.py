@@ -34,6 +34,12 @@ class Forms(object):
 
       rptObj.ui.forms.date("http://127.0.0.1:5000", "POST")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Form`
+      - :py:class:`epyk.core.html.HtmlContainer.Col`
+      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
+
     Attributes:
     ----------
     :param action:
@@ -59,6 +65,12 @@ class Forms(object):
     Usage::
 
       rptObj.ui.forms.dates("http://127.0.0.1:5000", "POST")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Form`
+      - :py:class:`epyk.core.html.HtmlContainer.Col`
+      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
 
     Attributes:
     ----------
@@ -86,6 +98,11 @@ class Forms(object):
     Description:
     ------------
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Form`
+      - :py:class:`epyk.core.html.HtmlInput.FieldInput`
+
     Attributes:
     ----------
     :param helper:
@@ -106,7 +123,13 @@ class Forms(object):
       rptObj.ui.forms.inputs([
       {"label": "name", "htmlCode": "input"},
       {"label": "name 2", "htmlCode": "input2"},
-    ])
+      ])
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Form`
+      - :py:class:`epyk.core.html.HtmlContainer.Col`
+      - :py:class:`epyk.core.html.HtmlInput.FieldInput`
 
     Attributes:
     ----------
