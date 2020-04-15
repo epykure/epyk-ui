@@ -20,6 +20,11 @@ class Images(object):
 
       rptObj.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
 
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlImage.Image`
+
     Related Pages:
     --------------
     https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
@@ -54,6 +59,10 @@ class Images(object):
     Usage::
 
       rptObj.ui.circular("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlImage.Image`
 
     Related Pages:
     --------------
@@ -91,7 +100,12 @@ class Images(object):
     Usage::
 
       rptObj.ui.images.avatar("Epyk", status='out')
-    rptObj.ui.images.avatar(image="epykIcon.PNG", path=config.IMG_PATH, status=False)
+      rptObj.ui.images.avatar(image="epykIcon.PNG", path=config.IMG_PATH, status=False)
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Div`
+      - :py:class:`epyk.core.html.HtmlImage.Image`
 
     Attributes:
     ----------
@@ -153,6 +167,14 @@ class Images(object):
 
       rptObj.ui.images.section("epykIcon.PNG", "# Test", "Epyk Test", 'This is a test', path=r"../../../static/images")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Div`
+      - :py:class:`epyk.core.html.HtmlText.Span`
+      - :py:class:`epyk.core.html.HtmlText.Paragraph`
+      - :py:class:`epyk.core.html.HtmlText.Title`
+      - :py:class:`epyk.core.html.HtmlImage.Image`
+
     Attributes:
     ----------
     :param image:
@@ -189,7 +211,11 @@ class Images(object):
     Usage::
 
       c = rptObj.ui.images.animated("epykIcon.PNG", text="This is a comment", title="Title", url="#", path=r"../../../static/images")
-    c.style.css.borders()
+      c.style.css.borders()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlImage.AnimatedImage`
 
     Documentation
     https://tympanus.net/Tutorials/OriginalHoverEffects/
@@ -219,7 +245,11 @@ class Images(object):
 
       car = rptObj.ui.images.carrousel(["epykIcon.PNG", "epyklogo.ico", "epyklogo_whole_big.png"],
                                  path=r"../../../static/images", height=(200, 'px'))
-    car.click([rptObj.js.console.log('data', skip_data_convert=True)])
+      car.click([rptObj.js.console.log('data', skip_data_convert=True)])
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlImage.ImgCarrousel`
 
     Related Pages:
     --------------
@@ -249,6 +279,10 @@ class Images(object):
 
       rptObj.ui.images.emoji(rptObj.symbols.smileys.DISAPPOINTED_FACE)
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlImage.Emoji`
+
     Related Pages:
     --------------
     https://github.com/wedgies/jquery-emoji-picker
@@ -271,7 +305,11 @@ class Images(object):
     Usage::
 
       rptObj.ui.images.icon("fab fa-angellist")
-    
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlImage.Icon`
+
     Related Pages:
     --------------
     https://fontawesome.com/icons?m=free
@@ -296,6 +334,10 @@ class Images(object):
     Description:
     ------------
     Display a badge component using Bootstrap
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlImage.Badge`
 
     Usage::
 
@@ -332,6 +374,10 @@ class Images(object):
     Description:
     ------------
     Simple vignette to display a color with it is code
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Div`
 
     Attributes:
     ----------
