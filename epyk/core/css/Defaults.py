@@ -15,9 +15,9 @@ def font(step=0):
   Relative change of the CSS font size based on the default one in the Font class.
   Changing the value Font.size will impact this function accordingly
 
-  Usage:
-  ------
-  font(2)
+  Usage::
+
+    font(2)
 
   Attributes:
   ----------
@@ -46,9 +46,9 @@ def inline(cssAttrs):
   ------------
   Convert a CSS attributes dictionary to a online CSS Style to be added to the dom object
 
-  Usage:
-  ------
-  inline({"color": "red"})
+  Usage::
+
+    inline({"color": "red"})
 
   Related Pages:
   --------------
