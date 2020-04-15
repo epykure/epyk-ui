@@ -375,6 +375,10 @@ class Images(object):
     ------------
     Simple vignette to display a color with it is code
 
+     Usage::
+
+      rptObj.ui.images.color("FFFFFF")
+
     Underlying HTML Objects:
 
       - :py:class:`epyk.core.html.HtmlContainer.Div`
