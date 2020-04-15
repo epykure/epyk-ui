@@ -30,7 +30,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Input`
+      - :class:`epyk.core.html.HtmlInput.Input`
 
     Attributes:
     ----------
@@ -62,7 +62,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Input`
+      - :class:`epyk.core.html.HtmlInput.Input`
 
     Related Pages:
     --------------
@@ -102,7 +102,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Input`
+      - :class:`epyk.core.html.HtmlInput.Input`
 
     :param text:
     :param placeholder:
@@ -132,7 +132,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.InputTime`
+      - :class:`epyk.core.html.HtmlInput.InputTime`
 
     Attributes:
     ----------
@@ -165,7 +165,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.InputDate`
+      - :class:`epyk.core.html.HtmlInput.InputDate`
 
     Attributes:
     ----------
@@ -197,7 +197,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.InputInteger`
+      - :class:`epyk.core.html.HtmlInput.InputInteger`
 
     :param value:
     :param placeholder:
@@ -238,7 +238,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Output`
+      - :class:`epyk.core.html.HtmlInput.Output`
 
     Attributes:
     ----------
@@ -262,7 +262,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.TextArea`
+      - :class:`epyk.core.html.HtmlInput.TextArea`
 
     Related Pages:
     --------------
@@ -299,7 +299,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.AutoComplete`
+      - :class:`epyk.core.html.HtmlInput.AutoComplete`
 
 
     Related Pages:
@@ -338,7 +338,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Input`
+      - :class:`epyk.core.html.HtmlInput.Input`
 
     Attributes:
     ----------
@@ -370,7 +370,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Input`
+      - :class:`epyk.core.html.HtmlInput.Input`
 
     Attributes:
     ----------
@@ -403,7 +403,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Checkbox`
+      - :class:`epyk.core.html.HtmlInput.Checkbox`
 
     Attributes:
     ----------
@@ -437,7 +437,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Radio`
+      - :class:`epyk.core.html.HtmlInput.Radio`
 
     Attributes:
     ----------
@@ -465,7 +465,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Editor`
+      - :class:`epyk.core.html.HtmlTextEditor.Editor`
 
     Attributes:
     ----------
@@ -495,7 +495,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Cell`
+      - :class:`epyk.core.html.HtmlTextEditor.Cell`
 
     Attributes:
     ----------
@@ -524,7 +524,7 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Cell`
+      - :class:`epyk.core.html.HtmlTextEditor.Cell`
 
     Related Pages:
     --------------
@@ -559,9 +559,9 @@ class Inputs(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Input`
-      - :py:class:`epyk.core.html.HtmlText.Label`
-      - :py:class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlInput.Input`
+      - :class:`epyk.core.html.HtmlText.Label`
+      - :class:`epyk.core.html.HtmlContainer.Div`
 
     Attributes:
     ----------

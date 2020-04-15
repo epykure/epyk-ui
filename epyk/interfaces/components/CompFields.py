@@ -31,7 +31,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
+      - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Related Pages:
     --------------
@@ -65,7 +65,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
+      - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Related Pages:
     --------------
@@ -99,7 +99,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
+      - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Related Pages:
     --------------
@@ -135,7 +135,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlDates.TimePicker`
+      - :class:`epyk.core.html.HtmlDates.TimePicker`
 
     Related Pages:
     --------------
@@ -171,7 +171,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlDates.TimePicker`
+      - :class:`epyk.core.html.HtmlDates.TimePicker`
 
     Related Pages:
     --------------
@@ -204,7 +204,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.FieldInput`
+      - :class:`epyk.core.html.HtmlInput.FieldInput`
 
     Attributes:
     ----------
@@ -233,7 +233,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.FieldAutocomplete`
+      - :class:`epyk.core.html.HtmlInput.FieldAutocomplete`
 
     Attributes:
     ----------
@@ -262,7 +262,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.FieldInput`
+      - :class:`epyk.core.html.HtmlInput.FieldInput`
 
     Attributes:
     ----------
@@ -292,7 +292,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.FieldInteger`
+      - :class:`epyk.core.html.HtmlInput.FieldInteger`
 
     Attributes:
     ----------
@@ -321,7 +321,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.FieldPassword`
+      - :class:`epyk.core.html.HtmlInput.FieldPassword`
 
     Attributes:
     ----------
@@ -351,7 +351,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.FieldTextArea`
+      - :class:`epyk.core.html.HtmlInput.FieldTextArea`
 
     Attributes:
     ----------
@@ -381,7 +381,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.FieldCheckBox`
+      - :class:`epyk.core.html.HtmlInput.FieldCheckBox`
 
     Related Pages:
     --------------
@@ -416,7 +416,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.Radio`
+      - :class:`epyk.core.html.HtmlInput.Radio`
 
     Related Pages:
     --------------
@@ -457,7 +457,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.FieldRange`
+      - :class:`epyk.core.html.HtmlInput.FieldRange`
 
     Related Pages:
     --------------
@@ -494,7 +494,7 @@ class Fields(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlInput.FieldSelect`
+      - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
     Attributes:
     ----------

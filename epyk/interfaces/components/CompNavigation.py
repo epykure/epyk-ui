@@ -302,7 +302,7 @@ class Navigation(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlMenu.HtmlNavBar`
+      - :class:`epyk.core.html.HtmlMenu.HtmlNavBar`
 
 
     Attributes:
@@ -367,7 +367,7 @@ class Navigation(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlMenu.HtmlFooter`
+      - :class:`epyk.core.html.HtmlMenu.HtmlFooter`
 
     :param components: list of html components
     :param width: the width of the object

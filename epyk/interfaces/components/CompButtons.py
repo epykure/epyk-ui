@@ -55,7 +55,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.Button`
+      - :class:`epyk.core.html.HtmlButton.Button`
 
     Related Pages:
     --------------
@@ -92,7 +92,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.Button`
+      - :class:`epyk.core.html.HtmlButton.Button`
 
     Related Pages:
     --------------
@@ -129,7 +129,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.Button`
+      - :class:`epyk.core.html.HtmlButton.Button`
 
     Related Pages:
     --------------
@@ -163,7 +163,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.Button`
+      - :class:`epyk.core.html.HtmlButton.Button`
 
     Related Pages:
     --------------
@@ -198,7 +198,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.Button`
+      - :class:`epyk.core.html.HtmlButton.Button`
 
     Related Pages:
     --------------
@@ -233,7 +233,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.Button`
+      - :class:`epyk.core.html.HtmlButton.Button`
 
     Related Pages:
     --------------
@@ -269,7 +269,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlRadio.Radio`
+      - :class:`epyk.core.html.HtmlRadio.Radio`
 
     Related Pages:
     --------------
@@ -318,7 +318,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlRadio.Switch`
+      - :class:`epyk.core.html.HtmlRadio.Switch`
 
     Related Pages:
     --------------
@@ -352,7 +352,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.Checkbox`
+      - :class:`epyk.core.html.HtmlButton.Checkbox`
 
     Related Pages:
     --------------
@@ -409,7 +409,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.CheckButton`
+      - :class:`epyk.core.html.HtmlButton.CheckButton`
 
     Related Pages:
     --------------
@@ -441,7 +441,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlFiles.DownloadMemoryZip`
+      - :class:`epyk.core.html.HtmlFiles.DownloadMemoryZip`
 
     Related Pages:
     --------------
@@ -472,7 +472,7 @@ class Buttons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.ButtonMenu`
+      - :class:`epyk.core.html.HtmlButton.ButtonMenu`
 
     Related Pages:
     --------------

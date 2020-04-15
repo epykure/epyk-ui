@@ -19,7 +19,7 @@ class DropData(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlFiles.DropFile`
+      - :class:`epyk.core.html.HtmlFiles.DropFile`
 
     Usage::
 

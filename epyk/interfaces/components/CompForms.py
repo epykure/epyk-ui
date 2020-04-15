@@ -36,9 +36,9 @@ class Forms(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Form`
-      - :py:class:`epyk.core.html.HtmlContainer.Col`
-      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
+      - :class:`epyk.core.html.HtmlContainer.Form`
+      - :class:`epyk.core.html.HtmlContainer.Col`
+      - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Attributes:
     ----------
@@ -68,9 +68,9 @@ class Forms(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Form`
-      - :py:class:`epyk.core.html.HtmlContainer.Col`
-      - :py:class:`epyk.core.html.HtmlDates.DatePicker`
+      - :class:`epyk.core.html.HtmlContainer.Form`
+      - :class:`epyk.core.html.HtmlContainer.Col`
+      - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Attributes:
     ----------
@@ -100,8 +100,8 @@ class Forms(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Form`
-      - :py:class:`epyk.core.html.HtmlInput.FieldInput`
+      - :class:`epyk.core.html.HtmlContainer.Form`
+      - :class:`epyk.core.html.HtmlInput.FieldInput`
 
     Attributes:
     ----------
@@ -127,9 +127,9 @@ class Forms(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Form`
-      - :py:class:`epyk.core.html.HtmlContainer.Col`
-      - :py:class:`epyk.core.html.HtmlInput.FieldInput`
+      - :class:`epyk.core.html.HtmlContainer.Form`
+      - :class:`epyk.core.html.HtmlContainer.Col`
+      - :class:`epyk.core.html.HtmlInput.FieldInput`
 
     Attributes:
     ----------

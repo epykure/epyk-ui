@@ -23,7 +23,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -54,7 +54,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -82,7 +82,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -110,7 +110,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -137,7 +137,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -164,7 +164,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -191,7 +191,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -218,7 +218,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -245,7 +245,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -271,7 +271,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -298,7 +298,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -325,7 +325,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -352,7 +352,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -379,7 +379,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -406,7 +406,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -439,7 +439,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -472,7 +472,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -505,7 +505,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -538,7 +538,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -571,7 +571,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -604,7 +604,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -635,7 +635,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlRadio.Tick`
+      - :class:`epyk.core.html.HtmlRadio.Tick`
 
     Attributes:
     ----------
@@ -671,7 +671,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlImage.Image`
+      - :class:`epyk.core.html.HtmlImage.Image`
 
     Attributes:
     ----------
@@ -702,7 +702,7 @@ class Icons(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlEvent.SignIn
+      - :class:`epyk.core.html.HtmlEvent.SignIn
 
     Attributes:
     ----------

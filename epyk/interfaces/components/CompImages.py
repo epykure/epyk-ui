@@ -23,7 +23,7 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlImage.Image`
+      - :class:`epyk.core.html.HtmlImage.Image`
 
     Related Pages:
     --------------
@@ -62,7 +62,7 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlImage.Image`
+      - :class:`epyk.core.html.HtmlImage.Image`
 
     Related Pages:
     --------------
@@ -104,8 +104,8 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Div`
-      - :py:class:`epyk.core.html.HtmlImage.Image`
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlImage.Image`
 
     Attributes:
     ----------
@@ -169,11 +169,11 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Div`
-      - :py:class:`epyk.core.html.HtmlText.Span`
-      - :py:class:`epyk.core.html.HtmlText.Paragraph`
-      - :py:class:`epyk.core.html.HtmlText.Title`
-      - :py:class:`epyk.core.html.HtmlImage.Image`
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlText.Span`
+      - :class:`epyk.core.html.HtmlText.Paragraph`
+      - :class:`epyk.core.html.HtmlText.Title`
+      - :class:`epyk.core.html.HtmlImage.Image`
 
     Attributes:
     ----------
@@ -215,7 +215,7 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlImage.AnimatedImage`
+      - :class:`epyk.core.html.HtmlImage.AnimatedImage`
 
     Documentation
     https://tympanus.net/Tutorials/OriginalHoverEffects/
@@ -249,7 +249,7 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlImage.ImgCarrousel`
+      - :class:`epyk.core.html.HtmlImage.ImgCarrousel`
 
     Related Pages:
     --------------
@@ -281,7 +281,7 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlImage.Emoji`
+      - :class:`epyk.core.html.HtmlImage.Emoji`
 
     Related Pages:
     --------------
@@ -308,7 +308,7 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlImage.Icon`
+      - :class:`epyk.core.html.HtmlImage.Icon`
 
     Related Pages:
     --------------
@@ -337,7 +337,7 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlImage.Badge`
+      - :class:`epyk.core.html.HtmlImage.Badge`
 
     Usage::
 
@@ -381,7 +381,7 @@ class Images(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlContainer.Div`
 
     Attributes:
     ----------

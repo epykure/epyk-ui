@@ -20,7 +20,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlOthers.Newline`
+      - :class:`epyk.core.html.HtmlOthers.Newline`
 
     Related Pages:
     --------------
@@ -50,7 +50,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlOthers.Hr`
+      - :class:`epyk.core.html.HtmlOthers.Hr`
 
     Related Pages:
     --------------
@@ -91,7 +91,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Col`
+      - :class:`epyk.core.html.HtmlContainer.Col`
 
     Related Pages:
     --------------
@@ -132,7 +132,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Row`
+      - :class:`epyk.core.html.HtmlContainer.Row`
 
     Related Pages:
     --------------
@@ -166,7 +166,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Table`
+      - :class:`epyk.core.html.HtmlContainer.Table`
 
     Attributes:
     ----------
@@ -194,7 +194,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Grid`
+      - :class:`epyk.core.html.HtmlContainer.Grid`
 
     Related Pages:
     --------------
@@ -220,7 +220,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Panel`
+      - :class:`epyk.core.html.HtmlContainer.Panel`
 
     :param htmlObjs:
     :param title:
@@ -251,7 +251,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlContainer.Div`
 
     Related Pages:
     --------------
@@ -293,7 +293,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlPopup.Popup`
+      - :class:`epyk.core.html.HtmlPopup.Popup`
 
     Related Pages:
     --------------
@@ -328,7 +328,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.IFrame`
+      - :class:`epyk.core.html.HtmlContainer.IFrame`
 
     Attributes:
     ----------
@@ -347,7 +347,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Dialog`
+      - :class:`epyk.core.html.HtmlContainer.Dialog`
 
     :param record:
     :param width:
@@ -373,7 +373,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.IconsMenu`
+      - :class:`epyk.core.html.HtmlContainer.IconsMenu`
 
     Attributes:
     ----------
@@ -399,7 +399,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlEvent.Filters`
+      - :class:`epyk.core.html.HtmlEvent.Filters`
 
     Attributes:
     ----------
@@ -424,7 +424,7 @@ class Layouts(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlContainer.Form`
+      - :class:`epyk.core.html.HtmlContainer.Form`
 
     Attributes:
     ----------

@@ -19,7 +19,7 @@ class Links(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlLinks.ExternalLink`
+      - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
     Related Pages:
     --------------
@@ -54,7 +54,7 @@ class Links(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlLinks.ExternalLink`
+      - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
     Attributes:
     ----------
@@ -95,7 +95,7 @@ class Links(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlLinks.ExternalLink`
+      - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
     Attributes:
     ----------
@@ -136,7 +136,7 @@ class Links(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlLinks.ExternalLink`
+      - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
     Related Pages:
     --------------
@@ -170,7 +170,7 @@ class Links(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlLinks.DataLink`
+      - :class:`epyk.core.html.HtmlLinks.DataLink`
 
     Attributes:
     ----------
@@ -192,7 +192,7 @@ class Links(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlLinks.Bridge`
+      - :class:`epyk.core.html.HtmlLinks.Bridge`
 
     Related Pages:
     --------------

@@ -15,7 +15,7 @@ class Code(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -47,7 +47,7 @@ class Code(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -79,7 +79,7 @@ class Code(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -111,7 +111,7 @@ class Code(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -143,7 +143,7 @@ class Code(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -175,7 +175,7 @@ class Code(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -207,7 +207,7 @@ class Code(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -239,7 +239,7 @@ class Code(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -271,7 +271,7 @@ class Code(object):
 
     Underlying HTML Objects:
 
-      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
