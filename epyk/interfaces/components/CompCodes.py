@@ -13,6 +13,10 @@ class Code(object):
     ------------
     CSS Text editor
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+
     Related Pages:
     --------------
     https://codemirror.net/index.html
@@ -40,6 +44,10 @@ class Code(object):
     Description:
     ------------
     XML Text editor
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -69,6 +77,10 @@ class Code(object):
     ------------
     SQL Text editor
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+
     Related Pages:
     --------------
     https://codemirror.net/index.html
@@ -96,6 +108,10 @@ class Code(object):
     Description:
     ------------
     R Text editor
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -125,6 +141,10 @@ class Code(object):
     ------------
     Python Text editor
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+
     Related Pages:
     --------------
     https://codemirror.net/index.html
@@ -152,6 +172,10 @@ class Code(object):
     Description:
     ------------
     Javascript Text editor
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
@@ -181,6 +205,10 @@ class Code(object):
     ------------
     Markdown Text editor
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+
     Related Pages:
     --------------
     https://codemirror.net/index.html
@@ -209,6 +237,10 @@ class Code(object):
     ------------
     RestructuredText editor
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
+
     Related Pages:
     --------------
     https://codemirror.net/index.html
@@ -236,6 +268,10 @@ class Code(object):
     Description:
     ------------
     Generic code editor
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
     --------------
