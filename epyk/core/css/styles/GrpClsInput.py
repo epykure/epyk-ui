@@ -31,9 +31,10 @@ class ClassInputDate(ClassInput):
 
   def __init__(self, htmlObj):
     super(ClassInputDate, self).__init__(htmlObj)
-    self._css_class_dt, self._css_class_dt_ui = None, None
+    self._css_class_dt, self._css_class_dt_ui, self._css_time_picker_header = None, None, None
     self.classList['main'].add(self.cls_datepicker)
     self.classList['main'].add(self.cls_datepicker_ui)
+    self.classList['other'].add(self.cls_datepicker_header)
 
   @property
   def cls_datepicker(self):
@@ -54,6 +55,16 @@ class ClassInputDate(ClassInput):
     if self._css_class_dt_ui is None:
       self._css_class_dt_ui = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['main']).datepicker_ui()
     return self._css_class_dt_ui
+
+  @property
+  def cls_datepicker_header(self):
+    """
+
+    :rtype: Classes.CatalogInput.CatalogDate
+    """
+    if self._css_time_picker_header is None:
+      self._css_time_picker_header = Classes.CatalogInput.CatalogDate(self.htmlObj._report, self.classList['other']).datepicker_header()
+    return self._css_time_picker_header
 
 
 class ClassInputTime(ClassInput):

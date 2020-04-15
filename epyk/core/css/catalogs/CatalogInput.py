@@ -108,6 +108,13 @@ class CatalogDate(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesDates.CssDatePicker)
 
+  def datepicker_header(self):
+    """
+    Description:
+    ------------
+    """
+    return self._set_class(CssStylesDates.CssDatesDatePickerHeader)
+
   def time_picker(self):
     """
     Description:
