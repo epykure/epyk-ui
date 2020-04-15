@@ -21,6 +21,10 @@ class Icons(object):
 
       rptObj.ui.icons.awesome(icon="fas fa-align-center")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -41,10 +45,16 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a :html:`far fa-edit` icon
+
     Usage::
 
       rptObj.ui.icons.edit()
-    rptObj.ui.icons.edit().color("red")
+      rptObj.ui.icons.edit().color("red")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -63,6 +73,17 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a :html:`fas fa-clock` icon
+
+    Usage::
+
+      rptObj.ui.icons.clock()
+      rptObj.ui.icons.clock().color("red")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -79,6 +100,17 @@ class Icons(object):
     """
     Description:
     ------------
+
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-sync-alt <https://fontawesome.com/icons/sync-alt>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.refresh()
+      rptObj.ui.icons.refresh().color("red")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -97,9 +129,15 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-file-pdf<https://fontawesome.com/icons/file-pdf>`_ icon
+
     Usage::
 
       rptObj.ui.icons.pdf(tooltip="helper")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -118,6 +156,16 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-file-pdf<https://fontawesome.com/icons/plus-square>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.plus()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -134,6 +182,16 @@ class Icons(object):
     """
     Description:
     ------------
+
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-file-excel<https://fontawesome.com/icons/file-excel>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.excel()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -152,6 +210,16 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-download<https://fontawesome.com/icons/download>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.download()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -169,6 +237,16 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-trash-alt<https://fontawesome.com/icons/trash-alt>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.delete()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -184,6 +262,16 @@ class Icons(object):
     """
     Description:
     ------------
+
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-search-plus<https://fontawesome.com/icons/search-plus>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.zoom()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -202,6 +290,16 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-clipboard<https://fontawesome.com/icons/clipboard>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.capture()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -218,6 +316,16 @@ class Icons(object):
     """
     Description:
     ------------
+
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-times-circle<https://fontawesome.com/icons/times-circle>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.remove()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -236,9 +344,15 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-table<https://fontawesome.com/icons/table>`_ icon
+
     Usage::
 
       rptObj.ui.icons.table(tooltip="helper")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -257,6 +371,16 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-wrench<https://fontawesome.com/icons/wrench>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.wrench()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -273,6 +397,16 @@ class Icons(object):
     """
     Description:
     ------------
+
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-facebook-f<https://fontawesome.com/icons/facebook-f>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.facebook()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -297,6 +431,16 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-twitter<https://fontawesome.com/icons/twitter>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.twitter()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param text:
@@ -319,6 +463,16 @@ class Icons(object):
     """
     Description:
     ------------
+
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-linkedin-in<https://fontawesome.com/icons/linkedin-in>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.linkedIn()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -343,6 +497,16 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-youtube<https://fontawesome.com/icons/youtube>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.youtube()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param text:
@@ -362,6 +526,30 @@ class Icons(object):
 
   def github(self, text=None, url="https://github.com/", position=False, tooltip="Go the the Github project",
              width=(25, 'px'), htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-github<https://fontawesome.com/icons/github>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.github()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
+    Attributes:
+    ----------
+    :param text:
+    :param url:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
     icon = self.awesome('fab fa-github', text, tooltip, position, width, width, htmlCode, profile)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue'})
@@ -374,6 +562,16 @@ class Icons(object):
     """
     Description:
     ------------
+
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-python<https://fontawesome.com/icons/python>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.python()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
 
     Attributes:
     ----------
@@ -398,6 +596,16 @@ class Icons(object):
     Description:
     ------------
 
+    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-stack-overflow<https://fontawesome.com/icons/stack-overflow>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.stackoverflow()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlButton.IconEdit`
+
     Attributes:
     ----------
     :param text:
@@ -420,6 +628,14 @@ class Icons(object):
     """
     Description:
     ------------
+
+    Usage::
+
+      rptObj.ui.icons.tick()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlRadio.Tick`
 
     Attributes:
     ----------
@@ -453,6 +669,10 @@ class Icons(object):
 
       rptObj.ui.icons.epyk()
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlImage.Image`
+
     Attributes:
     ----------
     :param align:
@@ -479,6 +699,10 @@ class Icons(object):
     Usage::
 
       rptObj.ui.icons.signin("test")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlEvent.SignIn
 
     Attributes:
     ----------
