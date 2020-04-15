@@ -24,6 +24,14 @@ class Inputs(object):
     Description:
     ------------
 
+    Usage::
+
+      rptObj.ui.inputs.d_text()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.Input`
+
     Attributes:
     ----------
     :param text:
@@ -52,6 +60,10 @@ class Inputs(object):
 
       rptObj.ui.inputs.d_search("")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.Input`
+
     Related Pages:
     --------------
     https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search
@@ -78,6 +90,31 @@ class Inputs(object):
 
   def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
+    """
+
+    Description:
+    ------------
+    Input field that will hide characters typed in
+
+    Usage::
+
+      rptObj.ui.inputs.password(placeholder="Password")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.Input`
+
+    :param text:
+    :param placeholder:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param filter:
+    :param options:
+    :param attrs:
+    :param profile:
+    :return:
+    """
     attrs = attrs or {}
     attrs.update({"type": 'password'})
     return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height,
@@ -91,8 +128,11 @@ class Inputs(object):
 
     Usage::
 
-      date = rptObj.ui.dates.now(label="date")
-    date.label.css({"width": "auto"})
+      date = rptObj.ui.inputs.d_time()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.InputTime`
 
     Attributes:
     ----------
@@ -121,8 +161,11 @@ class Inputs(object):
 
     Usage::
 
-      date = rptObj.ui.dates.now(label="date")
-    date.label.css({"width": "auto"})
+      date = rptObj.ui.inputs.d_date()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.InputDate`
 
     Attributes:
     ----------
@@ -143,6 +186,30 @@ class Inputs(object):
 
   def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
+    """
+
+    Description:
+    ------------
+
+    Usage::
+
+      date = rptObj.ui.inputs.d_int()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.InputInteger`
+
+    :param value:
+    :param placeholder:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param filter:
+    :param options:
+    :param attrs:
+    :param profile:
+    :return:
+    """
     attrs = attrs or {}
     attrs.update({"type": 'number'})
     html_integer = html.HtmlInput.InputInteger(self.context.rptObj, value, placeholder, width, height, htmlCode, filter,
@@ -169,6 +236,10 @@ class Inputs(object):
 
       rptObj.ui.inputs._output("test output")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.Output`
+
     Attributes:
     ----------
     :param value:
@@ -189,8 +260,13 @@ class Inputs(object):
 
       rptObj.ui.inputs.textarea("Test")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.TextArea`
+
     Related Pages:
     --------------
+
     https://www.w3schools.com/tags/tag_textarea.asp
 
     Attributes:
@@ -217,7 +293,20 @@ class Inputs(object):
     ------------
     Enables users to quickly find and select from a pre-populated list of values as they type, leveraging searching and filtering.
 
+    Usage::
+
+      rptObj.ui.inputs.autocomplete("Test")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.AutoComplete`
+
+
+    Related Pages:
+    --------------
+
     https://jqueryui.com/autocomplete/
+
 
     Attributes:
     ----------
@@ -243,6 +332,14 @@ class Inputs(object):
     Description:
     ------------
 
+    Usage::
+
+      rptObj.ui.inputs.input("Test")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.Input`
+
     Attributes:
     ----------
     :param text:
@@ -266,6 +363,14 @@ class Inputs(object):
     """
     Description:
     ------------
+
+    Usage::
+
+      rptObj.ui.inputs.hidden("Test")
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.Input`
 
     Attributes:
     ----------
@@ -295,6 +400,10 @@ class Inputs(object):
     Usage::
 
       rptObj.ui.inputs.checkbox(False)
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.Checkbox`
 
     Attributes:
     ----------
@@ -326,6 +435,10 @@ class Inputs(object):
 
       rptObj.ui.inputs.radio(False, label="radio")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.Radio`
+
     Attributes:
     ----------
     :param flag:
@@ -345,6 +458,14 @@ class Inputs(object):
     """
     Description:
     ------------
+
+    Usage::
+
+      rptObj.ui.inputs.editor()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Editor`
 
     Attributes:
     ----------
@@ -367,6 +488,14 @@ class Inputs(object):
     """
     Description:
     ------------
+
+    Usage::
+
+      rptObj.ui.inputs.cell()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Cell`
 
     Attributes:
     ----------
@@ -393,8 +522,13 @@ class Inputs(object):
 
       rptObj.ui.inputs.search()
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlTextEditor.Cell`
+
     Related Pages:
     --------------
+
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
 
     Attributes:
@@ -418,6 +552,16 @@ class Inputs(object):
     """
     Description:
     ------------
+
+    Usage::
+
+      rptObj.ui.inputs.label()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlInput.Input`
+      - :py:class:`epyk.core.html.HtmlText.Label`
+      - :py:class:`epyk.core.html.HtmlContainer.Div`
 
     Attributes:
     ----------
