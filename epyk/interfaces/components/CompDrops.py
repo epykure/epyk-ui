@@ -17,6 +17,10 @@ class DropData(object):
     Files will also be recorded in the database in order to ensure that those data will not be shared.
     The data sharing is and should be defined only by the user from the UI.
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlFiles.DropFile`
+
     Usage::
 
       rptObj.ui.drops.dropfile()
