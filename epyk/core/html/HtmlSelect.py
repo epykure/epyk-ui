@@ -66,6 +66,10 @@ class Select(Html.Html):
 
   @property
   def style(self):
+    """
+
+    :rtype: GrpClsList.ClassSelect
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsList.ClassSelect(self)
     return self._styleObj
@@ -116,11 +120,11 @@ class Select(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      var selectObj = %s; selectObj.empty();
+      var selectObj = %s; selectObj.empty(); 
       for (var idx in data) {
           const text = (typeof data[idx].text !== 'undefined')? data[idx].text : data[idx].value;
           selectObj.append('<option value=' + data[idx].value + '>' + text + '</option>'); }
-      selectObj.selectpicker(options).val().selectpicker('refresh')''' % JsQuery.decorate_var("htmlObj", convert_var=False)
+      selectObj.selectpicker(options).val().selectpicker('refresh');''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def change(self, jsFncs, emtpyFncs=None, profile=False):
     """
@@ -157,7 +161,11 @@ class Select(Html.Html):
       opt_rp.inReport = False
       data.append(opt_rp.html())
     self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker(%s).selectpicker('refresh')" % (JsQuery.decorate_var(self.dom.varId, convert_var=False), json.dumps(self._jsStyles)))
-    return "<select %s>%s</select>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(data))
+    if self.attr.get("data-width") is not None:
+      self._report.css.customText('.%s_width {width: %s !IMPORTANT}' % (self.htmlId, self.attr.get("data-width")))
+    self.attr['class'].add("%s_width" % self.htmlId)
+    data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
+    return "<select %s>%s</select>" % (data_cls, "".join(data))
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -202,4 +210,5 @@ class Lookup(Select):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker().selectpicker('refresh')" % JsQuery.decorate_var(self.dom.varId, convert_var=False))
-    return "<select %s></select>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
+    return "<select %s></select>" % data_cls

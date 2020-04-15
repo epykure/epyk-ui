@@ -8,9 +8,35 @@ class ClassSelect(GrpCls.ClassHtml):
   def __init__(self, htmlObj):
     super(ClassSelect, self).__init__(htmlObj)
     self._css_class_dt, self._css_class_dt_ui, self._css_select = None, None, None
+    self._css_select_input, self._css_item_option, self._css_item_selected = None, None, None
+    self._css_menu_li = None
     self.classList['main'].add(self.cls_select)
-    self.classList['main'].add(self.cls_datepicker)
-    self.classList['main'].add(self.cls_datepicker_ui)
+    self.classList['main'].add(self.cls_select_button)
+    self.classList['main'].add(self.cls_select_outline)
+    self.classList['other'].add(self.cls_select_input)
+    self.classList['main'].add(self.cls_item_option)
+    self.classList['other'].add(self.cls_item_selected)
+    self.classList['other'].add(self.cls_toggle)
+
+  @property
+  def cls_item_selected(self):
+    """
+
+    :rtype: Classes.CatalogTree.CatalogDropDown
+    """
+    if self._css_item_selected is None:
+      self._css_item_selected = Classes.CatalogSelect.CatalogSelect(self.htmlObj._report, self.classList['other']).selected()
+    return self._css_item_selected
+
+  @property
+  def cls_toggle(self):
+    """
+
+    :rtype: Classes.CatalogTree.CatalogDropDown
+    """
+    if self._css_menu_li is None:
+      self._css_menu_li = Classes.CatalogSelect.CatalogSelect(self.htmlObj._report, self.classList['other']).toggle()
+    return self._css_menu_li
 
   @property
   def cls_select(self):
@@ -23,7 +49,7 @@ class ClassSelect(GrpCls.ClassHtml):
     return self._css_select
 
   @property
-  def cls_datepicker(self):
+  def cls_select_button(self):
     """
 
     :rtype: Classes.CatalogInput.CatalogDate
@@ -33,7 +59,7 @@ class ClassSelect(GrpCls.ClassHtml):
     return self._css_class_dt
 
   @property
-  def cls_datepicker_ui(self):
+  def cls_select_outline(self):
     """
 
     :rtype: Classes.CatalogInput.CatalogDate
@@ -41,6 +67,26 @@ class ClassSelect(GrpCls.ClassHtml):
     if self._css_class_dt_ui is None:
       self._css_class_dt_ui = Classes.CatalogSelect.CatalogSelect(self.htmlObj._report, self.classList['main']).outline()
     return self._css_class_dt_ui
+
+  @property
+  def cls_item_option(self):
+    """
+
+    :rtype: Classes.CatalogTree.CatalogDropDown
+    """
+    if self._css_item_option is None:
+      self._css_item_option = Classes.CatalogSelect.CatalogSelect(self.htmlObj._report, self.classList['main']).item()
+    return self._css_item_option
+
+  @property
+  def cls_select_input(self):
+    """
+
+    :rtype: Classes.CatalogTree.CatalogDropDown
+    """
+    if self._css_select_input is None:
+      self._css_select_input = Classes.CatalogSelect.CatalogSelect(self.htmlObj._report, self.classList['other']).search_box_input()
+    return self._css_select_input
 
 
 class ClassDropDown(GrpCls.ClassHtml):
