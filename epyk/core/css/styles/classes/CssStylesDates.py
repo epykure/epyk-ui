@@ -24,6 +24,13 @@ class CssDatePicker(CssStyle.Style):
     self.hover.css({'color': self.rptObj.theme.colors[-1]})
 
 
+class CssDatesDatePickerHeader(CssStyle.Style):
+  classname = "ui-widget-header"
+
+  def customize(self):
+    self.css({"background": self.rptObj.theme.success[1]})
+
+
 class CssDatesTimePicker(CssStyle.Style):
   _attrs = {'margin': 0}
   classname = "ui-timepicker-standard"
@@ -38,3 +45,4 @@ class CssDatesTimePickerState(CssStyle.Style):
 
   def customize(self):
     self.css({"background": self.rptObj.theme.colors[0]})
+
