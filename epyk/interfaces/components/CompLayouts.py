@@ -18,8 +18,13 @@ class Layouts(object):
 
       rptObj.ui.layouts.new_line(10)
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlOthers.Newline`
+
     Related Pages:
     --------------
+
     https://www.w3schools.com/tags/tag_br.asp
 
     Attributes:
@@ -43,8 +48,13 @@ class Layouts(object):
 
       rptObj.ui.layouts.hr(10)
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlOthers.Hr`
+
     Related Pages:
     --------------
+
     https://www.w3schools.com/tags/tag_hr.asp
 
     Attributes:
@@ -79,8 +89,13 @@ class Layouts(object):
       rptObj.ui.text("test D"),
       ])
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Col`
+
     Related Pages:
     --------------
+
     https://getbootstrap.com/docs/4.0/layout/grid/
     https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
@@ -115,8 +130,13 @@ class Layouts(object):
       rptObj.ui.text("test B"),
       ])
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Row`
+
     Related Pages:
     --------------
+
     https://getbootstrap.com/docs/4.0/layout/grid/
     https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
@@ -139,6 +159,14 @@ class Layouts(object):
     Description:
     ------------
     table layout for HTML components
+
+    Usage::
+
+      row = rptObj.ui.layouts.table()
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Table`
 
     Attributes:
     ----------
@@ -164,8 +192,13 @@ class Layouts(object):
       gr = rptObj.ui.layouts.grid()
       gr += [rptObj.ui.text("test %s" % i) for i in range(5)]
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Grid`
+
     Related Pages:
     --------------
+
     https://getbootstrap.com/docs/4.0/layout/grid/
 
     Attributes:
@@ -184,6 +217,10 @@ class Layouts(object):
   def panel(self, htmlObjs=None, title=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
             helper=None, options=None, profile=False):
     """
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Panel`
 
     :param htmlObjs:
     :param title:
@@ -212,8 +249,13 @@ class Layouts(object):
       div = rptObj.ui.div([html])
       div += html_2
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Div`
+
     Related Pages:
     --------------
+
     https://www.w3schools.com/tags/tag_div.asp
 
     Attributes:
@@ -249,8 +291,13 @@ class Layouts(object):
       popup = report.popup(report.title('Test'), color="red")
       popup + report.paragraph('Test')
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlPopup.Popup`
+
     Related Pages:
     --------------
+
     https://www.w3schools.com/tags/tag_div.asp
 
     Attributes:
@@ -279,6 +326,10 @@ class Layouts(object):
 
       rptObj.ui.layouts.iframe("http://www.google.com")
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.IFrame`
+
     Attributes:
     ----------
     :param url:
@@ -292,7 +343,19 @@ class Layouts(object):
     return html_frame
 
   def dialogs(self, record=None, width=(100, "%"), height=(200, "px"), helper=None, profile=None):
+    """
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Dialog`
+
+    :param record:
+    :param width:
+    :param height:
+    :param helper:
+    :param profile:
+    :return:
+    """
     html_dialog = html.HtmlContainer.Dialog(self.context.rptObj, record, width, height, helper, profile)
     self.context.register(html_dialog)
     return html_dialog
@@ -307,6 +370,10 @@ class Layouts(object):
       menu = rptObj.ui.layouts.icons(["fas fa-bell", "fas fa-calendar-check"])
       menu.icon.click([menu.icon.dom.css({"color": 'red'})])
       menu[0].click([menu[0].dom.css({"color": 'red'})])
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.IconsMenu`
 
     Attributes:
     ----------
@@ -330,6 +397,10 @@ class Layouts(object):
     Description:
     ------------
 
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlEvent.Filters`
+
     Attributes:
     ----------
     :param items:
@@ -350,6 +421,10 @@ class Layouts(object):
     """
     Description:
     ------------
+
+    Underlying HTML Objects:
+
+      - :py:class:`epyk.core.html.HtmlContainer.Form`
 
     Attributes:
     ----------
