@@ -167,9 +167,9 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
-
-      l = rptObj.ui.lists.list(["A", "B"])
+    Usage:
+    ------
+    l = rptObj.ui.lists.list(["A", "B"])
 
     Related Pages:
     --------------
@@ -188,9 +188,9 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.lists.numbers(["A", "B"])
+    Usage:
+    ------
+    rptObj.ui.lists.numbers(["A", "B"])
 
     Related Pages:
     --------------
@@ -205,7 +205,22 @@ class Lists(object):
 
   def alpha(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
 
+    Usage:
+    ------
+
+    :param data:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options or {}, profile)
     self.context.register(html_list)
@@ -281,9 +296,9 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.lists.squares(["A", "B"])
+    Usage:
+    ------
+    rptObj.ui.lists.squares(["A", "B"])
 
     Related Pages:
     --------------
@@ -312,10 +327,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
-
-      l = rptObj.ui.lists.groups(["AWW", "B"])
-      l.add_list(["D", "E"], category="Test")
+    Usage:
+    ------
+    l = rptObj.ui.lists.groups(["AWW", "B"])
+    l.add_list(["D", "E"], category="Test")
 
     Related Pages:
     --------------
@@ -352,10 +367,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
-
-      data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
-      checks = rptObj.ui.lists.checklist(data)
+    Usage:
+    ------
+    data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
+    checks = rptObj.ui.lists.checklist(data)
 
     Related Pages:
     --------------
@@ -380,10 +395,10 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
-
-      data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
-      rptObj.ui.lists.tree(data)
+    Usage:
+    ------
+    data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
+    rptObj.ui.lists.tree(data)
 
     Related Pages:
     --------------
@@ -429,10 +444,12 @@ class Lists(object):
   def badges(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
              htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Usage::
-
-      rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
+    Usage:
+    ------
+    rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Related Pages:
     --------------
@@ -456,10 +473,12 @@ class Lists(object):
   def buttons(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
               htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
-    Usage::
-
-      rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
+    Usage:
+    ------
+    rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
     Related Pages:
     --------------

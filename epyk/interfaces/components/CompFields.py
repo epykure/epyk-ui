@@ -25,9 +25,9 @@ class Fields(object):
     ------------
     This component is based on the Jquery Date Picker object.
 
-    Usage::
-
-      rptObj.ui.fields.today(label="Date").selectable(["2019-09-01", "2019-09-06"])
+    Usage:
+    ------
+    rptObj.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
 
     Related Pages:
     --------------
@@ -55,9 +55,9 @@ class Fields(object):
     ------------
     This component is based on the Jquery Date Picker object.
 
-    Usage::
-
-      rptObj.ui.fields.today(label="Date").selectable(["2019-09-01", "2019-09-06"])
+    Usage:
+    ------
+    rptObj.ui.fields.today(label="Date").included_dates(["2019-09-01", "2019-09-06"])
 
     Related Pages:
     --------------
@@ -85,9 +85,8 @@ class Fields(object):
     ------------
     This component is based on the Jquery Date Picker object.
 
-    Usage::
-
-      rptObj.ui.fields.cob(label="Date").selectable(["2019-09-01", "2019-09-06"])
+    Usage:
+    ------
     rptObj.ui.fields.cob(label="COB Date")
 
     Related Pages:
@@ -117,9 +116,9 @@ class Fields(object):
     ------------
     This component is based on the Jquery Time Picker object.
 
-    Usage::
-
-      rptObj.ui.fields.now(label="timestamp", color="red", helper="This is the report timestamp")
+    Usage:
+    ------
+    rptObj.ui.fields.now(label="timestamp", color="red", helper="This is the report timestamp")
     rptObj.ui.fields.now(label="Time field")
 
     Related Pages:
@@ -149,9 +148,9 @@ class Fields(object):
     ------------
     This component is based on the Jquery Time Picker object.
 
-    Usage::
-
-      rptObj.ui.fields.time(label="timestamp", color="red", helper="This is the report timestamp")
+    Usage:
+    ------
+    rptObj.ui.fields.time(label="timestamp", color="red", helper="This is the report timestamp")
     rptObj.ui.fields.time(label="Time field")
 
     Related Pages:
@@ -179,9 +178,9 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
+    Usage:
+    ------
+    rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
 
     Attributes:
     ----------
@@ -204,9 +203,9 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
+    Usage:
+    ------
+    rptObj.ui.fields.input("", label="Range Example", icon="fas fa-unlock-alt")
 
     Attributes:
     ----------
@@ -229,9 +228,9 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.fields.static(label="readonly field")
+    Usage:
+    ------
+    rptObj.ui.fields.static(label="readonly field")
 
     Attributes:
     ----------
@@ -255,9 +254,9 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.fields.integer(label="test")
+    Usage:
+    ------
+    rptObj.ui.fields.integer(label="test")
 
     Attributes:
     ----------
@@ -279,6 +278,10 @@ class Fields(object):
     """
     Description:
     ------------
+
+    Usage:
+    ------
+    rptObj.ui.fields.password(label="password")
 
     Attributes:
     ----------
@@ -302,9 +305,9 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.fields.textarea(label="Date")
+    Usage:
+    ------
+    rptObj.ui.fields.textarea(label="Date")
 
     Attributes:
     ----------
@@ -328,9 +331,9 @@ class Fields(object):
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.fields.checkbox(True, label="Check")
+    Usage:
+    ------
+    rptObj.ui.fields.checkbox(True, label="Check")
 
     Related Pages:
     --------------
@@ -359,9 +362,10 @@ class Fields(object):
     Radio buttons are normally presented in radio groups (a collection of radio buttons describing a set of related options).
     Only one radio button in a group can be selected at the same time.
 
-    Usage::
+    Usage:
+    ------
 
-      Related Pages:
+    Related Pages:
     --------------
     https://www.w3schools.com/tags/att_input_type_radio.asp
 
@@ -394,9 +398,9 @@ class Fields(object):
     - step - specifies the legal number intervals
     - value - Specifies the default value
 
-    Usage::
-
-      rptObj.ui.fields.range(54, min=20, label="Range Example", icon="fas fa-unlock-alt")
+    Usage:
+    ------
+    rptObj.ui.fields.range(54, min=20, label="Range Example", icon="fas fa-unlock-alt")
 
     Related Pages:
     --------------
@@ -422,14 +426,14 @@ class Fields(object):
     return html_input
 
   def select(self, value=False, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
-             helper=None, profile=None):
+             helper=None, options=None, profile=None):
     """
     Description:
     ------------
 
-    Usage::
-
-      rptObj.ui.fields.select(["a", "b"], label="Check")
+    Usage:
+    ------
+    rptObj.ui.fields.select(["a", "b"], label="Check")
 
     Attributes:
     ----------
@@ -441,7 +445,9 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    if options is not None and 'align' in options:
+      self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, profile)
-    html_input.input.css({"width": "none"})
+    html_input.input.options.width = 20
     self.context.register(html_input)
     return html_input

@@ -297,9 +297,9 @@ class Images(object):
     ------------
     Display a badge component using Bootstrap
 
-    Usage::
-
-      rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
+    Usage:
+    ------
+    rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
     rptObj.ui.images.badge("This is a badge", background_color="red", color="white")
     rptObj.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
 

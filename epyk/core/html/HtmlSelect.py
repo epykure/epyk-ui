@@ -53,7 +53,6 @@ class Select(Html.Html):
     self.selected = None
     if multiple:
       self.attr['multiple'] = None
-    #self.attr['class'].add(self.defined.clsAltMap)
     self.__options = OptSelect.OptionsSelect(self, options)
 
   @property
@@ -84,7 +83,8 @@ class Select(Html.Html):
     Attributes:
     ----------
     :return: A Javascript Dom object
-    :rtype: JsSelect.JSelect
+
+    :rtype: JsHtmlSelect.DomSelect
     """
     if self._dom is None:
       self._dom = JsHtmlSelect.DomSelect(self, report=self._report)
@@ -100,6 +100,8 @@ class Select(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
+    Related Pages:
+    --------------
     https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:
@@ -137,7 +139,7 @@ class Select(Html.Html):
     if emtpyFncs is not None:
       if not isinstance(emtpyFncs, list):
         emtpyFncs = [emtpyFncs]
-      jsFncs.append("if (%s === ''){ %s }" % (self.dom.content, JsUtils.jsConvertFncs(emtpyFncs, toStr=True)))
+      jsFncs.append("if (%s === ''){ %s }" % (self.dom.content.toStr(), JsUtils.jsConvertFncs(emtpyFncs, toStr=True)))
     return self.on("change", jsFncs, profile)
 
   def __str__(self):
@@ -199,19 +201,5 @@ class Lookup(Select):
         else {selectObj.selectpicker(options).selectpicker('refresh')} ''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def __str__(self):
-    options, opt_groups = [], {}
-    # for val in self.val:
-    #   opt = Option(self._report, val['value'], val['name'], None,
-    #                self.selected is not None and self.selected == val['value'])
-    #   opt.inReport = False
-    #   if 'group' in val:
-    #     opt_groups.setdefault(val['group'], []).append(opt)
-    #   else:
-    #     options.append(opt.html())
-    # data = options
-    # for k in sorted(opt_groups):
-    #   opt_rp = Optgroup(self._report, opt_groups[k], k)
-    #   opt_rp.inReport = False
-    #   data.append(opt_rp.html())
     self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker().selectpicker('refresh')" % JsQuery.decorate_var(self.dom.varId, convert_var=False))
     return "<select %s></select>" % (self.get_attrs(pyClassNames=self.style.get_classes()))

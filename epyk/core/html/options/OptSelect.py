@@ -1,8 +1,9 @@
 
-from epyk.core.data import DataClass
+
+from epyk.core.html.options import Options
 
 
-class OptionsSelect(DataClass):
+class OptionsSelect(Options):
 
   @property
   def actionsBox(self):
@@ -15,12 +16,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('actionsBox', False)
+    return self._config_get(False)
 
   @actionsBox.setter
   def actionsBox(self, bool):
-    self._report._jsStyles["actionsBox"] = bool
-    self.set(bool)
+    self._config(bool)
 
   @property
   def container(self):
@@ -33,12 +33,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('actionsBox', False)
+    return self._config_get(False)
 
   @container.setter
   def container(self, bool):
-    self._report._jsStyles["container"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def deselectAllText(self):
@@ -51,12 +50,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('deselectAllText', False)
+    return self._config_get(False)
 
   @deselectAllText.setter
   def deselectAllText(self, value):
-    self._report._jsStyles["deselectAllText"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def dropdownAlignRight(self):
@@ -69,12 +67,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('dropdownAlignRight', False)
+    return self._config_get(False)
 
   @dropdownAlignRight.setter
   def dropdownAlignRight(self, bool):
-    self._report._jsStyles["dropdownAlignRight"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def dropupAuto(self):
@@ -89,12 +86,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('dropupAuto', False)
+    return self._config_get(False)
 
   @dropupAuto.setter
   def dropupAuto(self, bool):
-    self._report._jsStyles["dropupAuto"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def header(self):
@@ -107,12 +103,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('header', False)
+    return self._config_get(False)
 
   @header.setter
   def header(self, bool):
-    self._report._jsStyles["header"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def hideDisabled(self):
@@ -125,12 +120,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('hideDisabled', False)
+    return self._config_get(False)
 
   @hideDisabled.setter
   def hideDisabled(self, bool):
-    self._report._jsStyles["hideDisabled"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def iconBase(self):
@@ -144,12 +138,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('iconBase', False)
+    return self._config_get(False)
 
   @iconBase.setter
   def iconBase(self, bool):
-    self._report._jsStyles["iconBase"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def liveSearch(self):
@@ -162,12 +155,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('liveSearch', False)
+    return self._config_get(False)
 
   @liveSearch.setter
   def liveSearch(self, bool):
-    self._report._jsStyles["liveSearch"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def liveSearchPlaceholder(self):
@@ -180,12 +172,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('liveSearchPlaceholder', False)
+    return self._config_get(False)
 
   @liveSearchPlaceholder.setter
   def liveSearchPlaceholder(self, value):
-    self._report._jsStyles["liveSearchPlaceholder"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def liveSearchStyle(self):
@@ -200,12 +191,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('liveSearchPlaceholder', False)
+    return self._config_get(False)
 
   @liveSearchStyle.setter
   def liveSearchStyle(self, value):
-    self._report._jsStyles["liveSearchStyle"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def maxOptions(self):
@@ -218,12 +208,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('maxOptions', False)
+    return self._config_get(False)
 
   @maxOptions.setter
   def maxOptions(self, value):
-    self._report._jsStyles["maxOptions"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def maxOptionsText(self):
@@ -236,12 +225,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('maxOptionsText', False)
+    return self._config_get(False)
 
   @maxOptionsText.setter
   def maxOptionsText(self, value):
-    self._report._jsStyles["maxOptionsText"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def mobile(self):
@@ -254,12 +242,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('mobile', False)
+    return self._config_get(False)
 
   @mobile.setter
   def mobile(self, bool):
-    self._report._jsStyles["mobile"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def noneSelectedText(self):
@@ -272,12 +259,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('noneSelectedText', False)
+    return self._config_get(False)
 
   @noneSelectedText.setter
   def noneSelectedText(self, value):
-    self._report._jsStyles["noneSelectedText"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def noneResultsText(self):
@@ -290,12 +276,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('noneResultsText', False)
+    return self._config_get(False)
 
   @noneResultsText.setter
   def noneResultsText(self, value):
-    self._report._jsStyles["noneResultsText"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def selectAllText(self):
@@ -308,12 +293,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('selectAllText', False)
+    return self._config_get(False)
 
   @selectAllText.setter
   def selectAllText(self, value):
-    self._report._jsStyles["selectAllText"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def selectOnTab(self):
@@ -326,12 +310,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('selectOnTab', False)
+    return self._config_get(False)
 
   @selectOnTab.setter
   def selectOnTab(self, bool):
-    self._report._jsStyles["selectOnTab"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def showContent(self):
@@ -345,12 +328,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('showContent', False)
+    return self._config_get(False)
 
   @showContent.setter
   def showContent(self, bool):
-    self._report._jsStyles["showContent"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def showIcon(self):
@@ -363,12 +345,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('showIcon', False)
+    return self._config_get(False)
 
   @showIcon.setter
   def showIcon(self, bool):
-    self._report._jsStyles["showIcon"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def showSubtext(self):
@@ -381,12 +362,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('showSubtext', False)
+    return self._config_get(False)
 
   @showSubtext.setter
   def showSubtext(self, bool):
-    self._report._jsStyles["showSubtext"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def showTick(self):
@@ -399,12 +379,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('showTick', False)
+    return self._config_get(False)
 
   @showTick.setter
   def showTick(self, bool):
-    self._report._jsStyles["showTick"] = bool
-    return self.set(bool)
+    self._config(bool)
 
   @property
   def size(self):
@@ -417,12 +396,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('size', False)
+    return self._config_get(False)
 
   @size.setter
   def size(self, value):
-    self._report._jsStyles["size"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def style(self):
@@ -435,12 +413,28 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('style', False)
+    return self._config_get(False)
 
   @style.setter
   def style(self, value):
-    self._report._jsStyles["style"] = value
-    return self.set(value)
+    self._config(value)
+
+  @property
+  def styleBase(self):
+    """
+    Description:
+    ------------
+    The default class applied to the button. When using the setStyle method, this class will always remain.
+
+    Related Pages:
+    --------------
+    https://developer.snapappointments.com/bootstrap-select/options/
+    """
+    return self._config_get(False)
+
+  @styleBase.setter
+  def styleBase(self, value):
+    self._config(value)
 
   @property
   def tickIcon(self):
@@ -453,12 +447,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('tickIcon', False)
+    return self._config_get(False)
 
   @tickIcon.setter
   def tickIcon(self, value):
-    self._report._jsStyles["tickIcon"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def title(self):
@@ -471,12 +464,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('title', False)
+    return self._config_get(False)
 
   @title.setter
   def title(self, value):
-    self._report._jsStyles["title"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def virtualScroll(self):
@@ -491,12 +483,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('virtualScroll', False)
+    return self._config_get(False)
 
   @virtualScroll.setter
   def virtualScroll(self, value):
-    self._report._jsStyles["virtualScroll"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def width(self):
@@ -509,12 +500,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('width', False)
+    return self._config_get(False)
 
   @width.setter
   def width(self, value):
-    self._report._jsStyles["width"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def windowPadding(self):
@@ -529,12 +519,11 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('windowPadding', False)
+    return self._config_get(False)
 
   @windowPadding.setter
   def windowPadding(self, value):
-    self._report._jsStyles["windowPadding"] = value
-    return self.set(value)
+    self._config(value)
 
   @property
   def sanitize(self):
@@ -547,9 +536,8 @@ class OptionsSelect(DataClass):
     --------------
     https://developer.snapappointments.com/bootstrap-select/options/
     """
-    return self._attrs.get('sanitize', False)
+    return self._config_get(False)
 
   @sanitize.setter
   def sanitize(self, bool):
-    self._report._jsStyles["sanitize"] = bool
-    return self.set(bool)
+    self._config(bool)

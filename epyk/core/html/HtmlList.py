@@ -92,7 +92,7 @@ class List(Html.Html):
   # grpCls = CssGrpClsList.CssClassList
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
-    super(List, self).__init__(report, data, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
+    super(List, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
     self.__options = OptList.OptionsLi(self, options)
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
@@ -126,6 +126,7 @@ class List(Html.Html):
     """
 
     :param i:
+
     :rtype: Li
     """
     return self.items[i]
@@ -134,7 +135,6 @@ class List(Html.Html):
     """
 
     :param d:
-    :return:
     """
     if self.items is None:
       self.items = []
@@ -173,7 +173,6 @@ class List(Html.Html):
 
     :param jsFncs:
     :param profile:
-    :return:
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs)
     for i, item in enumerate(self.items):
