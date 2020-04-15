@@ -13,7 +13,7 @@ Simple HTML Components:
     :glob:
     :maxdepth: 5
     
-    /report/ui/components/Comp*
+    /report/ui/components/*
 
 Table Components:
 =======================
@@ -22,7 +22,7 @@ Table Components:
     :glob:
     :maxdepth: 5
     
-    /report/ui/tables/Comp*
+    /report/ui/tables/*
 
 Chart Components:
 =======================
@@ -31,7 +31,7 @@ Chart Components:
     :glob:
     :maxdepth: 5
     
-    /report/ui/graphs/Comp*
+    /report/ui/graphs/*
     
 Geo Components:
 =======================
@@ -40,7 +40,7 @@ Geo Components:
     :glob:
     :maxdepth: 5
     
-    /report/ui/geo/Comp*
+    /report/ui/geo/*
 
 .. currentmodule:: epyk.interfaces.Components
 

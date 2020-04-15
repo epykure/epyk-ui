@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Navigation Interface &mdash; Epyk 0.0.1 documentation</title>
+  <title>Banners Interface &mdash; Epyk 0.0.1 documentation</title>
   
 
   
@@ -130,7 +130,7 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
-      <li>Navigation Interface</li>
+      <li>Banners Interface</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,8 +149,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="navigation-interface">
-<h1>Navigation Interface<a class="headerlink" href="#navigation-interface" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="banners-interface">
+<h1>Banners Interface<a class="headerlink" href="#banners-interface" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
 <dl class="py class">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation">
 <em class="property">class </em><code class="sig-prename descclassname">epyk.interfaces.components.CompNavigation.</code><code class="sig-name descname">Navigation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation" title="Permalink to this definition">¶</a></dt>
@@ -177,10 +178,16 @@
 <code class="sig-name descname">bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">40, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.bar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nav</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+<span class="n">nav</span><span class="o">.</span><span class="n">add_text</span><span class="p">(</span><span class="s2">&quot;Test text&quot;</span><span class="p">)</span>
+<span class="n">nav</span> <span class="o">+</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">button</span><span class="p">(</span><span class="s2">&quot;Click&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>nav.add_text(“Test text”)
-nav + rptObj.ui.button(“Click”)</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlMenu.HtmlNavBar</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -241,6 +248,31 @@ nav + rptObj.ui.button(“Click”)</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="epyk.interfaces.components.CompNavigation.Navigation.footer">
+<code class="sig-name descname">footer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">'120', 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.footer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will create a footer object in the body of the report</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlMenu.HtmlFooter</span></code></p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>components</strong> – list of html components</p></li>
+<li><p><strong>width</strong> – the width of the object</p></li>
+<li><p><strong>height</strong> – the height of the object</p></li>
+<li><p><strong>profile</strong> – get profiling info</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="epyk.interfaces.components.CompNavigation.Navigation.indices">
 <code class="sig-name descname">indices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">count</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
@@ -266,9 +298,9 @@ nav + rptObj.ui.button(“Click”)</p>
 <code class="sig-name descname">path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">divider</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">record</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Lin 1&quot;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;report_list.html&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Link 2&quot;</span><span class="p">}]</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>rptObj.ui.navigation.path(record)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -313,12 +345,10 @@ nav + rptObj.ui.button(“Click”)</p>
 <code class="sig-name descname">points</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">count</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompNavigation.Navigation.points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">navigation</span><span class="o">.</span><span class="n">points</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+  <span class="n">p</span><span class="o">.</span><span class="n">click_item</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="p">[])</span>
 </pre></div>
 </div>
-<dl class="simple">
-<dt>for i, _ in enumerate(p):</dt><dd><p>p.click_item(i, [])</p>
-</dd>
-</dl>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -374,9 +404,6 @@ nav + rptObj.ui.button(“Click”)</p>
 <li><p><strong>options</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
 </dd>
 </dl>
 </dd></dl>

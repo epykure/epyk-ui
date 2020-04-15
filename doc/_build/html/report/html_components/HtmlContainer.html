@@ -1,0 +1,916 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HtmlContainer Module &mdash; Epyk 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Epyk
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../report.html">Report Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../themes.html">Themes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../html_builtins.html">HTML Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../css_builtins.html">CSS Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../js_builtins.html">Javascript Built-Ins</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Epyk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>HtmlContainer Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/report/html_components/HtmlContainer.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="htmlcontainer-module">
+<h1>HtmlContainer Module<a class="headerlink" href="#htmlcontainer-module" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Caption">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Caption</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">tooltip</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Caption" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Caption.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Caption.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to set all the possible object for a button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="options/OptText.html#epyk.core.html.options.OptText.OptionsText" title="epyk.core.html.options.OptText.OptionsText">OptText.OptionsText</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Col">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Col</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Col" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Col.build">
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Col.build" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Col.set_size">
+<code class="sig-name descname">set_size</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Col.set_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the column size</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ps</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">layouts</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>ps += [rptObj.ui.text(“test %s” % i) for i in range(5)]
+ps[0][0].set_size(10)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Col.to_word">
+<code class="sig-name descname">to_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Col.to_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the corresponding function to produce the same result in a word document.
+This function is very specific and it has to be defined in each class.</p>
+<p><a class="reference external" href="http://python-docx.readthedocs.io/en/latest/">http://python-docx.readthedocs.io/en/latest/</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Col.to_xls">
+<code class="sig-name descname">to_xls</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">workbook</span></em>, <em class="sig-param"><span class="n">worksheet</span></em>, <em class="sig-param"><span class="n">cursor</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Col.to_xls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the corresponding function to produce the same result in a word document.
+This function is very specific and it has to be defined in each class.</p>
+<p><a class="reference external" href="https://xlsxwriter.readthedocs.io/">https://xlsxwriter.readthedocs.io/</a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Dialog">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordSet</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Dialog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Div">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Div</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObj</span></em>, <em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">icon</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">editable</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">padding</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">tag</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Div" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Div.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Div.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript Functions</p>
+<p>Return all the Javascript functions defined for an HTML Component.
+Those functions will use plain javascript by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript Dom object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsHtml.JsHtmlRich</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Div.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Div.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to set all the possible object for a button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="options/OptPanel.html#epyk.core.html.options.OptPanel.OptionsDiv" title="epyk.core.html.options.OptPanel.OptionsDiv">OptPanel.OptionsDiv</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Div.style">
+<em class="property">property </em><code class="sig-name descname">style</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Div.style" title="Permalink to this definition">¶</a></dt>
+<dd><p>GrpClsContainer.ClassDiv</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>rtype</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Div.to_word">
+<code class="sig-name descname">to_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Div.to_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the corresponding function to produce the same result in a word document.
+This function is very specific and it has to be defined in each class.</p>
+<p><a class="reference external" href="http://python-docx.readthedocs.io/en/latest/">http://python-docx.readthedocs.io/en/latest/</a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Form">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Form</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">helper</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Form" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Grid">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Grid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Grid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Grid.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Grid.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript Functions</p>
+<p>Return all the Javascript functions defined for an HTML Component.
+Those functions will use plain javascript by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript Dom object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsHtmlPanels.JsHtmlGrid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Grid.resize">
+<code class="sig-name descname">resize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Grid.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>For the resizing of the space for the containers.</p>
+<p>This will rescale based on the number of items and the fact that the max per row is 12
+It will update the colsDim list</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Grid.to_word">
+<code class="sig-name descname">to_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Grid.to_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the corresponding function to produce the same result in a word document.
+This function is very specific and it has to be defined in each class.</p>
+<p><a class="reference external" href="http://python-docx.readthedocs.io/en/latest/">http://python-docx.readthedocs.io/en/latest/</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Grid.to_xls">
+<code class="sig-name descname">to_xls</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">workbook</span></em>, <em class="sig-param"><span class="n">worksheet</span></em>, <em class="sig-param"><span class="n">cursor</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Grid.to_xls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the corresponding function to produce the same result in a word document.
+This function is very specific and it has to be defined in each class.</p>
+<p><a class="reference external" href="https://xlsxwriter.readthedocs.io/">https://xlsxwriter.readthedocs.io/</a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.IFrame">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">IFrame</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.IFrame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.IconsMenu">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">IconsMenu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">icon_names</span></em>, <em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.IconsMenu" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.IconsMenu.add_icon">
+<code class="sig-name descname">add_icon</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">css</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">position</span><span class="o">=</span><span class="default_value">'after'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.IconsMenu.add_icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an icon to the HTML object</p>
+<p>Example
+checks.title.add_icon(“fas fa-align-center”)</p>
+<p>Documentation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – The icon reference from font awsome website</p></li>
+<li><p><strong>css</strong> – Optional. A dictionary with the CSS style to be added to the component</p></li>
+<li><p><strong>position</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Html object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Indices">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Indices</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">count</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Indices" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Indices.click_item">
+<code class="sig-name descname">click_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Indices.click_item" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> – </p></li>
+<li><p><strong>jsFncs</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Indices.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Indices.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>OptPanel.OptionsPanelPoints</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>rtype</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Modal">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Modal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">header</span></em>, <em class="sig-param"><span class="n">footer</span></em>, <em class="sig-param"><span class="n">submit</span></em>, <em class="sig-param"><span class="n">helper</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Modal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Modal.close_on_background">
+<code class="sig-name descname">close_on_background</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Modal.close_on_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will allow an event to close the modal if a click event is detected anywhere outside the modal</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Modal.style">
+<em class="property">property </em><code class="sig-name descname">style</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Modal.style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to the CSS Style of the component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GrpClsButton.ClassButton</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Panel">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Panel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObj</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Panel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Panel.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Panel.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript Functions</p>
+<p>Return all the Javascript functions defined for an HTML Component.
+Those functions will use plain javascript by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript Dom object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsHtmlPanels.JsHtmlPanel</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Panel.style">
+<em class="property">property </em><code class="sig-name descname">style</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Panel.style" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GrpClsContainer.ClassDiv</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.PanelSlide">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">PanelSlide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObj</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.PanelSlide" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.PanelSlide.click">
+<code class="sig-name descname">click</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.PanelSlide.click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event added to the title bar.
+This will be triggered first</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFncs</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.PanelSlide.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.PanelSlide.options" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="options/OptPanel.html#epyk.core.html.options.OptPanel.OptionPanelSliding" title="epyk.core.html.options.OptPanel.OptionPanelSliding">OptPanel.OptionPanelSliding</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.PanelSplit">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">PanelSplit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">left_width</span></em>, <em class="sig-param"><span class="n">left_obj</span></em>, <em class="sig-param"><span class="n">right_obj</span></em>, <em class="sig-param"><span class="n">resizable</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.PanelSplit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.PanelSplit.left">
+<code class="sig-name descname">left</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">html_obj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.PanelSplit.left" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the left component to the panel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>html_obj</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.PanelSplit.right">
+<code class="sig-name descname">right</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">html_obj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.PanelSplit.right" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the right component to the panel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>html_obj</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Points">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Points</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">count</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Points" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Points.click_item">
+<code class="sig-name descname">click_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Points.click_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a click event on a particular item of the component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> – Integer. The item index</p></li>
+<li><p><strong>jsFncs</strong> – Array. The Javascript functions</p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Points.on">
+<code class="sig-name descname">on</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event</span></em>, <em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Points.on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add Javascript events to all the items in the component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFncs</strong> – Array. The Javascript functions</p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Points.on_item">
+<code class="sig-name descname">on_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">event</span></em>, <em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Points.on_item" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> – Integer. The item index</p></li>
+<li><p><strong>event</strong> – String. The Javascript event reference</p></li>
+<li><p><strong>jsFncs</strong> – Array. The Javascript functions</p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Points.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Points.options" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="options/OptPanel.html#epyk.core.html.options.OptPanel.OptionsPanelPoints" title="epyk.core.html.options.OptPanel.OptionsPanelPoints">OptPanel.OptionsPanelPoints</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Row">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Row</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Row" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Row.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Row.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all the Javascript functions defined for an HTML Component.
+Those functions will use plain javascript by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript Dom object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsHtmlPanels.JsHtmlRow</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.TSection">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">TSection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">type</span></em>, <em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.TSection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Table">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Table</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Table.add_caption">
+<code class="sig-name descname">add_caption</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Table.add_caption" title="Permalink to this definition">¶</a></dt>
+<dd><p>The &lt;caption&gt; tag defines a table caption.</p>
+<p><a class="reference external" href="https://www.w3schools.com/tags/tag_caption.asp">https://www.w3schools.com/tags/tag_caption.asp</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>align</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>tooltip</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Table.from_array">
+<code class="sig-name descname">from_array</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">dim</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Table.from_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load data from a 2D array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Array. The list of data</p></li>
+<li><p><strong>dim</strong> – Integer. The number of columns in the table</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Table.get_footer">
+<code class="sig-name descname">get_footer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Table.get_footer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> – Integer.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Table.get_header">
+<code class="sig-name descname">get_header</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Table.get_header" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> – Integer.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Table.line">
+<code class="sig-name descname">line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">'&amp;nbsp;'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'left'</span></em>, <em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Table.line" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>align</strong> – </p></li>
+<li><p><strong>dim</strong> – Integer. The number of columns in the table</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Table.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Table.options" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="options/OptPanel.html#epyk.core.html.options.OptPanel.OptionPanelTable" title="epyk.core.html.options.OptPanel.OptionPanelTable">OptPanel.OptionPanelTable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Tabs">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Tabs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tabs" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Tabs.add_panel">
+<code class="sig-name descname">add_panel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">div</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">css_tab</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">css_tab_clicked</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tabs.add_panel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>div</strong> – </p></li>
+<li><p><strong>selected</strong> – Boolean. Flag to set the selected panel</p></li>
+<li><p><strong>css_tab</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Tabs.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tabs.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript Functions</p>
+<p>Return all the Javascript functions defined for an HTML Component.
+Those functions will use plain javascript by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript Dom object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsHtmlPanels.JsHtmlTabs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Tabs.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tabs.options" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="options/OptPanel.html#epyk.core.html.options.OptPanel.OptionPanelTabs" title="epyk.core.html.options.OptPanel.OptionPanelTabs">OptPanel.OptionPanelTabs</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Tabs.panel">
+<code class="sig-name descname">panel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tabs.panel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the panel obkect</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – String. The tab name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.HtmlContainer.Div" title="epyk.core.html.HtmlContainer.Div">Div</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Tabs.select">
+<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tabs.select" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Tabs.tab">
+<code class="sig-name descname">tab</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tabs.tab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tab container</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – String. The tab name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.HtmlContainer.Div" title="epyk.core.html.HtmlContainer.Div">Div</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Tabs.tab_holder">
+<code class="sig-name descname">tab_holder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tabs.tab_holder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tab container</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – String. The tab name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.HtmlContainer.Div" title="epyk.core.html.HtmlContainer.Div">Div</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Tabs.tabs">
+<code class="sig-name descname">tabs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tabs.tabs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tab container</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – String. The tab name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.HtmlContainer.Div" title="epyk.core.html.HtmlContainer.Div">Div</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.TabsArrowsDown">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">TabsArrowsDown</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.TabsArrowsDown" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.TabsArrowsDown.add_panel">
+<code class="sig-name descname">add_panel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">div</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">css_tab</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">css_tab_clicked</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.TabsArrowsDown.add_panel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>div</strong> – </p></li>
+<li><p><strong>selected</strong> – Boolean. Flag to set the selected panel</p></li>
+<li><p><strong>css_tab</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.TabsArrowsUp">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">TabsArrowsUp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.TabsArrowsUp" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.TabsArrowsUp.add_panel">
+<code class="sig-name descname">add_panel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">div</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">selected</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">css_tab</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">css_tab_clicked</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.TabsArrowsUp.add_panel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>div</strong> – </p></li>
+<li><p><strong>selected</strong> – Boolean. Flag to set the selected panel</p></li>
+<li><p><strong>css_tab</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Td">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Td</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">header</span></em>, <em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Td" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Td.colspan">
+<code class="sig-name descname">colspan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Td.colspan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The colspan attribute defines the number of columns a cell should span.</p>
+<p><a class="reference external" href="https://www.w3schools.com/tags/att_td_colspan.asp">https://www.w3schools.com/tags/att_td_colspan.asp</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Td.rowspan">
+<code class="sig-name descname">rowspan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Td.rowspan" title="Permalink to this definition">¶</a></dt>
+<dd><p>The rowspan attribute specifies the number of rows a cell should span.</p>
+<p><a class="reference external" href="https://www.w3schools.com/tags/att_td_rowspan.asp">https://www.w3schools.com/tags/att_td_rowspan.asp</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlContainer.Tr">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Tr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">header</span></em>, <em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tr" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Tr.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Tr.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript Functions</p>
+<p>Return all the Javascript functions defined for an HTML Component.
+Those functions will use plain javascript by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript Dom object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsHtmlPanels.JsHtmlTr</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Epykure
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

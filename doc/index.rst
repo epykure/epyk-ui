@@ -31,7 +31,6 @@ In the following sections you will learn how to build complex HTML/JS reports us
     
     report
     themes
-    components
     html_builtins
     css_builtins
     js_builtins

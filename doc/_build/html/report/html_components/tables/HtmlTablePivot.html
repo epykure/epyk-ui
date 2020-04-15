@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HtmlTablePivot Module &mdash; Epyk 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Epyk
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../js_builtins.html">Javascript Built-Ins</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Epyk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>HtmlTablePivot Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/report/html_components/tables/HtmlTablePivot.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="htmltablepivot-module">
+<h1>HtmlTablePivot Module<a class="headerlink" href="#htmltablepivot-module" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="epyk.core.html.tables.HtmlTablePivot.PivotTable">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.tables.HtmlTablePivot.</code><code class="sig-name descname">PivotTable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordSet</span></em>, <em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">cols</span></em>, <em class="sig-param"><span class="n">valCol</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">tableOptions</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">aggOptions</span></em>, <em class="sig-param"><span class="n">rendererName</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">dataSrc</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTablePivot.PivotTable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTablePivot.PivotTable.addAggregator">
+<code class="sig-name descname">addAggregator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">aggCls</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTablePivot.PivotTable.addAggregator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add on the fly new aggregation logic to the pivot table. This will allow the creation of bespoke aggregation functions.
+Those functions will be structure in the way they can be added to the core framework easily.
+Aggregators should follow some rules and they should defined some mandatory parameters (name, keyAgg, push, value, format).</p>
+<dl class="simple">
+<dt>Example</dt><dd><dl class="simple">
+<dt>class JsPivotSumAgg(object):</dt><dd><p>name = “New Sum Agg”
+keyAgg, key2Agg = 0, None
+push = ‘this.keyAgg += parseFloat(record[attributeArray[0]]) * 2’
+value = ‘return this.keyAgg’
+format = ‘return numberWithCommas(x.toFixed(%(digits)s))’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>Documentation
+<a class="reference external" href="https://github.com/nicolaskruchten/pivottable/wiki/Aggregators">https://github.com/nicolaskruchten/pivottable/wiki/Aggregators</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTablePivot.PivotTable.setTableCss">
+<code class="sig-name descname">setTableCss</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cssClss</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTablePivot.PivotTable.setTableCss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a style to the datatable. This can be used to change some specific part of the table (for example the header)</p>
+<dl>
+<dt>Example</dt><dd><dl class="simple">
+<dt>class CssTableHeader(object):</dt><dd><p>__style = [{‘attr’: ‘background’, ‘value’: ‘grey’}]
+childrenTag = ‘th’</p>
+</dd>
+</dl>
+<p>tb.setTableCss(CssTableHeader)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The Python Datatable object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Epykure
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

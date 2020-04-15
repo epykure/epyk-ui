@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HtmlButton Module &mdash; Epyk 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Epyk
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../report.html">Report Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../themes.html">Themes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../html_builtins.html">HTML Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../css_builtins.html">CSS Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../js_builtins.html">Javascript Built-Ins</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Epyk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>HtmlButton Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/report/html_components/HtmlButton.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="htmlbutton-module">
+<h1>HtmlButton Module<a class="headerlink" href="#htmlbutton-module" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="epyk.core.html.HtmlButton.Button">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">Button</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">icon</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">tooltip</span></em>, <em class="sig-param"><span class="n">profile</span></em>, <em class="sig-param"><span class="n">options</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Button.color">
+<code class="sig-name descname">color</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the color of the button background when the mouse is hover</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;remove&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>color</strong> – String. the color of the component (text and borders)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Button.disable">
+<code class="sig-name descname">disable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.disable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>background_color</strong> – String.</p></li>
+<li><p><strong>color</strong> – String.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The htmlObj to allow the chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Button.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>HTML Dom object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>JsHtml.JsHtmlButton</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Button.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to set all the possible object for a button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="options/OptButton.html#epyk.core.html.options.OptButton.OptionsButton" title="epyk.core.html.options.OptButton.OptionsButton">OptButton.OptionsButton</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Button.press">
+<code class="sig-name descname">press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsPressFncs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">jsReleaseFncs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Special click event to keep in memory the state of the component</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Attributes</span><span class="p">:</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsPressFncs</strong> – </p></li>
+<li><p><strong>jsReleaseFncs</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Button.style">
+<em class="property">property </em><code class="sig-name descname">style</code><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to the CSS Style of the component</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">css</span><span class="o">.</span><span class="n">margin</span> <span class="o">=</span> <span class="s2">&quot;5px&quot;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GrpClsButton.ClassButton</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Button.to_word">
+<code class="sig-name descname">to_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.to_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the corresponding function to produce the same result in a word document.
+This function is very specific and it has to be defined in each class.</p>
+<p><a class="reference external" href="http://python-docx.readthedocs.io/en/latest/">http://python-docx.readthedocs.io/en/latest/</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Button.to_xls">
+<code class="sig-name descname">to_xls</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">workbook</span></em>, <em class="sig-param"><span class="n">worksheet</span></em>, <em class="sig-param"><span class="n">cursor</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.to_xls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the corresponding function to produce the same result in a word document.
+This function is very specific and it has to be defined in each class.</p>
+<p><a class="reference external" href="https://xlsxwriter.readthedocs.io/">https://xlsxwriter.readthedocs.io/</a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlButton.ButtonMenu">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">ButtonMenu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">icon</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">tooltip</span></em>, <em class="sig-param"><span class="n">profile</span></em>, <em class="sig-param"><span class="n">options</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.ButtonMenu" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlButton.ButtonMenu.style">
+<em class="property">property </em><code class="sig-name descname">style</code><a class="headerlink" href="#epyk.core.html.HtmlButton.ButtonMenu.style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to the CSS Style of the component</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">css</span><span class="o">.</span><span class="n">margin</span> <span class="o">=</span> <span class="s2">&quot;5px&quot;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GrpClsButton.ClassButton</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlButton.ButtonMenuItem">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">ButtonMenuItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">selector</span></em>, <em class="sig-param"><span class="n">parent</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.ButtonMenuItem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlButton.ButtonMenuItem.click">
+<code class="sig-name descname">click</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFncs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.ButtonMenuItem.click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript click events of the items in the menu</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jsFncs</strong> – List: The Javascript fragments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.ButtonMenuItem.js">
+<em class="property">property </em><code class="sig-name descname">js</code><a class="headerlink" href="#epyk.core.html.HtmlButton.ButtonMenuItem.js" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript module of the items in the menu</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript Dom object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsQueryUi.Autocomplete</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.ButtonMenuItem.on">
+<code class="sig-name descname">on</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">event</span></em>, <em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.ButtonMenuItem.on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript generic events of the items in the menu</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> – String. The JavaScript event</p></li>
+<li><p><strong>jsFncs</strong> – List: The Javascript fragments</p></li>
+<li><p><strong>profile</strong> – Boolean.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlButton.Buttons">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">Buttons</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Buttons" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlButton.CheckButton">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">CheckButton</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">flag</span></em>, <em class="sig-param"><span class="n">tooltip</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">icon</span></em>, <em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.CheckButton" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlButton.CheckButton.click">
+<code class="sig-name descname">click</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFncsTrue</span></em>, <em class="sig-param"><span class="n">jsFncFalse</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">withColors</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.CheckButton.click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Click even on the checkbox item</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ch</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Label&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ch.click(rptObj.js.alert(“true”), rptObj.js.alert(“false”))</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFncsTrue</strong> – Js function or a list of JsFunction to be triggered when checked</p></li>
+<li><p><strong>jsFncFalse</strong> – Optional. Js function or a list of JsFunction to be triggered when unchecked</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The htmlObl to allow the chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.CheckButton.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlButton.CheckButton.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Javascript Dom object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>JsHtml.JsHtmlButtonMenu</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.CheckButton.js">
+<em class="property">property </em><code class="sig-name descname">js</code><a class="headerlink" href="#epyk.core.html.HtmlButton.CheckButton.js" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript Dom object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsQueryUi.Autocomplete</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.CheckButton.style">
+<em class="property">property </em><code class="sig-name descname">style</code><a class="headerlink" href="#epyk.core.html.HtmlButton.CheckButton.style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to the CSS Style of the component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GrpClsButton.ClassButtonCheckBox</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlButton.Checkbox">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">Checkbox</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rptObj</span></em>, <em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">filters</span></em>, <em class="sig-param"><span class="n">tooltip</span></em>, <em class="sig-param"><span class="n">icon</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Checkbox.jsAdd">
+<code class="sig-name descname">jsAdd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsData</span><span class="o">=</span><span class="default_value">'data'</span></em>, <em class="sig-param"><span class="n">jsDataKey</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">isPyData</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">jsParse</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">jsFnc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">isUnique</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.jsAdd" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>c.jsAdd([{“value”: ‘A’, “name”: ‘Test’}], isPyData=True, isUnique=True)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Checkbox.jsItemState">
+<code class="sig-name descname">jsItemState</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsData</span><span class="o">=</span><span class="default_value">'data'</span></em>, <em class="sig-param"><span class="n">jsDataKey</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">isPyData</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">jsParse</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">jsFnc</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.jsItemState" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>c.jsItemState(jsData=True, isPyData=True)</p>
+</dd>
+<dt class="field-even">Example</dt>
+<dd class="field-even"><p>c.jsItemState(jsData=False, isPyData=True)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Checkbox.jsRemove">
+<code class="sig-name descname">jsRemove</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsData</span><span class="o">=</span><span class="default_value">'data'</span></em>, <em class="sig-param"><span class="n">jsDataKey</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">isPyData</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">jsParse</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">jsFnc</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.jsRemove" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p>c.jsRemove([1, “A”], isPyData=True)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Checkbox.onDocumentLoadFnc">
+<code class="sig-name descname">onDocumentLoadFnc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.onDocumentLoadFnc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pure Javascript onDocumentLoad Function</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Checkbox.to_word">
+<code class="sig-name descname">to_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.to_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the corresponding function to produce the same result in a word document.
+This function is very specific and it has to be defined in each class.</p>
+<p><a class="reference external" href="http://python-docx.readthedocs.io/en/latest/">http://python-docx.readthedocs.io/en/latest/</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Checkbox.to_xls">
+<code class="sig-name descname">to_xls</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">workbook</span></em>, <em class="sig-param"><span class="n">worksheet</span></em>, <em class="sig-param"><span class="n">cursor</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.to_xls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the corresponding function to produce the same result in a word document.
+This function is very specific and it has to be defined in each class.</p>
+<p><a class="reference external" href="https://xlsxwriter.readthedocs.io/">https://xlsxwriter.readthedocs.io/</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlButton.Checkbox.tooltip">
+<code class="sig-name descname">tooltip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">location</span><span class="o">=</span><span class="default_value">'top'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.tooltip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the Tooltip feature when the mouse is over the component.
+This tooltip version is coming from Bootstrap</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">htmlObj</span><span class="o">.</span><span class="n">tooltip</span><span class="p">(</span><span class="s2">&quot;My tooltip&quot;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://getbootstrap.com/docs/4.1/components/tooltips/">https://getbootstrap.com/docs/4.1/components/tooltips/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – </p></li>
+<li><p><strong>location</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Python object self</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlButton.IconEdit">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">IconEdit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">icon</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">tooltip</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.IconEdit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Epykure
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

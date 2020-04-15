@@ -161,9 +161,15 @@
 This will display some details when the mouse is on the container</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">animated</span><span class="p">(</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;This is a comment&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Title&quot;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">css</span><span class="o">.</span><span class="n">borders</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>c.style.css.borders()</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlImage.AnimatedImage</span></code></p></li>
+</ul>
+</div></blockquote>
 <p>Documentation
 <a class="reference external" href="https://tympanus.net/Tutorials/OriginalHoverEffects/">https://tympanus.net/Tutorials/OriginalHoverEffects/</a></p>
 <dl class="field-list simple">
@@ -188,9 +194,16 @@ This will display some details when the mouse is on the container</p>
 <dd><p>Generate or load an avatar</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">avatar</span><span class="p">(</span><span class="s2">&quot;Epyk&quot;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;out&#39;</span><span class="p">)</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">avatar</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">IMG_PATH</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>rptObj.ui.images.avatar(image=”epykIcon.PNG”, path=config.IMG_PATH, status=False)</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlContainer.Div</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlImage.Image</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -211,12 +224,18 @@ This will display some details when the mouse is on the container</p>
 <dt id="epyk.interfaces.components.CompImages.Images.badge">
 <code class="sig-name descname">badge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.badge" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display a badge component using Bootstrap</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlImage.Badge</span></code></p></li>
+</ul>
+</div></blockquote>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">badge</span><span class="p">(</span><span class="s2">&quot;Test badge&quot;</span><span class="p">,</span> <span class="s2">&quot;Label&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;fas fa-align-center&quot;</span><span class="p">)</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">badge</span><span class="p">(</span><span class="s2">&quot;This is a badge&quot;</span><span class="p">,</span> <span class="n">background_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">badge</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;far fa-bell&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;badge_position&quot;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">})</span>
 </pre></div>
 </div>
-<p>rptObj.ui.images.badge(“This is a badge”, background_color=”red”, color=”white”)
-rptObj.ui.images.badge(12, icon=”far fa-bell”, options={“badge_position”: ‘right’})</p>
 <p>b = rptObj.ui.images.badge(7688, icon=”fab fa-python”, options={‘badge_css’: {‘color’: ‘white’, “background”: ‘red’}})
 b.options.badge_css = {“background”: ‘green’}</p>
 <p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/badge/">https://getbootstrap.com/docs/4.0/components/badge/</a></p>
@@ -244,9 +263,15 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">car</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">carrousel</span><span class="p">([</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="s2">&quot;epyklogo.ico&quot;</span><span class="p">,</span> <span class="s2">&quot;epyklogo_whole_big.png&quot;</span><span class="p">],</span>
                            <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;px&#39;</span><span class="p">))</span>
+<span class="n">car</span><span class="o">.</span><span class="n">click</span><span class="p">([</span><span class="n">rptObj</span><span class="o">.</span><span class="n">js</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">skip_data_convert</span><span class="o">=</span><span class="kc">True</span><span class="p">)])</span>
 </pre></div>
 </div>
-<p>car.click([rptObj.js.console.log(‘data’, skip_data_convert=True)])</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlImage.ImgCarrousel</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://www.cssscript.com/basic-pure-css-slideshow-carousel/">https://www.cssscript.com/basic-pure-css-slideshow-carousel/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -270,6 +295,12 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">circular</span><span class="p">(</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;px&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlImage.Image</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp">https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp</a>
 <a class="reference external" href="https://www.w3schools.com/cssref/css3_pr_border-radius.asp">https://www.w3schools.com/cssref/css3_pr_border-radius.asp</a></p>
 <dl class="field-list simple">
@@ -289,12 +320,49 @@ b.options.badge_css = {“background”: ‘green’}</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="epyk.interfaces.components.CompImages.Images.color">
+<code class="sig-name descname">color</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">code</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">110, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">25, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple vignette to display a color with it is code</p>
+<blockquote>
+<div><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="s2">&quot;FFFFFF&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlContainer.Div</span></code></p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>code</strong> – String. The color code</p></li>
+<li><p><strong>color</strong> – String. The font color</p></li>
+<li><p><strong>width</strong> – Tuple. The size with its unit</p></li>
+<li><p><strong>height</strong> – Tuple. The size with its unit</p></li>
+<li><p><strong>options</strong> – Dictionary. The object options</p></li>
+<li><p><strong>helper</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="epyk.interfaces.components.CompImages.Images.emoji">
 <code class="sig-name descname">emoji</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">symbole</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">top</span><span class="o">=</span><span class="default_value">20, 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompImages.Images.emoji" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">emoji</span><span class="p">(</span><span class="n">rptObj</span><span class="o">.</span><span class="n">symbols</span><span class="o">.</span><span class="n">smileys</span><span class="o">.</span><span class="n">DISAPPOINTED_FACE</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlImage.Emoji</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://github.com/wedgies/jquery-emoji-picker">https://github.com/wedgies/jquery-emoji-picker</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -314,6 +382,12 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">icon</span><span class="p">(</span><span class="s2">&quot;fab fa-angellist&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlImage.Icon</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://fontawesome.com/icons?m=free">https://fontawesome.com/icons?m=free</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -338,6 +412,12 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">img</span><span class="p">(</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;px&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlImage.Image</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp">https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp</a>
 <a class="reference external" href="https://www.w3schools.com/cssref/css3_pr_border-radius.asp">https://www.w3schools.com/cssref/css3_pr_border-radius.asp</a></p>
 <dl class="field-list simple">
@@ -363,6 +443,16 @@ b.options.badge_css = {“background”: ‘green’}</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">section</span><span class="p">(</span><span class="s2">&quot;epykIcon.PNG&quot;</span><span class="p">,</span> <span class="s2">&quot;# Test&quot;</span><span class="p">,</span> <span class="s2">&quot;Epyk Test&quot;</span><span class="p">,</span> <span class="s1">&#39;This is a test&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;../../../static/images&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlContainer.Div</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Span</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Paragraph</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Title</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlImage.Image</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

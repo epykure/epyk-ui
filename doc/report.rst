@@ -8,6 +8,7 @@ You should consider this page as the `body <https://www.w3schools.com/tags/tag_b
 There are 5 main interfaces available through this object which will enable you to build a complete HTML page:
 
 - :doc:`report/ui`
+- :doc:`report/html`
 - :doc:`report/js`
 - :doc:`report/outs`
 - :doc:`report/py`

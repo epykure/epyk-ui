@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HtmlTable Module &mdash; Epyk 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Epyk
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../js_builtins.html">Javascript Built-Ins</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Epyk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>HtmlTable Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/report/html_components/tables/HtmlTable.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="htmltable-module">
+<h1>HtmlTable Module<a class="headerlink" href="#htmltable-module" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="epyk.core.html.tables.HtmlTable.Bespoke">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.tables.HtmlTable.</code><code class="sig-name descname">Bespoke</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordSet</span></em>, <em class="sig-param"><span class="n">cols</span></em>, <em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Bespoke" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTable.Bespoke.add">
+<code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em>, <em class="sig-param"><span class="n">missing</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">is_header</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Bespoke.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a row to the table</p>
+<p>Example
+simple_table.row_add({“column”: “value”})</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The row to be added to the table</p></li>
+<li><p><strong>missing</strong> – The data to put when a cell is missing</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The python table</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTable.Bespoke.col">
+<code class="sig-name descname">col</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">header</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Bespoke.col" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the table column cells as a generator</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>header</strong> – String.</p></li>
+<li><p><strong>i</strong> – Integer</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTable.Bespoke.header">
+<em class="property">property </em><code class="sig-name descname">header</code><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Bespoke.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the header row. Returns none if missing</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTable.Bespoke.row">
+<code class="sig-name descname">row</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em>, <em class="sig-param"><span class="n">inc_header</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Bespoke.row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the table rows</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> – Integer. The column number</p></li>
+<li><p><strong>inc_header</strong> – Boolean. Default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTable.Bespoke.tableId">
+<em class="property">property </em><code class="sig-name descname">tableId</code><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Bespoke.tableId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Javascript variable of the bespoke</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.tables.HtmlTable.Cell">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.tables.HtmlTable.</code><code class="sig-name descname">Cell</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">is_header</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Cell" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTable.Cell.set_html_content">
+<code class="sig-name descname">set_html_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">htmlObj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Cell.set_html_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the cell content to be an HTML object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>htmlObj</strong> – Python HTML object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>self, the cell object to allow the chaining</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.tables.HtmlTable.Excel">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.tables.HtmlTable.</code><code class="sig-name descname">Excel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordSet</span></em>, <em class="sig-param"><span class="n">cols</span></em>, <em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">cellwidth</span></em>, <em class="sig-param"><span class="n">delimiter</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Excel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTable.Excel.tableId">
+<em class="property">property </em><code class="sig-name descname">tableId</code><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Excel.tableId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Javascript variable of the bespoke</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.tables.HtmlTable.Excel.val">
+<em class="property">property </em><code class="sig-name descname">val</code><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Excel.val" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to get the jquery value of the HTML object in a python HTML object.
+This method can be used in any jsFunction to get the value of a component in the browser.
+This method will only be used on the javascript side, so please do not consider it in your algorithm in Python</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Javascript string with the function to get the current value of the component</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.tables.HtmlTable.Row">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.tables.HtmlTable.</code><code class="sig-name descname">Row</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">cells</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.tables.HtmlTable.Row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Epykure
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

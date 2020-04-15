@@ -161,6 +161,12 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Range Example&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;fas fa-unlock-alt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.FieldAutocomplete</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -184,6 +190,12 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">checkbox</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Check&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.FieldCheckBox</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/tags/att_input_type_checkbox.asp">https://www.w3schools.com/tags/att_input_type_checkbox.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -205,10 +217,15 @@
 <code class="sig-name descname">cob</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">'far fa-calendar-alt'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompFields.Fields.cob" title="Permalink to this definition">¶</a></dt>
 <dd><p>This component is based on the Jquery Date Picker object.</p>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">cob</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">selectable</span><span class="p">([</span><span class="s2">&quot;2019-09-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2019-09-06&quot;</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">cob</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;COB Date&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>rptObj.ui.fields.cob(label=”COB Date”)</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlDates.DatePicker</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://jqueryui.com/datepicker/">https://jqueryui.com/datepicker/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -231,9 +248,15 @@
 <code class="sig-name descname">date</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">'far fa-calendar-alt'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompFields.Fields.date" title="Permalink to this definition">¶</a></dt>
 <dd><p>This component is based on the Jquery Date Picker object.</p>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">today</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">selectable</span><span class="p">([</span><span class="s2">&quot;2019-09-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2019-09-06&quot;</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="s1">&#39;2020-04-08&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">included_dates</span><span class="p">([</span><span class="s2">&quot;2020-04-08&quot;</span><span class="p">,</span> <span class="s2">&quot;2019-09-06&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlDates.DatePicker</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://jqueryui.com/datepicker/">https://jqueryui.com/datepicker/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -258,6 +281,12 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Range Example&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;fas fa-unlock-alt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.FieldInput</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -281,6 +310,12 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">integer</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.FieldInteger</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -303,9 +338,15 @@
 <dd><p>This component is based on the Jquery Time Picker object.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;This is the report timestamp&quot;</span><span class="p">)</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Time field&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>rptObj.ui.fields.now(label=”Time field”)</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlDates.TimePicker</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://github.com/jonthornton/jquery-timepicker">https://github.com/jonthornton/jquery-timepicker</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -325,7 +366,17 @@
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompFields.Fields.password">
 <code class="sig-name descname">password</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">placeholder</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompFields.Fields.password" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">password</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.FieldPassword</span></code></p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>value</strong> – </p></li>
@@ -348,9 +399,15 @@
 Radio buttons are normally presented in radio groups (a collection of radio buttons describing a set of related options).
 Only one radio button in a group can be selected at the same time.</p>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">radio</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;radio&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.Radio</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/tags/att_input_type_radio.asp">https://www.w3schools.com/tags/att_input_type_radio.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -381,6 +438,12 @@ Default range is 0 to 100. However, you can set restrictions on what numbers are
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">54</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Range Example&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;fas fa-unlock-alt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.FieldRange</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/tags/att_input_type_range.asp">https://www.w3schools.com/tags/att_input_type_range.asp</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -403,11 +466,17 @@ Default range is 0 to 100. However, you can set restrictions on what numbers are
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompFields.Fields.select">
-<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompFields.Fields.select" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompFields.Fields.select" title="Permalink to this definition">¶</a></dt>
 <dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Check&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.FieldSelect</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -430,6 +499,12 @@ Default range is 0 to 100. However, you can set restrictions on what numbers are
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">static</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;readonly field&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.FieldInput</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -453,6 +528,12 @@ Default range is 0 to 100. However, you can set restrictions on what numbers are
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">textarea</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.FieldTextArea</span></code></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -475,9 +556,15 @@ Default range is 0 to 100. However, you can set restrictions on what numbers are
 <dd><p>This component is based on the Jquery Time Picker object.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;This is the report timestamp&quot;</span><span class="p">)</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Time field&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>rptObj.ui.fields.time(label=”Time field”)</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlDates.TimePicker</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://github.com/jonthornton/jquery-timepicker">https://github.com/jonthornton/jquery-timepicker</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -500,9 +587,15 @@ Default range is 0 to 100. However, you can set restrictions on what numbers are
 <code class="sig-name descname">today</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">'far fa-calendar-alt'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompFields.Fields.today" title="Permalink to this definition">¶</a></dt>
 <dd><p>This component is based on the Jquery Date Picker object.</p>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">today</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">selectable</span><span class="p">([</span><span class="s2">&quot;2019-09-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2019-09-06&quot;</span><span class="p">])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">today</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">included_dates</span><span class="p">([</span><span class="s2">&quot;2019-09-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2019-09-06&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlDates.DatePicker</span></code></p></li>
+</ul>
+</div></blockquote>
 <p><a class="reference external" href="https://jqueryui.com/datepicker/">https://jqueryui.com/datepicker/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
