@@ -836,7 +836,8 @@ class JsNvd3Pie(JsNvd3):
     Display pie labels
 
     Related Pages:
-    --------------
+
+
     http://nvd3.org/examples/pie.html
 
     Attributes:
@@ -853,7 +854,8 @@ class JsNvd3Pie(JsNvd3):
     Configure the minimum slice size for labels to show up
 
     Related Pages:
-    --------------
+
+
     http://nvd3.org/examples/pie.html
 
     Attributes:
@@ -906,7 +908,8 @@ class JsNvd3Pie(JsNvd3):
     Turn on Donut mode. Makes pie chart look tasty!
 
     Related Pages:
-    --------------
+
+
     http://nvd3.org/examples/pie.html
 
     Attributes:
@@ -947,7 +950,8 @@ class JsNvd3Pie(JsNvd3):
     Configure how big you want the donut hole size to be.
 
     Related Pages:
-    --------------
+
+
     http://nvd3.org/examples/pie.html
 
     Attributes:
@@ -965,7 +969,8 @@ class JsNvd3Pie(JsNvd3):
     Add a padding (space) between the different categories of the chart
 
     Related Pages:
-    --------------
+
+
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
     Attributes:
@@ -982,7 +987,8 @@ class JsNvd3Pie(JsNvd3):
     Change the angle corner radius
 
     Related Pages:
-    --------------
+
+
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
     Attributes:

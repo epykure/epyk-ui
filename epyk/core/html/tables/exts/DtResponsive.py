@@ -11,7 +11,8 @@ class DataBreakPoints(DataClass):
     -----------
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/responsive.breakpoints
     """
     return self._attrs["name"]
@@ -27,7 +28,8 @@ class DataBreakPoints(DataClass):
     -----------
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/responsive.breakpoints
     """
     return self._attrs["width"]
@@ -46,7 +48,8 @@ class DataDetails(DataClass):
     -----------
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/responsive.details
     """
     return self._attrs["type"]
@@ -63,7 +66,8 @@ class DataDetails(DataClass):
     Responsive provides the ability to show information about the columns it has hidden using DataTables child rows feature (row().child()), but you may wish to display the data in a different manner (potentially so you can use the child rows for other actions such as editing) - this parameter provides that ability.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/responsive.details.display
     """
     return self._attrs["display"]
@@ -80,7 +84,8 @@ class DataDetails(DataClass):
 
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/responsive.details.renderer
     """
     return self._attrs["renderer"]
@@ -96,7 +101,8 @@ class DataDetails(DataClass):
     -----------
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/responsive.details.target
     """
     return self._attrs["target"]
@@ -120,7 +126,8 @@ class Responsive(DataClass):
     Responsive has the ability to use DataTables' child rows feature to show information about any columns which have been removed from the display as a child row, which can be particularly useful for displaying complex information on small screen devices. Please see the Responsive manual on the details rows for further information.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/responsive.details
 
     :rtype: DataDetails
@@ -136,7 +143,8 @@ class Responsive(DataClass):
     This provides the ability to exactly control which columns in a table will be visible for each device type. See the Responsive manual for more information.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/responsive.breakpoints
 
     :rtype: DataBreakPoints
@@ -154,7 +162,8 @@ class Responsive(DataClass):
     the same data but formatted in a different way for different uses.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/responsive.details.target
     """
     return self._attrs["orthogonal"]

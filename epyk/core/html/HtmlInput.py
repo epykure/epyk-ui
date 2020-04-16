@@ -179,7 +179,8 @@ class AutoComplete(Input):
     Property to set all the input timepicker component properties
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
 
     :rtype: OptInputs.OptionAutoComplete
@@ -225,7 +226,8 @@ class InputTime(Input):
     Property to set all the input timepicker component properties
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
 
     :rtype: OptInputs.OptionsTimePicker
@@ -298,7 +300,8 @@ class InputTime(Input):
     Note: the variable time is a function parameter received in the Javascript side
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
 
     :param jsFnc:
@@ -329,7 +332,8 @@ class InputDate(Input):
     Property to set all the input Datepicker component properties
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
 
     :rtype: OptInputs.OptionsDatePicker
@@ -545,7 +549,8 @@ class FieldAutocomplete(Field):
     Note: the variable time is a function parameter received in the Javascript side
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#event-change
 
     :param jsFnc:
@@ -563,7 +568,8 @@ class FieldAutocomplete(Field):
     If canceled, then no request will be started and no items suggested.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#event-search
 
     :param jsFnc:
@@ -582,7 +588,8 @@ class FieldAutocomplete(Field):
     Canceling this event prevents the value from being updated, but does not prevent the menu item from being focused.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#event-focus
 
     Attributes:
@@ -602,7 +609,8 @@ class FieldAutocomplete(Field):
     Triggered when the menu is hidden. Not every close event will be accompanied by a change event.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#event-close
 
     Attributes:
@@ -624,7 +632,8 @@ class FieldAutocomplete(Field):
     Canceling this event prevents the value from being updated, but does not prevent the menu from closing.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#event-select
 
     Attributes:
@@ -646,7 +655,8 @@ class FieldAutocomplete(Field):
     This event is always triggered when a search completes, even if the menu will not be shown because there are no results or the Autocomplete is disabled.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#event-response
 
     Attributes:
@@ -850,7 +860,8 @@ class TextArea(Html.Html):
     Return the HTML DOM object
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_htmldom.asp
 
     :rtype: JsHtmlField.JsHtmlTextarea

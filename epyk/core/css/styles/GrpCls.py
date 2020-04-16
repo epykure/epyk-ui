@@ -230,7 +230,8 @@ class ClassHtml(Properties.CssMixin):
     The attr() function returns the value of an attribute of the selected elements.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/func_attr.asp
 
     Attributes:
@@ -255,7 +256,8 @@ class ClassHtml(Properties.CssMixin):
     This is the unique valid use of this CSS function in most of the browser
 
     Related Pages:
-    --------------
+
+
     https://gomakethings.com/how-to-access-and-use-data-attributes-in-your-css/
 
     Attributes:

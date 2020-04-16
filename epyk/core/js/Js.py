@@ -54,7 +54,8 @@ class JsConsole(object):
       rptObj.js.console.debugger
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_debugger.asp
 
     :return: The Javascript Keyword to trigger the browser debugger
@@ -73,7 +74,8 @@ class JsConsole(object):
       rptObj.js.console.clear
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_console_clear.asp
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
@@ -91,7 +93,8 @@ class JsConsole(object):
       rptObj.js.console.log("Test")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_console_log.asp
 
     Attributes:
@@ -114,7 +117,8 @@ class JsConsole(object):
     The console.info() method writes a message to the console.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_console_info.asp
 
     Attributes:
@@ -133,7 +137,8 @@ class JsConsole(object):
     The console.warn() method writes a warning to the console.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_console_warn.asp
 
     Attributes:
@@ -152,7 +157,8 @@ class JsConsole(object):
     The console.error() method writes an error message to the console.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_console_error.asp
 
     Attributes:
@@ -171,7 +177,8 @@ class JsConsole(object):
     The console.table() method writes a table in the console view.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_console_table.asp
 
     Attributes:
@@ -192,7 +199,8 @@ class JsConsole(object):
     The console.time() method starts a timer in the console view
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_console_time.asp
 
     Attributes:
@@ -209,7 +217,8 @@ class JsConsole(object):
     The console.timeEnd() method ends a timer, and writes the result in the console view.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_console_timeend.asp
 
     Attributes:
@@ -226,7 +235,8 @@ class JsConsole(object):
     The console.assert() method writes a message to the console, but only if an expression evaluates to false.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_console_assert.asp
 
     Attributes:
@@ -244,7 +254,8 @@ class JsConsole(object):
     Javascript Try Catch Exceptions
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_obj_error.asp
 
     Attributes:
@@ -279,7 +290,8 @@ class JsJson(object):
     Parses a JSON string and returns a JavaScript object
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_json_parse.asp
     https://www.w3schools.com/jsref/jsref_parse_json.asp
 
@@ -303,7 +315,8 @@ class JsJson(object):
     The JSON.stringify() method converts JavaScript objects into strings.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_json_stringify.asp
 
     Attributes:
@@ -365,7 +378,8 @@ class JsBreadCrumb(object):
     Add an anchor to the URL after the hash tag
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_loc_hash.asp
     """
     return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, None)))
@@ -396,7 +410,8 @@ class JsScreen(object):
     The availHeight property returns the height of the user's screen, in pixels, minus interface features like the Windows Taskbar.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_screen_availheight.asp
     """
     return JsNumber.JsNumber("screen.availHeight")
@@ -409,7 +424,8 @@ class JsScreen(object):
     The availWidth property returns the width of the user's screen, in pixels, minus interface features like the Windows Taskbar.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_screen_availwidth.asp
     """
     return JsNumber.JsNumber("screen.availWidth")
@@ -422,7 +438,8 @@ class JsScreen(object):
     The colorDepth property returns the bit depth of the color palette for displaying images (in bits per pixel).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_screen_colordepth.asp
     """
     return JsNumber.JsNumber("screen.colorDepth")
@@ -435,7 +452,8 @@ class JsScreen(object):
     The height property returns the total height of the user's screen, in pixels.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_screen_height.asp
     """
     return JsNumber.JsNumber("screen.height")
@@ -448,7 +466,8 @@ class JsScreen(object):
     The pixelDepth property returns the color resolution (in bits per pixel) of the visitor's screen.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_screen_pixeldepth.asp
     """
     return JsNumber.JsNumber("screen.pixelDepth")
@@ -461,7 +480,8 @@ class JsScreen(object):
     The width property returns the total width of the user's screen, in pixels.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_screen_width.asp
     """
     return JsNumber.JsNumber("screen.width")
@@ -504,7 +524,8 @@ class JsBase(object):
     Document.documentElement returns the Element that is the root element of the document (for example, the <html> element for HTML documents).
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
     """
     return JsNodeDom.JsDoms.get("document.documentElement")
@@ -517,7 +538,8 @@ class JsBase(object):
     The screen object contains information about the visitor's screen.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/obj_screen.asp
     """
     return JsScreen()
@@ -544,7 +566,8 @@ class JsBase(object):
     Property to the Javascript Location functions
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/obj_location.asp
 
     :rtype: JsLocation.JsLocation
@@ -574,7 +597,8 @@ class JsBase(object):
     With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
 
     Related Pages:
-    --------------
+
+
     https://jquery.com/
     """
     from epyk.core.js.packages import JsQuery
@@ -591,7 +615,8 @@ class JsBase(object):
     D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
 
     Related Pages:
-    --------------
+
+
     https://d3js.org/
     """
     from epyk.core.js.packages import JsD3
@@ -610,7 +635,8 @@ class JsBase(object):
       jsObj.not_(jsObj.objects.boolean.get("weekend"))
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
 
     Attributes:
@@ -628,7 +654,8 @@ class JsBase(object):
     Conditional statements are used to perform different actions based on different conditions.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_if_else.asp
 
     Attributes:
@@ -648,7 +675,8 @@ class JsBase(object):
     Javascript return keyword
 
     Related Pages:
-    --------------
+
+
     :param jsData: The Javascript expression
     """
     return JsFncs.JsFunction("return %s" % jsData)
@@ -659,7 +687,8 @@ class JsBase(object):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_switch.asp
 
     Attributes:
@@ -767,7 +796,8 @@ class JsBase(object):
     Python and Javascript.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_object_prototypes.asp
 
     Attributes:
@@ -790,7 +820,8 @@ class JsBase(object):
     All modern browsers have a built-in XMLHttpRequest object to request data from a server.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/xml/xml_http.asp
 
     Usage::
@@ -861,7 +892,8 @@ class JsBase(object):
     Create a internal Breadcrumb to keep track of the user journey within your page.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 
     :rtype: JsBreadCrumb
@@ -883,7 +915,8 @@ class JsBase(object):
       icon.click([self.context.rptObj.js.navigateTo(url)])
 
     Related Pages:
-    --------------
+
+
     https://redfin.github.io/react-server/annotated-src/navigateTo.html
 
     Attributes:
@@ -921,7 +954,8 @@ class JsBase(object):
     Copy the full URL to rhe clipboard
 
     Related Pages:
-    --------------
+
+
     https://isabelcastillo.com/hidden-input-javascript
     """
     return JsFncs.JsFunction('''
@@ -952,7 +986,8 @@ class JsBase(object):
     Either the keyCode or the keyCondition can be None
 
     Related Pages:
-    --------------
+
+
     http://gcctech.org/csc/javascript/javascript_keycodes.htm
 
     Attributes:
@@ -1005,7 +1040,8 @@ class JsBase(object):
     The ready event occurs when the body DOM (document object model) has been loaded.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jquery/event_ready.asp
 
     Attributes:
@@ -1041,7 +1077,8 @@ class JsBase(object):
     The getElementById() method returns the element that has the ID attribute with the specified value.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_document_getelementbyid.asp
 
     Attributes:
@@ -1061,7 +1098,8 @@ class JsBase(object):
     The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers. The index starts at 0.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp
 
     Attributes:
@@ -1083,7 +1121,8 @@ class JsBase(object):
     The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers. The index starts at 0.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
 
     Attributes:
@@ -1100,7 +1139,8 @@ class JsBase(object):
     The createElement() method creates an Element Node with the specified name.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_document_createelement.asp
 
     Attributes:
@@ -1122,7 +1162,8 @@ class JsBase(object):
     The createTextNode() method creates a Text Node with the specified text.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_document_createtextnode.asp
 
     Attributes:
@@ -1140,7 +1181,8 @@ class JsBase(object):
     The encodeURIComponent() function encodes a URI component
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp
 
     Attributes:
@@ -1158,7 +1200,8 @@ class JsBase(object):
     The decodeURIComponent() function decodes a URI component.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
 
     Attributes:
@@ -1235,7 +1278,8 @@ class JsBase(object):
     The activeElement property returns the currently focused element in the document.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_document_activeelement.asp
 
     :return: A reference to the element object in the document that has focus
@@ -1249,7 +1293,8 @@ class JsBase(object):
     The title property sets or returns the title of the current document (the text inside the HTML title element).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_doc_title.asp
 
     Attributes:
@@ -1268,7 +1313,8 @@ class JsBase(object):
     The getElementsByClassName() method returns a collection of all elements in the document with the specified class name, as a NodeList object.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
 
     Attributes:
@@ -1287,7 +1333,8 @@ class JsBase(object):
     The hasFocus() method returns a Boolean value indicating whether the document (or any element inside the document) has focus.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_document_hasfocus.asp
 
     :return: A Boolean value, incidating whether the document or any element in the document has focus:
@@ -1301,7 +1348,8 @@ class JsBase(object):
     The execCommand() method executes the specified command for the selected part of an editable section.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_document_execcommand.asp
 
     Attributes:
@@ -1323,7 +1371,8 @@ class JsBase(object):
     The event can be of any legal event type, and must be initialized before use.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_createevent.asp
 
     Attributes:
@@ -1344,7 +1393,8 @@ class JsBase(object):
     The createAttribute() method creates an attribute with the specified name, and returns the attribute as an Attr object.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_document_createattribute.asp
 
     Attributes:
@@ -1362,7 +1412,8 @@ class JsBase(object):
     The writeln() method is identical to the document.write() method, with the addition of writing a newline character after each statement.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_doc_writeln.asp
 
     :param jsString: Optional. What to write to the output stream.
@@ -1463,7 +1514,8 @@ class JsBase(object):
     The parseFloat() function parses a string and returns a floating point number.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_parseint.asp
 
     Attributes:
@@ -1481,7 +1533,8 @@ class JsBase(object):
     The parseInt() function parses a string and returns an integer.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_parseint.asp
 
     Attributes:
@@ -1499,7 +1552,8 @@ class JsBase(object):
     The parse() method parses a date string and returns the number of milliseconds between the date string and midnight of January 1, 1970.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_parse.asp
 
     Attributes:
@@ -1573,7 +1627,8 @@ class JsBase(object):
     Display a message
 
     Related Pages:
-    --------------
+
+
     https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
 
     Attributes:

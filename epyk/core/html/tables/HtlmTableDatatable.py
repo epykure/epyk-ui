@@ -137,7 +137,8 @@ class ColumnDef(DataClass):
     The columnDefs option allows a column definition object to be defined and then assigned to one or more columns in a DataTable, regardless of the order of the column definitions array, or the order of the columns in the table.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columnDefs.targets
     """
     return self._attrs["targets"]
@@ -154,7 +155,8 @@ class ColumnDef(DataClass):
     Enable or disable the display of this column.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.visible
     """
     return self._attrs["visible"]
@@ -171,7 +173,8 @@ class ColumnDef(DataClass):
     Enable or disable search on the data in this column.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.searchable
     """
     return self._attrs["searchable"]
@@ -188,7 +191,8 @@ class ColumnDef(DataClass):
     Define multiple column ordering as the default order for a column.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.orderData
     """
     return self._attrs["orderData"]
@@ -208,7 +212,8 @@ class Column(DataClass):
     Change the cell type created for the column - either TD cells or TH cells.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.cellType
     """
     return self._attrs["cellType"]
@@ -225,7 +230,8 @@ class Column(DataClass):
     Quite simply this option adds a class to each cell in a column, regardless of if the table source is from DOM, Javascript or Ajax. This can be useful for styling columns.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.className
     https://datatables.net/manual/styling/classes
 
@@ -241,7 +247,8 @@ class Column(DataClass):
     Add padding to the text content used when calculating the optimal width for a table.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.contentPadding
     """
     return self._attrs["contentPadding"]
@@ -258,7 +265,8 @@ class Column(DataClass):
     Set default, static, content for a column.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.defaultContent
     """
     return self._attrs["defaultContent"]
@@ -275,7 +283,8 @@ class Column(DataClass):
     When working with DataTables' API, it is very common to want to be able to address individual columns so you can work with them (you wish to sum the numeric content of a column for example). DataTables has two basic methods of addressing columns:
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.name
     """
     return self._attrs["name"]
@@ -292,7 +301,8 @@ class Column(DataClass):
     Set the column title.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.title
     """
     return self._attrs["title"]
@@ -318,7 +328,8 @@ class Column(DataClass):
     This might be useful for generated content columns, for example if you have 'Edit' or 'Delete' buttons in the table.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.orderable
     """
     return self._attrs["orderable"]
@@ -335,7 +346,8 @@ class Column(DataClass):
     Define multiple column ordering as the default order for a column.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.orderData
     """
     return self._attrs["orderData"]
@@ -352,7 +364,8 @@ class Column(DataClass):
     Live DOM sorting type assignment.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.orderDataType
     """
     return self._attrs["orderDataType"]
@@ -369,7 +382,8 @@ class Column(DataClass):
     You can control the default ordering direction, and even alter the behaviour of the order handler (i.e. only allow ascending sorting etc) using this parameter.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.orderSequence
     """
     return self._attrs["orderSequence"]
@@ -386,7 +400,8 @@ class Column(DataClass):
     This property will modify the data that is used by DataTables for various operations as it is read from the data source. columns.render can be considered to be the the read only companion to columns.data which is read / write (and therefore more complex)
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.render
     """
     return self._attrs["render"]
@@ -411,7 +426,8 @@ class Column(DataClass):
     Using this parameter, you can define if DataTables should include this column in the filterable data in the table. You may want to use this option to disable search on generated columns such as 'Edit' and 'Delete' buttons for example.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.searchable
     """
     return self._attrs["searchable"]
@@ -428,7 +444,8 @@ class Column(DataClass):
     Enable or disable the display of this column.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.visible
     """
     return self._attrs["visible"]
@@ -445,7 +462,8 @@ class Column(DataClass):
     Column width assignment.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns.width
     """
     return self._attrs["width"]
@@ -503,7 +521,8 @@ class Language(DataClass):
     Decimal place character.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/language.decimal
     """
     return self._attrs["decimal"]
@@ -544,7 +563,8 @@ class Search(DataClass):
     Flag to indicate if the filtering should be case insensitive or not.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/search.caseInsensitive
     """
     return self._attrs["caseInsensitive"]
@@ -561,7 +581,8 @@ class Search(DataClass):
     The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an initial global filter.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/search
     """
     return self._attrs["search"]
@@ -579,7 +600,8 @@ class Search(DataClass):
     This option controls that ability in DataTables.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/search.regex
     """
     return self._attrs["regex"]
@@ -596,7 +618,8 @@ class Search(DataClass):
     DataTables' built-in filtering is "smart" in that it breaks the user's input into individual words and then matches those words in any position and in any order in the table (rather than simple doing a simple string compare).
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/search.smart
     """
     return self._attrs["smart"]
@@ -624,7 +647,8 @@ class TableConfig(DataClass):
     This can be disabled as an optimisation (it takes a finite amount of time to calculate the widths) if the tables widths are passed in using
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/autoWidth
     """
     return self._attrs["autoWidth"]
@@ -643,7 +667,8 @@ class TableConfig(DataClass):
     Showing such buttons is an interface that end users are comfortable with, making them feel at home with the table.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/extensions/buttons/
     """
     from epyk.core.html.tables.exts import DtButtons
@@ -668,7 +693,8 @@ class TableConfig(DataClass):
     By default, when DataTables loads data from an Ajax or Javascript data source (ajax and data respectively)
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/deferRender
 
     """
@@ -689,7 +715,8 @@ class TableConfig(DataClass):
     This lets your users quickly determine what each column refers to rather than needing to scroll back to the top of the table.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/extensions/fixedheader/
     """
     from epyk.core.html.tables.exts import DtFixedHeader
@@ -724,7 +751,8 @@ class TableConfig(DataClass):
     The options shown in the list are controlled by the lengthMenu configuration option.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/lengthChange
     """
     return self._attrs["lengthChange"]
@@ -741,7 +769,8 @@ class TableConfig(DataClass):
     Very similar to columns, this parameter allows you to assign specific options to columns in the table, although in this case the column options defined can be applied to one or more columns. Additionally, not every column need be specified, unlike columns.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columnDefs
     """
     return self.sub_data_enum("columnDefs", ColumnDef)
@@ -754,7 +783,8 @@ class TableConfig(DataClass):
     The columns option in the initialisation parameter allows you to define details about the way individual columns behave. For a full list of column options that can be set, please see the related parameters below.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/columns
     """
     return self.sub_data_enum("columns", Column)
@@ -767,7 +797,8 @@ class TableConfig(DataClass):
     Language configuration options for DataTables
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/
     """
     return self.sub_data("language", Language)
@@ -781,7 +812,8 @@ class TableConfig(DataClass):
     As with other dynamic data sources, arrays or objects can be used for the data source for each row, with columns.data employed to read from specific object properties.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/ajax
     """
     return self._attrs["ajax"]
@@ -799,7 +831,8 @@ class TableConfig(DataClass):
     This is particularly useful for tables with large amounts of data where it can take a noticeable amount of time to sort the entries.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/processing
     """
     return self._attrs["processing"]
@@ -816,7 +849,8 @@ class TableConfig(DataClass):
     The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an initial global filter.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/search
     """
     return self.sub_data_enum("search", Search)
@@ -830,7 +864,8 @@ class TableConfig(DataClass):
     Server-side processing is useful when working with large data sets (typically >50'000 records) as it means a database engine can be used to perform the sorting etc calculations - operations that modern database engines are highly optimised for, allowing use of DataTables with massive data sets (millions of rows).
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/serverSide
     """
     return self._attrs["serverSide"]
@@ -849,7 +884,8 @@ class TableConfig(DataClass):
     As such, this option exists to allow you to instruct DataTables to not make that initial request, rather it will use the data already on the page (no sorting etc will be applied to it).
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/deferLoading
     """
     return self._attrs["deferLoading"]
@@ -867,7 +903,8 @@ class TableConfig(DataClass):
     This can be useful if you want to change a property of the table which cannot be altered through the API.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/destroy
     """
     return self._attrs["destroy"]
@@ -884,7 +921,8 @@ class TableConfig(DataClass):
     Define the starting point for data display when using DataTables with pagination
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/displayStart
     """
     return self._attrs["displayStart"]
@@ -903,7 +941,8 @@ class TableConfig(DataClass):
     This parameter is used to control their ordering and additional mark-up surrounding them in the DOM.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/dom
     """
     return self._attrs["dom"]
@@ -921,7 +960,8 @@ class TableConfig(DataClass):
     As with other dynamic data sources, arrays or objects can be used for the data source for each row, with columns.data employed to read from specific object properties.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/data
     """
     return self._attrs["data"]
@@ -940,7 +980,8 @@ class TableConfig(DataClass):
     This feature is enabled by default, but if you wish to disable it, you may do so with this parameter.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/paging
     """
     return self._attrs["paging"]
@@ -958,7 +999,8 @@ class TableConfig(DataClass):
     This option allows that feature to be enabled or disabled.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/info
     """
     return self._attrs["info"]
@@ -976,7 +1018,8 @@ class TableConfig(DataClass):
     This is useful when using complex headers.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/orderCellsTop
     """
     return self._attrs["orderCellsTop"]
@@ -993,7 +1036,8 @@ class TableConfig(DataClass):
     DataTables highlight the columns which are used to order the content in the table's body by adding a class to the cells in that column, which in turn has CSS applied to those classes to highlight those cells.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/orderClasses
     """
     return self._attrs["orderClasses"]
@@ -1010,7 +1054,8 @@ class TableConfig(DataClass):
     The option works in tandem with the order option which provides an initial ordering state for the table which can then be modified by the user clicking on column headings, while the ordering specified by this option will always be applied to the table, regardless of user interaction.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/orderFixed
     """
     return self._attrs["orderFixed"]
@@ -1029,7 +1074,8 @@ class TableConfig(DataClass):
     Therefore, this option is provided to allow this shift-click multiple column ability.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/orderMulti
     """
     return self._attrs["orderMulti"]
@@ -1047,7 +1093,8 @@ class TableConfig(DataClass):
     The ability to order data can be disabled using this option.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/ordering
     """
     return self._attrs["ordering"]
@@ -1065,7 +1112,8 @@ class TableConfig(DataClass):
     The order must be an array of arrays, each inner array comprised of two elements:
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/order
 
     Attributes:
@@ -1092,7 +1140,8 @@ class TableConfig(DataClass):
     Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different screen sizes through the dynamic insertion and removal of columns from the table.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/extensions/responsive/
 
     :rtype: DtResponsive.Responsive
@@ -1110,7 +1159,8 @@ class TableConfig(DataClass):
     When the end user reloads the page the table's state will be altered to match what they had previously set up.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/stateSave
     """
     return self._attrs["stateSave"]
@@ -1136,7 +1186,8 @@ class TableConfig(DataClass):
     Vertical scrolling will constrain the DataTable to the given height, and enable scrolling for any data which overflows the current viewport. This can be used as an alternative to paging to display a lot of data in a small area (although paging and scrolling can both be enabled at the same time if desired).
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/scrollY
     """
     return self._attrs["scrollY"]
@@ -1154,7 +1205,8 @@ class TableConfig(DataClass):
     When a table is too wide to fit into a certain layout, or you have a large number of columns in the table, you can enable horizontal (x) scrolling to show the table in a viewport, which can be scrolled.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/scrollX
     """
     return self._attrs["scrollX"]
@@ -1172,7 +1224,8 @@ class TableConfig(DataClass):
     However, this can look odd when filtering data down to a small data set, and the footer is left "floating" further down.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/scrollCollapse
     """
     return self._attrs["scrollCollapse"]
@@ -1205,7 +1258,8 @@ class TableConfig(DataClass):
     This parameter allows you to readily specify the entries in the length drop down select list that DataTables shows when pagination is enabled. It can be either:
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/lengthMenu
     """
     return self._attrs["lengthMenu"]
@@ -1235,7 +1289,8 @@ class TableConfig(DataClass):
     Number of rows to display on a single page when using pagination.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/pageLength
     """
     return self._attrs["pageLength"]
@@ -1253,7 +1308,8 @@ class TableConfig(DataClass):
     Which buttons are shown in the pagination control are defined by the option given here.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/pagingType
     """
     return self._attrs["pagingType"]
@@ -1271,7 +1327,8 @@ class TableConfig(DataClass):
     The business logic used to calculate what information should be displayed (what buttons in the case of the pagination buttons) is core to DataTables and generally doesn't vary how the buttons are actually displayed based on the styling requirements of the page.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/renderer
     """
     return self._attrs["renderer"]
@@ -1289,7 +1346,8 @@ class TableConfig(DataClass):
     Note that if the table has already been initialised, this parameter will cause DataTables to simply return the object that has already been set up - it will not take account of any changes you might have made to the initialisation object passed to DataTables
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/retrieve
     """
     return self._attrs["retrieve"]
@@ -1306,7 +1364,8 @@ class TableConfig(DataClass):
     It can often be useful to have a id attribute on each tr element in a DataTable for row selection and data source identification, particularly when using events.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/rowId
     """
     return self._attrs["rowId"]
@@ -1353,7 +1412,8 @@ class TableConfig(DataClass):
     Select adds item selection capabilities to a DataTable. Items can be rows, columns or cells, which can be selected independently, or together. Item selection can be particularly useful in interactive tables where users can perform some action on the table, such as editing rows or marking items to perform an action on.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select
     """
     from epyk.core.html.tables.exts import DtSelect
@@ -1369,7 +1429,8 @@ class TableConfig(DataClass):
     What the virtual rendering means is that only the visible portion of the table (and a bit to either side to make the scrolling smooth) is drawn, while the scrolling container gives the visual impression that the whole table is visible.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/extensions/scroller/
     """
     from epyk.core.html.tables.exts import DtScroller
@@ -1388,7 +1449,8 @@ class TableConfig(DataClass):
 
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/extensions/searchpanes
     """
     from epyk.core.html.tables.exts import DtSearchPanes
@@ -1403,7 +1465,8 @@ class TableConfig(DataClass):
     Basically the same as the search option, but in this case for individual columns, rather than the global filter, this option defined the filtering to apply to the table during initialisation.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchCols
     """
     return self._attrs["searchCols"]
@@ -1420,7 +1483,8 @@ class TableConfig(DataClass):
     The built-in DataTables global search (by default at the top right of every DataTable) will instantly search the table on every keypress when in client-side processing mode and reduce the search call frequency automatically to 400mS when in server-side processing mode.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchDelay
     """
     return self._attrs["searchDelay"]
@@ -1437,7 +1501,8 @@ class TableConfig(DataClass):
     Duration for which the saved state information is considered valid. After this period has elapsed the state will be returned to the default.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/stateDuration
     """
     return self._attrs["stateDuration"]
@@ -1454,7 +1519,8 @@ class TableConfig(DataClass):
     An array of CSS classes that should be applied to displayed rows, in sequence. This array may be of any length, and DataTables will apply each class sequentially, looping when required.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/stripeClasses
     """
     return self._attrs["stripeClasses"]
@@ -1471,7 +1537,8 @@ class TableConfig(DataClass):
     By default DataTables allows keyboard navigation of the table (sorting, paging, and filtering) by adding a tabindex attribute to the required elements.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/tabIndex
     """
     return self._attrs["tabIndex"]

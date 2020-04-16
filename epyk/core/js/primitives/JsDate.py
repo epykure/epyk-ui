@@ -22,7 +22,8 @@ class JsDate(JsObject.JsObject):
     -----------
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     Attributes:
@@ -56,7 +57,8 @@ class JsDate(JsObject.JsObject):
       JsDate.get("MyDate")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     Attributes:
@@ -97,7 +99,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.now()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_now.asp
 
     :return: A Number, representing the number of milliseconds since midnight January 1, 1970
@@ -118,7 +121,8 @@ class JsDate(JsObject.JsObject):
       rptObj.js.objects.date.today()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A Python / Javascript object
@@ -133,7 +137,8 @@ class JsDate(JsObject.JsObject):
     The getDate() method returns the day of the month (from 1 to 31) for the specified date.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_getdate.asp
 
     :return:
@@ -152,7 +157,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("dateTest").getDay()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_getday.asp
 
     :return:
@@ -172,7 +178,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("dateTest").getFullYear()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_getfullyear.asp
 
     :return: A Number, representing the year of the specified date
@@ -193,7 +200,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("dateTest").getHours()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_gethours.asp
 
     :return: A Number, from 0 to 23, representing the hour
@@ -214,7 +222,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("dateTest").getMilliseconds()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_getmilliseconds.asp
 
     :return: A Number, from 0 to 999, representing milliseconds
@@ -235,7 +244,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("dateTest").getMonth()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_getmonth.asp
 
     :return: A Number, from 0 to 11, representing the month
@@ -255,7 +265,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("dateTest").getMonthName()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_getmonth.asp
 
     :return: A Number, from 0 to 11, representing the month
@@ -275,7 +286,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("dateTest").setDate(5)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_setdate.asp
 
     Attributes:
@@ -299,7 +311,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("dateTest").setMonth(5)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_setmonth.asp
 
     Attributes:
@@ -326,7 +339,8 @@ class JsDate(JsObject.JsObject):
       jsType.date.get("Test").toDateString()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_todatestring.asp
 
     :return: A String, representing the date as a string
@@ -347,7 +361,8 @@ class JsDate(JsObject.JsObject):
       jsType.date.get("Test").toISOString()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A String, representing the date and time using the ISO standard format
@@ -368,7 +383,8 @@ class JsDate(JsObject.JsObject):
       jsType.date.get("dateTest").getStrDate()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A Python / Javascript object
@@ -388,7 +404,8 @@ class JsDate(JsObject.JsObject):
       jsType.date.get("dateTest").getStrTimeStamp()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A Python / Javascript object
@@ -447,7 +464,8 @@ class JsDate(JsObject.JsObject):
       jsObj.objects.date.get("MyDate").addDays(jsObj, 6).getStrDate()
 
     Related Pages:
-    --------------
+
+
     https://stackoverflow.com/questions/563406/add-days-to-javascript-date
 
     Attributes:

@@ -261,7 +261,8 @@ class Vis(object):
     -----------
 
     Related Pages:
-    --------------
+
+
     http://www.chartjs.org/
 
     Attributes:

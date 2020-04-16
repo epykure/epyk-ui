@@ -20,7 +20,8 @@ class Canvas(object):
     This reference will cover the properties and methods of the getContext("2d") object, which can be used to draw text, lines, boxes, circles, and more - on the canvas
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/ref_canvas.asp
 
     Attributes:

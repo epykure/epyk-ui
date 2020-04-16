@@ -16,7 +16,8 @@ class RowGroup(DataClass):
     Set the class name to be used for the grouping rows.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/rowGroup.className
     """
     return self._attrs["className"]
@@ -33,7 +34,8 @@ class RowGroup(DataClass):
     Set the data point to use as the grouping data source
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/rowGroup.className
     """
     return self._attrs["dataSrc"]
@@ -50,7 +52,8 @@ class RowGroup(DataClass):
     Text to show for rows which have null, undefined or empty string group data.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/rowGroup.emptyDataGroup
     """
     return self._attrs["emptyDataGroup"]
@@ -67,7 +70,8 @@ class RowGroup(DataClass):
     Provides the ability to disable row grouping at initialisation.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/rowGroup.enable
     """
     return self._attrs["enable"]
@@ -84,7 +88,8 @@ class RowGroup(DataClass):
     Set the class name to be used for the grouping end rows.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/rowGroup.endClassName
     """
     return self._attrs["endClassName"]
@@ -101,7 +106,8 @@ class RowGroup(DataClass):
     Set the class name to be used for the grouping start rows.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/rowGroup.startClassName
     """
     return self._attrs["startClassName"]

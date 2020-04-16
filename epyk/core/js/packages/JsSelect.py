@@ -19,7 +19,8 @@ class JsSelectItem():
     ------------
 
     Related Pages:
-    --------------
+
+
     :param attrs:
     """
     return JsObjects.JsObjects.get("%s.css(%s)" % (self._selector, attrs))
@@ -55,7 +56,8 @@ class JSelect(JsPackage):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:
@@ -87,7 +89,8 @@ class JSelect(JsPackage):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
     """
     if 'multiple' in self._src.attr:
@@ -115,7 +118,8 @@ class JSelect(JsPackage):
     """
 
     Related Pages:
-    --------------
+
+
     :param value:
 
     :return:
@@ -129,7 +133,8 @@ class JSelect(JsPackage):
     This will deselect all items in a multi-select.
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('deselectAll')" % self._src.dom.jquery.varId)
@@ -141,7 +146,8 @@ class JSelect(JsPackage):
     This will select all items in a multi-select.
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('selectAll')" % self._src.dom.jquery.varId)
@@ -154,7 +160,8 @@ class JSelect(JsPackage):
     This is useful if you programatically change any underlying values that affect the layout of the element.
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('render')" % self._src.dom.jquery.varId)
@@ -165,7 +172,8 @@ class JSelect(JsPackage):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('refresh')" % self._src.dom.jquery.varId)
@@ -177,7 +185,8 @@ class JSelect(JsPackage):
     Programmatically toggles the bootstrap-select menu open/closed.
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('toggle')" % self._src.dom.jquery.varId)
@@ -189,7 +198,8 @@ class JSelect(JsPackage):
     To programmatically hide the bootstrap-select use the hide method (this only affects the visibility of the bootstrap-select itself).
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('hide')" % self._src.dom.jquery.varId)
@@ -201,7 +211,8 @@ class JSelect(JsPackage):
     To programmatically show the bootstrap-select use the show method (this only affects the visibility of the bootstrap-select itself).
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('show')" % self._src.dom.jquery.varId)
@@ -213,7 +224,8 @@ class JSelect(JsPackage):
     To programmatically show the bootstrap-select use the show method (this only affects the visibility of the bootstrap-select itself).
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:
@@ -232,7 +244,8 @@ class JSelect(JsPackage):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:
@@ -273,7 +286,8 @@ class JSelect(JsPackage):
     Whether you're building highly interactive web applications or you just need to add a date picker to a form control, jQuery UI is the perfect choice.
 
     Related Pages:
-    --------------
+
+
     https://jqueryui.com/
 
     :rtype: JsQuery.JQuery
@@ -289,7 +303,8 @@ class JSelect(JsPackage):
     Process the raw data returned from a request. The following arguments are passed to this callback:
 
     Related Pages:
-    --------------
+
+
     https://github.com/truckingsim/Ajax-Bootstrap-Select
 
     Usage::

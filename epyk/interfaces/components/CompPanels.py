@@ -19,7 +19,8 @@ class Panels(object):
       tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
 
     Related Pages:
-    --------------
+
+
     https://getbootstrap.com/docs/4.0/components/navs/
     """
     dflt_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0', 'border-radius': '5px',
@@ -44,7 +45,8 @@ class Panels(object):
       tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
 
     Related Pages:
-    --------------
+
+
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
@@ -65,7 +67,8 @@ class Panels(object):
     Python wrapper for a multi Tabs component
 
     Related Pages:
-    --------------
+
+
     https://getbootstrap.com/docs/4.0/components/navs/
 
     """
@@ -90,7 +93,8 @@ class Panels(object):
     Python wrapper for a multi Tabs component
 
     Related Pages:
-    --------------
+
+
     https://getbootstrap.com/docs/4.0/components/navs/
     """
     dflt_options = {
@@ -114,7 +118,8 @@ class Panels(object):
     Python wrapper to the Bootstrap Pills interface
 
     Related Pages:
-    --------------
+
+
     https://getbootstrap.com/docs/4.0/components/navs/
     """
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
@@ -167,7 +172,8 @@ class Panels(object):
     div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)
 
     Related Pages:
-    --------------
+
+
     https://codepen.io/rstrahl/pen/eJZQej
 
     Attributes:

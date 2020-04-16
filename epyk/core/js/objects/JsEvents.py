@@ -18,7 +18,8 @@ class Event(object):
     The cancelBubble() method prevents the event-flow from bubbling up to parent elements.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_cancelbubble.asp
     """
     return JsString.JsString("event.cancelBubble = true")
@@ -30,7 +31,8 @@ class Event(object):
     Returns the element that triggered the event
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_target.asp
     """
     return JsString.JsString("event.target")
@@ -46,7 +48,8 @@ class Event(object):
     This object is available from the dataTransfer property of all drag events.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
     """
     return JsDataTransfer("event.dataTransfer")
@@ -59,7 +62,8 @@ class Event(object):
     Returns the time (in milliseconds relative to the epoch) at which the event was created
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_timestamp.asp
     """
     return JsString.JsString("event.timeStamp", isPyData=False)
@@ -72,7 +76,8 @@ class Event(object):
     The defaultPrevented event property checks whether the preventDefault() method was called for the event.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_defaultprevented.asp
     """
     return JsString.JsString("event.defaultPrevented", isPyData=False)
@@ -84,7 +89,8 @@ class Event(object):
     Cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_preventdefault.asp
     """
     return JsString.JsString("event.preventDefault()", isPyData=False)
@@ -96,7 +102,8 @@ class Event(object):
     The stopImmediatePropagation() method of the Event interface prevents other listeners of the same event from being called.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
     """
     return JsString.JsString("event.stopImmediatePropagation()", isPyData=False)
@@ -108,7 +115,8 @@ class Event(object):
     Prevents further propagation of an event during event flow
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_stoppropagation.asp
     """
     return JsString.JsString("event.stopPropagation()", isPyData=False)
@@ -124,7 +132,8 @@ class UIEvent(Event):
     The detail property returns a number with details about the event.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_detail.asp
     """
     return JsNumber.JsNumber("event.detail", isPyData=False)
@@ -137,7 +146,8 @@ class UIEvent(Event):
     The view event property returns a reference to the Window object where the event occured.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_view.asp
     """
     from epyk.core.js.JsWindow import JsWindow
@@ -155,7 +165,8 @@ class KeyboardEvent(UIEvent):
     The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a key event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_altkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.altKey")
@@ -168,7 +179,8 @@ class KeyboardEvent(UIEvent):
     The charCode property returns the Unicode character code of the key that triggered the onkeypress event.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_charcode.asp
     """
     return JsString.JsString(varName="event.charCode")
@@ -182,7 +194,8 @@ class KeyboardEvent(UIEvent):
     The code property returns the key that triggered the event.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_code.asp
     """
     return JsString.JsString("event.code", isPyData=False)
@@ -195,7 +208,8 @@ class KeyboardEvent(UIEvent):
     The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a key event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_ctrlkey.asp
     """
     return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
@@ -209,7 +223,8 @@ class KeyboardEvent(UIEvent):
     The getModifierState() method returns true if the specified modifier key was pressed, or activated.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_key.asp
     """
     return JsString.JsString("event.key", isPyData=False)
@@ -222,7 +237,8 @@ class KeyboardEvent(UIEvent):
     The keyCode property returns the Unicode character code of the key that triggered the onkeypress event, or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_keycode.asp
     """
     return JsString.JsString("event.keyCode", isPyData=False)
@@ -236,7 +252,8 @@ class KeyboardEvent(UIEvent):
     The location property returns a number that indicates the location of a key on the keyboard or device.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_location.asp
     """
     return JsNumber.JsNumber("event.location", isPyData=False)
@@ -249,7 +266,8 @@ class KeyboardEvent(UIEvent):
     The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed when a key event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_metakey.asp
     """
     return JsString.JsString("event.metaKey", isPyData=False)
@@ -262,7 +280,8 @@ class KeyboardEvent(UIEvent):
     The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a key event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_shiftkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.shiftKey")
@@ -275,7 +294,8 @@ class KeyboardEvent(UIEvent):
     The which property returns the Unicode character code of the key that triggered the onkeypress event, or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_key_which.asp
     """
     return JsNumber.JsNumber("event.which", isPyData=False)
@@ -291,7 +311,8 @@ class MouseEvent(UIEvent):
     The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a key event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_altkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.altKey")
@@ -302,7 +323,8 @@ class MouseEvent(UIEvent):
     The button property returns a number that indicates which mouse button was pressed when a mouse event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_button.asp
     """
     return JsNumber.JsNumber("event.button", isPyData=False)
@@ -314,7 +336,8 @@ class MouseEvent(UIEvent):
     The buttons property returns a number that indicates which mouse button or mouse buttons were pressed when a mouse event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_buttons.asp
     """
     return JsNumber.JsNumber("event.buttons", isPyData=False)
@@ -335,7 +358,8 @@ class MouseEvent(UIEvent):
     Returns the horizontal coordinate of the mouse pointer, relative to the current window, when the mouse event was triggered
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_clientx.asp
     """
     return JsNumber.JsNumber.get(varName="event.clientX")
@@ -348,7 +372,8 @@ class MouseEvent(UIEvent):
     The clientY property returns the vertical coordinate (according to the client area) of the mouse pointer when a mouse event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_clienty.asp
     """
     return JsNumber.JsNumber.get(varName="event.clientY")
@@ -415,7 +440,8 @@ class TouchEvent(UIEvent):
     The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a touch event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_touch_altkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.altKey")
@@ -428,7 +454,8 @@ class TouchEvent(UIEvent):
     The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a touch event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_touch_ctrlkey.asp
     """
     return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
@@ -441,7 +468,8 @@ class TouchEvent(UIEvent):
     The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed when a touch event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_touch_metakey.asp
     """
     return JsString.JsString("event.metaKey", isPyData=False)
@@ -454,7 +482,8 @@ class TouchEvent(UIEvent):
     The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a touch event was triggered.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_touch_shiftkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.shiftKey")
@@ -467,7 +496,8 @@ class TouchEvent(UIEvent):
     The targetTouches property returns an array of Touch objects, one for each finger that is touching the current target element.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_touch_targettouches.asp
     """
     return JsArray.JsArray("event.shiftKey", isPyData=False)
@@ -480,7 +510,8 @@ class TouchEvent(UIEvent):
     The touches property returns an array of Touch objects, one for each finger that is currently touching the surface.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_touch_touches.asp
     """
     return JsArray.JsArray("event.shiftKey", isPyData=False)

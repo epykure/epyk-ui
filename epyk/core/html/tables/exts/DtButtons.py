@@ -10,7 +10,8 @@ class InnerButtons(DataClass):
     -----------
     Being able to let your users know what will happen when they activate a button is obviously fundamentally important to the Buttons extension and this option provides exactly that ability.
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.text
     """
     return self._attrs['text']
@@ -27,7 +28,8 @@ class InnerButtons(DataClass):
     This function defined the action that the button will take when activated by the end user.
     This will normally be to perform some operation on the DataTable, but can be absolutely anything since the function can be defined by yourself.
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.action
     """
     return self._attrs['action']
@@ -44,7 +46,8 @@ class InnerButtons(DataClass):
     This option provides the ability to set any arbitrary attribute on the button's HTML element in the document.
     This can be useful for customisation of attributes such as ARIA assistive attributes, setting a custom id for selection / styling, custom data parameters, etc.
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.attr
     """
     return self._attrs['attr']
@@ -60,7 +63,8 @@ class InnerButtons(DataClass):
     -----------
     Set the class name for the button.
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.className
     """
     return self._attrs['className']
@@ -76,7 +80,8 @@ class InnerButtons(DataClass):
     -----------
     Ensure that any requirements have been satisfied before initialising a button
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.available
     """
     return self._attrs['available']
@@ -93,7 +98,8 @@ class InnerButtons(DataClass):
     This option provides the ability to set the initial enabled state of a button using a boolean value.
     It is most likely to be of use when using the API methods that can control the button's enabled state after initialisation:
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.enabled
     """
     return self._attrs["enabled"]
@@ -110,7 +116,8 @@ class InnerButtons(DataClass):
     Define which button type the button should be based on.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.extend
     """
     return self._attrs["extend"]
@@ -127,7 +134,8 @@ class InnerButtons(DataClass):
     Define an activation key for a button.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.key
     """
     return self._attrs["key"]
@@ -144,7 +152,8 @@ class InnerButtons(DataClass):
     Define a name for a button.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.name
     """
     return self._attrs["name"]
@@ -161,7 +170,8 @@ class InnerButtons(DataClass):
     Define a tag  for a button.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.tag
     """
     return self._attrs["tag"]
@@ -179,7 +189,8 @@ class InnerButtons(DataClass):
     This can be used to provide a detailed description of the button, or a simple text name if you choose to display an icon in the button rather than text (using the buttons.buttons.text option).
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.titleAttr
     """
     return self._attrs["titleAttr"]
@@ -289,7 +300,8 @@ class Buttons(DataClass):
       This can be useful for cases where the styling framework requires a list of buttons,
       where the list element is just a container and not the button itself (Zurb Foundation requires this for example).
       Related Pages:
-      --------------
+
+
       https://datatables.net/reference/option/buttons.buttons.buttonContainer
       """
       return self.sub_data('buttonContainer', self.Container)
@@ -303,7 +315,8 @@ class Buttons(DataClass):
       This can be particularly useful for adding complex styling rules to buttons.
       It can also be disabled if you wish to have minimal markup in your document.
       Related Pages:
-      --------------
+
+
       https://datatables.net/reference/option/buttons.buttons.buttonLiner
       """
       return self.sub_data('buttonLiner', self.ButtonLiner)
@@ -316,7 +329,8 @@ class Buttons(DataClass):
       This option controls the HTML tag that is used for the element that is displayed when a collection button is triggered.
       It in turn contains the sub-buttons of the collection.
       Related Pages:
-      --------------
+
+
       https://datatables.net/reference/option/buttons.buttons.collection
       """
       return self.sub_data('collection', self.Collection)
@@ -329,7 +343,8 @@ class Buttons(DataClass):
       This option controls the HTML tag that is used to create each individual button.
       With this option the tag type and class name can be specified using the tag and className properties of this object.
       Related Pages:
-      --------------
+
+
       https://datatables.net/reference/option/buttons.buttons.button
       """
       return self.sub_data('button', self.DomButton)
@@ -343,7 +358,8 @@ class Buttons(DataClass):
     This option provides the ability to set the initial enabled state of a button using a boolean value.
     It is most likely to be of use when using the API methods that can control the button's enabled state after initialisation:
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.buttons.enabled
     """
     return self._attrs["enabled"]
@@ -367,7 +383,8 @@ class Buttons(DataClass):
     -----------
     Set a name for the instance for the group selector.
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/buttons.name
     """
     return self._attrs['name']

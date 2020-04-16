@@ -39,7 +39,8 @@ class Sliders(object):
     rptObj.ui.slider([1, 2, 3, 4, 5, 6, 7])
 
     Related Pages:
-    --------------
+
+
     https://jqueryui.com/slider/
 
     Attributes:
@@ -141,7 +142,8 @@ class Sliders(object):
       rptObj.ui.sliders.progressbar(300)
 
     Related Pages:
-    --------------
+
+
     https://jqueryui.com/progressbar/
 
     Attributes:

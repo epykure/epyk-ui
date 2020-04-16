@@ -12,7 +12,8 @@ class ExtsEditors(DataGroup):
     The input editor allows entering of a single line of plain text
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
@@ -36,7 +37,8 @@ class ExtsEditors(DataGroup):
     The input editor allows entering of a single line of plain text
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:

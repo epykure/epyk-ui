@@ -347,7 +347,8 @@ class Td(Html.Html):
     The colspan attribute defines the number of columns a cell should span.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_td_colspan.asp
 
     Attributes:
@@ -364,7 +365,8 @@ class Td(Html.Html):
     The rowspan attribute specifies the number of rows a cell should span.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_td_rowspan.asp
 
     Attributes:
@@ -584,7 +586,8 @@ class Table(Html.Html):
     The <caption> tag defines a table caption.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_caption.asp
 
     Attributes:

@@ -22,7 +22,8 @@ class OutBrowsers(object):
     URL used: https://codepen.io/pen/define/
 
     Related Pages:
-    --------------
+
+
     https://www.debuggex.com/cheatsheet/regex/python
 
     Attributes:
@@ -148,7 +149,8 @@ class PyOuts(object):
     Thanks to this function some packages will not be imported to not conflict with the existing ones
 
     Related Pages:
-    --------------
+
+
     https://jupyter.org/
     """
     self.excluded_packages = ['bootstrap']
@@ -162,7 +164,8 @@ class PyOuts(object):
     Thanks to this function some packages will not be imported to not conflict with the existing ones
 
     Related Pages:
-    --------------
+
+
     https://jupyter.org/
 
     :return: The ouput object with the function _repr_html_
@@ -177,7 +180,8 @@ class PyOuts(object):
     This will produce everything in a single page which can be directly copied to the try editor in w3C website
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic
 
     Attributes:
@@ -207,7 +211,8 @@ class PyOuts(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://codepen.io/
 
     Attributes:
@@ -233,7 +238,8 @@ class PyOuts(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://jsfiddle.net/
 
     Attributes:

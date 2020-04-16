@@ -104,7 +104,8 @@ class SearchPanes(DataClass):
     This is useful when dealing with large data sets with many different options as they are narrowed down accordingly as selections proceed.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.cascadePanes
     """
     return self._attrs['cascadePanes']
@@ -125,7 +126,8 @@ class SearchPanes(DataClass):
     It is useful to be able to disable these buttons, for example on smaller tables with less options it may be preferrable to employ a custom user interface.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.clear
     """
     return self._attrs['clear']
@@ -147,7 +149,8 @@ class SearchPanes(DataClass):
     This may result in faster load times as there is not as much validation to be done.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.columns
     """
     return self._attrs['columns']
@@ -167,7 +170,8 @@ class SearchPanes(DataClass):
     The control buttons can be hidden and searching disabled for individual panes by the columns.searchPanes.controls option.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.controls
     """
     return self._attrs['controls']
@@ -184,7 +188,8 @@ class SearchPanes(DataClass):
     This is useful as it prevents the searchPanes cells becoming mishapen and overpopulated when the table contains long strings.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.dataLength
     """
     return self._attrs['dataLength']
@@ -201,7 +206,8 @@ class SearchPanes(DataClass):
     Empty cells will be represented in the panes by the option searchPanes.emptyMessage. This is useful as it's a more user-friendly way than just having a blank cell.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.emptyMessage
     """
     return self._attrs['emptyMessage']
@@ -219,7 +225,8 @@ class SearchPanes(DataClass):
     However if the value of searchPanes.hideCount is set to true then the count column won't be displayed in any of the panes.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.hideCount
     """
     return self._attrs['hideCount']
@@ -238,7 +245,8 @@ class SearchPanes(DataClass):
     There are 6 sizes supported from 1 pane in a row to 6 panes in a row. Altering the number at the end of columns- will alter the number of panes on a row.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.layout
     """
     return self._attrs['layout']
@@ -255,7 +263,8 @@ class SearchPanes(DataClass):
     As standard, SearchPanes will be displayed with the ordering buttons included in the interface, allowing the user to change the order of the selections in each pane.
     However if the value of searchPanes.orderable is set to false then the ordering buttons will no longer be displayed in any of the panes.
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.orderable
     """
     return self._attrs['orderable']
@@ -272,7 +281,8 @@ class SearchPanes(DataClass):
     As standard, SearchPanes will be displayed with the ordering buttons included in the interface, allowing the user to change the order of the selections in each pane.
     However if the value of searchPanes.orderable is set to false then the ordering buttons will no longer be displayed in any of the panes.
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.orderable
     """
     return self._attrs['orderable']
@@ -325,7 +335,8 @@ class SearchPanes(DataClass):
     This is useful as it prevents the searchPanes cells becoming mishapen and overpopulated when the table contains long strings.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/searchPanes.dtOpts
     """
     return self.sub_data('dtOps', self.DtOps)

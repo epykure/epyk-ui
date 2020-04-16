@@ -14,7 +14,8 @@ class OptionsCode(Options):
     The starting value of the editor. Can be a string, or a document object.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
@@ -34,7 +35,8 @@ class OptionsCode(Options):
     add extra addon: /mode/javascript/javascript.js
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("")
@@ -55,7 +57,8 @@ class OptionsCode(Options):
     When a specific string is given, lines will only be split on that string, and output will, by default, use that same separator.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get()
@@ -75,7 +78,8 @@ class OptionsCode(Options):
     It is possible to use multiple theming classes at once—for example "foo bar" will assign both the cm-s-foo and the cm-s-bar classes to the editor.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get()
@@ -92,7 +96,8 @@ class OptionsCode(Options):
     How many spaces a block (whatever that means in the edited language) should be indented. The default is 2.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(2)
@@ -109,7 +114,8 @@ class OptionsCode(Options):
     Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line before). Defaults to true.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
@@ -126,7 +132,8 @@ class OptionsCode(Options):
     The width of a tab character. Defaults to 4.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(4)
@@ -143,7 +150,8 @@ class OptionsCode(Options):
     Whether, when indenting, the first N*tabSize spaces should be replaced by N tabs. Default is false.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
@@ -161,7 +169,8 @@ class OptionsCode(Options):
     Default is true.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
@@ -179,7 +188,8 @@ class OptionsCode(Options):
     Default is "ltr". CodeMirror applies the Unicode Bidirectional Algorithm to each line, but does not autodetect base direction — it's set to the editor direction for all lines.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("ltr")
@@ -196,7 +206,8 @@ class OptionsCode(Options):
     Determines whether horizontal cursor movement through right-to-left (Arabic, Hebrew) text is visual (pressing the left arrow moves the cursor left) or logical (pressing the left arrow moves to the next lower index in the string, which is visually right in right-to-left text). The default is false on Windows, and true on other platforms.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
@@ -214,7 +225,8 @@ class OptionsCode(Options):
     Extra key maps are found in the key map directory. See the section on key maps for more information.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("default")
@@ -231,7 +243,8 @@ class OptionsCode(Options):
     Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
@@ -248,7 +261,8 @@ class OptionsCode(Options):
     Whether to show line numbers to the left of the editor.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
@@ -265,7 +279,8 @@ class OptionsCode(Options):
     At which number to start counting lines. Default is 1.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(1)
@@ -282,7 +297,8 @@ class OptionsCode(Options):
     Determines whether the gutter scrolls along with the content horizontally (false) or whether it stays fixed during horizontal scrolling (true, the default).
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
@@ -300,7 +316,8 @@ class OptionsCode(Options):
     The core library also provides the "null" style, which completely hides the scrollbars. Addons can implement additional scrollbar models.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("native")
@@ -318,7 +335,8 @@ class OptionsCode(Options):
     If this option is set to true, it will be covered by an element with class CodeMirror-gutter-filler.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
@@ -336,7 +354,8 @@ class OptionsCode(Options):
     he core library defines the "textarea" and "contenteditable" input models. On mobile browsers, the default is "contenteditable". On desktop browsers, the default is "textarea".
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("textarea")
@@ -353,7 +372,8 @@ class OptionsCode(Options):
     This disables editing of the editor content by the user. If the special value "nocursor" is given (instead of simply true), focusing of the editor is also disallowed.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
@@ -370,7 +390,8 @@ class OptionsCode(Options):
     This label is read by the screenreaders when CodeMirror text area is focused. This is helpful for accessibility.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("")
@@ -387,7 +408,8 @@ class OptionsCode(Options):
     Whether the cursor should be drawn when a selection is active. Defaults to false.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
@@ -404,7 +426,8 @@ class OptionsCode(Options):
     When enabled, which is the default, doing copy or cut when there is no selection will copy or cut the whole lines that have cursors on them.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
@@ -422,7 +445,8 @@ class OptionsCode(Options):
     CodeMirror will by default insert one line per selection. You can set this to false to disable that behavior.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
@@ -439,7 +463,8 @@ class OptionsCode(Options):
     Determines whether multiple selections are joined as soon as they touch (the default) or only when they overlap (true).
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
@@ -456,7 +481,8 @@ class OptionsCode(Options):
     The period of inactivity (in milliseconds) that will cause a new history event to be started when typing or deleting. Defaults to 1250.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(1250)
@@ -473,7 +499,8 @@ class OptionsCode(Options):
     The tab index to assign to the editor. If not given, no tab index will be assigned.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get()
@@ -491,7 +518,8 @@ class OptionsCode(Options):
     When fromTextArea is used, and no explicit value is given for this option, it will be set to true when either the source textarea is focused, or it has an autofocus attribute and no other element is focused.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
@@ -508,7 +536,8 @@ class OptionsCode(Options):
     Controls whether drag-and-drop is enabled. On by default.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
@@ -526,7 +555,8 @@ class OptionsCode(Options):
     The default blink rate is 530ms. By setting this to zero, blinking can be disabled. A negative value hides the cursor entirely.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(530)
@@ -543,7 +573,8 @@ class OptionsCode(Options):
     How much extra space to always keep above and below the cursor when approaching the top or bottom of the visible view in a scrollable document. Default is 0.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(0)
@@ -561,7 +592,8 @@ class OptionsCode(Options):
     For some fonts (and by some tastes) a smaller height (for example 0.85), which causes the cursor to not reach all the way to the bottom of the line, looks better
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(1)
@@ -583,7 +615,8 @@ class OptionsCode(Options):
     Add extra addon: addon/selection/active-line.js
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
@@ -604,7 +637,8 @@ class OptionsCode(Options):
     Add extra addon: addon/edit/matchbrackets.js
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)

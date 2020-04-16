@@ -1079,7 +1079,8 @@ class TableConfig(DataClass):
     This is useful is you want to provide your own navigation controls.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-pagination/
     """
     return self._attrs["suppressPaginationPanel"]
@@ -1096,7 +1097,8 @@ class TableConfig(DataClass):
     The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top when the page changes.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-pagination/
     """
     return self._attrs["suppressScrollOnNewData"]
@@ -1113,7 +1115,8 @@ class TableConfig(DataClass):
     ensures the rows and columns in the DOM always appear in the same order as displayed in the grid.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-cell-editing/
     """
     return self._attrs["ensureDomOrder"]
@@ -1130,7 +1133,8 @@ class TableConfig(DataClass):
     Ensures all columns are rendered, i.e. appears in the DOM.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-accessibility/
     """
     return self._attrs["suppressColumnVirtualisation"]
@@ -1149,7 +1153,8 @@ class TableConfig(DataClass):
     To turn OFF column animations, set the grid property suppressColumnMoveAnimation=true.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-column-moving/
     """
     return self._attrs["suppressDragLeaveHidesColumns"]
@@ -1169,7 +1174,8 @@ class TableConfig(DataClass):
     This is useful for touch devices where Ctrl and Shift clicking is not an option.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-selection/
     """
     return self._attrs["rowMultiSelectWithClick"]
@@ -1187,7 +1193,8 @@ class TableConfig(DataClass):
     By default the grid disallows deselection of rows (i.e. once a row is selected, it remains selected until another row is selected in its place).
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-selection/
     """
     return self._attrs["rowDeselection"]
@@ -1206,7 +1213,8 @@ class TableConfig(DataClass):
     'multiple' allows multiple rows to be selected.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-selection/
     """
     return self._attrs["rowSelection"]
@@ -1223,7 +1231,8 @@ class TableConfig(DataClass):
     Sets the number of rows rendered outside of the scrollable viewable area.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-accessibility/
     """
     return self._attrs["rowBuffer"]
@@ -1240,7 +1249,8 @@ class TableConfig(DataClass):
     If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't want to also select the row when the row is clicked.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid-selection/
     """
     return self._attrs["suppressRowClickSelection"]

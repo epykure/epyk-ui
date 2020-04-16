@@ -12,7 +12,8 @@ class OptionsSlider(Options):
     Whether to slide the handle smoothly when the user clicks on the slider track. Also accepts any valid animation
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-animate
     """
     return self._report._jsStyles.get('animate', False)
@@ -32,7 +33,8 @@ class OptionsSlider(Options):
     To learn more about this option, check out the learn article about the classes option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-classes
     """
     return self._report._jsStyles.get('classes')
@@ -50,7 +52,8 @@ class OptionsSlider(Options):
     Disables the slider if set to true.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-disabled
     """
     return self._report._jsStyles.get('disabled', False)
@@ -68,7 +71,8 @@ class OptionsSlider(Options):
     The maximum value of the slider.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-max
     """
     return self._report._jsStyles.get('max', 100)
@@ -86,7 +90,8 @@ class OptionsSlider(Options):
     The minimum value of the slider.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-min
     """
     return self._report._jsStyles.get('min', 0)
@@ -105,7 +110,8 @@ class OptionsSlider(Options):
     Possible values: "horizontal", "vertical".
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-orientation
     """
     return self._report._jsStyles.get('orientation', "horizontal")
@@ -123,7 +129,8 @@ class OptionsSlider(Options):
     Whether the slider represents a range.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-range
     """
     return self._report._jsStyles.get('range', False)
@@ -142,7 +149,8 @@ class OptionsSlider(Options):
     The full specified value range of the slider (max - min) should be evenly divisible by the step.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-step
     """
     return self._report._jsStyles.get('step', 1)
@@ -161,7 +169,8 @@ class OptionsSlider(Options):
     If there is more than one handle, determines the value of the first handle.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-value
     """
     return self._report._jsStyles.get('value', 0)
@@ -180,7 +189,8 @@ class OptionsSlider(Options):
     If the range option is set to true, the length of values should be 2.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#option-values
     """
     return self._report._jsStyles.get('values', 0)
@@ -201,7 +211,8 @@ class OptionsProgBar(Options):
     Initialize the progressbar with the classes option specified, changing the theming for the ui-progressbar
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#option-classes
     """
     return self._report._jsStyles.get('classes')
@@ -243,7 +254,8 @@ class OptionsProgBar(Options):
     Disables the progressbar if set to true.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#option-disabled
     """
     return self._report._jsStyles.get('disabled', False)
@@ -261,7 +273,8 @@ class OptionsProgBar(Options):
     The maximum value of the progressbar.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#option-max
     """
     return self._report._jsStyles.get('max', 100)
@@ -279,7 +292,8 @@ class OptionsProgBar(Options):
     The value of the progressbar.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#option-value
     """
     return self._report._jsStyles.get('value', False)
@@ -302,7 +316,8 @@ class OptionsMenu(Options):
     To learn more about this option, check out the learn article about the
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#option-classes
     """
     return self._report._jsStyles.get('classes', {})
@@ -320,7 +335,8 @@ class OptionsMenu(Options):
     Disables the menu if set to true
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#option-disabled
     """
     return self._report._jsStyles.get('disabled', False)
@@ -338,7 +354,8 @@ class OptionsMenu(Options):
     Icons to use for submenus, matching an icon provided by the jQuery UI CSS Framework.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#option-icons
     """
     return self._report._jsStyles.get('icons')
@@ -358,7 +375,8 @@ class OptionsMenu(Options):
     You can refer to the jQuery UI Position utility for more details about the various options.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#option-position
     """
     return self._report._jsStyles.get('position')
@@ -379,7 +397,8 @@ class OptionDialog(Options):
     Which element the dialog (and overlay, if modal) should be appended to
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-appendTo
     """
     return self._report._jsStyles.get('appendTo', 'body')
@@ -398,7 +417,8 @@ class OptionDialog(Options):
     If false, the dialog will stay hidden until the open() method is called.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-autoOpen
     """
     return self._report._jsStyles.get('autoOpen', True)
@@ -418,7 +438,8 @@ class OptionDialog(Options):
     To learn more about this option, check out the learn article about the
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-classes
     """
     return self._report._jsStyles.get('classes', {})
@@ -436,7 +457,8 @@ class OptionDialog(Options):
     Specifies whether the dialog should close when it has focus and the user presses the escape (ESC) key.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-closeOnEscape
     """
     return self._report._jsStyles.get('closeOnEscape', True)
@@ -454,7 +476,8 @@ class OptionDialog(Options):
     Specifies the text for the close button. Note that the close text is visibly hidden when using a standard theme.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-closeText
     """
     return self._report._jsStyles.get('closeText', True)
@@ -472,7 +495,8 @@ class OptionDialog(Options):
     If set to true, the dialog will be draggable by the title bar. Requires the jQuery UI Draggable widget to be included.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-draggable
     """
     return self._report._jsStyles.get('draggable', True)
@@ -490,7 +514,8 @@ class OptionDialog(Options):
     The height of the dialog.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-height
     """
     return self._report._jsStyles.get('draggable', 'auto')
@@ -508,7 +533,8 @@ class OptionDialog(Options):
     If and how to animate the hiding of the dialog.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-hide
     """
     return self._report._jsStyles.get('draggable', None)
@@ -526,7 +552,8 @@ class OptionDialog(Options):
     The maximum height to which the dialog can be resized, in pixels.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-maxHeight
     """
     return self._report._jsStyles.get('maxHeight', None)
@@ -544,7 +571,8 @@ class OptionDialog(Options):
     The maximum width to which the dialog can be resized, in pixels.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-maxWidth
     """
     return self._report._jsStyles.get("option", {})('maxWidth', None)
@@ -562,7 +590,8 @@ class OptionDialog(Options):
     The minimum height to which the dialog can be resized, in pixels.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-minHeight
     """
     return self._report._jsStyles.get("option", {})('minHeight', None)
@@ -580,7 +609,8 @@ class OptionDialog(Options):
     The minimum width to which the dialog can be resized, in pixels.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-minWidth
     """
     return self._report._jsStyles.get("option", {})('minWidth', None)
@@ -599,7 +629,8 @@ class OptionDialog(Options):
     Modal dialogs create an overlay below the dialog but above other page elements.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-modal
     """
     return self._report._jsStyles.get("option", {})('modal', True)
@@ -611,7 +642,8 @@ class OptionDialog(Options):
     Specifies where the dialog should be displayed when opened. The dialog will handle collisions such that as much of the dialog is visible as possible.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-position
     """
     self._report._jsStyles['position'] = {"my": "center", "at": "center", "of": "window"}
@@ -630,7 +662,8 @@ class OptionDialog(Options):
     If set to true, the dialog will be resizable. Requires the jQuery UI Resizable widget to be included.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-resizable
     """
     return self._report._jsStyles.get("option", {})('resizable', True)
@@ -648,7 +681,8 @@ class OptionDialog(Options):
     Specifies the title of the dialog. If the value is null, the title attribute on the dialog source element will be used.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-title
     """
     return self._report._jsStyles.get('title', None)
@@ -666,7 +700,8 @@ class OptionDialog(Options):
     The width of the dialog, in pixels.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-title
     """
     return self._report._jsStyles.get('width', 300)

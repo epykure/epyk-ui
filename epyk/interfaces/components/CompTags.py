@@ -18,7 +18,8 @@ class Tags(object):
     The most important attribute of the <a> element is the href attribute, which indicates the link's destination.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_a.asp
 
     Attributes:
@@ -45,7 +46,8 @@ class Tags(object):
     The <b> tag specifies bold text without any extra importance.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_b.asp
 
     Attributes:
@@ -72,7 +74,8 @@ class Tags(object):
     <h1> defines the most important heading. <h6> defines the least important heading.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_hn.asp
 
     Attributes:
@@ -99,7 +102,8 @@ class Tags(object):
     <h1> defines the most important heading. <h6> defines the least important heading.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_hn.asp
 
     Attributes:
@@ -126,7 +130,8 @@ class Tags(object):
     <h1> defines the most important heading. <h6> defines the least important heading.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_hn.asp
 
     Attributes:
@@ -171,7 +176,8 @@ class Tags(object):
     <p>This is a <u>paragraph</u>.</p>
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_u.asp
 
     Attributes:
@@ -197,7 +203,8 @@ class Tags(object):
     <p>This is some text in a paragraph.</p>
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_p.asp
 
     Attributes:
@@ -229,7 +236,8 @@ class Tags(object):
     bdi.css({'cursor': 'pointer'})
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_bdi.asp
 
     Attributes:
@@ -254,7 +262,8 @@ class Tags(object):
     The <bdo> tag is used to override the current text direction.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_bdo.asp
 
     Attributes:
@@ -278,7 +287,8 @@ class Tags(object):
     The <em> tag is a phrase tag. It renders as emphasized text.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_em.asp
 
     Attributes:
@@ -302,7 +312,8 @@ class Tags(object):
     The <strong> tag is a phrase tag. It defines important text.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_strong.asp
 
     Attributes:
@@ -326,7 +337,8 @@ class Tags(object):
     The <samp> tag is a phrase tag. It defines sample output from a computer program.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_samp.asp
 
     Attributes:
@@ -351,7 +363,8 @@ class Tags(object):
     The <kbd> tag is a phrase tag. It defines keyboard input.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_kbd.asp
 
     Attributes:
@@ -375,7 +388,8 @@ class Tags(object):
     The <var> tag also supports the Global Attributes in HTML.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_var.asp
 
     Attributes:
@@ -399,7 +413,8 @@ class Tags(object):
     The <sup> tag defines superscript text. Superscript text appears half a character above the normal line, and is sometimes rendered in a smaller font. Superscript text can be used for footnotes, like WWW
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_sup.asp
 
     Attributes:
@@ -423,7 +438,8 @@ class Tags(object):
     The <wbr> (Word Break Opportunity) tag specifies where in a text it would be ok to add a line-break.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_wbr.asp
 
     Attributes:
@@ -447,7 +463,8 @@ class Tags(object):
     The <time> tag defines a human-readable date/time.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_time.asp
 
     Attributes:
@@ -472,7 +489,8 @@ class Tags(object):
     Subscript text can be used for chemical formulas, like H2O.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_sub.asp
 
     Attributes:
@@ -496,7 +514,8 @@ class Tags(object):
     The <small> tag defines smaller text (and other side comments).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_small.asp
 
     Attributes:
@@ -520,7 +539,8 @@ class Tags(object):
     The <s> tag specifies text that is no longer correct, accurate or relevant.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_s.asp
 
     Attributes:
@@ -544,7 +564,8 @@ class Tags(object):
     The <i> tag defines a part of text in an alternate voice or mood. The content of the <i> tag is usually displayed in italic.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_i.asp
 
     Attributes:
@@ -570,7 +591,8 @@ class Tags(object):
     Browsers normally insert quotation marks around the quotation.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_q.asp
 
     Attributes:
@@ -596,7 +618,8 @@ class Tags(object):
     Use the <mark> tag if you want to highlight parts of your text.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_mark.asp
 
     Attributes:
@@ -620,7 +643,8 @@ class Tags(object):
     The <ins> tag defines a text that has been inserted into a document.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_ins.asp
 
     Attributes:
@@ -644,7 +668,8 @@ class Tags(object):
     The <dfn> tag represents the defining instance of a term in HTML.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_dfn.asp
 
     Attributes:
@@ -668,7 +693,8 @@ class Tags(object):
     The <cite> tag defines the title of a work (e.g. a book, a song, a movie, a TV show, a painting, a sculpture, etc.).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_cite.asp
 
     Attributes:
@@ -692,7 +718,8 @@ class Tags(object):
     The <abbr> tag defines an abbreviation or an acronym, like "HTML", "Mr.", "Dec.", "ASAP", "ATM".
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_abbr.asp
 
     Attributes:
@@ -717,7 +744,8 @@ class Tags(object):
     This is also known as a gauge.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_meter.asp
 
     Attributes:

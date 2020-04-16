@@ -25,7 +25,8 @@ class Effects(object):
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
     Attributes:
@@ -66,7 +67,8 @@ class Effects(object):
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
     Attributes:
@@ -86,7 +88,8 @@ class Effects(object):
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
     Attributes:
@@ -143,7 +146,8 @@ class Effects(object):
     htmlObj.style.effects.animate("pink", {"color": "blue", "width": "400px"})
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css_animatable.asp
 
     :param name: String. The animation name

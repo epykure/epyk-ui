@@ -23,7 +23,8 @@ class Layouts(object):
       - :class:`epyk.core.html.HtmlOthers.Newline`
 
     Related Pages:
-    --------------
+
+
 
     https://www.w3schools.com/tags/tag_br.asp
 
@@ -53,7 +54,8 @@ class Layouts(object):
       - :class:`epyk.core.html.HtmlOthers.Hr`
 
     Related Pages:
-    --------------
+
+
 
     https://www.w3schools.com/tags/tag_hr.asp
 
@@ -94,7 +96,8 @@ class Layouts(object):
       - :class:`epyk.core.html.HtmlContainer.Col`
 
     Related Pages:
-    --------------
+
+
 
     https://getbootstrap.com/docs/4.0/layout/grid/
     https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
@@ -135,7 +138,8 @@ class Layouts(object):
       - :class:`epyk.core.html.HtmlContainer.Row`
 
     Related Pages:
-    --------------
+
+
 
     https://getbootstrap.com/docs/4.0/layout/grid/
     https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
@@ -197,7 +201,8 @@ class Layouts(object):
       - :class:`epyk.core.html.HtmlContainer.Grid`
 
     Related Pages:
-    --------------
+
+
 
     https://getbootstrap.com/docs/4.0/layout/grid/
 
@@ -254,7 +259,8 @@ class Layouts(object):
       - :class:`epyk.core.html.HtmlContainer.Div`
 
     Related Pages:
-    --------------
+
+
 
     https://www.w3schools.com/tags/tag_div.asp
 
@@ -296,7 +302,8 @@ class Layouts(object):
       - :class:`epyk.core.html.HtmlPopup.Popup`
 
     Related Pages:
-    --------------
+
+
 
     https://www.w3schools.com/tags/tag_div.asp
 

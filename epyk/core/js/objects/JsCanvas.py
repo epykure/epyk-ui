@@ -33,7 +33,8 @@ class RadialGradient(object):
     The addColorStop() method is used together with createLinearGradient() or createRadialGradient().
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createRadialGradient
 
     Attributes:
@@ -64,7 +65,8 @@ class Context2D(object):
     The arc() method creates an arc/curve (used to create circles, or parts of circles).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_arc.asp
 
     Attributes:
@@ -85,7 +87,8 @@ class Context2D(object):
     The beginPath() method begins a path, or resets the current path.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_beginpath.asp
     """
     return "%s.beginPath()" % self.varId
@@ -97,7 +100,8 @@ class Context2D(object):
     The bezierCurveTo() method adds a point to the current path by using the specified control points that represent a cubic Bézier curve.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_beziercurveto.asp
 
     Attributes:
@@ -118,7 +122,8 @@ class Context2D(object):
     The clearRect() method clears the specified pixels within a given rectangle.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_clearrect.asp
 
     Attributes:
@@ -137,7 +142,8 @@ class Context2D(object):
     The clip() method clips a region of any shape and size from the original canvas.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_clip.asp
     """
     return "%s.clip()" % self.varId
@@ -149,7 +155,8 @@ class Context2D(object):
     The closePath() method creates a path from the current point back to the starting point.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_closepath.asp
     """
     return "%s.closePath()" % self.varId
@@ -163,7 +170,8 @@ class Context2D(object):
     The element can be an image, video, or another <canvas> element.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_createpattern.asp
 
     Attributes:
@@ -182,7 +190,8 @@ class Context2D(object):
     The createRadialGradient() method is specified by six parameters, three defining the gradient's start circle, and three defining the end circle.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_createradialgradient.asp
 
     Attributes:
@@ -214,7 +223,8 @@ class Context2D(object):
     canvas.ctx.strokeText("Hello World!", 10, 50),
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_createlineargradient.asp
 
     Attributes:
@@ -235,7 +245,8 @@ class Context2D(object):
     The fill() method fills the current drawing (path). The default color is black.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_fill.asp
 
     Attributes:
@@ -254,7 +265,8 @@ class Context2D(object):
     The fillStyle property sets or returns the color, gradient, or pattern used to fill the drawing.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_fillstyle.asp
 
     Attributes:
@@ -271,7 +283,8 @@ class Context2D(object):
     The fillText() method draws filled text on the canvas. The default color of the text is black.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_filltext.asp
 
     Attributes:
@@ -300,7 +313,8 @@ class Context2D(object):
     The lineCap property sets or returns the style of the end caps for a line.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_linecap.asp
 
     Attributes:
@@ -317,7 +331,8 @@ class Context2D(object):
     The lineJoin property sets or returns the type of corner created, when two lines meet.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_linejoin.asp
 
     Attributes:
@@ -334,7 +349,8 @@ class Context2D(object):
     Adds a new point and creates a line to that point from the last specified point in the canvas
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_lineto.asp
 
     Attributes:
@@ -351,7 +367,8 @@ class Context2D(object):
     The lineWidth property sets or returns the current line width, in pixels.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_linewidth.asp
 
     Attributes:
@@ -367,7 +384,8 @@ class Context2D(object):
     Moves the path to the specified point in the canvas, without creating a line
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_moveto.asp
 
     Attributes:
@@ -384,7 +402,8 @@ class Context2D(object):
     The rect() method creates a rectangle.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_rect.asp
 
     Attributes:
@@ -403,7 +422,8 @@ class Context2D(object):
     The rect() method creates a rectangle.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_rect.asp
 
     Attributes:
@@ -422,7 +442,8 @@ class Context2D(object):
     The font property sets or returns the current font properties for text content on the canvas.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_font.asp
 
     Attributes:
@@ -441,7 +462,8 @@ class Context2D(object):
     The globalAlpha property value must be a number between 0.0 (fully transparent) and 1.0 (no transparancy).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_globalalpha.asp
 
     Attributes:
@@ -457,7 +479,8 @@ class Context2D(object):
     The isPointInPath() method returns true if the specified point is in the current path, otherwise false.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_ispointinpath.asp
 
     Attributes:
@@ -474,7 +497,8 @@ class Context2D(object):
     The measureText() method returns an object that contains the width of the specified text, in pixels.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_measuretext.asp
 
     Attributes:
@@ -494,7 +518,8 @@ class Context2D(object):
     The rotate() method rotates the current drawing.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_rotate.asp
 
     Attributes:
@@ -510,7 +535,8 @@ class Context2D(object):
     The scale() method scales the current drawing, bigger or smaller.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_scale.asp
 
     Attributes:
@@ -527,7 +553,8 @@ class Context2D(object):
     The shadowBlur property sets or returns the blur level for shadows.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_shadowblur.asp
 
     Attributes:
@@ -543,7 +570,8 @@ class Context2D(object):
     The shadowColor property sets or returns the color to use for shadows.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_shadowcolor.asp
 
     Attributes:
@@ -560,7 +588,8 @@ class Context2D(object):
     The shadowOffsetX property sets or returns the horizontal distance of the shadow from the shape.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_shadowoffsetx.asp
 
     Attributes:
@@ -576,7 +605,8 @@ class Context2D(object):
     The shadowOffsetY property sets or returns the vertical distance of the shadow from the shape.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_shadowoffsety.asp
 
     Attributes:
@@ -612,7 +642,8 @@ class Context2D(object):
     The strokeStyle property sets or returns the color, gradient, or pattern used for strokes.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_strokestyle.asp
 
     Attributes:
@@ -628,7 +659,8 @@ class Context2D(object):
     The strokeRect() method draws a rectangle (no fill). The default color of the stroke is black.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_strokestyle.asp
     """
 
@@ -639,7 +671,8 @@ class Context2D(object):
     The strokeText() method draws text (with no fill) on the canvas. The default color of the text is black.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_stroketext.asp
 
     Attributes:
@@ -662,7 +695,8 @@ class Context2D(object):
     The textAlign property sets or returns the current alignment for text content, according to the anchor point.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_textalign.asp
 
     Attributes:
@@ -678,7 +712,8 @@ class Context2D(object):
     The translate() method remaps the (0,0) position on the canvas.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_translate.asp
 
     Attributes:
@@ -695,7 +730,8 @@ class Context2D(object):
     The textBaseline property sets or returns the current text baseline used when drawing text.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_textbaseline.asp
 
     Attributes:
@@ -711,7 +747,8 @@ class Context2D(object):
     The drawImage() method draws an image, canvas, or video onto the canvas.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_drawimage.asp
 
     Attributes:
@@ -731,7 +768,8 @@ class Context2D(object):
     The getImageData() method returns an ImageData object that copies the pixel data for the specified rectangle on a canvas.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/canvas_getimagedata.asp
 
     Attributes:
@@ -769,7 +807,8 @@ class Canvas(JsNodeDom.JsDoms):
     The HTMLCanvasElement.getContext() method returns a drawing context on the canvas, or null if the context identifier is not supported.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
 
     :rtype: Context2D

@@ -26,7 +26,8 @@ class DropData(object):
       rptObj.ui.drops.dropfile()
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------

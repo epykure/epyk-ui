@@ -341,7 +341,8 @@ class JsDomsTransforms(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
 
     Attributes:
@@ -364,7 +365,8 @@ class JsDomsTransforms(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX
     https://www.w3schools.com/jsref/prop_style_transform.asp
 
@@ -382,7 +384,8 @@ class JsDomsTransforms(object):
     The translateY() CSS function repositions an element vertically on the 2D plane. Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_style_transform.asp
 
     Attributes:
@@ -399,7 +402,8 @@ class JsDomsTransforms(object):
     The translate() CSS function repositions an element in the horizontal and/or vertical directions. Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_style_transform.asp
 
     Attributes:
@@ -419,7 +423,8 @@ class JsDomsTransforms(object):
     Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/perspective
 
     Attributes:
@@ -437,7 +442,8 @@ class JsDomsTransforms(object):
     The scale() CSS function defines a transformation that resizes an element on the 2D plane.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale
 
     Attributes:
@@ -455,7 +461,8 @@ class JsDomsTransforms(object):
     The scaleX() CSS function defines a transformation that resizes an element along the x-axis (horizontally). Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleX
 
     Attributes:
@@ -471,7 +478,8 @@ class JsDomsTransforms(object):
     The scaleY() CSS function defines a transformation that resizes an element along the y-axis (vertically). Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleY
 
     Attributes:
@@ -487,7 +495,8 @@ class JsDomsTransforms(object):
     The skew() CSS function defines a transformation that skews an element on the 2D plane. Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skew
 
     Attributes:
@@ -511,7 +520,8 @@ class JsDomsTransforms(object):
       i.label.dom.transform.skewX(20),
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewX
 
     Attributes:
@@ -529,7 +539,8 @@ class JsDomsTransforms(object):
     Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewY
 
     Attributes:
@@ -551,7 +562,8 @@ class JsDomsTransforms(object):
       i.label.dom.transform.rotate(90)
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate
 
     Attributes:
@@ -569,7 +581,8 @@ class JsDomsTransforms(object):
     Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate3d
 
     Attributes:
@@ -590,7 +603,8 @@ class JsDomsTransforms(object):
     Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX
 
     Attributes:
@@ -608,7 +622,8 @@ class JsDomsTransforms(object):
     Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateY
 
     Attributes:
@@ -625,7 +640,8 @@ class JsDomsTransforms(object):
     The rotateZ() CSS function defines a transformation that rotates an element around the z-axis without deforming it. Its result is a <transform-function> data type.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateZ
 
     Attributes:
@@ -648,7 +664,8 @@ class JsDoms(JsObject.JsObject):
     Create a new dom object to be added to the HTML page
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     Attributes:
@@ -681,7 +698,8 @@ class JsDoms(JsObject.JsObject):
     The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_document_queryselectorall.asp
 
     Attributes:
@@ -702,7 +720,8 @@ class JsDoms(JsObject.JsObject):
     This property allows you to rotate, scale, move, skew, etc., elements.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_style_transform.asp
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function
     """
@@ -733,7 +752,8 @@ class JsDoms(JsObject.JsObject):
     The ready event occurs when the DOM (document object model) has been loaded.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jquery/event_ready.asp
 
     Attributes:
@@ -753,7 +773,8 @@ class JsDoms(JsObject.JsObject):
       select.label.dom.innerText("test Change")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_node_innertext.asp
 
     Attributes:
@@ -789,7 +810,8 @@ class JsDoms(JsObject.JsObject):
       select.label.dom.innerHTML("<p style='color:red'>Changed !</p>")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_html_innerhtml.asp
 
     Attributes:
@@ -827,7 +849,8 @@ class JsDoms(JsObject.JsObject):
     select.label.dom.attr({"title": "Tooltip"})
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
@@ -859,7 +882,8 @@ class JsDoms(JsObject.JsObject):
       select.label.dom.setAttribute("title", "Tooltip")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
@@ -883,7 +907,8 @@ class JsDoms(JsObject.JsObject):
       table.dom.addClass("red", {"border": "1px solid green"}, extend=False)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
@@ -915,7 +940,8 @@ class JsDoms(JsObject.JsObject):
       select.label.dom.css({"color": "red"})
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
@@ -985,7 +1011,8 @@ class JsDoms(JsObject.JsObject):
     i.label.dom.transition('color', 'red', 5, reverse=True),
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_transition.asp
 
     Attributes:
@@ -1033,7 +1060,8 @@ class JsDoms(JsObject.JsObject):
       input.js.hide()
 
     Related Pages:
-    --------------
+
+
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
     return self.css("display", "none")
@@ -1048,7 +1076,8 @@ class JsDoms(JsObject.JsObject):
       input.js.hide()
 
     Related Pages:
-    --------------
+
+
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
     return self.css("display", self.display_value)
@@ -1122,7 +1151,8 @@ class JsDoms(JsObject.JsObject):
       rptObj.js.alert(rptObj.js.body.clientHeight)
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight
     """
     return JsNumber.JsNumber("%s.clientHeight" % self.varId)
@@ -1179,7 +1209,8 @@ class JsDoms(JsObject.JsObject):
     select.dom.firstChild.css({"color": "yellow"})
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_node_firstchild.asp
 
     :return: A new JsDom python object
@@ -1194,7 +1225,8 @@ class JsDoms(JsObject.JsObject):
     The nextSibling property returns the node immediately following the specified node, in the same tree level.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_node_nextsibling.asp
     """
     return JsDoms("%s.nextSibling" % self.varId)
@@ -1206,7 +1238,8 @@ class JsDoms(JsObject.JsObject):
     The contains() method returns a Boolean value indicating whether a node is a descendant of a specified node.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_node_contains.asp
 
     Attributes:
@@ -1228,7 +1261,8 @@ class JsDoms(JsObject.JsObject):
       select.dom.getAttribute("class")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_getattribute.asp
 
     Attributes:
@@ -1246,7 +1280,8 @@ class JsDoms(JsObject.JsObject):
     The getAttributeNode() method returns the attribute node with the specified name of an element, as an Attr object.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_getattributenode.asp
 
     Attributes:
@@ -1281,7 +1316,8 @@ class JsDoms(JsObject.JsObject):
     The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_getboundingclientrect.asp
     https://developer.mozilla.org/en-US/docs/Web/API/DOMRect
     """
@@ -1299,7 +1335,8 @@ class JsDoms(JsObject.JsObject):
       select.dom.hasChildNodes
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_node_haschildnodes.asp
 
     :return: A Boolean, returns true if the node has child nodes, false otherwise
@@ -1329,7 +1366,8 @@ class JsDoms(JsObject.JsObject):
     Shortcut in charge oa creating a text node object and adding the text.
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -1349,7 +1387,8 @@ class JsDoms(JsObject.JsObject):
     The nodes in the collection are sorted as they appear in the source code and can be accessed by index numbers. The index starts at 0.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_node_childnodes.asp
 
     :return: A NodeList object, representing a collection of nodes. The nodes in the returned collection are sorted as they appear in the source code
@@ -1369,7 +1408,8 @@ class JsDoms(JsObject.JsObject):
       select.dom.tagName
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_element_tagname.asp
 
     :return: A String, representing the tag name of the element in uppercase
@@ -1405,7 +1445,8 @@ class JsDoms(JsObject.JsObject):
       select.dom.className()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_html_classname.asp
 
     Attributes:
@@ -1433,7 +1474,8 @@ class JsDoms(JsObject.JsObject):
       select.dom.cloneNode()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_node_clonenode.asp
 
     Attributes:
@@ -1455,7 +1497,8 @@ class JsDoms(JsObject.JsObject):
       select.dom.remove()
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/fr/docs/Web/API/ChildNode/remove
     """
     return JsFncs.JsFunction("%s.remove()" % self.varId)
@@ -1467,7 +1510,8 @@ class JsDoms(JsObject.JsObject):
     Removes a child node from an element
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_node_removechild.asp
 
     Attributes:
@@ -1489,7 +1533,8 @@ class JsDoms(JsObject.JsObject):
       select.dom.appendChild(select.label.dom.cloneNode())
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_node_appendchild.asp
 
     Attributes:
@@ -1512,7 +1557,8 @@ class JsDoms(JsObject.JsObject):
       select.dom.insertBefore(select.label.dom.cloneNode())
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_node_insertbefore.asp
 
     Attributes:
@@ -1550,7 +1596,8 @@ class JsDoms(JsObject.JsObject):
     Execute a JavaScript when a button is clicked
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_onclick.asp
 
     Attributes:
@@ -1586,7 +1633,8 @@ class JsDoms(JsObject.JsObject):
     The HTMLCanvasElement.getContext() method returns a drawing context on the canvas, or null if the context identifier is not supported.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
 
     Attributes:
@@ -1644,7 +1692,8 @@ class JsDomsList(JsArray.JsArray):
       select.label.dom.css({"color": "red"})
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
@@ -1685,7 +1734,8 @@ class JsDomsList(JsArray.JsArray):
     select.label.dom.attr({"title": "Tooltip"})
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:

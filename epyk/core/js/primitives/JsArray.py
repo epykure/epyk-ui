@@ -21,7 +21,8 @@ class JsArray(JsObject.JsObject):
     The length property of an array returns the length of an array (the number of array elements).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/JS/js_arrays.asp
 
     :return: A python Javascript Number
@@ -59,7 +60,8 @@ class JsArray(JsObject.JsObject):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_some.asp
 
     Attributes:
@@ -82,7 +84,8 @@ class JsArray(JsObject.JsObject):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_every.asp
 
     Attributes:
@@ -107,7 +110,8 @@ class JsArray(JsObject.JsObject):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_filter.asp
 
     Attributes:
@@ -132,7 +136,8 @@ class JsArray(JsObject.JsObject):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_find.asp
 
     Attributes:
@@ -157,7 +162,8 @@ class JsArray(JsObject.JsObject):
       ]))
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_findindex.asp
 
     Attributes:
@@ -181,7 +187,8 @@ class JsArray(JsObject.JsObject):
       jsObj.console.log(jsObj.data.loop.val)])
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_foreach.asp
 
     Attributes:
@@ -206,7 +213,8 @@ class JsArray(JsObject.JsObject):
       jsObj.return_(jsObj.data.loop.val)]))
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_map.asp
 
     Attributes:
@@ -233,7 +241,8 @@ class JsArray(JsObject.JsObject):
       jsObj.objects.array.get("MyArray").sort()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_array_sort.asp
 
     :return: An Array object, representing the joined array
@@ -256,7 +265,8 @@ class JsArray(JsObject.JsObject):
       jsObj.return_(jsObj.data.reduce.val)]))
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_reduce.asp
 
     Attributes:
@@ -286,7 +296,8 @@ class JsArray(JsObject.JsObject):
       jsObj.console.log(jsObj.objects.array.get("MyArray")),
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_shift.asp
 
     :return: Any type*, representing the removed array item. *An array item can be a string, a number, an array, a boolean, or any other object types that are allowed in an array.
@@ -305,7 +316,8 @@ class JsArray(JsObject.JsObject):
       jsObj.objects.array.get("MyArray").slice(3, 5)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_slice_array.asp
 
     Attributes:
@@ -331,7 +343,8 @@ class JsArray(JsObject.JsObject):
       jsObj.objects.array.get("MyArray").pop()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_array_methods.asp
 
     :return: Any type*, representing the removed array item. *An array item can be a string, a number, an array, a boolean, or any other object types that are allowed in an array.
@@ -351,7 +364,8 @@ class JsArray(JsObject.JsObject):
       jsObj.objects.array.get("MyArray").delete(2)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_array_methods.asp
 
     Attributes:
@@ -374,7 +388,8 @@ class JsArray(JsObject.JsObject):
       rptObj.js.array(varName="newUrl").join("&")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_join.asp
 
     Attributes:
@@ -398,7 +413,8 @@ class JsArray(JsObject.JsObject):
       jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_copywithin.asp
 
     Attributes:
@@ -425,7 +441,8 @@ class JsArray(JsObject.JsObject):
       jsObj.objects.array.get("MyArray").fill("test", 0, 2)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_fill.asp
 
     Attributes:
@@ -467,7 +484,8 @@ class JsArray(JsObject.JsObject):
       jsObj.console.log(jsObj.objects.array.get("MyArray3").concat(jsObj.objects.array.get("MyArray"), jsObj.objects.array.get("MyArray2"))),
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_concat_array.asp
 
     Attributes:
@@ -490,7 +508,8 @@ class JsArray(JsObject.JsObject):
       jsObj.objects.array.get("MyArray").append(jsObj, 34).append(jsObj, -47)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_array_methods.asp
     https://www.w3schools.com/python/ref_list_append.asp
 
@@ -518,7 +537,8 @@ class JsArray(JsObject.JsObject):
       jsObj.objects.array.get("MyArray").push(55, -17)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_array_methods.asp
 
     Attributes:
@@ -543,7 +563,8 @@ class JsArray(JsObject.JsObject):
       jsObj.objects.array.get("MyArray").reverse()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_array_sort.asp
 
     :return: An Array, representing the array after it has been reversed
@@ -562,7 +583,8 @@ class JsArray(JsObject.JsObject):
     jsObj.objects.array.get("MyArray").unshift(22)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_array_methods.asp
 
     Attributes:
@@ -583,7 +605,8 @@ class JsArray(JsObject.JsObject):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_array_methods.asp
 
     Attributes:

@@ -141,7 +141,7 @@ class Report(object):
     Shortcut to the HTML symbols
 
     Related Pages:
-    --------------
+
     https://www.w3schools.com/html/html_symbols.asp
     https://www.w3schools.com/charsets/ref_utf_math.asp
 
@@ -157,7 +157,8 @@ class Report(object):
     Shortcut to the HTML Entities
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/html/html_entities.asp
 
     Those can be added in string in order to improve the render of a text.
@@ -175,8 +176,8 @@ class Report(object):
     Within this object different categories of items can be used like (list, simple text, charts...)
 
     Related Pages:
-    --------------
-    https://www.w3schools.com/html/default.asp
+
+	https://www.w3schools.com/html/default.asp
 
     :rtype: :doc:`Components.Components <report/ui>`
 
@@ -223,7 +224,8 @@ class Report(object):
     Python external module section.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/default.asp
 
     :return: Python HTML object

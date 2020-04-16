@@ -43,7 +43,8 @@ class Graphs(object):
     rptObj.ui.charts.skillbars(records, y_column=['value'], x_axis=['label']).css({"width": '100px'})
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/howto/howto_css_skill_bar.asp
 
     Attributes:
@@ -156,7 +157,8 @@ class Graphs(object):
     rptObj.ui.charts.sparkline("bar", [1, 2, 3, 4, 5, 4, 3, 2, 10])
 
     Related Pages:
-    --------------
+
+
     https://omnipotent.net/jquery.sparkline/#s-about
 
     Attributes:
@@ -191,7 +193,8 @@ class Graphs(object):
     Interface for the Plotly library
 
     Related Pages:
-    --------------
+
+
 
     :return: A Python Plolty object
     """
@@ -205,7 +208,8 @@ class Graphs(object):
     Interface for the ChartJs library
 
     Related Pages:
-    --------------
+
+
 
     :return: A Python ChartJs object
     """
@@ -219,7 +223,8 @@ class Graphs(object):
     Interface to the Javsacript C3 module
 
     Related Pages:
-    --------------
+
+
 
     :return: A Python C3 object
     """
@@ -236,7 +241,8 @@ class Graphs(object):
     This project has been forked from C3.js
 
     Related Pages:
-    --------------
+
+
     https://naver.github.io/billboard.js/
 
     :return: A Python Billboard Object
@@ -251,7 +257,8 @@ class Graphs(object):
     Interface to the Javascript Vis module
 
     Related Pages:
-    --------------
+
+
 
     :return: A Python Vis object
     """
@@ -265,7 +272,8 @@ class Graphs(object):
     Interface to the Javascript NVD3 library
 
     Related Pages:
-    --------------
+
+
     http://nvd3.org/
 
     :return: A Python NVD3 object
@@ -287,7 +295,8 @@ class Graphs(object):
     ------------
 
     Related Pages:
-    --------------
+
+
     """
     return CompChartsD3.D3(self)
 
@@ -299,7 +308,8 @@ class Graphs(object):
     SVG defines vector-based graphics in XML format
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_intro.asp
     """
     return CompChartsSvg.SVG(self)
@@ -311,6 +321,7 @@ class Graphs(object):
     ------------
 
     Related Pages:
-    --------------
+
+
     """
     return CompChartsCanvas.Canvas(self)

@@ -26,7 +26,8 @@ class VisDataSet(JsPackage):
     Add one or multiple items to the DataSet. data can be a single item or an array with items.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
@@ -45,7 +46,8 @@ class VisDataSet(JsPackage):
     Clear all data from the DataSet
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
@@ -67,7 +69,8 @@ class VisDataSet(JsPackage):
     Find all distinct values of a specified field
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
@@ -85,7 +88,8 @@ class VisDataSet(JsPackage):
     Flush queued changes. Only available when the DataSet is configured with the option queue, see section Construction.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataset.html
     """
     return JsObjects.JsObject.JsObject("%s.flush()" % self.varId)
@@ -115,7 +119,8 @@ class VisDataSet(JsPackage):
     Find the item with maximum value of specified field
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
@@ -133,7 +138,8 @@ class VisDataSet(JsPackage):
     Find the item with minimum value of specified field
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
@@ -160,7 +166,8 @@ class VisDataSet(JsPackage):
     Remove a data item or an array with items
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
@@ -180,7 +187,8 @@ class VisDataSet(JsPackage):
     Set options for the DataSet.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
@@ -201,7 +209,8 @@ class VisDataSet(JsPackage):
     Available options are described in section Data Selection, except that options fields and type are not applicable in case of getIds
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
@@ -231,7 +240,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param position:
     """
     return self.attr("align", JsUtils.jsConvertData(position, None))
@@ -243,7 +253,8 @@ class VisDataOptions(DataAttrs):
     The queue will be flushed automatically after an inactivity of this delay in milliseconds. Default value is null
 
     Related Pages:
-    --------------
+
+
     :param n:
     """
     if n is None:
@@ -257,7 +268,8 @@ class VisDataOptions(DataAttrs):
     When the queue exceeds the given maximum number of entries, the queue is flushed automatically. Default value is
 
     Related Pages:
-    --------------
+
+
     :param n:
     """
     if n is None:
@@ -270,7 +282,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param flag:
     """
     return self.attr("autoResize", JsUtils.jsConvertData(flag, None))
@@ -281,11 +294,13 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-timeline/examples/timeline/interaction/clickToUse.html
 
     Related Pages:
-    --------------
+
+
     :param flag:
     """
     return self.attr("clickToUse", JsUtils.jsConvertData(flag, None))
@@ -296,7 +311,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param flag:
     """
     return self.attr("configure", JsUtils.jsConvertData(flag, None))
@@ -307,7 +323,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param strings:
     """
     return self.attr("dataAttributes", JsUtils.jsConvertData(strings, None))
@@ -322,7 +339,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param object:
     """
     return self.attr("end", JsUtils.jsConvertData(object, None))
@@ -333,7 +351,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param object:
     """
     return self.attr("format", JsUtils.jsConvertData(object, None))
@@ -348,7 +367,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param text:
     """
     return self.attr("groupHeightMode", JsUtils.jsConvertData(text, None))
@@ -359,7 +379,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param text:
     """
     return self.attr("groupOrder", JsUtils.jsConvertData(text, None))
@@ -370,7 +391,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param fnc:
     """
 
@@ -380,7 +402,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param fnc:
     """
 
@@ -390,7 +413,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param n:
     """
     return self.attr("height", JsUtils.jsConvertData(n, None))
@@ -401,7 +425,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param object:
     """
 
@@ -411,7 +436,8 @@ class VisDataOptions(DataAttrs):
     -----------
 
     Related Pages:
-    --------------
+
+
     :param flag:
     """
     return self.attr("horizontalScroll", JsUtils.jsConvertData(flag, None))
@@ -439,7 +465,8 @@ class VisDataView(JsPackage):
     Get a single item, multiple items, or all items from the DataView.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataview.html
     """
     if data is None:
@@ -460,7 +487,8 @@ class VisDataView(JsPackage):
     Get a single item, multiple items, or all items from the DataView.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataview.html
 
     Attributes:
@@ -488,7 +516,8 @@ class VisDataView(JsPackage):
     Get the DataSet to which the DataView is connected.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataview.html
     """
     return VisDataSet(src=self.src, data="%s.getDataSet()" % self.varId, varName=vanName)
@@ -501,7 +530,8 @@ class VisDataView(JsPackage):
     Available options are described in section Data Selection, except that options fields and type are not applicable in case of getIds.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataview.html
 
     Attributes:
@@ -521,7 +551,8 @@ class VisDataView(JsPackage):
     Unsubscribe from an event, remove an event listener.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataview.html
     https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
 
@@ -538,7 +569,8 @@ class VisDataView(JsPackage):
     Subscribe to an event, add an event listener.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataview.html
     https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
 
@@ -555,7 +587,8 @@ class VisDataView(JsPackage):
     Refresh the filter results of a DataView.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataview.html
     """
     return self.fnc_closure("refresh()")
@@ -590,7 +623,8 @@ class VisDataGroups(DataAttrs):
     This field is optional. A className can be used to give groups an individual css style. For example, when a group has className 'red', one can define a css style .red { color: red; } .
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-timeline/docs/timeline/
 
     Attributes:
@@ -646,7 +680,8 @@ class VisNetworkEdge(JsPackage):
     Returns the x y positions in canvas space of the nodes with the supplied nodeIds as an object
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-network/docs/network/
 
     Attributes:
@@ -661,7 +696,8 @@ class VisNetworkEdge(JsPackage):
     When using the vis.DataSet to load your nodes into the network, this method will put the X and Y positions of all nodes into that dataset.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-network/docs/network/
     """
 
@@ -722,7 +758,8 @@ class VisNetwork(JsPackage):
     Remove the network from the DOM and remove all Hammer bindings and references.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-network/docs/network/
     """
     return self.fnc_closure("destroy()")
@@ -736,7 +773,8 @@ class VisNetwork(JsPackage):
     This method is also performed when first initializing the network.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-network/docs/network/
 
     Attributes:
@@ -753,7 +791,8 @@ class VisNetwork(JsPackage):
     Each module requires it's own container with the module name to contain its options.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-network/docs/network/
 
     Attributes:
@@ -769,7 +808,8 @@ class VisNetwork(JsPackage):
     Redraw the network.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-network/docs/network/
     """
     return self.fnc_closure("redraw()")
@@ -781,7 +821,8 @@ class VisNetwork(JsPackage):
     Set the size of the canvas. This is automatically done on a window resize.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-network/docs/network/
 
     Attributes:
@@ -812,7 +853,8 @@ class VisGraph3D(JsPackage):
     Only applicable when animation data is available.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-graph3d/docs/graph3d/
     """
     return self.fnc_closure("animationStart()")
@@ -825,7 +867,8 @@ class VisGraph3D(JsPackage):
     Only applicable when animation data is available.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-graph3d/docs/graph3d/
     """
     return self.fnc_closure("animationStop()")
@@ -837,7 +880,8 @@ class VisGraph3D(JsPackage):
     Returns an object with parameters horizontal, vertical and distance, which each one of them is a number, representing the rotation and position of the camera.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-graph3d/docs/graph3d/
     """
     return "getCameraPosition()"
@@ -849,7 +893,8 @@ class VisGraph3D(JsPackage):
     Redraw the graph. Useful after the camera position is changed externally, when data is changed, or when the layout of the webpage changed.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-graph3d/docs/graph3d/
     """
     return self.fnc_closure("redraw()")
@@ -861,7 +906,8 @@ class VisGraph3D(JsPackage):
     Replace the data in the Graph3d.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:
@@ -877,7 +923,8 @@ class VisGraph3D(JsPackage):
     Update options of Graph3d. The provided options will be merged with current options.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:
@@ -893,7 +940,8 @@ class VisGraph3D(JsPackage):
     Parameters width and height are strings, containing a new size for the graph. Size can be provided in pixels or in percentages.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:
@@ -913,7 +961,8 @@ class VisGraph3D(JsPackage):
     Parameter pos is an object which contains three parameters: horizontal, vertical, and distance.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:
@@ -930,7 +979,8 @@ class VisGraph3D(JsPackage):
     The camera position changed. Fired after the user modified the camera position by moving (dragging) the graph, or by zooming (scrolling), but not after a call to setCameraPosition method.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:

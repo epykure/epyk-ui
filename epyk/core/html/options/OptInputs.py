@@ -25,7 +25,8 @@ class OptionsInput(Options):
     The rows attribute specifies the visible height of a text area, in lines.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_rows.asp
     """
     return self._report.attr.get('disabled', False)
@@ -46,7 +47,8 @@ class OptionsInput(Options):
     Format any number into currency
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/
 
     Attributes:
@@ -67,7 +69,8 @@ class OptionsInput(Options):
     Format a number with custom precision and localisation
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/
 
     Attributes:
@@ -86,7 +89,8 @@ class OptionsInput(Options):
     Better rounding for floating point numbers
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/
 
     Attributes:
@@ -104,7 +108,8 @@ class OptionsInput(Options):
     Specifies the maximum number of characters allowed in the text area
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_textarea_maxlength.asp
     """
     return self._report.attr.get('maxlength')
@@ -121,7 +126,8 @@ class OptionsInput(Options):
     Specifies a name for a text area
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_textarea_name.asp
     """
     return self._report.attr.get('name')
@@ -138,7 +144,8 @@ class OptionsInput(Options):
     The placeholder attribute specifies a short hint that describes the expected value of an input field (e.g. a sample value or a short description of the expected format).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_input_placeholder.asp
     """
     return self._report.attr.get('placeholder', "")
@@ -155,7 +162,8 @@ class OptionsInput(Options):
     Specifies that a text area is required/must be filled out
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_textarea_required.asp
     """
     return self._report.attr.get('required')
@@ -176,7 +184,8 @@ class OptionsInput(Options):
     Specifies how the text in a text area is to be wrapped when submitted in a form
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_textarea_wrap.asp
     """
     return self._report.attr.get('wrap', "")
@@ -193,7 +202,8 @@ class OptionsInput(Options):
     The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_global_spellcheck.asp
     """
     return self._report.attr.get('spellcheck', False)
@@ -210,7 +220,8 @@ class OptionsInput(Options):
     The readonly attribute is a boolean attribute.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_input_readonly.asp
     """
     return self._report.attr.get('readOnly', False)
@@ -249,7 +260,8 @@ class OptionsTimePicker(OptionsInput):
     string The format of the time string displayed in the input and the menu items in the combobox. Available modifiers are:
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('timeFormat', True)
@@ -268,7 +280,8 @@ class OptionsTimePicker(OptionsInput):
     Time entries before minTime won't be displayed/allowed.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('minTime', True)
@@ -286,7 +299,8 @@ class OptionsTimePicker(OptionsInput):
     int. Time entries with an 24-hour part before minHour won't be displayed/allowed. Ignored if minTime is set.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('minHour', True)
@@ -304,7 +318,8 @@ class OptionsTimePicker(OptionsInput):
     int Time entries with minutes part before minMinutes won't be displayed/allowed. Ignored if minTime is set.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('minMinutes', True)
@@ -322,7 +337,8 @@ class OptionsTimePicker(OptionsInput):
     A Date object or string. Only the time parts (getHours, getMinutes) of the object are important. Time entries after minTime won't be displayed/allowed.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('maxTime', True)
@@ -340,7 +356,8 @@ class OptionsTimePicker(OptionsInput):
     int. Time entries with an 24-hour part after maxHour won't be displayed/allowed. Ignored if maxTime is set.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('maxHour', True)
@@ -358,7 +375,8 @@ class OptionsTimePicker(OptionsInput):
     int. Time entries with minutes part after maxHour won't be displayed/allowed. Ignored if maxTime is set.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('maxMinutes', True)
@@ -377,7 +395,8 @@ class OptionsTimePicker(OptionsInput):
     If the input field is not empty the first item will be the next allowed time entry.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('startTime', True)
@@ -396,7 +415,8 @@ class OptionsTimePicker(OptionsInput):
     If input field is not empty the first item will be the next allowed time entry. Ignored if startTime is set.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('startHour', True)
@@ -415,7 +435,8 @@ class OptionsTimePicker(OptionsInput):
     If input field is not empty the first item will be the next allowed time entry. Ignored if startTime is set.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('startMinutes', True)
@@ -433,7 +454,8 @@ class OptionsTimePicker(OptionsInput):
     int Separation in minutes between time entries in the dropdown menu.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('interval', 15)
@@ -451,7 +473,8 @@ class OptionsTimePicker(OptionsInput):
     boolean If a date is already selected and dynamic is true, the items in the dropdown will be arranged so that the first item is chronologically right after the selected time entry.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('dynamic', True)
@@ -469,7 +492,8 @@ class OptionsTimePicker(OptionsInput):
     boolean Whether the scrollbars should be displayed or not.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('scrollbar', True)
@@ -487,7 +511,8 @@ class OptionsTimePicker(OptionsInput):
     int The value for the z-index property of the timepicker's container <div>.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     return self._report._jsStyles.get('zindex', True)
@@ -511,7 +536,8 @@ class OptionAutoComplete(Options):
     Regardless of the value, if no element is found, the menu will be appended to the body.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#option-appendTo
     """
     return self._report._jsStyles.get('appendTo', None)
@@ -529,7 +555,8 @@ class OptionAutoComplete(Options):
     If set to true the first item will automatically be focused when the menu is shown.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#option-autoFocus
     """
     return self._report._jsStyles.get('autoFocus', False)
@@ -549,7 +576,8 @@ class OptionAutoComplete(Options):
     To learn more about this option, check out the learn article about the classes option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#option-classes
     """
     return self._report._jsStyles.get('classes', {})
@@ -568,7 +596,8 @@ class OptionAutoComplete(Options):
     A zero-delay makes sense for local data (more responsive), but can produce a lot of load for remote data, while being less responsive.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#option-delay
     """
     return self._report._jsStyles.get('delay', 300)
@@ -586,7 +615,8 @@ class OptionAutoComplete(Options):
     Disables the autocomplete if set to true.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#option-delay
     """
     return self._report._jsStyles.get('disabled', True)
@@ -605,7 +635,8 @@ class OptionAutoComplete(Options):
     Zero is useful for local data with just a few items, but a higher value should be used when a single character search could match a few thousand items.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#option-minLength
     """
     return self._report._jsStyles.get('minLength', 0)
@@ -622,7 +653,8 @@ class OptionAutoComplete(Options):
     Specifies where the dialog should be displayed when opened. The dialog will handle collisions such that as much of the dialog is visible as possible.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#option-position
     """
     self._report._jsStyles['position'] = {"my": "center", "at": "center", "of": "window"}
@@ -636,7 +668,8 @@ class OptionAutoComplete(Options):
     Defines the data to use, must be specified.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#option-source
     """
     return self._report._jsStyles.get('source', [])
@@ -657,7 +690,8 @@ class OptionsDatePicker(OptionsInput):
     An input element that is to be updated with the selected date from the datepicker. Use the altFormat option to change the format of the date within this field. Leave as blank for no alternate field.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-altField
     """
     return self._report._jsStyles.get('altField', "")
@@ -675,7 +709,8 @@ class OptionsDatePicker(OptionsInput):
     The dateFormat to be used for the altField option. This allows one date format to be shown to the user for selection purposes, while a different format is actually sent behind the scenes. For a full list of the possible formats see the formatDate function
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-altFormat
     """
     return self._report._jsStyles.get('altFormat', "")
@@ -693,7 +728,8 @@ class OptionsDatePicker(OptionsInput):
     The text to display after each date field, e.g., to show the required format.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-appendText
     """
     return self._report._jsStyles.get('appendText', "")
@@ -711,7 +747,8 @@ class OptionsDatePicker(OptionsInput):
     Set to true to automatically resize the input field to accommodate dates in the current dateFormat.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-autoSize
     """
     return self._report._jsStyles.get('autoSize', False)
@@ -729,7 +766,8 @@ class OptionsDatePicker(OptionsInput):
     A function that takes an input field and current datepicker instance and returns an options object to update the datepicker with. It is called just before the datepicker is displayed.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-beforeShow
     """
     return self._report._jsStyles.get('beforeShow', None)
@@ -747,7 +785,8 @@ class OptionsDatePicker(OptionsInput):
     A function that takes a date as a parameter and must return an array with:
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-beforeShowDay
     """
     return self._report._jsStyles.get('beforeShowDay', None)
@@ -765,7 +804,8 @@ class OptionsDatePicker(OptionsInput):
     A URL of an image to use to display the datepicker when the showOn option is set to "button" or "both". If set, the buttonText option becomes the alt value and is not directly displayed.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-buttonImage
     """
     return self._report._jsStyles.get('buttonImage', "")
@@ -783,7 +823,8 @@ class OptionsDatePicker(OptionsInput):
     Whether the button image should be rendered by itself instead of inside a button element. This option is only relevant if the buttonImage option has also been set.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-buttonImageOnly
     """
     return self._report._jsStyles.get('buttonImageOnly', False)
@@ -801,7 +842,8 @@ class OptionsDatePicker(OptionsInput):
     The text to display on the trigger button. Use in conjunction with the showOn option set to "button" or "both".
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-buttonText
     """
     return self._report._jsStyles.get('buttonText', "...")
@@ -819,7 +861,8 @@ class OptionsDatePicker(OptionsInput):
     A function to calculate the week of the year for a given date. The default implementation uses the ISO 8601 definition: weeks start on a Monday; the first week of the year contains the first Thursday of the year.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-calculateWeek
     """
     return self._report._jsStyles.get('calculateWeek', None)
@@ -837,7 +880,8 @@ class OptionsDatePicker(OptionsInput):
     Whether the month should be rendered as a dropdown instead of text.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-changeMonth
     """
     return self._report._jsStyles.get('changeMonth', False)
@@ -855,7 +899,8 @@ class OptionsDatePicker(OptionsInput):
     Whether the year should be rendered as a dropdown instead of text. Use the yearRange option to control which years are made available for selection.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-changeYear
     """
     return self._report._jsStyles.get('changeYear', False)
@@ -873,7 +918,8 @@ class OptionsDatePicker(OptionsInput):
     The text to display for the close link. Use the showButtonPanel option to display this button.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-closeText
     """
     return self._report._jsStyles.get('closeText', "Done")
@@ -891,7 +937,8 @@ class OptionsDatePicker(OptionsInput):
     When true, entry in the input field is constrained to those characters allowed by the current dateFormat option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-constrainInput
     """
     return self._report._jsStyles.get('constrainInput', True)
@@ -909,7 +956,8 @@ class OptionsDatePicker(OptionsInput):
     The text to display for the current day link. Use the showButtonPanel option to display this button.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-currentText
     """
     return self._report._jsStyles.get('currentText', "Today")
@@ -927,7 +975,8 @@ class OptionsDatePicker(OptionsInput):
     The format for parsed and displayed dates. For a full list of the possible formats see the formatDate function.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-dateFormat
     """
     return self._report._jsStyles.get('dateFormat', "mm/dd/yy")
@@ -945,7 +994,8 @@ class OptionsDatePicker(OptionsInput):
     The list of long day names, starting from Sunday, for use as requested via the dateFormat option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-dayNames
     """
     return self._report._jsStyles.get('dayNames', [])
@@ -963,7 +1013,8 @@ class OptionsDatePicker(OptionsInput):
     The list of minimised day names, starting from Sunday, for use as column headers within the datepicker.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-dayNamesMin
     """
     return self._report._jsStyles.get('dayNamesMin', [])
@@ -981,7 +1032,8 @@ class OptionsDatePicker(OptionsInput):
     The list of abbreviated day names, starting from Sunday, for use as requested via the dateFormat option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-dayNamesShort
     """
     return self._report._jsStyles.get('dayNamesShort', [])
@@ -999,7 +1051,8 @@ class OptionsDatePicker(OptionsInput):
     Set the date to highlight on first opening if the field is blank. Specify either an actual date via a Date object or as a string in the current dateFormat, or a number of days from today (e.g. +7) or a string of values and periods ('y' for years, 'm' for months, 'w' for weeks, 'd' for days, e.g. '+1m +7d'), or null for today.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-defaultDate
     """
     return self._report._jsStyles.get('defaultDate', None)
@@ -1017,7 +1070,8 @@ class OptionsDatePicker(OptionsInput):
     Control the speed at which the datepicker appears, it may be a time in milliseconds or a string representing one of the three predefined speeds ("slow", "normal", "fast").
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-duration
     """
     return self._report._jsStyles.get('duration', "normal")
@@ -1035,7 +1089,8 @@ class OptionsDatePicker(OptionsInput):
     Set the first day of the week: Sunday is 0, Monday is 1, etc.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-firstDay
     """
     return self._report._jsStyles.get('firstDay', 0)
@@ -1053,7 +1108,8 @@ class OptionsDatePicker(OptionsInput):
     When true, the current day link moves to the currently selected date instead of today.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-gotoCurrent
     """
     return self._report._jsStyles.get('gotoCurrent', False)
@@ -1071,7 +1127,8 @@ class OptionsDatePicker(OptionsInput):
     Normally the previous and next links are disabled when not applicable (see the minDate and maxDate options). You can hide them altogether by setting this attribute to true.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-hideIfNoPrevNext
     """
     return self._report._jsStyles.get('hideIfNoPrevNext', False)
@@ -1089,7 +1146,8 @@ class OptionsDatePicker(OptionsInput):
     Whether the current language is drawn from right to left.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-isRTL
     """
     return self._report._jsStyles.get('isRTL', False)
@@ -1107,7 +1165,8 @@ class OptionsDatePicker(OptionsInput):
     The maximum selectable date. When set to null, there is no maximum.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-maxDate
     """
     return self._report._jsStyles.get('maxDate', None)
@@ -1125,7 +1184,8 @@ class OptionsDatePicker(OptionsInput):
     The minimum selectable date. When set to null, there is no minimum.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-minDate
     """
     return self._report._jsStyles.get('minDate', None)
@@ -1143,7 +1203,8 @@ class OptionsDatePicker(OptionsInput):
     The list of full month names, for use as requested via the dateFormat option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-monthNames
     """
     return self._report._jsStyles.get('monthNames', [])
@@ -1161,7 +1222,8 @@ class OptionsDatePicker(OptionsInput):
     The list of abbreviated month names, as used in the month header on each datepicker and as requested via the dateFormat option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-monthNamesShort
     """
     return self._report._jsStyles.get('monthNamesShort', [])
@@ -1179,7 +1241,8 @@ class OptionsDatePicker(OptionsInput):
     Whether the currentText, prevText and nextText options should be parsed as dates by the formatDate function, allowing them to display the target month names for example.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-navigationAsDateFormat
     """
     return self._report._jsStyles.get('navigationAsDateFormat', False)
@@ -1197,7 +1260,8 @@ class OptionsDatePicker(OptionsInput):
     The text to display for the next month link. With the standard ThemeRoller styling, this value is replaced by an icon.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-nextText
     """
     return self._report._jsStyles.get('nextText', "Next")
@@ -1215,7 +1279,8 @@ class OptionsDatePicker(OptionsInput):
     The number of months to show at once.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-numberOfMonths
     """
     return self._report._jsStyles.get('numberOfMonths', 1)
@@ -1233,7 +1298,8 @@ class OptionsDatePicker(OptionsInput):
     Called when the datepicker moves to a new month and/or year. The function receives the selected year, month (1-12), and the datepicker instance as parameters. this refers to the associated input field.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-onChangeMonthYear
     """
     return self._report._jsStyles.get('onChangeMonthYear', None)
@@ -1251,7 +1317,8 @@ class OptionsDatePicker(OptionsInput):
     Called when the datepicker is closed, whether or not a date is selected. The function receives the selected date as text ("" if none) and the datepicker instance as parameters. this refers to the associated input field.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-onClose
     """
     return self._report._jsStyles.get('onClose', None)
@@ -1269,7 +1336,8 @@ class OptionsDatePicker(OptionsInput):
     Called when the datepicker is selected. The function receives the selected date as text and the datepicker instance as parameters. this refers to the associated input field.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-onSelect
     """
     return self._report._jsStyles.get('onSelect', None)
@@ -1287,7 +1355,8 @@ class OptionsDatePicker(OptionsInput):
     The text to display for the previous month link. With the standard ThemeRoller styling, this value is replaced by an icon.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-prevText
     """
     return self._report._jsStyles.get('prevText', "Prev")
@@ -1305,7 +1374,8 @@ class OptionsDatePicker(OptionsInput):
     Whether days in other months shown before or after the current month are selectable. This only applies if the showOtherMonths option is set to true.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-selectOtherMonths
     """
     return self._report._jsStyles.get('selectOtherMonths', False)
@@ -1323,7 +1393,8 @@ class OptionsDatePicker(OptionsInput):
     The cutoff year for determining the century for a date (used in conjunction with dateFormat 'y'). Any dates entered with a year value less than or equal to the cutoff year are considered to be in the current century, while those greater than it are deemed to be in the previous century.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-shortYearCutoff
     """
     return self._report._jsStyles.get('shortYearCutoff', "+10")
@@ -1341,7 +1412,8 @@ class OptionsDatePicker(OptionsInput):
     The name of the animation used to show and hide the datepicker. Use "show" (the default), "slideDown", "fadeIn", any of the jQuery UI effects. Set to an empty string to disable animation.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-showAnim
     """
     return self._report._jsStyles.get('showAnim', "show")
@@ -1359,7 +1431,8 @@ class OptionsDatePicker(OptionsInput):
     Whether to display a button pane underneath the calendar. The button pane contains two buttons, a Today button that links to the current day, and a Done button that closes the datepicker. The buttons' text can be customized using the currentText and closeText options respectively.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-showButtonPanel
     """
     return self._report._jsStyles.get('showButtonPanel', False)
@@ -1377,7 +1450,8 @@ class OptionsDatePicker(OptionsInput):
     When displaying multiple months via the numberOfMonths option, the showCurrentAtPos option defines which position to display the current month in.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-showCurrentAtPos
     """
     return self._report._jsStyles.get('showCurrentAtPos', 0)
@@ -1395,7 +1469,8 @@ class OptionsDatePicker(OptionsInput):
     Whether to show the month after the year in the header.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-showMonthAfterYear
     """
     return self._report._jsStyles.get('showMonthAfterYear', False)
@@ -1413,7 +1488,8 @@ class OptionsDatePicker(OptionsInput):
     When the datepicker should appear. The datepicker can appear when the field receives focus ("focus"), when a button is clicked ("button"), or when either event occurs ("both").
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-showOn
     """
     return self._report._jsStyles.get('showOn', "focus")
@@ -1431,7 +1507,8 @@ class OptionsDatePicker(OptionsInput):
     If using one of the jQuery UI effects for the showAnim option, you can provide additional properties for that animation using this option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-showOptions
     """
     return self._report._jsStyles.get('showOptions', {})
@@ -1449,7 +1526,8 @@ class OptionsDatePicker(OptionsInput):
     Whether to display dates in other months (non-selectable) at the start or end of the current month. To make these days selectable use the selectOtherMonths option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-showOtherMonths
     """
     return self._report._jsStyles.get('showOtherMonths', False)
@@ -1467,7 +1545,8 @@ class OptionsDatePicker(OptionsInput):
     When true, a column is added to show the week of the year. The calculateWeek option determines how the week of the year is calculated. You may also want to change the firstDay option.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-showWeek
     """
     return self._report._jsStyles.get('showWeek', False)
@@ -1485,7 +1564,8 @@ class OptionsDatePicker(OptionsInput):
     Set how many months to move when clicking the previous/next links.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-stepMonths
     """
     return self._report._jsStyles.get('stepMonths', 1)
@@ -1503,7 +1583,8 @@ class OptionsDatePicker(OptionsInput):
     The text to display for the week of the year column heading. Use the showWeek option to display this column.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-weekHeader
     """
     return self._report._jsStyles.get('weekHeader', "wk")
@@ -1521,7 +1602,8 @@ class OptionsDatePicker(OptionsInput):
     The range of years displayed in the year drop-down: either relative to today's year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the minDate and/or maxDate options.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-yearRange
     """
     return self._report._jsStyles.get('yearRange', "c-10:c+10")
@@ -1539,7 +1621,8 @@ class OptionsDatePicker(OptionsInput):
     Additional text to display after the year in the month headers.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#option-yearSuffix
     """
     return self._report._jsStyles.get('yearSuffix', "")
@@ -1560,7 +1643,8 @@ class OptionsTextarea(OptionsInput):
     The rows attribute specifies the visible height of a text area, in lines.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_rows.asp
     """
     return self._report.attr.get('rows', "")

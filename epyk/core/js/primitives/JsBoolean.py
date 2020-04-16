@@ -31,7 +31,8 @@ class JsBoolean(JsObject.JsObject):
       jsObj.objects.boolean.get("weekend").not_
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
 
     :return: The Python Javascript Boolean Object
@@ -51,7 +52,8 @@ class JsBoolean(JsObject.JsObject):
       jsObj.objects.boolean.get("testBool").valueOf()
 
     Related Pages:
-    --------------:
+
+:
     https://www.w3schools.com/jsref/jsref_valueof_boolean.asp
 
     :return: A Boolean, either "true" or "false"

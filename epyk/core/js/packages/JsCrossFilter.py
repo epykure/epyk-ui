@@ -21,7 +21,8 @@ class CrossFilter(JsPackage):
     It is acceptable for the array and index to be different lengths, and for indexes to be duplicated or omitted
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -38,7 +39,8 @@ class CrossFilter(JsPackage):
     Adds the specified records to this crossfilter.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -54,7 +56,8 @@ class CrossFilter(JsPackage):
     Removes all records that match the current filters from this crossfilter.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -72,7 +75,8 @@ class CrossFilter(JsPackage):
     For example, if you only added a single batch of records to the Crossfilter, this method would return records.length.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsNumber.JsNumber("%s.size()" % self.varId)
@@ -85,7 +89,8 @@ class CrossFilter(JsPackage):
     Note: unlike a dimension's groupAll, this grouping observes all current filters.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -102,7 +107,8 @@ class CrossFilter(JsPackage):
     Constructs a new dimension using the specified value accessor function
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -222,7 +228,8 @@ class Quicksort(JsPackage):
     For example, to create a quicksort function for objects based on their property
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -241,7 +248,8 @@ class Dimension(JsPackage):
     Filters records such that this dimension's value matches value, and returns this dimension.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     self._js.append("filter(%s)" % JsUtils.jsConvertData(jsData, None))
@@ -254,7 +262,8 @@ class Dimension(JsPackage):
     Filters records such that this dimension's value equals value, and returns this dimension. For example:
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -269,7 +278,8 @@ class Dimension(JsPackage):
     Filters records such that this dimension's value is greater than or equal to range[0], and less than range[1], returning this dimension.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -300,7 +310,8 @@ class Dimension(JsPackage):
     ilters records such that the specified function returns truthy when called with this dimension's value, and returns this dimension.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -315,7 +326,8 @@ class Dimension(JsPackage):
     Clears any filters on this dimension, selecting all records and returning this dimension. For example:
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return self.fnc("filterAll()")
@@ -327,7 +339,8 @@ class Dimension(JsPackage):
     Returns the numeric id of the dimension. For use with crossfilter.isElementFiltered.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
     """
     return JsObjects.JsNumber.JsNumber("%s.id()" % self.varId)
@@ -340,7 +353,8 @@ class Dimension(JsPackage):
     The returned array is sorted by descending natural order.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -361,7 +375,8 @@ class Dimension(JsPackage):
     Returns a new array containing the bottom k records, according to the natural order of this dimension.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -380,7 +395,8 @@ class Dimension(JsPackage):
     This frees up space for other dimensions to be added to this crossfilter.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return self.fnc_closure("dispose()")
@@ -392,7 +408,8 @@ class Dimension(JsPackage):
     Constructs a new grouping for the given dimension, according to the specified groupValue function, which takes a dimension value as input and returns the corresponding rounded value.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     groupObj = Group(selector="%s.group()" % self.varId, varName=varName, setVar=True)
@@ -405,7 +422,8 @@ class Dimension(JsPackage):
     Constructs a new grouping for the given dimension, according to the specified groupValue function, which takes a dimension value as input and returns the corresponding rounded value.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     groupObj = GroupAll(selector="%s.groupAll()" % self.varId, varName=varName, setVar=True)
@@ -426,7 +444,8 @@ class Dimension(JsPackage):
     Returns truthy if a filter has been set, or falsy if a filter has not been set on this dimension.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.hasCurrentFilter()" % self.varId)
@@ -439,7 +458,8 @@ class Dimension(JsPackage):
     To sort the entire array, specify a lo of 0 and a hi of array.length.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
@@ -456,7 +476,8 @@ class Dimension(JsPackage):
     To sort the entire array, specify a lo of 0 and a hi of array.length.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
@@ -472,7 +493,8 @@ class Dimension(JsPackage):
     The identity heapselect function; suitable for numbers, dates, strings, and other naturally-comparable objects.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
@@ -488,7 +510,8 @@ class Dimension(JsPackage):
     The identity heapselect function; suitable for numbers, dates, strings, and other naturally-comparable objects.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
@@ -507,7 +530,8 @@ class Group(JsPackage):
     Returns the number of distinct values in the group, independent of any filters; the cardinality.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsNumber.JsNumber("%s.size()" % self.varId)
@@ -520,7 +544,8 @@ class Group(JsPackage):
     The default behavior, reduce by count, is implemented as follows
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -538,7 +563,8 @@ class Group(JsPackage):
     A convenience method for setting the reduce functions to count records; returns this group.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
@@ -556,7 +582,8 @@ class Group(JsPackage):
     A convenience method for setting the reduce functions to sum records using the specified value accessor function;
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -573,7 +600,8 @@ class Group(JsPackage):
     -----------
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     :param orderValue:
@@ -585,7 +613,8 @@ class Group(JsPackage):
     A convenience method for using natural order for reduce values. Returns this grouping
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     groupObj = Group("%s.orderNatural()" % self.toStr())
@@ -598,7 +627,8 @@ class Group(JsPackage):
     Returns a new array containing the top k groups, according to the group order of the associated reduce value.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     :param k:
@@ -615,7 +645,8 @@ class Group(JsPackage):
     Returns the array of all groups, in ascending natural order by key. Like top, the returned objects contain key and value attributes.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsArray.JsArray("%s.all()" % self.varId)
@@ -628,7 +659,8 @@ class Group(JsPackage):
     This group will no longer update when new filters are applied to the crossfilter, and it may be garbage collected if there are no other references to it remaining.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsObject.JsObject("%s.dispose()" % self.toStr())
@@ -643,7 +675,8 @@ class GroupAll(JsPackage):
     A convenience method for setting the reduce functions to count records; returns this group.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
@@ -661,7 +694,8 @@ class GroupAll(JsPackage):
     A convenience method for setting the reduce functions to sum records using the specified value accessor function;
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -679,7 +713,8 @@ class GroupAll(JsPackage):
     Equivalent to group.all()[0].value.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsNumber.JsNumber("%s.value()" % self.varId)

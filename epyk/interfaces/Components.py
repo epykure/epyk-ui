@@ -80,7 +80,8 @@ class Components(object):
     This will wrap the Javascript module codemirror
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html
     """
     return CompCodes.Code(self)
@@ -376,7 +377,8 @@ class Components(object):
     Internal function to register a HTML component based on its memory id.
 
     Related Pages:
-    --------------
+
+
     :param html_comp: The html component
 
     return the html component
@@ -392,7 +394,8 @@ class Components(object):
     Add a content table to the page
 
     Related Pages:
-    --------------
+
+
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
@@ -457,7 +460,8 @@ class Components(object):
       rptObj.ui.title("Test").attach_menu(menu)
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -481,7 +485,8 @@ class Components(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -509,7 +514,8 @@ class Components(object):
     Add a side Bar to the report.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav
 
     Attributes:

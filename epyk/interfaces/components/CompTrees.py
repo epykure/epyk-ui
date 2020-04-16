@@ -21,7 +21,8 @@ class Trees(object):
     ------------
 
     Related Pages:
-    --------------
+
+
 
     Usage::
 
@@ -49,7 +50,8 @@ class Trees(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -72,7 +74,8 @@ class Trees(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -96,7 +99,8 @@ class Trees(object):
     ------------
 
     Related Pages:
-    --------------
+
+
     http://getbootstrap.com/docs/4.0/components/dropdowns/
     https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
     https://codepen.io/svnt/pen/beEgre

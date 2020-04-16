@@ -12,7 +12,8 @@ class Scroller(DataClass):
     Enable and configure the Scroller extension for DataTables
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/scroller
     """
     self.loadingIndicator = True
@@ -26,7 +27,8 @@ class Scroller(DataClass):
     Set the point at which new data will be loaded and drawn.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/scroller.boundaryScale
     """
     return self._attrs["boundaryScale"]
@@ -43,7 +45,8 @@ class Scroller(DataClass):
     The amount of data that Scroller should pre-buffer to ensure smooth scrolling.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/scroller.displayBuffer
     """
     return self._attrs["displayBuffer"]
@@ -60,7 +63,8 @@ class Scroller(DataClass):
     Display a loading message while Scroller is loading additional data.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/scroller.loadingIndicator
     """
     return self._attrs["loadingIndicator"]
@@ -77,7 +81,8 @@ class Scroller(DataClass):
     Set the row height, or how the row height is calculated.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/scroller.rowHeight
     """
     return self._attrs["rowHeight"]
@@ -94,7 +99,8 @@ class Scroller(DataClass):
     Time delay before new data is requested when server-side processing is enabled.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/scroller.serverWait
     """
     return self._attrs["serverWait"]

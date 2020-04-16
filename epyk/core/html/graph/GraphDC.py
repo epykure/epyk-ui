@@ -51,7 +51,8 @@ class ChartLine(Chart):
     For example, the popularity of food items can be drawn as a line chart in such a way that the food item is represented along the x-axis and its popularity is represented along the y-axis.
 
     Related Pages:
-    --------------
+
+
     https://www.tutorialspoint.com/dcjs/dcjs_line_chart.htm
 
     :rtype: JsChartDC.JsLine
@@ -73,7 +74,8 @@ class ChartBar(Chart):
     The graph is constructed such that the heights or lengths of the different bars are proportional to the size of the category they represent.
 
     Related Pages:
-    --------------
+
+
     https://www.tutorialspoint.com/dcjs/dcjs_bar_chart.htm
 
     :rtype: JsDc.Bar
@@ -109,7 +111,8 @@ class ChartScatter(Chart):
     The data is displayed as a collection of points and the points maybe colored.
 
     Related Pages:
-    --------------
+
+
     https://www.tutorialspoint.com/dcjs/dcjs_scatter_plot.htm
 
     :rtype: JsDc.Scatter
@@ -132,7 +135,8 @@ class ChartBubble(Chart):
     It uses horizontal and vertical axes as value axes.
 
     Related Pages:
-    --------------
+
+
     https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
 
     :rtype: JsDc.Bubble
@@ -153,7 +157,8 @@ class ChartPie(Chart):
     A pie chart is a circular statistical graph. It is divided into slices to show a numerical proportion
 
     Related Pages:
-    --------------
+
+
     https://www.tutorialspoint.com/dcjs/dcjs_pie_chart.htm
 
     :rtype: JsDc.Pie
@@ -187,7 +192,8 @@ class ChartSeries(Chart):
     A series is a set of data. You can plot a chart based on the data.
 
     Related Pages:
-    --------------
+
+
     https://www.tutorialspoint.com/dcjs/dcjs_series_chart.htm
 
     :rtype: JsDc.Series

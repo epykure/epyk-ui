@@ -27,7 +27,8 @@ class SVG(Html.Html):
       defs = poly.defs()
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs
     """
     self.html_objs.append(Defs(self._report))
@@ -43,7 +44,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_text.asp
 
     Attributes:
@@ -66,7 +68,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_rect.asp
 
     Attributes:
@@ -91,7 +94,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_line.asp
 
     Attributes:
@@ -115,7 +119,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_circle.asp
 
     Attributes:
@@ -138,7 +143,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_ellipse.asp
 
     Attributes:
@@ -162,7 +168,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_polygon.asp
 
     Attributes:
@@ -183,7 +190,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_polyline.asp
 
     Attributes:
@@ -205,7 +213,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_polyline.asp
 
     Attributes:
@@ -227,7 +236,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g
 
     Attributes:
@@ -248,7 +258,8 @@ class SVG(Html.Html):
     The <path> element is used to define a path.
 
     Related Pages:
-    --------------
+
+
     https://www.w3.org/TR/SVG/paths.html
     https://www.w3.org/TR/svg-paths/
 
@@ -274,7 +285,8 @@ class SVG(Html.Html):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
 
     Attributes:
@@ -404,7 +416,8 @@ class Defs(Html.Html):
     The <linearGradient> element lets authors define linear gradients that can be applied to fill or stroke of graphical elements.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient
 
     Attributes:
@@ -428,7 +441,8 @@ class Defs(Html.Html):
     The <radialGradient> element lets authors define radial gradients that can be applied to fill or stroke of graphical elements.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialGradient
 
     Attributes:
@@ -445,7 +459,8 @@ class Defs(Html.Html):
     The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given <path>, <line>, <polyline> or <polygon> element.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
 
     Attributes:
@@ -651,7 +666,8 @@ class Text(SVGItem):
     It allows for adjustment of the style and/or position of that subtext as needed.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan
 
     Attributes:

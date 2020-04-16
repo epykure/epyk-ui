@@ -15,7 +15,8 @@ class Plotly(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://plot.ly/javascript/table-subplots/
 
     Attributes:

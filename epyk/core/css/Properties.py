@@ -97,7 +97,8 @@ class CssMixin(object):
     CSS allows animation of HTML elements without using JavaScript or Flash!
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/css/css3_animations.asp
     """
     return self.htmlObj.css("animation")
@@ -125,7 +126,8 @@ class CssMixin(object):
     The animation-direction property defines whether an animation should be played forwards, backwards or in alternate cycles.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_animation-direction.asp
     """
     return self.htmlObj.css("animation-direction")
@@ -145,7 +147,8 @@ class CssMixin(object):
     The animation-duration property defines how long an animation should take to complete one cycle.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_animation-duration.asp
     """
     return self.htmlObj.css("animation-duration")
@@ -171,7 +174,8 @@ class CssMixin(object):
     both - The animation will follow the rules for both forwards and backwards, extending the animation properties in both directions
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_animation-fill-mode.asp
     """
     return self.htmlObj.css("animation-fill-mode")
@@ -189,7 +193,8 @@ class CssMixin(object):
     The animation-iteration-count property specifies the number of times an animation should be played.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_animation-iteration-count.asp
     """
     return self.htmlObj.css("animation-iteration-count")
@@ -209,7 +214,8 @@ class CssMixin(object):
     The animation-name property specifies a name for the @keyframes animation.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_animation-name.asp
     """
     return self.htmlObj.css("animation-name")
@@ -237,7 +243,8 @@ class CssMixin(object):
     The animation-timing-function specifies the speed curve of an animation.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_animation-timing-function.asp
     """
     return self.htmlObj.css("animation-timing-function")
@@ -258,7 +265,8 @@ class CssMixin(object):
     It is also used in the XBL implementations of the widgets that ship with the Mozilla platform.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
     """
     return self.htmlObj.css(autoPrefixer("appearance")[0])
@@ -277,7 +285,8 @@ class CssMixin(object):
     Hide and show the back face of two rotated <div> elements:
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_backface-visibility.asp
     """
     return self.htmlObj.css("backface-visibility")
@@ -297,7 +306,8 @@ class CssMixin(object):
     Set different background properties in one declaration
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_background.asp
     """
     return self.htmlObj.css("background")
@@ -341,7 +351,8 @@ class CssMixin(object):
     The background of an element is the total size of the element, including padding and border (but not the margin).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_background-color.asp
     """
     return self.htmlObj.css("background-color")
@@ -412,7 +423,8 @@ class CssMixin(object):
     - border-color
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_border.asp
 
     Usage::
@@ -482,7 +494,8 @@ class CssMixin(object):
     The border-collapse property sets whether table borders should collapse into a single border or be separated as in standard HTML.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_border-collapse.asp
     """
     return self.htmlObj.css("border-collapse")
@@ -591,7 +604,8 @@ class CssMixin(object):
     The border-radius property defines the radius of the element's corners.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_border-radius.asp
     """
     return self.htmlObj.css("border-radius")
@@ -643,7 +657,8 @@ class CssMixin(object):
     The border-spacing property sets the distance between the borders of adjacent cells.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_border-spacing.asp
     """
     return self.htmlObj.css("border-spacing")
@@ -727,7 +742,8 @@ class CssMixin(object):
     The bottom property affects the vertical position of a positioned element. This property has no effect on non-positioned elements.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_pos_bottom.asp
     """
     return self.htmlObj.css("bottom")
@@ -747,7 +763,8 @@ class CssMixin(object):
     The box-decoration-break property specifies how the background, padding, border, border-image, box-shadow, margin, and clip-path of an element is applied when the box for the element is fragmented.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_box-decoration-break.asp
     """
     return self.htmlObj.css("box-decoration-break")
@@ -765,7 +782,8 @@ class CssMixin(object):
     The box-shadow property attaches one or more shadows to an element.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_box-shadow.asp
     """
     return self.htmlObj.css("box-shadow")
@@ -833,7 +851,8 @@ class CssMixin(object):
     Tip: Use a background color combined with a text color that makes the text easy to read.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_text_color.asp
     """
     return self.htmlObj.css("color")
@@ -955,7 +974,8 @@ class CssMixin(object):
     The cursor property specifies the mouse cursor to be displayed when pointing over an element.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_class_cursor.asp
     """
     return self.htmlObj.css("cursor")
@@ -983,7 +1003,8 @@ class CssMixin(object):
     In HTML, the default display property value is taken from the HTML specifications or from the browser/user default style sheet. The default value in XML is inline, including SVG elements.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_class_display.asp
     """
     return self.htmlObj.css("display")
@@ -1073,7 +1094,8 @@ class CssMixin(object):
     The float property specifies how an element should float
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_class_float.asp
     """
     return self.htmlObj.css("float")
@@ -1103,7 +1125,8 @@ class CssMixin(object):
     The font-family property specifies the font for an element.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_font_font-family.asp
     """
     return self.htmlObj.css("font-family")
@@ -1129,7 +1152,8 @@ class CssMixin(object):
     The font-size property sets the size of a font.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_font_font-size.asp
     """
     return self.htmlObj.css("font-size")
@@ -1181,7 +1205,8 @@ class CssMixin(object):
     The font-weight property sets how thick or thin characters in text should be displayed.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_font_weight.asp
     """
     return self.htmlObj.css("font-weight")
@@ -1353,7 +1378,8 @@ class CssMixin(object):
     The height of an element does not include padding, borders, or margins!
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_dim_height.asp
     """
     return self.htmlObj.css("height")
@@ -1390,7 +1416,8 @@ class CssMixin(object):
     This property is not inherited
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_justify-content.asp
     """
     return self.htmlObj.css("justify-content")
@@ -1409,7 +1436,8 @@ class CssMixin(object):
     The left property affects the horizontal position of a positioned element. This property has no effect on non-positioned elements.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_pos_left.asp
     """
     return self.htmlObj.css("left")
@@ -1439,7 +1467,8 @@ class CssMixin(object):
     Note: Negative values are not allowed.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_dim_line-height.asp
     """
     return self.htmlObj.css("line-height")
@@ -1495,7 +1524,8 @@ class CssMixin(object):
     - margin-left
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_margin.asp
     """
     return self.htmlObj.css("margin")
@@ -1517,7 +1547,8 @@ class CssMixin(object):
     Note: Negative values are allowed.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_margin-bottom.asp
     """
     return self.htmlObj.css("margin-bottom")
@@ -1539,7 +1570,8 @@ class CssMixin(object):
     Note: Negative values are allowed.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_margin-left.asp
     """
     return self.htmlObj.css("margin-left")
@@ -1561,7 +1593,8 @@ class CssMixin(object):
     Note: Negative values are allowed.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_margin-right.asp
     """
     return self.htmlObj.css("margin-right")
@@ -1581,7 +1614,8 @@ class CssMixin(object):
     Note: Negative values are allowed.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_margin-top.asp
     """
     return self.htmlObj.css("margin-top")
@@ -1659,7 +1693,8 @@ class CssMixin(object):
     The opacity-level describes the transparency-level, where 1 is not transparent at all, 0.5 is 50% see-through, and 0 is completely transparent.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_opacity.asp
     """
     return self.htmlObj.css("opacity")
@@ -1749,7 +1784,8 @@ class CssMixin(object):
     The CSS padding properties are used to generate space around an element's content, inside of any defined borders.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/css/css_padding.asp
     """
     return self.htmlObj.css("padding")
@@ -1779,7 +1815,8 @@ class CssMixin(object):
     The padding-left property sets the left padding (space) of an element.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_padding-left.asp
     """
     return self.htmlObj.css("padding-left")
@@ -1809,7 +1846,8 @@ class CssMixin(object):
     The padding-top property sets the top padding (space) of an element.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_padding-top.asp
     """
     return self.htmlObj.css("padding-top")
@@ -1877,7 +1915,8 @@ class CssMixin(object):
     The position property specifies the type of positioning method used for an element (static, relative, absolute, fixed, or sticky).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_class_position.asp
     """
     return self.htmlObj.css("position")
@@ -1914,7 +1953,8 @@ class CssMixin(object):
     This property has no effect on non-positioned elements.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_pos_right.asp
     """
     return self.htmlObj.css("right")
@@ -1958,7 +1998,8 @@ class CssMixin(object):
     The text-align property specifies the horizontal alignment of text in an element.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_text_text-align.ASP
     """
     return self.htmlObj.css("text-align")
@@ -2045,7 +2086,8 @@ class CssMixin(object):
     This property accepts a comma-separated list of shadows to be applied to the text.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_text-shadow.asp
     """
     return self.htmlObj.css("text-shadow")
@@ -2065,7 +2107,8 @@ class CssMixin(object):
     The text-transform property controls the capitalization of text.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_text_text-transform.asp
     """
     return self.htmlObj.css("text-transform")
@@ -2083,7 +2126,8 @@ class CssMixin(object):
     The -webkit-text-stroke CSS property specifies the width and color of strokes for text characters. This is a shorthand property for the longhand properties -webkit-text-stroke-width and -webkit-text-stroke-color.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke
     """
     return self.htmlObj.css("-webkit-text-stroke")
@@ -2101,7 +2145,8 @@ class CssMixin(object):
     The -webkit-text-stroke-width CSS property specifies the width of the stroke for text.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-width
     """
     return self.htmlObj.css("-webkit-text-stroke-width")
@@ -2119,7 +2164,8 @@ class CssMixin(object):
     The -webkit-text-stroke-color CSS property specifies the stroke color of characters of text. If this property is not set, the value of the color property is used.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-color
     """
     return self.htmlObj.css("-webkit-text-stroke-color")
@@ -2138,7 +2184,8 @@ class CssMixin(object):
     This property has no effect on non-positioned elements.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_pos_top.asp
     """
     return self.htmlObj.css("top")
@@ -2159,7 +2206,8 @@ class CssMixin(object):
     The transform property applies a 2D or 3D transformation to an element. This property allows you to rotate, scale, move, skew, etc., elements.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_transform.asp
     """
     return self.htmlObj.css("transform")
@@ -2246,7 +2294,8 @@ class CssMixin(object):
     In web browsers, if you double-click on some text it will be selected/highlighted. This property can be used to prevent this.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/css3_pr_user-select.asp
     """
     return self.htmlObj.css("user-select")
@@ -2266,7 +2315,8 @@ class CssMixin(object):
     The vertical-align property sets the vertical alignment of an element
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_pos_vertical-align.asp
     """
     return self.htmlObj.css("vertical-align")
@@ -2306,7 +2356,8 @@ class CssMixin(object):
     The width of an element does not include padding, borders, or margins!
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_dim_width.asp
     """
     return self.htmlObj.css("width")
@@ -2362,7 +2413,8 @@ class CssMixin(object):
     Note: z-index only works on positioned elements (position: absolute, position: relative, position: fixed, or position: sticky).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_pos_z-index.asp
     """
     return self.htmlObj.css("z-index")
@@ -2388,7 +2440,8 @@ class CssMixin(object):
       htmlObj.style.css.sticky()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_sticky_element
 
     Attributes:
@@ -2422,7 +2475,8 @@ class CssMixin(object):
       .style.css.shadow()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/css/css3_shadows.asp
 
     Attributes:
@@ -2442,7 +2496,8 @@ class CssMixin(object):
     Set the box shadow color
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/css/css3_shadows.asp
 
     Attributes:
@@ -2462,7 +2517,8 @@ class CssMixin(object):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/css/css3_shadows.asp
     """
     self.text_shadow = "0 0 3px #FF0000, 0 0 5px #0000FF"

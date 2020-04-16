@@ -139,7 +139,8 @@ class Span(Html.Html):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
 
     :return:
@@ -178,7 +179,8 @@ class Span(Html.Html):
       select.label.click(str(rptObj.js.console.log("test")))
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/event_onload.asp
 
@@ -784,7 +786,8 @@ class Numeric(Html.Html):
     Format any number into currency
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/
 
     Attributes:
@@ -808,7 +811,8 @@ class Numeric(Html.Html):
     Format a number with custom precision and localisation
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/
 
     Attributes:

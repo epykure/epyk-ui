@@ -20,7 +20,8 @@ class Meta(object):
       rptObj.headers.meta.viewport("test")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/html/html_head.asp
 
     Attributes:
@@ -41,7 +42,8 @@ class Meta(object):
       rptObj.headers.meta.charset("test")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_meta.asp
 
     Attributes:
@@ -62,7 +64,8 @@ class Meta(object):
       rptObj.headers.meta.refresh(10)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_meta.asp
 
     Attributes:
@@ -104,7 +107,8 @@ class Meta(object):
       rptObj.headers.meta.description('This is a description')
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/html/html_head.asp
 
     Attributes:
@@ -127,7 +131,8 @@ class Meta(object):
       rptObj.headers.meta.keywords(['python', 'javascript'])
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/html/html_head.asp
 
     Attributes:
@@ -216,7 +221,8 @@ class Header(object):
       rptObj.headers.meta
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_meta.asp
 
     :rtype: Meta
@@ -236,7 +242,8 @@ class Header(object):
       rptObj.headers.title("title")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_title.asp
 
     Attributes:
@@ -256,7 +263,8 @@ class Header(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_base.asp
 
     Attributes:
@@ -281,7 +289,8 @@ class Header(object):
       rptObj.headers.favicon('https://github.com/favicon.ico')
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_link.asp
 
     Attributes:

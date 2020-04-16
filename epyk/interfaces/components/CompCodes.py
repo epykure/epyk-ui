@@ -18,7 +18,8 @@ class Code(object):
       - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/index.html
 
     Attributes:
@@ -50,7 +51,8 @@ class Code(object):
       - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/index.html
 
     Attributes:
@@ -82,7 +84,8 @@ class Code(object):
       - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/index.html
 
     Attributes:
@@ -114,7 +117,8 @@ class Code(object):
       - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/index.html
 
     Attributes:
@@ -146,7 +150,8 @@ class Code(object):
       - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/index.html
 
     Attributes:
@@ -178,7 +183,8 @@ class Code(object):
       - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/index.html
 
     Attributes:
@@ -210,7 +216,8 @@ class Code(object):
       - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/index.html
 
     Attributes:
@@ -242,7 +249,8 @@ class Code(object):
       - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/index.html
 
     Attributes:
@@ -274,7 +282,8 @@ class Code(object):
       - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/index.html
 
     Attributes:

@@ -26,7 +26,8 @@ class Images(object):
       - :class:`epyk.core.html.HtmlImage.Image`
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
     https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
@@ -65,7 +66,8 @@ class Images(object):
       - :class:`epyk.core.html.HtmlImage.Image`
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
     https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
@@ -252,7 +254,8 @@ class Images(object):
       - :class:`epyk.core.html.HtmlImage.ImgCarrousel`
 
     Related Pages:
-    --------------
+
+
     https://www.cssscript.com/basic-pure-css-slideshow-carousel/
 
     Attributes:
@@ -284,7 +287,8 @@ class Images(object):
       - :class:`epyk.core.html.HtmlImage.Emoji`
 
     Related Pages:
-    --------------
+
+
     https://github.com/wedgies/jquery-emoji-picker
 
     Attributes:
@@ -311,7 +315,8 @@ class Images(object):
       - :class:`epyk.core.html.HtmlImage.Icon`
 
     Related Pages:
-    --------------
+
+
     https://fontawesome.com/icons?m=free
 
     Attributes:

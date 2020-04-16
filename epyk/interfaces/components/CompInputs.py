@@ -65,7 +65,8 @@ class Inputs(object):
       - :class:`epyk.core.html.HtmlInput.Input`
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search
     https://css-tricks.com/webkit-html5-search-inputs/
 
@@ -265,7 +266,8 @@ class Inputs(object):
       - :class:`epyk.core.html.HtmlInput.TextArea`
 
     Related Pages:
-    --------------
+
+
 
     https://www.w3schools.com/tags/tag_textarea.asp
 
@@ -303,7 +305,8 @@ class Inputs(object):
 
 
     Related Pages:
-    --------------
+
+
 
     https://jqueryui.com/autocomplete/
 
@@ -428,7 +431,8 @@ class Inputs(object):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_input_type_radio.asp
 
     Usage::
@@ -527,7 +531,8 @@ class Inputs(object):
       - :class:`epyk.core.html.HtmlTextEditor.Cell`
 
     Related Pages:
-    --------------
+
+
 
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
 

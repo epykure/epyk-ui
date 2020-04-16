@@ -307,7 +307,8 @@ class Code(Html.Html):
     A lot of CodeMirror features are only available through its API. Thus, you need to write code (or use addons) if you want to expose them to your users.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#api
 
     :rtype: JsCodeMirror.CM

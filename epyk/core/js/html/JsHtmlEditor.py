@@ -85,7 +85,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Select the whole content of the editor.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/3/doc/manual.html#keymaps
     """
     return JsObjects.JsObjects.get("%s.execCommand('selectAll')" % self._src.editorId)
@@ -97,7 +98,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
     When multiple selections are present, this deselects all but the primary selection.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/3/doc/manual.html#keymaps
     """
     return JsObjects.JsObjects.get("%s.execCommand('singleSelection')" % self._src.editorId)
@@ -110,7 +112,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
     If that consists only of whitespace, the newline at the end of the line is also deleted.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/3/doc/manual.html#keymaps
     """
     return JsObjects.JsObjects.get("%s.execCommand('killLine')" % self._src.editorId)
@@ -122,7 +125,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
     Deletes the whole line under the cursor, including newline at the end.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/3/doc/manual.html#keymaps
     """
     return JsObjects.JsObjects.get("%s.execCommand('deleteLine')" % self._src.editorId)

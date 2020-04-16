@@ -80,7 +80,8 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlSelect.Select`
 
     Related Pages:
-    --------------
+
+
 
     https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
@@ -146,7 +147,8 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlSelect.Lookup`
 
     Related Pages:
-    --------------
+
+
     https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
     https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
@@ -185,7 +187,8 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.List`
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
@@ -281,7 +284,8 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.List`
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/html/html_lists.asp
 
     Attributes:
@@ -312,7 +316,8 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.List`
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/cssref/pr_list-style-type.asp
 
     Attributes:
@@ -427,7 +432,8 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.Checks`
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -459,7 +465,8 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlTrees.Tree`
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -582,7 +589,8 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlInput.Radio`
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------

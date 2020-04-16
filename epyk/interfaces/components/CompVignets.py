@@ -24,7 +24,8 @@ class Vignets(object):
       rptObj.ui.vignets.bubble({"value": 23, "title": "Title"}, helper="This is a helper")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/event_bubbles.asp
 
     Attributes:
@@ -78,7 +79,8 @@ class Vignets(object):
     number.span.add_icon(rptObj.ui.icons.get.ICON_ENVELOPE)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_input_type_number.asp
 
     Attributes:
@@ -110,7 +112,8 @@ class Vignets(object):
                              "button": {"text": 'Get Started', 'url': "/getStarted"}, 'color': 'green'})
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/htmL/html_blocks.asp
 
     Attributes:
@@ -138,7 +141,8 @@ class Vignets(object):
                             'icon': 'fab fa-python', 'colorTitle': 'darkgreen'})
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------

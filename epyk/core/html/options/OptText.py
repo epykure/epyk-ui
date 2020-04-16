@@ -12,7 +12,8 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-    --------------
+
+
     """
     return self._config_get(False)
 
@@ -29,7 +30,8 @@ class OptionsText(Options):
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
     Related Pages:
-    --------------
+
+
     https://github.com/showdownjs/showdown
     """
     return self._config_get(False, 'showdown')
@@ -49,7 +51,8 @@ class OptionsText(Options):
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
     Related Pages:
-    --------------
+
+
     https://github.com/showdownjs/showdown
     """
     return self._config_get(False)
@@ -67,7 +70,8 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-    --------------
+
+
     """
     return self._config_get(None, 'limit_char')
 
@@ -82,7 +86,8 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-    --------------
+
+
     """
     return self._config_get(self._report.theme.danger[1])
 
@@ -97,7 +102,8 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-    --------------
+
+
     """
     return self._config_get(self._report.theme.success[1])
 
@@ -112,7 +118,8 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-    --------------
+
+
     """
     return self._config_get(self._report.theme.warning[1])
 
@@ -127,7 +134,8 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-    --------------
+
+
     """
     return self._config_get('none')
 
@@ -145,7 +153,8 @@ class OptionsTitle(OptionsText):
     ------------
 
     Related Pages:
-    --------------
+
+
     """
     return self._config_get(True)
 
@@ -164,7 +173,8 @@ class OptionsNumber(OptionsText):
     decimal point separator
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get(0)
@@ -181,7 +191,8 @@ class OptionsNumber(OptionsText):
     controls output: %s = symbol, %v = value/number
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get("%s%v")
@@ -198,7 +209,8 @@ class OptionsNumber(OptionsText):
     default currency symbol is ''
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/#documentation
     """
     return self._config_get("")
@@ -216,7 +228,8 @@ class OptionsNumber(OptionsText):
     thousands separator
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get(",")
@@ -233,7 +246,8 @@ class OptionsNumber(OptionsText):
     decimal point separator
 
     Related Pages:
-    --------------
+
+
     http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get(".")

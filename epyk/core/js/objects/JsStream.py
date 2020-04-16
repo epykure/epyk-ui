@@ -26,7 +26,8 @@ class TransformStream(JsPackage):
     """
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
 
     :return:
@@ -38,7 +39,8 @@ class TransformStream(JsPackage):
     """
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
     """
     return "%s.writable" % self.varId
@@ -58,7 +60,8 @@ class ReadableStream(JsPackage):
     The supplied reason parameter will be given to the underlying source, which may or may not use it.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/cancel
     """
     return self.fnc("cancel()")
@@ -71,7 +74,8 @@ class ReadableStream(JsPackage):
     While the stream is locked, no other reader can be acquired until this one is released.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/getReader
     """
     return ReadableStream("%s.getReader()" % self.varId)
@@ -83,7 +87,8 @@ class ReadableStream(JsPackage):
     The pipeThrough() method of the ReadableStream interface provides a chainable way of piping the current stream through a transform stream or any other writable/readable pair.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/pipeThrough
 
     :param transformStream: A TransformStream (or an object with the structure {writable, readable}) consisting of a readable stream and a writable stream working together to transform some data from one form to another.
@@ -105,7 +110,8 @@ class ReadableStream(JsPackage):
     The pipeTo() method of the ReadableStream interface pipes the current ReadableStream to a given WritableStream and returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/pipeTo
 
     Attributes:
@@ -125,7 +131,8 @@ class ReadableStream(JsPackage):
     The tee() method of the ReadableStream interface tees the current readable stream, returning a two-element array containing the two resulting branches as new ReadableStream instances.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/tee
     """
     return TeedStreams("%s.tee()" % self.varId)
@@ -141,7 +148,8 @@ class WritableStreamDefaultWriter(JsPackage):
     The desiredSize read-only property of the WritableStreamDefaultWriter interface returns the desired size required to fill the stream's internal queue.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/desiredSize
     """
     return "%s.desiredSize" % self.varId
@@ -154,7 +162,8 @@ class WritableStreamDefaultWriter(JsPackage):
     The closed read-only property of the WritableStreamDefaultWriter interface returns a promise that fulfills if the stream becomes closed or the writer's lock is released, or rejects if the stream errors.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/closed
     """
     return JsObjects.JsPromise("%s.writer" % self.varId)
@@ -167,7 +176,8 @@ class WritableStreamDefaultWriter(JsPackage):
     The ready read-only property of the WritableStreamDefaultWriter interface returns a Promise that resolves when the desired size of the stream's internal queue transitions from non-positive to positive, signaling that it is no longer applying backpressure.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/ready
     """
     return JsObjects.JsPromise("%s.ready" % self.varId)
@@ -179,7 +189,8 @@ class WritableStreamDefaultWriter(JsPackage):
     The abort() method of the WritableStreamDefaultWriter interface aborts the stream, signaling that the producer can no longer successfully write to the stream and it is to be immediately moved to an error state, with any queued writes discarded.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/abort
     """
     if reason is None:
@@ -195,7 +206,8 @@ class WritableStreamDefaultWriter(JsPackage):
     The close() method of the WritableStreamDefaultWriter interface closes the associated writable stream.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/close
     """
     return JsObjects.JsPromise("%s.close()" % self.varId)
@@ -207,7 +219,8 @@ class WritableStreamDefaultWriter(JsPackage):
     The releaseLock() method of the WritableStreamDefaultWriter interface releases the writer's lock on the corresponding stream.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/releaseLock
     """
     return self.fnc_closure("%s.releaseLock()" % self.varId)
@@ -219,7 +232,8 @@ class WritableStreamDefaultWriter(JsPackage):
     The write() property of the WritableStreamDefaultWriter interface writes a passed chunk of data to a WritableStream and its underlying sink, then returns a Promise that resolves to indicate the success or failure of the write operation.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/write
 
     Attributes:
@@ -248,7 +262,8 @@ class WritableStream(JsPackage):
     The abort() method of the WritableStream interface aborts the stream, signaling that the producer can no longer successfully write to the stream and it is to be immediately moved to an error state, with any queued writes discarded.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/WritableStream/abort
     """
     if reason is None:
@@ -267,7 +282,8 @@ class WritableStream(JsPackage):
     The getWriter() method of the WritableStream interface returns a new instance of WritableStreamDefaultWriter and locks the stream to that instance. While the stream is locked, no other writer can be acquired until this one is released.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/WritableStream/getWriter
     """
     return WritableStreamDefaultWriter("%s.getWriter()" % self.varId)

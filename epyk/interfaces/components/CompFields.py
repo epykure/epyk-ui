@@ -34,7 +34,8 @@ class Fields(object):
       - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Related Pages:
-    --------------
+
+
     https://jqueryui.com/datepicker/
 
     Attributes:
@@ -68,7 +69,8 @@ class Fields(object):
       - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Related Pages:
-    --------------
+
+
     https://jqueryui.com/datepicker/
 
     Attributes:
@@ -102,7 +104,8 @@ class Fields(object):
       - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Related Pages:
-    --------------
+
+
     https://jqueryui.com/datepicker/
 
     Attributes:
@@ -138,7 +141,8 @@ class Fields(object):
       - :class:`epyk.core.html.HtmlDates.TimePicker`
 
     Related Pages:
-    --------------
+
+
     https://github.com/jonthornton/jquery-timepicker
 
     Attributes:
@@ -174,7 +178,8 @@ class Fields(object):
       - :class:`epyk.core.html.HtmlDates.TimePicker`
 
     Related Pages:
-    --------------
+
+
     https://github.com/jonthornton/jquery-timepicker
 
     Attributes:
@@ -384,7 +389,8 @@ class Fields(object):
       - :class:`epyk.core.html.HtmlInput.FieldCheckBox`
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_input_type_checkbox.asp
 
     Attributes:
@@ -419,7 +425,8 @@ class Fields(object):
       - :class:`epyk.core.html.HtmlInput.Radio`
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_input_type_radio.asp
 
     Attributes:
@@ -460,7 +467,8 @@ class Fields(object):
       - :class:`epyk.core.html.HtmlInput.FieldRange`
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_input_type_range.asp
 
     Attributes:

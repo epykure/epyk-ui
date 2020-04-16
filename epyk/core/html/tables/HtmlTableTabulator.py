@@ -99,7 +99,8 @@ class EnumLayout(DataEnum):
     The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the empty row to fill the table it stretches the last visible column.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/layout
     """
     return self.set()
@@ -111,7 +112,8 @@ class EnumLayout(DataEnum):
     As an alternative to the default data fit, you can use the fitColumns layout mode to cause Tabulator to resize columns so they fit perfectly in the available table width.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/layout
     """
     return self.set()
@@ -123,7 +125,8 @@ class EnumLayout(DataEnum):
     The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the empty row to fill the table it stretches the last visible column.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/layout
     """
     return self.set()
@@ -135,7 +138,8 @@ class EnumLayout(DataEnum):
     The fitDataFill layout mode functions in the same way as the fitData mode, but ensures that rows are always at least the full width of the table.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/layout
     """
     return self.set()
@@ -150,7 +154,8 @@ class EnumSorter(DataEnum):
     Sorts column as strings of characters
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("string")
@@ -162,7 +167,8 @@ class EnumSorter(DataEnum):
     Sorts column as numbers (integer or float, will also handle numbers using "," separators)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("number")
@@ -174,7 +180,8 @@ class EnumSorter(DataEnum):
     Sorts column as alpha numeric code
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("alphanum")
@@ -186,7 +193,8 @@ class EnumSorter(DataEnum):
     Sorts column as booleans
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("boolean")
@@ -198,7 +206,8 @@ class EnumSorter(DataEnum):
     Sorts column as dates
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/examples/4.5#sorters
     """
     return self.set("date")
@@ -210,7 +219,8 @@ class EnumSorter(DataEnum):
     Sorts column as dates
 
     Related Pages:
-    --------------
+
+
     sorts column as times
     """
     return self.set("time")
@@ -315,7 +325,8 @@ class PersistencePage(DataClass):
     persist the current page size
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["size"]
@@ -332,7 +343,8 @@ class PersistencePage(DataClass):
     do not persist the current page
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["page"]
@@ -352,7 +364,8 @@ class Persistence(DataClass):
     You can ensure the data sorting is stored for the next page load by setting the sort property of the persistence option to true
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["sort"]
@@ -369,7 +382,8 @@ class Persistence(DataClass):
     You can ensure the data filtering is stored for the next page load by setting the filter property of the persistence option to true
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["filter"]
@@ -386,7 +400,8 @@ class Persistence(DataClass):
     You can ensure the row grouping settings are stored for the next page load by setting the group property of the persistence option to true
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/release#persistence
 
     :rtype: PersistenceGroup
@@ -401,7 +416,8 @@ class Persistence(DataClass):
     You can ensure the pagination settings are stored for the next page load by setting the page property of the persistence option to true
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/release#persistence
 
     :rtype: PersistencePage
@@ -416,7 +432,8 @@ class Persistence(DataClass):
     You can ensure the layout of columns is stored for the next page load by setting the columns property of the persistence option to true
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/release#persistence
     """
     return self._attrs["columns"]
@@ -466,7 +483,8 @@ class Editor(DataGroup):
     The input editor allows entering of a single line of plain text
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
@@ -489,7 +507,8 @@ class Editor(DataGroup):
     The textarea editor allows entering of multiple lines of plain text
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
@@ -509,7 +528,8 @@ class Editor(DataGroup):
     The number editor allows for numeric entry with a number type input element with increment and decrement buttons.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
@@ -537,7 +557,8 @@ class Editor(DataGroup):
     The range editor allows for numeric entry with a range type input element.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
@@ -564,7 +585,8 @@ class Editor(DataGroup):
     The tick editor allows for boolean values using a checkbox type input element.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
@@ -590,7 +612,8 @@ class Editor(DataGroup):
     This editor will automatically detect the correct number of stars to use if it is used on the same column as the star formatter.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
@@ -613,7 +636,8 @@ class Editor(DataGroup):
     The select editor creates a dropdown select box to allow the user to select from some predefined options passed into the values property of the editorParams option.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
@@ -640,7 +664,8 @@ class Editor(DataGroup):
     The autocomplete editor allows users to search a list of predefined options passed into the values property of the editorParams option.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/edit#edit-builtin
 
     Attributes:
@@ -671,7 +696,8 @@ class Formattors(DataGroup):
     The plaintext formater is the default formatter for all cells and will simply dispay the value of the cell as text.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -690,7 +716,8 @@ class Formattors(DataGroup):
     The textarea formater shows text with carriage returns intact (great for multiline text), this formatter will also adjust the height of rows to fit the cells contents when columns are resized.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -709,7 +736,8 @@ class Formattors(DataGroup):
     he html formater displays un-sanitized html.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -728,7 +756,8 @@ class Formattors(DataGroup):
     The money formater formats a number into currency notation (eg. 1234567.8901 -> 1,234,567.89).
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -752,7 +781,8 @@ class Formattors(DataGroup):
     The image formater creates an img element with the src set as the value. (triggers the normalizeHeight function on the row on image load).
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -779,7 +809,8 @@ class Formattors(DataGroup):
     The link formater renders data as an anchor with a link to the given value (by default the value will be used as both the url and the label of the tag).
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -804,7 +835,8 @@ class Formattors(DataGroup):
     The datetime formater transforms on format of date or time into another.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -828,7 +860,8 @@ class Formattors(DataGroup):
     The tickCross formatter displays a green tick if the value is (true|'true'|'True'|1) and a red cross if not.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -853,7 +886,8 @@ class Formattors(DataGroup):
     The color formater sets the background colour of the cell to the value. The cell's value can be any valid CSS color eg. #ff0000, #f00, rgb(255,0,0), red, rgba(255,0,0,0), hsl(0, 100%, 50%)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'color'
@@ -868,7 +902,8 @@ class Formattors(DataGroup):
     The star formater displays a graphical star rating based on integer values.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -905,7 +940,8 @@ class Formattors(DataGroup):
     The lookup formater looks up the value to display from a object passed into the formatterParams property, if not present it displays the current cell value
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/format
 
     Attributes:
@@ -956,7 +992,8 @@ class Validators(DataGroup):
     The required validator allows values that are not null or an empty string
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('required')
@@ -969,7 +1006,8 @@ class Validators(DataGroup):
     The unique validator allows values that do not match the value of any other cell in this column
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('unique')
@@ -982,7 +1020,8 @@ class Validators(DataGroup):
     The integer validator allows values that are valid integers
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('integer')
@@ -995,7 +1034,8 @@ class Validators(DataGroup):
     The float validator allows values that are valid floats
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('float')
@@ -1008,7 +1048,8 @@ class Validators(DataGroup):
     The float validator allows values that are valid floats
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('numeric')
@@ -1021,7 +1062,8 @@ class Validators(DataGroup):
     The min validator allows numeric values that are greater than or equal to parameter
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('min:%s' % val)
@@ -1034,7 +1076,8 @@ class Validators(DataGroup):
     The max validator allows numeric values that are less than or equal to parameter
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('max:%s' % val)
@@ -1047,7 +1090,8 @@ class Validators(DataGroup):
     The maxLength validator allows string values that have a length less than or equal to parameter
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('maxLength:%s' % val)
@@ -1060,7 +1104,8 @@ class Validators(DataGroup):
     The in validator allows that values that match a value from the | delimieted string in the parameter
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('in:%s' % "".join(map(lambda  x: str(), vals)))
@@ -1073,7 +1118,8 @@ class Validators(DataGroup):
     The regex validator allows values that match the supplied regex
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"].append('regex:%s' % val)
@@ -1092,7 +1138,8 @@ class Extensions(DataGroup):
     More information on these functions can be found in the Editing Data Documentation.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.0/modules
     """
     from epyk.core.html.tables.exts import TbEditors
@@ -1109,7 +1156,8 @@ class Extensions(DataGroup):
     You can pass an optional additional parameter with the formatter, formatterParams that should contain an object with additional information for configuring the formatter.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.0/format
     """
     from epyk.core.html.tables.exts import TbFormatters
@@ -1125,7 +1173,8 @@ class Extensions(DataGroup):
     For example if you wanted to convert a numeric column into a boolean based on its value, before the data is used to build the table.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.0/mutators
     """
     from epyk.core.html.tables.exts import TbMutators
@@ -1142,7 +1191,8 @@ class Extensions(DataGroup):
     This can be extended to add custom validator functions to the default list:
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.0/modules
     """
     from epyk.core.html.tables.exts import TbValidators
@@ -1160,7 +1210,8 @@ class Column(DataClass):
     sets the text alignment for this column (left|center|right)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["align"]
@@ -1177,7 +1228,8 @@ class Column(DataClass):
     the column calculation to be displayed at the bottom of this column(see Column Calculations for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["bottomCalc"]
@@ -1194,7 +1246,8 @@ class Column(DataClass):
     additional parameters you can pass to the bottomCalc calculation function(see Column Calculations for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
 
     :rtype: BottomCalcParams
@@ -1217,7 +1270,8 @@ class Column(DataClass):
     callback to check if the cell is editable (see Manipulating Data for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["editable"]
@@ -1234,7 +1288,8 @@ class Column(DataClass):
     Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a series of modules that provide all of its wonderfull features.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.0/modules
     """
     return Extensions(self, self._attrs)
@@ -1258,7 +1313,8 @@ class Column(DataClass):
     Required (not required in icon/button columns) this is the key for this column in the data array
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["field"]
@@ -1275,7 +1331,8 @@ class Column(DataClass):
     You can set cell formatters on a per column basis using the formatter option in the column definition object.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5
     """
     return Formattors(self, self._attrs)
@@ -1288,7 +1345,8 @@ class Column(DataClass):
     freezes the column in place when scrolling (see Frozen Columns for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["frozen"]
@@ -1305,7 +1363,8 @@ class Column(DataClass):
     change the orientation of the column header to vertical (see Vertical Column Headers for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["headerVertical"]
@@ -1322,7 +1381,8 @@ class Column(DataClass):
     user can sort by clicking on the header (see Sorting Data for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["headerSort"]
@@ -1339,7 +1399,8 @@ class Column(DataClass):
     By setting the headerVisible option to false you can hide the column headers and present the table as a simple list if needed.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["headerVisible"]
@@ -1356,7 +1417,8 @@ class Column(DataClass):
     By default Tabulator will attempt to guess which sorter should be applied to a column based on the data contained in the first row.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/examples/4.5#sorters
 
     :rtype: EnumSorter
@@ -1371,7 +1433,8 @@ class Column(DataClass):
     sets the width of this column, this can be set in pixels or as a percentage of total table width (if not set the system will determine the best)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["width"]
@@ -1388,7 +1451,8 @@ class Column(DataClass):
     sets the minimum width of this column, this should be set in pixels (this takes priority over the global option of columnMinWidth)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.1/columns
     """
     return self._attrs["minwidth"]
@@ -1405,7 +1469,8 @@ class Column(DataClass):
     when using fitColumns layout mode, determines how much the column should grow to fill available space (see Table Layout for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["widthGrow"]
@@ -1422,7 +1487,8 @@ class Column(DataClass):
     an integer to determine when the column should be hidden in responsive mode (see Responsive Layout for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["responsive"]
@@ -1439,7 +1505,8 @@ class Column(DataClass):
     set whether column can be resized by user dragging its edges (see Table Layout for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["resizable"]
@@ -1456,7 +1523,8 @@ class Column(DataClass):
     Required This is the title that will be displayed in the header for this column
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["title"]
@@ -1473,7 +1541,8 @@ class Column(DataClass):
     formatter function for header title (see Formatting Data for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["titleFormatter"]
@@ -1490,7 +1559,8 @@ class Column(DataClass):
     the column calculation to be displayed at the top of this column(see Column Calculations for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/columns
     """
     return self._attrs["topCalc"]
@@ -1507,7 +1577,8 @@ class Column(DataClass):
     set the validator to be used to approve data when a user edits a cell. (see Manipulating Data for more details)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/validate
     """
     self._attrs["validator"] = []
@@ -1523,7 +1594,8 @@ class TableConfig(DataClass):
     -----------
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.0/data
     """
     return self._attrs["ajaxURL"]
@@ -1539,7 +1611,8 @@ class TableConfig(DataClass):
     -----------
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.0/data
     """
     return self._attrs["ajaxProgressiveLoad"]
@@ -1556,7 +1629,8 @@ class TableConfig(DataClass):
     If you set the autoColumns option to true, every time data is loaded into the table through the data option or through the setData function, Tabulator will examine the first row of the data and build columns to match that data.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/columns
     """
     return self._attrs["autoColumns"]
@@ -1573,7 +1647,8 @@ class TableConfig(DataClass):
     The position in the table for new rows to be added, "bottom" or "top"
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["addRowPos"]
@@ -1590,7 +1665,8 @@ class TableConfig(DataClass):
     Enable clipboard module
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["clipboard"]
@@ -1607,7 +1683,8 @@ class TableConfig(DataClass):
     Clipboard paste action function
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["clipboardPasteAction"]
@@ -1624,7 +1701,8 @@ class TableConfig(DataClass):
     Holder for column definition array
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
 
     :rtype: Column
@@ -1636,7 +1714,8 @@ class TableConfig(DataClass):
     """
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
 
     :rtype: ColumnsGroup
@@ -1651,7 +1730,8 @@ class TableConfig(DataClass):
     Vertical alignment for contents of column header (used in column grouping)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["columnVertAlign"]
@@ -1668,7 +1748,8 @@ class TableConfig(DataClass):
     Array to hold data that should be loaded on table creation
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["data"]
@@ -1685,7 +1766,8 @@ class TableConfig(DataClass):
     String/function to select field to group rows by
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["groupBy"]
@@ -1702,7 +1784,8 @@ class TableConfig(DataClass):
     By default Tabulator allows users to toggle a group open or closed by clicking on the arrow icon in the left of the group header. If you would prefer a different behaviour you can use the groupToggleElement option to choose a different option:
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.0/group
 
     :param val:
@@ -1721,7 +1804,8 @@ class TableConfig(DataClass):
     You can set the default open state of groups using the groupStartOpen property.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.0/group
     """
     return self._attrs["groupStartOpen"]
@@ -1738,7 +1822,8 @@ class TableConfig(DataClass):
     Array of values for groups
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["groupValues"]
@@ -1756,7 +1841,8 @@ class TableConfig(DataClass):
     If set to false (the default), the height of the table will resize to fit the table data.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["height"]
@@ -1775,7 +1861,8 @@ class TableConfig(DataClass):
     Enable user interaction history functionality
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["history"]
@@ -1792,7 +1879,8 @@ class TableConfig(DataClass):
     hold localization templates
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["lang"]
@@ -1809,7 +1897,8 @@ class TableConfig(DataClass):
     Layout mode for the table columns
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
 
     :rtype: EnumLayout
@@ -1824,7 +1913,8 @@ class TableConfig(DataClass):
     Allow users to move and reorder columns
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableColumns"]
@@ -1841,7 +1931,8 @@ class TableConfig(DataClass):
     Allow users to move and reorder rows
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableRows"]
@@ -1858,7 +1949,8 @@ class TableConfig(DataClass):
     Connection selector for receving tables
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableRowsConnectedTables"]
@@ -1875,7 +1967,8 @@ class TableConfig(DataClass):
     Sender function to be executed when row has been received
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableRowsReceiver"]
@@ -1892,7 +1985,8 @@ class TableConfig(DataClass):
     Sender function to be executed when row has been sent
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["movableRowsSender"]
@@ -1909,7 +2003,8 @@ class TableConfig(DataClass):
     Choose pagination method, "local" or "remote"
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["pagination"]
@@ -1926,7 +2021,8 @@ class TableConfig(DataClass):
     Set the number of rows in each page
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["paginationSize"]
@@ -1946,7 +2042,8 @@ class TableConfig(DataClass):
     Add page size selection select element to the table footer
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["paginationSizeSelector"]
@@ -1963,7 +2060,8 @@ class TableConfig(DataClass):
     ID tag used to identify persistent storage information
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["persistenceID"]
@@ -1980,7 +2078,8 @@ class TableConfig(DataClass):
     The persistence system has received an overhaul in this release, providing a more consistent way to configure table persistence and allow even more table options to be persisted between sessions.
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.5/release#persistence
 
     :rtype: Persistence
@@ -1995,7 +2094,8 @@ class TableConfig(DataClass):
     placeholder element to display on empty table
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["placeholder"]
@@ -2036,7 +2136,8 @@ class TableConfig(DataClass):
     enable data reactivity
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["reactiveData"]
@@ -2053,7 +2154,8 @@ class TableConfig(DataClass):
     Automatically hide/show columns to fit the width of the Tabulator element
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["responsiveLayout"]
@@ -2070,7 +2172,8 @@ class TableConfig(DataClass):
     Allow user to resize columns (via handles on the left and right edges of the column header)
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["resizableColumns"]
@@ -2087,7 +2190,8 @@ class TableConfig(DataClass):
     Enable/Disable row selection
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/docs/4.2/options
     """
     return self._attrs["selectable"]

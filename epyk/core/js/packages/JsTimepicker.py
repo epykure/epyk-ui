@@ -19,7 +19,8 @@ class Timepicker(JsPackage):
     Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
     """
     if not isinstance(jsFncs, list):
@@ -34,7 +35,8 @@ class Timepicker(JsPackage):
     Set the timepicker object value
 
     Related Pages:
-    --------------
+
+
     https://stackoverflow.com/questions/32378842/setting-the-hour-and-minute-of-timepicker-dynamically
 
     Attributes:

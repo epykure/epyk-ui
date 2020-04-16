@@ -25,7 +25,8 @@ class Config(DataAttrs):
     Time for the animation of the redraw in milliseconds
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
     """
     return self._attrs["duration"]
@@ -42,7 +43,8 @@ class Config(DataAttrs):
     If true, the animation can be interrupted by other animations
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
     """
     return self._attrs["lazy"]
@@ -59,7 +61,8 @@ class Config(DataAttrs):
     Set the easing option
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/configuration/animations.html
     """
     return self._attrs["easing"]
@@ -92,7 +95,8 @@ class ChartJs(JsPackage):
     Triggers an update of the chart. This can be safely called after updating the data object.
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
@@ -117,7 +121,8 @@ class ChartJs(JsPackage):
       myLineChart.reset()
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
     """
     return JsObjects.JsObject.JsObject("%s.reset()" % self.toStr())
@@ -133,7 +138,8 @@ class ChartJs(JsPackage):
       chart.stop()
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: 'this' for chainability
@@ -150,7 +156,8 @@ class ChartJs(JsPackage):
     This is run each time the canvas container is resized, but you can call this method manually if you change the size of the canvas nodes container element.
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: 'this' for chainability
@@ -169,7 +176,8 @@ class ChartJs(JsPackage):
       chart.clear()
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: 'this' for chainability
@@ -184,7 +192,8 @@ class ChartJs(JsPackage):
     This returns a base 64 encoded string of the chart in it's current state.
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: png data url of the image on the canvas
@@ -198,7 +207,8 @@ class ChartJs(JsPackage):
     Returns an HTML string of a legend for that chart. The legend is generated from the legendCallback in the options.
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: HTML string of a legend for this chart
@@ -212,7 +222,8 @@ class ChartJs(JsPackage):
     Calling getElementAtEvent(event) on your Chart instance passing an argument of an event, or jQuery event, will return the single element at the event position
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
@@ -231,7 +242,8 @@ class ChartJs(JsPackage):
     Looks for the element under the event point, then returns all elements at the same data index.
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
@@ -248,7 +260,8 @@ class ChartJs(JsPackage):
     Looks for the element under the event point, then returns all elements from that dataset.
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
@@ -271,7 +284,8 @@ class ChartJs(JsPackage):
       chart.getDatasetMeta(0)
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
@@ -291,7 +305,8 @@ class ChartJs(JsPackage):
       chart.render({duration: 800, lazy: false, easing: 'easeOutBounce'})
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
@@ -308,7 +323,8 @@ class ChartJs(JsPackage):
     Use this to destroy any chart instances that are created.
 
     Related Pages:
-    --------------
+
+
     https://www.chartjs.org/docs/latest/developers/api.html
     """
     return JsObjects.JsObject.JsObject("%s.destroy()" % self.toStr())

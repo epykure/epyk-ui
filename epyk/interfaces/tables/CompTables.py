@@ -32,7 +32,8 @@ class Tables(object):
     Developers using ag-Grid are building applications that would not be possible if ag-Grid did not exist.
 
     Related Pages:
-    --------------
+
+
     https://www.ag-grid.com/javascript-grid/
     """
     return CompAgGrid.AgGrid(self)
@@ -45,7 +46,8 @@ class Tables(object):
     Interface to the different Tabulator configurations
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/
     """
     return CompTabulator.Tabulators(self)
@@ -58,7 +60,8 @@ class Tables(object):
     Interface to the different Tabulator configurations
 
     Related Pages:
-    --------------
+
+
     https://github.com/d3/d3/wiki/Gallery
 
     :rtype: CompTableD3.D3
@@ -71,7 +74,8 @@ class Tables(object):
     Interface to the different Tabulator configurations
 
     Related Pages:
-    --------------
+
+
     http://tabulator.info/
 
     :rtype: CompTabulator.Tabulators
@@ -86,7 +90,8 @@ class Tables(object):
     Interface to the different Datatable configurations
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/
 
     :rtype: CompDatatable.Datatables
@@ -103,7 +108,8 @@ class Tables(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://pivottable.js.org/examples/
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
@@ -135,7 +141,8 @@ class Tables(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://datatables.net/reference/index
     https://datatables.net/reference/option/
     https://datatables.net/reference/option/ajax.data
@@ -234,7 +241,8 @@ class Tables(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     http://tabulator.info/
 
     Attributes:

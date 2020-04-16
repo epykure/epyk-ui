@@ -21,7 +21,8 @@ class Texts(object):
       rptObj.ui.text("this is a test")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_font.asp
 
     Attributes:
@@ -61,7 +62,8 @@ class Texts(object):
       rptObj.ui.texts.label("this is a test", color="red")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_label.asp
 
     Attributes:
@@ -99,7 +101,8 @@ class Texts(object):
       rptObj.ui.texts.span("Test")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_span.asp
 
     Attributes:
@@ -133,7 +136,8 @@ class Texts(object):
       rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
 
     Related Pages:
-    --------------
+
+
     https://getbootstrap.com/docs/4.3/components/alerts/
 
     Attributes:
@@ -166,7 +170,8 @@ class Texts(object):
       rptObj.ui.texts.formula("$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$", helper="This is a formula")
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -192,7 +197,8 @@ class Texts(object):
       rptObj.ui.texts.code("This is a code")
 
     Related Pages:
-    --------------
+
+
     https://v4-alpha.getbootstrap.com/content/code/
 
     Attributes:
@@ -225,7 +231,8 @@ class Texts(object):
       rptObj.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/html/html_styles.asp
 
     Attributes:
@@ -263,7 +270,8 @@ class Texts(object):
       rptObj.ui.texts.preformat("This is a pre formatted text")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/html/html_styles.asp
     https://www.w3schools.com/tags/tag_pre.asp
 
@@ -299,7 +307,8 @@ class Texts(object):
       rptObj.ui.texts.blockquote("This is a code")
 
     Related Pages:
-    --------------
+
+
     https://v4-alpha.getbootstrap.com/content/typography/
     https://www.w3schools.com/TAGS/tag_blockquote.asp
 
@@ -329,7 +338,8 @@ class Texts(object):
       rptObj.ui.texts.up_down({'previous': 240885, 'value': 240985})
 
     Related Pages:
-    --------------
+
+
     https://fontawesome.com/
 
     Attributes:
@@ -361,7 +371,8 @@ class Texts(object):
       rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -397,7 +408,8 @@ class Texts(object):
       rptObj.ui.title("Test", level=2)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_hn.asp
 
     Attributes:
@@ -437,7 +449,8 @@ class Texts(object):
       rptObj.ui.texts.fieldset("legend")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/tag_legend.asp
     https://www.w3schools.com/tags/tag_fieldset.asp
 

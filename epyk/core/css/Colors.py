@@ -598,7 +598,8 @@ class DefinedColors(object):
     Returns the Hexadecimal predefined color codes
 
     Related Pages:
-    --------------
+
+
     https://www.rapidtables.com/web/color/RGB_Color.html
     """
     return HexColors
@@ -611,7 +612,8 @@ class DefinedColors(object):
     Returns the RGB predefined color codes
 
     Related Pages:
-    --------------
+
+
     https://www.rapidtables.com/web/color/RGB_Color.html
     """
     return RgbColors

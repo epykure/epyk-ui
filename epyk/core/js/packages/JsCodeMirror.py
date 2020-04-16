@@ -21,7 +21,8 @@ class CM(JsPackage):
     You can pass null for either of them to indicate that that dimension should not be changed.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#option_viewportMargin
 
     Attributes:
@@ -42,7 +43,8 @@ class CM(JsPackage):
     Scroll the editor to a given (pixel) position. Both arguments may be left as null or undefined to have no effect.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#option_viewportMargin
 
     Attributes:
@@ -61,7 +63,8 @@ class CM(JsPackage):
     Tells you whether the editor currently has focus.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#option_viewportMargin
 
     :return: A Boolean
@@ -76,7 +79,8 @@ class CM(JsPackage):
     option should the name of an option, and value should be a valid value for that option.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#option_viewportMargin
 
     Attributes:
@@ -97,7 +101,8 @@ class CM(JsPackage):
     Retrieves the current value of the given option for this editor instance.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#api
 
     :return: The Javascript object
@@ -111,7 +116,8 @@ class CM(JsPackage):
     If your code does something to change the size of the editor element (window resizes are already listened for), or unhides it, you should probably follow up by calling this method to ensure CodeMirror is still looking as intended. See also the autorefresh addon.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#api
 
     :return: The Javascript string fragment
@@ -125,7 +131,8 @@ class CM(JsPackage):
     Runs the command with the given name on the editor.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#commands
 
     :return: The Javascript string fragment
@@ -140,7 +147,8 @@ class CM(JsPackage):
     Give the editor focus.
 
     Related Pages:
-    --------------
+
+
     https://codemirror.net/doc/manual.html#api
 
     :return: The Javascript string fragment

@@ -77,7 +77,8 @@ class JsObjects(object):
     Interface to the JavaScript MouseEvents
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/obj_mouseevent.asp
     """
     return JsEvents.MouseEvent()
@@ -90,7 +91,8 @@ class JsObjects(object):
     Interface to the JavaScript Events
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/obj_event.asp
     """
     return JsEvents.Event()
@@ -137,7 +139,8 @@ class JsObjects(object):
     Interface to the Javascript Number primitive
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_number.asp
 
     :return: A Python JsNumber primitive
@@ -152,7 +155,8 @@ class JsObjects(object):
     Interface to the Javascript String primitive
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_obj_string.asp
 
     :return: A Python JsString primitive
@@ -167,7 +171,8 @@ class JsObjects(object):
     Interface to the Javascript Array primitive
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_obj_array.asp
 
     :return: A Python JsArray primitive
@@ -182,7 +187,8 @@ class JsObjects(object):
     Interface to the Javascript Date primitive
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     :return: A Python JsDate object
@@ -197,7 +203,8 @@ class JsObjects(object):
     Interface to the Javascript Boolean primitive
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_obj_boolean.asp
 
     :return: A Python JsBoolean primitive
@@ -223,7 +230,8 @@ class JsObjects(object):
     Similar as None in Python
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_datatypes.asp
 
     :return: A Python Js Null object
@@ -238,7 +246,8 @@ class JsObjects(object):
     Similar as the None in Python
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_undefined.asp
 
     :return: A Python Js undefined object
@@ -255,7 +264,8 @@ class JsObjects(object):
     The NaN property is the same as the Number.Nan property.
 
     Related Pages:
-    --------------:
+
+:
     https://www.w3schools.com/jsref/jsref_number_nan.asp
     https://www.w3schools.com/jsref/jsref_isnan.asp
     """
@@ -269,7 +279,8 @@ class JsObjects(object):
     Similar as True in Python
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_booleans.asp
 
     :return: A Python Js True object
@@ -284,7 +295,8 @@ class JsObjects(object):
     Similar as False in Python
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/js/js_booleans.asp
     
     :return: A Python Js False object
@@ -378,7 +390,8 @@ class XMLHttpRequest(object):
     The XMLHttpRequest.readyState property returns the state an XMLHttpRequest client is in.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState
     """
     return JsNumber.JsNumber("%s.readyState" % self.varId)
@@ -390,7 +403,8 @@ class XMLHttpRequest(object):
     The read-only XMLHttpRequest.status property returns the numerical HTTP status code of the XMLHttpRequest's response.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/status
     """
     return JsNumber.JsNumber("%s.status" % self.varId)
@@ -402,7 +416,8 @@ class XMLHttpRequest(object):
     The XMLHttpRequest property responseType is an enumerated string value specifying the type of data contained in the response.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType
     """
     return JsString.JsString("%s.responseType" % self.varId, isPyData=False)
@@ -415,7 +430,8 @@ class XMLHttpRequest(object):
     The read-only XMLHttpRequest property responseText returns the text received from a server following a request being sent.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseText
     """
     return JsString.JsString("%s.responseText" % self.varId, isPyData=False)
@@ -427,7 +443,8 @@ class XMLHttpRequest(object):
     The XMLHttpRequest.timeout property is an unsigned long representing the number of milliseconds a request can take before automatically being terminated.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/timeout
 
     Attributes:
@@ -442,7 +459,8 @@ class XMLHttpRequest(object):
     The abort event is fired when a request has been aborted, for example because the program called XMLHttpRequest.abort().
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/abort_event
     """
 
@@ -452,7 +470,8 @@ class XMLHttpRequest(object):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/error_event
 
     Attributes:
@@ -468,7 +487,8 @@ class XMLHttpRequest(object):
     The XMLHttpRequest method open() initializes a newly-created request, or re-initializes an existing one.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/open
 
     Attributes:
@@ -489,7 +509,8 @@ class XMLHttpRequest(object):
     The XMLHttpRequest method setRequestHeader() sets the value of an HTTP request header.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
 
     Attributes:
@@ -506,7 +527,8 @@ class XMLHttpRequest(object):
     The XMLHttpRequest method setRequestHeader() sets the value of an HTTP request header.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
 
     Attributes:
@@ -529,7 +551,8 @@ class XMLHttpRequest(object):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/timeout
 
     Attributes:
@@ -550,7 +573,8 @@ class XMLHttpRequest(object):
     The XMLHttpRequest.withCredentials property is a Boolean that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates. Setting withCredentials has no effect on same-site requests.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials
 
     Attributes:
@@ -567,7 +591,8 @@ class XMLHttpRequest(object):
     If the request is synchronous, this method doesn't return until the response has arrived.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send
 
     Attributes:

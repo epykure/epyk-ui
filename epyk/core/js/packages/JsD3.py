@@ -76,7 +76,8 @@ class D3Select(JsPackage):
     If the selection has multiple groups (such as d3.selectAll followed by selection.selectAll), then data should typically be specified as a function.
 
     Related Pages:
-    --------------
+
+
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_data
 
     Attributes:
@@ -97,7 +98,8 @@ class D3Select(JsPackage):
     Convert a list of dictionaries to an iteractor which will return ordered arrays based on the columns definition
 
     Related Pages:
-    --------------
+
+
     http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
     Attributes:
@@ -127,7 +129,8 @@ class D3Select(JsPackage):
     Unlike selection.data, this method does not compute a join and does not affect indexes or the enter and exit selections.
 
     Related Pages:
-    --------------
+
+
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_datum
 
     :param datasets: If a value is not specified, returns the bound datum for the first (non-null) element in the selection.
@@ -149,7 +152,8 @@ class D3Select(JsPackage):
     (The enter selection is empty for selections not returned by selection.data.)
 
     Related Pages:
-    --------------
+
+
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_enter
     """
     return self.fnc("enter()")
@@ -162,7 +166,8 @@ class D3Select(JsPackage):
     (The exit selection is empty for selections not returned by selection.data.)
 
     Related Pages:
-    --------------
+
+
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_exit
     """
     return self.fnc("exit()")
@@ -174,7 +179,8 @@ class D3Select(JsPackage):
     If the specified type is a string, appends a new element of this type (tag name) as the last child of each selected element, or before the next following sibling in the update selection if this is an enter selection.
 
     Related Pages:
-    --------------
+
+
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
 
     Attributes:
@@ -262,7 +268,8 @@ class D3Select(JsPackage):
     There is not currently a dedicated API to add removed elements back to the document; however, you can pass a function to selection.append or selection.insert to re-add elements.
 
     Related Pages:
-    --------------
+
+
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
     """
     return self.fnc("remove()")
@@ -274,7 +281,8 @@ class D3Select(JsPackage):
     Inserts clones of the selected elements immediately following the selected elements and returns a selection of the newly added clones.
 
     Related Pages:
-    --------------
+
+
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
 
     Attributes:
@@ -291,7 +299,8 @@ class D3Select(JsPackage):
     This is equivalent to calling selection.sort if the data is already sorted, but much faster.
 
     Related Pages:
-    --------------
+
+
     https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_append
     """
     return self.fnc("order()")

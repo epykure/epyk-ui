@@ -12,7 +12,8 @@ class EnumStyleOptions(DataEnum):
     Selection can only be performed via the API
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select.style
     """
     return self.set()
@@ -24,7 +25,8 @@ class EnumStyleOptions(DataEnum):
     Only a single item can be selected, any other selected items will be automatically deselected when a new item is selected
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select.style
     """
     return self.set()
@@ -36,7 +38,8 @@ class EnumStyleOptions(DataEnum):
     Multiple items can be selected. Selection is performed by simply clicking on the items to be selected
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select.style
     """
     return self.set()
@@ -48,7 +51,8 @@ class EnumStyleOptions(DataEnum):
     Operating System (OS) style selection. This is the most comprehensive option and provides complex behaviours such as ctrl/cmd clicking to select / deselect individual items, shift clicking to select ranges and an unmodified click to select a single item.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select.style
     """
     return self.set()
@@ -60,7 +64,8 @@ class EnumStyleOptions(DataEnum):
     a hybrid between the os style and multi, allowing easy multi-row selection without immediate de-selection when clicking on a row.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select.style
     """
     return self.set("multi+shift")
@@ -99,7 +104,8 @@ class Select(DataClass):
     Indicate if the selected items will be removed when clicking outside of the table
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select.blurable
     """
     return self._attrs["blurable"]
@@ -116,7 +122,8 @@ class Select(DataClass):
     Set which table items to select (rows, columns or cells).
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select.items
     """
     return self._attrs["items"]
@@ -133,7 +140,8 @@ class Select(DataClass):
     Set the selection style for end user interaction with the table.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select.style
     """
     return self._attrs["style"]
@@ -150,7 +158,8 @@ class Select(DataClass):
     Disable the deselection of selected rows when clicked.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/select.toggleable
     """
     return self._attrs["toggleable"]

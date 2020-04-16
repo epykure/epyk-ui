@@ -33,7 +33,8 @@ class DatePicker(Html.Html):
     The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu
 
     :rtype: OptInputs.OptionsDatePicker
@@ -69,7 +70,8 @@ class DatePicker(Html.Html):
     Add TimePicker options
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
 
     Attributes:
@@ -116,7 +118,8 @@ class TimePicker(Html.Html):
     The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu
 
     :rtype: OptInputs.OptionsTimePicker
@@ -138,7 +141,8 @@ class TimePicker(Html.Html):
     ])
 
     Related Pages:
-    --------------
+
+
     https://timepicker.co/options/
 
     :param jsFnc:

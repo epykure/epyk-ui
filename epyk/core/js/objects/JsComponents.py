@@ -93,7 +93,8 @@ class Menu(JsPackage):
       item.js.set_url("https://stackoverflow.com")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/tags/att_a_href.asp
 
     Attributes:

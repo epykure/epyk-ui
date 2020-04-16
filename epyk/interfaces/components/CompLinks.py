@@ -22,7 +22,8 @@ class Links(object):
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
     Related Pages:
-    --------------
+
+
 
     https://www.w3schools.com/TagS/att_a_href.asp
 
@@ -139,7 +140,8 @@ class Links(object):
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------
@@ -195,7 +197,8 @@ class Links(object):
       - :class:`epyk.core.html.HtmlLinks.Bridge`
 
     Related Pages:
-    --------------
+
+
 
     Attributes:
     ----------

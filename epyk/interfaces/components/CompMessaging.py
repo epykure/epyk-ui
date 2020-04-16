@@ -116,7 +116,8 @@ class Messaging(object):
       - :class:`epyk.core.html.HtmlMessaging.Alert`
 
     Related Pages:
-    --------------
+
+
     https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:

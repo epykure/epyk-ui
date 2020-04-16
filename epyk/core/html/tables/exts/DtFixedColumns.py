@@ -10,7 +10,8 @@ class FixedColumns(DataClass):
     -----------
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/fixedColumns
     """
     self.leftColumns = 2
@@ -24,7 +25,8 @@ class FixedColumns(DataClass):
     FixedColumns operates by cloning the cells from the original table and then inserting them into the document, positioned visually above the DataTable - thus allowing them to appear fixed.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/fixedColumns.heightMatch
     """
     return self._attrs["heightMatch"]

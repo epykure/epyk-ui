@@ -20,7 +20,8 @@ class SVG(object):
     svg.add_text("I love SVG!", x=0, y=15, options={"fill": 'red'})
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/SVG
     https://www.w3schools.com/graphics/svg_intro.asp
 
@@ -46,7 +47,8 @@ class SVG(object):
       rptObj.ui.charts.svg.line(10, 30, 40, 69)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_line.asp
 
     Attributes:
@@ -118,7 +120,8 @@ class SVG(object):
       rptObj.ui.charts.svg.ellipse(100, 100, 40, 69)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_ellipse.asp
 
     Attributes:
@@ -146,7 +149,8 @@ class SVG(object):
       rptObj.ui.charts.svg.polyline([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_polyline.asp
 
     Attributes:
@@ -171,7 +175,8 @@ class SVG(object):
       rptObj.ui.charts.svg.polygone([(15, 80), (29, 50), (43, 60), (57, 30), (71, 40), (85, 15)])
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/tryit.asp?filename=trysvg_polygon
 
     Attributes:
@@ -196,7 +201,8 @@ class SVG(object):
       rptObj.ui.charts.svg.triangle((50, 100))
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/graphics/svg_polyline.asp
 
     Attributes:

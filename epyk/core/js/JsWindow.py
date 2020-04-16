@@ -32,7 +32,8 @@ class JsLocalStorage(object):
       jsObj.localStorage.key(0)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_storage_key.asp
 
     Attributes:
@@ -88,7 +89,8 @@ class JsLocalStorage(object):
       jsObj.localStorage.getItem("lastname", "test")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_storage_setitem.asp
 
     Attributes:
@@ -116,7 +118,8 @@ class JsLocalStorage(object):
       jsObj.localStorage.getItem("lastname")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_storage_getitem.asp
 
     Attributes:
@@ -142,7 +145,8 @@ class JsLocalStorage(object):
       jsObj.localStorage.removeItem("lastname")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_storage_removeitem.asp
 
     Attributes:
@@ -168,7 +172,8 @@ class JsLocalStorage(object):
       jsObj.localStorage.clear()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_storage_clear.asp
 
     :return: Void
@@ -244,7 +249,8 @@ class JsSessionStorage(object):
       jsObj.sessionStorage.setItem("lastname", jsObj.objects.get("bin")),
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp
 
     Attributes:
@@ -289,7 +295,8 @@ class JsSessionStorage(object):
       jsObj.sessionStorage.removeItem("lastname")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_storage_removeitem.asp
 
     Attributes:
@@ -311,7 +318,8 @@ class JsSessionStorage(object):
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_win_sessionstorage.asp
     """
     return JsFncs.JsFunction("sessionStorage.clear()")
@@ -343,7 +351,8 @@ class JsHistory(object):
       rptObj.js.window.history.length
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_his_length.asp
 
     :return: A Number, representing the number of entries in the session history
@@ -361,7 +370,8 @@ class JsHistory(object):
       rptObj.js.window.history.back()
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_his_back.asp
 
     :return: The Javascript String to be added to the page
@@ -375,7 +385,8 @@ class JsHistory(object):
     The forward() method loads the next URL in the history list.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_his_forward.asp
 
     :return: The Javascript String to be added to the page
@@ -389,7 +400,8 @@ class JsHistory(object):
     The go() method loads a specific URL from the history list.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_his_go.asp
 
     Attributes:
@@ -409,7 +421,8 @@ class JsHistory(object):
     Note that pushState() never causes a hashchange event to be fired, even if the new URL differs from the old URL only in its hash
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/History_API
 
     Attributes:
@@ -432,7 +445,8 @@ class JsHistory(object):
     history.replaceState() operates exactly like history.pushState() except that replaceState() modifies the current history entry instead of creating a new one.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/History_API
 
     Attributes:
@@ -460,7 +474,8 @@ class JsHistory(object):
       htmlObj.js.js.window.history.updateState(self.htmlId, self.val)
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/History_API
 
     Attributes:
@@ -534,7 +549,8 @@ class JsWindowEvent(object):
       )
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event
 
     Attributes:
@@ -578,7 +594,8 @@ class JsWindow(object):
     The read-only scrollY property of the Window interface returns the number of pixels that the document is currently scrolled vertically.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
 
     Attributes:
@@ -595,7 +612,8 @@ class JsWindow(object):
     The innerHeight property returns the height of a window's content area.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/prop_win_innerheight.asp
 
     Attributes:
@@ -639,7 +657,8 @@ class JsWindow(object):
     The Window.scrollMaxY read-only property returns the maximum number of pixels that the document can be scrolled vertically.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollMaxY
     """
     return JsNumber.JsNumber("(%s.scrollMaxY || (document.documentElement.scrollHeight - document.documentElement.clientHeight))" % windowId)
@@ -687,7 +706,8 @@ class JsWindow(object):
     Closes the current window
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_win_close.asp
 
     Attributes:
@@ -729,7 +749,8 @@ class JsWindow(object):
     Opens a new browser window
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/Jsref/met_win_open.asp
 
     Attributes:
@@ -792,7 +813,8 @@ class JsWindow(object):
     The moveBy() method moves a window a specified number of pixels relative to its current coordinates.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/Jsref/met_win_moveby.asp
 
     Attributes:
@@ -812,7 +834,8 @@ class JsWindow(object):
     The focus() method sets focus to the current window
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/Jsref/met_win_focus.asp
 
     Attributes:
@@ -830,7 +853,8 @@ class JsWindow(object):
     The Window.scroll() method scrolls the window to a particular place in the document.
 
     Related Pages:
-    --------------
+
+
     https://developer.mozilla.org/uk/docs/Web/API/Window/scroll
 
     Attributes:
@@ -874,7 +898,8 @@ class JsWindow(object):
     Prints the content of the current window
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/Jsref/met_win_print.asp
 
     Attributes:
@@ -897,7 +922,8 @@ class JsWindow(object):
       rptObj.js.alert("Test 2")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_win_alert.asp
 
     Attributes:
@@ -923,7 +949,8 @@ class JsWindow(object):
       jsObj.window.atob(jsObj.objects.get("bin"))
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_win_atob.asp
 
     Attributes:
@@ -945,7 +972,8 @@ class JsWindow(object):
       jsObj.window.btoa("Test").setVar("bin")
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_win_btoa.asp
 
     Attributes:
@@ -969,7 +997,8 @@ class JsWindow(object):
       jsObj.window.setInterval([jsObj.console.log(jsObj.math.random())], 5000)
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_win_setinterval.asp
 
     #TODO: Add a control on setInterval to only have one created
@@ -1002,7 +1031,8 @@ class JsWindow(object):
       jsObj.window.clearInterval(jsObj.objects.get("interva1"))
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_win_clearinterval.asp
 
     #TODO: Check if interval is unique
@@ -1046,7 +1076,8 @@ class JsWindow(object):
     The setTimeout() method calls a function or evaluates an expression after a specified number of milliseconds.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_win_settimeout.asp
 
     Attributes:
@@ -1066,7 +1097,8 @@ class JsWindow(object):
     The ID value returned by setTimeout() is used as the parameter for the clearTimeout() method.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/met_win_cleartimeout.asp
 
     Attributes:
@@ -1082,7 +1114,8 @@ class JsWindow(object):
     The getComputedStyle() method gets all the actual (computed) CSS property and values of the specified element.
 
     Related Pages:
-    --------------
+
+
     https://www.w3schools.com/jsref/jsref_getcomputedstyle.asp
 
     Attributes:

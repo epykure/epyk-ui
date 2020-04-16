@@ -16,7 +16,8 @@ class AutoFill(DataClass):
     Always ask the end user if an action should be taken or not.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/autoFill.alwaysAsk
     """
     return self._attrs["alwaysAsk"]
@@ -33,7 +34,8 @@ class AutoFill(DataClass):
     Select the columns that can be auto filled.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/autoFill.columns
     """
     return self._attrs["alwaysAsk"]
@@ -50,7 +52,8 @@ class AutoFill(DataClass):
     Initial enablement state of AutoFill.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/autoFill.enable
     """
     return self._attrs["enable"]
@@ -67,7 +70,8 @@ class AutoFill(DataClass):
     Action that will cause the auto fill drag handle to appear in a cell.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/autoFill.focus
     """
     return self._attrs["focus"]
@@ -84,7 +88,8 @@ class AutoFill(DataClass):
     Enable / disable user ability to horizontally drag and fill.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/autoFill.horizontal
     """
     return self._attrs["horizontal"]
@@ -101,7 +106,8 @@ class AutoFill(DataClass):
     Control automatic update of data when a fill drag is completed.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/autoFill.update
     """
     return self._attrs["update"]
@@ -118,7 +124,8 @@ class AutoFill(DataClass):
     Enable / disable user ability to vertically drag and fill.
 
     Related Pages:
-    --------------
+
+
     https://datatables.net/reference/option/autoFill.vertical
     """
     return self._attrs["vertical"]

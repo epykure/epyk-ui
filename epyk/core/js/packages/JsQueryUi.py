@@ -336,7 +336,8 @@ class Slider(JQueryUI):
     Removes the slider functionality completely. This will return the element back to its pre-init state.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.slider("destroy")' % self._src.dom.jquery.varId)
@@ -348,7 +349,8 @@ class Slider(JQueryUI):
     Disables the slider
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#method-disable
     """
     return JsObjects.JsObjects.get('%s.slider("disable")' % self._src.dom.jquery.varId)
@@ -360,7 +362,8 @@ class Slider(JQueryUI):
     Enables the slider.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#method-enable
     """
     return JsObjects.JsObjects.get('%s.slider("enable")' % self._src.dom.jquery.varId)
@@ -372,7 +375,8 @@ class Slider(JQueryUI):
     Retrieves the slider's instance object. If the element does not have an associated instance, undefined is returned.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#method-instance
     """
     return JsObjects.JsObjects.get('%s.slider("instance")' % self._src.dom.jquery.varId)
@@ -384,7 +388,8 @@ class Slider(JQueryUI):
     Retrieves the slider's instance object. If the element does not have an associated instance, undefined is returned.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#method-instance
 
     Attributes:
@@ -404,7 +409,8 @@ class Slider(JQueryUI):
     Get the value of the slider.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#method-value
 
     Attributes:
@@ -424,7 +430,8 @@ class Slider(JQueryUI):
     Get the value for the specified handle.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#method-value
     """
     if jsData is None:
@@ -443,7 +450,8 @@ class ProgressBar(JQueryUI):
     Removes the progressbar functionality completely. This will return the element back to its pre-init state.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.progressbar("destroy")' % self._src.dom.jquery.varId)
@@ -455,7 +463,8 @@ class ProgressBar(JQueryUI):
     Disables the progressbar.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#method-disable
     """
     return JsObjects.JsObjects.get('%s.progressbar("disable")' % self._src.dom.jquery.varId)
@@ -467,7 +476,8 @@ class ProgressBar(JQueryUI):
     Enables the progressbar.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#method-enable
     """
     return JsObjects.JsObjects.get('%s.progressbar("enable")' % self._src.dom.jquery.varId)
@@ -479,7 +489,8 @@ class ProgressBar(JQueryUI):
     Retrieves the progressbar's instance object. If the element does not have an associated instance, undefined is returned.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#method-instance
     """
     return JsObjects.JsObjects.get('%s.progressbar("instance")' % self._src.dom.jquery.varId)
@@ -493,7 +504,8 @@ class ProgressBar(JQueryUI):
     Sets the value of the progressbar option associated with the specified optionName.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#method-instance
 
     Attributes:
@@ -518,7 +530,8 @@ class ProgressBar(JQueryUI):
     Retrieves the progressbar's instance object. If the element does not have an associated instance, undefined is returned.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#method-instance
 
     Attributes:
@@ -541,7 +554,8 @@ class Menu(JQueryUI):
     Removes focus from a menu, resets any active element styles and triggers the menu's blur event.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-blur
     """
     return JsObjects.JsObjects.get('%s.menu("blur")' % self._src.dom.jquery.varId)
@@ -553,7 +567,8 @@ class Menu(JQueryUI):
     Closes the currently active sub-menu.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-collapse
     """
     return JsObjects.JsObjects.get('%s.menu("collapse")' % self._src.dom.jquery.varId)
@@ -565,7 +580,8 @@ class Menu(JQueryUI):
     Closes all open sub-menus.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-collapseAll
     """
     return JsObjects.JsObjects.get('%s.menu("collapseAll", null, true)' % self._src.dom.jquery.varId)
@@ -577,7 +593,8 @@ class Menu(JQueryUI):
     Removes the menu functionality completely. This will return the element back to its pre-init state.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.menu("destroy")' % self._src.dom.jquery.varId)
@@ -589,7 +606,8 @@ class Menu(JQueryUI):
     Disables the menu.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-disable
     """
     return JsObjects.JsObjects.get('%s.menu("disable")' % self._src.dom.jquery.varId)
@@ -601,7 +619,8 @@ class Menu(JQueryUI):
     Enables the menu.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-disable
     """
     return JsObjects.JsObjects.get('%s.menu("enable")' % self._src.dom.jquery.varId)
@@ -613,7 +632,8 @@ class Menu(JQueryUI):
     Opens the sub-menu below the currently active item, if one exists.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-expand
     """
     return JsObjects.JsObjects.get('%s.menu("expand")' % self._src.dom.jquery.varId)
@@ -625,7 +645,8 @@ class Menu(JQueryUI):
     Retrieves the menu's instance object. If the element does not have an associated instance, undefined is returned.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-instance
     """
     return JsObjects.JsObjects.get('%s.menu("instance")' % self._src.dom.jquery.varId)
@@ -637,7 +658,8 @@ class Menu(JQueryUI):
     Returns a boolean value stating whether or not the currently active item is the first item in the menu.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-isFirstItem
     """
     return JsObjects.JsBoolean.JsBoolean('%s.menu("isFirstItem")' % self._src.dom.jquery.varId)
@@ -649,7 +671,8 @@ class Menu(JQueryUI):
     Returns a boolean value stating whether or not the currently active item is the last item in the menu
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-isLastItem
     """
     return JsObjects.JsBoolean.JsBoolean('%s.menu("isLastItem")' % self._src.dom.jquery.varId)
@@ -661,7 +684,8 @@ class Menu(JQueryUI):
     Moves active state to next menu item.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-next
     """
     return JsObjects.JsObjects.get('%s.menu("next")' % self._src.dom.jquery.varId)
@@ -673,7 +697,8 @@ class Menu(JQueryUI):
     Moves active state to first menu item below the bottom of a scrollable menu or the last item if not scrollable.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-nextPage
     """
     return JsObjects.JsObjects.get('%s.menu("nextPage")' % self._src.dom.jquery.varId)
@@ -687,7 +712,8 @@ class Menu(JQueryUI):
     Sets one or more options for the menu.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar/#method-option
 
     Attributes:
@@ -712,7 +738,8 @@ class Menu(JQueryUI):
     Moves active state to previous menu item.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-previous
     """
     return JsObjects.JsObjects.get('%s.menu("previous")' % self._src.dom.jquery.varId)
@@ -724,7 +751,8 @@ class Menu(JQueryUI):
     Moves active state to first menu item above the top of a scrollable menu or the first item if not scrollable.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-previousPage
     """
     return JsObjects.JsObjects.get('%s.menu("previousPage")' % self._src.dom.jquery.varId)
@@ -737,7 +765,8 @@ class Menu(JQueryUI):
     New menu items, including sub-menus can be added to the menu or all of the contents of the menu can be replaced and then initialized with the refresh() method.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-refresh
     """
     return JsObjects.JsObjects.get('%s.menu("refresh")' % self._src.dom.jquery.varId)
@@ -749,7 +778,8 @@ class Menu(JQueryUI):
     Selects the currently active menu item, collapses all sub-menus and triggers the menu's select event.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu/#method-select
     """
     return JsObjects.JsObjects.get('%s.menu("select")' % self._src.dom.jquery.varId)
@@ -764,7 +794,8 @@ class Dialog(JQueryUI):
     Closes the dialog.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#method-close
     """
     return JsObjects.JsObjects.get('%s.dialog("close")' % self._src.dom.jquery.varId)
@@ -776,7 +807,8 @@ class Dialog(JQueryUI):
     Removes the dialog functionality completely. This will return the element back to its pre-init state.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.dialog("destroy")' % self._src.dom.jquery.varId)
@@ -788,7 +820,8 @@ class Dialog(JQueryUI):
     Retrieves the dialog's instance object. If the element does not have an associated instance, undefined is returned.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#method-instance
     """
     return JsObjects.JsObjects.get('%s.dialog("instance")' % self._src.dom.jquery.varId)
@@ -800,7 +833,8 @@ class Dialog(JQueryUI):
     Whether the dialog is currently open.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#method-isOpen
     """
     return JsObjects.JsObjects.get('%s.dialog("isOpen")' % self._src.dom.jquery.varId)
@@ -812,7 +846,8 @@ class Dialog(JQueryUI):
     Moves the dialog to the top of the dialog stack.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#method-moveToTop
     """
     return JsObjects.JsObjects.get('%s.dialog("moveToTop")' % self._src.dom.jquery.varId)
@@ -824,7 +859,8 @@ class Dialog(JQueryUI):
     Opens the dialog.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#method-open
     """
     return JsObjects.JsObjects.get('%s.dialog("open")' % self._src.dom.jquery.varId)
@@ -839,7 +875,8 @@ class Dialog(JQueryUI):
     Sets one or more options for the dialog.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/dialog/#method-option
 
     Attributes:
@@ -867,7 +904,8 @@ class Autocomplete(JQueryUI):
     Closes the dialog.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#method-close
     """
     return JsObjects.JsObjects.get('%s.autocomplete("close")' % self._src.dom.jquery.varId)
@@ -879,7 +917,8 @@ class Autocomplete(JQueryUI):
     Removes the autocomplete functionality completely. This will return the element back to its pre-init state.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.autocomplete("destroy")' % self._src.dom.jquery.varId)
@@ -891,7 +930,8 @@ class Autocomplete(JQueryUI):
     Disables the autocomplete.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#method-disable
     """
     return JsObjects.JsObjects.get('%s.autocomplete("disable")' % self._src.dom.jquery.varId)
@@ -903,7 +943,8 @@ class Autocomplete(JQueryUI):
     Enables the autocomplete.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#method-enable
     """
     return JsObjects.JsObjects.get('%s.autocomplete("enable")' % self._src.dom.jquery.varId)
@@ -915,7 +956,8 @@ class Autocomplete(JQueryUI):
     Retrieves the autocomplete's instance object. If the element does not have an associated instance, undefined is returned.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#method-enable
     """
     return JsObjects.JsObjects.get('%s.autocomplete("instance")' % self._src.dom.jquery.varId)
@@ -930,7 +972,8 @@ class Autocomplete(JQueryUI):
     Sets one or more options for the dialog.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#method-option
 
     Attributes:
@@ -956,7 +999,8 @@ class Autocomplete(JQueryUI):
     Can be used by a selectbox-like button to open the suggestions when clicked. When invoked with no parameters, the current input's value is used. Can be called with an empty string and minLength: 0 to display all items.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/autocomplete/#method-close
 
     Attributes:
@@ -977,7 +1021,8 @@ class Datepicker(JQueryUI):
     Removes the datepicker functionality completely. This will return the element back to its pre-init state.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.datepicker("destroy")' % self._src.dom.jquery.varId)
@@ -989,7 +1034,8 @@ class Datepicker(JQueryUI):
     Returns the current date for the datepicker or null if no date has been selected.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#method-getDate
     """
     return JsObjects.JsObjects.get('%s.datepicker("getDate")' % self._src.dom.jquery.varId)
@@ -1001,7 +1047,8 @@ class Datepicker(JQueryUI):
     Close a previously opened date picker.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#method-hide
     """
     return JsObjects.JsObjects.get('%s.datepicker("hide")' % self._src.dom.jquery.varId)
@@ -1013,7 +1060,8 @@ class Datepicker(JQueryUI):
     Determine whether a date picker has been disabled.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#method-isDisabled
     """
     return JsObjects.JsObjects.get('%s.datepicker("isDisabled")' % self._src.dom.jquery.varId)
@@ -1045,7 +1093,8 @@ class Datepicker(JQueryUI):
     Sets one or more options for the dialog.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#method-option
 
     Attributes:
@@ -1070,7 +1119,8 @@ class Datepicker(JQueryUI):
     Redraw the date picker, after having made some external modifications.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#method-refresh
     """
     return JsObjects.JsObjects.get('%s.datepicker("refresh")' % self._src.dom.jquery.varId)
@@ -1082,7 +1132,8 @@ class Datepicker(JQueryUI):
     Sets the date for the datepicker. The new date may be a Date object or a string in the current date format (e.g., "01/26/2009"), a number of days from today (e.g., +7) or a string of values and periods ("y" for years, "m" for months, "w" for weeks, "d" for days, e.g., "+1m +7d"), or null to clear the selected date.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#method-setDate
 
     Attributes:
@@ -1099,7 +1150,8 @@ class Datepicker(JQueryUI):
     Open the date picker. If the datepicker is attached to an input, the input must be visible for the datepicker to be shown.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/datepicker/#method-show
     """
     return JsObjects.JsObjects.get('%s.datepicker("show")' % self._src.dom.jquery.varId)

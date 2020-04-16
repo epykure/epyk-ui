@@ -119,7 +119,8 @@ class ContentFormatters(object):
       t.dom.content.fromMarkdown()
 
     Related Pages:
-    --------------
+
+
     https://github.com/showdownjs/showdown
 
     Attributes:
@@ -140,7 +141,8 @@ class ContentFormatters(object):
     Usage::
 
       Related Pages:
-    --------------
+
+
     https://openexchangerates.github.io/accounting.js/
 
     Attributes:
@@ -158,7 +160,8 @@ class ContentFormatters(object):
     ------------
 
     Related Pages:
-    --------------
+
+
     https://openexchangerates.github.io/accounting.js/
 
     Attributes:
@@ -315,7 +318,8 @@ class JsHtml(JsNodeDom.JsDoms):
     Interface to the main Javascript Classes and Primitives
 
     Related Pages:
-    --------------
+
+
 
     :return:
     """
@@ -329,7 +333,8 @@ class JsHtml(JsNodeDom.JsDoms):
     Interface to CrossFilter package
 
     Related Pages:
-    --------------
+
+
     https://github.com/square/crossfilter/wiki/API-Reference#group_all
 
     :return:
@@ -355,7 +360,8 @@ class JsHtml(JsNodeDom.JsDoms):
     button.js.style({"backgroundColor": None})
 
     Related Pages:
-    --------------
+
+
     https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style
 
     Attributes:
@@ -399,7 +405,8 @@ class JsHtml(JsNodeDom.JsDoms):
       input.js.hide()
 
     Related Pages:
-    --------------
+
+
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
     return self.css("display", "none")
@@ -414,7 +421,8 @@ class JsHtml(JsNodeDom.JsDoms):
       input.js.show()
 
     Related Pages:
-    --------------
+
+
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
     Attributes:
@@ -442,7 +450,8 @@ class JsHtml(JsNodeDom.JsDoms):
     input.js.toggle("background", "red", "blue")
 
     Related Pages:
-    --------------
+
+
     https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
     Attributes:

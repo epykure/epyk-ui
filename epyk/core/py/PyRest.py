@@ -83,7 +83,8 @@ class PyRest(object):
       rptObj.py.requests.post("https://jsonplaceholder.typicode.com/todos/1")
 
     Related Pages:
-    --------------
+
+
     https://docs.python.org/2/howto/urllib2.html
 
     Attributes:
@@ -119,7 +120,8 @@ class PyRest(object):
     pyrest.get(r"https://jsonplaceholder.typicode.com/todos/1")
 
     Related Pages:
-    --------------
+
+
     https://docs.python.org/2/howto/urllib2.html
 
     Attributes:
@@ -157,7 +159,8 @@ class PyRest(object):
       json.loads(PyRest().request(r"https://jsonplaceholder.typicode.com/todos/1", method="GET"))
 
     Related Pages:
-    --------------
+
+
     https://2.python-requests.org/en/master/api/
     https://docs.python.org/3/library/urllib.request.html
 

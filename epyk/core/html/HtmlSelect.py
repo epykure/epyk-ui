@@ -105,7 +105,8 @@ class Select(Html.Html):
     Those functions will use plain javascript by default.
 
     Related Pages:
-    --------------
+
+
     https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:

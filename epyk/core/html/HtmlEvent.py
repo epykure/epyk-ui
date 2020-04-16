@@ -36,7 +36,8 @@ class ProgressBar(Html.Html):
     The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar
 
     :rtype: OptSliders.OptionsProgBar
@@ -61,7 +62,8 @@ class ProgressBar(Html.Html):
     Those functions will use plain javascript by default.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/progressbar
 
     Attributes:
@@ -131,7 +133,8 @@ class Menu(Html.Html):
     -----------
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu
 
     :rtype: OptSliders.OptionsMenu
@@ -160,7 +163,8 @@ class Menu(Html.Html):
     Javascript Functions
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/menu
 
     Attributes:
@@ -210,7 +214,8 @@ class Dialog(Html.Html):
     Open content in an interactive overlay.
 
     Related Pages:
-    --------------
+
+
     https://jqueryui.com/dialog/
 
     :rtype: OptSliders.OptionDialog
@@ -229,7 +234,8 @@ class Dialog(Html.Html):
     Open content in an interactive overlay.
 
     Related Pages:
-    --------------
+
+
     https://jqueryui.com/dialog/
 
     Attributes:
@@ -305,7 +311,8 @@ class Slider(Html.Html):
     Those functions will use plain javascript by default.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider
 
     Attributes:
@@ -325,7 +332,8 @@ class Slider(Html.Html):
     Triggered after the user slides a handle, if the value has changed; or if the value is changed programmatically via the value method.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#event-change
 
     Attributes:
@@ -344,7 +352,8 @@ class Slider(Html.Html):
     Triggered when the user starts sliding.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#event-start
 
     Attributes:
@@ -363,7 +372,8 @@ class Slider(Html.Html):
     Triggered when the user starts sliding.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#event-slide
 
     Attributes:
@@ -382,7 +392,8 @@ class Slider(Html.Html):
     Triggered after the user slides a handle.
 
     Related Pages:
-    --------------
+
+
     https://api.jqueryui.com/slider/#event-stop
 
     Attributes:

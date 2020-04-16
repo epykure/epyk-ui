@@ -235,7 +235,8 @@ class JsData(object):
     Records can be any array of JavaScript objects or primitives.
 
     Related Pages:
-    --------------
+
+
     https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
@@ -260,7 +261,8 @@ class JsData(object):
     To enable this, vis.js includes a flexible key/value based DataSet and DataView to handle unstructured JSON data.
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/index.html
 
     Attributes:
@@ -284,7 +286,8 @@ class JsData(object):
     Viz.Js module
 
     Related Pages:
-    --------------
+
+
     https://visjs.github.io/vis-data/data/dataview.html
 
     Attributes:
