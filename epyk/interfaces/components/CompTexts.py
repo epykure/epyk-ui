@@ -20,6 +20,10 @@ class Texts(object):
 
       rptObj.ui.text("this is a test")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Text`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_font.asp
@@ -60,6 +64,10 @@ class Texts(object):
       rptObj.ui.texts.label("Test")
       rptObj.ui.texts.label("this is a test", color="red")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Label`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_label.asp
@@ -98,6 +106,10 @@ class Texts(object):
 
       rptObj.ui.texts.span("Test")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Span`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_span.asp
@@ -132,6 +144,10 @@ class Texts(object):
 
       rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Highlights`
+
     Related Pages:
 
 			https://getbootstrap.com/docs/4.3/components/alerts/
@@ -165,8 +181,16 @@ class Texts(object):
 
       rptObj.ui.texts.formula("$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$", helper="This is a formula")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextComp.Formula`
+
     Related Pages:
-Attributes:
+
+      https://mathjs.org/docs/index.html
+
+
+    Attributes:
     ----------
     :param text: Optional. The string value to be displayed in the component
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -188,6 +212,10 @@ Attributes:
     Usage::
 
       rptObj.ui.texts.code("This is a code")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextEditor.Code`
 
     Related Pages:
 
@@ -221,6 +249,10 @@ Attributes:
     Usage::
 
       rptObj.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Paragraph`
 
     Related Pages:
 
@@ -260,10 +292,14 @@ Attributes:
 
       rptObj.ui.texts.preformat("This is a pre formatted text")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Pre`
+
     Related Pages:
 
 			https://www.w3schools.com/html/html_styles.asp
-    https://www.w3schools.com/tags/tag_pre.asp
+      https://www.w3schools.com/tags/tag_pre.asp
 
     Attributes:
     ----------
@@ -296,10 +332,14 @@ Attributes:
 
       rptObj.ui.texts.blockquote("This is a code")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.BlockQuote`
+
     Related Pages:
 
 			https://v4-alpha.getbootstrap.com/content/typography/
-    https://www.w3schools.com/TAGS/tag_blockquote.asp
+      https://www.w3schools.com/TAGS/tag_blockquote.asp
 
     Attributes:
     ----------
@@ -325,6 +365,10 @@ Attributes:
     Usage::
 
       rptObj.ui.texts.up_down({'previous': 240885, 'value': 240985})
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.UpDown`
 
     Related Pages:
 
@@ -358,8 +402,15 @@ Attributes:
 
       rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Numeric`
+
     Related Pages:
-Attributes:
+
+      http://openexchangerates.github.io/accounting.js/
+
+    Attributes:
     ----------
     :param number: Optional. The value to be displayed to the component. Default now
     :param title:
@@ -391,6 +442,10 @@ Attributes:
 
       rptObj.ui.title("Test")
       rptObj.ui.title("Test", level=2)
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Title`
 
     Related Pages:
 
@@ -432,10 +487,14 @@ Attributes:
 
       rptObj.ui.texts.fieldset("legend")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Fieldset`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_legend.asp
-    https://www.w3schools.com/tags/tag_fieldset.asp
+      https://www.w3schools.com/tags/tag_fieldset.asp
 
     Attributes:
     ----------
