@@ -16,8 +16,11 @@ class Rich(object):
 
       rptObj.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
 
-    Related Pages:
-Attributes:
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextComp.Delta`
+
+    Attributes:
     ----------
     :param rec:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -43,9 +46,12 @@ Attributes:
     Usage::
 
       rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
+      stars = rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
+      stars.click()
 
-    stars = rptObj.ui.rich.stars(3, label="test", helper="This is a helper")
-    stars.click()
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlOthers.Stars`
 
     Related Pages:
 
@@ -74,7 +80,11 @@ Attributes:
     Usage::
 
       rptObj.ui.rich.light("red", label="label", tooltip="Tooltip", helper="Helper")
-    rptObj.ui.rich.light(True)
+      rptObj.ui.rich.light(True)
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextComp.TrafficLight`
 
     Attributes:
     ----------
@@ -103,10 +113,14 @@ Attributes:
 
       rptObj.ui.info("Test")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlOthers.Help`
+
     Related Pages:
 
 			https://fontawesome.com/icons/question-circle?style=solid
-    https://api.jqueryui.com/tooltip/
+      https://api.jqueryui.com/tooltip/
 
     Attributes:
     ----------
@@ -128,11 +142,15 @@ Attributes:
 
       rptObj.ui.rich.countdown("2050-09-24")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlDates.CountDownDate`
+
     Related Pages:
 
 			https://www.w3schools.com/js/js_date_methods.asp
-    https://www.w3schools.com/howto/howto_js_countdown.asp
-    https://fontawesome.com/icons/stopwatch?style=solid
+      https://www.w3schools.com/howto/howto_js_countdown.asp
+      https://fontawesome.com/icons/stopwatch?style=solid
 
     Attributes:
     ----------
@@ -160,6 +178,10 @@ Attributes:
 
       rptObj.ui.rich.update("Last update: ")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlDates.LastUpdated`
+
     Attributes:
     ----------
     :param label: The label to be displayed close to the date. Default Last Update
@@ -177,6 +199,10 @@ Attributes:
     """
     Description:
     ------------
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextEditor.Console`
 
     Attributes:
     ----------
@@ -206,6 +232,10 @@ Attributes:
 
       rptObj.ui.inputs.search()
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.Search`
+
     Related Pages:
 
 			https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
@@ -231,10 +261,11 @@ Attributes:
     Description:
     ------------
 
-    Usage::
+    Underlying HTML Objects:
 
-      Related Pages:
-Attributes:
+      - :class:`epyk.core.html.HtmlTextComp.SearchResult`
+
+    Attributes:
     ----------
     """
     records = records or []
