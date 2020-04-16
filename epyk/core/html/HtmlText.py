@@ -787,7 +787,8 @@ class Numeric(Html.Html):
     Format any number into currency
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/
+
+      http://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------
@@ -810,7 +811,8 @@ http://openexchangerates.github.io/accounting.js/
     Format a number with custom precision and localisation
 
     Related Pages:
-http://openexchangerates.github.io/accounting.js/
+
+      http://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------
