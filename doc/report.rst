@@ -8,7 +8,7 @@ It takes care of writing the `body <https://www.w3schools.com/tags/tag_body.asp>
 There are 5 main interfaces available through this object which will enable you to build a complete HTML page:
 
 - :doc:`report/ui`
-- :doc:`report/html`
+- :doc:`report/html_components`
 - :doc:`report/js`
 - :doc:`report/outs`
 - :doc:`report/py`
@@ -19,7 +19,7 @@ There are 5 main interfaces available through this object which will enable you 
     :hidden:
     
     /report/ui
-    /report/html
+    /report/html_components
     /report/js
     /report/outs
     /report/py

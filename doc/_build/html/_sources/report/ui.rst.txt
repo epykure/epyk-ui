@@ -9,7 +9,7 @@ These interfaces are as follows:
 .. toctree::
     :maxdepth: 1
     
-    /report/ui/components
+    /report/ui/compositions
     /report/ui/geo
     /report/ui/graphs
     /report/ui/tables

@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>HtmlTextComp Module &mdash; Epyk 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="HtmlTextEditor Module" href="HtmlTextEditor.html" />
+    <link rel="prev" title="HtmlText Module" href="HtmlText.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Epyk
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../report.html">Report Object</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../ui.html">UI Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../html_components.html">HTML Interface</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../components.html">Core Html Components:</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Defaults.html">Defaults Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Header.html">Header Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Html.html">Html Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlButton.html">HtmlButton Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlContainer.html">HtmlContainer Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlDates.html">HtmlDates Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlEvent.html">HtmlEvent Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlFiles.html">HtmlFiles Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlImage.html">HtmlImage Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlInput.html">HtmlInput Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlLinks.html">HtmlLinks Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlList.html">HtmlList Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlMedia.html">HtmlMedia Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlMenu.html">HtmlMenu Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlMessaging.html">HtmlMessaging Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlOthers.html">HtmlOthers Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlPopup.html">HtmlPopup Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlRadio.html">HtmlRadio Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlSelect.html">HtmlSelect Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlTags.html">HtmlTags Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlText.html">HtmlText Module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">HtmlTextComp Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlTextEditor.html">HtmlTextEditor Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="HtmlTrees.html">HtmlTrees Module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tables.html">Core Table Components:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../graphs.html">Core Chart Components:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../html_components.html#core-html-classes">Core Html Classes:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../html_components.html#core-table-components">Core Table Components:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../html_components.html#core-chart-components">Core Chart Components:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html">Data Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../js_builtins.html">Javascript Built-Ins</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Epyk</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../report.html">Report Object</a> &raquo;</li>
+        
+          <li><a href="../../html_components.html">HTML Interface</a> &raquo;</li>
+        
+          <li><a href="../components.html">Core Html Components:</a> &raquo;</li>
+        
+      <li>HtmlTextComp Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/report/html_components/core_html/HtmlTextComp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="htmltextcomp-module">
+<h1>HtmlTextComp Module<a class="headerlink" href="#htmltextcomp-module" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="epyk.core.html.HtmlTextComp.BlockText">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlTextComp.</code><code class="sig-name descname">BlockText</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordSet</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">border</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.BlockText" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.BlockText.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlTextComp.BlockText.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to set all the possible object for a button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../options/OptText.html#epyk.core.html.options.OptText.OptionsText" title="epyk.core.html.options.OptText.OptionsText">OptText.OptionsText</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlTextComp.ContentsTable">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlTextComp.</code><code class="sig-name descname">ContentsTable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.ContentsTable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.ContentsTable.add">
+<code class="sig-name descname">add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">level</span></em>, <em class="sig-param"><span class="n">anchor</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.ContentsTable.add" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>level</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.ContentsTable.move">
+<code class="sig-name descname">move</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.ContentsTable.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the component to this position in the page</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.ContentsTable.style">
+<em class="property">property </em><code class="sig-name descname">style</code><a class="headerlink" href="#epyk.core.html.HtmlTextComp.ContentsTable.style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to the CSS Style of the component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>GrpClsText.ContentTable</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlTextComp.Delta">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlTextComp.</code><code class="sig-name descname">Delta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.Delta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.Delta.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlTextComp.Delta.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to set all the possible object for a button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../options/OptText.html#epyk.core.html.options.OptText.OptionsNumber" title="epyk.core.html.options.OptText.OptionsNumber">OptText.OptionsNumber</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlTextComp.Formula">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlTextComp.</code><code class="sig-name descname">Formula</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.Formula" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlTextComp.Number">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlTextComp.</code><code class="sig-name descname">Number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">number</span></em>, <em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">profile</span></em>, <em class="sig-param"><span class="n">options</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.Number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlTextComp.SearchResult">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlTextComp.</code><code class="sig-name descname">SearchResult</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordSet</span></em>, <em class="sig-param"><span class="n">pageNumber</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.SearchResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlTextComp.TextWithBorder">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlTextComp.</code><code class="sig-name descname">TextWithBorder</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordSet</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.TextWithBorder" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.TextWithBorder.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlTextComp.TextWithBorder.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to set all the possible object for a button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../options/OptText.html#epyk.core.html.options.OptText.OptionsText" title="epyk.core.html.options.OptText.OptionsText">OptText.OptionsText</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlTextComp.TrafficLight">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlTextComp.</code><code class="sig-name descname">TrafficLight</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">tooltip</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.TrafficLight" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.TrafficLight.click">
+<code class="sig-name descname">click</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.TrafficLight.click" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFncs</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.TrafficLight.colors">
+<code class="sig-name descname">colors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">green</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">red</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">neutral</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.TrafficLight.colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the 3 colors of the traffic light</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>green</strong> – The color used in case of result true</p></li>
+<li><p><strong>red</strong> – The color used in case of result false</p></li>
+<li><p><strong>neutral</strong> – The color used in case of null</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>self to allow the chains</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.TrafficLight.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlTextComp.TrafficLight.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript Functions</p>
+<p>Return all the Javascript functions defined for an HTML Component.
+Those functions will use plain javascript by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript Dom object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsHtml.JsHtmlRich</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.TrafficLight.resolve">
+<code class="sig-name descname">resolve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.TrafficLight.resolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn a error warning to a green one</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFncs</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="epyk.core.html.HtmlTextComp.UpDown">
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlTextComp.</code><code class="sig-name descname">UpDown</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">rec</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlTextComp.UpDown" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlTextComp.UpDown.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlTextComp.UpDown.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property to set all the possible object for a button</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../options/OptText.html#epyk.core.html.options.OptText.OptionsNumber" title="epyk.core.html.options.OptText.OptionsNumber">OptText.OptionsNumber</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="HtmlTextEditor.html" class="btn btn-neutral float-right" title="HtmlTextEditor Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="HtmlText.html" class="btn btn-neutral float-left" title="HtmlText Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Epykure
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
