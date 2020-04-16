@@ -11,10 +11,14 @@ class Dc(object):
            height=(330, "px"), htmlCode=None):
     """
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoDc.ChartGeoChoroplethk`
+
     Related Pages:
 
 			https://jsfiddle.net/djmartin_umich/9VJHe/
-    http://bl.ocks.org/KatiRG/cccd23dd7a830da0de5c
+      http://bl.ocks.org/KatiRG/cccd23dd7a830da0de5c
 
     :param record:
     :param y_columns:
