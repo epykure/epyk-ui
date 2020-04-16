@@ -15,8 +15,12 @@ class Panels(object):
     Usage::
 
       tab = rptObj.ui.panels.pills()
-    for i in range(5):
-      tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
+      for i in range(5):
+        tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Tabs`
 
     Related Pages:
 
@@ -40,13 +44,16 @@ class Panels(object):
     Usage::
 
       tab = rptObj.ui.panels.tabs()
-    for i in range(5):
-      tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
+      for i in range(5):
+        tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Tabs`
 
     Related Pages:
 
 			https://getbootstrap.com/docs/4.0/components/navs/
-
     """
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
                                 "border-bottom": "1px solid white"}}
@@ -63,6 +70,10 @@ class Panels(object):
     Description:
     ------------
     Python wrapper for a multi Tabs component
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.TabsArrowsUp`
 
     Related Pages:
 
@@ -89,6 +100,10 @@ class Panels(object):
     ------------
     Python wrapper for a multi Tabs component
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.TabsArrowsDown`
+
     Related Pages:
 
 			https://getbootstrap.com/docs/4.0/components/navs/
@@ -113,6 +128,10 @@ class Panels(object):
     ------------
     Python wrapper to the Bootstrap Pills interface
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Tabs`
+
     Related Pages:
 
 			https://getbootstrap.com/docs/4.0/components/navs/
@@ -134,6 +153,10 @@ class Panels(object):
     """
     Description:
     ------------
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.PanelSlide`
 
     Attributes:
     ----------
@@ -163,8 +186,12 @@ class Panels(object):
     Usage::
 
       number = rptObj.ui.rich.number(500, "Test", height=(150, 'px'))
-    number_2 = rptObj.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
-    div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)
+      number_2 = rptObj.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
+      div = rptObj.ui.layouts.panelsplit(left=number, right=number_2)
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.PanelSlide`
 
     Related Pages:
 
