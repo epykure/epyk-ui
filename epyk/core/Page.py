@@ -13,7 +13,7 @@ except NameError:
   basestring = str
 
 from epyk.core.js import Imports
-from epyk.interfacess import Components
+from epyk.interfaces import Components
 from epyk.core.css.themes import Theme
 from epyk.core.css import Classes
 
@@ -25,7 +25,6 @@ from epyk.core import data
 from epyk.core.html import symboles
 from epyk.core.html import entities
 from epyk.core.py import OrderedSet
-
 
 
 class ContextRun(object):
@@ -62,8 +61,9 @@ class ContextRun(object):
 
 class Report(object):
   showNavMenu, withContainer = False, False
+  ext_packages = None # For extension modules
 
-  def __init__(self, run_options=None, appCache=None, sideBar=True, urlsApp=None, theme=None, context=None):
+  def __init__(self, run_options=None):
     #
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
     self._props, self._tags, self._header_obj, self.__import_manage = {}, None, None, None

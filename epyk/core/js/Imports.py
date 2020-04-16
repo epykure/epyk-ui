@@ -1000,6 +1000,38 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
     config[reference]["modules"].append({'script': module, 'version': version, 'path': path, 'cdnjs': cdnjs_url})
 
 
+def extend_imports(extension):
+  """
+  Description:
+  ------------
+  Hook to extend the imports in the centralised Import module.
+  The packages definition is quite similar to the one in IMports.py except that CSS and JS are grouped together for
+  simplicity
+
+  :param extension: Dictionary. The list of packages to be added grouped by alias
+  """
+  global CSS_IMPORTS, JS_IMPORTS
+
+  for alias, mod in extension.items():
+    css, js = {'website': mod.get('website', ''), 'modules': []}, {'website': mod.get('website', ''), 'modules': []}
+    if 'req' in mod:
+      css['req'] = mod['req']
+      js['req'] = mod['req']
+    for module in mod['modules']:
+      if not 'cdnjs' in module:
+        module['cdnjs'] = CDNJS_REPO
+      module['version'] = mod['version']  # propagate the version tag
+      if module['script'].endswith(".js"):
+        js['modules'].append(module)
+      elif module['script'].endswith(".css"):
+        css['modules'].append(module)
+    if css['modules']:
+      CSS_IMPORTS[alias] = css
+
+    if js['modules']:
+      JS_IMPORTS[alias] = js
+
+
 class ImportManager(object):
   """
   Description:
@@ -1027,6 +1059,8 @@ class ImportManager(object):
     :param report: Optional. The internal report object with all the required external modules
     """
     self._report, ovr_version = report, {}
+    if report is not None and report.ext_packages is not None:
+      extend_imports(report.ext_packages)
     if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
       # Force the version of some external Javascript or CSS packages
       packages = importlib.import_module("%s.__init__" % self._report.run.report_name)
