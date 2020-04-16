@@ -13,9 +13,7 @@ class Geo(object):
     """
     Interface for the Plotly library
 
-    Documentation
-
-    :return: A Python Plolty object
+    :return: CompGeoPlotly.Plotly
     """
     return CompGeoPlotly.Plotly(self)
 
@@ -23,7 +21,7 @@ class Geo(object):
   def dc_choropleth(self):
     """
 
-    :return:
+    :return: CompGeoDc.Dc
     """
     return CompGeoDc.Dc(self)
 
@@ -31,7 +29,7 @@ class Geo(object):
   def chartjs_choropleth(self):
     """
 
-    :return:
+    :return: CompGeoChartJs.ChartJs
     """
     return CompGeoChartJs.ChartJs(self)
 
@@ -39,7 +37,7 @@ class Geo(object):
   def plotly_choropleth(self):
     """
 
-    :return:
+    :return: CompGeoPlotly.PlotlyChoropleth
     """
     return CompGeoPlotly.PlotlyChoropleth(self)
 
@@ -49,7 +47,7 @@ class Geo(object):
 
     https://plot.ly/javascript/scatter-plots-on-maps/
 
-    :return:
+    :return: CompGeoPlotly.PlotlyScatter
     """
     return CompGeoPlotly.PlotlyScatter(self)
 
@@ -59,6 +57,6 @@ class Geo(object):
 
     https://plot.ly/javascript/bubble-maps/
 
-    :return:
+    :return: CompGeoPlotly.PlotlyBubble
     """
     return CompGeoPlotly.PlotlyBubble(self)

@@ -11,7 +11,13 @@ class Plotly(object):
                     profile=None, options=None,  width=(100, "%"), height=(430, "px"), htmlCode=None):
     """
 
-    https://plot.ly/javascript/mapbox-layers/
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.Scatter`
+
+    Related Pages:
+
+      https://plot.ly/javascript/mapbox-layers/
 
     :param record:
     :param lon_columns:
@@ -53,7 +59,13 @@ class Plotly(object):
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    https://plot.ly/javascript/mapbox-density-heatmaps/
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.Scatter`
+
+    Related Pages:
+
+      https://plot.ly/javascript/mapbox-density-heatmaps/
 
     :param record:
     :param y_columns:
@@ -82,6 +94,28 @@ class Plotly(object):
 
   def chorolet(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.Chorolet`
+
+    Related Pages:
+
+      https://plotly.com/javascript/mapbox-county-choropleth/
+
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param title:
+    :param filters:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     data = {"locations": ["NY", "MA", "VT"], "z": [-50, -10, -20]}
     line_chart = geo.GeoPlotly.Chorolet(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
                                        filters, profile)
@@ -103,6 +137,28 @@ class PlotlyBubble(object):
 
   def bubble(self, scope, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None,
              width=(100, "%"), height=(430, "px"), htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.BubbleGeo`
+
+    Related Pages:
+
+      https://plotly.com/javascript/bubble-maps/
+
+    :param scope:
+    :param record:
+    :param y_column:
+    :param x_axis:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     map_chart = geo.GeoPlotly.BubbleGeo(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
                                          profile)
     map_chart.options.responsive = True
@@ -132,6 +188,28 @@ class PlotlyBubble(object):
 
   def usa(self, record=None, lon_columns=None, lat_columns=None, text_columns=None, title=None, profile=None, options=None,
              width=(100, "%"), height=(430, "px"), htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.BubbleGeo`
+
+    Related Pages:
+
+      https://plotly.com/javascript/bubble-maps/
+
+    :param record:
+    :param lon_columns:
+    :param lat_columns:
+    :param text_columns:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     map_usa = self.bubble('usa', record, None, None, title, profile, options, width, height, htmlCode)
 
     series = []
@@ -150,6 +228,27 @@ class PlotlyBubble(object):
 
   def europe(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None,
              width=(100, "%"), height=(430, "px"), htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.BubbleGeo`
+
+    Related Pages:
+
+      https://plotly.com/javascript/bubble-maps/
+
+    :param record:
+    :param y_column:
+    :param x_axis:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     return self.bubble('europe', record, y_column, x_axis, title, profile, options, width, height, htmlCode)
 
 
@@ -160,6 +259,29 @@ class PlotlyScatter(object):
 
   def scatter(self, scope, record=None, lon_columns=None, lat_columns=None, text_columns=None, title="", profile=None, options=None,
               width=(100, "%"), height=(430, "px"), htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.ScatterGeo`
+
+    Related Pages:
+
+      https://plotly.com/javascript/scatter-plots-on-maps/
+
+    :param scope:
+    :param record:
+    :param lon_columns:
+    :param lat_columns:
+    :param text_columns:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     map_chart = geo.GeoPlotly.ScatterGeo(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
                                          profile)
     map_chart.options.responsive = True
@@ -190,13 +312,57 @@ class PlotlyScatter(object):
 
   def north_america(self, record=None, lon_columns=None, lat_columns=None, text_columns=None, title=None, profile=None,
                     options=None, width=(100, "%"), height=(430, "px"), htmlCode=None):
-    geo_bubble = self.bubble('north america', record, lon_columns, lat_columns, text_columns, title, profile, options, width, height, htmlCode)
-    return geo_bubble
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.ScatterGeo`
+
+    Related Pages:
+
+      https://plotly.com/javascript/scatter-plots-on-maps/
+
+    :param record:
+    :param lon_columns:
+    :param lat_columns:
+    :param text_columns:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
+    map_chart = self.scatter('north america', record, lon_columns, lat_columns, text_columns, title, profile, options, width, height, htmlCode)
+    return map_chart
 
   def usa(self, record=None, lon_columns=None, lat_columns=None, text_columns=None, title=None, profile=None,
           options=None, width=(100, "%"), height=(430, "px"), htmlCode=None):
-    geo_bubble = self.bubble('usa', record, lon_columns, lat_columns, text_columns, title, profile, options, width, height, htmlCode)
-    return geo_bubble
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.ScatterGeo`
+
+    Related Pages:
+
+      https://plotly.com/javascript/scatter-plots-on-maps/
+
+    :param record:
+    :param lon_columns:
+    :param lat_columns:
+    :param text_columns:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
+    map_chart = self.scatter('usa', record, lon_columns, lat_columns, text_columns, title, profile, options, width, height, htmlCode)
+    return map_chart
 
 
 class PlotlyChoropleth(object):
@@ -206,7 +372,27 @@ class PlotlyChoropleth(object):
 
   def world_map(self, record, y_columns=None, country_column=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.Choropleth`
+
+    Related Pages:
+
+      https://plotly.com/javascript/choropleth-maps/
+
+    :param record:
+    :param y_columns:
+    :param country_column:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     series = []
     for y in y_columns:
       s = {'locations': [], 'z': []}
@@ -224,6 +410,27 @@ class PlotlyChoropleth(object):
 
   def europe(self, record, y_column=None, x_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.Choropleth`
+
+    Related Pages:
+
+      https://plotly.com/javascript/choropleth-maps/
+
+    :param record:
+    :param y_column:
+    :param x_axis:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     map_chart.options.responsive = True
     data = {}
@@ -242,6 +449,27 @@ class PlotlyChoropleth(object):
 
   def asia(self, record, y_column=None, x_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.Choropleth`
+
+    Related Pages:
+
+      https://plotly.com/javascript/choropleth-maps/
+
+    :param record:
+    :param y_column:
+    :param x_axis:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     map_chart.options.responsive = True
     data = {}
@@ -261,6 +489,27 @@ class PlotlyChoropleth(object):
 
   def africa(self, record, y_column=None, x_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.Choropleth`
+
+    Related Pages:
+
+      https://plotly.com/javascript/choropleth-maps/
+
+    :param record:
+    :param y_column:
+    :param x_axis:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     map_chart.options.responsive = True
     data = {}
@@ -278,6 +527,27 @@ class PlotlyChoropleth(object):
 
   def usa(self, record, y_column=None, x_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.geo.GeoPlotly.Choropleth`
+
+    Related Pages:
+
+      https://plotly.com/javascript/choropleth-maps/
+
+    :param record:
+    :param y_column:
+    :param x_axis:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     map_chart.options.responsive = True
     data = {}
