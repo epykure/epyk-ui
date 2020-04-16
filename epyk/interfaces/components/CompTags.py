@@ -17,6 +17,10 @@ class Tags(object):
 
     The most important attribute of the <a> element is the href attribute, which indicates the link's destination.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGenericLInk`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_a.asp
@@ -43,6 +47,10 @@ class Tags(object):
     Description:
     ------------
     The <b> tag specifies bold text without any extra importance.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -71,6 +79,10 @@ class Tags(object):
 
     <h1> defines the most important heading. <h6> defines the least important heading.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`s
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_hn.asp
@@ -97,6 +109,10 @@ class Tags(object):
     The <h1> to <h6> tags are used to define HTML headings.
 
     <h1> defines the most important heading. <h6> defines the least important heading.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -125,6 +141,10 @@ class Tags(object):
 
     <h1> defines the most important heading. <h6> defines the least important heading.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_hn.asp
@@ -149,6 +169,10 @@ class Tags(object):
     Description:
     ------------
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Attributes:
     ----------
     :param text: String with the content to be added to the component
@@ -169,6 +193,10 @@ class Tags(object):
     ------------
     Underline a misspelled word with the <u> tag:
     <p>This is a <u>paragraph</u>.</p>
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -195,6 +223,10 @@ class Tags(object):
     ------------
     A paragraph is marked up as follows with the <p> tag:
     <p>This is some text in a paragraph.</p>
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -225,8 +257,12 @@ class Tags(object):
     Usage::
 
       bdi = rptObj.ui.tags.bdi("bdi tag")
-    bdi.click(rptObj.js.alert("test"))
-    bdi.css({'cursor': 'pointer'})
+      bdi.click(rptObj.js.alert("test"))
+      bdi.css({'cursor': 'pointer'})
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -253,6 +289,14 @@ class Tags(object):
     bdo stands for Bi-Directional Override.
     The <bdo> tag is used to override the current text direction.
 
+    Usage::
+
+      bdo = rptObj.ui.tags.bdo("bdo tag")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_bdo.asp
@@ -276,6 +320,10 @@ class Tags(object):
     Description:
     ------------
     The <em> tag is a phrase tag. It renders as emphasized text.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -301,6 +349,10 @@ class Tags(object):
     ------------
     The <strong> tag is a phrase tag. It defines important text.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_strong.asp
@@ -324,6 +376,10 @@ class Tags(object):
     Description:
     ------------
     The <samp> tag is a phrase tag. It defines sample output from a computer program.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -350,6 +406,10 @@ class Tags(object):
     ------------
     The <kbd> tag is a phrase tag. It defines keyboard input.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_kbd.asp
@@ -373,6 +433,10 @@ class Tags(object):
     Description:
     ------------
     The <var> tag also supports the Global Attributes in HTML.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -398,6 +462,10 @@ class Tags(object):
     ------------
     The <sup> tag defines superscript text. Superscript text appears half a character above the normal line, and is sometimes rendered in a smaller font. Superscript text can be used for footnotes, like WWW
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_sup.asp
@@ -422,6 +490,10 @@ class Tags(object):
     ------------
     The <wbr> (Word Break Opportunity) tag specifies where in a text it would be ok to add a line-break.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_wbr.asp
@@ -445,6 +517,10 @@ class Tags(object):
     Description:
     ------------
     The <time> tag defines a human-readable date/time.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -471,6 +547,10 @@ class Tags(object):
     The <sub> tag defines subscript text. Subscript text appears half a character below the normal line, and is sometimes rendered in a smaller font.
     Subscript text can be used for chemical formulas, like H2O.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_sub.asp
@@ -494,6 +574,10 @@ class Tags(object):
     Description:
     ------------
     The <small> tag defines smaller text (and other side comments).
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -519,6 +603,10 @@ class Tags(object):
     ------------
     The <s> tag specifies text that is no longer correct, accurate or relevant.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_s.asp
@@ -542,6 +630,10 @@ class Tags(object):
     Description:
     ------------
     The <i> tag defines a part of text in an alternate voice or mood. The content of the <i> tag is usually displayed in italic.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -569,6 +661,10 @@ class Tags(object):
 
     Browsers normally insert quotation marks around the quotation.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_q.asp
@@ -595,6 +691,10 @@ class Tags(object):
 
     Use the <mark> tag if you want to highlight parts of your text.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_mark.asp
@@ -618,6 +718,10 @@ class Tags(object):
     Description:
     ------------
     The <ins> tag defines a text that has been inserted into a document.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -643,6 +747,10 @@ class Tags(object):
     ------------
     The <dfn> tag represents the defining instance of a term in HTML.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_dfn.asp
@@ -667,6 +775,10 @@ class Tags(object):
     ------------
     The <cite> tag defines the title of a work (e.g. a book, a song, a movie, a TV show, a painting, a sculpture, etc.).
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_cite.asp
@@ -690,6 +802,10 @@ class Tags(object):
     Description:
     ------------
     The <abbr> tag defines an abbreviation or an acronym, like "HTML", "Mr.", "Dec.", "ASAP", "ATM".
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
     Related Pages:
 
@@ -716,6 +832,10 @@ class Tags(object):
     The <meter> tag defines a scalar measurement within a known range, or a fractional value.
     This is also known as a gauge.
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_meter.asp
@@ -739,6 +859,10 @@ class Tags(object):
     Description:
     ------------
     Add an HTML comment to the code
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlComment`
 
     Attributes:
     ----------
