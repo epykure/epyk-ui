@@ -1,9 +1,0 @@
-Banners Interface
-=================
-
-.. autoclass:: epyk.interfaces.components.CompNavigation.Banners
-	:members:Navigation Interface
-====================
-
-.. autoclass:: epyk.interfaces.components.CompNavigation.Navigation
-	:members:

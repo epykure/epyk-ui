@@ -14,5 +14,16 @@ There are 5 main interfaces available through this object which will enable you 
 - :doc:`report/py`
 - :doc:`report/data`
 
+.. toctree::
+    :maxdepth: 5
+    :hidden:
+    
+    /report/ui
+    /report/html
+    /report/js
+    /report/outs
+    /report/py
+    /report/data
+
 .. autoclass:: epyk.core.Page.Report
     :members:

@@ -6,41 +6,14 @@ are built.
 
 These interfaces are as follows:
 
-Simple HTML Components:
-=======================
-
 .. toctree::
-    :glob:
-    :maxdepth: 5
+    :maxdepth: 1
     
-    /report/ui/components/*
+    /report/ui/components
+    /report/ui/geo
+    /report/ui/graphs
+    /report/ui/tables
 
-Table Components:
-=======================
-
-.. toctree::
-    :glob:
-    :maxdepth: 5
-    
-    /report/ui/tables/*
-
-Chart Components:
-=======================
-
-.. toctree::
-    :glob:
-    :maxdepth: 5
-    
-    /report/ui/graphs/*
-    
-Geo Components:
-=======================
-
-.. toctree::
-    :glob:
-    :maxdepth: 5
-    
-    /report/ui/geo/*
 
 .. currentmodule:: epyk.interfaces.Components
 

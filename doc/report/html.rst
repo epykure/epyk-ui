@@ -9,7 +9,7 @@ Core Html Classes:
 
 .. toctree::
     :glob:
-    :maxdepth: 5
+    :maxdepth: 1
     
     /report/html_components/Html*
 
@@ -18,7 +18,7 @@ Core Table Components:
 
 .. toctree::
     :glob:
-    :maxdepth: 5
+    :maxdepth: 1
     
     /report/html_components/tables/*
 
@@ -27,7 +27,7 @@ Core Chart Components:
 
 .. toctree::
     :glob:
-    :maxdepth: 5
+    :maxdepth: 1
     
     /report/html_components/graphs/*
 
