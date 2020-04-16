@@ -14,8 +14,16 @@ class Menus(object):
 
       l = rptObj.ui.lists.list(["A", "B"])
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlContainer.Col`
+      - :class:`epyk.core.html.HtmlContainer.Grid`
+      - :class:`epyk.core.html.HtmlText.Title`
+      - :class:`epyk.core.html.HtmlList.List`
+
     Related Pages:
-    --------------
+
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
@@ -48,8 +56,15 @@ class Menus(object):
 
       l = rptObj.ui.lists.list(["A", "B"])
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlContainer.Col`
+      - :class:`epyk.core.html.HtmlText.Title`
+      - :class:`epyk.core.html.HtmlList.List`
+
     Related Pages:
-    --------------
+
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
@@ -93,8 +108,16 @@ class Menus(object):
 
       l = rptObj.ui.lists.list(["A", "B"])
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlContainer.Col`
+      - :class:`epyk.core.html.HtmlContainer.Grid`
+      - :class:`epyk.core.html.HtmlText.Title`
+      - :class:`epyk.core.html.HtmlList.List`
+
     Related Pages:
-    --------------
+
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
@@ -144,9 +167,13 @@ class Menus(object):
     Usage::
 
       bs = rptObj.ui.buttons.buttons(["Button", "Button 2", "Button 3"])
-    bs[2].click([
+      bs[2].click([
       rptObj.js.alert(bs[2].dom.content)
-    ])
+      ])
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.Buttons`
 
     Attributes:
     ----------
@@ -181,7 +208,12 @@ class Menus(object):
     Usage::
 
       record = []
-    rptObj.ui.menus.divisor(record)
+      rptObj.ui.menus.divisor(record)
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlText.Text`
 
     Attributes:
     ----------
@@ -210,7 +242,12 @@ class Menus(object):
     Usage::
 
       mb = rptObj.ui.menus.button("Value", rptObj.ui.button("sub button"))
-    mb.item.click([rptObj.js.alert(mb.item.dom.content)])
+      mb.item.click([rptObj.js.alert(mb.item.dom.content)])
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlButton.Button`
 
     Attributes:
     ----------
@@ -250,9 +287,14 @@ class Menus(object):
     Usage::
 
       tb = rptObj.ui.menus.toolbar(["fas fa-paint-brush", "fas fa-code"])
-    tb[1].link.val = 4589
-    tb[1].tooltip("This is a tooltip")
-    tb[0].style.css.color = 'red'
+      tb[1].link.val = 4589
+      tb[1].tooltip("This is a tooltip")
+      tb[0].style.css.color = 'red'
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlImage.Badge`
 
     Attributes:
     ----------
@@ -270,6 +312,22 @@ class Menus(object):
 
   def selections(self, data, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
                   helper=None, options=None, profile=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.Menu`
+
+    :param data:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param attrs:
+    :param helper:
+    :param options:
+    :param profile:
+    :return:
+    """
     html_pr = html.HtmlEvent.Menu(self.context.rptObj, data, width, height,  attrs or {}, helper,
                                          options or {}, htmlCode, profile)
     self.context.register(html_pr)

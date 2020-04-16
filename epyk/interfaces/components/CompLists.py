@@ -20,6 +20,8 @@ class Lists(object):
     Description:
     ------------
 
+
+
     Attributes:
     ----------
     :param recordSet:
@@ -73,8 +75,13 @@ class Lists(object):
       s.selected = "B"
       s.change(rptObj.js.console.log(s.dom.val))
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlSelect.Select`
+
     Related Pages:
     --------------
+
     https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
     https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
@@ -134,9 +141,11 @@ class Lists(object):
     ------------
     HTML Select component
 
-    Usage::
+    Underlying HTML Objects:
 
-      Related Pages:
+      - :class:`epyk.core.html.HtmlSelect.Lookup`
+
+    Related Pages:
     --------------
     https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
@@ -171,6 +180,10 @@ class Lists(object):
 
       l = rptObj.ui.lists.list(["A", "B"])
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.List`
+
     Related Pages:
     --------------
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
@@ -192,8 +205,12 @@ class Lists(object):
 
       rptObj.ui.lists.numbers(["A", "B"])
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.List`
+
     Related Pages:
-    --------------
+
     https://www.w3schools.com/html/html_lists.asp
     https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
@@ -209,9 +226,11 @@ class Lists(object):
     Description:
     ------------
 
-    Usage::
+    Underlying HTML Objects:
 
-      :param data:
+      - :class:`epyk.core.html.HtmlList.List`
+
+    :param data:
     :param color:
     :param width:
     :param height:
@@ -228,6 +247,22 @@ class Lists(object):
 
   def roman(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.List`
+
+    :param data:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    :return:
+    """
 
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options or {}, profile)
@@ -240,6 +275,10 @@ class Lists(object):
     """
     Description:
     ------------
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.List`
 
     Related Pages:
     --------------
@@ -267,6 +306,10 @@ class Lists(object):
     """
     Description:
     ------------
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.List`
 
     Related Pages:
     --------------
@@ -299,8 +342,12 @@ class Lists(object):
 
       rptObj.ui.lists.squares(["A", "B"])
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.List`
+
     Related Pages:
-    --------------
+
     https://www.w3schools.com/cssref/pr_list-style-type.asp
 
     Attributes:
@@ -331,8 +378,12 @@ class Lists(object):
       l = rptObj.ui.lists.groups(["AWW", "B"])
       l.add_list(["D", "E"], category="Test")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.Groups`
+
     Related Pages:
-    --------------
+
     http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
     http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
 
@@ -371,6 +422,10 @@ class Lists(object):
       data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
       checks = rptObj.ui.lists.checklist(data)
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.Checks`
+
     Related Pages:
     --------------
 
@@ -399,6 +454,10 @@ class Lists(object):
       data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
       rptObj.ui.lists.tree(data)
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTrees.Tree`
+
     Related Pages:
     --------------
 
@@ -420,7 +479,12 @@ class Lists(object):
     Description:
     ------------
 
-    Documentation
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTrees.DropDown`
+
+    Related Pages:
+
     http://getbootstrap.com/docs/4.0/components/dropdowns/
     https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
     https://codepen.io/svnt/pen/beEgre
@@ -450,8 +514,12 @@ class Lists(object):
 
       rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.Badges`
+
     Related Pages:
-    --------------
+
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     https://v4-alpha.getbootstrap.com/components/list-group/
 
@@ -479,8 +547,12 @@ class Lists(object):
 
       rptObj.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.Buttons`
+
     Related Pages:
-    --------------
+
     https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     https://v4-alpha.getbootstrap.com/components/list-group/
 
@@ -502,6 +574,12 @@ class Lists(object):
     """
     Description:
     ------------
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.ListTournaments`
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlInput.Radio`
 
     Related Pages:
     --------------
@@ -525,3 +603,4 @@ class Lists(object):
 
   def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
+

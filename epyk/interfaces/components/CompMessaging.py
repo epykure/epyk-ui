@@ -19,10 +19,14 @@ class Messaging(object):
     Usage::
 
       db = report.db(database="test.db")
-    report.comments('Test', dbService={'db': db, 'com_table': 'comments', 'reply_table': 'replyComments', 'reply_service': 'post_reply/url', 'user_coms': 'user_comments', 'privacy': 'public', 'service': your/url})
+      report.comments('Test', dbService={'db': db, 'com_table': 'comments', 'reply_table': 'replyComments', 'reply_service': 'post_reply/url', 'user_coms': 'user_comments', 'privacy': 'public', 'service': your/url})
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMessaging.Comments`
 
     Related Pages:
-    --------------
+
     https://leaverou.github.io/bubbly/
     http://manos.malihu.gr/jquery-custom-content-scroller/
 
@@ -47,11 +51,46 @@ class Messaging(object):
 
   def chat(self, htmlCode, title="", pmts=None, dbService=None, width=(100, '%'),
                height=(200, 'px'), httpCodes=None, readonly=False, profile=None, chatOptions=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMessaging.Chat`
+
+    :param htmlCode:
+    :param title:
+    :param pmts:
+    :param dbService:
+    :param width:
+    :param height:
+    :param httpCodes:
+    :param readonly:
+    :param profile:
+    :param chatOptions:
+    :return:
+    """
     return self.context.register(html.HtmlMessaging.Chat(self.context.rptObj, htmlCode, title, pmts, dbService, width,
                                                          height, httpCodes, readonly, profile, chatOptions))
 
   def bot(self, htmlCode, name="Roxane", pmts=None, dbService=None, width=(250, 'px'),
                height=(200, 'px'), httpCodes=None, profile=None, botOptions=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMessaging.Bot`
+
+    :param htmlCode:
+    :param name:
+    :param pmts:
+    :param dbService:
+    :param width:
+    :param height:
+    :param httpCodes:
+    :param profile:
+    :param botOptions:
+    :return:
+    """
     return self.context.register(html.HtmlMessaging.Bot(self.context.rptObj, htmlCode, name, pmts, dbService, width,
                                                         height, httpCodes, profile, botOptions))
 
@@ -72,12 +111,16 @@ class Messaging(object):
 
       report.ui.messaging.alert('WARNING', 'Server URL not recognized', 'Please check')
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMessaging.Alert`
+
     Related Pages:
     --------------
     https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
-    ----------
+
     :param title: The title of the notification
     :param value: The content of the notification
     :param category:
@@ -117,8 +160,12 @@ class Messaging(object):
 
       rptObj.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMessaging.Alert`
+
     Related Pages:
-    --------------
+
     https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
@@ -155,8 +202,12 @@ class Messaging(object):
 
       rptObj.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMessaging.Alert`
+
     Related Pages:
-    --------------
+
     https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
@@ -184,13 +235,23 @@ class Messaging(object):
 
       rptObj.ui.messaging.alert('success', 'Server URL not recognized', 'Please check')
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMessaging.Alert`
+
     Related Pages:
-    --------------
+
     https://getbootstrap.com/docs/4.0/components/alerts/
 
-    Attributes:
-    ----------
-    :rtype: html.HtmlMessaging.Alert
+    :param title:
+    :param value:
+    :param htmlCode:
+    :param close_button:
+    :param width:
+    :param height:
+    :param color:
+    :param profile:
+    :param dataSrc:
     """
     if not getattr(self.context.rptObj, "alerts", True):
       return
@@ -215,13 +276,24 @@ class Messaging(object):
 
       rptObj.ui.messaging.alert('warning', 'Server URL not recognized', 'Please check')
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMessaging.Alert`
+
     Related Pages:
-    --------------
+
     https://getbootstrap.com/docs/4.0/components/alerts/
 
-    Attributes:
-    ----------
-    :rtype: html.HtmlMessaging.Alert
+    :param title:
+    :param value:
+    :param htmlCode:
+    :param close_button:
+    :param width:
+    :param height:
+    :param color:
+    :param profile:
+    :param dataSrc:
+
     """
     if not getattr(self.context.rptObj, "alerts", True):
       return
@@ -240,12 +312,24 @@ class Messaging(object):
     Usage::
 
       b = rptObj.ui.button("Display")
-    n = rptObj.ui.messaging.news("This is a title", "This is the content", link_script="TestSlider")
-    b.click(n.jsGenerate("Updated content", isPyData=True))
+      n = rptObj.ui.messaging.news("This is a title", "This is the content", link_script="TestSlider")
+      b.click(n.jsGenerate("Updated content", isPyData=True))
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMessaging.News`
 
     Attributes:
     ----------
-    :return:
+    :param title:
+    :param value:
+    :param label:
+    :param link_script:
+    :param icon:
+    :param htmlCode:
+    :param width:
+    :param height:
+    :param profile:
     """
     return self.context.register(html.HtmlMessaging.News(self.context.rptObj, title, value, label, link_script, icon, width,
                                                           height, htmlCode, profile))

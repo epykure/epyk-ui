@@ -18,7 +18,12 @@ class Media(object):
 
       rptObj.ui.media.video("CWWB3673.MP4")
 
-    Documentation
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMedia.Media`
+
+    Related Pages:
+
     https://www.w3schools.com/html/html5_video.asp
 
     Attributes:
@@ -47,7 +52,12 @@ class Media(object):
 
       rptObj.ui.media.video("CWWB3673.mpeg")
 
-    Documentation
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMedia.Audio`
+
+    Related Pages
+
     https://www.w3schools.com/html/html5_video.asp
 
     Attributes:
@@ -75,7 +85,12 @@ class Media(object):
 
       rptObj.ui.media.youtube("https://www.youtube.com/embed/dfiHMtih5Ac")
 
-    Documentation
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlMedia.Youtube`
+
+    Related Pages
+
     https://www.w3schools.com/html/html5_video.asp
 
     Attributes:
@@ -94,13 +109,13 @@ class Media(object):
     self.context.register(html_youtube)
     return html_youtube
 
-  def camera(self):
-    """
-
-    Documentation
-    https://www.html5rocks.com/en/tutorials/getusermedia/intro/
-
-    Attributes:
-    ----------
-    :return:
-    """
+  # def camera(self):
+  #   """
+  #
+  #   Documentation
+  #   https://www.html5rocks.com/en/tutorials/getusermedia/intro/
+  #
+  #   Attributes:
+  #   ----------
+  #   :return:
+  #   """

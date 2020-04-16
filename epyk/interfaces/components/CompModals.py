@@ -6,48 +6,29 @@ class Modals(object):
   def __init__(self, context):
     self.context = context
 
-
-  def inputs(self, records, header=None, footer=None, submit=False, helper=None):
-    """
-    Usage::
-
-      rptObj.ui.forms.inputs([
-      {"label": "name", "htmlCode": "input"},
-      {"label": "name 2", "htmlCode": "input2"},
-    ], "http://127.0.0.1:5000", "POST")
-
-    Attributes:
-    ----------
-    :param records:
-    :param action:
-    :param method:
-    :param helper:
-    :return:
-    """
-    html_objs = []
-    modal = html.HtmlContainer.Modal(self.context.rptObj, [], helper)
-    for rec in records:
-      inp = self.context.rptObj.ui.fields.input(label=rec["label"])
-      inp.label.css({'float': ''})
-      inp.input.set_attrs({"name": rec["htmlCode"]})
-      modal.col += inp
-    modal = html.HtmlContainer.Modal(self.context.rptObj, [], header, footer, submit, helper)
-    modal.col += modal.submit
-    self.context.register(modal)
-    return modal
-
   def forms(self, html_objs, action, method, header=None, footer=None, helper=None):
     """
     Simple interface to create an html form within a modal
 
     Usage::
 
-      Documentation
+      d = rptObj.ui.fields.today('test')
+      i = rptObj.ui.fields.input(placeholder='test2', label='test1')
+      i2 = rptObj.ui.fields.input('test3', label='test2')
+      form_modal = rptObj.ui.modals.forms([d, i, i2], "http://127.0.0.1:5000", "POST")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Modal`
+      - :class:`epyk.core.html.HtmlContainer.Form`
+
+    Related Pages:
+
+    https://www.w3schools.com/w3css/w3css_modal.asp
 
     Attributes:
     ----------
-    :param html_objs list, :
-    :param action: String. frebtbtoojtrjn, fdeul
+    :param html_objs list:
     :param method:
     :param helper:
     :return:
@@ -63,6 +44,32 @@ class Modals(object):
     return modal
 
   def disclaimer(self, disc_list, header=None, footer=None, submit=True, validation_text='AGREE', action=None, add_buttons=None, to_html=True, helper=None):
+    """
+    Disclaimer that will appear as a modal
+
+    Usage::
+
+      privacy_title = rptObj.ui.texts.title('A privacy reminder', 2)
+      p1 = rptObj.ui.texts.paragraph('''Scroll down and click “%s” when you’re ready to continue, or explore other options on this page.''' % rptObj.ui.tags.strong('''I agree''', options={'managed': False}))
+      disc = rptObj.ui.modals.disclaimer([privacy_title, p1])
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Modal`
+      - :class:`epyk.core.html.HtmlContainer.Row`
+      - :class:`epyk.core.html.HtmlButton.Button`
+
+    :param disc_list:
+    :param header:
+    :param footer:
+    :param submit:
+    :param validation_text:
+    :param action:
+    :param add_buttons:
+    :param to_html:
+    :param helper:
+    :return:
+    """
     for obj in disc_list:
       obj.css({'margin': '40px', 'width': 'auto', 'text-align': 'justify'})
 
@@ -88,10 +95,12 @@ class Modals(object):
     ------------
     Simple Jquery UI modal with a text
 
-    Usage::
+    Underlying HTML Objects:
 
-      Related Pages:
-    --------------
+      - :class:`epyk.core.html.HtmlEvent.Dialog`
+
+    Related Pages:
+
     https://jqueryui.com/dialog/
 
     Attributes:

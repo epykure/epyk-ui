@@ -336,6 +336,15 @@ class Navigation(object):
     Description:
     ------------
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlImage.Image`
+      - :class:`epyk.core.html.HtmlContainer.Col`
+      - :class:`epyk.core.html.HtmlContainer.Row`
+      - :class:`epyk.core.html.HtmlText.Text`
+      - :class:`epyk.core.html.HtmlLinks.ExternalLink`
+
     :param image:
     :param text:
     :param link:
@@ -389,6 +398,10 @@ class Banners(object):
     Description:
     ------------
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+
     :param data:
     :param background:
     :param width:
@@ -409,6 +422,10 @@ class Banners(object):
     Description:
     ------------
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
+
     :param data:
     :param background:
     :param width:
@@ -428,6 +445,10 @@ class Banners(object):
     """
     Description:
     ------------
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.Div`
 
     :param data:
     :param background:
