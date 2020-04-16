@@ -137,8 +137,7 @@ class Links(object):
 
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
-    Related Pages:
-Attributes:
+    Attributes:
     ----------
     :param text: The string value to be displayed in the component
     :param url: The string url of the link

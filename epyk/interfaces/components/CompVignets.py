@@ -23,6 +23,12 @@ class Vignets(object):
 
       rptObj.ui.vignets.bubble({"value": 23, "title": "Title"}, helper="This is a helper")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Text`
+      - :class:`epyk.core.html.HtmlContainer.Div`
+      - :class:`epyk.core.html.HtmlLinks.ExternalLink`
+
     Related Pages:
 
 			https://www.w3schools.com/jsref/event_bubbles.asp
@@ -74,8 +80,12 @@ class Vignets(object):
     Usage::
 
       number = rptObj.ui.vignets.number(500, "Test")
-    number_2 = rptObj.ui.vignets.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
-    number.span.add_icon(rptObj.ui.icons.get.ICON_ENVELOPE)
+      number_2 = rptObj.ui.vignets.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
+      number.span.add_icon(rptObj.ui.icons.get.ICON_ENVELOPE)
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextComp.Number`
 
     Related Pages:
 
@@ -109,6 +119,10 @@ class Vignets(object):
       rptObj.ui.vignets.block({"text": 'This is a brand new python framework', "title": 'New Python Web Framework',
                              "button": {"text": 'Get Started', 'url': "/getStarted"}, 'color': 'green'})
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextComp.BlockText`
+
     Related Pages:
 
 			https://www.w3schools.com/htmL/html_blocks.asp
@@ -137,8 +151,11 @@ class Vignets(object):
       rptObj.ui.vignets.text({"title": "New Python Framework", 'value': "A new Python Web Framework", 'color': 'green',
                             'icon': 'fab fa-python', 'colorTitle': 'darkgreen'})
 
-    Related Pages:
-Attributes:
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextComp.TextWithBorder`
+
+    Attributes:
     ----------
     :param recordSet:
     :param width: Optional. A tuple with the integer for the component width and its unit
