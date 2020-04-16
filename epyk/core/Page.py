@@ -13,7 +13,7 @@ except NameError:
   basestring = str
 
 from epyk.core.js import Imports
-from epyk.interfacess import Components
+from epyk.interfaces import Components
 from epyk.core.css.themes import Theme
 from epyk.core.css import Classes
 
