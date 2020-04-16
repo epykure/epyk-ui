@@ -425,10 +425,6 @@ class Inputs(object):
     Description:
     ------------
 
-    Related Pages:
-
-			https://www.w3schools.com/tags/att_input_type_radio.asp
-
     Usage::
 
       rptObj.ui.inputs.radio(False, label="radio")
@@ -436,6 +432,10 @@ class Inputs(object):
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlInput.Radio`
+
+    Related Pages:
+
+			https://www.w3schools.com/tags/att_input_type_radio.asp
 
     Attributes:
     ----------
