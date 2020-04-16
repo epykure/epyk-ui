@@ -3,7 +3,7 @@ Report Object
 
 This class is your your main entry point to the epyk framework, this is where you'll be able to access
 UI components through the :doc:`report/ui` interfaces or the :doc:`report/js` features.
-You should consider this page as the `body <https://www.w3schools.com/tags/tag_body.asp>`_ section of an html page.
+It takes care of writing the `body <https://www.w3schools.com/tags/tag_body.asp>`_ section of your html page and also populating the `style <https://www.w3schools.com/tags/tag_style.asp>`_ and `scripts <https://www.w3schools.com/tags/tag_script.asp>`_ parts.
 
 There are 5 main interfaces available through this object which will enable you to build a complete HTML page:
 
