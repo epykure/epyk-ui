@@ -21,10 +21,7 @@ class Trees(object):
     ------------
 
     Related Pages:
-
-
-
-    Usage::
+Usage::
 
       data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
     rptObj.ui.lists.tree(data)
@@ -50,10 +47,7 @@ class Trees(object):
     Usage::
 
       Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param data:
     :param width:
@@ -74,10 +68,7 @@ class Trees(object):
     Usage::
 
       Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param data:
     :param width:
@@ -99,9 +90,7 @@ class Trees(object):
     ------------
 
     Related Pages:
-
-
-    http://getbootstrap.com/docs/4.0/components/dropdowns/
+http://getbootstrap.com/docs/4.0/components/dropdowns/
     https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
     https://codepen.io/svnt/pen/beEgre
 

@@ -45,7 +45,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-edit <https://fontawesome.com/icons/edit>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-edit <https://fontawesome.com/icons/edit>`_ icon
 
     Usage::
 
@@ -73,7 +73,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-clock <https://fontawesome.com/icons/clock>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-clock <https://fontawesome.com/icons/clock>`_ icon
 
     Usage::
 
@@ -101,7 +101,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-sync-alt <https://fontawesome.com/icons/sync-alt>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-sync-alt <https://fontawesome.com/icons/sync-alt>`_ icon
 
     Usage::
 
@@ -129,7 +129,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-file-pdf <https://fontawesome.com/icons/file-pdf>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-file-pdf <https://fontawesome.com/icons/file-pdf>`_ icon
 
     Usage::
 
@@ -156,7 +156,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-file-pdf <https://fontawesome.com/icons/plus-square>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-file-pdf <https://fontawesome.com/icons/plus-square>`_ icon
 
     Usage::
 
@@ -183,7 +183,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-file-excel <https://fontawesome.com/icons/file-excel>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-file-excel <https://fontawesome.com/icons/file-excel>`_ icon
 
     Usage::
 
@@ -210,7 +210,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-download <https://fontawesome.com/icons/download>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-download <https://fontawesome.com/icons/download>`_ icon
 
     Usage::
 
@@ -237,7 +237,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-trash-alt <https://fontawesome.com/icons/trash-alt>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-trash-alt <https://fontawesome.com/icons/trash-alt>`_ icon
 
     Usage::
 
@@ -263,7 +263,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-search-plus <https://fontawesome.com/icons/search-plus>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-search-plus <https://fontawesome.com/icons/search-plus>`_ icon
 
     Usage::
 
@@ -290,7 +290,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `far fa-clipboard <https://fontawesome.com/icons/clipboard>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `far fa-clipboard <https://fontawesome.com/icons/clipboard>`_ icon
 
     Usage::
 
@@ -317,7 +317,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-times-circle <https://fontawesome.com/icons/times-circle>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-times-circle <https://fontawesome.com/icons/times-circle>`_ icon
 
     Usage::
 
@@ -344,7 +344,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-table <https://fontawesome.com/icons/table>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-table <https://fontawesome.com/icons/table>`_ icon
 
     Usage::
 
@@ -371,7 +371,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fas fa-wrench <https://fontawesome.com/icons/wrench>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-wrench <https://fontawesome.com/icons/wrench>`_ icon
 
     Usage::
 
@@ -398,7 +398,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-facebook-f <https://fontawesome.com/icons/facebook-f>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-facebook-f <https://fontawesome.com/icons/facebook-f>`_ icon
 
     Usage::
 
@@ -431,7 +431,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-twitter <https://fontawesome.com/icons/twitter>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-twitter <https://fontawesome.com/icons/twitter>`_ icon
 
     Usage::
 
@@ -464,7 +464,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-linkedin-in <https://fontawesome.com/icons/linkedin-in>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-linkedin-in <https://fontawesome.com/icons/linkedin-in>`_ icon
 
     Usage::
 
@@ -497,7 +497,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-youtube <https://fontawesome.com/icons/youtube>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-youtube <https://fontawesome.com/icons/youtube>`_ icon
 
     Usage::
 
@@ -530,7 +530,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-github <https://fontawesome.com/icons/github>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-github <https://fontawesome.com/icons/github>`_ icon
 
     Usage::
 
@@ -563,7 +563,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-python <https://fontawesome.com/icons/python>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-python <https://fontawesome.com/icons/python>`_ icon
 
     Usage::
 
@@ -596,7 +596,7 @@ class Icons(object):
     Description:
     ------------
 
-    Same as :func:`epyk.interface.components.CompIcons.awesome` with a `fab fa-stack-overflow <https://fontawesome.com/icons/stack-overflow>`_ icon
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-stack-overflow <https://fontawesome.com/icons/stack-overflow>`_ icon
 
     Usage::
 

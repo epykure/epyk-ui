@@ -33,8 +33,7 @@ class Tables(object):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid/
+      https://www.ag-grid.com/javascript-grid/
     """
     return CompAgGrid.AgGrid(self)
 
@@ -46,9 +45,7 @@ class Tables(object):
     Interface to the different Tabulator configurations
 
     Related Pages:
-
-
-    http://tabulator.info/
+http://tabulator.info/
     """
     return CompTabulator.Tabulators(self)
 
@@ -61,8 +58,7 @@ class Tables(object):
 
     Related Pages:
 
-
-    https://github.com/d3/d3/wiki/Gallery
+			https://github.com/d3/d3/wiki/Gallery
 
     :rtype: CompTableD3.D3
     """
@@ -74,9 +70,7 @@ class Tables(object):
     Interface to the different Tabulator configurations
 
     Related Pages:
-
-
-    http://tabulator.info/
+http://tabulator.info/
 
     :rtype: CompTabulator.Tabulators
     """
@@ -91,8 +85,7 @@ class Tables(object):
 
     Related Pages:
 
-
-    https://datatables.net/
+			https://datatables.net/
 
     :rtype: CompDatatable.Datatables
     """
@@ -109,8 +102,7 @@ class Tables(object):
 
       Related Pages:
 
-
-    https://pivottable.js.org/examples/
+			https://pivottable.js.org/examples/
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
 
@@ -142,8 +134,7 @@ class Tables(object):
 
       Related Pages:
 
-
-    https://datatables.net/reference/index
+			https://datatables.net/reference/index
     https://datatables.net/reference/option/
     https://datatables.net/reference/option/ajax.data
     https://datatables.net/reference/option/drawCallback
@@ -241,9 +232,7 @@ class Tables(object):
     Usage::
 
       Related Pages:
-
-
-    http://tabulator.info/
+http://tabulator.info/
 
     Attributes:
     ----------

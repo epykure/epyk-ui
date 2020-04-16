@@ -11,8 +11,9 @@ class Plotly(object):
            width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    Documentation
-    https://plot.ly/javascript/
+    Related Pages:
+
+			https://plot.ly/javascript/
     https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
     :param record:
@@ -49,8 +50,9 @@ class Plotly(object):
           width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    Documentation
-    https://plot.ly/javascript/
+    Related Pages:
+
+			https://plot.ly/javascript/
     https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
     :param record:
@@ -86,8 +88,9 @@ class Plotly(object):
           width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    Documentation
-    https://plot.ly/javascript/
+    Related Pages:
+
+			https://plot.ly/javascript/
     https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
     :param record:
@@ -121,8 +124,9 @@ class Plotly(object):
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    Documentation
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+    Related Pages:
+
+			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
     https://plot.ly/javascript/
 
     :param record:
@@ -163,8 +167,9 @@ class Plotly(object):
                  width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-        Documentation
-        https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+        Related Pages:
+
+			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
         https://plot.ly/javascript/
 
         :param record:
@@ -198,8 +203,9 @@ class Plotly(object):
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    Documentation
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+    Related Pages:
+
+			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
     https://plot.ly/javascript/
 
     :param record:
@@ -232,8 +238,9 @@ class Plotly(object):
                 width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    Documentation
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+    Related Pages:
+
+			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
     https://plot.ly/javascript/
 
     :param record:
@@ -266,8 +273,9 @@ class Plotly(object):
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    Documentation
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+    Related Pages:
+
+			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
     https://plot.ly/javascript/
 
     :param record:
@@ -303,8 +311,9 @@ class Plotly(object):
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    Documentation
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+    Related Pages:
+
+			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
     https://plot.ly/javascript/
 
     :param record:
@@ -339,8 +348,9 @@ class Plotly(object):
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
-    Documentation
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+    Related Pages:
+
+			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
     https://plot.ly/javascript/
 
     :param data:

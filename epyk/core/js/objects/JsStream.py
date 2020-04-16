@@ -27,8 +27,7 @@ class TransformStream(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
+			https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
 
     :return:
     """
@@ -40,8 +39,7 @@ class TransformStream(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
+			https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
     """
     return "%s.writable" % self.varId
 
@@ -61,8 +59,7 @@ class ReadableStream(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/cancel
+			https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/cancel
     """
     return self.fnc("cancel()")
 
@@ -75,8 +72,7 @@ class ReadableStream(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/getReader
+			https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/getReader
     """
     return ReadableStream("%s.getReader()" % self.varId)
 
@@ -88,8 +84,7 @@ class ReadableStream(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/pipeThrough
+			https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/pipeThrough
 
     :param transformStream: A TransformStream (or an object with the structure {writable, readable}) consisting of a readable stream and a writable stream working together to transform some data from one form to another.
     :param options: The options that should be used when piping to the writable stream. Available options are
@@ -111,8 +106,7 @@ class ReadableStream(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/pipeTo
+			https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/pipeTo
 
     Attributes:
     ----------
@@ -132,8 +126,7 @@ class ReadableStream(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/tee
+			https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/tee
     """
     return TeedStreams("%s.tee()" % self.varId)
 
@@ -149,8 +142,7 @@ class WritableStreamDefaultWriter(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/desiredSize
+			https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/desiredSize
     """
     return "%s.desiredSize" % self.varId
 
@@ -163,8 +155,7 @@ class WritableStreamDefaultWriter(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/closed
+			https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/closed
     """
     return JsObjects.JsPromise("%s.writer" % self.varId)
 
@@ -177,8 +168,7 @@ class WritableStreamDefaultWriter(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/ready
+			https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/ready
     """
     return JsObjects.JsPromise("%s.ready" % self.varId)
 
@@ -190,8 +180,7 @@ class WritableStreamDefaultWriter(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/abort
+			https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/abort
     """
     if reason is None:
       return JsObjects.JsPromise("%s.abort()" % self.varId)
@@ -207,8 +196,7 @@ class WritableStreamDefaultWriter(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/close
+			https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/close
     """
     return JsObjects.JsPromise("%s.close()" % self.varId)
 
@@ -220,8 +208,7 @@ class WritableStreamDefaultWriter(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/releaseLock
+			https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/releaseLock
     """
     return self.fnc_closure("%s.releaseLock()" % self.varId)
 
@@ -233,8 +220,7 @@ class WritableStreamDefaultWriter(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/write
+			https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/write
 
     Attributes:
     ----------
@@ -263,8 +249,7 @@ class WritableStream(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStream/abort
+			https://developer.mozilla.org/en-US/docs/Web/API/WritableStream/abort
     """
     if reason is None:
       return JsObjects.JsPromise("%s.abort()" % self.varId)
@@ -283,8 +268,7 @@ class WritableStream(JsPackage):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/WritableStream/getWriter
+			https://developer.mozilla.org/en-US/docs/Web/API/WritableStream/getWriter
     """
     return WritableStreamDefaultWriter("%s.getWriter()" % self.varId)
 

@@ -3,8 +3,9 @@ The location object contains information about the current URL.
 
 The location object is part of the window object and is accessed through the window.location property.
 
-Documentation:
-https://www.w3schools.com/jsref/obj_location.asp
+Related Pages:
+
+			https//www.w3schools.com/jsref/obj_location.asp
 
 """
 
@@ -25,8 +26,9 @@ class JsLocation(object):
     Example
     rptObj.location.hostname
 
-    Documentation:
-    https://www.w3schools.com/jsref/obj_location.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/obj_location.asp
 
     :return: Return the hostname property
     """
@@ -40,8 +42,9 @@ class JsLocation(object):
     Example
     jsObj.location.pathname
 
-    Documentation:
-    https://www.w3schools.com/jsref/obj_location.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/obj_location.asp
 
     :return: Return the pathname property
     """
@@ -55,8 +58,9 @@ class JsLocation(object):
     Example
     jsObj.location.host
 
-    Documentation:
-    https://www.w3schools.com/jsref/prop_loc_host.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/prop_loc_host.asp
 
     :return: Return the hostname and port of the current URL
     """
@@ -70,8 +74,9 @@ class JsLocation(object):
     Example
     jsObj.location.hash
 
-    Documentation:
-    https://www.w3schools.com/jsref/prop_loc_hash.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/prop_loc_hash.asp
 
     :return: A String, representing the anchor part of the URL, including the hash sign (#)
     """
@@ -82,8 +87,9 @@ class JsLocation(object):
     """
     The search property sets or returns the querystring part of a URL, including the question mark (?).
 
-    Documentation:
-    https://www.w3schools.com/jsref/prop_loc_search.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/prop_loc_search.asp
 
     :return: A String, representing the querystring part of a URL, including the question mark (?)
     """
@@ -94,8 +100,9 @@ class JsLocation(object):
     """
     The port property sets or returns the port number the server uses for a URL.
 
-    Documentation:
-    https://www.w3schools.com/jsref/prop_loc_port.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/prop_loc_port.asp
 
     :return: A String, representing the port number of a URL.
     """
@@ -109,8 +116,9 @@ class JsLocation(object):
     Example
     rptObj.js.location.origin + rptObj.js.location.pathname
 
-    Documentation:
-    https://www.w3schools.com/jsref/prop_loc_origin.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/prop_loc_origin.asp
 
     :return: A String, representing the protocol (including ://), the domain name (or IP address) and port number (including the colon sign (:) of the URL.
              For URL's using the "file:" protocol, the return value differs between browser
@@ -124,8 +132,9 @@ class JsLocation(object):
     Example
     rptObj.js.location.href("https://www.w3schools.com/howto/howto_js_fullscreen.asp")
 
-    Documentation
-    https://www.w3schools.com/jsref/prop_loc_href.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/prop_loc_href.asp
 
     :param href: Set the href property
 
@@ -145,8 +154,9 @@ class JsLocation(object):
     Example
     rptObj.js.location.open_new_tab("www.google.fr")
 
-    Documentation
-    https://www.w3schools.com/Jsref/met_win_open.asp
+    Related Pages:
+
+			https://www.w3schools.com/Jsref/met_win_open.asp
 
     :param url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with about:blank is opened
     :param name: Optional. Specifies the target attribute or the name of the window. Default _blank
@@ -190,8 +200,9 @@ class JsLocation(object):
 
     The reload() method does the same as the reload button in your browser.
 
-    Documentation:
-    https://www.w3schools.com/jsref/met_loc_reload.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/met_loc_reload.asp
 
     :param forceGet: Optional. Specifies the type of reloading:
           false - Default. Reloads the current page from the cache.
@@ -206,8 +217,9 @@ class JsLocation(object):
     """
     The assign() method loads a new document.
 
-    Documentation:
-    https://www.w3schools.com/jsref/met_loc_assign.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/met_loc_assign.asp
 
     :param url: Required. Specifies the URL of the page to navigate to
 
@@ -222,8 +234,9 @@ class JsLocation(object):
 
     The difference between this method and assign(), is that replace() removes the URL of the current document from the document history, meaning that it is not possible to use the "back" button to navigate back to the original document.
 
-    Documentation:
-    https://www.w3schools.com/jsref/met_loc_replace.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/met_loc_replace.asp
 
     :param url: Required. Specifies the URL of the page to navigate to
     :param secured: Optional. If the http is missing. This will be used to fix the url
@@ -239,8 +252,9 @@ class JsLocation(object):
     """
     This method will create a internal form and submit the response exactly like a post of a form to another page
 
-    Documentation
-    https://www.w3schools.com/jsref/dom_obj_form.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/dom_obj_form.asp
 
     :param url: The target url
     :param data: A python dictionary

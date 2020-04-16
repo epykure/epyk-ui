@@ -19,9 +19,7 @@ class JsSelectItem():
     ------------
 
     Related Pages:
-
-
-    :param attrs:
+:param attrs:
     """
     return JsObjects.JsObjects.get("%s.css(%s)" % (self._selector, attrs))
 
@@ -57,8 +55,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:
     ----------
@@ -90,8 +87,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
     """
     if 'multiple' in self._src.attr:
       return JsObjects.JsObjects.get("%s.val([]).selectpicker('refresh')" % (self._src.dom.jquery.varId))
@@ -118,9 +114,7 @@ class JSelect(JsPackage):
     """
 
     Related Pages:
-
-
-    :param value:
+:param value:
 
     :return:
     """
@@ -134,8 +128,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('deselectAll')" % self._src.dom.jquery.varId)
 
@@ -147,8 +140,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('selectAll')" % self._src.dom.jquery.varId)
 
@@ -161,8 +153,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('render')" % self._src.dom.jquery.varId)
 
@@ -173,8 +164,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('refresh')" % self._src.dom.jquery.varId)
 
@@ -186,8 +176,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('toggle')" % self._src.dom.jquery.varId)
 
@@ -199,8 +188,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('hide')" % self._src.dom.jquery.varId)
 
@@ -212,8 +200,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%s.selectpicker('show')" % self._src.dom.jquery.varId)
 
@@ -225,8 +212,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:
     ----------
@@ -245,8 +231,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:
     ----------
@@ -287,8 +272,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://jqueryui.com/
+			https://jqueryui.com/
 
     :rtype: JsQuery.JQuery
     """
@@ -304,8 +288,7 @@ class JSelect(JsPackage):
 
     Related Pages:
 
-
-    https://github.com/truckingsim/Ajax-Bootstrap-Select
+			https://github.com/truckingsim/Ajax-Bootstrap-Select
 
     Usage::
 

@@ -34,8 +34,7 @@ class RadialGradient(object):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createRadialGradient
+			https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/createRadialGradient
 
     Attributes:
     ----------
@@ -66,8 +65,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_arc.asp
+			https://www.w3schools.com/tags/canvas_arc.asp
 
     Attributes:
     ----------
@@ -88,8 +86,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_beginpath.asp
+			https://www.w3schools.com/tags/canvas_beginpath.asp
     """
     return "%s.beginPath()" % self.varId
 
@@ -101,8 +98,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_beziercurveto.asp
+			https://www.w3schools.com/tags/canvas_beziercurveto.asp
 
     Attributes:
     ----------
@@ -123,8 +119,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_clearrect.asp
+			https://www.w3schools.com/tags/canvas_clearrect.asp
 
     Attributes:
     ----------
@@ -143,8 +138,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_clip.asp
+			https://www.w3schools.com/tags/canvas_clip.asp
     """
     return "%s.clip()" % self.varId
 
@@ -156,8 +150,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_closepath.asp
+			https://www.w3schools.com/tags/canvas_closepath.asp
     """
     return "%s.closePath()" % self.varId
 
@@ -171,8 +164,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_createpattern.asp
+			https://www.w3schools.com/tags/canvas_createpattern.asp
 
     Attributes:
     ----------
@@ -191,8 +183,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_createradialgradient.asp
+			https://www.w3schools.com/tags/canvas_createradialgradient.asp
 
     Attributes:
     ----------
@@ -224,8 +215,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_createlineargradient.asp
+			https://www.w3schools.com/tags/canvas_createlineargradient.asp
 
     Attributes:
     ----------
@@ -246,8 +236,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_fill.asp
+			https://www.w3schools.com/tags/canvas_fill.asp
 
     Attributes:
     ----------
@@ -266,8 +255,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_fillstyle.asp
+			https://www.w3schools.com/tags/canvas_fillstyle.asp
 
     Attributes:
     ----------
@@ -284,8 +272,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_filltext.asp
+			https://www.w3schools.com/tags/canvas_filltext.asp
 
     Attributes:
     ----------
@@ -314,8 +301,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_linecap.asp
+			https://www.w3schools.com/tags/canvas_linecap.asp
 
     Attributes:
     ----------
@@ -332,8 +318,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_linejoin.asp
+			https://www.w3schools.com/tags/canvas_linejoin.asp
 
     Attributes:
     ----------
@@ -350,8 +335,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_lineto.asp
+			https://www.w3schools.com/tags/canvas_lineto.asp
 
     Attributes:
     ----------
@@ -368,8 +352,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_linewidth.asp
+			https://www.w3schools.com/tags/canvas_linewidth.asp
 
     Attributes:
     ----------
@@ -385,8 +368,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_moveto.asp
+			https://www.w3schools.com/tags/canvas_moveto.asp
 
     Attributes:
     ----------
@@ -403,8 +385,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_rect.asp
+			https://www.w3schools.com/tags/canvas_rect.asp
 
     Attributes:
     ----------
@@ -423,8 +404,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_rect.asp
+			https://www.w3schools.com/tags/canvas_rect.asp
 
     Attributes:
     ----------
@@ -443,8 +423,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_font.asp
+			https://www.w3schools.com/tags/canvas_font.asp
 
     Attributes:
     ----------
@@ -463,8 +442,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_globalalpha.asp
+			https://www.w3schools.com/tags/canvas_globalalpha.asp
 
     Attributes:
     ----------
@@ -480,8 +458,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_ispointinpath.asp
+			https://www.w3schools.com/tags/canvas_ispointinpath.asp
 
     Attributes:
     ----------
@@ -498,8 +475,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_measuretext.asp
+			https://www.w3schools.com/tags/canvas_measuretext.asp
 
     Attributes:
     ----------
@@ -519,8 +495,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_rotate.asp
+			https://www.w3schools.com/tags/canvas_rotate.asp
 
     Attributes:
     ----------
@@ -536,8 +511,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_scale.asp
+			https://www.w3schools.com/tags/canvas_scale.asp
 
     Attributes:
     ----------
@@ -554,8 +528,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_shadowblur.asp
+			https://www.w3schools.com/tags/canvas_shadowblur.asp
 
     Attributes:
     ----------
@@ -571,8 +544,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_shadowcolor.asp
+			https://www.w3schools.com/tags/canvas_shadowcolor.asp
 
     Attributes:
     ----------
@@ -589,8 +561,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_shadowoffsetx.asp
+			https://www.w3schools.com/tags/canvas_shadowoffsetx.asp
 
     Attributes:
     ----------
@@ -606,8 +577,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_shadowoffsety.asp
+			https://www.w3schools.com/tags/canvas_shadowoffsety.asp
 
     Attributes:
     ----------
@@ -643,8 +613,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_strokestyle.asp
+			https://www.w3schools.com/tags/canvas_strokestyle.asp
 
     Attributes:
     ----------
@@ -660,8 +629,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_strokestyle.asp
+			https://www.w3schools.com/tags/canvas_strokestyle.asp
     """
 
   def strokeText(self, text, x, y, maxWidth=None):
@@ -672,8 +640,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_stroketext.asp
+			https://www.w3schools.com/tags/canvas_stroketext.asp
 
     Attributes:
     ----------
@@ -696,8 +663,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_textalign.asp
+			https://www.w3schools.com/tags/canvas_textalign.asp
 
     Attributes:
     ----------
@@ -713,8 +679,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_translate.asp
+			https://www.w3schools.com/tags/canvas_translate.asp
 
     Attributes:
     ----------
@@ -731,8 +696,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_textbaseline.asp
+			https://www.w3schools.com/tags/canvas_textbaseline.asp
 
     Attributes:
     ----------
@@ -748,8 +712,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_drawimage.asp
+			https://www.w3schools.com/tags/canvas_drawimage.asp
 
     Attributes:
     ----------
@@ -769,8 +732,7 @@ class Context2D(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/canvas_getimagedata.asp
+			https://www.w3schools.com/tags/canvas_getimagedata.asp
 
     Attributes:
     ----------
@@ -808,8 +770,7 @@ class Canvas(JsNodeDom.JsDoms):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
+			https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
 
     :rtype: Context2D
     """

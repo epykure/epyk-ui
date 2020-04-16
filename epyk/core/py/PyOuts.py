@@ -23,8 +23,7 @@ class OutBrowsers(object):
 
     Related Pages:
 
-
-    https://www.debuggex.com/cheatsheet/regex/python
+			https://www.debuggex.com/cheatsheet/regex/python
 
     Attributes:
     ----------
@@ -150,8 +149,7 @@ class PyOuts(object):
 
     Related Pages:
 
-
-    https://jupyter.org/
+			https://jupyter.org/
     """
     self.excluded_packages = ['bootstrap']
     return self
@@ -165,8 +163,7 @@ class PyOuts(object):
 
     Related Pages:
 
-
-    https://jupyter.org/
+			https://jupyter.org/
 
     :return: The ouput object with the function _repr_html_
     """
@@ -181,8 +178,7 @@ class PyOuts(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic
+			https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic
 
     Attributes:
     ----------
@@ -212,8 +208,7 @@ class PyOuts(object):
 
       Related Pages:
 
-
-    https://codepen.io/
+			https://codepen.io/
 
     Attributes:
     ----------
@@ -239,8 +234,7 @@ class PyOuts(object):
 
       Related Pages:
 
-
-    https://jsfiddle.net/
+			https://jsfiddle.net/
 
     Attributes:
     ----------

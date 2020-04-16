@@ -1,7 +1,9 @@
 """
 Theme module for the Blue classes
 
-https://htmlcolorcodes.com/color-chart/material-design-color-chart/
+Related Pages:
+
+		https://htmlcolorcodes.com/color-chart/material-design-color-chart/
 """
 
 from epyk.core.css.themes import Theme

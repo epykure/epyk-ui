@@ -99,8 +99,9 @@ def load_package(package_name, pip_attrs=None, action='install'):
   Example
   load_package("pandas")
 
-  Documentation
-  https://pypi.org/
+  Related Pages:
+
+			https://pypi.org/
 
   Attributes:
   ----------

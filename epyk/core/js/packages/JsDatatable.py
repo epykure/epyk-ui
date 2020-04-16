@@ -1,7 +1,9 @@
 """
 Javascript Interface to the Datatable Module
 
-https://datatables.net/reference/api/
+Related Pages:
+
+		https://datatables.net/reference/api/
 """
 
 from epyk.core.js import JsUtils
@@ -21,8 +23,9 @@ class SelectAPI(JsPackage):
     """
     Get the blurable state for the table
 
-    Documentation
-    https://datatables.net/reference/api/select.blurable()
+    Related Pages:
+
+			https://datatables.net/reference/api/select.blurable()
 
     :return:
     """
@@ -32,8 +35,9 @@ class SelectAPI(JsPackage):
     """
     Get / set the information summary display state.
 
-    Documentation
-    https://datatables.net/reference/api/select.info()
+    Related Pages:
+
+			https://datatables.net/reference/api/select.info()
 
     :param jsFlag: Value to set for the information summary display state - true to enable, false to disable.
     :return:
@@ -47,8 +51,9 @@ class SelectAPI(JsPackage):
     """
     Get / set the items that Select will select based on user interaction (rows, columns or cells).
 
-    Documentation
-    https://datatables.net/reference/api/select.items()
+    Related Pages:
+
+			https://datatables.net/reference/api/select.items()
 
     :return:
     """
@@ -58,8 +63,9 @@ class SelectAPI(JsPackage):
     """
     Get the current item selector string applied to the table.
 
-    Documentation
-    https://datatables.net/reference/api/select.selector()
+    Related Pages:
+
+			https://datatables.net/reference/api/select.selector()
 
     :return:
     """
@@ -69,8 +75,9 @@ class SelectAPI(JsPackage):
     """
     Get / set the style by which the end user can select items in the table.
 
-    Documentation
-    https://datatables.net/reference/api/select.style()
+    Related Pages:
+
+			https://datatables.net/reference/api/select.style()
 
     :return:
     """
@@ -86,8 +93,9 @@ class CellAPI(JsPackage):
     """
     Deselect a single cell
 
-    Documentation
-    https://datatables.net/reference/api/column().deselect()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().deselect()
 
     :return: DataTables API instance for chaining
     """
@@ -97,8 +105,9 @@ class CellAPI(JsPackage):
     """
     Select a single cell
 
-    Documentation
-    https://datatables.net/reference/api/cell().select()
+    Related Pages:
+
+			https://datatables.net/reference/api/cell().select()
 
     :return: DataTables API instance for chaining
     """
@@ -108,8 +117,9 @@ class CellAPI(JsPackage):
     """
     Get rendered data for a cell
 
-    Documentation
-    https://datatables.net/reference/api/cell().render()
+    Related Pages:
+
+			https://datatables.net/reference/api/cell().render()
 
     :return: DataTables API instance for chaining
     """
@@ -119,8 +129,9 @@ class CellAPI(JsPackage):
     """
     Get the DOM element for the selected cell
 
-    Documentation
-    https://datatables.net/reference/api/cell().node()
+    Related Pages:
+
+			https://datatables.net/reference/api/cell().node()
 
     :return: DataTables API instance for chaining
     """
@@ -130,8 +141,9 @@ class CellAPI(JsPackage):
     """
     Get the cell nodes for the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().nodes()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().nodes()
 
     :return:
     """
@@ -143,8 +155,9 @@ class CellAPI(JsPackage):
     """
     Invalidate the data held in DataTables for the selected cells
 
-    Documentation
-    https://datatables.net/reference/api/cell().invalidate()
+    Related Pages:
+
+			https://datatables.net/reference/api/cell().invalidate()
 
     :return: DataTables API instance for chaining
     """
@@ -154,8 +167,9 @@ class CellAPI(JsPackage):
     """
     Get index information about the selected cell
 
-    Documentation
-    https://datatables.net/reference/api/cell().index()
+    Related Pages:
+
+			https://datatables.net/reference/api/cell().index()
 
     :return:
     """
@@ -165,8 +179,9 @@ class CellAPI(JsPackage):
     """
     Get cached data of the cache type specified
 
-    Documentation
-    https://datatables.net/reference/api/cell().cache()
+    Related Pages:
+
+			https://datatables.net/reference/api/cell().cache()
 
     :return:
     """
@@ -175,8 +190,9 @@ class CellAPI(JsPackage):
     """
     Get / set data for the selected cell.
 
-    Documentation
-    https://datatables.net/reference/api/cell().data()
+    Related Pages:
+
+			https://datatables.net/reference/api/cell().data()
 
     :return:
     """
@@ -186,8 +202,9 @@ class CellAPI(JsPackage):
     """
     Focus on a cell.
 
-    Documentation
-    https://datatables.net/reference/api/cell().focus()
+    Related Pages:
+
+			https://datatables.net/reference/api/cell().focus()
 
     :return:
     """
@@ -197,8 +214,9 @@ class CellAPI(JsPackage):
     """
     Blur focus from the table.
 
-    Documentation
-    https://datatables.net/reference/api/cell.blur()
+    Related Pages:
+
+			https://datatables.net/reference/api/cell.blur()
 
     :return:
     """
@@ -214,8 +232,9 @@ class ColumnAPI(JsPackage):
     """
     Deselect a single column
 
-    Documentation
-    https://datatables.net/reference/api/column().deselect()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().deselect()
 
     :return: DataTables API instance for chaining
     """
@@ -225,8 +244,9 @@ class ColumnAPI(JsPackage):
     """
     Select a single column
 
-    Documentation
-    https://datatables.net/reference/api/column().select()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().select()
 
     :return: DataTables API instance for chaining
     """
@@ -236,8 +256,9 @@ class ColumnAPI(JsPackage):
     """
     Get the DataTables cached data for the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().cache()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().cache()
 
     :return:
     """
@@ -246,8 +267,9 @@ class ColumnAPI(JsPackage):
     """
     Get the data for the cells in the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().data()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().data()
 
     :return:
     """
@@ -257,8 +279,9 @@ class ColumnAPI(JsPackage):
     """
     Get the data source property for the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().dataSrc()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().dataSrc()
 
     :return:
     """
@@ -267,8 +290,9 @@ class ColumnAPI(JsPackage):
     """
     Get the footer node for the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().footer()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().footer()
 
     :return:
     """
@@ -277,8 +301,9 @@ class ColumnAPI(JsPackage):
     """
     Get the header node for the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().header()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().header()
 
     :return:
     """
@@ -287,8 +312,9 @@ class ColumnAPI(JsPackage):
     """
     Get the column index of the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().index()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().index()
 
     :return:
     """
@@ -298,8 +324,9 @@ class ColumnAPI(JsPackage):
     """
     Get the cell nodes for the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().nodes()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().nodes()
 
     :return:
     """
@@ -310,8 +337,9 @@ class ColumnAPI(JsPackage):
     """
     Get the cell nodes for the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().nodes()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().nodes()
 
     :return:
     """
@@ -323,8 +351,9 @@ class ColumnAPI(JsPackage):
     """
     Order the table by the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().order()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().order()
 
     :return:
     """
@@ -333,8 +362,9 @@ class ColumnAPI(JsPackage):
     """
     Search for data in the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().search()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().search()
 
     :return:
     """
@@ -344,8 +374,9 @@ class ColumnAPI(JsPackage):
     """
     Get / set the visibility of a single selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().visible()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().visible()
 
     :return: DataTables API instance for chaining
     """
@@ -355,8 +386,9 @@ class ColumnAPI(JsPackage):
     """
     Redraw the DataTables in the current context, optionally updating ordering, searching and paging as required.
 
-    Documentation
-    https://datatables.net/reference/api/draw()
+    Related Pages:
+
+			https://datatables.net/reference/api/draw()
 
     :return: DataTables API instance for chaining
     """
@@ -380,8 +412,9 @@ class RowChildAPI(JsPackage):
     """
     Hide the child row(s) of a parent row.
 
-    Documentation
-    https://datatables.net/reference/api/row().child.hide()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().child.hide()
 
     :return:
     """
@@ -403,8 +436,9 @@ class RowAPI(JsPackage):
 
     This mapping is done according to the Package API definition
 
-    Documentation
-    https://datatables.net/reference/api/
+    Related Pages:
+
+			https://datatables.net/reference/api/
 
     :param strFnc: The function string
     :param varId: The object reference for the Javascript side
@@ -420,8 +454,9 @@ class RowAPI(JsPackage):
     """
     This method simply deselects a single row that has been found by the row() selector method.
 
-    Documentation
-    https://datatables.net/reference/api/row().deselect()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().deselect()
 
     :return: DataTables API instance for chaining
     """
@@ -431,8 +466,9 @@ class RowAPI(JsPackage):
     """
     This method simply selects a single row that has been found by the row() selector method.
 
-    Documentation
-    https://datatables.net/reference/api/row().select()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().select()
 
     :return: DataTables API instance for chaining
     """
@@ -442,8 +478,9 @@ class RowAPI(JsPackage):
     """
     Redraw the table's scrolling display to show the row selected by the row() method.
 
-    Documentation
-    https://datatables.net/reference/api/row().scrollTo()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().scrollTo()
 
     :param animate: Animate the scroll (true) or not (false).
 
@@ -455,8 +492,9 @@ class RowAPI(JsPackage):
     """
     Get the DataTables cached data for the selected row.
 
-    Documentation
-    https://datatables.net/reference/api/row().cache()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().cache()
 
     :param dtype: Specify which cache the data should be read from. Can take one of two values: search or order.
                   Defaults to order if no value is given.
@@ -473,8 +511,9 @@ class RowAPI(JsPackage):
     """
     Retrieve the data for the whole table, in row index order.
 
-    Documentation
-    https://datatables.net/reference/api/row().data()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().data()
 
     :return: DataTables API instance for chaining
     """
@@ -485,8 +524,9 @@ class RowAPI(JsPackage):
     This method can be used to get a row's id, as specified by the row's data and the rowId option.
     Optionally it can also prepend a hash (#) to the row id allowing it to then easily be used as a selector.
 
-    Documentation
-    https://datatables.net/reference/api/row().id()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().id()
 
     :param hash: Append a hash (#) to the start of the row id. This can be useful for then using the id as a selector
 
@@ -499,8 +539,9 @@ class RowAPI(JsPackage):
     """
     Get the row index of the selected row.
 
-    Documentation
-    https://datatables.net/reference/api/row().index()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().index()
 
     :return: Row index
     """
@@ -510,8 +551,9 @@ class RowAPI(JsPackage):
     """
     Invalidate the data held in DataTables for the selected row.
 
-    Documentation
-    https://datatables.net/reference/api/row().invalidate()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().invalidate()
 
     :param source:
 
@@ -523,8 +565,9 @@ class RowAPI(JsPackage):
     """
     Get the row TR node for the selected row.
 
-    Documentation
-    https://datatables.net/reference/api/row().node()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().node()
 
     :return:
     """
@@ -534,8 +577,9 @@ class RowAPI(JsPackage):
     """
     Get the cell nodes for the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().nodes()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().nodes()
 
     :return:
     """
@@ -547,8 +591,9 @@ class RowAPI(JsPackage):
     """
     Delete the selected row from the DataTable.
 
-    Documentation
-    https://datatables.net/reference/api/row().remove()
+    Related Pages:
+
+			https://datatables.net/reference/api/row().remove()
 
     :param update:
 
@@ -564,8 +609,9 @@ class RowAPI(JsPackage):
     """
     Add a new row to the table.
 
-    Documentation
-    https://datatables.net/reference/api/row.add()
+    Related Pages:
+
+			https://datatables.net/reference/api/row.add()
 
     :param jsData: The input data
     :param toArray: Boolean. Convert a python dictionary to a list
@@ -595,8 +641,9 @@ class RowAPI(JsPackage):
     """
     Redraw the DataTables in the current context, optionally updating ordering, searching and paging as required.
 
-    Documentation
-    https://datatables.net/reference/api/draw()
+    Related Pages:
+
+			https://datatables.net/reference/api/draw()
 
     :return:
     """
@@ -610,8 +657,9 @@ class RowAPI(JsPackage):
     Row child method
     Get / set the child rows of the selected main table row
 
-    Documentation
-    https://datatables.net/reference/api/row().child
+    Related Pages:
+
+			https://datatables.net/reference/api/row().child
 
     :param namespace: Boolean to set the level of this method, selected rows or namespace
     """
@@ -629,8 +677,9 @@ class DatatableAPI(JsPackage):
     """
     Get the tbody node for the table in the API's context.
 
-    Documentation
-    https://datatables.net/reference/api/table().body()
+    Related Pages:
+
+			https://datatables.net/reference/api/table().body()
 
     :return:
     """
@@ -641,8 +690,9 @@ class DatatableAPI(JsPackage):
     """
     Link to the single row API
 
-    Documentation
-    https://datatables.net/reference/api/row()
+    Related Pages:
+
+			https://datatables.net/reference/api/row()
     """
     return RowAPI(self.src, selector="%s.row()" % self.varId, setVar=False, parent=self._parent)
 
@@ -651,8 +701,9 @@ class DatatableAPI(JsPackage):
     """
     Link to the rows API
 
-    Documentation
-    https://datatables.net/reference/api/rows()
+    Related Pages:
+
+			https://datatables.net/reference/api/rows()
     """
     return RowAPI(self.src, selector="%s.rows()" % self.varId, setVar=False, parent=self._parent)
 
@@ -660,8 +711,9 @@ class DatatableAPI(JsPackage):
     """
     Get the div container node for the table in the API's context.
 
-    Documentation
-    https://datatables.net/reference/api/table().container()
+    Related Pages:
+
+			https://datatables.net/reference/api/table().container()
 
     :return:
     """
@@ -671,8 +723,9 @@ class DatatableAPI(JsPackage):
     """
     Get the div container node for the table in the API's context.
 
-    Documentation
-    https://datatables.net/reference/api/table().container()
+    Related Pages:
+
+			https://datatables.net/reference/api/table().container()
 
     :return:
     """
@@ -682,8 +735,9 @@ class DatatableAPI(JsPackage):
     """
     Get the tfoot node for the table in the API's context
 
-    Documentation
-    https://datatables.net/reference/api/table().footer()
+    Related Pages:
+
+			https://datatables.net/reference/api/table().footer()
 
     :return:
     """
@@ -692,8 +746,9 @@ class DatatableAPI(JsPackage):
     """
     Get the thead node for the table in the API's context
 
-    Documentation
-    https://datatables.net/reference/api/table().header()
+    Related Pages:
+
+			https://datatables.net/reference/api/table().header()
 
     :return:
     """
@@ -702,8 +757,9 @@ class DatatableAPI(JsPackage):
     """
     Get the table node for the table in the API's context.
 
-    Documentation
-    https://datatables.net/reference/api/table().node()
+    Related Pages:
+
+			https://datatables.net/reference/api/table().node()
 
     :return:
     """
@@ -713,8 +769,9 @@ class DatatableAPI(JsPackage):
     """
     Get the cell nodes for the selected column.
 
-    Documentation
-    https://datatables.net/reference/api/column().nodes()
+    Related Pages:
+
+			https://datatables.net/reference/api/column().nodes()
 
     :return:
     """
@@ -724,8 +781,9 @@ class DatatableAPI(JsPackage):
     """
     Clear the table of all data:
 
-    Documentation
-    https://datatables.net/reference/api/clear()
+    Related Pages:
+
+			https://datatables.net/reference/api/clear()
 
     :param update: Boolean
     :return:
@@ -740,8 +798,9 @@ class DatatableAPI(JsPackage):
     """
     Retrieve the data for the whole table, in row index order.
 
-    Documentation
-    https://datatables.net/reference/api/data()
+    Related Pages:
+
+			https://datatables.net/reference/api/data()
 
     :return:
     """
@@ -752,8 +811,9 @@ class DatatableAPI(JsPackage):
     Restore the tables in the current context to its original state in the DOM by removing all of DataTables enhancements,
     alterations to the DOM structure of the table and event listeners.
 
-    Documentation
-    https://datatables.net/reference/api/destroy()
+    Related Pages:
+
+			https://datatables.net/reference/api/destroy()
 
     :param remove: Boolean, Completely remove the table from the DOM (true) or leave it in the DOM in its original plain un-enhanced HTML state (default, false).
     :param checkUndefined: Boolean
@@ -766,8 +826,9 @@ class DatatableAPI(JsPackage):
     """
     Redraw the DataTables in the current context, optionally updating ordering, searching and paging as required.
 
-    Documentation
-    https://datatables.net/reference/api/draw()
+    Related Pages:
+
+			https://datatables.net/reference/api/draw()
 
     :return:
     """
@@ -782,8 +843,9 @@ class DatatableAPI(JsPackage):
     Example
 
 
-    DOcumentation
-    https://datatables.net/reference/api/order()
+    Related Pages:
+
+			https://datatables.net/reference/api/order()
 
     :return:
     """
@@ -796,8 +858,9 @@ class DatatableAPI(JsPackage):
   def page(self, action):
     """
 
-    Documentation
-    https://datatables.net/reference/api/page()
+    Related Pages:
+
+			https://datatables.net/reference/api/page()
 
     :return:
     """
@@ -809,8 +872,9 @@ class DatatableAPI(JsPackage):
   def search(self, jsData):
     """
 
-    Documentation
-    https://datatables.net/reference/api/search()
+    Related Pages:
+
+			https://datatables.net/reference/api/search()
 
     :param jsData:
     :return:
@@ -821,8 +885,9 @@ class DatatableAPI(JsPackage):
   def settings(self):
     """
 
-    Documentation
-    https://datatables.net/reference/api/settings()
+    Related Pages:
+
+			https://datatables.net/reference/api/settings()
 
     :return:
     """
@@ -832,8 +897,9 @@ class DatatableAPI(JsPackage):
     """
     Get the last saved state of the table.
 
-    Documentation
-    https://datatables.net/reference/api/state()
+    Related Pages:
+
+			https://datatables.net/reference/api/state()
 
     :return:
     """
@@ -843,8 +909,9 @@ class DatatableAPI(JsPackage):
     """
     Select cells found by both row and column selectors
 
-    Documentation
-    https://datatables.net/reference/api/cells()
+    Related Pages:
+
+			https://datatables.net/reference/api/cells()
     https://datatables.net/reference/api/cell()
 
     :return:
@@ -885,8 +952,9 @@ class DatatableAPI(JsPackage):
     """
     Initialise Select from outside of the constructor
 
-    Documentation
-    https://datatables.net/reference/api/select()
+    Related Pages:
+
+			https://datatables.net/reference/api/select()
 
     TODO add the select true
     :return:

@@ -265,9 +265,7 @@ class ExtsFormattors(DataGroup):
     The buttonTick formater displays a tick icon on each row (for use as a button)
 
     Related Pages:
-
-
-    http://tabulator.info/docs/4.1/format
+http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'buttonTick'
     if kwargs:
@@ -281,9 +279,7 @@ class ExtsFormattors(DataGroup):
     The buttonCross formater displays a cross icon on each row (for use as a button)
 
     Related Pages:
-
-
-    http://tabulator.info/docs/4.1/format
+http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'buttonCross'
     if kwargs:
@@ -297,9 +293,7 @@ class ExtsFormattors(DataGroup):
     The rownum formatter shows an incrementing row number for each row as it is displayed
 
     Related Pages:
-
-
-    http://tabulator.info/docs/4.1/format
+http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'rownum'
     if kwargs:
@@ -313,9 +307,7 @@ class ExtsFormattors(DataGroup):
     The handle formatter fills the cell with hamburger bars, to be used as a row handle
 
     Related Pages:
-
-
-    http://tabulator.info/docs/4.1/format
+http://tabulator.info/docs/4.1/format
     """
     self._attrs["formatter"] = 'handle'
     if kwargs:
@@ -329,9 +321,7 @@ class ExtsFormattors(DataGroup):
     -----------
 
     Related Pages:
-
-
-    http://tabulator.info/docs/4.1/format
+http://tabulator.info/docs/4.1/format
 
     Attributes:
     ----------

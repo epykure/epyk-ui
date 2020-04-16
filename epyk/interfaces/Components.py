@@ -81,8 +81,7 @@ class Components(object):
 
     Related Pages:
 
-
-    https://codemirror.net/doc/manual.html
+			https://codemirror.net/doc/manual.html
     """
     return CompCodes.Code(self)
 
@@ -334,8 +333,9 @@ class Components(object):
     ------------
     Group all the Forms components dedicated to drop data.
 
-    Documentation
-    https://www.w3schools.com/html/html_forms.asp
+    Related Pages:
+
+			https://www.w3schools.com/html/html_forms.asp
     """
     return CompForms.Forms(self)
 
@@ -377,9 +377,7 @@ class Components(object):
     Internal function to register a HTML component based on its memory id.
 
     Related Pages:
-
-
-    :param html_comp: The html component
+:param html_comp: The html component
 
     return the html component
     """
@@ -394,9 +392,7 @@ class Components(object):
     Add a content table to the page
 
     Related Pages:
-
-
-    :param width: Optional. A tuple with the integer for the component width and its unit
+:param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -460,10 +456,7 @@ class Components(object):
       rptObj.ui.title("Test").attach_menu(menu)
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param records: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -485,10 +478,7 @@ class Components(object):
     Usage::
 
       Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param records:
     :param color:
@@ -515,8 +505,7 @@ class Components(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav
+			https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav
 
     Attributes:
     ----------

@@ -11,8 +11,9 @@ class JsFor(object):
 
     The loop will continue to run as long as the condition is true. It will only stop when the condition becomes false.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_for.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_for.asp
     https://www.w3schools.com/js/js_performance.asp
 
     :param jsIterable:

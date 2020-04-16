@@ -52,8 +52,7 @@ class ChartLine(Chart):
 
     Related Pages:
 
-
-    https://www.tutorialspoint.com/dcjs/dcjs_line_chart.htm
+			https://www.tutorialspoint.com/dcjs/dcjs_line_chart.htm
 
     :rtype: JsChartDC.JsLine
     """
@@ -75,8 +74,7 @@ class ChartBar(Chart):
 
     Related Pages:
 
-
-    https://www.tutorialspoint.com/dcjs/dcjs_bar_chart.htm
+			https://www.tutorialspoint.com/dcjs/dcjs_bar_chart.htm
 
     :rtype: JsDc.Bar
     """
@@ -112,8 +110,7 @@ class ChartScatter(Chart):
 
     Related Pages:
 
-
-    https://www.tutorialspoint.com/dcjs/dcjs_scatter_plot.htm
+			https://www.tutorialspoint.com/dcjs/dcjs_scatter_plot.htm
 
     :rtype: JsDc.Scatter
     """
@@ -136,8 +133,7 @@ class ChartBubble(Chart):
 
     Related Pages:
 
-
-    https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
+			https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
 
     :rtype: JsDc.Bubble
     """
@@ -158,8 +154,7 @@ class ChartPie(Chart):
 
     Related Pages:
 
-
-    https://www.tutorialspoint.com/dcjs/dcjs_pie_chart.htm
+			https://www.tutorialspoint.com/dcjs/dcjs_pie_chart.htm
 
     :rtype: JsDc.Pie
     """
@@ -193,8 +188,7 @@ class ChartSeries(Chart):
 
     Related Pages:
 
-
-    https://www.tutorialspoint.com/dcjs/dcjs_series_chart.htm
+			https://www.tutorialspoint.com/dcjs/dcjs_series_chart.htm
 
     :rtype: JsDc.Series
     """

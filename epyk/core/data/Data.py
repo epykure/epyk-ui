@@ -156,8 +156,9 @@ class DataSrc(object):
     data = rptObj.data.pdf("document.pdf", r"")
     data.getPage(0)
 
-    Documentation
-    https://www.geeksforgeeks.org/working-with-pdf-files-in-python/
+    Related Pages:
+
+			https://www.geeksforgeeks.org/working-with-pdf-files-in-python/
 
     :param filename: The pdf file name
     :param path: The file path
@@ -181,8 +182,9 @@ class DataSrc(object):
     soap = rptObj.data.soap("http://www.soapclient.com/xml/soapresponder.wsdl")
     soap.Method1('Zeep', 'is cool')
 
-    Documentation
-    https://en.wikipedia.org/wiki/SOAP
+    Related Pages:
+
+			https://en.wikipedia.org/wiki/SOAP
     https://python-zeep.readthedocs.io/en/master/
 
     :param wsdl: The wsdl service url
@@ -201,8 +203,9 @@ class DataSrc(object):
     Example
     rptObj.data.rest("https://jsonplaceholder.typicode.com/posts/1", method="PUT")
 
-    Documentation
-    https://jsonrpcclient.readthedocs.io/en/latest/api.html
+    Related Pages:
+
+			https://jsonrpcclient.readthedocs.io/en/latest/api.html
 
     :param url: The REST service url
     :param data: The input data for the service
@@ -244,8 +247,9 @@ class DataSrc(object):
     for title in xml_soup.findAll('title'):
       print(title)
 
-    Documentation
-    https://pypi.org/project/beautifulsoup4/
+    Related Pages:
+
+			https://pypi.org/project/beautifulsoup4/
 
     :param url: The url of the html page
     :param method: Optional, The request method. Default method GET
@@ -267,8 +271,9 @@ class DataSrc(object):
     rptObj.data.webscrapping("https://www.w3schools.com/colors/default.asp")
     xml_soup.findAll('title')
 
-    Documentation
-    https://pypi.org/project/beautifulsoup4/
+    Related Pages:
+
+			https://pypi.org/project/beautifulsoup4/
 
     :param url: The url of the html page
     :param parser: The output data parser
@@ -296,8 +301,9 @@ class DataSrc(object):
 
     Example
 
-    Documentation
-    https://en.wikipedia.org/wiki/Rapid_control_prototyping
+    Related Pages:
+
+			https://en.wikipedia.org/wiki/Rapid_control_prototyping
     https://gurujsonrpc.appspot.com/
     https://jsonrpcclient.readthedocs.io/en/latest/
 
@@ -325,8 +331,9 @@ class DataSrc(object):
     data = grpc.imp("helloworld_pb2").HelloRequest(name="Test")
     print(grpc.request("SayHello", data))
 
-    Documentation
-    https://grpc.io/docs/tutorials/basic/python/
+    Related Pages:
+
+			https://grpc.io/docs/tutorials/basic/python/
     https://grpc.io/docs/quickstart/python.html
 
     :param serviceName: The Service name (the class name in the python module)

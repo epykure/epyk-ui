@@ -98,8 +98,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/css/css3_animations.asp
+			https://www.w3schools.com/css/css3_animations.asp
     """
     return self.htmlObj.css("animation")
 
@@ -127,8 +126,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_animation-direction.asp
+			https://www.w3schools.com/cssref/css3_pr_animation-direction.asp
     """
     return self.htmlObj.css("animation-direction")
 
@@ -148,8 +146,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_animation-duration.asp
+			https://www.w3schools.com/cssref/css3_pr_animation-duration.asp
     """
     return self.htmlObj.css("animation-duration")
 
@@ -175,8 +172,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_animation-fill-mode.asp
+			https://www.w3schools.com/cssref/css3_pr_animation-fill-mode.asp
     """
     return self.htmlObj.css("animation-fill-mode")
 
@@ -194,8 +190,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_animation-iteration-count.asp
+			https://www.w3schools.com/cssref/css3_pr_animation-iteration-count.asp
     """
     return self.htmlObj.css("animation-iteration-count")
 
@@ -215,8 +210,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_animation-name.asp
+			https://www.w3schools.com/cssref/css3_pr_animation-name.asp
     """
     return self.htmlObj.css("animation-name")
 
@@ -244,8 +238,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_animation-timing-function.asp
+			https://www.w3schools.com/cssref/css3_pr_animation-timing-function.asp
     """
     return self.htmlObj.css("animation-timing-function")
 
@@ -266,8 +259,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
+			https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
     """
     return self.htmlObj.css(autoPrefixer("appearance")[0])
 
@@ -286,8 +278,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_backface-visibility.asp
+			https://www.w3schools.com/cssref/css3_pr_backface-visibility.asp
     """
     return self.htmlObj.css("backface-visibility")
 
@@ -307,8 +298,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_background.asp
+			https://www.w3schools.com/cssref/css3_pr_background.asp
     """
     return self.htmlObj.css("background")
 
@@ -352,8 +342,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_background-color.asp
+			https://www.w3schools.com/cssref/pr_background-color.asp
     """
     return self.htmlObj.css("background-color")
 
@@ -424,8 +413,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_border.asp
+			https://www.w3schools.com/cssref/pr_border.asp
 
     Usage::
 
@@ -495,8 +483,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_border-collapse.asp
+			https://www.w3schools.com/cssref/pr_border-collapse.asp
     """
     return self.htmlObj.css("border-collapse")
 
@@ -605,8 +592,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_border-radius.asp
+			https://www.w3schools.com/cssref/css3_pr_border-radius.asp
     """
     return self.htmlObj.css("border-radius")
 
@@ -658,8 +644,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_border-spacing.asp
+			https://www.w3schools.com/cssref/pr_border-spacing.asp
     """
     return self.htmlObj.css("border-spacing")
 
@@ -743,8 +728,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_pos_bottom.asp
+			https://www.w3schools.com/cssref/pr_pos_bottom.asp
     """
     return self.htmlObj.css("bottom")
 
@@ -764,8 +748,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_box-decoration-break.asp
+			https://www.w3schools.com/cssref/css3_pr_box-decoration-break.asp
     """
     return self.htmlObj.css("box-decoration-break")
 
@@ -783,8 +766,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_box-shadow.asp
+			https://www.w3schools.com/cssref/css3_pr_box-shadow.asp
     """
     return self.htmlObj.css("box-shadow")
 
@@ -852,8 +834,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_text_color.asp
+			https://www.w3schools.com/cssref/pr_text_color.asp
     """
     return self.htmlObj.css("color")
 
@@ -975,8 +956,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_class_cursor.asp
+			https://www.w3schools.com/cssref/pr_class_cursor.asp
     """
     return self.htmlObj.css("cursor")
 
@@ -1004,8 +984,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_class_display.asp
+			https://www.w3schools.com/cssref/pr_class_display.asp
     """
     return self.htmlObj.css("display")
 
@@ -1095,8 +1074,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_class_float.asp
+			https://www.w3schools.com/cssref/pr_class_float.asp
     """
     return self.htmlObj.css("float")
 
@@ -1126,8 +1104,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_font_font-family.asp
+			https://www.w3schools.com/cssref/pr_font_font-family.asp
     """
     return self.htmlObj.css("font-family")
 
@@ -1153,8 +1130,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_font_font-size.asp
+			https://www.w3schools.com/cssref/pr_font_font-size.asp
     """
     return self.htmlObj.css("font-size")
 
@@ -1206,8 +1182,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_font_weight.asp
+			https://www.w3schools.com/cssref/pr_font_weight.asp
     """
     return self.htmlObj.css("font-weight")
 
@@ -1379,8 +1354,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_dim_height.asp
+			https://www.w3schools.com/cssref/pr_dim_height.asp
     """
     return self.htmlObj.css("height")
 
@@ -1417,8 +1391,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_justify-content.asp
+			https://www.w3schools.com/cssref/css3_pr_justify-content.asp
     """
     return self.htmlObj.css("justify-content")
 
@@ -1437,8 +1410,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_pos_left.asp
+			https://www.w3schools.com/cssref/pr_pos_left.asp
     """
     return self.htmlObj.css("left")
 
@@ -1468,8 +1440,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_dim_line-height.asp
+			https://www.w3schools.com/cssref/pr_dim_line-height.asp
     """
     return self.htmlObj.css("line-height")
 
@@ -1525,8 +1496,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_margin.asp
+			https://www.w3schools.com/cssref/pr_margin.asp
     """
     return self.htmlObj.css("margin")
 
@@ -1548,8 +1518,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_margin-bottom.asp
+			https://www.w3schools.com/cssref/pr_margin-bottom.asp
     """
     return self.htmlObj.css("margin-bottom")
 
@@ -1571,8 +1540,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_margin-left.asp
+			https://www.w3schools.com/cssref/pr_margin-left.asp
     """
     return self.htmlObj.css("margin-left")
 
@@ -1594,8 +1562,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_margin-right.asp
+			https://www.w3schools.com/cssref/pr_margin-right.asp
     """
     return self.htmlObj.css("margin-right")
 
@@ -1615,8 +1582,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_margin-top.asp
+			https://www.w3schools.com/cssref/pr_margin-top.asp
     """
     return self.htmlObj.css("margin-top")
 
@@ -1694,8 +1660,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_opacity.asp
+			https://www.w3schools.com/cssref/css3_pr_opacity.asp
     """
     return self.htmlObj.css("opacity")
 
@@ -1785,8 +1750,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/css/css_padding.asp
+			https://www.w3schools.com/css/css_padding.asp
     """
     return self.htmlObj.css("padding")
 
@@ -1816,8 +1780,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_padding-left.asp
+			https://www.w3schools.com/cssref/pr_padding-left.asp
     """
     return self.htmlObj.css("padding-left")
 
@@ -1847,8 +1810,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_padding-top.asp
+			https://www.w3schools.com/cssref/pr_padding-top.asp
     """
     return self.htmlObj.css("padding-top")
 
@@ -1916,8 +1878,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_class_position.asp
+			https://www.w3schools.com/cssref/pr_class_position.asp
     """
     return self.htmlObj.css("position")
 
@@ -1954,8 +1915,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_pos_right.asp
+			https://www.w3schools.com/cssref/pr_pos_right.asp
     """
     return self.htmlObj.css("right")
 
@@ -1999,8 +1959,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_text_text-align.ASP
+			https://www.w3schools.com/cssref/pr_text_text-align.ASP
     """
     return self.htmlObj.css("text-align")
 
@@ -2087,8 +2046,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_text-shadow.asp
+			https://www.w3schools.com/cssref/css3_pr_text-shadow.asp
     """
     return self.htmlObj.css("text-shadow")
 
@@ -2108,8 +2066,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_text_text-transform.asp
+			https://www.w3schools.com/cssref/pr_text_text-transform.asp
     """
     return self.htmlObj.css("text-transform")
 
@@ -2127,8 +2084,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke
+			https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke
     """
     return self.htmlObj.css("-webkit-text-stroke")
 
@@ -2146,8 +2102,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-width
+			https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-width
     """
     return self.htmlObj.css("-webkit-text-stroke-width")
 
@@ -2165,8 +2120,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-color
+			https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-text-stroke-color
     """
     return self.htmlObj.css("-webkit-text-stroke-color")
 
@@ -2185,8 +2139,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_pos_top.asp
+			https://www.w3schools.com/cssref/pr_pos_top.asp
     """
     return self.htmlObj.css("top")
 
@@ -2207,8 +2160,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_transform.asp
+			https://www.w3schools.com/cssref/css3_pr_transform.asp
     """
     return self.htmlObj.css("transform")
 
@@ -2295,8 +2247,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css3_pr_user-select.asp
+			https://www.w3schools.com/cssref/css3_pr_user-select.asp
     """
     return self.htmlObj.css("user-select")
 
@@ -2316,8 +2267,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_pos_vertical-align.asp
+			https://www.w3schools.com/cssref/pr_pos_vertical-align.asp
     """
     return self.htmlObj.css("vertical-align")
 
@@ -2357,8 +2307,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_dim_width.asp
+			https://www.w3schools.com/cssref/pr_dim_width.asp
     """
     return self.htmlObj.css("width")
 
@@ -2414,8 +2363,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_pos_z-index.asp
+			https://www.w3schools.com/cssref/pr_pos_z-index.asp
     """
     return self.htmlObj.css("z-index")
 
@@ -2441,8 +2389,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_sticky_element
+			https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_sticky_element
 
     Attributes:
     ----------
@@ -2476,8 +2423,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/css/css3_shadows.asp
+			https://www.w3schools.com/css/css3_shadows.asp
 
     Attributes:
     ----------
@@ -2497,8 +2443,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/css/css3_shadows.asp
+			https://www.w3schools.com/css/css3_shadows.asp
 
     Attributes:
     ----------
@@ -2518,8 +2463,7 @@ class CssMixin(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/css/css3_shadows.asp
+			https://www.w3schools.com/css/css3_shadows.asp
     """
     self.text_shadow = "0 0 3px #FF0000, 0 0 5px #0000FF"
     return self

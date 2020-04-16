@@ -1,8 +1,12 @@
 """
 Module dedicated to perform the data transformation for the Billboard / C3 charts
 
-https://naver.github.io/billboard.js/
-https://c3js.org/
+Related Pages:
+
+		https://naver.github.io/billboard.js/
+Related Pages:
+
+		https://c3js.org/
 """
 
 from epyk.core.js import JsUtils

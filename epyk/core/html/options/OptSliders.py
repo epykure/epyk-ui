@@ -13,8 +13,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-animate
+			https://api.jqueryui.com/slider/#option-animate
     """
     return self._report._jsStyles.get('animate', False)
 
@@ -34,8 +33,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-classes
+			https://api.jqueryui.com/slider/#option-classes
     """
     return self._report._jsStyles.get('classes')
 
@@ -53,8 +51,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-disabled
+			https://api.jqueryui.com/slider/#option-disabled
     """
     return self._report._jsStyles.get('disabled', False)
 
@@ -72,8 +69,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-max
+			https://api.jqueryui.com/slider/#option-max
     """
     return self._report._jsStyles.get('max', 100)
 
@@ -91,8 +87,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-min
+			https://api.jqueryui.com/slider/#option-min
     """
     return self._report._jsStyles.get('min', 0)
 
@@ -111,8 +106,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-orientation
+			https://api.jqueryui.com/slider/#option-orientation
     """
     return self._report._jsStyles.get('orientation', "horizontal")
 
@@ -130,8 +124,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-range
+			https://api.jqueryui.com/slider/#option-range
     """
     return self._report._jsStyles.get('range', False)
 
@@ -150,8 +143,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-step
+			https://api.jqueryui.com/slider/#option-step
     """
     return self._report._jsStyles.get('step', 1)
 
@@ -170,8 +162,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-value
+			https://api.jqueryui.com/slider/#option-value
     """
     return self._report._jsStyles.get('value', 0)
 
@@ -190,8 +181,7 @@ class OptionsSlider(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#option-values
+			https://api.jqueryui.com/slider/#option-values
     """
     return self._report._jsStyles.get('values', 0)
 
@@ -212,8 +202,7 @@ class OptionsProgBar(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#option-classes
+			https://api.jqueryui.com/progressbar/#option-classes
     """
     return self._report._jsStyles.get('classes')
 
@@ -255,8 +244,7 @@ class OptionsProgBar(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#option-disabled
+			https://api.jqueryui.com/progressbar/#option-disabled
     """
     return self._report._jsStyles.get('disabled', False)
 
@@ -274,8 +262,7 @@ class OptionsProgBar(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#option-max
+			https://api.jqueryui.com/progressbar/#option-max
     """
     return self._report._jsStyles.get('max', 100)
 
@@ -293,8 +280,7 @@ class OptionsProgBar(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#option-value
+			https://api.jqueryui.com/progressbar/#option-value
     """
     return self._report._jsStyles.get('value', False)
 
@@ -317,8 +303,7 @@ class OptionsMenu(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#option-classes
+			https://api.jqueryui.com/menu/#option-classes
     """
     return self._report._jsStyles.get('classes', {})
 
@@ -336,8 +321,7 @@ class OptionsMenu(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#option-disabled
+			https://api.jqueryui.com/menu/#option-disabled
     """
     return self._report._jsStyles.get('disabled', False)
 
@@ -355,8 +339,7 @@ class OptionsMenu(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#option-icons
+			https://api.jqueryui.com/menu/#option-icons
     """
     return self._report._jsStyles.get('icons')
 
@@ -376,8 +359,7 @@ class OptionsMenu(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#option-position
+			https://api.jqueryui.com/menu/#option-position
     """
     return self._report._jsStyles.get('position')
 
@@ -398,8 +380,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-appendTo
+			https://api.jqueryui.com/dialog/#option-appendTo
     """
     return self._report._jsStyles.get('appendTo', 'body')
 
@@ -418,8 +399,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-autoOpen
+			https://api.jqueryui.com/dialog/#option-autoOpen
     """
     return self._report._jsStyles.get('autoOpen', True)
 
@@ -439,8 +419,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-classes
+			https://api.jqueryui.com/dialog/#option-classes
     """
     return self._report._jsStyles.get('classes', {})
 
@@ -458,8 +437,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-closeOnEscape
+			https://api.jqueryui.com/dialog/#option-closeOnEscape
     """
     return self._report._jsStyles.get('closeOnEscape', True)
 
@@ -477,8 +455,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-closeText
+			https://api.jqueryui.com/dialog/#option-closeText
     """
     return self._report._jsStyles.get('closeText', True)
 
@@ -496,8 +473,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-draggable
+			https://api.jqueryui.com/dialog/#option-draggable
     """
     return self._report._jsStyles.get('draggable', True)
 
@@ -515,8 +491,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-height
+			https://api.jqueryui.com/dialog/#option-height
     """
     return self._report._jsStyles.get('draggable', 'auto')
 
@@ -534,8 +509,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-hide
+			https://api.jqueryui.com/dialog/#option-hide
     """
     return self._report._jsStyles.get('draggable', None)
 
@@ -553,8 +527,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-maxHeight
+			https://api.jqueryui.com/dialog/#option-maxHeight
     """
     return self._report._jsStyles.get('maxHeight', None)
 
@@ -572,8 +545,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-maxWidth
+			https://api.jqueryui.com/dialog/#option-maxWidth
     """
     return self._report._jsStyles.get("option", {})('maxWidth', None)
 
@@ -591,8 +563,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-minHeight
+			https://api.jqueryui.com/dialog/#option-minHeight
     """
     return self._report._jsStyles.get("option", {})('minHeight', None)
 
@@ -610,8 +581,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-minWidth
+			https://api.jqueryui.com/dialog/#option-minWidth
     """
     return self._report._jsStyles.get("option", {})('minWidth', None)
 
@@ -630,8 +600,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-modal
+			https://api.jqueryui.com/dialog/#option-modal
     """
     return self._report._jsStyles.get("option", {})('modal', True)
 
@@ -643,8 +612,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-position
+			https://api.jqueryui.com/dialog/#option-position
     """
     self._report._jsStyles['position'] = {"my": "center", "at": "center", "of": "window"}
     return self
@@ -663,8 +631,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-resizable
+			https://api.jqueryui.com/dialog/#option-resizable
     """
     return self._report._jsStyles.get("option", {})('resizable', True)
 
@@ -682,8 +649,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-title
+			https://api.jqueryui.com/dialog/#option-title
     """
     return self._report._jsStyles.get('title', None)
 
@@ -701,8 +667,7 @@ class OptionDialog(Options):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#option-title
+			https://api.jqueryui.com/dialog/#option-title
     """
     return self._report._jsStyles.get('width', 300)
 

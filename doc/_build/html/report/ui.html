@@ -233,8 +233,12 @@ Components can be self contained in a module and rely on external packages</p>
 <dl class="py method">
 <dt id="epyk.interfaces.Components.Components.codes">
 <em class="property">property </em><code class="sig-name descname">codes</code><a class="headerlink" href="#epyk.interfaces.Components.Components.codes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Group all the UI Components dedicated to display code fragments</p>
+<dd><dl>
+<dt>Description:</dt><dd><p>Group all the UI Components dedicated to display code fragments</p>
 <p>This will wrap the Javascript module codemirror</p>
+<p>Related Pages:</p>
+</dd>
+</dl>
 <p><a class="reference external" href="https://codemirror.net/doc/manual.html">https://codemirror.net/doc/manual.html</a></p>
 </dd></dl>
 
@@ -247,14 +251,15 @@ Components can be self contained in a module and rely on external packages</p>
 <dl class="py method">
 <dt id="epyk.interfaces.Components.Components.contents">
 <code class="sig-name descname">contents</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">'Contents'</span></em>, <em class="sig-param"><span class="n">top</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">right</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">left</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.contents" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a content table to the page</p>
+<dd><blockquote>
+<div><p>Add a content table to the page</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
-<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
-<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
-</ul>
+<dd class="field-odd"><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit
+:param height: Optional. A tuple with the integer for the component height and its unit
+:param profile: Optional. A flag to set the component performance storage</p>
 </dd>
 </dl>
 </dd></dl>
@@ -262,24 +267,21 @@ Components can be self contained in a module and rely on external packages</p>
 <dl class="py method">
 <dt id="epyk.interfaces.Components.Components.context_menu">
 <code class="sig-name descname">context_menu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">visible</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.context_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
+<dd><blockquote>
+<div><p>Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
 This component is generic is need to be added to a component to work</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">menu</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">context_menu</span><span class="p">([{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="s1">&#39;alert(&quot;ok&quot;)&#39;</span><span class="p">}])</span>
 <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">attach_menu</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>records</strong> – Optional.</p></li>
-<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
-<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
-<li><p><strong>visible</strong> – Optional.</p></li>
-<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
-</ul>
-</dd>
-</dl>
+<p>Related Pages:</p>
+</div></blockquote>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">----------</code></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py method">
@@ -297,7 +299,7 @@ This component is generic is need to be added to a component to work</p>
 <dl class="py attribute">
 <dt id="epyk.interfaces.Components.Components.disclaimer">
 <code class="sig-name descname">disclaimer</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.disclaimer" title="Permalink to this definition">¶</a></dt>
-<dd><p>shortcut for footer <code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompModals.Modals.disclaimer()</span></code></p>
+<dd><p>shortcut for footer <a class="reference internal" href="ui/compositions/Modals.html#epyk.interfaces.components.CompModals.Modals.disclaimer" title="epyk.interfaces.components.CompModals.Modals.disclaimer"><code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompModals.Modals.disclaimer()</span></code></a></p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -527,23 +529,18 @@ Those components are interactive and they would require underlying services and 
 <dl class="py method">
 <dt id="epyk.interfaces.Components.Components.options_bar">
 <code class="sig-name descname">options_bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">border_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.options_bar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a bespoke options / actions bar with icons</p>
+<dd><blockquote>
+<div><p>Add a bespoke options / actions bar with icons</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>records</strong> – </p></li>
-<li><p><strong>color</strong> – </p></li>
-<li><p><strong>border_color</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
-<li><p><strong>options</strong> – </p></li>
-</ul>
-</dd>
-</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">----------</code></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py method">
@@ -566,13 +563,17 @@ Those components are interactive and they would require underlying services and 
 <dl class="py method">
 <dt id="epyk.interfaces.Components.Components.register">
 <code class="sig-name descname">register</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">html_comp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.register" title="Permalink to this definition">¶</a></dt>
-<dd><p>Internal function to register a HTML component based on its memory id.</p>
+<dd><blockquote>
+<div><p>Internal function to register a HTML component based on its memory id.</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>html_comp</strong> – The html component</p>
+<dd class="field-odd"><p><strong>html_comp</strong> – <p>The html component</p>
+<p>return the html component</p>
+</p>
 </dd>
 </dl>
-<p>return the html component</p>
 </dd></dl>
 
 <dl class="py method">
@@ -597,18 +598,23 @@ Those components are interactive and they would require underlying services and 
 <dl class="py method">
 <dt id="epyk.interfaces.Components.Components.side_bar">
 <code class="sig-name descname">side_bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">links</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">servers</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">position</span><span class="o">=</span><span class="default_value">'right'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.side_bar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a side Bar to the report.</p>
+<dd><blockquote>
+<div><p>Add a side Bar to the report.</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav">https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>links</strong> – </p></li>
-<li><p><strong>color</strong> – </p></li>
-<li><p><strong>servers</strong> – </p></li>
-<li><p><strong>position</strong> – </p></li>
-</ul>
-</dd>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param links</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param color</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param servers</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param position</dt>
+<dd class="field-even"><p></p></dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py attribute">

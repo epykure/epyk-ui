@@ -11,8 +11,7 @@ class InnerButtons(DataClass):
     Being able to let your users know what will happen when they activate a button is obviously fundamentally important to the Buttons extension and this option provides exactly that ability.
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.text
+			https://datatables.net/reference/option/buttons.buttons.text
     """
     return self._attrs['text']
 
@@ -29,8 +28,7 @@ class InnerButtons(DataClass):
     This will normally be to perform some operation on the DataTable, but can be absolutely anything since the function can be defined by yourself.
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.action
+			https://datatables.net/reference/option/buttons.buttons.action
     """
     return self._attrs['action']
 
@@ -47,8 +45,7 @@ class InnerButtons(DataClass):
     This can be useful for customisation of attributes such as ARIA assistive attributes, setting a custom id for selection / styling, custom data parameters, etc.
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.attr
+			https://datatables.net/reference/option/buttons.buttons.attr
     """
     return self._attrs['attr']
 
@@ -64,8 +61,7 @@ class InnerButtons(DataClass):
     Set the class name for the button.
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.className
+			https://datatables.net/reference/option/buttons.buttons.className
     """
     return self._attrs['className']
 
@@ -81,8 +77,7 @@ class InnerButtons(DataClass):
     Ensure that any requirements have been satisfied before initialising a button
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.available
+			https://datatables.net/reference/option/buttons.buttons.available
     """
     return self._attrs['available']
 
@@ -99,8 +94,7 @@ class InnerButtons(DataClass):
     It is most likely to be of use when using the API methods that can control the button's enabled state after initialisation:
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.enabled
+			https://datatables.net/reference/option/buttons.buttons.enabled
     """
     return self._attrs["enabled"]
 
@@ -117,8 +111,7 @@ class InnerButtons(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.extend
+			https://datatables.net/reference/option/buttons.buttons.extend
     """
     return self._attrs["extend"]
 
@@ -135,8 +128,7 @@ class InnerButtons(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.key
+			https://datatables.net/reference/option/buttons.buttons.key
     """
     return self._attrs["key"]
 
@@ -153,8 +145,7 @@ class InnerButtons(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.name
+			https://datatables.net/reference/option/buttons.buttons.name
     """
     return self._attrs["name"]
 
@@ -171,8 +162,7 @@ class InnerButtons(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.tag
+			https://datatables.net/reference/option/buttons.buttons.tag
     """
     return self._attrs["tag"]
 
@@ -190,8 +180,7 @@ class InnerButtons(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.titleAttr
+			https://datatables.net/reference/option/buttons.buttons.titleAttr
     """
     return self._attrs["titleAttr"]
 
@@ -301,8 +290,7 @@ class Buttons(DataClass):
       where the list element is just a container and not the button itself (Zurb Foundation requires this for example).
       Related Pages:
 
-
-      https://datatables.net/reference/option/buttons.buttons.buttonContainer
+			https://datatables.net/reference/option/buttons.buttons.buttonContainer
       """
       return self.sub_data('buttonContainer', self.Container)
 
@@ -316,8 +304,7 @@ class Buttons(DataClass):
       It can also be disabled if you wish to have minimal markup in your document.
       Related Pages:
 
-
-      https://datatables.net/reference/option/buttons.buttons.buttonLiner
+			https://datatables.net/reference/option/buttons.buttons.buttonLiner
       """
       return self.sub_data('buttonLiner', self.ButtonLiner)
 
@@ -330,8 +317,7 @@ class Buttons(DataClass):
       It in turn contains the sub-buttons of the collection.
       Related Pages:
 
-
-      https://datatables.net/reference/option/buttons.buttons.collection
+			https://datatables.net/reference/option/buttons.buttons.collection
       """
       return self.sub_data('collection', self.Collection)
 
@@ -344,8 +330,7 @@ class Buttons(DataClass):
       With this option the tag type and class name can be specified using the tag and className properties of this object.
       Related Pages:
 
-
-      https://datatables.net/reference/option/buttons.buttons.button
+			https://datatables.net/reference/option/buttons.buttons.button
       """
       return self.sub_data('button', self.DomButton)
 
@@ -359,8 +344,7 @@ class Buttons(DataClass):
     It is most likely to be of use when using the API methods that can control the button's enabled state after initialisation:
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.buttons.enabled
+			https://datatables.net/reference/option/buttons.buttons.enabled
     """
     return self._attrs["enabled"]
 
@@ -384,8 +368,7 @@ class Buttons(DataClass):
     Set a name for the instance for the group selector.
     Related Pages:
 
-
-    https://datatables.net/reference/option/buttons.name
+			https://datatables.net/reference/option/buttons.name
     """
     return self._attrs['name']
 

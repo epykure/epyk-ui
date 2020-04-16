@@ -1,7 +1,9 @@
 """
 Module in charge of the PivotTable library
 
-https://pivottable.js.org/examples/
+Related Pages:
+
+		https://pivottable.js.org/examples/
 """
 
 import json
@@ -81,8 +83,9 @@ class PivotTable(Html.Html):
         value = 'return this.keyAgg'
         format = 'return numberWithCommas(x.toFixed(%(digits)s))'
 
-    Documentation
-    https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
+    Related Pages:
+
+			https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
     """
     if not ':dsc:' in aggCls.__doc__:
       raise Exception("The new Aggregator class %s must have a doc string with a :dsc: field !" % aggCls.name)

@@ -106,8 +106,7 @@ class Select(Html.Html):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/methods/
+			https://developer.snapappointments.com/bootstrap-select/methods/
 
     Attributes:
     ----------

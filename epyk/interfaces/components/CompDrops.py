@@ -26,10 +26,7 @@ class DropData(object):
       rptObj.ui.drops.dropfile()
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param placeholder:
     :param tooltip:

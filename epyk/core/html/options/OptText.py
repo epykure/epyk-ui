@@ -12,9 +12,7 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-
-
-    """
+"""
     return self._config_get(False)
 
   @reset.setter
@@ -31,8 +29,7 @@ class OptionsText(Options):
 
     Related Pages:
 
-
-    https://github.com/showdownjs/showdown
+			https://github.com/showdownjs/showdown
     """
     return self._config_get(False, 'showdown')
 
@@ -52,8 +49,7 @@ class OptionsText(Options):
 
     Related Pages:
 
-
-    https://github.com/showdownjs/showdown
+			https://github.com/showdownjs/showdown
     """
     return self._config_get(False)
 
@@ -70,9 +66,7 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-
-
-    """
+"""
     return self._config_get(None, 'limit_char')
 
   @limit_char.setter
@@ -86,9 +80,7 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-
-
-    """
+"""
     return self._config_get(self._report.theme.danger[1])
 
   @red.setter
@@ -102,9 +94,7 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-
-
-    """
+"""
     return self._config_get(self._report.theme.success[1])
 
   @green.setter
@@ -118,9 +108,7 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-
-
-    """
+"""
     return self._config_get(self._report.theme.warning[1])
 
   @orange.setter
@@ -134,9 +122,7 @@ class OptionsText(Options):
     ------------
 
     Related Pages:
-
-
-    """
+"""
     return self._config_get('none')
 
   @font_size.setter
@@ -153,9 +139,7 @@ class OptionsTitle(OptionsText):
     ------------
 
     Related Pages:
-
-
-    """
+"""
     return self._config_get(True)
 
   @content_table.setter
@@ -173,9 +157,7 @@ class OptionsNumber(OptionsText):
     decimal point separator
 
     Related Pages:
-
-
-    http://openexchangerates.github.io/accounting.js/
+http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get(0)
 
@@ -191,9 +173,7 @@ class OptionsNumber(OptionsText):
     controls output: %s = symbol, %v = value/number
 
     Related Pages:
-
-
-    http://openexchangerates.github.io/accounting.js/
+http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get("%s%v")
 
@@ -209,9 +189,7 @@ class OptionsNumber(OptionsText):
     default currency symbol is ''
 
     Related Pages:
-
-
-    http://openexchangerates.github.io/accounting.js/#documentation
+http://openexchangerates.github.io/accounting.js/#documentation
     """
     return self._config_get("")
 
@@ -228,9 +206,7 @@ class OptionsNumber(OptionsText):
     thousands separator
 
     Related Pages:
-
-
-    http://openexchangerates.github.io/accounting.js/
+http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get(",")
 
@@ -246,9 +222,7 @@ class OptionsNumber(OptionsText):
     decimal point separator
 
     Related Pages:
-
-
-    http://openexchangerates.github.io/accounting.js/
+http://openexchangerates.github.io/accounting.js/
     """
     return self._config_get(".")
 

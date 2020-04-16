@@ -1,7 +1,9 @@
 """
 Wrapper for the Javascript Math module
 
-https://www.w3schools.com/jsref/jsref_obj_math.asp
+Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_obj_math.asp
 """
 
 
@@ -19,8 +21,9 @@ class JsMaths(object):
     Example
     jsObj.math.E
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_e.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_e.asp
 
     :return: Returns Euler's number (approx. 2.718)
     """
@@ -34,8 +37,9 @@ class JsMaths(object):
     Example
     jsObj.math.LN2
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_ln2.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_ln2.asp
 
     :return: Returns the natural logarithm of 2 (approx. 0.693)
     """
@@ -49,8 +53,9 @@ class JsMaths(object):
     Example
     jsObj.math.LN10
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_ln10.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_ln10.asp
 
     :return: Returns the natural logarithm of 10 (approx. 2.302)
     """
@@ -64,8 +69,9 @@ class JsMaths(object):
     Example
     jsObj.math.LOG2E
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_log2e.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_log2e.asp
 
     :return: Returns the base-2 logarithm of E (approx. 1.442)
     """
@@ -79,8 +85,9 @@ class JsMaths(object):
     Example
     jsObj.math.SQRT1_2
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_sqrt1_2.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_sqrt1_2.asp
 
     :return: Returns the square root of 1/2 (approx. 0.707)
     """
@@ -97,8 +104,9 @@ class JsMaths(object):
     Example
     rptObj.js.math.SQRT2
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_sqrt2.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_sqrt2.asp
 
     :return: Returns the square root of 2 (approx. 1.414)
     """
@@ -121,8 +129,9 @@ class JsMaths(object):
     rptObj.js.math.random()
     jsObj.math.random(10, 100)
 
-    Documentation
-    https://www.w3schools.com/js/js_random.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_random.asp
 
     :return: A Number, representing a number from 0 up to but not including 1
     """
@@ -140,8 +149,9 @@ class JsMaths(object):
     Example
     jsObj.math.min(10, 45, 100, -3, 56)
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_min.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_min.asp
 
     :param args: Optional. One or more numbers to compare
 
@@ -157,8 +167,9 @@ class JsMaths(object):
     Example
     jsObj.math.max(10, 45, 100, -3, 56)
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_max.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_max.asp
     https://www.jstips.co/en/javascript/calculate-the-max-min-value-from-an-array/
 
     :param args: Optional. One or more numbers to compare
@@ -178,8 +189,9 @@ class JsMaths(object):
     Example
     jsObj.math.floor(13.566)
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_floor.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_floor.asp
 
     :param number: Required. The number you want to round
 
@@ -195,8 +207,9 @@ class JsMaths(object):
     Example
     rptObj.js.math.trunc(rptObj.js.math.SQRT2)
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_trunc.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_trunc.asp
 
     :param number: Required. A number
 
@@ -209,8 +222,9 @@ class JsMaths(object):
     """
     The abs() method returns the absolute value of a number.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_abs.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_abs.asp
 
     :param number: Required. A number
 
@@ -223,8 +237,9 @@ class JsMaths(object):
     """
     The acos() method returns the cosinus of a number as a value value between 0 and PI radians.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_cos.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_cos.asp
 
     :param number: Returns the cosine of x (x is in radians)
 
@@ -237,8 +252,9 @@ class JsMaths(object):
     """
     The sin() method returns the sinus of a number as a value value between 0 and PI radians.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_sin.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_sin.asp
 
     :param number: Returns the sinus of x (x is in radians)
 
@@ -251,8 +267,9 @@ class JsMaths(object):
     """
     The log() method returns the natural logarithm (base E) of a number.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_log.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_log.asp
 
     :param number: Required. A number
 
@@ -265,8 +282,9 @@ class JsMaths(object):
     """
     The exp() method returns the value of Ex, where E is Euler's number (approximately 2.7183) and x is the number passed to it.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_exp.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_exp.asp
 
     :param number: Required. A number
 
@@ -285,8 +303,9 @@ class JsMaths(object):
     jsObj.objects.number.new(23.6, varName="MyNumber")
     jsObj.math.round(jsObj.objects.number.get("MyNumber"))
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_round.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_round.asp
 
     :param number: Required. The number to be rounded
 
@@ -303,8 +322,9 @@ class JsMaths(object):
     jsObj.objects.number.new(23.6, varName="MyNumber")
     jsObj.math.sqrt(jsObj.objects.number.get("MyNumber"))
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_sqrt.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_sqrt.asp
 
     :param number: Required. A number
 
@@ -320,8 +340,9 @@ class JsMaths(object):
     Example
     jsObj.math.ceil(jsObj.objects.number.get("MyNumber"))
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_ceil.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_ceil.asp
 
     :param number: Required. The number you want to round
 
@@ -339,8 +360,9 @@ class JsMaths(object):
     jsObj.objects.number.new(23.6, varName="MyNumber")
     jsObj.math.pow(jsObj.objects.number.get("MyNumber"), 2)
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_pow.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_pow.asp
 
     :param number: Required. The base
     :param power: Required. The exponent

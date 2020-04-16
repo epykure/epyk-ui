@@ -21,8 +21,7 @@ class Meta(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/html/html_head.asp
+      https://www.w3schools.com/html/html_head.asp
 
     Attributes:
     ----------
@@ -43,8 +42,7 @@ class Meta(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_meta.asp
+			https://www.w3schools.com/tags/tag_meta.asp
 
     Attributes:
     ----------
@@ -65,8 +63,7 @@ class Meta(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_meta.asp
+			https://www.w3schools.com/tags/tag_meta.asp
 
     Attributes:
     ----------
@@ -108,8 +105,7 @@ class Meta(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/html/html_head.asp
+			https://www.w3schools.com/html/html_head.asp
 
     Attributes:
     ----------
@@ -132,8 +128,7 @@ class Meta(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/html/html_head.asp
+			https://www.w3schools.com/html/html_head.asp
 
     Attributes:
     ----------
@@ -222,8 +217,7 @@ class Header(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_meta.asp
+			https://www.w3schools.com/tags/tag_meta.asp
 
     :rtype: Meta
     """
@@ -243,8 +237,7 @@ class Header(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_title.asp
+			https://www.w3schools.com/tags/tag_title.asp
 
     Attributes:
     ----------
@@ -264,8 +257,7 @@ class Header(object):
 
       Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_base.asp
+			https://www.w3schools.com/tags/tag_base.asp
 
     Attributes:
     ----------
@@ -290,8 +282,7 @@ class Header(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_link.asp
+			https://www.w3schools.com/tags/tag_link.asp
 
     Attributes:
     ----------

@@ -19,8 +19,7 @@ class Code(object):
 
     Related Pages:
 
-
-    https://codemirror.net/index.html
+			https://codemirror.net/index.html
 
     Attributes:
     ----------
@@ -52,8 +51,7 @@ class Code(object):
 
     Related Pages:
 
-
-    https://codemirror.net/index.html
+			https://codemirror.net/index.html
 
     Attributes:
     ----------
@@ -85,8 +83,7 @@ class Code(object):
 
     Related Pages:
 
-
-    https://codemirror.net/index.html
+			https://codemirror.net/index.html
 
     Attributes:
     ----------
@@ -118,8 +115,7 @@ class Code(object):
 
     Related Pages:
 
-
-    https://codemirror.net/index.html
+			https://codemirror.net/index.html
 
     Attributes:
     ----------
@@ -151,8 +147,7 @@ class Code(object):
 
     Related Pages:
 
-
-    https://codemirror.net/index.html
+			https://codemirror.net/index.html
 
     Attributes:
     ----------
@@ -184,8 +179,7 @@ class Code(object):
 
     Related Pages:
 
-
-    https://codemirror.net/index.html
+			https://codemirror.net/index.html
 
     Attributes:
     ----------
@@ -217,8 +211,7 @@ class Code(object):
 
     Related Pages:
 
-
-    https://codemirror.net/index.html
+			https://codemirror.net/index.html
 
     Attributes:
     ----------
@@ -250,8 +243,7 @@ class Code(object):
 
     Related Pages:
 
-
-    https://codemirror.net/index.html
+			https://codemirror.net/index.html
 
     Attributes:
     ----------
@@ -283,8 +275,7 @@ class Code(object):
 
     Related Pages:
 
-
-    https://codemirror.net/index.html
+			https://codemirror.net/index.html
 
     Attributes:
     ----------

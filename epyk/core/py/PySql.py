@@ -1,8 +1,9 @@
 """
 Base Class to create a database and perform SQL operations using the sqlalchemy interface
 
-Documentation
-https://www.pythonsheets.com/notes/python-sqlalchemy.html#join-joined-two-tables-via-join-statement
+Related Pages:
+
+			https://www.pythonsheets.com/notes/python-sqlalchemy.html#join-joined-two-tables-via-join-statement
 
 """
 
@@ -79,8 +80,9 @@ class SqlConn(object):
     Load a database schema from a python file.
     This will use the dialect available from SQLAlchemy
 
-    Documentation
-    https://www.sqlalchemy.org/
+    Related Pages:
+
+			https://www.sqlalchemy.org/
 
     :param filename: The database schema python file name
     :param reset: Boolean, flag to specify is the schema needs to be fully reloaded
@@ -349,8 +351,9 @@ class SqlConn(object):
     Example
     rptObj.db().delete('table1')
 
-    Documentation
-    https://docs.sqlalchemy.org/en/13/core/dml.html
+    Related Pages:
+
+			https://docs.sqlalchemy.org/en/13/core/dml.html
 
     :param table_name: Optional, The database table name
     :return: self
@@ -436,8 +439,9 @@ class SqlConn(object):
     db.insert('table1',[{'name': 'test'}], commit=True)
     db.insert("table", {"user_name": "Test", "data": "test"}, commit=True)
 
-    Documentation
-    https://docs.sqlalchemy.org/en/13/core/dml.html
+    Related Pages:
+
+			https://docs.sqlalchemy.org/en/13/core/dml.html
     https://docs.sqlalchemy.org/en/13/core/dml.html
 
     :param table_name: The database table name
@@ -643,8 +647,9 @@ class SqlConn(object):
     rptObj.db().drop('test')
     rptObj.db().drop('test', withCheck=False)
 
-    Documentation
-    https://docs.sqlalchemy.org/en/13/core/connections.html#sqlalchemy.engine.ResultProxy
+    Related Pages:
+
+			https://docs.sqlalchemy.org/en/13/core/connections.html#sqlalchemy.engine.ResultProxy
 
     :param table_name: The database table name
     :param validate: Boolean, Validation check before dropping the table
@@ -666,8 +671,9 @@ class SqlConn(object):
     """
     Execute the current SQL query
 
-    Documentation
-    https://docs.sqlalchemy.org/en/13/core/connections.html#sqlalchemy.engine.ResultProxy
+    Related Pages:
+
+			https://docs.sqlalchemy.org/en/13/core/connections.html#sqlalchemy.engine.ResultProxy
 
     :return: The SQL Result proxy
     """

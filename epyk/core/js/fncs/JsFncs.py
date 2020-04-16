@@ -409,8 +409,9 @@ class JsRegisteredFunctions(object):
     Create a anonymous / lambda function.
     Those functions are directly called when they are defined.
 
-    Documentation
-    https://www.w3schools.com/js/js_function_definition.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_function_definition.asp
 
     :param jsFnc:
     :param pmts:
@@ -438,8 +439,9 @@ class JsRegisteredFunctions(object):
     """
     Create a name function which can be then called later
 
-    Documentation
-    https://www.w3schools.com/js/js_function_definition.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_function_definition.asp
 
     :param fnc_name:
     :param jsFnc:

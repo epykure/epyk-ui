@@ -63,8 +63,9 @@ class CssGlobal(object):
     """
     Add a new CSS Class in the page header
 
-    Documentation
-    https://www.w3schools.com/html/html_css.asp
+    Related Pages:
+
+			https://www.w3schools.com/html/html_css.asp
 
     :param name: The CSS Style reference as a string
     :param attrs: The CSS attributes as a dictionary
@@ -78,8 +79,9 @@ class CssGlobal(object):
     """
     Add a new CSS Class in the page header
 
-    Documentation
-    https://www.w3schools.com/html/html_css.asp
+    Related Pages:
+
+			https://www.w3schools.com/html/html_css.asp
 
     :param html_id: The HTML object ID
     :param attrs: The CSS attributes as a dictionary
@@ -93,8 +95,9 @@ class CssGlobal(object):
     """
     Add a new CSS Class in the page header
 
-    Documentation
-    https://www.w3schools.com/html/html_css.asp
+    Related Pages:
+
+			https://www.w3schools.com/html/html_css.asp
 
     :param html_tag: The HTML object tag
     :param attrs: The CSS attributes as a dictionary
@@ -108,8 +111,9 @@ class CssGlobal(object):
     """
     Add a new CSS Class in the page header
 
-    Documentation
-    https://www.w3schools.com/html/html_css.asp
+    Related Pages:
+
+			https://www.w3schools.com/html/html_css.asp
 
     :param clss_nam: The CSS class name as a string
     :param attrs: The CSS attributes as a dictionary

@@ -27,7 +27,7 @@ class Messaging(object):
 
     Related Pages:
 
-    https://leaverou.github.io/bubbly/
+        https://leaverou.github.io/bubbly/
     http://manos.malihu.gr/jquery-custom-content-scroller/
 
     Attributes:
@@ -117,8 +117,7 @@ class Messaging(object):
 
     Related Pages:
 
-
-    https://getbootstrap.com/docs/4.0/components/alerts/
+			https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
 
@@ -167,7 +166,7 @@ class Messaging(object):
 
     Related Pages:
 
-    https://getbootstrap.com/docs/4.0/components/alerts/
+        https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
     ----------
@@ -209,7 +208,7 @@ class Messaging(object):
 
     Related Pages:
 
-    https://getbootstrap.com/docs/4.0/components/alerts/
+        https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
     ----------
@@ -242,7 +241,7 @@ class Messaging(object):
 
     Related Pages:
 
-    https://getbootstrap.com/docs/4.0/components/alerts/
+        https://getbootstrap.com/docs/4.0/components/alerts/
 
     :param title:
     :param value:
@@ -283,7 +282,7 @@ class Messaging(object):
 
     Related Pages:
 
-    https://getbootstrap.com/docs/4.0/components/alerts/
+        https://getbootstrap.com/docs/4.0/components/alerts/
 
     :param title:
     :param value:

@@ -14,8 +14,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -32,8 +31,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -50,8 +48,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -68,8 +65,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -88,8 +84,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -106,8 +101,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -124,8 +118,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -143,8 +136,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -161,8 +153,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -179,8 +170,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -199,8 +189,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -217,8 +206,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -235,8 +223,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -253,8 +240,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -271,8 +257,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -289,8 +274,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -307,8 +291,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -325,8 +308,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -344,8 +326,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -362,8 +343,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -380,8 +360,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -398,8 +377,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -416,8 +394,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -434,8 +411,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -452,8 +428,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -470,8 +445,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -488,8 +462,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -508,8 +481,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -526,8 +498,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -546,8 +517,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 
@@ -564,8 +534,7 @@ class OptionsSelect(Options):
 
     Related Pages:
 
-
-    https://developer.snapappointments.com/bootstrap-select/options/
+			https://developer.snapappointments.com/bootstrap-select/options/
     """
     return self._config_get(False)
 

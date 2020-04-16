@@ -1,5 +1,7 @@
 """
-https://www.w3schools.com/charsets/ref_utf_punctuation.asp
+Related Pages:
+
+		https://www.w3schools.com/charsets/ref_utf_punctuation.asp
 """
 
 from epyk.core.html.symboles import SymbSmileys
@@ -18,8 +20,9 @@ class Symboles(object):
   def shapes(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_utf_geometric.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_utf_geometric.asp
     """
     return SymbShapes
 
@@ -27,8 +30,9 @@ class Symboles(object):
   def punctuations(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_utf_punctuation.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_utf_punctuation.asp
     """
     return SymbPunctuations
 
@@ -36,8 +40,9 @@ class Symboles(object):
   def maths(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_utf_math.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_utf_math.asp
     """
     return SymbMaths
 
@@ -45,8 +50,9 @@ class Symboles(object):
   def emojis(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_emoji.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_emoji.asp
     """
     return SymbEmojis
 
@@ -54,8 +60,9 @@ class Symboles(object):
   def letters(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_utf_letterlike.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_utf_letterlike.asp
     """
     return SymbLetters
 
@@ -63,8 +70,9 @@ class Symboles(object):
   def currencies(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_utf_currency.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_utf_currency.asp
     """
     return SymbCurrencies
 
@@ -72,8 +80,9 @@ class Symboles(object):
   def smileys(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_emoji_smileys.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_emoji_smileys.asp
     """
     return SymbSmileys
 
@@ -81,8 +90,9 @@ class Symboles(object):
   def html(self):
     """
 
-    Documentation
-    https://www.w3schools.com/html/html_symbols.asp
+    Related Pages:
+
+			https://www.w3schools.com/html/html_symbols.asp
     https://www.w3schools.com/charsets/ref_utf_math.asp
     """
     return SymbHtml
@@ -91,8 +101,9 @@ class Symboles(object):
   def arrows(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_utf_arrows.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_utf_arrows.asp
     """
     return SymbArrows
 

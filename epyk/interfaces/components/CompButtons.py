@@ -59,8 +59,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_button.asp
+			https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -97,8 +96,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_button.asp
+			https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -135,8 +133,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_button.asp
+			https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -170,8 +167,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_button.asp
+			https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -206,8 +202,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_button.asp
+			https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -242,8 +237,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_button.asp
+			https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -279,8 +273,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp
+			https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp
 
     Attributes:
     ----------
@@ -328,9 +321,7 @@ class Buttons(object):
       - :class:`epyk.core.html.HtmlRadio.Switch`
 
     Related Pages:
-
-
-    http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
+http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     https://codepen.io/mburnette/pen/LxNxNg
 
     Attributes:
@@ -364,8 +355,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
+			https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
 
     Attributes:
     ----------
@@ -421,10 +411,7 @@ class Buttons(object):
       - :class:`epyk.core.html.HtmlButton.CheckButton`
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param flag: Optional. The value of the checkbox. Default False
     :param tooltip: Optional. A string with the value of the tooltip
@@ -455,8 +442,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://newseasandbeyond.wordpress.com/2014/01/27/creating-in-memory-zip-file-with-python/
+			https://newseasandbeyond.wordpress.com/2014/01/27/creating-in-memory-zip-file-with-python/
 
     Attributes:
     ----------
@@ -487,8 +473,7 @@ class Buttons(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
+			https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
 
     Attributes:
     ----------

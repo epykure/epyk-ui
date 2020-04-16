@@ -24,7 +24,7 @@ class Modals(object):
 
     Related Pages:
 
-    https://www.w3schools.com/w3css/w3css_modal.asp
+        https://www.w3schools.com/w3css/w3css_modal.asp
 
     Attributes:
     ----------
@@ -101,7 +101,7 @@ class Modals(object):
 
     Related Pages:
 
-    https://jqueryui.com/dialog/
+        https://jqueryui.com/dialog/
 
     Attributes:
     ----------

@@ -44,8 +44,7 @@ class Graphs(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/howto_css_skill_bar.asp
+			https://www.w3schools.com/howto/howto_css_skill_bar.asp
 
     Attributes:
     ----------
@@ -158,8 +157,7 @@ class Graphs(object):
 
     Related Pages:
 
-
-    https://omnipotent.net/jquery.sparkline/#s-about
+			https://omnipotent.net/jquery.sparkline/#s-about
 
     Attributes:
     ----------
@@ -193,10 +191,7 @@ class Graphs(object):
     Interface for the Plotly library
 
     Related Pages:
-
-
-
-    :return: A Python Plolty object
+:return: A Python Plolty object
     """
     return CompChartsPlotly.Plotly(self)
 
@@ -208,10 +203,7 @@ class Graphs(object):
     Interface for the ChartJs library
 
     Related Pages:
-
-
-
-    :return: A Python ChartJs object
+:return: A Python ChartJs object
     """
     return CompChartsChartJs.ChartJs(self)
 
@@ -223,10 +215,7 @@ class Graphs(object):
     Interface to the Javsacript C3 module
 
     Related Pages:
-
-
-
-    :return: A Python C3 object
+:return: A Python C3 object
     """
     return CompChartsC3.C3(self)
 
@@ -242,8 +231,7 @@ class Graphs(object):
 
     Related Pages:
 
-
-    https://naver.github.io/billboard.js/
+			https://naver.github.io/billboard.js/
 
     :return: A Python Billboard Object
     """
@@ -257,10 +245,7 @@ class Graphs(object):
     Interface to the Javascript Vis module
 
     Related Pages:
-
-
-
-    :return: A Python Vis object
+:return: A Python Vis object
     """
     return CompChartsVis.Vis(self)
 
@@ -272,9 +257,7 @@ class Graphs(object):
     Interface to the Javascript NVD3 library
 
     Related Pages:
-
-
-    http://nvd3.org/
+http://nvd3.org/
 
     :return: A Python NVD3 object
     """
@@ -295,9 +278,7 @@ class Graphs(object):
     ------------
 
     Related Pages:
-
-
-    """
+"""
     return CompChartsD3.D3(self)
 
   @property
@@ -309,8 +290,7 @@ class Graphs(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/graphics/svg_intro.asp
+			https://www.w3schools.com/graphics/svg_intro.asp
     """
     return CompChartsSvg.SVG(self)
 
@@ -321,7 +301,5 @@ class Graphs(object):
     ------------
 
     Related Pages:
-
-
-    """
+"""
     return CompChartsCanvas.Canvas(self)

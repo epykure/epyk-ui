@@ -4,7 +4,7 @@ from . import GraphChartJs
 from . import GraphVis
 from . import GraphSvg
 from . import GraphBillboard
-from . import GraphDC
+# from . import GraphDC
 from . import GraphD3
 from . import GraphPlotly
 from . import GraphSparklines

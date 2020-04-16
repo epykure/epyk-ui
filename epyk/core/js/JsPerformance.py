@@ -4,8 +4,9 @@ Wrapper to the Javascript Performance Module
 The Performance interface provides access to performance-related information for the current page.
 It's part of the High Resolution Time API, but is enhanced by the Performance Timeline API, the Navigation Timing API, the User Timing API, and the Resource Timing API
 
-Documentation
-https://developer.mozilla.org/fr/docs/Web/API/Performance
+Related Pages:
+
+			https://developer.mozilla.org/fr/docs/Web/API/Performance
 
 """
 
@@ -30,8 +31,9 @@ class JsPerformance(object):
     Example
     self._report.js.performance.add_profiling(fncs['content'])
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
 
     :param jsFnc: The Javascript functions
 
@@ -53,8 +55,9 @@ class JsPerformance(object):
     Example
     performance.clearMarks("a")
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMarks
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMarks
 
     :return: Void, the String for the Javascript side
     """
@@ -74,8 +77,9 @@ class JsPerformance(object):
     Example:
     performance.clearMeasures("a");
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMeasures
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMeasures
 
     :param name: Optional, The name of the mark to be cleared
 
@@ -95,8 +99,9 @@ class JsPerformance(object):
     Example
     performance.clearResourceTimings()
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearResourceTimings
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearResourceTimings
 
     :return: This method has no return value, but only the String for the Javascript side
     """
@@ -108,8 +113,9 @@ class JsPerformance(object):
     The list's members (entries) can be created by making performance marks or measures (for example by calling the mark() method) at explicit points in time.
     If you are only interested in performance entries of certain types or that have certain names, see getEntriesByType() and getEntriesByName().
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntries
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntries
 
     :return: An array of PerformanceEntry objects
     """
@@ -123,8 +129,9 @@ class JsPerformance(object):
     Example
     performance.getEntriesByName("Begin", "mark")
 
-    Documentation:
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByName
+    Related Pages:
+
+			https//developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByName
 
     :param name: The name of the entry to retrieve.
     :param type: Optional, The type of entry to retrieve such as "mark"
@@ -148,8 +155,9 @@ class JsPerformance(object):
     Example
     performance.getEntriesByType("mark")
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType
 
     :param type: The type of entry to retrieve such as "mark"
 
@@ -165,8 +173,9 @@ class JsPerformance(object):
     Example:
     performance.mark("a")
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/mark
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/mark
 
     :param name: A DOMString representing the name of the mark.
 
@@ -182,8 +191,9 @@ class JsPerformance(object):
     When measuring between two marks, there is a start mark and end mark, respectively.
     The named timestamp is referred to as a measure.
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure
 
     :param name: A DOMString representing the name of the measure
     :param startMark: Optional, A DOMString representing the name of the measure's starting mark
@@ -214,8 +224,9 @@ class JsPerformance(object):
     Example
     var t0 = performance.now();
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
 
     :return: A Javascript Number
     """
@@ -228,8 +239,9 @@ class JsPerformance(object):
     Example
     performance.setResourceTimingBufferSize(maxSize)
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/setResourceTimingBufferSize
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/setResourceTimingBufferSize
 
     :return: Void, the String for the Javascript side
     """
@@ -242,8 +254,9 @@ class JsPerformance(object):
     Example
     performance.toJSON()
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/API/Performance/toJSON
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Performance/toJSON
 
     :return: A JSON object that is the serialization of the Performance object.
     """

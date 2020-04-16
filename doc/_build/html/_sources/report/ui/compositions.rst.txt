@@ -9,3 +9,4 @@ This is where you will find the entry points to most of the basic HTML component
   :maxdepth: 2
   
   /report/ui/compositions/*
+  

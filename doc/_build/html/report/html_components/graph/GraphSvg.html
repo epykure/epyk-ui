@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="GraphVis Module" href="GraphVis.html" />
+    <link rel="prev" title="GraphSparklines Module" href="GraphSparklines.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,8 +80,34 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../report.html">Report Object</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../ui.html">UI Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../html_components.html">HTML Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../components.html">Core Html Components:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tables.html">Core Table Components:</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../graphs.html">Core Chart Components:</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="GraphBillboard.html">GraphBillboard Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphC3.html">GraphC3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphCanvas.html">GraphCanvas Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphChartJs.html">GraphChartJs Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphD3.html">GraphD3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphDC.html">GraphDC Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphNVD3.html">GraphNVD3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphPlotly.html">GraphPlotly Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphSparklines.html">GraphSparklines Module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">GraphSvg Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphVis.html">GraphVis Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html">Data Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
@@ -129,6 +157,12 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="../../../report.html">Report Object</a> &raquo;</li>
+        
+          <li><a href="../../html_components.html">HTML Interface</a> &raquo;</li>
+        
+          <li><a href="../graphs.html">Core Chart Components:</a> &raquo;</li>
+        
       <li>GraphSvg Module</li>
     
     
@@ -171,58 +205,80 @@
 <dd><dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.Defs.linearGradient">
 <code class="sig-name descname">linearGradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">x1</span><span class="o">=</span><span class="default_value">'0%'</span></em>, <em class="sig-param"><span class="n">y1</span><span class="o">=</span><span class="default_value">'0%'</span></em>, <em class="sig-param"><span class="n">x2</span><span class="o">=</span><span class="default_value">'100%'</span></em>, <em class="sig-param"><span class="n">y2</span><span class="o">=</span><span class="default_value">'0%'</span></em>, <em class="sig-param"><span class="n">gradientTransform</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.Defs.linearGradient" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;linearGradient&gt; element lets authors define linear gradients that can be applied to fill or stroke of graphical elements.</p>
+<dd><blockquote>
+<div><p>The &lt;linearGradient&gt; element lets authors define linear gradients that can be applied to fill or stroke of graphical elements.</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient">https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>htmlCode</strong> – String. The HTML id of the component</p></li>
-<li><p><strong>x1</strong> – Float.</p></li>
-<li><p><strong>y1</strong> – Float.</p></li>
-<li><p><strong>x2</strong> – Float.</p></li>
-<li><p><strong>y2</strong> – Float.</p></li>
-<li><p><strong>gradientTransform</strong> – </p></li>
-</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param htmlCode</dt>
+<dd class="field-odd"><p>String. The HTML id of the component</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.LinearGradient" title="epyk.core.html.graph.GraphSvg.LinearGradient">LinearGradient</a></p>
+<dt class="field-even">param x1</dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+<dt class="field-odd">param y1</dt>
+<dd class="field-odd"><p>Float.</p>
+</dd>
+<dt class="field-even">param x2</dt>
+<dd class="field-even"><p>Float.</p>
+</dd>
+<dt class="field-odd">param y2</dt>
+<dd class="field-odd"><p>Float.</p>
+</dd>
+<dt class="field-even">param gradientTransform</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>LinearGradient</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.Defs.marker">
 <code class="sig-name descname">marker</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">viewBox</span></em>, <em class="sig-param"><span class="n">refX</span></em>, <em class="sig-param"><span class="n">refY</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.Defs.marker" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;marker&gt; element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given &lt;path&gt;, &lt;line&gt;, &lt;polyline&gt; or &lt;polygon&gt; element.</p>
+<dd><blockquote>
+<div><p>The &lt;marker&gt; element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given &lt;path&gt;, &lt;line&gt;, &lt;polyline&gt; or &lt;polygon&gt; element.</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker">https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>htmlCode</strong> – </p></li>
-<li><p><strong>viewBox</strong> – </p></li>
-<li><p><strong>refX</strong> – </p></li>
-<li><p><strong>refY</strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.Marker" title="epyk.core.html.graph.GraphSvg.Marker">Marker</a></p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param htmlCode</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param viewBox</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param refX</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param refY</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>Marker</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.Defs.radialGradient">
 <code class="sig-name descname">radialGradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">htmlCode</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.Defs.radialGradient" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;radialGradient&gt; element lets authors define radial gradients that can be applied to fill or stroke of graphical elements.</p>
+<dd><blockquote>
+<div><p>The &lt;radialGradient&gt; element lets authors define radial gradients that can be applied to fill or stroke of graphical elements.</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialGradient">https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialGradient</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>htmlCode</strong> – String. The HTML id of the component</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param htmlCode</dt>
+<dd class="field-odd"><p>String. The HTML id of the component</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">rtype</dt>
 <dd class="field-even"><p>radialGradient</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>
@@ -467,149 +523,191 @@
 <dd><dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.circle">
 <code class="sig-name descname">circle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">r</span></em>, <em class="sig-param"><span class="n">fill</span><span class="o">=</span><span class="default_value">'None'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.circle" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;circle&gt; element is used to create a circle</p>
+<dd><blockquote>
+<div><p>The &lt;circle&gt; element is used to create a circle</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_circle.asp">https://www.w3schools.com/graphics/svg_circle.asp</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – Float. The x coordinate of the circle</p></li>
-<li><p><strong>y</strong> – Float. The y coordinate of the circle</p></li>
-<li><p><strong>r</strong> – Float. The r attribute defines the radius of the circle</p></li>
-</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param x</dt>
+<dd class="field-odd"><p>Float. The x coordinate of the circle</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.Circle" title="epyk.core.html.graph.GraphSvg.Circle">Circle</a></p>
+<dt class="field-even">param y</dt>
+<dd class="field-even"><p>Float. The y coordinate of the circle</p>
+</dd>
+<dt class="field-odd">param r</dt>
+<dd class="field-odd"><p>Float. The r attribute defines the radius of the circle</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>Circle</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.defs">
 <code class="sig-name descname">defs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.defs" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;defs&gt; element is used to store graphical objects that will be used at a later time.
+<dd><blockquote>
+<div><p>The &lt;defs&gt; element is used to store graphical objects that will be used at a later time.
 Objects created inside a &lt;defs&gt; element are not rendered directly.
 To display them you have to reference them (with a &lt;use&gt; element for exampl</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defs</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">defs</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>Related Pages:</p>
+</div></blockquote>
 <p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs">https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs</a></p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.ellipse">
 <code class="sig-name descname">ellipse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cx</span></em>, <em class="sig-param"><span class="n">cy</span></em>, <em class="sig-param"><span class="n">rx</span></em>, <em class="sig-param"><span class="n">ry</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.ellipse" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;ellipse&gt; element is used to create an ellipse</p>
+<dd><blockquote>
+<div><p>The &lt;ellipse&gt; element is used to create an ellipse</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_ellipse.asp">https://www.w3schools.com/graphics/svg_ellipse.asp</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cx</strong> – Float. The cx attribute defines the x coordinate of the center of the ellipse</p></li>
-<li><p><strong>cy</strong> – Float. The cy attribute defines the y coordinate of the center of the ellipse</p></li>
-<li><p><strong>rx</strong> – Float. The rx attribute defines the horizontal radius</p></li>
-<li><p><strong>ry</strong> – Float. The ry attribute defines the vertical radius</p></li>
-</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param cx</dt>
+<dd class="field-odd"><p>Float. The cx attribute defines the x coordinate of the center of the ellipse</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.Ellipse" title="epyk.core.html.graph.GraphSvg.Ellipse">Ellipse</a></p>
+<dt class="field-even">param cy</dt>
+<dd class="field-even"><p>Float. The cy attribute defines the y coordinate of the center of the ellipse</p>
+</dd>
+<dt class="field-odd">param rx</dt>
+<dd class="field-odd"><p>Float. The rx attribute defines the horizontal radius</p>
+</dd>
+<dt class="field-even">param ry</dt>
+<dd class="field-even"><p>Float. The ry attribute defines the vertical radius</p>
+</dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>Ellipse</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.foreignObject">
 <code class="sig-name descname">foreignObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.foreignObject" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;foreignObject&gt; SVG element includes elements from a different XML namespace. In the context of a browser, it is most likely (X)HTML.</p>
+<dd><blockquote>
+<div><p>The &lt;foreignObject&gt; SVG element includes elements from a different XML namespace. In the context of a browser, it is most likely (X)HTML.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject">https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – Float. The x coordinate of the foreignObject.</p></li>
-<li><p><strong>y</strong> – Float. The y coordinate of the foreignObject.</p></li>
-<li><p><strong>width</strong> – Float or Percentage. The width of the foreignObject.</p></li>
-<li><p><strong>height</strong> – Float or Percentage. The height of the foreignObject.</p></li>
-</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param x</dt>
+<dd class="field-odd"><p>Float. The x coordinate of the foreignObject.</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.ForeignObject" title="epyk.core.html.graph.GraphSvg.ForeignObject">ForeignObject</a></p>
+<dt class="field-even">param y</dt>
+<dd class="field-even"><p>Float. The y coordinate of the foreignObject.</p>
+</dd>
+<dt class="field-odd">param width</dt>
+<dd class="field-odd"><p>Float or Percentage. The width of the foreignObject.</p>
+</dd>
+<dt class="field-even">param height</dt>
+<dd class="field-even"><p>Float or Percentage. The height of the foreignObject.</p>
+</dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>ForeignObject</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.g">
 <code class="sig-name descname">g</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fill</span><span class="o">=</span><span class="default_value">'None'</span></em>, <em class="sig-param"><span class="n">stroke</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stroke_width</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.g" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;g&gt; SVG element is a container used to group other SVG elements.</p>
+<dd><blockquote>
+<div><p>The &lt;g&gt; SVG element is a container used to group other SVG elements.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g">https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fill</strong> – String. The color for the component background</p></li>
-<li><p><strong>stroke</strong> – String. The color for the border</p></li>
-<li><p><strong>stroke_width</strong> – Float. The width of the component’s border</p></li>
-</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param fill</dt>
+<dd class="field-odd"><p>String. The color for the component background</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.G" title="epyk.core.html.graph.GraphSvg.G">G</a></p>
+<dt class="field-even">param stroke</dt>
+<dd class="field-even"><p>String. The color for the border</p>
+</dd>
+<dt class="field-odd">param stroke_width</dt>
+<dd class="field-odd"><p>Float. The width of the component’s border</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>G</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.line">
 <code class="sig-name descname">line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x1</span></em>, <em class="sig-param"><span class="n">y1</span></em>, <em class="sig-param"><span class="n">x2</span></em>, <em class="sig-param"><span class="n">y2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.line" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;line&gt; element is used to create a line</p>
+<dd><blockquote>
+<div><p>The &lt;line&gt; element is used to create a line</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_line.asp">https://www.w3schools.com/graphics/svg_line.asp</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x1</strong> – Float. The x1 attribute defines the start of the line on the x-axis</p></li>
-<li><p><strong>y1</strong> – Float. The y1 attribute defines the start of the line on the y-axis</p></li>
-<li><p><strong>x2</strong> – Float. The x2 attribute defines the end of the line on the x-axis</p></li>
-<li><p><strong>y2</strong> – Float. The y2 attribute defines the end of the line on the y-axis</p></li>
-</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param x1</dt>
+<dd class="field-odd"><p>Float. The x1 attribute defines the start of the line on the x-axis</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="GraphPlotly.html#epyk.core.html.graph.GraphPlotly.Line" title="epyk.core.html.graph.GraphPlotly.Line">Line</a></p>
+<dt class="field-even">param y1</dt>
+<dd class="field-even"><p>Float. The y1 attribute defines the start of the line on the y-axis</p>
+</dd>
+<dt class="field-odd">param x2</dt>
+<dd class="field-odd"><p>Float. The x2 attribute defines the end of the line on the x-axis</p>
+</dd>
+<dt class="field-even">param y2</dt>
+<dd class="field-even"><p>Float. The y2 attribute defines the end of the line on the y-axis</p>
+</dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>Line</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.path">
 <code class="sig-name descname">path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">fill</span><span class="o">=</span><span class="default_value">'none'</span></em>, <em class="sig-param"><span class="n">from_origin</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.path" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;path&gt; element is used to define a path.</p>
-<p><a class="reference external" href="https://www.w3.org/TR/SVG/paths.html">https://www.w3.org/TR/SVG/paths.html</a>
-<a class="reference external" href="https://www.w3.org/TR/svg-paths/">https://www.w3.org/TR/svg-paths/</a></p>
+<dd><blockquote>
+<div><p>The &lt;path&gt; element is used to define a path.</p>
+<p>Related Pages:</p>
+</div></blockquote>
+<dl class="simple">
+<dt><a class="reference external" href="https://www.w3.org/TR/SVG/paths.html">https://www.w3.org/TR/SVG/paths.html</a></dt><dd><p><a class="reference external" href="https://www.w3.org/TR/svg-paths/">https://www.w3.org/TR/svg-paths/</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – </p></li>
-<li><p><strong>y</strong> – </p></li>
-</ul>
+<dt class="field-odd">param x</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param y</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>Path</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.Path" title="epyk.core.html.graph.GraphSvg.Path">Path</a></p>
+</dl>
 </dd>
 </dl>
 </dd></dl>
@@ -617,109 +715,131 @@ To display them you have to reference them (with a &lt;use&gt; element for examp
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.polygon">
 <code class="sig-name descname">polygon</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">fill</span><span class="o">=</span><span class="default_value">'None'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.polygon" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;polygon&gt; element is used to create a graphic that contains at least three sides.</p>
+<dd><blockquote>
+<div><p>The &lt;polygon&gt; element is used to create a graphic that contains at least three sides.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_polygon.asp">https://www.w3schools.com/graphics/svg_polygon.asp</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>points</strong> – String. The points attribute defines the x and y coordinates for each corner of the polygon</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param points</dt>
+<dd class="field-odd"><p>String. The points attribute defines the x and y coordinates for each corner of the polygon</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.Polygone" title="epyk.core.html.graph.GraphSvg.Polygone">Polygone</a></p>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>Polygone</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.polyline">
 <code class="sig-name descname">polyline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">fill</span><span class="o">=</span><span class="default_value">'None'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.polyline" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;polyline&gt; element is used to create any shape that consists of only straight lines (that is connected at several points)</p>
+<dd><blockquote>
+<div><p>The &lt;polyline&gt; element is used to create any shape that consists of only straight lines (that is connected at several points)</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_polyline.asp">https://www.w3schools.com/graphics/svg_polyline.asp</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>points</strong> – </p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.Polyline" title="epyk.core.html.graph.GraphSvg.Polyline">Polyline</a></p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param points</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>Polyline</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.rect">
 <code class="sig-name descname">rect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">fill</span></em>, <em class="sig-param"><span class="n">rx</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">ry</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.rect" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;rect&gt; element is used to create a rectangle and variations of a rectangle shape</p>
+<dd><blockquote>
+<div><p>The &lt;rect&gt; element is used to create a rectangle and variations of a rectangle shape</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_rect.asp">https://www.w3schools.com/graphics/svg_rect.asp</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>x</strong> – </p></li>
-<li><p><strong>y</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
-<li><p><strong>fill</strong> – </p></li>
-<li><p><strong>rx</strong> – </p></li>
-<li><p><strong>ry</strong> – </p></li>
-</ul>
-</dd>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param x</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param y</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param width</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param height</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param fill</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param rx</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param ry</dt>
+<dd class="field-odd"><p></p></dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.text">
 <code class="sig-name descname">text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.text" title="Permalink to this definition">¶</a></dt>
-<dd><p>The &lt;text&gt; element can be arranged in any number of sub-groups with the &lt;tspan&gt; element.
+<dd><blockquote>
+<div><p>The &lt;text&gt; element can be arranged in any number of sub-groups with the &lt;tspan&gt; element.
 Each &lt;tspan&gt; element can contain different formatting and position.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_text.asp">https://www.w3schools.com/graphics/svg_text.asp</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> – String. The text to be added to the container</p></li>
-<li><p><strong>x</strong> – Float. The x coordinate of the starting point of the text baseline.</p></li>
-<li><p><strong>y</strong> – Float. The y coordinate of the starting point of the text baseline.</p></li>
-</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param text</dt>
+<dd class="field-odd"><p>String. The text to be added to the container</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="../HtmlText.html#epyk.core.html.HtmlText.Text" title="epyk.core.html.HtmlText.Text">Text</a></p>
+<dt class="field-even">param x</dt>
+<dd class="field-even"><p>Float. The x coordinate of the starting point of the text baseline.</p>
+</dd>
+<dt class="field-odd">param y</dt>
+<dd class="field-odd"><p>Float. The y coordinate of the starting point of the text baseline.</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>Text</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.SVG.triangle">
 <code class="sig-name descname">triangle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">fill</span><span class="o">=</span><span class="default_value">'None'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.SVG.triangle" title="Permalink to this definition">¶</a></dt>
-<dd><p>A polyline element with three points</p>
+<dd><blockquote>
+<div><p>A polyline element with three points</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
 </pre></div>
 </div>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/graphics/svg_polyline.asp">https://www.w3schools.com/graphics/svg_polyline.asp</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> – </p></li>
-<li><p><strong>options</strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Rtpye</dt>
-<dd class="field-even"><p>Polyline</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param points</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param options</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">rtpye</dt>
+<dd class="field-odd"><p>Polyline</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>
@@ -773,21 +893,28 @@ Each &lt;tspan&gt; element can contain different formatting and position.</p>
 <dd><dl class="py method">
 <dt id="epyk.core.html.graph.GraphSvg.Text.line">
 <code class="sig-name descname">line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphSvg.Text.line" title="Permalink to this definition">¶</a></dt>
-<dd><p>The SVG &lt;tspan&gt; element defines a subtext within a &lt;text&gt; element or another &lt;tspan&gt; element.
+<dd><blockquote>
+<div><p>The SVG &lt;tspan&gt; element defines a subtext within a &lt;text&gt; element or another &lt;tspan&gt; element.
 It allows for adjustment of the style and/or position of that subtext as needed.</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <p><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan">https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> – String. The text to be added to the container</p></li>
-<li><p><strong>x</strong> – Float. The x coordinate of the starting point of the text baseline.</p></li>
-<li><p><strong>y</strong> – Float. The y coordinate of the starting point of the text baseline.</p></li>
-</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param text</dt>
+<dd class="field-odd"><p>String. The text to be added to the container</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference internal" href="#epyk.core.html.graph.GraphSvg.TSpan" title="epyk.core.html.graph.GraphSvg.TSpan">TSpan</a></p>
+<dt class="field-even">param x</dt>
+<dd class="field-even"><p>Float. The x coordinate of the starting point of the text baseline.</p>
+</dd>
+<dt class="field-odd">param y</dt>
+<dd class="field-odd"><p>Float. The y coordinate of the starting point of the text baseline.</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>TSpan</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>
@@ -799,6 +926,15 @@ It allows for adjustment of the style and/or position of that subtext as needed.
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="GraphVis.html" class="btn btn-neutral float-right" title="GraphVis Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="GraphSparklines.html" class="btn btn-neutral float-left" title="GraphSparklines Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -1,8 +1,10 @@
 """
 Wrapper to the Javascript Socket module
 
-https://www.tutorialspoint.com/html5/html5_websocket.htm
-https://blog.miguelgrinberg.com/post/easy-websockets-with-flask-and-gevent
+Related Pages:
+
+	ttps://www.tutorialspoint.com/html5/html5_websocket.htm
+  https://blog.miguelgrinberg.com/post/easy-websockets-with-flask-and-gevent
 """
 
 

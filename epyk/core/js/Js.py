@@ -37,8 +37,8 @@ class JsConsole(object):
   This is a wrapper to the Console
 
   Related Pages:
-  --------------
-  https://medium.freecodecamp.org/how-to-get-the-most-out-of-the-javascript-console-b57ca9db3e6d
+
+    https://medium.freecodecamp.org/how-to-get-the-most-out-of-the-javascript-console-b57ca9db3e6d
   """
 
   @property
@@ -55,8 +55,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/jsref_debugger.asp
+			https://www.w3schools.com/jsref/jsref_debugger.asp
 
     :return: The Javascript Keyword to trigger the browser debugger
     """
@@ -75,8 +74,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_console_clear.asp
+			https://www.w3schools.com/jsref/met_console_clear.asp
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
@@ -94,8 +92,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_console_log.asp
+			https://www.w3schools.com/jsref/met_console_log.asp
 
     Attributes:
     ----------
@@ -118,8 +115,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_console_info.asp
+			https://www.w3schools.com/jsref/met_console_info.asp
 
     Attributes:
     ----------
@@ -138,8 +134,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_console_warn.asp
+			https://www.w3schools.com/jsref/met_console_warn.asp
 
     Attributes:
     ----------
@@ -158,8 +153,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_console_error.asp
+			https://www.w3schools.com/jsref/met_console_error.asp
 
     Attributes:
     ----------
@@ -178,8 +172,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_console_table.asp
+			https://www.w3schools.com/jsref/met_console_table.asp
 
     Attributes:
     ----------
@@ -200,8 +193,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_console_time.asp
+			https://www.w3schools.com/jsref/met_console_time.asp
 
     Attributes:
     ----------
@@ -218,8 +210,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_console_timeend.asp
+			https://www.w3schools.com/jsref/met_console_timeend.asp
 
     Attributes:
     ----------
@@ -236,8 +227,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_console_assert.asp
+			https://www.w3schools.com/jsref/met_console_assert.asp
 
     Attributes:
     ----------
@@ -255,8 +245,7 @@ class JsConsole(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/jsref_obj_error.asp
+			https://www.w3schools.com/jsref/jsref_obj_error.asp
 
     Attributes:
     ----------
@@ -279,8 +268,8 @@ class JsJson(object):
   The documentation can be found in each function or are available on the Javascript Official documentation
 
   Related Pages:
-  --------------
-  https://www.w3schools.com/js/js_json_intro.asp
+
+    https://www.w3schools.com/js/js_json_intro.asp
   """
 
   def parse(self, jsData, jsResultFnc=None, jsFnc=None):
@@ -291,9 +280,8 @@ class JsJson(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/js/js_json_parse.asp
-    https://www.w3schools.com/jsref/jsref_parse_json.asp
+			https://www.w3schools.com/js/js_json_parse.asp
+      https://www.w3schools.com/jsref/jsref_parse_json.asp
 
     Attributes:
     ----------
@@ -316,8 +304,7 @@ class JsJson(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/js/js_json_stringify.asp
+			https://www.w3schools.com/js/js_json_stringify.asp
 
     Attributes:
     ----------
@@ -379,8 +366,7 @@ class JsBreadCrumb(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/prop_loc_hash.asp
+			https://www.w3schools.com/jsref/prop_loc_hash.asp
     """
     return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, None)))
 
@@ -411,8 +397,7 @@ class JsScreen(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/prop_screen_availheight.asp
+			https://www.w3schools.com/jsref/prop_screen_availheight.asp
     """
     return JsNumber.JsNumber("screen.availHeight")
 
@@ -425,8 +410,7 @@ class JsScreen(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/prop_screen_availwidth.asp
+			https://www.w3schools.com/jsref/prop_screen_availwidth.asp
     """
     return JsNumber.JsNumber("screen.availWidth")
 
@@ -439,8 +423,7 @@ class JsScreen(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/prop_screen_colordepth.asp
+			https://www.w3schools.com/jsref/prop_screen_colordepth.asp
     """
     return JsNumber.JsNumber("screen.colorDepth")
 
@@ -453,8 +436,7 @@ class JsScreen(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/prop_screen_height.asp
+			https://www.w3schools.com/jsref/prop_screen_height.asp
     """
     return JsNumber.JsNumber("screen.height")
 
@@ -467,8 +449,7 @@ class JsScreen(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/prop_screen_pixeldepth.asp
+			https://www.w3schools.com/jsref/prop_screen_pixeldepth.asp
     """
     return JsNumber.JsNumber("screen.pixelDepth")
 
@@ -481,8 +462,7 @@ class JsScreen(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/prop_screen_width.asp
+			https://www.w3schools.com/jsref/prop_screen_width.asp
     """
     return JsNumber.JsNumber("screen.width")
 
@@ -525,8 +505,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
+			https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
     """
     return JsNodeDom.JsDoms.get("document.documentElement")
 
@@ -539,8 +518,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/obj_screen.asp
+			https://www.w3schools.com/jsref/obj_screen.asp
     """
     return JsScreen()
 
@@ -567,8 +545,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/obj_location.asp
+			https://www.w3schools.com/jsref/obj_location.asp
 
     :rtype: JsLocation.JsLocation
     """
@@ -598,8 +575,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://jquery.com/
+			https://jquery.com/
     """
     from epyk.core.js.packages import JsQuery
 
@@ -616,8 +592,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://d3js.org/
+			https://d3js.org/
     """
     from epyk.core.js.packages import JsD3
 
@@ -636,8 +611,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
+			https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
 
     Attributes:
     ----------
@@ -655,8 +629,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/js/js_if_else.asp
+			https://www.w3schools.com/js/js_if_else.asp
 
     Attributes:
     ----------
@@ -675,9 +648,7 @@ class JsBase(object):
     Javascript return keyword
 
     Related Pages:
-
-
-    :param jsData: The Javascript expression
+:param jsData: The Javascript expression
     """
     return JsFncs.JsFunction("return %s" % jsData)
 
@@ -688,8 +659,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/js/js_switch.asp
+			https://www.w3schools.com/js/js_switch.asp
 
     Attributes:
     ----------
@@ -797,8 +767,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/js/js_object_prototypes.asp
+			https://www.w3schools.com/js/js_object_prototypes.asp
 
     Attributes:
     ----------
@@ -821,8 +790,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/xml/xml_http.asp
+			https://www.w3schools.com/xml/xml_http.asp
 
     Usage::
 
@@ -893,8 +861,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
+			https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 
     :rtype: JsBreadCrumb
 
@@ -916,8 +883,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://redfin.github.io/react-server/annotated-src/navigateTo.html
+			https://redfin.github.io/react-server/annotated-src/navigateTo.html
 
     Attributes:
     ----------
@@ -955,8 +921,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://isabelcastillo.com/hidden-input-javascript
+			https://isabelcastillo.com/hidden-input-javascript
     """
     return JsFncs.JsFunction('''
         var elInput = document.createElement('input'); 
@@ -986,9 +951,7 @@ class JsBase(object):
     Either the keyCode or the keyCondition can be None
 
     Related Pages:
-
-
-    http://gcctech.org/csc/javascript/javascript_keycodes.htm
+http://gcctech.org/csc/javascript/javascript_keycodes.htm
 
     Attributes:
     ----------
@@ -1041,8 +1004,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jquery/event_ready.asp
+			https://www.w3schools.com/jquery/event_ready.asp
 
     Attributes:
     ----------
@@ -1078,8 +1040,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_document_getelementbyid.asp
+			https://www.w3schools.com/jsref/met_document_getelementbyid.asp
 
     Attributes:
     ----------
@@ -1099,8 +1060,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp
+			https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp
 
     Attributes:
     ----------
@@ -1122,8 +1082,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
+			https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
 
     Attributes:
     ----------
@@ -1140,8 +1099,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_document_createelement.asp
+			https://www.w3schools.com/jsref/met_document_createelement.asp
 
     Attributes:
     ----------
@@ -1163,8 +1121,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_document_createtextnode.asp
+			https://www.w3schools.com/jsref/met_document_createtextnode.asp
 
     Attributes:
     ----------
@@ -1182,8 +1139,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp
+			https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp
 
     Attributes:
     ----------
@@ -1201,8 +1157,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
+			https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
 
     Attributes:
     ----------
@@ -1279,8 +1234,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/prop_document_activeelement.asp
+			https://www.w3schools.com/jsref/prop_document_activeelement.asp
 
     :return: A reference to the element object in the document that has focus
     """
@@ -1294,8 +1248,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/prop_doc_title.asp
+			https://www.w3schools.com/jsref/prop_doc_title.asp
 
     Attributes:
     ----------
@@ -1314,8 +1267,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
+			https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
 
     Attributes:
     ----------
@@ -1334,8 +1286,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_document_hasfocus.asp
+			https://www.w3schools.com/jsref/met_document_hasfocus.asp
 
     :return: A Boolean value, incidating whether the document or any element in the document has focus:
     """
@@ -1349,8 +1300,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_document_execcommand.asp
+			https://www.w3schools.com/jsref/met_document_execcommand.asp
 
     Attributes:
     ----------
@@ -1372,8 +1322,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_createevent.asp
+			https://www.w3schools.com/jsref/event_createevent.asp
 
     Attributes:
     ----------
@@ -1394,8 +1343,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_document_createattribute.asp
+			https://www.w3schools.com/jsref/met_document_createattribute.asp
 
     Attributes:
     ----------
@@ -1413,8 +1361,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_doc_writeln.asp
+			https://www.w3schools.com/jsref/met_doc_writeln.asp
 
     :param jsString: Optional. What to write to the output stream.
                      Multiple arguments can be listed and they will be appended to the document in order of occurrence
@@ -1515,8 +1462,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/jsref_parseint.asp
+			https://www.w3schools.com/jsref/jsref_parseint.asp
 
     Attributes:
     ----------
@@ -1534,8 +1480,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/jsref_parseint.asp
+			https://www.w3schools.com/jsref/jsref_parseint.asp
 
     Attributes:
     ----------
@@ -1553,8 +1498,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/jsref_parse.asp
+			https://www.w3schools.com/jsref/jsref_parse.asp
 
     Attributes:
     ----------
@@ -1628,8 +1572,7 @@ class JsBase(object):
 
     Related Pages:
 
-
-    https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
+			https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
 
     Attributes:
     ----------

@@ -36,8 +36,9 @@ class Sparklines(Html.Html):
     Example
     chartObj.options({"lineColor": 'yellow'})
 
-    Documentation
-    https://omnipotent.net/jquery.sparkline/#s-docs
+    Related Pages:
+
+			https://omnipotent.net/jquery.sparkline/#s-docs
 
     :param attrs: A python dictionary
 

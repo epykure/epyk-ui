@@ -17,8 +17,9 @@ class JsGeolocation(object):
     """
     The getCurrentPosition() method is used to return the user's position
 
-    Documentation
-    https://developer.mozilla.org/fr/docs/Web/API/Geolocation/getCurrentPosition
+    Related Pages:
+
+			https://developer.mozilla.org/fr/docs/Web/API/Geolocation/getCurrentPosition
     https://www.w3schools.com/html/html5_geolocation.asp
     https://developer.kaiostech.com/api/geolocation/getposition
 
@@ -38,8 +39,9 @@ class JsGeolocation(object):
     Example
     options = {"enableHighAccuracy": False, "timeout": 5000, "maximumAge": 0}
 
-    Documentation
-    https://www.w3schools.com/html/html5_geolocation.asp
+    Related Pages:
+
+			https://www.w3schools.com/html/html5_geolocation.asp
 
     :param callbackFnc: A callback function that takes a Position object as an input parameter.
     :param watchId: The ID number returned by the Geolocation.watchPosition() method when installing the handler you wish to remove.
@@ -52,8 +54,9 @@ class JsGeolocation(object):
     """
     Stops the watchPosition() method
 
-    Documentation
-    https://www.w3schools.com/html/html5_geolocation.asp
+    Related Pages:
+
+			https://www.w3schools.com/html/html5_geolocation.asp
 
     :param watchId: The ID number returned by the Geolocation.watchPosition() method when installing the handler you wish to remove.
     """
@@ -71,8 +74,9 @@ class JsNavigator(object):
     """
     The HTML Geolocation API is used to locate a user's position.
 
-    Documentation
-    https://w3c.github.io/geolocation-api/#navi-geo
+    Related Pages:
+
+			https://w3c.github.io/geolocation-api/#navi-geo
     https://www.w3schools.com/html/html5_geolocation.asp
     """
     return JsGeolocation(self._rptObj)
@@ -82,8 +86,9 @@ class JsNavigator(object):
     """
     The language property returns the language version of the browser.
 
-    Documentation
-    https://www.w3schools.com/jsref/prop_nav_language.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/prop_nav_language.asp
 
     :return:
     """
@@ -95,8 +100,9 @@ class JsNavigator(object):
     The language property returns the language version of the browser.
     For IE10 and earlier versions, you can use the browserLanguage property
 
-    Documentation
-    https://www.w3schools.com/jsref/prop_nav_language.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/prop_nav_language.asp
 
     :return:
     """
@@ -107,8 +113,9 @@ class JsNavigator(object):
     """
     The appCodeName property returns the application code name of the browser
 
-    Documentation
-    https://www.w3schools.com/js/js_window_navigator.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.appCodeName", isPyData=False)
 
@@ -117,8 +124,9 @@ class JsNavigator(object):
     """
     The appName property returns the application name of the browser
 
-    Documentation
-    https://www.w3schools.com/js/js_window_navigator.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.appName", isPyData=False)
 
@@ -127,8 +135,9 @@ class JsNavigator(object):
     """
     The product property returns the product name of the browser engine
 
-    Documentation
-    https://www.w3schools.com/js/js_window_navigator.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.product", isPyData=False)
 
@@ -137,8 +146,9 @@ class JsNavigator(object):
     """
     The appVersion property returns version information about the browser
 
-    Documentation
-    https://www.w3schools.com/js/js_window_navigator.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.appVersion", isPyData=False)
 
@@ -153,8 +163,9 @@ class JsNavigator(object):
     """
     The onLine property returns true if the browser is online
 
-    Documentation
-    https://www.w3schools.com/js/js_window_navigator.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.onLine", isPyData=False)
 
@@ -163,8 +174,9 @@ class JsNavigator(object):
     """
     The platform property returns the browser platform (operating system)
 
-    Documentation
-    https://www.w3schools.com/js/js_window_navigator.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.platform", isPyData=False)
 
@@ -173,8 +185,9 @@ class JsNavigator(object):
     """
     The userAgent property returns the user-agent header sent by the browser to the server
 
-    Documentation
-    https://www.w3schools.com/js/js_window_navigator.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_window_navigator.asp
 
     """
     return JsString.JsString("navigator.userAgent", isPyData=False)
@@ -183,8 +196,9 @@ class JsNavigator(object):
     """
     The javaEnabled() method returns a Boolean value that specifies whether the browser has Java enabled.
 
-    Documentation
-    https://www.w3schools.com/jsref/met_nav_javaenabled.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/met_nav_javaenabled.asp
 
     :return:
     """

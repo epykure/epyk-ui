@@ -26,8 +26,7 @@ class Effects(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/howto_css_glowing_text.asp
+			https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
     Attributes:
     ----------
@@ -68,8 +67,7 @@ class Effects(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/howto_css_glowing_text.asp
+			https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
     Attributes:
     ----------
@@ -89,8 +87,7 @@ class Effects(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/howto_css_glowing_text.asp
+			https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
     Attributes:
     ----------
@@ -147,8 +144,7 @@ class Effects(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/css_animatable.asp
+			https://www.w3schools.com/cssref/css_animatable.asp
 
     :param name: String. The animation name
     :param targ_css_attrs: Dictionary. The different CSS attributes to animate

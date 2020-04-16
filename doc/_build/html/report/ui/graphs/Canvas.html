@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="ChartJs Interface" href="ChartJs.html" />
+    <link rel="prev" title="C3 Interface" href="C3.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,8 +80,35 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../report.html">Report Object</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../ui.html">UI Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../compositions.html">Simple HTML Compositions:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geo.html">Geo Compositions:</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../graphs.html">Charts Compositions:</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Billboard.html">Billboard Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="C3.html">C3 Interface</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Canvas Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChartJs.html">ChartJs Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="D3.html">D3 Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DC.html">DC Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Graphs.html">Graphs Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Nvd3.html">Nvd3 Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Plotly.html">Plotly Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SVG.html">SVG Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Vis.html">Vis Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tables.html">Table Compositions:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../html_components.html">HTML Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html">Data Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
@@ -129,6 +158,12 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="../../../report.html">Report Object</a> &raquo;</li>
+        
+          <li><a href="../../ui.html">UI Interface</a> &raquo;</li>
+        
+          <li><a href="../graphs.html">Charts Compositions:</a> &raquo;</li>
+        
       <li>Canvas Interface</li>
     
     
@@ -156,19 +191,22 @@
 <dd><dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsCanvas.Canvas.new">
 <code class="sig-name descname">new</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">400, 'px'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsCanvas.Canvas.new" title="Permalink to this definition">¶</a></dt>
-<dd><p>The HTML &lt;canvas&gt; tag is used to draw graphics, on the fly, via scripting (usually JavaScript).</p>
+<dd><blockquote>
+<div><p>The HTML &lt;canvas&gt; tag is used to draw graphics, on the fly, via scripting (usually JavaScript).</p>
 <p>However, the &lt;canvas&gt; element has no drawing abilities of its own (it is only a container for graphics) - you must use a script to actually draw the graphics.</p>
 <p>The getContext() method returns an object that provides methods and properties for drawing on the canvas.</p>
 <p>This reference will cover the properties and methods of the getContext(“2d”) object, which can be used to draw text, lines, boxes, circles, and more - on the canvas</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <p><a class="reference external" href="https://www.w3schools.com/tags/ref_canvas.asp">https://www.w3schools.com/tags/ref_canvas.asp</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>height</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-</ul>
-</dd>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param height</dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param width</dt>
+<dd class="field-even"><p></p></dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>
@@ -180,6 +218,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ChartJs.html" class="btn btn-neutral float-right" title="ChartJs Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="C3.html" class="btn btn-neutral float-left" title="C3 Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

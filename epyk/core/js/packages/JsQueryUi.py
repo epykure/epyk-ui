@@ -1,7 +1,9 @@
 """
 Wrapper to the Jquery UI package
 
-https://api.jqueryui.com/
+Related Pages:
+
+		https://api.jqueryui.com/
 """
 
 import json
@@ -34,8 +36,9 @@ class JQueryUI(JsPackage):
     """
     Getter/setter for an object version of the CSS clip property.
 
-    Documentation
-    https://api.jqueryui.com/cssClip/
+    Related Pages:
+
+			https://api.jqueryui.com/cssClip/
 
     :param css:
 
@@ -51,8 +54,9 @@ class JQueryUI(JsPackage):
     """
     The jQuery UI .position() method allows you to position an element relative to the window, document, another element, or the cursor/mouse, without worrying about offset parents.
 
-    Documentation
-    https://api.jqueryui.com/position/
+    Related Pages:
+
+			https://api.jqueryui.com/position/
 
     :param options:
 
@@ -71,8 +75,9 @@ class JQueryUI(JsPackage):
 
     Example
 
-    Documentation
-    https://jqueryui.com/draggable/
+    Related Pages:
+
+			https://jqueryui.com/draggable/
 
     :param options:
     """
@@ -87,8 +92,9 @@ class JQueryUI(JsPackage):
 
     Example
 
-    Documentation
-    https://jqueryui.com/droppable/
+    Related Pages:
+
+			https://jqueryui.com/droppable/
 
     :param options:
 
@@ -106,8 +112,9 @@ class JQueryUI(JsPackage):
     Click on and drag an element to a new spot within the list, and the other items will adjust to fit.
     By default, sortable items share draggable properties.
 
-    Documentation
-    https://jqueryui.com/sortable/
+    Related Pages:
+
+			https://jqueryui.com/sortable/
 
     :param options:
 
@@ -126,8 +133,9 @@ class JQueryUI(JsPackage):
 
     Example
 
-    Documentation
-    https://jqueryui.com/resizable/#constrain-area
+    Related Pages:
+
+			https://jqueryui.com/resizable/#constrain-area
 
     :param options:
 
@@ -144,8 +152,9 @@ class JQueryUI(JsPackage):
     Enable a DOM element (or group of elements) to be selectable.
     Draw a box with your cursor to select items. Hold down the Ctrl key to make multiple non-adjacent selections.
 
-    Documentation
-    https://jqueryui.com/selectable/
+    Related Pages:
+
+			https://jqueryui.com/selectable/
 
     :param options:
 
@@ -161,8 +170,9 @@ class JQueryUI(JsPackage):
     """
     Adds class(es) to elements while animating all style changes.
 
-    Documentation
-    https://jqueryui.com/addClass/
+    Related Pages:
+
+			https://jqueryui.com/addClass/
 
     :param cls_name:
     :param delay:
@@ -177,8 +187,9 @@ class JQueryUI(JsPackage):
     """
     Removes class(es) from elements while animating all style changes.
 
-    Documentation
-    https://jqueryui.com/removeClass/
+    Related Pages:
+
+			https://jqueryui.com/removeClass/
 
     :param cls_name:
     :param delay:
@@ -208,8 +219,9 @@ class JQueryUI(JsPackage):
     """
     Toggle class(es) on elements while animating all style changes.
 
-    Documentation
-    https://jqueryui.com/toggleClass/
+    Related Pages:
+
+			https://jqueryui.com/toggleClass/
 
     :param cls_name:
     :param delay:
@@ -224,8 +236,9 @@ class JQueryUI(JsPackage):
     """
     Display elements using custom effects.
 
-    Documentation
-    https://jqueryui.com/show/
+    Related Pages:
+
+			https://jqueryui.com/show/
 
     :param selected_effect:
     :param options:
@@ -247,8 +260,9 @@ class JQueryUI(JsPackage):
     """
     Display elements using custom effects.
 
-    Documentation
-    https://jqueryui.com/show/
+    Related Pages:
+
+			https://jqueryui.com/show/
 
     :param selected_effect:
     :param options:
@@ -269,8 +283,9 @@ class JQueryUI(JsPackage):
   def toggle(self, selected_effect, options, delay):
     """
 
-    Documentation
-    https://jqueryui.com/toggle/
+    Related Pages:
+
+			https://jqueryui.com/toggle/
 
     :param selected_effect:
     :param options:
@@ -287,8 +302,9 @@ class JQueryUI(JsPackage):
     """
     Animate the properties of elements between colors.
 
-    Documentation
-    https://jqueryui.com/animate/
+    Related Pages:
+
+			https://jqueryui.com/animate/
 
     :param css:
     :param delay:
@@ -337,8 +353,7 @@ class Slider(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#method-destroy
+			https://api.jqueryui.com/slider/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.slider("destroy")' % self._src.dom.jquery.varId)
 
@@ -350,8 +365,7 @@ class Slider(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#method-disable
+			https://api.jqueryui.com/slider/#method-disable
     """
     return JsObjects.JsObjects.get('%s.slider("disable")' % self._src.dom.jquery.varId)
 
@@ -363,8 +377,7 @@ class Slider(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#method-enable
+			https://api.jqueryui.com/slider/#method-enable
     """
     return JsObjects.JsObjects.get('%s.slider("enable")' % self._src.dom.jquery.varId)
 
@@ -376,8 +389,7 @@ class Slider(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#method-instance
+			https://api.jqueryui.com/slider/#method-instance
     """
     return JsObjects.JsObjects.get('%s.slider("instance")' % self._src.dom.jquery.varId)
 
@@ -389,8 +401,7 @@ class Slider(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#method-instance
+			https://api.jqueryui.com/slider/#method-instance
 
     Attributes:
     ----------
@@ -410,8 +421,7 @@ class Slider(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#method-value
+			https://api.jqueryui.com/slider/#method-value
 
     Attributes:
     ----------
@@ -431,8 +441,7 @@ class Slider(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#method-value
+			https://api.jqueryui.com/slider/#method-value
     """
     if jsData is None:
       return JsObjects.JsObjects.get('%s.slider("values", %s)' % (self._src.dom.jquery.varId, index))
@@ -451,8 +460,7 @@ class ProgressBar(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#method-destroy
+			https://api.jqueryui.com/progressbar/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.progressbar("destroy")' % self._src.dom.jquery.varId)
 
@@ -464,8 +472,7 @@ class ProgressBar(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#method-disable
+			https://api.jqueryui.com/progressbar/#method-disable
     """
     return JsObjects.JsObjects.get('%s.progressbar("disable")' % self._src.dom.jquery.varId)
 
@@ -477,8 +484,7 @@ class ProgressBar(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#method-enable
+			https://api.jqueryui.com/progressbar/#method-enable
     """
     return JsObjects.JsObjects.get('%s.progressbar("enable")' % self._src.dom.jquery.varId)
 
@@ -490,8 +496,7 @@ class ProgressBar(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#method-instance
+			https://api.jqueryui.com/progressbar/#method-instance
     """
     return JsObjects.JsObjects.get('%s.progressbar("instance")' % self._src.dom.jquery.varId)
 
@@ -505,8 +510,7 @@ class ProgressBar(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#method-instance
+			https://api.jqueryui.com/progressbar/#method-instance
 
     Attributes:
     ----------
@@ -531,8 +535,7 @@ class ProgressBar(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#method-instance
+			https://api.jqueryui.com/progressbar/#method-instance
 
     Attributes:
     ----------
@@ -555,8 +558,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-blur
+			https://api.jqueryui.com/menu/#method-blur
     """
     return JsObjects.JsObjects.get('%s.menu("blur")' % self._src.dom.jquery.varId)
 
@@ -568,8 +570,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-collapse
+			https://api.jqueryui.com/menu/#method-collapse
     """
     return JsObjects.JsObjects.get('%s.menu("collapse")' % self._src.dom.jquery.varId)
 
@@ -581,8 +582,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-collapseAll
+			https://api.jqueryui.com/menu/#method-collapseAll
     """
     return JsObjects.JsObjects.get('%s.menu("collapseAll", null, true)' % self._src.dom.jquery.varId)
 
@@ -594,8 +594,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-destroy
+			https://api.jqueryui.com/menu/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.menu("destroy")' % self._src.dom.jquery.varId)
 
@@ -607,8 +606,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-disable
+			https://api.jqueryui.com/menu/#method-disable
     """
     return JsObjects.JsObjects.get('%s.menu("disable")' % self._src.dom.jquery.varId)
 
@@ -620,8 +618,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-disable
+			https://api.jqueryui.com/menu/#method-disable
     """
     return JsObjects.JsObjects.get('%s.menu("enable")' % self._src.dom.jquery.varId)
 
@@ -633,8 +630,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-expand
+			https://api.jqueryui.com/menu/#method-expand
     """
     return JsObjects.JsObjects.get('%s.menu("expand")' % self._src.dom.jquery.varId)
 
@@ -646,8 +642,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-instance
+			https://api.jqueryui.com/menu/#method-instance
     """
     return JsObjects.JsObjects.get('%s.menu("instance")' % self._src.dom.jquery.varId)
 
@@ -659,8 +654,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-isFirstItem
+			https://api.jqueryui.com/menu/#method-isFirstItem
     """
     return JsObjects.JsBoolean.JsBoolean('%s.menu("isFirstItem")' % self._src.dom.jquery.varId)
 
@@ -672,8 +666,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-isLastItem
+			https://api.jqueryui.com/menu/#method-isLastItem
     """
     return JsObjects.JsBoolean.JsBoolean('%s.menu("isLastItem")' % self._src.dom.jquery.varId)
 
@@ -685,8 +678,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-next
+			https://api.jqueryui.com/menu/#method-next
     """
     return JsObjects.JsObjects.get('%s.menu("next")' % self._src.dom.jquery.varId)
 
@@ -698,8 +690,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-nextPage
+			https://api.jqueryui.com/menu/#method-nextPage
     """
     return JsObjects.JsObjects.get('%s.menu("nextPage")' % self._src.dom.jquery.varId)
 
@@ -713,8 +704,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar/#method-option
+			https://api.jqueryui.com/progressbar/#method-option
 
     Attributes:
     ----------
@@ -739,8 +729,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-previous
+			https://api.jqueryui.com/menu/#method-previous
     """
     return JsObjects.JsObjects.get('%s.menu("previous")' % self._src.dom.jquery.varId)
 
@@ -752,8 +741,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-previousPage
+			https://api.jqueryui.com/menu/#method-previousPage
     """
     return JsObjects.JsObjects.get('%s.menu("previousPage")' % self._src.dom.jquery.varId)
 
@@ -766,8 +754,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-refresh
+			https://api.jqueryui.com/menu/#method-refresh
     """
     return JsObjects.JsObjects.get('%s.menu("refresh")' % self._src.dom.jquery.varId)
 
@@ -779,8 +766,7 @@ class Menu(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu/#method-select
+			https://api.jqueryui.com/menu/#method-select
     """
     return JsObjects.JsObjects.get('%s.menu("select")' % self._src.dom.jquery.varId)
 
@@ -795,8 +781,7 @@ class Dialog(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#method-close
+			https://api.jqueryui.com/dialog/#method-close
     """
     return JsObjects.JsObjects.get('%s.dialog("close")' % self._src.dom.jquery.varId)
 
@@ -808,8 +793,7 @@ class Dialog(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#method-destroy
+			https://api.jqueryui.com/dialog/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.dialog("destroy")' % self._src.dom.jquery.varId)
 
@@ -821,8 +805,7 @@ class Dialog(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#method-instance
+			https://api.jqueryui.com/dialog/#method-instance
     """
     return JsObjects.JsObjects.get('%s.dialog("instance")' % self._src.dom.jquery.varId)
 
@@ -834,8 +817,7 @@ class Dialog(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#method-isOpen
+			https://api.jqueryui.com/dialog/#method-isOpen
     """
     return JsObjects.JsObjects.get('%s.dialog("isOpen")' % self._src.dom.jquery.varId)
 
@@ -847,8 +829,7 @@ class Dialog(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#method-moveToTop
+			https://api.jqueryui.com/dialog/#method-moveToTop
     """
     return JsObjects.JsObjects.get('%s.dialog("moveToTop")' % self._src.dom.jquery.varId)
 
@@ -860,8 +841,7 @@ class Dialog(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#method-open
+			https://api.jqueryui.com/dialog/#method-open
     """
     return JsObjects.JsObjects.get('%s.dialog("open")' % self._src.dom.jquery.varId)
 
@@ -876,8 +856,7 @@ class Dialog(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/dialog/#method-option
+			https://api.jqueryui.com/dialog/#method-option
 
     Attributes:
     ----------
@@ -905,8 +884,7 @@ class Autocomplete(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#method-close
+			https://api.jqueryui.com/autocomplete/#method-close
     """
     return JsObjects.JsObjects.get('%s.autocomplete("close")' % self._src.dom.jquery.varId)
 
@@ -918,8 +896,7 @@ class Autocomplete(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#method-destroy
+			https://api.jqueryui.com/autocomplete/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.autocomplete("destroy")' % self._src.dom.jquery.varId)
 
@@ -931,8 +908,7 @@ class Autocomplete(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#method-disable
+			https://api.jqueryui.com/autocomplete/#method-disable
     """
     return JsObjects.JsObjects.get('%s.autocomplete("disable")' % self._src.dom.jquery.varId)
 
@@ -944,8 +920,7 @@ class Autocomplete(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#method-enable
+			https://api.jqueryui.com/autocomplete/#method-enable
     """
     return JsObjects.JsObjects.get('%s.autocomplete("enable")' % self._src.dom.jquery.varId)
 
@@ -957,8 +932,7 @@ class Autocomplete(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#method-enable
+			https://api.jqueryui.com/autocomplete/#method-enable
     """
     return JsObjects.JsObjects.get('%s.autocomplete("instance")' % self._src.dom.jquery.varId)
 
@@ -973,8 +947,7 @@ class Autocomplete(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#method-option
+			https://api.jqueryui.com/autocomplete/#method-option
 
     Attributes:
     ----------
@@ -1000,8 +973,7 @@ class Autocomplete(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#method-close
+			https://api.jqueryui.com/autocomplete/#method-close
 
     Attributes:
     ----------
@@ -1022,8 +994,7 @@ class Datepicker(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/datepicker/#method-destroy
+			https://api.jqueryui.com/datepicker/#method-destroy
     """
     return JsObjects.JsObjects.get('%s.datepicker("destroy")' % self._src.dom.jquery.varId)
 
@@ -1035,8 +1006,7 @@ class Datepicker(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/datepicker/#method-getDate
+			https://api.jqueryui.com/datepicker/#method-getDate
     """
     return JsObjects.JsObjects.get('%s.datepicker("getDate")' % self._src.dom.jquery.varId)
 
@@ -1048,8 +1018,7 @@ class Datepicker(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/datepicker/#method-hide
+			https://api.jqueryui.com/datepicker/#method-hide
     """
     return JsObjects.JsObjects.get('%s.datepicker("hide")' % self._src.dom.jquery.varId)
 
@@ -1061,8 +1030,7 @@ class Datepicker(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/datepicker/#method-isDisabled
+			https://api.jqueryui.com/datepicker/#method-isDisabled
     """
     return JsObjects.JsObjects.get('%s.datepicker("isDisabled")' % self._src.dom.jquery.varId)
 
@@ -1094,8 +1062,7 @@ class Datepicker(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/datepicker/#method-option
+			https://api.jqueryui.com/datepicker/#method-option
 
     Attributes:
     ----------
@@ -1120,8 +1087,7 @@ class Datepicker(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/datepicker/#method-refresh
+			https://api.jqueryui.com/datepicker/#method-refresh
     """
     return JsObjects.JsObjects.get('%s.datepicker("refresh")' % self._src.dom.jquery.varId)
 
@@ -1133,8 +1099,7 @@ class Datepicker(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/datepicker/#method-setDate
+			https://api.jqueryui.com/datepicker/#method-setDate
 
     Attributes:
     ----------
@@ -1151,7 +1116,6 @@ class Datepicker(JQueryUI):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/datepicker/#method-show
+			https://api.jqueryui.com/datepicker/#method-show
     """
     return JsObjects.JsObjects.get('%s.datepicker("show")' % self._src.dom.jquery.varId)

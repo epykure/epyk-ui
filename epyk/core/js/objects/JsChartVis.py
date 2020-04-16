@@ -1,7 +1,9 @@
 """
 Module dedicated to perform the data transformation for the Vis charts
 
-https://visjs.org/
+Related Pages:
+
+		https://visjs.org/
 """
 
 from epyk.core.js import JsUtils

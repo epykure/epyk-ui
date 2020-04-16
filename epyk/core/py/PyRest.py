@@ -84,8 +84,7 @@ class PyRest(object):
 
     Related Pages:
 
-
-    https://docs.python.org/2/howto/urllib2.html
+			https://docs.python.org/2/howto/urllib2.html
 
     Attributes:
     ----------
@@ -121,8 +120,7 @@ class PyRest(object):
 
     Related Pages:
 
-
-    https://docs.python.org/2/howto/urllib2.html
+			https://docs.python.org/2/howto/urllib2.html
 
     Attributes:
     ----------
@@ -160,8 +158,7 @@ class PyRest(object):
 
     Related Pages:
 
-
-    https://2.python-requests.org/en/master/api/
+			https://2.python-requests.org/en/master/api/
     https://docs.python.org/3/library/urllib.request.html
 
     Attributes:

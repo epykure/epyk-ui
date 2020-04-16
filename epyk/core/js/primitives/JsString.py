@@ -13,8 +13,9 @@ Each function will have it is specific documentation and a simple example.
 More examples can be found in the tests folder if needed.
 If necessary the tests folder can be updated in order to catch some specific regressions
 
-Documentation
-https://www.w3schools.com/jsref/jsref_obj_string.asp
+Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_obj_string.asp
 """
 
 
@@ -59,8 +60,9 @@ class JsString(JsObject.JsObject):
     """
     The length property of an array returns the length of an array (the number of array elements).
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_length_string.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_length_string.asp
 
     :return: The length of a string
     """
@@ -83,8 +85,9 @@ class JsString(JsObject.JsObject):
     """
     The indexOf() method returns the position of the first occurrence of a specified value in a string.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_indexof.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_indexof.asp
 
     :param searchvalue: Required. The string to search for
     :param start: Optional. Default 0. At which position to start the search
@@ -100,8 +103,9 @@ class JsString(JsObject.JsObject):
     """
     The lastIndexOf() method returns the position of the last occurrence of a specified value in a string.
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_lastindexof.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_lastindexof.asp
 
     :param searchvalue: Required. The string to search for
     :param start: Optional. Default 0. At which position to start the search
@@ -117,8 +121,9 @@ class JsString(JsObject.JsObject):
     """
     The substring() method extracts the characters from a string, between two specified indices, and returns the new sub string.
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_substring.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_substring.asp
 
     :param start: Required. The position where to start the extraction. First character is at index 0
     :param end: Optional. The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the string
@@ -133,8 +138,9 @@ class JsString(JsObject.JsObject):
     """
     The substr() method extracts parts of a string, beginning at the character at the specified position, and returns the specified number of characters.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_substr.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_substr.asp
 
     :param start: Required. The position where to start the extraction. First character is at index 0.
     :param length: Optional. The number of characters to extract. If omitted, it extracts the rest of the string
@@ -152,8 +158,9 @@ class JsString(JsObject.JsObject):
 
     The replace() method does not change the string it is called on. It returns a new string.
 
-    Documentation
-    https://www.w3schools.com/js/js_string_methods.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_string_methods.asp
 
     :param searchvalue: Required. The value, or regular expression, that will be replaced by the new value
     :param newvalue: Required. The value to replace the search value with
@@ -170,8 +177,9 @@ class JsString(JsObject.JsObject):
     """
     The slice() method extracts parts of a string and returns the extracted parts in a new string.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_slice_string.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_slice_string.asp
 
     :param start: Required. The position where to begin the extraction. First character is at position 0
     :param end: Optional. The position (up to, but not including) where to end the extraction.
@@ -185,8 +193,9 @@ class JsString(JsObject.JsObject):
     """
     The search() method searches a string for a specified value, and returns the position of the match.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_search.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_search.asp
 
     :param searchvalue: Required. A regular expression. A string will automatically be converted to a regular expression.
 
@@ -202,8 +211,9 @@ class JsString(JsObject.JsObject):
     """
     The concat() method is used to join two or more strings.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_concat_string.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_concat_string.asp
 
     :param args: Required. The strings to be joined
     :param newVarName: The new Javascript Variable Name
@@ -234,8 +244,9 @@ class JsString(JsObject.JsObject):
     Example
     rptObj.js.string("iib$% rni233n", varName="MyTest").clean() => returns "iibrni233n"
 
-    Documentation
-    https://www.w3schools.com/js/js_conventions.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_conventions.asp
 
     :return: The Python Javascript String transformed to be a variable name
     """
@@ -252,8 +263,9 @@ class JsString(JsObject.JsObject):
     """
     The trim() method removes whitespace from both sides of a string.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_trim_string.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_trim_string.asp
 
     :return: A String, representing the string with removed whitespace from both ends
     """
@@ -263,8 +275,9 @@ class JsString(JsObject.JsObject):
     """
     The charAt() method returns the character at the specified index in a string.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_charat.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_charat.asp
 
     :param i: Required. An integer representing the index of the character you want to return
 
@@ -276,8 +289,9 @@ class JsString(JsObject.JsObject):
     """
     The charCodeAt() method returns the Unicode of the character at the specified index in a string.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_charcodeat.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_charcodeat.asp
 
     :param i: Required. A number representing the index of the character you want to return
 
@@ -291,8 +305,9 @@ class JsString(JsObject.JsObject):
     """
     The toLocaleLowerCase() method converts a string to lowercase letters, according to the host's current locale.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_tolocalelowercase.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_tolocalelowercase.asp
 
     :return: A String, representing the value of a string converted to lowercase according to the host's current locale
     """
@@ -302,8 +317,9 @@ class JsString(JsObject.JsObject):
     """
     The toUpperCase() method converts a string to uppercase letters.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_touppercase.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_touppercase.asp
 
     :return: A String, representing the value of a string converted to uppercase
     """
@@ -314,8 +330,9 @@ class JsString(JsObject.JsObject):
     The includes() method determines whether a string contains the characters of a specified string.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_includes.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_includes.asp
 
     :param searchvalue: Required. The string to search for
     :param start: Optional. Default 0. At which position to start the search
@@ -336,8 +353,9 @@ class JsString(JsObject.JsObject):
     The startsWith() method determines whether a string begins with the characters of a specified string.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_startswith.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_startswith.asp
 
     :param searchvalue: Required. The string to search for
     :param start: Optional. Default 0. At which position to start the search
@@ -357,8 +375,9 @@ class JsString(JsObject.JsObject):
     """
     The endsWith() method determines whether a string ends with the characters of a specified string.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_endswith.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_endswith.asp
 
     :param searchvalue: Required. The string to search for
     :param length: Optional. Specify the length of the string to search. If omitted, the default value is the length of the string
@@ -377,8 +396,9 @@ class JsString(JsObject.JsObject):
     """
     The repeat() method returns a new string with a specified number of copies of the string it was called on.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_repeat.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_repeat.asp
 
     :param count: Required. The number of times the original string value should be repeated in the new string
 
@@ -391,8 +411,9 @@ class JsString(JsObject.JsObject):
     The split() method is used to split a string into an array of substrings, and returns the new array.
     The empty value is a List with as a first value an emtpy String.
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_split.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_split.asp
 
     :param separator: Optional. Specifies the character, or the regular expression, to use for splitting the string.
                                 If omitted, the entire string will be returned (an array with only one item)
@@ -412,8 +433,9 @@ class JsString(JsObject.JsObject):
     The splitEmptyArray() method is used to split a string into an array of substrings, and returns the new array.
     The empty value is an emtpy list
 
-    Documentation
-    https://stackoverflow.com/questions/5164883/the-confusion-about-the-split-function-of-javascript
+    Related Pages:
+
+			https://stackoverflow.com/questions/5164883/the-confusion-about-the-split-function-of-javascript
 
     :param rptObj: The report object in order to register the prototype extension
     :param separator: Optional. Specifies the character, or the regular expression, to use for splitting the string.

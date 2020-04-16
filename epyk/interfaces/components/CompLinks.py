@@ -23,9 +23,7 @@ class Links(object):
 
     Related Pages:
 
-
-
-    https://www.w3schools.com/TagS/att_a_href.asp
+			https://www.w3schools.com/TagS/att_a_href.asp
 
     Attributes:
     ----------
@@ -140,10 +138,7 @@ class Links(object):
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param text: The string value to be displayed in the component
     :param url: The string url of the link
@@ -197,10 +192,7 @@ class Links(object):
       - :class:`epyk.core.html.HtmlLinks.Bridge`
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param text:
     :param script_name:

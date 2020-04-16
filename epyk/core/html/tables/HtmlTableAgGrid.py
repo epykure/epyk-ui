@@ -1080,8 +1080,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-pagination/
+			https://www.ag-grid.com/javascript-grid-pagination/
     """
     return self._attrs["suppressPaginationPanel"]
 
@@ -1098,8 +1097,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-pagination/
+			https://www.ag-grid.com/javascript-grid-pagination/
     """
     return self._attrs["suppressScrollOnNewData"]
 
@@ -1116,8 +1114,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-cell-editing/
+			https://www.ag-grid.com/javascript-grid-cell-editing/
     """
     return self._attrs["ensureDomOrder"]
 
@@ -1134,8 +1131,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-accessibility/
+			https://www.ag-grid.com/javascript-grid-accessibility/
     """
     return self._attrs["suppressColumnVirtualisation"]
 
@@ -1154,8 +1150,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-column-moving/
+			https://www.ag-grid.com/javascript-grid-column-moving/
     """
     return self._attrs["suppressDragLeaveHidesColumns"]
 
@@ -1175,8 +1170,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-selection/
+			https://www.ag-grid.com/javascript-grid-selection/
     """
     return self._attrs["rowMultiSelectWithClick"]
 
@@ -1194,8 +1188,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-selection/
+			https://www.ag-grid.com/javascript-grid-selection/
     """
     return self._attrs["rowDeselection"]
 
@@ -1214,8 +1207,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-selection/
+			https://www.ag-grid.com/javascript-grid-selection/
     """
     return self._attrs["rowSelection"]
 
@@ -1232,8 +1224,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-accessibility/
+			https://www.ag-grid.com/javascript-grid-accessibility/
     """
     return self._attrs["rowBuffer"]
 
@@ -1250,8 +1241,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://www.ag-grid.com/javascript-grid-selection/
+			https://www.ag-grid.com/javascript-grid-selection/
     """
     return self._attrs["suppressRowClickSelection"]
 

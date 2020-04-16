@@ -19,8 +19,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_a.asp
+			https://www.w3schools.com/tags/tag_a.asp
 
     Attributes:
     ----------
@@ -47,8 +46,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_b.asp
+			https://www.w3schools.com/tags/tag_b.asp
 
     Attributes:
     ----------
@@ -75,8 +73,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_hn.asp
+			https://www.w3schools.com/tags/tag_hn.asp
 
     Attributes:
     ----------
@@ -103,8 +100,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_hn.asp
+			https://www.w3schools.com/tags/tag_hn.asp
 
     Attributes:
     ----------
@@ -131,8 +127,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_hn.asp
+			https://www.w3schools.com/tags/tag_hn.asp
 
     Attributes:
     ----------
@@ -177,8 +172,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_u.asp
+			https://www.w3schools.com/tags/tag_u.asp
 
     Attributes:
     ----------
@@ -204,8 +198,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_p.asp
+			https://www.w3schools.com/tags/tag_p.asp
 
     Attributes:
     ----------
@@ -237,8 +230,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_bdi.asp
+			https://www.w3schools.com/tags/tag_bdi.asp
 
     Attributes:
     ----------
@@ -263,8 +255,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_bdo.asp
+			https://www.w3schools.com/tags/tag_bdo.asp
 
     Attributes:
     ----------
@@ -288,8 +279,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_em.asp
+			https://www.w3schools.com/tags/tag_em.asp
 
     Attributes:
     ----------
@@ -313,8 +303,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_strong.asp
+			https://www.w3schools.com/tags/tag_strong.asp
 
     Attributes:
     ----------
@@ -338,8 +327,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_samp.asp
+			https://www.w3schools.com/tags/tag_samp.asp
 
     Attributes:
     ----------
@@ -364,8 +352,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_kbd.asp
+			https://www.w3schools.com/tags/tag_kbd.asp
 
     Attributes:
     ----------
@@ -389,8 +376,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_var.asp
+			https://www.w3schools.com/tags/tag_var.asp
 
     Attributes:
     ----------
@@ -414,8 +400,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_sup.asp
+			https://www.w3schools.com/tags/tag_sup.asp
 
     Attributes:
     ----------
@@ -439,8 +424,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_wbr.asp
+			https://www.w3schools.com/tags/tag_wbr.asp
 
     Attributes:
     ----------
@@ -464,8 +448,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_time.asp
+			https://www.w3schools.com/tags/tag_time.asp
 
     Attributes:
     ----------
@@ -490,8 +473,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_sub.asp
+			https://www.w3schools.com/tags/tag_sub.asp
 
     Attributes:
     ----------
@@ -515,8 +497,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_small.asp
+			https://www.w3schools.com/tags/tag_small.asp
 
     Attributes:
     ----------
@@ -540,8 +521,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_s.asp
+			https://www.w3schools.com/tags/tag_s.asp
 
     Attributes:
     ----------
@@ -565,8 +545,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_i.asp
+			https://www.w3schools.com/tags/tag_i.asp
 
     Attributes:
     ----------
@@ -592,8 +571,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_q.asp
+			https://www.w3schools.com/tags/tag_q.asp
 
     Attributes:
     ----------
@@ -619,8 +597,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_mark.asp
+			https://www.w3schools.com/tags/tag_mark.asp
 
     Attributes:
     ----------
@@ -644,8 +621,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_ins.asp
+			https://www.w3schools.com/tags/tag_ins.asp
 
     Attributes:
     ----------
@@ -669,8 +645,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_dfn.asp
+			https://www.w3schools.com/tags/tag_dfn.asp
 
     Attributes:
     ----------
@@ -694,8 +669,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_cite.asp
+			https://www.w3schools.com/tags/tag_cite.asp
 
     Attributes:
     ----------
@@ -719,8 +693,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_abbr.asp
+			https://www.w3schools.com/tags/tag_abbr.asp
 
     Attributes:
     ----------
@@ -745,8 +718,7 @@ class Tags(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_meter.asp
+			https://www.w3schools.com/tags/tag_meter.asp
 
     Attributes:
     ----------

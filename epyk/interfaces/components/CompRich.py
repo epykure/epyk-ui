@@ -17,10 +17,7 @@ class Rich(object):
       rptObj.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param rec:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -52,8 +49,7 @@ class Rich(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/howto_css_star_rating.asp
+			https://www.w3schools.com/howto/howto_css_star_rating.asp
 
     Attributes:
     ----------
@@ -109,8 +105,7 @@ class Rich(object):
 
     Related Pages:
 
-
-    https://fontawesome.com/icons/question-circle?style=solid
+			https://fontawesome.com/icons/question-circle?style=solid
     https://api.jqueryui.com/tooltip/
 
     Attributes:
@@ -135,8 +130,7 @@ class Rich(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/js/js_date_methods.asp
+			https://www.w3schools.com/js/js_date_methods.asp
     https://www.w3schools.com/howto/howto_js_countdown.asp
     https://fontawesome.com/icons/stopwatch?style=solid
 
@@ -214,8 +208,7 @@ class Rich(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
+			https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
 
     Attributes:
     ----------
@@ -241,10 +234,7 @@ class Rich(object):
     Usage::
 
       Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     """
     records = records or []

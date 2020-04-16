@@ -30,8 +30,9 @@ class Label(Html.Html):
   def id_html(self):
     """
 
-    Documentation
-    https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
+    Related Pages:
+
+			https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
 
     :return:
     """
@@ -58,8 +59,9 @@ class Label(Html.Html):
     Example
     select.label.click(str(rptObj.js.console.log("test")))
 
-    Documentation
-    https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/event_onload.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
@@ -140,8 +142,7 @@ class Span(Html.Html):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
+			https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
 
     :return:
     """
@@ -180,8 +181,7 @@ class Span(Html.Html):
 
     Related Pages:
 
-
-    https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+			https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/event_onload.asp
 
     Attributes:
@@ -748,8 +748,9 @@ class Title(Html.Html):
   def to_xls(self, workbook, worksheet, cursor):
     """
 
-    Documentation
-    https://xlsxwriter.readthedocs.io/format.html
+    Related Pages:
+
+			https://xlsxwriter.readthedocs.io/format.html
 
     :param workbook:
     :param worksheet:
@@ -786,9 +787,7 @@ class Numeric(Html.Html):
     Format any number into currency
 
     Related Pages:
-
-
-    http://openexchangerates.github.io/accounting.js/
+http://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------
@@ -811,9 +810,7 @@ class Numeric(Html.Html):
     Format a number with custom precision and localisation
 
     Related Pages:
-
-
-    http://openexchangerates.github.io/accounting.js/
+http://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------

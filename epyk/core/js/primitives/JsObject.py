@@ -27,8 +27,9 @@ class JsObject(object):
   def __init__(self, data, varName=None, setVar=False, isPyData=False, report=None):
     """
 
-    Documentation:
-    https://www.w3schools.com/js/js_type_conversion.asp
+    Related Pages:
+
+			https//www.w3schools.com/js/js_type_conversion.asp
 
     :param varName:
     :param data:
@@ -55,8 +56,9 @@ class JsObject(object):
     Example
     JsDate.new("2019-05-03", varName="MyDate")
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_obj_date.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     :param data: Optional, The object data
     :param varName: Optional, The object variable name
@@ -78,8 +80,9 @@ class JsObject(object):
     Example
     jsObj.object.this
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
 
     :param report: The internal report object
 
@@ -96,8 +99,9 @@ class JsObject(object):
     JsDate.new("2019-05-03", varName="MyDate")
     JsDate.get("MyDate")
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_obj_date.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     :param varName: The Javascript object reference
     :param report: The internal report object
@@ -291,8 +295,9 @@ class JsObject(object):
     Example
     jsObj.objects.get("MyObject").isFrozen()
 
-    Documentation
-    https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
+    Related Pages:
+
+			https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen
 
     :return: A Python Javascript Boolean
@@ -310,8 +315,9 @@ class JsObject(object):
     Example
     jsObj.objects.get("MyObject").freeze()
 
-    Documentation
-    https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
+    Related Pages:
+
+			https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
 
     :return: The object that was passed to the function
@@ -330,8 +336,9 @@ class JsObject(object):
     Example
     jsObj.objects.get("MyObject").isSealed()
 
-    Documentation
-    https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
+    Related Pages:
+
+			https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
 
     :return: A Javascript Boolean
@@ -345,8 +352,9 @@ class JsObject(object):
     """
     The static method Object.defineProperty() defines a new property directly on an object, or modifies an existing property on an object, and returns the object.
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
 
     :param obj: The object on which to define the property.
     :param prop: The name or Symbol of the property to be defined or modified.
@@ -360,8 +368,9 @@ class JsObject(object):
     """
     The Object.getOwnPropertyNames() method returns an array of all properties (including non-enumerable properties except for those which use Symbol) found directly in a given object.
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames
 
     :param obj: The object whose enumerable and non-enumerable properties are to be returned.
 
@@ -376,8 +385,9 @@ class JsObject(object):
     The Object.seal() method seals an object, preventing new properties from being added to it and marking all existing properties as non-configurable.
     Values of present properties can still be changed as long as they are writable.
 
-    Documentation
-    https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
+    Related Pages:
+
+			https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
     https://www.w3schools.com/Js/js_object_es5.asp
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
 
@@ -394,8 +404,9 @@ class JsObject(object):
     It will return the target object.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 
     :param target: The target object.
     :param sources: The source object(s).
@@ -416,8 +427,9 @@ class JsObject(object):
     """
     The Object.create() method creates a new object, using an existing object as the prototype of the newly created object.
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 
     :param proto: The object which should be the prototype of the newly-created object.
     :param propertiesObject: Optional. If specified and not undefined, an object whose enumerable own properties (that is, those properties defined upon itself and not enumerable properties along its prototype chain) specify property descriptors to be added to the newly-created object, with the corresponding property names.
@@ -434,8 +446,9 @@ class JsObject(object):
     """
     The entries() method returns an Array Iterator object with key/value pairs.
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_entries.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_entries.asp
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
 
     :return: A new Array, containing the selected elements
@@ -450,8 +463,9 @@ class JsObject(object):
     Example
     jsObj.objects.get("MyObject").setattr("tesr", jsObj.objects.number.get("MyNumber"))
 
-    Documentation
-    https://www.w3schools.com/js/js_objects.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_objects.asp
     https://www.w3schools.com/js/js_object_es5.asp
 
     :param key: The key to add to the object
@@ -480,8 +494,9 @@ class JsObject(object):
     Example
     jsObj.objects.get("MyObject")["test"]
 
-    Documentation
-    https://www.w3schools.com/js/js_object_es5.asp
+    Related Pages:
+
+			https://www.w3schools.com/js/js_object_es5.asp
 
     :param key: The String used as key
 
@@ -496,8 +511,9 @@ class JsObject(object):
     Example
     jsObj.objects.get("MyObject").keys()
 
-    Documentation
-    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
     https://www.w3schools.com/js/js_object_es5.asp
 
     :return: A new Array, containing the selected elements
@@ -529,8 +545,9 @@ class JsObject(object):
     Example
     jsObj.objects.get("MyObject").toString()
 
-    Documentation
-    https://www.w3schools.com/JS/js_number_methods.asp
+    Related Pages:
+
+			https://www.w3schools.com/JS/js_number_methods.asp
 
     :param explicit: Optional, default True. Parameter to force the String conversion on the Js side
 
@@ -550,8 +567,9 @@ class JsObject(object):
     Example
     jsObj.objects.get("MyObject").isArray()
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_isarray.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_isarray.asp
 
     :return: A Javascript Boolean
     """

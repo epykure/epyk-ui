@@ -1,5 +1,7 @@
 """
-https://www.w3schools.com/charsets/ref_utf_currency.asp
+Related Pages:
+
+		https://www.w3schools.com/charsets/ref_utf_currency.asp
 """
 
 EURO_CURRENCY_SIGN = '&#8352'

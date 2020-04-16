@@ -34,8 +34,7 @@ class DatePicker(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu
+			https://api.jqueryui.com/menu
 
     :rtype: OptInputs.OptionsDatePicker
     """
@@ -71,8 +70,7 @@ class DatePicker(Html.Html):
 
     Related Pages:
 
-
-    https://timepicker.co/options/
+			https://timepicker.co/options/
 
     Attributes:
     ----------
@@ -119,8 +117,7 @@ class TimePicker(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu
+			https://api.jqueryui.com/menu
 
     :rtype: OptInputs.OptionsTimePicker
     """
@@ -142,8 +139,7 @@ class TimePicker(Html.Html):
 
     Related Pages:
 
-
-    https://timepicker.co/options/
+			https://timepicker.co/options/
 
     :param jsFnc:
     """

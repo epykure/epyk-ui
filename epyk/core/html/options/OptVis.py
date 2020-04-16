@@ -941,8 +941,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["animationInterval"]
 
@@ -960,8 +959,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["animationPreload"]
 
@@ -978,8 +976,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["animationAutoStart"]
 
@@ -996,8 +993,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["axisColor"]
 
@@ -1046,8 +1042,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["dotSizeRatio"]
 
@@ -1064,8 +1059,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["dotSizeMinFraction"]
 
@@ -1082,8 +1076,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["dotSizeMaxFraction"]
 
@@ -1108,8 +1101,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["gridColor"]
 
@@ -1126,8 +1118,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["height"]
 
@@ -1147,8 +1138,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["keepAspectRatio"]
 
@@ -1165,8 +1155,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["rotateAxisLabels"]
 
@@ -1185,8 +1174,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showAnimationControls"]
 
@@ -1203,8 +1191,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showGrayBottom"]
 
@@ -1221,8 +1208,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showGrid"]
 
@@ -1239,8 +1225,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showXAxis"]
 
@@ -1257,8 +1242,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showYAxis"]
 
@@ -1275,8 +1259,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showZAxis"]
 
@@ -1294,8 +1277,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showPerspective"]
 
@@ -1313,8 +1295,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showLegend"]
 
@@ -1331,8 +1312,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showShadow"]
 
@@ -1349,8 +1329,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["showSurfaceGrid"]
 
@@ -1367,8 +1346,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
 
     :rtype: Enum3dStyles
     """
@@ -1385,8 +1363,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["tooltip"]
 
@@ -1403,8 +1380,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["tooltipDelay"]
 
@@ -1429,8 +1405,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["valueMax"]
 
@@ -1447,8 +1422,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["valueMin"]
 
@@ -1466,8 +1440,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["verticalRatio"]
 
@@ -1484,8 +1457,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["width"]
 
@@ -1504,8 +1476,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xCenter"]
 
@@ -1522,8 +1493,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xMax"]
 
@@ -1540,8 +1510,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xMin"]
 
@@ -1559,8 +1528,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xBarWidth"]
 
@@ -1577,8 +1545,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xValueLabel"]
 
@@ -1595,8 +1562,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["xStep"]
 
@@ -1614,8 +1580,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yBarWidth"]
 
@@ -1632,8 +1597,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yCenter"]
 
@@ -1650,8 +1614,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yMax"]
 
@@ -1668,8 +1631,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yMin"]
 
@@ -1686,8 +1648,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yValueLabel"]
 
@@ -1704,8 +1665,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["yStep"]
 
@@ -1722,8 +1682,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["zValueLabel"]
 
@@ -1740,8 +1699,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["zMax"]
 
@@ -1758,8 +1716,7 @@ class Options3D(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+			https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["zMin"]
 
@@ -1779,8 +1736,7 @@ class OptionsEditable(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["add"]
 
@@ -1797,8 +1753,7 @@ class OptionsEditable(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["remove"]
 
@@ -1815,8 +1770,7 @@ class OptionsEditable(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["updateGroup"]
 
@@ -1833,8 +1787,7 @@ class OptionsEditable(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["updateTime"]
 
@@ -1851,8 +1804,7 @@ class OptionsEditable(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["overrideItems"]
 
@@ -1872,8 +1824,7 @@ class OptionsTimeline(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+			https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["autoResize"]
 
@@ -1887,8 +1838,7 @@ class OptionsTimeline(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
 
     :rtype: OptionsEditable
     """
@@ -1907,8 +1857,7 @@ class OptionsTimeline(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+			https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["end"]
 
@@ -1925,8 +1874,7 @@ class OptionsTimeline(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["clickToUse"]
 
@@ -1943,8 +1891,7 @@ class OptionsTimeline(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["start"]
 
@@ -1961,8 +1908,7 @@ class OptionsTimeline(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["stack"]
 
@@ -1979,8 +1925,7 @@ class OptionsTimeline(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["stackSubgroups"]
 
@@ -1997,8 +1942,7 @@ class OptionsTimeline(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["multiselect"]
 
@@ -2015,8 +1959,7 @@ class OptionsTimeline(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-timeline/docs/timeline/
+			https://visjs.github.io/vis-timeline/docs/timeline/
     """
     return self._attrs["sequentialSelection"]
 
@@ -2036,8 +1979,7 @@ class OptionLabel(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-network/docs/network/edges.html
+			https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["enabled"]
 
@@ -2054,8 +1996,7 @@ class OptionLabel(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-network/docs/network/edges.html
+			https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["min"]
 
@@ -2072,8 +2013,7 @@ class OptionLabel(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-network/docs/network/edges.html
+			https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["max"]
 
@@ -2092,8 +2032,7 @@ class OptionLabel(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-network/docs/network/edges.html
+			https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["maxVisible"]
 
@@ -2111,8 +2050,7 @@ class OptionLabel(DataClass):
 
     Related Pages:
 
-
-    https://visjs.github.io/vis-network/docs/network/edges.html
+			https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["drawThreshold"]
 

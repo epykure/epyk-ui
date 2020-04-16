@@ -1,5 +1,7 @@
 """
-https://www.w3schools.com/charsets/ref_emoji_smileys.asp
+Related Pages:
+
+		https://www.w3schools.com/charsets/ref_emoji_smileys.asp
 """
 
 GRINNING_FACE = '&#128512'

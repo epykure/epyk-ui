@@ -12,8 +12,7 @@ class ColReorder(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/colReorder
+			https://datatables.net/reference/option/colReorder
     """
     self.realtime = True
     return self
@@ -27,8 +26,7 @@ class ColReorder(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/colReorder.enable
+			https://datatables.net/reference/option/colReorder.enable
     """
     return self._attrs["enable"]
 
@@ -45,8 +43,7 @@ class ColReorder(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/colReorder.fixedColumnsLeft
+			https://datatables.net/reference/option/colReorder.fixedColumnsLeft
     """
     return self._attrs["fixedColumnsLeft"]
 
@@ -63,8 +60,7 @@ class ColReorder(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/colReorder.fixedColumnsRight
+			https://datatables.net/reference/option/colReorder.fixedColumnsRight
     """
     return self._attrs["fixedColumnsRight"]
 
@@ -81,8 +77,7 @@ class ColReorder(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/colReorder.order
+			https://datatables.net/reference/option/colReorder.order
     """
     return self._attrs["order"]
 

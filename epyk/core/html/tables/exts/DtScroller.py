@@ -13,8 +13,7 @@ class Scroller(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/scroller
+			https://datatables.net/reference/option/scroller
     """
     self.loadingIndicator = True
     return self
@@ -28,8 +27,7 @@ class Scroller(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/scroller.boundaryScale
+			https://datatables.net/reference/option/scroller.boundaryScale
     """
     return self._attrs["boundaryScale"]
 
@@ -46,8 +44,7 @@ class Scroller(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/scroller.displayBuffer
+			https://datatables.net/reference/option/scroller.displayBuffer
     """
     return self._attrs["displayBuffer"]
 
@@ -64,8 +61,7 @@ class Scroller(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/scroller.loadingIndicator
+			https://datatables.net/reference/option/scroller.loadingIndicator
     """
     return self._attrs["loadingIndicator"]
 
@@ -82,8 +78,7 @@ class Scroller(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/scroller.rowHeight
+			https://datatables.net/reference/option/scroller.rowHeight
     """
     return self._attrs["rowHeight"]
 
@@ -100,8 +95,7 @@ class Scroller(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/scroller.serverWait
+			https://datatables.net/reference/option/scroller.serverWait
     """
     return self._attrs["serverWait"]
 

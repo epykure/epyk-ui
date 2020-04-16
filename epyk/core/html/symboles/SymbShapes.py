@@ -1,5 +1,7 @@
 """
-https://www.w3schools.com/charsets/ref_utf_geometric.asp
+Related Pages:
+
+		https://www.w3schools.com/charsets/ref_utf_geometric.asp
 """
 
 BLACK_SQUARE = '&#9632'

@@ -65,8 +65,9 @@ class JsBase(JsPackage):
     Get or set the chart group to which this chart belongs.
     Chart groups are rendered or redrawn together since it is expected they share the same underlying crossfilter data set.
 
-    Documentation
-    https://dc-js.github.io/dc.js/docs/html/dc.baseMixin.html
+    Related Pages:
+
+			https://dc-js.github.io/dc.js/docs/html/dc.baseMixin.html
 
     :param groupId: Optional. The group ID
 
@@ -88,8 +89,9 @@ class JsBase(JsPackage):
     """
     Returns the internal numeric ID of the chart.
 
-    Documentation
-    https://dc-js.github.io/dc.js/docs/html/dc.baseMixin.html
+    Related Pages:
+
+			https://dc-js.github.io/dc.js/docs/html/dc.baseMixin.html
 
     :return:
     """
@@ -136,8 +138,9 @@ class JsBase(JsPackage):
     urn on/off the brush-based range filter.
     When brushing is on then user can drag the mouse across a chart with a quantitative scale to perform range filtering based on the extent of the brush, or click on the bars of an ordinal bar chart or slices of a pie chart to filter and un-filter them.
 
-    Documentation
-    https://dc-js.github.io/dc.js/docs/html/dc.coordinateGridMixin.html
+    Related Pages:
+
+			https://dc-js.github.io/dc.js/docs/html/dc.coordinateGridMixin.html
 
     :param brushOn:
     :return:
@@ -325,8 +328,9 @@ class JsPie(JsBase):
     """
     Title to use for the only slice when there is no data.
 
-    Documentation
-    https://dc-js.github.io/dc.js/docs/html/dc.pieChart.html
+    Related Pages:
+
+			https://dc-js.github.io/dc.js/docs/html/dc.pieChart.html
 
     :param title:
 

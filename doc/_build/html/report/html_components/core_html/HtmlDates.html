@@ -115,9 +115,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../graphs.html">Core Chart Components:</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../html_components.html#core-html-classes">Core Html Classes:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../html_components.html#core-table-components">Core Table Components:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../html_components.html#core-chart-components">Core Chart Components:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
@@ -211,16 +208,21 @@
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlDates.DatePicker.add_options">
 <code class="sig-name descname">add_options</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">value</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlDates.DatePicker.add_options" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add TimePicker options</p>
+<dd><blockquote>
+<div><p>Add TimePicker options</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> – A string or a Python dictionary with the options to set</p></li>
-<li><p><strong>val</strong> – Optional.</p></li>
-</ul>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param key</dt>
+<dd class="field-odd"><p>A string or a Python dictionary with the options to set</p>
+</dd>
+<dt class="field-even">param val</dt>
+<dd class="field-even"><p>Optional.</p>
 </dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
@@ -252,14 +254,20 @@
 <dl class="py method">
 <dt id="epyk.core.html.HtmlDates.DatePicker.options">
 <em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlDates.DatePicker.options" title="Permalink to this definition">¶</a></dt>
-<dd><p>The progress bar is designed to display the current percent complete for a process.
+<dd><dl>
+<dt>Description:</dt><dd><p>The progress bar is designed to display the current percent complete for a process.
 The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.</p>
-<p><a class="reference external" href="https://api.jqueryui.com/menu">https://api.jqueryui.com/menu</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../options/OptInputs.html#epyk.core.html.options.OptInputs.OptionsDatePicker" title="epyk.core.html.options.OptInputs.OptionsDatePicker">OptInputs.OptionsDatePicker</a></p>
+<p>Related Pages:</p>
 </dd>
 </dl>
+<p><a class="reference external" href="https://api.jqueryui.com/menu">https://api.jqueryui.com/menu</a></p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>OptInputs.OptionsDatePicker</p>
+</dd>
+</dl>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>
@@ -275,7 +283,8 @@ The bar is coded to be flexibly sized through CSS and will scale to fit inside i
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlDates.TimePicker.change">
 <code class="sig-name descname">change</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFnc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlDates.TimePicker.change" title="Permalink to this definition">¶</a></dt>
-<dd><p>Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
+<dd><blockquote>
+<div><p>Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
 Note: the variable time is a function parameter received in the Javascript side</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">morning</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">time</span><span class="p">(</span><span class="s2">&quot;8:13:00&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Time field&quot;</span><span class="p">)</span>
@@ -286,25 +295,34 @@ Note: the variable time is a function parameter received in the Javascript side<
 </dd>
 </dl>
 <p>])</p>
+<p>Related Pages:</p>
+</div></blockquote>
 <p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>jsFnc</strong> – </p>
-</dd>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param jsFnc</dt>
+<dd class="field-odd"><p></p></dd>
 </dl>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.HtmlDates.TimePicker.options">
 <em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlDates.TimePicker.options" title="Permalink to this definition">¶</a></dt>
-<dd><p>The progress bar is designed to display the current percent complete for a process.
+<dd><dl>
+<dt>Description:</dt><dd><p>The progress bar is designed to display the current percent complete for a process.
 The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.</p>
-<p><a class="reference external" href="https://api.jqueryui.com/menu">https://api.jqueryui.com/menu</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../options/OptInputs.html#epyk.core.html.options.OptInputs.OptionsTimePicker" title="epyk.core.html.options.OptInputs.OptionsTimePicker">OptInputs.OptionsTimePicker</a></p>
+<p>Related Pages:</p>
 </dd>
 </dl>
+<p><a class="reference external" href="https://api.jqueryui.com/menu">https://api.jqueryui.com/menu</a></p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>OptInputs.OptionsTimePicker</p>
+</dd>
+</dl>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>

@@ -6,7 +6,9 @@ This will also standardise the date format to YYYY-MM-DD in the Python layer to 
 conversion to the Javascript
 
 All the tests in this module are using doctest
-https://docs.python.org/2/library/doctest.html
+Related Pages:
+
+		https://docs.python.org/2/library/doctest.html
 """
 
 import time
@@ -32,8 +34,9 @@ class PyDates(object):
     Example
     PyDates().today
 
-    Documentation
-    https://docs.python.org/2/library/datetime.html
+    Related Pages:
+
+			https://docs.python.org/2/library/datetime.html
 
     :return: A string date in the format YYYY-MM-DD
     """
@@ -47,8 +50,9 @@ class PyDates(object):
     Example
     PyDates().now
 
-    Documentation
-    https://docs.python.org/2/library/datetime.html
+    Related Pages:
+
+			https://docs.python.org/2/library/datetime.html
 
     :return: Return a string timestamp
     """
@@ -184,8 +188,9 @@ class PyDates(object):
     >>> PyDates().date_from_excel(39448)
     '2008-01-01'
 
-    Documentation
-    https://support.office.com/en-gb/article/date-function-e36c0c8c-4104-49da-ab83-82328b832349?ui=en-US&rs=en-GB&ad=GB
+    Related Pages:
+
+			https://support.office.com/en-gb/article/date-function-e36c0c8c-4104-49da-ab83-82328b832349?ui=en-US&rs=en-GB&ad=GB
 
     :param xlDate:
 

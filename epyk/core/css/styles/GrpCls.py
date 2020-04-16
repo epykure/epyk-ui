@@ -231,8 +231,7 @@ class ClassHtml(Properties.CssMixin):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/func_attr.asp
+			https://www.w3schools.com/cssref/func_attr.asp
 
     Attributes:
     ----------
@@ -257,8 +256,7 @@ class ClassHtml(Properties.CssMixin):
 
     Related Pages:
 
-
-    https://gomakethings.com/how-to-access-and-use-data-attributes-in-your-css/
+			https://gomakethings.com/how-to-access-and-use-data-attributes-in-your-css/
 
     Attributes:
     ----------

@@ -180,8 +180,7 @@ class AutoComplete(Input):
 
     Related Pages:
 
-
-    https://timepicker.co/options/
+			https://timepicker.co/options/
 
     :rtype: OptInputs.OptionAutoComplete
     """
@@ -227,8 +226,7 @@ class InputTime(Input):
 
     Related Pages:
 
-
-    https://timepicker.co/options/
+			https://timepicker.co/options/
 
     :rtype: OptInputs.OptionsTimePicker
     """
@@ -301,8 +299,7 @@ class InputTime(Input):
 
     Related Pages:
 
-
-    https://timepicker.co/options/
+			https://timepicker.co/options/
 
     :param jsFnc:
     """
@@ -333,8 +330,7 @@ class InputDate(Input):
 
     Related Pages:
 
-
-    https://timepicker.co/options/
+			https://timepicker.co/options/
 
     :rtype: OptInputs.OptionsDatePicker
     """
@@ -550,8 +546,7 @@ class FieldAutocomplete(Field):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#event-change
+			https://api.jqueryui.com/autocomplete/#event-change
 
     :param jsFnc:
     """
@@ -569,8 +564,7 @@ class FieldAutocomplete(Field):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#event-search
+			https://api.jqueryui.com/autocomplete/#event-search
 
     :param jsFnc:
     """
@@ -589,8 +583,7 @@ class FieldAutocomplete(Field):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#event-focus
+			https://api.jqueryui.com/autocomplete/#event-focus
 
     Attributes:
     ----------
@@ -610,8 +603,7 @@ class FieldAutocomplete(Field):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#event-close
+			https://api.jqueryui.com/autocomplete/#event-close
 
     Attributes:
     ----------
@@ -633,8 +625,7 @@ class FieldAutocomplete(Field):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#event-select
+			https://api.jqueryui.com/autocomplete/#event-select
 
     Attributes:
     ----------
@@ -656,8 +647,7 @@ class FieldAutocomplete(Field):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/autocomplete/#event-response
+			https://api.jqueryui.com/autocomplete/#event-response
 
     Attributes:
     ----------
@@ -861,8 +851,7 @@ class TextArea(Html.Html):
 
     Related Pages:
 
-
-    https://www.w3schools.com/js/js_htmldom.asp
+			https://www.w3schools.com/js/js_htmldom.asp
 
     :rtype: JsHtmlField.JsHtmlTextarea
     """

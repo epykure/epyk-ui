@@ -27,9 +27,8 @@ class Images(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
-    https://www.w3schools.com/cssref/css3_pr_border-radius.asp
+      https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
+      https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
     Attributes:
     ----------
@@ -67,8 +66,7 @@ class Images(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
+			https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
     https://www.w3schools.com/cssref/css3_pr_border-radius.asp
 
     Attributes:
@@ -219,8 +217,9 @@ class Images(object):
 
       - :class:`epyk.core.html.HtmlImage.AnimatedImage`
 
-    Documentation
-    https://tympanus.net/Tutorials/OriginalHoverEffects/
+    Related Pages:
+
+			https://tympanus.net/Tutorials/OriginalHoverEffects/
 
     Attributes:
     ----------
@@ -255,8 +254,7 @@ class Images(object):
 
     Related Pages:
 
-
-    https://www.cssscript.com/basic-pure-css-slideshow-carousel/
+			https://www.cssscript.com/basic-pure-css-slideshow-carousel/
 
     Attributes:
     ----------
@@ -288,8 +286,7 @@ class Images(object):
 
     Related Pages:
 
-
-    https://github.com/wedgies/jquery-emoji-picker
+			https://github.com/wedgies/jquery-emoji-picker
 
     Attributes:
     ----------
@@ -316,8 +313,7 @@ class Images(object):
 
     Related Pages:
 
-
-    https://fontawesome.com/icons?m=free
+			https://fontawesome.com/icons?m=free
 
     Attributes:
     ----------
@@ -355,7 +351,7 @@ class Images(object):
 
     Related Pages:
 
-    https://getbootstrap.com/docs/4.0/components/badge/
+        https://getbootstrap.com/docs/4.0/components/badge/
 
     Attributes:
     ----------

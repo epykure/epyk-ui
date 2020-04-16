@@ -1,7 +1,8 @@
 """
 
-Documentation
-https://github.com/nicolaskruchten/pivottable/wiki/Parameters
+Related Pages:
+
+			https://github.com/nicolaskruchten/pivottable/wiki/Parameters
 """
 
 from epyk.core.js import JsUtils

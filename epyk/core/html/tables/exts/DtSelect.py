@@ -13,8 +13,7 @@ class EnumStyleOptions(DataEnum):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select.style
+			https://datatables.net/reference/option/select.style
     """
     return self.set()
 
@@ -26,8 +25,7 @@ class EnumStyleOptions(DataEnum):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select.style
+			https://datatables.net/reference/option/select.style
     """
     return self.set()
 
@@ -39,8 +37,7 @@ class EnumStyleOptions(DataEnum):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select.style
+			https://datatables.net/reference/option/select.style
     """
     return self.set()
 
@@ -52,8 +49,7 @@ class EnumStyleOptions(DataEnum):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select.style
+			https://datatables.net/reference/option/select.style
     """
     return self.set()
 
@@ -65,8 +61,7 @@ class EnumStyleOptions(DataEnum):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select.style
+			https://datatables.net/reference/option/select.style
     """
     return self.set("multi+shift")
 
@@ -105,8 +100,7 @@ class Select(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select.blurable
+			https://datatables.net/reference/option/select.blurable
     """
     return self._attrs["blurable"]
 
@@ -123,8 +117,7 @@ class Select(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select.items
+			https://datatables.net/reference/option/select.items
     """
     return self._attrs["items"]
 
@@ -141,8 +134,7 @@ class Select(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select.style
+			https://datatables.net/reference/option/select.style
     """
     return self._attrs["style"]
 
@@ -159,8 +151,7 @@ class Select(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select.toggleable
+			https://datatables.net/reference/option/select.toggleable
     """
     return self._attrs["toggleable"]
 

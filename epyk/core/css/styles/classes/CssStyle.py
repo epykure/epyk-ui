@@ -63,8 +63,9 @@ class Selector(object):
     """
     Selects all <div> elements and all <p> elements
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_element_comma.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_element_comma.asp
 
     :param element_types:
     :return:
@@ -82,8 +83,9 @@ class Selector(object):
     """
     Selects all <p> elements inside <div> elements
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_element_element.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_element_element.asp
 
     :param element:
     :return:
@@ -98,8 +100,9 @@ class Selector(object):
     """
     Selects all <p> elements inside <div> elements
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_element_element.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_element_element.asp
 
     :param element:
     :return:
@@ -114,8 +117,9 @@ class Selector(object):
     """
     Selects all <p> elements that are placed immediately after <div> elements
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_element_pluss.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_element_pluss.asp
 
     :param element:
     :return:
@@ -127,8 +131,9 @@ class Selector(object):
     """
     Selects every <ul> element that are preceded by a <p> element
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_gen_sibling.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_gen_sibling.asp
 
     :param element:
     :return:
@@ -162,8 +167,9 @@ class Selector(object):
     """
     Selects all <p> elements inside <div> elements
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_element_element.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_element_element.asp
 
     :param class_name:
     :return:
@@ -190,8 +196,9 @@ class Selector(object):
     """
     Selects the element with id="firstname"
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_id.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_id.asp
 
     :param htmlObj:
     :return:
@@ -203,8 +210,9 @@ class Selector(object):
     """
     Selects every element that is not a <p> element
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_not.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_not.asp
 
     :param element:
     :return:
@@ -216,8 +224,9 @@ class Selector(object):
     """
     Selects every <p> element that is the first child of its parent
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_firstchild.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_firstchild.asp
 
     :return:
     """
@@ -228,8 +237,9 @@ class Selector(object):
     """
     Selects the first letter of every <p> element
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_firstletter.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_firstletter.asp
 
     :return:
     """
@@ -240,8 +250,9 @@ class Selector(object):
     """
     Selects the first line of every <p> element
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_firstline.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_firstline.asp
 
     :return:
     """
@@ -252,8 +263,9 @@ class Selector(object):
     """
     Selects every <p> element that is the first <p> element of its parent
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_first-of-type.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_first-of-type.asp
 
     :return:
     """
@@ -264,8 +276,9 @@ class Selector(object):
     """
     Selects input elements with a value within a specified range
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_in-range.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_in-range.asp
 
     :return:
     """
@@ -276,8 +289,9 @@ class Selector(object):
     """
     Selects every <p> element that is the last child of its parent
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_last-child.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_last-child.asp
 
     :return:
     """
@@ -288,8 +302,9 @@ class Selector(object):
     """
     Selects every <p> element that is the last <p> element of its parent
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_last-of-type.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_last-of-type.asp
 
     :return:
     """
@@ -300,8 +315,9 @@ class Selector(object):
     """
     Selects all unvisited links
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_link.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_link.asp
 
     :return:
     """
@@ -312,8 +328,9 @@ class Selector(object):
     """
     Selects every <p> element that is the second child of its parent
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_nth-child.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_nth-child.asp
 
     :param n:
     :return:
@@ -325,8 +342,9 @@ class Selector(object):
     """
     Selects every <p> element that is the second child of its parent, counting from the last child
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_nth-last-child.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_nth-last-child.asp
 
     :param n:
     :return:
@@ -338,8 +356,9 @@ class Selector(object):
     """
     Selects every <p> element that is the second <p> element of its parent, counting from the last child
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_nth-last-of-type.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_nth-last-of-type.asp
 
     :param n:
     :return:
@@ -351,8 +370,9 @@ class Selector(object):
     """
     Selects every <p> element that is the second <p> element of its parent
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_nth-of-type.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_nth-of-type.asp
 
     :param n:
     :return:
@@ -364,8 +384,9 @@ class Selector(object):
     """
     Selects every <p> element that is the only <p> element of its parent
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_only-of-type.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_only-of-type.asp
 
     :return:
     """
@@ -376,8 +397,9 @@ class Selector(object):
     """
     Selects every <p> element that is the only child of its parent
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_only-child.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_only-child.asp
 
     :return:
     """
@@ -388,8 +410,9 @@ class Selector(object):
     """
     Selects input elements with placeholder text
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_placeholder.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_placeholder.asp
 
     :return:
     """
@@ -400,8 +423,9 @@ class Selector(object):
     """
     Selects input elements with the "readonly" attribute specified
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_read-only.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_read-only.asp
 
     :return:
     """
@@ -412,8 +436,9 @@ class Selector(object):
     """
     Selects input elements with the "readonly" attribute NOT specified
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_read-write.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_read-write.asp
 
     :return:
     """
@@ -513,8 +538,9 @@ class Style(object):
       "to": {"border-color": "red"},
     })
 
-    Documentation
-    https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
     https://www.w3schools.com/css/css3_animations.asp
 
     :param effect: Effect Class.
@@ -561,8 +587,9 @@ class Style(object):
     """
     Selects links on mouse over
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_hover.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_hover.asp
 
     :return:
     """
@@ -575,8 +602,9 @@ class Style(object):
     """
     Selects every checked <input> element
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_checked.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_checked.asp
 
     :return:
     """
@@ -589,8 +617,9 @@ class Style(object):
     """
     Selects every disabled <input> element
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_disabled.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_disabled.asp
 
     :return:
     """
@@ -603,8 +632,9 @@ class Style(object):
     """
     Selects the input element which has focus
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_focus.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_focus.asp
 
     :return:
     """
@@ -617,8 +647,9 @@ class Style(object):
     """
     Selects every <p> element that has no children (including text nodes)
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_empty.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_empty.asp
 
     :return:
     """
@@ -631,8 +662,9 @@ class Style(object):
     """
     Selects every enabled <input> element
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_enabled.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_enabled.asp
 
     :return:
     """
@@ -645,8 +677,9 @@ class Style(object):
     """
     Selects all input elements with an invalid value
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_invalid.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_invalid.asp
 
     :return:
     """
@@ -659,8 +692,9 @@ class Style(object):
     """
     Selects all input elements with a valid value
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_valid.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_valid.asp
 
     :return:
     """
@@ -673,8 +707,9 @@ class Style(object):
     """
     Selects all visited links
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_visited.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_visited.asp
 
     :return:
     """
@@ -687,8 +722,9 @@ class Style(object):
     """
     Insert something before the content of each <p> element
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_before.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_before.asp
 
     :return:
     """
@@ -701,8 +737,9 @@ class Style(object):
     """
     Insert something after the content of each <p> element
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_after.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_after.asp
 
     :return:
     """
@@ -724,8 +761,9 @@ class Style(object):
     """
     Selects the active link
 
-    Documentation
-    https://www.w3schools.com/cssref/sel_active.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/sel_active.asp
 
     :return:
     """
@@ -765,8 +803,9 @@ class Style(object):
 
     The first key of the attributes can be an Epyk html object
 
-    Documentation
-    https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
     :param attrs: String. Required. Percentage of the animation duration.
     :param rule: not or only or and see documentation for more info
     :param media_type: the media to which the rule will need to be applied
@@ -803,8 +842,9 @@ class Style(object):
       "100%": {"transform": "scale(0.001, 0.001)", "opacity": 1},
     })
 
-    Documentation
-    https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+    Related Pages:
+
+			https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
 
     :param effects: Effect Class.
     :param name: String. Required. Defines the name of the animation.

@@ -28,8 +28,7 @@ class SVG(Html.Html):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs
+			https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs
     """
     self.html_objs.append(Defs(self._report))
     return self.html_objs[-1]
@@ -45,8 +44,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://www.w3schools.com/graphics/svg_text.asp
+			https://www.w3schools.com/graphics/svg_text.asp
 
     Attributes:
     ----------
@@ -69,8 +67,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://www.w3schools.com/graphics/svg_rect.asp
+			https://www.w3schools.com/graphics/svg_rect.asp
 
     Attributes:
     ----------
@@ -95,8 +92,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://www.w3schools.com/graphics/svg_line.asp
+			https://www.w3schools.com/graphics/svg_line.asp
 
     Attributes:
     ----------
@@ -120,8 +116,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://www.w3schools.com/graphics/svg_circle.asp
+			https://www.w3schools.com/graphics/svg_circle.asp
 
     Attributes:
     ----------
@@ -144,8 +139,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://www.w3schools.com/graphics/svg_ellipse.asp
+			https://www.w3schools.com/graphics/svg_ellipse.asp
 
     Attributes:
     ----------
@@ -169,8 +163,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://www.w3schools.com/graphics/svg_polygon.asp
+			https://www.w3schools.com/graphics/svg_polygon.asp
 
     Attributes:
     ----------
@@ -191,8 +184,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://www.w3schools.com/graphics/svg_polyline.asp
+			https://www.w3schools.com/graphics/svg_polyline.asp
 
     Attributes:
     ----------
@@ -214,8 +206,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://www.w3schools.com/graphics/svg_polyline.asp
+			https://www.w3schools.com/graphics/svg_polyline.asp
 
     Attributes:
     ----------
@@ -237,8 +228,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g
+			https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g
 
     Attributes:
     ----------
@@ -259,8 +249,7 @@ class SVG(Html.Html):
 
     Related Pages:
 
-
-    https://www.w3.org/TR/SVG/paths.html
+			https://www.w3.org/TR/SVG/paths.html
     https://www.w3.org/TR/svg-paths/
 
     Attributes:
@@ -286,8 +275,7 @@ class SVG(Html.Html):
 
       Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
+			https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
 
     Attributes:
     ----------
@@ -417,8 +405,7 @@ class Defs(Html.Html):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient
+			https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient
 
     Attributes:
     ----------
@@ -442,8 +429,7 @@ class Defs(Html.Html):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialGradient
+			https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialGradient
 
     Attributes:
     ----------
@@ -460,8 +446,7 @@ class Defs(Html.Html):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+			https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
 
     Attributes:
     ----------
@@ -667,8 +652,7 @@ class Text(SVGItem):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan
+			https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan
 
     Attributes:
     ----------

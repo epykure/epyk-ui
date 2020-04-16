@@ -22,8 +22,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_font.asp
+			https://www.w3schools.com/tags/tag_font.asp
 
     Attributes:
     ----------
@@ -63,8 +62,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_label.asp
+			https://www.w3schools.com/tags/tag_label.asp
 
     Attributes:
     ----------
@@ -102,8 +100,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_span.asp
+			https://www.w3schools.com/tags/tag_span.asp
 
     Attributes:
     ----------
@@ -137,8 +134,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://getbootstrap.com/docs/4.3/components/alerts/
+			https://getbootstrap.com/docs/4.3/components/alerts/
 
     Attributes:
     ----------
@@ -170,10 +166,7 @@ class Texts(object):
       rptObj.ui.texts.formula("$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$", helper="This is a formula")
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param text: Optional. The string value to be displayed in the component
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -198,8 +191,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://v4-alpha.getbootstrap.com/content/code/
+			https://v4-alpha.getbootstrap.com/content/code/
 
     Attributes:
     ----------
@@ -232,8 +224,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/html/html_styles.asp
+			https://www.w3schools.com/html/html_styles.asp
 
     Attributes:
     ----------
@@ -271,8 +262,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/html/html_styles.asp
+			https://www.w3schools.com/html/html_styles.asp
     https://www.w3schools.com/tags/tag_pre.asp
 
     Attributes:
@@ -308,8 +298,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://v4-alpha.getbootstrap.com/content/typography/
+			https://v4-alpha.getbootstrap.com/content/typography/
     https://www.w3schools.com/TAGS/tag_blockquote.asp
 
     Attributes:
@@ -339,8 +328,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://fontawesome.com/
+			https://fontawesome.com/
 
     Attributes:
     ----------
@@ -371,10 +359,7 @@ class Texts(object):
       rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param number: Optional. The value to be displayed to the component. Default now
     :param title:
@@ -409,8 +394,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_hn.asp
+			https://www.w3schools.com/tags/tag_hn.asp
 
     Attributes:
     ----------
@@ -450,8 +434,7 @@ class Texts(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_legend.asp
+			https://www.w3schools.com/tags/tag_legend.asp
     https://www.w3schools.com/tags/tag_fieldset.asp
 
     Attributes:

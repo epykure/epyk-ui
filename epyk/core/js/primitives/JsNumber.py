@@ -31,8 +31,9 @@ class JsNumber(JsObject.JsObject):
     Example
     jsObj.objects.number.get("MyNumber").NEGATIVE_INFINITY
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_negative_infinity.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_negative_infinity.asp
 
     :return:
     """
@@ -47,8 +48,9 @@ class JsNumber(JsObject.JsObject):
     Example
     jsObj.objects.number.get("MyNumber").POSITIVE_INFINITY
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_positive_infinity.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_positive_infinity.asp
 
     :return:
     """
@@ -64,8 +66,9 @@ class JsNumber(JsObject.JsObject):
     Example
     jsObj.objects.number.get("MyNumber").MAX_VALUE
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_max_value.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_max_value.asp
 
     :return:
     """
@@ -81,8 +84,9 @@ class JsNumber(JsObject.JsObject):
     Example
     jsObj.objects.number.get("MyNumber").MIN_VALUE
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_min_value.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_min_value.asp
 
     :return:
     """
@@ -95,8 +99,9 @@ class JsNumber(JsObject.JsObject):
     Example
     string.parseFloat().isNaN()
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_isnan_number.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_isnan_number.asp
 
     :return: A Javascript boolean
     """
@@ -138,8 +143,9 @@ class JsNumber(JsObject.JsObject):
     Example
     jsObj.objects.number.get("MyNumber").toExponential()
 
-    Documentation:
-    https://www.w3schools.com/jsref/jsref_toexponential.asp
+    Related Pages:
+
+			https//www.w3schools.com/jsref/jsref_toexponential.asp
 
     :return: A Javascript Number
     """
@@ -152,8 +158,9 @@ class JsNumber(JsObject.JsObject):
     Example
     jsObj.objects.number.get("MyNumber").toFixed()
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_tofixed.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_tofixed.asp
 
     :param digits: Optional. The number of digits after the decimal point. Default is 2 (2 digits after the decimal point)
 
@@ -168,8 +175,9 @@ class JsNumber(JsObject.JsObject):
     Example
     jsObj.objects.number.get("MyNumber").isFinite()
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_isfinite_number.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_isfinite_number.asp
 
     :return: A Javascript boolean
     """
@@ -183,8 +191,9 @@ class JsNumber(JsObject.JsObject):
     Example
     rptObj.js.number(varName="myNumber").toPrecision(10) for 5776 returns 5776.000000
 
-    Documentation
-    https://www.w3schools.com/jsref/jsref_toprecision.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/jsref_toprecision.asp
 
     :param n: Optional. The number of digits. If omitted, it returns the entire number (without any formatting)
 
@@ -234,8 +243,9 @@ class JsNumber(JsObject.JsObject):
     """
     Wrapper function
 
-    Documentation
-    https://en.wikipedia.org/wiki/Decimal_separator
+    Related Pages:
+
+			https://en.wikipedia.org/wiki/Decimal_separator
     https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
 
     :param jsObj: The base Javascript Python object

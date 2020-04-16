@@ -144,8 +144,9 @@ class JsNvd3(JsPackage):
     The width the graph or component created inside the SVG should be made.
     The width of the container element (normally the svg itself)
 
-    Documentation
-    https://nvd3-community.github.io/nvd3/examples/documentation.html
+    Related Pages:
+
+			https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param value: A python integer
 
@@ -158,8 +159,9 @@ class JsNvd3(JsPackage):
     The height the graph or component created inside the SVG should be made.
     The height of the container element (normally the svg itself)
 
-    Documentation
-    https://nvd3-community.github.io/nvd3/examples/documentation.html
+    Related Pages:
+
+			https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param value:
 
@@ -173,8 +175,9 @@ class JsNvd3(JsPackage):
     You can specify only certain margins in the object to change just those parts.
     Default options: { "top": 15, "right": 10, "bottom": 50, "left": 60 }
 
-    Documentation
-    https://nvd3-community.github.io/nvd3/examples/documentation.html
+    Related Pages:
+
+			https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param options: A python dictionary with the options
     """
@@ -554,8 +557,9 @@ class JsNvd3Bar(JsNvd3):
     """
     Rotates the X axis labels by the specified degree.
 
-    Documentation
-    https://nvd3-community.github.io/nvd3/examples/documentation.html
+    Related Pages:
+
+			https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param value:
     """
@@ -836,9 +840,7 @@ class JsNvd3Pie(JsNvd3):
     Display pie labels
 
     Related Pages:
-
-
-    http://nvd3.org/examples/pie.html
+http://nvd3.org/examples/pie.html
 
     Attributes:
     ----------
@@ -854,9 +856,7 @@ class JsNvd3Pie(JsNvd3):
     Configure the minimum slice size for labels to show up
 
     Related Pages:
-
-
-    http://nvd3.org/examples/pie.html
+http://nvd3.org/examples/pie.html
 
     Attributes:
     ----------
@@ -908,9 +908,7 @@ class JsNvd3Pie(JsNvd3):
     Turn on Donut mode. Makes pie chart look tasty!
 
     Related Pages:
-
-
-    http://nvd3.org/examples/pie.html
+http://nvd3.org/examples/pie.html
 
     Attributes:
     ----------
@@ -950,9 +948,7 @@ class JsNvd3Pie(JsNvd3):
     Configure how big you want the donut hole size to be.
 
     Related Pages:
-
-
-    http://nvd3.org/examples/pie.html
+http://nvd3.org/examples/pie.html
 
     Attributes:
     ----------
@@ -970,8 +966,7 @@ class JsNvd3Pie(JsNvd3):
 
     Related Pages:
 
-
-    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
+			https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
     Attributes:
     ----------
@@ -988,8 +983,7 @@ class JsNvd3Pie(JsNvd3):
 
     Related Pages:
 
-
-    https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
+			https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
     Attributes:
     ----------
@@ -1042,8 +1036,9 @@ class JsNvd3Pie(JsNvd3):
     """
     Text to include within the middle of a donut chart
 
-    Documentation
-    https://nvd3-community.github.io/nvd3/examples/documentation.html
+    Related Pages:
+
+			https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param text:
 

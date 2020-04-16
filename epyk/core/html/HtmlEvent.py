@@ -37,8 +37,7 @@ class ProgressBar(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar
+			https://api.jqueryui.com/progressbar
 
     :rtype: OptSliders.OptionsProgBar
     """
@@ -63,8 +62,7 @@ class ProgressBar(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/progressbar
+			https://api.jqueryui.com/progressbar
 
     Attributes:
     ----------
@@ -134,8 +132,7 @@ class Menu(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu
+			https://api.jqueryui.com/menu
 
     :rtype: OptSliders.OptionsMenu
     """
@@ -164,8 +161,7 @@ class Menu(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/menu
+			https://api.jqueryui.com/menu
 
     Attributes:
     ----------
@@ -215,8 +211,7 @@ class Dialog(Html.Html):
 
     Related Pages:
 
-
-    https://jqueryui.com/dialog/
+			https://jqueryui.com/dialog/
 
     :rtype: OptSliders.OptionDialog
     """
@@ -235,8 +230,7 @@ class Dialog(Html.Html):
 
     Related Pages:
 
-
-    https://jqueryui.com/dialog/
+			https://jqueryui.com/dialog/
 
     Attributes:
     ----------
@@ -312,8 +306,7 @@ class Slider(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider
+			https://api.jqueryui.com/slider
 
     Attributes:
     ----------
@@ -333,8 +326,7 @@ class Slider(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#event-change
+			https://api.jqueryui.com/slider/#event-change
 
     Attributes:
     ----------
@@ -353,8 +345,7 @@ class Slider(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#event-start
+			https://api.jqueryui.com/slider/#event-start
 
     Attributes:
     ----------
@@ -373,8 +364,7 @@ class Slider(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#event-slide
+			https://api.jqueryui.com/slider/#event-slide
 
     Attributes:
     ----------
@@ -393,8 +383,7 @@ class Slider(Html.Html):
 
     Related Pages:
 
-
-    https://api.jqueryui.com/slider/#event-stop
+			https://api.jqueryui.com/slider/#event-stop
 
     Attributes:
     ----------

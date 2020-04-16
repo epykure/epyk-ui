@@ -16,8 +16,9 @@ class JsCookies(object):
   def set(self, jsKey, jsData, jsDataKey=None, isPyData=True, jsFnc=None):
     """
 
-    Documentation:
-    https://www.w3schools.com/js/js_cookies.asp
+    Related Pages:
+
+			https//www.w3schools.com/js/js_cookies.asp
 
     :return:
     """

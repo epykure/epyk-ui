@@ -1,5 +1,7 @@
 """
-https://www.w3schools.com/charsets/ref_utf_arrows.asp
+Related Pages:
+
+		https://www.w3schools.com/charsets/ref_utf_arrows.asp
 """
 
 LEFTWARDS_ARROW = '&#8592'

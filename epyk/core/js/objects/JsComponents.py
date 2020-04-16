@@ -94,8 +94,7 @@ class Menu(JsPackage):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/att_a_href.asp
+      https://www.w3schools.com/tags/att_a_href.asp
 
     Attributes:
     ----------

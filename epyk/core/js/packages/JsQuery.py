@@ -33,8 +33,9 @@ class Jsjqxhr(object):
 
     An alternative construct to the success callback option, refer to deferred.done() for implementation details
 
-    Documentation
-    https://api.jquery.com/jQuery.ajax/#jqXHR
+    Related Pages:
+
+			https://api.jquery.com/jQuery.ajax/#jqXHR
 
     :param jsFncs: The Javascript Functions
 
@@ -51,8 +52,9 @@ class Jsjqxhr(object):
 
     An alternative construct to the error callback option, the .fail() method replaces the deprecated .error() method
 
-    Documentation
-    https://api.jquery.com/jQuery.ajax/#jqXHR
+    Related Pages:
+
+			https://api.jquery.com/jQuery.ajax/#jqXHR
 
     :param jsFncs: The Javascript Functions
 
@@ -69,8 +71,9 @@ class Jsjqxhr(object):
 
     An alternative construct to the complete callback option
 
-    Documentation
-    https://api.jquery.com/jQuery.ajax/#jqXHR
+    Related Pages:
+
+			https://api.jquery.com/jQuery.ajax/#jqXHR
 
     :param jsFncs: The Javascript Functions
 
@@ -169,8 +172,9 @@ class JQuery(JsPackage):
   def hide(self, speed=None, callback=None):
     """
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_hide_show.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_hide_show.asp
     http://api.jquery.com/hide/
 
     :param speed:
@@ -192,8 +196,9 @@ class JQuery(JsPackage):
   def show(self, speed=None, callback=None):
     """
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_hide_show.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_hide_show.asp
     http://api.jquery.com/show/
 
     :param speed:
@@ -215,8 +220,9 @@ class JQuery(JsPackage):
   def fadeIn(self, speed=None, callback=None):
     """
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_fade.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_fade.asp
     http://api.jquery.com/fadein/
 
     :param speed:
@@ -238,8 +244,9 @@ class JQuery(JsPackage):
   def fadeOut(self, speed=None, callback=None):
     """
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_fade.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_fade.asp
     http://api.jquery.com/fadeout/
 
     :param speed:
@@ -283,8 +290,9 @@ class JQuery(JsPackage):
     """
     Adjust the opacity of the matched elements.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_fade.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_fade.asp
     https://api.jquery.com/fadeto/
 
     :param duration: A string or number determining how long the animation will run.
@@ -311,8 +319,9 @@ class JQuery(JsPackage):
     """
     Display the matched elements with a sliding motion.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_slide.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_slide.asp
     https://api.jquery.com/slideDown/#slideDown-duration-complete
 
     :param speed: A string or number determining how long the animation will run.
@@ -333,8 +342,9 @@ class JQuery(JsPackage):
     """
     Hide the matched elements with a sliding motion.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_slide.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_slide.asp
     https://api.jquery.com/slideUp/#slideUp-duration-complete
 
     :param speed: A string or number determining how long the animation will run.
@@ -355,8 +365,9 @@ class JQuery(JsPackage):
     """
     Display or hide the matched elements with a sliding motion.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_slide.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_slide.asp
     https://api.jquery.com/slideToggle/#slideToggle-duration-complete
 
     :param speed: A string or number determining how long the animation will run.
@@ -380,8 +391,9 @@ class JQuery(JsPackage):
     Example
     myObj.animate(0.25, "+=50")
 
-    Documentation
-    https://www.w3schools.com/jquery/jquery_animate.asp
+    Related Pages:
+
+			https://www.w3schools.com/jquery/jquery_animate.asp
     https://api.jquery.com/animate/#animate-properties-duration-easing-complete
 
     :param params: An object of CSS properties and values that the animation will move toward.
@@ -399,8 +411,9 @@ class JQuery(JsPackage):
     """
     Stop the currently-running animation on the matched elements.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_stop.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_stop.asp
     https://api.jquery.com/stop/#stop-clearQueue-jumpToEnd
 
     :param stopAll: A Boolean indicating whether to remove queued animation as well
@@ -414,8 +427,9 @@ class JQuery(JsPackage):
     """
     Remove the set of matched elements from the DOM.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_dom_remove.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_dom_remove.asp
     https://api.jquery.com/remove/#remove-selector
 
     :param selector: A selector expression that filters the set of matched elements to be removed.
@@ -430,8 +444,9 @@ class JQuery(JsPackage):
     """
     Remove all child nodes of the set of matched elements from the DOM.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_dom_remove.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_dom_remove.asp
     https://api.jquery.com/empty/#empty
 
     :return:
@@ -442,8 +457,9 @@ class JQuery(JsPackage):
     """
     Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_traversing_siblings.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
     https://api.jquery.com/siblings/#siblings-selector
 
     :param selector: A string containing a selector expression to match elements against.
@@ -459,8 +475,9 @@ class JQuery(JsPackage):
     Get the immediately following sibling of each element in the set of matched elements.
     If a selector is provided, it retrieves the next sibling only if it matches that selector.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_traversing_siblings.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
     https://api.jquery.com/next/#next-selector
 
     :param selector: A string containing a selector expression to match elements against.
@@ -477,8 +494,9 @@ class JQuery(JsPackage):
     Get the immediately preceding sibling of each element in the set of matched elements.
     If a selector is provided, it retrieves the previous sibling only if it matches that selector.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_traversing_siblings.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
     https://api.jquery.com/prev/#prev-selector
 
     :param selector: A string containing a selector expression to match elements against.
@@ -494,8 +512,9 @@ class JQuery(JsPackage):
     """
     The first() method returns the first element of the specified elements.
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_traversing_filtering.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_traversing_filtering.asp
     https://api.jquery.com/first/#first
 
     :return:
@@ -506,8 +525,9 @@ class JQuery(JsPackage):
     """
     The children() method returns all direct children of the selected element
 
-    Documentation:
-    https://www.w3schools.com/jquery/traversing_children.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/traversing_children.asp
 
     :param selector: Optional. Specifies a selector expression to narrow down the search for children
     :return:
@@ -521,8 +541,9 @@ class JQuery(JsPackage):
     """
     The last() method returns the last element of the specified element
 
-    Documentation:
-    https://www.w3schools.com/jquery/jquery_traversing_filtering.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/jquery_traversing_filtering.asp
 
     :return:
     """
@@ -556,8 +577,9 @@ class JQuery(JsPackage):
     """
     Insert content, specified by the parameter, to the beginning of each element in the set of matched elements.
 
-    Documentation
-    https://api.jquery.com/prepend/#prepend-content-content
+    Related Pages:
+
+			https://api.jquery.com/prepend/#prepend-content-content
 
     :param jsData:
     :param jsFnc:
@@ -594,8 +616,9 @@ class JQuery(JsPackage):
     """
     Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object, or element.
 
-    Documentation
-    https://api.jquery.com/find/#entry-examples
+    Related Pages:
+
+			https://api.jquery.com/find/#entry-examples
 
     :param criteria: Selector or element An element or a jQuery object to match elements against.
 
@@ -608,8 +631,9 @@ class JQuery(JsPackage):
     """
     Iterate over a jQuery object, executing a function for each matched element.
 
-    Documentation
-    https://api.jquery.com/each/#each-function
+    Related Pages:
+
+			https://api.jquery.com/each/#each-function
 
     :param jsFncs: A function to execute for each matched element.
 
@@ -622,8 +646,9 @@ class JQuery(JsPackage):
     """
     Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property naming, or create custom properties.
 
-    Documentation
-    https://api.jquery.com/jQuery.cssHooks/#jQuery-cssHooks1
+    Related Pages:
+
+			https://api.jquery.com/jQuery.cssHooks/#jQuery-cssHooks1
 
     :param key:
     :param value:
@@ -644,8 +669,9 @@ class JQuery(JsPackage):
     """
     Get the value of an attribute for the first element in the set of matched elements.
 
-    Documentation
-    https://api.jquery.com/attr/#attr-attributeName
+    Related Pages:
+
+			https://api.jquery.com/attr/#attr-attributeName
 
     :param key: The name of the attribute to get.
     :param value: A value to set for the attribute. If null, the specified attribute will be removed
@@ -662,8 +688,9 @@ class JQuery(JsPackage):
     """
     Get the current value of the first element in the set of matched elements.
 
-    Documentation
-    https://api.jquery.com/val/#val
+    Related Pages:
+
+			https://api.jquery.com/val/#val
 
     :param jsData:
     :param jsFnc:
@@ -678,8 +705,9 @@ class JQuery(JsPackage):
     """
     Get the combined text contents of each element in the set of matched elements, including their descendants, or set the text contents of the matched elements.
 
-    Documentation
-    https://api.jquery.com/text/#text
+    Related Pages:
+
+			https://api.jquery.com/text/#text
 
     :param jsData:
     :param jsFnc:
@@ -736,8 +764,9 @@ class JQuery(JsPackage):
     """
     Load JSON-encoded data from the server using a GET HTTP request.
 
-    Documentation:
-    https://api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
+    Related Pages:
+
+			https//api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
 
     :return:
     """
@@ -749,8 +778,9 @@ class JQuery(JsPackage):
     """
     Load a JavaScript file from the server using a GET HTTP request, then execute it.
 
-    Documentation:
-    https://api.jquery.com/jQuery.getScript/
+    Related Pages:
+
+			https//api.jquery.com/jQuery.getScript/
 
     :param url:
     :param jsData:
@@ -768,8 +798,9 @@ class JQuery(JsPackage):
   def getPyScript(self, script, data=None, successFncs=None, options=None, timeout=None, props=None):
     """
 
-    Documentation:
-    https://api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
+    Related Pages:
+
+			https//api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
 
     :param script:
     :param jsData:
@@ -802,8 +833,9 @@ class JQuery(JsPackage):
     Example
     div.dom.jquery.load(r"./report_list.html")
 
-    Documentation
-    https://api.jquery.com/load/#load-url-data-complete
+    Related Pages:
+
+			https://api.jquery.com/load/#load-url-data-complete
 
     :param url: A string containing the URL to which the request is sent.
     :param jsData: A plain object or string that is sent to the server with the request.
@@ -822,8 +854,9 @@ class JQuery(JsPackage):
   def ajaxError(self, jsFncs):
     """
 
-    Documentation
-    https://api.jquery.com/ajaxError/
+    Related Pages:
+
+			https://api.jquery.com/ajaxError/
 
     :param jsFncs:
     :return:
@@ -835,8 +868,9 @@ class JQuery(JsPackage):
     """
     Register a handler to be called when the first Ajax request begins. This is an Ajax Event.
 
-    Documentation
-    https://api.jquery.com/ajaxStart/
+    Related Pages:
+
+			https://api.jquery.com/ajaxStart/
 
     :return:
     """
@@ -847,8 +881,9 @@ class JQuery(JsPackage):
     """
     Register a handler to be called when all Ajax requests have completed. This is an Ajax Event.
 
-    Documentation
-    https://api.jquery.com/ajaxStop/
+    Related Pages:
+
+			https://api.jquery.com/ajaxStop/
 
     :param jsFncs:
     :return:
@@ -860,8 +895,9 @@ class JQuery(JsPackage):
     """
     Attach a function to be executed whenever an Ajax request completes successfully. This is an Ajax Event.
 
-    Documentation
-    https://api.jquery.com/ajaxSuccess/
+    Related Pages:
+
+			https://api.jquery.com/ajaxSuccess/
 
     :param jsFncs:
     :return:
@@ -872,8 +908,9 @@ class JQuery(JsPackage):
   def ajaxSend(self, jsFncs):
     """
 
-    Documentation
-    https://api.jquery.com/ajaxSend/
+    Related Pages:
+
+			https://api.jquery.com/ajaxSend/
 
     :param jsFncs:
     :return:
@@ -936,8 +973,9 @@ class JQuery(JsPackage):
     Example
 
 
-    Documentation:
-    https://www.w3schools.com/jquery/ajax_ajax.asp
+    Related Pages:
+
+			https//www.w3schools.com/jquery/ajax_ajax.asp
 
     :return:
     :param type: Specifies the type of request. (GET or POST)

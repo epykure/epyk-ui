@@ -33,8 +33,9 @@ class Entities(object):
   def html4(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_html_entities_4.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_html_entities_4.asp
     """
     return EntHtml4
 
@@ -42,8 +43,9 @@ class Entities(object):
   def html5_a(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_html_entities_a.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_html_entities_a.asp
     """
     return EntHtml5_A
 
@@ -51,8 +53,9 @@ class Entities(object):
   def html5_b(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_html_entities_b.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_html_entities_b.asp
     """
     return EntHtml5_B
 
@@ -60,8 +63,9 @@ class Entities(object):
   def html5_c(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_html_entities_c.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_html_entities_c.asp
     """
     return EntHtml5_C
 
@@ -69,8 +73,9 @@ class Entities(object):
   def html5_d(self):
     """
 
-    Documentation
-    https://www.w3schools.com/charsets/ref_html_entities_d.asp
+    Related Pages:
+
+			https://www.w3schools.com/charsets/ref_html_entities_d.asp
     """
     return EntHtml5_D
 

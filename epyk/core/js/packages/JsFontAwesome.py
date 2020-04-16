@@ -1,5 +1,7 @@
 """
-https://www.w3schools.com/icons/fontawesome_icons_webapp.asp
+Related Pages:
+
+		https://www.w3schools.com/icons/fontawesome_icons_webapp.asp
 """
 
 ICON_ADDRESS_BOOK = 'fa fa-address-book'

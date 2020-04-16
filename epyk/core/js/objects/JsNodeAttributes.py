@@ -9,8 +9,9 @@ from epyk.core.js import JsUtils
 class JsAttributes(JsObject.JsObject):
   """
 
-  Documentation
-  https://www.w3schools.com/jsref/dom_obj_attributes.asp
+  Related Pages:
+
+			https://www.w3schools.com/jsref/dom_obj_attributes.asp
 
   """
 
@@ -21,8 +22,9 @@ class JsAttributes(JsObject.JsObject):
 
     This property is read-only.
 
-    Documentation
-    https://www.w3schools.com/jsref/prop_attr_name.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/prop_attr_name.asp
 
     :return: A String, representing the name of the attribute
     """
@@ -33,8 +35,9 @@ class JsAttributes(JsObject.JsObject):
     """
     The value property sets or returns the value of the attribute.
 
-    Documentation
-    https://www.w3schools.com/jsref/prop_attr_value.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/prop_attr_value.asp
 
     :return: Specifies the value of the attribute
     """
@@ -45,8 +48,9 @@ class JsAttributes(JsObject.JsObject):
     """
     The specified property returns true if the attribute is specified.
 
-    Documentation
-    https://www.w3schools.com/jsref/prop_attr_specified.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/prop_attr_specified.asp
 
     :return: A Boolean, returns true if the attribute is specified, otherwise false
     """
@@ -56,8 +60,9 @@ class JsAttributes(JsObject.JsObject):
     """
     The item() method returns the node at the specified index in a NamedNodeMap, as a Node object.
 
-    Documentation
-    https://www.w3schools.com/jsref/met_namednodemap_item.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/met_namednodemap_item.asp
 
     :param i: Required. The index of the node in the NamedNodeMap you want to return
 
@@ -69,8 +74,9 @@ class JsAttributes(JsObject.JsObject):
     """
     The removeNamedItem() method removes the node with the specified name in a NamedNodeMap object.
 
-    Documentation
-    https://www.w3schools.com/jsref/met_namednodemap_removenameditem.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/met_namednodemap_removenameditem.asp
 
     :param type: Required. The name of the node in the namedNodeMap you want to remove
     :return: 	A Node object, representing the removed attribute node
@@ -83,8 +89,9 @@ class JsAttributes(JsObject.JsObject):
 
     If the node already exists, it will be replaced, and the replaced node will be the return value, otherwise the return value will be null.
 
-    Documentation
-    https://www.w3schools.com/jsref/met_namednodemap_setnameditem.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/met_namednodemap_setnameditem.asp
 
     :return: A Node object, representing the replaced node (if any), otherwise null
     """
@@ -94,8 +101,9 @@ class JsAttributes(JsObject.JsObject):
     """
     The getNamedItem() method returns the attribute node with the specified name from a NamedNodeMap object.
 
-    Documentation
-    https://www.w3schools.com/jsref/met_namednodemap_getnameditem.asp
+    Related Pages:
+
+			https://www.w3schools.com/jsref/met_namednodemap_getnameditem.asp
 
     :param nodeName: Required. The name of the node in the namedNodeMap you want to return
 

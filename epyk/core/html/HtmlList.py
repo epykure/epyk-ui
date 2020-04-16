@@ -41,8 +41,9 @@ class Li(Html.Html):
 
     Example
 
-    Documentation
-    https://www.w3schools.com/tags/tag_label.asp
+    Related Pages:
+
+			https://www.w3schools.com/tags/tag_label.asp
 
     :param text: The label content
     :param css: Optional. A dictionary with the CSS style to be added to the component

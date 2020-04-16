@@ -20,8 +20,7 @@ class Panels(object):
 
     Related Pages:
 
-
-    https://getbootstrap.com/docs/4.0/components/navs/
+			https://getbootstrap.com/docs/4.0/components/navs/
     """
     dflt_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0', 'border-radius': '5px',
                                 'color': self.context.rptObj.theme.greys[-1], "background": self.context.rptObj.theme.greys[0]}}
@@ -46,8 +45,7 @@ class Panels(object):
 
     Related Pages:
 
-
-    https://getbootstrap.com/docs/4.0/components/navs/
+			https://getbootstrap.com/docs/4.0/components/navs/
 
     """
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
@@ -68,8 +66,7 @@ class Panels(object):
 
     Related Pages:
 
-
-    https://getbootstrap.com/docs/4.0/components/navs/
+			https://getbootstrap.com/docs/4.0/components/navs/
 
     """
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
@@ -94,8 +91,7 @@ class Panels(object):
 
     Related Pages:
 
-
-    https://getbootstrap.com/docs/4.0/components/navs/
+			https://getbootstrap.com/docs/4.0/components/navs/
     """
     dflt_options = {
       "css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
@@ -119,8 +115,7 @@ class Panels(object):
 
     Related Pages:
 
-
-    https://getbootstrap.com/docs/4.0/components/navs/
+			https://getbootstrap.com/docs/4.0/components/navs/
     """
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
                  'border-radius': '10px 10px 0 0'}}
@@ -173,8 +168,7 @@ class Panels(object):
 
     Related Pages:
 
-
-    https://codepen.io/rstrahl/pen/eJZQej
+			https://codepen.io/rstrahl/pen/eJZQej
 
     Attributes:
     ----------

@@ -20,8 +20,9 @@ class NoSql(object):
   def mongo(self, host="localhost", port=5000, is_secured=False):
     """
 
-    Documentation
-    https://www.w3schools.com/python/python_mongodb_getstarted.asp
+    Related Pages:
+
+			https://www.w3schools.com/python/python_mongodb_getstarted.asp
     https://www.mongodb.com/dr/fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-4.0.3-signed.msi/download
 
     :param host: Optional, Database hostname. Default localhost
@@ -37,8 +38,9 @@ class NoSql(object):
   def neo4j(self, host="localhost", port=5000, is_secured=False):
     """
 
-    Documentation
-    https://neo4j.com/developer/python/
+    Related Pages:
+
+			https://neo4j.com/developer/python/
     https://community.neo4j.com/?_ga=2.69585106.394662973.1539480121-615400289.1539480121
 
     :param host: Optional, Database hostname. Default localhost
@@ -106,8 +108,9 @@ class DataDb(object):
 
     Example
 
-    Documentation
-    https://www.sqlalchemy.org/
+    Related Pages:
+
+			https://www.sqlalchemy.org/
 
     :return: A dictionary with the database names in each context
     """
@@ -126,8 +129,9 @@ class DataDb(object):
 
     Example
 
-    Documentation
-    https://www.sqlalchemy.org/
+    Related Pages:
+
+			https://www.sqlalchemy.org/
 
     :rtype: epyk.core.py.PySql.SqlConn
     :return:
@@ -167,8 +171,9 @@ class DataDb(object):
 
     Example
 
-    Documentation
-    https://www.sqlalchemy.org/
+    Related Pages:
+
+			https://www.sqlalchemy.org/
 
     :rtype: epyk.core.py.PySql.SqlConn
 
@@ -201,8 +206,9 @@ class DataDb(object):
     """
     Reduce the scope of database tables to be loaded by SQLAchemy
 
-    Documentation
-    https://docs.sqlalchemy.org/en/13/core/metadata.html
+    Related Pages:
+
+			https://docs.sqlalchemy.org/en/13/core/metadata.html
 
     :param table_names:
 
@@ -331,8 +337,9 @@ class DataDb(object):
 
     Example
 
-    Documentation
-    https://www.599cd.com/access/studentdatabases/
+    Related Pages:
+
+			https://www.599cd.com/access/studentdatabases/
 
     :param name: The filename
     :param db_path: The database full path
@@ -355,8 +362,9 @@ class DataDb(object):
     """
     Get a PostgreSql Database query object using SQLAlchemy
 
-    Documentation
-    https://www.postgresql.org/
+    Related Pages:
+
+			https://www.postgresql.org/
     https://docs.sqlalchemy.org/en/13/dialects/postgresql.html#sqlalchemy.dialects.postgresql.dml.Insert.on_conflict_do_update.params.where
 
     :param name: Database name
@@ -387,8 +395,9 @@ class DataDb(object):
     Example
     rptObj.data.db.mysql("MySQL", port=3333)
 
-    Documentation
-    https://dev.mysql.com/
+    Related Pages:
+
+			https://dev.mysql.com/
 
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
@@ -416,8 +425,9 @@ class DataDb(object):
     Example
     rptObj.data.db.mariadb("MySQL", port=3333)
 
-    Documentation
-    https://mariadb.org/
+    Related Pages:
+
+			https://mariadb.org/
 
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost

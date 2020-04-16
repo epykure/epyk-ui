@@ -1,6 +1,8 @@
 """
 Interface to the SipHash module available in the below packages
-https://pypi.org/project/siphash/
+Related Pages:
+
+			https://pypi.org/project/siphash/
 """
 
 
@@ -91,8 +93,9 @@ class SipHash(object):
       >>> SipHash().hashId("Test")
       3169529217224722230
 
-      Documentation
-      https://github.com/bozhu/siphash-python
+      Related Pages:
+
+			https://github.com/bozhu/siphash-python
 
       :param text: The String to be hashed
       """

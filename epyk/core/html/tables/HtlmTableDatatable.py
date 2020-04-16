@@ -138,8 +138,7 @@ class ColumnDef(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columnDefs.targets
+			https://datatables.net/reference/option/columnDefs.targets
     """
     return self._attrs["targets"]
 
@@ -156,8 +155,7 @@ class ColumnDef(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.visible
+			https://datatables.net/reference/option/columns.visible
     """
     return self._attrs["visible"]
 
@@ -174,8 +172,7 @@ class ColumnDef(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.searchable
+			https://datatables.net/reference/option/columns.searchable
     """
     return self._attrs["searchable"]
 
@@ -192,8 +189,7 @@ class ColumnDef(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.orderData
+			https://datatables.net/reference/option/columns.orderData
     """
     return self._attrs["orderData"]
 
@@ -213,8 +209,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.cellType
+			https://datatables.net/reference/option/columns.cellType
     """
     return self._attrs["cellType"]
 
@@ -231,8 +226,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.className
+			https://datatables.net/reference/option/columns.className
     https://datatables.net/manual/styling/classes
 
     :rtype: EnumStyleOptions
@@ -248,8 +242,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.contentPadding
+			https://datatables.net/reference/option/columns.contentPadding
     """
     return self._attrs["contentPadding"]
 
@@ -266,8 +259,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.defaultContent
+			https://datatables.net/reference/option/columns.defaultContent
     """
     return self._attrs["defaultContent"]
 
@@ -284,8 +276,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.name
+			https://datatables.net/reference/option/columns.name
     """
     return self._attrs["name"]
 
@@ -302,8 +293,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.title
+			https://datatables.net/reference/option/columns.title
     """
     return self._attrs["title"]
 
@@ -329,8 +319,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.orderable
+			https://datatables.net/reference/option/columns.orderable
     """
     return self._attrs["orderable"]
 
@@ -347,8 +336,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.orderData
+			https://datatables.net/reference/option/columns.orderData
     """
     return self._attrs["orderData"]
 
@@ -365,8 +353,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.orderDataType
+			https://datatables.net/reference/option/columns.orderDataType
     """
     return self._attrs["orderDataType"]
 
@@ -383,8 +370,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.orderSequence
+			https://datatables.net/reference/option/columns.orderSequence
     """
     return self._attrs["orderSequence"]
 
@@ -401,8 +387,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.render
+			https://datatables.net/reference/option/columns.render
     """
     return self._attrs["render"]
 
@@ -427,8 +412,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.searchable
+			https://datatables.net/reference/option/columns.searchable
     """
     return self._attrs["searchable"]
 
@@ -445,8 +429,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.visible
+			https://datatables.net/reference/option/columns.visible
     """
     return self._attrs["visible"]
 
@@ -463,8 +446,7 @@ class Column(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns.width
+			https://datatables.net/reference/option/columns.width
     """
     return self._attrs["width"]
 
@@ -522,8 +504,7 @@ class Language(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/language.decimal
+			https://datatables.net/reference/option/language.decimal
     """
     return self._attrs["decimal"]
 
@@ -564,8 +545,7 @@ class Search(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/search.caseInsensitive
+			https://datatables.net/reference/option/search.caseInsensitive
     """
     return self._attrs["caseInsensitive"]
 
@@ -582,8 +562,7 @@ class Search(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/search
+			https://datatables.net/reference/option/search
     """
     return self._attrs["search"]
 
@@ -601,8 +580,7 @@ class Search(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/search.regex
+			https://datatables.net/reference/option/search.regex
     """
     return self._attrs["regex"]
 
@@ -619,8 +597,7 @@ class Search(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/search.smart
+			https://datatables.net/reference/option/search.smart
     """
     return self._attrs["smart"]
 
@@ -648,8 +625,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/autoWidth
+			https://datatables.net/reference/option/autoWidth
     """
     return self._attrs["autoWidth"]
 
@@ -668,8 +644,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/extensions/buttons/
+			https://datatables.net/extensions/buttons/
     """
     from epyk.core.html.tables.exts import DtButtons
     self._attrs['dom'] = 'B<"clear">lfrtip'
@@ -694,8 +669,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/deferRender
+			https://datatables.net/reference/option/deferRender
 
     """
     return self._attrs["deferRender"]
@@ -716,8 +690,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/extensions/fixedheader/
+			https://datatables.net/extensions/fixedheader/
     """
     from epyk.core.html.tables.exts import DtFixedHeader
     return self.sub_data("fixedHeader", DtFixedHeader.FixedHeater)
@@ -752,8 +725,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/lengthChange
+			https://datatables.net/reference/option/lengthChange
     """
     return self._attrs["lengthChange"]
 
@@ -770,8 +742,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columnDefs
+			https://datatables.net/reference/option/columnDefs
     """
     return self.sub_data_enum("columnDefs", ColumnDef)
 
@@ -784,8 +755,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/columns
+			https://datatables.net/reference/option/columns
     """
     return self.sub_data_enum("columns", Column)
 
@@ -798,8 +768,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/
+			https://datatables.net/reference/option/
     """
     return self.sub_data("language", Language)
 
@@ -813,8 +782,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/ajax
+			https://datatables.net/reference/option/ajax
     """
     return self._attrs["ajax"]
 
@@ -832,8 +800,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/processing
+			https://datatables.net/reference/option/processing
     """
     return self._attrs["processing"]
 
@@ -850,8 +817,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/search
+			https://datatables.net/reference/option/search
     """
     return self.sub_data_enum("search", Search)
 
@@ -865,8 +831,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/serverSide
+			https://datatables.net/reference/option/serverSide
     """
     return self._attrs["serverSide"]
 
@@ -885,8 +850,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/deferLoading
+			https://datatables.net/reference/option/deferLoading
     """
     return self._attrs["deferLoading"]
 
@@ -904,8 +868,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/destroy
+			https://datatables.net/reference/option/destroy
     """
     return self._attrs["destroy"]
 
@@ -922,8 +885,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/displayStart
+			https://datatables.net/reference/option/displayStart
     """
     return self._attrs["displayStart"]
 
@@ -942,8 +904,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/dom
+			https://datatables.net/reference/option/dom
     """
     return self._attrs["dom"]
 
@@ -961,8 +922,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/data
+			https://datatables.net/reference/option/data
     """
     return self._attrs["data"]
 
@@ -981,8 +941,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/paging
+			https://datatables.net/reference/option/paging
     """
     return self._attrs["paging"]
 
@@ -1000,8 +959,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/info
+			https://datatables.net/reference/option/info
     """
     return self._attrs["info"]
 
@@ -1019,8 +977,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/orderCellsTop
+			https://datatables.net/reference/option/orderCellsTop
     """
     return self._attrs["orderCellsTop"]
 
@@ -1037,8 +994,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/orderClasses
+			https://datatables.net/reference/option/orderClasses
     """
     return self._attrs["orderClasses"]
 
@@ -1055,8 +1011,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/orderFixed
+			https://datatables.net/reference/option/orderFixed
     """
     return self._attrs["orderFixed"]
 
@@ -1075,8 +1030,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/orderMulti
+			https://datatables.net/reference/option/orderMulti
     """
     return self._attrs["orderMulti"]
 
@@ -1094,8 +1048,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/ordering
+			https://datatables.net/reference/option/ordering
     """
     return self._attrs["ordering"]
 
@@ -1113,8 +1066,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/order
+			https://datatables.net/reference/option/order
 
     Attributes:
     ----------
@@ -1141,8 +1093,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/extensions/responsive/
+			https://datatables.net/extensions/responsive/
 
     :rtype: DtResponsive.Responsive
     """
@@ -1160,8 +1111,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/stateSave
+			https://datatables.net/reference/option/stateSave
     """
     return self._attrs["stateSave"]
 
@@ -1187,8 +1137,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/scrollY
+			https://datatables.net/reference/option/scrollY
     """
     return self._attrs["scrollY"]
 
@@ -1206,8 +1155,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/scrollX
+			https://datatables.net/reference/option/scrollX
     """
     return self._attrs["scrollX"]
 
@@ -1225,8 +1173,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/scrollCollapse
+			https://datatables.net/reference/option/scrollCollapse
     """
     return self._attrs["scrollCollapse"]
 
@@ -1259,8 +1206,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/lengthMenu
+			https://datatables.net/reference/option/lengthMenu
     """
     return self._attrs["lengthMenu"]
 
@@ -1290,8 +1236,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/pageLength
+			https://datatables.net/reference/option/pageLength
     """
     return self._attrs["pageLength"]
 
@@ -1309,8 +1254,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/pagingType
+			https://datatables.net/reference/option/pagingType
     """
     return self._attrs["pagingType"]
 
@@ -1328,8 +1272,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/renderer
+			https://datatables.net/reference/option/renderer
     """
     return self._attrs["renderer"]
 
@@ -1347,8 +1290,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/retrieve
+			https://datatables.net/reference/option/retrieve
     """
     return self._attrs["retrieve"]
 
@@ -1365,8 +1307,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/rowId
+			https://datatables.net/reference/option/rowId
     """
     return self._attrs["rowId"]
 
@@ -1413,8 +1354,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/select
+			https://datatables.net/reference/option/select
     """
     from epyk.core.html.tables.exts import DtSelect
     return self.sub_data("select", DtSelect.Select)
@@ -1430,8 +1370,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/extensions/scroller/
+			https://datatables.net/extensions/scroller/
     """
     from epyk.core.html.tables.exts import DtScroller
     return self.sub_data("scroller", DtScroller.Scroller)
@@ -1450,8 +1389,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/extensions/searchpanes
+			https://datatables.net/extensions/searchpanes
     """
     from epyk.core.html.tables.exts import DtSearchPanes
     self._attrs['dom'] = 'Prftip'
@@ -1466,8 +1404,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/searchCols
+			https://datatables.net/reference/option/searchCols
     """
     return self._attrs["searchCols"]
 
@@ -1484,8 +1421,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/searchDelay
+			https://datatables.net/reference/option/searchDelay
     """
     return self._attrs["searchDelay"]
 
@@ -1502,8 +1438,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/stateDuration
+			https://datatables.net/reference/option/stateDuration
     """
     return self._attrs["stateDuration"]
 
@@ -1520,8 +1455,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/stripeClasses
+			https://datatables.net/reference/option/stripeClasses
     """
     return self._attrs["stripeClasses"]
 
@@ -1538,8 +1472,7 @@ class TableConfig(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/tabIndex
+			https://datatables.net/reference/option/tabIndex
     """
     return self._attrs["tabIndex"]
 

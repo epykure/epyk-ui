@@ -516,8 +516,9 @@ class MarkDown(object):
     Example
     MarkDown.parse_restructured_text(MarkDown.loadsDsc.__doc__)
 
-    Documentation
-    https://en.wikipedia.org/wiki/ReStructuredText
+    Related Pages:
+
+			https://en.wikipedia.org/wiki/ReStructuredText
     https://mail.python.org/pipermail/python-dev/2002-April/022131.html
 
     :param report: The report object

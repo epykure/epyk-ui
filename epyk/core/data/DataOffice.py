@@ -25,8 +25,9 @@ class DataOffice(object):
     docx = rptObj.data.office.word("FX Sales Trainee.docx", path=r"")
     print(docx.paragraphs)
 
-    Documentation
-    https://python-docx.readthedocs.io/en/latest/
+    Related Pages:
+
+			https://python-docx.readthedocs.io/en/latest/
 
     :param filename: The filename with the extension
     :param path: The path of the file
@@ -47,8 +48,9 @@ class DataOffice(object):
     ppts = rptObj.data.office.ppt("diagramme.pptx", r"")
     print(ppts.slides)
 
-    Documentation
-    https://python-pptx.readthedocs.io/en/latest/user/quickstart.html
+    Related Pages:
+
+			https://python-pptx.readthedocs.io/en/latest/user/quickstart.html
 
     :param filename: The filename with the extension
     :param path: The path of the file
@@ -67,8 +69,9 @@ class DataOffice(object):
     data = rptObj.data.office.xls("Classeur1.xlsx", "")
     print(data.sheet_by_index(0) )
 
-    Documentation
-    https://www.geeksforgeeks.org/reading-excel-file-using-python/
+    Related Pages:
+
+			https://www.geeksforgeeks.org/reading-excel-file-using-python/
 
     :param filename: The filename with the extension
     :param path: The path of the file

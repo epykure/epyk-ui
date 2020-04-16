@@ -57,8 +57,9 @@ class PyExt(object):
     This will rely on the package cryptography. This should be added to the python environment before using it.
     This package can be installed using the usual pip install function.
 
-    Documentation
-    https://pypi.org/project/cryptography/
+    Related Pages:
+
+			https://pypi.org/project/cryptography/
     https://cryptography.io/en/latest/
 
     :return:

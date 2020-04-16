@@ -81,9 +81,7 @@ class Lists(object):
 
     Related Pages:
 
-
-
-    https://silviomoreto.github.io/bootstrap-select/examples/
+			https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
     https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
 
@@ -148,8 +146,7 @@ class Lists(object):
 
     Related Pages:
 
-
-    https://silviomoreto.github.io/bootstrap-select/examples/
+			https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
     https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
 
@@ -188,8 +185,7 @@ class Lists(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+			https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
@@ -214,7 +210,7 @@ class Lists(object):
 
     Related Pages:
 
-    https://www.w3schools.com/html/html_lists.asp
+        https://www.w3schools.com/html/html_lists.asp
     https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
@@ -285,8 +281,7 @@ class Lists(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/html/html_lists.asp
+			https://www.w3schools.com/html/html_lists.asp
 
     Attributes:
     ----------
@@ -317,8 +312,7 @@ class Lists(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/cssref/pr_list-style-type.asp
+			https://www.w3schools.com/cssref/pr_list-style-type.asp
 
     Attributes:
     ----------
@@ -353,7 +347,7 @@ class Lists(object):
 
     Related Pages:
 
-    https://www.w3schools.com/cssref/pr_list-style-type.asp
+        https://www.w3schools.com/cssref/pr_list-style-type.asp
 
     Attributes:
     ----------
@@ -432,10 +426,7 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.Checks`
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param data:
     :param color:
@@ -465,10 +456,7 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlTrees.Tree`
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param data:
     :param width:
@@ -527,7 +515,7 @@ class Lists(object):
 
     Related Pages:
 
-    https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+        https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     https://v4-alpha.getbootstrap.com/components/list-group/
 
     Attributes:
@@ -560,7 +548,7 @@ class Lists(object):
 
     Related Pages:
 
-    https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+        https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     https://v4-alpha.getbootstrap.com/components/list-group/
 
     Attributes:
@@ -589,10 +577,7 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlInput.Radio`
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param records:
     :param group_name:

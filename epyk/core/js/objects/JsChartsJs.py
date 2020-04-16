@@ -1,7 +1,9 @@
 """
 Module dedicated to perform the data transformation for the ChartJs charts
 
-https://www.chartjs.org/
+Related Pages:
+
+		https://www.chartjs.org/
 """
 
 from epyk.core.js import JsUtils

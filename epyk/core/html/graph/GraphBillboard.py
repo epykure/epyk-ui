@@ -1,8 +1,10 @@
 '''
 Module used as a wrapper to the Javascript C3 libraries
-reference website: http://c3js.org/
-https://c3js.org/gettingstarted.html
 
+Related Pages:
+
+		https://c3js.org/gettingstarted.html
+  http://c3js.org/
 This module is defined by a main class ** Chart **.
 
 The constructor ::__init__

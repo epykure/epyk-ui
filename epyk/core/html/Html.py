@@ -208,8 +208,7 @@ class Html(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_node_insertbefore.asp
+			https://www.w3schools.com/jsref/met_node_insertbefore.asp
 
     Attributes:
     ----------
@@ -238,8 +237,7 @@ class Html(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/met_node_appendchild.asp
+			https://www.w3schools.com/jsref/met_node_appendchild.asp
 
     Attributes:
     ----------
@@ -303,10 +301,7 @@ class Html(object):
       checks.title.add_icon("fas fa-align-center")
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param text: The icon reference from font awsome website
     :param css: Optional. A dictionary with the CSS style to be added to the component
@@ -336,8 +331,7 @@ class Html(object):
 
       Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_label.asp
+			https://www.w3schools.com/tags/tag_label.asp
 
     Attributes:
     ----------
@@ -372,8 +366,7 @@ class Html(object):
 
       Related Pages:
 
-
-    https://fontawesome.com/how-to-use/on-the-web/styling/layering
+			https://fontawesome.com/how-to-use/on-the-web/styling/layering
 
     Attributes:
     ----------
@@ -580,9 +573,7 @@ class Html(object):
     Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function
 
     Related Pages:
-
-
-    http://api.jquery.com/css/
+http://api.jquery.com/css/
 
     Attributes:
     ----------
@@ -632,8 +623,7 @@ class Html(object):
 
     Related Pages:
 
-
-    https://getbootstrap.com/docs/4.1/components/tooltips/
+			https://getbootstrap.com/docs/4.1/components/tooltips/
 
     Attributes:
     ----------
@@ -684,10 +674,7 @@ class Html(object):
     Tips: It is possible to use the data- attributes to store any kind of information in the dom.
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param attrs: A python dictionary with the attributes
     :param name: A python string with the name of the attribute
@@ -764,8 +751,7 @@ class Html(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jquery/event_on.asp
+			https://www.w3schools.com/jquery/event_on.asp
     https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/dom_obj_event.asp
 
@@ -838,10 +824,7 @@ class Html(object):
         span.dom.css("color", "blue").r)
 
     Related Pages:
-
-
-
-    Attributes:
+Attributes:
     ----------
     :param on_fncs: Array or String of Javascript events
     :param out_fncs: Array or String of Javascript events
@@ -966,9 +949,7 @@ class Html(object):
     This function is very specific and it has to be defined in each class.
 
     Related Pages:
-
-
-    http://python-docx.readthedocs.io/en/latest/
+http://python-docx.readthedocs.io/en/latest/
     """
     raise NotImplementedError('''
       subclasses must override to_word(), %s !
@@ -984,8 +965,7 @@ class Html(object):
 
     Related Pages:
 
-
-    https://xlsxwriter.readthedocs.io/
+			https://xlsxwriter.readthedocs.io/
     """
     raise NotImplementedError('''
       subclasses must override to_xls(), %s !

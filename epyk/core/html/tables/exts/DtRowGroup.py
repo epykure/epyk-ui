@@ -17,8 +17,7 @@ class RowGroup(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/rowGroup.className
+			https://datatables.net/reference/option/rowGroup.className
     """
     return self._attrs["className"]
 
@@ -35,8 +34,7 @@ class RowGroup(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/rowGroup.className
+			https://datatables.net/reference/option/rowGroup.className
     """
     return self._attrs["dataSrc"]
 
@@ -53,8 +51,7 @@ class RowGroup(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/rowGroup.emptyDataGroup
+			https://datatables.net/reference/option/rowGroup.emptyDataGroup
     """
     return self._attrs["emptyDataGroup"]
 
@@ -71,8 +68,7 @@ class RowGroup(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/rowGroup.enable
+			https://datatables.net/reference/option/rowGroup.enable
     """
     return self._attrs["enable"]
 
@@ -89,8 +85,7 @@ class RowGroup(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/rowGroup.endClassName
+			https://datatables.net/reference/option/rowGroup.endClassName
     """
     return self._attrs["endClassName"]
 
@@ -107,8 +102,7 @@ class RowGroup(DataClass):
 
     Related Pages:
 
-
-    https://datatables.net/reference/option/rowGroup.startClassName
+			https://datatables.net/reference/option/rowGroup.startClassName
     """
     return self._attrs["startClassName"]
 

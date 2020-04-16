@@ -2,8 +2,9 @@
 Wrapper to the Javascript require package
 This module will replace the Python Import module if specified
 
-Documentation
-https://requirejs.org/docs/api.html#mechanics
+Related Pages:
+
+			https://requirejs.org/docs/api.html#mechanics
 """
 
 from epyk.core.js.packages import JsPackage

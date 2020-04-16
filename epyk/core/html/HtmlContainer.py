@@ -348,8 +348,7 @@ class Td(Html.Html):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/att_td_colspan.asp
+			https://www.w3schools.com/tags/att_td_colspan.asp
 
     Attributes:
     ----------
@@ -366,8 +365,7 @@ class Td(Html.Html):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/att_td_rowspan.asp
+			https://www.w3schools.com/tags/att_td_rowspan.asp
 
     Attributes:
     ----------
@@ -587,8 +585,7 @@ class Table(Html.Html):
 
     Related Pages:
 
-
-    https://www.w3schools.com/tags/tag_caption.asp
+			https://www.w3schools.com/tags/tag_caption.asp
 
     Attributes:
     ----------

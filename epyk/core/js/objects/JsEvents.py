@@ -19,8 +19,7 @@ class Event(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_cancelbubble.asp
+			https://www.w3schools.com/jsref/event_cancelbubble.asp
     """
     return JsString.JsString("event.cancelBubble = true")
 
@@ -32,8 +31,7 @@ class Event(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_target.asp
+			https://www.w3schools.com/jsref/event_target.asp
     """
     return JsString.JsString("event.target")
 
@@ -49,8 +47,7 @@ class Event(object):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
+			https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
     """
     return JsDataTransfer("event.dataTransfer")
 
@@ -63,8 +60,7 @@ class Event(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_timestamp.asp
+			https://www.w3schools.com/jsref/event_timestamp.asp
     """
     return JsString.JsString("event.timeStamp", isPyData=False)
 
@@ -77,8 +73,7 @@ class Event(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_defaultprevented.asp
+			https://www.w3schools.com/jsref/event_defaultprevented.asp
     """
     return JsString.JsString("event.defaultPrevented", isPyData=False)
 
@@ -90,8 +85,7 @@ class Event(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_preventdefault.asp
+			https://www.w3schools.com/jsref/event_preventdefault.asp
     """
     return JsString.JsString("event.preventDefault()", isPyData=False)
 
@@ -103,8 +97,7 @@ class Event(object):
 
     Related Pages:
 
-
-    https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
+			https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
     """
     return JsString.JsString("event.stopImmediatePropagation()", isPyData=False)
 
@@ -116,8 +109,7 @@ class Event(object):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_stoppropagation.asp
+			https://www.w3schools.com/jsref/event_stoppropagation.asp
     """
     return JsString.JsString("event.stopPropagation()", isPyData=False)
 
@@ -133,8 +125,7 @@ class UIEvent(Event):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_detail.asp
+			https://www.w3schools.com/jsref/event_detail.asp
     """
     return JsNumber.JsNumber("event.detail", isPyData=False)
 
@@ -147,8 +138,7 @@ class UIEvent(Event):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_view.asp
+			https://www.w3schools.com/jsref/event_view.asp
     """
     from epyk.core.js.JsWindow import JsWindow
 
@@ -166,8 +156,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_altkey.asp
+			https://www.w3schools.com/jsref/event_key_altkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.altKey")
 
@@ -180,8 +169,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_charcode.asp
+			https://www.w3schools.com/jsref/event_key_charcode.asp
     """
     return JsString.JsString(varName="event.charCode")
 
@@ -195,8 +183,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_code.asp
+			https://www.w3schools.com/jsref/event_key_code.asp
     """
     return JsString.JsString("event.code", isPyData=False)
 
@@ -209,8 +196,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_ctrlkey.asp
+			https://www.w3schools.com/jsref/event_key_ctrlkey.asp
     """
     return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
 
@@ -224,8 +210,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_key.asp
+			https://www.w3schools.com/jsref/event_key_key.asp
     """
     return JsString.JsString("event.key", isPyData=False)
 
@@ -238,8 +223,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_keycode.asp
+			https://www.w3schools.com/jsref/event_key_keycode.asp
     """
     return JsString.JsString("event.keyCode", isPyData=False)
 
@@ -253,8 +237,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_location.asp
+			https://www.w3schools.com/jsref/event_key_location.asp
     """
     return JsNumber.JsNumber("event.location", isPyData=False)
 
@@ -267,8 +250,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_metakey.asp
+			https://www.w3schools.com/jsref/event_key_metakey.asp
     """
     return JsString.JsString("event.metaKey", isPyData=False)
 
@@ -281,8 +263,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_shiftkey.asp
+			https://www.w3schools.com/jsref/event_key_shiftkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.shiftKey")
 
@@ -295,8 +276,7 @@ class KeyboardEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_key_which.asp
+			https://www.w3schools.com/jsref/event_key_which.asp
     """
     return JsNumber.JsNumber("event.which", isPyData=False)
 
@@ -312,8 +292,7 @@ class MouseEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_altkey.asp
+			https://www.w3schools.com/jsref/event_altkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.altKey")
 
@@ -324,8 +303,7 @@ class MouseEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_button.asp
+			https://www.w3schools.com/jsref/event_button.asp
     """
     return JsNumber.JsNumber("event.button", isPyData=False)
 
@@ -337,8 +315,7 @@ class MouseEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_buttons.asp
+			https://www.w3schools.com/jsref/event_buttons.asp
     """
     return JsNumber.JsNumber("event.buttons", isPyData=False)
 
@@ -359,8 +336,7 @@ class MouseEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_clientx.asp
+			https://www.w3schools.com/jsref/event_clientx.asp
     """
     return JsNumber.JsNumber.get(varName="event.clientX")
 
@@ -373,8 +349,7 @@ class MouseEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_clienty.asp
+			https://www.w3schools.com/jsref/event_clienty.asp
     """
     return JsNumber.JsNumber.get(varName="event.clientY")
 
@@ -441,8 +416,7 @@ class TouchEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_touch_altkey.asp
+			https://www.w3schools.com/jsref/event_touch_altkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.altKey")
 
@@ -455,8 +429,7 @@ class TouchEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_touch_ctrlkey.asp
+			https://www.w3schools.com/jsref/event_touch_ctrlkey.asp
     """
     return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
 
@@ -469,8 +442,7 @@ class TouchEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_touch_metakey.asp
+			https://www.w3schools.com/jsref/event_touch_metakey.asp
     """
     return JsString.JsString("event.metaKey", isPyData=False)
 
@@ -483,8 +455,7 @@ class TouchEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_touch_shiftkey.asp
+			https://www.w3schools.com/jsref/event_touch_shiftkey.asp
     """
     return JsBoolean.JsBoolean(varName="event.shiftKey")
 
@@ -497,8 +468,7 @@ class TouchEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_touch_targettouches.asp
+			https://www.w3schools.com/jsref/event_touch_targettouches.asp
     """
     return JsArray.JsArray("event.shiftKey", isPyData=False)
 
@@ -511,8 +481,7 @@ class TouchEvent(UIEvent):
 
     Related Pages:
 
-
-    https://www.w3schools.com/jsref/event_touch_touches.asp
+			https://www.w3schools.com/jsref/event_touch_touches.asp
     """
     return JsArray.JsArray("event.shiftKey", isPyData=False)
 
