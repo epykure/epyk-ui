@@ -205,35 +205,37 @@
 <dd><dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.blockquote">
 <code class="sig-name descname">blockquote</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">author</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.blockquote" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>The &lt;blockquote&gt; tag specifies a section that is quoted from another source.
+<dd><p>The &lt;blockquote&gt; tag specifies a section that is quoted from another source.
 Browsers usually indent &lt;blockquote&gt; elements.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">blockquote</span><span class="p">(</span><span class="s2">&quot;This is a code&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.BlockQuote" title="epyk.core.html.HtmlText.BlockQuote"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.BlockQuote</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="simple">
-<dt><a class="reference external" href="https://v4-alpha.getbootstrap.com/content/typography/">https://v4-alpha.getbootstrap.com/content/typography/</a></dt><dd><p><a class="reference external" href="https://www.w3schools.com/TAGS/tag_blockquote.asp">https://www.w3schools.com/TAGS/tag_blockquote.asp</a></p>
+<p>Related Pages:</p>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference external" href="https://v4-alpha.getbootstrap.com/content/typography/">https://v4-alpha.getbootstrap.com/content/typography/</a></p>
+</div></blockquote>
+<p><a class="reference external" href="https://www.w3schools.com/TAGS/tag_blockquote.asp">https://www.w3schools.com/TAGS/tag_blockquote.asp</a></p>
+</div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param author</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param color</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param width</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param height</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param htmlCode</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param helper</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>author</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>helper</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -241,63 +243,68 @@ Browsers usually indent &lt;blockquote&gt; elements.</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.code">
 <code class="sig-name descname">code</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">language</span><span class="o">=</span><span class="default_value">'python'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">90, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.code" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Python Wrapper to the Bootstrap CODE Tag</p>
+<dd><p>Python Wrapper to the Bootstrap CODE Tag</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">code</span><span class="p">(</span><span class="s2">&quot;This is a code&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://v4-alpha.getbootstrap.com/content/code/">https://v4-alpha.getbootstrap.com/content/code/</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param color</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param width</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param height</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param htmlCode</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param options</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param helper</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlTextEditor.html#epyk.core.html.HtmlTextEditor.Code" title="epyk.core.html.HtmlTextEditor.Code"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlTextEditor.Code</span></code></a></p></li>
+</ul>
 </div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://v4-alpha.getbootstrap.com/content/code/">https://v4-alpha.getbootstrap.com/content/code/</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>helper</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.fieldset">
 <code class="sig-name descname">fieldset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">legend</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.fieldset" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>The &lt;fieldset&gt; tag is used to group related elements in a form.
+<dd><p>The &lt;fieldset&gt; tag is used to group related elements in a form.
 The &lt;fieldset&gt; tag draws a box around the related elements.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">fieldset</span><span class="p">(</span><span class="s2">&quot;legend&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Fieldset" title="epyk.core.html.HtmlText.Fieldset"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Fieldset</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="simple">
-<dt><a class="reference external" href="https://www.w3schools.com/tags/tag_legend.asp">https://www.w3schools.com/tags/tag_legend.asp</a></dt><dd><p><a class="reference external" href="https://www.w3schools.com/tags/tag_fieldset.asp">https://www.w3schools.com/tags/tag_fieldset.asp</a></p>
+<p>Related Pages:</p>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/tags/tag_legend.asp">https://www.w3schools.com/tags/tag_legend.asp</a></p>
+</div></blockquote>
+<p><a class="reference external" href="https://www.w3schools.com/tags/tag_fieldset.asp">https://www.w3schools.com/tags/tag_fieldset.asp</a></p>
+</div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">param legend</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param width</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param height</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param options</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param profile</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>legend</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -305,196 +312,214 @@ The &lt;fieldset&gt; tag draws a box around the related elements.</p>
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.formula">
 <code class="sig-name descname">formula</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.formula" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Interface to the mathjs Formulas object</p>
+<dd><p>Interface to the mathjs Formulas object</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">formula</span><span class="p">(</span><span class="s2">&quot;$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;This is a formula&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlTextComp.html#epyk.core.html.HtmlTextComp.Formula" title="epyk.core.html.HtmlTextComp.Formula"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlTextComp.Formula</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="py attribute">
-<dt>
-<code class="sig-name descname">----------</code></dt>
-<dd></dd></dl>
-
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://mathjs.org/docs/index.html">https://mathjs.org/docs/index.html</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – Optional. The string value to be displayed in the component</p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>color</strong> – Optional. The color of the text</p></li>
+<li><p><strong>helper</strong> – </p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.highlights">
 <code class="sig-name descname">highlights</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">type</span><span class="o">=</span><span class="default_value">'danger'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.highlights" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.</p>
+<dd><p>Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">highlights</span><span class="p">(</span><span class="s2">&quot;Test content&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;fab fa-angellist&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://getbootstrap.com/docs/4.3/components/alerts/">https://getbootstrap.com/docs/4.3/components/alerts/</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p>Optional. The string value to be displayed in the component</p>
-</dd>
-<dt class="field-even">param title</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param icon</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param type</dt>
-<dd class="field-even"><p>Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
-dark). Default danger</p>
-</dd>
-<dt class="field-odd">param color</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param width</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param height</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param htmlCode</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param helper</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Highlights" title="epyk.core.html.HtmlText.Highlights"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Highlights</span></code></a></p></li>
+</ul>
 </div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://getbootstrap.com/docs/4.3/components/alerts/">https://getbootstrap.com/docs/4.3/components/alerts/</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – Optional. The string value to be displayed in the component</p></li>
+<li><p><strong>title</strong> – </p></li>
+<li><p><strong>icon</strong> – </p></li>
+<li><p><strong>type</strong> – Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
+dark). Default danger</p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>helper</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.label">
 <code class="sig-name descname">label</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">'auto', ''</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.label" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>The &lt;label&gt; tag defines a label for a &lt;button&gt;, &lt;input&gt;, &lt;meter&gt;, &lt;output&gt;, &lt;progress&gt;, &lt;select&gt;, or &lt;textarea&gt; element…</p>
+<dd><p>The &lt;label&gt; tag defines a label for a &lt;button&gt;, &lt;input&gt;, &lt;meter&gt;, &lt;output&gt;, &lt;progress&gt;, &lt;select&gt;, or &lt;textarea&gt; element…</p>
 <p>The for attribute of the &lt;label&gt; tag should be equal to the id attribute of the related element to bind them together.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
 <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s2">&quot;this is a test&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/tags/tag_label.asp">https://www.w3schools.com/tags/tag_label.asp</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p>Optional. The string value to be displayed in the component</p>
-</dd>
-<dt class="field-even">param color</dt>
-<dd class="field-even"><p>Optional. The color of the text</p>
-</dd>
-<dt class="field-odd">param align</dt>
-<dd class="field-odd"><p>Optional. The position of the icon in the line (left, right, center)</p>
-</dd>
-<dt class="field-even">param width</dt>
-<dd class="field-even"><p>Optional. A tuple with the integer for the component width and its unit</p>
-</dd>
-<dt class="field-odd">param height</dt>
-<dd class="field-odd"><p>Optional. A tuple with the integer for the component height and its unit</p>
-</dd>
-<dt class="field-even">param htmlCode</dt>
-<dd class="field-even"><p>Optional. An identifier for this component (on both Python and Javascript side)</p>
-</dd>
-<dt class="field-odd">param tooltip</dt>
-<dd class="field-odd"><p>Optional. A string with the value of the tooltip</p>
-</dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p>Optional. A flag to set the component performance storage</p>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Label" title="epyk.core.html.HtmlText.Label"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Label</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/tags/tag_label.asp">https://www.w3schools.com/tags/tag_label.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – Optional. The string value to be displayed in the component</p></li>
+<li><p><strong>color</strong> – Optional. The color of the text</p></li>
+<li><p><strong>align</strong> – Optional. The position of the icon in the line (left, right, center)</p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
+<li><p><strong>htmlCode</strong> – Optional. An identifier for this component (on both Python and Javascript side)</p></li>
+<li><p><strong>tooltip</strong> – Optional. A string with the value of the tooltip</p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.number">
 <code class="sig-name descname">number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">number</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">150, 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.number" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Usage:</p>
+<dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="mi">289839898</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;Ok&quot;</span><span class="p">,</span> <span class="n">icon</span><span class="o">=</span><span class="s2">&quot;fas fa-align-center&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Numeric" title="epyk.core.html.HtmlText.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Numeric</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="py attribute">
-<dt>
-<code class="sig-name descname">----------</code></dt>
-<dd></dd></dl>
-
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://openexchangerates.github.io/accounting.js/">http://openexchangerates.github.io/accounting.js/</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> – Optional. The value to be displayed to the component. Default now</p></li>
+<li><p><strong>title</strong> – </p></li>
+<li><p><strong>label</strong> – Optional. The text of label to be added to the component</p></li>
+<li><p><strong>icon</strong> – Optional. A string with the value of the icon to display from font-awesome</p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>tooltip</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>helper</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.paragraph">
 <code class="sig-name descname">paragraph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">border</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">encoding</span><span class="o">=</span><span class="default_value">'UTF-8'</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.paragraph" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Python Wrapper to the HTML P Tag</p>
+<dd><p>Python Wrapper to the HTML P Tag</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">paragraph</span><span class="p">(</span><span class="s2">&quot;This is a paragraph&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;Paragraph helper&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/html/html_styles.asp">https://www.w3schools.com/html/html_styles.asp</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param color</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param background_color</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param border</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param width</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param height</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param htmlCode</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param encoding</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param dataSrc</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Paragraph" title="epyk.core.html.HtmlText.Paragraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Paragraph</span></code></a></p></li>
+</ul>
 </div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/html/html_styles.asp">https://www.w3schools.com/html/html_styles.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>background_color</strong> – </p></li>
+<li><p><strong>border</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>encoding</strong> – </p></li>
+<li><p><strong>dataSrc</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.preformat">
 <code class="sig-name descname">preformat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">90, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.preformat" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Preformatted text:
+<dd><p>Preformatted text:
 The &lt;pre&gt; tag defines preformatted text.
 Text in a &lt;pre&gt; element is displayed in a fixed-width font (usually Courier), and it preserves both spaces and line breaks.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">preformat</span><span class="p">(</span><span class="s2">&quot;This is a pre formatted text&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Pre" title="epyk.core.html.HtmlText.Pre"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Pre</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="simple">
-<dt><a class="reference external" href="https://www.w3schools.com/html/html_styles.asp">https://www.w3schools.com/html/html_styles.asp</a></dt><dd><p><a class="reference external" href="https://www.w3schools.com/tags/tag_pre.asp">https://www.w3schools.com/tags/tag_pre.asp</a></p>
+<p>Related Pages:</p>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/html/html_styles.asp">https://www.w3schools.com/html/html_styles.asp</a></p>
+</div></blockquote>
+<p><a class="reference external" href="https://www.w3schools.com/tags/tag_pre.asp">https://www.w3schools.com/tags/tag_pre.asp</a></p>
+</div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param color</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param width</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param height</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param htmlCode</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param dataSrc</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param options</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param helper</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param profile</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>dataSrc</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>helper</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -502,172 +527,149 @@ Text in a &lt;pre&gt; element is displayed in a fixed-width font (usually Courie
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.span">
 <code class="sig-name descname">span</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.span" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>The &lt;span&gt; tag is used to group inline-elements in a document.</p>
+<dd><p>The &lt;span&gt; tag is used to group inline-elements in a document.</p>
 <p>The &lt;span&gt; tag provides no visual change by itself.</p>
 <p>The &lt;span&gt; tag provides a way to add a hook to a part of a text or a part of a document.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">span</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/tags/tag_span.asp">https://www.w3schools.com/tags/tag_span.asp</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p>Optional. The string value to be displayed in the component</p>
-</dd>
-<dt class="field-even">param color</dt>
-<dd class="field-even"><p>Optional. The color of the text</p>
-</dd>
-<dt class="field-odd">param align</dt>
-<dd class="field-odd"><p>Optional. The position of the icon in the line (left, right, center)</p>
-</dd>
-<dt class="field-even">param width</dt>
-<dd class="field-even"><p>Optional. A tuple with the integer for the component width and its unit</p>
-</dd>
-<dt class="field-odd">param height</dt>
-<dd class="field-odd"><p>Optional. A tuple with the integer for the component height and its unit</p>
-</dd>
-<dt class="field-even">param htmlCode</dt>
-<dd class="field-even"><p>Optional. An identifier for this component (on both Python and Javascript side)</p>
-</dd>
-<dt class="field-odd">param tooltip</dt>
-<dd class="field-odd"><p>Optional. A string with the value of the tooltip</p>
-</dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p>Optional. A flag to set the component performance storage</p>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Span" title="epyk.core.html.HtmlText.Span"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Span</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/tags/tag_span.asp">https://www.w3schools.com/tags/tag_span.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – Optional. The string value to be displayed in the component</p></li>
+<li><p><strong>color</strong> – Optional. The color of the text</p></li>
+<li><p><strong>align</strong> – Optional. The position of the icon in the line (left, right, center)</p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
+<li><p><strong>htmlCode</strong> – Optional. An identifier for this component (on both Python and Javascript side)</p></li>
+<li><p><strong>tooltip</strong> – Optional. A string with the value of the tooltip</p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.text">
 <code class="sig-name descname">text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'left'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">'auto', ''</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.text" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Add the HTML text component to the page</p>
+<dd><p>Add the HTML text component to the page</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;this is a test&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/tags/tag_font.asp">https://www.w3schools.com/tags/tag_font.asp</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p>The string value to be displayed in the component</p>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Text" title="epyk.core.html.HtmlText.Text"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Text</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/tags/tag_font.asp">https://www.w3schools.com/tags/tag_font.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – The string value to be displayed in the component</p></li>
+<li><p><strong>color</strong> – Optional. The color of the text</p></li>
+<li><p><strong>align</strong> – Optional. The position of the icon in the line (left, right, center)</p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
+<li><p><strong>htmlCode</strong> – Optional. An identifier for this component (on both Python and Javascript side)</p></li>
+<li><p><strong>tooltip</strong> – Optional. A string with the value of the tooltip</p></li>
+<li><p><strong>options</strong> – Optional. The component options</p></li>
+<li><p><strong>helper</strong> – </p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
 </dd>
-<dt class="field-even">param color</dt>
-<dd class="field-even"><p>Optional. The color of the text</p>
-</dd>
-<dt class="field-odd">param align</dt>
-<dd class="field-odd"><p>Optional. The position of the icon in the line (left, right, center)</p>
-</dd>
-<dt class="field-even">param width</dt>
-<dd class="field-even"><p>Optional. A tuple with the integer for the component width and its unit</p>
-</dd>
-<dt class="field-odd">param height</dt>
-<dd class="field-odd"><p>Optional. A tuple with the integer for the component height and its unit</p>
-</dd>
-<dt class="field-even">param htmlCode</dt>
-<dd class="field-even"><p>Optional. An identifier for this component (on both Python and Javascript side)</p>
-</dd>
-<dt class="field-odd">param tooltip</dt>
-<dd class="field-odd"><p>Optional. A string with the value of the tooltip</p>
-</dd>
-<dt class="field-even">param options</dt>
-<dd class="field-even"><p>Optional. The component options</p>
-</dd>
-<dt class="field-odd">param helper</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p>Optional. A flag to set the component performance storage</p>
-</dd>
-<dt class="field-odd">return</dt>
-<dd class="field-odd"><p>The text HTML object</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The text HTML object</p>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.title">
 <code class="sig-name descname">title</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">level</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">contents</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">picture</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">marginTop</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">'auto', ''</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.title" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Add a title</p>
+<dd><p>Add a title</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
 <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/tags/tag_hn.asp">https://www.w3schools.com/tags/tag_hn.asp</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param level</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param name</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param contents</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param color</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param picture</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param icon</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param marginTop</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param htmlCode</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param width</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param height</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param align</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param options</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Title" title="epyk.core.html.HtmlText.Title"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Title</span></code></a></p></li>
+</ul>
 </div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/tags/tag_hn.asp">https://www.w3schools.com/tags/tag_hn.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>level</strong> – </p></li>
+<li><p><strong>name</strong> – </p></li>
+<li><p><strong>contents</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>picture</strong> – </p></li>
+<li><p><strong>icon</strong> – </p></li>
+<li><p><strong>marginTop</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>align</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompTexts.Texts.up_down">
 <code class="sig-name descname">up_down</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompTexts.Texts.up_down" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Up and down Text component</p>
+<dd><p>Up and down Text component</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">texts</span><span class="o">.</span><span class="n">up_down</span><span class="p">({</span><span class="s1">&#39;previous&#39;</span><span class="p">:</span> <span class="mi">240885</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">240985</span><span class="p">})</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://fontawesome.com/">https://fontawesome.com/</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param rec</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param color</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param label</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param options</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param helper</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.UpDown</span></code></p></li>
+</ul>
 </div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://fontawesome.com/">https://fontawesome.com/</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rec</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>label</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>helper</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

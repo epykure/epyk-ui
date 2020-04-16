@@ -205,8 +205,7 @@
 <dd><dl class="py method">
 <dt id="epyk.interfaces.components.CompMessaging.Messaging.alert">
 <code class="sig-name descname">alert</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">category</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">close_button</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">320, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">'black'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompMessaging.Messaging.alert" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Function to add when the python run some tags to put on the top of your report messages.</p>
+<dd><p>Function to add when the python run some tags to put on the top of your report messages.</p>
 <p>The type of the messages can be different according to its criticallity.
 This is fully defined and #driven in the Python and visible in the browser when the page is ready</p>
 <p>All the notification can be hidden directly from the report by setting the flag alerts = False
@@ -222,42 +221,30 @@ e.g: rptObj.alerts = False</p>
 </ul>
 </div></blockquote>
 <p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
 <blockquote>
-<div><p>Attributes:</p>
+<div><p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+</div></blockquote>
+<p>Attributes:</p>
 <dl class="field-list simple">
-<dt class="field-odd">param title</dt>
-<dd class="field-odd"><p>The title of the notification</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> – The title of the notification</p></li>
+<li><p><strong>value</strong> – The content of the notification</p></li>
+<li><p><strong>category</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>background_color</strong> – Optional. The background color. Can be also overridden from the .css function</p></li>
+<li><p><strong>close_button</strong> – Optional. Boolean, add a close button to the notification</p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>dataSrc</strong> – </p></li>
+</ul>
 </dd>
-<dt class="field-even">param value</dt>
-<dd class="field-even"><p>The content of the notification</p>
-</dd>
-<dt class="field-odd">param category</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param htmlCode</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param background_color</dt>
-<dd class="field-odd"><p>Optional. The background color. Can be also overridden from the .css function</p>
-</dd>
-<dt class="field-even">param close_button</dt>
-<dd class="field-even"><p>Optional. Boolean, add a close button to the notification</p>
-</dd>
-<dt class="field-odd">param width</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param height</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param color</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param dataSrc</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">rtype</dt>
-<dd class="field-even"><p>html.HtmlMessaging.Alert</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="../../html_components/core_html/HtmlMessaging.html#epyk.core.html.HtmlMessaging.Alert" title="epyk.core.html.HtmlMessaging.Alert">html.HtmlMessaging.Alert</a></p>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
@@ -335,8 +322,10 @@ e.g: rptObj.alerts = False</p>
 </ul>
 </div></blockquote>
 <p>Related Pages:</p>
-<p><a class="reference external" href="https://leaverou.github.io/bubbly/">https://leaverou.github.io/bubbly/</a>
-<a class="reference external" href="http://manos.malihu.gr/jquery-custom-content-scroller/">http://manos.malihu.gr/jquery-custom-content-scroller/</a></p>
+<blockquote>
+<div><p><a class="reference external" href="https://leaverou.github.io/bubbly/">https://leaverou.github.io/bubbly/</a></p>
+</div></blockquote>
+<p><a class="reference external" href="http://manos.malihu.gr/jquery-custom-content-scroller/">http://manos.malihu.gr/jquery-custom-content-scroller/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -378,7 +367,9 @@ e.g: rptObj.alerts = False</p>
 </ul>
 </div></blockquote>
 <p>Related Pages:</p>
-<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+<blockquote>
+<div><p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -416,7 +407,9 @@ This is fully defined and #driven in the Python and visible in the browser when 
 </ul>
 </div></blockquote>
 <p>Related Pages:</p>
-<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+<blockquote>
+<div><p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="../../html_components/core_html/HtmlMessaging.html#epyk.core.html.HtmlMessaging.Alert" title="epyk.core.html.HtmlMessaging.Alert">html.HtmlMessaging.Alert</a></p>
@@ -473,7 +466,9 @@ This is fully defined and #driven in the Python and visible in the browser when 
 </ul>
 </div></blockquote>
 <p>Related Pages:</p>
-<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+<blockquote>
+<div><p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -508,7 +503,9 @@ This is fully defined and #driven in the Python and visible in the browser when 
 </ul>
 </div></blockquote>
 <p>Related Pages:</p>
-<p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+<blockquote>
+<div><p><a class="reference external" href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

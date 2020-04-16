@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Plotly Interface" href="Plotly.html" />
+    <link rel="prev" title="Dc Interface" href="Dc.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,8 +80,31 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../report.html">Report Object</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../ui.html">UI Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../compositions.html">Simple HTML Compositions:</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../geo.html">Geo Compositions:</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ChartJs.html">ChartJs Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Dc.html">Dc Interface</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Geo Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Plotly.html">Plotly Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotlyBubble.html">PlotlyBubble Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotlyChoropleth.html">PlotlyChoropleth Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PlotlyScatter.html">PlotlyScatter Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../graphs.html">Charts Compositions:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tables.html">Table Compositions:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../html_components.html">HTML Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html">Data Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
@@ -129,6 +154,12 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="../../../report.html">Report Object</a> &raquo;</li>
+        
+          <li><a href="../../ui.html">UI Interface</a> &raquo;</li>
+        
+          <li><a href="../geo.html">Geo Compositions:</a> &raquo;</li>
+        
       <li>Geo Interface</li>
     
     
@@ -156,13 +187,23 @@
 <dd><dl class="py method">
 <dt id="epyk.interfaces.geo.CompGeo.Geo.chartjs_choropleth">
 <em class="property">property </em><code class="sig-name descname">chartjs_choropleth</code><a class="headerlink" href="#epyk.interfaces.geo.CompGeo.Geo.chartjs_choropleth" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
+<dd><p>CompGeoChartJs.ChartJs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.geo.CompGeo.Geo.dc_choropleth">
 <em class="property">property </em><code class="sig-name descname">dc_choropleth</code><a class="headerlink" href="#epyk.interfaces.geo.CompGeo.Geo.dc_choropleth" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
+<dd><p>CompGeoDc.Dc</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -171,7 +212,7 @@
 <dd><p>//plot.ly/javascript/bubble-maps/</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
+<dd class="field-odd"><p>CompGeoPlotly.PlotlyBubble</p>
 </dd>
 <dt class="field-even">Type</dt>
 <dd class="field-even"><p>https</p>
@@ -182,17 +223,21 @@
 <dl class="py method">
 <dt id="epyk.interfaces.geo.CompGeo.Geo.plotly_choropleth">
 <em class="property">property </em><code class="sig-name descname">plotly_choropleth</code><a class="headerlink" href="#epyk.interfaces.geo.CompGeo.Geo.plotly_choropleth" title="Permalink to this definition">¶</a></dt>
-<dd><p>return:</p>
+<dd><p>CompGeoPlotly.PlotlyChoropleth</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>return</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.geo.CompGeo.Geo.plotly_map">
 <em class="property">property </em><code class="sig-name descname">plotly_map</code><a class="headerlink" href="#epyk.interfaces.geo.CompGeo.Geo.plotly_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interface for the Plotly library</p>
-<p>Documentation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>A Python Plolty object</p>
+<dd class="field-odd"><p>CompGeoPlotly.Plotly</p>
 </dd>
 </dl>
 </dd></dl>
@@ -203,7 +248,7 @@
 <dd><p>//plot.ly/javascript/scatter-plots-on-maps/</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
+<dd class="field-odd"><p>CompGeoPlotly.PlotlyScatter</p>
 </dd>
 <dt class="field-even">Type</dt>
 <dd class="field-even"><p>https</p>
@@ -220,6 +265,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Plotly.html" class="btn btn-neutral float-right" title="Plotly Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Dc.html" class="btn btn-neutral float-left" title="Dc Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

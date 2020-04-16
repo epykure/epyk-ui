@@ -216,19 +216,16 @@
 <dl class="py method">
 <dt id="epyk.core.html.HtmlInput.AutoComplete.options">
 <em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlInput.AutoComplete.options" title="Permalink to this definition">¶</a></dt>
-<dd><dl>
-<dt>Description:</dt><dd><p>Property to set all the input timepicker component properties</p>
+<dd><p>Property to set all the input timepicker component properties</p>
 <p>Related Pages:</p>
-</dd>
-</dl>
-<p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p>OptInputs.OptionAutoComplete</p>
+<div><p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../options/OptInputs.html#epyk.core.html.options.OptInputs.OptionAutoComplete" title="epyk.core.html.options.OptInputs.OptionAutoComplete">OptInputs.OptionAutoComplete</a></p>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 </dd></dl>
@@ -278,114 +275,112 @@ Those functions will use plain javascript by default.</p>
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlInput.FieldAutocomplete.change">
 <code class="sig-name descname">change</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFnc</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlInput.FieldAutocomplete.change" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Event triggerd when the value of the input field changes.
+<dd><p>Event triggerd when the value of the input field changes.
 A Date object containing the selected time is passed as the first argument of the callback.
 Note: the variable time is a function parameter received in the Javascript side</p>
 <p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-change">https://api.jqueryui.com/autocomplete/#event-change</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param jsFnc</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
+<div><p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-change">https://api.jqueryui.com/autocomplete/#event-change</a></p>
 </div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jsFnc</strong> – </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.HtmlInput.FieldAutocomplete.close">
 <code class="sig-name descname">close</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFnc</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlInput.FieldAutocomplete.close" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Triggered when the menu is hidden. Not every close event will be accompanied by a change event.</p>
+<dd><p>Triggered when the menu is hidden. Not every close event will be accompanied by a change event.</p>
 <p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-close">https://api.jqueryui.com/autocomplete/#event-close</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param jsFnc</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-close">https://api.jqueryui.com/autocomplete/#event-close</a></p>
 </div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFnc</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.HtmlInput.FieldAutocomplete.focus">
 <code class="sig-name descname">focus</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFnc</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlInput.FieldAutocomplete.focus" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Triggered when focus is moved to an item (not selecting).
+<dd><p>Triggered when focus is moved to an item (not selecting).
 The default action is to replace the text field’s value with the value of the focused item, though only if the event was triggered by a keyboard interaction.
 Canceling this event prevents the value from being updated, but does not prevent the menu item from being focused.</p>
 <p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-focus">https://api.jqueryui.com/autocomplete/#event-focus</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param focus</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-focus">https://api.jqueryui.com/autocomplete/#event-focus</a></p>
 </div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>focus</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.HtmlInput.FieldAutocomplete.response">
 <code class="sig-name descname">response</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFnc</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlInput.FieldAutocomplete.response" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Triggered after a search completes, before the menu is shown.
+<dd><p>Triggered after a search completes, before the menu is shown.
 Useful for local manipulation of suggestion data, where a custom source option callback is not required.
 This event is always triggered when a search completes, even if the menu will not be shown because there are no results or the Autocomplete is disabled.</p>
 <p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-response">https://api.jqueryui.com/autocomplete/#event-response</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param jsFnc</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-response">https://api.jqueryui.com/autocomplete/#event-response</a></p>
 </div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFnc</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.HtmlInput.FieldAutocomplete.search">
 <code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFnc</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlInput.FieldAutocomplete.search" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Triggered before a search is performed, after minLength and delay are met.
+<dd><p>Triggered before a search is performed, after minLength and delay are met.
 If canceled, then no request will be started and no items suggested.</p>
 <p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-search">https://api.jqueryui.com/autocomplete/#event-search</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param jsFnc</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
+<div><p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-search">https://api.jqueryui.com/autocomplete/#event-search</a></p>
 </div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jsFnc</strong> – </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.core.html.HtmlInput.FieldAutocomplete.select">
 <code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFnc</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlInput.FieldAutocomplete.select" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Triggered when an item is selected from the menu.
+<dd><p>Triggered when an item is selected from the menu.
 The default action is to replace the text field’s value with the value of the selected item.
 Canceling this event prevents the value from being updated, but does not prevent the menu from closing.</p>
 <p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-select">https://api.jqueryui.com/autocomplete/#event-select</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param jsFnc</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><p><a class="reference external" href="https://api.jqueryui.com/autocomplete/#event-select">https://api.jqueryui.com/autocomplete/#event-select</a></p>
 </div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFnc</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -575,19 +570,16 @@ Canceling this event prevents the value from being updated, but does not prevent
 <dl class="py method">
 <dt id="epyk.core.html.HtmlInput.InputDate.options">
 <em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlInput.InputDate.options" title="Permalink to this definition">¶</a></dt>
-<dd><dl>
-<dt>Description:</dt><dd><p>Property to set all the input Datepicker component properties</p>
+<dd><p>Property to set all the input Datepicker component properties</p>
 <p>Related Pages:</p>
-</dd>
-</dl>
-<p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p>OptInputs.OptionsDatePicker</p>
+<div><p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../options/OptInputs.html#epyk.core.html.options.OptInputs.OptionsDatePicker" title="epyk.core.html.options.OptInputs.OptionsDatePicker">OptInputs.OptionsDatePicker</a></p>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
@@ -641,18 +633,17 @@ Canceling this event prevents the value from being updated, but does not prevent
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlInput.InputTime.change">
 <code class="sig-name descname">change</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFnc</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlInput.InputTime.change" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
+<dd><p>Event triggerd when the value of the input field changes. A Date object containing the selected time is passed as the first argument of the callback.
 Note: the variable time is a function parameter received in the Javascript side</p>
 <p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param jsFnc</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
+<div><p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
 </div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>jsFnc</strong> – </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -682,19 +673,16 @@ Note: the variable time is a function parameter received in the Javascript side<
 <dl class="py method">
 <dt id="epyk.core.html.HtmlInput.InputTime.options">
 <em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlInput.InputTime.options" title="Permalink to this definition">¶</a></dt>
-<dd><dl>
-<dt>Description:</dt><dd><p>Property to set all the input timepicker component properties</p>
+<dd><p>Property to set all the input timepicker component properties</p>
 <p>Related Pages:</p>
-</dd>
-</dl>
-<p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p>OptInputs.OptionsTimePicker</p>
+<div><p><a class="reference external" href="https://timepicker.co/options/">https://timepicker.co/options/</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../options/OptInputs.html#epyk.core.html.options.OptInputs.OptionsTimePicker" title="epyk.core.html.options.OptInputs.OptionsTimePicker">OptInputs.OptionsTimePicker</a></p>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
@@ -787,19 +775,16 @@ htmlObj.enter(” alert() “)</p>
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlInput.TextArea.dom">
 <em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlInput.TextArea.dom" title="Permalink to this definition">¶</a></dt>
-<dd><dl>
-<dt>Description:</dt><dd><p>Return the HTML DOM object</p>
+<dd><p>Return the HTML DOM object</p>
 <p>Related Pages:</p>
-</dd>
-</dl>
-<p><a class="reference external" href="https://www.w3schools.com/js/js_htmldom.asp">https://www.w3schools.com/js/js_htmldom.asp</a></p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
+<div><p><a class="reference external" href="https://www.w3schools.com/js/js_htmldom.asp">https://www.w3schools.com/js/js_htmldom.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>JsHtmlField.JsHtmlTextarea</p>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">

@@ -205,47 +205,42 @@
 <dd><dl class="py method">
 <dt id="epyk.interfaces.components.CompVignets.Vignets.block">
 <code class="sig-name descname">block</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">border</span><span class="o">=</span><span class="default_value">'auto'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">300, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompVignets.Vignets.block" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Every HTML element has a default display value depending on what type of element it is.
+<dd><p>Every HTML element has a default display value depending on what type of element it is.
 The two display values are: block and inline.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">vignets</span><span class="o">.</span><span class="n">block</span><span class="p">({</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s1">&#39;This is a brand new python framework&#39;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s1">&#39;New Python Web Framework&#39;</span><span class="p">,</span>
                        <span class="s2">&quot;button&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s1">&#39;Get Started&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s2">&quot;/getStarted&quot;</span><span class="p">},</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">})</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/htmL/html_blocks.asp">https://www.w3schools.com/htmL/html_blocks.asp</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param recordSet</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param color</dt>
-<dd class="field-even"><p>Optional. The font color in the component. Default inherit</p>
-</dd>
-<dt class="field-odd">param border</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param width</dt>
-<dd class="field-even"><p>Optional. A tuple with the integer for the component width and its unit</p>
-</dd>
-<dt class="field-odd">param height</dt>
-<dd class="field-odd"><p>Optional. A tuple with the integer for the component height and its unit</p>
-</dd>
-<dt class="field-even">param helper</dt>
-<dd class="field-even"><p>Optional. A tooltip helper</p>
-</dd>
-<dt class="field-odd">param profile</dt>
-<dd class="field-odd"><p>Optional. A flag to set the component performance storage</p>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlTextComp.html#epyk.core.html.HtmlTextComp.BlockText" title="epyk.core.html.HtmlTextComp.BlockText"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlTextComp.BlockText</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/htmL/html_blocks.asp">https://www.w3schools.com/htmL/html_blocks.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recordSet</strong> – </p></li>
+<li><p><strong>color</strong> – Optional. The font color in the component. Default inherit</p></li>
+<li><p><strong>border</strong> – </p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
+<li><p><strong>helper</strong> – Optional. A tooltip helper</p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompVignets.Vignets.bubble">
 <code class="sig-name descname">bubble</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">50, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">110, 'px'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">background_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompVignets.Vignets.bubble" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>The bubbles event property returns a Boolean value that indicates whether or not an event is a bubbling event.
+<dd><p>The bubbles event property returns a Boolean value that indicates whether or not an event is a bubbling event.
 Event bubbling directs an event to its intended target, it works like this:
 A button is clicked and the event is directed to the button
 If an event handler is set for that object, the event is triggered
@@ -255,39 +250,37 @@ The event bubbles up from parent to parent until it is handled, or until it reac
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">vignets</span><span class="o">.</span><span class="n">bubble</span><span class="p">({</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Title&quot;</span><span class="p">},</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;This is a helper&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/jsref/event_bubbles.asp">https://www.w3schools.com/jsref/event_bubbles.asp</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param recordSet</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param width</dt>
-<dd class="field-even"><p>Optional. A tuple with the integer for the component width and its unit</p>
-</dd>
-<dt class="field-odd">param height</dt>
-<dd class="field-odd"><p>Optional. A tuple with the integer for the component height and its unit</p>
-</dd>
-<dt class="field-even">param color</dt>
-<dd class="field-even"><p>Optional. The font color in the component. Default inherit</p>
-</dd>
-<dt class="field-odd">param background_color</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param helper</dt>
-<dd class="field-even"><p>Optional. A tooltip helper</p>
-</dd>
-<dt class="field-odd">param profile</dt>
-<dd class="field-odd"><p>Optional. A flag to set the component performance storage</p>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlText.html#epyk.core.html.HtmlText.Text" title="epyk.core.html.HtmlText.Text"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlText.Text</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlContainer.html#epyk.core.html.HtmlContainer.Div" title="epyk.core.html.HtmlContainer.Div"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlContainer.Div</span></code></a></p></li>
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlLinks.html#epyk.core.html.HtmlLinks.ExternalLink" title="epyk.core.html.HtmlLinks.ExternalLink"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlLinks.ExternalLink</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/jsref/event_bubbles.asp">https://www.w3schools.com/jsref/event_bubbles.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recordSet</strong> – </p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
+<li><p><strong>color</strong> – Optional. The font color in the component. Default inherit</p></li>
+<li><p><strong>background_color</strong> – </p></li>
+<li><p><strong>helper</strong> – Optional. A tooltip helper</p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompVignets.Vignets.number">
 <code class="sig-name descname">number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">number</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompVignets.Vignets.number" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>The &lt;input type=”number”&gt; defines a field for entering a number.
+<dd><p>The &lt;input type=”number”&gt; defines a field for entering a number.
 Use the following attributes to specify restrictions:
 max - specifies the maximum value allowed
 min - specifies the minimum value allowed
@@ -295,45 +288,59 @@ step - specifies the legal number intervals
 value - Specifies the default value</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">number</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">vignets</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+<span class="n">number_2</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">vignets</span><span class="o">.</span><span class="n">number</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;Test 2 &quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.google.fr&quot;</span><span class="p">})</span>
+<span class="n">number</span><span class="o">.</span><span class="n">span</span><span class="o">.</span><span class="n">add_icon</span><span class="p">(</span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">icons</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">ICON_ENVELOPE</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>number_2 = rptObj.ui.vignets.number(500, “Test 2 “, options={“url”: “<a class="reference external" href="http://www.google.fr">http://www.google.fr</a>”})
-number.span.add_icon(rptObj.ui.icons.get.ICON_ENVELOPE)</p>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/tags/att_input_type_number.asp">https://www.w3schools.com/tags/att_input_type_number.asp</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param number</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param label</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param width</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param height</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param profile</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlTextComp.html#epyk.core.html.HtmlTextComp.Number" title="epyk.core.html.HtmlTextComp.Number"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlTextComp.Number</span></code></a></p></li>
+</ul>
 </div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/tags/att_input_type_number.asp">https://www.w3schools.com/tags/att_input_type_number.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> – </p></li>
+<li><p><strong>label</strong> – </p></li>
+<li><p><strong>width</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompVignets.Vignets.text">
 <code class="sig-name descname">text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'center'</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompVignets.Vignets.text" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Usage:</p>
+<dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">vignets</span><span class="o">.</span><span class="n">text</span><span class="p">({</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;New Python Framework&quot;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s2">&quot;A new Python Web Framework&quot;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
                       <span class="s1">&#39;icon&#39;</span><span class="p">:</span> <span class="s1">&#39;fab fa-python&#39;</span><span class="p">,</span> <span class="s1">&#39;colorTitle&#39;</span><span class="p">:</span> <span class="s1">&#39;darkgreen&#39;</span><span class="p">})</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlTextComp.html#epyk.core.html.HtmlTextComp.TextWithBorder" title="epyk.core.html.HtmlTextComp.TextWithBorder"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlTextComp.TextWithBorder</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="py attribute">
-<dt>
-<code class="sig-name descname">----------</code></dt>
-<dd></dd></dl>
-
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recordSet</strong> – </p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
+<li><p><strong>align</strong> – </p></li>
+<li><p><strong>helper</strong> – Optional. A tooltip helper</p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

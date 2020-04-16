@@ -205,7 +205,13 @@
 <dd><dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.console">
 <code class="sig-name descname">console</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">content</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.console" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlTextEditor.html#epyk.core.html.HtmlTextEditor.Console" title="epyk.core.html.HtmlTextEditor.Console"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlTextEditor.Console</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>content</strong> – </p></li>
@@ -222,45 +228,38 @@
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.countdown">
 <code class="sig-name descname">countdown</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">yyyy_mm_dd</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">'fas fa-stopwatch'</span></em>, <em class="sig-param"><span class="n">timeInMilliSeconds</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.countdown" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Add a countdown to the page and remove the content if the page has expired.</p>
+<dd><p>Add a countdown to the page and remove the content if the page has expired.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">countdown</span><span class="p">(</span><span class="s2">&quot;2050-09-24&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlDates.html#epyk.core.html.HtmlDates.CountDownDate" title="epyk.core.html.HtmlDates.CountDownDate"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlDates.CountDownDate</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="simple">
-<dt><a class="reference external" href="https://www.w3schools.com/js/js_date_methods.asp">https://www.w3schools.com/js/js_date_methods.asp</a></dt><dd><p><a class="reference external" href="https://www.w3schools.com/howto/howto_js_countdown.asp">https://www.w3schools.com/howto/howto_js_countdown.asp</a>
+<p>Related Pages:</p>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/js/js_date_methods.asp">https://www.w3schools.com/js/js_date_methods.asp</a></p>
+</div></blockquote>
+<p><a class="reference external" href="https://www.w3schools.com/howto/howto_js_countdown.asp">https://www.w3schools.com/howto/howto_js_countdown.asp</a>
 <a class="reference external" href="https://fontawesome.com/icons/stopwatch?style=solid">https://fontawesome.com/icons/stopwatch?style=solid</a></p>
+</div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">param yyyy_mm_dd</dt>
-<dd class="field-odd"><p>The end date in format YYYY-MM-DD</p>
-</dd>
-<dt class="field-even">param label</dt>
-<dd class="field-even"><p>Optional. The component label content</p>
-</dd>
-<dt class="field-odd">param icon</dt>
-<dd class="field-odd"><p>Optional. The component icon content from font-awesome references</p>
-</dd>
-<dt class="field-even">param timeInMilliSeconds</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param width</dt>
-<dd class="field-odd"><p>Optional. Integer for the component width</p>
-</dd>
-<dt class="field-even">param height</dt>
-<dd class="field-even"><p>Optional. Integer for the component height</p>
-</dd>
-<dt class="field-odd">param htmlCode</dt>
-<dd class="field-odd"><p>Optional. The component identifier code (for both Python and Javascript)</p>
-</dd>
-<dt class="field-even">param helper</dt>
-<dd class="field-even"><p>Optional. A tooltip helper</p>
-</dd>
-<dt class="field-odd">param profile</dt>
-<dd class="field-odd"><p>Optional. A flag to set the component performance storage</p>
-</dd>
-</dl>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>yyyy_mm_dd</strong> – The end date in format YYYY-MM-DD</p></li>
+<li><p><strong>label</strong> – Optional. The component label content</p></li>
+<li><p><strong>icon</strong> – Optional. The component icon content from font-awesome references</p></li>
+<li><p><strong>timeInMilliSeconds</strong> – </p></li>
+<li><p><strong>width</strong> – Optional. Integer for the component width</p></li>
+<li><p><strong>height</strong> – Optional. Integer for the component height</p></li>
+<li><p><strong>htmlCode</strong> – Optional. The component identifier code (for both Python and Javascript)</p></li>
+<li><p><strong>helper</strong> – Optional. A tooltip helper</p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -268,41 +267,56 @@
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.delta">
 <code class="sig-name descname">delta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">200, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">80, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.delta" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Usage:</p>
+<dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">delta</span><span class="p">({</span><span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;prevNumber&#39;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;thresold1&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;thresold2&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlTextComp.html#epyk.core.html.HtmlTextComp.Delta" title="epyk.core.html.HtmlTextComp.Delta"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlTextComp.Delta</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="py attribute">
-<dt>
-<code class="sig-name descname">----------</code></dt>
-<dd></dd></dl>
-
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rec</strong> – </p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
+<li><p><strong>helper</strong> – Optional. A tooltip helper</p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.info">
 <code class="sig-name descname">info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.info" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Display an info icon with a tooltip</p>
+<dd><p>Display an info icon with a tooltip</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlOthers.html#epyk.core.html.HtmlOthers.Help" title="epyk.core.html.HtmlOthers.Help"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlOthers.Help</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="simple">
-<dt><a class="reference external" href="https://fontawesome.com/icons/question-circle?style=solid">https://fontawesome.com/icons/question-circle?style=solid</a></dt><dd><p><a class="reference external" href="https://api.jqueryui.com/tooltip/">https://api.jqueryui.com/tooltip/</a></p>
+<p>Related Pages:</p>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference external" href="https://fontawesome.com/icons/question-circle?style=solid">https://fontawesome.com/icons/question-circle?style=solid</a></p>
+</div></blockquote>
+<p><a class="reference external" href="https://api.jqueryui.com/tooltip/">https://api.jqueryui.com/tooltip/</a></p>
+</div></blockquote>
 <dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p>The content of the tooltip</p>
-</dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p>Optional, A boolean to store the performances for each components</p>
-</dd>
-</dl>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – The content of the tooltip</p></li>
+<li><p><strong>profile</strong> – Optional, A boolean to store the performances for each components</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -313,9 +327,15 @@
 <dd><p>Add a traffic light component to give a visual status of a given process</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">light</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;Tooltip&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;Helper&quot;</span><span class="p">)</span>
+<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">light</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>rptObj.ui.rich.light(True)</p>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlTextComp.html#epyk.core.html.HtmlTextComp.TrafficLight" title="epyk.core.html.HtmlTextComp.TrafficLight"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlTextComp.TrafficLight</span></code></a></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -333,89 +353,80 @@
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.search_input">
 <code class="sig-name descname">search_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">placeholder</span><span class="o">=</span><span class="default_value">'Search..'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extensible</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.search_input" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Usage:</p>
+<dd><p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">search</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search">https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param text</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param placeholder</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param color</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param height</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param htmlCode</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param tooltip</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param extensible</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param profile</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlInput.html#epyk.core.html.HtmlInput.Search" title="epyk.core.html.HtmlInput.Search"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlInput.Search</span></code></a></p></li>
+</ul>
 </div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search">https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – </p></li>
+<li><p><strong>placeholder</strong> – </p></li>
+<li><p><strong>color</strong> – </p></li>
+<li><p><strong>height</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+<li><p><strong>tooltip</strong> – </p></li>
+<li><p><strong>extensible</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.search_results">
 <code class="sig-name descname">search_results</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">results_per_page</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.search_results" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
-</pre></div>
-</div>
+<dd><p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlTextComp.html#epyk.core.html.HtmlTextComp.SearchResult" title="epyk.core.html.HtmlTextComp.SearchResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlTextComp.SearchResult</span></code></a></p></li>
+</ul>
 </div></blockquote>
-<dl class="py attribute">
-<dt>
-<code class="sig-name descname">----------</code></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 <dl class="py method">
 <dt id="epyk.interfaces.components.CompRich.Rich.stars">
 <code class="sig-name descname">stars</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'left'</span></em>, <em class="sig-param"><span class="n">best</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.components.CompRich.Rich.stars" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Entry point for the Stars component</p>
+<dd><p>Entry point for the Stars component</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">stars</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;This is a helper&quot;</span><span class="p">)</span>
+<span class="n">stars</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">stars</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">helper</span><span class="o">=</span><span class="s2">&quot;This is a helper&quot;</span><span class="p">)</span>
+<span class="n">stars</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>stars = rptObj.ui.rich.stars(3, label=”test”, helper=”This is a helper”)
-stars.click()</p>
-<p>Related Pages:</p>
-</div></blockquote>
-<p><a class="reference external" href="https://www.w3schools.com/howto/howto_css_star_rating.asp">https://www.w3schools.com/howto/howto_css_star_rating.asp</a></p>
+<p>Underlying HTML Objects:</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param val</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param label</dt>
-<dd class="field-even"><p>Optional. The text of label to be added to the component</p>
-</dd>
-<dt class="field-odd">param color</dt>
-<dd class="field-odd"><p>Optional. The font color in the component. Default inherit</p>
-</dd>
-<dt class="field-even">param align</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param best</dt>
-<dd class="field-odd"><p>Optional. The max number of stars. Default 5</p>
-</dd>
-<dt class="field-even">param htmlCode</dt>
-<dd class="field-even"><p>Optional. An identifier for this component (on both Python and Javascript side)</p>
-</dd>
-<dt class="field-odd">param profile</dt>
-<dd class="field-odd"><p>Optional. A flag to set the component performance storage</p>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlOthers.html#epyk.core.html.HtmlOthers.Stars" title="epyk.core.html.HtmlOthers.Stars"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlOthers.Stars</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/howto/howto_css_star_rating.asp">https://www.w3schools.com/howto/howto_css_star_rating.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>val</strong> – </p></li>
+<li><p><strong>label</strong> – Optional. The text of label to be added to the component</p></li>
+<li><p><strong>color</strong> – Optional. The font color in the component. Default inherit</p></li>
+<li><p><strong>align</strong> – </p></li>
+<li><p><strong>best</strong> – Optional. The max number of stars. Default 5</p></li>
+<li><p><strong>htmlCode</strong> – Optional. An identifier for this component (on both Python and Javascript side)</p></li>
+<li><p><strong>profile</strong> – Optional. A flag to set the component performance storage</p></li>
+</ul>
 </dd>
 </dl>
-</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
@@ -426,6 +437,12 @@ stars.click()</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">rich</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;Last update: &quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Underlying HTML Objects:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../../html_components/core_html/HtmlDates.html#epyk.core.html.HtmlDates.LastUpdated" title="epyk.core.html.HtmlDates.LastUpdated"><code class="xref py py-class docutils literal notranslate"><span class="pre">epyk.core.html.HtmlDates.LastUpdated</span></code></a></p></li>
+</ul>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
