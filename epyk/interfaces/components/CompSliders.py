@@ -18,6 +18,7 @@ class Sliders(object):
   This module is relying on some Jquery IU components
 
   The slider and progress bar components can be fully described on the corresponding website
+
     - https://jqueryui.com/progressbar/
     - https://jqueryui.com/slider/
 
@@ -36,7 +37,11 @@ class Sliders(object):
     Usage::
 
       rptObj.ui.slider(40)
-    rptObj.ui.slider([1, 2, 3, 4, 5, 6, 7])
+      rptObj.ui.slider([1, 2, 3, 4, 5, 6, 7])
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.Slider`
 
     Related Pages:
 
@@ -66,6 +71,10 @@ class Sliders(object):
              helper=None, options=None, profile=None):
     """
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.SliderDate`
+
     :param value:
     :param min:
     :param max:
@@ -86,6 +95,10 @@ class Sliders(object):
   def date_range(self, value1, value2, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
                  helper=None, options=None, profile=None):
     """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.SliderDate`
 
     :param value1:
     :param value2:
@@ -109,6 +122,10 @@ class Sliders(object):
   def range(self, values, min=0, max=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
              helper=None, options=None, profile=None):
     """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.Range`
 
     :param values:
     :param min:
@@ -139,6 +156,10 @@ class Sliders(object):
     Usage::
 
       rptObj.ui.sliders.progressbar(300)
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.ProgressBar`
 
     Related Pages:
 
