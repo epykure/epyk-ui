@@ -20,11 +20,14 @@ class Trees(object):
     Description:
     ------------
 
-    Related Pages:
-Usage::
+    Usage::
 
       data = [{"label": 'test', 'items': [{"label": 'child 1', 'color': 'red'}]}]
-    rptObj.ui.lists.tree(data)
+      rptObj.ui.lists.tree(data)
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTrees.Tree`
 
     Attributes:
     ----------
@@ -44,10 +47,11 @@ Usage::
     Description:
     ------------
 
-    Usage::
+    Underlying HTML Objects:
 
-      Related Pages:
-Attributes:
+      - :class:`epyk.core.html.HtmlTrees.TreeInput`
+
+    Attributes:
     ----------
     :param data:
     :param width:
@@ -65,10 +69,11 @@ Attributes:
     Description:
     ------------
 
-    Usage::
+    Underlying HTML Objects:
 
-      Related Pages:
-Attributes:
+      - :class:`epyk.core.html.HtmlEvent.Menu`
+
+    Attributes:
     ----------
     :param data:
     :param width:
@@ -89,14 +94,19 @@ Attributes:
     Description:
     ------------
 
-    Related Pages:
-http://getbootstrap.com/docs/4.0/components/dropdowns/
-    https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
-    https://codepen.io/svnt/pen/beEgre
+    Underlying HTML Objects:
 
-    https://codepen.io/raneio/pen/NbbZEM
-    https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
-    https://codepen.io/antoniputra/pen/BzyWmb
+      - :class:`epyk.core.html.HtmlTrees.DropDown`
+
+    Related Pages:
+
+      http://getbootstrap.com/docs/4.0/components/dropdowns/
+      https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
+      https://codepen.io/svnt/pen/beEgre
+
+      https://codepen.io/raneio/pen/NbbZEM
+      https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
+      https://codepen.io/antoniputra/pen/BzyWmb
 
     Attributes:
     ----------
