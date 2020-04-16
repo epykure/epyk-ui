@@ -27,8 +27,12 @@ class Numbers(object):
 
       rptObj.ui.texts.span("Test")
 
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Position`
+
     Related Pages:
-    --------------
+
     https://www.w3schools.com/tags/tag_span.asp
 
     Attributes:
@@ -63,8 +67,9 @@ class Numbers(object):
 
       rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
-    Related Pages:
-    --------------
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Numeric`
 
     Attributes:
     ----------
@@ -95,10 +100,11 @@ class Numbers(object):
 
     Usage::
 
-      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      rptObj.ui.texts.pound(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
-    Related Pages:
-    --------------
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Numeric`
 
     Attributes:
     ----------
@@ -125,10 +131,11 @@ class Numbers(object):
 
     Usage::
 
-      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      rptObj.ui.texts.euro(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
-    Related Pages:
-    --------------
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Numeric`
 
     Attributes:
     ----------
@@ -155,10 +162,11 @@ class Numbers(object):
 
     Usage::
 
-      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      rptObj.ui.texts.dollar(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
-    Related Pages:
-    --------------
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Numeric`
 
     Attributes:
     ----------
@@ -185,10 +193,11 @@ class Numbers(object):
 
     Usage::
 
-      rptObj.ui.texts.number(289839898, label="test", helper="Ok", icon="fas fa-align-center")
+      rptObj.ui.texts.money(289839898, label="test", helper="Ok", icon="fas fa-align-center")
 
-    Related Pages:
-    --------------
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Numeric`
 
     Attributes:
     ----------
@@ -209,6 +218,21 @@ class Numbers(object):
 
   def plotly(self, value, title=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
              htmlCode=None):
+    """
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.graph.GraphPlotly.Indicator`
+
+    :param value:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.context.register(ind)
     ind.add_trace({'value': value}, mode="number")
@@ -216,6 +240,20 @@ class Numbers(object):
 
   def plotly_with_delta(self, value, title=None, profile=None, options=None, width=(100, "%"),
                         height=(330, "px"), htmlCode=None):
+    """
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.graph.GraphPlotly.Indicator`
+
+    :param value:
+    :param title:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :return:
+    """
     ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.context.register(ind)
     ind.add_trace({'value': value}, mode="number+delta")
