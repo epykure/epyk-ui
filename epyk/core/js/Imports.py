@@ -973,6 +973,9 @@ CSS_IMPORTS = {
 }
 
 
+_SERVICES = {}
+
+
 def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None):
   """
   Description:
@@ -1017,19 +1020,25 @@ def extend_imports(extension):
     if 'req' in mod:
       css['req'] = mod['req']
       js['req'] = mod['req']
-    for module in mod['modules']:
-      if not 'cdnjs' in module:
-        module['cdnjs'] = CDNJS_REPO
-      module['version'] = mod['version']  # propagate the version tag
-      if module['script'].endswith(".js"):
-        js['modules'].append(module)
-      elif module['script'].endswith(".css"):
-        css['modules'].append(module)
-    if css['modules']:
-      CSS_IMPORTS[alias] = css
-
-    if js['modules']:
-      JS_IMPORTS[alias] = js
+    if 'modules' in mod:
+      for module in mod['modules']:
+        if not 'cdnjs' in module:
+          module['cdnjs'] = CDNJS_REPO
+        module['version'] = mod['version']  # propagate the version tag
+        if module['script'].endswith(".js"):
+          js['modules'].append(module)
+        elif module['script'].endswith(".css"):
+          css['modules'].append(module)
+      if css['modules']:
+        CSS_IMPORTS[alias] = css
+      if js['modules']:
+        JS_IMPORTS[alias] = js
+    if 'services' in mod:
+      for service in mod['services']:
+        service['pmts'] = ";".join(["%s=%s" % (k, v) for k, v in service['values'].items()])
+        if service['type'] not in _SERVICES:
+          _SERVICES[alias] = {}
+        _SERVICES[alias].setdefault(service['type'], []).append("%(url)s?%(pmts)s" % service)
 
 
 class ImportManager(object):
@@ -1212,6 +1221,12 @@ class ImportManager(object):
     css_aliases = self.cleanImports(css_aliases, CSS_IMPORTS)
     for css_alias in css_aliases:
       if excluded is not None and css_alias in excluded:
+        continue
+
+      if css_alias in _SERVICES:
+        # Add services url
+        for service in _SERVICES[css_alias].get('css', []):
+          css.append('<link rel="stylesheet" href="%s">' % service)
         continue
 
       for urlModule in list(self.cssImports[css_alias]['main']):
