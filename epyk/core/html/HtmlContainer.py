@@ -262,7 +262,7 @@ class Div(Html.Html):
     if self.options.inline:
       htmlObj.style.css.display = 'inline-block'
     if not isinstance(self.val, list):
-      self.val = [self.val]
+      self._vals = [self.val]
     self.val.append(htmlObj)
     return self
 

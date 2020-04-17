@@ -350,6 +350,7 @@ class ClassHtml(Properties.CssMixin):
     self.clear_style()
     self.classList['main'] = OrderedSet()
     self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_margin()
+    self.htmlObj.attr['class'] = self.classList['main']
     return self
 
   def clear(self):
@@ -362,6 +363,7 @@ class ClassHtml(Properties.CssMixin):
     """
     self.classList['main'] = OrderedSet()
     self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
+    self.htmlObj.attr['class'] = self.classList['main']
     return self
 
   def get_classes(self):
