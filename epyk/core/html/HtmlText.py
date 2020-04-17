@@ -20,6 +20,9 @@ class Label(Html.Html):
   def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, profile, options):
     if text is not None and not isinstance(text, list):
       text = [text]
+    for obj in text:
+      if hasattr(obj, 'inReport'):
+        obj.inReport = False
     super(Label, self).__init__(report, text or [], css_attrs={"width": width, "height": height, 'color': color, 'text-align': align},
                                 code=htmlCode, profile=profile)
     self.__options = OptText.OptionsText(self, options)

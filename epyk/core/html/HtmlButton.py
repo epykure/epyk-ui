@@ -21,6 +21,9 @@ class Button(Html.Html):
   def __init__(self, report, text, icon, width, height, htmlCode, tooltip, profile, options):
     if text is not None and not isinstance(text, list):
       text = [text]
+    for obj in text:
+      if hasattr(obj, 'inReport'):
+        obj.inReport = False
     super(Button, self).__init__(report, text or [], code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self.add_icon(icon)
     if icon is not None and not text:
