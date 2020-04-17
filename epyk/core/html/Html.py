@@ -688,10 +688,20 @@ Attributes:
     for k, v in attrs.items():
       if k == 'css':
         # Section for the Style attributes
+        if v is None:
+          self.style.clear_style()
+          continue
+
         if not 'css' in self.attr:
           self.attr['css'] = dict(v)
         else:
           self.attr['css'].update(v)
+      elif k == 'class':
+        self.style.clear()
+        if not isinstance(v, set):
+          v = set(v.split(" "))
+        for c in v:
+          self.attr['class'].add(c)
       else:
         # Section for all the other attributes#
         if v is not None:

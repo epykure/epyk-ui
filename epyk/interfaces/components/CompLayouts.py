@@ -270,7 +270,7 @@ class Layouts(object):
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
     html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs or [], label, color, width, icon, height,
-                                      editable, align, padding, htmlCode, tag, helper, options, profile)
+                                      editable, align, padding, htmlCode, tag, helper, options or {}, profile)
     self.context.register(html_div)
     return html_div
 

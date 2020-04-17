@@ -19,17 +19,22 @@ class Button(Html.Html):
   name, category, callFnc = 'Button', 'buttons', 'button'
 
   def __init__(self, report, text, icon, width, height, htmlCode, tooltip, profile, options):
-    super(Button, self).__init__(report, text, code=htmlCode, profile=profile,
-                                 css_attrs={"width": width, "height": height})
-    if options is None:
-      options = {}
+    if text is not None and not isinstance(text, list):
+      text = [text]
+    super(Button, self).__init__(report, text or [], code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self.add_icon(icon)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
-    self.__options = OptButton.OptionsButton(self, options)
+    self.__options = OptButton.OptionsButton(self, options or {})
     if tooltip is not None:
       self.tooltip(tooltip)
     self.set_attrs(name="data-count", value=0)
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.val.append(htmlObj)
+    return self
 
   @property
   def options(self):
@@ -149,7 +154,8 @@ class Button(Html.Html):
     return self
 
   def __str__(self):
-    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
+    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)
 
   @staticmethod
   def matchMarkDown(val):

@@ -91,7 +91,7 @@ class Texts(object):
     self.context.register(html_label)
     return html_label
 
-  def span(self, text=None, color=None, align='center', width=None, height=None, htmlCode=None,
+  def span(self, text="", color=None, align='center', width=None, height=None, htmlCode=None,
            tooltip=None, options=None, profile=None):
     """
     Description:

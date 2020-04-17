@@ -334,7 +334,7 @@ class ClassHtml(Properties.CssMixin):
     :return: self to allow the chaining
     """
     self.htmlObj.attr['css'] = {}
-    self.css.attrs = {}
+    self.css.attrs = self.htmlObj.attr['css']
     return self
 
   def clear_all(self):
