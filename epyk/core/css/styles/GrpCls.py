@@ -366,6 +366,21 @@ class ClassHtml(Properties.CssMixin):
     self.htmlObj.attr['class'] = self.classList['main']
     return self
 
+  def builder(self, name, js_frg):
+    """
+    Description:
+    ------------
+    Attach a Javascript Builder to a CSS style.
+    It will be triggered only once for all the HTML components using this style
+
+    Attributes:
+    ----------
+    :param name: String. The Javascript variable name
+    :param js_frg: String. The Javascript framework corresponding to the Js builder
+    """
+    self.htmlObj._report._props.setdefault('js', {}).setdefault("builders_css", OrderedSet()).add("const %s = %s" % (name, js_frg))
+    return self
+
   def get_classes(self):
     """
     Description:

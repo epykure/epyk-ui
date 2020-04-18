@@ -710,6 +710,9 @@ Attributes:
           self.attr['css'].update(v)
       elif k == 'class':
         self.style.clear()
+        if v is None:
+          continue
+
         if not isinstance(v, set):
           v = set(v.split(" "))
         for c in v:
