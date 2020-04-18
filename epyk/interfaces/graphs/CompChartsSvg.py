@@ -69,6 +69,34 @@ class SVG(object):
     self.parent.context.register(html_svg)
     return html_svg
 
+  def circle(self, x, y, r, width=(500, "px"), height=(300, "px"), options=None):
+    """
+    Description:
+    ------------
+    Entry point to the basic line definition in a SVG HTML Tag
+
+    Usage::
+
+      rptObj.ui.charts.svg.line(10, 30, 40, 69)
+
+    Related Pages:
+
+      https://www.w3schools.com/graphics/svg_line.asp
+
+    Attributes:
+    ----------
+    :param x: The x attribute defines the start of the line on the x-axis
+    :param y: The y attribute defines the start of the line on the y-axis
+    :param r: The r attribute defines the radius
+    :param width: Optional. Integer for the component width
+    :param height: Optional. Integer for the component height
+    :param options:
+    """
+    html_svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
+    html_svg.circle(x, y, r)
+    self.parent.context.register(html_svg)
+    return html_svg
+
   def arrow_right(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), options=None):
     """
 
