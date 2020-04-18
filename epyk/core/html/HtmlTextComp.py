@@ -564,6 +564,7 @@ class Composite(Html.Html):
     self.add_helper(helper)
     self._set_comp(None, schema, self.__builders)
     self.attr = self.val.attr
+    self._js = self.val._js
 
   @property
   def dom(self):
@@ -643,6 +644,8 @@ class Composite(Html.Html):
       comp += new_comp
     else:
       new_comp.inReport = False
+      # delegate the htmlID to the main component
+      new_comp.htmlCode = self.htmlId
       self._vals = new_comp
 
   def __str__(self):
