@@ -597,6 +597,8 @@ class Composite(Html.Html):
       'label': self._report.ui.label,
       'header': self._report.ui.header,
       'section': self._report.ui.section,
+      'icon': self._report.ui.icon,
+      'span': self._report.ui.texts.span,
       'input': self._report.ui.inputs.d_text}
 
   def _set_comp(self, comp, schema_child, builders):
