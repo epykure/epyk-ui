@@ -1518,3 +1518,72 @@ class Points(Html.Html):
   def __str__(self):
     str_vals = "".join([i.html() for i in self.items])
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)
+
+
+class Header(Html.Html):
+
+  def __init__(self, report, htmlObj, width, height, htmlCode, helper, options, profile):
+    super(Header, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptPanel.OptionsDiv(self, options)
+    self.add_helper(helper)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptPanel.OptionsDiv
+    """
+    return self.__options
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    if self.options.inline:
+      htmlObj.style.css.display = 'inline-block'
+    self.val.append(htmlObj)
+    return self
+
+  def __getitem__(self, i):
+    return self.val[i]
+
+  def __str__(self):
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
+    return "<header %s>%s</header>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+
+
+class Section(Html.Html):
+
+  def __init__(self, report, htmlObj, width, height, htmlCode, helper, options, profile):
+    super(Section, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptPanel.OptionsDiv(self, options)
+    self.add_helper(helper)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptPanel.OptionsDiv
+    """
+    return self.__options
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    if self.options.inline:
+      htmlObj.style.css.display = 'inline-block'
+    self.val.append(htmlObj)
+    return self
+
+  def __getitem__(self, i):
+    return self.val[i]
+
+  def __str__(self):
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
+    return "<section %s>%s</section>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+
