@@ -288,6 +288,8 @@ class Rich(object):
         ...
     ]}
 
+    Attributes:
+    ----------
     :param schema:
     :param width:
     :param height:

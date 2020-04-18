@@ -588,7 +588,7 @@ class Composite(Html.Html):
     """
     Description:
     ------------
-    
+
     """
     return {
       'div': self._report.ui.div,
@@ -604,6 +604,8 @@ class Composite(Html.Html):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param comp:
     :param schema_child:
     :param builders:
