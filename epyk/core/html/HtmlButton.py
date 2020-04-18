@@ -39,6 +39,9 @@ class Button(Html.Html):
     self.val.append(htmlObj)
     return self
 
+  def __getitem__(self, i):
+    return self.val[i]
+
   @property
   def options(self):
     """

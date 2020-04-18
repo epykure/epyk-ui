@@ -67,6 +67,7 @@ class Components(object):
     self.textarea = self.inputs.textarea
     self.header = self.layouts.header
     self.section = self.layouts.section
+    self.composite = self.rich.composite
 
   def css(self, cssAttrs):
     """
