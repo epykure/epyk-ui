@@ -838,6 +838,23 @@ class Aria(object):
     self.htmlObj.attr["aria-valuemin"] = num
 
   @property
+  def valuemax(self):
+    """
+    Description:
+    ------------
+    Defines the maximum allowed value for a range widget.
+
+    Related Pages:
+
+      https://www.w3.org/TR/wai-aria-1.1/#aria-valuemax
+    """
+    return self.htmlObj.attr.get("aria-valuemax")
+
+  @valuemax.setter
+  def valuemax(self, num):
+    self.htmlObj.attr["aria-valuemax"] = num
+
+  @property
   def valuenow(self):
     """
     Description:
