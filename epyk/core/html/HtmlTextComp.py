@@ -563,6 +563,7 @@ class Composite(Html.Html):
     self.__builders = set()
     self.add_helper(helper)
     self._set_comp(None, schema, self.__builders)
+    self.attr = self.val.attr
 
   @property
   def dom(self):
@@ -579,6 +580,18 @@ class Composite(Html.Html):
     if self._dom is None:
       self._dom = JsHtml.JsHtml(self.val, report=self._report)
     return self._dom
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+
+    :rtype: GrpCls.ClassHtmlEmpty
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpCls.ClassHtmlEmpty(self)
+    return self._styleObj
 
   def __getitem__(self, i):
     return self.val[i]
@@ -631,18 +644,6 @@ class Composite(Html.Html):
     else:
       new_comp.inReport = False
       self._vals = new_comp
-
-  @property
-  def style(self):
-    """
-    Description:
-    ------------
-
-    :rtype: GrpCls.ClassHtmlEmpty
-    """
-    if self._styleObj is None:
-      self._styleObj = GrpCls.ClassHtmlEmpty(self)
-    return self._styleObj
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).extend(list(self.__builders))
