@@ -35,7 +35,6 @@ f.writeJs([
   jsObj.console.log(jsObj.objects.array.new([2, 5, 12, -3], "MyArray").shift()),
   jsObj.console.log(jsObj.objects.array.get("MyArray").delete(2)),
   jsObj.console.log(jsObj.objects.array.get("MyArray").unshift(22)),
-  #jsObj.console.log(jsObj.objects.array.get("MyArray").fill("Olivier", 0, 5)),
   jsObj.console.log(jsObj.objects.array.get("MyArray")),
   jsObj.objects.array.get("MyArray").copyWithin().setVar("youpi"),
   #jsObj.console.log(jsObj.objects.array.get("youpi").append(jsObj, 34).append(jsObj, -47)),
