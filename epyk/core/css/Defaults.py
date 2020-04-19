@@ -104,6 +104,9 @@ def em_to_px(value, with_unit=True):
 
   return px_value
 
+#
+DEFAULT_STYLE = "no_border"
+
 
 # Default CSS Styles
 BODY_CONTAINER = None # The body CSS dictionary

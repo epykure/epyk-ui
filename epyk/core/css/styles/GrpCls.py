@@ -337,6 +337,22 @@ class ClassHtml(Properties.CssMixin):
     self.css.attrs = self.htmlObj.attr['css']
     return self
 
+  def clear(self):
+    """
+    Description:
+    ------------
+    Remove the predefined class and set the default one for the div components
+
+    :return: self to allow the chaining
+    """
+    self.classList['main'] = OrderedSet()
+    if Defaults_css.DEFAULT_STYLE == 'no_border':
+      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
+    else:
+      self._css_class = Defaults_css.DEFAULT_STYLE
+    self.htmlObj.attr['class'] = self.classList['main']
+    return self
+
   def clear_all(self):
     """
     Description:
@@ -348,22 +364,7 @@ class ClassHtml(Properties.CssMixin):
     :return: self to allow the chaining
     """
     self.clear_style()
-    self.classList['main'] = OrderedSet()
-    self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_margin()
-    self.htmlObj.attr['class'] = self.classList['main']
-    return self
-
-  def clear(self):
-    """
-    Description:
-    ------------
-    Remove the predefined class and set the default one for the div components
-
-    :return: self to allow the chaining
-    """
-    self.classList['main'] = OrderedSet()
-    self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
-    self.htmlObj.attr['class'] = self.classList['main']
+    self.clear()
     return self
 
   def builder(self, name, js_frg):

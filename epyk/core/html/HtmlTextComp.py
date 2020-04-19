@@ -613,6 +613,8 @@ class Composite(Html.Html):
       'section': self._report.ui.section,
       'icon': self._report.ui.icon,
       'span': self._report.ui.texts.span,
+      'checkbox': self._report.ui.inputs.checkbox,
+      'radio': self._report.ui.inputs.d_radio,
       'input': self._report.ui.inputs.d_text}
 
   def _set_comp(self, comp, schema_child, builders):
@@ -626,7 +628,13 @@ class Composite(Html.Html):
     :param schema_child:
     :param builders:
     """
-    new_comp = self._get_comp_map[schema_child['type']](**schema_child.get('args', {}))
+    if comp is None:
+      # delegate the htmlID to the main component
+      new_comp = self._get_comp_map[schema_child['type']](htmlCode=self.htmlId, **schema_child.get('args', {}))
+      new_comp.inReport = False
+      self._vals = new_comp
+    else:
+      new_comp = self._get_comp_map[schema_child['type']](**schema_child.get('args', {}))
     if 'builder' in schema_child:
       builders.add(schema_child['builder'])
     if 'class' in schema_child:
@@ -642,11 +650,6 @@ class Composite(Html.Html):
 
     if comp is not None:
       comp += new_comp
-    else:
-      new_comp.inReport = False
-      # delegate the htmlID to the main component
-      new_comp.htmlCode = self.htmlId
-      self._vals = new_comp
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).extend(list(self.__builders))

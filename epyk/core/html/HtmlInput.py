@@ -157,6 +157,16 @@ class Input(Html.Html):
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
+class InputRadio(Input):
+  name, category, callFnc = 'Input', 'Inputs', 'input'
+
+  def __init__(self, report, flag, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+    super(InputRadio, self).__init__(report, "", placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    self.set_attrs({"type": 'radio'})
+    if flag:
+      self.set_attrs({"checked": json.dumps(flag)})
+
+
 class AutoComplete(Input):
   name, callFnc = 'Input Time', 'input'
   __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
