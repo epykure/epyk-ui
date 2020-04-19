@@ -328,7 +328,8 @@ class Td(Html.Html):
   def __init__(self, report, htmlObjs, header, position, width, height, align, options, profile):
     self.position, self.rows_css, self.row_css_dflt, self.header = position, {}, {}, header
     super(Td, self).__init__(report, [], css_attrs={"width": width, "height": height, 'white-space': 'nowrap'}, profile=profile)
-    self.attr["align"] = align
+    self.__options = options
+    self.attr["align"] = options.cell_align or align
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
@@ -391,6 +392,7 @@ class Tr(Html.Html):
   def __init__(self, report, htmlObjs, header, position, width, height, align, options, profile):
     self.position, self.header = position, header
     super(Tr, self).__init__(report, [], css_attrs={"width": width, "height": height, 'text-align': align}, profile=profile)
+    self.__options = options
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
@@ -401,7 +403,7 @@ class Tr(Html.Html):
     if not isinstance(htmlObj, Td):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
-      htmlObj = Td(self._report, htmlObj, self.header, None, (None, "%"), (None, "%"), 'center', None, False)
+      htmlObj = Td(self._report, htmlObj, self.header, None, (None, "%"), (None, "%"), 'center', self.__options, False)
     self.val.append(htmlObj)
     return self
 
@@ -467,12 +469,23 @@ class Caption(Html.Html):
 
 class TSection(Html.Html):
 
-  def __init__(self, report, type, rows=None):
+  def __init__(self, report, type, rows=None, options=None, profile=None):
     super(TSection, self).__init__(report, [])
     self.__section = type
+    self.__options = OptPanel.OptionPanelTable(report, options)
     if rows is not None:
       for row in rows:
         self.__add__(row)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptPanel.OptionPanelTable
+    """
+    return self.__options
 
   def __getitem__(self, i):
     """
@@ -490,7 +503,7 @@ class TSection(Html.Html):
   def __add__(self, row_data):
     """ Add items to a container """
     if not isinstance(row_data, Tr):
-      row_data = Tr(self._report, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"), 'center', None, False)
+      row_data = Tr(self._report, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"), 'center', self.options, False)
 
     self.val.append(row_data)
     return self
@@ -509,7 +522,7 @@ class Table(Html.Html):
             'white-space': 'nowrap', 'border-collapse': 'collapse', 'box-sizing': 'border-box'}, profile=profile)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.__options = OptPanel.OptionPanelTable(report, options)
-    self.header, self.body, self.footer = TSection(self._report, 'thead'), TSection(self._report, 'tbody'), TSection(self._report, 'tfoot')
+    self.header, self.body, self.footer = TSection(self._report, 'thead', options=options), TSection(self._report, 'tbody', options=options), TSection(self._report, 'tfoot', options=options)
     self.caption = None
     if rows is not None:
       for row in rows:
@@ -531,9 +544,9 @@ class Table(Html.Html):
       row = row_data
     else:
       if not self.header.val and not self.body.val and self.options.header:
-        row = Tr(self._report, row_data, True, None, (100, "%"), (100, "%"), 'center', None, False)
+        row = Tr(self._report, row_data, True, None, (100, "%"), (100, "%"), 'center', self.options, False)
       else:
-        row = Tr(self._report, row_data, False, None, (100, "%"), (100, "%"), 'left', None, False)
+        row = Tr(self._report, row_data, False, None, (100, "%"), (100, "%"), 'left', self.options, False)
     if row.header:
       self.header += row
     else:
@@ -571,9 +584,9 @@ class Table(Html.Html):
     :param align:
     :param dim: Integer. The number of columns in the table
     """
-    cell = Td(self._report, [text], False, None, (None, "%"), (None, "%"), align, None, False)
+    cell = Td(self._report, [text], False, None, (None, "%"), (None, "%"), align, self.options, False)
     cell.colspan(dim or len(self.body.val[0].val))
-    self += Tr(self._report, [cell], False, None, (100, "%"), (100, "%"), align, None, False)
+    self += Tr(self._report, [cell], False, None, (100, "%"), (100, "%"), align, self.options, False)
     return cell
 
   def add_caption(self, text, color=None, align=None, width=(100, "%"), height=(100, "%"), htmlCode=None, tooltip=None,
@@ -627,6 +640,24 @@ class Table(Html.Html):
     :return:
     """
     return self.footer.val[i]
+
+  def col(self, i):
+    """
+
+    :param i:
+    """
+    cells = []
+    if self.header:
+      for h in self.header:
+        cells.append(h[i])
+    if self.body:
+      for b in self.body:
+        cells.append(b[i])
+    if self.footer:
+      for f in self.footer:
+        cells.append(f[i])
+    for c in cells:
+      yield c
 
   def __getitem__(self, i):
     """
