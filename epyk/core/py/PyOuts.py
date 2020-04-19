@@ -36,7 +36,7 @@ class OutBrowsers(object):
     import re
     import webbrowser
 
-    results = self._context._to_html_obj(content_only=True)
+    results = self._context._to_html_obj()
     js_external = re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
     css_external = re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', results['cssImports'])
     jsObj = Js.JsBase()
