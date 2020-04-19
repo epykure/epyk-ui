@@ -18,7 +18,12 @@ class Label(Html.Html):
   name, category, callFnc = 'Label', 'Text', 'label'
 
   def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, profile, options):
-    super(Label, self).__init__(report, text, css_attrs={"width": width, "height": height, 'color': color, 'text-align': align},
+    if text is not None and not isinstance(text, list):
+      text = [text]
+    for obj in text:
+      if hasattr(obj, 'inReport'):
+        obj.inReport = False
+    super(Label, self).__init__(report, text or [], css_attrs={"width": width, "height": height, 'color': color, 'text-align': align},
                                 code=htmlCode, profile=profile)
     self.__options = OptText.OptionsText(self, options)
     self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block', 'line-height': '23px',
@@ -48,6 +53,12 @@ class Label(Html.Html):
     :rtype: OptText.OptionsText
     """
     return self.__options
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.val.append(htmlObj)
+    return self
 
   def click(self, jsFncs, profile=False):
     """
@@ -100,8 +111,16 @@ class Label(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
     
   def __str__(self):
-    val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
-    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
+    res = []
+    for v in self.val:
+      if hasattr(v, 'html'):
+        res.append(v.html())
+      else:
+        if self.options.showdown:
+          res.append(self._report.py.markdown.all(self.val))
+        else:
+          res.append(str(v))
+    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(res), self.helper)
 
 
 class Span(Html.Html):

@@ -272,3 +272,32 @@ class Rich(object):
     html_help = html.HtmlTextComp.SearchResult(self.context.rptObj, records, pageNumber=results_per_page, width=width, height=height, profile=profile, options=options or {})
     self.context.register(html_help)
     return html_help
+
+  def composite(self, schema, width=(None, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Composite bespoke object.
+
+    This obhect will be built based on its schema. No specific CSS Style and class will be added to this object.
+    The full definition will be done in the nested dictionary schema.
+
+    Example
+    schema = {'type': 'div', 'css': {}, 'class': , 'attrs': {} 'arias': {},  'children': [
+        {'type': : {...}}
+        ...
+    ]}
+
+    Attributes:
+    ----------
+    :param schema:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    html_help = html.HtmlTextComp.Composite(self.context.rptObj, schema, width=width, height=height, htmlCode=htmlCode, profile=profile, options=options or {}, helper=helper)
+    self.context.register(html_help)
+    return html_help

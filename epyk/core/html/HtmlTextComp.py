@@ -1,3 +1,4 @@
+
 import re
 
 from epyk.core.html import Html
@@ -7,6 +8,7 @@ from epyk.core.html.options import OptText
 from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
+from epyk.core.css.styles import GrpCls
 from epyk.core.css import Defaults_css
 
 # The list of CSS classes
@@ -433,6 +435,8 @@ class ContentsTable(Html.Html):
 
   def __getitem__(self, i):
     """
+    Description:
+    ------------
     Return the internal column in the row for the given index
 
     :param i: the column index
@@ -443,6 +447,8 @@ class ContentsTable(Html.Html):
   @property
   def style(self):
     """
+    Description:
+    ------------
     Property to the CSS Style of the component
 
     :rtype: GrpClsText.ContentTable
@@ -453,6 +459,8 @@ class ContentsTable(Html.Html):
 
   def add(self, text, level, anchor):
     """
+    Description:
+    ------------
 
     :param text:
     :param level:
@@ -545,3 +553,104 @@ class SearchResult(Html.Html):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     #self._report.style.cssCls('CssDivPagination')
     return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(pyClassNames=self.style.get_classes())
+
+
+class Composite(Html.Html):
+  name, category, callFnc = 'Composite', 'Rich', 'composite'
+
+  def __init__(self, report, schema, width, height, htmlCode, options, profile, helper):
+    super(Composite, self).__init__(report, None, css_attrs={"width": width, "height": height})
+    self.__builders = set()
+    self.add_helper(helper)
+    self._set_comp(None, schema, self.__builders)
+    self.attr = self.val.attr
+    self._js = self.val._js
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtml(self.val, report=self._report)
+    return self._dom
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+
+    :rtype: GrpCls.ClassHtmlEmpty
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpCls.ClassHtmlEmpty(self)
+    return self._styleObj
+
+  def __getitem__(self, i):
+    return self.val[i]
+
+  @property
+  def _get_comp_map(self):
+    """
+    Description:
+    ------------
+
+    """
+    return {
+      'div': self._report.ui.div,
+      'textarea': self._report.ui.textarea,
+      'button': self._report.ui.section,
+      'label': self._report.ui.label,
+      'header': self._report.ui.header,
+      'section': self._report.ui.section,
+      'icon': self._report.ui.icon,
+      'span': self._report.ui.texts.span,
+      'checkbox': self._report.ui.inputs.checkbox,
+      'radio': self._report.ui.inputs.d_radio,
+      'input': self._report.ui.inputs.d_text}
+
+  def _set_comp(self, comp, schema_child, builders):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param comp:
+    :param schema_child:
+    :param builders:
+    """
+    if comp is None:
+      # delegate the htmlID to the main component
+      new_comp = self._get_comp_map[schema_child['type']](htmlCode=self.htmlId, **schema_child.get('args', {}))
+      new_comp.inReport = False
+      self._vals = new_comp
+    else:
+      new_comp = self._get_comp_map[schema_child['type']](**schema_child.get('args', {}))
+    if 'builder' in schema_child:
+      builders.add(schema_child['builder'])
+    if 'class' in schema_child:
+      new_comp.set_attrs({'class': schema_child['class']})
+    if 'arias' in schema_child:
+      new_comp.aria.set(schema_child['arias'])
+    if 'css' in schema_child:
+      new_comp.css(schema_child['css'], reset=True)
+    if 'attrs' in schema_child:
+      new_comp.set_attrs(schema_child['attrs'])
+    for child in schema_child.get('children', []):
+      self._set_comp(new_comp, child, builders)
+
+    if comp is not None:
+      comp += new_comp
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).extend(list(self.__builders))
+    return self.val.html()

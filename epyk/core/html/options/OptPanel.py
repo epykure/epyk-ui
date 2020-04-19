@@ -180,6 +180,18 @@ class OptionPanelTable(Options):
   def header(self, bool):
     self.set(bool)
 
+  @property
+  def cell_align(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get()
+
+  @cell_align.setter
+  def cell_align(self, value):
+    self.set(value)
+
 
 class OptionsDiv(Options):
 

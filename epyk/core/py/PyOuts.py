@@ -101,6 +101,9 @@ class PyOuts(object):
     for b in self._report._props.get('js', {}).get("builders", []):
       onloadParts.append(b)
 
+    for b in self._report._props.get('js', {}).get("builders_css", []):
+      onloadParts.append(b)
+
     # Add the component on ready functions
     for objId in self._report.content:
       obj_id = self._report.htmlItems[objId].dom.varId

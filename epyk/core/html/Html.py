@@ -10,7 +10,7 @@ from epyk.core.js import Js
 from epyk.core.js.html import JsHtml
 
 from epyk.core.css.styles import GrpCls
-
+from epyk.core.html import Aria
 
 try:  # For python 3
   import urllib.request as urllib2
@@ -537,6 +537,18 @@ Attributes:
     return self
 
   @property
+  def aria(self):
+    """
+    Accessible Rich Internet Applications is a [HTML] specification module.
+    Web developers MAY use the ARIA role and aria-* attributes on HTML elements
+
+    Related Pages:
+
+			https://www.w3.org/TR/html-aria/#allowed-aria-roles-states-and-properties
+    """
+    return Aria.Aria(self)
+
+  @property
   def val(self):
     """
     Description:
@@ -688,10 +700,23 @@ Attributes:
     for k, v in attrs.items():
       if k == 'css':
         # Section for the Style attributes
+        if v is None:
+          self.style.clear_style()
+          continue
+
         if not 'css' in self.attr:
           self.attr['css'] = dict(v)
         else:
           self.attr['css'].update(v)
+      elif k == 'class':
+        self.style.clear()
+        if v is None:
+          continue
+
+        if not isinstance(v, set):
+          v = set(v.split(" "))
+        for c in v:
+          self.attr['class'].add(c)
       else:
         # Section for all the other attributes#
         if v is not None:

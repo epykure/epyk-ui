@@ -388,6 +388,7 @@ class Navigation(object):
     self.context.register(footer)
     return footer
 
+
 class Banners(object):
 
   def __init__(self, context):

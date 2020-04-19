@@ -270,7 +270,7 @@ class Layouts(object):
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
     html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs or [], label, color, width, icon, height,
-                                      editable, align, padding, htmlCode, tag, helper, options, profile)
+                                      editable, align, padding, htmlCode, tag, helper, options or {}, profile)
     self.context.register(html_div)
     return html_div
 
@@ -428,3 +428,72 @@ class Layouts(object):
     form = html.HtmlContainer.Form(self.context.rptObj, htmlObj, helper)
     self.context.register(form)
     return form
+
+  def header(self, htmlObjs=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+      """
+      Description:
+      ------------
+      The HTML <header> element represents introductory content, typically a group of introductory or navigational aids.
+      It may contain some heading elements but also a logo, a search form, an author name, and other elements
+
+      Usage::
+
+        div = rptObj.ui.header([html])
+        div += html_2
+
+      Underlying HTML Objects:
+
+        - :class:`epyk.core.html.HtmlContainer.Header`
+
+      Related Pages:
+
+  			https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header
+
+      Attributes:
+      ----------
+      :param htmlObjs:
+      :param width:
+      :param height:
+      :param htmlCode:
+      :param tag:
+      :param profile:
+      """
+      if htmlObjs is not None and not isinstance(htmlObjs, list):
+        htmlObjs = [htmlObjs]
+      html_obj = html.HtmlContainer.Header(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
+      self.context.register(html_obj)
+      return html_obj
+
+  def section(self, htmlObjs=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+      """
+      Description:
+      ------------
+      The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections of the document.
+
+      Usage::
+
+        div = rptObj.ui.header([html])
+        div += html_2
+
+      Underlying HTML Objects:
+
+        - :class:`epyk.core.html.HtmlContainer.Header`
+
+      Related Pages:
+
+  			https://www.w3schools.com/tags/tag_section.asp
+
+      Attributes:
+      ----------
+      :param htmlObjs:
+      :param width:
+      :param height:
+      :param htmlCode:
+      :param tag:
+      :param profile:
+      """
+      if htmlObjs is not None and not isinstance(htmlObjs, list):
+        htmlObjs = [htmlObjs]
+      html_obj = html.HtmlContainer.Section(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
+      self.context.register(html_obj)
+      return html_obj

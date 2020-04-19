@@ -62,6 +62,13 @@ class Components(object):
     self.modal = self.modals.forms #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.forms`
     self.disclaimer = self.modals.disclaimer #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.disclaimer`
 
+    # Shortcut to some important HTML tags
+    self.label = self.texts.label
+    self.textarea = self.inputs.textarea
+    self.header = self.layouts.header
+    self.section = self.layouts.section
+    self.composite = self.rich.composite
+
   def css(self, cssAttrs):
     """
     Description:

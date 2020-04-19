@@ -500,12 +500,13 @@ class SkillBar(Html.Html):
     super(SkillBar, self).__init__(report, "", css_attrs={"width": width, "height": height}, htmlCode=htmlCode,
                                    globalFilter=filters, profile=profile)
     self.add_title(title, options={'content_table': False})
-    self.innerPyHTML = report.ui.layouts.table(data, y_column, x_axis)
+    self.innerPyHTML = report.ui.layouts.table(options={"header": False}) # data, y_column, x_axis)
     self.innerPyHTML.inReport = False
-    for c in self.innerPyHTML.col(i=1):
-      if c.val not in y_column:
-        c.set_html_content(report.ui.div(EntHtml4.NO_BREAK_SPACE).css({"width": '%spx' % c.val, 'margin-left': "2px",
-                                                                       "background": report.theme.success[0]}))
+    for rec in data:
+      value = report.ui.div(EntHtml4.NO_BREAK_SPACE).css({"width": '%spx' % rec[y_column], 'margin-left': "2px",  "background": report.theme.success[0]})
+      value.inReport = False
+      self.innerPyHTML += [rec[x_axis], value]
+      self.innerPyHTML[-1][1].attr["align"] = 'left'
     self.innerPyHTML.style.clear()
     self.css({"margin": '5px 0'})
 

@@ -334,7 +334,23 @@ class ClassHtml(Properties.CssMixin):
     :return: self to allow the chaining
     """
     self.htmlObj.attr['css'] = {}
-    self.css.attrs = {}
+    self.css.attrs = self.htmlObj.attr['css']
+    return self
+
+  def clear(self):
+    """
+    Description:
+    ------------
+    Remove the predefined class and set the default one for the div components
+
+    :return: self to allow the chaining
+    """
+    self.classList['main'] = OrderedSet()
+    if Defaults_css.DEFAULT_STYLE == 'no_border':
+      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
+    else:
+      self._css_class = Defaults_css.DEFAULT_STYLE
+    self.htmlObj.attr['class'] = self.classList['main']
     return self
 
   def clear_all(self):
@@ -348,20 +364,22 @@ class ClassHtml(Properties.CssMixin):
     :return: self to allow the chaining
     """
     self.clear_style()
-    self.classList['main'] = OrderedSet()
-    self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_margin()
+    self.clear()
     return self
 
-  def clear(self):
+  def builder(self, name, js_frg):
     """
     Description:
     ------------
-    Remove the predefined class and set the default one for the div components
+    Attach a Javascript Builder to a CSS style.
+    It will be triggered only once for all the HTML components using this style
 
-    :return: self to allow the chaining
+    Attributes:
+    ----------
+    :param name: String. The Javascript variable name
+    :param js_frg: String. The Javascript framework corresponding to the Js builder
     """
-    self.classList['main'] = OrderedSet()
-    self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
+    self.htmlObj._report._props.setdefault('js', {}).setdefault("builders_css", OrderedSet()).add("const %s = %s" % (name, js_frg))
     return self
 
   def get_classes(self):

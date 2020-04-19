@@ -79,7 +79,7 @@ class DomSelect(JsHtml.JsHtmlRich):
     Get the selected content from the Select component
 
     """
-    return JsHtml.ContentFormatters("%s.val()" % self.jquery.varId)
+    return JsHtml.ContentFormatters(self._report, "%s.val()" % self.jquery.varId)
 
   @property
   def text(self):
