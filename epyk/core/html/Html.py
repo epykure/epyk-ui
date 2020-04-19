@@ -287,7 +287,7 @@ class Html(object):
     :param context_menu: A Python context menu object
     """
     context_menu.source = self
-    self._report._contextMenu[self.jqDiv] = context_menu
+    self._report._contextMenu[self.dom.jquery.varName] = context_menu
     return self
 
   def add_icon(self, text, css=None, position="before"):

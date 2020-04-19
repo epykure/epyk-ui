@@ -104,7 +104,9 @@ class Stars(Html.Html):
     self.set_attrs(name='data-level', value=val)
     self.add_label(label, {"margin": "0 0 0 5px", 'height': 'none', "text-align": "left", "display": "inline-block",
                            'float': 'None'}, position="after")
-    self.add_helper(helper).helper.css({"margin": '1px 4px'})
+    self.add_helper(helper)
+    if self.helper:
+      self.helper.css({"margin": '1px 4px'})
     self.css({'text-align': align, "display": 'block'})
 
   @property

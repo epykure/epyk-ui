@@ -662,17 +662,17 @@ class ContextMenu(Html.Html):
               else {CONTEXT_MENU_VAL = row.getData()}
             } else{CONTEXT_MENU_VAL = row.getData()};
             event.stopPropagation(); %(jqId)s.css({left: event.pageX + 1, top: event.pageY + 1, display: 'block'}); event.preventDefault()
-          } ''' % {'jqDiv': self.source.jqDiv, 'jqId': self.jqId}
+          } ''' % {'jqDiv': self.source.jqDiv, 'jqId': self.dom.jquery.varName}
       else:
         self._report.jsOnLoadFnc.add('''
           $('html').click(function(){$('nav[name=context_menus]').hide()});
           %(jqDiv)s.on('contextmenu', function(event, i) {CONTEXT_MENU_VAL = %(val)s;
             event.stopPropagation(); %(jqId)s.css({left: event.pageX + 1, top: event.pageY + 1, display: 'block'}); event.preventDefault()
-          })''' % {'jqDiv': self.source.jqDiv, 'val': self.source.contextVal, 'jqId': self.jqId})
+          })''' % {'jqDiv': self.source.jqDiv, 'val': self.source.contextVal, 'jqId': self.dom.jquery.varName})
     return '''
       <nav %(attr)s name='context_menus'>
         <ul style='list-style:none;padding:0px;margin:0'></ul>
-      </nav>''' % {'attr': self.get_attrs(pyClassNames=self.defined)}
+      </nav>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
 class OptionsBar(Html.Html):

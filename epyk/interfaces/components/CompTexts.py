@@ -202,7 +202,7 @@ class Texts(object):
     self.context.register(html_formula)
     return html_formula
 
-  def code(self, text="", language='python', color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None,
+  def code(self, text="", language='python', color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None,
            options=None, helper=None, profile=None):
     """
     Description:
