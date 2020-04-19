@@ -14,7 +14,7 @@ This Framework also encourages the implementation of Micro services and cloud ba
 Compatibility
 ================================
 
-epik is compatible with the most common Web Python Frameworks (Flask and Django).
+epyk is compatible with the most common Web Python Frameworks (Flask and Django).
 By default, the server package embeds a Flask app as it is easier to install and ready to use.
 
 The Framework can be included within a Jupyter or JupyterLab project. But this will lead to some limitations - for example Ajax and Socket will not be available.
