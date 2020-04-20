@@ -16,12 +16,15 @@ def install_required():
 setuptools.setup(
     name="epyk",
     author="epykure",
-    version="1.0.2",
+    version="1.0.3",
     author_email="smith.pyotr@gmail.com",
     description="",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/epykure/epyk-ui",
+    project_urls = {
+    "Documentation": "www.epyk.io",
+    "Issue tracker": "https://github.com/epykure/epyk-ui/issues"},
     packages=setuptools.find_packages(),
     install_requires=install_required(),
     package_data={'epyk': [os.path.join('static', 'images', '*'), os.path.join('static', 'images', 'logo', '*')]},
