@@ -160,11 +160,13 @@ class Input(Html.Html):
 class InputRadio(Input):
   name, category, callFnc = 'Input', 'Inputs', 'input'
 
-  def __init__(self, report, flag, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+  def __init__(self, report, flag, group_name, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputRadio, self).__init__(report, "", placeholder, width, height, htmlCode, filter, options, attrs, profile)
     self.set_attrs({"type": 'radio'})
     if flag:
       self.set_attrs({"checked": json.dumps(flag)})
+    if group_name is not None:
+      self.set_attrs({"name": group_name})
 
 
 class AutoComplete(Input):
