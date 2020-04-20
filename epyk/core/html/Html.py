@@ -862,6 +862,27 @@ Attributes:
       self.on("mouseleave", out_fncs)
     return self
 
+  def contextMenu(self, menu, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+    Attach a context menu to a component and set a function to called before the display
+
+Attributes:
+    ----------
+    :param menu:
+    :param jsFncs:
+    :param profile:
+    """
+    menu.source = self
+    # event.stopPropagation(); %(jqId)s.css({left: event.pageX + 1, top: event.pageY + 1, display: 'block'}); event.preventDefault()
+    new_js_fncs = jsFncs + [self._report.js.objects.mouseEvent.stopPropagation(),
+                   menu.dom.css({"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
+                                 'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
+                   self._report.js.objects.mouseEvent.preventDefault()]
+    self.on("contextmenu", new_js_fncs, profile)
+    return self
+
   # -------------------------------------------------------------
   # Builder functions
   #

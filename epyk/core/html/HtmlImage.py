@@ -286,7 +286,7 @@ class Badge(Html.Html):
   __reqCss = ['bootstrap', 'font-awesome']
 
   def __init__(self, report, text, label, icon, background_color, color, url, tooltip, options, profile):
-    super(Badge, self).__init__(report, None, css_attrs={"color": color, 'background-color': background_color}, profile=profile)
+    super(Badge, self).__init__(report, None, css_attrs={}, profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     self.__options = OptButton.OptionsBadge(self, options)
     if self.options.badge_position == 'left':
@@ -296,12 +296,14 @@ class Badge(Html.Html):
     self.link = None
     if url is not None:
       self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "2px", "border-radius": "20px", "width": "auto", "font-size": Defaults_css.font(-2)})
+          "padding": "2px", "width": "auto", "font-size": Defaults_css.font(-4)})
       self.link.inReport = False
     else:
       self.link = self._report.ui.text(text).css({'display': 'inline-block',
-          "padding": "2px", "border-radius": "20px", "width": "auto", "font-size": Defaults_css.font(-2)})
+          "padding": "2px", "width": "auto", "font-size": Defaults_css.font(-4)})
     self.link.css(self.options.badge_css)
+    self.link.css({"color": color, 'background-color': background_color, "border-radius": "10px",
+                   'padding': '2px 2px 4px 2px', 'margin-left': '2px'})
     self.link.inReport = False
     self.attr['class'].add("badge") # From bootstrap
     if tooltip is not None:

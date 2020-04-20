@@ -123,8 +123,9 @@ class Images(object):
       'available': self.context.rptObj.theme.success[1],
       False: self.context.rptObj.theme.danger[1],
       'busy': self.context.rptObj.theme.danger[1],
-      'out': self.context.rptObj.theme.warning[1],
-                  }
+      'out': self.context.rptObj.theme.warning[1]
+    }
+
     bgcolor, margin_top = None, -5
     if image is not None:
       img = self.img(image, path, (width[0]-5, width[1]), (height[0]-5, height[1]), align, htmlCode, profile, options)

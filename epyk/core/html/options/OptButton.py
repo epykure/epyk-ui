@@ -34,12 +34,9 @@ class OptionsBadge(object):
     self.src = src
     self._badge_prop = options.get('badge_position', "left")
     if self._badge_prop == 'left':
-      self._badge_css = {"border-radius": "20px", "position": 'relative',
-                         #"bottom": "-5px", "right": "-6px"
-                         }
+      self._badge_css = {"position": 'relative'}
     else:
-      self._badge_css = {"border-radius": "20px", "position": 'relative', "top": "-4px", "right": "11px",
-                         }
+      self._badge_css = {"position": 'relative', "top": "-4px", "right": "11px"}
     self._badge_css.update(options.get('badge_css', {}))
 
   @property

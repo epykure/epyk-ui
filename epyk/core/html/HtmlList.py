@@ -89,8 +89,6 @@ class Li(Html.Html):
 
 class List(Html.Html):
   name, category, callFnc = 'List', 'Lists', 'list'
-  # The CSS Group attached to this component
-  # grpCls = CssGrpClsList.CssClassList
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
     super(List, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
@@ -235,7 +233,7 @@ class Groups(Html.Html):
         function(evt){evt.style.display = evt.style.display === "none" ? "" : "none"})' style='cursor:pointer'>%s</a>%s
       ''' % (self._lists__map_index[i] if len(self._lists__map_index) > i else "Category %s" % i, l.html()) for i, l in enumerate(self.val)])
     self.builder_name = self.__class__.__name__
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.defined), self._vals)
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self._vals)
 
 
 class Badges(List):

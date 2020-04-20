@@ -528,7 +528,6 @@ Attributes:
     :param profile:
     """
     html_obj = html.HtmlList.Badges(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
-
     self.context.register(html_obj)
     return html_obj
 

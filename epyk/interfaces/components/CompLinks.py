@@ -149,6 +149,8 @@ class Links(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     options = options or {}
+    if url is not None and url.startswith("www."):
+      url = "//%s" % url
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, options, profile)
     self.context.register(html_link)
     return html_link
