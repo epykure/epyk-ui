@@ -471,7 +471,7 @@ Attributes:
     :param visible: Optional.
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_menu = html.HtmlEvent.ContextMenu(self.rptObj, records, width, height, visible, options, profile)
+    html_menu = html.HtmlEvent.ContextMenu(self.rptObj, records or [], width, height, visible, options or {}, profile)
     self.register(html_menu)
     return html_menu
 

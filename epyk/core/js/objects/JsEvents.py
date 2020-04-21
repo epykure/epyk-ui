@@ -11,6 +11,7 @@ from epyk.core.js.objects.JsData import JsDataTransfer
 
 
 class Event(object):
+
   def cancelBubble(self):
     """
     Description:
@@ -354,6 +355,22 @@ class MouseEvent(UIEvent):
     return JsNumber.JsNumber.get(varName="event.clientY")
 
   @property
+  def pageX(self):
+    """
+
+    :return:
+    """
+    return JsNumber.JsNumber.get(varName="event.pageX")
+
+  @property
+  def pageY(self):
+    """
+
+    :return:
+    """
+    return JsNumber.JsNumber.get(varName="event.pageY")
+
+  @property
   def offsetX(self):
     """
     Description:
@@ -361,6 +378,15 @@ class MouseEvent(UIEvent):
     Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element
     """
     return JsNumber.JsNumber.get(varName="event.offsetX")
+
+  @property
+  def offsetY(self):
+    """
+    Description:
+    ------------
+    Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element
+    """
+    return JsNumber.JsNumber.get(varName="event.offsetY")
 
   def getField(self, fieldName):
     return JsObject.JsObject.get("event.%s" % fieldName)

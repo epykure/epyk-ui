@@ -4,10 +4,14 @@ import json
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptSliders
+from epyk.core.html.options import OptList
+from epyk.core.html.HtmlList import Li
+
 from epyk.core.html.entities import EntHtml4
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlJqueryUI
+from epyk.core.js.html import JsHtmlList
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsQueryUi
@@ -619,22 +623,41 @@ class SkillBar(Html.Html):
 class ContextMenu(Html.Html):
   name, category, callFnc = 'Context Menu', None, 'contextmenu'
   source = None # The container
-  # _grpCls = CssGrpClsText.CssClassTextItem
 
   def __init__(self, report, recordSet, width, height, visible, options, profile):
-    for rec in recordSet:
-      if isinstance(rec.get('event'), list):
-        rec['event'] = ";".join(rec['event'])
-    super(ContextMenu, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
+    super(ContextMenu, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptList.OptionsLi(self, options)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
               'padding': 0, 'margin': 0, 'background-color': self._report.theme.greys[0],
               'border': '1px solid %s' % self._report.theme.colors[5], 'border-radius': '2px'})
     for rec in recordSet:
-      if "icon" in rec:
-        self._report.jsImports.add("font-awesome")
-        self._report.cssImport.add("font-awesome")
-    # self.addGlobalVar("CONTEXT_MENU_VAL", "{}")
-    self._jsStyles = {'liStyles': ""}
+      self += rec
+
+  @property
+  def options(self):
+    """
+
+    :rtype: OptList.OptionsLi
+    """
+    return self.__options
+
+  def __add__(self, htmlObj):
+    """
+
+    :param d:
+    """
+    if not hasattr(htmlObj, 'inReport'):
+      htmlObj = self._report.ui.div(htmlObj)
+    htmlObj.inReport = False
+    li_obj = Li(self._report, htmlObj) if not isinstance(htmlObj, Li) else htmlObj
+    li_obj.css({"padding": "5px", 'cursor': 'pointer'})
+    if hasattr(htmlObj, 'inReport'):
+      htmlObj.inReport = False
+    self.val.append(li_obj)
+    return self
+
+  def __getitem__(self, i):
+    return self.val[i].val
 
   def onDocumentLoadFnc(self):
     """ Pure Javascript onDocumentLoad Function """
@@ -647,32 +670,17 @@ class ContextMenu(Html.Html):
       ''', 'Javascript Object builder')
 
   def __str__(self):
-    self._report._scroll.add("$('nav[name=context_menus]').hide()")
+    #self._report._scroll.add("$('nav[name=context_menus]').hide()")
     # TODO: Add a condition in the init to display the context menu only for some columns or rows when table for example
     if getattr(self, 'source') is None:
-      raise Exception("Context Menu should be added to a component with the function attachMenu")
+      raise Exception("Context Menu should be added to a component with the function contextMenu")
 
-    if self.source.jqDiv is not None:
-      if self.source.name == 'Tabulator':
-        self._report.jsOnLoadFnc.add("$('html').click(function(){$('nav[name=context_menus]').hide()})")
-        self.source._options['rowContext'] = '''
-          function(event, row){
-            if(row.getTable().options.dataTree){
-              if(row.getTreeParent()) {CONTEXT_MENU_VAL = row.getTreeParent().getData()}
-              else {CONTEXT_MENU_VAL = row.getData()}
-            } else{CONTEXT_MENU_VAL = row.getData()};
-            event.stopPropagation(); %(jqId)s.css({left: event.pageX + 1, top: event.pageY + 1, display: 'block'}); event.preventDefault()
-          } ''' % {'jqDiv': self.source.jqDiv, 'jqId': self.dom.jquery.varName}
-      else:
-        self._report.jsOnLoadFnc.add('''
-          $('html').click(function(){$('nav[name=context_menus]').hide()});
-          %(jqDiv)s.on('contextmenu', function(event, i) {CONTEXT_MENU_VAL = %(val)s;
-            event.stopPropagation(); %(jqId)s.css({left: event.pageX + 1, top: event.pageY + 1, display: 'block'}); event.preventDefault()
-          })''' % {'jqDiv': self.source.jqDiv, 'val': self.source.contextVal, 'jqId': self.dom.jquery.varName})
+    str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
+    self.mouse(out_fncs=[self.dom.hide()]) # hide when mouse leave the component
     return '''
       <nav %(attr)s name='context_menus'>
-        <ul style='list-style:none;padding:0px;margin:0'></ul>
-      </nav>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes())}
+        <ul style='list-style:none;padding:0px;margin:0'>%(val)s</ul>
+      </nav>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': str_vals}
 
 
 class OptionsBar(Html.Html):
@@ -736,113 +744,57 @@ class SignIn(Html.Html):
 
 class Filters(Html.Html):
   name, category, callFnc = 'Multi Filter', 'Event', 'multiFilter'
-  __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery', 'jquery-scrollbar']
-  # _grpCls = CssGrpClsList.CssClassListFilters
 
-  def __init__(self, report, items, title, width, height, htmlCode, helper, profile):
-    super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
-    self.add_title(title, options={'content_table': False})
+  def __init__(self, report, items, title, width, height, htmlCode, helper, options, profile):
+    super(Filters, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
+    self.add_title(title, options={'content_table': False, 'managed': False})
     self._jsStyles = {'items': {'display': 'inline-block', 'padding': '1px 4px',
                                 'color': self._report.theme.colors[-1], 'margin': '2px', 'border-radius': '5px', 'background-color': self._report.theme.colors[0]}}
-    self.style.addCls('scroll_content')
+    self.__options = OptList.OptionsTagItems(self, options)
+    for item in items:
+      self += item
 
   @property
-  def jqId(self): return "$('#%s_div')" % self.htmlId
+  def options(self):
+    """
+
+    :rtype: OptList.OptionsTagItems
+    """
+    return self.__options
+
+  def __getitem__(self, i):
+    return self.val[i]
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    if not hasattr(htmlObj, 'inReport'):
+      htmlObj = self._report.ui.div(htmlObj)
+      icon = self._report.ui.icon("fas fa-times").css({"margin-left": '2px'})
+      htmlObj += icon
+      icon.click([htmlObj.dom.remove()])
+    htmlObj.style.css.display = 'inline'
+    htmlObj.css(self.options.item_css)
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.val.append(htmlObj)
+    return self
 
   @property
-  def val(self):
-    return '''
-      function(){
-        var existingItems = {}; 
-        %(jqId)s.find('div[name=item]').each(function(){
-          if ($(this).find('span').length > 0){existingItems[$(this).find('span').text()] = $(this).find('div').text()}
-          else {existingItems[$(this).text()] = $(this).text()}}); 
-        return existingItems}()''' % {'jqId': self.jqId}
+  def dom(self):
+    """
+    Description:
+    -----------
+    The Javascript Dom object
 
-  @property
-  def _js__builder__(self):
-    return '''htmlObj.empty();
-      var col = null;
-      if (Array.isArray(data)){data.forEach(function(rec){%(jsAddItem)s})}
-      else {for (var col in data){var rec = data[col]; %(jsAddItem)s}} 
-      ''' % {"jsAddItem": self.jsAddItem('rec', jsColumn="col")}
-
-  def _jsCloseItem(self, jsFnc=None):
-    if jsFnc is None:
-      return "$(this).parent().remove()"
-
-    return "(function(e){%s}(event)); $(this).parent().remove()" % ";".join(jsFnc).replace("'", "\\'")
-
-  def jsToggleItem(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None, jsColumn="null", jsFlag=None, jsFncClosure=None):
-    if jsFlag is None:
-      raise Exception("A flag should be defined to toggle the items")
-
-    add = self.jsAddItem(jsData, jsDataKey, isPyData, jsParse, jsFnc, jsColumn, jsFncClosure)
-    remove = self.jsRemoveItems(jsData, jsDataKey, isPyData, jsParse, jsFnc)
-    return "if(%(jsFlag)s){%(add)s} else {%(remove)s}" % {"jsFlag": jsFlag, "add": add, "remove": remove}
-
-  def jsAddItem(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None, jsColumn="null", jsFncClosure=None):
-    jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
-    cssItem = self._report.style.cssCls('CssDivFilterItems')
-    if jsFncClosure == False:
-      return '''
-            var idata = %(jsData)s; var existingItems = %(existingItems)s; var jsColumn = %(jsColumn)s;
-            if (typeof jsStyles === "undefined"){var jsStyles = %(jsStyles)s};
-            if (jsColumn !== null){
-              if (jsColumn != '' && !(jsColumn in existingItems)){
-                %(jqId)s.append('<div class="%(pyClass)s" name="item" style="'+ %(CssStyleBuilder)s(jsStyles.items) +'"><span style="font-style:bold;color:%(color)s">'+ %(jsColumn)s + '</span><div id="%(htmlId)s_'+ jsColumn +'" style="padding-left:18px">'+ idata +'</div></div>')}
-              else if(jsColumn in existingItems){$('#%(htmlId)s_'+ jsColumn).text(idata)}
-            } else{
-              if (idata != '' && !(idata in existingItems)){
-                %(jqId)s.append('<div class="%(pyClass)s" name="item" style="'+ %(CssStyleBuilder)s(jsStyles.items) +'">'+ idata +'</div>')
-            }}''' % {'jqId': self.jqId, 'jsData': jsData, 'existingItems': self.val,
-                     "CssStyleBuilder": self._report.js.fncs.cssStyle,
-                     "jsStyles": json.dumps(self._jsStyles), "jsColumn": jsColumn,
-                     'color': self._report.theme.colors[7], 'htmlId': self.htmlId, 'pyClass': cssItem}
-
-    return '''
-      var idata = %(jsData)s; var existingItems = %(existingItems)s; var jsColumn = %(jsColumn)s;
-      if (typeof jsStyles === "undefined"){ var jsStyles = %(jsStyles)s};
-      if (jsColumn !== null){
-        if (jsColumn != '' && !(jsColumn in existingItems)){
-          %(jqId)s.append('<div class="%(pyClass)s" name="item" style="'+ %(CssStyleBuilder)s(jsStyles.items) +'"><i onclick="%(jsCloseItem)s" style="font-size:9px;padding-right:2px;margin-right:10px;cursor:pointer" class="fas fa-times"></i><span style="font-style:bold;color:%(color)s">'+ %(jsColumn)s + '</span><div id="%(htmlId)s_'+ jsColumn +'" style="padding-left:18px">'+ idata +'</div></div>')}
-        else if(jsColumn in existingItems){
-          $('#%(htmlId)s_'+ jsColumn).text(idata)}
-      } else{
-        if (idata != '' && !(idata in existingItems)){
-          %(jqId)s.append('<div class="%(pyClass)s" name="item" style="'+ %(CssStyleBuilder)s(jsStyles.items) +'"><i onclick="%(jsCloseItem)s" style="font-size:9px;padding-right:2px;margin-right:10px;cursor:pointer" class="fas fa-times"></i>'+ idata +'</div>')
-      }}''' % {'jqId': self.jqId, 'jsData': jsData, 'existingItems': self.val, "jsStyles": json.dumps(self._jsStyles),
-               "jsColumn": jsColumn, "jsCloseItem": self._jsCloseItem(jsFncClosure),
-               "CssStyleBuilder": self._report.js.fncs.cssStyle, 'color': self._report.theme.colors[7],
-               'htmlId': self.htmlId, 'pyClass': cssItem}
-
-  def jsAddItems(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):
-    jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
-    return '''
-      var jsStyles = %(jsStyles)s;
-      var fData = %(jsData)s; fData.forEach(function(rec){%(jsAddItem)s})
-      ''' % {'jsData': jsData, 'jsAddItem': self.jsAddItem('rec'), "jsStyles": json.dumps(self._jsStyles)}
-
-  def jsClear(self):
-    return "%(jqId)s.find('div[name=item]').each(function(){$(this).remove()})" % {'jqId': self.jqId}
-
-  def jsRemoveItems(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):
-    jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
-    return '''
-      var fData = %(jsData)s; 
-      if (Array.isArray(fData)){
-        fData.forEach(function(rec){
-          %(jqId)s.find('div[name=item]').each(function(){if($(this).text() == rec){$(this).remove()}})}) 
-      } else {
-        %(jqId)s.find('div[name=item]').each(function(){
-          if($(this).find('div').text() == fData){$(this).remove()} })
-      }''' % {'jsData': jsData, 'jqId': self.jqId}
+    :rtype: JsHtmlJqueryUI.JsHtmlSlider
+    """
+    if self._dom is None:
+      self._dom = JsHtmlList.Tags(self, report=self._report)
+    return self._dom
 
   def __str__(self):
+    str_data = "".join([s.html() for s in self.val])
     return '''
       <div %(cssAttr)s>
-        <div id='%(htmlId)s'></div>
-      </div>
-      <div style='font-size:9px;margin:0 0 5px auto;width:40px;font-style:italic;cursor:pointer' onclick="%(click)s"><i class="fas fa-times-circle" style="font-size:9px;margin-right:2px"></i>clear</div>
-      ''' % {'htmlId': "%s_div" % self.htmlId, 'cssAttr': self.get_attrs(pyClassNames=[s for s in self.defined if s not in ['CssDivFilterItems']]),
-             'click': self.jsClear()}
+        %(title)s
+        <div name="panel">%(data)s</div>
+      </div>''' % {'title': self.title, 'cssAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'data': str_data}

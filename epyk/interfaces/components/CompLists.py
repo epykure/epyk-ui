@@ -169,6 +169,28 @@ class Lists(object):
     self.context.register(html_select)
     return html_select
 
+  def item(self, text=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      l = rptObj.ui.lists.list(["A", "B"])
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.List`
+
+    Related Pages:
+
+      https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+    http://astronautweb.co/snippet/font-awesome/
+    """
+    html_item = html.HtmlList.Li(self.context.rptObj, text)
+    self.context.register(html_item)
+    return html_item
+
   def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """
@@ -526,7 +548,6 @@ class Lists(object):
     :param profile:
     """
     html_obj = html.HtmlList.Badges(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
-
     self.context.register(html_obj)
     return html_obj
 
@@ -594,3 +615,25 @@ class Lists(object):
   def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
 
+  def tags(self, items=None, title="Filter Panel", width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.Filters`
+
+    Attributes:
+    ----------
+    :param items:
+    :param title:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param profile:
+    """
+    html_f = html.HtmlEvent.Filters(self.context.rptObj, items or [], title, width, height, htmlCode, helper, options or {}, profile)
+    self.context.register(html_f)
+    return html_f

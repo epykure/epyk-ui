@@ -32,7 +32,7 @@ class CssImgMask(CssStyle.Style):
   _hover = {'opacity': 0.8}
 
   def customize(self):
-    self.css({'background-color': self.rptObj.theme.success[0]})
+    self.css({'background-color': self.rptObj.theme.success[0], 'border': '1px solid %s' % self.rptObj.theme.success[1]})
 
 
 class CssImgAInfo(CssStyle.Style):

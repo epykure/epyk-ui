@@ -49,7 +49,7 @@ class Inputs(object):
     self.context.register(html_input)
     return html_input
 
-  def d_radio(self, flag=False, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_radio(self, flag=False, group_name=None, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
             options=None, attrs=None, profile=None):
     """
     Description:
@@ -75,7 +75,7 @@ class Inputs(object):
     :param attrs:
     :param profile:
     """
-    html_input = html.HtmlInput.InputRadio(self.context.rptObj, flag, placeholder, width, height, htmlCode, filter,
+    html_input = html.HtmlInput.InputRadio(self.context.rptObj, flag, group_name, placeholder, width, height, htmlCode, filter,
                                            options or {}, attrs or {}, profile)
     self.context.register(html_input)
     return html_input

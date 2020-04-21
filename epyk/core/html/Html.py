@@ -447,11 +447,13 @@ Attributes:
     self.title = ""
     if text is not None:
       self.title = self._report.ui.texts.title(text, level=level, options=options)
-      if position == "before":
-        self.prepend_child(self.title)
+      if options.get('managed', True):
+        if position == "before":
+          self.prepend_child(self.title)
+        else:
+          self.append_child(self.title)
       else:
-        self.append_child(self.title)
-      #self.title.inReport = False
+        self.title.inReport = False
       if css == False:
         self.title.attr['css'] = {}
       elif css is not None:
@@ -564,6 +566,9 @@ Attributes:
   @property
   def content(self):
     if self.innerPyHTML is not None:
+      if isinstance(self.innerPyHTML, list):
+        return "".join([h.html() for h in self.innerPyHTML])
+
       return self.innerPyHTML.html()
 
     return self.val if not hasattr(self.val, "html") else self.val.html()
@@ -741,7 +746,9 @@ Attributes:
     """
     cssStyle, cssClass, classData = '', '', ''
     if 'css' in self.attr:
-      cssStyle = 'style="%s"' % ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
+      styles = ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
+      if styles:
+        cssStyle = 'style="%s"' % styles
     if 'class' in self.attr and len(self.attr['class']) > 0 and classData:
       if pyClassNames is not None:
         # Need to merge in the class attribute some static classes coming from external CSS Styles sheets
@@ -860,6 +867,27 @@ Attributes:
       self.on("mouseover", on_fncs)
     if out_fncs is not None:
       self.on("mouseleave", out_fncs)
+    return self
+
+  def contextMenu(self, menu, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+    Attach a context menu to a component and set a function to called before the display
+
+Attributes:
+    ----------
+    :param menu:
+    :param jsFncs:
+    :param profile:
+    """
+    menu.source = self
+    # event.stopPropagation(); %(jqId)s.css({left: event.pageX + 1, top: event.pageY + 1, display: 'block'}); event.preventDefault()
+    new_js_fncs = jsFncs + [self._report.js.objects.mouseEvent.stopPropagation(),
+                   menu.dom.css({"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
+                                 'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
+                   self._report.js.objects.mouseEvent.preventDefault()]
+    self.on("contextmenu", new_js_fncs, profile)
     return self
 
   # -------------------------------------------------------------

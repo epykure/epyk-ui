@@ -384,32 +384,6 @@ class Layouts(object):
     self.context.register(html_icon)
     return html_icon
 
-  def multiFilter(self, items=None, title=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None,
-                  profile=None):
-    """
-    Description:
-    ------------
-
-    Underlying HTML Objects:
-
-      - :class:`epyk.core.html.HtmlEvent.Filters`
-
-    Attributes:
-    ----------
-    :param items:
-    :param title:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param profile:
-
-    :rtype: html.HtmlEvent.Filters
-    :return:
-    """
-    items = items or []
-    return self.context.register(html.HtmlEvent.Filters(self.context.rptObj, items, title, width, height, htmlCode, helper, profile))
-
   def form(self, htmlObj=None, helper=None):
     """
     Description:

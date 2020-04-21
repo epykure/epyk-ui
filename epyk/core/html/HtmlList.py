@@ -27,6 +27,14 @@ class Li(Html.Html):
     super(Li, self).__init__(report, text)
     self.css({'font-size': 'inherit', 'margin': "1px 5px", 'padding': 0})
 
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    if not hasattr(htmlObj, 'inReport'):
+      raise Exception("This can only be used for HTML components")
+
+    self.set_html_content(htmlObj)
+    return self
+
   @property
   def no_decoration(self):
     """
@@ -74,7 +82,12 @@ class Li(Html.Html):
     :return: self, the cell object to allow the chaining
     """
     htmlObj.inReport = False
-    self.innerPyHTML = htmlObj
+    if self.innerPyHTML is not None:
+      if not isinstance(self.innerPyHTML, list):
+        self.innerPyHTML = [self.innerPyHTML]
+      self.innerPyHTML.append(htmlObj)
+    else:
+      self.innerPyHTML = htmlObj
     return self
 
   def click(self, jsFncs, profile=False):
@@ -89,8 +102,6 @@ class Li(Html.Html):
 
 class List(Html.Html):
   name, category, callFnc = 'List', 'Lists', 'list'
-  # The CSS Group attached to this component
-  # grpCls = CssGrpClsList.CssClassList
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
     super(List, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
@@ -122,6 +133,17 @@ class List(Html.Html):
     if self._dom is None:
       self._dom = JsHtml.JsHtmlList(self, report=self._report)
     return self._dom
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    if not isinstance(htmlObj, Li):
+      raise Exception("This can only be used for Li")
+
+    if self.items is None:
+      self.items = []
+    htmlObj.inReport = False
+    self.items.append(htmlObj)
+    return self
 
   def __getitem__(self, i):
     """
@@ -235,7 +257,7 @@ class Groups(Html.Html):
         function(evt){evt.style.display = evt.style.display === "none" ? "" : "none"})' style='cursor:pointer'>%s</a>%s
       ''' % (self._lists__map_index[i] if len(self._lists__map_index) > i else "Category %s" % i, l.html()) for i, l in enumerate(self.val)])
     self.builder_name = self.__class__.__name__
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.defined), self._vals)
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self._vals)
 
 
 class Badges(List):
