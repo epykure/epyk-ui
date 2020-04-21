@@ -121,6 +121,17 @@ class List(Html.Html):
       self._dom = JsHtml.JsHtmlList(self, report=self._report)
     return self._dom
 
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    if not isinstance(htmlObj, Li):
+      raise Exception("This can only be used for Li")
+
+    if self.items is None:
+      self.items = []
+    htmlObj.inReport = False
+    self.items.append(htmlObj)
+    return self
+
   def __getitem__(self, i):
     """
 

@@ -169,6 +169,28 @@ class Lists(object):
     self.context.register(html_select)
     return html_select
 
+  def item(self, text=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      l = rptObj.ui.lists.list(["A", "B"])
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.List`
+
+    Related Pages:
+
+      https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+    http://astronautweb.co/snippet/font-awesome/
+    """
+    html_item = html.HtmlList.Li(self.context.rptObj, text)
+    self.context.register(html_item)
+    return html_item
+
   def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
            htmlCode=None, helper=None, options=None, profile=None):
     """

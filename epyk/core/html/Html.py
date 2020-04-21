@@ -743,7 +743,9 @@ Attributes:
     """
     cssStyle, cssClass, classData = '', '', ''
     if 'css' in self.attr:
-      cssStyle = 'style="%s"' % ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
+      styles = ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
+      if styles:
+        cssStyle = 'style="%s"' % styles
     if 'class' in self.attr and len(self.attr['class']) > 0 and classData:
       if pyClassNames is not None:
         # Need to merge in the class attribute some static classes coming from external CSS Styles sheets
