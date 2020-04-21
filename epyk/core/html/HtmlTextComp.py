@@ -608,7 +608,7 @@ class Composite(Html.Html):
     return {
       'div': self._report.ui.div,
       'textarea': self._report.ui.textarea,
-      'button': self._report.ui.section,
+      'button': self._report.ui.button,
       'label': self._report.ui.label,
       'header': self._report.ui.header,
       'section': self._report.ui.section,
