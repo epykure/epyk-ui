@@ -42,7 +42,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://www.w3schools.com/graphics/svg_text.asp
 
@@ -65,7 +65,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://www.w3schools.com/graphics/svg_rect.asp
 
@@ -90,7 +90,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://www.w3schools.com/graphics/svg_line.asp
 
@@ -114,7 +114,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://www.w3schools.com/graphics/svg_circle.asp
 
@@ -137,7 +137,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://www.w3schools.com/graphics/svg_ellipse.asp
 
@@ -161,7 +161,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://www.w3schools.com/graphics/svg_polygon.asp
 
@@ -182,7 +182,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://www.w3schools.com/graphics/svg_polyline.asp
 
@@ -204,7 +204,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://www.w3schools.com/graphics/svg_polyline.asp
 
@@ -226,7 +226,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g
 
@@ -273,7 +273,7 @@ class SVG(Html.Html):
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
 			https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
 
