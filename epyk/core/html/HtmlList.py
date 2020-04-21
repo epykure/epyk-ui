@@ -27,6 +27,14 @@ class Li(Html.Html):
     super(Li, self).__init__(report, text)
     self.css({'font-size': 'inherit', 'margin': "1px 5px", 'padding': 0})
 
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    if not hasattr(htmlObj, 'inReport'):
+      raise Exception("This can only be used for HTML components")
+
+    self.set_html_content(htmlObj)
+    return self
+
   @property
   def no_decoration(self):
     """
@@ -74,7 +82,12 @@ class Li(Html.Html):
     :return: self, the cell object to allow the chaining
     """
     htmlObj.inReport = False
-    self.innerPyHTML = htmlObj
+    if self.innerPyHTML is not None:
+      if not isinstance(self.innerPyHTML, list):
+        self.innerPyHTML = [self.innerPyHTML]
+      self.innerPyHTML.append(htmlObj)
+    else:
+      self.innerPyHTML = htmlObj
     return self
 
   def click(self, jsFncs, profile=False):

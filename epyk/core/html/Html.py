@@ -566,6 +566,9 @@ Attributes:
   @property
   def content(self):
     if self.innerPyHTML is not None:
+      if isinstance(self.innerPyHTML, list):
+        return "".join([h.html() for h in self.innerPyHTML])
+
       return self.innerPyHTML.html()
 
     return self.val if not hasattr(self.val, "html") else self.val.html()
