@@ -447,11 +447,13 @@ Attributes:
     self.title = ""
     if text is not None:
       self.title = self._report.ui.texts.title(text, level=level, options=options)
-      if position == "before":
-        self.prepend_child(self.title)
+      if options.get('managed', True):
+        if position == "before":
+          self.prepend_child(self.title)
+        else:
+          self.append_child(self.title)
       else:
-        self.append_child(self.title)
-      #self.title.inReport = False
+        self.title.inReport = False
       if css == False:
         self.title.attr['css'] = {}
       elif css is not None:

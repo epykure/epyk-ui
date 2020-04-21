@@ -31,6 +31,8 @@ class JsObject(object):
 
 			https//www.w3schools.com/js/js_type_conversion.asp
 
+    Attributes:
+    ----------
     :param varName:
     :param data:
     :param setVar:

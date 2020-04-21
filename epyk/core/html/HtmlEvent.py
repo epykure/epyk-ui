@@ -11,6 +11,7 @@ from epyk.core.html.entities import EntHtml4
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlJqueryUI
+from epyk.core.js.html import JsHtmlList
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsQueryUi
@@ -743,113 +744,57 @@ class SignIn(Html.Html):
 
 class Filters(Html.Html):
   name, category, callFnc = 'Multi Filter', 'Event', 'multiFilter'
-  __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery', 'jquery-scrollbar']
-  # _grpCls = CssGrpClsList.CssClassListFilters
 
-  def __init__(self, report, items, title, width, height, htmlCode, helper, profile):
-    super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
-    self.add_title(title, options={'content_table': False})
+  def __init__(self, report, items, title, width, height, htmlCode, helper, options, profile):
+    super(Filters, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
+    self.add_title(title, options={'content_table': False, 'managed': False})
     self._jsStyles = {'items': {'display': 'inline-block', 'padding': '1px 4px',
                                 'color': self._report.theme.colors[-1], 'margin': '2px', 'border-radius': '5px', 'background-color': self._report.theme.colors[0]}}
-    self.style.addCls('scroll_content')
+    self.__options = OptList.OptionsTagItems(self, options)
+    for item in items:
+      self += item
 
   @property
-  def jqId(self): return "$('#%s_div')" % self.htmlId
+  def options(self):
+    """
+
+    :rtype: OptList.OptionsTagItems
+    """
+    return self.__options
+
+  def __getitem__(self, i):
+    return self.val[i]
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    if not hasattr(htmlObj, 'inReport'):
+      htmlObj = self._report.ui.div(htmlObj)
+      icon = self._report.ui.icon("fas fa-times").css({"margin-left": '2px'})
+      htmlObj += icon
+      icon.click([htmlObj.dom.remove()])
+    htmlObj.style.css.display = 'inline'
+    htmlObj.css(self.options.item_css)
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.val.append(htmlObj)
+    return self
 
   @property
-  def val(self):
-    return '''
-      function(){
-        var existingItems = {}; 
-        %(jqId)s.find('div[name=item]').each(function(){
-          if ($(this).find('span').length > 0){existingItems[$(this).find('span').text()] = $(this).find('div').text()}
-          else {existingItems[$(this).text()] = $(this).text()}}); 
-        return existingItems}()''' % {'jqId': self.jqId}
+  def dom(self):
+    """
+    Description:
+    -----------
+    The Javascript Dom object
 
-  @property
-  def _js__builder__(self):
-    return '''htmlObj.empty();
-      var col = null;
-      if (Array.isArray(data)){data.forEach(function(rec){%(jsAddItem)s})}
-      else {for (var col in data){var rec = data[col]; %(jsAddItem)s}} 
-      ''' % {"jsAddItem": self.jsAddItem('rec', jsColumn="col")}
-
-  def _jsCloseItem(self, jsFnc=None):
-    if jsFnc is None:
-      return "$(this).parent().remove()"
-
-    return "(function(e){%s}(event)); $(this).parent().remove()" % ";".join(jsFnc).replace("'", "\\'")
-
-  def jsToggleItem(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None, jsColumn="null", jsFlag=None, jsFncClosure=None):
-    if jsFlag is None:
-      raise Exception("A flag should be defined to toggle the items")
-
-    add = self.jsAddItem(jsData, jsDataKey, isPyData, jsParse, jsFnc, jsColumn, jsFncClosure)
-    remove = self.jsRemoveItems(jsData, jsDataKey, isPyData, jsParse, jsFnc)
-    return "if(%(jsFlag)s){%(add)s} else {%(remove)s}" % {"jsFlag": jsFlag, "add": add, "remove": remove}
-
-  def jsAddItem(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None, jsColumn="null", jsFncClosure=None):
-    jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
-    cssItem = self._report.style.cssCls('CssDivFilterItems')
-    if jsFncClosure == False:
-      return '''
-            var idata = %(jsData)s; var existingItems = %(existingItems)s; var jsColumn = %(jsColumn)s;
-            if (typeof jsStyles === "undefined"){var jsStyles = %(jsStyles)s};
-            if (jsColumn !== null){
-              if (jsColumn != '' && !(jsColumn in existingItems)){
-                %(jqId)s.append('<div class="%(pyClass)s" name="item" style="'+ %(CssStyleBuilder)s(jsStyles.items) +'"><span style="font-style:bold;color:%(color)s">'+ %(jsColumn)s + '</span><div id="%(htmlId)s_'+ jsColumn +'" style="padding-left:18px">'+ idata +'</div></div>')}
-              else if(jsColumn in existingItems){$('#%(htmlId)s_'+ jsColumn).text(idata)}
-            } else{
-              if (idata != '' && !(idata in existingItems)){
-                %(jqId)s.append('<div class="%(pyClass)s" name="item" style="'+ %(CssStyleBuilder)s(jsStyles.items) +'">'+ idata +'</div>')
-            }}''' % {'jqId': self.jqId, 'jsData': jsData, 'existingItems': self.val,
-                     "CssStyleBuilder": self._report.js.fncs.cssStyle,
-                     "jsStyles": json.dumps(self._jsStyles), "jsColumn": jsColumn,
-                     'color': self._report.theme.colors[7], 'htmlId': self.htmlId, 'pyClass': cssItem}
-
-    return '''
-      var idata = %(jsData)s; var existingItems = %(existingItems)s; var jsColumn = %(jsColumn)s;
-      if (typeof jsStyles === "undefined"){ var jsStyles = %(jsStyles)s};
-      if (jsColumn !== null){
-        if (jsColumn != '' && !(jsColumn in existingItems)){
-          %(jqId)s.append('<div class="%(pyClass)s" name="item" style="'+ %(CssStyleBuilder)s(jsStyles.items) +'"><i onclick="%(jsCloseItem)s" style="font-size:9px;padding-right:2px;margin-right:10px;cursor:pointer" class="fas fa-times"></i><span style="font-style:bold;color:%(color)s">'+ %(jsColumn)s + '</span><div id="%(htmlId)s_'+ jsColumn +'" style="padding-left:18px">'+ idata +'</div></div>')}
-        else if(jsColumn in existingItems){
-          $('#%(htmlId)s_'+ jsColumn).text(idata)}
-      } else{
-        if (idata != '' && !(idata in existingItems)){
-          %(jqId)s.append('<div class="%(pyClass)s" name="item" style="'+ %(CssStyleBuilder)s(jsStyles.items) +'"><i onclick="%(jsCloseItem)s" style="font-size:9px;padding-right:2px;margin-right:10px;cursor:pointer" class="fas fa-times"></i>'+ idata +'</div>')
-      }}''' % {'jqId': self.jqId, 'jsData': jsData, 'existingItems': self.val, "jsStyles": json.dumps(self._jsStyles),
-               "jsColumn": jsColumn, "jsCloseItem": self._jsCloseItem(jsFncClosure),
-               "CssStyleBuilder": self._report.js.fncs.cssStyle, 'color': self._report.theme.colors[7],
-               'htmlId': self.htmlId, 'pyClass': cssItem}
-
-  def jsAddItems(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):
-    jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
-    return '''
-      var jsStyles = %(jsStyles)s;
-      var fData = %(jsData)s; fData.forEach(function(rec){%(jsAddItem)s})
-      ''' % {'jsData': jsData, 'jsAddItem': self.jsAddItem('rec'), "jsStyles": json.dumps(self._jsStyles)}
-
-  def jsClear(self):
-    return "%(jqId)s.find('div[name=item]').each(function(){$(this).remove()})" % {'jqId': self.jqId}
-
-  def jsRemoveItems(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):
-    jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
-    return '''
-      var fData = %(jsData)s; 
-      if (Array.isArray(fData)){
-        fData.forEach(function(rec){
-          %(jqId)s.find('div[name=item]').each(function(){if($(this).text() == rec){$(this).remove()}})}) 
-      } else {
-        %(jqId)s.find('div[name=item]').each(function(){
-          if($(this).find('div').text() == fData){$(this).remove()} })
-      }''' % {'jsData': jsData, 'jqId': self.jqId}
+    :rtype: JsHtmlJqueryUI.JsHtmlSlider
+    """
+    if self._dom is None:
+      self._dom = JsHtmlList.Tags(self, report=self._report)
+    return self._dom
 
   def __str__(self):
+    str_data = "".join([s.html() for s in self.val])
     return '''
       <div %(cssAttr)s>
-        <div id='%(htmlId)s'></div>
-      </div>
-      <div style='font-size:9px;margin:0 0 5px auto;width:40px;font-style:italic;cursor:pointer' onclick="%(click)s"><i class="fas fa-times-circle" style="font-size:9px;margin-right:2px"></i>clear</div>
-      ''' % {'htmlId': "%s_div" % self.htmlId, 'cssAttr': self.get_attrs(pyClassNames=[s for s in self.defined if s not in ['CssDivFilterItems']]),
-             'click': self.jsClear()}
+        %(title)s
+        <div name="panel">%(data)s</div>
+      </div>''' % {'title': self.title, 'cssAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'data': str_data}

@@ -711,6 +711,15 @@ class JsDoms(JsObject.JsObject):
     """
     return JsArray.JsArray("%s.querySelectorAll('%s')" % (self.toStr(), tag), varName=varName, setVar=True, isPyData=False)
 
+  def empty(self):
+    """
+    Description:
+    ------------
+    Shortcup function to emtpy an HTML compnent.
+    This will only reuse the innerHTML property
+    """
+    return JsObject.JsObject('%s.innerHTML = ""' % (self.varId))
+
   @property
   def transform(self):
     """

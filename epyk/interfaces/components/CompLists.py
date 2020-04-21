@@ -596,3 +596,25 @@ Attributes:
   def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
 
+  def tags(self, items=None, title="Filter Panel", width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.Filters`
+
+    Attributes:
+    ----------
+    :param items:
+    :param title:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param profile:
+    """
+    html_f = html.HtmlEvent.Filters(self.context.rptObj, items or [], title, width, height, htmlCode, helper, options or {}, profile)
+    self.context.register(html_f)
+    return html_f
