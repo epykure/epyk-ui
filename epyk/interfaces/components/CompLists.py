@@ -448,7 +448,7 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlList.Checks`
 
     Related Pages:
-Attributes:
+
     ----------
     :param data:
     :param color:
@@ -477,8 +477,6 @@ Attributes:
 
       - :class:`epyk.core.html.HtmlTrees.Tree`
 
-    Related Pages:
-Attributes:
     ----------
     :param data:
     :param width:
@@ -502,9 +500,9 @@ Attributes:
 
     Related Pages:
 
-    http://getbootstrap.com/docs/4.0/components/dropdowns/
-    https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
-    https://codepen.io/svnt/pen/beEgre
+      http://getbootstrap.com/docs/4.0/components/dropdowns/
+      https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_ref_js_dropdown_multilevel_css&stacked=h
+      https://codepen.io/svnt/pen/beEgre
 
     Attributes:
     ----------
@@ -537,8 +535,8 @@ Attributes:
 
     Related Pages:
 
-        https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
-    https://v4-alpha.getbootstrap.com/components/list-group/
+      https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+      https://v4-alpha.getbootstrap.com/components/list-group/
 
     Attributes:
     ----------
@@ -569,8 +567,8 @@ Attributes:
 
     Related Pages:
 
-        https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
-    https://v4-alpha.getbootstrap.com/components/list-group/
+      https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+      https://v4-alpha.getbootstrap.com/components/list-group/
 
     Attributes:
     ----------
@@ -597,9 +595,8 @@ Attributes:
       - :class:`epyk.core.html.HtmlContainer.Div`
       - :class:`epyk.core.html.HtmlInput.Radio`
 
-    Related Pages:
-Attributes:
-    ----------
+
+
     :param records:
     :param group_name:
     :param width:
