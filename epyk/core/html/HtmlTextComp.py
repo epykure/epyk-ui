@@ -575,6 +575,8 @@ class Composite(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
+    This is the only flexible component in which this DOM object can be changed.
+
     :return: A Javascript Dom object
 
     :rtype: JsHtml.JsHtml
@@ -582,6 +584,10 @@ class Composite(Html.Html):
     if self._dom is None:
       self._dom = JsHtml.JsHtml(self.val, report=self._report)
     return self._dom
+
+  @dom.setter
+  def dom(self, js_html):
+    self._dom = js_html
 
   @property
   def style(self):

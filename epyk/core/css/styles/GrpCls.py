@@ -148,6 +148,15 @@ class ClassHtml(Properties.CssMixin):
     self.classList['main'].add(self.css_class)
 
   @property
+  def varName(self):
+    """
+    Description:
+    ------------
+    Unique identifier for the CSS object on the Javascript side
+    """
+    return "%s_css" % self.htmlObj.htmlId
+
+  @property
   def css(self):
     """
     Description:
