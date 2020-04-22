@@ -616,7 +616,10 @@ class Composite(Html.Html):
       'span': self._report.ui.texts.span,
       'checkbox': self._report.ui.inputs.checkbox,
       'radio': self._report.ui.inputs.d_radio,
-      'input': self._report.ui.inputs.d_text}
+      'input': self._report.ui.inputs.d_text,
+      'checkbox': self._report.ui.inputs.checkbox,
+      'svg': self._report.ui.charts.svg
+    }
 
   def _set_comp(self, comp, schema_child, builders):
     """

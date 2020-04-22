@@ -250,7 +250,7 @@ class SVG(Html.Html):
     Related Pages:
 
 			https://www.w3.org/TR/SVG/paths.html
-    https://www.w3.org/TR/svg-paths/
+      https://www.w3.org/TR/svg-paths/
 
     Attributes:
     ----------
