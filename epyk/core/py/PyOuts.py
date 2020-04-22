@@ -140,7 +140,7 @@ class PyOuts(object):
 
     This is what will use IPython in order to display the results in cells.
     """
-    results = self._to_html_obj(content_only=True)
+    results = self._to_html_obj()
     return HtmlTmplBase.JUPYTER.strip() % results
 
   def jupyterlab(self):
