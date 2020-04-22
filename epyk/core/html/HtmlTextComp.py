@@ -561,11 +561,20 @@ class Composite(Html.Html):
   def __init__(self, report, schema, width, height, htmlCode, options, profile, helper):
     super(Composite, self).__init__(report, None, css_attrs={"width": width, "height": height})
     self.__builders = set()
+    self.__options = OptText.OptionsComposite(self, options)
     self.add_helper(helper)
     self._set_comp(None, schema, self.__builders)
     self.attr = self.val.attr
     self._js = self.val._js
     self._styleObj = self.val._styleObj
+
+  @property
+  def options(self):
+    """
+
+    :rtype: ptText.OptionsComposite
+    """
+    return self.__options
 
   @property
   def dom(self):
@@ -647,8 +656,14 @@ class Composite(Html.Html):
       new_comp = self._get_comp_map[schema_child['type']](**schema_child.get('args', {}))
     if 'builder' in schema_child:
       builders.add(schema_child['builder'])
+    if self.options.reset_class:
+      new_comp.style.clear()
     if 'class' in schema_child:
-      new_comp.set_attrs({'class': schema_child['class']})
+      if schema_child['class'] is None:
+        new_comp.set_attrs({'class': schema_child['class']})
+      else:
+        for cls in schema_child['class'].split(" "):
+          new_comp.attr['class'].add(cls)
     if 'arias' in schema_child:
       new_comp.aria.set(schema_child['arias'])
     if 'css' in schema_child:

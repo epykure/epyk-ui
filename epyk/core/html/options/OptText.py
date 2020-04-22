@@ -244,3 +244,18 @@ class OptionsConsole(OptionsText):
   @timestamp.setter
   def timestamp(self, bool):
     self.set(bool)
+
+
+class OptionsComposite(Options):
+
+  @property
+  def reset_class(self):
+    """
+    Description:
+    ------------
+    """
+    return self._attrs.get('reset_class', False)
+
+  @reset_class.setter
+  def reset_class(self, bool):
+    self.set(bool)
