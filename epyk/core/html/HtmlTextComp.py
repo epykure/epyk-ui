@@ -611,7 +611,13 @@ class Composite(Html.Html):
     return self._styleObj
 
   def __getitem__(self, i):
-    return self.val[i]
+    return self.val.val[i]
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    self.val.val.append(htmlObj)
+    return self
 
   @property
   def _get_comp_map(self):
