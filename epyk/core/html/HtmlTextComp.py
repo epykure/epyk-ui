@@ -633,7 +633,9 @@ class Composite(Html.Html):
       'radio': self._report.ui.inputs.d_radio,
       'input': self._report.ui.inputs.d_text,
       'circle': self._report.ui.charts.svg.circle,
-      'svg': self._report.ui.charts.svg
+      'svg': self._report.ui.charts.svg,
+      'list': self._report.ui.list,
+      'item': self._report.ui.lists.item,
     }
 
   def _set_comp(self, comp, schema_child, builders):
