@@ -636,6 +636,10 @@ class Composite(Html.Html):
       'svg': self._report.ui.charts.svg,
       'list': self._report.ui.list,
       'item': self._report.ui.lists.item,
+      'nav': self._report.ui.tags.nav,
+      'link': self._report.ui.tags.a,
+      'aside': self._report.ui.tags.aside,
+      'hr': self._report.ui.layouts.hr,
     }
 
   def _set_comp(self, comp, schema_child, builders):

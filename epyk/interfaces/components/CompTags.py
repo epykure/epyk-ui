@@ -42,6 +42,38 @@ class Tags(object):
     self.context.register(html_a)
     return html_a
 
+  def aside(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None,
+            profile=None):
+    """
+    Description:
+    ------------
+    The <aside> tag defines some content aside from the content it is placed in.
+
+    The aside content should be related to the surrounding content.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGenericLInk`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_aside.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_a = html.HtmlTags.HtmlGenericLInk(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
+                                           height, htmlCode, tooltip, options, profile)
+    html_a.style.clear()
+    self.context.register(html_a)
+    return html_a
+
   def b(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
     """
     Description:
@@ -698,6 +730,36 @@ class Tags(object):
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_mark.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_mark = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
+                                          height, htmlCode, tooltip, options, profile)
+    self.context.register(html_mark)
+    return html_mark
+
+  def nav(self, text="", width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+    """
+    Description:
+    ------------
+    The HTML <nav> element represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents.
+    Common examples of navigation sections are menus, tables of contents, and indexes.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
+    Related Pages:
+
+      https://fr.w3docs.com/apprendre-html/html-tag-nav.html
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/nav
 
     Attributes:
     ----------

@@ -14,6 +14,20 @@ class HtmlGeneric(Html.Html):
     if options is not None and not options.get('managed', True):
       self.inReport = False
 
+  def __getitem__(self, i):
+    if not isinstance(self.val, list):
+      return self.val
+
+    return self.val[i]
+
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    if not isinstance(self.val, list):
+      self._vals = [self.val]
+    self.val.append(htmlObj)
+    return self
+
   @property
   def dom(self):
     """
