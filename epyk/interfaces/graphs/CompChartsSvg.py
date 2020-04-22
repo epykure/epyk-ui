@@ -17,12 +17,12 @@ class SVG(object):
     Usage::
 
       svg = rptObj.ui.charts.svg.new(width=200)
-    svg.add_text("I love SVG!", x=0, y=15, options={"fill": 'red'})
+      svg.add_text("I love SVG!", x=0, y=15, options={"fill": 'red'})
 
     Related Pages:
 
 			https://developer.mozilla.org/en-US/docs/Web/SVG
-    https://www.w3schools.com/graphics/svg_intro.asp
+      https://www.w3schools.com/graphics/svg_intro.asp
 
     Attributes:
     ----------
@@ -118,7 +118,9 @@ class SVG(object):
   def arrow_left(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), options=None):
     """
 
-    rptObj.ui.charts.svg.arrow_left()
+    Usage::
+
+      rptObj.ui.charts.svg.arrow_left()
 
     :param x1:
     :param y1:
@@ -254,11 +256,11 @@ class SVG(object):
     Usage::
 
       svg = rptObj.ui.charts.svg.axes()
-    m = svg.defs().marker("circle", "0 0 10 10", 5, 5)
-    m.circle(5, 5, 5, 'red')
-    m.markerWidth(10).markerHeight(10)
-    p = svg.path(0, 0, from_origin=True).line_to(50, 100).horizontal_line_to(300).line_to(400, 200)
-    p.markers(m.url)
+      m = svg.defs().marker("circle", "0 0 10 10", 5, 5)
+      m.circle(5, 5, 5, 'red')
+      m.markerWidth(10).markerHeight(10)
+      p = svg.path(0, 0, from_origin=True).line_to(50, 100).horizontal_line_to(300).line_to(400, 200)
+      p.markers(m.url)
 
     Attributes:
     ----------
