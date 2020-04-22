@@ -616,6 +616,8 @@ class Composite(Html.Html):
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    if not isinstance(self.val.val, list):
+      self._vals = self.val._vals
     self.val.val.append(htmlObj)
     return self
 
