@@ -632,7 +632,7 @@ class Composite(Html.Html):
       'checkbox': self._report.ui.inputs.checkbox,
       'radio': self._report.ui.inputs.d_radio,
       'input': self._report.ui.inputs.d_text,
-      'checkbox': self._report.ui.inputs.checkbox,
+      'circle': self._report.ui.charts.svg.circle,
       'svg': self._report.ui.charts.svg
     }
 
@@ -656,7 +656,7 @@ class Composite(Html.Html):
       new_comp = self._get_comp_map[schema_child['type']](**schema_child.get('args', {}))
     if 'builder' in schema_child:
       builders.add(schema_child['builder'])
-    if self.options.reset_class:
+    if self.options.reset_class and not schema_child.get('class-keep', False):
       new_comp.style.clear()
     if 'class' in schema_child:
       if schema_child['class'] is None:
