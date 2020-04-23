@@ -566,6 +566,7 @@ class Composite(Html.Html):
     self._set_comp(None, schema, self.__builders)
     self.attr = self.val.attr
     self._js = self.val._js
+    self._dom = self.val._dom
     self._styleObj = self.val._styleObj
 
   @property
