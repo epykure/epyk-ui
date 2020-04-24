@@ -11,6 +11,10 @@ class SVG(Html.Html):
     self.css({"display": 'inline-block'})
     self.html_objs = []
 
+  def __add__(self, obj):
+    obj.inReport = False
+    self.html_objs.append(obj)
+
   def __getitem__(self, i):
     return self.html_objs[i]
 
@@ -241,7 +245,7 @@ class SVG(Html.Html):
     self.html_objs.append(G(self._report, fill, stroke, stroke_width))
     return self.html_objs[-1]
 
-  def path(self, x=0, y=0, fill='none', from_origin=False):
+  def path(self, x=0, y=0, fill='none', from_origin=False, bespoke_path=None):
     """
     Description:
     ------------
@@ -262,7 +266,7 @@ class SVG(Html.Html):
     if from_origin:
       x += self.origine[0]
       y += self.origine[1]
-    self.html_objs.append(Path(self._report, x, y, fill, self.origine))
+    self.html_objs.append(Path(self._report, x, y, fill, self.origine, bespoke_path))
     return self.html_objs[-1]
 
   def foreignObject(self, x, y, width, height):
@@ -682,10 +686,16 @@ class TSpan(SVGItem):
 
 
 class Path(SVGItem):
-  def __init__(self, report, x, y, fill, origin):
+  def __init__(self, report, x, y, fill, origin, bespoke_path):
     super(Path, self).__init__(report, "")
     self.set_attrs({'fill': fill, "stroke": report.theme.greys[-1], "stroke-width": 1})
-    self.html_objs, self.__path = [], ["M%s %s" % (x, y)]
+    if bespoke_path:
+      if type(bespoke_path) != list:
+        bespoke_path = [bespoke_path]
+      self.__path = bespoke_path
+    else:
+      self.__path = ["M%s %s" % (x, y)]
+    self.html_objs = []
     self.origin = origin
 
   def markers(self, marker_code):

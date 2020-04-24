@@ -330,3 +330,17 @@ class SVG(object):
     svg[-1].css({"stroke": 'none'})
     self.parent.context.register(svg)
     return svg
+
+  def path(self, x=0, y=0, fill='none', origin=False, bespoke_path=None):
+    """
+
+    :param x:
+    :param y:
+    :param fill:
+    :param origin:
+    :param bespoke_path:
+    :return:
+    """
+    path = graph.GraphSvg.Path(self.parent.context.rptObj, x, y, fill, origin, bespoke_path)
+    self.parent.context.register(path)
+    return path

@@ -303,3 +303,4 @@ http://nvd3.org/
     Related Pages:
 """
     return CompChartsCanvas.Canvas(self)
+
