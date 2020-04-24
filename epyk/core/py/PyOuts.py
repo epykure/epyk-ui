@@ -57,8 +57,8 @@ class OutBrowsers(object):
 
 
 class PyOuts(object):
-  def __init__(self, report=None):
-    self._report = report
+  def __init__(self, report=None, options=None):
+    self._report, self._options = report, options
     self.excluded_packages = None
 
   def _to_html_obj(self, htmlParts=None, cssParts=None):
