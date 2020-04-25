@@ -414,7 +414,7 @@ class Slider(Html.Html):
   @property
   def _js__builder__(self):
     return ''' options.value = data; %(jqId)s.slider(options).css(options.css)
-      ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
+      ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

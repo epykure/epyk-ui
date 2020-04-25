@@ -30,6 +30,7 @@ JUPYTER = '''
 <body>
 %(content)s
 <script>
+var jQuery = $;
 require.config({ paths:%(paths)s});
 %(jsFrgs_in_req)s
 </script>
