@@ -994,6 +994,8 @@ def extend_imports(extension):
 
   for alias, mod in extension.items():
     css, js = {'website': mod.get('website', ''), 'modules': []}, {'website': mod.get('website', ''), 'modules': []}
+    if 'register' in mod:
+      js['register'] = mod['register']
     if 'req' in mod:
       css['req'] = mod['req']
       js['req'] = mod['req']
