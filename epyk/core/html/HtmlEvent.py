@@ -276,6 +276,7 @@ class Slider(Html.Html):
     self._jsStyles = {'css': {"background": self._report.theme.success[0]}}
     self.__options = OptSliders.OptionsSlider(self, options)
     self.style.css.padding = "0 10px"
+    self.style.css.margin = "15px 0"
 
   @property
   def options(self):
