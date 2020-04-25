@@ -141,6 +141,10 @@ class PyOuts(object):
     This is what will use IPython in order to display the results in cells.
     """
     results = self._to_html_obj()
+    importMng = Imports.ImportManager(online=True, report=self._report)
+    require_js = importMng.to_requireJs(results, self.excluded_packages)
+    results['paths'] = require_js['paths']
+    results['req_config'] = require_js['jsFrgs']
     return HtmlTmplBase.JUPYTER.strip() % results
 
   def jupyterlab(self):

@@ -19,17 +19,20 @@ STATIC_PAGE = '''
 '''
 
 JUPYTER = '''
-<!DOCTYPE html>
-<HTML>
+<head>
 <style>
     %(cssStyle)s
 </style>
 %(cssImports)s
 %(jsImports)s
-
+</head>
+<body>
 %(content)s
 <script>
-    %(jsFrgs)s
+require.config({ paths:%(req_config)s});
+$(document).ready(function() {
+  %(jsFrgs)s
+})
 </script>
-</HTML>
+<body>
 '''
