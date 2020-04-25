@@ -179,7 +179,7 @@ JS_IMPORTS = {
 
   'moment': {
     'dsc': 'Module used by Tabulator for datetime objects',
-    'register': {'alias': 'moment', 'module': 'moment.min', 'npm': 'moment'},
+    #'register': {'alias': 'moment', 'module': 'moment.min', 'npm': 'moment'},
     'modules': [
       {'script': 'moment.min.js', 'version': '2.24.0', 'path': 'moment.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -1599,7 +1599,16 @@ class ImportManager(object):
     :param data: Dictionary. The Report modules to resolve
     :param excluded_packages: Optional. List. The packages to exclude
     """
-    deps_level, alias_to_name, results = {}, {}, {'jsFrgs': data['jsFrgs'], 'paths': {}}
+    deps_level, alias_to_name, name_to_alias, results = {}, {}, {}, {'jsFrgs': data['jsFrgs'], 'paths': {}}
+    m_versions = {}
+
+    # Check first if some specific versions are requried for the packages
+    for m in self._report.jsImports:
+      for req in JS_IMPORTS[m].get('req', []):
+        if 'version' in req:
+          m_versions[req['alias']] = req['version']
+
+    # Produce the dependency tree for requirejs
     for m in self.cleanImports(self._report.jsImports, JS_IMPORTS):
       if excluded_packages is not None and m in excluded_packages:
         continue
@@ -1607,9 +1616,12 @@ class ImportManager(object):
       if 'register' in JS_IMPORTS[m]:
         alias = JS_IMPORTS[m]['register']['alias']
         first_module = JS_IMPORTS[m]['modules'][0]
-        results['paths'][alias] = "%s/%s/%s" % (first_module['cdnjs'], first_module['path'] % first_module,
+        if m in m_versions:
+          first_module['version'] = m_versions[m]
+        results['paths'][alias] = "%s/%s%s" % (first_module['cdnjs'], first_module['path'] % first_module,
                                      JS_IMPORTS[m]['register'].get('module', first_module['script'][:-3]))
         alias_to_name[m] = alias
+        name_to_alias[alias] = m
         if 'req' in JS_IMPORTS[m]:
           max_level = max([deps_level[alias['alias']] if alias['alias'] in deps_level else -1 for alias in
                            JS_IMPORTS[m]['req']])
@@ -1623,12 +1635,18 @@ class ImportManager(object):
       if level is None:
         level = v
       if level != v:
+        for g in group:
+          if 'init_fnc' in JS_IMPORTS[name_to_alias[g]]['register']:
+            results['jsFrgs'] = "%s; %s" % (JS_IMPORTS[name_to_alias[g]]['register']['init_fnc'], results['jsFrgs'])
         results['jsFrgs'] = "require(['%s'], function (%s) { %s })" % (
         "', '".join([g for g in group]), ", ".join([g for g in group]), results['jsFrgs'])
         level, group = v, [alias_to_name[k]]
       else:
         group.append(alias_to_name[k])
     if group:
+      for g in group:
+        if 'init_fnc' in JS_IMPORTS[name_to_alias[g]]['register']:
+          results['jsFrgs'] = "%s; %s" % (JS_IMPORTS[name_to_alias[g]]['register']['init_fnc'], results['jsFrgs'])
       results['jsFrgs'] = "require(['%s'], function (%s) { %s })" % (
       "', '".join([g for g in group]), ", ".join([g for g in group]), results['jsFrgs'])
     return results

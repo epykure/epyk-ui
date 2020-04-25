@@ -18,21 +18,20 @@ STATIC_PAGE = '''
 </html>
 '''
 
+# %(jsFrgs_in_req)s
+# %(jsImports)s
 JUPYTER = '''
 <head>
 <style>
     %(cssStyle)s
 </style>
 %(cssImports)s
-%(jsImports)s
 </head>
 <body>
 %(content)s
 <script>
-require.config({ paths:%(req_config)s});
-$(document).ready(function() {
-  %(jsFrgs)s
-})
+require.config({ paths:%(paths)s});
+%(jsFrgs_in_req)s
 </script>
 <body>
 '''

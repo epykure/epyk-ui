@@ -143,8 +143,8 @@ class PyOuts(object):
     results = self._to_html_obj()
     importMng = Imports.ImportManager(online=True, report=self._report)
     require_js = importMng.to_requireJs(results, self.excluded_packages)
-    results['paths'] = require_js['paths']
-    results['req_config'] = require_js['jsFrgs']
+    results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
+    results['jsFrgs_in_req'] = require_js['jsFrgs']
     return HtmlTmplBase.JUPYTER.strip() % results
 
   def jupyterlab(self):
@@ -174,7 +174,7 @@ class PyOuts(object):
 
     :return: The ouput object with the function _repr_html_
     """
-    self.excluded_packages = ['bootstrap', 'jquery']
+    self.excluded_packages = ['bootstrap', 'jquery', 'moment']
     return self
 
   def w3cTryIt(self, path=None, name=None):
