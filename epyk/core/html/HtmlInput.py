@@ -9,6 +9,7 @@ from epyk.core.html.options import OptInputs
 #
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsComponents
+from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsTimepicker
 from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.html import JsHtmlField
@@ -299,8 +300,8 @@ class InputTime(Input):
     :return:
     """
     return '''
-      if (typeof data == "string"){jQuery(htmlObj).timepicker('setTime', data)} 
-      jQuery(htmlObj).timepicker(options); '''
+      if (typeof data == "string"){%(jqId)s.timepicker('setTime', data)} 
+      %(jqId)s.timepicker(options); ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def change(self, jsFnc):
     """
@@ -432,7 +433,7 @@ class InputDate(Input):
       jQuery(htmlObj).datepicker(data.options).datepicker('setDate', data.value)
     :return:
     '''
-    return '''jQuery(htmlObj).datepicker(options).datepicker('setDate', data)'''
+    return '''%(jqId)s.datepicker(options).datepicker('setDate', data)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
     # Javascript builder is mandatory for this object

@@ -20,7 +20,7 @@ class Tabulators(object):
     """
     cols = cols or []
     rows = rows or []
-    if not cols and not rows:
+    if records is not None and not cols and not rows:
       cols = list(records[0].keys())
 
     table_options_dflts = {'selectable': False, 'index': '_row', 'layout': 'fitColumns', 'pagination': 'local',
