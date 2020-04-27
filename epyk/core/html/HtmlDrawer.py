@@ -59,6 +59,8 @@ class Drawer(Html.Html):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param link:
     :param container:
     """
