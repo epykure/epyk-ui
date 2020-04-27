@@ -28,6 +28,8 @@ from epyk.interfaces.components import CompMenus
 from epyk.interfaces.components import CompPanels
 from epyk.interfaces.components import CompModals
 from epyk.interfaces.components import CompNavigation
+from epyk.interfaces.components import CompSteps
+from epyk.interfaces.components import CompDrawers
 
 
 class Components(object):
@@ -61,6 +63,7 @@ class Components(object):
     self.footer = self.navigation.footer #: shortcut for footer :func:`epyk.interfaces.components.CompNavigation.Navigation.footer`
     self.modal = self.modals.forms #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.forms`
     self.disclaimer = self.modals.disclaimer #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.disclaimer`
+    self.drawer = self.drawers.drawer #: shortcut for drawer :func:`epyk.interfaces.components.CompDrawers.Drawers.drawer`
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label
@@ -248,6 +251,24 @@ class Components(object):
     implementation).
     """
     return CompTables.Tables(self)
+
+  @property
+  def steps(self):
+    """
+    Description:
+    ------------
+    Group all the UI steps components.
+    """
+    return CompSteps.Steppers(self)
+
+  @property
+  def drawers(self):
+    """
+    Description:
+    ------------
+    Group all the UI drawers components.
+    """
+    return CompDrawers.Drawers(self)
 
   @property
   def media(self):
@@ -545,15 +566,15 @@ Attributes:
     self.register(html_loading)
     return html_loading
 
-  def workflow(self, records, width=(None, '%'), height=(40, 'px'), color=None, options=None):
+  def stepper(self, records, width=(None, '%'), height=(40, 'px'), color=None, options=None):
     """
     Description:
 
-    Entry point for the workflow object
+    Entry point for the stepper object
 
     Usage::
 
-      rptObj.ui.workflow([
+      rptObj.ui.stepper([
         {"value": 'test 1', "status": 'success', 'label': 'test'},
         {"value": 'test 2', "status": 'error'},
         {"value": 'test 3', "status": 'pending'}])
@@ -566,7 +587,7 @@ Attributes:
     :param color: Optional.
     :param options: Optional. Specific Python options available for this component
     """
-    html_wf = html.HtmlOthers.Workflow(self.rptObj, records, width, height, color, options or {})
+    html_wf = html.HtmlStepper.Stepper(self.rptObj, records, width, height, color, options or {})
     self.register(html_wf)
     return html_wf
 

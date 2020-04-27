@@ -206,3 +206,32 @@ class OptionsDiv(Options):
   @inline.setter
   def inline(self, bool):
     self.set(bool)
+
+
+class OptionDrawer(Options):
+
+  @property
+  def side(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get("left")
+
+  @side.setter
+  def side(self, value):
+    self.set(value)
+
+  @property
+  def width(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get("200px")
+
+  @width.setter
+  def width(self, integer):
+    if isinstance(integer, int):
+      integer = "%spx" % integer
+    self.set(integer)

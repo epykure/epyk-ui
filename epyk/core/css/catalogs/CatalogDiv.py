@@ -1,10 +1,11 @@
-"""
-
-"""
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles.classes import CssStylesDrop, CssStylesDivEvents, CssStylesDiv, CssStylesCommon
+from epyk.core.css.styles.classes import CssStylesDrop
+from epyk.core.css.styles.classes import CssStylesDivEvents
+from epyk.core.css.styles.classes import CssStylesDiv
+from epyk.core.css.styles.classes import CssStylesCommon
+from epyk.core.css.styles.classes import CssStylesDivDrawers
 
 
 class CatalogDiv(Catalog.CatalogGroup):
@@ -107,3 +108,22 @@ class CatalogDiv(Catalog.CatalogGroup):
   def modal_content(self):
     """  """
     return self._set_class(CssStylesDiv.CssDivModalContent)
+
+
+class CatalogDrawer(Catalog.CatalogGroup):
+
+  def drawer(self):
+    """  The main layout for the drawer compenent """
+    return self._set_class(CssStylesDivDrawers.CssDrawer)
+
+  def nav(self):
+    """   """
+    return self._set_class(CssStylesDivDrawers.CssDrawerNav)
+
+  def handle(self):
+    """  """
+    return self._set_class(CssStylesDivDrawers.CssDrawerHandle)
+
+  def content(self):
+    """  """
+    return self._set_class(CssStylesDivDrawers.CssDrawerContent)
