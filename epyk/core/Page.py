@@ -83,7 +83,6 @@ class Report(object):
     #
     self.jsOnLoadFnc, self.jsWindowLoadFnc = OrderedSet(), OrderedSet()
     self.jsOnLoadEvtsFnc = OrderedSet()
-    #self.jsFnc = OrderedSet()
 
     self.jsImports, self.cssImport = set(), set()
     self.jsLocalImports, self.cssLocalImports = set(), set()
