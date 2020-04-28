@@ -982,13 +982,12 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
   :param cdnjs_url: String. The CDNJS reference path
   :param required: List. The list of dependency modules
   """
-  mapped_modules = {"modules": []}
-  if required is not None:
-    mapped_modules['req'] = [{'alias': req} for req in required]
   for module, path in module_path:
     config = JS_IMPORTS if module.endswith(".js") else CSS_IMPORTS
     if not reference in config:
-      config[reference] = mapped_modules
+      config[reference] = {"modules": []}
+      if required is not None:
+        config[reference]['req'] = [{'alias': req} for req in required]
     if version in config:
       # take the version from another registered module
       version = config[version]['modules'][0]['version']

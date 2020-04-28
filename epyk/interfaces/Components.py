@@ -635,3 +635,20 @@ Attributes:
       h_json.style.css.overflow = 'auto'
     self.register(h_json)
     return h_json
+
+  def extension(self, package_name, alias=None):
+    """
+    Description:
+    ------------
+    Add an extension base on it is name
+
+    Attributes:
+    ----------
+    :param package_name: String. The package name
+    :param alias: String. The alias for the link in report.ui
+    """
+    mod = __import__(package_name)
+    __import__("%s.components" % package_name)
+    if alias is None:
+      alias = getattr(mod.components, 'alias', package_name)
+    setattr(self, alias, mod.components.Components(self))
