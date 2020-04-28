@@ -1,5 +1,3 @@
-from . import PyExt
-from . import PyOuts
 
 
 class OrderedSet(list):

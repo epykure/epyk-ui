@@ -8,6 +8,7 @@ import logging
 from epyk.core.js import JsUtils
 from epyk.core.js import Js
 from epyk.core.js.html import JsHtml
+from epyk.core.js import packages
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.html import Aria
@@ -650,7 +651,34 @@ http://api.jquery.com/css/
     :return: The Python object self
     """
     self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-placement': location})
-    self._report.jsFnc.add("%s.tooltip()" % self.dom.varId)
+    self._report._props['js']['onReady'].add("%s.tooltip()" % self.dom.jquery.varId)
+    return self
+
+  @packages.packageImport('bootstrap', 'bootstrap')
+  def popover(self, content, title=None, options=None):
+    """
+    Description:
+    -----------
+    All the attributes will be added to the
+
+    Related Pages:
+
+			https://getbootstrap.com/docs/4.4/components/popovers/
+
+    Attributes:
+    ----------
+    :param content: String. The tooltip content
+    :param title: String. The tooltip title
+    :param options: Dictionary all the options to be attached to the component
+    """
+    self.attr["data-content"] = content
+    if title is not None:
+      self.attr["data-title"] = title
+    if options is not None:
+      for k, v in options.items():
+        self.attr["data-%s" % k] = title
+    self.attr["data-toggle"] = 'popover'
+    self._report._props['js']['onReady'].add("$('[data-toggle=\"popover\"]').popover()")
     return self
 
   def add_options(self, options=None, name=None, value=None):

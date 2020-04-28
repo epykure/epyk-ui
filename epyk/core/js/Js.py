@@ -2,6 +2,7 @@
 import os
 import json
 
+
 from epyk.core.js import Imports
 
 from epyk.core.js import JsUtils
@@ -1010,7 +1011,7 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     ----------
     :param jsFncs: The Javascript functions to be added to this section
     """
-    self._src._props.setdefault('js', {}).setdefault('onReady', []).append(";".join(JsUtils.jsConvertFncs(jsFncs)))
+    self._src._props['js']['onReady'].add(";".join(JsUtils.jsConvertFncs(jsFncs)))
     return self
 
   def profile(self, type, htmlId, mark, recordsCount=""):
