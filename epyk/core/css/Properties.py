@@ -1718,7 +1718,23 @@ class CssMixin(object):
     self.htmlObj.css({"outline-width": val})
 
   @property
-  def overflow(self): return self.htmlObj.css("overflow")
+  def overflow(self):
+    """
+    Description:
+    ------------
+    The overflow property specifies what should happen if content overflows an element's box.
+
+    This property specifies whether to clip content or to add scrollbars when an element's content is too big to fit in a specified area.
+
+    Note: The overflow property only works for block elements with a specified height.
+
+    Values: visible|hidden|scroll|auto|initial|inherit
+
+    Related Pages:
+
+			https://www.w3schools.com/cssref/pr_pos_overflow.asp
+    """
+    return self.htmlObj.css("overflow")
 
   @overflow.setter
   def overflow(self, val):

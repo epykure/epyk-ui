@@ -602,7 +602,7 @@ Attributes:
       f = rptObj.ui.form()
 
     Attributes:
-
+    ----------
     :param action:
     :param method:
     :param helper:
@@ -610,3 +610,28 @@ Attributes:
     form = html.HtmlContainer.Form(self.rptObj, [], action, method, helper)
     self.register(form)
     return form
+
+  def json(self, data=None, width=(None, '%'), height=(100, '%'), options=None, profile=None):
+    """
+    Description:
+    ------------
+    HTML component to display a Json
+
+    Related Pages:
+
+			https://github.com/mohsen1/json-formatter-js
+
+    Attributes:
+    ----------
+    :param data: Dictioanry. The Json object to be display
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Dictionary with the component properties
+    :param profile: Boolean
+    """
+    data = data or {}
+    h_json = html.HtmlOthers.HtmlJson(self.rptObj, data, width, height, options, profile)
+    if height[1] != '%':
+      h_json.style.css.overflow = 'auto'
+    self.register(h_json)
+    return h_json

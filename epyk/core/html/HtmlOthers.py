@@ -1,6 +1,8 @@
 from epyk.core.html import Html
+from epyk.core.html.options import OptJsonFormatter
 
 from epyk.core.js.html import JsHtmlStars
+from epyk.core.js.packages import JsJsonFormatter
 from epyk.core.js.primitives import JsObjects
 
 from epyk.core.js import JsUtils
@@ -250,3 +252,49 @@ class Loading(Html.Html):
   def __str__(self):
     return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
+
+class HtmlJson(Html.Html):
+  __reqCss, __reqJs = ['json-formatter'], ['json-formatter']
+
+  def __init__(self, report, data, width, height, options, profile):
+    super(HtmlJson, self).__init__(report, data, profile=profile, css_attrs={"height": height, width: "width"})
+    self.__options = OptJsonFormatter.OptionsJsonFmt(self, options)
+
+  @property
+  def jsonId(self):
+    """
+    Return the Javascript variable of the json object
+    """
+    return "%s_obj" % self.htmlId
+
+  @property
+  def _js__builder__(self):
+    return '''
+      window[ htmlObj.id + '_obj'] = new JSONFormatter(data, options.open, options.opts); htmlObj.innerHTML = '';
+      htmlObj.appendChild(window[ htmlObj.id + '_obj'].render());
+      '''
+
+  @property
+  def options(self):
+    """
+
+    :rtype: OptJsonFormatter.OptionsJsonFmt
+    """
+    return self.__options
+
+  @property
+  def js(self):
+    """
+    Return the Javascript internal object
+
+    :return: A Javascript object
+
+    :rtype: JsJsonFormatter.Json
+    """
+    if self._js is None:
+      self._js = JsJsonFormatter.Json(self._report, varName=self.jsonId, setVar=False, parent=self)
+    return self._js
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))

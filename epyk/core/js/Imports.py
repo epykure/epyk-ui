@@ -399,6 +399,14 @@ JS_IMPORTS = {
       {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'version': '3.1.5', 'path': 'jszip/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]},
 
+  #
+  'json-formatter': {
+    'website': 'https://azimi.me/json-formatter-js/',
+    'register': {'alias': 'formatter', 'module': 'json-formatter.min'},
+    'modules': [
+      {'script': 'json-formatter.umd.min.js', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
+    ]},
+
   # Datatable pivot
   'pivot': {
     'req': [{'alias': 'jqueryui'}],
@@ -946,7 +954,14 @@ CSS_IMPORTS = {
   'leaflet': {
     'website': 'https://leafletjs.com/',
     'modules': [
-      {'script': 'leaflet.css', 'version': '1.6.0', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]}
+      {'script': 'leaflet.css', 'version': '1.6.0', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  #
+  'json-formatter': {
+    'website': 'https://azimi.me/json-formatter-js/',
+    'modules': [
+      {'script': 'json-formatter.css', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
+    ]},
 }
 
 
