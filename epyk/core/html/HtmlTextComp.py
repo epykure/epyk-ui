@@ -560,10 +560,10 @@ class Composite(Html.Html):
 
   def __init__(self, report, schema, width, height, htmlCode, options, profile, helper):
     super(Composite, self).__init__(report, None, css_attrs={"width": width, "height": height})
-    self.__builders = set()
+    self.__builders, ref_map = set(), {}
     self.__options = OptText.OptionsComposite(self, options)
     self.add_helper(helper)
-    self._set_comp(None, schema, self.__builders)
+    self._set_comp(None, schema, self.__builders, ref_map)
     self.attr = self.val.attr
     self._js = self.val._js
     self._dom = self.val._dom
@@ -634,6 +634,7 @@ class Composite(Html.Html):
       'textarea': self._report.ui.textarea,
       'button': self._report.ui.button,
       'label': self._report.ui.label,
+      'img': self._report.ui.img,
       'header': self._report.ui.header,
       'section': self._report.ui.section,
       'icon': self._report.ui.icon,
@@ -647,12 +648,13 @@ class Composite(Html.Html):
       'list': self._report.ui.list,
       'item': self._report.ui.lists.item,
       'nav': self._report.ui.tags.nav,
+      'p': self._report.ui.tags.p,
       'link': self._report.ui.tags.a,
       'aside': self._report.ui.tags.aside,
       'hr': self._report.ui.layouts.hr,
     }
 
-  def _set_comp(self, comp, schema_child, builders):
+  def _set_comp(self, comp, schema_child, builders, ref_map):
     """
     Description:
     ------------
@@ -663,6 +665,8 @@ class Composite(Html.Html):
     :param schema_child:
     :param builders:
     """
+    if 'args' in schema_child and 'url' in schema_child['args']:
+      schema_child['args']['url'] = schema_child['args']['url'] % ref_map
     if comp is None:
       # delegate the htmlID to the main component
       new_comp = self._get_comp_map[schema_child['type']](htmlCode=self.htmlId, **schema_child.get('args', {}))
@@ -681,14 +685,19 @@ class Composite(Html.Html):
         for cls in schema_child['class'].split(" "):
           new_comp.attr['class'].add(cls)
     if 'arias' in schema_child:
+      if 'describedby' in schema_child['arias']:
+        schema_child['arias']['describedby'] = schema_child['arias']['describedby'] % ref_map
       new_comp.aria.set(schema_child['arias'])
     if 'css' in schema_child:
       new_comp.css(schema_child['css'], reset=True)
     if 'attrs' in schema_child:
+      if 'data-target' in schema_child['attrs']:
+        schema_child['attrs']['data-target'] = schema_child['attrs']['data-target'] % ref_map
       new_comp.set_attrs(schema_child['attrs'])
+    if 'ref' in schema_child:
+      ref_map[schema_child['ref']] = new_comp.htmlId
     for child in schema_child.get('children', []):
-      self._set_comp(new_comp, child, builders)
-
+      self._set_comp(new_comp, child, builders, ref_map)
     if comp is not None:
       comp += new_comp
 
