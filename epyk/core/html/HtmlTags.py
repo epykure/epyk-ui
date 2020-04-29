@@ -24,7 +24,7 @@ class HtmlGeneric(Html.Html):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     if not isinstance(self.val, list):
-      self._vals = [] if self.val is None else [self.val]  
+      self._vals = [] if self.val is None else [self.val]
     if htmlObj is not None:
       self.val.append(htmlObj)
     return self
