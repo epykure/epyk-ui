@@ -347,7 +347,7 @@ class Tags(object):
     self.context.register(html_bdo)
     return html_bdo
 
-  def ol(self, text="", width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  def ol(self, text=None, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -432,7 +432,7 @@ class Tags(object):
     self.context.register(html_strong)
     return html_strong
 
-  def samp(self, text, size=(None, "px"), width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  def samp(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
@@ -774,7 +774,7 @@ class Tags(object):
     self.context.register(html_mark)
     return html_mark
 
-  def nav(self, text="", width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+  def nav(self, text=None, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
     """
     Description:
     ------------
