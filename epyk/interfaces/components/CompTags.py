@@ -347,6 +347,35 @@ class Tags(object):
     self.context.register(html_bdo)
     return html_bdo
 
+  def ol(self, text="", width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
+    """
+    Description:
+    ------------
+    The <ol> tag defines an ordered list. An ordered list can be numerical or alphabetical.
+
+    Use the <li> tag to define list items.
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_ol.asp
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param htmlCode: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    html_sup = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width, height, htmlCode, tooltip, options, profile)
+    self.context.register(html_sup)
+    return html_sup
+
   def em(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
     """
     Description:

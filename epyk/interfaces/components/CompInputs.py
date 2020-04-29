@@ -420,7 +420,7 @@ class Inputs(object):
     input.style.css.display = None
     return input
 
-  def checkbox(self, flag, group_name=None, width=(None, "%"), height=(None, "px"),
+  def checkbox(self, flag, label="", group_name=None, width=(None, "%"), height=(None, "px"),
                htmlCode=None, filter=None, options=None, attrs=None, profile=None):
     """
     Description:
@@ -445,7 +445,7 @@ class Inputs(object):
     :param attrs:
     :param profile:
     """
-    html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, group_name, width, height, htmlCode,
+    html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, label, group_name, width, height, htmlCode,
                                          filter, options or {}, attrs or {}, profile)
     self.context.register(html_coech)
     return html_coech
