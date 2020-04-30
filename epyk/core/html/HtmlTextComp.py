@@ -650,6 +650,7 @@ class Composite(Html.Html):
       'nav': self._report.ui.tags.nav,
       'p': self._report.ui.tags.p,
       'link': self._report.ui.tags.a,
+      'ol': self._report.ui.tags.ol,
       'aside': self._report.ui.tags.aside,
       'hr': self._report.ui.layouts.hr,
     }
