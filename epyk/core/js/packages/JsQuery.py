@@ -18,9 +18,9 @@ def decorate_var(var_name, convert_var=True):
   :return: The decorated Jquery reference
   """
   if not convert_var:
-    return 'jQuery(%s)' % var_name
+    return '$(%s)' % var_name
 
-  return 'jQuery(%s)' % JsUtils.jsConvertData(var_name, None)
+  return '$(%s)' % JsUtils.jsConvertData(var_name, None)
 
 
 class Jsjqxhr(object):

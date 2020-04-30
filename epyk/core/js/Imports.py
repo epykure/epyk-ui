@@ -167,13 +167,13 @@ JS_IMPORTS = {
 
   # module are written from the first one to load to the last one
   'bootstrap': {
-    'register': {'alias': 'bootstrap', 'module': 'bootstrap.bundle.min', 'name': 'bootstrap'},
+    'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap'},
     'req': [
       {'alias': 'jquery'},
     ],
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'bootstrap.bundle.min.js', 'version': '4.2.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
+      {'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
     ],
     'website': 'https://getbootstrap.com/'},
 
@@ -879,7 +879,7 @@ CSS_IMPORTS = {
     'website': 'https://getbootstrap.com/',
     'req': [{'alias': 'font-awesome'}],
     'modules': [
-      {'script': 'bootstrap.min.css', 'version': '4.2.1', 'path': 'bootstrap/%(version)s/css/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'}]},
+      {'script': 'bootstrap.min.css', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/css/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'}]},
 
   # Font awesome style width CDN links
   'font-awesome': {
@@ -987,7 +987,9 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
     if not reference in config:
       config[reference] = {"modules": []}
       if required is not None:
-        config[reference]['req'] = [{'alias': req} for req in required]
+        reqs = [{'alias': req} for req in required if req in config]
+        if reqs:
+          config[reference]['req'] = reqs
     if version in config:
       # take the version from another registered module
       version = config[version]['modules'][0]['version']
@@ -1011,8 +1013,12 @@ def extend_imports(extension):
     if 'register' in mod:
       js['register'] = mod['register']
     if 'req' in mod:
-      css['req'] = mod['req']
-      js['req'] = mod['req']
+      css['req'], js['req'] = [], []
+      for req in mod['req']:
+        if req['alias'] in CSS_IMPORTS:
+          css['req'].append(req)
+        if req['alias'] in JS_IMPORTS:
+          js['req'].append(req)
     if 'modules' in mod:
       for module in mod['modules']:
         if not 'cdnjs' in module:
@@ -1149,10 +1155,15 @@ class ImportManager(object):
       # For example NVD3 cannot use any recent version of D3
       if 'version' in mod:
         self.reqVersion[mod['alias']] = mod['version']
-        new_main_for_alias = collections.OrderedDict()
+        new_main_for_alias, new_main_for_alias_css = collections.OrderedDict(), collections.OrderedDict()
         for path in self.jsImports[mod['alias']]['main']:
           for v in self.jsImports[mod['alias']]['versions']:
             new_main_for_alias[path.replace(v, mod['version'])] = mod['version']
+        if mod['alias'] in self.cssImports:
+          for path in self.cssImports[mod['alias']]['main']:
+            for v in self.cssImports[mod['alias']]['versions']:
+              new_main_for_alias_css[path.replace(v, mod['version'])] = mod['version']
+          self.cssImports[mod['alias']]['main'] = new_main_for_alias_css
         # Store the new dictionary with the key and version updated for the module
         self.jsImports[mod['alias']]['main'] = new_main_for_alias
         for i, path in enumerate(self.jsImports[mod['alias']]['dep']):

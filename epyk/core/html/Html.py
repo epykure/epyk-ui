@@ -9,6 +9,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js import Js
 from epyk.core.js.html import JsHtml
 from epyk.core.js import packages
+from epyk.core.js.packages import JsQuery
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.html import Aria
@@ -651,7 +652,7 @@ http://api.jquery.com/css/
     :return: The Python object self
     """
     self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-placement': location})
-    self._report._props['js']['onReady'].add("%s.tooltip()" % self.dom.jquery.varId)
+    self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
     return self
 
   @packages.packageImport('bootstrap', 'bootstrap')
@@ -678,7 +679,7 @@ http://api.jquery.com/css/
       for k, v in options.items():
         self.attr["data-%s" % k] = title
     self.attr["data-toggle"] = 'popover'
-    self._report._props['js']['onReady'].add("$('[data-toggle=\"popover\"]').popover()")
+    self._report._props['js']['onReady'].add("%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
     return self
 
   def add_options(self, options=None, name=None, value=None):
