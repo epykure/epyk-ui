@@ -654,8 +654,7 @@ JS_IMPORTS = {
 
   # Popper tooltips used by bootstrap in the dropdown components
   'popper': {
-    'req': [
-      {'alias': 'jquery'}],
+    'req': [{'alias': 'jquery'}],
     'website': 'https://popper.js.org/',
     'register': {'alias': 'popper', 'module': 'popper.min'},
     'modules': [
