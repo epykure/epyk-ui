@@ -168,9 +168,7 @@ JS_IMPORTS = {
   # module are written from the first one to load to the last one
   'bootstrap': {
     'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap'},
-    'req': [
-      {'alias': 'jquery'},
-    ],
+    'req': [{'alias': 'jquery'}, {'alias': 'popper'}],
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
       {'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
