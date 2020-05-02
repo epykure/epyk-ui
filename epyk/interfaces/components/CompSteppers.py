@@ -35,6 +35,10 @@ class Steppers(object):
     st = html.HtmlStepper.Stepper(self.context.rptObj, records, width, height, color, dft_options)
     self.context.register(st)
     st.style.add_classes.div.stepper()
+    st.style.css_class.media({'.cssdivstepper li': {"float": None, 'width': '100%'},
+                               '.cssdivstepper li line': {'stroke-width': 0},
+                               '.cssdivstepper li [name=label]': {'width': '100%!IMPORTANT'}}, 'only', 'screen',
+                              {"and": [{'max-width': '600px'}]})
     return st
 
   def arrow(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
