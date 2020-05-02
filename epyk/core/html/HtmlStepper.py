@@ -8,9 +8,9 @@ from epyk.core.html.options import OptPanel
 class Stepper(Html.Html):
 
   def __init__(self, report, records, width, height, color, options):
-    super(Stepper, self).__init__(report, records, css_attrs={"list-style-type": 'none', "width": width, "height": height})
+    super(Stepper, self).__init__(report, records, css_attrs={"list-style-type": 'none', "width": width})
     self.color = self._report.theme.greys[-1] if color is None else color
-    self.css({'color': self.color, "margin": '0', 'display': 'flex', 'flex-flow': 'row wrap'})
+    self.css({'color': self.color, "margin": '0', 'display': 'block'})
     dflt_options = {'svg_style': {'display': 'block', 'width': 100, 'height': height[0]-20}, 'circle_factor': 2,
                     'text_style': {'display': 'block', 'text-align': 'center'},
                     'backgrounds': {"success": '#37A78C', 'error': '#FF0000', 'waiting': '#A0A0A0', 'pending': '#FF9200'},
@@ -55,6 +55,7 @@ class Stepper(Html.Html):
       
       data.forEach(function(step, i){
         var li = document.createElement("LI") ;
+        li.style['margin-bottom'] = '10px';
         
         attrs.forEach(function(attr){ if (typeof step[attr] === 'undefined'){ step[attr] = ''}; });
         props.forEach(function(prop){ if (typeof step[prop] === 'undefined'){ step[prop] = options[prop]}; })

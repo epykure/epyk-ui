@@ -34,6 +34,7 @@ class Steppers(object):
       dft_options.update(options)
     st = html.HtmlStepper.Stepper(self.context.rptObj, records, width, height, color, dft_options)
     self.context.register(st)
+    st.style.add_classes.div.stepper()
     return st
 
   def arrow(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
@@ -54,7 +55,7 @@ class Steppers(object):
       dft_options.update(options)
     self.stepper(records, width, height, color, dft_options)
 
-  def vertical(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
+  def vertical(self, records, shape='cicle',  width=(100, '%'), height=(70, 'px'), color=None, options=None):
     """
     Description:
 
@@ -75,9 +76,9 @@ class Steppers(object):
     :param color: Optional.
     :param options: Optional. Specific Python options available for this component
     """
-    dft_options = {"line": False}
+    dft_options = {"line": False, "shape": shape}
     if options is not None:
       dft_options.update(options)
-    st = html.HtmlStepper.Stepper(self.context.rptObj, records, width, height, color, options or {})
+    st = html.HtmlStepper.Stepper(self.context.rptObj, records, width, height, color, dft_options)
     self.context.register(st)
     return st

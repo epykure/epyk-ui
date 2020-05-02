@@ -109,6 +109,10 @@ class CatalogDiv(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesDiv.CssDivModalContent)
 
+  def stepper(self):
+    """  """
+    return self._set_class(CssStylesDiv.CssDivStepper)
+
 
 class CatalogDrawer(Catalog.CatalogGroup):
 
