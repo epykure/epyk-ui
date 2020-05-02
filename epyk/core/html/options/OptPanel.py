@@ -251,7 +251,7 @@ class OptionsStepper(Options):
     :param colors: List or Dictionary. The color definition
     """
     if not 'colors' in self._report._jsStyles:
-      self._report._jsStyles['colors'] = {type: []}
+      self._report._jsStyles['colors'] = {}
     if not isinstance(colors[0], dict):
       s = 100 / (len(colors) - 1)
       tmp_colors = []
@@ -394,16 +394,31 @@ class OptionsStepper(Options):
     self._config(num)
 
   @property
-  def background(self):
+  def line(self):
     """
     Description:
     ------------
 
     """
-    return self._config_get('grey')
+    return self._config_get(False)
 
-  @background.setter
-  def background(self, color):
+  @line.setter
+  def line(self, attrs):
+    if attrs is True:
+      attrs = {"stroke": 'grey', 'stroke-width': 2}
+    self._config(attrs)
+
+  @property
+  def backgrounds(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get({})
+
+  @backgrounds.setter
+  def backgrounds(self, color):
     self._config(color)
 
   @property

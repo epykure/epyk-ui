@@ -30,6 +30,7 @@ from epyk.interfaces.components import CompModals
 from epyk.interfaces.components import CompNavigation
 from epyk.interfaces.components import CompSteps
 from epyk.interfaces.components import CompDrawers
+from epyk.interfaces.components import CompSteppers
 
 
 class Components(object):
@@ -64,6 +65,7 @@ class Components(object):
     self.modal = self.modals.forms #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.forms`
     self.disclaimer = self.modals.disclaimer #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.disclaimer`
     self.drawer = self.drawers.drawer #: shortcut for drawer :func:`epyk.interfaces.components.CompDrawers.Drawers.drawer`
+    self.stepper = self.steppers.stepper #: shortcut for drawer :func:`epyk.interfaces.components.CompDrawers.Drawers.drawer`
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label
@@ -269,6 +271,15 @@ class Components(object):
     Group all the UI drawers components.
     """
     return CompDrawers.Drawers(self)
+
+  @property
+  def steppers(self):
+    """
+    Description:
+    ------------
+    Group all the UI steppers components.
+    """
+    return CompSteppers.Steppers(self)
 
   @property
   def media(self):
@@ -565,31 +576,6 @@ Attributes:
     html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, options or {})
     self.register(html_loading)
     return html_loading
-
-  def stepper(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
-    """
-    Description:
-
-    Entry point for the stepper object
-
-    Usage::
-
-      rptObj.ui.stepper([
-        {"value": 'test 1', "status": 'success', 'label': 'test'},
-        {"value": 'test 2', "status": 'error'},
-        {"value": 'test 3', "status": 'pending'}])
-
-    Attributes:
-    ----------
-    :param records: A list with the different steps defined in the workflow
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param color: Optional.
-    :param options: Optional. Specific Python options available for this component
-    """
-    html_wf = html.HtmlStepper.Stepper(self.rptObj, records, width, height, color, options or {})
-    self.register(html_wf)
-    return html_wf
 
   def form(self, action=None, method=None, helper=None):
     """
