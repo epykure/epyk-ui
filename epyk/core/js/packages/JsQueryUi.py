@@ -14,14 +14,13 @@ from epyk.core.js.primitives import JsObjects
 
 
 class JQueryUI(JsPackage):
+
   lib_alias = {"js": 'jqueryui', 'css': 'jqueryui'}
   lib_set_var = False
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlId = varName if varName is not None else htmlObj.htmlId
-    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
-    self._src, self._report = htmlObj, report
-    self._js, self._jquery = [], None
+  def __init__(self, htmlObj, varName=None, selector=None, setVar=True, report=None):
+    super(JQueryUI, self).__init__(src=htmlObj, varName=varName, selector=selector, data=None, setVar=setVar, parent=report)
+
 
   def labels(self):
     """
@@ -29,7 +28,7 @@ class JQueryUI(JsPackage):
 
     :return:
     """
-    self._js.append("labels()")
+    self.fnc("labels()")
     return self
 
   def cssClip(self, css=None):
@@ -45,9 +44,9 @@ class JQueryUI(JsPackage):
     :return:
     """
     if css is not None:
-      self._js.append("cssClip(%s)" % JsUtils.jsConvertData(css, None))
+      self.fnc("cssClip(%s)" % JsUtils.jsConvertData(css, None))
     else:
-      self._js.append("cssClip()")
+      self.fnc("cssClip()")
     return self
 
   def position(self, options=None):
@@ -63,9 +62,9 @@ class JQueryUI(JsPackage):
     :return:
     """
     if options is not None:
-      self._js.append("position(%s)" % JsUtils.jsConvertData(options, None))
+      self.fnc("position(%s)" % JsUtils.jsConvertData(options, None))
     else:
-      self._js.append("position()")
+      self.fnc("position()")
     return self
 
   def draggable(self, options=None):

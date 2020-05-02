@@ -687,17 +687,23 @@ class ContextMenu(Html.Html):
 class OptionsBar(Html.Html):
   name, category, callFnc = 'Options', 'Event', 'optionsbar'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  # _grpCls = CssGrpClsImage.CssClassIcon
 
-  def __init__(self, report, recordset, width, height, color, border_color, options):
+  def __init__(self, report, recordset, width, height, color, options):
     super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height})
+    self.__options = OptSliders.OptionBar(self, options)
     self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
               'background': self._report.theme.greys[0]})
-    self.border_color = border_color
     for rec in recordset:
       self += rec
-    if options.get("draggable", False):
+    if self.options.draggable:
       self.draggable()
+
+  @property
+  def options(self):
+    """
+    :rtype: OptSliders.OptionBar
+    """
+    return self.__options
 
   def __add__(self, icon):
     """ Add items to a container """
@@ -721,9 +727,8 @@ class OptionsBar(Html.Html):
     return self.val[i]
 
   def draggable(self, options=None):
-    self.css({"border": "1px solid %s" % self.border_color})
+    self.css({'border-radius': '5px', "border": "1px dotted %s" % self._report.theme.success[1]})
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.dom.jquery_ui.draggable(options).toStr())
-    #self._report.js.addOnLoad(self.dom.jquery_ui.draggable(options).toStr())
     return self
 
   def __str__(self):

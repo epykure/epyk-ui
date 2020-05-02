@@ -675,3 +675,19 @@ class OptionDialog(Options):
   def width(self, value):
     self._report._jsStyles["width"] = value
     return self
+
+
+class OptionBar(Options):
+
+  @property
+  def draggable(self):
+    """
+    Description:
+    ------------
+    Set the bar draggable using Jquery UI
+    """
+    return self._config_get(False)
+
+  @draggable.setter
+  def draggable(self, bool):
+    self._config(bool)
