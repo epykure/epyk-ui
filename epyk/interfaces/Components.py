@@ -566,7 +566,7 @@ Attributes:
     self.register(html_loading)
     return html_loading
 
-  def stepper(self, records, width=(None, '%'), height=(40, 'px'), color=None, options=None):
+  def stepper(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
     """
     Description:
 
