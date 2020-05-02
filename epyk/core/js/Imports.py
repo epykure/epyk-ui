@@ -277,7 +277,7 @@ JS_IMPORTS = {
     'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free'},
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                 'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
-    'modules': [{'script': 'fontawesome.js', 'version': '5.11.2', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
+    'modules': [{'script': 'fontawesome.js', 'version': '5.13.0', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
     'website': 'https://fontawesome.com/'},
 
   # Javascript packages to handle DataTables
@@ -884,7 +884,7 @@ CSS_IMPORTS = {
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                     'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
     'modules': [
-      {'script': 'all.css', 'version': '5.11.2', 'path': 'releases/v%(version)s/css/', 'cdnjs': 'https://use.fontawesome.com'}]},
+      {'script': 'all.css', 'version': '5.13.0', 'path': 'releases/v%(version)s/css/', 'cdnjs': 'https://use.fontawesome.com'}]},
 
   # NVD3 Components width CDN links
   'nvd3': {
