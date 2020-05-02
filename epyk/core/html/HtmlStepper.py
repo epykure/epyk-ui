@@ -1,8 +1,23 @@
 
 from epyk.core.html import Html
 
+from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlStepper
 from epyk.core.html.options import OptPanel
+
+
+class Step(object):
+
+  def __init__(self, src, selector):
+    self._src = src
+    self._selector = selector
+
+  def click(self, jsFncs, profile=False):
+
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._src._report._props['js'].setdefault("onReady", []).append("%s.addEventListener('click', function(event){%s})" % (self._selector.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self
 
 
 class Stepper(Html.Html):
@@ -21,6 +36,14 @@ class Stepper(Html.Html):
                     'shape': 'circle', 'text_colors': 'white'}
     dflt_options.update(options)
     self.__options = OptPanel.OptionsStepper(self, dflt_options)
+
+  def __getitem__(self, i):
+    """
+    Description:
+    ------------
+
+    """
+    return Step(self, selector=self.dom[i])
 
   @property
   def dom(self):
