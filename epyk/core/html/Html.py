@@ -871,7 +871,7 @@ Attributes:
   def click(self, jsFncs, profile=False):
     return self.on("click", jsFncs, profile)
 
-  def mouse(self, on_fncs=None, out_fncs=None):
+  def mouse(self, on_fncs=None, out_fncs=None, profile=False):
     """
     Description:
     -----------
@@ -895,10 +895,11 @@ Attributes:
 
     :return: self to allow the chains
     """
+    self.style.css.cursor = 'pointer'
     if on_fncs is not None:
-      self.on("mouseover", on_fncs)
+      self.on("mouseenter", on_fncs, profile)
     if out_fncs is not None:
-      self.on("mouseleave", out_fncs)
+      self.on("mouseleave", out_fncs, profile)
     return self
 
   def contextMenu(self, menu, jsFncs, profile=False):

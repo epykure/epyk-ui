@@ -973,7 +973,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.style.%s = %s" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 
-  def position(self, x=None, y=None):
+  def position(self, x=None, y=None, dx=0, dy=0):
     """
     Description:
     -----------
@@ -989,12 +989,14 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param x: Integer. The positinn from the top of the page
     :param y: Integer. The position from the left
+    :param dx: Integer.
+    :param dy: Integer.
 
     :return: A JsObj
     """
     if x is None and y is None:
-      self.css({"position": 'absolute', 'top': JsObject.JsObject.get("(event.clientY + window.scrollY) + 'px'"),
-                'left': JsObject.JsObject.get("(event.clientX + window.scrollX) + 'px'")})
+      self.css({"position": 'absolute', 'top': JsObject.JsObject.get("(event.clientY + window.scrollY + %s) + 'px'" % dy),
+                'left': JsObject.JsObject.get("(event.clientX + window.scrollX + %s) + 'px'" % dx)})
     else:
       self.css({"position": 'absolute', 'top': "%spx" % x or 0, 'left': "%spx" % x or 0})
     return self
