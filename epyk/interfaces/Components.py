@@ -508,27 +508,6 @@ Attributes:
     self.register(html_menu)
     return html_menu
 
-  def side_bar(self, links=None, color=None, servers=None, position="right"):
-    """
-    Description:
-    ------------
-    Add a side Bar to the report.
-
-    Related Pages:
-
-			https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav
-
-    Attributes:
-    ----------
-    :param links:
-    :param color:
-    :param servers:
-    :param position:
-    """
-    bar = html.HtmlMenu.HtmlSideBar(self.rptObj, links or [], color, servers)
-    self.register(bar)
-    return bar
-
   def loading(self, text="Loading", color=None, options=None):
     """
     Description:
