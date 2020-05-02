@@ -815,7 +815,7 @@ class Style(object):
     if change:
       self.__has_changed = True
     media_props = []
-    if rule:
+    if rule is not None:
       if rule in ['only', 'not'] and not mediatype:
         raise Exception('You need to specify a mediatype when using rules not or only')
 
