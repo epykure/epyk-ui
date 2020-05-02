@@ -717,9 +717,8 @@ class FieldSelect(Field):
 
 class Checkbox(Html.Html):
   name, category, callFnc = 'Checkbox', 'Inputs', 'checkbox'
-  # _grpCls = CssGrpClsInput.CssClassInput
 
-  def __init__(self, report, flag, group_name, width, height, htmlCode, filter, options, attrs, profile):
+  def __init__(self, report, flag, label, group_name, width, height, htmlCode, filter, options, attrs, profile):
     super(Checkbox, self).__init__(report, {"value": flag}, htmlCode=htmlCode,
                                    css_attrs={"width": width, "height": height}, globalFilter=filter,
                                    profile=profile, options=options)
@@ -727,6 +726,7 @@ class Checkbox(Html.Html):
     self.set_attrs(attrs=attrs)
     self.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'margin-left': '2px'})
     self.style.css.line_height = Defaults.LINE_HEIGHT
+    self._label = label or ''
 
   @property
   def dom(self):
@@ -752,7 +752,7 @@ class Checkbox(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<input %(strAttr)s>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '<input %(strAttr)s>%(label)s' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'label': self._label}
 
 
 class Radio(Html.Html):
@@ -773,6 +773,7 @@ class Radio(Html.Html):
     else:
       self.input.set_attrs(name="name", value=self.htmlId)
     self.input.set_attrs(attrs={"type": "radio"})
+    self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
     self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
@@ -814,7 +815,7 @@ class Radio(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '<div %(strAttr)s>%(helper)s</div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
 
 
 class TextArea(Html.Html):

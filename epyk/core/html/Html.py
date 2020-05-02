@@ -8,6 +8,8 @@ import logging
 from epyk.core.js import JsUtils
 from epyk.core.js import Js
 from epyk.core.js.html import JsHtml
+from epyk.core.js import packages
+from epyk.core.js.packages import JsQuery
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.html import Aria
@@ -650,7 +652,34 @@ http://api.jquery.com/css/
     :return: The Python object self
     """
     self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-placement': location})
-    self._report.jsFnc.add("%s.tooltip()" % self.dom.varId)
+    self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
+    return self
+
+  @packages.packageImport('bootstrap', 'bootstrap')
+  def popover(self, content, title=None, options=None):
+    """
+    Description:
+    -----------
+    All the attributes will be added to the
+
+    Related Pages:
+
+			https://getbootstrap.com/docs/4.4/components/popovers/
+
+    Attributes:
+    ----------
+    :param content: String. The tooltip content
+    :param title: String. The tooltip title
+    :param options: Dictionary all the options to be attached to the component
+    """
+    self.attr["data-content"] = content
+    if title is not None:
+      self.attr["data-title"] = title
+    if options is not None:
+      for k, v in options.items():
+        self.attr["data-%s" % k] = title
+    self.attr["data-toggle"] = 'popover'
+    self._report._props['js']['onReady'].add("%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
     return self
 
   def add_options(self, options=None, name=None, value=None):
@@ -764,11 +793,14 @@ Attributes:
     elif pyClassNames is not None:
       pyClsNames = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in pyClassNames['main']]
       cssClass = 'class="%s"' % " ".join(pyClsNames) if len(pyClsNames) > 0 else ""
-    if withId:
-      str_tag = 'id="%s" %s %s %s' % (self.htmlId, " ".join(['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
-      return str_tag.strip()
 
-    str_tag = '%s %s %s' % (" ".join(['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]), cssStyle, cssClass)
+    if withId:
+      self.attr['id'] = self.htmlId
+    html_tags = ['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]
+    for tag in [cssStyle, cssClass]:
+      if tag:
+        html_tags.append(tag)
+    str_tag = " ".join(html_tags)
     return str_tag.strip()
 
   # -------------------------------------------------------------
@@ -960,27 +992,6 @@ Attributes:
     filterObj = {"operation": operation, 'itemType': itemType, 'allIfEmpty': allSelected, 'colName': colName, 'val': self.val, 'typeVal': 'js'}
     self._report.jsSources.setdefault(jsId, {}).setdefault('_filters', {})[self.htmlCode] = filterObj
     return self
-
-  # def _addToContainerMap(self, htmlObj):
-  #   if hasattr(self, 'htmlMaps'):
-  #     if hasattr(htmlObj, 'htmlMaps'):
-  #       # It is a container and we need to get the mapping of the different components inside
-  #       self.htmlMaps.update(htmlObj.htmlMaps)
-  #     else:
-  #       if getattr(htmlObj, 'htmlCode', None) is not None:
-  #         if htmlObj.category == 'Table':
-  #           self.htmlMaps[htmlObj.htmlCode] = (htmlObj.__class__.__name__, '%s_table' % htmlObj.htmlCode)
-  #         elif htmlObj.category == 'Charts':
-  #           self.htmlMaps[htmlObj.htmlCode] = ('PyChartJs', '$("#%s")' % htmlObj.htmlCode)
-  #         else:
-  #           self.htmlMaps[htmlObj.htmlCode] = (htmlObj.__class__.__name__, htmlObj.jqId)
-  #       elif getattr(htmlObj, '_code', None) is not None:
-  #         if htmlObj.category == 'Table':
-  #           self.htmlMaps[htmlObj._code] = (htmlObj.__class__.__name__, '%s_table' % htmlObj._code)
-  #         elif htmlObj.category == 'Charts':
-  #           self.htmlMaps[htmlObj._code] = ('PyChartJs', '$("#%s")' % htmlObj._code)
-  #         else:
-  #           self.htmlMaps[htmlObj._code] = (htmlObj.__class__.__name__, htmlObj.jqId)
 
   # -------------------------------------------------------------------------------------------------------------------
   #                    OUTPUT METHODS

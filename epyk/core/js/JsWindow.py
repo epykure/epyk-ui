@@ -986,7 +986,13 @@ class JsWindow(object):
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs)
     if setVar:
-      return JsFncs.JsFunction("var %s = %s.setInterval(function(){%s}, %s)" % (varId, windowId, ";".join(jsFncs), milliseconds))
+      if windowId == 'window':
+        # To make the variable scope as global
+        varId = "window['%s']" % varId
+      else:
+        varId = "var %s" % varId
+
+      return JsFncs.JsFunction("%s = %s.setInterval(function(){%s}, %s)" % (varId, windowId, ";".join(jsFncs), milliseconds))
 
     return JsFncs.JsFunction("%s.setInterval(function(){%s}, %s)" % (windowId, ";".join(jsFncs), milliseconds))
 

@@ -21,6 +21,8 @@ class Options(DataClass):
     ------------
     Get the option attribute to be added on the Javascript side during the component build
 
+    Attributes:
+    ----------
     :param name: String. The attribute name
     """
     return self._report._jsStyles.get(name or sys._getframe().f_back.f_code.co_name, dflt)
@@ -31,6 +33,8 @@ class Options(DataClass):
     ------------
     Set the option attribute to be added on the Javascript side during the component build
 
+    Attributes:
+    ----------
     :param value: Object. The value for the name
     :param name: String. The attribute name
     """

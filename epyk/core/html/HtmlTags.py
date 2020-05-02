@@ -24,8 +24,9 @@ class HtmlGeneric(Html.Html):
     """ Add items to a container """
     htmlObj.inReport = False # Has to be defined here otherwise it is set to late
     if not isinstance(self.val, list):
-      self._vals = [self.val]
-    self.val.append(htmlObj)
+      self._vals = [] if self.val is None else [self.val]
+    if htmlObj is not None:
+      self.val.append(htmlObj)
     return self
 
   @property
@@ -51,6 +52,10 @@ class HtmlGeneric(Html.Html):
     return 'htmlObj.innerHTML = data'
 
   def __str__(self):
+    if isinstance(self.val, list):
+      str_val = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
+      return '<%s %s>%s</%s>%s' % (self.tag, self.get_attrs(pyClassNames=self.style.get_classes()), str_val, self.tag, self.helper)
+
     return '<%s %s>%s</%s>%s' % (self.tag, self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.tag, self.helper)
 
 

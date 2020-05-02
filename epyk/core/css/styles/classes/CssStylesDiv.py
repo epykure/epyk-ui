@@ -219,3 +219,9 @@ class CssDivModalContent(CssStyle.Style):
   def customize(self):
     self.css({'background-color': self.rptObj.theme.greys[0]})
     self.animation('epyk_modal_animatetop', {'0%': {'top': '-300px', 'opacity': '0'}, '100%': {'top': '0px', 'opacity': '1'}}, 0.7, iteration=1)
+
+
+class CssDivStepper(CssStyle.Style):
+  _selectors = {'child': 'li'}
+
+  _attrs = {'float': 'left', 'text-align': 'center'}

@@ -28,6 +28,9 @@ from epyk.interfaces.components import CompMenus
 from epyk.interfaces.components import CompPanels
 from epyk.interfaces.components import CompModals
 from epyk.interfaces.components import CompNavigation
+from epyk.interfaces.components import CompSteps
+from epyk.interfaces.components import CompDrawers
+from epyk.interfaces.components import CompSteppers
 
 
 class Components(object):
@@ -61,6 +64,8 @@ class Components(object):
     self.footer = self.navigation.footer #: shortcut for footer :func:`epyk.interfaces.components.CompNavigation.Navigation.footer`
     self.modal = self.modals.forms #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.forms`
     self.disclaimer = self.modals.disclaimer #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.disclaimer`
+    self.drawer = self.drawers.drawer #: shortcut for drawer :func:`epyk.interfaces.components.CompDrawers.Drawers.drawer`
+    self.stepper = self.steppers.stepper #: shortcut for drawer :func:`epyk.interfaces.components.CompDrawers.Drawers.drawer`
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label
@@ -248,6 +253,33 @@ class Components(object):
     implementation).
     """
     return CompTables.Tables(self)
+
+  @property
+  def steps(self):
+    """
+    Description:
+    ------------
+    Group all the UI steps components.
+    """
+    return CompSteps.Steppers(self)
+
+  @property
+  def drawers(self):
+    """
+    Description:
+    ------------
+    Group all the UI drawers components.
+    """
+    return CompDrawers.Drawers(self)
+
+  @property
+  def steppers(self):
+    """
+    Description:
+    ------------
+    Group all the UI steppers components.
+    """
+    return CompSteppers.Steppers(self)
 
   @property
   def media(self):
@@ -545,31 +577,6 @@ Attributes:
     self.register(html_loading)
     return html_loading
 
-  def workflow(self, records, width=(None, '%'), height=(40, 'px'), color=None, options=None):
-    """
-    Description:
-
-    Entry point for the workflow object
-
-    Usage::
-
-      rptObj.ui.workflow([
-        {"value": 'test 1', "status": 'success', 'label': 'test'},
-        {"value": 'test 2', "status": 'error'},
-        {"value": 'test 3', "status": 'pending'}])
-
-    Attributes:
-    ----------
-    :param records: A list with the different steps defined in the workflow
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param color: Optional.
-    :param options: Optional. Specific Python options available for this component
-    """
-    html_wf = html.HtmlOthers.Workflow(self.rptObj, records, width, height, color, options or {})
-    self.register(html_wf)
-    return html_wf
-
   def form(self, action=None, method=None, helper=None):
     """
     Description:
@@ -581,7 +588,7 @@ Attributes:
       f = rptObj.ui.form()
 
     Attributes:
-
+    ----------
     :param action:
     :param method:
     :param helper:
@@ -589,3 +596,45 @@ Attributes:
     form = html.HtmlContainer.Form(self.rptObj, [], action, method, helper)
     self.register(form)
     return form
+
+  def json(self, data=None, width=(None, '%'), height=(100, '%'), options=None, profile=None):
+    """
+    Description:
+    ------------
+    HTML component to display a Json
+
+    Related Pages:
+
+			https://github.com/mohsen1/json-formatter-js
+
+    Attributes:
+    ----------
+    :param data: Dictioanry. The Json object to be display
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Dictionary with the component properties
+    :param profile: Boolean
+    """
+    data = data or {}
+    h_json = html.HtmlOthers.HtmlJson(self.rptObj, data, width, height, options, profile)
+    if height[1] != '%':
+      h_json.style.css.overflow = 'auto'
+    self.register(h_json)
+    return h_json
+
+  def extension(self, package_name, alias=None):
+    """
+    Description:
+    ------------
+    Add an extension base on it is name
+
+    Attributes:
+    ----------
+    :param package_name: String. The package name
+    :param alias: String. The alias for the link in report.ui
+    """
+    mod = __import__(package_name)
+    __import__("%s.components" % package_name)
+    if alias is None:
+      alias = getattr(mod.components, 'alias', package_name)
+    setattr(self, alias, mod.components.Components(self))

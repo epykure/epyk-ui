@@ -692,7 +692,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsDoms("%s.querySelector('%s')" % (self.toStr(), tag))
 
-  def querySelectorAll(self, tag, varName):
+  def querySelectorAll(self, tag, varName=None):
     """
     Description:
     ------------
@@ -709,6 +709,9 @@ class JsDoms(JsObject.JsObject):
 
     :return: A javascript Array object
     """
+    if varName is None:
+      return JsArray.JsArray("%s.querySelectorAll('%s')" % (self.toStr(), tag), isPyData=False)
+
     return JsArray.JsArray("%s.querySelectorAll('%s')" % (self.toStr(), tag), varName=varName, setVar=True, isPyData=False)
 
   def empty(self):
@@ -996,7 +999,43 @@ class JsDoms(JsObject.JsObject):
       self.css({"position": 'absolute', 'top': "%spx" % x or 0, 'left': "%spx" % x or 0})
     return self
 
-  def transition(self, attribute, value, duration=2, delay=None, reverse=False):
+  def toggle_transition(self, attribute, value, value2, duration=1, timing_fnc='ease', delay=None):
+    """
+    Description:
+    ------------
+    Toogle a transition
+
+    Related Pages:
+
+			https://www.w3schools.com/cssref/css3_pr_transition.asp
+
+    Attributes:
+    ----------
+    :param attribute: String or List. Specifies the name of the CSS property the transition effect is for
+    :param value: String or List. Specifies the value of the CSS property the transition effect is for
+    :param value2: String or List. Specifies the value of the CSS property the transition effect is for
+    :param duration: Number or List. Specifies how many seconds or milliseconds the transition effect takes to complete
+    :param delay: Number. Defines when the transition effect will start
+    :param timing_fnc: String. The transition-timing-function property specifies the speed curve of the transition effect.
+    """
+    if "-" in attribute:
+      split_css = attribute.split("-")
+      css_attr = "%s%s" % (split_css[0], split_css[1].title())
+    else:
+      css_attr = attribute
+    tmp = list(self._js)
+    self._js = []
+    self.transition(attribute, value, duration, delay, timing_fnc)
+    if_ = "; ".join(self._js)
+
+    self._js = []
+    self.transition(attribute, value2, duration, delay, timing_fnc)
+    else_ = "; ".join(self._js)
+    self._js = tmp
+    self._js.append("if(%s.style.%s != '%s') {%s} else {%s}" % (self.varId, css_attr, value, if_, else_))
+    return self
+
+  def transition(self, attribute, value, duration=1, delay=None, timing_fnc='ease', reverse=False):
     """
     Description:
     ------------
@@ -1021,6 +1060,7 @@ class JsDoms(JsObject.JsObject):
     :param value: String or List. Specifies the value of the CSS property the transition effect is for
     :param duration: Number or List. Specifies how many seconds or milliseconds the transition effect takes to complete
     :param delay: Number. Defines when the transition effect will start
+    :param timing_fnc: String. The transition-timing-function property specifies the speed curve of the transition effect.
     :param reverse: Boolean. Rewind the transition animation
     """
     self.css("transition-property", ",".join(attribute) if isinstance(attribute, list) else attribute)
@@ -1028,6 +1068,7 @@ class JsDoms(JsObject.JsObject):
       self.css("transition-duration", "%ss" % "s, ".join(map(lambda x: str(x), duration)))
     else:
       self.css("transition-duration", "%ss" % duration)
+    self.css("transition-timing-function", timing_fnc)
     if delay is not None:
       if isinstance(delay, int):
         self.css("transition-delay", "%ss" % delay)

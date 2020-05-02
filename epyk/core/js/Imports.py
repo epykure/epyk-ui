@@ -167,13 +167,11 @@ JS_IMPORTS = {
 
   # module are written from the first one to load to the last one
   'bootstrap': {
-    'register': {'alias': 'bootstrap', 'module': 'bootstrap.bundle.min', 'name': 'bootstrap'},
-    'req': [
-      {'alias': 'jquery'},
-    ],
+    'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap'},
+    'req': [{'alias': 'jquery'}, {'alias': 'popper'}],
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'bootstrap.bundle.min.js', 'version': '4.2.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
+      {'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
     ],
     'website': 'https://getbootstrap.com/'},
 
@@ -397,6 +395,14 @@ JS_IMPORTS = {
     'register': {'alias': 'jszip', 'module': 'jszip.min'},
     'modules': [
       {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'version': '3.1.5', 'path': 'jszip/%(version)s/', 'cdnjs': CDNJS_REPO},
+    ]},
+
+  #
+  'json-formatter': {
+    'website': 'https://azimi.me/json-formatter-js/',
+    'register': {'alias': 'formatter', 'module': 'json-formatter.min'},
+    'modules': [
+      {'script': 'json-formatter.umd.min.js', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
     ]},
 
   # Datatable pivot
@@ -646,8 +652,7 @@ JS_IMPORTS = {
 
   # Popper tooltips used by bootstrap in the dropdown components
   'popper': {
-    'req': [
-      {'alias': 'jquery'}],
+    'req': [{'alias': 'jquery'}],
     'website': 'https://popper.js.org/',
     'register': {'alias': 'popper', 'module': 'popper.min'},
     'modules': [
@@ -871,7 +876,7 @@ CSS_IMPORTS = {
     'website': 'https://getbootstrap.com/',
     'req': [{'alias': 'font-awesome'}],
     'modules': [
-      {'script': 'bootstrap.min.css', 'version': '4.2.1', 'path': 'bootstrap/%(version)s/css/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'}]},
+      {'script': 'bootstrap.min.css', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/css/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'}]},
 
   # Font awesome style width CDN links
   'font-awesome': {
@@ -946,7 +951,14 @@ CSS_IMPORTS = {
   'leaflet': {
     'website': 'https://leafletjs.com/',
     'modules': [
-      {'script': 'leaflet.css', 'version': '1.6.0', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]}
+      {'script': 'leaflet.css', 'version': '1.6.0', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  #
+  'json-formatter': {
+    'website': 'https://azimi.me/json-formatter-js/',
+    'modules': [
+      {'script': 'json-formatter.css', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
+    ]},
 }
 
 
@@ -967,13 +979,14 @@ def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None)
   :param cdnjs_url: String. The CDNJS reference path
   :param required: List. The list of dependency modules
   """
-  mapped_modules = {"modules": []}
-  if required is not None:
-    mapped_modules['req'] = [{'alias': req} for req in required]
   for module, path in module_path:
     config = JS_IMPORTS if module.endswith(".js") else CSS_IMPORTS
     if not reference in config:
-      config[reference] = mapped_modules
+      config[reference] = {"modules": []}
+      if required is not None:
+        reqs = [{'alias': req} for req in required if req in config]
+        if reqs:
+          config[reference]['req'] = reqs
     if version in config:
       # take the version from another registered module
       version = config[version]['modules'][0]['version']
@@ -997,8 +1010,12 @@ def extend_imports(extension):
     if 'register' in mod:
       js['register'] = mod['register']
     if 'req' in mod:
-      css['req'] = mod['req']
-      js['req'] = mod['req']
+      css['req'], js['req'] = [], []
+      for req in mod['req']:
+        if req['alias'] in CSS_IMPORTS:
+          css['req'].append(req)
+        if req['alias'] in JS_IMPORTS:
+          js['req'].append(req)
     if 'modules' in mod:
       for module in mod['modules']:
         if not 'cdnjs' in module:
@@ -1135,10 +1152,15 @@ class ImportManager(object):
       # For example NVD3 cannot use any recent version of D3
       if 'version' in mod:
         self.reqVersion[mod['alias']] = mod['version']
-        new_main_for_alias = collections.OrderedDict()
+        new_main_for_alias, new_main_for_alias_css = collections.OrderedDict(), collections.OrderedDict()
         for path in self.jsImports[mod['alias']]['main']:
           for v in self.jsImports[mod['alias']]['versions']:
             new_main_for_alias[path.replace(v, mod['version'])] = mod['version']
+        if mod['alias'] in self.cssImports:
+          for path in self.cssImports[mod['alias']]['main']:
+            for v in self.cssImports[mod['alias']]['versions']:
+              new_main_for_alias_css[path.replace(v, mod['version'])] = mod['version']
+          self.cssImports[mod['alias']]['main'] = new_main_for_alias_css
         # Store the new dictionary with the key and version updated for the module
         self.jsImports[mod['alias']]['main'] = new_main_for_alias
         for i, path in enumerate(self.jsImports[mod['alias']]['dep']):

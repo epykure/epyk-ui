@@ -21,6 +21,8 @@ from . import HtmlDates
 from . import templates
 from . import HtmlTrees
 from . import HtmlTags
+from . import HtmlStepper
+from . import HtmlDrawer
 from . import Header
 
 from . import tables

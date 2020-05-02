@@ -18,3 +18,4 @@ from . import CssStylesTable as tables
 from . import CssStylesTabs as tabs
 from . import CssStylesText as texts
 from . import CssStylesDates as dates
+from . import CssStylesDivDrawers as drawers

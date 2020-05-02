@@ -51,8 +51,8 @@ class ProgressBar(Html.Html):
   def _js__builder__(self):
     return '''
       options.value = parseFloat(data); jQuery(htmlObj).progressbar(options).find('div').css(options.css);
-      jQuery(htmlObj).progressbar(options).find('div').attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"% ("+ parseFloat(data) +" / "+ options.max +")");
-      '''
+      %(jqId)s.progressbar(options).find('div').attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")");
+      ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
   def js(self):
@@ -435,7 +435,7 @@ class Range(Slider):
   @property
   def _js__builder__(self):
     return '''options.values = [Math.min(...data), Math.max(...data)]; %(jqId)s.slider(options).css(options.css)
-        ''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
+        ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
 
 class SliderDate(Slider):

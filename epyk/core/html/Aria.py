@@ -1,4 +1,6 @@
 
+import json
+
 
 class Aria(object):
   def __init__(self, htmlObj):
@@ -377,7 +379,7 @@ class Aria(object):
 
   @hidden.setter
   def hidden(self, bool):
-    self.htmlObj.attr["aria-hidden"] = bool
+    self.htmlObj.attr["aria-hidden"] = json.dumps(bool)
 
   @property
   def invalid(self):

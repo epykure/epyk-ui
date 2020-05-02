@@ -1,9 +1,9 @@
 from epyk.core.html import Html
+from epyk.core.html.options import OptJsonFormatter
 
-from epyk.core.js.html import JsHtmlWorkflow
 from epyk.core.js.html import JsHtmlStars
+from epyk.core.js.packages import JsJsonFormatter
 from epyk.core.js.primitives import JsObjects
-from epyk.core.html.entities import EntHtml4
 
 from epyk.core.js import JsUtils
 
@@ -253,52 +253,48 @@ class Loading(Html.Html):
     return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
 
-class Workflow(Html.Html):
-  name = "workflow"
+class HtmlJson(Html.Html):
+  __reqCss, __reqJs = ['json-formatter'], ['json-formatter']
 
-  def __init__(self, report, records, width, height, color, options):
-    super(Workflow, self).__init__(report, records, css_attrs={"width": width, "height": height})
-    self.color = self._report.theme.greys[-1] if color is None else color
-    self.css({'color': self.color, "display": "inline-block", "margin": '5px'})
-    self.status_colors = {
-      "success": {"border": self._report.theme.success[1], "background": self._report.theme.success[0], "stroke-width": 2, "stroke": self._report.theme.greys[-1]},
-      "error": {"border": self._report.theme.danger[1], "background": self._report.theme.danger[0], "stroke-width": 2, "stroke": self._report.theme.greys[-1]},
-      "pending": {"border": self._report.theme.warning[1], "background": self._report.theme.warning[1], "stroke-width": 1, "stroke": self._report.theme.greys[-1]},
-      "default": {"border": self._report.theme.greys[5], "background": self._report.theme.greys[3], "stroke-width": 1, "stroke": self._report.theme.greys[-1]}}
+  def __init__(self, report, data, width, height, options, profile):
+    super(HtmlJson, self).__init__(report, data, profile=profile, css_attrs={"height": height, width: "width"})
+    self.__options = OptJsonFormatter.OptionsJsonFmt(self, options)
 
   @property
-  def dom(self):
+  def jsonId(self):
     """
-    Description:
-    ------------
+    Return the Javascript variable of the json object
+    """
+    return "%s_obj" % self.htmlId
 
-    :rtype: JsHtmlWorkflow.Workflow
+  @property
+  def _js__builder__(self):
+    return '''
+      window[ htmlObj.id + '_obj'] = new JSONFormatter(data, options.open, options.opts); htmlObj.innerHTML = '';
+      htmlObj.appendChild(window[ htmlObj.id + '_obj'].render());
+      '''
+
+  @property
+  def options(self):
     """
-    if self._dom is None:
-      self._dom = JsHtmlWorkflow.Workflow(self, report=self._report)
-    return self._dom
+
+    :rtype: OptJsonFormatter.OptionsJsonFmt
+    """
+    return self.__options
+
+  @property
+  def js(self):
+    """
+    Return the Javascript internal object
+
+    :return: A Javascript object
+
+    :rtype: JsJsonFormatter.Json
+    """
+    if self._js is None:
+      self._js = JsJsonFormatter.Json(self._report, varName=self.jsonId, setVar=False, parent=self)
+    return self._js
 
   def __str__(self):
-    divs = []
-    # Add the first step
-    colors = self.status_colors.get(self.val[0].get('status', 'default'), self.status_colors['default'])
-    step = self._report.ui.div(EntHtml4.NO_BREAK_SPACE).tooltip(self.val[0]['value'])
-    step.css({"border": '1px solid %s' % colors["border"], "border-radius": "20px", "width": '20px', "height": '20px',
-              'padding': '2px', "background": colors["background"]})
-    step.inReport = False
-    divs.append("<div style='display:inline-block;width:auto;height:auto;vertical-align:top'>%s<span>%s</span></div>" % (step, self.val[0].get("label", EntHtml4.NO_BREAK_SPACE)))
-
-    for v in self.val[1:]:
-      colors = self.status_colors.get(v.get('status', 'default'), self.status_colors['default'])
-      # Add the link to the next step
-      line = self._report.ui.charts.svg.line(y1=13, y2=13, width=(40, "px"), height=(60, "px"), options={"stroke": colors["stroke"], "stroke-width": colors["stroke-width"]})
-      line.inReport = False
-      divs.append(str(line))
-
-      # Add the following step
-      step = self._report.ui.div(EntHtml4.NO_BREAK_SPACE).tooltip(v['value'])
-      step.css({"border": '1px solid %s' % colors["border"], "border-radius": "20px", "width": '20px', "height": '20px',
-                'padding': '2px', "background": colors["background"]})
-      step.inReport = False
-      divs.append("<div style='display:inline-block;width:auto;height:auto;vertical-align:top'>%s<span>%s</span></div>" % (step, v.get("label", EntHtml4.NO_BREAK_SPACE)))
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(divs))
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))

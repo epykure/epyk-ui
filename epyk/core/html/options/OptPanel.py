@@ -206,3 +206,260 @@ class OptionsDiv(Options):
   @inline.setter
   def inline(self, bool):
     self.set(bool)
+
+
+class OptionDrawer(Options):
+
+  @property
+  def side(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get("left")
+
+  @side.setter
+  def side(self, value):
+    self.set(value)
+
+  @property
+  def width(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get("200px")
+
+  @width.setter
+  def width(self, integer):
+    if isinstance(integer, int):
+      integer = "%spx" % integer
+    self.set(integer)
+
+
+class OptionsStepper(Options):
+
+  def __add_colors(self, type, colors):
+    """
+    Description:
+    ------------
+    Set the colors for a step state
+
+    Attributes:
+    ----------
+    :param type: String. The state
+    :param colors: List or Dictionary. The color definition
+    """
+    if not 'colors' in self._report._jsStyles:
+      self._report._jsStyles['colors'] = {}
+    if not isinstance(colors[0], dict):
+      s = 100 / (len(colors) - 1)
+      tmp_colors = []
+      for i, c in enumerate(colors):
+        tmp_colors.append({"color": c, 'offset': "%s%%" % int(i * s)})
+      colors = tmp_colors
+    self._report._jsStyles['colors'][type] = colors
+
+  @property
+  def success(self):
+    """
+    Description:
+    ------------
+    Add the success colors
+    """
+    return self._report._jsStyles.get('colors', {}).get('success', [])
+
+  @success.setter
+  def success(self, colors):
+    self.__add_colors('success', colors)
+
+  @property
+  def error(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._report._jsStyles['colors'].get('error', [])
+
+  @error.setter
+  def error(self, colors):
+    self.__add_colors('error', colors)
+
+  @property
+  def pending(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._report._jsStyles['colors'].get('pending', [])
+
+  @pending.setter
+  def pending(self, colors):
+    self.__add_colors('pending', colors)
+
+  @property
+  def waiting(self):
+    """
+    Description:
+    ------------
+    The list of
+    """
+    return self._report._jsStyles['colors'].get('waiting', [])
+
+  @waiting.setter
+  def waiting(self, colors):
+    self.__add_colors('waiting', colors)
+
+  @property
+  def blink(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._report._jsStyles.get('colors', {}).get('blink')
+
+  @blink.setter
+  def blink(self, colors):
+    self.__add_colors('blink', colors)
+
+  @property
+  def circle_factor(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get(False)
+
+  @circle_factor.setter
+  def circle_factor(self, bool):
+    self._config(bool)
+
+  @property
+  def width(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get(100)
+
+  @width.setter
+  def width(self, num):
+    self._config(num)
+
+  @property
+  def shape(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get('arrow')
+
+  @shape.setter
+  def shape(self, value):
+    if not value in ('arrow', 'triangle', 'rectangle', 'circle'):
+      raise Exception("This shape is not yet available, please create a request for adding it")
+
+    self._config(value)
+
+  @property
+  def opacities(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get([])
+
+  @opacities.setter
+  def opacities(self, values):
+    self._config(values)
+
+  @property
+  def height(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get(50)
+
+  @height.setter
+  def height(self, num):
+    self._config(num)
+
+  @property
+  def line(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get(False)
+
+  @line.setter
+  def line(self, attrs):
+    if attrs is True:
+      attrs = {"stroke": 'grey', 'stroke-width': 2}
+    self._config(attrs)
+
+  @property
+  def backgrounds(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get({})
+
+  @backgrounds.setter
+  def backgrounds(self, color):
+    self._config(color)
+
+  @property
+  def svg_style(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get({})
+
+  @svg_style.setter
+  def svg_style(self, css):
+    if not 'svg_style' in self._report._jsStyles:
+      self._report._jsStyles['svg_style'] = {}
+    self._report._jsStyles['svg_style'].update(css)
+
+  @property
+  def text_color(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get('white')
+
+  @text_color.setter
+  def text_color(self, colors):
+    self._config(colors)
+
+  @property
+  def text_style(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_get({})
+
+  @text_style.setter
+  def text_style(self, css):
+    if not 'title_style' in self._report._jsStyles:
+      self._report._jsStyles['text_style'] = {}
+    self._report._jsStyles['text_style'].update(css)
