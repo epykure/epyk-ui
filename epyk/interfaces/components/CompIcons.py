@@ -711,3 +711,28 @@ class Icons(object):
     bar = html.HtmlEvent.SignIn(self.context.rptObj, text, width, icon)
     self.context.register(bar)
     return bar
+
+  def bar(self, records=None, color=None, border_color=None, width=(None, 'px'),
+                  height=(None, 'px'), options=None):
+    """
+    Description:
+    ------------
+    Add a bespoke options / actions bar with icons
+
+    Usage::
+
+      Related Pages:
+Attributes:
+    ----------
+    :param records:
+    :param color:
+    :param border_color:
+    :param width:
+    :param height:
+    :param options:
+    """
+    records = records or []
+    options = options or {}
+    html_opts = html.HtmlEvent.OptionsBar(self.context.rptObj, records, width, height, color, border_color, options)
+    self.context.register(html_opts)
+    return html_opts

@@ -508,35 +508,6 @@ Attributes:
     self.register(html_menu)
     return html_menu
 
-  def options_bar(self, records=None, color=None, border_color=None, width=(None, 'px'),
-                  height=(None, 'px'), options=None):
-    """
-    Description:
-    ------------
-    Add a bespoke options / actions bar with icons
-
-    Usage::
-
-      Related Pages:
-Attributes:
-    ----------
-    :param records:
-    :param color:
-    :param border_color:
-    :param width:
-    :param height:
-    :param options:
-    """
-    records = records or []
-    options = options or {}
-    border_color = border_color or self.rptObj.getColor("colors", 1)
-    color = color or self.rptObj.getColor("greys", -1)
-    if width[0] is None:
-      width = (len(records) * 35, width[1])
-    html_opts = html.HtmlEvent.OptionsBar(self.rptObj, records, width, height, color, border_color, options)
-    self.register(html_opts)
-    return html_opts
-
   def side_bar(self, links=None, color=None, servers=None, position="right"):
     """
     Description:

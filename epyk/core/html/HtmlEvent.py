@@ -689,14 +689,36 @@ class OptionsBar(Html.Html):
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
   # _grpCls = CssGrpClsImage.CssClassIcon
 
-  def __init__(self, report, recordset, width, height, size, color, border_color, options):
-    super(OptionsBar, self).__init__(report, recordset, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
+  def __init__(self, report, recordset, width, height, color, border_color, options):
+    super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height})
     self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
               'background': self._report.theme.greys[0]})
     self.border_color = border_color
+    for rec in recordset:
+      self += rec
     if options.get("draggable", False):
       self.draggable()
-    self.size = size
+
+  def __add__(self, icon):
+    """ Add items to a container """
+    icon = self._report.ui.icon(icon)
+    icon.style.css.margin = "5px"
+    icon.inReport = False
+    self.val.append(icon)
+    return self
+
+  def __getitem__(self, i):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param i: Integer. The internal row based on the index
+
+    :rtype: Row
+    """
+    return self.val[i]
 
   def draggable(self, options=None):
     self.css({"border": "1px solid %s" % self.border_color})
@@ -705,16 +727,8 @@ class OptionsBar(Html.Html):
     return self
 
   def __str__(self):
-    cssIcon = self._report.style.cssName('CssIcon')
-    icons = []
-    for rec in self.val:
-      rec.update({'cssIcon': cssIcon, 'size': "%s%s" % (self.size[0], self.size[1])})
-      if isinstance(rec.get('jsFnc', []), list):
-        rec['jsFnc'] = ";".join(rec.get('jsFnc', []))
-      if not 'tooltip' in rec:
-        rec['tooltip'] = ''
-      icons.append('<i class="%(icon)s %(cssIcon)s" style="font-size:%(size)s" title="%(tooltip)s" onclick="var data={event_val:\'%(icon)s\'};%(jsFnc)s"></i>' % rec)
-    return '<div %(attrs)s>%(icons)s</div>' % {'attrs': self.get_attrs(pyClassNames=self.defined), 'icons': "".join(icons)}
+    str_html = "".join([v.html() for v in self.val])
+    return '<div %(attrs)s>%(icons)s</div>' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), 'icons': str_html}
 
 
 class SignIn(Html.Html):
@@ -762,7 +776,6 @@ class Filters(Html.Html):
   @property
   def options(self):
     """
-     htmlObj.innerHTML = '';
     :rtype: OptList.OptionsTagItems
     """
     return self.__options
@@ -770,13 +783,9 @@ class Filters(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      var panel = htmlObj.querySelector('[name=panel]');
-      panel.innerHTML = '';
+      var panel = htmlObj.querySelector('[name=panel]'); panel.innerHTML = '';
       data.forEach(function(val){
-        if(typeof val === 'string'){ val = {value: val, disabled: false, fixed: false}}
-        chipAdd(panel, val, options);
-      })
-      '''
+        if(typeof val === 'string'){ val = {value: val, disabled: false, fixed: false}}; chipAdd(panel, val, options);})'''
 
   def enter(self, jsFncs, profile=False):
     if not isinstance(jsFncs, list):
