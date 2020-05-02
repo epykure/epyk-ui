@@ -65,7 +65,8 @@ class Components(object):
     self.modal = self.modals.forms #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.forms`
     self.disclaimer = self.modals.disclaimer #: shortcut for footer :func:`epyk.interfaces.components.CompModals.Modals.disclaimer`
     self.drawer = self.drawers.drawer #: shortcut for drawer :func:`epyk.interfaces.components.CompDrawers.Drawers.drawer`
-    self.stepper = self.steppers.stepper #: shortcut for drawer :func:`epyk.interfaces.components.CompDrawers.Drawers.drawer`
+    self.stepper = self.steppers.stepper #: shortcut for steppers :func:`epyk.interfaces.components.CompSteppers.Steppers.stepper`
+    self.chips = self.lists.chips #: shortcut for chips :func:`epyk.interfaces.components.CompLists.Lists.chips`
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label

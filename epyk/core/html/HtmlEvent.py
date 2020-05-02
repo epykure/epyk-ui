@@ -797,5 +797,5 @@ class Filters(Html.Html):
     return '''
       <div %(cssAttr)s>
         %(title)s
-        <div name="panel">%(data)s</div>
+        <div name="panel" style="width:100%%">%(data)s</div>
       </div>''' % {'title': self.title, 'cssAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'data': str_data}

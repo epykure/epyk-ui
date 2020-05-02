@@ -615,7 +615,7 @@ class Lists(object):
   def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
 
-  def tags(self, items=None, title="Filter Panel", width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def chips(self, items=None, title="Filter Panel", width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
