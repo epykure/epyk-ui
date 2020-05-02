@@ -744,40 +744,47 @@ class SignIn(Html.Html):
 
 
 class Filters(Html.Html):
-  name, category, callFnc = 'Multi Filter', 'Event', 'multiFilter'
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
 
-  def __init__(self, report, items, title, width, height, htmlCode, helper, options, profile):
-    super(Filters, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
-    self.add_title(title, options={'content_table': False, 'managed': False})
-    self._jsStyles = {'items': {'display': 'inline-block', 'padding': '1px 4px',
-                                'color': self._report.theme.colors[-1], 'margin': '2px', 'border-radius': '5px', 'background-color': self._report.theme.colors[0]}}
+  def __init__(self, report, items, width, height, htmlCode, helper, options, profile):
+    super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
     self.__options = OptList.OptionsTagItems(self, options)
-    for item in items:
-      self += item
+    self.input = self._report.ui.input()
+    self.input.style.css.text_align = 'left'
+    self.input.style.css.padding = '0 5px'
+    self.input.inReport = False
+    self.selections = self._report.ui.div()
+    self.selections.inReport = False
+    self.selections.attr["name"] = "panel"
+    self.selections.css({'height': '30px', 'padding': '5px 2px'})
+    self.add_helper(helper)
 
   @property
   def options(self):
     """
-
+     htmlObj.innerHTML = '';
     :rtype: OptList.OptionsTagItems
     """
     return self.__options
 
-  def __getitem__(self, i):
-    return self.val[i]
+  @property
+  def _js__builder__(self):
+    return '''
+      var panel = htmlObj.querySelector('[name=panel]');
+      panel.innerHTML = '';
+      data.forEach(function(val){
+        if(typeof val === 'string'){ val = {value: val, disabled: false, fixed: false}}
+        chipAdd(panel, val, options);
+      })
+      '''
 
-  def __add__(self, htmlObj):
-    """ Add items to a container """
-    if not hasattr(htmlObj, 'inReport'):
-      htmlObj = self._report.ui.div(htmlObj)
-      icon = self._report.ui.icon("fas fa-times").css({"margin-left": '2px'})
-      htmlObj += icon
-      icon.click([htmlObj.dom.remove()])
-    htmlObj.style.css.display = 'inline'
-    htmlObj.css(self.options.item_css)
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    self.val.append(htmlObj)
-    return self
+  def enter(self, jsFncs, profile=False):
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    return self.input.on("keydown", "if (event.which == 13) { %s; %s; this.value = '' }" % (JsUtils.jsConvertFncs(jsFncs, toStr=True), self.dom.add(self.dom.input)), profile)
+
+  def append(self, value, disabled=False, fixed=False):
+    self._vals.append({"value": value, 'disabled': disabled, 'fixed': fixed})
 
   @property
   def dom(self):
@@ -793,9 +800,18 @@ class Filters(Html.Html):
     return self._dom
 
   def __str__(self):
-    str_data = "".join([s.html() for s in self.val])
-    return '''
-      <div %(cssAttr)s>
-        %(title)s
-        <div name="panel" style="width:100%%">%(data)s</div>
-      </div>''' % {'title': self.title, 'cssAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'data': str_data}
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    #
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors['ChipAdd'] = '''function chipAdd(panel, record, options){
+        var div = document.createElement("div"); for (var key in options.item_css){ div.style[key] = options.item_css[key]};
+        var content = document.createElement("span"); content.innerHTML = record.value; div.appendChild(content);
+        
+        if(!record.fixed){
+          var icon = document.createElement("i"); for (var key in options.icon_css){ icon.style[key] = options.icon_css[key] };
+          icon.classList.add('fas'); icon.classList.add('fa-times');  icon.addEventListener('click', function(event){ this.parentNode.remove()} );
+          div.appendChild(icon) }
+        panel.appendChild(div);
+    }'''
+    return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
+          'input': self.input.html(), 'selections': self.selections.html(),  'helper': self.helper}

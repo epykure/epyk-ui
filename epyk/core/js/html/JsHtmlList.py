@@ -55,7 +55,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     return self.querySelector("div[name=panel]").toggle()
 
-  def add(self, text, no_duplicte=True):
+  def add(self, text, fixed=False, no_duplicte=True):
     """
     Description:
     ------------
@@ -66,26 +66,24 @@ class Tags(JsHtml.JsHtmlRich):
     :param text: String. The value to be added on the filter panel
     """
     text = JsUtils.jsConvertData(text, None)
+    fixed = JsUtils.jsConvertData(fixed, None)
     if no_duplicte:
       return JsObjects.JsObjects.get(''' 
-      if (%(duplicated)s == -1){
-      var div = document.createElement("div"); div.innerHTML = %(text)s; div.style.width = 'auto'; div.style.display = 'inline'; %(css)s;
-      var icon = document.createElement("i"); icon.classList.add('fas'); icon.classList.add('fa-times'); 
-      icon.addEventListener('click', function(event) {div.remove()}) ;div.appendChild(icon); %(icon_css)s;
-      %(panel)s.appendChild(div); }
-      ''' % {'duplicated': self.is_duplicated(text),
-        'panel': self.querySelector("div[name=panel]"), 'text': text, 'css': JsDoms.get(varName="div").css(self._src.options.item_css).r,
-        'icon_css': JsDoms.get(varName="icon").css({"vertical-align": "middle", "display": "inline-block",
-                              "margin": "auto 0", "padding": "auto 0", "margin-left": "2px", "cursor": "pointer"}).r})
+      if (%(duplicated)s == -1){ chipAdd(%(panel)s, {value: %(text)s, disabled: false, fixed: %(fixed)s}, %(options)s)  }
+      ''' % {'duplicated': self.is_duplicated(text), 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': JsUtils.jsConvertData(self._src._jsStyles, None)})
 
     return JsObjects.JsObjects.get(''' 
-      var div = document.createElement("div"); div.innerHTML = %(text)s; div.style.width = 'auto'; div.style.display = 'inline'; %(css)s;
-      var icon = document.createElement("i"); icon.classList.add('fas'); icon.classList.add('fa-times'); 
-      icon.addEventListener('click', function(event) {div.remove()}) ;div.appendChild(icon); %(icon_css)s;
-      %(panel)s.appendChild(div);
-      ''' % {'panel': self.querySelector("div[name=panel]"), 'text': text, 'css': JsDoms.get(varName="div").css(self._src.options.item_css).r,
-             'icon_css': JsDoms.get(varName="icon").css({"vertical-align": "middle", "display": "inline-block",
-                              "margin": "auto 0", "padding": "auto 0", "margin-left": "2px", "cursor": "pointer"}).r})
+      chipAdd(%(panel)s, {value: %(text)s, disabled: false, fixed: %(fixed)s}, %(options)s)
+      ''' % {'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': JsUtils.jsConvertData(self._src._jsStyles, None)})
+
+  @property
+  def input(self):
+    """
+    Description:
+    ------------
+    Clear the content of the fitlers panel
+    """
+    return JsObjects.JsObjects.get("%s.value" % self.querySelector("input"))
 
   def clear(self):
     """

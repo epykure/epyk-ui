@@ -795,7 +795,7 @@ class JsDoms(JsObject.JsObject):
     :return: The JsObj to allow the chaining
     """
     if jsString is None:
-      return "%s.innerText" % self.varId
+      return JsString.JsString("%s.innerText" % self.varId, isPyData=False)
 
     if append:
       if valType == int:

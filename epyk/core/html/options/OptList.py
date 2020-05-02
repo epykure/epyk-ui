@@ -41,9 +41,24 @@ class OptionsTagItems(Options):
     ----------
     :param css: Dictionary. All the CSS attributes to add the any items
     """
-    dflt_css = {"padding": '0 2px', 'border': '1px solid black', 'border-radius': '5px', 'margin': '2px'}
-    return self._config_get(dflt_css)
+    return self._config_get({})
 
   @item_css.setter
   def item_css(self, attrs):
+    self._config(attrs)
+
+  @property
+  def icon_css(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. All the CSS attributes to add the any items
+    """
+    return self._config_get({})
+
+  @icon_css.setter
+  def icon_css(self, attrs):
     self._config(attrs)
