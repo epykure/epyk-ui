@@ -458,7 +458,10 @@ class Style(object):
   def __init__(self, rptObj, css_ovrs=None, selector_ovrs=None, html_id=None):
     self.rptObj, self.html_id, self.cls_ref = rptObj, html_id, None
     css_ovrs = css_ovrs or {}
-    self.__keyframes, self.__media = {}, {}
+    self.__keyframes, self.div.style.css_class.media({'.topnav li': {"float": None, 'width': '100%'},
+                                                      'topnav li line': {'stroke-width': 0},
+                                                      'topnav li [name=label]': {'width': '100%!IMPORTANT'}}, 'only', 'screen', {"and": [{'max-width': '600px'}]})
+    # div.style.css.background_color = 'yellow' = {}, {}
     selector_ids = dict(getattr(self, '_selectors', {}))
     if self.classname is None:
       self.classname = self.__class__.__name__.lower()
@@ -815,7 +818,7 @@ class Style(object):
     if change:
       self.__has_changed = True
     media_props = []
-    if rule:
+    if rule is not None:
       if rule in ['only', 'not'] and not mediatype:
         raise Exception('You need to specify a mediatype when using rules not or only')
 
