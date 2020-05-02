@@ -622,6 +622,34 @@ Attributes:
     self.register(h_json)
     return h_json
 
+  def postit(self, components=None, anchor=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param components:
+    :param anchor: Component. Optional.
+    """
+    postit = self.rptObj.ui.div()
+    if anchor is None:
+      anchor = self.rptObj.ui.icon("fas fa-map-marker")
+      anchor.style.css.padding = "4px"
+      postit += anchor
+    postit.anchor = anchor
+    popup = self.rptObj.ui.div(components, width=(None, 'px'))
+    popup.css({"display": 'none', 'position': 'absolute', 'border': '1px solid black', 'border-radius': '5px', 'padding': '5px'})
+    postit += popup
+    postit.popup = popup
+    anchor.mouse([
+      popup.dom.position(dx=10, dy=10), popup.dom.css({"display": 'block'}).r
+    ],
+      [
+        popup.dom.css({"display": 'none'}).r]
+    )
+    return postit
+
   def extension(self, package_name, alias=None):
     """
     Description:
