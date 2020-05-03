@@ -733,15 +733,27 @@ class Filters(Html.Html):
         chipAdd(panel, val, options)})'''
 
   def enter(self, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    return self.input.on("keydown", "if (event.which == 13) { %s; %s; this.value = '' }" % (JsUtils.jsConvertFncs(jsFncs, toStr=True), self.dom.add(self.dom.input)), profile)
+    self.keydown.enter([JsUtils.jsConvertFncs(jsFncs, toStr=True), self.dom.add(self.dom.input)] + jsFncs, profile)
+    return self
 
   def append(self, value, category=None, name=None, disabled=False, fixed=False):
     """
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param value:
     :param category:
     :param disabled:

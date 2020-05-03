@@ -13,6 +13,7 @@ from epyk.core.js.packages import JsQuery
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.html import Aria
+from epyk.core.html import KeyCodes
 
 try:  # For python 3
   import urllib.request as urllib2
@@ -81,6 +82,7 @@ class Html(object):
     self._triggerEvents, self.profile = set(), profile
     self._report, self._styleObj = report, None # The html object ID
     self._dom, self._container, self._sub_htmls, self._js, self.helper = None, None, [], None, ""
+    self._events__keys = {}
     self.jsImports = report.jsImports
     self.cssImport = report.cssImport
     self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
@@ -539,6 +541,57 @@ Attributes:
       if css is not None:
         self.helper.css(css)
     return self
+
+  @property
+  def keydown(self):
+    """
+    Description:
+    -----------
+    The onkeydown event occurs when the user is pressing a key (on the keyboard).
+
+    Related Pages:
+
+			https://www.w3schools.com/jsref/event_onkeydown.asp
+
+    :rtype: KeyCodes.KeyCode
+    """
+    keydown = KeyCodes.KeyCode()
+    self._events__keys['keydown'] = keydown
+    return keydown
+
+  @property
+  def keypress(self):
+    """
+    Description:
+    -----------
+    The onkeypress event occurs when the user presses a key (on the keyboard).
+
+    Related Pages:
+
+			https://www.w3schools.com/jsref/event_onkeypress.asp
+
+    :rtype: KeyCodes.KeyCode
+    """
+    keypress = KeyCodes.KeyCode()
+    self._events__keys['keypress'] = keypress
+    return keypress
+
+  @property
+  def keyup(self):
+    """
+    Description:
+    -----------
+    The onkeypress event occurs when the user presses a key (on the keyboard)
+
+    Related Pages:
+
+			https://www.w3schools.com/jsref/event_onkeypress.asp
+
+    :rtype: KeyCodes.KeyCode
+    """
+    keyup = KeyCodes.KeyCode()
+    self._events__keys['keyup'] = keyup
+    return keyup
 
   @property
   def aria(self):
@@ -1046,6 +1099,10 @@ http://python-docx.readthedocs.io/en/latest/
       str_result.append(htmlObj.html())
     if self.helper != "":
       self.helper.html()
+    #
+    for k_event, k_obj in self._events__keys.items():
+      self.on(k_event, k_obj.get_event())
+
     #if self.builder_name:
     #  self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     for c in self.style.get_classes()['main']:
