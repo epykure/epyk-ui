@@ -220,6 +220,30 @@ http://openexchangerates.github.io/accounting.js/
     else:
       self._report.set_attrs({"readOnly": value})
 
+  @property
+  def reset(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @reset.setter
+  def reset(self, bool):
+    self.set(bool)
+
+  @property
+  def select(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @select.setter
+  def select(self, bool):
+    self.set(bool)
+
 
 class OptionsInputRange(OptionsInput):
 

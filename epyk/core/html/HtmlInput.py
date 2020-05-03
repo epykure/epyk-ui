@@ -35,7 +35,7 @@ class Input(Html.Html):
     value = text['value'] if isinstance(text, dict) else text
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
     self.set_attrs(attrs=attrs)
-    self.__options = OptInputs.OptionsInput(self, options)
+    self.__options, self.__focus = OptInputs.OptionsInput(self, options), False
 
   @property
   def options(self):
@@ -86,13 +86,20 @@ class Input(Html.Html):
     :param profile: Boolean to add the Javascript fragment to profile
     :param options: Python dictionary with special options (shortcuts) for the component
     """
+    self.__focus = True
+    if jsFncs is None:
+      jsFncs = []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
     if options is not None:
-      if jsFncs is None:
-        jsFncs = []
-      elif not isinstance(jsFncs, list):
-        jsFncs = [jsFncs]
       if options.get("reset", False):
         jsFncs.append(self.dom.empty())
+      if options.get("select", False):
+        jsFncs.append(self.dom.select())
+    if self.options.reset:
+      jsFncs.append(self.dom.empty())
+    if self.options.select:
+      jsFncs.append(self.dom.select())
     return self.on("focus", jsFncs, profile)
 
   def validation(self, pattern, required=True):
@@ -153,6 +160,8 @@ class Input(Html.Html):
     return self
 
   def __str__(self):
+    if not self.__focus and (self.options.reset or self.options.select):
+      self.focus()
     if 'css' in self._jsStyles:
       self.css(self._jsStyles['css'])
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}

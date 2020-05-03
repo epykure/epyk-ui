@@ -12,11 +12,13 @@ from epyk.core.py import OrderedSet
 class ClassPage(object):
   def __init__(self, htmlObj):
     self.htmlObj, self._css_struct, self._css_class = htmlObj, None, None
-    self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb = None, None, None
+    self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb, self.__selection, self.__moz_selection = 5 * [None]
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
     self.classList['other'].add(self.scrollbar_webkit)
     self.classList['other'].add(self.scrollbar_webkit_thumb)
     self.classList['other'].add(self.scrollbar_webkit_track)
+    self.classList['other'].add(self.selection)
+    self.classList['other'].add(self.moz_selection)
 
   @property
   def css(self):
@@ -48,6 +50,26 @@ class ClassPage(object):
     if not self.__webkitscrollbar_track:
       self.__webkitscrollbar_track = CssStyleScrollbar.CssWebkitScrollbarTrack(self.htmlObj._report)
     return  self.__webkitscrollbar_track
+
+  @property
+  def selection(self):
+    """
+
+    https://www.w3schools.com/howto/howto_css_text_selection.asp
+    """
+    if not self.__selection:
+      self.__selection = CssStyleScrollbar.CssWebkitSelection(self.htmlObj._report)
+    return self.__selection
+
+  @property
+  def moz_selection(self):
+    """
+
+    https://www.w3schools.com/howto/howto_css_text_selection.asp
+    """
+    if not self.__moz_selection:
+      self.__moz_selection = CssStyleScrollbar.CssWebkitMozSelection(self.htmlObj._report)
+    return self.__moz_selection
 
   @property
   def defaults(self):

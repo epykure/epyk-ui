@@ -21,3 +21,16 @@ class CssWebkitScrollbarThumb(CssStyle.Style):
   def customize(self):
     self.css({'background-color': self.rptObj.theme.colors[-2]})
 
+
+class CssWebkitSelection(CssStyle.Style):
+  classname = "::selection"
+
+  def customize(self):
+    self.css({'background-color': self.rptObj.theme.colors[1]})
+
+
+class CssWebkitMozSelection(CssStyle.Style):
+  classname = "::-moz-selection"
+
+  def customize(self):
+    self.css({'background-color': self.rptObj.theme.colors[1]})
