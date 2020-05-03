@@ -46,6 +46,7 @@ class Inputs(object):
     """
     html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
                                       options or {}, attrs or {}, profile)
+    html_input.style.css.margin_bottom = '2px'
     self.context.register(html_input)
     return html_input
 

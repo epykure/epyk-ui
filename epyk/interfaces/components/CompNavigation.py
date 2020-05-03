@@ -345,6 +345,8 @@ class Navigation(object):
       - :class:`epyk.core.html.HtmlText.Text`
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
+    Attributes:
+    ----------
     :param image:
     :param text:
     :param link:
@@ -378,15 +380,50 @@ class Navigation(object):
 
       - :class:`epyk.core.html.HtmlMenu.HtmlFooter`
 
+    Attributes:
+    ----------
     :param components: list of html components
     :param width: the width of the object
     :param height: the height of the object
     :param profile: get profiling info
-    :return:
     """
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
     self.context.register(footer)
     return footer
+
+  def side(self, components=None, anchor=None, size=200, position='right', profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param components:
+    :param anchor:
+    :param size:
+    :param position:
+    :param profile:
+    """
+    d = self.context.rptObj.ui.div(components)
+    d.css({"background": self.context.rptObj.theme.colors[2], "position": 'absolute', 'top': 0, 'height': '100%', 'overflow-x': 'hidden', 'width': "%spx" % size})
+    if position == 'left':
+      d.css({'left': 0, 'margin-left': "-%spx" % size, 'border-right': '1px solid %s' % self.context.rptObj.theme.colors[5], 'padding': '5px'})
+    else:
+      d.css({'right': 0, 'margin-right': "-%spx" % size, 'border-left': '1px solid %s' % self.context.rptObj.theme.colors[5], 'padding': '5px'})
+    self.context.rptObj.body.style.css.overflow_x = 'hidden'
+    if anchor is None:
+      if position == 'left':
+        i = self.context.rptObj.ui.icon("fas fa-bars").click([d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
+        i.style.css.float = 'right'
+      else:
+        i = self.context.rptObj.ui.icon("fas fa-bars").click([d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
+      i.css({"padding": '5px'})
+    else:
+      if position == 'left':
+        anchor.click([d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
+      else:
+        anchor.click([d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
+    return d
 
 
 class Banners(object):
@@ -403,6 +440,8 @@ class Banners(object):
 
       - :class:`epyk.core.html.HtmlContainer.Div`
 
+    Attributes:
+    ----------
     :param data:
     :param background:
     :param width:
@@ -427,6 +466,8 @@ class Banners(object):
 
       - :class:`epyk.core.html.HtmlContainer.Div`
 
+    Attributes:
+    ----------
     :param data:
     :param background:
     :param width:
@@ -451,6 +492,8 @@ class Banners(object):
 
       - :class:`epyk.core.html.HtmlContainer.Div`
 
+    Attributes:
+    ----------
     :param data:
     :param background:
     :param width:
