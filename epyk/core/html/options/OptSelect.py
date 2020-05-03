@@ -36,8 +36,8 @@ class OptionsSelect(Options):
     return self._config_get(False)
 
   @container.setter
-  def container(self, bool):
-    self._config(bool)
+  def container(self, value):
+    self._config(value)
 
   @property
   def deselectAllText(self):
