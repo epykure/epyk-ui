@@ -937,7 +937,7 @@ Attributes:
     More specific events are possible using the generic out function
 
     Tip: As function are defined to be chaining in most of the components use .r to get the string representation and clean the cache.
-    
+
     Usage::
 
       span.mouse([

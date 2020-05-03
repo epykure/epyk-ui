@@ -566,7 +566,8 @@ class Components(object):
       postit += anchor
     postit.anchor = anchor
     popup = self.rptObj.ui.div(components, width=(None, 'px'))
-    popup.css({"display": 'none', 'position': 'absolute', 'border': '1px solid black', 'border-radius': '5px', 'padding': '5px'})
+    popup.css({"display": 'none', 'position': 'absolute', 'border': '1px solid black', 'border-radius': '5px',
+               'padding': '5px', 'background': self.rptObj.theme.greys[0]})
     postit += popup
     postit.popup = popup
     anchor.mouse([
