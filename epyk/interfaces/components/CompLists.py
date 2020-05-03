@@ -8,6 +8,7 @@ except:
   has_pandas = False
 
 from epyk.core import html
+from epyk.core.css import Defaults
 
 
 class Lists(object):
@@ -615,7 +616,7 @@ class Lists(object):
   def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
 
-  def chips(self, items=None, width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def chips(self, items=None, category='group', width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -635,6 +636,9 @@ class Lists(object):
     """
     dflt_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.context.rptObj.theme.success[0], 'border-radius': '5px', 'margin': '2px',
                                  "width": 'auto', 'display': 'inline', 'background': 'white'},
+                    'category': category,
+                    'value_css': {'font-size': Defaults.font(3), 'font-weight': 'bold', 'vertical-align': 'bottom'},
+                    'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top', 'font-size': Defaults.font(-3)},
                     'icon_css': {'color': self.context.rptObj.theme.success[1], 'margin-left': '5px', 'cursor': 'pointer'}}
 
     if options is not None:

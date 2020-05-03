@@ -32,6 +32,38 @@ class OptionsLi(object):
 class OptionsTagItems(Options):
 
   @property
+  def category_css(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. All the CSS attributes to add the any items
+    """
+    return self._config_get({})
+
+  @category_css.setter
+  def category_css(self, attrs):
+    self._config(attrs)
+
+  @property
+  def value_css(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. All the CSS attributes to add the any items
+    """
+    return self._config_get({})
+
+  @value_css.setter
+  def value_css(self, attrs):
+    self._config(attrs)
+
+  @property
   def item_css(self):
     """
     Description:
@@ -45,6 +77,22 @@ class OptionsTagItems(Options):
 
   @item_css.setter
   def item_css(self, attrs):
+    self._config(attrs)
+
+  @property
+  def category(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. All the CSS attributes to add the any items
+    """
+    return self._config_get({})
+
+  @category.setter
+  def category(self, attrs):
     self._config(attrs)
 
   @property

@@ -474,7 +474,7 @@ class SliderDates(SliderDate):
 
   @property
   def _js__builder__(self):
-    return ''' console.log(options);
+    return '''
       const minDt = new Date(options.min).getTime() / 1000;
       const maxDt = new Date(options.max).getTime() / 1000;
 
@@ -726,15 +726,32 @@ class Filters(Html.Html):
     return '''
       var panel = htmlObj.querySelector('[name=panel]'); panel.innerHTML = '';
       data.forEach(function(val){
-        if(typeof val === 'string'){ val = {value: val, disabled: false, fixed: false}}; chipAdd(panel, val, options);})'''
+        if(typeof val === 'string'){ val = {name: options.category, category: options.category, value: val, disabled: false, fixed: false} }
+        else{
+          if(val.category === undefined){ if(val.name === undefined) {val.category = options.category} else {val.category = val.name}}
+          if(val.name === undefined){ val.name = val.category }};
+        chipAdd(panel, val, options)})'''
 
   def enter(self, jsFncs, profile=False):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     return self.input.on("keydown", "if (event.which == 13) { %s; %s; this.value = '' }" % (JsUtils.jsConvertFncs(jsFncs, toStr=True), self.dom.add(self.dom.input)), profile)
 
-  def append(self, value, disabled=False, fixed=False):
-    self._vals.append({"value": value, 'disabled': disabled, 'fixed': fixed})
+  def append(self, value, category=None, name=None, disabled=False, fixed=False):
+    """
+    Description:
+    -----------
+
+    :param value:
+    :param category:
+    :param disabled:
+    :param fixed:
+    """
+    rec = {"value": value, 'disabled': disabled, 'fixed': fixed, 'category': category, 'name': name}
+    if category is None:
+      rec['category'] = name or self.options.category
+    rec['name'] = name or rec['category']
+    self._vals.append(rec)
 
   @property
   def dom(self):
@@ -743,7 +760,7 @@ class Filters(Html.Html):
     -----------
     The Javascript Dom object
 
-    :rtype: JsHtmlJqueryUI.JsHtmlSlider
+    :rtype: JsHtmlList.Tags
     """
     if self._dom is None:
       self._dom = JsHtmlList.Tags(self, report=self._report)
@@ -755,12 +772,20 @@ class Filters(Html.Html):
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     constructors['ChipAdd'] = '''function chipAdd(panel, record, options){
         var div = document.createElement("div"); for (var key in options.item_css){ div.style[key] = options.item_css[key]};
-        var content = document.createElement("span"); content.innerHTML = record.value; div.appendChild(content);
-        
+        div.setAttribute('data-category', record.category);
+        var content = document.createElement("span"); for (var key in options.value_css){ content.style[key] = options.value_css[key]};
+        content.setAttribute('name', 'chip_value'); content.innerHTML = record.value; 
+        if(true){
+          var p = document.createElement("p");
+          for (var key in options.category_css){ p.style[key] = options.category_css[key]};
+          p.innerHTML = record.name; 
+          div.appendChild(p)
+        };
+        div.appendChild(content);
         if(!record.fixed){
           var icon = document.createElement("i"); for (var key in options.icon_css){ icon.style[key] = options.icon_css[key] };
           icon.classList.add('fas'); icon.classList.add('fa-times');  icon.addEventListener('click', function(event){ this.parentNode.remove()} );
-          div.appendChild(icon) }
+          div.appendChild(icon)}
         panel.appendChild(div);
     }'''
     return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
