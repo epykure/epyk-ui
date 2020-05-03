@@ -636,11 +636,12 @@ class Lists(object):
     """
     dflt_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.context.rptObj.theme.success[0], 'border-radius': '5px', 'margin': '2px',
                                  "width": 'auto', 'display': 'inline', 'background': 'white'},
-                    'category': category,
+                    'category': category, 'visible': True,
                     'value_css': {'font-size': Defaults.font(3), 'font-weight': 'bold', 'vertical-align': 'bottom'},
                     'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top', 'font-size': Defaults.font(-3)},
                     'icon_css': {'color': self.context.rptObj.theme.success[1], 'margin-left': '5px', 'cursor': 'pointer'}}
-
+    if category == 'group':
+      dflt_options['visible'] = False
     if options is not None:
       dflt_options.update(options)
     html_f = html.HtmlEvent.Filters(self.context.rptObj, items or [], width, height, htmlCode, helper, dflt_options, profile)

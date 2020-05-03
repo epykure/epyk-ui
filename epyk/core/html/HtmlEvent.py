@@ -775,7 +775,7 @@ class Filters(Html.Html):
         div.setAttribute('data-category', record.category);
         var content = document.createElement("span"); for (var key in options.value_css){ content.style[key] = options.value_css[key]};
         content.setAttribute('name', 'chip_value'); content.innerHTML = record.value; 
-        if(true){
+        if(options.visible){
           var p = document.createElement("p");
           for (var key in options.category_css){ p.style[key] = options.category_css[key]};
           p.innerHTML = record.name; 

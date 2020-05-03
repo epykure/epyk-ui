@@ -32,6 +32,22 @@ class OptionsLi(object):
 class OptionsTagItems(Options):
 
   @property
+  def visible(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param css: Dictionary. All the CSS attributes to add the any items
+    """
+    return self._config_get(False)
+
+  @visible.setter
+  def visible(self, attrs):
+    self._config(attrs)
+
+  @property
   def category_css(self):
     """
     Description:
