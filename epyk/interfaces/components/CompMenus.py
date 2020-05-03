@@ -332,3 +332,29 @@ class Menus(object):
                                          options or {}, htmlCode, profile)
     self.context.register(html_pr)
     return html_pr
+
+  def contextual(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None,
+                 profile=None):
+    """
+    Description:
+    ------------
+    Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
+    This component is generic is need to be added to a component to work
+
+    Usage::
+
+      menu = rptObj.ui.contextual([{"text": 'text', 'event': 'alert("ok")'}])
+      rptObj.ui.title("Test").attach_menu(menu)
+
+    Related Pages:
+Attributes:
+    ----------
+    :param records: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param visible: Optional.
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    html_menu = html.HtmlMenu.ContextMenu(self.context.rptObj, records or [], width, height, visible, options or {}, profile)
+    self.context.register(html_menu)
+    return html_menu

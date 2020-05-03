@@ -67,6 +67,7 @@ class Components(object):
     self.drawer = self.drawers.drawer #: shortcut for drawer :func:`epyk.interfaces.components.CompDrawers.Drawers.drawer`
     self.stepper = self.steppers.stepper #: shortcut for steppers :func:`epyk.interfaces.components.CompSteppers.Steppers.stepper`
     self.chips = self.lists.chips #: shortcut for chips :func:`epyk.interfaces.components.CompLists.Lists.chips`
+    self.contextual = self.menus.contextual #: shortcut for chips :func:`epyk.interfaces.components.CompMenus.Menus.contextual`
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label
@@ -482,31 +483,6 @@ class Components(object):
     :rtype: html.HtmlTextEditor.Tags
     """
     return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile))
-
-  def context_menu(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None, profile=None):
-    """
-    Description:
-    ------------
-    Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
-    This component is generic is need to be added to a component to work
-
-    Usage::
-
-      menu = rptObj.ui.context_menu([{"text": 'text', 'event': 'alert("ok")'}])
-      rptObj.ui.title("Test").attach_menu(menu)
-
-    Related Pages:
-Attributes:
-    ----------
-    :param records: Optional.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param visible: Optional.
-    :param profile: Optional. A flag to set the component performance storage
-    """
-    html_menu = html.HtmlEvent.ContextMenu(self.rptObj, records or [], width, height, visible, options or {}, profile)
-    self.register(html_menu)
-    return html_menu
 
   def loading(self, text="Loading", color=None, options=None):
     """

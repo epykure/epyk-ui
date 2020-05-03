@@ -2451,7 +2451,7 @@ class CssMixin(object):
     self.css({"box-shadow": "%(size)spx %(size)spx %(size)spx %(color)s" % {'color': color, 'size': size}})
     return self
 
-  def shadow_box(self, hexa_color=None, opacity=0.2):
+  def shadow_box(self, hexa_color=None, opacity=0.2, size=2, position='right'):
     """
     Description:
     ------------
@@ -2460,6 +2460,7 @@ class CssMixin(object):
     Related Pages:
 
 			https://www.w3schools.com/css/css3_shadows.asp
+			https://gist.github.com/ocean90/1268328
 
     Attributes:
     ----------
@@ -2468,8 +2469,14 @@ class CssMixin(object):
 
     :return: The CSS object to allow the functions chaining
     """
-    rgb = Colors.getHexToRgb(self.orign_htmlObj._report.theme.greys[-1]) if hexa_color is None else hexa_color
-    self.box_shadow = "0 4px 8px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s), 0 6px 20px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity}
+    rgb = Colors.getHexToRgb(self.orign_htmlObj._report.theme.greys[-1] if hexa_color is None else hexa_color)
+    #self.box_shadow = "0 2px 4px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s), 0 3px 10px 0 rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity}
+    if position == 'right':
+      self.box_shadow = "%(size)spx 0 %(size)spx -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
+    elif position == 'left':
+      self.box_shadow = "-%(size)spx 0 5px -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
+    else:
+      self.box_shadow = "0 0 %(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {"r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
     return self
 
   def shadow_text(self):

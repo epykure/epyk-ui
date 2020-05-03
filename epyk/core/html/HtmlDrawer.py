@@ -69,8 +69,8 @@ class Drawer(Html.Html):
       link.inReport = False
     if not hasattr(container, 'inReport'):
       container = self._report.ui.div(container)
-      container.style.css.display = 'none'
-      container.inReport = False
+    container.style.css.display = 'none'
+    container.inReport = False
     self.panels += container
     self.drawers += link
 
