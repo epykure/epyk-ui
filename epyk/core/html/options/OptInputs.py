@@ -257,7 +257,24 @@ class OptionsInputRange(OptionsInput):
 
   @output.setter
   def output(self, bool):
-    return self.set(bool)
+    self.set(bool)
+
+
+class OptionsInputInteger(OptionsInput):
+
+  @property
+  def quantity(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @quantity.setter
+  def quantity(self, bool):
+    self.set(bool)
+    if bool:
+      self._report.quantity()
 
 
 class OptionsTimePicker(OptionsInput):
@@ -278,7 +295,6 @@ class OptionsTimePicker(OptionsInput):
   @timeFormat.setter
   def timeFormat(self, value):
     self._report._jsStyles["timeFormat"] = value
-    return self
 
   @property
   def minTime(self):
@@ -297,7 +313,6 @@ class OptionsTimePicker(OptionsInput):
   @minTime.setter
   def minTime(self, value):
     self._report._jsStyles["minTime"] = value
-    return self
 
   @property
   def minHour(self):
@@ -315,7 +330,6 @@ class OptionsTimePicker(OptionsInput):
   @minHour.setter
   def minHour(self, number):
     self._report._jsStyles["minHour"] = number
-    return self
 
   @property
   def minMinutes(self):
@@ -333,7 +347,6 @@ class OptionsTimePicker(OptionsInput):
   @minMinutes.setter
   def minMinutes(self, number):
     self._report._jsStyles["minMinutes"] = number
-    return self
 
   @property
   def maxTime(self):
@@ -351,7 +364,6 @@ class OptionsTimePicker(OptionsInput):
   @maxTime.setter
   def maxTime(self, number):
     self._report._jsStyles["maxTime"] = number
-    return self
 
   @property
   def maxHour(self):
@@ -369,7 +381,6 @@ class OptionsTimePicker(OptionsInput):
   @maxHour.setter
   def maxHour(self, number):
     self._report._jsStyles["maxHour"] = number
-    return self
 
   @property
   def maxMinutes(self):
@@ -387,7 +398,6 @@ class OptionsTimePicker(OptionsInput):
   @maxMinutes.setter
   def maxMinutes(self, number):
     self._report._jsStyles["maxMinutes"] = number
-    return self
 
   @property
   def startTime(self):
@@ -406,7 +416,6 @@ class OptionsTimePicker(OptionsInput):
   @startTime.setter
   def startTime(self, value):
     self._report._jsStyles["startTime"] = value
-    return self
 
   @property
   def startHour(self):
@@ -425,7 +434,6 @@ class OptionsTimePicker(OptionsInput):
   @startHour.setter
   def startHour(self, number):
     self._report._jsStyles["startHour"] = number
-    return self
 
   @property
   def startMinutes(self):
@@ -444,7 +452,6 @@ class OptionsTimePicker(OptionsInput):
   @startMinutes.setter
   def startMinutes(self, number):
     self._report._jsStyles["startMinutes"] = number
-    return self
 
   @property
   def interval(self):
@@ -462,7 +469,6 @@ class OptionsTimePicker(OptionsInput):
   @interval.setter
   def interval(self, value):
     self._report._jsStyles["interval"] = value
-    return self
 
   @property
   def dynamic(self):
@@ -480,7 +486,6 @@ class OptionsTimePicker(OptionsInput):
   @dynamic.setter
   def dynamic(self, bool):
     self._report._jsStyles["dynamic"] = bool
-    return self
 
   @property
   def scrollbar(self):
@@ -498,7 +503,6 @@ class OptionsTimePicker(OptionsInput):
   @scrollbar.setter
   def scrollbar(self, bool):
     self._report._jsStyles["scrollbar"] = bool
-    return self
 
   @property
   def zindex(self):
@@ -516,7 +520,6 @@ class OptionsTimePicker(OptionsInput):
   @zindex.setter
   def zindex(self, number):
     self._report._jsStyles["zindex"] = number
-    return self
 
 
 class OptionAutoComplete(Options):
@@ -540,7 +543,6 @@ class OptionAutoComplete(Options):
   @appendTo.setter
   def appendTo(self, value):
     self._report._jsStyles["appendTo"] = value
-    return self
 
   @property
   def autoFocus(self):
@@ -558,7 +560,6 @@ class OptionAutoComplete(Options):
   @autoFocus.setter
   def autoFocus(self, value):
     self._report._jsStyles["autoFocus"] = value
-    return self
 
   @property
   def classes(self):
@@ -578,7 +579,6 @@ class OptionAutoComplete(Options):
   @classes.setter
   def classes(self, value):
     self._report._jsStyles["classes"] = value
-    return self
 
   @property
   def delay(self):
@@ -597,7 +597,6 @@ class OptionAutoComplete(Options):
   @delay.setter
   def delay(self, value):
     self._report._jsStyles["delay"] = value
-    return self
 
   @property
   def disabled(self):
@@ -615,7 +614,6 @@ class OptionAutoComplete(Options):
   @disabled.setter
   def disabled(self, value):
     self._report._jsStyles["disabled"] = value
-    return self
 
   @property
   def minLength(self):
@@ -634,7 +632,6 @@ class OptionAutoComplete(Options):
   @minLength.setter
   def minLength(self, value):
     self._report._jsStyles["minLength"] = value
-    return self
 
   def position(self, my="center", at="center", of="window"):
     """
@@ -665,7 +662,6 @@ class OptionAutoComplete(Options):
   @source.setter
   def source(self, value):
     self._report._jsStyles["source"] = value
-    return self
 
 
 class OptionsDatePicker(OptionsInput):
@@ -686,7 +682,6 @@ class OptionsDatePicker(OptionsInput):
   @altField.setter
   def altField(self, value):
     self._report._jsStyles["altField"] = value
-    return self
 
   @property
   def altFormat(self):
@@ -704,7 +699,6 @@ class OptionsDatePicker(OptionsInput):
   @altFormat.setter
   def altFormat(self, value):
     self._report._jsStyles["altFormat"] = value
-    return self
 
   @property
   def appendText(self):
@@ -722,7 +716,6 @@ class OptionsDatePicker(OptionsInput):
   @appendText.setter
   def appendText(self, value):
     self._report._jsStyles["appendText"] = value
-    return self
 
   @property
   def autoSize(self):
@@ -740,7 +733,6 @@ class OptionsDatePicker(OptionsInput):
   @autoSize.setter
   def autoSize(self, value):
     self._report._jsStyles["autoSize"] = value
-    return self
 
   @property
   def beforeShow(self):
@@ -758,7 +750,6 @@ class OptionsDatePicker(OptionsInput):
   @beforeShow.setter
   def beforeShow(self, value):
     self._report._jsStyles["beforeShow"] = value
-    return self
 
   @property
   def beforeShowDay(self):
@@ -776,7 +767,6 @@ class OptionsDatePicker(OptionsInput):
   @beforeShowDay.setter
   def beforeShowDay(self, value):
     self._report._jsStyles["beforeShowDay"] = value
-    return self
 
   @property
   def buttonImage(self):
@@ -794,7 +784,6 @@ class OptionsDatePicker(OptionsInput):
   @buttonImage.setter
   def buttonImage(self, value):
     self._report._jsStyles["buttonImage"] = value
-    return self
 
   @property
   def buttonImageOnly(self):
@@ -812,7 +801,6 @@ class OptionsDatePicker(OptionsInput):
   @buttonImageOnly.setter
   def buttonImageOnly(self, value):
     self._report._jsStyles["buttonImageOnly"] = value
-    return self
 
   @property
   def buttonText(self):
@@ -830,7 +818,6 @@ class OptionsDatePicker(OptionsInput):
   @buttonText.setter
   def buttonText(self, value):
     self._report._jsStyles["buttonText"] = value
-    return self
 
   @property
   def calculateWeek(self):
@@ -848,7 +835,6 @@ class OptionsDatePicker(OptionsInput):
   @calculateWeek.setter
   def calculateWeek(self, value):
     self._report._jsStyles["calculateWeek"] = value
-    return self
 
   @property
   def changeMonth(self):
@@ -866,7 +852,6 @@ class OptionsDatePicker(OptionsInput):
   @changeMonth.setter
   def changeMonth(self, value):
     self._report._jsStyles["changeMonth"] = value
-    return self
 
   @property
   def changeYear(self):
@@ -884,7 +869,6 @@ class OptionsDatePicker(OptionsInput):
   @changeYear.setter
   def changeYear(self, value):
     self._report._jsStyles["changeYear"] = value
-    return self
 
   @property
   def closeText(self):
@@ -902,7 +886,6 @@ class OptionsDatePicker(OptionsInput):
   @closeText.setter
   def closeText(self, value):
     self._report._jsStyles["closeText"] = value
-    return self
 
   @property
   def constrainInput(self):
@@ -920,7 +903,6 @@ class OptionsDatePicker(OptionsInput):
   @constrainInput.setter
   def constrainInput(self, value):
     self._report._jsStyles["constrainInput"] = value
-    return self
 
   @property
   def currentText(self):
@@ -938,7 +920,6 @@ class OptionsDatePicker(OptionsInput):
   @currentText.setter
   def currentText(self, value):
     self._report._jsStyles["currentText"] = value
-    return self
 
   @property
   def dateFormat(self):
@@ -956,7 +937,6 @@ class OptionsDatePicker(OptionsInput):
   @dateFormat.setter
   def dateFormat(self, value):
     self._report._jsStyles["dateFormat"] = value
-    return self
 
   @property
   def dayNames(self):
@@ -974,7 +954,6 @@ class OptionsDatePicker(OptionsInput):
   @dayNames.setter
   def dayNames(self, value):
     self._report._jsStyles["dayNames"] = value
-    return self
 
   @property
   def dayNamesMin(self):
@@ -992,7 +971,6 @@ class OptionsDatePicker(OptionsInput):
   @dayNamesMin.setter
   def dayNamesMin(self, value):
     self._report._jsStyles["dayNamesMin"] = value
-    return self
 
   @property
   def dayNamesShort(self):
@@ -1010,7 +988,6 @@ class OptionsDatePicker(OptionsInput):
   @dayNamesShort.setter
   def dayNamesShort(self, value):
     self._report._jsStyles["dayNamesShort"] = value
-    return self
 
   @property
   def defaultDate(self):
@@ -1028,7 +1005,6 @@ class OptionsDatePicker(OptionsInput):
   @defaultDate.setter
   def defaultDate(self, value):
     self._report._jsStyles["defaultDate"] = value
-    return self
 
   @property
   def duration(self):
@@ -1046,7 +1022,6 @@ class OptionsDatePicker(OptionsInput):
   @duration.setter
   def duration(self, value):
     self._report._jsStyles["duration"] = value
-    return self
 
   @property
   def firstDay(self):
@@ -1064,7 +1039,6 @@ class OptionsDatePicker(OptionsInput):
   @firstDay.setter
   def firstDay(self, value):
     self._report._jsStyles["firstDay"] = value
-    return self
 
   @property
   def gotoCurrent(self):
@@ -1082,7 +1056,6 @@ class OptionsDatePicker(OptionsInput):
   @gotoCurrent.setter
   def gotoCurrent(self, value):
     self._report._jsStyles["gotoCurrent"] = value
-    return self
 
   @property
   def hideIfNoPrevNext(self):
@@ -1100,7 +1073,6 @@ class OptionsDatePicker(OptionsInput):
   @hideIfNoPrevNext.setter
   def hideIfNoPrevNext(self, value):
     self._report._jsStyles["hideIfNoPrevNext"] = value
-    return self
 
   @property
   def isRTL(self):
@@ -1118,7 +1090,6 @@ class OptionsDatePicker(OptionsInput):
   @isRTL.setter
   def isRTL(self, value):
     self._report._jsStyles["isRTL"] = value
-    return self
 
   @property
   def maxDate(self):
@@ -1136,7 +1107,6 @@ class OptionsDatePicker(OptionsInput):
   @maxDate.setter
   def maxDate(self, value):
     self._report._jsStyles["maxDate"] = value
-    return self
 
   @property
   def minDate(self):
@@ -1154,7 +1124,6 @@ class OptionsDatePicker(OptionsInput):
   @minDate.setter
   def minDate(self, value):
     self._report._jsStyles["minDate"] = value
-    return self
 
   @property
   def monthNames(self):
@@ -1172,7 +1141,6 @@ class OptionsDatePicker(OptionsInput):
   @monthNames.setter
   def monthNames(self, value):
     self._report._jsStyles["monthNames"] = value
-    return self
 
   @property
   def monthNamesShort(self):
@@ -1190,7 +1158,6 @@ class OptionsDatePicker(OptionsInput):
   @monthNamesShort.setter
   def monthNamesShort(self, value):
     self._report._jsStyles["monthNamesShort"] = value
-    return self
 
   @property
   def navigationAsDateFormat(self):
@@ -1208,7 +1175,6 @@ class OptionsDatePicker(OptionsInput):
   @navigationAsDateFormat.setter
   def navigationAsDateFormat(self, value):
     self._report._jsStyles["navigationAsDateFormat"] = value
-    return self
 
   @property
   def nextText(self):
@@ -1226,7 +1192,6 @@ class OptionsDatePicker(OptionsInput):
   @nextText.setter
   def nextText(self, value):
     self._report._jsStyles["nextText"] = value
-    return self
 
   @property
   def numberOfMonths(self):
@@ -1244,7 +1209,6 @@ class OptionsDatePicker(OptionsInput):
   @numberOfMonths.setter
   def numberOfMonths(self, value):
     self._report._jsStyles["numberOfMonths"] = value
-    return self
 
   @property
   def onChangeMonthYear(self):
@@ -1262,7 +1226,6 @@ class OptionsDatePicker(OptionsInput):
   @onChangeMonthYear.setter
   def onChangeMonthYear(self, value):
     self._report._jsStyles["onChangeMonthYear"] = value
-    return self
 
   @property
   def onClose(self):
@@ -1280,7 +1243,6 @@ class OptionsDatePicker(OptionsInput):
   @onClose.setter
   def onClose(self, value):
     self._report._jsStyles["onClose"] = value
-    return self
 
   @property
   def onSelect(self):
@@ -1298,7 +1260,6 @@ class OptionsDatePicker(OptionsInput):
   @onSelect.setter
   def onSelect(self, value):
     self._report._jsStyles["onSelect"] = value
-    return self
 
   @property
   def prevText(self):
@@ -1316,7 +1277,6 @@ class OptionsDatePicker(OptionsInput):
   @prevText.setter
   def prevText(self, value):
     self._report._jsStyles["prevText"] = value
-    return self
 
   @property
   def selectOtherMonths(self):
@@ -1334,7 +1294,6 @@ class OptionsDatePicker(OptionsInput):
   @selectOtherMonths.setter
   def selectOtherMonths(self, value):
     self._report._jsStyles["selectOtherMonths"] = value
-    return self
 
   @property
   def shortYearCutoff(self):
@@ -1352,7 +1311,6 @@ class OptionsDatePicker(OptionsInput):
   @shortYearCutoff.setter
   def shortYearCutoff(self, value):
     self._report._jsStyles["shortYearCutoff"] = value
-    return self
 
   @property
   def showAnim(self):
@@ -1370,7 +1328,6 @@ class OptionsDatePicker(OptionsInput):
   @showAnim.setter
   def showAnim(self, value):
     self._report._jsStyles["showAnim"] = value
-    return self
 
   @property
   def showButtonPanel(self):
@@ -1388,7 +1345,6 @@ class OptionsDatePicker(OptionsInput):
   @showButtonPanel.setter
   def showButtonPanel(self, value):
     self._report._jsStyles["showButtonPanel"] = value
-    return self
 
   @property
   def showCurrentAtPos(self):
@@ -1406,7 +1362,6 @@ class OptionsDatePicker(OptionsInput):
   @showCurrentAtPos.setter
   def showCurrentAtPos(self, value):
     self._report._jsStyles["showCurrentAtPos"] = value
-    return self
 
   @property
   def showMonthAfterYear(self):
@@ -1424,7 +1379,6 @@ class OptionsDatePicker(OptionsInput):
   @showMonthAfterYear.setter
   def showMonthAfterYear(self, value):
     self._report._jsStyles["showMonthAfterYear"] = value
-    return self
 
   @property
   def showOn(self):
@@ -1442,7 +1396,6 @@ class OptionsDatePicker(OptionsInput):
   @showOn.setter
   def showOn(self, value):
     self._report._jsStyles["showOn"] = value
-    return self
 
   @property
   def showOptions(self):
@@ -1460,7 +1413,6 @@ class OptionsDatePicker(OptionsInput):
   @showOptions.setter
   def showOptions(self, value):
     self._report._jsStyles["showOptions"] = value
-    return self
 
   @property
   def showOtherMonths(self):
@@ -1478,7 +1430,6 @@ class OptionsDatePicker(OptionsInput):
   @showOtherMonths.setter
   def showOtherMonths(self, value):
     self._report._jsStyles["showOtherMonths"] = value
-    return self
 
   @property
   def showWeek(self):
@@ -1496,7 +1447,6 @@ class OptionsDatePicker(OptionsInput):
   @showWeek.setter
   def showWeek(self, value):
     self._report._jsStyles["showWeek"] = value
-    return self
 
   @property
   def stepMonths(self):
@@ -1514,7 +1464,6 @@ class OptionsDatePicker(OptionsInput):
   @stepMonths.setter
   def stepMonths(self, value):
     self._report._jsStyles["stepMonths"] = value
-    return self
 
   @property
   def weekHeader(self):
@@ -1532,7 +1481,6 @@ class OptionsDatePicker(OptionsInput):
   @weekHeader.setter
   def weekHeader(self, value):
     self._report._jsStyles["weekHeader"] = value
-    return self
 
   @property
   def yearRange(self):
@@ -1550,7 +1498,6 @@ class OptionsDatePicker(OptionsInput):
   @yearRange.setter
   def yearRange(self, value):
     self._report._jsStyles["yearRange"] = value
-    return self
 
   @property
   def yearSuffix(self):
@@ -1568,7 +1515,6 @@ class OptionsDatePicker(OptionsInput):
   @yearSuffix.setter
   def yearSuffix(self, value):
     self._report._jsStyles["yearSuffix"] = value
-    return self
 
 
 class OptionsTextarea(OptionsInput):

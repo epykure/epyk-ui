@@ -629,7 +629,8 @@ http://api.jquery.com/css/
       self.attr['css'][key] = value if isinstance(value, str) else json.dumps(value)
     return self
 
-  def tooltip(self, value, location='top'):
+  @packages.packageImport('bootstrap', 'bootstrap')
+  def tooltip(self, value, location='top', options=None):
     """
     Description:
     -----------
@@ -651,7 +652,9 @@ http://api.jquery.com/css/
 
     :return: The Python object self
     """
-    self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-placement': location})
+    self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-html': 'true', 'data-placement': location})
+    if options is not None:
+      self.attr.update(options)
     self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
     return self
 

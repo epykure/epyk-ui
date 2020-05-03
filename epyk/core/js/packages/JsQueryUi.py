@@ -20,7 +20,7 @@ class JQueryUI(JsPackage):
 
   def __init__(self, htmlObj, varName=None, selector=None, setVar=True, report=None):
     super(JQueryUI, self).__init__(src=htmlObj, varName=varName, selector=selector, data=None, setVar=setVar, parent=report)
-
+    self._src = htmlObj
 
   def labels(self):
     """

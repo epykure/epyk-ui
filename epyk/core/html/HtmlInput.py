@@ -451,13 +451,27 @@ class InputDate(Input):
 
 
 class InputInteger(Input):
-  # _grpCls = CssGrpClsInput.CssClassInputInteger
   name, callFnc = 'Input Number', 'input'
+
+  def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+    super(InputInteger, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    self.__options = OptInputs.OptionsInputInteger(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the input component properties
+
+    :rtype: OptInputs.OptionsInputInteger
+    """
+    return self.__options
 
   def quantity(self):
     factors, strFcts = {'K': 1000, 'M': 1000000, 'B': 1000000000}, []
     for f, val in factors.items():
-      strFcts.append("if(event.key.toUpperCase() == '%s'){$(this).find('input').val($(this).find('input').val() * %s)}" % (f, val))
+      strFcts.append("if(event.key.toUpperCase() == '%s'){this.value *= %s}" % (f, val))
     self.on('keydown', ";".join(strFcts))
     return self
 
@@ -547,15 +561,15 @@ class Field(Html.Html):
 
 class FieldInput(Field):
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
-    input = report.ui.inputs.input(value, width=(None, "%"), placeholder=placeholder)
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.inputs.input(value, width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldInput, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldAutocomplete(Field):
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
-    input = report.ui.inputs.autocomplete(value, width=(None, "%"), placeholder=placeholder)
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.inputs.autocomplete(value, width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldAutocomplete, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
   def change(self, jsFnc, profile=None):
@@ -690,37 +704,37 @@ class FieldRange(Field):
 
 class FieldCheckBox(Field):
 
-  def __init__(self, report, value, label, icon, width, height, htmlCode, helper, profile):
-    input = report.ui.inputs.checkbox(value, width=(None, "%"))
+  def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.inputs.checkbox(value, width=(None, "%"), options=options)
     super(FieldCheckBox, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, profile)
     self.style.css.line_height = Defaults.LINE_HEIGHT
 
 
 class FieldInteger(Field):
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
-    input = report.ui.inputs.d_int(value, width=(None, "%"), placeholder=placeholder)
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.inputs.d_int(value, width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldInteger, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldPassword(Field):
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
-    input = report.ui.inputs.password(value, width=(None, "%"), placeholder=placeholder)
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.inputs.password(value, width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldPassword, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldTextArea(Field):
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, profile):
-    input = report.ui.inputs.textarea(value, width=(100, "%"), placeholder=placeholder)
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.inputs.textarea(value, width=(100, "%"), placeholder=placeholder, options=options)
     super(FieldTextArea, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldSelect(Field):
 
-  def __init__(self, report, value, label, icon, width, height, htmlCode, helper, profile):
-    input = report.ui.select(value, width=(100, "%"))
+  def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.select(value, width=(100, "%"), options=options)
     super(FieldSelect, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, profile)
 
 
@@ -767,7 +781,7 @@ class Checkbox(Html.Html):
 class Radio(Html.Html):
   name, category, callFnc = 'Radio', 'Inputs', 'radio'
 
-  def __init__(self, report, flag, label, group_name, icon, width, height, htmlCode, helper, profile):
+  def __init__(self, report, flag, label, group_name, icon, width, height, htmlCode, helper, options, profile):
     super(Radio, self).__init__(report, {"value": flag, 'text': label}, htmlCode=htmlCode,
                                          css_attrs={"width": width, 'height': height}, profile=profile)
     self.add_input("", position="before", css={"width": 'none', "vertical-align": 'middle'})

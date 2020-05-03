@@ -157,8 +157,7 @@ class Fields(object):
     self.context.register(html_dt)
     return html_dt
 
-  def time(self, value=None, label=None, icon="far fa-clock", color=None, htmlCode=None, profile=None,
-          options=None, helper=None):
+  def time(self, value=None, label=None, icon="far fa-clock", color=None, htmlCode=None, profile=None, options=None, helper=None):
     """
     Description:
     ------------
@@ -193,7 +192,7 @@ class Fields(object):
     return html_dt
 
   def input(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-            height=(None, "px"), htmlCode=None, helper=None, profile=None):
+            height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -217,12 +216,12 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
-    html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
     self.context.register(html_input)
     return html_input
 
   def autocomplete(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-            height=(None, "px"), htmlCode=None, helper=None, profile=None):
+            height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -246,12 +245,12 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
-    html_input = html.HtmlInput.FieldAutocomplete(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    html_input = html.HtmlInput.FieldAutocomplete(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
     self.context.register(html_input)
     return html_input
 
   def static(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
-             helper=None, profile=None):
+             helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -275,13 +274,13 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
-    html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
     html_input.input.readonly(True)
     self.context.register(html_input)
     return html_input
 
   def integer(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, profile=None):
+              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -305,12 +304,12 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
-    html_input = html.HtmlInput.FieldInteger(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    html_input = html.HtmlInput.FieldInteger(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
     self.context.register(html_input)
     return html_input
 
   def password(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, profile=None):
+              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -335,12 +334,12 @@ class Fields(object):
     :param profile:
     """
     html_input = html.HtmlInput.FieldPassword(self.context.rptObj, value, label, placeholder, icon, width, height,
-                                              htmlCode, helper, profile)
+                                              htmlCode, helper, options, profile)
     self.context.register(html_input)
     return html_input
 
   def textarea(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, profile=None):
+              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -365,12 +364,12 @@ class Fields(object):
     :param profile:
     """
     html_input = html.HtmlInput.FieldTextArea(self.context.rptObj, value, label, placeholder, icon, width, height,
-                                              htmlCode, helper, profile)
+                                              htmlCode, helper, options, profile)
     self.context.register(html_input)
     return html_input
 
   def checkbox(self, value=False, label=None, icon=None, width=(100, "%"), height=(None, "px"),
-               htmlCode=None, helper=None, profile=None):
+               htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -397,12 +396,12 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
-    html_input = html.HtmlInput.FieldCheckBox(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, profile)
+    html_input = html.HtmlInput.FieldCheckBox(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, options, profile)
     self.context.register(html_input)
     return html_input
 
   def radio(self, value=False, label=None, group_name=None, icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, profile=None):
+              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -433,7 +432,7 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
-    html_input = html.HtmlInput.Radio(self.context.rptObj, value, label, group_name, icon, width, height, htmlCode, helper, profile)
+    html_input = html.HtmlInput.Radio(self.context.rptObj, value, label, group_name, icon, width, height, htmlCode, helper, options, profile)
     html_input.label.css({"width": '100px', 'float': 'left'})
     html_input.css({"display": 'inline-block'})
     self.context.register(html_input)
@@ -508,7 +507,7 @@ class Fields(object):
     """
     if options is not None and 'align' in options:
       self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
-    html_input = html.HtmlInput.FieldSelect(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, profile)
+    html_input = html.HtmlInput.FieldSelect(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, options, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
     self.context.register(html_input)
     return html_input

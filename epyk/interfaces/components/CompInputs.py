@@ -452,7 +452,7 @@ class Inputs(object):
     return html_coech
 
   def radio(self, flag, label=None, group_name=None, icon=None, width=(None, "%"), height=(None, "px"),
-            htmlCode=None, helper=None, profile=None):
+            htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -480,7 +480,7 @@ class Inputs(object):
     :param profile:
     """
     html_radio = html.HtmlInput.Radio(self.context.rptObj, flag, label, group_name, icon, width, height, htmlCode,
-                                      helper, profile)
+                                      helper, options, profile)
     self.context.register(html_radio)
     return html_radio
 

@@ -391,7 +391,7 @@ class Navigation(object):
     self.context.register(footer)
     return footer
 
-  def side(self, components=None, anchor=None, size=200, position='right', profile=False):
+  def side(self, components=None, anchor=None, size=262, position='right', profile=False):
     """
     Description:
     ------------

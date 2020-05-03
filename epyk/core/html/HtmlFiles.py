@@ -49,8 +49,9 @@ class DownloadMemoryZip(Html.Html):
 
   def __str__(self):
     self.click('''
-        $.ajax({url: %(url)s, type: "POST", contentType: attr("enctype", "multipart/form-data"), data: %(archive)s, success: success})
-        ''' % {'htmlId': self.htmlId, 'url': "''", 'archive': self.zf})
+        $.ajax({url: %(url)s, type: "POST", contentType: attr("enctype", "multipart/form-data"), data: '%(archive)s', success: success})
+        ''' % {'htmlId': self.htmlId, 'url': "''", 'archive': '' #self.zf
+               })
     return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
 
 
