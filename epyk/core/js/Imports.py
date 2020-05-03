@@ -438,7 +438,7 @@ JS_IMPORTS = {
   # Jquery package width CDN links
   'jquery': {
     'website': 'http://jquery.com/',
-    'register': {'alias': 'jQuery', 'module': 'jquery.min', 'name': '$ = jQuery', 'npm': 'jquery'},
+    'register': {'alias': 'jquery', 'module': 'jquery.min', 'npm': 'jquery'},
     'modules': [
       {'script': 'jquery.min.js', 'version': '3.4.1', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -461,7 +461,7 @@ JS_IMPORTS = {
   'jqueryui': {
     'req': [{'alias': 'jquery'}],
     'website': 'http://jquery.com/',
-    'register': {'alias': 'jQueryUi', 'module': 'jquery-ui.min', 'npm': 'jquery-ui'},
+    'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui'},
     'modules': [
       {'script': 'jquery-ui.min.js', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 

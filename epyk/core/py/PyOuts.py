@@ -174,7 +174,7 @@ class PyOuts(object):
 
     :return: The ouput object with the function _repr_html_
     """
-    self.excluded_packages = ['bootstrap', 'jquery', 'moment']
+    self.excluded_packages = ['bootstrap', 'jquery', 'moment', 'jqueryui']
     return self
 
   def w3cTryIt(self, path=None, name=None):
