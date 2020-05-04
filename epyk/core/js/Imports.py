@@ -1674,3 +1674,29 @@ class ImportManager(object):
       results['jsFrgs'] = "require(['%s'], function (%s) { %s })" % (
       "', '".join([g for g in group]), ", ".join([g for g in group]), results['jsFrgs'])
     return results
+
+  def show(self, all=False):
+    """
+    Description:
+    ------------
+    Show all the underlying packages used in a report or available in the framework
+
+    Attributes:
+    ----------
+    :param all: Boolean. A flag to specify if only the one requested in the report should be displayed
+    """
+    packages = {}
+    if not all:
+      for imp, repo in [(self._report.cssImport, CSS_IMPORTS), (self._report.jsImports, JS_IMPORTS)]:
+        pkg = self.cleanImports(imp, repo)
+        for c in pkg:
+          for s in repo[c].get('modules', []):
+            s['path'] = s['path'] % s
+            packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
+    else:
+      for mod in [CSS_IMPORTS, JS_IMPORTS]:
+        for c, pkg in mod.items():
+          for s in pkg.get('modules', []):
+            s['path'] = s['path'] % s
+            packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
+    return packages
