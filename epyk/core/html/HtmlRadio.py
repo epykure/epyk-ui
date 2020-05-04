@@ -78,7 +78,8 @@ class Tick(Html.Html):
     self.style.css.float = position
     self.style.css.display = "inline-block"
     self.css({"text-align": "center"})
-    self.span.css({"line-height": '%spx' % 25, 'vertical-align': 'middle'})
+    if text is not None:
+      self.span.css({"line-height": '%spx' % 25, 'vertical-align': 'middle'})
     self.icon.css({"border-radius": "%spx" % 25, "width": "%spx" % 25, "margin-right": "auto", "margin": "auto",
                    "color": 'blue', "line-height": '%s%s' % (25, width[1])})
 

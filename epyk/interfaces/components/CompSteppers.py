@@ -59,7 +59,7 @@ class Steppers(object):
       dft_options.update(options)
     return self.stepper(records, width, height, color, dft_options)
 
-  def vertical(self, records, shape='cicle',  width=(100, '%'), height=(70, 'px'), color=None, options=None):
+  def vertical(self, records, shape='circle',  width=(100, '%'), height=(70, 'px'), color=None, options=None):
     """
     Description:
 
