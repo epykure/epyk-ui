@@ -675,7 +675,7 @@ JS_IMPORTS = {
     'register': {'alias': 'selectAjax', 'module': 'ajax-bootstrap-select.min'},
     'req': [{"alias": 'select'}
     ], 'modules': [
-      {'script': 'ajax-bootstrap-select.min.js', 'version': '1.4.5','path': 'ajax-bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO}
+      {'script': 'ajax-bootstrap-select.min.js', 'version': '1.4.5', 'path': 'ajax-bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
