@@ -3,7 +3,9 @@ from epyk.core.data import DataClass
 
 from epyk.core.html import Html
 
+from epyk.core.js.packages import JsC3
 from epyk.core.js import JsUtils
+from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsD3
 
 
@@ -26,9 +28,30 @@ class Chart(Html.Html):
     return "%s_obj" % self.htmlId
 
   @property
+  def js(self):
+    """
+    Description:
+    -----------
+    JC3 reference API
+
+    https://c3js.org/reference.html#api-show
+
+    :return: A Javascript object
+
+    :rtype: JsC3.C3
+    """
+    if self._js is None:
+      self._js = JsC3.C3(self, varName=self.chartId, report=self._report)
+    return self._js
+
+  def click(self, jsFncs, profile=False):
+    self.data.onclick(jsFncs, profile)
+    return self
+
+  @property
   def d3(self):
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, id="#%s" % self.htmlId)
+      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
     return self._d3
 
   def build(self, data=None, options=None, profile=False):
@@ -233,6 +256,9 @@ class JsData(DataClass):
   @property
   def selection(self):
     return self.sub_data("selection", C3Selection)
+
+  def onclick(self, jsFncs, profile=False):
+    self._attrs["onclick"] = JsObjects.JsObject.JsObject("function () { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
 
 
 class JsDataEpochs(JsData):

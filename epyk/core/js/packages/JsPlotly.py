@@ -425,8 +425,8 @@ class PlotlyMarkers(object):
 class JsPlotlyTrace(object):
 
   def __init__(self, htmlObj, varName=None, isPyData=True, report=None):
-    self._src, self.varName, self._report = htmlObj, varName, report
-    self._layout = None
+    self._src, self.chartId, self._report = htmlObj, varName, report
+    self._layout, self.varName = None, "document.getElementById('%s')" % htmlObj.htmlId
 
   def mode(self):
     pass

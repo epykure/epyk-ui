@@ -27,6 +27,91 @@ class Chart(Html.Html):
     """
     return "%s_obj" % self.htmlId
 
+  def click_legend(self, jsFnc, profile=False):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plotly.com/javascript/plotlyjs-events/
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param profile:
+    """
+    self.onReady("%s.on('plotly_legendclick', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    return self
+
+  def click(self, jsFnc, profile=False):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plotly.com/javascript/click-events/
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param profile:
+    """
+    self.onReady("%s.on('plotly_click', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    return self
+
+  def dblclick(self, jsFnc, profile=False):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plotly.com/javascript/click-events/
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param profile:
+    """
+    self.onReady("%s.on('plotly_doubleclick', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    return self
+
+  def hover(self, jsFnc, profile=False):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plotly.com/javascript/hover-events/
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param profile:
+    """
+    self.onReady("%s.on('plotly_hover', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    return self
+
+  def unhover(self, jsFnc, profile=False):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plotly.com/javascript/hover-events/
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param profile:
+    """
+    self.onReady("%s.on('plotly_unhover', function(data) { %s })" % (self.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    return self
+
   @property
   def data(self):
     """
@@ -43,7 +128,6 @@ class Chart(Html.Html):
     """
 
     :rtype: OptPlotly.OptionConfig
-    :return:
     """
     if self._options is None:
       self._options = OptPlotly.OptionConfig(self._report, attrs=self._options_init)
@@ -64,7 +148,6 @@ class Chart(Html.Html):
     """
 
     :rtype: Layout
-    :return:
     """
     if self._layout is None:
       self._layout = Layout(self._report)
@@ -75,7 +158,6 @@ class Chart(Html.Html):
     """
 
     :rtype: JsD3.D3Select
-    :return:
     """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
@@ -95,7 +177,7 @@ class Chart(Html.Html):
     for t in self._traces:
       str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in t.attrs()]))
     obj_datasets = JsObject.JsObject.get("[%s]" % ", ".join(str_traces))
-    return JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).newPlot(self.htmlId, obj_datasets, self.layout, self.options)], toStr=True)
+    return "%s = %s" % (self.chartId, JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).newPlot(self.htmlId, obj_datasets, self.layout, self.options)], toStr=True))
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

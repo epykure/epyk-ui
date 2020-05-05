@@ -78,12 +78,53 @@ class ChartJs(JsPackage):
   class __internal(object):
     jqId, htmlId, jsImports, cssImport = 'chart', '', set([]), set([])
 
-  def __init__(self, htmlId, config, src=None, varName=None, setVar=True):
+  def __init__(self, htmlId=None, config=None, src=None, varName=None, selector=None, setVar=True):
     self.src = src if src is not None else self.__internal()
-    self._selector = 'new Chart(%s.getContext("2d"), %s)' % (htmlId, config.toStr())
+    if selector is None:
+      self._selector = 'new Chart(%s.getContext("2d"), %s)' % (htmlId, config.toStr())
+    else:
+      self._selector = selector
     self.varName, self.setVar = varName or self._selector, setVar
     self.src.jsImports.add(self.lib_alias['js'])
     self._js = []
+
+  def getElementsAtEvent(self, jsEvent):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsEvent:
+    """
+    return JsObjects.JsArray.JsArray("%s.getElementsAtEvent(%s)" % (self.varName, jsEvent), isPyData=False)
+
+  @property
+  def label(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsObjects.JsString.JsString("%s.data.labels[activePoints[0]['_index']]" % self.varName, isPyData=False)
+
+  @property
+  def content(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsObjects.JsObject.JsObject("%s.data.datasets[0].data[activePoints[0]['_index']]" % self.varName, isPyData=False)
+
+  @property
+  def value(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsObjects.JsString.JsString("{%(htmlId)s: {point: %(chart)s.data.datasets[0].data[activePoints[0]['_index']], label: %(chart)s.data.labels[activePoints[0]['_index']]}}" % {'htmlId': self.src.htmlId, "chart": self.varName}, isPyData=False)
 
   def update(self, config=None):
     """
@@ -821,7 +862,6 @@ class Options(DataAttrs):
     if self._attrs.get("title") is None:
       self._attrs['title'] = OptionsTitle(self._report)
     return self._attrs['title']
-
 
 
 class DataSetPie(DataAttrs):

@@ -22,6 +22,8 @@ class Chart(Html.Html):
   @property
   def chartId(self):
     """
+    Description:
+    -----------
     Return the Javascript variable of the chart
     """
     return "%s_obj" % self.htmlId
@@ -29,15 +31,34 @@ class Chart(Html.Html):
   @property
   def d3(self):
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, id="#%s" % self.htmlId)
+      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
     return self._d3
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript base function
+
+    Return all the Javascript functions defined in the framework.
+    THis is an entry point to the full Javascript ecosystem.
+
+    :return: A Javascript object
+
+    :rtype: JsChartJs.JsChart
+    """
+    if self._js is None:
+      self._js = JsChartJs.ChartJs(selector=self.chartId, src=self)
+    return self._js
 
   @property
   def options(self):
     """
+    Description:
+    -----------
 
-    :rtype: Options
-    :return:
+    :rtype: OptChartJs.Options
     """
     if self._options is None:
       self._options = OptChartJs.Options(self._report, attrs=self._options_init)
@@ -45,15 +66,20 @@ class Chart(Html.Html):
 
   def labels(self, labels):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param labels:
-    :return:
     """
     self._data_attrs['labels'] = labels
     return self
 
   def dataset(self, i=None):
     """
+    Description:
+    -----------
 
     :rtype: JsChartJs.DataSetPie
     """
@@ -61,6 +87,38 @@ class Chart(Html.Html):
       return self._datasets[-1]
 
     return self._datasets[i]
+
+  def click(self, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    if self._attrs['type'] in ['pie']:
+      tmpJsFncs = ["console.log(%s)" % self.chartId, "var activePoints = %s.getSegmentsAtEvent(event)" % self.chartId]
+      tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    else:
+      tmpJsFncs = ["var activePoints = %s.getElementsAtEvent(event)" % self.chartId]
+      tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    return super(Chart, self).click(tmpJsFncs, profile)
+
+  def hover(self, jsFncs, profile=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    tmpJsFncs = ["var activePoints = %s.getElementsAtEvent(event)" % self.chartId]
+    tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
+    return self.on("mouseover", tmpJsFncs, profile)
 
   @property
   def datasets(self):
@@ -105,7 +163,6 @@ class ChartLine(Chart):
     """
 
     :rtype: OptionsPolar
-    :return:
     """
     if self._options is None:
       self._options = OptChartJs.OptionsLine(self._report, attrs=self._options_init)
@@ -114,7 +171,6 @@ class ChartLine(Chart):
   def add_dataset(self, data, colors=None, opacity=None):
     """
 
-    :return:
     """
     data = JsChartJs.DataSetScatterLine(self._report, attrs={"data": data})
     data.fill = False
@@ -164,7 +220,6 @@ class ChartBar(Chart):
     """
 
     :rtype: OptionsPolar
-    :return:
     """
     if self._options is None:
       self._options = OptChartJs.OptionsBar(self._report, attrs=self._options_init)
@@ -199,7 +254,6 @@ class ChartPolar(Chart):
     """
 
     :rtype: OptionsPolar
-    :return:
     """
     if self._options is None:
       self._options = OptChartJs.OptionsPolar(self._report, attrs=self._options_init)
@@ -242,7 +296,6 @@ class ChartPie(Chart):
     """
 
     :rtype: OptionsPie
-    :return:
     """
     if self._options is None:
       self._options = OptChartJs.OptionsPie(self._report, attrs=self._options_init)
@@ -271,7 +324,6 @@ class ChartRadar(Chart):
   def add_dataset(self, data, colors=None, opacity=0.4):
     """
 
-    :return:
     """
     data = JsChartJs.DataSetRadar(self._report, attrs={"data": data})
     self._datasets.append(data)

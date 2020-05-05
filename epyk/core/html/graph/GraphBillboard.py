@@ -58,7 +58,7 @@ class Chart(Html.Html):
   @property
   def d3(self):
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, id="#%s" % self.htmlId)
+      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
     return self._d3
 
   def build(self, data=None, options=None, profile=False):
