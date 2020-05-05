@@ -438,7 +438,7 @@ JS_IMPORTS = {
   # Jquery package width CDN links
   'jquery': {
     'website': 'http://jquery.com/',
-    'register': {'alias': 'jquery', 'module': 'jquery.min', 'npm': 'jquery'},
+    'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery'},
     'modules': [
       {'script': 'jquery.min.js', 'version': '3.4.1', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
