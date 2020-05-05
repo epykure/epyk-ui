@@ -19,6 +19,14 @@ from epyk.core.js.objects import JsEvents
 from epyk.core.js import JsUtils
 
 
+class JsVoid(object):
+  def __init__(self, data):
+    self._data = data
+
+  def toStr(self):
+    return self._data
+
+
 class JsObjects(object):
   def __init__(self, jsObj):
     self._jsObj = jsObj

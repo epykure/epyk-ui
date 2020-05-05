@@ -451,6 +451,7 @@ JS_IMPORTS = {
   # Used to produce sparkline charts in a document and in Tabulator
   'jquery-sparklines': {
     'req': [{'alias': 'jquery'}],
+    'register': {'alias': 'sparklines', 'module': 'jquery.sparkline.min', 'npm': 'sparklines'},
     'website': 'https://omnipotent.net/jquery.sparkline/#s-about',
     'modules': [
       {'script': 'jquery.sparkline.min.js', 'version': '2.1.2', 'path': 'jquery-sparklines/%(version)s/', 'cdnjs': CDNJS_REPO}

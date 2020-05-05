@@ -1,6 +1,8 @@
 
 from epyk.core.html import Html
+from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsQuery
+from epyk.core.js.html import JsHtmlJqueryUI
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpChart
@@ -22,6 +24,8 @@ class Sparklines(Html.Html):
   @property
   def style(self):
     """
+    Description:
+    ------------
 
     :rtype: GrpChart.ClassBSpartlines
     """
@@ -31,6 +35,8 @@ class Sparklines(Html.Html):
 
   def options(self, attrs):
     """
+    Description:
+    ------------
     Add any option to the sparkline object
 
     Example
@@ -40,11 +46,71 @@ class Sparklines(Html.Html):
 
 			https://omnipotent.net/jquery.sparkline/#s-docs
 
+    Attributes:
+    ----------
     :param attrs: A python dictionary
 
     :return: The sparkline object
     """
     self._jsStyles.update(attrs)
+    return self
+
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlSparkline
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlSparkline(self, report=self._report)
+    return self._dom
+
+  def click(self, jsFnc, profile=False):
+    """
+    Description:
+    ------------
+    When a user clicks on a sparkline, a sparklineClick event is generated.
+    The event object contains a property called "sparklines" that holds an array of the sparkline objects under the mouse at the time of the click.
+    For non-composite sparklines, this array will have just one entry.
+
+    Related Pages:
+
+			https://omnipotent.net/jquery.sparkline/#interactive
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param profile:
+    """
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(
+      "%s.bind('sparklineClick', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    return self
+
+  def hover(self, jsFnc, profile=False):
+    """
+    Description:
+    ------------
+    When the mouse moves over a different value in a sparkline a sparklineRegionChange event is generated.
+    This can be useful to hook in an alternate tooltip library.
+
+    Related Pages:
+
+      https://omnipotent.net/jquery.sparkline/#interactive
+
+    Attributes:
+    ----------
+    :param jsFnc:
+    :param profile:
+    """
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(
+      "%s.bind('sparklineRegionChange', function(event) { %s })" % (
+      self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
     return self
 
   @property

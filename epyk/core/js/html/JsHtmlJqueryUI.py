@@ -183,3 +183,59 @@ class JsHtmlSliderDates(JsHtml.JsHtml):
 
     """
     return JsHtml.ContentFormatters(self._report, 'function() {return [new Date(%s.slider("values")[0] * 1000).toISOString().split("T")[0], new Date(%s.slider("values")[1] * 1000).toISOString().split("T")[0]]}()' % (self._src.dom.jquery.varId, self._src.dom.jquery.varId))
+
+
+class JsHtmlSparkline(JsHtml.JsHtml):
+
+  @property
+  def val(self):
+    """
+    Description:
+    ------------
+    """
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.region))
+
+  @property
+  def content(self):
+    """
+    Description:
+    ------------
+
+    """
+    if self._src._jsStyles['type'] in ['bar']:
+      return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields()[0].value')
+
+    return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields().y')
+
+  @property
+  def value(self):
+    if self._src._jsStyles['type'] in ['bar']:
+      return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields()[0].value')
+
+    return JsObjects.JsNumber.JsNumber("event.sparklines[0].getCurrentRegionFields().y", isPyData=False)
+
+  @property
+  def region(self):
+    return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()")
+
+  @property
+  def x(self):
+    if self._src._jsStyles['type'] in ['bar']:
+      return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields().offset")
+
+    return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields().x")
+
+  @property
+  def offset(self):
+    if self._src._jsStyles['type'] in ['bar']:
+      return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()[0].offset")
+
+    return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields().offset")
+
+  @property
+  def y(self):
+    if self._src._jsStyles['type'] in ['bar']:
+      return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()[0].value")
+
+    return JsObjects.JsNumber.JsNumber("event.sparklines[0].getCurrentRegionFields().y", isPyData=False)
