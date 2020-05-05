@@ -88,8 +88,7 @@ class Sparklines(Html.Html):
     :param jsFnc:
     :param profile:
     """
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(
-      "%s.bind('sparklineClick', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.bind('sparklineClick', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
     return self
 
   def hover(self, jsFnc, profile=False):
@@ -108,9 +107,7 @@ class Sparklines(Html.Html):
     :param jsFnc:
     :param profile:
     """
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(
-      "%s.bind('sparklineRegionChange', function(event) { %s })" % (
-      self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    self.onReady("%s.bind('sparklineRegionChange', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
     return self
 
   @property

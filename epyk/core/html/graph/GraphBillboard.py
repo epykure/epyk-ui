@@ -32,6 +32,7 @@ from epyk.core.data import DataClass
 
 from epyk.core.html import Html
 
+from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
 from epyk.core.js.packages import JsD3
@@ -54,6 +55,10 @@ class Chart(Html.Html):
     Return the Javascript variable of the chart
     """
     return "%s_obj" % self.htmlId
+
+  def click(self, jsFncs, profile=False):
+    self.data.onclick(jsFncs, profile)
+    return self
 
   @property
   def d3(self):
@@ -263,6 +268,9 @@ class JsData(DataClass):
   @property
   def selection(self):
     return self.sub_data("selection", BBSelection)
+
+  def onclick(self, jsFncs, profile=False):
+    self._attrs["onclick"] = JsObjects.JsObject.JsObject("function () { %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
 
 
 class JsScales(DataClass):
