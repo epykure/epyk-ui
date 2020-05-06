@@ -991,6 +991,8 @@ class CssMixin(object):
   @display.setter
   def display(self, val):
     val = val if val is not None else 'None'
+    if val is False:
+      val = 'None'
     self.htmlObj.css({"display": val})
 
   @property

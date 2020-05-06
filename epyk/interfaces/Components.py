@@ -68,6 +68,7 @@ class Components(object):
     self.stepper = self.steppers.stepper #: shortcut for steppers :func:`epyk.interfaces.components.CompSteppers.Steppers.stepper`
     self.chips = self.lists.chips #: shortcut for chips :func:`epyk.interfaces.components.CompLists.Lists.chips`
     self.contextual = self.menus.contextual #: shortcut for chips :func:`epyk.interfaces.components.CompMenus.Menus.contextual`
+    self.hidden = self.fields.hidden #: shortcut for chips :func:`epyk.interfaces.components.CompInputs.Inputs.input`
 
     # Shortcut to some important HTML tags
     self.label = self.texts.label

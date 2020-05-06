@@ -279,6 +279,39 @@ class Fields(object):
     self.context.register(html_input)
     return html_input
 
+  def hidden(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+             helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Create a hidden HTML component.
+    This is used to store values which are not visible on the page.
+
+    Usage::
+
+      rptObj.ui.fields.hidden(label="readonly field")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.FieldInput`
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param placeholder:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
+    html_input.input.readonly(True)
+    html_input.style.css.display = False
+    self.context.register(html_input)
+    return html_input
+
   def integer(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
