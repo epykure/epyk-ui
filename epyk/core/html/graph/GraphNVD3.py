@@ -41,7 +41,7 @@ class Chart(Html.Html):
     return self._vals[i]
 
   def click(self, jsFnc, profile=False):
-    raise Exception("Not implemented for this chart ")
+    raise Exception("Not implemented for this chart !")
 
   def add_trace(self, data, name=""):
     dataset = {"values": data, 'key': name}
@@ -94,6 +94,10 @@ class ChartScatter(Chart):
       self._dom = JsNvd3.JsNvd3Scatter(self._report, varName=self.chartId)
     return self._dom
 
+  def click(self, jsFnc, profile=False):
+    self.onReady("%s.scatter.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    return self
+
 
 class ChartCumulativeLine(Chart):
 
@@ -129,6 +133,10 @@ class ChartBar(Chart):
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
     return self._dom
+
+  def click(self, jsFnc, profile=False):
+    self.onReady("%s.selectAll('.nv-bar').on('click', function(event){ %s })" % (self.d3.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    return self
 
 
 class ChartHorizontalBar(Chart):
