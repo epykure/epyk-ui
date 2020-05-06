@@ -234,6 +234,8 @@ class Report(object):
   @property
   def data(self):
     """
+    Description:
+    ------------
     Python internal data source management
 
     This can be extended by inheriting from this epyk.core.data.DataSrc.DataSrc

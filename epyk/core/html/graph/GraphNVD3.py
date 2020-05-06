@@ -40,6 +40,9 @@ class Chart(Html.Html):
 
     return self._vals[i]
 
+  def click(self, jsFnc, profile=False):
+    raise Exception("Not implemented for this chart ")
+
   def add_trace(self, data, name=""):
     dataset = {"values": data, 'key': name}
     next_index = len(self._vals)
@@ -162,6 +165,10 @@ class ChartPie(Chart):
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Pie(self._report, varName=self.chartId)
     return self._dom
+
+  def click(self, jsFnc, profile=False):
+    self.onReady("%s.pie.dispatch.on('elementClick', function(event){ %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    return self
 
   def add_trace(self, data, name=""):
     """

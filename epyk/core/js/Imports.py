@@ -622,7 +622,7 @@ JS_IMPORTS = {
     'register': {'alias': 'bb', 'module': 'billboard.min'},
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'reqAlias': 'bb', 'script': 'billboard.min.js', 'version': '1.11.1', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'reqAlias': 'bb', 'script': 'billboard.min.js', 'version': '1.12.7', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs modules width CDN links
   'Chart.js': {
@@ -908,7 +908,7 @@ CSS_IMPORTS = {
   # billboard modules width CDN links
   'billboard': {
     'modules': [
-      {'script': 'billboard.min.css', 'version': '1.11.1', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
+      {'script': 'billboard.min.css', 'version': '1.12.7', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/'},
 
   #'epyk': {'req': ['bootstrap'], 'modules': ['bdi.css'], 'website': 'internal lib', 'version': '0'},

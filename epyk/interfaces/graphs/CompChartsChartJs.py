@@ -14,6 +14,8 @@ class ChartJs(object):
     Documentation
     http://www.chartjs.org/
 
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -21,24 +23,13 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": x, "y": y})
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    line_chart.labels(sorted(list(labels)))
-    for d in data:
-      line_chart.add_dataset(d)
-
+    line_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      line_chart.add_dataset(d, data['series'][i])
     self.parent.context.register(line_chart)
     return line_chart
 
@@ -47,30 +38,30 @@ class ChartJs(object):
     line = self.line(record, y_columns, x_axis, profile, width, height, options, htmlCode)
     return line
 
-  def pie(self, record=None, y_column=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param record:
     :param profile:
     :param width:
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      agg_data[rec[x_axis]] = agg_data.get(rec[x_axis],  0) + float(rec[y_column])
-    labels, data = [], []
-    for x, y in agg_data.items():
-      labels.append(x)
-      data.append(y)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    line_chart.add_dataset(data)
-    line_chart.labels(labels)
+    line_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      line_chart.add_dataset(d, data['series'][i])
     self.parent.context.register(line_chart)
     return line_chart
 
-  def donut(self, record=None, y_column=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
 
     :param record:
@@ -79,21 +70,14 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      agg_data[rec[x_axis]] = agg_data.get(rec[x_axis],  0) + float(rec[y_column])
-    labels, data = [], []
-    for x, y in agg_data.items():
-      labels.append(x)
-      data.append(y)
-
-    dflt_options = {'cutoutPercentage': 50}
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    dflt_options = {'cutoutPercentage': 50, 'y_columns': y_columns, 'x_column': x_axis}
     if options is not None:
       dflt_options.update()
     pie_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, htmlCode, dflt_options, profile)
-    pie_chart.add_dataset(data)
-    pie_chart.labels(labels)
-
+    pie_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      pie_chart.add_dataset(d, data['series'][i])
     self.parent.context.register(pie_chart)
     return pie_chart
 
@@ -105,23 +89,13 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": x, "y": y})
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    line_chart.labels(sorted(list(labels)))
-    for d in data:
-      line_chart.add_dataset(d, opacity=0.2)
+    line_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      line_chart.add_dataset(d, data['series'][i], opacity=0.2)
       line_chart.dataset().fill = True
     self.parent.context.register(line_chart)
     return line_chart
@@ -134,55 +108,38 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": x, "y": y})
-      data.append(series)
-
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    line_chart.labels(sorted(list(labels)))
-    for d in data:
-      line_chart.add_dataset(d)
+    line_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      line_chart.add_dataset(d, data['series'][i])
       line_chart.dataset().steppedLine = 'before'
     self.parent.context.register(line_chart)
     return line_chart
 
   def bar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
 
-    :param record:
-    :param y_column:
-    :param x_axis:
+    Attributes:
+    ----------
+    :param record: Array.
+    :param y_column: String.
+    :param x_axis: String.
     :param profile:
     :param width:
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": x, "y": y})
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    bar_chart.labels(sorted(list(labels)))
-    for d in data:
+    bar_chart.labels(data['labels'])
+    for d in data['datasets']:
       bar_chart.add_dataset(d)
+    bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     self.parent.context.register(bar_chart)
     return bar_chart
 
@@ -195,22 +152,12 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": y, "y": x})
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartHBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    bar_chart.labels(sorted(list(labels)))
-    for d in data:
+    bar_chart.labels(data['labels'])
+    for d in data['datasets']:
       bar_chart.add_dataset(d)
     self.parent.context.register(bar_chart)
     return bar_chart
@@ -225,14 +172,20 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                              filters, profile)
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, title, options, htmlCode, filters, profile)
     bar_chart.chart._data = self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False)
     self.parent.context.register(bar_chart)
     return bar_chart
 
   def scatter(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
 
     :param record:
     :param profile:
@@ -240,23 +193,13 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": x, "y": y})
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).chartjs.xy(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    line_chart.labels(sorted(list(labels)))
-    for d in data:
-      line_chart.add_dataset(d)
+    line_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      line_chart.add_dataset(d, data['series'][i])
     self.parent.context.register(line_chart)
     return line_chart
 
@@ -269,25 +212,13 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    agg_data, agg_r = {}, {}
-    for rec in record:
-      for i, y in enumerate(y_columns):
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
-        if r_values is not None and i < len(r_values):
-          agg_r.setdefault(y, {})[rec[x_axis]] = agg_r.get(y, {}).get(rec[x_axis],  0) + float(rec[r_values[i]])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 1)})
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_columns': r_values})
+    data = self.parent.context.rptObj.data.js(record).chartjs.xyz(y_columns, x_axis, r_values)
     line_chart = graph.GraphChartJs.ChartBubble(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    line_chart.labels(sorted(list(labels)))
-    for d in data:
-      line_chart.add_dataset(d)
+    line_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      line_chart.add_dataset(d, data['series'][i])
     self.parent.context.register(line_chart)
     return line_chart
 
@@ -300,23 +231,13 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append(y)
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     polar_chart = graph.GraphChartJs.ChartPolar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    polar_chart.labels(sorted(list(labels)))
-    for d in data:
-      polar_chart.add_dataset(d)
+    polar_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      polar_chart.add_dataset(d, data['series'][i])
     self.parent.context.register(polar_chart)
     return polar_chart
 
@@ -334,23 +255,13 @@ class ChartJs(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis],  0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append(y)
-      data.append(series)
 
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     radar_chart = graph.GraphChartJs.ChartRadar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
-    radar_chart.labels(sorted(list(labels)))
-    for i, d in enumerate(data):
-      radar_chart.add_dataset(d)
-      radar_chart.dataset().label = y_columns[i]
+    radar_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      radar_chart.add_dataset(d, data['series'][i])
     self.parent.context.register(radar_chart)
     return radar_chart

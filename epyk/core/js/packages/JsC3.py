@@ -173,15 +173,15 @@ class C3(JsPackage):
 
   @property
   def value(self):
-    return "{'%s': arguments[0]}" % self.src.htmlId
+    return JsObjects.JsObjects.get("{'%s': arguments[0], timestamp: Date.now(), offset: new Date().getTimezoneOffset()}" % self.src.htmlId)
 
   @property
   def content(self):
-    return "arguments[0].value"
+    return JsObjects.JsNumber.JsNumber("arguments[0].value")
 
   @property
   def label(self):
-    return "arguments[0].name"
+    return JsObjects.JsString.JsString("arguments[0].name", isPyData=False)
 
   def load(self):
     """

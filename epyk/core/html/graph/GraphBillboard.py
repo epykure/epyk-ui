@@ -32,6 +32,7 @@ from epyk.core.data import DataClass
 
 from epyk.core.html import Html
 
+from epyk.core.js.packages import JsBillboard
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
@@ -40,6 +41,7 @@ from epyk.core.js.packages import JsD3
 
 class Chart(Html.Html):
   name, category, callFnc = 'Billboard', 'Charts', 'Billboard'
+  data_out, data_format = 'billboard', 'y'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     self.height = height[0]
@@ -50,8 +52,27 @@ class Chart(Html.Html):
     self.style.css.margin_top = 10
 
   @property
+  def js(self):
+    """
+    Description:
+    -----------
+    JC3 reference API
+
+    https://c3js.org/reference.html#api-show
+
+    :return: A Javascript object
+
+    :rtype: JsC3.C3
+    """
+    if self._js is None:
+      self._js = JsBillboard.Billboard(self, varName=self.chartId, report=self._report)
+    return self._js
+
+  @property
   def chartId(self):
     """
+    Description:
+    -----------
     Return the Javascript variable of the chart
     """
     return "%s_obj" % self.htmlId
@@ -67,6 +88,24 @@ class Chart(Html.Html):
     return self._d3
 
   def build(self, data=None, options=None, profile=False):
+    if data:
+      dft_options = dict(self._options_init)
+      dft_options.update(options or {})
+      js_data = getattr(getattr(self._report.data.js(data), self.data_out), self.data_format)(dft_options['y_columns'], dft_options['x_column'])
+      if self._type in ['pie', 'donut']:
+        columns, colors, types = [], {}, {}
+        for i, d in enumerate(js_data['datasets'][0]):
+          columns.append([js_data['labels'][i], d])
+          colors[js_data['labels'][i]] = self._report.theme.colors[i]
+          types[js_data['labels'][i]] = self._type
+      else:
+        columns, colors, types = [['x'] + js_data['labels']], {}, {}
+        for i, d in enumerate(js_data['datasets']):
+          columns.append([js_data['series'][i]] + d)
+          colors[js_data['series'][i]] = self._report.theme.colors[i]
+          types[js_data['series'][i]] = self._type
+      return '%(chartId)s.unload(); %(chartId)s.load({columns: %(columns)s, colors: %(colors)s, types: %(types)s})' % {'chartId': self.chartId, 'columns': JsUtils.jsConvertData(columns, None), 'types': JsUtils.jsConvertData(types, None),  'colors': JsUtils.jsConvertData(colors, None)}
+
     return '%s = bb.generate(%s)' % (self.chartId, self.getCtx())
 
   def __str__(self):
@@ -544,10 +583,15 @@ class ChartPie(ChartLine):
   __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'pie'
 
-  def add_dataset(self, name, value, type=None):
-    self.data.columns.append([name, value])
-    if type is None:
-      self.data.add_type(name, self._type)
+  def labels(self, labels, series_id='x'):
+    self._labels = labels
+
+  def add_dataset(self, name, values, type=None):
+    for i, value in enumerate(values):
+      self.data.columns.append([self._labels[i], value])
+      self.data.colors[self._labels[i]] = self._report.theme.colors[i]
+      if type is None:
+        self.data.add_type(self._labels[i], self._type)
     return self._attrs
 
 
@@ -560,24 +604,26 @@ class ChartGauge(ChartPie):
   __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'gauge'
 
+  def build(self, data=None, options=None, profile=False):
+    if data:
+      return '%(chartId)s.load({columns: [["data", %(value)s]]})' % {'chartId': self.chartId, 'value': data}
+
+    return '%s = bb.generate(%s)' % (self.chartId, self.getCtx())
+
+  def add_dataset(self, name, value, type=None):
+    self.data.columns.append(["data", value])
+    self.data.colors["data"] = self._report.theme.colors[len(self.data.colors)]
+    if type is None:
+      self.data.add_type("data", self._type)
+    return self._attrs
+
 
 class ChartBubble(ChartLine):
   __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'bubble'
-
-  def add_dataset(self, name, data, type=None):
-    self.data.columns.append([name] + data)
-    if type is None:
-      self.data.type = self._type
-    return self._attrs
 
 
 class ChartRadar(ChartLine):
   __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'radar'
 
-  def add_dataset(self, name, data, type=None):
-    self.data.columns.append([name] + data)
-    if type is None:
-      self.data.type = self._type
-    return self._attrs

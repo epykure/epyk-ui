@@ -20,6 +20,8 @@ import importlib
 from epyk.core.data import DataDb
 from epyk.core.data import DataGrpc
 from epyk.core.data import DataOffice
+from epyk.core.data import DataCore
+
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
 
@@ -30,6 +32,17 @@ class DataSrc(object):
 
   def __init__(self, report=None):
     self._report = report if report is not None else self.__internal()
+
+  def js(self, records):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param records:
+    """
+    return DataCore.DataGlobal(records, self._report)
 
   @property
   def db(self):
@@ -103,6 +116,8 @@ class DataSrc(object):
 
   def from_source(self, http_data, fileName, fncName="getData", report_name=None, folder="sources", path=None):
     """
+    Description:
+    ------------
     Returns data from a internal data service defined in the sources folder
 
     :param http_data: The input data for the service
@@ -111,7 +126,6 @@ class DataSrc(object):
     :param report_name: Optional, the report name. Default the current one
     :param folder: Optional, the folder with the services. Default sources
     :param path: Optional, the path to be added to the python system path
-    :return: The data
     """
     fileName = fileName.replace(".py", "")
     if path is not None:

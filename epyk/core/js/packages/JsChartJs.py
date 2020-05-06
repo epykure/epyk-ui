@@ -78,7 +78,7 @@ class ChartJs(JsPackage):
   class __internal(object):
     jqId, htmlId, jsImports, cssImport = 'chart', '', set([]), set([])
 
-  def __init__(self, htmlId=None, config=None, src=None, varName=None, selector=None, setVar=True):
+  def __init__(self, htmlId=None, config=None, src=None, varName=None, selector=None, setVar=False):
     self.src = src if src is not None else self.__internal()
     if selector is None:
       self._selector = 'new Chart(%s.getContext("2d"), %s)' % (htmlId, config.toStr())
@@ -321,7 +321,7 @@ class ChartJs(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.getDatasetMeta(%s)" % (self.toStr(), index))
 
-  def render(self, config):
+  def render(self, config=None):
     """
     Description:
     ------------
@@ -339,6 +339,9 @@ class ChartJs(JsPackage):
     ----------
     :param config: A python dictionary as config object
     """
+    if config is None:
+      return JsObjects.JsObject.JsObject("%s.render()" % self.toStr())
+
     config = JsUtils.jsConvertData(config, None)
     return JsObjects.JsObject.JsObject("%s.render(%s)" % (self.toStr(), config))
 
@@ -550,7 +553,9 @@ class ChartJsOptGridLines(DataAttrs):
 class ChartJsOptScale(DataAttrs):
 
   def ticks(self):
-    pass
+    if not "ticks" in self._attrs:
+      self._attrs["ticks"] = ChartJsOptTicks(self._report)
+    return self._attrs["ticks"]
 
   @property
   def gridLines(self):
