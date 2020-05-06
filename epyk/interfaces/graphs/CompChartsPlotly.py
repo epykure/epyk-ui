@@ -23,22 +23,9 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
-    if record is None:
-      record = []
-      y_columns = y_columns or []
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     line_chart.options.responsive = True
     self.parent.context.register(line_chart)
@@ -62,22 +49,9 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
-    if record is None:
-      record = []
-      y_columns = y_columns or []
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
     bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(bar_chart)
     for d in data:
@@ -100,19 +74,9 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
     bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(bar_chart)
     for d in data:
@@ -179,24 +143,13 @@ class Plotly(object):
         :param height:
         :param htmlCode:
         """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data[c].items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
-
-    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                      profile)
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'lines', 'type': "scatter"})
+    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for d in data:
-      sc_chart.add_trace(d, mode='lines', type="scatter")
+      sc_chart.add_trace(d)
     return sc_chart
 
   def scattergl(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
@@ -215,19 +168,9 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data[c].items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers', 'type': "scattergl"})
+    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for d in data:
@@ -323,19 +266,9 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': "scatter"})
+    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(line_chart)
     for d in data:
@@ -360,23 +293,13 @@ class Plotly(object):
     :param height:
     :param htmlCode:
     """
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
-
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers'})
+    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
     self.parent.context.register(line_chart)
     for d in data:
-      line_chart.add_trace(d, mode="markers")
+      line_chart.add_trace(d, mode=options['mode'])
     return line_chart
 
   def ribbon(self, record, y_columns=None, x_axis=None, z_axis=None, title=None, profile=None, options=None,

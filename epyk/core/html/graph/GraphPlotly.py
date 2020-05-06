@@ -173,6 +173,15 @@ class Chart(Html.Html):
     return self
 
   def build(self, data=None, options=None, profile=False):
+    if data:
+      dft_options = dict(self._options_init)
+      dft_options.update(options or {})
+      str_traces = []
+      for t in self._report.data.js(data).plotly.xy(dft_options['y_columns'], dft_options['x_column']):
+        str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self.trace(t).attrs()]))
+      obj_datasets = JsObject.JsObject.get("[%s]" % ", ".join(str_traces))
+      return JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).react(self.htmlId, obj_datasets, self.layout, self.options)], toStr=True)
+
     str_traces = []
     for t in self._traces:
       str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in t.attrs()]))
@@ -196,13 +205,16 @@ class Line(Chart):
       self._dom = JsPlotly.Line(self, varName=self.chartId, report=self._report)
     return self._dom
 
-  def add_trace(self, data, type=None, mode='lines+markers'):
+  def trace(self, data, type=None, mode='lines+markers'):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = type
+      c_data['type'] = self._options_init.get('type', type)
     if mode is not None:
-      c_data['mode'] = mode
-    self._traces.append(DataXY(self._report, attrs=c_data))
+      c_data['mode'] = self._options_init.get('mode', mode)
+    return DataXY(self._report, attrs=c_data)
+
+  def add_trace(self, data, type=None, mode='lines+markers'):
+    self._traces.append(self.trace(data, type, mode))
     return self
 
 
@@ -224,13 +236,16 @@ class Bar(Chart):
       self._layout = LayoutBar(self._report)
     return self._layout
 
-  def add_trace(self, data, type='bar', mode=None):
+  def trace(self, data, type='bar', mode=None):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = type
+      c_data['type'] = self._options_init.get('type', type)
     if mode is not None:
-      c_data['mode'] = mode
-    self._traces.append(DataXY(self._report, attrs=c_data))
+      c_data['mode'] = self._options_init.get('mode', mode)
+    return DataXY(self._report, attrs=c_data)
+
+  def add_trace(self, data, type='bar', mode=None):
+    self._traces.append(self.trace(data, type, mode))
     return self
 
 

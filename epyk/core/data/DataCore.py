@@ -35,6 +35,15 @@ class DataGlobal(object):
     """
     return DataCharrtJs(self._data, self._report, self._component)
 
+  @property
+  def plotly(self):
+    """
+    Description:
+    ------------
+
+    """
+    return DataPlotly(self._data, self._report, self._component)
+
 
 class DataCharrtJs(object):
 
@@ -126,3 +135,24 @@ class DataCharrtJs(object):
       is_data["series"].append(l)
     return is_data
 
+
+class DataPlotly(object):
+
+  def __init__(self, data, report=None, component=None):
+    self._data = data
+    self._report, self._component = report, component
+
+  def xy(self, y_columns, x_axis, profile=None):
+    agg_data = {}
+    for rec in self._data:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+    data = []
+    for c in y_columns:
+      series = {'x': [], 'y': []}
+      for x, y in agg_data.get(c, {}).items():
+        series['x'].append(x)
+        series['y'].append(y)
+      data.append(series)
+    return data
