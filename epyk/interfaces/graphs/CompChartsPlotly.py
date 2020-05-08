@@ -7,178 +7,190 @@ class Plotly(object):
     self.parent = context
     self.chartFamily = "Plotly"
 
-  def line(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-           width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def line(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
     Related Pages:
 
 			https://plot.ly/javascript/
     https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
-    :param record:
-    :param title:
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': 'lines+markers'})
     data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
-    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     line_chart.options.responsive = True
     self.parent.context.register(line_chart)
     for d in data:
       line_chart.add_trace(d)
     return line_chart
 
-  def bar(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-          width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def bar(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
     Related Pages:
 
-			https://plot.ly/javascript/
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+			https://plotly.com/javascript/bar-charts/
 
-    :param record:
-    :param title:
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None})
     data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
-    bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(bar_chart)
     for d in data:
       bar_chart.add_trace(d)
     return bar_chart
 
-  def hbar(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-          width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def hbar(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
     Related Pages:
 
-			https://plot.ly/javascript/
-    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+			https://plotly.com/javascript/bar-charts/
 
-    :param record:
-    :param title:
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None, 'attrs': {'orientation': 'h'}})
     data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
-    bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(bar_chart)
     for d in data:
       bar_chart.add_trace(d, type='bar')
       bar_chart.data.orientation = 'h'
     return bar_chart
 
-  def scatter(self, record=None, y_columns=None, x_axis=None, texts=None, title=None, profile=None, options=None,
+  def scatter(self, record=None, y_columns=None, x_axis=None, text_column=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
     Related Pages:
 
-			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
-    https://plot.ly/javascript/
+			https://plotly.com/javascript/text-and-annotations/
 
-    :param record:
-    :param title:
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
     :param htmlCode:
     """
-    if record is None:
-      data = []
-    else:
-      agg_data, pount_texts = {}, {}
-      for rec in record:
-        for i, y in enumerate(y_columns):
-          if y in rec:
-            agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-            if texts is not None:
-              pount_texts.setdefault(y, {})[rec[x_axis]] = rec[texts[i]]
-      data = []
-      for c in y_columns:
-        series = {'x': [], 'y': [], 'text': []}
-        for x, y in agg_data.get(c, {}).items():
-          series['x'].append(x)
-          series['y'].append(y)
-          if texts is not None:
-            series['text'].append(pount_texts[c][x])
-        data.append(series)
-    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'text_column': text_column, 'type': 'scatter',
+                    'mode': 'markers+text' if text_column is not None else 'markers'})
+    data = self.parent.context.rptObj.data.js(record).plotly.xy_text(y_columns, x_axis, text_column)
+    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for i, d in enumerate(data):
-      sc_chart.add_trace(d, mode='markers+text' if texts is not None else 'markers', type="scatter")
+      sc_chart.add_trace(d, mode=options['mode'], type=options['type'])
       sc_chart.data.marker.color = self.parent.context.rptObj.theme.colors[i]
+      sc_chart.data.text = d['text']
     sc_chart.layout.no_background()
     return sc_chart
 
-  def timeseries(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-                 width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def timeseries(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
-        Related Pages:
+    Related Pages:
 
-			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
-        https://plot.ly/javascript/
+			https://plot.ly/javascript/
+    https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
-        :param record:
-        :param title:
-        :param profile:
-        :param width:
-        :param height:
-        :param htmlCode:
-        """
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param profile:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param htmlCode:
+    """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'lines', 'type': "scatter"})
     data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
-    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for d in data:
       sc_chart.add_trace(d)
     return sc_chart
 
-  def scattergl(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-              width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def scattergl(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
     Related Pages:
 
-			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
-    https://plot.ly/javascript/
+			https://plotly.com/javascript/line-and-scatter/
 
-    :param record:
-    :param title:
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
     :param htmlCode:
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers', 'type': "scattergl"})
     data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
-    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for d in data:
       sc_chart.add_trace(d, type="scattergl", mode='markers')
     return sc_chart
 
-  def histogram(self, record, y_columns=None, x_columns=None, title=None, profile=None, options=None,
-                width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def histogram(self, record, y_columns=None, x_columns=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
     Related Pages:
@@ -187,7 +199,6 @@ class Plotly(object):
     https://plot.ly/javascript/
 
     :param record:
-    :param title:
     :param profile:
     :param width:
     :param height:
@@ -205,104 +216,105 @@ class Plotly(object):
         if y in rec:
           series[histo_axis[0]].append(float(rec[y]))
         data.append(series)
-    histo_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    histo_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(histo_chart)
-
     for d in data:
       histo_chart.add_trace(d, type='histogram')
     return histo_chart
 
-  def pie(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-              width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def pie(self, record=None, y_columns=None, x_axis=None,  profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
 
     Related Pages:
 
-			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
-    https://plot.ly/javascript/
+			https://plotly.com/javascript/pie-charts/
 
-    :param record:
-    :param title:
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
-    :param htmlCode:
-    """
-    if record is None:
-      record = []
-      y_columns = y_columns or []
-    agg_data = {}
-    for rec in record:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'labels': [], 'values': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['labels'].append(x)
-        series['values'].append(y)
-      data.append(series)
-
-    pie_chart = graph.GraphPlotly.Pie(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
-    self.parent.context.register(pie_chart)
-    for d in data:
-      pie_chart.add_trace(d)
-    return pie_chart
-
-  def area(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-              width=(100, "%"), height=(330, "px"), htmlCode=None):
-    """
-
-    Related Pages:
-
-			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
-    https://plot.ly/javascript/
-
-    :param record:
-    :param title:
-    :param profile:
-    :param width:
-    :param height:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': "scatter"})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'pie', 'marker': {'colors': self.parent.context.rptObj.theme.charts}, 'mode': None, 'attrs': {'orientation': 'h'}})
     data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
-    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
-    self.parent.context.register(line_chart)
+    pie_chart = graph.GraphPlotly.Pie(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
+    self.parent.context.register(pie_chart)
     for d in data:
-      line_chart.add_trace(d)
-      line_chart.data.type = "scatter"
-      line_chart.data.fill = "tozeroy"
-    return line_chart
+      pie_chart.add_trace({"label": d['x'], "values": d['y']})
+      pie_chart.data.marker.colors = self.parent.context.rptObj.theme.charts
+    return pie_chart
 
-  def bubble(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-              width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def area(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
+    How to make a D3.js-based filled area plot in javascript. An area chart displays a solid color between the traces of a graph.
 
     Related Pages:
 
-			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
-    https://plot.ly/javascript/
+			https://plotly.com/javascript/filled-area-plots/
 
-    :param data:
-    :param title:
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param htmlCode:
+    """
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': "scatter", 'attrs': {'fill': "tozeroy"}})
+    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
+    self.parent.context.register(line_chart)
+    for d in data:
+      line_chart.add_trace(d)
+      line_chart.data.type = options['type']
+      line_chart.data.fill = "tozeroy"
+    return line_chart
+
+  def bubble(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+    How to make a D3.js-based filled area plot in javascript. An area chart displays a solid color between the traces of a graph.
+
+    Related Pages:
+
+			https://plotly.com/javascript/bubble-charts/
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param profile:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
     :param htmlCode:
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers'})
     data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
-    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(line_chart)
     for d in data:
       line_chart.add_trace(d, mode=options['mode'])
     return line_chart
 
-  def ribbon(self, record, y_columns=None, x_axis=None, z_axis=None, title=None, profile=None, options=None,
+  def ribbon(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
     Create ribbons on the x axis
@@ -313,7 +325,6 @@ class Plotly(object):
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -334,15 +345,14 @@ class Plotly(object):
         series['y'].append([y, y])
         series['z'].append([z_data[c][x], z_data[c][x]])
       data.append(series)
-    line_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                          profile)
+    line_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(line_chart)
     for d in data:
       line_chart.add_trace(d)
       line_chart.data.showscale = False
     return line_chart
 
-  def surface(self, record, y_columns=None, x_axis=None, z_axis=None, title=None, profile=None,
+  def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None,
              options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
@@ -350,7 +360,6 @@ class Plotly(object):
     :param y_columns:
     :param x_axis:
     :param z_axis:
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -378,16 +387,15 @@ class Plotly(object):
         nap.append(row)
       naps.append(nap)
 
-    surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                           profile)
+    surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(surf_chart)
     for d in naps:
       surf_chart.add_trace({'z': d})
       surf_chart.data.showscale = False
     return surf_chart
 
-  def scatter3d(self, record, y_columns=None, x_columns=None, z_columns=None, title=None, profile=None,
-             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def scatter3d(self, record, y_columns=None, x_columns=None, z_columns=None, profile=None, options=None, width=(100, "%"),
+                height=(330, "px"), htmlCode=None):
     """
 
     https://plot.ly/javascript/3d-line-plots/
@@ -396,7 +404,6 @@ class Plotly(object):
     :param y_columns:
     :param x_columns:
     :param z_columns:
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -413,27 +420,22 @@ class Plotly(object):
       x_series.append(xs)
       y_all_series.append(ys)
       z_series.append(zs)
-
-    sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                          profile)
+    sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for i, y_series in enumerate(y_all_series):
       sc_chart.add_trace({'x': x_series[i], 'y': y_series, 'z': z_series[i]})
       sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
     return sc_chart
 
-  def maps(self, records, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), htmlCode=None):
+  def maps(self, records, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
 
-    surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                           profile)
+    surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(surf_chart)
     for d in records:
       surf_chart.add_trace({'z': d})
     return surf_chart
 
-  def mesh3d(self, records, intensity, x, y, z, i=None, j=None, k=None, title=None, profile=None,
-             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def mesh3d(self, records, intensity, x, y, z, i=None, j=None, k=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
     https://plot.ly/javascript/3d-mesh/
@@ -446,7 +448,6 @@ class Plotly(object):
     :param i:
     :param j:
     :param k:
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -471,49 +472,93 @@ class Plotly(object):
         data["j"].append(rec[j])
       if k is not None:
         data["k"].append(rec[k])
-    mesh_chart = graph.GraphPlotly.Mesh3d(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                          profile)
+    mesh_chart = graph.GraphPlotly.Mesh3d(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(mesh_chart)
     mesh_chart.add_trace(data)
     return mesh_chart
 
-  def number(self, value, title=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
-             htmlCode=None):
-    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
-    self.parent.context.register(ind)
-    ind.add_trace({'value': value}, mode="number")
-    return ind
-
-  def number_with_delta(self, value, title=None, profile=None, options=None, width=(100, "%"),
-                        height=(330, "px"), htmlCode=None):
-    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
-    self.parent.context.register(ind)
-    ind.add_trace({'value': value}, mode="number+delta")
-    return ind
-
-  def gauge(self, value, title=None, profile=None, options=None, width=(100, "%"),
-                        height=(330, "px"), htmlCode=None):
+  def number(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
+
+    Related Pages:
+
+			https://plotly.com/javascript/indicator/
+
+    Attributes:
+    ----------
+    :param value:
+    :param profile:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param htmlCode:
+    """
+    options = options or {}
+    options.update({'type': 'indicator', 'mode': "number"})
+    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, options, htmlCode, profile)
+    self.parent.context.register(ind)
+    ind.add_trace({'value': value}, mode=options["mode"])
+    return ind
+
+  def number_with_delta(self, value, delta=100, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+			https://plotly.com/javascript/indicator/
+
+    Attributes:
+    ----------
+    :param value:
+    :param profile:
+    :param options:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param htmlCode:
+    """
+    options = options or {}
+    options.update({'type': 'indicator', 'mode': "number+delta", "delta": {'reference': delta}})
+    ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, options, htmlCode, profile)
+    self.parent.context.register(ind)
+    ind.add_trace({'value': value}, mode=options["mode"])
+    ind.data.delta.reference = delta
+    return ind
+
+  def gauge(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+    How to make a D3.js-based gauge chart in javascript.
+
 
     gauge = rptObj.ui.charts.plotly.gauge(2000)
     gauge.data.gauge.axis.range = [0, 5000]
 
-    https://plot.ly/javascript/indicator/
+    Related Pages:
 
+			https://plotly.com/javascript/gauge-charts/
+
+    Attributes:
+    ----------
     :param value:
-    :param title:
     :param profile:
     :param options:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
     :param htmlCode:
     """
-    gau = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    options = options or {}
+    options.update({'type': 'indicator', 'mode': "gauge+number"})
+    gau = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(gau)
-    gau.add_trace({'value': value}, mode="gauge+number")
+    gau.add_trace({'value': value}, mode=options['mode'], type=options['type'])
     return gau
 
-  def scatterpolar(self, records, r_columns=None, theta_axis=None, title=None, profile=None,
+  def scatterpolar(self, records, r_columns=None, theta_axis=None, profile=None,
              options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
 
     all_series = []
@@ -531,30 +576,25 @@ class Plotly(object):
       spolar_chart.data.marker.color = None
     return spolar_chart
 
-  def box(self, records, y_columns=None, x_columns=None, title=None, profile=None,
-             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def box(self, records, y_columns=None, x_columns=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
 
     axis, cols = ('y', y_columns) if y_columns is not None else ('x', x_columns)
     series = []
     for c in cols:
       series.append([rec.get(c) for rec in records])
-
-    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(box_chart)
     for s in series:
       box_chart.add_trace({axis: s})
     return box_chart
 
-  def group_box(self, records, y_columns=None, x_axis=None, title=None, profile=None,
-             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
-
+  def group_box(self, records, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
     https://plot.ly/javascript/box-plots/
 
     :param records:
     :param y_columns:
     :param x_axis:
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -566,15 +606,13 @@ class Plotly(object):
       for i, c in enumerate(y_columns):
         series[i].append(rec.get(c))
       x.append(rec.get(x_axis))
-    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(box_chart)
     for s in series:
       box_chart.add_trace({'y': s, 'x': x})
     return box_chart
 
-  def candlestick(self, records, closes, highs, lows, opens, x_axis, title=None, profile=None,
-                  options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
-
+  def candlestick(self, records, closes, highs, lows, opens, x_axis, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
     data = rptObj.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
@@ -586,7 +624,6 @@ class Plotly(object):
     :param lows:
     :param opens:
     :param x_axis:
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -605,8 +642,7 @@ class Plotly(object):
         series['open'].append(rec[opens[i]])
       all_series.append(series)
 
-    candle_chart = graph.GraphPlotly.CandleStick(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                       profile)
+    candle_chart = graph.GraphPlotly.CandleStick(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(candle_chart)
     for s in all_series:
       candle_chart.add_trace(s)

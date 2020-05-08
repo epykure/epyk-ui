@@ -314,6 +314,11 @@ class C3(JsPackage):
     ----------
     :param args:
     """
+    if isinstance(args, list):
+      if not isinstance(args[0], list):
+        args = {"columns": [args]}
+      else:
+        args = {"columns": args}
     args = JsUtils.jsConvertData(args, None)
     return JsObjects.JsVoid("%s.load(%s)" % (self._selector, args))
 
@@ -331,6 +336,8 @@ class C3(JsPackage):
     ----------
     :param args:
     """
+    if isinstance(args, list):
+      args = {"ids": args}
     args = JsUtils.jsConvertData(args, None)
     return JsObjects.JsVoid("%s.unload(%s)" % (self._selector, args))
 

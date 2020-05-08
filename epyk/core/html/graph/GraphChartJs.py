@@ -113,7 +113,7 @@ class Chart(Html.Html):
     :param jsFncs:
     :param profile:
     """
-    if self._attrs['type'] in ['pie']:
+    if self._attrs.get('type') in ['pie']:
       tmpJsFncs = ["console.log(%s)" % self.chartId, "var activePoints = %s.getSegmentsAtEvent(event)" % self.chartId]
       tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
     else:
@@ -148,18 +148,33 @@ class Chart(Html.Html):
     str_ctx = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
     return str_ctx
 
+  def convert(self, data, options, profile=False):
+    mod_name = __name__.split(".")[-1]
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors[self.builder_name] = "function %s%sConvert(data, options){%s; return result}" % (
+      mod_name, self.builder_name, self._js__convertor__)
+    if isinstance(data, dict):
+      # check if there is no nested HTML components in the data
+      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      js_data = "{%s}" % ",".join(tmp_data)
+    else:
+      js_data = JsUtils.jsConvertData(data, None)
+    options, js_options = options or self._options_init, []
+    for k, v in options.items():
+      if isinstance(v, dict):
+        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
+      else:
+        if str(v).strip().startswith("function"):
+          js_options.append("%s: %s" % (k, v))
+        else:
+          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    return "%s%sConvert(%s, %s)" % (mod_name, self.builder_name, js_data, "{%s}" % ",".join(js_options))
+
   def build(self, data=None, options=None, profile=False):
     if data:
-      dft_options = dict(self._options_init)
-      dft_options.update(options or {})
-      if self.data_format == 'xyz':
-        js_data = getattr(getattr(self._report.data.js(data), self.data_out), self.data_format)(dft_options['y_columns'], dft_options['x_column'], dft_options['z_columns'])
-      else:
-        js_data = getattr(getattr(self._report.data.js(data), self.data_out), self.data_format)(dft_options['y_columns'], dft_options['x_column'])
-      recordsset = []
-      for i, d in enumerate(js_data['datasets']):
-        recordsset.append(self.new_dataset(i, d, self._options_init['y_columns'][i]).toStr())
-      return "window['%(chartId)s'].data.labels = %(labels)s; window['%(chartId)s'].data.datasets = [%(recordsset)s]; window['%(chartId)s'].update()" % {'labels': js_data['labels'], 'recordsset': ",".join(recordsset),  'chartId': self.chartId}
+      return "Object.assign(window['%(chartId)s'].data, %(data)s); window['%(chartId)s'].update()" % {'chartId': self.chartId, 'data': self.convert(data, options, profile)}
+      #return "window['%(chartId)s'].data.labels = %(labels)s; window['%(chartId)s'].data.datasets = [%(recordsset)s]; window['%(chartId)s'].update()" % {'labels': js_data['labels'], 'recordsset': ",".join(recordsset),  'chartId': self.chartId}
 
     return '%s = new Chart(%s.getContext("2d"), %s)' % (self.chartId, self.dom.varId, self.getCtx())
 
@@ -224,6 +239,25 @@ class ChartLine(Chart):
     self._datasets.append(data)
     return data
 
+  @property
+  def _js__convertor__(self):
+    return '''
+      var temp = {}; var labels = []; var uniqLabels = {};
+      options.y_columns.forEach(function(series){temp[series] = {}});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+            temp[name][rec[options.x_column]] = rec[name]}})});
+      result = {datasets: [], labels: labels};
+      options.y_columns.forEach(function(series, i){
+        dataSet = {label: series, data: [], backgroundColor: options.colors[i], borderColor: options.colors[i]};
+        for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]};
+        labels.forEach(function(x){
+          if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
+        }); result.datasets.push(dataSet)})
+      '''
+
 
 class ChartBubble(Chart):
   __reqJs = ['Chart.js']
@@ -251,8 +285,25 @@ class ChartBubble(Chart):
     self._datasets.append(data)
     return data
 
+  @property
+  def _js__convertor__(self):
+    return '''
+      var temp = {}; var labels = [];
+      options.y_columns.forEach(function(series){temp[series] = []});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            labels.push(rec[options.x_column]); var r = 2; if((options.rDim != undefined) && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
+            temp[name].push({y: rec[name], x: rec[options.x_column], r: r})}})});
+      result = {datasets: [], labels: labels};
+      options.y_columns.forEach(function(series, i){
+        dataSet = {label: series, data: [], backgroundColor: options.colors[i]};
+        labels.forEach(function(x, i){dataSet.data = temp[series]}); 
+      result.datasets.push(dataSet)})
+      '''
 
-class ChartBar(Chart):
+
+class ChartBar(ChartLine):
   __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
@@ -324,6 +375,25 @@ class ChartPolar(Chart):
     self._datasets.append(data)
     return data
 
+  @property
+  def _js__convertor__(self):
+    return '''
+      var temp = {}; var labels = []; var uniqLabels = {};
+      options.y_columns.forEach(function(series){temp[series] = {}});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+            temp[name][rec[options.x_column]] = rec[name]}})});
+      result = {datasets: [], labels: labels};
+      options.y_columns.forEach(function(series, i){
+        dataSet = {label: series, data: [], backgroundColor: options.colors, borderColor: options.colors[i]};
+        for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]};
+        labels.forEach(function(x){
+          if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
+        }); result.datasets.push(dataSet)})
+      '''
+
 
 class ChartHBar(ChartBar):
   __reqJs = ['Chart.js']
@@ -366,6 +436,25 @@ class ChartPie(Chart):
     self._datasets.append(data)
     return data
 
+  @property
+  def _js__convertor__(self):
+    return '''
+      var temp = {}; var labels = []; var uniqLabels = {};
+      options.y_columns.forEach(function(series){temp[series] = {}});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+            temp[name][rec[options.x_column]] = rec[name]}})});
+      result = {datasets: [], labels: labels};
+      options.y_columns.forEach(function(series){
+        dataSet = {label: series, data: [], backgroundColor: []};
+        labels.forEach(function(x, i){
+          dataSet.backgroundColor.push(options.colors[i]);
+          if(temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
+        }); result.datasets.push(dataSet)})
+      '''
+
 
 class ChartRadar(Chart):
   __reqJs = ['Chart.js']
@@ -391,6 +480,25 @@ class ChartRadar(Chart):
     data = self.new_dataset(len(self._datasets), data, label, colors, opacity)
     self._datasets.append(data)
     return data
+
+  @property
+  def _js__convertor__(self):
+    return '''
+        var temp = {}; var labels = []; var uniqLabels = {};
+        options.y_columns.forEach(function(series){temp[series] = {}});
+        data.forEach(function(rec){ 
+          options.y_columns.forEach(function(name){
+            if(rec[name] !== undefined){
+              if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+              temp[name][rec[options.x_column]] = rec[name]}})});
+        result = {datasets: [], labels: labels};
+        options.y_columns.forEach(function(series, i){
+          dataSet = {label: series, data: [], backgroundColor: options.colors, borderColor: options.colors[i]};
+          for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]};
+          labels.forEach(function(x){
+            if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
+          }); result.datasets.push(dataSet)})
+        '''
 
 
 class ChartScatter(Chart):
@@ -418,3 +526,20 @@ class ChartScatter(Chart):
     data = self.new_dataset(len(self._datasets), data, label, colors)
     self._datasets.append(data)
     return data
+
+  @property
+  def _js__convertor__(self):
+    return '''
+      var temp = {}; var labels = [];
+      options.y_columns.forEach(function(series){temp[series] = []});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            labels.push(rec[options.x_column]); var r = 2; if((options.rDim != undefined) && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
+            temp[name].push({y: rec[name], x: rec[options.x_column], r: r})}})});
+      result = {datasets: [], labels: labels};
+      options.y_columns.forEach(function(series, i){
+        dataSet = {label: series, data: [], backgroundColor: options.colors[i]};
+        labels.forEach(function(x, i){dataSet.data = temp[series]}); 
+      result.datasets.push(dataSet)})
+      '''

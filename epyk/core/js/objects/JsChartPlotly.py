@@ -341,17 +341,6 @@ class JsPlotlyHBox(object):
     '''
 
 
-class JsPlotlySurface(object):
-  pmts = ("seriesNames", "xAxis", "zAxis")
-  content = '''
-    seriesNames.forEach(function(series){
-      records = {z: []};
-      data.forEach(function(rec){var y = rec[series]; if(y == undefined){y = 0};
-         records.z.push([parseFloat(rec[xAxis]), y, rec[zAxis]])})
-      result.push(records)})
-    '''
-
-
 class JsPlotlyScatter3D(object):
   """
   Convert the recordset to a Plotly object which can be used in 3d surface charts
@@ -371,23 +360,6 @@ class JsPlotlyScatter3D(object):
         result[i].x.push(rec[xAxis]); result[i].y.push(y); result[i].z.push(rec[zAxis])})})
     '''
 
-
-class JsPlotlyHBar(object):
-  pmts = ("seriesNames", "xAxis")
-  content = '''
-    var temp = {}; var labels = {};
-    data.forEach(function(rec){ 
-      if(!(rec[xAxis] in temp)){temp[rec[xAxis]] = {}};
-      seriesNames.forEach(function(name){
-        labels[name] = true; if(rec[name] !== undefined){
-          if(!(name in temp[rec[xAxis]])){temp[rec[xAxis]][name] = rec[name]}else{temp[rec[xAxis]][name] += rec[name]}}})
-    });
-    result = []; var labels = Object.keys(labels);
-    labels.forEach(function(label){
-      dataSet = {x: [], y: [], name: label};
-      for(var series in temp){if(temp[series][label] !== undefined){dataSet.x.push(series); dataSet.y.push(temp[series][label])}};
-      result.push(dataSet)}) 
-    '''
 
 
 class JsPlotlyMaps(object):

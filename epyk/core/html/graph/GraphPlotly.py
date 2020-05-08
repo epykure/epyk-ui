@@ -14,7 +14,7 @@ from epyk.core.js.packages import JsD3
 class Chart(Html.Html):
   name, category, callFnc = 'Plotly', 'Charts', 'plotly'
 
-  def __init__(self,  report, width, height, title, options, htmlCode, profile):
+  def __init__(self,  report, width, height, options, htmlCode, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
     super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self._d3, self._attrs, self._traces, self._layout, self._options = None, None, [], None, None
@@ -144,6 +144,26 @@ class Chart(Html.Html):
     return self._traces[i]
 
   @property
+  def _js__convertor__(self):
+    return '''
+      var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+      options.y_columns.forEach(function(series){temp[series] = {}});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+            temp[name][rec[options.x_column]] = rec[name]}})});
+      options.y_columns.forEach(function(series){
+        dataSet = {x: [], y: [], name: series, type: options.type, mode: options.mode, marker: {}};
+        if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+        if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+        labels.forEach(function(x, i){
+          dataSet.x.push(x);
+          if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])}
+        }); result.push(dataSet)})
+      '''
+
+  @property
   def layout(self):
     """
 
@@ -172,15 +192,34 @@ class Chart(Html.Html):
     self._traces.append(DataChart(self._report, attrs=c_data))
     return self
 
+  def convert(self, data, options, profile=False):
+    mod_name = __name__.split(".")[-1]
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors[self.builder_name] = "function %s%sConvert(data, options){%s; return result}" % (
+      mod_name, self.builder_name, self._js__convertor__)
+    if isinstance(data, dict):
+      # check if there is no nested HTML components in the data
+      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      js_data = "{%s}" % ",".join(tmp_data)
+    else:
+      js_data = JsUtils.jsConvertData(data, None)
+    dfl_options, js_options = dict(self._options_init), []
+    if options is not None:
+      dfl_options.update(options)
+    for k, v in dfl_options.items():
+      if isinstance(v, dict):
+        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
+      else:
+        if str(v).strip().startswith("function"):
+          js_options.append("%s: %s" % (k, v))
+        else:
+          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    return JsObject.JsObject("%s%sConvert(%s, %s)" % (mod_name, self.builder_name, js_data, "{%s}" % ",".join(js_options)), isPyData=True)
+
   def build(self, data=None, options=None, profile=False):
     if data:
-      dft_options = dict(self._options_init)
-      dft_options.update(options or {})
-      str_traces = []
-      for t in self._report.data.js(data).plotly.xy(dft_options['y_columns'], dft_options['x_column']):
-        str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self.trace(t).attrs()]))
-      obj_datasets = JsObject.JsObject.get("[%s]" % ", ".join(str_traces))
-      return JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).react(self.htmlId, obj_datasets, self.layout, self.options)], toStr=True)
+      return JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).react(self.htmlId, self.convert(data, options, profile), self.layout, self.options)], toStr=True)
 
     str_traces = []
     for t in self._traces:
@@ -1445,6 +1484,14 @@ class DataMarkers(DataClass):
     self._attrs["color"] = val
 
   @property
+  def colors(self):
+    return self._attrs["colors"]
+
+  @color.setter
+  def colors(self, val):
+    self._attrs["colors"] = val
+
+  @property
   def opacity(self):
     return self._attrs["opacity"]
 
@@ -1635,6 +1682,14 @@ class DataXY(DataChart):
   @y.setter
   def y(self, val):
     self._attrs["y"] = val
+
+  @property
+  def text(self):
+    return self._attrs["text"]
+
+  @text.setter
+  def text(self, val):
+    self._attrs["text"] = val
 
 
 class DataPie(DataChart):
@@ -2116,11 +2171,31 @@ class Pie(Chart):
   def add_trace(self, data, type='pie', mode=None):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = type
+      c_data['type'] = self._options_init.get('type', type)
     if mode is not None:
-      c_data['mode'] = mode
+      c_data['mode'] = self._options_init.get('mode', type)
     self._traces.append(DataPie(self._report, attrs=c_data))
     return self
+
+  @property
+  def _js__convertor__(self):
+    return '''
+      var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+      options.y_columns.forEach(function(series){temp[series] = {}});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+            temp[name][rec[options.x_column]] = rec[name]}})});
+      options.y_columns.forEach(function(series){
+        dataSet = {label: [], values: [], name: series, type: options.type, mode: options.mode, marker: {}};
+        if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+        if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+        labels.forEach(function(x, i){
+          dataSet.label.push(x);
+          if(temp[series][x] == undefined){dataSet.values.push(null)} else{dataSet.values.push(temp[series][x])}
+        }); result.push(dataSet)})
+      '''
 
 
 class Surface(Chart):
@@ -2228,6 +2303,14 @@ class Indicator(Chart):
       c_data['mode'] = mode
     self._traces.append(DataIndicator(self._report, attrs=c_data))
     return self
+
+  @property
+  def _js__convertor__(self):
+    return '''
+      var dataset = {value: data, type: options.type, mode: options.mode, delta: {}};
+      if(typeof options.delta !== undefined){ for(var attr in options.delta){dataset.delta[attr] = options.delta[attr]}};
+      var result = [dataset]
+      '''
 
 
 class ScatterPolar(Chart):

@@ -10,21 +10,27 @@ class ChartJs(object):
 
   def line(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
+    Display a line chart from ChartJs
 
-    Documentation
-    http://www.chartjs.org/
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/scales/logarithmic/line.html
 
     Attributes:
     ----------
-    :param record:
-    :param y_columns:
-    :param x_axis:
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -33,8 +39,27 @@ class ChartJs(object):
     self.parent.context.register(line_chart)
     return line_chart
 
-  def timeseries(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-                 width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def timeseries(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+    Display a line chart from ChartJs
+
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/scales/logarithmic/line.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param profile:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
+    :param htmlCode:
+    """
     line = self.line(record, y_columns, x_axis, profile, width, height, options, htmlCode)
     return line
 
@@ -42,17 +67,25 @@ class ChartJs(object):
     """
     Description:
     ------------
+    Display a pie chart from ChartJs
+
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/charts/pie.html
 
     Attributes:
     ----------
-    :param record:
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -63,15 +96,27 @@ class ChartJs(object):
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
+    Display a donut chart from ChartJs
 
-    :param record:
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/charts/doughnut.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
-    dflt_options = {'cutoutPercentage': 50, 'y_columns': y_columns, 'x_column': x_axis}
+    dflt_options = {'cutoutPercentage': 50, 'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}}
     if options is not None:
       dflt_options.update()
     pie_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, htmlCode, dflt_options, profile)
@@ -83,14 +128,27 @@ class ChartJs(object):
 
   def area(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
+    Display a area chart from ChartJs
 
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/charts/area/line-stacked.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {"opacity": 0.2}})
     data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -102,12 +160,27 @@ class ChartJs(object):
 
   def step(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
+    Display a step chart from ChartJs
 
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/scales/linear/step-size.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {"fill": None}})
     data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -121,19 +194,25 @@ class ChartJs(object):
     """
     Description:
     ------------
+    Display a bar chart from ChartJs
+
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/scriptable/bar.html
 
     Attributes:
     ----------
-    :param record: Array.
-    :param y_column: String.
-    :param x_axis: String.
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
@@ -145,15 +224,27 @@ class ChartJs(object):
 
   def hbar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
+    Display a horizontal bar chart from ChartJs
 
-    :param record:
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/scriptable/bar.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartHBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
@@ -162,20 +253,36 @@ class ChartJs(object):
     self.parent.context.register(bar_chart)
     return bar_chart
 
-  def multi(self, data=None, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
-           width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def multi(self, type, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
+    Description:
+    ------------
+    Display a multi chart from ChartJs
 
-    :param title:
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/charts/combo-bar-line.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
-    bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, title, options, htmlCode, filters, profile)
-    bar_chart.chart._data = self.parent.context.rptObj.js.data.records(data).to.chartJs.line(y_columns, x_axis, profile or False)
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
+    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    bar_chart.labels(data['labels'])
+    for d in data['datasets']:
+      bar_chart.add_dataset(d)
+    bar_chart._attrs['type'] = type
+    bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     self.parent.context.register(bar_chart)
     return bar_chart
 
@@ -183,18 +290,25 @@ class ChartJs(object):
     """
     Description:
     ------------
+    Display a scatter chart from ChartJs
+
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/charts/scatter/basic.html
 
     Attributes:
     ----------
-
-    :param record:
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'rDim': None, 'attrs': {}})
     data = self.parent.context.rptObj.data.js(record).chartjs.xy(y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -205,15 +319,27 @@ class ChartJs(object):
 
   def bubble(self, record, y_columns=None, x_axis=None, r_values=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
+    Display a bubble chart from ChartJs
 
-    :param title:
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/scriptable/bubble.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_columns': r_values})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_columns': r_values, 'colors': self.parent.context.rptObj.theme.charts, 'rDim': None, 'attrs': {}})
     data = self.parent.context.rptObj.data.js(record).chartjs.xyz(y_columns, x_axis, r_values)
     line_chart = graph.GraphChartJs.ChartBubble(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
@@ -224,15 +350,27 @@ class ChartJs(object):
 
   def polar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
+    Description:
+    ------------
+    Display a bubble chart from ChartJs
 
-    :param title:
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/charts/polar-area.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     polar_chart = graph.GraphChartJs.ChartPolar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     polar_chart.labels(data['labels'])
@@ -243,21 +381,27 @@ class ChartJs(object):
 
   def radar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
-    A radar chart is a way of showing multiple data points and the variation between them.
+    Description:
+    ------------
+    Display a bubble chart from ChartJs
 
-    https://www.chartjs.org/docs/latest/charts/radar.html
+    Related Pages:
 
-    :param record:
-    :param y_columns:
-    :param x_axis:
+      https://www.chartjs.org/samples/latest/charts/radar.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param profile:
-    :param width:
-    :param height:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
     :param htmlCode:
     """
-
     options = options or {}
-    options.update({'y_columns': y_columns, 'x_column': x_axis})
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
     radar_chart = graph.GraphChartJs.ChartRadar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     radar_chart.labels(data['labels'])

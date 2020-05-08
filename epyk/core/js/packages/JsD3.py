@@ -134,6 +134,7 @@ http://bl.ocks.org/gka/17ee676dc59aa752b4e6
     if datasets is None:
       self.fnc("datum()")
     else:
+      print(JsUtils.jsConvertData(datasets, None))
       self.fnc("datum(%s)" % JsUtils.jsConvertData(datasets, None))
     return self
 

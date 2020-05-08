@@ -44,6 +44,15 @@ class DataGlobal(object):
     """
     return DataPlotly(self._data, self._report, self._component)
 
+  @property
+  def nvd3(self):
+    """
+    Description:
+    ------------
+
+    """
+    return DataNVD3(self._data, self._report, self._component)
+
 
 class DataCharrtJs(object):
 
@@ -58,7 +67,7 @@ class DataCharrtJs(object):
 
     Attributes:
     ----------
-    :param y_column:
+    :param y_columns:
     :param x_axis:
     :param profile:
     """
@@ -137,7 +146,6 @@ class DataCharrtJs(object):
 
 
 class DataPlotly(object):
-
   def __init__(self, data, report=None, component=None):
     self._data = data
     self._report, self._component = report, component
@@ -156,3 +164,89 @@ class DataPlotly(object):
         series['y'].append(y)
       data.append(series)
     return data
+
+  def xy_text(self, y_columns, x_axis, text=None, profile=None):
+    if text is None:
+      return self.xy(y_columns, x_axis, profile)
+
+    agg_data, texts = {}, {}
+    for rec in self._data:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+          texts.setdefault(y, {})[rec[x_axis]] = rec[text]
+    data = []
+    for c in y_columns:
+      series = {'x': [], 'y': [], 'text': []}
+      for x, y in agg_data.get(c, {}).items():
+        series['x'].append(x)
+        series['y'].append(y)
+        series['text'].append(texts.get(c, {}).get(x, ''))
+      data.append(series)
+    return data
+
+class DataNVD3(object):
+
+  def __init__(self, data, report=None, component=None):
+    self._data = data
+    self._report, self._component = report, component
+
+  def xy(self, y_columns, x_axis, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param y_columns:
+    :param x_axis:
+    :param profile:
+    """
+    agg_data = {}
+    for rec in self._data:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+    labels, data = set(), []
+    for c in y_columns:
+      series = []
+      for x, y in agg_data[c].items():
+        labels.add(x)
+        series.append({"x": x, "y": y})
+      data.append(series)
+    is_data = {"labels": [], 'datasets': [], 'series': []}
+    for i, l in enumerate(y_columns):
+      is_data["labels"].append(l)
+      is_data["datasets"].append(data[i])
+      is_data["series"].append(l)
+    return is_data
+
+  def labely(self, y_columns, x_axis, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param y_columns:
+    :param x_axis:
+    :param profile:
+    """
+    agg_data = {}
+    for rec in self._data:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+    labels, data = set(), []
+    for c in y_columns:
+      series = []
+      for x, y in agg_data[c].items():
+        labels.add(x)
+        series.append({"label": x, "y": y})
+      data.append(series)
+    is_data = {"labels": [], 'datasets': [], 'series': []}
+    for i, l in enumerate(y_columns):
+      is_data["labels"].append(l)
+      is_data["datasets"].append(data[i])
+      is_data["series"].append(l)
+    return is_data

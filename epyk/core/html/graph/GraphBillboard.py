@@ -40,8 +40,7 @@ from epyk.core.js.packages import JsD3
 
 
 class Chart(Html.Html):
-  name, category, callFnc = 'Billboard', 'Charts', 'Billboard'
-  data_out, data_format = 'billboard', 'y'
+  name = 'Billboard'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     self.height = height[0]
@@ -87,24 +86,34 @@ class Chart(Html.Html):
       self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
     return self._d3
 
+  def convert(self, data, options, profile=False):
+    mod_name = __name__.split(".")[-1]
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors[self.builder_name] = "function %s%sConvert(data, options){%s; return result}" % (
+      mod_name, self.builder_name, self._js__convertor__)
+    if isinstance(data, dict):
+      # check if there is no nested HTML components in the data
+      tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
+      js_data = "{%s}" % ",".join(tmp_data)
+    else:
+      js_data = JsUtils.jsConvertData(data, None)
+    dfl_options, js_options = dict(self._options_init), []
+    if options is not None:
+      dfl_options.update(options)
+    for k, v in dfl_options.items():
+      if isinstance(v, dict):
+        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
+      else:
+        if str(v).strip().startswith("function"):
+          js_options.append("%s: %s" % (k, v))
+        else:
+          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+    return "%s%sConvert(%s, %s)" % (mod_name, self.builder_name, js_data, "{%s}" % ",".join(js_options))
+
   def build(self, data=None, options=None, profile=False):
     if data:
-      dft_options = dict(self._options_init)
-      dft_options.update(options or {})
-      js_data = getattr(getattr(self._report.data.js(data), self.data_out), self.data_format)(dft_options['y_columns'], dft_options['x_column'])
-      if self._type in ['pie', 'donut']:
-        columns, colors, types = [], {}, {}
-        for i, d in enumerate(js_data['datasets'][0]):
-          columns.append([js_data['labels'][i], d])
-          colors[js_data['labels'][i]] = self._report.theme.colors[i]
-          types[js_data['labels'][i]] = self._type
-      else:
-        columns, colors, types = [['x'] + js_data['labels']], {}, {}
-        for i, d in enumerate(js_data['datasets']):
-          columns.append([js_data['series'][i]] + d)
-          colors[js_data['series'][i]] = self._report.theme.colors[i]
-          types[js_data['series'][i]] = self._type
-      return '%(chartId)s.unload(); %(chartId)s.load({columns: %(columns)s, colors: %(colors)s, types: %(types)s})' % {'chartId': self.chartId, 'columns': JsUtils.jsConvertData(columns, None), 'types': JsUtils.jsConvertData(types, None),  'colors': JsUtils.jsConvertData(colors, None)}
+      return '%(chartId)s.unload(); %(chartId)s.load(%(data)s)' % {'chartId': self.chartId, 'data': self.convert(data, options, profile)}
 
     return '%s = bb.generate(%s)' % (self.chartId, self.getCtx())
 
@@ -502,6 +511,24 @@ class ChartLine(Chart):
     return self._attrs
 
   @property
+  def _js__convertor__(self):
+    return '''
+      var temp = {}; var labels = []; var uniqLabels = {};
+      options.y_columns.forEach(function(series){temp[series] = {}});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            if (!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+            temp[name][rec[options.x_column]] = rec[name]}})});
+      columns = []; columns.push(['x'].concat(labels));
+      options.y_columns.forEach(function(series){
+        dataSet = [series];
+        labels.forEach(function(x){
+          if(temp[series][x] == undefined){dataSet.push(null)} else {dataSet.push(temp[series][x])}}); columns.push(dataSet)});
+      var result = {columns: columns}
+      '''
+
+  @property
   def axis(self):
     """
 
@@ -578,10 +605,44 @@ class ChartScatter(ChartLine):
   __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'scatter'
 
+  @property
+  def _js__convertor__(self):
+    return '''
+      var tempVal = {}; var tempX = {}; var labels = []; 
+      options.y_columns.forEach(function(series){tempVal[series] = []; tempX[series +"_x"] = []});
+      data.forEach(function(rec){ 
+        options.y_columns.forEach(function(name){
+          if(rec[name] !== undefined){
+            if(!(rec[options.x_column] in tempVal[name])){tempVal[name] = [name, rec[name]]; tempX[name +"_x"] = [name +"_x", rec[options.x_column]]}
+            else {tempVal[name].push(rec[name]); tempX[name +"_x"].push(rec[options.x_column])}}})});
+      result = {'columns': [], 'xs': {}};
+      options.y_columns.forEach(function(series){
+        result.columns.push(tempVal[series]); result.columns.push(tempX[series +"_x"]); result.xs[series] = series +"_x"})
+      '''
+
 
 class ChartPie(ChartLine):
   __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'pie'
+
+  @property
+  def _js__convertor__(self):
+    return '''
+      var temp = {}; var labels = {};
+      data.forEach(function(rec){ 
+        if(!(rec[options.x_column] in temp)){temp[rec[options.x_column]] = {}};
+        options.y_columns.forEach(function(name){
+          labels[name] = true; 
+          if(rec[name] !== undefined){
+            if(!(name in temp[rec[options.x_column]])){temp[rec[options.x_column]][name] = rec[name]} else{temp[rec[options.x_column]][name] += rec[name]}}})});
+      columns = []; var labels = Object.keys(labels); var count = 0;
+      for(var series in temp){
+        var values = [count]; count += 1;
+        labels.forEach(function(label){
+          if(temp[series][label] !== undefined){values.push(temp[series][label])} else{values.push(null)}});
+        columns.push(values)};
+      var result = {columns: columns};
+      '''
 
   def labels(self, labels, series_id='x'):
     self._labels = labels

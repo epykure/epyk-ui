@@ -1,10 +1,7 @@
 from epyk.core.js.fncs import JsFncsRecords
 from epyk.core.js.fncs import JsFncsAgg
 
-from epyk.core.js.objects import JsChartNvd3
-from epyk.core.js.objects import JsChartsJs
 from epyk.core.js.objects import JsChartD3
-from epyk.core.js.objects import JsChartBillboard
 from epyk.core.js.objects import JsChartPlotly
 
 from epyk.core.js.primitives import JsObject
@@ -33,34 +30,6 @@ class FncToObject(object):
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
       self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def), 'pmt': fnc_pmts}
-
-  @property
-  def chartJs(self):
-    """
-    Data transformation to the ChartJs package
-    """
-    return JsChartsJs.JsChartLinks(self._data, self._js_src, self._data_schema)
-
-  @property
-  def nvd3(self):
-    """
-    Data transformation to the NVD3 package
-    """
-    return JsChartNvd3.JsNVD3Links(self._data, self._js_src, self._data_schema)
-
-  @property
-  def c3(self):
-    """
-    Data transformation to the C3 package
-    """
-    return JsChartBillboard.JsChartBillboardLinks(self._data, self._js_src, self._data_schema)
-
-  @property
-  def billboard(self):
-    """
-    Data transformation to the Billboard package
-    """
-    return JsChartBillboard.JsChartBillboardLinks(self._data, self._js_src, self._data_schema)
 
   @property
   def d3(self):

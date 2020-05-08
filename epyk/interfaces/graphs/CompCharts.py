@@ -70,41 +70,6 @@ class Graphs(object):
     self.context.register(html_skillbar)
     return html_skillbar
 
-  def _data(self, data, seriesNames, xAxis, otherDims, dataFncs, xAxisOrder, chartFam, chartType, profile):
-    """
-
-    Attributes:
-    ----------
-    :param data:
-    :param seriesNames:
-    :param xAxis:
-    :param otherDims:
-    :param dataFncs:
-    :param xAxisOrder:
-    :param chartFam:
-    :param chartType:
-    :param profile:
-    """
-    if data is None:
-      data = []
-    if xAxis == '_index' or xAxis is None:
-      xAxis = '_index'
-      if seriesNames is None:
-        seriesNames = list(data.columns)
-      data['_index'] = data.index
-
-    if not isinstance(seriesNames, list):
-      seriesNames = [seriesNames]
-    if dataFncs == False:
-      dataFncs = [('all', [xAxis], seriesNames)]
-    elif dataFncs is None:
-      if otherDims is not None:
-        dataFncs = [('sum', [xAxis], seriesNames + list(otherDims), xAxisOrder)]
-      else:
-        dataFncs = [('sum', [xAxis], seriesNames, xAxisOrder)]
-    params = (seriesNames, xAxis) if otherDims is None else tuple([seriesNames, xAxis] + list(otherDims))
-    return js.AresJs.Js(self.context.rptObj, data, profile=profile).fncs(dataFncs).output(chartFam, chartType, params)
-
   def d3script(self, script, aresDf=None, seriesNames=None, xAxis=None, otherDims=None, dataFncs=None, title='',
             globalFilter=None, filterSensitive=True, profile=None, dataSrc=None, xAxisOrder=None, chartOptions=None,
             width=100, widthUnit="%", height=330, heightUnit="px", url=None, htmlCode=None, d3Version=None):
