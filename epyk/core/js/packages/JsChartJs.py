@@ -99,6 +99,122 @@ class ChartJs(JsPackage):
     """
     return JsObjects.JsArray.JsArray("%s.getElementsAtEvent(%s)" % (self.varName, jsEvent), isPyData=False)
 
+  def add(self, point, values):
+    """
+    Description:
+    -----------
+    Add point to an exiting chart on existing series
+
+    Note: Do not forget to trigger an update on the chart once all your transformations are done
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/developers/updates.html
+
+    Attributes:
+    ----------
+    :param point: Object. The point to add on the x-axis
+    :param values: dictionary. The value per series name
+    """
+    point = JsUtils.jsConvertData(point, None)
+    values = JsUtils.jsConvertData(values, None)
+    return JsObjects.JsVoid('''%(varName)s.data.labels.push(%(point)s);
+      %(varName)s.data.datasets.forEach(function(dataset){
+        dataset.data.push(%(values)s[dataset.label])})''' % {'varName': self.varName, 'point': point, 'values': values})
+
+  def remove(self, point=None, seriesNames=None):
+    """
+    Description:
+    -----------
+    Remove point to existing series
+
+    Note: Do not forget to trigger an update on the chart once all your transformations are done
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/developers/updates.html
+
+    Attributes:
+    ----------
+    :param point: Object. Optional. The point to be removed on the series. If none the last one will be removed
+    :param seriesNames: List. Optional. The series name
+    """
+    point = JsUtils.jsConvertData(point, None)
+    if seriesNames is None:
+      if point is None:
+        return JsObjects.JsVoid('''
+          %(varName)s.data.labels.pop();
+          %(varName)s.data.datasets.forEach(function(dataset){ dataset.data.pop() })''' % {'varName': self.varName})
+
+      return JsObjects.JsVoid('''
+        var index = %(varName)s.data.labels.indexOf(%(point)s);
+        if(index >= 0){
+          %(varName)s.data.labels.splice(index, 1);
+          %(varName)s.data.datasets.forEach(function(dataset){ dataset.data.splice(index, 1) })
+        } ''' % {'varName': self.varName, 'point': point})
+
+    seriesNames = JsUtils.jsConvertData(seriesNames, None)
+    return JsObjects.JsVoid('''
+        var index = %(varName)s.data.labels.indexOf(%(point)s);
+        if(index >= 0){
+          %(varName)s.data.datasets.forEach(function(dataset){
+            if (%(seriesNames)s.includes(dataset.label)){
+              dataset.data[index] = null}})} ''' % {'varName': self.varName, 'point': point, 'seriesNames': seriesNames})
+
+  def load(self, name, points, options=None):
+    """
+    Description:
+    -----------
+    Loads new series on an existing chart.
+    existing x axis will not be changed and they will be used to add the points
+
+    Note: Do not forget to trigger an update on the chart once all your transformations are done
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/developers/updates.html
+
+    Attributes:
+    ----------
+    :param name: String. The series name
+    :param points: List of dictionaries. The list of points ({x: , y: }) to be added to the chart
+    """
+    name = JsUtils.jsConvertData(name, None)
+    points = JsUtils.jsConvertData(points, None)
+    return JsObjects.JsVoid('''
+      var values = []; var index= -1;
+      %(varName)s.data.datasets.forEach(function(d, i){ if(d.label == %(name)s){ index = i}});
+      if (index == -1){
+        %(varName)s.data.labels.forEach(function(v){ values.push(%(points)s.v) });
+        %(varName)s.data.datasets.push({label: %(name)s, data: %(points)s})
+      }''' % {'varName': self.varName, 'name': name, 'points': points})
+
+  def unload(self, names=None):
+    """
+    Description:
+    -----------
+    Remove series from the chart
+
+    Note: Do not forget to trigger an update on the chart once all your transformations are done
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/developers/updates.html
+
+    Attributes:
+    ----------
+    :param names: List. Optional. The series names to be removed from the chart. If none all series will be removed
+    """
+    if names is None:
+      return JsObjects.JsVoid('%(varName)s.data.labels = []; %(varName)s.data.datasets = []' % {'varName': self.varName})
+
+    names = JsUtils.jsConvertData(names, None)
+    return JsObjects.JsVoid('''
+      var indices = [];
+      %(varName)s.data.datasets.forEach(function(d, i){ if(%(names)s.includes(d.label)){ indices.push(i)}});
+      indices.sort().reverse().forEach(function(i){%(varName)s.data.datasets.splice(i, 1)})
+      ''' % {'varName': self.varName, 'names': names})
+
   @property
   def label(self):
     """
