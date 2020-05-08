@@ -616,10 +616,11 @@ class Lists(object):
   def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
     return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
 
-  def chips(self, items=None, category='group', width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def chips(self, items=None, category='group', placeholder="", width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
+    Add a chip (filter) html component
 
     Underlying HTML Objects:
 
@@ -627,7 +628,9 @@ class Lists(object):
 
     Attributes:
     ----------
-    :param items:
+    :param items: List. Selected items
+    :param category: String. The group of the items.
+    :param placeholder: String. The input field placeholder
     :param width:
     :param height:
     :param htmlCode:
@@ -645,5 +648,6 @@ class Lists(object):
     if options is not None:
       dflt_options.update(options)
     html_f = html.HtmlEvent.Filters(self.context.rptObj, items or [], width, height, htmlCode, helper, dflt_options, profile)
+    html_f.input.attr['placeholder'] = placeholder
     self.context.register(html_f)
     return html_f
