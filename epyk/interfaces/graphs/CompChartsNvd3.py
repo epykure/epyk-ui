@@ -4,6 +4,68 @@ import datetime
 from epyk.core.html import graph
 
 
+def xy(data, y_columns, x_axis):
+  """
+  Description:
+  ------------
+
+  Attributes:
+  ----------
+  :param data: List of dict. The Python recordset
+  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+  """
+  agg_data = {}
+  for rec in data:
+    for y in y_columns:
+      if y in rec:
+        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+  labels, data = set(), []
+  for c in y_columns:
+    series = []
+    for x, y in agg_data[c].items():
+      labels.add(x)
+      series.append({"x": x, "y": y})
+    data.append(series)
+  is_data = {"labels": [], 'datasets': [], 'series': []}
+  for i, l in enumerate(y_columns):
+    is_data["labels"].append(l)
+    is_data["datasets"].append(data[i])
+    is_data["series"].append(l)
+  return is_data
+
+
+def labely(data, y_columns, x_axis):
+  """
+  Description:
+  ------------
+
+  Attributes:
+  ----------
+  :param data: List of dict. The Python recordset
+  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+  """
+  agg_data = {}
+  for rec in data:
+    for y in y_columns:
+      if y in rec:
+        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+  labels, data = set(), []
+  for c in y_columns:
+    series = []
+    for x, y in agg_data[c].items():
+      labels.add(x)
+      series.append({"label": x, "y": y})
+    data.append(series)
+  is_data = {"labels": [], 'datasets': [], 'series': []}
+  for i, l in enumerate(y_columns):
+    is_data["labels"].append(l)
+    is_data["datasets"].append(data[i])
+    is_data["series"].append(l)
+  return is_data
+
+
 class Nvd3(object):
   def __init__(self, context):
     self.parent = context
@@ -31,7 +93,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).chartjs.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartScatter(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d, data['labels'][i])
@@ -61,7 +123,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).chartjs.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartLine(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     line_chart.dom.useInteractiveGuideline(True)
     for i, d in enumerate(data['datasets']):
@@ -92,7 +154,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).chartjs.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartCumulativeLine(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     line_chart.dom.useInteractiveGuideline(True)
     for i, d in enumerate(data['datasets']):
@@ -123,7 +185,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).chartjs.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     line_chart = graph.GraphNVD3.ChartFocusLine(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     line_chart.dom.useInteractiveGuideline(True)
     for i, d in enumerate(data['datasets']):
@@ -154,7 +216,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).nvd3.labely(y_columns, x_axis)
+    data = labely(record, y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartBar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     if y_columns is not None and len(y_columns) > 1:
       # Change automatically the underlying chart object to add a multibars chart
@@ -188,7 +250,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).nvd3.labely(y_columns, x_axis)
+    data = labely(record, y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartHorizontalBar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(bar_chart)
     bar_chart.dom.x(column="label").y(column="y")
@@ -219,7 +281,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).nvd3.labely(y_columns, x_axis)
+    data = labely(record, y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartBar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     if y_columns is not None and len(y_columns) > 1:
       # Change automatically the underlying chart object to add a multibars chart
@@ -252,7 +314,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).nvd3.labely(y_columns, x_axis)
+    data = labely(record, y_columns, x_axis)
     histo_chart = graph.GraphNVD3.ChartHistoBar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     histo_chart.dom.x(column="label").y(column="y")
     for i, d in enumerate(data['datasets']):
@@ -284,7 +346,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).nvd3.labely(y_columns, x_axis)
+    data = labely(record, y_columns, x_axis)
     histo_chart = graph.GraphNVD3.ChartHistoBar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     histo_chart.dom.x(column="label").y(column="y")
     for i, d in enumerate(data['datasets']):
@@ -314,7 +376,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).nvd3.labely(y_columns, x_axis)
+    data = labely(record, y_columns, x_axis)
     area_chart = graph.GraphNVD3.ChartArea(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     for i, d in enumerate(data['datasets']):
       area_chart.add_trace(d, data['labels'][i])
@@ -344,7 +406,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).chartjs.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     pie_chart = graph.GraphNVD3.ChartPie(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(pie_chart)
     pie_chart.dom.x(column="x").y(column="y")
@@ -374,7 +436,7 @@ class Nvd3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = self.parent.context.rptObj.data.js(record).chartjs.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     pie_chart = graph.GraphNVD3.ChartPie(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(pie_chart)
     pie_chart.dom.x(column="x").y(column="y").donut(True)

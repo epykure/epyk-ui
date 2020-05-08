@@ -1,5 +1,97 @@
 
 from epyk.core.html import graph
+from epyk.core.py import OrderedSet
+
+
+def y(data, y_columns, x_axis):
+  """
+  Description:
+  ------------
+
+  Attributes:
+  ----------
+  :param data: List of dict. The Python recordset
+  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+  """
+  agg_data = {}
+  for rec in data:
+    for y in y_columns:
+      if y in rec:
+        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+  labels, data = OrderedSet(), []
+  for c in y_columns:
+    for x, y in agg_data.get(c, {}).items():
+      labels.add(x)
+  is_data = {"labels": labels, 'datasets': [], 'series': []}
+  for i, y in enumerate(y_columns):
+    is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in labels])
+    is_data["series"].append(y)
+  return is_data
+
+
+def xy(data, y_columns, x_axis):
+  """
+  Description:
+  ------------
+
+  Attributes:
+  ----------
+  :param data: List of dict. The Python recordset
+  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+  """
+  agg_data = {}
+  for rec in data:
+    for y in y_columns:
+      if y in rec:
+        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+  labels, data = set(), []
+  for c in y_columns:
+    series = []
+    for x, y in agg_data[c].items():
+      labels.add(x)
+      series.append({"x": x, "y": y})
+    data.append(series)
+  is_data = {"labels": [], 'datasets': [], 'series': []}
+  for i, l in enumerate(y_columns):
+    is_data["labels"].append(l)
+    is_data["datasets"].append(data[i])
+    is_data["series"].append(l)
+  return is_data
+
+
+def xyz(data, y_columns, x_axis, z_axis):
+  """
+  Description:
+  ------------
+
+  Attributes:
+  ----------
+  :param data: List of dict. The Python recordset
+  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+  :param z_axis:
+  """
+  agg_data, agg_r = {}, {}
+  for rec in data:
+    for i, y in enumerate(y_columns):
+      if y in rec:
+        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+      if z_axis is not None and i < len(z_axis):
+        agg_r.setdefault(y, {})[rec[x_axis]] = agg_r.get(y, {}).get(rec[x_axis], 0) + float(rec[z_axis[i]])
+  labels, data = OrderedSet(), []
+  for c in y_columns:
+    series = []
+    for x, y in agg_data[c].items():
+      labels.add(x)
+      series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 1)})
+    data.append(series)
+  is_data = {"labels": labels, 'datasets': [], 'series': []}
+  for i, l in enumerate(y_columns):
+    is_data["datasets"].append(data[i])
+    is_data["series"].append(l)
+  return is_data
 
 
 class ChartJs(object):
@@ -31,7 +123,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -86,7 +178,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartPie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -115,7 +207,7 @@ class ChartJs(object):
     :param options:
     :param htmlCode:
     """
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     dflt_options = {'cutoutPercentage': 50, 'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}}
     if options is not None:
       dflt_options.update()
@@ -149,7 +241,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {"opacity": 0.2}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -181,7 +273,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {"fill": None}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -213,7 +305,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
     for d in data['datasets']:
@@ -245,7 +337,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartHBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
     for d in data['datasets']:
@@ -276,7 +368,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
     for d in data['datasets']:
@@ -309,7 +401,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'rDim': None, 'attrs': {}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     line_chart = graph.GraphChartJs.ChartScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -340,7 +432,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_columns': r_values, 'colors': self.parent.context.rptObj.theme.charts, 'rDim': None, 'attrs': {}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.xyz(y_columns, x_axis, r_values)
+    data = xyz(record, y_columns, x_axis, r_values)
     line_chart = graph.GraphChartJs.ChartBubble(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -371,7 +463,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     polar_chart = graph.GraphChartJs.ChartPolar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     polar_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -402,7 +494,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
-    data = self.parent.context.rptObj.data.js(record).chartjs.y(y_columns, x_axis)
+    data = y(record, y_columns, x_axis)
     radar_chart = graph.GraphChartJs.ChartRadar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     radar_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):

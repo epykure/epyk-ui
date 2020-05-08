@@ -2,6 +2,67 @@
 from epyk.core.html import graph
 
 
+def xy(data, y_columns, x_axis):
+  """
+  Description:
+  ------------
+
+  Attributes:
+  ----------
+  :param data: List of dict. The Python recordset
+  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+  """
+  if data is None:
+    return []
+
+  agg_data = {}
+  for rec in data:
+    for y in y_columns:
+      if y in rec:
+        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+  data = []
+  for c in y_columns:
+    series = {'x': [], 'y': []}
+    for x, y in agg_data.get(c, {}).items():
+      series['x'].append(x)
+      series['y'].append(y)
+    data.append(series)
+  return data
+
+
+def xy_text(data, y_columns, x_axis, text=None):
+  """
+  Description:
+  ------------
+
+  Attributes:
+  ----------
+  :param data: List of dict. The Python recordset
+  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+  :param text: String. The column corresponding to the key in the dictionaries in the record
+  """
+  if text is None:
+    return xy(data, y_columns, x_axis)
+
+  agg_data, texts = {}, {}
+  for rec in data:
+    for y in y_columns:
+      if y in rec:
+        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+        texts.setdefault(y, {})[rec[x_axis]] = rec[text]
+  data = []
+  for c in y_columns:
+    series = {'x': [], 'y': [], 'text': []}
+    for x, y in agg_data.get(c, {}).items():
+      series['x'].append(x)
+      series['y'].append(y)
+      series['text'].append(texts.get(c, {}).get(x, ''))
+    data.append(series)
+  return data
+
+
 class Plotly(object):
   def __init__(self, context):
     self.parent = context
@@ -30,7 +91,7 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': 'lines+markers'})
-    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     line_chart.options.responsive = True
     self.parent.context.register(line_chart)
@@ -60,7 +121,7 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None})
-    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(bar_chart)
     for d in data:
@@ -89,7 +150,7 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None, 'attrs': {'orientation': 'h'}})
-    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(bar_chart)
     for d in data:
@@ -121,13 +182,14 @@ class Plotly(object):
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'text_column': text_column, 'type': 'scatter',
                     'mode': 'markers+text' if text_column is not None else 'markers'})
-    data = self.parent.context.rptObj.data.js(record).plotly.xy_text(y_columns, x_axis, text_column)
+    data = xy_text(record, y_columns, x_axis, text_column)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for i, d in enumerate(data):
       sc_chart.add_trace(d, mode=options['mode'], type=options['type'])
       sc_chart.data.marker.color = self.parent.context.rptObj.theme.colors[i]
-      sc_chart.data.text = d['text']
+      if text_column is not None:
+        sc_chart.data.text = d['text']
     sc_chart.layout.no_background()
     return sc_chart
 
@@ -154,7 +216,7 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'lines', 'type': "scatter"})
-    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for d in data:
@@ -183,7 +245,7 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers', 'type': "scattergl"})
-    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
     for d in data:
@@ -244,7 +306,7 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'pie', 'marker': {'colors': self.parent.context.rptObj.theme.charts}, 'mode': None, 'attrs': {'orientation': 'h'}})
-    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     pie_chart = graph.GraphPlotly.Pie(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(pie_chart)
     for d in data:
@@ -275,7 +337,7 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': "scatter", 'attrs': {'fill': "tozeroy"}})
-    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(line_chart)
     for d in data:
@@ -307,7 +369,7 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers'})
-    data = self.parent.context.rptObj.data.js(record).plotly.xy(y_columns, x_axis)
+    data = xy(record, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(line_chart)
     for d in data:
@@ -568,8 +630,7 @@ class Plotly(object):
         series['r'].append(rec[c])
         series['theta'].append(rec[theta_axis])
       all_series.append(series)
-    spolar_chart = graph.GraphPlotly.ScatterPolar(self.parent.context.rptObj, width, height, title, options or {},
-                                                  htmlCode, profile)
+    spolar_chart = graph.GraphPlotly.ScatterPolar(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(spolar_chart)
     for d in all_series:
       spolar_chart.add_trace(d, mode="line")

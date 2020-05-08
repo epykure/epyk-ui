@@ -1,252 +1,99 @@
 
+import json
+
+from epyk.core.js import JsUtils
 from epyk.core.py import OrderedSet
+
+
+class DataFilters(object):
+
+  def __init__(self,  varName, report=None):
+    self.varName, self.__filters = varName, []
+    self._report = report
+
+  def equal(self, key, value):
+    name = "filterEqual"
+    key = JsUtils.jsConvertData(key, None)
+    value = JsUtils.jsConvertData(value, None)
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors[name] = "function %s(r, k, v){if (v == ''){return r}; var n=[];r.forEach(function(e){if(e[k]==v){n.push(e)}});return n}" % name
+    self.__filters.append("%s(%%s, %s, %s)" % (name, key, value))
+    return self
+
+  def startswith(self, key, value):
+    name = "filterStartsWith"
+    key = JsUtils.jsConvertData(key, None)
+    value = JsUtils.jsConvertData(value, None)
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k].startsWith(v)){n.push(e)}});return n}" % name
+    self.__filters.append("%s(%%s, %s, %s)" % (name, key, value))
+    return self
+
+  def sup(self, key, value, strict=True):
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    if strict:
+      name = "filterSup"
+      key = JsUtils.jsConvertData(key, None)
+      value = JsUtils.jsConvertData(value, None)
+      constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] > v){n.push(e)}});return n}" % name
+      self.__filters.append("%s(%%s, %s, %s)" % (name, key, value))
+    else:
+      name = "filterSupEq"
+      key = JsUtils.jsConvertData(key, None)
+      value = JsUtils.jsConvertData(value, None)
+      constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] >= v){n.push(e)}});return n}" % name
+      self.__filters.append("%s(%%s, %s, %s)" % (name, key, value))
+    return self
+
+  def inf(self, key, value, strict=True):
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    if strict:
+      name = "filterInf"
+      key = JsUtils.jsConvertData(key, None)
+      value = JsUtils.jsConvertData(value, None)
+      constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] < v){n.push(e)}});return n}" % name
+      self.__filters.append("%s(%%s, %s, %s)" % (name, key, value))
+    else:
+      name = "filterInfEq"
+      key = JsUtils.jsConvertData(key, None)
+      value = JsUtils.jsConvertData(value, None)
+      constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] <= v){n.push(e)}});return n}" % name
+      self.__filters.append("%s(%%s, %s, %s)" % (name, key, value))
+
+    return self
+
+  def toStr(self):
+    result = "%s"
+    for rec in self.__filters[::-1]:
+      result %= rec
+    return result % self.varName
 
 
 class DataGlobal(object):
 
-  def __init__(self, data, report=None, component=None):
-    self._data = data
-    self._report, self._component = report, component
+  def __init__(self, data, varName, report=None):
+    report._props["js"]["datasets"][varName] = json.dumps(data)
+    self._data, self.__filters_groups, self._report, self.varName = data, {}, report, varName
 
-  @property
-  def chartjs(self):
-    """
-    Description:
-    ------------
-
-    """
-    return DataCharrtJs(self._data, self._report, self._component)
-
-  @property
-  def c3(self):
-    """
-    Description:
-    ------------
-
-    """
-    return DataCharrtJs(self._data, self._report, self._component)
-
-  @property
-  def billboard(self):
-    """
-    Description:
-    ------------
-
-    """
-    return DataCharrtJs(self._data, self._report, self._component)
-
-  @property
-  def plotly(self):
-    """
-    Description:
-    ------------
-
-    """
-    return DataPlotly(self._data, self._report, self._component)
-
-  @property
-  def nvd3(self):
-    """
-    Description:
-    ------------
-
-    """
-    return DataNVD3(self._data, self._report, self._component)
-
-
-class DataCharrtJs(object):
-
-  def __init__(self, data, report=None, component=None):
-    self._data = data
-    self._report, self._component = report, component
-
-  def xy(self, y_columns, x_axis, profile=None):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param y_columns:
-    :param x_axis:
-    :param profile:
-    """
-    agg_data = {}
-    for rec in self._data:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": x, "y": y})
-      data.append(series)
-    is_data = {"labels": [], 'datasets': [], 'series': []}
-    for i, l in enumerate(y_columns):
-      is_data["labels"].append(l)
-      is_data["datasets"].append(data[i])
-      is_data["series"].append(l)
-    return is_data
-
-  def y(self, y_columns, x_axis, profile=None):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param y_column:
-    :param x_axis:
-    :param profile:
-    """
-    agg_data = {}
-    for rec in self._data:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    labels, data = OrderedSet(), []
-    for c in y_columns:
-      for x, y in agg_data.get(c, {}).items():
-        labels.add(x)
-    is_data = {"labels": labels, 'datasets': [], 'series': []}
-    for i, y in enumerate(y_columns):
-      is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in labels])
-      is_data["series"].append(y)
-    return is_data
-
-  def xyz(self, y_columns, x_axis, z_axis, profile=None):
+  def filterGroup(self, groupBame):
     """
 
-    :param y_column:
-    :param x_axis:
-    :param z_axis:
-    :param profile:
+    :param groupBame:
     """
-    agg_data, agg_r = {}, {}
-    for rec in self._data:
-      for i, y in enumerate(y_columns):
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-        if z_axis is not None and i < len(z_axis):
-          agg_r.setdefault(y, {})[rec[x_axis]] = agg_r.get(y, {}).get(rec[x_axis], 0) + float(rec[z_axis[i]])
-    labels, data = OrderedSet(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 1)})
-      data.append(series)
-    is_data = {"labels": labels, 'datasets': [], 'series': []}
-    for i, l in enumerate(y_columns):
-      is_data["datasets"].append(data[i])
-      is_data["series"].append(l)
-    return is_data
+    if not groupBame in self.__filters_groups:
+      self.__filters_groups[groupBame] = DataFilters(self.varName, self._report)
+    return self.__filters_groups[groupBame]
 
-
-class DataPlotly(object):
-  def __init__(self, data, report=None, component=None):
-    self._data = data
-    self._report, self._component = report, component
-
-  def xy(self, y_columns, x_axis, profile=None):
-    agg_data = {}
-    for rec in self._data:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['x'].append(x)
-        series['y'].append(y)
-      data.append(series)
-    return data
-
-  def xy_text(self, y_columns, x_axis, text=None, profile=None):
-    if text is None:
-      return self.xy(y_columns, x_axis, profile)
-
-    agg_data, texts = {}, {}
-    for rec in self._data:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-          texts.setdefault(y, {})[rec[x_axis]] = rec[text]
-    data = []
-    for c in y_columns:
-      series = {'x': [], 'y': [], 'text': []}
-      for x, y in agg_data.get(c, {}).items():
-        series['x'].append(x)
-        series['y'].append(y)
-        series['text'].append(texts.get(c, {}).get(x, ''))
-      data.append(series)
-    return data
-
-class DataNVD3(object):
-
-  def __init__(self, data, report=None, component=None):
-    self._data = data
-    self._report, self._component = report, component
-
-  def xy(self, y_columns, x_axis, profile=None):
+  def cleafFilterGroup(self, groupBame):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
-    :param y_columns:
-    :param x_axis:
-    :param profile:
+    :param groupBame:
     """
-    agg_data = {}
-    for rec in self._data:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": x, "y": y})
-      data.append(series)
-    is_data = {"labels": [], 'datasets': [], 'series': []}
-    for i, l in enumerate(y_columns):
-      is_data["labels"].append(l)
-      is_data["datasets"].append(data[i])
-      is_data["series"].append(l)
-    return is_data
+    if not groupBame in self.__filters_groups:
+      del self.__filters_groups[groupBame]
 
-  def labely(self, y_columns, x_axis, profile=None):
-    """
-    Description:
-    ------------
+    return self
 
-    Attributes:
-    ----------
-    :param y_columns:
-    :param x_axis:
-    :param profile:
-    """
-    agg_data = {}
-    for rec in self._data:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    labels, data = set(), []
-    for c in y_columns:
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"label": x, "y": y})
-      data.append(series)
-    is_data = {"labels": [], 'datasets': [], 'series': []}
-    for i, l in enumerate(y_columns):
-      is_data["labels"].append(l)
-      is_data["datasets"].append(data[i])
-      is_data["series"].append(l)
-    return is_data
+  def clearFilters(self):
+    self.__filters_groups = {}
+    return self

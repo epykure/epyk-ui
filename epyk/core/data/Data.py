@@ -33,7 +33,7 @@ class DataSrc(object):
   def __init__(self, report=None):
     self._report = report if report is not None else self.__internal()
 
-  def js(self, records):
+  def js(self, records, varName):
     """
     Description:
     ------------
@@ -42,7 +42,7 @@ class DataSrc(object):
     ----------
     :param records:
     """
-    return DataCore.DataGlobal(records, self._report)
+    return DataCore.DataGlobal(records, varName, self._report)
 
   @property
   def db(self):

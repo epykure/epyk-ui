@@ -66,7 +66,7 @@ class Report(object):
   def __init__(self, run_options=None):
     #
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
-    self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet()}}, None, None, None
+    self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet(), 'datasets': {}}}, None, None, None
     self.run = self.run_context(run_options if run_options is not None else {})
 
     self.timestamp, self.runTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'), time.time() * 100

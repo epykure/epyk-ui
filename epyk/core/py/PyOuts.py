@@ -96,7 +96,7 @@ class PyOuts(object):
       onloadParts.append(d)
 
     for c, d in self._report._props.get('js', {}).get("datasets", {}).items():
-      onloadParts.append(d)
+      onloadParts.append("var %s = %s" % (c, d))
 
     for b in self._report._props.get('js', {}).get("builders", []):
       onloadParts.append(b)

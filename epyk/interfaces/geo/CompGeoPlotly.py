@@ -135,7 +135,7 @@ class PlotlyBubble(object):
     self.parent = context
     self.chartFamily = "Plotly"
 
-  def bubble(self, scope, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None,
+  def bubble(self, scope, record=None, y_column=None, x_axis=None, profile=None, options=None,
              width=(100, "%"), height=(430, "px"), htmlCode=None):
     """
 
@@ -151,7 +151,6 @@ class PlotlyBubble(object):
     :param record:
     :param y_column:
     :param x_axis:
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -159,8 +158,7 @@ class PlotlyBubble(object):
     :param htmlCode:
     :return:
     """
-    map_chart = geo.GeoPlotly.BubbleGeo(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                         profile)
+    map_chart = geo.GeoPlotly.BubbleGeo(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     map_chart.options.responsive = True
     data = {}
     if record is None:
@@ -210,7 +208,7 @@ class PlotlyBubble(object):
     :param htmlCode:
     :return:
     """
-    map_usa = self.bubble('usa', record, None, None, title, profile, options, width, height, htmlCode)
+    map_usa = self.bubble('usa', record, None, None, profile, options, width, height, htmlCode)
 
     series = []
     for i, l in enumerate(lon_columns):

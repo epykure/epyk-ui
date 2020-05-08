@@ -141,9 +141,10 @@ class Input(Html.Html):
 
     :return: The python object itself
     """
+
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self.on("keydown", "if(event.keyCode == 13){event.preventDefault(); %s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True), profile)
+    self.keydown.enter(jsFncs + [self.dom.select()], profile)
     return self
 
   def readonly(self, flag=True):
