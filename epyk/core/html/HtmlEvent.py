@@ -704,6 +704,7 @@ class Filters(Html.Html):
   def __init__(self, report, items, width, height, htmlCode, helper, options, profile):
     super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
     self.__options = OptList.OptionsTagItems(self, options)
+    self._jsStyles['delete'] = 'function(){this.parentNode.remove()}'
     self.input = self._report.ui.input()
     self.input.style.css.text_align = 'left'
     self.input.style.css.padding = '0 5px'
@@ -713,6 +714,7 @@ class Filters(Html.Html):
     self.selections.attr["name"] = "panel"
     self.selections.css({'height': '30px', 'padding': '5px 2px'})
     self.add_helper(helper)
+    self.__enter_def = False
 
   @property
   def options(self):
@@ -742,10 +744,25 @@ class Filters(Html.Html):
     :param jsFncs:
     :param profile:
     """
+    self.__enter_def = True
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self.keydown.enter([JsUtils.jsConvertFncs(jsFncs, toStr=True), self.dom.add(self.dom.input)] + jsFncs, profile)
+    self.keydown.enter([JsUtils.jsConvertFncs(jsFncs, toStr=True), self.dom.add(self.dom.input)] + jsFncs + [self.input.dom.empty()], profile)
     return self
+
+  def delete(self, jsFncs, profile=False):
+    """
+
+    :param jsFncs:
+    :param profile:
+    """
+    if self.__enter_def:
+      raise Exception("delete on chip must be triggered before enter")
+
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._jsStyles['delete'] = 'function(){ this.parentNode.remove(); %s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self # function(event){ this.parentNode.remove()}
 
   def append(self, value, category=None, name=None, disabled=False, fixed=False):
     """
@@ -788,15 +805,13 @@ class Filters(Html.Html):
         var content = document.createElement("span"); for (var key in options.value_css){ content.style[key] = options.value_css[key]};
         content.setAttribute('name', 'chip_value'); content.innerHTML = record.value; 
         if(options.visible){
-          var p = document.createElement("p");
-          for (var key in options.category_css){ p.style[key] = options.category_css[key]};
-          p.innerHTML = record.name; 
-          div.appendChild(p)
+          var p = document.createElement("p"); for (var key in options.category_css){ p.style[key] = options.category_css[key]};
+          p.innerHTML = record.name; div.appendChild(p)
         };
         div.appendChild(content);
         if(!record.fixed){
           var icon = document.createElement("i"); for (var key in options.icon_css){ icon.style[key] = options.icon_css[key] };
-          icon.classList.add('fas'); icon.classList.add('fa-times');  icon.addEventListener('click', function(event){ this.parentNode.remove()} );
+          icon.classList.add('fas'); icon.classList.add('fa-times');  icon.addEventListener('click', options.delete );
           div.appendChild(icon)}
         panel.appendChild(div);
     }'''

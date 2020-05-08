@@ -95,14 +95,27 @@ class Tags(JsHtml.JsHtmlRich):
     name = name or category
     category = JsUtils.jsConvertData(category, None)
     name = JsUtils.jsConvertData(name, None)
+    # Convert the option to a javascript object
+    # TODO move this in a centralised place
+    options, js_options = self._src._jsStyles, []
+    for k, v in options.items():
+      if isinstance(v, dict):
+        row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
+        js_options.append("'%s': {%s}" % (k, ", ".join(row)))
+      else:
+        if str(v).strip().startswith("function"):
+          js_options.append("%s: %s" % (k, v))
+        else:
+          js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+
     if no_duplicte:
       return JsObjects.JsObjects.get(''' 
-      if (%(duplicated)s == -1){ chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, %(options)s)  }
-      ''' % {'name': name, 'category': category, 'duplicated': self.is_duplicated(text, category), 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': JsUtils.jsConvertData(self._src._jsStyles, None)})
+      if ((%(duplicated)s == -1) && (%(text)s != '')){ chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, {%(options)s})  }
+      ''' % {'name': name, 'category': category, 'duplicated': self.is_duplicated(text, category), 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': ",".join(js_options)})
 
     return JsObjects.JsObjects.get(''' 
-      chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, %(options)s)
-      ''' % {'name': name, 'category': category, 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': JsUtils.jsConvertData(self._src._jsStyles, None)})
+      chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, {%(options)s})
+      ''' % {'name': name, 'category': category, 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': ",".join(js_options)})
 
   @property
   def input(self):

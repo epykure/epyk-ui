@@ -20,6 +20,15 @@ class DataFilters(object):
     self.__filters.append("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
+  def includes(self, key, values):
+    name = "filterContain"
+    key = JsUtils.jsConvertData(key, None)
+    value = JsUtils.jsConvertData(values, None)
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors[name] = "function %s(r, k, v){if (v.length == 0){return r}; var n=[];r.forEach(function(e){if(v.includes(e[k])){n.push(e)}});return n}" % name
+    self.__filters.append("%s(%%s, %s, %s)" % (name, key, value))
+    return self
+
   def startswith(self, key, value):
     name = "filterStartsWith"
     key = JsUtils.jsConvertData(key, None)
