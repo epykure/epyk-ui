@@ -25,6 +25,16 @@ class Panels(object):
     Related Pages:
 
 			https://getbootstrap.com/docs/4.0/components/navs/
+
+		Attributes:
+    ----------
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
     """
     dflt_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0', 'border-radius': '5px',
                                 'color': self.context.rptObj.theme.greys[-1], "background": self.context.rptObj.theme.greys[0]}}
@@ -54,6 +64,16 @@ class Panels(object):
     Related Pages:
 
 			https://getbootstrap.com/docs/4.0/components/navs/
+
+		Attributes:
+    ----------
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
     """
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
                                 "border-bottom": "1px solid white"}}
@@ -64,8 +84,7 @@ class Panels(object):
     self.context.register(html_tabs)
     return html_tabs
 
-  def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-                options=None, profile=False):
+  def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -79,6 +98,15 @@ class Panels(object):
 
 			https://getbootstrap.com/docs/4.0/components/navs/
 
+		Attributes:
+    ----------
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
     """
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
                                 "border-bottom": "1px solid white"}}
@@ -93,8 +121,7 @@ class Panels(object):
     self.context.register(html_tabs)
     return html_tabs
 
-  def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None,
-                  options=None, profile=False):
+  def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -107,6 +134,16 @@ class Panels(object):
     Related Pages:
 
 			https://getbootstrap.com/docs/4.0/components/navs/
+
+		Attributes:
+    ----------
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
     """
     dflt_options = {
       "css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
@@ -135,6 +172,16 @@ class Panels(object):
     Related Pages:
 
 			https://getbootstrap.com/docs/4.0/components/navs/
+
+		Attributes:
+    ----------
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
     """
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
                  'border-radius': '10px 10px 0 0'}}
@@ -148,8 +195,7 @@ class Panels(object):
     self.context.register(html_tabs)
     return html_tabs
 
-  def sliding(self, htmlObjs, title, color=None, width=(100, "%"), height=(None, "px"),
-            htmlCode=None, helper=None, options=None, profile=False):
+  def sliding(self, htmlObjs, title, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -216,7 +262,22 @@ class Panels(object):
     """
     Description:
     -----------
+    Chip component wiht only the filtering eection.
 
+    Usage::
+
+      filters = rptObj.ui.panels.filters()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlEvent.Filters`
+
+    Related Pages:
+
+			https://www.w3schools.com/howto/howto_css_contact_chips.asp
+
+    Attributes:
+    ----------
     :param items:
     :param category:
     :param width:

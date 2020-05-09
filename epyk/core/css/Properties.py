@@ -2580,3 +2580,16 @@ class CssMixin(object):
     """
     self.font_weight = "bold"
     return self
+
+  def underline(self):
+    """
+    Description:
+    ------------
+    Shotcut to put the underline the text
+
+    Related Pages:
+
+			https://www.w3schools.com/cssref/pr_text_text-decoration.asp
+    """
+    self.text_decoration = "underline"
+    return self

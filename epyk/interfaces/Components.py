@@ -31,6 +31,7 @@ from epyk.interfaces.components import CompNavigation
 from epyk.interfaces.components import CompSteps
 from epyk.interfaces.components import CompDrawers
 from epyk.interfaces.components import CompSteppers
+from epyk.interfaces.components import CompTitles
 
 
 class Components(object):
@@ -123,6 +124,15 @@ class Components(object):
     Those components are mainly relying on Jquery and JqueryUi
     """
     return CompSliders.Sliders(self)
+
+  @property
+  def titles(self):
+    """
+    Description:
+    ------------
+    Group all the UI components dedicated to produce titles
+    """
+    return CompTitles.Titles(self)
 
   @property
   def links(self):

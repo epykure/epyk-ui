@@ -45,8 +45,7 @@ class Texts(object):
     """
     if not isinstance(width, tuple):
       width = (width, 'px')
-    text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip,
-                                   options or {}, helper, profile)
+    text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options or {}, helper, profile)
     self.context.register(text_comp)
     return text_comp
 

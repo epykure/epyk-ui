@@ -70,7 +70,6 @@ class Stepper(Html.Html):
 
   @property
   def _js__builder__(self):
-    # li.style.float = "left";
     return ''' htmlObj.innerHTML = '';
       var width = options.svg_style.width; var height = options.svg_style.height;
       var attrs = ['name', 'text', 'title', 'tooltip'];
@@ -99,14 +98,15 @@ class Stepper(Html.Html):
       })    
       '''
 
-  def add_step(self):
-    """"""
-
   def add_shape(self, shape, shape_def):
     """
+    Description:
+    ------------
 
-    :param shape:
-    :param shape_def:
+    Attributes:
+    ----------
+    :param shape: String.
+    :param shape_def: String.
     """
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     constructors[shape] = "function %s(htmlObj, options, status){%s}" % (shape, JsHtmlStepper.JsShapes().custom(shape_def))
