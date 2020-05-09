@@ -70,9 +70,21 @@ class DataAggregators(object):
 
 class DataFilters(object):
 
-  def __init__(self,  varName, report=None):
+  def __init__(self,  varName, filter_map, report=None):
     self.varName, self.__filters = varName, OrderedSet()
-    self._report = report
+    self._report, self.filter_map = report, filter_map
+
+  def setFilter(self, name):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param name:
+    """
+    self.filter_map[name] = self.toStr()
+    return JsObjects.JsVoid("const %s = %s" % (name, self.filter_map[name]))
 
   def match(self, data, case_sensitive=True):
     """
@@ -238,6 +250,51 @@ class DataGlobal(object):
     if data is not None:
       report._props["js"]["datasets"][varName] = json.dumps(data)
     self._data, self.__filters_groups, self._report, self.varName = data, {}, report, varName
+    self.__filter_saved = {}
+
+  def getFilter(self, name, groupName=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param name:
+    :param groupName:
+    """
+    if groupName is None:
+      saved_filter = None
+      for k, v in self.__filter_saved.items():
+        if name in v:
+          saved_filter = v
+          break
+
+    else:
+      if name not in self.__filter_saved[groupName]:
+        raise Exception("")
+
+      saved_filter = self.__filter_saved[groupName]
+    return DataFilters(name, saved_filter, self._report)
+
+  def clearFilter(self, name, groupName=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param name:
+    :param groupName:
+    """
+    if groupName is None:
+      for k, v in self.__filter_saved.items():
+        if name in v:
+          del v[name]
+
+    else:
+      del self.__filter_saved[groupName][name]
+
+    return self
 
   def filterGroup(self, groupName):
     """
@@ -249,7 +306,8 @@ class DataGlobal(object):
     :param groupName: String. The filter name
     """
     if not groupName in self.__filters_groups:
-      self.__filters_groups[groupName] = DataFilters(self.varName, self._report)
+      self.__filter_saved[groupName] = {}
+      self.__filters_groups[groupName] = DataFilters(self.varName, self.__filter_saved[groupName], self._report)
     return self.__filters_groups[groupName]
 
   def cleafFilterGroup(self, groupName):
