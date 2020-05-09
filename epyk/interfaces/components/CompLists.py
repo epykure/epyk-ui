@@ -218,7 +218,6 @@ class Lists(object):
   def items(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None, profile=None, helper=None):
     """
     """
-
     if column is not None:
       values = set()
       for rec in records:
@@ -230,7 +229,7 @@ class Lists(object):
     html_item.style.css.padding_left = '15px'
     return html_item
 
-  def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, options=None, profile=None, helper=None):
+  def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -248,13 +247,11 @@ class Lists(object):
         https://www.w3schools.com/html/html_lists.asp
     https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
-    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
-    self.context.register(html_list)
+    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'decimal'})
-    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def alpha(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, options=None, profile=None, helper=None):
+  def alpha(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -272,13 +269,11 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
-    self.context.register(html_list)
+    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'lower-alpha'})
-    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def roman(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, options=None, profile=None, helper=None):
+  def roman(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -297,13 +292,11 @@ class Lists(object):
     :param profile:
     :return:
     """
-    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
-    self.context.register(html_list)
+    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'lower-roman'})
-    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def points(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, options=None, profile=None, helper=None):
+  def points(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -327,13 +320,11 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
-    self.context.register(html_list)
+    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'circle'})
-    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def disc(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def disc(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -357,13 +348,11 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
-    self.context.register(html_list)
+    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'disc'})
-    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def squares(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def squares(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -391,10 +380,8 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
-    self.context.register(html_list)
+    html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'square'})
-    html_list.style.css.padding_left = '15px'
     return html_list
 
   def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, profile=None):
@@ -535,7 +522,7 @@ class Lists(object):
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def badges(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def badges(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -561,12 +548,18 @@ class Lists(object):
     :param options:
     :param profile:
     """
+    if column is not None:
+      values = set()
+      for rec in data:
+        values.add(rec[column])
+      data = sorted(list(values))
+
     html_list = html.HtmlList.Items(self.context.rptObj, 'badge', data or [], width, height, options or {}, htmlCode, profile, helper)
     self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def icons(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
+  def icons(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -592,7 +585,17 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    html_list = html.HtmlList.Items(self.context.rptObj, 'icon', data or [], width, height, options or {}, htmlCode,profile, helper)
+    if column is not None:
+      values = set()
+      for rec in data:
+        values.add(rec[column])
+      data = sorted(list(values))
+
+    dft_options = {"icon": "fas fa-check"}
+    if options is not None:
+      dft_options.update(options)
+
+    html_list = html.HtmlList.Items(self.context.rptObj, 'icon', data or [], width, height, dft_options, htmlCode,profile, helper)
     self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list

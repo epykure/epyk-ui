@@ -44,6 +44,19 @@ class OptionsItems(Options):
   def checked(self, attrs):
     self._config(attrs)
 
+  @property
+  def icon(self):
+    """
+    Description:
+    ------------
+    Check default value for radio and check lists
+    """
+    return self._config_get("")
+
+  @icon.setter
+  def icon(self, attrs):
+    self._config(attrs)
+
 
 class OptionsTagItems(Options):
 

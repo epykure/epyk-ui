@@ -44,10 +44,13 @@ class JsItemsDef(object):
     report.cssImport.add('font-awesome')
     item_def = '''
     var item = document.createElement("DIV"); var icon = document.createElement("I"); 
-    if(typeof data.icon !== 'undefined') {data.icon.split(" ").forEach(function(s){icon.classList.add(s)})};
+    if(typeof data.icon !== 'undefined') {data.icon.split(" ").forEach(function(s){icon.classList.add(s)})}
+    else {options.icon.split(" ").forEach(function(s){icon.classList.add(s)}) }
     icon.style.marginRight = '5px'; var span = document.createElement("span");  
     span.setAttribute('name', 'value'); span.setAttribute('data-valid', true); 
     if(typeof data === 'object'){ span.innerHTML = data.text} else { span.innerHTML = data };
+    if(options.click != null){ item.style.cursor = 'pointer';
+      item.onclick = function(event){ var value = span.innerHTML; options.click(event, value) }  };
     item.appendChild(icon); item.appendChild(span)'''
     return self._item(item_def)
 

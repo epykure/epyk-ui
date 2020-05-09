@@ -4,17 +4,68 @@ import json
 from epyk.core.js import JsUtils
 from epyk.core.py import OrderedSet
 
+from epyk.core.js.primitives import JsObjects
+
 
 class DataAggregators(object):
-  """
 
-  """
+  def __init__(self,  varName, report=None):
+    self.varName = varName
+    self._report = report
 
-  def sum(self):
-    pass
+  def sum(self, columns, attrs=None):
+    """
+    Description:
+    -----------
+    Reduce the record set by adding all the columns
 
-  def count(self):
-    pass
+    Attributes:
+    ----------
+    :param columns: List. The columns in the recordset to be counted
+    :param attrs: Dictionary. The static values to be added to the final recordset
+    """
+    return JsObjects.JsArray.JsArray('''
+       (function(r, cs){ var result = {}; cs.forEach(function(c){result[c] = 0});
+        r.forEach(function(v){cs.forEach(function(c){ if(typeof v[c] !== 'undefined'){ result[c] += v[c]}})
+        }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
+        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False)
+
+  def count(self, columns, attrs=None):
+    """
+    Description:
+    -----------
+    Reduce the record set by counting all the columns
+
+    Attributes:
+    ----------
+    :param columns: List. The columns in the recordset to be counted
+    :param attrs: Dictionary. The static values to be added to the final recordset
+    """
+    return JsObjects.JsArray.JsArray('''
+       (function(r, cs){ var result = {}; cs.forEach(function(c){result[c] = 0});
+        r.forEach(function(v){cs.forEach(function(c){ if(typeof v[c] !== 'undefined'){ result[c] += 1}})
+        }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
+        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False)
+
+  def sumBy(self, columns, keys):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param columns:
+    :param keys:
+    """
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    name = "AggSumBy"
+    constructors[name] = '''
+      function %s(rs, cs, ks){ var result = {}; 
+        fs.forEach(function(r){
+          
+        })
+      } return result; ''' % name
+    return JsObjects.JsArray.JsArray('%s(%s, %s, %s)' % (name, self.varName, json.dumps(columns), json.dumps(keys)))
 
 
 class DataFilters(object):
@@ -161,6 +212,14 @@ class DataFilters(object):
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
+  def group(self):
+    """
+    Description:
+    -----------
+
+    """
+    return DataAggregators(self.toStr(), self._report)
+
   def toStr(self):
     """
     Description:
@@ -180,29 +239,38 @@ class DataGlobal(object):
       report._props["js"]["datasets"][varName] = json.dumps(data)
     self._data, self.__filters_groups, self._report, self.varName = data, {}, report, varName
 
-  def filterGroup(self, groupBame):
+  def filterGroup(self, groupName):
     """
     Description:
     -----------
 
-    :param groupBame:
+    Attributes:
+    ----------
+    :param groupName: String. The filter name
     """
-    if not groupBame in self.__filters_groups:
-      self.__filters_groups[groupBame] = DataFilters(self.varName, self._report)
-    return self.__filters_groups[groupBame]
+    if not groupName in self.__filters_groups:
+      self.__filters_groups[groupName] = DataFilters(self.varName, self._report)
+    return self.__filters_groups[groupName]
 
-  def cleafFilterGroup(self, groupBame):
+  def cleafFilterGroup(self, groupName):
     """
     Description:
     -----------
 
-    :param groupBame:
+    Attributes:
+    ----------
+    :param groupName: String. The filter name
     """
-    if not groupBame in self.__filters_groups:
-      del self.__filters_groups[groupBame]
+    if not groupName in self.__filters_groups:
+      del self.__filters_groups[groupName]
 
     return self
 
   def clearFilters(self):
+    """
+    Description:
+    -----------
+    Remove all the filters
+    """
     self.__filters_groups = {}
     return self
