@@ -36,6 +36,7 @@ class Drawer(Html.Html):
     """
     Description:
     ------------
+    Property to get the common dom features
 
     :rtype: JsHtmlStepper.Drawer
     """
@@ -54,22 +55,24 @@ class Drawer(Html.Html):
     """
     return self.__options
 
-  def add_panel(self, link, container):
+  def add_panel(self, link, container, display=False):
     """
     Description:
     ------------
+    Add panel to the drawer object.
 
     Attributes:
     ----------
-    :param link:
-    :param container:
+    :param link: String | HTML object. The value in the drawer
+    :param container: HTML object. The component to be displayed
+    :param display: String. The CSS Display property
     """
     if not hasattr(link, 'inReport'):
       link = self._report.ui.div(link)
       link.inReport = False
     if not hasattr(container, 'inReport'):
       container = self._report.ui.div(container)
-    container.style.css.display = 'none'
+    container.style.css.display = display
     container.inReport = False
     self.panels += container
     self.drawers += link
@@ -79,6 +82,7 @@ class Drawer(Html.Html):
     """
     Description:
     ------------
+    Get the CSS Style of the object
 
     :rtype: GrpClsContainer.ClassDrawer
     """
@@ -90,7 +94,7 @@ class Drawer(Html.Html):
     """
     Description:
     ------------
-
+    Set the handle used to trigger the open / close events
     """
     self.handle = self._report.ui.div()
     self.handle.style.clear_all()

@@ -230,6 +230,8 @@ class ChartLine(Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     :param label:
     :param colors:

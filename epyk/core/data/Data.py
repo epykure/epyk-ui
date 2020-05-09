@@ -33,16 +33,19 @@ class DataSrc(object):
   def __init__(self, report=None):
     self._report = report if report is not None else self.__internal()
 
-  def js(self, records, varName):
+  def js(self, varName="data", records=None):
     """
     Description:
     ------------
+    Interface to transform Python records to Javascript objects.
+    This will allow interactivity of the various HTML components
 
     Attributes:
     ----------
-    :param records:
+    :param varName: String. The Javascript variable name
+    :param records: Dictionary of lists. Object passed to the Javascript layer
     """
-    return DataCore.DataGlobal(records, varName, self._report)
+    return DataCore.DataGlobal(varName, records, self._report)
 
   @property
   def db(self):
@@ -54,8 +57,12 @@ class DataSrc(object):
 
   def from_cache(self, code, is_secured=False, report_name=None):
     """
+    Description:
+    -----------
     Loads data from a cached files
 
+    Attributes:
+    ----------
     :param code: The code for the data
     :param is_secured: Optional, boolean to set if the file should be secured. Default False
     :param report_name: Optional, the environment in which cache are stored. Default current one
@@ -79,8 +86,12 @@ class DataSrc(object):
 
   def save_cache(self, data, code, is_secured=False, if_missing=True):
     """
+    Description:
+    -----------
     Temporary files are saved in a pickle manner in order to avoid having to parse those files again.
 
+    Attributes:
+    ----------
     :param data: The data to be saved
     :param code: The code for the data
     :param is_secured: Optional, boolean to set if the file should be secured. Default False
@@ -96,11 +107,16 @@ class DataSrc(object):
 
   def from_file(self, filename, isSecured=False, report_name=None):
     """
+    Description:
+    -----------
     Return the file
 
+    Attributes:
+    ----------
     :param filename: The filename
     :param isSecured: Optional, Check if the file is secured or not
     :param report_name: The environment with the file
+
     :return: The file object
     """
     if getattr(self._report, "run", None) is not None:
@@ -120,6 +136,8 @@ class DataSrc(object):
     ------------
     Returns data from a internal data service defined in the sources folder
 
+    Attributes:
+    ----------
     :param http_data: The input data for the service
     :param fileName: The service file name
     :param fncName: Optional, the function name in the service. Default getData
@@ -143,12 +161,15 @@ class DataSrc(object):
 
   def from_post_source(self, script, data=None, successFncs=None, udpate_freq=None, interval_name=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param script:
     :param data:
     :param successFncs:
     :param udpate_freq: Optional, Set the data update frequency in second
-    :return:
     """
     if udpate_freq is not None:
       return self._report.js.window.setInterval(JsQuery.JQuery(self._report).getPyScript(script, data, successFncs=successFncs), milliseconds=udpate_freq * 1000).setVar(interval_name)
@@ -163,6 +184,8 @@ class DataSrc(object):
 
   def pdf(self, filename, path=None):
     """
+    Description:
+    -----------
     Read a pdf file
 
     This will require an external module PyPDF2
@@ -174,6 +197,8 @@ class DataSrc(object):
 
 			https://www.geeksforgeeks.org/working-with-pdf-files-in-python/
 
+    Attributes:
+    ----------
     :param filename: The pdf file name
     :param path: The file path
     :return: A pdf object from PyPDF2
@@ -188,6 +213,8 @@ class DataSrc(object):
 
   def soap(self, wsdl):
     """
+    Description:
+    -----------
     Interface to a SOAP server.
 
     This function will require an external python package zeep to use SOAP
@@ -201,8 +228,11 @@ class DataSrc(object):
 			https://en.wikipedia.org/wiki/SOAP
     https://python-zeep.readthedocs.io/en/master/
 
+    Attributes:
+    ----------
     :param wsdl: The wsdl service url
     :rtype: zeep.service
+
     :return: The SOAP services
     """
     soap = requires("zeep", reason='Missing Package', install="zeep", sourceScript=__file__, raiseExcept=True)
@@ -210,6 +240,8 @@ class DataSrc(object):
 
   def rest(self, url, data=None, method=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
     """
+    Description:
+    -----------
     Interface to a REST server.
 
     Test with a online server can be done here https://jsonplaceholder.typicode.com/
@@ -221,20 +253,24 @@ class DataSrc(object):
 
 			https://jsonrpcclient.readthedocs.io/en/latest/api.html
 
+    Attributes:
+    ----------
     :param url: The REST service url
     :param data: The input data for the service
-    :return:
     """
     return json.loads(self._report.py.request(url, data, method, encoding, headers, unverifiable, proxy=proxy))
 
   def socket(self, data, host='localhost', port=5000, encoding='utf-8'):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param data: The input data for the service
     :param host: The service host name (e.g localhost)
     :param port: The service port
     :param encoding:
-    :return:
     """
     import socket
 
@@ -245,13 +281,13 @@ class DataSrc(object):
     s.close()
     return result
 
-
-
   def websocket(self):
     pass
 
   def rss(self, url, proxy=None, method="GET"):
     """
+    Description:
+    -----------
     Entry point to retrieve RSS feeds.
 
     This module will require beautifulsoup4 as external package
@@ -265,8 +301,11 @@ class DataSrc(object):
 
 			https://pypi.org/project/beautifulsoup4/
 
+    Attributes:
+    ----------
     :param url: The url of the html page
     :param method: Optional, The request method. Default method GET
+
     :return: A xml object
     """
     bs4 = requires("bs4", reason='Missing Package', install='beautifulsoup4', sourceScript=__file__, raiseExcept=True)
@@ -277,6 +316,8 @@ class DataSrc(object):
 
   def webscrapping(self, url, parser="html.parser", proxy=None, method=None):
     """
+    Description:
+    -----------
     Entry point to retrieve data from any website.
 
     This module will require beautifulsoup4 as external package
@@ -289,8 +330,11 @@ class DataSrc(object):
 
 			https://pypi.org/project/beautifulsoup4/
 
+    Attributes:
+    ----------
     :param url: The url of the html page
     :param parser: The output data parser
+
     :return: A xml object
     """
     bs4 = requires("bs4", reason='Missing Package', install='beautifulsoup4', sourceScript=__file__, raiseExcept=True)
@@ -309,6 +353,8 @@ class DataSrc(object):
 
   def rpc(self, url, data=None, headers=None, is_secured=False):
     """
+    Description:
+    -----------
     Interface to a RPC server.
 
     This is using the external python package jsonrpcclient (https://jsonrpcclient.readthedocs.io/en/latest/)
@@ -321,9 +367,10 @@ class DataSrc(object):
     https://gurujsonrpc.appspot.com/
     https://jsonrpcclient.readthedocs.io/en/latest/
 
+    Attributes:
+    ----------
     :param url: The RPC service url
     :param data: The input data for the service
-    :return:
     """
     http_client = requires("jsonrpcclient.clients.http_client", reason='Missing Package', install="jsonrpcclient[requests]", sourceScript=__file__, raiseExcept=True)
     client = http_client.HTTPClient(url)
@@ -338,6 +385,8 @@ class DataSrc(object):
 
   def grpc(self, serviceName, path, module, host="localhost", port=50051):
     """
+    Description:
+    -----------
     Interface to a GRPC server.
 
     Example
@@ -350,11 +399,14 @@ class DataSrc(object):
 			https://grpc.io/docs/tutorials/basic/python/
     https://grpc.io/docs/quickstart/python.html
 
+    Attributes:
+    ----------
     :param serviceName: The Service name (the class name in the python module)
     :param path: The path with the GRPC features
     :param module: The python module name for the service
     :param host: The service host name (e.g localhost)
     :param port: The service port
+
     :return: A GRPC wrapped object
     """
     requires("grpc", reason='Missing Package', install='grpcio', sourceScript=__file__, raiseExcept=True)

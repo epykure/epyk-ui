@@ -179,6 +179,8 @@ class Menu(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    -----------
     Javascript Functions
 
     Return all the Javascript functions defined for an HTML Component.
@@ -601,6 +603,8 @@ class SkillBar(Html.Html):
 
   def to_word(self, document):
     """
+    Description:
+    -----------
 
     :param document:
 
@@ -752,6 +756,8 @@ class Filters(Html.Html):
 
   def delete(self, jsFncs, profile=False):
     """
+    Description:
+    -----------
 
     :param jsFncs:
     :param profile:

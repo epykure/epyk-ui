@@ -270,6 +270,8 @@ class Lists(object):
   def roman(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
                   htmlCode=None, helper=None, options=None, profile=None):
     """
+    Description:
+    ------------
 
     Underlying HTML Objects:
 
@@ -285,7 +287,6 @@ class Lists(object):
     :param profile:
     :return:
     """
-
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options or {}, profile)
     self.context.register(html_list)
@@ -450,7 +451,8 @@ class Lists(object):
 
     Related Pages:
 
-    ----------
+    -ttributes:
+    -----------
     :param data:
     :param color:
     :param width:
@@ -596,8 +598,8 @@ class Lists(object):
       - :class:`epyk.core.html.HtmlContainer.Div`
       - :class:`epyk.core.html.HtmlInput.Radio`
 
-
-
+    Attributes:
+    ----------
     :param records:
     :param group_name:
     :param width:

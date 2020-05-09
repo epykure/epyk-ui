@@ -211,3 +211,21 @@ class Panels(object):
     html_split = html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, left_width, left, right, resizable, helper, profile)
     self.context.register(html_split)
     return html_split
+
+  def filters(self, items=None, category='group', width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    :param items:
+    :param category:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    chip = self.context.rptObj.ui.chips(items, category, width=width, height=height, htmlCode=htmlCode, helper=helper, options=options, profile=profile)
+    chip.input.style.css.display = False
+    return chip

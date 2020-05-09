@@ -3,7 +3,6 @@ from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
 
 from epyk.core.js.primitives import JsObjects
-from epyk.core.js.objects.JsNodeDom import JsDoms
 
 
 class Tags(JsHtml.JsHtmlRich):
