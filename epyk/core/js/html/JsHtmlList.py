@@ -1,8 +1,236 @@
 
+import json
+
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
+from epyk.core.css import Defaults
 
 from epyk.core.js.primitives import JsObjects
+
+
+class JsItemsDef(object):
+
+  def _item(self, item_def):
+    return '''%(item_def)s; htmlObj.appendChild(item)
+      ''' % {'item_def': item_def}
+
+  def text(self, report):
+    """
+    Description:
+    ------------
+
+    :param report:
+    """
+    item_def = '''
+    var item = document.createElement("DIV");  
+    item.setAttribute('name', 'value'); item.setAttribute('data-valid', true);
+    if(options.click != null){ 
+      item.style.cursor = 'pointer';
+      item.onclick = function(event){ var value = this.innerHTML; options.click(event, value) }  };
+    if(typeof data === 'object'){ span.innerHTML = data.text} else { item.innerHTML = data }'''
+    return self._item(item_def)
+
+  def icon(self, report):
+    """
+    Description:
+    ------------
+    Set an list of icons
+
+    Attributes:
+    ----------
+    :param report:
+    """
+    report.jsImports.add('font-awesome')
+    report.cssImport.add('font-awesome')
+    item_def = '''
+    var item = document.createElement("DIV"); var icon = document.createElement("I"); 
+    if(typeof data.icon !== 'undefined') {data.icon.split(" ").forEach(function(s){icon.classList.add(s)})};
+    icon.style.marginRight = '5px'; var span = document.createElement("span");  
+    span.setAttribute('name', 'value'); span.setAttribute('data-valid', true); 
+    if(typeof data === 'object'){ span.innerHTML = data.text} else { span.innerHTML = data };
+    item.appendChild(icon); item.appendChild(span)'''
+    return self._item(item_def)
+
+  def check(self, report):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param report:
+    """
+    item_def = '''
+    var item = document.createElement("DIV");  
+    item.style.padding = 0; item.style.whiteSpace = "nowrap";  item.style.display = "block";
+    
+    var span = document.createElement("span");  
+    var input = document.createElement("input");    
+    input.setAttribute('type', 'checkbox');
+    input.setAttribute('name', 'input_box');
+    input.style.verticalAlign = "middle";
+    input.onchange = function(event){ event.stopPropagation(); event.cancelBubble = true; span.setAttribute('data-valid', this.checked ); 
+      var value = span.innerHTML; if(options.click != null){options.click(event, value)} };
+    
+    var span = document.createElement("span"); span.style.marginLeft = '5px'; 
+    span.setAttribute('name', 'value'); span.setAttribute('data-valid', false); 
+    
+    if(typeof data === 'object'){ span.innerHTML = data.text} else { span.innerHTML = data };
+    if(options.checked){ input.setAttribute('checked', options.checked); span.setAttribute('data-valid', options.checked) };
+    if(data.checked){ input.setAttribute('checked', data.checked); span.setAttribute('data-valid', data.checked) };
+    
+    span.style.verticalAlign = "middle";
+    item.appendChild(input); item.appendChild(span);
+    '''
+    return self._item(item_def)
+
+  def radio(self, report):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param report:
+    """
+    item_def = '''
+    var item = document.createElement("DIV");  
+    item.style.padding = 0; item.style.whiteSpace = "nowrap";  item.style.display = "block";
+    
+    var span = document.createElement("span");  
+    var input = document.createElement("input");    
+    input.setAttribute('type', 'radio'); input.setAttribute('name', options.group);
+    input.style.verticalAlign = "middle";
+    input.onchange = function(event){ 
+      this.parentNode.parentNode.parentNode.querySelectorAll('[name=value]').forEach(function(node){
+        node.setAttribute('data-valid', false); }); var value = span.innerHTML; 
+        span.setAttribute('data-valid', this.checked ); if(options.click != null){options.click(event, value)} };
+    
+    var span = document.createElement("span");  
+    span.setAttribute('name', 'value'); span.setAttribute('data-valid', false);
+    if(typeof data === 'object'){ span.innerHTML = data.text} else { span.innerHTML = data };
+    span.style.verticalAlign = "middle";
+    
+    item.appendChild(input); item.appendChild(span);
+    '''
+    return self._item(item_def)
+
+  def badge(self, report):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param report:
+    """
+    item_def = '''
+    var item = document.createElement("DIV");  
+    var span = document.createElement("span"); span.setAttribute('name', 'value'); span.innerHTML = data;  
+    var badge = document.createElement("span"); badge.innerHTML = 5;
+    badge.style.backgroundColor = 'red'; badge.style.color = 'white'; badge.style.borderRadius = '50%%'; badge.style.padding = '0 3px';
+    badge.style.marginLeft = '5px'; badge.style.fontSize = '%s'; 
+    item.appendChild(span); item.appendChild(badge)''' % Defaults.font(-2)
+    return self._item(item_def)
+
+  def link(self, report):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param report:
+    """
+    item_def = '''
+    var item = document.createElement("a");  
+    item.setAttribute('name', 'value'); item.setAttribute('data-valid', false);
+    item.innerHTML = data ; item.href ='#' '''
+    return self._item(item_def)
+
+  def custom(self, item_def):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param item_def:
+    """
+    return self._item(item_def)
+
+
+class JsItem(JsHtml.JsHtmlRich):
+
+  @property
+  def content(self):
+    return JsHtml.ContentFormatters(self._report, '''
+      (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
+          const valid = dom.querySelector('[name=value]').getAttribute("data-valid");
+          if (valid === 'true'){values.push(dom.querySelector('[name=value]').innerHTML)}
+      }); return values })(%s)''' % self.varName)
+
+  def selectAll(self):
+    """
+    Description:
+    ------------
+    Select all the items in the list
+    """
+    if self._src._jsStyles['items_type'] == "radio":
+      raise Exception("It is not possible to select all radios from a same group, use check instead")
+
+    if self._src._jsStyles['items_type'] == "check":
+      return JsObjects.JsVoid('''
+        %s.childNodes.forEach( function(dom, k){  
+          dom.querySelector('[name=input_box]').checked = true;
+          dom.querySelector('[name=value]').setAttribute("data-valid", true);
+        })''' % self.varName)
+
+    return JsObjects.JsVoid('''
+      %s.childNodes.forEach( function(dom, k){  
+        dom.querySelector('[name=value]').setAttribute("data-valid", true);
+      })''' % self.varName)
+
+  def unSelectAll(self):
+    """
+    Description:
+    ------------
+    UnSelect all the items in the list
+    """
+    if self._src._jsStyles['items_type'] == "radio":
+      raise Exception("It is not possible to select all radios from a same group, use check instead")
+
+    if self._src._jsStyles['items_type'] == "check":
+      return JsObjects.JsVoid('''
+        %s.childNodes.forEach( function(dom, k){  
+          dom.querySelector('[name=input_box]').checked = false;
+          dom.querySelector('[name=value]').setAttribute("data-valid", false);
+        })''' % self.varName)
+
+    return JsObjects.JsVoid('''
+      %s.childNodes.forEach( function(dom, k){  
+        dom.querySelector('[name=value]').setAttribute("data-valid", false);
+      })''' % self.varName)
+
+  def add(self, value):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value: String | Dictionary.
+    """
+    if isinstance(value, dict):
+      js_values = []
+      for k, v in value.items():
+        js_values.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+      value = "{%s}" % ",".join(js_values)
+    else:
+      value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsVoid('''
+      var li = document.createElement("LI"); %(shape)s(li, %(value)s, %(options)s); li.style.margin = "5px 0"; %(comp)s.appendChild(li)
+      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'value': value, 'shape': "%s%s" % (self._src._prefix, self._src._jsStyles['items_type'])})
 
 
 class Tags(JsHtml.JsHtmlRich):
@@ -28,12 +256,12 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Check the duplicates in the filter panel
+    Check the duplicates in the filter panel for a given category
 
     Attributes:
     ----------
-    :param text:
-    :param cateory:
+    :param text: String. The item text
+    :param category: String. The item category
     """
     text = JsUtils.jsConvertData(text, None)
     return JsObjects.JsObjects.get(''' 

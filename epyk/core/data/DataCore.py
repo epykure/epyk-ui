@@ -67,7 +67,7 @@ class DataFilters(object):
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
-  def includes(self, key, values, case_sensitive=True):
+  def includes(self, key, values, case_sensitive=True, empty_all=True):
     """
     Description:
     -----------
@@ -78,18 +78,19 @@ class DataFilters(object):
     :param key: String, The key in the various records
     :param values: List . The list of values to keep
     :param case_sensitive: Boolean. To make sure algorithm case sensitive
+    :param empty_all: Boolean. To specify how to consider the empty case
     """
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(values, None)
     if not case_sensitive:
       name = "filterContainUpper"
-      constructors[name] = '''function %s(r, k, v){if (v.length == 0){return r}; 
+      constructors[name] = '''function %s(r, k, v){if (v.length == 0){if(%s){return r} else {return []}}; 
           var vUp = []; v.forEach(function(t){vUp.push(t.toUpperCase())}); 
-          var n=[];r.forEach(function(e){if(vUp.includes(e[k].toUpperCase())){n.push(e)}});return n}''' % name
+          var n=[];r.forEach(function(e){if(vUp.includes(e[k].toUpperCase())){n.push(e)}});return n}''' % (name, json.dumps(empty_all))
     else:
       name = "filterContain"
-      constructors[name] = "function %s(r, k, v){if (v.length == 0){return r}; var n=[];r.forEach(function(e){if(v.includes(e[k])){n.push(e)}});return n}" % name
+      constructors[name] = "function %s(r, k, v){if (v.length == 0){if(%s){return r} else {return []}}; var n=[];r.forEach(function(e){if(v.includes(e[k])){n.push(e)}});return n}" % (name, json.dumps(empty_all))
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 

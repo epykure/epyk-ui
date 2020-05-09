@@ -62,8 +62,7 @@ class Lists(object):
       data = [result[k] for k in sorted(result.keys())]
     return data
 
-  def select(self, records=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
-             column=None, filter=None, profile=None, multiple=False, options=None):
+  def select(self, records=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"), column=None, filter=None, profile=None, multiple=False, options=None):
     """
     Description:
     ------------
@@ -134,8 +133,7 @@ class Lists(object):
     self.context.register(html_select)
     return html_select
 
-  def lookup(self, lookupData=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"),
-             column=None, filter=None, profile=None, multiple=False, options=None):
+  def lookup(self, lookupData=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"), column=None, filter=None, profile=None, multiple=False, options=None):
     """
     Description:
     ------------
@@ -192,8 +190,8 @@ class Lists(object):
     self.context.register(html_item)
     return html_item
 
-  def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-           htmlCode=None, helper=None, options=None, profile=None):
+  def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None,
+           options=None, profile=None):
     """
     Description:
     ------------
@@ -208,7 +206,7 @@ class Lists(object):
 
     Related Pages:
 
-			https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+      https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
@@ -217,8 +215,22 @@ class Lists(object):
     html_list.css({"list-style": 'none'})
     return html_list
 
-  def numbers(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-                  htmlCode=None, helper=None, options=None, profile=None):
+  def items(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None, profile=None, helper=None):
+    """
+    """
+
+    if column is not None:
+      values = set()
+      for rec in records:
+        values.add(rec[column])
+      records = sorted(list(values))
+
+    html_item = html.HtmlList.Items(self.context.rptObj, 'text', records, width, height, options, htmlCode, profile, helper)
+    self.context.register(html_item)
+    html_item.style.css.padding_left = '15px'
+    return html_item
+
+  def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -236,14 +248,13 @@ class Lists(object):
         https://www.w3schools.com/html/html_lists.asp
     https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options or {}, profile)
+    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'decimal'})
+    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def alpha(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-                  htmlCode=None, helper=None, options=None, profile=None):
+  def alpha(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -261,14 +272,13 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options or {}, profile)
+    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'lower-alpha'})
+    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def roman(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-                  htmlCode=None, helper=None, options=None, profile=None):
+  def roman(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -287,14 +297,13 @@ class Lists(object):
     :param profile:
     :return:
     """
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options or {}, profile)
+    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'lower-roman'})
+    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def points(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-             htmlCode=None, helper=None, options=None, profile=None):
+  def points(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -318,14 +327,13 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options or {}, profile)
+    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'circle'})
+    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def disc(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None,
-           options=None, profile=None):
+  def disc(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -349,14 +357,13 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options or {}, profile)
+    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'disc'})
+    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def squares(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-             htmlCode=None, helper=None, options=None, profile=None):
+  def squares(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -384,14 +391,13 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options or {}, profile)
+    html_list = html.HtmlList.Items(self.context.rptObj, 'text', data or [], width, height, options or {}, htmlCode, profile, helper)
     self.context.register(html_list)
     html_list.css({"list-style-type": 'square'})
+    html_list.style.css.padding_left = '15px'
     return html_list
 
-  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'),
-             htmlCode=None, helper=None, profile=None):
+  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, profile=None):
     """
     Description:
     ------------
@@ -429,44 +435,11 @@ class Lists(object):
       else:
         # This object is expecting a list of lists
         data = [data]
-    html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, color, width, height, htmlCode,
-                                    helper, profile)
+    html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, color, width, height, htmlCode, helper, profile)
     self.context.register(html_obj)
     return html_obj
 
-  def checklist(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-                htmlCode=None, helper=None, options=None, profile=None):
-    """
-    Description:
-    ------------
-
-    Usage::
-
-      data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
-      checks = rptObj.ui.lists.checklist(data)
-
-    Underlying HTML Objects:
-
-      - :class:`epyk.core.html.HtmlList.Checks`
-
-    Related Pages:
-
-    -ttributes:
-    -----------
-    :param data:
-    :param color:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param helper:
-    :param profile:
-    """
-    html_obj = html.HtmlList.Checks(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
-    self.context.register(html_obj)
-    return html_obj
-
-  def tree(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-           htmlCode=None, helper=None, options=None, profile=None):
+  def tree(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -491,8 +464,7 @@ class Lists(object):
     self.context.register(html_tree)
     return html_tree
 
-  def dropdown(self, recordSet=None, text="", width=('auto', ""), height=(32, 'px'), htmlCode=None,
-               helper=None, options=None, profile=None):
+  def dropdown(self, recordSet=None, text="", width=('auto', ""), height=(32, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -522,8 +494,48 @@ class Lists(object):
     self.context.register(html_d)
     return html_d
 
-  def badges(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-             htmlCode=None, helper=None, options=None, profile=None):
+  def checks(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
+      checks = rptObj.ui.lists.checklist(data)
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlList.Checks`
+
+    Related Pages:
+
+    Attributes:
+    ----------
+    :param data:
+    :param width:
+    :param height:
+    :param column:
+    :param htmlCode:
+    :param helper:
+    :param profile:
+    """
+    if column is not None:
+      values = set()
+      for rec in data:
+        values.add(rec[column])
+      data = sorted(list(values))
+
+    dft_options = {"checked": False}
+    if options is not None:
+      dft_options.update(options)
+
+    html_list = html.HtmlList.Items(self.context.rptObj, 'check', data or [], width, height, dft_options, htmlCode, profile, helper)
+    self.context.register(html_list)
+    html_list.css({"list-style": 'none'})
+    return html_list
+
+  def badges(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -544,18 +556,17 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param color:
     :param width:
     :param height:
     :param options:
     :param profile:
     """
-    html_obj = html.HtmlList.Badges(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
-    self.context.register(html_obj)
-    return html_obj
+    html_list = html.HtmlList.Items(self.context.rptObj, 'badge', data or [], width, height, options or {}, htmlCode, profile, helper)
+    self.context.register(html_list)
+    html_list.css({"list-style": 'none'})
+    return html_list
 
-  def buttons(self, data=None, color=None, width=('auto', ""), height=(None, 'px'),
-              htmlCode=None, helper=None, options=None, profile=None):
+  def icons(self, data=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -566,7 +577,7 @@ class Lists(object):
 
     Underlying HTML Objects:
 
-      - :class:`epyk.core.html.HtmlList.Buttons`
+      - :class:`epyk.core.html.HtmlList.Badges`
 
     Related Pages:
 
@@ -576,31 +587,29 @@ class Lists(object):
     Attributes:
     ----------
     :param data:
-    :param color:
     :param width:
     :param height:
+    :param options:
     :param profile:
     """
-    html_obj = html.HtmlList.Buttons(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
+    html_list = html.HtmlList.Items(self.context.rptObj, 'icon', data or [], width, height, options or {}, htmlCode,profile, helper)
+    self.context.register(html_list)
+    html_list.css({"list-style": 'none'})
+    return html_list
 
-    self.context.register(html_obj)
-    return html_obj
-
-  def radios(self, records, group_name=None, width=('auto', ""), height=(None, "px"), htmlCode=None, helper=None,
-             options=None, profile=None):
+  def radios(self, data=None, group_name='group', width=('auto', ""), height=(None, "px"), column=None, htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
 
     Underlying HTML Objects:
 
-      - :class:`epyk.core.html.HtmlList.ListTournaments`
       - :class:`epyk.core.html.HtmlContainer.Div`
       - :class:`epyk.core.html.HtmlInput.Radio`
 
     Attributes:
     ----------
-    :param records:
+    :param data:
     :param group_name:
     :param width:
     :param height:
@@ -609,14 +618,20 @@ class Lists(object):
     :param options:
     :param profile:
     """
-    container = self.context.rptObj.ui.div(width=width, height=height, htmlCode=htmlCode, helper=helper, profile=profile)
-    group_name = group_name or container.htmlId
-    for rec in records:
-      container += self.context.rptObj.ui.fields.radio(rec.get("value", False), rec.get('label', ''), rec.get("group_name", group_name))
-    return container
+    if column is not None:
+      values = set()
+      for rec in data:
+        values.add(rec[column])
+      data = sorted(list(values))
+
+    html_list = html.HtmlList.Items(self.context.rptObj, 'radio', data or [], width, height, options or {}, htmlCode, profile, helper)
+    html_list._jsStyles['group'] = group_name
+    self.context.register(html_list)
+    html_list.css({"list-style": 'none'})
+    return html_list
 
   def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
-    return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options, profile))
+    return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options or {}, profile))
 
   def chips(self, items=None, category='group', placeholder="", width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
@@ -624,9 +639,17 @@ class Lists(object):
     ------------
     Add a chip (filter) html component
 
+    Usage::
+
+      chips = rptObj.ui.panels.chips()
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlEvent.Filters`
+
+    Related Pages:
+
+			https://www.w3schools.com/howto/howto_css_contact_chips.asp
 
     Attributes:
     ----------

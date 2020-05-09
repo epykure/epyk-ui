@@ -28,6 +28,7 @@ class Drawer(Html.Html):
 
     self.drawers = report.ui.div()
     self.drawers.style.clear_all()
+    self.drawers.style.padding = "0 5px"
     self.drawers.inReport = False
     self.drawers.attr['name'] = 'drawer_content'
 

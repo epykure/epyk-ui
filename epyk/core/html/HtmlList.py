@@ -5,8 +5,6 @@ List are standard and very popular HTML objects, please have a look at the below
 
 """
 
-import re
-import json
 
 from epyk.core.js import JsUtils
 from epyk.core.html import Html
@@ -14,10 +12,7 @@ from epyk.core.html.options import OptList
 
 # The list of Javascript classes
 from epyk.core.js.html import JsHtml
-
-# The list of CSS classes
-from epyk.core.css.styles import GrpCls
-# from epyk.core.css.styles import CssGrpClsList
+from epyk.core.js.html import JsHtmlList
 
 
 class Li(Html.Html):
@@ -38,6 +33,8 @@ class Li(Html.Html):
   @property
   def no_decoration(self):
     """
+    Description:
+    ------------
     Property to remove the list default style
     """
     self.css({"text-decoration": "none", "list-style-type": 'none'})
@@ -45,14 +42,19 @@ class Li(Html.Html):
 
   def add_label(self, text, css=None, position="before", for_=None):
     """
+    Description:
+    ------------
     Add an elementary label component
 
-    Example
+    Usage::
+
 
     Related Pages:
 
 			https://www.w3schools.com/tags/tag_label.asp
 
+    Attributes:
+    ----------
     :param text: The label content
     :param css: Optional. A dictionary with the CSS style to be added to the component
     :param position:
@@ -76,9 +78,14 @@ class Li(Html.Html):
 
   def set_html_content(self, htmlObj):
     """
+    Description:
+    ------------
     Set the cell content to be an HTML object
 
+    Attributes:
+    ----------
     :param htmlObj: Python HTML object
+
     :return: self, the cell object to allow the chaining
     """
     htmlObj.inReport = False
@@ -101,7 +108,7 @@ class Li(Html.Html):
 
 
 class List(Html.Html):
-  name, category, callFnc = 'List', 'Lists', 'list'
+  name = 'List'
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
     super(List, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
@@ -118,6 +125,8 @@ class List(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
 
     :rtype: OptList.OptionsLi
     """
@@ -126,9 +135,10 @@ class List(Html.Html):
   @property
   def dom(self):
     """
+    Description:
+    ------------
 
-    :rtype: JsHtml.JsHtmlIcon
-    :return:
+    :rtype: JsHtml.JsHtmlList
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlList(self, report=self._report)
@@ -156,7 +166,11 @@ class List(Html.Html):
 
   def add_item(self, d):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param d:
     """
     if self.items is None:
@@ -169,6 +183,9 @@ class List(Html.Html):
 
   def set_items(self):
     """
+    Description:
+    ------------
+
     """
     if self.items is None:
       self.items = []
@@ -184,8 +201,9 @@ class List(Html.Html):
 
   def on_items(self, event, jsFncs, profile=False):
     """
+    Description:
+    ------------
 
-    :return:
     """
     for i in self.items:
       i.on(event, jsFncs, profile)
@@ -193,7 +211,11 @@ class List(Html.Html):
 
   def click_items(self, jsFncs, profile=False):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param jsFncs:
     :param profile:
     """
@@ -232,7 +254,11 @@ class Groups(Html.Html):
   def add_list(self, data, category="", color='inherit', width=(None, 'px'), height=(None, 'px'),
                htmlCode=None, helper=None, options=None, profile=False):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param data:
     :param category:
     :param color:
@@ -260,80 +286,84 @@ class Groups(Html.Html):
     return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self._vals)
 
 
-class Badges(List):
-  name, category, callFnc = 'List Badges', 'Lists', 'Badges'
+class Items(Html.Html):
+  name = 'List'
 
-  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
-    super(Badges, self).__init__(report, data, color, width, height, htmlCode, helper, options, profile)
-    for l in self.items:
-      l.set_html_content(report.ui.div([
-        report.ui.texts.label(l.val['label']).css({"width": 'auto'}),
-        report.ui.images.badge(l.val['value'], url=l.val.get('url')).css({"background": 'green', "color": 'white'})
-      ])).no_decoration
+  def __init__(self, report, type, records, width, height, options, htmlCode, profile, helper):
+    super(Items, self).__init__(report, records, css_attrs={"width": width, 'height': height})
+    self.__options = OptList.OptionsItems(self, options)
+    self._prefix, self._jsStyles['items_type'] = "ListDyn_", type
+    self._jsStyles['click'] = None
 
+  @property
+  def _js__builder__(self):
+    return '''
+      data.forEach(function(item, i){
+        var li = document.createElement("li");
+        if(typeof item.type === 'undefined'){window['%(alias)s'+ options.items_type](li, item, options)}
+        else{window['%(alias)s' + item.type](li, item, options)};
+        li.style.margin = "5px 0";
+        htmlObj.appendChild(li)})''' % {"alias": self._prefix}
 
-class Buttons(List):
-  name, category, callFnc = 'List Buttons', 'Lists', 'buttons'
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
 
-  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
-    super(Buttons, self).__init__(report, data, color, width, height, htmlCode, helper, options, profile)
-    for l in self.items:
-      l.set_html_content(
-        report.ui.buttons.button(l.val, width=width).css({"text-align": 'center'})).no_decoration
+    :rtype: OptList.OptionsItems
+    """
+    return self.__options
 
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
 
-class Checks(List):
-  name, category, callFnc = 'List Checked', 'Lists', 'checklist'
+    :rtype: JsHtmlList.JsItem
+    """
+    if self._dom is None:
+      self._dom = JsHtmlList.JsItem(self, report=self._report)
+    return self._dom
 
-  def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
-    super(Checks, self).__init__(report, data, color, width, height, htmlCode, helper, options, profile)
-    for l in self.items:
-      c = report.ui.buttons.check(l.val['value'])
-      c.click([
-        c.input.dom.switchClass("fa-check", "fa-times")])
-      l.set_html_content(report.ui.div([
-        report.ui.texts.label(l.val['label']).css({"width": 'auto'}).click([
-          report.js.alert(report.js.objects.this)]), c])).no_decoration
+  def click(self, jsFncs, profile=False):
+    if not isinstance(jsFncs, list):
+      jsFncs = []
+    self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self
 
-  @classmethod
-  def matchMarkDownBlock(cls, data): return re.match(">>>%s" % cls.callFnc, data[0])
+  def add_type(self, type, item_def):
+    """
+    Description:
+    ------------
 
-  @staticmethod
-  def matchEndBlock(data): return data.endswith("<<<")
+    Attributes:
+    ----------
+    :param type: String.
+    :param item_def: String.
+    """
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    constructors["%s%s" %(self._prefix, type)] = "function %s%s(htmlObj, options, status){%s}" % (self._prefix, type, JsHtmlList.JsItemsDef().custom(item_def))
+    return self
 
-  @classmethod
-  def convertMarkDownBlock(cls, data, report=None):
-    recordSet = []
-    for val in data[1:-1]:
-      line = val.strip()
-      if line.startswith("- [x] "):
-        recordSet.append({'value': line[5:], "isChecked": 1})
-      else:
-        recordSet.append({'value': line[5:], 'disabled': 1})
-    if report is not None:
-      getattr(report, 'checklist')(recordSet)
-    return ["report.checklist(%s)" % json.dumps(recordSet)]
-
-  @classmethod
-  def jsMarkDown(cls, vals):
-    result = []
-    for rec in vals:
-      if rec.get('isChecked') == 1:
-        result.append("- [X] %s" % rec['value'])
-      else:
-        result.append("- [ ] %s" % rec['value'])
-    return [">>>%s" % cls.callFnc, result, "<<<"]
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    # add all the shape definitions
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    shapes = JsHtmlList.JsItemsDef()
+    constructors["%s%s" %(self._prefix, self._jsStyles['items_type'])] = "function %s%s(htmlObj, data, options){%s}" % (self._prefix, self._jsStyles['items_type'], getattr(shapes, self._jsStyles['items_type'])(self._report))
+    return '<ul %s></ul>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class ListTournaments(Html.Html):
-  name, category, callFnc = 'Brackets', 'Container', 'brackets'
+  name = 'Brackets'
   __reqCss, __reqJs = ['jquery-brackets'], ['jquery-brackets']
 
   def __init__(self, report, records, width, height, options, profile):
-    self.options = {} if options is None else options
-    super(ListTournaments, self).__init__(report, {'vals': records, 'save': 'null', 'edit': 'null', 'render': 'null',
-                                                   'options': self.options}, width=width[0], widthUnit=width[1],
-                                                   height=height[0], heightUnit=height[1], profile=profile)
+    self.options = options
+    super(ListTournaments, self).__init__(report, {'vals': records, 'save': 'null', 'edit': 'null', 'render': 'null', 'options': self.options},
+                                          css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'overflow': 'auto', "padding": "auto", "margin": "auto"})
 
   def addFnc(self, fncName, jsFncs):
@@ -341,17 +371,18 @@ class ListTournaments(Html.Html):
       jsFncs = ";".join(jsFncs)
     self.vals[fncName] = jsFncs
 
-  def onDocumentLoadFnc(self):
-    # , disableToolbar: true, disableTeamEdit: false
-    self.addGlobalFnc("%s(htmlObj, data)" % self.__class__.__name__, ''' htmlObj.empty() ;
-      parameters = {centerConnectors: true, init: data.vals }; 
+  @property
+  def _js__builder__(self):
+    return '''
+      htmlObj.empty(); parameters = {centerConnectors: true, init: data.vals }; 
       if (data.save != "null"){parameters['save'] = new Function('rec', 'userData', 'var data = {challenge: JSON.stringify(rec), userProno: JSON.stringify(userData) } ;' + data.save) };
       if (data.render != "null"){parameters['decorator'] = {render: new Function('rec', 'userData', data.save), edit: function(container, data, doneCb) { } } };
       if (data.edit != "null"){ 
-        if ( data.render == "null" ) { parameters['decorator']['render'] = function(rec, userData) {} } ;
+        if (data.render == "null") { parameters['decorator']['render'] = function(rec, userData) {} } ;
         parameters['decorator']['edit'] = new Function('container', 'data', 'doneCb', data.edit); };
       for (var k in data.options) { parameters[k] = data.options[k] ;};
-      htmlObj.bracket( parameters )''', 'Javascript Object builder')
+      htmlObj.bracket( parameters )
+      '''
 
   def __str__(self):
-    return "<div %s></div>" % self.get_attrs(pyClassNames=self.defined)
+    return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())

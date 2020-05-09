@@ -29,6 +29,22 @@ class OptionsLi(object):
     self._li_class = cls_names
 
 
+class OptionsItems(Options):
+
+  @property
+  def checked(self):
+    """
+    Description:
+    ------------
+    Check default value for radio and check lists
+    """
+    return self._config_get(False)
+
+  @checked.setter
+  def checked(self, attrs):
+    self._config(attrs)
+
+
 class OptionsTagItems(Options):
 
   @property

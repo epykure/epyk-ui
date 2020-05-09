@@ -78,6 +78,17 @@ class JsObjects(object):
     return JsObject.JsObject.get("data")
 
   @property
+  def value(self):
+    """
+    Description:
+    -----------
+    Interface to the Javascript Object primitive
+
+    :return: The Javascript value in a event
+    """
+    return JsObject.JsObject.get("value")
+
+  @property
   def mouseEvent(self):
     """
     Description:
