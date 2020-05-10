@@ -2,11 +2,19 @@
 from epyk.core.html.options import Options
 
 
-class OptionsTree(object):
+class OptionsTree(Options):
 
-  def __init__(self, src, options):
-    self._icon_open, self._icon_close, self._expanded = "fas fa-folder-open", "fas fa-folder", True
-    self.src = src
+  @property
+  def is_root(self):
+    """
+
+    :return:
+    """
+    return self._config_get(True)
+
+  @is_root.setter
+  def is_root(self, bool):
+    self._config(bool)
 
   @property
   def icon_open(self):
@@ -14,7 +22,11 @@ class OptionsTree(object):
 
     :return:
     """
-    return self._icon_open
+    return self._config_get("fas fa-folder-open")
+
+  @icon_open.setter
+  def icon_open(self, icon):
+    self._config(icon)
 
   @property
   def icon_close(self):
@@ -22,7 +34,11 @@ class OptionsTree(object):
 
     :return:
     """
-    return self._icon_close
+    return self._config_get("fas fa-folder")
+
+  @icon_close.setter
+  def icon_close(self, icon):
+    self._config(icon)
 
   @property
   def expanded(self):
@@ -30,25 +46,24 @@ class OptionsTree(object):
 
     :return:
     """
-    return self._expanded
+    return self._config_get(True)
 
   @expanded.setter
   def expanded(self, bool):
-    self._expanded = bool
-    self.src.items = None
-    self.src.set(self.src, self.src.val)
+    self._config(bool)
 
-  @icon_open.setter
-  def icon_open(self, icon):
-    self._icon_open = icon
-    self.src.items = []
-    self.src.set(self.src, self.src.val)
+  @property
+  def style(self):
+    """
 
-  @icon_close.setter
-  def icon_close(self, icon):
-    self._icon_close = icon
-    self.src.items = []
-    self.src.set(self.src, self.src.val)
+    :return:
+    """
+    return self._config_get({})
+
+  @style.setter
+  def style(self, css):
+    self._config(css)
+
 
 
 class OptDropDown(Options):

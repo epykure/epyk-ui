@@ -1,5 +1,4 @@
 
-from epyk.core.html import HtmlList
 from epyk.core.html import Html
 from epyk.core.html import Defaults
 
@@ -11,72 +10,94 @@ from epyk.core.html.options import OptTrees
 from epyk.core.css.styles import GrpClsList
 
 
-class Tree(HtmlList.List):
-  name, category, callFnc = 'List Expandable', 'Lists', 'tree'
+class Tree(Html.Html):
+  name = 'List Expandable'
+  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
 
-  def __init__(self, report, data, color, width, height, htmlCode, helper, option, profile):
-    super(Tree, self).__init__(report, [], color, width, height, htmlCode, helper, {}, profile)
-    self._vals = data # Attach the original data anyway to the object
+  def __init__(self, report, records, color, width, height, htmlCode, helper, option, profile):
+    super(Tree, self).__init__(report, records, css_attrs={"width": width, 'height': height})
+    option['is_root'] = True
+    option['icon_open'] = "fas fa-folder-open"
+    option['style'] = {"list-style": 'none', 'margin-left': '8px', 'padding-left': 0}
     self.__options = OptTrees.OptionsTree(self, option)
-    self.set(self, self.val)
+    self.css(option['style'])
+    self._jsStyles['click_node'] = None
 
   @property
   def options(self):
     """
+    Description:
+    -----------
 
     :rtype: OptTrees.OptionsTree
     """
     return self.__options
 
-  def empty(self):
-    """
+  @property
+  def _js__builder__(self):
+    return ''' if(options){htmlObj.innerHTML = ''; options.is_root = false};
+      data.forEach(function(item, i){
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        if(typeof item.items !== 'undefined'){
+          var ul = document.createElement("ul"); 
+          for(const attr in options.style){ul.style[attr] = options.style[attr]};
+          %(builder)s(ul, item.items, options);
+          var icon = document.createElement("i"); icon.style.marginRight = '5px';
+          icon.onclick = function(){ 
+            var ulDisplay = this.parentNode.querySelector('ul').style.display;
+            if(ulDisplay == 'none'){ this.parentNode.querySelector('ul').style.display = 'block'}
+            else{this.parentNode.querySelector('ul').style.display = 'none'}
+          };
 
-    :return:
+          options.icon_open.split(" ").forEach(function(s){icon.classList.add(s)});
+          var span = document.createElement("span"); 
+          span.innerHTML = item.value;
+          a.appendChild(icon); a.appendChild(span); a.appendChild(ul);
+        } else {
+          a.innerHTML = item.value;
+          a.style.paddingLeft = '18px';
+        }
+       
+        li.appendChild(a);
+        htmlObj.appendChild(li)
+      })''' % {"builder": self.builder_name}
+
+  def clickNode(self, jsFncs, profile=False):
     """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = []
+
+    self._jsStyles['click_node'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 
-  def set(self, ul, data):
+  def click(self, jsFncs, profile=False):
     """
+    Description:
+    -----------
 
-    :param ul:
-    :param data:
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
     """
-    for l in data:
-      if l.get('items') is not None:
-        sub_l = self._report.ui.list()
-        sub_l.inReport = False
-        ul.add_item(sub_l)[-1].no_decoration
-        ul[-1].add_label(l.get('label', l.get('value', '')), css={"color": l.get('color', 'none')})
-        ul[-1].add_icon(self.options.icon_open if self.options.expanded else self.options.icon_close)
-        if not self.options.expanded:
-          sub_l.css({"display": 'none'})
-        ul[-1].icon.click([
-          ul[-1].val.dom.toggle(),
-          ul[-1].icon.dom.switchClass(self.options.icon_close.split(" ")[-1], self.options.icon_open.split(" ")[-1])])
-        self.set(sub_l, l.get('items'))
-      else:
-        ul.add_item(l.get('label', l.get('value', '')))[-1].no_decoration
-        ul[-1].css({"color": l.get('color', 'none')})
+    if not isinstance(jsFncs, list):
+      jsFncs = []
+
+    self._jsStyles['click_leaf'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 
-  def find(self, value):
-    pass
-
-  def nodes(self, level):
-    """
-
-    :param level:
-    :return:
-    """
-    for i in self.items:
-      print(i.items)
-
-  def leafs(self):
-    """
-
-    :return:
-    """
-    pass
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<ul %s></ul>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class TreeInput(Tree):

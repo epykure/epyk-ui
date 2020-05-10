@@ -474,7 +474,7 @@ class Lists(object):
     :param htmlCode:
     :param profile:
     """
-    dftl_options = {"width": 70}
+    dftl_options = {"width": 90}
     dftl_options.update(options or {})
     html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, text, width, height, htmlCode, helper, dftl_options, profile)
     html_d.style.css.display = 'inline-block'
