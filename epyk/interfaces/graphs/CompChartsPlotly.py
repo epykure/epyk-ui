@@ -524,8 +524,7 @@ class Plotly(object):
       surf_chart.data.showscale = False
     return surf_chart
 
-  def scatter3d(self, record, y_columns=None, x_axis=None, z_columns=None, profile=None, options=None, width=(100, "%"),
-                height=(330, "px"), htmlCode=None):
+  def scatter3d(self, record, y_columns=None, x_axis=None, z_columns=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
 
     https://plot.ly/javascript/3d-line-plots/
@@ -679,9 +678,7 @@ class Plotly(object):
     gau.add_trace({'value': value}, mode=options['mode'], type=options['type'])
     return gau
 
-  def scatterpolar(self, records, r_columns=None, theta_axis=None, profile=None,
-             options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
-
+  def scatterpolar(self, records, r_columns=None, theta_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     all_series = []
     for c in r_columns:
       series = {"r": [], "theta": []}
