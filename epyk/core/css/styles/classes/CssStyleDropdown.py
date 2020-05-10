@@ -3,7 +3,8 @@ from epyk.core.css.styles.classes import CssStyle
 
 
 class CssDropDownSubMenu(CssStyle.Style):
-  _attrs = {'display': 'none'}
+  _attrs = {'display': 'none', 'border': '1px solid rgba(0,0,0,.15)', 'border-radius': '4px',
+            'box-shadow': '0 6px 12px rgba(0,0,0,.175)', '-webkit-box-shadow': '0 6px 12px rgba(0,0,0,.175)'}
   classname = "menu .submenu"
 
 
@@ -33,3 +34,9 @@ class CssDropDownAfterMenu(CssStyle.Style):
 
   def customize(self):
     self.css({'color': self.rptObj.theme.greys[-1], 'background': self.rptObj.theme.greys[0]})
+
+
+class CssDropDownCaret(CssStyle.Style):
+  _attrs = {'display': 'inline-block', "width": 0, "height": 0, 'margin-left': '2px', 'vertical-align': 'middle',
+            'border-top': '4px dashed', 'border-right': '4px solid transparent', 'border-left': '4px solid transparent'}
+  classname = "caret"

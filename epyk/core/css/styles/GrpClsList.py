@@ -93,14 +93,15 @@ class ClassDropDown(GrpCls.ClassHtml):
 
   def __init__(self, htmlObj):
     super(ClassDropDown, self).__init__(htmlObj)
-    self._css_base, self._css_menu, self._css_menu_after, self._css_menu_link = None, None, None, None
-    self._css_menu_hover, self._css_menu_pull_left, self._css_menu_li = None, None, None
+    self._css_base, self._css_menu, self._css_menu_after, self._css_menu_link = 4 * [None]
+    self._css_menu_hover, self._css_menu_pull_left, self._css_menu_li, self._css_caret = 4 * [None]
     self.classList['main'].add(self.cls_base)
     self.classList['main'].add(self.cls_menu)
     self.classList['main'].add(self.cls_menu_li)
     self.classList['main'].add(self.cls_menu_after)
     self.classList['main'].add(self.cls_menu_hover)
     self.classList['main'].add(self.cls_menu_pull_left)
+    self.classList['other'].add(self.cls_caret)
 
   @property
   def cls_base(self):
@@ -161,3 +162,13 @@ class ClassDropDown(GrpCls.ClassHtml):
     if self._css_menu_pull_left is None:
       self._css_menu_pull_left = Classes.CatalogTree.CatalogDropDown(self.htmlObj._report, self.classList['main']).menu_pull_left()
     return self._css_menu_pull_left
+
+  @property
+  def cls_caret(self):
+    """
+
+    :rtype: Classes.CatalogTree.CatalogDropDown
+    """
+    if self._css_caret is None:
+      self._css_caret = Classes.CatalogTree.CatalogDropDown(self.htmlObj._report, self.classList['other']).menu_caret()
+    return self._css_caret

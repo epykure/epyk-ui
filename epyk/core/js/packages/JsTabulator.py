@@ -710,55 +710,65 @@ class Tabulator(JsPackage):
 
   def previousPage(self):
     """
+    Description:
+    -----------
 
     http://tabulator.info/docs/4.1/page
-
-    :return:
     """
-    return JsObjects.JsPromise("previousPage()")
+    return JsObjects.JsPromise("%s.previousPage()" % self.varId)
 
   def nextPage(self):
     """
+    Description:
+    -----------
 
     http://tabulator.info/docs/4.1/page
 
     :return:
     """
-    return JsObjects.JsPromise("nextPage()")
+    return JsObjects.JsPromise("%s.nextPage()" % self.varId)
 
   def setPage(self, i):
     """
+    Description:
+    -----------
 
     http://tabulator.info/docs/4.1/page
 
     :param i:
     :return:
     """
-    return JsObjects.JsPromise("setPage(%s)" % i)
+    return JsObjects.JsPromise("%s.setPage(%s)" % (self.varId, i))
 
   def setPageSize(self, i):
     """
+    Description:
+    -----------
 
     http://tabulator.info/docs/4.1/page
 
+    Attributes:
+    ----------
     :param i:
-    :return:
     """
-    return self.fnc_closure("setPageSize(%s)" % i)
+    return JsObjects.JsPromise("%s.setPageSize(%s)" % (self.varId, i))
 
   def setGroupBy(self, column):
     """
+    Description:
+    -----------
     You can use the setGroupBy function to change the fields that rows are grouped by.
     This function has one argument and takes the same values as passed to the groupBy setup option.
 
-    Documentation
-    http://www.tabulator.info/docs/4.1/group
+    Related Pages:
 
+			http://www.tabulator.info/docs/4.1/group
+
+    Attributes:
+    ----------
     :param column:
-
-    :return:
     """
-    return self.fnc_closure("setGroupBy(%s)" % JsUtils.jsConvertData(column, None))
+    return JsObjects.JsVoid("%s.setGroupBy(%s)" % (self.varId, JsUtils.jsConvertData(column, None)))
 
   def setGroupStartOpen(self, flag):
     """
@@ -772,7 +782,7 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return self.fnc_closure("setGroupStartOpen(%s)" % JsUtils.jsConvertData(flag, None))
+    return JsObjects.JsVoid("%s.setGroupStartOpen(%s)" % (self.varId, JsUtils.jsConvertData(flag, None)))
 
   def setGroupHeader(self, jsFnc):
     """
@@ -800,7 +810,7 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return self.fnc_closure_in_promise("deleteRow(%s)" % n)
+    return JsObjects.JsPromise("%s.deleteRow(%s)" % (self.varId, n))
 
   def addRow(self, data, flag=False):
     """
@@ -818,8 +828,6 @@ class Tabulator(JsPackage):
 
     :param data:
     :param flag:
-
-    :return:
     """
     data = JsUtils.jsConvertData(data, None)
     flag = JsUtils.jsConvertData(flag, None)
@@ -878,7 +886,7 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return JsObjects.JsArray.JsArray("%s.getSelectedRows()" % self.toStr())
+    return JsObjects.JsArray.JsArray("%s.getSelectedRows()" % self.varId)
 
   def getRows(self):
     """
@@ -892,7 +900,7 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return JsObjects.JsArray.JsArray("%s.getRows()" % self.toStr())
+    return JsObjects.JsArray.JsArray("%s.getRows()" % self.varId)
 
   def getRowPosition(self, row, bool=True):
     """
@@ -903,7 +911,7 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return JsObjects.JsNumber.JsNumber("%s.getRowPosition(%s, %s)" % (self.toStr(), row, bool))
+    return JsObjects.JsNumber.JsNumber("%s.getRowPosition(%s, %s)" % (self.varId, row, bool))
 
   def getPageSize(self):
     """
@@ -912,7 +920,7 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return JsObjects.JsNumber.JsNumber("%s.getPageSize()")
+    return JsObjects.JsNumber.JsNumber("%s.getPageSize()" % self.varId)
 
   def getPage(self):
     """
@@ -921,7 +929,7 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return JsObjects.JsNumber.JsNumber("%s.getPage()")
+    return JsObjects.JsNumber.JsNumber("%s.getPage()" % self.varId)
 
   def getPageMax(self):
     """
@@ -929,15 +937,15 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return JsObjects.JsNumber.JsNumber("%s.getPageMax()")
+    return JsObjects.JsNumber.JsNumber("%s.getPageMax()" % self.varId)
 
   def getRowFromPosition(self, n, bool=True):
     """
 
     :param n:
-    :return:
     """
-    return JsObjects.JsNumber.JsNumber("%s.getRowFromPosition(%s, %s)" % (self.toStr(), n, bool))
+    bool = JsUtils.jsConvertData(bool, None)
+    return JsObjects.JsNumber.JsNumber("%s.getRowFromPosition(%s, %s)" % (self.varId, n, bool))
 
   def toggleColumn(self, column):
     """
@@ -1001,7 +1009,7 @@ class Tabulator(JsPackage):
     self.fnc(columns)
     return columns
 
-  def addColumn(self, jsData, before, position):
+  def addColumn(self, jsData, before=False, position=""):
     """
     If you wish to add a single column to the table, you can do this using the addColumn function
 
@@ -1019,7 +1027,7 @@ class Tabulator(JsPackage):
     jsData = JsUtils.jsConvertData(jsData, None)
     before = JsUtils.jsConvertData(before, None)
     position = JsUtils.jsConvertData(position, None)
-    return self.fnc_closure_in_promise("addColumn(%s, %s, %s)" % (jsData, position, before))
+    return JsObjects.JsPromise("%s.addColumn(%s, %s, %s)" % (self.varId, jsData, position, before))
 
   def deleteColumn(self, jsData):
     """
@@ -1029,10 +1037,8 @@ class Tabulator(JsPackage):
     http://tabulator.info/docs/4.5/columns#delete
 
     :param jsData:
-    :return:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return self.fnc_closure_in_promise("deleteColumn(%s)" % jsData)
+    return JsObjects.JsPromise("%s.deleteColumn(%s)" % (self.varId, JsUtils.jsConvertData(jsData, None)))
 
   def redraw(self, jsData):
     """
@@ -1046,8 +1052,7 @@ class Tabulator(JsPackage):
     :param jsData: Boolean. Trigger full rerender including all data and rows
     :return:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return self.fnc_closure("redraw(%s)" % jsData)
+    return JsObjects.JsVoid("%s.redraw(%s)" % (self.varId, JsUtils.jsConvertData(jsData, None)))
 
   def blockRedraw(self):
     """
@@ -1058,10 +1063,8 @@ class Tabulator(JsPackage):
 
     Documentation
     http://tabulator.info/docs/4.5/release#redraw-block
-
-    :return:
     """
-    return self.fnc_closure("blockRedraw()")
+    return JsObjects.JsVoid("%s.blockRedraw()" % self.varId)
 
   def restoreRedraw(self):
     """
@@ -1071,10 +1074,8 @@ class Tabulator(JsPackage):
 
     Documentation
     http://tabulator.info/docs/4.5/release#redraw-block
-
-    :return:
     """
-    return self.fnc_closure("restoreRedraw()")
+    return JsObjects.JsVoid("%s.restoreRedraw()" % self.varId)
 
   def setSort(self, jsData):
     """
@@ -1086,10 +1087,8 @@ class Tabulator(JsPackage):
     http://tabulator.info/docs/4.0/sort
 
     :param jsData:
-    :return:
     """
-    self._js.append("setSort(%s)" % JsUtils.jsConvertData(jsData, None))
-    return self
+    return JsObjects.JsVoid("%s.setSort(%s)" % (self.varId, JsUtils.jsConvertData(jsData, None)))
 
   def getGroups(self, jsData=None):
     """
@@ -1105,10 +1104,9 @@ class Tabulator(JsPackage):
     :return:
     """
     if jsData is not None:
-      jsData = JsUtils.jsConvertData(jsData, None)
-      return JsObjects.JsObject.JsObject("%s.getGroups(%s)" % (self.toStr(), jsData))
+      return JsObjects.JsObject.JsObject("%s.getGroups(%s)" % (self.varId, JsUtils.jsConvertData(jsData, None)))
 
-    return JsObjects.JsObject.JsObject("%s.getGroups()" % self.toStr())
+    return JsObjects.JsObject.JsObject("%s.getGroups()" % self.varId)
 
   def clearData(self):
     """
@@ -1138,8 +1136,7 @@ class Tabulator(JsPackage):
     ----------
     :param column: String. The column name to be displayed
     """
-    column = JsUtils.jsConvertData(column, None)
-    return JsObjects.JsPromise("%s.showColumn(%s)" % (column, self.varId))
+    return JsObjects.JsPromise("%s.showColumn(%s)" % (self.varId, JsUtils.jsConvertData(column, None)))
 
   def showColumna(self, columna):
     """
@@ -1158,16 +1155,14 @@ class Tabulator(JsPackage):
     ----------
     :param columna: List. The column names to be displayed
     """
-    columna = JsUtils.jsConvertData(columna, None)
-    return JsObjects.JsPromise("%s.forEach(function(c){%s.showColumn(c)})" % (columna, self.varId))
+    return JsObjects.JsPromise("%s.forEach(function(c){%s.showColumn(c)})" % (JsUtils.jsConvertData(columna, None), self.varId))
 
   def setData(self, data):
     """
 
     :return:
     """
-    data = JsUtils.jsConvertData(data, None)
-    return self.fnc_closure("setData(%s)" % data)
+    return JsObjects.JsVoid("%s.setData(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
   def replaceData(self, jsData=None):
     """
@@ -1178,10 +1173,9 @@ class Tabulator(JsPackage):
     :return:
     """
     if jsData is None:
-      return JsObjects.JsObject.JsObject("%s.replaceData()" % self.toStr())
+      return JsObjects.JsObject.JsObject("%s.replaceData()" % self.varId)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObject.JsObject("%s.replaceData(%s)" % (self.toStr(), jsData))
+    return JsObjects.JsObject.JsObject("%s.replaceData(%s)" % (self.varId, JsUtils.jsConvertData(jsData, None)))
 
   def getData(self):
     """
@@ -1189,4 +1183,4 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return JsObjects.JsObject.JsObject("%s.getData()" % self.toStr())
+    return JsObjects.JsObject.JsObject("%s.getData()" % self.varId)

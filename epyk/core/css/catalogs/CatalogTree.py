@@ -48,3 +48,9 @@ class CatalogDropDown(Catalog.CatalogGroup):
     """
     return self._set_class(CssStyleDropdown.CssDropDownSubMenuPullLeft)
 
+  def menu_caret(self):
+    """
+    Description:
+    ------------
+    """
+    return self._set_class(CssStyleDropdown.CssDropDownCaret)

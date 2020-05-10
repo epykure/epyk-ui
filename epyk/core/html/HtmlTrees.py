@@ -3,6 +3,9 @@ from epyk.core.html import HtmlList
 from epyk.core.html import Html
 from epyk.core.html import Defaults
 
+from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsQuery
+
 from epyk.core.html.options import OptTrees
 
 from epyk.core.css.styles import GrpClsList
@@ -104,7 +107,6 @@ class TreeInput(Tree):
 
 class DropDown(Html.Html):
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
-  #__reqJs = ['jquery']
   name, category, callFnc = 'DropDown Select', 'Lists', 'dropdown'
 
   def __init__(self, report, data, text, width, height, htmlCode, helper, options, profile):
@@ -133,26 +135,33 @@ class DropDown(Html.Html):
     """
     Description:
     -----------
-    Property to set all the possible object for a Dropdown
+    Property to set all the possible object for a dropdown
 
     :rtype: OptTrees.OptDropDown
     """
     return self.__options
 
+  def click(self, jsFncs, profile=False):
+    if not isinstance(jsFncs, list):
+      jsFncs = []
+    self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self
+
   @property
   def _js__builder__(self):
     return ''' 
-        var jqHtmlObj = jQuery(htmlObj); if(options.clearDropDown) {jqHtmlObj.empty()};
-        data.forEach(function(rec){
-          if (rec.items != undefined) {
-            var li = $('<li class="dropdown" style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); var a = $('<a>'+ rec.value +'</a>');
-            li.append(a); var ul = $('<ul class="submenu"></ul>'); ul.css(options.ul); options.clearDropDown = false; a.css(options.a);
-            %(pyCls)s(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
-          } else {
-              if (rec.url == undefined){var a = $('<a href="#">'+ rec.value +'</a>')}
-              else {var a = $('<a href="'+ rec.url +'">'+ rec.value +'</a>')}; a.css(options.a);
-              var li = $('<li style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); li.append(a); jqHtmlObj.append(li)}
-        })''' % {"pyCls": self.__class__.__name__}
+      var jqHtmlObj = %(jqId)s; if(options.clearDropDown){jqHtmlObj.empty()};
+      data.forEach(function(rec){
+        if (rec.items != undefined) {
+          var li = $('<li class="dropdown" style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); var a = $('<a tabindex=-1>'+ rec.value +'<span class="caret"></span></a>');
+          li.append(a); var ul = $('<ul class="submenu"></ul>'); ul.css(options.ul); options.clearDropDown = false; a.css(options.a);
+          %(pyCls)s(ul, rec.items, options); li.append(ul); jqHtmlObj.append(li);
+        } else {
+          if (rec.url == undefined){var a = $('<a href="#">'+ rec.value +'</a>')}
+          else {var a = $('<a href="'+ rec.url +'">'+ rec.value +'</a>')}; a.css(options.a);
+          a.click(function(event){const value = a.html(); options.click(event, value)} );
+          var li = $('<li style="list-style-type:none;display:list-item;text-align:-webkit-match-parent"></li>'); li.append(a); jqHtmlObj.append(li)}
+      })''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False), "pyCls": self.__class__.__name__}
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
