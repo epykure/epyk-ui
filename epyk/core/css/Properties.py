@@ -1842,11 +1842,23 @@ class CssMixin(object):
     self.htmlObj.css({"padding-left": val})
 
   @property
-  def padding_right(self): return self.htmlObj.css("padding-right")
+  def padding_right(self):
+    """
+    Description:
+    ------------
+    An element's padding is the space between its content and its border
+
+    Related Pages:
+
+			https://www.w3schools.com/cssref/pr_padding-right.asp
+    """
+    return self.htmlObj.css("padding-right")
 
   @padding_right.setter
   def padding_right(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"padding-right": val})
 
   @property

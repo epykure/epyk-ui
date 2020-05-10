@@ -17,6 +17,7 @@ class Drawer(Html.Html):
 
     self.panels = report.ui.div()
     self.panels.inReport = False
+    self.panels.style.css.padding_right = 10
     self.panels.attr['name'] = 'drawer_panels'
 
     self.handle = report.ui.div()
