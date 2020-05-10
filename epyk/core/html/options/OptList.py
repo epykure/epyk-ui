@@ -32,6 +32,32 @@ class OptionsLi(object):
 class OptionsItems(Options):
 
   @property
+  def style(self):
+    """
+    Description:
+    ------------
+    Item CSS Style
+    """
+    return self._config_get({})
+
+  @style.setter
+  def style(self, attrs):
+    self._config(attrs)
+
+  @property
+  def badge(self):
+    """
+    Description:
+    ------------
+    Get the badge style
+    """
+    return self._config_get({})
+
+  @badge.setter
+  def badge(self, attrs):
+    self._config(attrs)
+
+  @property
   def checked(self):
     """
     Description:

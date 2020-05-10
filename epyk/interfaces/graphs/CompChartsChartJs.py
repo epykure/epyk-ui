@@ -308,8 +308,8 @@ class ChartJs(object):
     data = y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
-    for d in data['datasets']:
-      bar_chart.add_dataset(d)
+    for i, d in enumerate(data['datasets']):
+      bar_chart.add_dataset(d, data['series'][i])
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     self.parent.context.register(bar_chart)
     return bar_chart
@@ -340,8 +340,8 @@ class ChartJs(object):
     data = y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartHBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
-    for d in data['datasets']:
-      bar_chart.add_dataset(d)
+    for i, d in enumerate(data['datasets']):
+      bar_chart.add_dataset(d, data['series'][i])
     self.parent.context.register(bar_chart)
     return bar_chart
 
@@ -371,8 +371,8 @@ class ChartJs(object):
     data = y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     bar_chart.labels(data['labels'])
-    for d in data['datasets']:
-      bar_chart.add_dataset(d)
+    for i, d in enumerate(data['datasets']):
+      bar_chart.add_dataset(d, data['series'][i])
     bar_chart._attrs['type'] = type
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     self.parent.context.register(bar_chart)

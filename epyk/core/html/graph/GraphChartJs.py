@@ -220,7 +220,7 @@ class ChartLine(Chart):
       data.borderColor = self._report.theme.charts[id]
       data.backgroundColor = self._report.theme.charts[id]
     data.borderWidth = 1
-    data.pointRadius = 5
+    data.pointRadius = 3
     if opacity is not None:
       data.fillOpacity = opacity
     return data
@@ -333,11 +333,11 @@ class ChartBar(ChartLine):
       data.fillOpacity = opacity
     return data
 
-  def add_dataset(self, data, type=None, colors=None, opacity=0.8):
+  def add_dataset(self, data, label, type=None, colors=None, opacity=0.8):
     """
 
     """
-    data = self.new_dataset(len(self._datasets), data, self._data_attrs['labels'][len(self._datasets)-1], colors, opacity=opacity, type=type)
+    data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity, type=type)
     self._datasets.append(data)
     return data
 
@@ -505,7 +505,6 @@ class ChartRadar(Chart):
 
 class ChartScatter(Chart):
   __reqJs = ['Chart.js']
-  data_format = 'xy'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartScatter, self).__init__(report, width, height, htmlCode, options, profile)

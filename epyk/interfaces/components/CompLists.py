@@ -554,7 +554,11 @@ class Lists(object):
         values.add(rec[column])
       data = sorted(list(values))
 
-    html_list = html.HtmlList.Items(self.context.rptObj, 'badge', data or [], width, height, options or {}, htmlCode, profile, helper)
+    dft_options = {"badge": {"background": 'red', 'color': 'white'}}
+    if options is not None:
+      dft_options.update(options)
+
+    html_list = html.HtmlList.Items(self.context.rptObj, 'badge', data or [], width, height, dft_options, htmlCode, profile, helper)
     self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list

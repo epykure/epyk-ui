@@ -27,7 +27,7 @@ class JsItemsDef(object):
     if(options.click != null){ 
       item.style.cursor = 'pointer';
       item.onclick = function(event){ var value = this.innerHTML; options.click(event, value) }  };
-    if(typeof data === 'object'){ span.innerHTML = data.text} else { item.innerHTML = data }'''
+    if(typeof data === 'object'){ item.innerHTML = data.text} else { item.innerHTML = data }'''
     return self._item(item_def)
 
   def icon(self, report):
@@ -129,10 +129,11 @@ class JsItemsDef(object):
     """
     item_def = '''
     var item = document.createElement("DIV");  
-    var span = document.createElement("span"); span.setAttribute('name', 'value'); span.innerHTML = data;  
-    var badge = document.createElement("span"); badge.innerHTML = 5;
+    var span = document.createElement("span"); span.setAttribute('name', 'value'); span.innerHTML = data.text;  
+    var badge = document.createElement("span"); badge.innerHTML = data.value;
     badge.style.backgroundColor = 'red'; badge.style.color = 'white'; badge.style.borderRadius = '50%%'; badge.style.padding = '0 3px';
     badge.style.marginLeft = '5px'; badge.style.fontSize = '%s'; 
+    for(const attr in options.badge){badge.style[attr] = options.badge[attr]};
     item.appendChild(span); item.appendChild(badge)''' % Defaults.font(-2)
     return self._item(item_def)
 
@@ -173,16 +174,20 @@ class JsItem(JsHtml.JsHtmlRich):
           if (valid === 'true'){values.push(dom.querySelector('[name=value]').innerHTML)}
       }); return values })(%s)''' % self.varName)
 
-  def selectAll(self):
+  def selectAll(self, with_input_box=False):
     """
     Description:
     ------------
     Select all the items in the list
+
+    Attributes:
+    ----------
+    :param with_input_box:
     """
     if self._src._jsStyles['items_type'] == "radio":
       raise Exception("It is not possible to select all radios from a same group, use check instead")
 
-    if self._src._jsStyles['items_type'] == "check":
+    if self._src._jsStyles['items_type'] == "check" or with_input_box:
       return JsObjects.JsVoid('''
         %s.childNodes.forEach( function(dom, k){  
           dom.querySelector('[name=input_box]').checked = true;
@@ -194,16 +199,20 @@ class JsItem(JsHtml.JsHtmlRich):
         dom.querySelector('[name=value]').setAttribute("data-valid", true);
       })''' % self.varName)
 
-  def unSelectAll(self):
+  def unSelectAll(self, with_input_box=False):
     """
     Description:
     ------------
     UnSelect all the items in the list
+
+    Attributes:
+    ----------
+    :param with_input_box:
     """
     if self._src._jsStyles['items_type'] == "radio":
       raise Exception("It is not possible to select all radios from a same group, use check instead")
 
-    if self._src._jsStyles['items_type'] == "check":
+    if self._src._jsStyles['items_type'] == "check" or with_input_box:
       return JsObjects.JsVoid('''
         %s.childNodes.forEach( function(dom, k){  
           dom.querySelector('[name=input_box]').checked = false;

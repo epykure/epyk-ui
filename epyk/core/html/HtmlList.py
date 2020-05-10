@@ -343,16 +343,22 @@ class Items(Html.Html):
     :param type: String.
     :param item_def: String.
     """
+    self.style.css.padding_left = 0
+    self.css({"list-style": 'none'})
+    self._jsStyles['items_type'] = type
+    item_type_name = "%s%s" % (self._prefix, self._jsStyles['items_type'])
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors["%s%s" %(self._prefix, type)] = "function %s%s(htmlObj, options, status){%s}" % (self._prefix, type, JsHtmlList.JsItemsDef().custom(item_def))
+    constructors[item_type_name] = "function %s(htmlObj, data, options){%s}" % (item_type_name, JsHtmlList.JsItemsDef().custom(item_def))
     return self
 
   def __str__(self):
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    # add all the shape definitions
+    item_type_name = "%s%s" % (self._prefix, self._jsStyles['items_type'])
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    shapes = JsHtmlList.JsItemsDef()
-    constructors["%s%s" %(self._prefix, self._jsStyles['items_type'])] = "function %s%s(htmlObj, data, options){%s}" % (self._prefix, self._jsStyles['items_type'], getattr(shapes, self._jsStyles['items_type'])(self._report))
+    if not item_type_name in constructors:
+      # add all the shape definitions
+      shapes = JsHtmlList.JsItemsDef()
+      constructors[item_type_name] = "function %s(htmlObj, data, options){%s}" % (item_type_name, getattr(shapes, self._jsStyles['items_type'])(self._report))
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<ul %s></ul>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 

@@ -47,7 +47,7 @@ class DataAggregators(object):
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
         ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False)
 
-  def sumBy(self, columns, keys):
+  def sumBy(self, columns, key, dstKey=None):
     """
     Description:
     -----------
@@ -55,17 +55,20 @@ class DataAggregators(object):
     Attributes:
     ----------
     :param columns:
-    :param keys:
+    :param key:
+    :param dstKey:
     """
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    key = JsUtils.jsConvertData(key, None)
+    dstKey = JsUtils.jsConvertData(dstKey, None)
     name = "AggSumBy"
     constructors[name] = '''
-      function %s(rs, cs, ks){ var result = {}; 
-        fs.forEach(function(r){
-          
-        })
-      } return result; ''' % name
-    return JsObjects.JsArray.JsArray('%s(%s, %s, %s)' % (name, self.varName, json.dumps(columns), json.dumps(keys)))
+      function %s(rs, cs, sk, dk){var result = []; var tmpResults = {}; if(sk == ''){return rs}; var rdk = dk === null ? sk :  dk;
+        rs.forEach(function(r){
+          if (!(r[sk] in tmpResults)){tmpResults[r[sk]] = {}; tmpResults[r[sk]][rdk] = r[sk]; cs.forEach(function(c){tmpResults[r[sk]][c] = 0})}
+          cs.forEach(function(c){tmpResults[r[sk]][c] += r[c]})
+        }); for(const v in tmpResults){result.push(tmpResults[v])}; return result}''' % name
+    return JsObjects.JsArray.JsArray('%s(%s, %s, %s, %s)' % (name, self.varName, json.dumps(columns), key, dstKey))
 
 
 class DataFilters(object):
