@@ -164,6 +164,24 @@ class Chart(Html.Html):
       '''
 
   @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript base function
+
+    Return all the Javascript functions defined in the framework.
+    THis is an entry point to the full Javascript ecosystem.
+
+    :return: A Javascript object
+
+    :rtype: JsChartJs.JsChart
+    """
+    if self._js is None:
+      self._js = JsPlotly.JsPlotly(selector="window['%s']" % self.chartId, src=self)
+    return self._js
+
+  @property
   def layout(self):
     """
 
@@ -219,13 +237,13 @@ class Chart(Html.Html):
 
   def build(self, data=None, options=None, profile=False):
     if data:
-      return JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).react(self.htmlId, self.convert(data, options, profile), self.layout, self.options)], toStr=True)
+      return JsUtils.jsConvertFncs([self.js.react(self.convert(data, options, profile), self.layout, self.options)], toStr=True)
 
     str_traces = []
     for t in self._traces:
       str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in t.attrs()]))
     obj_datasets = JsObject.JsObject.get("[%s]" % ", ".join(str_traces))
-    return "%s = %s" % (self.chartId, JsUtils.jsConvertFncs([JsPlotly.JsPlotly(src=self._report).newPlot(self.htmlId, obj_datasets, self.layout, self.options)], toStr=True))
+    return "%s = %s" % (self.chartId, JsUtils.jsConvertFncs([self.js.newPlot(obj_datasets, self.layout, self.options)], toStr=True))
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

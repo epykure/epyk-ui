@@ -9,97 +9,128 @@ from epyk.core.js.packages import DataAttrs
 
 class JsPlotly(JsPackage):
 
-  def newPlot(self, htmlId, data=None, layout=None, config=None):
+  def newPlot(self, data=None, layout=None, config=None, htmlId=None):
     """
+    Description:
+    ------------
     Draws a new plot in an <div> element, overwriting any existing plot. To update an existing plot in a <div>, it is much more efficient to use Plotly.react than to overwrite it.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId: DOM node or string id of a DOM node
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param data: array of objects, see documentation (defaults to [])
     :param layout: object, see documentation (defaults to {})
     :param config: object, see documentation (defaults to {})
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     data = JsUtils.jsConvertData(data or [], None)
     layout = JsUtils.jsConvertData(layout or {}, None)
     config = JsUtils.jsConvertData(config or {}, None)
-    return JsObject.JsObject.get("Plotly.newPlot(%s, %s, %s, %s)" % (htmlId, data, layout, config))
+    return JsObject.JsObject.get("Plotly.newPlot(%s, %s, %s, %s)" % (htmlId or self.src.dom.varName, data, layout, config))
 
-  def react(self, htmlId, data=None, layout=None, config=None):
+  def react(self, data=None, layout=None, config=None, htmlId=None):
     """
+    Description:
+    ------------
     Plotly.react has the same signature as Plotly.newPlot above, and can be used in its place to create a plot, but when called again on the same <div> will update it far more efficiently than Plotly.newPlot, which would destroy and recreate the plot. Plotly.react is as fast as Plotly.restyle/Plotly.relayout documented below.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId: DOM node or string id of a DOM node
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param data: array of objects, see documentation (defaults to [])
     :param layout: object, see documentation (defaults to {})
     :param config: object, see documentation (defaults to {})
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     data = JsUtils.jsConvertData(data or [], None)
     layout = JsUtils.jsConvertData(layout or {}, None)
     config = JsUtils.jsConvertData(config or {}, None)
-    return JsObject.JsObject.get("Plotly.react(%s, %s, %s, %s)" % (htmlId, data, layout, config))
+    return JsObject.JsObject.get("Plotly.react(%s, %s, %s, %s)" % (htmlId or self.src.dom.varName, data, layout, config))
 
-  def restyle(self, htmlId, update=None, traceIndices=None):
+  def restyle(self, update=None, traceIndices=None, htmlId=None):
     """
+    Description:
+    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot with Plotly.newPlot.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId: DOM node or string id of a DOM node
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param update: object, see below for examples (defaults to {})
     :param traceIndices: array of integer indices into existing value of data (optional, default behaviour is to apply to all traces)
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     update = JsUtils.jsConvertData(update or {}, None)
     if traceIndices is None:
-      return JsObject.JsObject.get("Plotly.restyle(%s, %s)" % (htmlId, update))
+      return JsObject.JsObject.get("Plotly.restyle(%s, %s)" % (htmlId or self.src.dom.varName, update))
 
     traceIndices = JsUtils.jsConvertData(traceIndices, None)
-    return JsObject.JsObject.get("Plotly.restyle(%s, %s, %s)" % (htmlId, update, traceIndices))
+    return JsObject.JsObject.get("Plotly.restyle(%s, %s, %s)" % (htmlId or self.src.dom.varName, update, traceIndices))
 
-  def relayout(self, htmlId, update=None):
+  def relayout(self, update=None, htmlId=None):
     """
+    Description:
+    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot with Plotly.newPlot.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId: DOM node or string id of a DOM node
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param update: object, see below for examples (defaults to {})
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     update = JsUtils.jsConvertData(update or {}, None)
-    return JsObject.JsObject.get("Plotly.relayout(%s, %s)" % (htmlId, update))
+    return JsObject.JsObject.get("Plotly.relayout(%s, %s)" % (htmlId or self.src.dom.varName, update))
 
-  def update(self, htmlId, data_update=None, layout_update=None, traceIndices=None):
+  def update(self, data_update=None, layout_update=None, traceIndices=None, htmlId=None):
     """
+    Description:
+    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot with Plotly.newPlot.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId: DOM node or string id of a DOM node
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param data_update: object, see Plotly.restyle above (defaults to {})
     :param layout_update: object, see Plotly.relayout above (defaults to {})
     :param traceIndices: array of integer indices into existing value of data, see Plotly.restyle above (optional, default behaviour is to apply to all traces)
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     data_update = JsUtils.jsConvertData(data_update or {}, None)
     layout_update = JsUtils.jsConvertData(layout_update or {}, None)
     if traceIndices is None:
-      return JsObject.JsObject.get("Plotly.update(%s, %s, %s)" % (htmlId, data_update, layout_update))
+      return JsObject.JsObject.get("Plotly.update(%s, %s, %s)" % (htmlId or self.src.dom.varName, data_update, layout_update))
 
     traceIndices = JsUtils.jsConvertData(traceIndices, None)
-    return JsObject.JsObject.get("Plotly.update(%s, %s, %s, %s)" % (htmlId, data_update, layout_update, traceIndices))
+    return JsObject.JsObject.get("Plotly.update(%s, %s, %s, %s)" % (htmlId or self.src.dom.varName, data_update, layout_update, traceIndices))
 
   def validate(self, data, layout):
     """
+    Description:
+    ------------
     Plotly.validate allows users to validate their input data array and layout object.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param data: array of objects
     :param layout: object
     """
@@ -109,10 +140,17 @@ class JsPlotly(JsPackage):
 
   def makeTemplate(self, figure):
     """
-    Plotly.makeTemplate copies the style information from a figure. It does this by returning a template object which can be passed to the layout.template attribute of another figure.
+    Description:
+    ------------
+    Plotly.makeTemplate copies the style information from a figure.
+    It does this by returning a template object which can be passed to the layout.template attribute of another figure.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param figure: figure or DOM Node where figure is a plot object, with {data, layout} members. If a DOM node is used it must be a div element already containing a plot.
     """
     figure = JsUtils.jsConvertData(figure, None)
@@ -120,10 +158,16 @@ class JsPlotly(JsPackage):
 
   def validateTemplate(self, figure, template):
     """
+    Description:
+    ------------
     Plotly.validateTemplate allows users to Test for consistency between the given figure and a template, either already included in the figure or given separately.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param figure: figure or DOM Node where figure is a plot object, with {data, layout} members.
     :param template: the template, with its own {data, layout}, to test. If omitted, we will look for a template already attached as the plot's
     """
@@ -131,132 +175,176 @@ class JsPlotly(JsPackage):
     template = JsUtils.jsConvertData(template, None)
     return JsObject.JsObject.get("Plotly.validateTemplate(%s, %s)" % (figure, template))
 
-  def addTraces(self, htmlId, traces, position=None):
+  def addTraces(self, traces, position=None, htmlId=None):
     """
+    Description:
+    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot with Plotly.newPlot.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId:
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param traces:
     :param position:
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     traces = JsUtils.jsConvertData(traces, None)
     if position is None:
-      return JsObject.JsObject.get("Plotly.addTraces(%s, %s)" % (htmlId, traces))
+      return JsObject.JsObject.get("Plotly.addTraces(%s, %s)" % (htmlId or self.src.dom.varName, traces))
 
-      position = JsUtils.jsConvertData(position, None)
-    return JsObject.JsObject.get("Plotly.addTraces(%s, %s, %s)" % (htmlId, traces, position))
+    position = JsUtils.jsConvertData(position, None)
+    return JsObjects.JsVoid("Plotly.addTraces(%s, %s, %s)" % (htmlId or self.src.dom.varName, traces, position))
 
-  def deleteTraces(self, htmlId, positions):
+  def deleteTraces(self, positions, htmlId=None):
     """
+    Description:
+    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot with Plotly.newPlot.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId:
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param positions:
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     positions = JsUtils.jsConvertData(positions, None)
-    return JsObject.JsObject.get("Plotly.deleteTraces(%s, %s)" % (htmlId, positions))
+    return JsObject.JsObject.get("Plotly.deleteTraces(%s, %s)" % (htmlId or self.src.dom.varName, positions))
 
-  def moveTraces(self, htmlId, currentPosition, destPosition=None):
+  def moveTraces(self, currentPosition, destPosition=None, htmlId=None):
     """
+    Description:
+    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot with Plotly.newPlot.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId:
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param currentPosition:
     :param destPosition:
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     currentPosition = JsUtils.jsConvertData(currentPosition, None)
     if destPosition is None:
-      return JsObject.JsObject.get("Plotly.moveTraces(%s, %s)" % (htmlId, currentPosition))
+      return JsObject.JsObject.get("Plotly.moveTraces(%s, %s)" % (htmlId or self.src.dom.varName, currentPosition))
 
-    return JsObject.JsObject.get("Plotly.moveTraces(%s, %s, %s)" % (htmlId, currentPosition, destPosition))
+    return JsObject.JsObject.get("Plotly.moveTraces(%s, %s, %s)" % (htmlId or self.src.dom.varName, currentPosition, destPosition))
 
-  def extendTraces(self, htmlId, tracesExtension, indexTraces):
+  def extendTraces(self, tracesExtension, indexTraces, htmlId=None):
     """
+    Description:
+    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot with Plotly.newPlot.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId:
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param tracesExtension:
     :param indexTraces:
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     tracesExtension = JsUtils.jsConvertData(tracesExtension, None)
     indexTraces = JsUtils.jsConvertData(indexTraces, None)
-    return JsObject.JsObject.get("Plotly.extendTraces(%s, %s, %s)" % (htmlId, tracesExtension, indexTraces))
+    return JsObject.JsObject.get("Plotly.extendTraces(%s, %s, %s)" % (htmlId or self.src.dom.varName, tracesExtension, indexTraces))
 
-  def prependTraces(self, htmlId, tracesNew, indexTraces):
+  def prependTraces(self, tracesNew, indexTraces, htmlId=None):
     """
+    Description:
+    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot with Plotly.newPlot.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId:
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param tracesNew:
     :param indexTraces:
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     tracesNew = JsUtils.jsConvertData(tracesNew, None)
     indexTraces = JsUtils.jsConvertData(indexTraces, None)
-    return JsObject.JsObject.get("Plotly.prependTraces(%s, %s, %s)" % (htmlId, tracesNew, indexTraces))
+    return JsObject.JsObject.get("Plotly.prependTraces(%s, %s, %s)" % (htmlId or self.src.dom.varName, tracesNew, indexTraces))
 
-  def animate(self, htmlId, frameOrGroupNameOrFrameList, animationAttributes):
+  def animate(self, frameOrGroupNameOrFrameList, animationAttributes, htmlId=None):
     """
+    Description:
+    ------------
     This allows you to add animation frames to a graphDiv. The group or name attribute of a frame can be used by Plotly.animate in place of a frame object (or array of frame objects). See example here.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId: DOM node or string id of a DOM node
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param frameOrGroupNameOrFrameList: A frame to be animated or an array of frames to be animated in sequence.
     :param animationAttributes: An object, see documentation for examples.
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     frameOrGroupNameOrFrameList = JsUtils.jsConvertData(frameOrGroupNameOrFrameList, None)
     animationAttributes = JsUtils.jsConvertData(animationAttributes, None)
-    return JsObject.JsObject.get("Plotly.animate(%s, %s, %s)" % (htmlId, frameOrGroupNameOrFrameList, animationAttributes))
+    return JsObject.JsObject.get("Plotly.animate(%s, %s, %s)" % (htmlId or self.src.dom.varName, frameOrGroupNameOrFrameList, animationAttributes))
 
   def purge(self):
     """
+    Description:
+    ------------
     Using purge will clear the div, and remove any Plotly plots that have been placed in it.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
+
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
     """
     return JsObject.JsObject.get("Plotly.purge()")
 
-  def toImage(self, htmlId, format):
+  def toImage(self, format, htmlId=None):
     """
+    Description:
+    ------------
     toImage will generate a promise to an image of the plot in data URL format.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId:
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param format:
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     format = JsUtils.jsConvertData(format, None)
-    return JsObjects.JsPromise("Plotly.toImage(%s, %s)" % (htmlId, format))
+    return JsObjects.JsPromise("Plotly.toImage(%s, %s)" % (htmlId or self.src.dom.varName, format))
 
-  def downloadImage(self, htmlId, format):
+  def downloadImage(self, format, htmlId=None):
     """
+    Description:
+    ------------
     downloadImage will trigger a request to download the image of a Plotly plot.
 
-    https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+    Related Pages:
 
-    :param htmlId:
+      https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
+
+    Attributes:
+    ----------
     :param format:
+    :param htmlId: DOM node or string id of a DOM node
     """
-    htmlId = JsUtils.jsConvertData(htmlId, None)
     format = JsUtils.jsConvertData(format, None)
-    return JsObject.JsObject.get("Plotly.downloadImage(%s, %s)" % (htmlId, format))
+    return JsObject.JsObject.get("Plotly.downloadImage(%s, %s)" % (htmlId or self.src.dom.varName, format))
 
 
 class JsPlotlyLegend(object):
