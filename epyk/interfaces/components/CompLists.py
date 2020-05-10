@@ -226,6 +226,7 @@ class Lists(object):
 
     html_item = html.HtmlList.Items(self.context.rptObj, 'text', records, width, height, options, htmlCode, profile, helper)
     self.context.register(html_item)
+    html_item.css({"list-style-type": 'none'})
     html_item.style.css.padding_left = '15px'
     return html_item
 
