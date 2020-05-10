@@ -1612,11 +1612,23 @@ class CssMixin(object):
     self.htmlObj.css({"max-width": val})
 
   @property
-  def min_height(self): return self.htmlObj.css("min-height")
+  def min_height(self):
+    """
+    Description:
+    ------------
+    The min-height property defines the minimum height of an element.
+
+    Related Pages:
+
+			https://www.w3schools.com/cssref/pr_dim_min-height.asp
+    """
+    return self.htmlObj.css("min-height")
 
   @min_height.setter
   def min_height(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"min-height": val})
 
   @property
@@ -1744,7 +1756,17 @@ class CssMixin(object):
     self.htmlObj.css({"overflow": val})
 
   @property
-  def overflow_x(self): return self.htmlObj.css("overflow-x")
+  def overflow_x(self):
+    """
+    Description:
+    ------------
+    The overflow-x property specifies whether to clip the content, add a scroll bar, or display overflow content of a block-level element, when it overflows at the left and right edges.
+
+    Related Pages:
+
+			https://www.w3schools.com/cssref/css3_pr_overflow-x.asp
+    """
+    return self.htmlObj.css("overflow-x")
 
   @overflow_x.setter
   def overflow_x(self, val):
@@ -1752,7 +1774,17 @@ class CssMixin(object):
     self.htmlObj.css({"overflow-x": val})
 
   @property
-  def overflow_y(self): return self.htmlObj.css("overflow-y")
+  def overflow_y(self):
+    """
+    Description:
+    ------------
+    The overflow-y property specifies whether to clip the content, add a scroll bar, or display overflow content of a block-level element, when it overflows at the top and bottom edges.
+
+    Related Pages:
+
+			https://www.w3schools.com/cssref/css3_pr_overflow-y.asp
+    """
+    return self.htmlObj.css("overflow-y")
 
   @overflow_y.setter
   def overflow_y(self, val):

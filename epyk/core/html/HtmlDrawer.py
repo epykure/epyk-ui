@@ -28,7 +28,7 @@ class Drawer(Html.Html):
 
     self.drawers = report.ui.div()
     self.drawers.style.clear_all()
-    self.drawers.style.padding = "0 5px"
+    self.drawers.style.css.overflow_y = 'auto'
     self.drawers.inReport = False
     self.drawers.attr['name'] = 'drawer_content'
 
@@ -70,6 +70,7 @@ class Drawer(Html.Html):
     """
     if not hasattr(link, 'inReport'):
       link = self._report.ui.div(link)
+      link.style.css.padding = "0 5px"
       link.inReport = False
     if not hasattr(container, 'inReport'):
       container = self._report.ui.div(container)
@@ -118,7 +119,7 @@ class Drawer(Html.Html):
     return '''
       <div %(attr)s>
         %(panels)s
-        <div name='drawer' style='%(side)s:0'>
+        <div name='drawer' style='clear:both;%(side)s:0;overflow-y:hidden'>
           %(handle)s%(drawer)s
         </div>
       </div>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlId': self.htmlId,

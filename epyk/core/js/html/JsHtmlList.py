@@ -174,6 +174,28 @@ class JsItem(JsHtml.JsHtmlRich):
           if (valid === 'true'){values.push(dom.querySelector('[name=value]').innerHTML)}
       }); return values })(%s)''' % self.varName)
 
+  @property
+  def selected(self):
+    """
+    Description:
+    ------------
+    Return a list with all the selected values
+    """
+    return self.content
+
+  @property
+  def unselected(self):
+    """
+    Description:
+    ------------
+    Return a list with all the unselected values
+    """
+    return JsHtml.ContentFormatters(self._report, '''
+        (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
+            const valid = dom.querySelector('[name=value]').getAttribute("data-valid");
+            if (valid === 'false'){values.push(dom.querySelector('[name=value]').innerHTML)}
+        }); return values })(%s)''' % self.varName)
+
   def selectAll(self, with_input_box=False):
     """
     Description:

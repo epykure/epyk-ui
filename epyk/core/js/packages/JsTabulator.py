@@ -952,7 +952,7 @@ class Tabulator(JsPackage):
     :return:
     """
     column = JsUtils.jsConvertData(column, None)
-    return self.fnc_closure_in_promise("toggleColumn(%s)" % column)
+    return JsObjects.JsPromise("%s.toggleColumn(%s)" % (self.varId, column))
 
   def hideColumn(self, column):
     """
@@ -967,7 +967,22 @@ class Tabulator(JsPackage):
     :param column:
     """
     column = JsUtils.jsConvertData(column, None)
-    return self.fnc_closure_in_promise("hideColumn(%s)" % column)
+    return JsObjects.JsPromise("%s.hideColumn(%s)" % (self.varId, column))
+
+  def hideColumna(self, columna):
+    """
+    You can hide a visible column at any point using the hideColumn function. Pass the field name of the column you wish to hide as the first parameter of the function.
+
+    Example
+    table.hideColumn("name")
+
+    Documentation
+    http://tabulator.info/docs/4.5/columns#addColumn
+
+    :param column:
+    """
+    columna = JsUtils.jsConvertData(columna, None)
+    return JsObjects.JsPromise("%s.forEach(function(c){%s.hideColumn(c)})" % (columna, self.varId))
 
   @property
   def getColumns(self):
@@ -1107,16 +1122,44 @@ class Tabulator(JsPackage):
 
     :return:
     """
-    return self.fnc_closure("clearData()")
+    return JsObjects.JsVoid("%s.clearData()" % self.varId)
 
-  def showColumn(self, columns):
+  def showColumn(self, column):
     """
+    Description:
+    ------------
+    You can show a hidden column at any point using the showColumn function. Pass the field name of the column you wish to show as the first parameter of the function.
 
-    :param columns:
-    :return:
+    Related Pages:
+
+			http://tabulator.info/docs/4.0/columns
+
+    Attributes:
+    ----------
+    :param column: String. The column name to be displayed
     """
-    columns = JsUtils.jsConvertData(columns, None)
-    return self.fnc_closure("showColumn(%s)" % columns)
+    column = JsUtils.jsConvertData(column, None)
+    return JsObjects.JsPromise("%s.showColumn(%s)" % (column, self.varId))
+
+  def showColumna(self, columna):
+    """
+    Description:
+    ------------
+    You can show a hidden columns at any point using the showColumn function. Pass the field name of the column you wish to show as the first parameter of the function.
+
+    Example
+    table.showColumna("name")
+
+    Related Pages:
+
+			http://tabulator.info/docs/4.0/columns
+
+    Attributes:
+    ----------
+    :param columna: List. The column names to be displayed
+    """
+    columna = JsUtils.jsConvertData(columna, None)
+    return JsObjects.JsPromise("%s.forEach(function(c){%s.showColumn(c)})" % (columna, self.varId))
 
   def setData(self, data):
     """

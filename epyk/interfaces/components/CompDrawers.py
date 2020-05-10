@@ -22,6 +22,7 @@ class Drawers(object):
     :param helper:
     """
     h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)
+    h_drawer.style.css.min_height = 200
     self.context.register(h_drawer)
     return h_drawer
 
