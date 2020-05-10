@@ -109,6 +109,30 @@ class DataFilters(object):
     self.__filters.add("%s(%%s, %s)" % (name, data))
     return self
 
+  def any(self, value, keys=None):
+    """
+    Description:
+    -----------
+    Check if any value in the record match the value.
+    This is not case sensitive.
+
+    TODO: improve the performances by filtering on a list of keys if passed
+
+    Attributes:
+    ----------
+    :param value:
+    :param keys:
+    """
+    constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
+    value = JsUtils.jsConvertData(value, None)
+    keys = JsUtils.jsConvertData(keys, None)
+    name = "AnyMatch"
+    constructors[
+      name] = "function %s(r, v, ks){if (v == ''){return r}; v = v.toUpperCase(); var n=[];r.forEach(function(e){ for(const k in e){ if(String(e[k]).toUpperCase().includes(v)){n.push(e); break;} } });return n}" % name
+
+    self.__filters.add("%s(%%s, %s, %s)" % (name, value, keys))
+    return self
+
   def equal(self, key, value, case_sensitive=True):
     """
     Description:

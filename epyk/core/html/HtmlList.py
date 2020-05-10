@@ -297,11 +297,20 @@ class Items(Html.Html):
 
   @property
   def _js__builder__(self):
-    return '''
+    return ''' htmlObj.innerHTML = "";
       data.forEach(function(item, i){
         var li = document.createElement("li");
         if(typeof item.type === 'undefined'){window['%(alias)s'+ options.items_type](li, item, options)}
         else{window['%(alias)s' + item.type](li, item, options)};
+        
+        if(options.delete){
+          var close = document.createElement("i");
+          close.classList.add("fas"); close.classList.add("fa-times");
+          close.style.marginLeft = '10px'; close.style.cursor = 'pointer';
+          close.onclick = function(event){this.parentNode.remove()};
+          li.lastChild.style.display = 'inline-block';
+          li.appendChild(close);
+        }
         li.style.margin = "5px 0";
         htmlObj.appendChild(li)})''' % {"alias": self._prefix}
 

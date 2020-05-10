@@ -58,6 +58,19 @@ class OptionsItems(Options):
     self._config(attrs)
 
   @property
+  def delete(self):
+    """
+    Description:
+    ------------
+    Add a delete icon
+    """
+    return self._config_get(False)
+
+  @delete.setter
+  def delete(self, attrs):
+    self._config(attrs)
+
+  @property
   def checked(self):
     """
     Description:
