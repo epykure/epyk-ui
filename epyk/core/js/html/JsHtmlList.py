@@ -2,6 +2,7 @@
 import json
 
 from epyk.core.js.html import JsHtml
+from epyk.core.js.objects import JsNodeDom
 from epyk.core.js import JsUtils
 from epyk.core.css import Defaults
 
@@ -195,6 +196,22 @@ class JsItem(JsHtml.JsHtmlRich):
             const valid = dom.querySelector('[name=value]').getAttribute("data-valid");
             if (valid === 'false'){values.push(dom.querySelector('[name=value]').innerHTML)}
         }); return values })(%s)''' % self.varName)
+
+  def getItemByValue(self, value):
+    """
+    Description:
+    ------------
+    Get an item from the list based on its value
+
+    Attributes:
+    ----------
+    :param value: String. The value to find in the list
+    """
+    value = JsUtils.jsConvertData(value, None)
+    return JsNodeDom.JsDoms.get('''
+      (function(dom, value){var children = dom.childNodes; var values = null;
+        for (var i = 0; i < children.length; i++) { if(children[i].querySelector('[name=value]').innerHTML == value){ values = children[i]; break} };
+        return values })(%s, %s)''' % (self.varName, value))
 
   def selectAll(self, with_input_box=False):
     """
