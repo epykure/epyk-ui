@@ -401,7 +401,7 @@ class ChartJs(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'rDim': None, 'attrs': {}})
-    data = xy(record, y_columns, x_axis)
+    data = xyz(record, y_columns, x_axis, None)
     line_chart = graph.GraphChartJs.ChartScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):

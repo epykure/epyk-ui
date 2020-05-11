@@ -263,7 +263,6 @@ class ChartLine(Chart):
 
 class ChartBubble(Chart):
   __reqJs = ['Chart.js']
-  data_format = 'xyz'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartBubble, self).__init__(report, width, height, htmlCode, options, profile)
