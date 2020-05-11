@@ -99,6 +99,7 @@ class ChartLine(Chart):
 
 
 class ChartBar(ChartLine):
+  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartBar, self).__init__(report, width, height, htmlCode, options, profile)
@@ -106,6 +107,7 @@ class ChartBar(ChartLine):
 
 
 class ChartScatter(ChartLine):
+  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartScatter, self).__init__(report, width, height, htmlCode, options, profile)
@@ -187,6 +189,7 @@ class Chart3D(Chart):
 
 
 class Chart3DScatter(Chart3D):
+  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(Chart3DScatter, self).__init__(report, width, height, htmlCode, options, profile)
@@ -195,6 +198,7 @@ class Chart3DScatter(Chart3D):
 
 
 class Chart3DLine(Chart3D):
+  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(Chart3DLine, self).__init__(report, width, height, htmlCode, options, profile)
@@ -203,6 +207,7 @@ class Chart3DLine(Chart3D):
 
 
 class Chart3DBar(Chart3D):
+  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(Chart3DBar, self).__init__(report, width, height, htmlCode, options, profile)
