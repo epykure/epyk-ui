@@ -6,6 +6,7 @@ from epyk.core.js.packages import JsVis
 
 
 class Chart(Html.Html):
+  __reqJs, __reqCss = ['vis'], ['vis']
   name, category, callFnc = 'Vis', 'Charts', 'vis'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
