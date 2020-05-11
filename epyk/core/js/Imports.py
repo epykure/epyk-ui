@@ -400,7 +400,7 @@ JS_IMPORTS = {
   #
   'json-formatter': {
     'website': 'https://azimi.me/json-formatter-js/',
-    'register': {'alias': 'jsonformatter', 'module': 'json-formatter.umd.min'},
+    'register': {'alias': 'JSONFormatter', 'module': 'json-formatter.umd.min'},
     'modules': [
       {'script': 'json-formatter.umd.min.js', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
     ]},

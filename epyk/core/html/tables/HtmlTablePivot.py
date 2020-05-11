@@ -9,7 +9,10 @@ Related Pages:
 import json
 
 from epyk.core.html import Html
+from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsPivotFncs
+from epyk.core.html.options import OptTable
+from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
 # from epyk.core.css.styles import CssGrpClsTable
@@ -22,149 +25,142 @@ extensions = {
 
 class PivotTable(Html.Html):
   __reqJs, __reqCss = ["pivot"], ["pivot"]
-  name, category, callFnc = 'Pivot Table', 'Tables', 'pivot'
+  name = 'Pivot Table'
+  js_fncs_opts = ('renderer', 'aggregator', 'onRefresh', 'filter', 'dataClass', 'onRefresh')
+
   # _grpCls = CssGrpClsTable.CssStylesPivot
 
-  def __init__(self, report, recordSet, rows, cols, valCol, title, tableOptions, width, height, aggOptions, rendererName,
-               htmlCode, dataSrc, helper, profile):
-    super(PivotTable, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
-                                     code=htmlCode, dataSrc=dataSrc, profile=profile)
+  def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
+    super(PivotTable, self).__init__(report, recordSet, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     # Add the extra HTML components
-    self.add_title(title, options={'content_table': False})
     self.add_helper(helper)
+    self.__options = OptTable.OptionsPivot(self, options)
     # to add all the columns in the table if nothing defined
-    self.aggOptions, self.dsc, self.tableOptions, self.addinOptions = aggOptions, '', dict(tableOptions), []
-    self.__pivot = {'cols': [] if cols is None else cols, 'rows': [] if rows is None else rows, 'vals': [] if valCol is None else valCol,
-                    'aggregatorName': aggOptions['name'], 'rendererName': rendererName}
-    self.__aggFncs = dict(JsPivotFncs.getAggFnc())
-    self.data = recordSet
-    self.data.attach(self)
-    self.css({"overflow": 'auto', 'margin': '0 auto'})
-    self.addGlobalFnc("numberWithCommas(x)", 'return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")')
-    if not self.tableOptions.get("editable", True):
-      self.addinOptions.append("window['options_%s'].showUI = false" % self.htmlId)
-      del self.tableOptions["editable"]
-
-    if self.tableOptions.get('sub-total'):
-      self._report.jsImports.add('pivot-sub-total')
-      self.addinOptions.append("window['options_%s'].dataClass = $.pivotUtilities.SubtotalPivotData" % self.htmlId)
-      self.addinOptions.append("window['options_%s'].renderers = $.pivotUtilities.subtotal_renderers" % self.htmlId)
-      self.addinOptions.append("window['options_%s'].rendererName = 'Table With Subtotal'" % self.htmlId)
-      del tableOptions['sub-total']
-
-    # https://pivottable.js.org/examples/onrefresh.html
-    for k, v in self.tableOptions.items():
-      if k == 'sorters':
-        row = []
-        for i, j in v.items():
-          if isinstance(j, list):
-            row.append("'%s': $.pivotUtilities.sortAs(%s)" % (i, j))
-          else:
-            row.append("'%s': %s" % (i, j))
-        self.addinOptions.append("window['options_%(htmlId)s'].%(opt)s = {%(val)s}" % {'htmlId': self.htmlId, 'opt': k, 'val': ",".join(row)})
-      else:
-        self.addinOptions.append("window['options_%(htmlId)s'].%(opt)s = %(val)s" % {'htmlId': self.htmlId, 'opt': k, 'val': json.dumps(v)})
+    self._jsStyles.update({'cols': cols or [], 'rows': rows or []})
 
   @property
-  def jqId(self):
-    return "$('#%s div')" % self.htmlId
-
-  def addAggregator(self, aggCls):
+  def options(self):
     """
-    Add on the fly new aggregation logic to the pivot table. This will allow the creation of bespoke aggregation functions.
-    Those functions will be structure in the way they can be added to the core framework easily.
-    Aggregators should follow some rules and they should defined some mandatory parameters (name, keyAgg, push, value, format).
+    Description:
+    ------------
+    Pivot Table options
 
-    Example
-      class JsPivotSumAgg(object):
-        name = "New Sum Agg"
-        keyAgg, key2Agg = 0, None
-        push = 'this.keyAgg += parseFloat(record[attributeArray[0]]) * 2'
-        value = 'return this.keyAgg'
-        format = 'return numberWithCommas(x.toFixed(%(digits)s))'
-
-    Related Pages:
-
-			https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
+    :rtype: OptTable.OptionsPivot
     """
-    if not ':dsc:' in aggCls.__doc__:
-      raise Exception("The new Aggregator class %s must have a doc string with a :dsc: field !" % aggCls.name)
+    return self.__options
 
-    if aggCls.name in self.__aggFncs:
-      raise Exception("Duplicated Name - Aggregator %s cannot be replaced !!!" % aggCls.name)
+  @property
+  def aaggregators(self):
+    return PivotAggregator(self, self._jsStyles)
 
-    self.__aggFncs[aggCls.name] = type(aggCls.__name__, (aggCls, JsPivotFncs.JsPivotAggFnc), {})()
-    return self
+  @property
+  def renderers(self):
+    return PivotRenderer(self, self._jsStyles)
 
-  def jsGenerate(self, jsData='data', jsDataKey=None, isPyData=False, jsId=None):
-    return """%(jqId)s.pivotUI(%(jsData)s, window['options_%(htmlId)s'])""" % {'jqId': self.jqId, 'jsData': self.data.setId(jsData).getJs(), 'htmlId': self.htmlId}
+  @property
+  def _js__builder__(self):
+    return '''
+      if (options.showUI){%(jqId)s.pivotUI(data, options)}
+      else {%(jqId)s.pivot(data, options)}
+      ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
-  def onDocumentReady(self):
-    jsAggFncs = "{%s}" % ", ".join(["'%s': function(attributeArray) {return function(data, rowKey, colKey) {return %s}}" % (name, aggFncs.toJs(self.aggOptions)) for name, aggFncs in self.__aggFncs.items()])
-    profile = self.profile if self.profile is not None else getattr(self._report, 'PROFILE', False)
-    preFnc, endFnc = "", ""
-    if profile:
-      preFnc, endFnc = "var t0 = performance.now()", "console.log('|%s|%s|'+ (performance.now()-t0))" % (self.__class__.__name__, self.htmlId)
-    self._report.jsOnLoadFnc.add(""" %(preFnc)s;
-      var tpl = $.pivotUtilities.aggregatorTemplates; window['options_%(htmlId)s'] = %(options)s; %(addinOptions)s;
-      window['options_%(htmlId)s'].aggregators = %(agg)s;
-      window['options_%(htmlId)s'].onRefresh = function (config) {
-          %(jqId)s.find('.pvtVal').each(function( index, items ) {
-            if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
-          %(jqId)s.find('.pvtTotal').each(function( index, items ) {
-            if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
-          %(jqId)s.find('.pvtGrandTotal').each(function( index, items ) {
-            if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
-      } """ % {'jqId': self.jqId, 'options': json.dumps(self.__pivot), 'agg': jsAggFncs, 'htmlId': self.htmlId,
-               'addinOptions': ";".join(self.addinOptions), "preFnc": preFnc})
-    self._report.jsOnLoadFnc.add("%s;%s" % (self.jsGenerate(None), endFnc))
-
-  def onDocumentLoadFnc(self): return True
-
-  def setTableCss(self, cssClss):
-    """
-    Add a style to the datatable. This can be used to change some specific part of the table (for example the header)
-
-    Example
-      class CssTableHeader(object):
-        __style = [{'attr': 'background', 'value': 'grey'}]
-        childrenTag = 'th'
-
-      tb.setTableCss(CssTableHeader)
-
-    :return: The Python Datatable object
-    """
-    import inspect
-
-    if not isinstance(cssClss, list):
-      cssClss = [cssClss]
-    for cssCls in cssClss:
-      if inspect.isclass(cssCls):
-        self._report.cssObj.addPy(cssCls)
-        cssCls = cssCls.__name__
-      clssMod = self._report.style.add(cssCls)
-      if clssMod is not None:
-        self._report.style.cssCls(cssCls)
-    return self
+  # def build(self, data=None, options=None, profile=False):
+  #   jsAggFncs = "{%s}" % ", ".join(["'%s': function(attributeArray) {return function(data, rowKey, colKey) {return %s}}" % (name, aggFncs.toJs(self.aggOptions)) for name, aggFncs in self.__aggFncs.items()])
+  #   preFnc, endFnc = "", ""
+  #   return """ %(preFnc)s;
+  #     var tpl = $.pivotUtilities.aggregatorTemplates; window['options_%(htmlId)s'] = %(options)s; %(addinOptions)s;
+  #     window['options_%(htmlId)s'].aggregators = %(agg)s;
+  #     window['options_%(htmlId)s'].onRefresh = function (config) {
+  #         %(jqId)s.find('.pvtVal').each(function( index, items ) {
+  #           if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
+  #         %(jqId)s.find('.pvtTotal').each(function( index, items ) {
+  #           if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
+  #         %(jqId)s.find('.pvtGrandTotal').each(function( index, items ) {
+  #           if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
+  #     };
+  #     %(jqId)s.pivotUI([], window['options_%(htmlId)s'])
+  #     """ % {'jqId': self.jqId, 'options': json.dumps(self.__pivot), 'agg': jsAggFncs, 'htmlId': self.htmlId, 'addinOptions': ";".join(self.addinOptions), "preFnc": preFnc}
 
   def __str__(self):
-    return '<div %(strAttr)s><div></div></div>%(helper)s' % {'strAttr': self.get_attrs(pyClassNames=self.defined), "helper": self.helper}
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %(strAttr)s></div>%(helper)s' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), "helper": self.helper}
 
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @classmethod
-  def matchMarkDownBlock(cls, data):
-    return True if data[0].strip().startswith("---Pivot") else None
+class PivotUITable(Html.Html):
+  __reqJs, __reqCss = ["pivot"], ["pivot"]
 
-  @staticmethod
-  def matchEndBlock(data):
-    return data.endswith("---")
+  def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
+    super(PivotUITable, self).__init__(report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile)
+    self.__options = OptTable.OptionsPivotUI(self, options)
+    # to add all the columns in the table if nothing defined
+    self._jsStyles.update({'cols': cols or [], 'rows': rows or []})
 
-  @classmethod
-  def convertMarkDownBlock(cls, data, report=None):
-    return []
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Pivot Table options
 
-  def jsMarkDown(self): return ""
+    :rtype: OptTable.OptionsPivotUI
+    """
+    return self.__options
 
+  @property
+  def _js__builder__(self):
+    return '''
+        %(jqId)s.pivotUI(data, options)
+        ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+
+
+class PivotAggregator(object):
+
+  def __init__(self, report, options):
+    self.report, self.options = report, options
+
+  def sumOverSum(self, cola):
+    cola = JsUtils.jsConvertData(cola, None)
+    self.options['aggregator'] = '$.pivotUtilities.aggregators["Sum over Sum"](%s)' % cola
+    self.options['aggregatorName'] = "sumOverSum"
+
+  def count(self):
+    self.options['aggregator'] = '$.pivotUtilities.aggregators["Count"]()'
+    self.options['aggregatorName'] = "count"
+
+  def numberFormat(self, thousandsSep, decimalSep):
+    fmt_data = {"thousandsSep": thousandsSep, "decimalSep": decimalSep}
+    fmt_data = JsUtils.jsConvertData(fmt_data, None)
+    self.options['aggregator'] = '$.pivotUtilities.numberFormat(%s)' % fmt_data
+    self.options['aggregatorName'] = "count"
+
+  def custom(self, name, js_def):
+    """
+
+    https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
+
+    :param name:
+    :param js_def:
+    """
+    pass
+
+
+class PivotRenderer(object):
+
+  def __init__(self, report, options):
+    self.report, self.options = report, options
+
+  def table(self):
+    self.options['renderer'] = '$.pivotUtilities.renderers["table"]'
+
+  def heatmap(self):
+    self.options['renderer'] = '$.pivotUtilities.renderers["Heatmap"]'
+
+  def custom(self, name, js_def):
+    """
+
+    https://github.com/nicolaskruchten/pivottable/wiki/Renderers
+
+    :param name:
+    :param js_def:
+    """
+    pass

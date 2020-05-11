@@ -528,6 +528,24 @@ class JsHtml(JsNodeDom.JsDoms):
       jsFncs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i), append=append).r)
     return JsUtils.jsConvertFncs(jsFncs, toStr=True)
 
+  def options(self, options=None):
+    """
+    Description:
+    ------------
+    Return the builder options used to generate the object on the Javascript side.
+    This is not necessarily the same object than the component options as some can be only used on the Python side.
+
+    This will not change the original option object used during the first obhect creation.
+    
+    Attributes:
+    ----------
+    :param options: Dictionary. Optional. The value to be changed
+    """
+    opt = dict(self._src._jsStyles)
+    if options is not None:
+      opt.update(options)
+    return opt
+
 
 class JsHtmlRich(JsHtml):
 

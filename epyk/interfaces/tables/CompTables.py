@@ -17,6 +17,7 @@ from epyk.interfaces.tables import CompDatatable
 from epyk.interfaces.tables import CompTablesPlotly
 from epyk.interfaces.tables import CompTableD3
 from epyk.interfaces.tables import CompAgGrid
+from epyk.interfaces.tables import CompPivot
 
 
 class Tables(object):
@@ -48,6 +49,18 @@ class Tables(object):
 http://tabulator.info/
     """
     return CompTabulator.Tabulators(self)
+
+  @property
+  def pivots(self):
+    """
+    Description:
+    -----------
+    Interface to the different Pivot Table configurations
+
+    Related Pages:
+https://pivottable.js.org/examples/
+    """
+    return CompPivot.Pivottable(self)
 
   @property
   def d3(self):
@@ -91,8 +104,7 @@ http://tabulator.info/
     """
     return CompDatatable.Datatables(self)
 
-  def pivot(self, recordSet=None, rows=None, cols=None, vals=None, title='', aggOptions=None, rendererName="Table",
-            tableOptions=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, dataSrc=None, helper=None, profile=False):
+  def pivot(self, recordSet=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:
     -----------
@@ -105,20 +117,10 @@ http://tabulator.info/
 			https://pivottable.js.org/examples/
     https://react-pivottable.js.org/
     https://jsfiddle.net/nicolaskruchten/w86bgq9o/
-
-    :return: The python HTML Table
-
-    :rtype: tables.HtmlDataPivot.PivotTable
     """
-    if tableOptions is None:
-      tableOptions = {}
-    if aggOptions is None:
-      aggOptions = {'name': "Sum Agg", 'digits': 2}
-    elif 'name' not in aggOptions:
-      aggOptions['name'] = "Sum Agg"
-    return self.context.register(html_tables.HtmlTablePivot.PivotTable(self.context.rptObj, js.AresJs.Js(self.context.rptObj,
-            recordSet, profile=profile), rows, cols, vals, title, tableOptions, width, height, aggOptions, rendererName,
-                                                     htmlCode, dataSrc, helper, profile))
+    table = html_tables.HtmlTablePivot.PivotTable(self.context.rptObj, recordSet, rows, cols, width, height, htmlCode, helper, options, profile)
+    self.context.register(table)
+    return table
 
   def datatable(self, recordSet=None, header=None, dataFncs=None, aggFnc='sum', cols=None, rows=None, title='',
             width=(100, '%'), height=(None, 'px'), options=None, htmlCode=None,

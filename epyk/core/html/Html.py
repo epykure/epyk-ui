@@ -75,6 +75,7 @@ class Html(object):
   # mangling technique Python will make the change more difficult and easier to see
   reqJs, reqCss = [], []
   htmlCode, dataSrc, _code, inReport, builder_name = None, None, None, True, None
+  js_fncs_opts = ()
 
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None, css_attrs=None):
@@ -1008,7 +1009,7 @@ Attributes:
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
         js_options.append("'%s': {%s}" % (k, ", ".join(row)))
       else:
-        if str(v).strip().startswith("function"):
+        if k in self.js_fncs_opts or str(v).strip().startswith("function"):
           js_options.append("%s: %s" % (k, v))
         else:
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
