@@ -587,7 +587,7 @@ JS_IMPORTS = {
   'nvd3': {
     'website': 'http://nvd3.org/',
     'req': [{'alias': 'd3', 'version': '3.5.17'}],
-    'register': {'alias': 'nvd3', 'module': 'nv.d3.min'},
+    'register': {'alias': 'nv', 'module': 'nv.d3.min'},
     'modules': [
       {'script': 'nv.d3.min.js', 'version': '1.8.6', 'path': 'nvd3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
