@@ -687,6 +687,7 @@ class Col(Html.Html):
     self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
     super(Col, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionGrid(report, options)
+    self.style.clear_all(no_default=True)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
@@ -793,8 +794,6 @@ class Row(Html.Html):
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
     self.attr["class"].add('row')
-    if self.options.noGutters:
-      self.attr["class"].add('no-gutters')
     self.style.justify_content = self.position
 
   @property
@@ -844,6 +843,8 @@ class Row(Html.Html):
 
   def __str__(self):
     cols = []
+    if self.options.noGutters:
+      self.attr["class"].add('no-gutters')
     for i, htmlObj in enumerate(self.val):
       if self.options.autoSize:
         htmlObj.set_size(12//len(self.val))

@@ -368,23 +368,30 @@ class ClassHtml(Properties.CssMixin):
     self.css.attrs = self.htmlObj.attr['css']
     return self
 
-  def clear(self):
+  def clear(self, no_default=False):
     """
     Description:
     ------------
     Remove the predefined class and set the default one for the div components
 
+    Attributes:
+    ----------
+    :param no_default: Boolean. Remove the default class
+
     :return: self to allow the chaining
     """
     self.classList['main'] = OrderedSet()
     if Defaults_css.DEFAULT_STYLE == 'no_border':
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
+      if no_default:
+        self._css_class = ""
+      else:
+        self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
     else:
       self._css_class = Defaults_css.DEFAULT_STYLE
     self.htmlObj.attr['class'] = self.classList['main']
     return self
 
-  def clear_all(self):
+  def clear_all(self, no_default=False):
     """
     Description:
     ------------
@@ -392,10 +399,14 @@ class ClassHtml(Properties.CssMixin):
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog
     Set the default style to no marging and no padding
 
+    Attributes:
+    ----------
+    :param no_default: Boolean. Remove the default class
+
     :return: self to allow the chaining
     """
     self.clear_style()
-    self.clear()
+    self.clear(no_default)
     return self
 
   def builder(self, name, js_frg):

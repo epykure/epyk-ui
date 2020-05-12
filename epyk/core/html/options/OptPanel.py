@@ -487,7 +487,7 @@ class OptionGrid(Options):
 
     https://getbootstrap.com/docs/4.0/layout/grid/
     """
-    return self.get(True)
+    return self.get(False)
 
   @noGutters.setter
   def noGutters(self, bool):
