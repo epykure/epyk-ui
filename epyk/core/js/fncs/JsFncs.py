@@ -1,5 +1,4 @@
 from epyk.core.js.fncs import JsFncsRecords
-from epyk.core.js.fncs import JsFncsAgg
 
 from epyk.core.js.objects import JsChartD3
 from epyk.core.js.objects import JsChartPlotly
@@ -71,73 +70,6 @@ class FncRoAggRec(object):
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
       self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def), 'pmt': fnc_pmts}
-
-  def sum(self, column):
-    """
-    Get the result only on the selected column. This function will return a dictionary with the column name and the sum
-
-    :param column: String. The column name in the records
-    :return: The data object
-    """
-    fnc_name = JsFncsAgg.JsAggColStats.__name__
-    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColStats.content, fnc_pmts=list(JsFncsAgg.JsAggColStats.pmts))
-    column = JsUtils.jsConvertData(column, None)
-    self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, column))
-    return self._data
-
-  def sum_with_kpi(self, column):
-    """
-    Return the aggregated value of a defined column with some KPI (count, average, max, min)
-    Get the result only on the selected column. This function will return a dictionary with the column name and the sum
-
-    :param column: String. The column name in the records
-    :return: The data object
-    """
-    fnc_name = JsFncsAgg.JsAggColStats.__name__
-    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColStats.content, fnc_pmts=list(JsFncsAgg.JsAggColStats.pmts))
-    column = JsUtils.jsConvertData(column, None)
-    self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, column))
-    return self._data
-
-  def max(self, column):
-    """
-
-    :param column: String. The column name in the records
-    :return: The data object
-    """
-    fnc_name = JsFncsAgg.JsAggColMax.__name__
-    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColMax.content, fnc_pmts=list(JsFncsAgg.JsAggColMax.pmts))
-    column = JsUtils.jsConvertData(column, None)
-    self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, column))
-    return self._data
-
-  def min(self, column):
-    """
-
-    :param column: String. The column name in the records
-    :return: The data object
-    """
-    fnc_name = JsFncsAgg.JsAggColMin.__name__
-    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColMin.content, fnc_pmts=list(JsFncsAgg.JsAggColMin.pmts))
-    column = JsUtils.jsConvertData(column, None)
-    self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, column))
-    return self._data
-
-  def eq(self, column, val):
-    """
-    Return the last record in the records set matching the condition
-
-    :param column: String. The column name in the records
-    :param val: Object. The corresponding value
-
-    :return: The data object
-    """
-    fnc_name = JsFncsAgg.JsAggColEq.__name__
-    self.__register_records_fnc(fnc_name, JsFncsAgg.JsAggColEq.content, fnc_pmts=list(JsFncsAgg.JsAggColEq.pmts))
-    column = JsUtils.jsConvertData(column, None)
-    val = JsUtils.jsConvertData(val, None)
-    self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, column, val))
-    return self._data
 
 
 class FncOnRecords(object):

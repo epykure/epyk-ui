@@ -171,7 +171,8 @@ JS_IMPORTS = {
     'req': [{'alias': 'jquery'}, {'alias': 'popper'}],
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
+      {'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      #{'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
     ],
     'website': 'https://getbootstrap.com/'},
 
@@ -877,7 +878,9 @@ CSS_IMPORTS = {
     'website': 'https://getbootstrap.com/',
     'req': [{'alias': 'font-awesome'}],
     'modules': [
-      {'script': 'bootstrap.min.css', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/css/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'}]},
+      {'script': 'bootstrap.min.css', 'version': '4.4.1', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      #{'script': 'bootstrap.min.css', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/css/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'}
+    ]},
 
   # Font awesome style width CDN links
   'font-awesome': {

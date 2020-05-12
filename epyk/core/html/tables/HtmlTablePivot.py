@@ -50,7 +50,7 @@ class PivotTable(Html.Html):
     return self.__options
 
   @property
-  def aaggregators(self):
+  def aggregators(self):
     return PivotAggregator(self, self._jsStyles)
 
   @property
@@ -86,7 +86,7 @@ class PivotTable(Html.Html):
     return '<div %(strAttr)s></div>%(helper)s' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), "helper": self.helper}
 
 
-class PivotUITable(Html.Html):
+class PivotUITable(PivotTable):
   __reqJs, __reqCss = ["pivot"], ["pivot"]
 
   def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
@@ -119,29 +119,138 @@ class PivotAggregator(object):
     self.report, self.options = report, options
 
   def sumOverSum(self, cola):
+    """
+    Description:
+    ------------
+
+    :param cola:
+    """
     cola = JsUtils.jsConvertData(cola, None)
     self.options['aggregator'] = '$.pivotUtilities.aggregators["Sum over Sum"](%s)' % cola
     self.options['aggregatorName'] = "sumOverSum"
 
   def count(self):
+    """
+    Description:
+    ------------
+
+    """
     self.options['aggregator'] = '$.pivotUtilities.aggregators["Count"]()'
     self.options['aggregatorName'] = "count"
 
-  def numberFormat(self, thousandsSep, decimalSep):
-    fmt_data = {"thousandsSep": thousandsSep, "decimalSep": decimalSep}
-    fmt_data = JsUtils.jsConvertData(fmt_data, None)
-    self.options['aggregator'] = '$.pivotUtilities.numberFormat(%s)' % fmt_data
-    self.options['aggregatorName'] = "count"
+  def sum(self, col1):
+    """
+    Description:
+    ------------
+
+    """
+    col1 = JsUtils.jsConvertData(col1, None)
+    self.options['aggregator'] = '$.pivotUtilities.aggregators["Sum"]([%s])' % col1
+    self.options['aggregatorName'] = "sum"
+
+  def max(self, col1):
+    """
+    Description:
+    ------------
+
+    """
+    self.singleFactorFormulas(col1, "= Math.max(this.tmpVal, col1)")
+    self.options['aggregatorName'] = "Max"
+
+  def min(self, col1):
+    """
+    Description:
+    ------------
+
+    """
+    self.singleFactorFormulas(col1, "= Math.min(this.tmpVal, col1)")
+    self.options['aggregatorName'] = "Min"
+
+  def absSum(self, col1):
+    """
+    Description:
+    ------------
+
+    """
+    self.singleFactorFormulas(col1, "+= Math.abs(col1)")
+    self.options['aggregatorName'] = "sum (abs)"
+
+  def singleFactorFormulas(self, col1, formula):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param col1:
+    :param formula:
+    """
+    col1 = JsUtils.jsConvertData(col1, None)
+    self.options['aggregator'] = '''
+      function(keyAgg) { 
+        return function(data, rowKey, colKey) {
+          return {
+            tmpVal: 0, numInputs: 1,
+            push: function(record){
+              const col1 = record[keyAgg]; this.tmpVal %s; return this.tmpVal},
+            value: function() { return this.tmpVal; },
+            format: function(x) { return x; },
+          }}}(%s)''' % (formula, col1)
+    self.options['aggregatorName'] = "diff Abs Agg"
+
+  def twoFactorFormulas(self, col1, col2, formula):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param col1:
+    :param col2:
+    :param formula:
+    """
+    col1 = JsUtils.jsConvertData(col1, None)
+    col2 = JsUtils.jsConvertData(col2, None)
+    self.options['aggregator'] = '''
+      function(keyAgg, key2Agg) { 
+        return function(data, rowKey, colKey) {
+          return {
+            tmpVal: 0, numInputs: 2,
+            push: function(record){
+              const col1 = record[keyAgg]; const col2 = record[key2Agg]; this.tmpVal %s; return this.tmpVal},
+            value: function() { return this.tmpVal; },
+            format: function(x) { return x; },
+          };
+        };
+      }(%s, %s)''' % (formula, col1, col2)
+    self.options['aggregatorName'] = "diff Abs Agg"
+
+  def diffAbsolute(self, col1, col2, formula="+= col1 - col2"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param col1:
+    :param col2:
+    :param formula:
+    """
+    self.twoFactorFormulas(col1, col2, formula)
+    self.options['aggregatorName'] = "diff Abs Agg"
 
   def custom(self, name, js_def):
     """
 
     https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
 
+    Attributes:
+    ----------
     :param name:
     :param js_def:
     """
-    pass
+    self.options['aggregator'] = js_def
+    self.options['aggregatorName'] = name
 
 
 class PivotRenderer(object):
@@ -151,6 +260,9 @@ class PivotRenderer(object):
 
   def table(self):
     self.options['renderer'] = '$.pivotUtilities.renderers["table"]'
+
+  def bar(self):
+    self.options['renderer'] = '$.pivotUtilities.renderers["Table Barchart"]'
 
   def heatmap(self):
     self.options['renderer'] = '$.pivotUtilities.renderers["Heatmap"]'

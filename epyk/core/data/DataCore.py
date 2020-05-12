@@ -13,6 +13,12 @@ class DataAggregators(object):
     self.varName = varName
     self._report = report
 
+  def max(self):
+    raise Exception("To be implemented")
+
+  def min(self):
+    raise Exception("To be implemented")
+
   def sum(self, columns, attrs=None):
     """
     Description:

@@ -463,3 +463,32 @@ class OptionsStepper(Options):
     if not 'title_style' in self._report._jsStyles:
       self._report._jsStyles['text_style'] = {}
     self._report._jsStyles['text_style'].update(css)
+
+
+class OptionGrid(Options):
+
+  @property
+  def autoSize(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @autoSize.setter
+  def autoSize(self, bool):
+    self.set(bool)
+
+  @property
+  def noGutters(self):
+    """
+    Description:
+    ------------
+
+    https://getbootstrap.com/docs/4.0/layout/grid/
+    """
+    return self.get(True)
+
+  @noGutters.setter
+  def noGutters(self, bool):
+    self.set(bool)

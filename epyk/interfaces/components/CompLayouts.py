@@ -71,7 +71,7 @@ class Layouts(object):
       hr_html += hr_item
     return hr_html
 
-  def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
+  def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -104,13 +104,14 @@ class Layouts(object):
     :param height:
     :param align:
     :param helper:
+    :param options:
     :param profile:
     """
-    html_col = html.HtmlContainer.Col(self.context.rptObj, htmlObjs, position, width, height, align, helper, profile)
+    html_col = html.HtmlContainer.Col(self.context.rptObj, htmlObjs, position, width, height, align, helper, options or {}, profile)
     self.context.register(html_col)
     return html_col
 
-  def row(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
+  def row(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -146,7 +147,10 @@ class Layouts(object):
     :param helper:
     :param profile:
     """
-    html_col = html.HtmlContainer.Row(self.context.rptObj, htmlObjs, position, width, height, align, helper, profile)
+    dft_option = {"autoSize": True}
+    if options is not None:
+      dft_option.update(options)
+    html_col = html.HtmlContainer.Row(self.context.rptObj, htmlObjs, position, width, height, align, helper, dft_option, profile)
     self.context.register(html_col)
     return html_col
 
@@ -177,7 +181,7 @@ class Layouts(object):
     self.context.register(html_row)
     return html_row
 
-  def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, helper=None, profile=None):
+  def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -205,7 +209,7 @@ class Layouts(object):
     :param helper:
     :param profile:
     """
-    html_grid = html.HtmlContainer.Grid(self.context.rptObj, rows, width, height, align, helper, profile)
+    html_grid = html.HtmlContainer.Grid(self.context.rptObj, rows, width, height, align, helper, options, profile)
     self.context.register(html_grid)
     return html_grid
 

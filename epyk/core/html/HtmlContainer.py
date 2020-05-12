@@ -683,9 +683,10 @@ class Table(Html.Html):
 class Col(Html.Html):
   name, category, callFnc = 'Column', 'Layouts', 'col'
 
-  def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
+  def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
     self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
     super(Col, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptPanel.OptionGrid(report, options)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
@@ -695,6 +696,16 @@ class Col(Html.Html):
       self.css({'display': 'inline-block'})
     self.attr["class"].add('col')
     self.style.justify_content = self.position
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptPanel.OptionGrid
+    """
+    return self.__options
 
   def __add__(self, htmlObj):
     """
@@ -774,15 +785,27 @@ class Row(Html.Html):
   name, category, callFnc = 'Column', 'Layouts', 'col'
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
 
-  def __init__(self, report, htmlObjs, position, width, height, align, helper, profile):
+  def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
     self.position = position
     super(Row, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptPanel.OptionGrid(report, options)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
     self.attr["class"].add('row')
-    self.attr["class"].add('no-gutters')
+    if self.options.noGutters:
+      self.attr["class"].add('no-gutters')
     self.style.justify_content = self.position
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptPanel.OptionGrid
+    """
+    return self.__options
 
   @property
   def dom(self):
@@ -822,6 +845,8 @@ class Row(Html.Html):
   def __str__(self):
     cols = []
     for i, htmlObj in enumerate(self.val):
+      if self.options.autoSize:
+        htmlObj.set_size(12//len(self.val))
       cols.append(htmlObj.html())
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(cols))
 
@@ -830,8 +855,9 @@ class Grid(Html.Html):
   name, category, callFnc = 'Grid', 'Layouts', 'grid'
   __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
 
-  def __init__(self, report, rows, width, height, align, helper, profile):
+  def __init__(self, report, rows, width, height, align, helper, options, profile):
     super(Grid, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptPanel.OptionGrid(report, options)
     self.css({'overflow-x': 'hidden', 'padding': 0})
     self.attr["class"].add("container-fluid")
     if align == 'center':
@@ -839,6 +865,16 @@ class Grid(Html.Html):
     if rows is not None:
       for row in rows:
         self.__add__(row)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptPanel.OptionGrid
+    """
+    return self.__options
 
   def __add__(self, row_data):
     """ Add items to a container """
