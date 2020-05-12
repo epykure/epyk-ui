@@ -428,13 +428,31 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'subtotal.js', 'version': '1.10.0', 'path': 'subtotal@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
 
-  # Datatable pivot C3 renderer
+  # Pivot Table pivot C3 renderer
   'pivot-c3': {
-    'req': [{'alias': 'pivot'}],
-    'register': {'alias': 'pivotC', 'module': 'c3_renderers.min'},
+    'req': [{'alias': 'c3'}],
+    'register': {'alias': 'pivot_c3', 'module': 'c3_renderers.min'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
-      {'script': 'c3_renderers.min.js', 'version': '2.21.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'c3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # Pivot Table pivot plotly renderer
+  'pivot-plotly': {
+    'req': [{'alias': 'plotly.js'}],
+    'register': {'alias': 'pivot_plotly', 'module': 'plotly_renderers.min'},
+    'website': 'https://github.com/nicolaskruchten/pivottable',
+    'modules': [
+      {'script': 'plotly_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # Pivot Table pivot D3 renderer
+  'pivot-d3': {
+      'req': [
+        {'alias': 'd3', 'version': '3.5.5'},
+      ],
+      'register': {'alias': 'pivot_d3', 'module': 'd3_renderers.min'},
+      'website': 'https://github.com/nicolaskruchten/pivottable',
+      'modules': [
+        {'script': 'd3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Jquery package width CDN links
   'jquery': {

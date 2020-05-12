@@ -358,3 +358,35 @@ class OptionsPivotUI(OptionsPivot):
   @rendererOptions.setter
   def rendererOptions(self, bool):
     self._config(bool)
+
+  @property
+  def renderers(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://github.com/nicolaskruchten/pivottable/wiki/Parameters
+    """
+    return self._config_get("$.pivotUtilities.renderers")
+
+  @renderers.setter
+  def renderers(self, value):
+    self._config(value)
+
+  @property
+  def rendererName(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://github.com/nicolaskruchten/pivottable/wiki/Parameters
+    """
+    return self._config_get()
+
+  @rendererName.setter
+  def rendererName(self, value):
+    self._config(value)

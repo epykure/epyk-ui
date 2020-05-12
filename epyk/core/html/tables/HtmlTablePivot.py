@@ -6,29 +6,19 @@ Related Pages:
 		https://pivottable.js.org/examples/
 """
 
-import json
-
 from epyk.core.html import Html
 from epyk.core.js import JsUtils
-from epyk.core.js.objects import JsPivotFncs
 from epyk.core.html.options import OptTable
 from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable
 
-extensions = {
-  'sub-total': {'jsImports': ['pivot-sub-total']},
-  'c3': {'jsImports': ['pivot-c3']},
-}
-
 
 class PivotTable(Html.Html):
   __reqJs, __reqCss = ["pivot"], ["pivot"]
   name = 'Pivot Table'
-  js_fncs_opts = ('renderer', 'aggregator', 'onRefresh', 'filter', 'dataClass', 'onRefresh')
-
-  # _grpCls = CssGrpClsTable.CssStylesPivot
+  js_fncs_opts = ('renderer', 'aggregator', 'onRefresh', 'filter', 'dataClass', 'onRefresh', 'renderers')
 
   def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
     super(PivotTable, self).__init__(report, recordSet, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
@@ -58,11 +48,11 @@ class PivotTable(Html.Html):
 
   @property
   def aggregators(self):
-    return PivotAggregator(self, self._jsStyles)
+    return PivotAggregator(self._report, self._jsStyles)
 
   @property
   def renderers(self):
-    return PivotRenderer(self, self._jsStyles)
+    return PivotRenderer(self._report, self._jsStyles)
 
   @property
   def _js__builder__(self):
@@ -87,6 +77,16 @@ class PivotTable(Html.Html):
   #     };
   #     %(jqId)s.pivotUI([], window['options_%(htmlId)s'])
   #     """ % {'jqId': self.jqId, 'options': json.dumps(self.__pivot), 'agg': jsAggFncs, 'htmlId': self.htmlId, 'addinOptions': ";".join(self.addinOptions), "preFnc": preFnc}
+
+  def sub_total(self):
+    """
+
+    :return:
+    """
+    self._report.jsImports.add('pivot-sub-total')
+    self.options.dataClass = "$.pivotUtilities.SubtotalPivotData"
+    self.options.renderers = "$.pivotUtilities.subtotal_renderers"
+    self.options.rendererName = 'Table With Subtotal'
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -260,16 +260,112 @@ class PivotAggregator(object):
     self.options['aggregatorName'] = name
 
 
+class PivotRendererC3(object):
+  def __init__(self, report, options):
+    self._report, self.options = report, options
+
+  def bar(self):
+    """
+    https://pivottable.js.org/examples/c3.html
+
+    """
+    self._report.jsImports.add('pivot-c3')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options['rendererName'] = "Bar Chart"
+
+  def hbar(self):
+    """
+    https://pivottable.js.org/examples/c3.html
+    """
+    self._report.jsImports.add('pivot-c3')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options['rendererName'] = "Horizontal Stacked Bar Chart"
+
+
+class PivotRendererPlotly(object):
+
+  def __init__(self, report, options):
+    self._report, self.options = report, options
+
+  def pies(self):
+    """
+    https://pivottable.js.org/examples/plotly.html
+
+    """
+    self._report.jsImports.add('pivot-plotly')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options['rendererName'] = "Multiple Pie Chart"
+
+  def area(self):
+    """
+    https://pivottable.js.org/examples/c3.html
+
+    """
+    self._report.jsImports.add('pivot-plotly')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options['rendererName'] = "Area Chart"
+
+  def scatter(self):
+    """
+    https://pivottable.js.org/examples/plotly.html
+
+    """
+    self._report.jsImports.add('pivot-plotly')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options['rendererName'] = "Scatter Chart"
+
+  def line(self):
+    """
+    https://pivottable.js.org/examples/plotly.html
+
+    """
+    self._report.jsImports.add('pivot-plotly')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options['rendererName'] = "Line Chart"
+
+  def bar(self):
+    """
+    https://pivottable.js.org/examples/plotly.html
+
+    """
+    self._report.jsImports.add('pivot-plotly')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options['rendererName'] = "Bar Chart"
+
+  def hbar(self):
+    """
+    https://pivottable.js.org/examples/plotly.html
+
+    """
+    self._report.jsImports.add('pivot-plotly')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
+    self.options['rendererName'] = "Horizontal Bar Chart"
+
+
 class PivotRenderer(object):
 
   def __init__(self, report, options):
-    self.report, self.options = report, options
+    self._report, self.options = report, options
 
   def table(self):
     self.options['renderer'] = '$.pivotUtilities.renderers["table"]'
 
-  def bar(self):
-    self.options['renderer'] = '$.pivotUtilities.renderers["Table Barchart"]'
+  @property
+  def plotly(self):
+    return PivotRendererPlotly(self._report, self.options)
+
+  @property
+  def c3(self):
+    return PivotRendererC3(self._report, self.options)
+
+  def treemap(self):
+    """
+    https://pivottable.js.org/examples/plotly.html
+
+    """
+    self._report.jsImports.add('pivot-d3')
+    self.options['renderers'] = "$.pivotUtilities.d3_renderers"
+    self.options['rendererName'] = "Treemap"
 
   def heatmap(self):
     self.options['renderer'] = '$.pivotUtilities.renderers["Heatmap"]'
