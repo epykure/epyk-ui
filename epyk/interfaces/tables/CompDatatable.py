@@ -33,6 +33,7 @@ class Datatables(object):
       col_def.title = c
       col_def.className.center()
     table.style.themes.compact()
+    table.config.scrollX = True
     self.parent.context.register(table)
     return table
 
