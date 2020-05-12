@@ -350,3 +350,88 @@ class Tabulator(GrpCls.ClassHtml):
     if self._css_tabulator_headers is None:
       self._css_tabulator_headers = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).tabulator_headers()
     return self._css_tabulator_headers
+
+
+class Pivot(GrpCls.ClassHtml):
+
+  def __init__(self, htmlObj):
+    super(Pivot, self).__init__(htmlObj)
+    self._css_pt_head, self._css_pt_cell, self._css_pt_axis = 3 * [None]
+    self._css_pt_box, self._css_pt_pop, self._css_pt_val, self._css_pt_label = 4 * [None]
+    self.classList['main'].add(self.cls_pt_head)
+    self.classList['other'].add(self.cls_pt_cell)
+    self.classList['other'].add(self.cls_pt_axis)
+    self.classList['other'].add(self.cls_pt_filter_box)
+    self.classList['other'].add(self.cls_pt_popup)
+    self.classList['other'].add(self.cls_pt_val)
+    self.classList['other'].add(self.cls_pt_label)
+
+  @property
+  def cls_pt_head(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_head is None:
+      self._css_pt_head = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['main']).pivot_head()
+    return self._css_pt_head
+
+  @property
+  def cls_pt_cell(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_cell is None:
+      self._css_pt_cell = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).pivot_cell()
+    return self._css_pt_cell
+
+  @property
+  def cls_pt_axis(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_axis is None:
+      self._css_pt_axis = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).pivot_axis()
+    return self._css_pt_axis
+
+  @property
+  def cls_pt_filter_box(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_box is None:
+      self._css_pt_box = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).pivot_filter_box()
+    return self._css_pt_box
+
+  @property
+  def cls_pt_popup(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_pop is None:
+      self._css_pt_pop = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).pivot_filter_popup()
+    return self._css_pt_pop
+
+  @property
+  def cls_pt_val(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_val is None:
+      self._css_pt_val = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).pivot_filter_val()
+    return self._css_pt_val
+
+  @property
+  def cls_pt_label(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_pt_label is None:
+      self._css_pt_label = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).pivot_filter_label()
+    return self._css_pt_label

@@ -15,7 +15,7 @@ from epyk.core.html.options import OptTable
 from epyk.core.js.packages import JsQuery
 
 # The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsTable
+from epyk.core.css.styles import GrpClsTable
 
 extensions = {
   'sub-total': {'jsImports': ['pivot-sub-total']},
@@ -37,6 +37,13 @@ class PivotTable(Html.Html):
     self.__options = OptTable.OptionsPivot(self, options)
     # to add all the columns in the table if nothing defined
     self._jsStyles.update({'cols': cols or [], 'rows': rows or []})
+    self.style.css.display = 'block'
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsTable.Pivot(self)
+    return self._styleObj
 
   @property
   def options(self):

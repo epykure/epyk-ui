@@ -94,6 +94,10 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesPivot.CssPivotFilterVals)
 
+  def pivot_filter_label(self):
+    """  """
+    return self._set_class(CssStylesPivot.CssPivotLabel)
+
   def pivot_filter_popup(self):
     """  """
     return self._set_class(CssStylesPivot.CssPivotFilterBoxPopUp)

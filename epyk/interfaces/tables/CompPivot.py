@@ -27,7 +27,7 @@ class Pivottable(object):
     self.parent.context.register(table)
     return table
 
-  def pivotUI(self, recordSet=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), htmlCode=None,
+  def ui(self, recordSet=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), htmlCode=None,
             helper=None, options=None, profile=False):
     """
     Description:
