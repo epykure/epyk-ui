@@ -19,6 +19,8 @@ PLOTLY_WEBGL_POLAR = 'https://raw.githubusercontent.com/plotly/datasets/master/h
 
 BANKING_DATA = 'https://raw.githubusercontent.com/juliencohensolal/BankMarketing/master/rawData/bank-additional-full.csv'
 
+PIVOTTABLE_DATA = "https://pivottable.js.org/examples/mps.json"
+
 
 #####################################################################################################################
 # AG GRID
