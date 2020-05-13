@@ -13,11 +13,49 @@ class DataAggregators(object):
     self.varName = varName
     self._report = report
 
-  def max(self):
-    raise Exception("To be implemented")
+  def max(self, column):
+    """
+    Description:
+    -----------
+    Returns the maximum value in list. If an iteratee function is provided, it will be used on each value to generate the criterion by which the value is ranked.
+    -Infinity is returned if list is empty, so an isEmpty guard may be required. Non-numerical values in list will be ignored.
 
-  def min(self):
-    raise Exception("To be implemented")
+    https://underscorejs.org/#max
+
+    Attributes:
+    ----------
+    :param column:
+    """
+    self._report.jsImports.add('underscore')
+    return JsObjects.JsArray.JsArray("[_.max(%s, function(rec){console.log( rec['%s']); return rec['%s']; })]" % (self.varName, column, column))
+
+  def min(self, column):
+    """
+    Description:
+    -----------
+    Returns the minimum value in list. If an iteratee function is provided, it will be used on each value to generate the criterion by which the value is ranked.
+    Infinity is returned if list is empty, so an isEmpty guard may be required. Non-numerical values in list will be ignored.
+
+    https://underscorejs.org/#min
+
+    Attributes:
+    ----------
+    :param column:
+    """
+    self._report.jsImports.add('underscore')
+    return JsObjects.JsArray.JsArray("[_.min(%s, function(rec){ return rec['%s']; })]" % (self.varName, column))
+
+  def sortBy(self, column):
+    """
+    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iteratee.
+    iteratee may also be the string name of the property to sort by (eg. length).
+
+    Attributes:
+    ----------
+    :param column:
+    """
+    self._report.jsImports.add('underscore')
+    return JsObjects.JsArray.JsArray("[_.sortBy(%s, function(rec){ return rec['%s']; })]" % (self.varName, column))
 
   def sum(self, columns, attrs=None):
     """
@@ -265,6 +303,19 @@ class DataFilters(object):
     """
     return DataAggregators(self.toStr(), self._report)
 
+  def sortBy(self, column):
+    """
+    Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iteratee.
+    iteratee may also be the string name of the property to sort by (eg. length).
+
+    Attributes:
+    ----------
+    :param column:
+    """
+    self._report.jsImports.add('underscore')
+    self.__filters.add("[_.sortBy(%%s, function(rec){ return rec['%s']; })]" % column)
+    return self
+
   def toStr(self):
     """
     Description:
@@ -281,7 +332,7 @@ class DataGlobal(object):
 
   def __init__(self, varName, data, report=None):
     if data is not None:
-      report._props["js"]["datasets"][varName] = json.dumps(data)
+      report._props["js"]["datasets"][varName] = "var %s = %s" % (varName, json.dumps(data))
     self._data, self.__filters_groups, self._report, self.varName = data, {}, report, varName
     self.__filter_saved = {}
 

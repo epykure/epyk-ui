@@ -157,9 +157,9 @@ JS_IMPORTS = {
 
   # data transformation
   'underscore': {
-    'register': {'alias': 'underscore', 'module': 'underscore.min'},
+    'register': {'alias': 'underscore', 'module': 'underscore-min'},
     'modules': [
-      {'script': 'underscore.min.js', 'version': '1.9.1', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'underscore-min.js', 'version': '1.9.1', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://openexchangerates.github.io/accounting.js/'},
 
