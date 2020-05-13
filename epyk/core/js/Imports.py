@@ -212,8 +212,8 @@ JS_IMPORTS = {
     'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator'},
     'modules': [
       # core only needed for Jupyter for some reasons
-      {'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
-      {'script': 'tabulator.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}
+      #{'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
+      {'script': 'tabulator.min.js', 'version': '4.6.3', 'path': 'tabulator-tables@%(version)s/dist/js/', 'cdnjs': "https://unpkg.com"}
     ],
     'website': 'http://tabulator.info/'
   },
@@ -866,7 +866,8 @@ CSS_IMPORTS = {
   'tabulator': {
     'website': 'http://tabulator.info',
     'modules': [
-      {'script': 'tabulator.min.css', 'version': '4.4.3', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'tabulator.min.css', 'version': '4.6.3', 'path': 'tabulator-tables@%(version)s/dist/css/', 'cdnjs': "https://unpkg.com"}
+      #{'script': 'tabulator.min.css', 'version': '4.4.3', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
