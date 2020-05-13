@@ -264,7 +264,7 @@ JS_IMPORTS = {
       'req': [
         {'alias': 'tabulator'},
         {'alias': 'accounting'},
-        {'alias': 'd3-packages'},
+        #{'alias': 'd3-packages'},
       ],
       'modules': [
         # core only needed for Jupyter for some reasons
@@ -566,31 +566,82 @@ JS_IMPORTS = {
   },
 
   # D3 Packages
-  'd3-packages': {
-      'website': 'https://github.com/d3',
-      'req': [{'alias': 'd3'}],
+  # 'd3-packages': {
+  #     'website': 'https://github.com/d3',
+  #     'req': [{'alias': 'd3'}],
+  #     'modules': [
+  #         {'reqAlias': 'd3_time_format', 'script': 'd3-time-format.min.js', 'version': '2.1.1', 'path': 'd3-time-format/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_shape', 'script': 'd3-shape.min.js', 'version': '1.2.0', 'path': 'd3-shape/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_zoom', 'script': 'd3-zoom.min.js', 'version': '1.7.1', 'path': 'd3-zoom/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_dsv', 'script': 'd3-dsv.min.js', 'version': '1.0.8', 'path': 'd3-dsv/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_ease', 'script': 'd3-ease.min.js', 'version': '1.0.3', 'path': 'd3-ease/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_scale', 'script': 'd3-scale.min.js', 'version': '1.0.7', 'path': 'd3-scale/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_brush', 'script': 'd3-brush.min.js', 'version': '1.0.4', 'path': 'd3-brush/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_selection', 'script': 'd3-selection.min.js', 'version': '1.2.0', 'path': 'd3-selection/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_transition', 'script': 'd3-transition.min.js', 'version': '1.1.1', 'path': 'd3-transition/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_array', 'script': 'd3-array.min.js', 'version': '1.2.2', 'path': 'd3-array/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_collection', 'script': 'd3-collection.min.js', 'version': '1.0.5', 'path': 'd3-collection/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_drag', 'script': 'd3-drag.min.js', 'version': '1.2.1', 'path': 'd3-drag/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_interpolate', 'script': 'd3-interpolate.min.js', 'version': '1.3.0', 'path': 'd3-interpolate/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #         {'reqAlias': 'd3_axis', 'script': 'd3-axis.min.js', 'version': '1.0.10', 'path': 'd3-axis/%(version)s/', 'cdnjs': CDNJS_REPO},
+  #       ]},
+
+  # D3 Interpolate
+  'd3-interpolate': {
+      'website': 'https://github.com/d3/d3-interpolate',
+      'register': {'alias': 'd3_interpolate', 'module': 'd3-interpolate.min'},
+      'req': [{'alias': 'd3-color'}],
       'modules': [
-          {'reqAlias': 'd3_time_format', 'script': 'd3-time-format.min.js', 'version': '2.1.1', 'path': 'd3-time-format/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_shape', 'script': 'd3-shape.min.js', 'version': '1.2.0', 'path': 'd3-shape/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_zoom', 'script': 'd3-zoom.min.js', 'version': '1.7.1', 'path': 'd3-zoom/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_dsv', 'script': 'd3-dsv.min.js', 'version': '1.0.8', 'path': 'd3-dsv/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_ease', 'script': 'd3-ease.min.js', 'version': '1.0.3', 'path': 'd3-ease/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_scale', 'script': 'd3-scale.min.js', 'version': '1.0.7', 'path': 'd3-scale/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_brush', 'script': 'd3-brush.min.js', 'version': '1.0.4', 'path': 'd3-brush/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_selection', 'script': 'd3-selection.min.js', 'version': '1.2.0', 'path': 'd3-selection/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_transition', 'script': 'd3-transition.min.js', 'version': '1.1.1', 'path': 'd3-transition/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_array', 'script': 'd3-array.min.js', 'version': '1.2.2', 'path': 'd3-array/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_collection', 'script': 'd3-collection.min.js', 'version': '1.0.5', 'path': 'd3-collection/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_drag', 'script': 'd3-drag.min.js', 'version': '1.2.1', 'path': 'd3-drag/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_interpolate', 'script': 'd3-interpolate.min.js', 'version': '1.3.0', 'path': 'd3-interpolate/%(version)s/', 'cdnjs': CDNJS_REPO},
-          {'reqAlias': 'd3_axis', 'script': 'd3-axis.min.js', 'version': '1.0.10', 'path': 'd3-axis/%(version)s/', 'cdnjs': CDNJS_REPO},
-        ]},
+        {'script': 'd3-interpolate.js', 'version': '1.3.0', 'path': 'd3-interpolate/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # D3 Time format
+  'd3-time-format': {
+      'website': 'https://github.com/d3/d3-time-format',
+      'register': {'alias': 'd3_time_format', 'module': 'd3-time-format.min'},
+      'req': [{'alias': 'd3-time'}],
+      'modules': [
+        {'script': 'd3-time-format.min.js', 'version': '2.1.1', 'path': 'd3-time-format/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # D3 Time
+  'd3-time': {
+      'website': 'https://github.com/d3/d3-time',
+      'register': {'alias': 'd3_time', 'module': 'd3-time.min'},
+      'modules': [
+        {'script': 'd3-time.min.js', 'version': '1.0.8', 'path': 'd3-time/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # D3 Format
+  'd3-array': {
+      'website': 'https://github.com/d3/d3-format',
+      'register': {'alias': 'd3_array', 'module': 'd3-array.min'},
+      'modules': [
+        {'script': 'd3-array.min.js', 'version': '1.2.2', 'path': 'd3-array/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # D3 Format
+  'd3-format': {
+      'website': 'https://github.com/d3/d3-format',
+      'register': {'alias': 'd3_format', 'module': 'd3-format.min'},
+      'modules': [
+        {'script': 'd3-format.min.js', 'version': '1.3.0', 'path': 'd3-format/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # D3 collection
+  'd3-collection': {
+      'website': 'https://github.com/d3/d3-collection',
+      'register': {'alias': 'd3_collection', 'module': 'd3-collection.min'},
+      'modules': [
+        {'script': 'd3-collection.min.js', 'version': '1.0.5', 'path': 'd3-collection/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # D3 Scale
+  'd3-scale': {
+      'website': 'https://github.com/d3/d3-scale',
+      'register': {'alias': 'd3_scale', 'module': 'd3-scale.min'},
+      'req': [{'alias': 'd3-array'}, {'alias': 'd3-format'}, {'alias': 'd3-interpolate'}, {'alias': 'd3-time-format'}],
+      'modules': [
+        {'script': 'd3-scale.min.js', 'version': '1.0.7', 'path': 'd3-scale/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # D3 color module
   'd3-color': {
       'website': 'https://github.com/d3/d3-color',
       'register': {'alias': 'd3_color', 'module': 'd3-color.min'},
-      'req': [{'alias': 'd3'}],
       'modules': [
         {'script': 'd3-color.min.js', 'version': '1.2.1', 'path': 'd3-color/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -638,10 +689,10 @@ JS_IMPORTS = {
   # billboard modules width CDN links
   'billboard': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
-    'register': {'alias': 'bb', 'module': 'billboard.min'},
+    'register': {'alias': 'billboard', 'module': 'billboard.pkgd.min', 'npm': 'bb', 'init_fnc': 'var bb = billboard.bb'},
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'reqAlias': 'bb', 'script': 'billboard.min.js', 'version': '1.12.8', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'billboard.min.js', 'version': '1.12.8', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs modules width CDN links
   'Chart.js': {
