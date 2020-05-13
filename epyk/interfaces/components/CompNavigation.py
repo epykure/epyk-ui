@@ -425,6 +425,18 @@ class Navigation(object):
         anchor.click([d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
     return d
 
+  def pilcrow(self):
+    """
+    Description:
+    ------------
+    Add an anchor on the page and move to this when it is clicked
+    """
+    p = self.context.rptObj.ui.div("&#182")
+    p.style.css.font_size = Defaults_css.font(5)
+    p.style.css.cursor = "pointer"
+    p.click([self.context.rptObj.js.window.scrollTo(y=self.context.rptObj.js.objects.this.offsetTop)])
+    return p
+
 
 class Banners(object):
 

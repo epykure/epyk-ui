@@ -1444,6 +1444,19 @@ Attributes:
     """
     return JsString.JsString("%s.tagName" % self.varId, isPyData=False)
 
+  @property
+  def offsetTop(self):
+    """
+    Description:
+    ------------
+    The HTMLElement.offsetTop read-only property returns the distance of the current element relative to the top of the offsetParent node.
+
+    Related Pages:
+
+			https://developer.mozilla.org/fr/docs/Web/API/HTMLElement/offsetTop
+    """
+    return JsString.JsString("%s.offsetTop" % self.varId, isPyData=False)
+
   def contentEditable(self, bool):
     """
     Description:
