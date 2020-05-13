@@ -553,7 +553,7 @@ JS_IMPORTS = {
     'register': {'alias': 'd3', 'module': 'd3.min', 'npm': 'd3'},
     'req': [{'alias': 'jquery'}],
     'modules': [
-      {'reqAlias': 'd3', 'reqMod': 'ignore', 'script': 'd3.min.js', 'version': '5.9.7', 'path': 'd3/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'reqAlias': 'd3', 'reqMod': 'ignore', 'script': 'd3.min.js', 'version': '5.16.0', 'path': 'd3/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # D3 Tips Package
@@ -641,7 +641,7 @@ JS_IMPORTS = {
     'register': {'alias': 'bb', 'module': 'billboard.min'},
     'req': [{'alias': 'd3'}],
     'modules': [
-      {'reqAlias': 'bb', 'script': 'billboard.min.js', 'version': '1.12.7', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'reqAlias': 'bb', 'script': 'billboard.min.js', 'version': '1.12.8', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # ChartJs modules width CDN links
   'Chart.js': {
@@ -929,7 +929,7 @@ CSS_IMPORTS = {
   # billboard modules width CDN links
   'billboard': {
     'modules': [
-      {'script': 'billboard.min.css', 'version': '1.12.7', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
+      {'script': 'billboard.min.css', 'version': '1.12.8', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/'},
 
   #'epyk': {'req': ['bootstrap'], 'modules': ['bdi.css'], 'website': 'internal lib', 'version': '0'},
