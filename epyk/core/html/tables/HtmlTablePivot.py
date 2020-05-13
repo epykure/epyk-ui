@@ -266,20 +266,88 @@ class PivotRendererC3(object):
 
   def bar(self):
     """
-    https://pivottable.js.org/examples/c3.html
+    Description:
+    ------------
+    Horizontal bar chart from C3
+
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
 
     """
     self._report.jsImports.add('pivot-c3')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
     self.options['rendererName'] = "Bar Chart"
 
+  def scatter(self):
+    """
+    Description:
+    ------------
+    Scatter chart from C3
+
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
+    """
+    self._report.jsImports.add('pivot-c3')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options['rendererName'] = "Area Chart"
+
+  def area(self):
+    """
+    Description:
+    ------------
+    Area chart from C3
+
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
+    """
+    self._report.jsImports.add('pivot-c3')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options['rendererName'] = "Area Chart"
+
+  def line(self):
+    """
+    Description:
+    ------------
+    Line chart from C3
+
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
+    """
+    self._report.jsImports.add('pivot-c3')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options['rendererName'] = "Line Chart"
+
   def hbar(self):
     """
-    https://pivottable.js.org/examples/c3.html
+    Description:
+    ------------
+    Stacked bar chart from C3
+
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
     self.options['rendererName'] = "Horizontal Stacked Bar Chart"
+
+  def stacked(self):
+    """
+    Description:
+    ------------
+    Stacked bar chart from C3
+
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
+    """
+    self._report.jsImports.add('pivot-c3')
+    self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
+    self.options['rendererName'] = "Stacked Bar Chart"
 
 
 class PivotRendererPlotly(object):
@@ -289,8 +357,13 @@ class PivotRendererPlotly(object):
 
   def pies(self):
     """
-    https://pivottable.js.org/examples/plotly.html
+    Description:
+    ------------
+    Multiple Pies charts from Plotly
 
+    Related Pages:
+
+			https://pivottable.js.org/examples/plotly.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -298,8 +371,13 @@ class PivotRendererPlotly(object):
 
   def area(self):
     """
-    https://pivottable.js.org/examples/c3.html
+    Description:
+    ------------
+    Area chart from Plotly
 
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -307,8 +385,13 @@ class PivotRendererPlotly(object):
 
   def scatter(self):
     """
-    https://pivottable.js.org/examples/plotly.html
+    Description:
+    ------------
+    Scatter chart from Plotly
 
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -316,8 +399,13 @@ class PivotRendererPlotly(object):
 
   def line(self):
     """
-    https://pivottable.js.org/examples/plotly.html
+    Description:
+    ------------
+    Line chart from Plotly
 
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -325,8 +413,13 @@ class PivotRendererPlotly(object):
 
   def bar(self):
     """
-    https://pivottable.js.org/examples/plotly.html
+    Description:
+    ------------
+    Bar chart from Plotly
 
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -334,8 +427,13 @@ class PivotRendererPlotly(object):
 
   def hbar(self):
     """
-    https://pivottable.js.org/examples/plotly.html
+    Description:
+    ------------
+    Horizontal Bar chart from Plotly
 
+    Related Pages:
+
+			https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -352,10 +450,16 @@ class PivotRenderer(object):
 
   @property
   def plotly(self):
+    """
+    Property to use the Plotly special renderers
+    """
     return PivotRendererPlotly(self._report, self.options)
 
   @property
   def c3(self):
+    """
+    Property to use the C3 special renderers
+    """
     return PivotRendererC3(self._report, self.options)
 
   def treemap(self):
@@ -369,6 +473,9 @@ class PivotRenderer(object):
 
   def heatmap(self):
     self.options['renderer'] = '$.pivotUtilities.renderers["Heatmap"]'
+
+  def bars(self):
+    self.options['renderer'] = '$.pivotUtilities.renderers["Table Barchart"]'
 
   def custom(self, name, js_def):
     """
