@@ -671,7 +671,7 @@ JS_IMPORTS = {
 
   'crossfilter': {
     'website': 'http://square.github.io/crossfilter/',
-    'register': {'alias': 'dc', 'module': 'crossfilter.min'},
+    'register': {'alias': 'crossfilter2', 'module': 'crossfilter.min'},
     'modules': [
       {'script': 'crossfilter.min.js', 'version': '1.3.12', 'path': 'crossfilter/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
@@ -680,7 +680,7 @@ JS_IMPORTS = {
   # DC modules width CDN links
   'dc': {
     'website': 'https://dc-js.github.io/dc.js/examples/',
-    'register': {'alias': 'dcChart', 'module': 'dc.min'},
+    'register': {'alias': 'dc', 'module': 'dc.min'},
     'req': [{'alias': 'd3'}, {'alias': 'crossfilter'},
     ],
     'modules': [
