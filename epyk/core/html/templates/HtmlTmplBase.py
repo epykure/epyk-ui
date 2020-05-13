@@ -35,3 +35,20 @@ require.config({ paths:%(paths)s});
 </script>
 <body>
 '''
+
+
+JUPYTERLAB = '''
+<head>
+<style>
+    %(cssStyle)s
+</style>
+%(cssImports)s
+%(jsImports)s
+</head>
+<body>
+%(content)s
+<script>
+%(jsFrgs)s
+</script>
+<body>
+'''

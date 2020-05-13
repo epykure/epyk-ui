@@ -59,7 +59,7 @@ class OutBrowsers(object):
 class PyOuts(object):
   def __init__(self, report=None, options=None):
     self._report, self._options = report, options
-    self.excluded_packages = None
+    self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
 
   def _to_html_obj(self, htmlParts=None, cssParts=None):
     """
@@ -145,7 +145,7 @@ class PyOuts(object):
     require_js = importMng.to_requireJs(results, self.excluded_packages)
     results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
     results['jsFrgs_in_req'] = require_js['jsFrgs']
-    return HtmlTmplBase.JUPYTER.strip() % results
+    return self.html_tmpl.strip() % results
 
   def jupyterlab(self):
     """
@@ -158,6 +158,7 @@ class PyOuts(object):
 
 			https://jupyter.org/
     """
+    self.html_tmpl = HtmlTmplBase.JUPYTERLAB
     self.excluded_packages = ['bootstrap']
     return self
 
@@ -174,7 +175,16 @@ class PyOuts(object):
 
     :return: The ouput object with the function _repr_html_
     """
-    self.excluded_packages = ['bootstrap', 'jquery', 'moment', 'jqueryui', 'mathjs']
+    self.html_tmpl = HtmlTmplBase.JUPYTER
+    try:
+      import notebook
+
+      self.excluded_packages = []
+      nb_path = os.path.split(notebook.__file__)[0]
+      for f in os.listdir(os.path.join(nb_path, 'static', 'components')):
+        self.excluded_packages.append(Imports.NOTEBOOK_MAPPING.get(f, f))
+    except:
+      self.excluded_packages = ['bootstrap', 'jquery', 'moment', 'jqueryui', 'mathjs']
     return self
 
   def w3cTryIt(self, path=None, name=None):

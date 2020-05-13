@@ -137,14 +137,29 @@ def installed_packages():
 
 CDNJS_REPO = 'https://cdnjs.cloudflare.com/ajax/libs'
 
+# Mapping to match the folder names in Jupyter
+# If the folder are the same as the alias it is not included in this mapping
+# Purpose is to not double load the modules in Jupyter
+NOTEBOOK_MAPPING = {
+  'MathJax': 'mathjs',
+  'jquery-ui': 'jqueryui',
+
+}
 
 JS_IMPORTS = {
   # numbers formatting
   'accounting': {
     'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting'},
     'modules': [
-      # Better to use the bundle version to avoid the import issue with popper.js
       {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+    ],
+    'website': 'https://openexchangerates.github.io/accounting.js/'},
+
+  # data transformation
+  'underscore': {
+    'register': {'alias': 'underscore', 'module': 'underscore.min'},
+    'modules': [
+      {'script': 'underscore.min.js', 'version': '1.9.1', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://openexchangerates.github.io/accounting.js/'},
 
