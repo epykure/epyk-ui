@@ -20,14 +20,16 @@ class DataAggregators(object):
     Returns the maximum value in list. If an iteratee function is provided, it will be used on each value to generate the criterion by which the value is ranked.
     -Infinity is returned if list is empty, so an isEmpty guard may be required. Non-numerical values in list will be ignored.
 
-    https://underscorejs.org/#max
+    Related Pages:
+
+			https://underscorejs.org/#max
 
     Attributes:
     ----------
     :param column:
     """
     self._report.jsImports.add('underscore')
-    return JsObjects.JsArray.JsArray("[_.max(%s, function(rec){console.log( rec['%s']); return rec['%s']; })]" % (self.varName, column, column))
+    return JsObjects.JsArray.JsArray("[_.max(%s, function(rec){return rec['%s']; })]" % (self.varName, column), report=self._report)
 
   def min(self, column):
     """
@@ -36,14 +38,16 @@ class DataAggregators(object):
     Returns the minimum value in list. If an iteratee function is provided, it will be used on each value to generate the criterion by which the value is ranked.
     Infinity is returned if list is empty, so an isEmpty guard may be required. Non-numerical values in list will be ignored.
 
-    https://underscorejs.org/#min
+    Related Pages:
+
+			https://underscorejs.org/#min
 
     Attributes:
     ----------
     :param column:
     """
     self._report.jsImports.add('underscore')
-    return JsObjects.JsArray.JsArray("[_.min(%s, function(rec){ return rec['%s']; })]" % (self.varName, column))
+    return JsObjects.JsArray.JsArray("[_.min(%s, function(rec){ return rec['%s']; })]" % (self.varName, column), report=self._report)
 
   def sortBy(self, column):
     """
@@ -55,7 +59,8 @@ class DataAggregators(object):
     :param column:
     """
     self._report.jsImports.add('underscore')
-    return JsObjects.JsArray.JsArray("[_.sortBy(%s, function(rec){ return rec['%s']; })]" % (self.varName, column))
+    column = JsUtils.jsConvertData(column, None)
+    return JsObjects.JsArray.JsArray("_.sortBy(%s, %s)" % (self.varName, column), report=self._report)
 
   def sum(self, columns, attrs=None):
     """
@@ -72,7 +77,7 @@ class DataAggregators(object):
        (function(r, cs){ var result = {}; cs.forEach(function(c){result[c] = 0});
         r.forEach(function(v){cs.forEach(function(c){ if(typeof v[c] !== 'undefined'){ result[c] += v[c]}})
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
-        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False)
+        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self._report)
 
   def count(self, columns, attrs=None):
     """
@@ -89,7 +94,7 @@ class DataAggregators(object):
        (function(r, cs){ var result = {}; cs.forEach(function(c){result[c] = 0});
         r.forEach(function(v){cs.forEach(function(c){ if(typeof v[c] !== 'undefined'){ result[c] += 1}})
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
-        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False)
+        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self._report)
 
   def sumBy(self, columns, key, dstKey=None):
     """
@@ -112,7 +117,21 @@ class DataAggregators(object):
           if (!(r[sk] in tmpResults)){tmpResults[r[sk]] = {}; tmpResults[r[sk]][rdk] = r[sk]; cs.forEach(function(c){tmpResults[r[sk]][c] = 0})}
           cs.forEach(function(c){tmpResults[r[sk]][c] += r[c]})
         }); for(const v in tmpResults){result.push(tmpResults[v])}; return result}''' % name
-    return JsObjects.JsArray.JsArray('%s(%s, %s, %s, %s)' % (name, self.varName, json.dumps(columns), key, dstKey))
+    return JsObjects.JsArray.JsArray('%s(%s, %s, %s, %s)' % (name, self.varName, json.dumps(columns), key, dstKey), report=self._report)
+
+  def pluck(self, column):
+    """
+    Description:
+    -----------
+    A convenient version of what is perhaps the most common use-case for map: extracting a list of property values.
+
+    Related Pages:
+
+			https://underscorejs.org/#pluck
+    """
+    self._report.jsImports.add('underscore')
+    column = JsUtils.jsConvertData(column, None)
+    return JsObjects.JsArray.JsArray("_.pluck(%s, %s)" % (self.varName, column), report=self._report)
 
 
 class DataFilters(object):
@@ -308,12 +327,17 @@ class DataFilters(object):
     Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iteratee.
     iteratee may also be the string name of the property to sort by (eg. length).
 
+    Related Pages:
+
+			https://underscorejs.org/#sortBy
+
     Attributes:
     ----------
     :param column:
     """
     self._report.jsImports.add('underscore')
-    self.__filters.add("[_.sortBy(%%s, function(rec){ return rec['%s']; })]" % column)
+    column = JsUtils.jsConvertData(column, None)
+    self.__filters.add("_.sortBy(%%s, %s)" % column)
     return self
 
   def toStr(self):

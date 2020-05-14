@@ -28,7 +28,7 @@ class JsVoid(object):
 
 
 class JsObjects(object):
-  def __init__(self, jsObj):
+  def __init__(self, jsObj=None):
     self._jsObj = jsObj
 
   @property
@@ -138,7 +138,7 @@ class JsObjects(object):
     return JsObject.JsObject.get(varName)
 
   @classmethod
-  def new(cls, data=None, varName=None, isPyData=False):
+  def new(cls, data=None, varName=None, isPyData=False, report=None):
     """
     Description:
     -----------
@@ -146,7 +146,7 @@ class JsObjects(object):
 
     :return: A Python generic JsObject primitive
     """
-    return JsObject.JsObject.new(data, varName, isPyData)
+    return JsObject.JsObject.new(data, varName, isPyData, report=report)
 
   @property
   def number(self):
@@ -177,6 +177,21 @@ class JsObjects(object):
     :return: A Python JsString primitive
     """
     return JsString.JsString
+
+  @property
+  def list(self):
+    """
+    Description:
+    -----------
+    Interface to the Javascript Array primitive
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_obj_array.asp
+
+    :return: A Python JsArray primitive
+    """
+    return JsArray.JsArray
 
   @property
   def array(self):

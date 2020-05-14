@@ -24,16 +24,16 @@ from epyk.core.data import DataCore
 
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
+from epyk.core.js import JsUtils
+
+from epyk.core.js.primitives import JsObjects
 
 
-class DataSrc(object):
-  class __internal(object):
-    _props = {}
+class DataJs(object):
+  def __init__(self, report):
+    self._report = report
 
-  def __init__(self, report=None):
-    self._report = report if report is not None else self.__internal()
-
-  def js(self, varName="data", records=None):
+  def record(self, varName=None, data=None):
     """
     Description:
     ------------
@@ -43,9 +43,65 @@ class DataSrc(object):
     Attributes:
     ----------
     :param varName: String. The Javascript variable name
-    :param records: Dictionary of lists. Object passed to the Javascript layer
+    :param data: Dictionary of lists. Object passed to the Javascript layer
     """
-    return DataCore.DataGlobal(varName, records, self._report)
+    return DataCore.DataGlobal(varName, data, self._report)
+
+  def list(self, varName, data):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param varName: String. The Javascript variable name
+    :param data: List. Object passed to the Javascript layer
+    """
+    JsUtils.getJsValid(varName, fail=True)
+    return JsObjects.JsObjects().array(data, varName=varName, setVar=True, report=self._report)
+
+  def number(self, varName, value):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param varName: String. The Javascript variable name
+    :param value: Float or Integer. Object passed to the Javascript layer
+    """
+    JsUtils.getJsValid(varName, fail=True)
+    return JsObjects.JsObjects().number(value, varName=varName, setVar=True, report=self._report)
+
+  def object(self, varName, value):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param varName: String. The Javascript variable name
+    :param value: Float or Integer. Object passed to the Javascript layer
+    """
+    JsUtils.getJsValid(varName, fail=True)
+    return JsObjects.JsObjects().new(value, varName=varName, report=self._report)
+
+
+class DataSrc(object):
+  class __internal(object):
+    _props = {}
+
+  def __init__(self, report=None):
+    self._report = report if report is not None else self.__internal()
+
+  @property
+  def js(self):
+    """
+    Description:
+    ------------
+    Interface to the Javascript world
+    """
+    return DataJs(self._report)
 
   @property
   def db(self):
