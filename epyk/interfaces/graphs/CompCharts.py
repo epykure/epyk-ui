@@ -1,15 +1,5 @@
 
-# Check if pandas is available in the current environment
-# if it is the case this module can handle DataFrame directly
-try:
-  import pandas as pd
-  has_pandas = True
-
-except:
-  has_pandas = False
-
 from epyk.core import html
-from epyk.core import js
 from epyk.core.html import graph
 
 from epyk.interfaces.graphs import CompChartsBillboard
@@ -70,45 +60,6 @@ class Graphs(object):
     self.context.register(html_skillbar)
     return html_skillbar
 
-  def d3script(self, script, aresDf=None, seriesNames=None, xAxis=None, otherDims=None, dataFncs=None, title='',
-            globalFilter=None, filterSensitive=True, profile=None, dataSrc=None, xAxisOrder=None, chartOptions=None,
-            width=100, widthUnit="%", height=330, heightUnit="px", url=None, htmlCode=None, d3Version=None):
-    if aresDf is None:
-      aresDf = self.context.rptObj.df([])
-    if not hasattr(aresDf, 'htmlCode'):
-      if len(aresDf) > 0 and isinstance(aresDf[0], list):
-        tmpAresDf = []
-        for line in aresDf[1:]:
-          tmpAresDf.append(dict(zip(aresDf[0], line)))
-        aresDf = tmpAresDf
-      aresDf = self.context.rptObj.df(aresDf)
-    if xAxis == '_index' or xAxis is None:
-      xAxis = '_index'
-      if seriesNames is None:
-        seriesNames = list(aresDf.columns)
-      aresDf['_index'] = aresDf.index
-    # if not 'sort_values' in kwargs:
-    #   if xAxis is not None and not aresDf.empty:
-    #     aresDf.sort_values(by=[xAxis], inplace=True)
-    # else:
-    #   kwargs['sort_values']["inplace"] = True
-    #   aresDf.sort_values(**kwargs['sort_values'])
-    #   del kwargs['sort_values']
-
-    if not isinstance(seriesNames, list):
-      seriesNames = [seriesNames]
-    if dataFncs == False:
-      dataFncs = [('all', [xAxis], seriesNames)]
-    elif dataFncs is None:
-      if otherDims is not None:
-        dataFncs = [('sum', [xAxis], seriesNames + list(otherDims), xAxisOrder)]
-      else:
-        dataFncs = [('sum', [xAxis], seriesNames, xAxisOrder)]
-    params = (seriesNames, xAxis) if otherDims is None else tuple([seriesNames, xAxis] + list(otherDims))
-    data = js.AresJs.Js(self.context.rptObj, aresDf, profile=profile).fncs(dataFncs).output("D3Bespoke", None, params)
-    return self.context.register(getattr(graph, 'GraphD3Bespoke').Chart(self.context.rptObj, script, data,
-                                                                        width, widthUnit, height, heightUnit, title, chartOptions, htmlCode, globalFilter, filterSensitive, dataSrc, profile, url, d3Version))
-
   def sparkline(self, chart_type, data, title=None, options=None, column=None):
     """
     Description:
@@ -143,11 +94,6 @@ class Graphs(object):
     self.context.register(html_chart)
     return html_chart
 
-
-  #  ------------------------------------------------------------------------------------------------------------------
-  #
-  #
-  #  ------------------------------------------------------------------------------------------------------------------
   @property
   def plotly(self):
     """
