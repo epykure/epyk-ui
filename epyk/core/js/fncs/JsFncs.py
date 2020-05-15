@@ -1,7 +1,6 @@
 from epyk.core.js.fncs import JsFncsRecords
 
 from epyk.core.js.objects import JsChartD3
-from epyk.core.js.objects import JsChartPlotly
 
 from epyk.core.js.primitives import JsObject
 
@@ -45,13 +44,6 @@ class FncToObject(object):
     from epyk.core.js.objects import JsChartDC
 
     return JsChartDC.JsChartDCLinks(self._data, self._js_src, self._data_schema)
-
-  @property
-  def plotly(self):
-    """
-    Data transformation to the Plotly package
-    """
-    return JsChartPlotly.JsChartPlotlyLinks(self._data, self._js_src, self._data_schema)
 
 
 class FncRoAggRec(object):

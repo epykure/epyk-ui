@@ -232,6 +232,23 @@ class JsPackage(object):
     """
     return varId
 
+  def custom(self, func_nam, *argv):
+    """
+    Description:
+    ------------
+    Generic function to call any missing function form a package.
+    This will automatically convert the object to JavaScript and also put the right object reference.
+
+    Attributes:
+    ----------
+    :param func_nam: String. The function name
+    :param argv: Objects. Optional. The function arguments on the JavasScript side
+    """
+    js_args = []
+    for arg in argv:
+      js_args.append(str(JsUtils.jsConvertData(arg, None)))
+    return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (self.varId, func_nam, ", ".join(js_args)))
+
   def toStr(self):
     """
     Description:

@@ -2,6 +2,7 @@
 from epyk.core.html import Html
 from epyk.core.html.options import OptVis
 
+from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsVis
 
 
@@ -34,11 +35,32 @@ class Chart(Html.Html):
       self._options = OptVis.Options2D(self._report, attrs=self._options_init)
     return self._options
 
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript base function
+
+    Return all the Javascript functions defined in the framework.
+    THis is an entry point to the full Javascript ecosystem.
+
+    :return: A Javascript object
+
+    :rtype: JsVis.VisGraph2D
+    """
+    if self._js is None:
+      self._js = JsVis.VisGraph2D(selector="window['%s']" % self.chartId, src=self)
+    return self._js
+
   def build(self, data=None, options=None, profile=False):
+    if data:
+      return JsUtils.jsConvertFncs([self.js.setItems(data[0]), self.js.redraw()], toStr=True)
+
     return '''%s; var %s = %s''' % (self.groups.toStr(), self.chartId, self.getCtx())
 
   def getCtx(self):
-    raise Exception("")
+    raise Exception("Cannot create an object from the Vis base class directly")
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -56,16 +78,19 @@ class ChartLine(Chart):
   @property
   def js(self):
     """
+    Description:
+    -----------
     Javascript base function
 
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
     :return: A Javascript object
-    :rtype: JsVis.VisTimeline
+
+    :rtype: JsVis.VisGraph2D
     """
     if self._js is None:
-      self._js = JsVis.VisTimeline(self._report, varName=self.chartId)
+      self._js = JsVis.VisGraph2D(selector="window['%s']" % self.chartId, src=self)
     return self._js
 
   @property
@@ -129,6 +154,24 @@ class Chart3D(Chart):
     self.options.verticalRatio = 0.5
 
   @property
+  def js(self):
+    """
+    Description:
+    -----------
+    Javascript base function
+
+    Return all the Javascript functions defined in the framework.
+    THis is an entry point to the full Javascript ecosystem.
+
+    :return: A Javascript object
+
+    :rtype: JsVis.VisGraph2D
+    """
+    if self._js is None:
+      self._js = JsVis.VisGraph3D(selector="window['%s']" % self.chartId, src=self)
+    return self._js
+
+  @property
   def options(self):
     """
 
@@ -137,16 +180,6 @@ class Chart3D(Chart):
     if self._options is None:
       self._options = OptVis.Options3D(self._report, attrs=self._options_init)
     return self._options
-
-  @property
-  def groups(self):
-    """
-
-    :rtype: JsVis.VisGroups
-    """
-    if self.__grps is None:
-      self.__grps = JsVis.VisGroups(self._report, setVar=True, varName="%s_group" % self.chartId)
-    return self.__grps
 
   @property
   def groups(self):
@@ -184,6 +217,12 @@ class Chart3D(Chart):
     """
     self.items.append({"x": x, "y": y, "z": z, 'group': group})
     return self
+
+  def build(self, data=None, options=None, profile=False):
+    if data:
+      return "%(chartId)s.setData(%(data)s); %(chartId)s.redraw()" % {'chartId': self.chartId, 'data': data[0]}
+
+    return '''%s; var %s = %s''' % (self.groups.toStr(), self.chartId, self.getCtx())
 
   def getCtx(self):
     return "new vis.Graph3d(%s, %s, %s)" % (self.dom.varId, self.items, self.options)

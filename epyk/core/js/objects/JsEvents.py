@@ -114,6 +114,9 @@ class Event(object):
     """
     return JsString.JsString("event.stopPropagation()", isPyData=False)
 
+  def toStr(self):
+    return "event"
+
 
 class UIEvent(Event):
 

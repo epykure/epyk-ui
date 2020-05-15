@@ -121,12 +121,64 @@ class FmtPlotly(object):
       return naps
 
 
+class FmtVis(object):
+
+  @staticmethod
+  def xyz(data, y_columns, x_axis, z_axis):
+    """
+
+    :param data:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    """
+    agg_data = {}
+    for rec in data:
+      key_point = (rec[x_axis], rec[z_axis])
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[key_point] = agg_data.get(y, {}).get(key_point, 0) + float(rec[y])
+    labels, data = set(), []
+    for i, c in enumerate(y_columns):
+      series = []
+      for point, y in agg_data[c].items():
+        series.append({"x": float(point[0]), "y": y, 'z': float(point[1]), 'group': i})
+      data.append(series)
+    return data
+
+  @staticmethod
+  def xy(data, y_columns, x_axis):
+    """
+
+    :param data:
+    :param y_columns:
+    :param x_axis:
+    """
+    agg_data = {}
+    for rec in data:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+    labels, data = set(), []
+    for i, c in enumerate(y_columns):
+      series = []
+      for x, y in agg_data[c].items():
+        labels.add(x)
+        series.append({"x": float(x), "y": y, 'group': i})
+      data.append(series)
+    return data
+
+
 class DataSrc(object):
   class __internal(object):
     _props = {}
 
   def __init__(self, report=None):
     self._report = report if report is not None else self.__internal()
+
+  @property
+  def vis(self):
+    return FmtVis
 
   @property
   def plotly(self):
