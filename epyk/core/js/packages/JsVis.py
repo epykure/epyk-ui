@@ -425,6 +425,11 @@ class VisDataView(JsPackage):
     Related Pages:
 
 			https://visjs.github.io/vis-data/data/dataview.html
+
+		Attributes:
+    ----------
+    :param options:
+    :param data:
     """
     if data is None:
       if options is None:
@@ -474,6 +479,10 @@ class VisDataView(JsPackage):
     Related Pages:
 
 			https://visjs.github.io/vis-data/data/dataview.html
+
+		Attributes:
+    ----------
+    :param vanName:
     """
     return VisDataSet(src=self.src, data="%s.getDataSet()" % self.varId, varName=vanName)
 
@@ -709,7 +718,7 @@ class VisNetwork(JsPackage):
 
 			https://visjs.github.io/vis-network/docs/network/
     """
-    return self.fnc_closure("destroy()")
+    return JsObjects.JsVoid("%s.destroy()" % self.varId)
 
   def setData(self, data):
     """
@@ -727,7 +736,7 @@ class VisNetwork(JsPackage):
     ----------
     :param data:
     """
-    return self.fnc_closure("setData(%s)" % JsUtils.jsConvertData(data, None))
+    return JsObjects.JsVoid("%s.setData(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
   def setOptions(self, options):
     """
@@ -744,7 +753,7 @@ class VisNetwork(JsPackage):
     ----------
     :param options:
     """
-    return self.fnc_closure("setOptions(%s)" % JsUtils.jsConvertData(options, None))
+    return JsObjects.JsVoid("%s.setOptions(%s)" % (self.varId, JsUtils.jsConvertData(options, None)))
 
   def redraw(self):
     """
@@ -756,7 +765,7 @@ class VisNetwork(JsPackage):
 
 			https://visjs.github.io/vis-network/docs/network/
     """
-    return self.fnc_closure("redraw()")
+    return JsObjects.JsVoid("%s.redraw()" % self.varId)
 
   def setSize(self, width, height):
     """
@@ -770,15 +779,15 @@ class VisNetwork(JsPackage):
 
     Attributes:
     ----------
-    :param width:
-    :param height:
+    :param width: Integer. The width
+    :param height: Integer. The height
     """
     if isinstance(width, int):
       width = "%spx" % width
 
     if isinstance(height, int):
       height = "%spx" % height
-    return self.fnc_closure("setSize(%s, %s)" % (JsUtils.jsConvertData(width, None), JsUtils.jsConvertData(height, None)))
+    return JsObjects.JsVoid("%s.setSize(%s, %s)" % (self.varId, JsUtils.jsConvertData(width, None), JsUtils.jsConvertData(height, None)))
 
 
 class VisTimeline(JsPackage):
