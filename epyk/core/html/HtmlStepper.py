@@ -1,6 +1,7 @@
 
 from epyk.core.html import Html
 
+from epyk.core.js import Imports
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlStepper
 from epyk.core.html.options import OptPanel
@@ -98,7 +99,7 @@ class Stepper(Html.Html):
       })    
       '''
 
-  def add_shape(self, shape, shape_def):
+  def add_shape(self, shape, shape_def, dependencies=None):
     """
     Description:
     ------------
@@ -107,7 +108,14 @@ class Stepper(Html.Html):
     ----------
     :param shape: String.
     :param shape_def: String.
+    :param dependencies: List. Optional. The external module dependencies
     """
+    if dependencies is not None:
+      for d in dependencies:
+        if d in Imports.JS_IMPORTS:
+          self._report.jsImports.add(d)
+        if d in Imports.CSS_IMPORTS:
+          self._report.cssImport.add(d)
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     constructors[shape] = "function %s(htmlObj, options, step){%s}" % (shape, JsHtmlStepper.JsShapes().custom(shape_def))
     self.options.shape = shape
