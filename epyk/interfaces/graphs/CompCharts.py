@@ -215,3 +215,159 @@ http://nvd3.org/
 """
     return CompChartsCanvas.Canvas(self)
 
+
+class Chart2d(object):
+
+  def __init__(self, context):
+    self.context = context
+
+  @property
+  def plotly(self):
+    """
+    Description:
+    ------------
+    Interface for the Plotly library
+
+    Related Pages:
+:return: A Python Plolty object
+    """
+    return CompChartsPlotly.Plotly2D(self)
+
+  @property
+  def nvd3(self):
+    """
+    Description:
+    ------------
+    Interface to the Javascript NVD3 library
+
+    Related Pages:
+http://nvd3.org/
+
+    :return: A Python NVD3 object
+    """
+    return CompChartsNvd3.Nvd3(self)
+
+  @property
+  def dc(self):
+    """
+    Description:
+    ------------
+    """
+    return CompChartsDc.DC(self)
+
+  @property
+  def d3(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+"""
+    return CompChartsD3.D3(self)
+
+  @property
+  def svg(self):
+    """
+    Description:
+    ------------
+    SVG defines vector-based graphics in XML format
+
+    Related Pages:
+
+      https://www.w3schools.com/graphics/svg_intro.asp
+    """
+    return CompChartsSvg.SVG(self)
+
+  @property
+  def canvas(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+"""
+    return CompChartsCanvas.Canvas(self)
+
+  @property
+  def chartJs(self):
+    """
+    Description:
+    ------------
+    Interface for the ChartJs library
+
+    Related Pages:
+:return: A Python ChartJs object
+    """
+    return CompChartsChartJs.ChartJs(self)
+
+  @property
+  def c3(self):
+    """
+    Description:
+    ------------
+    Interface to the Javsacript C3 module
+
+    Related Pages:
+:return: A Python C3 object
+    """
+    return CompChartsC3.C3(self)
+
+  @property
+  def billboard(self):
+    """
+    Description:
+    ------------
+    Interface to the Javascript Billboard module
+
+    This will propose various charts for data analysis and visualisation based on D£.
+    This project has been forked from C3.js
+
+    Related Pages:
+
+      https://naver.github.io/billboard.js/
+
+    :return: A Python Billboard Object
+    """
+    return CompChartsBillboard.Billboard(self)
+
+  @property
+  def vis(self):
+    """
+    Description:
+    ------------
+    Interface for the Vis library
+
+    Related Pages:
+:return: A Python Vis object
+    """
+    return CompChartsVis.Vis2D(self)
+
+
+class Chart3d(object):
+
+  def __init__(self, context):
+    self.context = context
+
+  @property
+  def plotly(self):
+    """
+    Description:
+    ------------
+    Interface for the Plotly library
+
+    Related Pages:
+:return: A Python Plolty object
+    """
+    return CompChartsPlotly.Plotly3D(self)
+
+  @property
+  def vis(self):
+    """
+    Description:
+    ------------
+    Interface for the Vis library
+
+    Related Pages:
+:return: A Python Vis object
+    """
+    return CompChartsVis.Vis3D(self)

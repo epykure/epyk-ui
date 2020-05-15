@@ -1,7 +1,9 @@
 
-
 PLOTLY_POLAR = r'https://raw.githubusercontent.com/plotly/datasets/master/polar_dataset.csv'
 PLOTLY_POINTS = r'https://raw.githubusercontent.com/plotly/datasets/master/3d-line1.csv'
+PLOTLY_3D = "https://raw.githubusercontent.com/plotly/datasets/master/3d-scatter.csv"
+PLOTLY_SURFACE = "https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv"
+PLOTLY_ISOSURFACE = "https://raw.githubusercontent.com/plotly/datasets/master/clebsch-cubic.csv"
 
 data_line_3d = r'https://raw.githubusercontent.com/plotly/datasets/master/_3d-line-plot.csv'
 data_mesh_3d = r'https://raw.githubusercontent.com/plotly/datasets/master/mesh_dataset.txt'

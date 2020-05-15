@@ -87,12 +87,50 @@ class DataJs(object):
     return JsObjects.JsObjects().new(value, varName=varName, report=self._report)
 
 
+class FmtPlotly(object):
+
+  @staticmethod
+  def surface(data, y_columns, x_axis, z_axis):
+      """
+
+      :param data:
+      :param y_columns:
+      :param x_axis:
+      :param z_axis:
+      """
+      z_a, x_a, agg_y = set(), set(), {}
+      for rec in data:
+        if z_axis in rec:
+          z_a.add(rec[z_axis])
+        if x_axis in rec:
+          x_a.add(rec[x_axis])
+        if z_axis in rec and x_axis in rec:
+          agg_key = (rec[x_axis], rec[z_axis])
+          for y in y_columns:
+            agg_y.setdefault(agg_key, {})[y] = agg_y.get(agg_key, {}).get(y, 0) + float(rec[y] if rec[y] else 0)
+      z_array = sorted(list(z_a))
+      x_array = sorted(list(x_a))
+      naps = {'datasets': [], 'series': []}
+      for y in y_columns:
+        nap = []
+        for z in z_array:
+          row = [agg_y.get((x, z), {}).get(y, 0) for x in x_array]
+          nap.append(row)
+        naps['datasets'].append(nap)
+        naps['series'].append(y)
+      return naps
+
+
 class DataSrc(object):
   class __internal(object):
     _props = {}
 
   def __init__(self, report=None):
     self._report = report if report is not None else self.__internal()
+
+  @property
+  def plotly(self):
+    return FmtPlotly
 
   @property
   def js(self):
