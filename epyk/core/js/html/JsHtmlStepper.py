@@ -20,13 +20,13 @@ class JsShapes(object):
         var defs = document.createElementNS(svgns, 'defs');
         var gradient = document.createElementNS(svgns, 'linearGradient');
         
-        for (var i = 0, length = options.colors[status].length; i < length; i++) {
+        for (var i = 0, length = options.colors[step.status].length; i < length; i++) {
           var stop = document.createElementNS(svgns, 'stop');
-          stop.setAttribute('offset', options.colors[status][i].offset);
-          stop.setAttribute('stop-color', options.colors[status][i].color);
+          stop.setAttribute('offset', options.colors[step.status][i].offset);
+          stop.setAttribute('stop-color', options.colors[step.status][i].color);
           gradient.appendChild(stop)}
         
-        gradient.id = 'gradient' + status + htmlObj.id; gradient.setAttribute('x1', '0'); gradient.setAttribute('x2', '0'); 
+        gradient.id = 'gradient' + step.status + htmlObj.id; gradient.setAttribute('x1', '0'); gradient.setAttribute('x2', '0'); 
         gradient.setAttribute('y1', '0'); gradient.setAttribute('y2', '1');
         defs.appendChild(gradient);
         %(shape_def)s;
@@ -47,21 +47,21 @@ class JsShapes(object):
           svg.appendChild(line);
         }
         svg.appendChild(defs); svg.appendChild(shape); htmlObj.insertBefore(svg, htmlObj.firstChild);
-        htmlObj.setAttribute('data-status', status);
+        htmlObj.setAttribute('data-status', step.status);
       ''' % {'shape_def': shape_def, 'svgns': Defaults.SVGNS}
 
   def triangle(self):
     shape_def = '''
       var shape = document.createElementNS(svgns, 'polygon');
       shape.setAttribute('points', ''+ ((width)/2) + ' 0,'+ (width - 20) +' '+ height +',20 '+ height);
-      shape.setAttribute('stroke', options.backgrounds[status]);
+      shape.setAttribute('stroke', options.backgrounds[step.status]);
     '''
     return self._svg(shape_def)
 
   def rectangle(self):
     shape_def = '''
       var shape = document.createElementNS(svgns, 'rect');
-      shape.setAttribute('stroke', options.backgrounds[status]);
+      shape.setAttribute('stroke', options.backgrounds[step.status]);
       shape.setAttribute('width', width-20);
       shape.setAttribute('x', 10);
       shape.setAttribute('height', height);
@@ -71,7 +71,7 @@ class JsShapes(object):
   def circle(self):
     shape_def = '''
       var shape = document.createElementNS(svgns, 'circle');
-      shape.setAttribute('stroke', options.backgrounds[status]);
+      shape.setAttribute('stroke', options.backgrounds[step.status]);
       shape.setAttribute('stroke-width', 1);
       shape.setAttribute('cx', width / options.circle_factor );
       shape.setAttribute('cy', height / options.circle_factor );
@@ -83,7 +83,7 @@ class JsShapes(object):
     shape_def = '''
       var shape = document.createElementNS(svgns, 'polygon');
       shape.setAttribute('points', '10 0,'+ (width-30) +' 0,'+ (width-10) + ' ' + (height/2) +','+ (width-30) +' '+ height +',10 0'+ height +',25 '+ (height/2) +',10 0');
-      shape.setAttribute('stroke', options.backgrounds[status]);
+      shape.setAttribute('stroke', options.backgrounds[step.status]);
     '''
     return self._svg(shape_def)
 
@@ -154,7 +154,7 @@ class Step(JsNodeDom.JsDoms):
   def status(self):
     return JsObjects.JsObjects.get('%s.getAttribute("data-status")' % self.varName)
 
-  def shape(self, shape, status='success'):
+  def shape(self, shape, status='success', step=None):
     """
     Description:
     ------------
@@ -164,24 +164,24 @@ class Step(JsNodeDom.JsDoms):
     :param shape:
     :param status:
     """
-    status = JsUtils.jsConvertData(status, None)
+    step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
       var svgns = '%(svgns)s';
-      %(comp)s.querySelector('svg').remove(); %(shape)s(%(comp)s, %(options)s, %(status)s)
-      ''' % {'svgns': Defaults.SVGNS, 'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'status': status, 'shape': shape})
+      %(comp)s.querySelector('svg').remove(); %(shape)s(%(comp)s, %(options)s, %(step)s)
+      ''' % {'svgns': Defaults.SVGNS, 'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step, 'shape': shape})
 
-  def triangle(self, status='error'):
+  def triangle(self, status='error', step=None):
     """
     Description:
     ------------
     Hide all the panels in the drawer component
     """
-    status = JsUtils.jsConvertData(status, None)
+    step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
-      %(comp)s.querySelector('svg').remove(); triangle(%(comp)s, %(options)s, %(status)s)
-      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'status': status})
+      %(comp)s.querySelector('svg').remove(); triangle(%(comp)s, %(options)s, %(step)s)
+      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step})
 
-  def rectangle(self, status='success'):
+  def rectangle(self, status='success', step=None):
     """
     Description:
     ------------
@@ -189,32 +189,32 @@ class Step(JsNodeDom.JsDoms):
 
     htmlObj.querySelector('svg').remove();
     """
-    status = JsUtils.jsConvertData(status, None)
+    step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
-      %(comp)s.querySelector('svg').remove(); rectangle(%(comp)s, %(options)s, %(status)s)
-      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'status': status})
+      %(comp)s.querySelector('svg').remove(); rectangle(%(comp)s, %(options)s, %(step)s)
+      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step})
 
-  def arrow(self, status='success'):
+  def arrow(self, status='success', step=None):
     """
     Description:
     ------------
     Hide all the panels in the drawer component
     """
-    status = JsUtils.jsConvertData(status, None)
+    step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
-      %(comp)s.querySelector('svg').remove(); arrow(%(comp)s, %(options)s, %(status)s)
-      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'status': status})
+      %(comp)s.querySelector('svg').remove(); arrow(%(comp)s, %(options)s, %(step)s)
+      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step})
 
-  def circle(self, status='waiting'):
+  def circle(self, status='waiting', step=None):
     """
     Description:
     ------------
     Hide all the panels in the drawer component
     """
-    status = JsUtils.jsConvertData(status, None)
+    step = {"status": status} if step is None else JsUtils.jsConvertData(step, None)
     return JsObjects.JsObjects.get('''
-      %(comp)s.querySelector('svg').remove(); circle(%(comp)s, %(options)s, %(status)s)
-      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'status': status})
+      %(comp)s.querySelector('svg').remove(); circle(%(comp)s, %(options)s, %(step)s)
+      ''' % {'comp': self.varName, 'options': json.dumps(self._src._jsStyles), 'step': step})
 
   def label(self, value):
     """

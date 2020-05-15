@@ -50,4 +50,3 @@ class Script(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
-
