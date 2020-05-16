@@ -75,7 +75,8 @@ class Html(object):
   # mangling technique Python will make the change more difficult and easier to see
   reqJs, reqCss = [], []
   htmlCode, dataSrc, _code, inReport, builder_name = None, None, None, True, None
-  js_fncs_opts = ()
+  _out_mode = 'html'
+  js_fncs_opts = () # list of options which should never be considered as string but JavaScript fragments
 
   def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
                heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None, css_attrs=None):
@@ -852,7 +853,10 @@ Attributes:
       cssClass = 'class="%s"' % " ".join(pyClsNames) if len(pyClsNames) > 0 else ""
 
     if withId:
-      self.attr['id'] = self.htmlId
+      if self._out_mode == 'angular':
+        self.attr['[id]'] = "this.id"
+      else:
+        self.attr['id'] = self.htmlId
     html_tags = ['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]
     for tag in [cssStyle, cssClass]:
       if tag:
@@ -1019,23 +1023,23 @@ Attributes:
     # self._report._props.setdefault('js', {}).setdefault("builders", []).append(refresh_js)
     return self.build(self.val, self._jsStyles)
 
-  def onDocumentLoadContextmenu(self):
-    self._report.jsGlobal.fnc("ContextMenu(htmlObj, data, markdownFnc)",
-        '''
-        $('#popup').empty(); $('#popup').append('<ul style="width:100%%;height:100%%;margin:0;padding:0"></ul>');
-        var listMenu = $('#popup').find('ul');
-        data.forEach(function(rec){
-          if ('title' in rec) {
-            listMenu.append('<li class="list-group-item" style="cursor:cursor;width:100%%;display:inline-block;padding:5px 5px 2px 10px;font-weight:bold;color:white;background:%(color)s">' + rec.title + '</li> ');
-          } else {
-            if (rec.url != undefined) { var content = '<a href="' + rec.url + '" style="color:black">' + rec.label + '</a>' ;} else {var content = rec.label;};
-            listMenu.append('<li class="list-group-item" style="cursor:pointer;width:100%%;display:inline-block;padding:2px 5px 2px 10px">' + content + '</li> '); }
-        });
-        if (markdownFnc != false) {
-          listMenu.append('<li class="list-group-item" style="cursor:cursor;width:100%%;display:inline-block;padding:5px 5px 2px 10px;font-weight:bold;color:white;background:%(color)s">MarkDown</li> ');
-          listMenu.append('<li onclick="CopyMarkDown(\\''+ markdownFnc +'\\');" class="list-group-item" style="cursor:pointer;width:100%%;display:inline-block;padding:2px 5px 2px 10px"><i class="fas fa-thumbtack"></i>&nbsp;&nbsp;Copy MarkDown</li> ');};
-        $('#popup').css({'padding': '0', 'width': '200px'});
-        $('#popup').show()''' % {'color': self._report.theme.colors[9]})
+  # def onDocumentLoadContextmenu(self):
+  #   self._report.jsGlobal.fnc("ContextMenu(htmlObj, data, markdownFnc)",
+  #       '''
+  #       $('#popup').empty(); $('#popup').append('<ul style="width:100%%;height:100%%;margin:0;padding:0"></ul>');
+  #       var listMenu = $('#popup').find('ul');
+  #       data.forEach(function(rec){
+  #         if ('title' in rec) {
+  #           listMenu.append('<li class="list-group-item" style="cursor:cursor;width:100%%;display:inline-block;padding:5px 5px 2px 10px;font-weight:bold;color:white;background:%(color)s">' + rec.title + '</li> ');
+  #         } else {
+  #           if (rec.url != undefined) { var content = '<a href="' + rec.url + '" style="color:black">' + rec.label + '</a>' ;} else {var content = rec.label;};
+  #           listMenu.append('<li class="list-group-item" style="cursor:pointer;width:100%%;display:inline-block;padding:2px 5px 2px 10px">' + content + '</li> '); }
+  #       });
+  #       if (markdownFnc != false) {
+  #         listMenu.append('<li class="list-group-item" style="cursor:cursor;width:100%%;display:inline-block;padding:5px 5px 2px 10px;font-weight:bold;color:white;background:%(color)s">MarkDown</li> ');
+  #         listMenu.append('<li onclick="CopyMarkDown(\\''+ markdownFnc +'\\');" class="list-group-item" style="cursor:pointer;width:100%%;display:inline-block;padding:2px 5px 2px 10px"><i class="fas fa-thumbtack"></i>&nbsp;&nbsp;Copy MarkDown</li> ');};
+  #       $('#popup').css({'padding': '0', 'width': '200px'});
+  #       $('#popup').show()''' % {'color': self._report.theme.colors[9]})
 
   def paste(self, jsFnc):
     """ Generic click function """
@@ -1113,6 +1117,11 @@ http://python-docx.readthedocs.io/en/latest/
         self.pyCssCls.add(c.get_ref())
     str_result.append(str(self))
     return "".join(str_result)
+
+  def export(self, mode):
+    self._out_mode = mode
+    return {'folder': self.__class__.__name__.lower(), 'class': "%sComponent" % self.__class__.__name__,
+            'styleUrls': "", "externalVars": "", "componentFunctions": [], 'htmlTag': "app-epyk-%s" % self.__class__.__name__.lower()}
 
 
 class Body(Html):
