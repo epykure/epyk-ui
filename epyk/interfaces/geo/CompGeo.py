@@ -26,7 +26,7 @@ class Geo(object):
     return CompGeoDc.Dc(self)
 
   @property
-  def chartjs_choropleth(self):
+  def chartJs(self):
     """
 
     :return: CompGeoChartJs.ChartJs
@@ -34,29 +34,9 @@ class Geo(object):
     return CompGeoChartJs.ChartJs(self)
 
   @property
-  def plotly_choropleth(self):
+  def plotly(self):
     """
 
     :return: CompGeoPlotly.PlotlyChoropleth
     """
-    return CompGeoPlotly.PlotlyChoropleth(self)
-
-  @property
-  def plotly_scatter(self):
-    """
-
-    https://plot.ly/javascript/scatter-plots-on-maps/
-
-    :return: CompGeoPlotly.PlotlyScatter
-    """
-    return CompGeoPlotly.PlotlyScatter(self)
-
-  @property
-  def plotly_bubble(self):
-    """
-
-    https://plot.ly/javascript/bubble-maps/
-
-    :return: CompGeoPlotly.PlotlyBubble
-    """
-    return CompGeoPlotly.PlotlyBubble(self)
+    return CompGeoPlotly.Plotly(self)

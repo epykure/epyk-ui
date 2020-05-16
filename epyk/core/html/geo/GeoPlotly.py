@@ -244,6 +244,7 @@ class LayoutGeoMap(LayoutGeo):
     self.geo.bgcolor = 'rgba(0,0,0,0)'
     return self
 
+
 class DataScatterMapBox(GraphPlotly.DataChart):
 
   @property
@@ -420,48 +421,22 @@ class Choropleth(GraphPlotly.Chart):
   def add_trace(self, data, type='choropleth', mode=None):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = type
+      c_data['type'] = self._options_init.get('type', type)
     if mode is not None:
-      c_data['mode'] = mode
+      c_data['mode'] = self._options_init.get('mode', mode)
     self._traces.append(DataChoropleth(self._report, attrs=c_data))
     return self
 
-
-class ScatterGeo(GraphPlotly.Chart):
-
-  __reqJs = ['plotly.js']
-
   @property
-  def chart(self):
-    """
-    :rtype: JsPlotly.Bar
-    """
-    if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
-    return self._chart
-
-  @property
-  def layout(self):
-    """
-
-    :rtype: LayoutGeo
-    """
-    if self._layout is None:
-      self._layout = LayoutGeoMap(self._report)
-    return self._layout
-
-  @property
-  def data(self):
-    return self._traces[-1]
-
-  def add_trace(self, data, type='scattergeo', mode='markers'):
-    c_data = dict(data)
-    if type is not None:
-      c_data['type'] = type
-    if mode is not None:
-      c_data['mode'] = mode
-    self._traces.append(DataChoropleth(self._report, attrs=c_data))
-    return self
+  def _js__convertor__(self):
+    return '''
+        var labels = []; var result = [] ;
+        data.forEach(function(series, i){
+          var dataset = Object.assign(series, options);
+          result.push( dataset );
+        }); 
+        return result
+        '''
 
 
 class BubbleGeo(GraphPlotly.Chart):
@@ -489,13 +464,26 @@ class BubbleGeo(GraphPlotly.Chart):
 
   @property
   def data(self):
+    if not self._traces:
+      self.add_trace([])
     return self._traces[-1]
 
   def add_trace(self, data, type='scattergeo', mode='markers'):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = type
+      c_data['type'] = self._options_init.get('type', type)
     if mode is not None:
-      c_data['mode'] = mode
+      c_data['mode'] = self._options_init.get('mode', mode)
     self._traces.append(DataBubble(self._report, attrs=c_data))
     return self
+
+  @property
+  def _js__convertor__(self):
+    return '''
+      var labels = []; var result = [] ;
+      data.forEach(function(series, i){
+        var dataset = Object.assign(series, options);
+        result.push( dataset );
+      }); 
+      return result
+      '''

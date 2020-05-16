@@ -2247,10 +2247,10 @@ class Surface(Chart):
   @property
   def _js__convertor__(self):
     return '''
-        var labels = []; var result = [] ; console.log(data);
+        var labels = []; var result = [] ;
         data.series.forEach(function(name, i){
           result.push( {z: data.datasets[i], type: options.type} );
-        }); console.log(result);
+        });
         return result
         '''
 

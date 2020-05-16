@@ -4,6 +4,7 @@ PLOTLY_POINTS = r'https://raw.githubusercontent.com/plotly/datasets/master/3d-li
 PLOTLY_3D = "https://raw.githubusercontent.com/plotly/datasets/master/3d-scatter.csv"
 PLOTLY_SURFACE = "https://raw.githubusercontent.com/plotly/datasets/master/api_docs/mt_bruno_elevation.csv"
 PLOTLY_ISOSURFACE = "https://raw.githubusercontent.com/plotly/datasets/master/clebsch-cubic.csv"
+PLOTLY_COUNTRIES = "https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv"
 
 data_line_3d = r'https://raw.githubusercontent.com/plotly/datasets/master/_3d-line-plot.csv'
 data_mesh_3d = r'https://raw.githubusercontent.com/plotly/datasets/master/mesh_dataset.txt'

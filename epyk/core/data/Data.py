@@ -120,6 +120,70 @@ class FmtPlotly(object):
         naps['series'].append(y)
       return naps
 
+  @staticmethod
+  def countries(data, country_col, size_col, scale=False):
+    aggregated = {}
+    for rec in data:
+      if country_col in rec:
+        try:
+          aggregated[rec[country_col]] = aggregated.get(rec[country_col], 0) + float(rec.get(size_col, 0))
+        except: pass
+
+    records = []
+    if aggregated:
+      max_value = max(aggregated.values())
+      factor = scale if scale else 50 / max_value
+      record = {'locations': [], 'marker': {'size': []}}
+      for k, v in aggregated.items():
+        record['locations'].append(k)
+        record['marker']['size'].append(v * factor)
+      records.append(record)
+    return records
+
+  @staticmethod
+  def choropleth(data, country_col, size_col, scale=False):
+    aggregated = {}
+    for rec in data:
+      if country_col in rec:
+        try:
+          aggregated[rec[country_col]] = aggregated.get(rec[country_col], 0) + float(rec.get(size_col, 0))
+        except Exception as err:
+          print(err)
+          pass
+    records = []
+    if aggregated:
+      max_value = max(aggregated.values())
+      factor = scale if scale else 50 / max_value
+      record = {'locations': [], 'z': []}
+      for k, v in aggregated.items():
+        record['locations'].append(k)
+        record['z'].append(v * factor)
+      records.append(record)
+    return records
+
+  @staticmethod
+  def locations(data, long_col, lat_col, size_col, scale=False):
+    aggregated = {}
+    for rec in data:
+      if long_col in rec and lat_col in rec:
+        point = (rec[long_col], rec[lat_col])
+        try:
+          aggregated[point] = aggregated.get(point, 0) + float(rec.get(size_col, 0))
+        except:
+          pass
+
+    records = []
+    if aggregated:
+      max_value = max(aggregated.values())
+      factor = 1 / scale if scale else 50 / max_value
+      record = {'lon': [], 'lat': [], 'marker': {'size': []}}
+      for k, v in aggregated.items():
+        record['lon'].append(float(k[0]))
+        record['lat'].append(float(k[1]))
+        record['marker']['size'].append(v * factor)
+      records.append(record)
+    return records
+
 
 class FmtVis(object):
 

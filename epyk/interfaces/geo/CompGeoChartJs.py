@@ -7,6 +7,15 @@ class ChartJs(object):
     self.parent = context
     self.chartFamily = "ChartJs"
 
+  def choropleths(self):
+    return Choropleth(self.parent)
+
+
+class Choropleth(object):
+  def __init__(self, context):
+    self.parent = context
+    self.chartFamily = "ChartJs"
+
   def usa(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):
     """
