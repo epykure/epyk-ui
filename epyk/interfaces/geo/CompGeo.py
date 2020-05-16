@@ -11,32 +11,34 @@ class Geo(object):
   @property
   def plotly_map(self):
     """
+    Description:
+    ------------
     Interface for the Plotly library
-
-    :return: CompGeoPlotly.Plotly
     """
     return CompGeoPlotly.Plotly(self)
 
   @property
   def dc_choropleth(self):
     """
-
-    :return: CompGeoDc.Dc
+    Description:
+    ------------
     """
     return CompGeoDc.Dc(self)
 
   @property
   def chartJs(self):
     """
+    Description:
+    ------------
 
-    :return: CompGeoChartJs.ChartJs
     """
     return CompGeoChartJs.ChartJs(self)
 
   @property
   def plotly(self):
     """
+    Description:
+    ------------
 
-    :return: CompGeoPlotly.PlotlyChoropleth
     """
     return CompGeoPlotly.Plotly(self)

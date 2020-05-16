@@ -148,8 +148,8 @@ class FmtPlotly(object):
         try:
           aggregated[rec[country_col]] = aggregated.get(rec[country_col], 0) + float(rec.get(size_col, 0))
         except Exception as err:
-          print(err)
           pass
+
     records = []
     if aggregated:
       max_value = max(aggregated.values())

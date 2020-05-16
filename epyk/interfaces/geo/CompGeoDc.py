@@ -10,6 +10,8 @@ class Dc(object):
   def usa(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), htmlCode=None):
     """
+    Description:
+    -----------
 
     Underlying HTML Objects:
 
@@ -20,6 +22,8 @@ class Dc(object):
 			https://jsfiddle.net/djmartin_umich/9VJHe/
       http://bl.ocks.org/KatiRG/cccd23dd7a830da0de5c
 
+    Attributes:
+    ----------
     :param record:
     :param y_columns:
     :param x_axis:
