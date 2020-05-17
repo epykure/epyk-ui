@@ -13,6 +13,7 @@ from epyk.core.js.packages import JsQuery
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.html import Aria
+from epyk.core.html import Component
 from epyk.core.html import KeyCodes
 
 try:  # For python 3
@@ -1082,24 +1083,17 @@ http://python-docx.readthedocs.io/en/latest/
       Go to https://xlsxwriter.readthedocs.io/working_with_tables.html for more details  
     ''' % self.__class__.__name__)
 
-  def ts(self, name=None):
+  @property
+  def component(self):
     """
     Description:
     -----------
-    Component export for an Angular app.
-    This will allow to build apps directly from reports using each underlying components available in the framework.
+    The static component definition on the Javascript Side.
 
-    Attributes:
-    ----------
-    :param name: Optional. The component name. Can be set to define test components
+    This will be then used by the different framework to define the elementary bricks on which the complex component
+    will be based on.
     """
-    if name is None:
-      name = self.__class__.__name__
-    folder = name.lower()
-    self._out_mode = "angular"
-    html = self.html()
-    return {'folder': name.lower(), 'class': "Epyk%sComponent" % name, 'externalVars': '', 'css': self.attr['css'],
-            'htmlTag': 'epyk-%s' % folder, 'build': self._js__builder__.strip(), 'html': html, 'options': self._jsStyles}
+    return Component.Component(self)
 
   def html(self):
     str_result = []

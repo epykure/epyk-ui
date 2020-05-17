@@ -4,6 +4,8 @@ Default parameters for the HTML components.
 This can be overridden by the server setting or even locally in the report
 """
 
+COMP_PREFIX = 'epyk'
+
 SERVER_PATH = "/img"
 
 #

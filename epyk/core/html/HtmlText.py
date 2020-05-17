@@ -126,9 +126,10 @@ class Label(Html.Html):
 
 
 class Span(Html.Html):
-  name, category, callFnc = 'Span', 'Texts', 'span'
+  name = 'Span'
 
-  def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, options, profile):
+  def __init__(self, report, text="", color=None, align=None, width=None, height=None, htmlCode=None, tooltip=None,
+               options=None, profile=None):
     super(Span, self).__init__(report, text, css_attrs={"width": width, "height": height, "color": color, 'text-align': align},
                                code=htmlCode, profile=profile)
     self.css({'line-height': '%spx' % Default_html.LINE_HEIGHT, 'margin': '0 5px', 'display': 'inline-block', 'vertical-align': 'middle'})

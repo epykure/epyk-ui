@@ -365,9 +365,10 @@ class Report(object):
     Static component export for Angular
     """
     ts_comps = []
-    ts_comps.append(html.HtmlButton.Button(self).ts())
-    ts_comps.append(html.HtmlButton.CheckButton(self).ts())
-    ts_comps.append(html.HtmlText.Label(self).ts())
+    ts_comps.append(html.HtmlButton.Button(self).component.ts())
+    ts_comps.append(html.HtmlButton.CheckButton(self).component.ts())
+    ts_comps.append(html.HtmlText.Label(self).component.ts())
+    ts_comps.append(html.HtmlText.Span(self).component.ts())
     return ts_comps
 
   def dumps(self, data):
