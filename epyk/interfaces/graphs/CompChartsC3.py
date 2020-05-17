@@ -1,33 +1,5 @@
 
 from epyk.core.html import graph
-from epyk.core.py import OrderedSet
-
-
-def y(data, y_columns, x_axis):
-  """
-  Description:
-  ------------
-
-  Attributes:
-  ----------
-  :param data: List of dict. The Python recordset
-  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-  """
-  agg_data = {}
-  for rec in data:
-    for y in y_columns:
-      if y in rec:
-        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-  labels, data = OrderedSet(), []
-  for c in y_columns:
-    for x, y in agg_data.get(c, {}).items():
-      labels.add(x)
-  is_data = {"labels": labels, 'datasets': [], 'series': []}
-  for i, y in enumerate(y_columns):
-    is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in labels])
-    is_data["series"].append(y)
-  return is_data
 
 
 class C3(object):
@@ -58,7 +30,7 @@ class C3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
-    data = y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.c3.y(record, y_columns, x_axis)
     line_chart = graph.GraphC3.ChartLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -89,7 +61,7 @@ class C3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.c3.y(record, y_columns, x_axis)
     line_chart = graph.GraphC3.ChartSpline(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -120,7 +92,7 @@ class C3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.c3.y(record, y_columns, x_axis)
     line_chart = graph.GraphC3.ChartSpline(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart._type = 'step'
     line_chart.labels(data['labels'])
@@ -152,7 +124,7 @@ class C3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.c3.y(record, y_columns, x_axis)
     line_chart = graph.GraphC3.ChartArea(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -183,7 +155,7 @@ class C3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.c3.y(record, y_columns, x_axis)
     line_chart = graph.GraphC3.ChartArea(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart._type = "area-step"
     line_chart.labels(data['labels'])
@@ -241,7 +213,7 @@ class C3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.c3.y(record, y_columns, x_axis)
     line_chart = graph.GraphC3.ChartBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -297,7 +269,7 @@ class C3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.c3.y(record, y_columns, x_axis)
     line_chart = graph.GraphC3.ChartScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
@@ -329,7 +301,7 @@ class C3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.c3.y(record, y_columns, x_axis)
     pie_chart = graph.GraphC3.ChartPie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     pie_chart.labels(data['labels'])
     pie_chart.add_dataset(data['series'][0], data['labels'])
@@ -359,7 +331,7 @@ class C3(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis})
-    data = y(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.c3.y(record, y_columns, x_axis)
     pie_chart = graph.GraphC3.ChartDonut(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     pie_chart.labels(data['labels'])
     pie_chart.add_dataset(data['series'][0], data['labels'])

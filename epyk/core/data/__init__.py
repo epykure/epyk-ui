@@ -3,6 +3,7 @@ import sys
 
 from epyk.core.data import Data
 from epyk.core.js import JsUtils
+from epyk.core.data import DataPy
 
 
 class DataClass(object):
@@ -235,3 +236,14 @@ class DataEnumMulti(object):
       return JsUtils.jsConvertData(result, None).toStr()
 
     return result
+
+
+plotly = DataPy.Plotly()
+
+vis = DataPy.Vis()
+
+nvd3 = DataPy.NVD3()
+
+c3 = DataPy.C3()
+
+bb = DataPy.C3()

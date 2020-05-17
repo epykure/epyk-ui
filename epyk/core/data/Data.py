@@ -18,6 +18,7 @@ import pickle
 import importlib
 
 from epyk.core.data import DataDb
+from epyk.core.data import DataPy
 from epyk.core.data import DataGrpc
 from epyk.core.data import DataOffice
 from epyk.core.data import DataCore
@@ -87,152 +88,6 @@ class DataJs(object):
     return JsObjects.JsObjects().new(value, varName=varName, report=self._report)
 
 
-class FmtPlotly(object):
-
-  @staticmethod
-  def surface(data, y_columns, x_axis, z_axis):
-      """
-
-      :param data:
-      :param y_columns:
-      :param x_axis:
-      :param z_axis:
-      """
-      z_a, x_a, agg_y = set(), set(), {}
-      for rec in data:
-        if z_axis in rec:
-          z_a.add(rec[z_axis])
-        if x_axis in rec:
-          x_a.add(rec[x_axis])
-        if z_axis in rec and x_axis in rec:
-          agg_key = (rec[x_axis], rec[z_axis])
-          for y in y_columns:
-            agg_y.setdefault(agg_key, {})[y] = agg_y.get(agg_key, {}).get(y, 0) + float(rec[y] if rec[y] else 0)
-      z_array = sorted(list(z_a))
-      x_array = sorted(list(x_a))
-      naps = {'datasets': [], 'series': []}
-      for y in y_columns:
-        nap = []
-        for z in z_array:
-          row = [agg_y.get((x, z), {}).get(y, 0) for x in x_array]
-          nap.append(row)
-        naps['datasets'].append(nap)
-        naps['series'].append(y)
-      return naps
-
-  @staticmethod
-  def countries(data, country_col, size_col, scale=False):
-    aggregated = {}
-    for rec in data:
-      if country_col in rec:
-        try:
-          aggregated[rec[country_col]] = aggregated.get(rec[country_col], 0) + float(rec.get(size_col, 0))
-        except: pass
-
-    records = []
-    if aggregated:
-      max_value = max(aggregated.values())
-      factor = scale if scale else 50 / max_value
-      record = {'locations': [], 'marker': {'size': []}}
-      for k, v in aggregated.items():
-        record['locations'].append(k)
-        record['marker']['size'].append(v * factor)
-      records.append(record)
-    return records
-
-  @staticmethod
-  def choropleth(data, country_col, size_col, scale=False):
-    aggregated = {}
-    for rec in data:
-      if country_col in rec:
-        try:
-          aggregated[rec[country_col]] = aggregated.get(rec[country_col], 0) + float(rec.get(size_col, 0))
-        except Exception as err:
-          pass
-
-    records = []
-    if aggregated:
-      max_value = max(aggregated.values())
-      factor = scale if scale else 50 / max_value
-      record = {'locations': [], 'z': []}
-      for k, v in aggregated.items():
-        record['locations'].append(k)
-        record['z'].append(v * factor)
-      records.append(record)
-    return records
-
-  @staticmethod
-  def locations(data, long_col, lat_col, size_col, scale=False):
-    aggregated = {}
-    for rec in data:
-      if long_col in rec and lat_col in rec:
-        point = (rec[long_col], rec[lat_col])
-        try:
-          aggregated[point] = aggregated.get(point, 0) + float(rec.get(size_col, 0))
-        except:
-          pass
-
-    records = []
-    if aggregated:
-      max_value = max(aggregated.values())
-      factor = 1 / scale if scale else 50 / max_value
-      record = {'lon': [], 'lat': [], 'marker': {'size': []}}
-      for k, v in aggregated.items():
-        record['lon'].append(float(k[0]))
-        record['lat'].append(float(k[1]))
-        record['marker']['size'].append(v * factor)
-      records.append(record)
-    return records
-
-
-class FmtVis(object):
-
-  @staticmethod
-  def xyz(data, y_columns, x_axis, z_axis):
-    """
-
-    :param data:
-    :param y_columns:
-    :param x_axis:
-    :param z_axis:
-    """
-    agg_data = {}
-    for rec in data:
-      key_point = (rec[x_axis], rec[z_axis])
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[key_point] = agg_data.get(y, {}).get(key_point, 0) + float(rec[y])
-    labels, data = set(), []
-    for i, c in enumerate(y_columns):
-      series = []
-      for point, y in agg_data[c].items():
-        series.append({"x": float(point[0]), "y": y, 'z': float(point[1]), 'group': i})
-      data.append(series)
-    return data
-
-  @staticmethod
-  def xy(data, y_columns, x_axis):
-    """
-
-    :param data:
-    :param y_columns:
-    :param x_axis:
-    """
-    agg_data = {}
-    for rec in data:
-      for y in y_columns:
-        if y in rec:
-          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-    labels, data = set(), []
-    for i, c in enumerate(y_columns):
-      series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
-        series.append({"x": float(x), "y": y, 'group': i})
-      data.append(series)
-    return data
-
-
 class DataSrc(object):
   class __internal(object):
     _props = {}
@@ -242,11 +97,27 @@ class DataSrc(object):
 
   @property
   def vis(self):
-    return FmtVis
+    return DataPy.Vis()
+
+  @property
+  def chartJs(self):
+    return DataPy.ChartJs()
 
   @property
   def plotly(self):
-    return FmtPlotly
+    return DataPy.Plotly()
+
+  @property
+  def c3(self):
+    return DataPy.C3()
+
+  @property
+  def bb(self):
+    return DataPy.C3()
+
+  @property
+  def nvd3(self):
+    return DataPy.NVD3()
 
   @property
   def js(self):

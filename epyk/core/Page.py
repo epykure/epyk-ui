@@ -25,6 +25,8 @@ from epyk.core import data
 from epyk.core.html import symboles
 from epyk.core.html import entities
 from epyk.core.py import OrderedSet
+from epyk.core.py import PyOuts
+from epyk.core.py import PyExt
 
 
 class ContextRun(object):
@@ -228,7 +230,7 @@ class Report(object):
     :return: Python HTML object
     """
     if self._py is None:
-      self._py = py.PyExt.PyExt(self)
+      self._py = PyExt.PyExt(self)
     return self._py
 
   @property
@@ -303,7 +305,7 @@ class Report(object):
 
     :return:
     """
-    return py.PyOuts.PyOuts(self)
+    return PyOuts.PyOuts(self)
 
   @property
   def headers(self):

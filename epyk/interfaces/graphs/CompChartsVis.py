@@ -1,6 +1,4 @@
 
-import sys
-
 from epyk.core.html import graph
 
 
