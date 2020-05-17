@@ -358,6 +358,18 @@ class Report(object):
                                      'color': self.getColor('danger', 1), 'colorTitle': self.getColor('danger', 1)})
     return report_error.to_html(online, mode, html_template, fnc)
 
+  def export(self):
+    """
+    Description:
+    ------------
+    Static component export for Angular
+    """
+    ts_comps = []
+    ts_comps.append(html.HtmlButton.Button(self).ts())
+    ts_comps.append(html.HtmlButton.CheckButton(self).ts())
+    ts_comps.append(html.HtmlText.Label(self).ts())
+    return ts_comps
+
   def dumps(self, data):
     """
     Function used to dump the data before being sent to the Javascript layer

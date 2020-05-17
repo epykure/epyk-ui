@@ -17,15 +17,17 @@ from epyk.core.css.styles import GrpCls
 class Label(Html.Html):
   name, category, callFnc = 'Label', 'Text', 'label'
 
-  def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, profile, options):
-    if text is not None and not isinstance(text, list):
+  def __init__(self, report, text=None, color=None, align=None, width=None, height=None, htmlCode=None, tooltip=None,
+               profile=None, options=None):
+    text = text or []
+    if not isinstance(text, list):
       text = [text]
     for obj in text:
       if hasattr(obj, 'inReport'):
         obj.inReport = False
-    super(Label, self).__init__(report, text or [], css_attrs={"width": width, "height": height, 'color': color, 'text-align': align},
+    super(Label, self).__init__(report, text, css_attrs={"width": width, "height": height, 'color': color, 'text-align': align},
                                 code=htmlCode, profile=profile)
-    self.__options = OptText.OptionsText(self, options)
+    self.__options = OptText.OptionsText(self, options or {})
     self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block', 'line-height': '23px',
               'vertical-align': 'middle', 'text-align': 'left'})
     if tooltip:

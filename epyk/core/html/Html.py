@@ -119,7 +119,6 @@ class Html(object):
       if htmlCode in self._report.http:
         self.vals = self._report.http[htmlCode]
 
-    #css = None
     self.pyStyle = None #list(getattr(self, '_%s__pyStyle' % self.__class__.__name__, []))
     if hasattr(self, '_%s__reqJs' % self.__class__.__name__):
       self.reqJs = list(getattr(self, '_%s__reqJs' % self.__class__.__name__, []))
@@ -891,7 +890,7 @@ Attributes:
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     # JsUtils.jsConvertFncs needs to be applied in order to freeze the function
-    # span.on("mouseover", span.dom.css("color", "red"))
+    # span.on("mouseover", span.dom.css("color", "red").r)
     # span.on("mouseleave", span.dom.css("color", "blue"))
     self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
     self._events['doc_ready'][event]['profile'] = profile
@@ -986,9 +985,6 @@ Attributes:
     self.on("contextmenu", new_js_fncs, profile)
     return self
 
-  # -------------------------------------------------------------
-  # Builder functions
-  #
   @property
   def _js__builder__(self):
     raise Exception("Constructor must be defined in %s" % self.__class__.__name__)
@@ -1020,26 +1016,12 @@ Attributes:
     return "%s(%s, %s, %s)" % (self.builder_name, self.dom.varId, js_data, "{%s}" % ",".join(js_options))
 
   def refresh(self):
-    # self._report._props.setdefault('js', {}).setdefault("builders", []).append(refresh_js)
+    """
+    Description:
+    -----------
+    Component refresh function. Javascript function which can be called in any Javascript event
+    """
     return self.build(self.val, self._jsStyles)
-
-  # def onDocumentLoadContextmenu(self):
-  #   self._report.jsGlobal.fnc("ContextMenu(htmlObj, data, markdownFnc)",
-  #       '''
-  #       $('#popup').empty(); $('#popup').append('<ul style="width:100%%;height:100%%;margin:0;padding:0"></ul>');
-  #       var listMenu = $('#popup').find('ul');
-  #       data.forEach(function(rec){
-  #         if ('title' in rec) {
-  #           listMenu.append('<li class="list-group-item" style="cursor:cursor;width:100%%;display:inline-block;padding:5px 5px 2px 10px;font-weight:bold;color:white;background:%(color)s">' + rec.title + '</li> ');
-  #         } else {
-  #           if (rec.url != undefined) { var content = '<a href="' + rec.url + '" style="color:black">' + rec.label + '</a>' ;} else {var content = rec.label;};
-  #           listMenu.append('<li class="list-group-item" style="cursor:pointer;width:100%%;display:inline-block;padding:2px 5px 2px 10px">' + content + '</li> '); }
-  #       });
-  #       if (markdownFnc != false) {
-  #         listMenu.append('<li class="list-group-item" style="cursor:cursor;width:100%%;display:inline-block;padding:5px 5px 2px 10px;font-weight:bold;color:white;background:%(color)s">MarkDown</li> ');
-  #         listMenu.append('<li onclick="CopyMarkDown(\\''+ markdownFnc +'\\');" class="list-group-item" style="cursor:pointer;width:100%%;display:inline-block;padding:2px 5px 2px 10px"><i class="fas fa-thumbtack"></i>&nbsp;&nbsp;Copy MarkDown</li> ');};
-  #       $('#popup').css({'padding': '0', 'width': '200px'});
-  #       $('#popup').show()''' % {'color': self._report.theme.colors[9]})
 
   def paste(self, jsFnc):
     """ Generic click function """
@@ -1052,10 +1034,10 @@ Attributes:
         %(jsFnc)s 
       })''' % {'jqId': self.jqId, 'jsFnc': jsFnc})
 
-  def filter(self, jsId, colName, allSelected=True, filterGrp=None, operation="=", itemType="string"):
-    filterObj = {"operation": operation, 'itemType': itemType, 'allIfEmpty': allSelected, 'colName': colName, 'val': self.val, 'typeVal': 'js'}
-    self._report.jsSources.setdefault(jsId, {}).setdefault('_filters', {})[self.htmlCode] = filterObj
-    return self
+  # def filter(self, jsId, colName, allSelected=True, filterGrp=None, operation="=", itemType="string"):
+  #   filterObj = {"operation": operation, 'itemType': itemType, 'allIfEmpty': allSelected, 'colName': colName, 'val': self.val, 'typeVal': 'js'}
+  #   self._report.jsSources.setdefault(jsId, {}).setdefault('_filters', {})[self.htmlCode] = filterObj
+  #   return self
 
   # -------------------------------------------------------------------------------------------------------------------
   #                    OUTPUT METHODS
@@ -1099,6 +1081,25 @@ http://python-docx.readthedocs.io/en/latest/
       subclasses must override to_xls(), %s !
       Go to https://xlsxwriter.readthedocs.io/working_with_tables.html for more details  
     ''' % self.__class__.__name__)
+
+  def ts(self, name=None):
+    """
+    Description:
+    -----------
+    Component export for an Angular app.
+    This will allow to build apps directly from reports using each underlying components available in the framework.
+
+    Attributes:
+    ----------
+    :param name: Optional. The component name. Can be set to define test components
+    """
+    if name is None:
+      name = self.__class__.__name__
+    folder = name.lower()
+    self._out_mode = "angular"
+    html = self.html()
+    return {'folder': name.lower(), 'class': "Epyk%sComponent" % name, 'externalVars': '', 'css': self.attr['css'],
+            'htmlTag': 'epyk-%s' % folder, 'build': self._js__builder__.strip(), 'html': html, 'options': self._jsStyles}
 
   def html(self):
     str_result = []
