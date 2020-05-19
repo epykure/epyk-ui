@@ -25,7 +25,7 @@ class Plotly(object):
             agg_y.setdefault(agg_key, {})[y] = agg_y.get(agg_key, {}).get(y, 0) + float(rec[y] if rec[y] else 0)
       z_array = sorted(list(z_a))
       x_array = sorted(list(x_a))
-      naps = {'datasets': [], 'series': []}
+      naps = {'datasets': [], 'series': [], 'python': True}
       for y in y_columns:
         nap = []
         for z in z_array:
@@ -34,6 +34,10 @@ class Plotly(object):
         naps['datasets'].append(nap)
         naps['series'].append(y)
       return naps
+
+  @staticmethod
+  def map(data):
+    return {'datasets': data, 'series': [], 'python': True}
 
   @staticmethod
   def countries(data, country_col, size_col, scale=False):
@@ -112,7 +116,7 @@ class Plotly(object):
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     """
     if data is None:
-      return []
+      return {'datasets': [], 'python': True, 'series': y_columns}
 
     agg_data = {}
     for rec in data:
@@ -126,7 +130,7 @@ class Plotly(object):
         series['x'].append(x)
         series['y'].append(y)
       data.append(series)
-    return data
+    return {'datasets': data, 'python': True, 'series': y_columns}
 
   @staticmethod
   def xy_text(data, y_columns, x_axis, text=None):
@@ -158,7 +162,7 @@ class Plotly(object):
         series['y'].append(y)
         series['text'].append(texts.get(c, {}).get(x, ''))
       data.append(series)
-    return data
+    return {'datasets': data, 'python': True, 'series': y_columns}
 
   @staticmethod
   def xyz(data, y_columns, x_axis, z_axis):
@@ -192,7 +196,7 @@ class Plotly(object):
         series['y'].append(y)
         series['z'].append(agg_z.get(c, {}).get(x, 0))
       data.append(series)
-    is_data = {"labels": labels, 'datasets': [], 'series': []}
+    is_data = {"labels": labels, 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["datasets"].append(data[i])
       is_data["series"].append(l)
@@ -234,7 +238,7 @@ class Plotly(object):
         series['y'].append([y, y + dy])
         series['z'].append([z, z + dz])
       data.append(series)
-    is_data = {"labels": labels, 'datasets': [], 'series': []}
+    is_data = {"labels": labels, 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["datasets"].append(data[i])
       is_data["series"].append(l)
@@ -303,6 +307,10 @@ class ChartJs(object):
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     """
+    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
+    if data is None:
+      return is_data
+
     agg_data = {}
     for rec in data:
       for y in y_columns:
@@ -312,7 +320,7 @@ class ChartJs(object):
     for c in y_columns:
       for x, y in agg_data.get(c, {}).items():
         labels.add(x)
-    is_data = {"labels": labels, 'datasets': [], 'series': []}
+    is_data["labels"] = labels
     for i, y in enumerate(y_columns):
       is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in labels])
       is_data["series"].append(y)
@@ -342,7 +350,7 @@ class ChartJs(object):
         labels.add(x)
         series.append({"x": x, "y": y})
       data.append(series)
-    is_data = {"labels": [], 'datasets': [], 'series': []}
+    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["labels"].append(l)
       is_data["datasets"].append(data[i])
@@ -350,7 +358,7 @@ class ChartJs(object):
     return is_data
 
   @staticmethod
-  def xyz(data, y_columns, x_axis, z_axis):
+  def xyz(data, y_columns, x_axis, z_axis=None):
     """
     Description:
     ------------
@@ -376,7 +384,7 @@ class ChartJs(object):
         labels.add(x)
         series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 1)})
       data.append(series)
-    is_data = {"labels": labels, 'datasets': [], 'series': []}
+    is_data = {"labels": labels, 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["datasets"].append(data[i])
       is_data["series"].append(l)
@@ -406,7 +414,7 @@ class C3(object):
     for c in y_columns:
       for x, y in agg_data.get(c, {}).items():
         labels.add(x)
-    is_data = {"labels": labels, 'datasets': [], 'series': []}
+    is_data = {"labels": labels, 'datasets': [], 'series': [], 'python': True}
     for i, y in enumerate(y_columns):
       is_data["datasets"].append([agg_data.get(y, {}).get(x) for x in labels])
       is_data["series"].append(y)
@@ -435,11 +443,11 @@ class NVD3(object):
     labels, data = set(), []
     for c in y_columns:
       series = []
-      for x, y in agg_data[c].items():
+      for x, y in agg_data.get(c, {}).items():
         labels.add(x)
         series.append({"x": x, "y": y})
       data.append(series)
-    is_data = {"labels": [], 'datasets': [], 'series': []}
+    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["labels"].append(l)
       is_data["datasets"].append(data[i])
@@ -466,11 +474,11 @@ class NVD3(object):
     labels, data = set(), []
     for c in y_columns:
       series = []
-      for x, y in agg_data[c].items():
+      for x, y in agg_data.get(c, {}).items():
         labels.add(x)
         series.append({"label": x, "y": y})
       data.append(series)
-    is_data = {"labels": [], 'datasets': [], 'series': []}
+    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["labels"].append(l)
       is_data["datasets"].append(data[i])

@@ -536,6 +536,13 @@ class ChartLine(Chart):
   @property
   def _js__convertor__(self):
     return '''
+      if(data.python){ 
+        result = {'columns': [], type: options.type};
+        result['columns'].push(['x'].concat(data.labels));
+        data.series.forEach(function(name, i){
+          result['columns'].push([name].concat(data.datasets[i]));
+        }); 
+      } else {
         var temp = {}; var labels = []; var uniqLabels = {};
         options.y_columns.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){ 
@@ -549,7 +556,7 @@ class ChartLine(Chart):
           labels.forEach(function(x){
             if(temp[series][x] == undefined){dataSet.push(null)} else {dataSet.push(temp[series][x])}}); columns.push(dataSet)});
         var result = {columns: columns}
-        '''
+      }'''
 
   @property
   def axis(self):
@@ -630,17 +637,24 @@ class ChartScatter(ChartLine):
   @property
   def _js__convertor__(self):
     return '''
-      var tempVal = {}; var tempX = {}; var labels = []; 
-      options.y_columns.forEach(function(series){tempVal[series] = []; tempX[series +"_x"] = []});
-      data.forEach(function(rec){ 
-        options.y_columns.forEach(function(name){
-          if(rec[name] !== undefined){
-            if(!(rec[options.x_column] in tempVal[name])){tempVal[name] = [name, rec[name]]; tempX[name +"_x"] = [name +"_x", rec[options.x_column]]}
-            else {tempVal[name].push(rec[name]); tempX[name +"_x"].push(rec[options.x_column])}}})});
-      result = {'columns': [], 'xs': {}};
-      options.y_columns.forEach(function(series){
-        result.columns.push(tempVal[series]); result.columns.push(tempX[series +"_x"]); result.xs[series] = series +"_x"})
-      '''
+      if(data.python){ 
+        result = {'columns': [], type: options.type};
+        result['columns'].push(['x'].concat(data.labels));
+        data.series.forEach(function(name, i){
+          result['columns'].push([name].concat(data.datasets[i]));
+        });
+      } else {
+        var tempVal = {}; var tempX = {}; var labels = []; 
+        options.y_columns.forEach(function(series){tempVal[series] = []; tempX[series +"_x"] = []});
+        data.forEach(function(rec){ 
+          options.y_columns.forEach(function(name){
+            if(rec[name] !== undefined){
+              if(!(rec[options.x_column] in tempVal[name])){tempVal[name] = [name, rec[name]]; tempX[name +"_x"] = [name +"_x", rec[options.x_column]]}
+              else {tempVal[name].push(rec[name]); tempX[name +"_x"].push(rec[options.x_column])}}})});
+        result = {'columns': [], 'xs': {}};
+        options.y_columns.forEach(function(series){
+          result.columns.push(tempVal[series]); result.columns.push(tempX[series +"_x"]); result.xs[series] = series +"_x"})
+      }'''
 
 
 class ChartPie(ChartLine):
@@ -650,21 +664,28 @@ class ChartPie(ChartLine):
   @property
   def _js__convertor__(self):
     return '''
-      var temp = {}; var labels = {};
-      data.forEach(function(rec){ 
-        if(!(rec[options.x_column] in temp)){temp[rec[options.x_column]] = {}};
-        options.y_columns.forEach(function(name){
-          labels[name] = true; 
-          if(rec[name] !== undefined){
-            if(!(name in temp[rec[options.x_column]])){temp[rec[options.x_column]][name] = rec[name]} else{temp[rec[options.x_column]][name] += rec[name]}}})});
-      columns = []; var labels = Object.keys(labels); var count = 0;
-      for(var series in temp){
-        var values = [count]; count += 1;
-        labels.forEach(function(label){
-          if(temp[series][label] !== undefined){values.push(temp[series][label])} else{values.push(null)}});
-        columns.push(values)};
-      var result = {columns: columns};
-      '''
+      if(data.python){ 
+        result = {'columns': [], type: options.type};
+        result['columns'].push(['x'].concat(data.labels));
+        data.series.forEach(function(name, i){
+          result['columns'].push([name].concat(data.datasets[i]));
+        }); 
+      } else {
+        var temp = {}; var labels = {};
+        data.forEach(function(rec){ 
+          if(!(rec[options.x_column] in temp)){temp[rec[options.x_column]] = {}};
+          options.y_columns.forEach(function(name){
+            labels[name] = true; 
+            if(rec[name] !== undefined){
+              if(!(name in temp[rec[options.x_column]])){temp[rec[options.x_column]][name] = rec[name]} else{temp[rec[options.x_column]][name] += rec[name]}}})});
+        columns = []; var labels = Object.keys(labels); var count = 0;
+        for(var series in temp){
+          var values = [count]; count += 1;
+          labels.forEach(function(label){
+            if(temp[series][label] !== undefined){values.push(temp[series][label])} else{values.push(null)}});
+          columns.push(values)};
+        var result = {columns: columns}
+      }'''
 
   def labels(self, labels, series_id='x'):
     self._labels = labels

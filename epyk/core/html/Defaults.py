@@ -19,6 +19,7 @@ BIG_ICONS = 15
 HTML_HIGHLIGHT = {"border": {'attr': "1px solid %(color)s", 'color': ("success", 1)}}
 
 FAVICON_URL = "https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo.ico"
+FAVICON_DEV_URL = "https://raw.githubusercontent.com/epykure/epyk-templates/master/static/images/logo.ico"
 
 # Component defaults
 BUTTONS_CHECK_HEIGHT = 20

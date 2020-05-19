@@ -435,3 +435,66 @@ class Pivot(GrpCls.ClassHtml):
     if self._css_pt_label is None:
       self._css_pt_label = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).pivot_filter_label()
     return self._css_pt_label
+
+
+class Aggrid(GrpCls.ClassHtml):
+
+  def __init__(self, htmlObj):
+    super(Aggrid, self).__init__(htmlObj)
+    self._css_head, self._css_row_even, self._css_row_odd = 3 * [None]
+    self._css_cell_focus, self._css_cell = 2 * [None]
+    self.classList['other'].add(self.cls_head)
+    self.classList['other'].add(self.cls_row_even)
+    self.classList['other'].add(self.cls_row_odd)
+    self.classList['other'].add(self.cls_cell_focus)
+    self.classList['other'].add(self.cls_cell)
+
+  @property
+  def cls_head(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_head is None:
+      self._css_head = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_head()
+    return self._css_head
+
+  @property
+  def cls_row_even(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_row_even is None:
+      self._css_row_even = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_row_even()
+    return self._css_row_even
+
+  @property
+  def cls_row_odd(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_row_odd is None:
+      self._css_row_odd = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_row_odd()
+    return self._css_row_odd
+
+  @property
+  def cls_cell_focus(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_cell_focus is None:
+      self._css_cell_focus = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_cell_focus()
+    return self._css_cell_focus
+
+  @property
+  def cls_cell(self):
+    """
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_cell is None:
+      self._css_cell = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['other']).ag_cell()
+    return self._css_cell

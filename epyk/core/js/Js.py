@@ -783,7 +783,7 @@ class JsBase(object):
     self._src._props.setdefault('js', {}).setdefault('prototypes', {})["%s.prototype.%s" % (pyClass._jsClass, fncName)] = {"content": ";".join(jsData), 'pmts': pmts}
     return self
 
-  def request_http(self, varName, method_type, url):
+  def request_http(self, method_type, url, varName="response"):
     """
     Description:
     ------------
@@ -807,8 +807,24 @@ class JsBase(object):
     :rtype: JsObjects.XMLHttpRequest
     """
     method_type = JsUtils.jsConvertData(method_type, None)
-    url = JsUtils.jsConvertData(url, None)
     return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+
+  def post(self, url, jsData=None, varName="response"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param url: String. The url path of the HTTP request
+    :param jsData:
+    :param varName: String. Optional. The variable name created in the Javascript (default response)
+
+    :rtype: JsObjects.XMLHttpRequest
+    """
+    method_type = JsUtils.jsConvertData('POST', None)
+    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url).send(jsData)
+    return request
 
   def request_rpc(self, varName, method_type, fnc, url, extra_params=None):
     """

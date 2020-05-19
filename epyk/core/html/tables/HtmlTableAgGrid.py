@@ -2,9 +2,8 @@
 from epyk.core.html import Html
 
 from epyk.core.data import DataClass
-from epyk.core.data import DataEnum
+from epyk.core.js.packages import JsAgGrid
 from epyk.core.data import DataGroup
-from epyk.core.data import DataEnumMulti
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable
@@ -12,19 +11,48 @@ from epyk.core.css.styles import GrpClsTable
 
 class Table(Html.Html):
   name, category, callFnc = 'Table', 'Tables', 'table'
-  __reqJs = ['ag-grid']
+  __reqJs, __reqCss = ['ag-grid'], ['ag-grid']
 
   def __init__(self, report, records, width, height, htmlCode, options, profile):
     data, columns, self.__config = [], [], None
     super(Table, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.config.update(options)
     if records is not None:
       self.config.data = records
+
+  def headers(self, colsDef):
+    """
+
+    :param colsDef:
+    """
+    for col in self.config['columnDefs']:
+      if col['colId'] in colsDef:
+        col.update(colsDef[col['colId']])
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsTable.Aggrid(self)
+    return self._styleObj
 
   @property
   def config(self):
     if self.__config is None:
       self.__config = TableConfig(self._report)
     return self.__config
+
+  @property
+  def js(self):
+    """
+    Return the Javascript internal object
+
+    :return: A Javascript object
+
+    :rtype: JsAgGrid.AgGrid
+    """
+    if self._js is None:
+      self._js = JsAgGrid.AgGrid(self._report, selector=self.tableId, setVar=False, parent=self)
+    return self._js
 
   def add_column(self, field, title=None):
     """
@@ -47,7 +75,10 @@ class Table(Html.Html):
     return "%s_obj" % self.htmlId
 
   def build(self, data=None, options=None, profile=False):
-    return 'var %s =  new agGrid.Grid(%s, %s)' % (self.tableId, self.dom.varName, self.config)
+    if data:
+      return self.js.setRowData(data)
+
+    return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlId)s, %(tableId)s)' % {'tableId': self.tableId, 'config': self.config, 'htmlId': self.dom.varName}
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -515,7 +546,8 @@ class Column(DataClass):
     """
     Description:
     -----------
-    The index of the row group. If the column is not grouped, this field is null. If multiple columns are used to group, this index provides the order of the grouping.
+    The index of the row group. If the column is not grouped, this field is null.
+    If multiple columns are used to group, this index provides the order of the grouping.
 
     https://www.ag-grid.com/javascript-grid-column-definitions/
     """

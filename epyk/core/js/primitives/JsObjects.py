@@ -390,7 +390,7 @@ class XMLHttpRequest(object):
     self._src, self.__headers, self.url = report, {}, url
     self.__mod_name, self.__mod_path, self.method = None, None, method_type
     self.__req_success, self.__req_fail, self.__req_send = None, None, None
-    self.__url_prefix = ""
+    self.__url_prefix, self.__responseType = "", 'json'
     self.varId = varName
     if url is not None:
       self.open(method_type, url)
@@ -430,7 +430,7 @@ class XMLHttpRequest(object):
     """
     return JsNumber.JsNumber("%s.status" % self.varId)
 
-  def responseType(self):
+  def responseType(self, value=None):
     """
     Description:
     ------------
@@ -440,6 +440,10 @@ class XMLHttpRequest(object):
 
 			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType
     """
+    if value is not None:
+      self.__responseType = value
+      return self
+
     return JsString.JsString("%s.responseType" % self.varId, isPyData=False)
 
   @property
@@ -626,14 +630,15 @@ class XMLHttpRequest(object):
 
   def toStr(self):
     request = ["var %s = new XMLHttpRequest()" % self.varId]
+    request.append("%s.responseType = '%s'" % (self.varId, self.__responseType))
     request.append("%s.open(%s, '%s%s')" % (self.varId, self.method, self.url, self.__url_prefix))
     for k, v in self.__headers.items():
       request.append("%s.setRequestHeader('%s', '%s')" % (self.varId, k, v))
     if self.__req_success is not None:
       if self.__req_fail is not None:
-        request.append("%s.onload = function() {}" % self.varId)
+        request.append("%s.onload = function(){}" % self.varId)
       else:
-        request.append("%s.onload = function() {%s}" % (self.varId, JsUtils.jsConvertFncs(self.__req_success, toStr=True)))
+        request.append("%(varId)s.onload = function(){var data = %(varId)s.response; %(jsFncs)s}" % {'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_success, toStr=True)})
     if self.__req_send is None:
       raise Exception("The send method must be called")
 

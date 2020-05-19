@@ -204,7 +204,7 @@ JS_IMPORTS = {
   'ag-grid': {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'modules': [
-      {'script': 'ag-grid-community.min.js', 'version': '23.0.2', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'ag-grid-community.min.js', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # module for tabulator
   'tabulator': {
@@ -816,7 +816,7 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'showdown.min.js', 'path': 'showdown/%(version)s/', 'version': '1.9.1', 'cdnjs': CDNJS_REPO}
     ]
-  }
+  },
 }
 
 
@@ -1048,6 +1048,12 @@ CSS_IMPORTS = {
     'modules': [
       {'script': 'json-formatter.css', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
     ]},
+
+  # AG Grid tables
+  'ag-grid': {
+    'website': 'https://www.ag-grid.com/javascript-grid/',
+    'modules': [
+      {'script': 'ag-grid.min.css', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}]},
 }
 
 

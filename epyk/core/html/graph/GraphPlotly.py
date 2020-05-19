@@ -149,22 +149,31 @@ class Chart(Html.Html):
   @property
   def _js__convertor__(self):
     return '''
-      var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
-      options.y_columns.forEach(function(series){temp[series] = {}});
-      data.forEach(function(rec){ 
-        options.y_columns.forEach(function(name){
-          if(rec[name] !== undefined){
-            if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-            temp[name][rec[options.x_column]] = rec[name]}})});
-      options.y_columns.forEach(function(series){
-        dataSet = {x: [], y: [], name: series, type: options.type, mode: options.mode, marker: {}};
-        if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
-        if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
-        labels.forEach(function(x, i){
-          dataSet.x.push(x);
-          if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])}
-        }); result.push(dataSet)})
-      '''
+      if(data.python){
+        result = [];
+        data.datasets.forEach(function(values, i){
+          dataSet = {x: [], y: [], name: data.series[i], type: options.type, mode: options.mode, marker: {}};
+          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          result.push(Object.assign(dataSet, values))
+        }); 
+      } else {
+        var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+        options.y_columns.forEach(function(series){temp[series] = {}});
+        data.forEach(function(rec){ 
+          options.y_columns.forEach(function(name){
+            if(rec[name] !== undefined){
+              if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+              temp[name][rec[options.x_column]] = rec[name]}})});
+        options.y_columns.forEach(function(series){
+          dataSet = {x: [], y: [], name: series, type: options.type, mode: options.mode, marker: {}};
+          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          labels.forEach(function(x, i){
+            dataSet.x.push(x);
+            if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])}
+          }); result.push(dataSet)})
+      }'''
 
   @property
   def js(self):
@@ -2201,22 +2210,30 @@ class Pie(Chart):
   @property
   def _js__convertor__(self):
     return '''
-      var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
-      options.y_columns.forEach(function(series){temp[series] = {}});
-      data.forEach(function(rec){ 
-        options.y_columns.forEach(function(name){
-          if(rec[name] !== undefined){
-            if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-            temp[name][rec[options.x_column]] = rec[name]}})});
-      options.y_columns.forEach(function(series){
-        dataSet = {label: [], values: [], name: series, type: options.type, mode: options.mode, marker: {}};
+      if(data.python){
+        result = []; 
+        dataSet = {label: [], values: [], name: data.series, type: options.type, mode: options.mode, marker: {}};
         if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
         if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
-        labels.forEach(function(x, i){
-          dataSet.label.push(x);
-          if(temp[series][x] == undefined){dataSet.values.push(null)} else{dataSet.values.push(temp[series][x])}
-        }); result.push(dataSet)})
-      '''
+        data.datasets.forEach(function(rec, i){
+          dataSet.label = rec.x; dataSet.values = rec.y}); result.push(dataSet)
+      } else {
+        var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+        options.y_columns.forEach(function(series){temp[series] = {}});
+        data.forEach(function(rec){ 
+          options.y_columns.forEach(function(name){
+            if(rec[name] !== undefined){
+              if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+              temp[name][rec[options.x_column]] = rec[name]}})});
+        options.y_columns.forEach(function(series){
+          dataSet = {label: [], values: [], name: series, type: options.type, mode: options.mode, marker: {}};
+          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          labels.forEach(function(x, i){
+            dataSet.label.push(x);
+            if(temp[series][x] == undefined){dataSet.values.push(null)} else{dataSet.values.push(temp[series][x])}
+          }); result.push(dataSet)})
+      }'''
 
 
 class Surface(Chart):
@@ -2247,12 +2264,17 @@ class Surface(Chart):
   @property
   def _js__convertor__(self):
     return '''
+      if(data.python){
+        result = []; 
+        data.datasets.forEach(function(dataset, i){
+          result.push( {z: dataset, type: options.type} ) 
+        }); console.log(result);
+      } else {
         var labels = []; var result = [] ;
         data.series.forEach(function(name, i){
           result.push( {z: data.datasets[i], type: options.type} );
-        });
-        return result
-        '''
+        })
+      }'''
 
 
 class Scatter3D(Chart):

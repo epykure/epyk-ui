@@ -15,6 +15,9 @@ class DataClass(object):
   def __getitem__(self, i):
     return self._attrs[i]
 
+  def update(self, vals):
+    self._attrs.update(vals)
+
   def attrs(self):
     return self._attrs.items()
 
@@ -237,6 +240,8 @@ class DataEnumMulti(object):
 
     return result
 
+
+chartJs = DataPy.ChartJs()
 
 plotly = DataPy.Plotly()
 
