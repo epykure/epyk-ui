@@ -244,6 +244,26 @@ class Plotly(object):
       is_data["series"].append(l)
     return is_data
 
+  @staticmethod
+  def table(data, columns, dflt=''):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data: List of dict. The Python recordset
+    :param columns: List. The key in the recordset to be used to build the row
+    :param dflt: Optional. The default value if key is missing
+    """
+    result = {'values': [], 'python': True, 'header': [[c] for c in columns]}
+    if data is None:
+      return result
+
+    for rec in data:
+      result['values'].append([rec.get(c, dflt) for c in columns])
+    return result
+
 
 class Vis(object):
 
