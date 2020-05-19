@@ -585,7 +585,7 @@ class RowAPI(JsPackage):
     """
     self.node()
     self._js.append("to$()")
-    return JsQuery.JQuery(jqId=self.toStr())
+    return JsQuery.JQuery(src=self.src, selector=self.toStr(), setVar=False)
 
   def remove(self, update=False):
     """
@@ -707,6 +707,16 @@ class DatatableAPI(JsPackage):
     """
     return RowAPI(self.src, selector="%s.rows()" % self.varId, setVar=False, parent=self._parent)
 
+  def adjust(self):
+    """
+    Adjust the column sizes of a newly shown table:
+
+    Related Pages:
+
+			https://datatables.net/reference/api/columns.adjust()
+    """
+    return JsObjects.JsVoid("%s.columns.adjust()" % self.varId)
+
   def container_jquery(self):
     """
     Get the div container node for the table in the API's context.
@@ -714,8 +724,6 @@ class DatatableAPI(JsPackage):
     Related Pages:
 
 			https://datatables.net/reference/api/table().container()
-
-    :return:
     """
     return JsQuery.JQuery(self.src, selector="jQuery(%s.table().container())" % self.varId, setVar=False, parent=self._parent)
 
@@ -726,8 +734,6 @@ class DatatableAPI(JsPackage):
     Related Pages:
 
 			https://datatables.net/reference/api/table().container()
-
-    :return:
     """
     return JsNodeDom.JsDoms(None, report=self.src, varName="%s.table().container()" % self.varId, setVar=False)
 
@@ -738,8 +744,6 @@ class DatatableAPI(JsPackage):
     Related Pages:
 
 			https://datatables.net/reference/api/table().footer()
-
-    :return:
     """
 
   def header(self):
@@ -760,8 +764,6 @@ class DatatableAPI(JsPackage):
     Related Pages:
 
 			https://datatables.net/reference/api/table().node()
-
-    :return:
     """
     return self.fnc("nodes()")
 
@@ -772,8 +774,6 @@ class DatatableAPI(JsPackage):
     Related Pages:
 
 			https://datatables.net/reference/api/column().nodes()
-
-    :return:
     """
     return JsQuery.JQuery(selector="%s.nodes().to$()" % self.varId, setVar=False)
 

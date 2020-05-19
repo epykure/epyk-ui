@@ -484,3 +484,24 @@ class NVD3(object):
       is_data["datasets"].append(data[i])
       is_data["series"].append(l)
     return is_data
+
+
+class Datatable(object):
+
+  @staticmethod
+  def table(data, columns, dflt=''):
+    """
+    Description:
+    ------------
+    Tranform the data in a list of list for Datatable
+
+    Attributes:
+    ----------
+    :param data: List of dict. The Python recordset
+    :param columns: List. The key in the recordset to be used to build the row
+    :param dflt: Optional. The default value if key is missing
+    """
+    records = []
+    for rec in data:
+      records.append([rec.get(c, dflt) for c in columns])
+    return records

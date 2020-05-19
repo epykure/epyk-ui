@@ -252,3 +252,5 @@ nvd3 = DataPy.NVD3()
 c3 = DataPy.C3()
 
 bb = DataPy.C3()
+
+datatable = DataPy.Datatable()
