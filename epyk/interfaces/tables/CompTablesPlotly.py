@@ -32,7 +32,7 @@ class Plotly(object):
     data_rows, _header = [], []
     cols = cols or []
     rows = rows or []
-    if not cols and not rows:
+    if len(records) > 0 and not cols and not rows:
       cols = list(records[0].keys())
     for r in rows:
       data_rows.append([])

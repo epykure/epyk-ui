@@ -4,6 +4,7 @@ import sys
 from epyk.core.data import Data
 from epyk.core.js import JsUtils
 from epyk.core.data import DataPy
+from epyk.core.data import DataEvent
 
 
 class DataClass(object):
@@ -241,6 +242,8 @@ class DataEnumMulti(object):
     return result
 
 
+# Shortcut data in the framework.
+# All those features are available in the report object but this allow a shortcut when the context is not necessary
 chartJs = DataPy.ChartJs()
 
 plotly = DataPy.Plotly()
@@ -254,3 +257,5 @@ c3 = DataPy.C3()
 bb = DataPy.C3()
 
 datatable = DataPy.Datatable()
+
+events = DataEvent.DataEvents()
