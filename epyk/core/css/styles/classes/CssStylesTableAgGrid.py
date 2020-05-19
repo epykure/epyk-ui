@@ -7,7 +7,7 @@ class CssAgHead(CssStyle.Style):
   classname = "ag-header-cell-label"
 
   def customize(self):
-    self.css({'color': self.rptObj.theme.greys[0], 'background-color': self.rptObj.theme.greys[-1]})
+    self.css({'color': self.rptObj.theme.greys[0], 'padding': '0 0 0 5px', 'background-color': self.rptObj.theme.greys[-1]})
 
 
 class CssAgOddRow(CssStyle.Style):
