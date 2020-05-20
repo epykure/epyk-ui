@@ -52,7 +52,7 @@ class Plotly(object):
     if aggregated:
       max_value = max(aggregated.values())
       factor = scale if scale else 50 / max_value
-      record = {'locations': [], 'marker': {'size': []}}
+      record = {'locations': [], 'marker': {'size': []}, 'python': True}
       for k, v in aggregated.items():
         record['locations'].append(k)
         record['marker']['size'].append(v * factor)

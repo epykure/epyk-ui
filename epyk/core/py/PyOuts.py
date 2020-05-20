@@ -475,11 +475,27 @@ class PyOuts(object):
             f.write("%s\n" % html_obj.to_markdown(html_obj.vals))
       return file_Path
 
-  def str(self):
+  def html(self):
     """
 
     :return:
     """
+    self.html_tmpl = HtmlTmplBase.STATIC_PAGE
+    results = self._to_html_obj()
+    importMng = Imports.ImportManager(online=True, report=self._report)
+    require_js = importMng.to_requireJs(results, self.excluded_packages)
+    results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
+    results['jsFrgs_in_req'] = require_js['jsFrgs']
+    htmlParts = []
+    cssParts = dict(self._report.body.style.get_classes_css())
+    for objId in self._report.content:
+      if self._report.htmlItems[objId].inReport:
+        htmlParts.append(self._report.htmlItems[objId].html())
+      cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
+    body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
+    results['body'] = body
+    results['header'] = self._report.headers
+    return self.html_tmpl.strip() % results
 
   def pdf(self):
     """

@@ -324,7 +324,7 @@ class Scatter(GraphPlotly.Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -361,7 +361,7 @@ class Chorolet(GraphPlotly.Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -398,7 +398,7 @@ class Choropleth(GraphPlotly.Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -408,7 +408,7 @@ class Choropleth(GraphPlotly.Chart):
   def layout(self):
     """
 
-    :rtype: LayoutGeo
+    :rtype: LayoutGeoMap
     """
     if self._layout is None:
       self._layout = LayoutGeoMap(self._report)
@@ -430,13 +430,9 @@ class Choropleth(GraphPlotly.Chart):
   @property
   def _js__convertor__(self):
     return '''
-        var labels = []; var result = [] ;
-        data.forEach(function(series, i){
-          var dataset = Object.assign(series, options);
-          result.push( dataset );
-        }); 
-        return result
-        '''
+      var result = [] ;
+      data.forEach(function(series, i){var dataset = Object.assign(series, options); result.push(dataset)}); 
+      '''
 
 
 class BubbleGeo(GraphPlotly.Chart):
@@ -446,7 +442,7 @@ class BubbleGeo(GraphPlotly.Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -480,10 +476,7 @@ class BubbleGeo(GraphPlotly.Chart):
   @property
   def _js__convertor__(self):
     return '''
-      var labels = []; var result = [] ;
-      data.forEach(function(series, i){
-        var dataset = Object.assign(series, options);
-        result.push( dataset );
-      }); 
+      var result = [] ;
+      data.forEach(function(series, i){var dataset = Object.assign(series, options); result.push( dataset )}); 
       return result
       '''
