@@ -977,7 +977,7 @@ class Tabulator(JsPackage):
     column = JsUtils.jsConvertData(column, None)
     return JsObjects.JsPromise("%s.hideColumn(%s)" % (self.varId, column))
 
-  def hideColumna(self, columna):
+  def hideColumns(self, columna):
     """
     You can hide a visible column at any point using the hideColumn function. Pass the field name of the column you wish to hide as the first parameter of the function.
 
@@ -1138,7 +1138,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsPromise("%s.showColumn(%s)" % (self.varId, JsUtils.jsConvertData(column, None)))
 
-  def showColumna(self, columna):
+  def showColumns(self, columna):
     """
     Description:
     ------------

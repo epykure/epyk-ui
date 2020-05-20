@@ -204,7 +204,7 @@ JS_IMPORTS = {
   'ag-grid': {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'modules': [
-      {'script': 'ag-grid-community.min.js', 'version': '23.0.2', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'ag-grid-community.min.js', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # module for tabulator
   'tabulator': {
@@ -212,8 +212,8 @@ JS_IMPORTS = {
     'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator'},
     'modules': [
       # core only needed for Jupyter for some reasons
-      {'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
-      {'script': 'tabulator.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}
+      #{'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
+      {'script': 'tabulator.min.js', 'version': '4.6.3', 'path': 'tabulator-tables@%(version)s/dist/js/', 'cdnjs': "https://unpkg.com"}
     ],
     'website': 'http://tabulator.info/'
   },
@@ -816,7 +816,7 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'showdown.min.js', 'path': 'showdown/%(version)s/', 'version': '1.9.1', 'cdnjs': CDNJS_REPO}
     ]
-  }
+  },
 }
 
 
@@ -866,7 +866,8 @@ CSS_IMPORTS = {
   'tabulator': {
     'website': 'http://tabulator.info',
     'modules': [
-      {'script': 'tabulator.min.css', 'version': '4.4.3', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'tabulator.min.css', 'version': '4.6.3', 'path': 'tabulator-tables@%(version)s/dist/css/', 'cdnjs': "https://unpkg.com"}
+      #{'script': 'tabulator.min.css', 'version': '4.4.3', 'path': 'tabulator/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1047,6 +1048,12 @@ CSS_IMPORTS = {
     'modules': [
       {'script': 'json-formatter.css', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
     ]},
+
+  # AG Grid tables
+  'ag-grid': {
+    'website': 'https://www.ag-grid.com/javascript-grid/',
+    'modules': [
+      {'script': 'ag-grid.min.css', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}]},
 }
 
 

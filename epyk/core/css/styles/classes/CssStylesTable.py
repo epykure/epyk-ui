@@ -10,7 +10,6 @@ class CssDataTable(CssStyle.Style):
 
   def customize(self):
     self.css({'border': "1px solid %s" % self.rptObj.theme.greys[3]}, important=True)
-    self.hover.css({'border': "1px solid %s" % self.rptObj.theme.success[1]}, important=True)
 
 
 class CssDataTableHeader(CssStyle.Style):

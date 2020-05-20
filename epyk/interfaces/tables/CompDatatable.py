@@ -28,6 +28,8 @@ class Datatables(object):
       data.append([rec.get(c) for c in cols + rows])
 
     table = html_tables.HtlmTableDatatable.Table(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
+    table.config.autoWidth = True
+    table.config.scrollCollapse = True
     for c in cols + rows:
       col_def = table.config.columns
       col_def.title = c

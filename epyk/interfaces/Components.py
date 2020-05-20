@@ -126,6 +126,24 @@ class Components(object):
     return CompSliders.Sliders(self)
 
   @property
+  def _3d(self):
+    """
+    Description:
+    ------------
+    Group all the 3D charts
+    """
+    return CompCharts.Chart3d(self)
+
+  @property
+  def _2d(self):
+    """
+    Description:
+    ------------
+    Group all the 2D charts
+    """
+    return CompCharts.Chart2d(self)
+
+  @property
   def titles(self):
     """
     Description:

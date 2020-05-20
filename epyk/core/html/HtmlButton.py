@@ -7,6 +7,7 @@ from epyk.core.html.options import OptButton
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsQuery
 from epyk.core.js.statements import JsIf
 from epyk.core.js.objects import JsComponents
 
@@ -18,13 +19,14 @@ from epyk.core.css import Defaults_css
 class Button(Html.Html):
   name, category, callFnc = 'Button', 'buttons', 'button'
 
-  def __init__(self, report, text, icon, width, height, htmlCode, tooltip, profile, options):
-    if text is not None and not isinstance(text, list):
+  def __init__(self, report, text=None, icon=None, width=None, height=None, htmlCode=None, tooltip=None, profile=False, options=None):
+    text = text or []
+    if not isinstance(text, list):
       text = [text]
     for obj in text:
       if hasattr(obj, 'inReport'):
         obj.inReport = False
-    super(Button, self).__init__(report, text or [], code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+    super(Button, self).__init__(report, text, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self.add_icon(icon)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
@@ -219,7 +221,7 @@ class Checkbox(Html.Html):
             var bcIndex = %(breadCrumVar)s['params']['%(htmlCode)s'].indexOf(pItem.text());
             if(bcIndex > -1) {delete %(breadCrumVar)s['params']['%(htmlCode)s'].splice(bcIndex, 1)};
             $(this).html('<i class="fas fa-times %(disableCls)s"></i>'); pItem.addClass("%(disableCls)s")}
-        })''' % {'jsData': jsData, 'jqId': self.jqId, 'disableCls': self._report.style.cssName("CssLabelContainerDisabled"),
+        })''' % {'jsData': jsData, 'jqId': self.dom.jquery.varId, 'disableCls': self._report.style.cssName("CssLabelContainerDisabled"),
                  'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': self.htmlId, 'reset': json.dumps(reset)}
 
   def jsAdd(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None, isUnique=False):
@@ -241,7 +243,7 @@ class Checkbox(Html.Html):
           if (rec.checked){var checkData = '<i class="'+ %(jsStyles)s.icon + '" style="margin:2px"></i>'};
           var spanContent = '<span data-content="'+ rec.value + '" style="width:16px;display:inline-block;float:left;margin:0">'+ checkData +'</span><p style="margin:0" title="'+ rec.dsc + '">' + rec.name + '</p>';
           %(jqId)s.append($('<label style="' + strCss.join(";") + '">'+ spanContent +'</label>'))}
-      })''' % {'jsData': jsData, 'jsStyles': json.dumps(self._jsStyles), 'jqId': self.jqId, 'unique': json.dumps(isUnique)}
+      })''' % {'jsData': jsData, 'jsStyles': json.dumps(self._jsStyles), 'jqId': self.dom.jquery.varId, 'unique': json.dumps(isUnique)}
 
   def jsRemove(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):
     """
@@ -257,7 +259,7 @@ class Checkbox(Html.Html):
           var pItem = $(this).next(); var bcIndex = %(breadCrumVar)s['params']['%(htmlCode)s'].indexOf(pItem.text());
           if(bcIndex > -1) {delete %(breadCrumVar)s['params']['%(htmlCode)s'].splice(bcIndex, 1)};
           if (ldata.indexOf($(this).data('content')) > -1){$(this).parent().remove()}
-        })}''' % {'jsData': jsData, 'jqId': self.jqId, 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': self.htmlId}
+        })}''' % {'jsData': jsData, 'jqId': self.dom.jquery.varId, 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': self.htmlId}
 
   def jsItemState(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):
     """
@@ -383,7 +385,8 @@ class Checkbox(Html.Html):
 class CheckButton(Html.Html):
   name, category, callFnc = 'Check Button', 'Button', 'check'
 
-  def __init__(self, report, flag, tooltip, width, height, icon, label, htmlCode, options, profile):
+  def __init__(self, report, flag=False, tooltip=None, width=None, height=None, icon=None, label=None, htmlCode=None,
+               options=None, profile=None):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode,
                                       css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon("fas fa-check" if flag else "fas fa-times").css({"width": "12px"})
@@ -393,7 +396,7 @@ class CheckButton(Html.Html):
       self.input.style.css.color = self._report.theme.danger[1]
     self.input.style.middle()
     self.input.inReport = False
-    self.isDisable = options.get("disable", False)
+    self.isDisable = options.get("disable", False) if options is not None else False
     self.add_label(label, {"width": "none", "float": "none"}, position="after")
     self.add_icon(icon, {"float": 'none'}, position="after")
     self.css({'display': 'inline-block', 'margin-right': '10px'})
@@ -431,13 +434,17 @@ class CheckButton(Html.Html):
 
   @property
   def _js__builder__(self):
-    return ''' htmlObj.empty();
+    return ''' htmlObj.innerHTML = '';
       if (data === true || data == 'Y'){
-        htmlObj.append('<i class="fas fa-check" style="color:%(green)s;margin-bottom:2px;margin-left:2px"></i>');
-        htmlObj.parent().data('isChecked', true)} 
+        var i = document.createElement("i");
+        i.classList.add("fas"); i.classList.add("fa-check");
+        i.style.color = '%(green)s'; i.style.marginBottom = '2px'; i.style.marginLeft = '2px';
+        htmlObj.appendChild(i); htmlObj.parentNode.setAttribute('data-isChecked', true)}
       else {
-        htmlObj.append('<i class="fas fa-times" style="font-size:14px;margin-top:2px;margin-left:5px;color:%(red)s"></i>');
-        htmlObj.parent().data('isChecked', false)
+        var i = document.createElement("i");
+        i.classList.add("fas"); i.classList.add("fa-times");
+        i.style.color = '%(green)s'; i.style.marginBottom = '2px'; i.style.marginLeft = '2px';
+        htmlObj.appendChild(i); htmlObj.parentNode.setAttribute('data-isChecked', false)
       }''' % {'green': self._report.theme.success[1], 'red': self._report.theme.danger[1]}
 
   @property

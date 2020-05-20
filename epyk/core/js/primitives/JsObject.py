@@ -611,10 +611,10 @@ class JsObject(object):
     d = rptObj.ui.div()
     d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
+    Attributes:
+    ----------
     :param header:
     :param varName:
-
-    :return:
     """
     from epyk.core.js.primitives import JsArray
     from epyk.core.js.objects import JsData
@@ -632,10 +632,80 @@ class JsObject(object):
   @property
   def r(self):
     """
+    Description:
+    -----------
+
     Return the String representation of the Js object.
     This will produce the chain, empty the internal buffer and produce the string
     """
     return self.toStr()
+
+  def clone(self, report=None):
+    """
+    Description:
+    -----------
+    Create a shallow-copied clone of the provided plain object.
+    Any nested objects or arrays will be copied by reference, not duplicated.
+
+    Related Pages:
+
+			https://underscorejs.org/#clone
+
+    Attributes:
+    ----------
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    if self.varName is None:
+      return JsObject("_.clone(%s)" % self.varName, isPyData=False)
+
+    return JsObject("(function(){ %s; return _.clone(%s) }()" % (self.toStr(), self.varName), isPyData=False)
+
+  def defaults(self, attrs, report=None):
+    """
+    Description:
+    -----------
+    Returns object after filling in its undefined properties with the first value present in the following list of defaults objects.
+
+    Related Pages:
+
+      https://underscorejs.org/#defaults
+
+    Attributes:
+    ----------
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    attrs = JsUtils.jsConvertData(attrs, None)
+    if self.varName is None:
+      return JsObject("_.defaults(%s, %s)" % (self.toStr(), attrs), isPyData=False)
+
+    return JsObject("(function(){ %s; return _.defaults(%s, %s) }()" % (self.toStr(), self.varName, attrs), isPyData=False)
+
+  def pick(self, keys, report=None):
+    """
+    Description:
+    -----------
+    Return a copy of the object, filtered to only have values for the whitelisted keys (or array of valid keys).
+    Alternatively accepts a predicate indicating which keys to pick.
+
+    Related Pages:
+
+			https://underscorejs.org/#pick
+
+    Attributes:
+    ----------
+    :param keys:
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    keys = JsUtils.jsConvertData(keys, None)
+    if self.varName is None:
+      return JsObject("_.pick(%s, ..%s)" % (self.varName, keys), isPyData=False)
+
+    return JsObject("(function(){ %s; return _.pick(%s, ..%s) }()" % (self.toStr(), self.varName, keys), isPyData=False)
 
   def __str__(self):
     """

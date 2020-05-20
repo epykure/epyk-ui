@@ -362,9 +362,6 @@ class OptionsStepper(Options):
 
   @shape.setter
   def shape(self, value):
-    if not value in ('arrow', 'triangle', 'rectangle', 'circle'):
-      raise Exception("This shape is not yet available, please create a request for adding it")
-
     self._config(value)
 
   @property

@@ -25,6 +25,8 @@ from epyk.core import data
 from epyk.core.html import symboles
 from epyk.core.html import entities
 from epyk.core.py import OrderedSet
+from epyk.core.py import PyOuts
+from epyk.core.py import PyExt
 
 
 class ContextRun(object):
@@ -228,7 +230,7 @@ class Report(object):
     :return: Python HTML object
     """
     if self._py is None:
-      self._py = py.PyExt.PyExt(self)
+      self._py = PyExt.PyExt(self)
     return self._py
 
   @property
@@ -303,7 +305,7 @@ class Report(object):
 
     :return:
     """
-    return py.PyOuts.PyOuts(self)
+    return PyOuts.PyOuts(self)
 
   @property
   def headers(self):
@@ -314,49 +316,18 @@ class Report(object):
       self._header_obj = html.Header.Header(self)
     return self._header_obj
 
-  def to_html(self, online=False, mode=None, html_template=None, fnc=None):
+  def export(self):
     """
-
-    :param online:
-    :param mode:
-    :param html_template:
-    :param fnc:
-
-    :return:
+    Description:
+    ------------
+    Static component export for Angular
     """
-    if html_template is None:
-      html_template = html.templates.HtmlTmplBase.DATA
-
-    if fnc is not None:
-      return fnc(html_template, **self.html(online, mode))
-
-    return html_template % self.html(online, mode)
-
-  def to_html_error(self, tracebackStr, server_owner, title="Script Error Details", icon="fas fa-exclamation-triangle",
-                    pyModule=None, online=False, mode=None, html_template=None, fnc=None):
-    """
-
-    :param tracebackStr:
-    :param server_owner:
-    :param title:
-    :param icon:
-    :param pyModule:
-
-    :return:
-    """
-    report_error = Report(self.run.to_dict())
-    report_error._urlsApp.update(self._urlsApp)
-    report_error.nav(selected='Reports', breadcrum=True)
-    for notification in self._propagate:
-      report_error.add(notification)
-    report_error.ui.text("<i class='fas fa-cog'></i>&nbsp;To open the report again click [here](/reports/run/%s/%s)" % (
-      report_error.run.report_name, report_error.run.script_name)).css('margin', '5px')
-    owners = ";".join(pyModule.OWNERS) if pyModule is not None and hasattr(pyModule, 'OWNERS') else server_owner
-    report_error.ui.text("<i class='fas fa-envelope'></i>&nbsp;To raise this issue to the report owner <a onclick='window.NO_UNLOAD = true;' href='mailto:%(owners)s?subject=Report error&body=%(error)s'>contact us</a>" % {
-      'owners': owners, 'error': tracebackStr.replace("'", "").replace('"', "")}).css('margin', '5px')
-    report_error.ui.rich.textborder({'title': title, 'icon': icon, 'value': "<pre style='padding:5px;white-space:pre-wrap; '>%s</pre>" % '<br>'.join([re.sub(r'^ +', lambda m: ' ' * len(m.group()), i) for i in tracebackStr.split('\n')]),
-                                     'color': self.getColor('danger', 1), 'colorTitle': self.getColor('danger', 1)})
-    return report_error.to_html(online, mode, html_template, fnc)
+    ts_comps = []
+    ts_comps.append(html.HtmlButton.Button(self).component.ts())
+    ts_comps.append(html.HtmlButton.CheckButton(self).component.ts())
+    ts_comps.append(html.HtmlText.Label(self).component.ts())
+    ts_comps.append(html.HtmlText.Span(self).component.ts())
+    return ts_comps
 
   def dumps(self, data):
     """

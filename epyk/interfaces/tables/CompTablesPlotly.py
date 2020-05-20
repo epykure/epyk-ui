@@ -6,7 +6,7 @@ class Plotly(object):
   def __init__(self, context):
     self.parent = context
 
-  def table(self, records, cols, rows, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
+  def table(self, records, cols=None, rows=None, header=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -29,8 +29,11 @@ class Plotly(object):
     :param options:
     :param profile: 
     """
-    #
     data_rows, _header = [], []
+    cols = cols or []
+    rows = rows or []
+    if len(records) > 0 and not cols and not rows:
+      cols = list(records[0].keys())
     for r in rows:
       data_rows.append([])
       _header.append(r)
@@ -45,7 +48,9 @@ class Plotly(object):
         data_cols[i].append(rec.get(r, ''))
 
     header = header or _header
-    h_table = html_tables.HtmlTablePlotly.Table(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
+    options = options or {}
+    options.update({'type': 'table', 'mode': ''})
+    h_table = html_tables.HtmlTablePlotly.Table(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(h_table)
     h_table.add_trace(data_rows + data_cols)
     h_table.options.responsive = True

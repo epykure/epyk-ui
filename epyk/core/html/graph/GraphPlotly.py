@@ -19,6 +19,9 @@ class Chart(Html.Html):
     super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self._d3, self._attrs, self._traces, self._layout, self._options = None, None, [], None, None
     self._options_init = options
+    self.layout.autosize = True
+    if not height[0] is None:
+      self.layout.height = height[0]
 
   @property
   def chartId(self):
@@ -146,22 +149,31 @@ class Chart(Html.Html):
   @property
   def _js__convertor__(self):
     return '''
-      var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
-      options.y_columns.forEach(function(series){temp[series] = {}});
-      data.forEach(function(rec){ 
-        options.y_columns.forEach(function(name){
-          if(rec[name] !== undefined){
-            if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-            temp[name][rec[options.x_column]] = rec[name]}})});
-      options.y_columns.forEach(function(series){
-        dataSet = {x: [], y: [], name: series, type: options.type, mode: options.mode, marker: {}};
-        if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
-        if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
-        labels.forEach(function(x, i){
-          dataSet.x.push(x);
-          if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])}
-        }); result.push(dataSet)})
-      '''
+      if(data.python){
+        result = [];
+        data.datasets.forEach(function(values, i){
+          dataSet = {x: [], y: [], name: data.series[i], type: options.type, mode: options.mode, marker: {}};
+          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          result.push(Object.assign(dataSet, values))
+        }); 
+      } else {
+        var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+        options.y_columns.forEach(function(series){temp[series] = {}});
+        data.forEach(function(rec){ 
+          options.y_columns.forEach(function(name){
+            if(rec[name] !== undefined){
+              if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+              temp[name][rec[options.x_column]] = rec[name]}})});
+        options.y_columns.forEach(function(series){
+          dataSet = {x: [], y: [], name: series, type: options.type, mode: options.mode, marker: {}};
+          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          labels.forEach(function(x, i){
+            dataSet.x.push(x);
+            if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])}
+          }); result.push(dataSet)})
+      }'''
 
   @property
   def js(self):
@@ -1505,7 +1517,7 @@ class DataMarkers(DataClass):
   def colors(self):
     return self._attrs["colors"]
 
-  @color.setter
+  @colors.setter
   def colors(self, val):
     self._attrs["colors"] = val
 
@@ -2198,22 +2210,30 @@ class Pie(Chart):
   @property
   def _js__convertor__(self):
     return '''
-      var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
-      options.y_columns.forEach(function(series){temp[series] = {}});
-      data.forEach(function(rec){ 
-        options.y_columns.forEach(function(name){
-          if(rec[name] !== undefined){
-            if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-            temp[name][rec[options.x_column]] = rec[name]}})});
-      options.y_columns.forEach(function(series){
-        dataSet = {label: [], values: [], name: series, type: options.type, mode: options.mode, marker: {}};
+      if(data.python){
+        result = []; 
+        dataSet = {label: [], values: [], name: data.series, type: options.type, mode: options.mode, marker: {}};
         if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
         if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
-        labels.forEach(function(x, i){
-          dataSet.label.push(x);
-          if(temp[series][x] == undefined){dataSet.values.push(null)} else{dataSet.values.push(temp[series][x])}
-        }); result.push(dataSet)})
-      '''
+        data.datasets.forEach(function(rec, i){
+          dataSet.label = rec.x; dataSet.values = rec.y}); result.push(dataSet)
+      } else {
+        var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+        options.y_columns.forEach(function(series){temp[series] = {}});
+        data.forEach(function(rec){ 
+          options.y_columns.forEach(function(name){
+            if(rec[name] !== undefined){
+              if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+              temp[name][rec[options.x_column]] = rec[name]}})});
+        options.y_columns.forEach(function(series){
+          dataSet = {label: [], values: [], name: series, type: options.type, mode: options.mode, marker: {}};
+          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          labels.forEach(function(x, i){
+            dataSet.label.push(x);
+            if(temp[series][x] == undefined){dataSet.values.push(null)} else{dataSet.values.push(temp[series][x])}
+          }); result.push(dataSet)})
+      }'''
 
 
 class Surface(Chart):
@@ -2241,6 +2261,21 @@ class Surface(Chart):
     self._traces.append(DataSurface(self._report, attrs=c_data))
     return self
 
+  @property
+  def _js__convertor__(self):
+    return '''
+      if(data.python){
+        result = []; 
+        data.datasets.forEach(function(dataset, i){
+          result.push( {z: dataset, type: options.type} ) 
+        }); console.log(result);
+      } else {
+        var labels = []; var result = [] ;
+        data.series.forEach(function(name, i){
+          result.push( {z: data.datasets[i], type: options.type} );
+        })
+      }'''
+
 
 class Scatter3D(Chart):
   __reqJs = ['plotly.js']
@@ -2267,11 +2302,35 @@ class Scatter3D(Chart):
   def add_trace(self, data, type='scatter3d', mode="lines"):
     c_data = dict(data)
     if type is not None:
-      c_data['type'] = type
+      c_data['type'] = self._options_init.get('type', type)
     if mode is not None:
-      c_data['mode'] = mode
+      c_data['mode'] = self._options_init.get('mode', mode)
     self._traces.append(DataSurface(self._report, attrs=c_data))
     return self
+
+  @property
+  def _js__convertor__(self):
+    return '''
+        var temp = {}; var tempZ = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+        options.y_columns.forEach(function(series){temp[series] = {}});
+        options.y_columns.forEach(function(series){tempZ[series] = {}});
+        data.forEach(function(rec){ 
+          options.y_columns.forEach(function(name){
+            if(rec[name] !== undefined){
+              if(!(rec[options.x_column] in uniqLabels)){labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+              temp[name][rec[options.x_column]] = rec[name];
+              tempZ[name][rec[options.x_column]] = rec[options.z_axis];
+            }})});
+        options.y_columns.forEach(function(series){
+          dataSet = {x: [], y: [], z: [], name: series, type: options.type, mode: options.mode, marker: {}};
+          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+          labels.forEach(function(x, i){
+            dataSet.x.push(x);
+            if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])};
+            if(tempZ[series][x] == undefined){dataSet.y.push(null)} else{dataSet.z.push(tempZ[series][x])};
+          }); result.push(dataSet)});
+        '''
 
 
 class Mesh3d(Chart):

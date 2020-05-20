@@ -199,6 +199,18 @@ class Header(object):
       self._report = report
       self._report._props["header"] = self._headers
 
+  def dev(self, icon=None):
+    """
+    Description:
+    ------------
+    Change the tab icon to highlight this page is still in dev mode
+
+    Attributes:
+    ----------
+    :param icon:
+    """
+    self._favicon_url = icon or Defaults.FAVICON_DEV_URL
+
   @property
   def meta(self):
     """

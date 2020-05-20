@@ -21,6 +21,8 @@ class Chart(Html.Html):
 
   def crossFilter(self, dimension, group):
     """
+    Description:
+    -----------
 
     Attributes:
     ----------

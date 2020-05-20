@@ -600,7 +600,10 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.splice(%s, %s, %s)" % (self.varId, i, j, jsData))
 
   def __getitem__(self, index):
-    return JsObject.JsObject("%s[%s]" % (self.varId, index))
+    if index < 0:
+      return JsObject.JsObject("%s[%s %s]" % (self.varId, self.length, index), report=self._report)
+
+    return JsObject.JsObject("%s[%s]" % (self.varId, index), report=self._report)
 
   def unique(self, jsObj):
     """
@@ -668,3 +671,448 @@ class JsArray(JsObject.JsObject):
     :param header:
     """
     return JsObject.JsObject("(function(r, h){var rec = {}; h.forEach(function(c, i){rec[c] = r[i]}); return rec})(%s, %s)" % (self.varId, header))
+
+  def sample(self, n=None, report=None):
+    """
+    Description:
+    -----------
+    Produce a random sample from the list. Pass a number to return n random elements from the list.
+    Otherwise a single random item will be returned.
+
+    Usage::
+
+
+    Related Pages:
+
+			https://underscorejs.org/#arrays
+
+    Attributes:
+    ----------
+    :param n: Integer. An index
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    if n is not None:
+      if self.varName is None:
+        return JsArray("(function(){return _.sample(%s, %s)})()" % (self.toStr(), n), report=report)
+
+      return JsArray("(function(){%s; return _.sample(%s, %s)})()" % (self.toStr(), self.varName, n), report=report)
+
+    if self.varName is None:
+      return JsArray("(function(){return _.sample(%s)})()" % self.toStr(), report=report)
+
+    return JsArray("(function(){%s; return _.sample(%s)})()" % (self.toStr(), self.varName), report=report)
+
+  def first(self, n=None, report=None):
+    """
+    Description:
+    -----------
+    Returns the first element of an array. Passing n will return the first n elements of the array.
+
+    Usage::
+      rptObj.js.objects.list([1, 2, 3, 4, 5, 6])
+
+    Related Pages:
+
+			https://underscorejs.org/#arrays
+
+    Attributes:
+    ----------
+    :param n: Integer. An index
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    if n is not None:
+      print(self.varName)
+      if self.varName is None:
+        return JsArray("(function(){return _.first(%s, %s)})()" % (self.toStr(), n), report=report)
+
+      return JsArray("(function(){%s; return _.first(%s, %s)})()" % (self.toStr(), self.varName, n), report=report)
+
+    if self.varName is None:
+      return JsArray("(function(){return _.first(%s)})()" % self.varName, report=report)
+
+    return JsArray("(function(){%s; return _.first(%s)})()" % (self.toStr(), self.varName), report=report)
+
+  def last(self, n=None, report=None):
+    """
+    Description:
+    -----------
+    Returns the last element of an array. Passing n will return the last n elements of the array.
+
+    Usage::
+      rptObj.data.js.list("test", [1, 2, 3, 4, 5, 6]).sample(3).last(1)
+
+    Related Pages:
+
+			https://underscorejs.org/#arrays
+
+    Attributes:
+    ----------
+    :param n: Integer. An index
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    if n is not None:
+      if self.varName is None:
+        return JsArray("(function(){return _.last(%s, %s)})()" % (self.toStr(), n), report=report)
+
+      return JsArray("(function(){%s; return _.last(%s, %s)})()" % (self.toStr(), self.varName, n), report=report)
+
+    if self.varName is None:
+      return JsArray("(function(){return _.last(%s)})()" % self.varName, report=report)
+
+    return JsArray("(function(){%s; return _.last(%s)})()" % (self.toStr(), self.varName), report=report)
+
+  def chunk(self, n=None, report=None):
+    """
+    Description:
+    -----------
+    Chunks an array into multiple arrays, each containing length or fewer items.
+
+    Usage::
+      rptObj.data.js.list("test", [1, 2, 3, 4, 5, 6]).sample(3).last(1)
+
+    Related Pages:
+
+      https://underscorejs.org/#chunk
+
+    Attributes:
+    ----------
+    :param n: Integer. An length of the sub lists
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    if n is not None:
+      if self.varName is None:
+        return JsArray("(function(){return _.chunk(%s, %s)})()" % (self.toStr(), n), report=report)
+
+      return JsArray("(function(){%s; return _.chunk(%s, %s)})()" % (self.toStr(), self.varName, n), report=report)
+
+    if self.varName is None:
+      return JsArray("(function(){return _.chunk(%s)})()" % self.varName, report=report)
+
+    return JsArray("(function(){%s; return _.chunk(%s)})()" % (self.toStr(), self.varName), report=report)
+
+  def initial(self, n=None, report=None):
+    """
+    Description:
+    -----------
+    Returns everything but the last entry of the array. Especially useful on the arguments object.
+    Pass n to exclude the last n elements from the result.
+
+    Usage::
+      rptObj.data.js.list("test", [1, 2, 3, 4, 5, 6]).initial(3)
+
+    Related Pages:
+
+      https://underscorejs.org/#initial
+
+    Attributes:
+    ----------
+    :param n: Integer. An index
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    if n is not None:
+      if self.varName is None:
+        return JsArray("(function(){return _.initial(%s, %s)})()" % (self.toStr(), n), report=report)
+
+      return JsArray("(function(){%s; return _.initial(%s, %s)})()" % (self.toStr(), self.varName, n), report=report)
+
+    if self.varName is None:
+      return JsArray("(function(){return _.initial(%s)})()" % self.varName, report=report)
+
+    return JsArray("(function(){%s; return _.initial(%s)})()" % (self.toStr(), self.varName), report=report)
+
+  def rest(self, n=None, report=None):
+    """
+    Description:
+    -----------
+    Returns the rest of the elements in an array. Pass an index to return the values of the array from that index onward.
+
+    Usage::
+      rptObj.data.js.list("test", [1, 2, 3, 4, 5, 6]).sample(3).rest(1)
+
+    Related Pages:
+
+			https://underscorejs.org/#arrays
+
+    Attributes:
+    ----------
+    :param n: Integer. An index
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    if n is not None:
+      if self.varName is None:
+        return JsArray("(function(){return _.rest(%s, %s)})()" % (self.toStr(), n), report=report)
+
+      return JsArray("(function(){%s; return _.rest(%s, %s)})()" % (self.varName, self.varName, n), report=report)
+
+    if self.varName is None:
+      return JsArray("(function(){return _.rest(%s)})()" % self.toStr(), report=report)
+
+    return JsArray("(function(){%s; return _.rest(%s)})()" % (self.toStr(), self.varName), report=report)
+
+  def where(self, values=None, report=None):
+    """
+    Description:
+    -----------
+    Looks through each value in the list, returning an array of all the values that matches the key-value pairs listed in properties.
+
+    Usage::
+
+    Related Pages:
+
+      https://underscorejs.org/#where
+
+    Attributes:
+    ----------
+    :param values: List. All the values to be removed
+    :param report: Optional. The report object
+    """
+    values = JsUtils.jsConvertData(values, None)
+    report = report or self._report
+    report.jsImports.add('underscore')
+    if self.varName is None:
+      return JsArray("(function(){return _.where(%s, %s)})()" % (self.toStr(), values), report=report)
+
+    return JsArray("(function(){%s; return _.where(%s, %s)})()" % (self.toStr, self.varName, values), report=report)
+
+  def without(self, values=None, report=None):
+    """
+    Description:
+    -----------
+    Returns a copy of the array with all instances of the values removed.
+
+    Usage::
+
+    Related Pages:
+
+			https://underscorejs.org/#arrays
+
+    Attributes:
+    ----------
+    :param values: List. All the values to be removed
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    if self.varName is None:
+      return JsArray("(function(){return _.without(%s, %s)})()" % (self.toStr(), values), report=report)
+
+    return JsArray("(function(){%s; return _.without(%s, %s)})()" % (self.toStr, self.varName, values), report=report)
+
+  def union(self, arrays=None, report=None):
+    """
+    Description:
+    -----------
+    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+
+    Usage::
+
+    Related Pages:
+
+			https://underscorejs.org/#arrays
+
+    Attributes:
+    ----------
+    :param arrays:
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    arrays = JsUtils.jsConvertData(arrays, None)
+    if self.varName is None:
+      return JsArray("(function(){return _.union(%s, ...%s)})()" % (self.toStr(), arrays), report=report)
+
+    return JsArray("(function(){%s; return _.union(%s, ...%s)})()" % (self.toStr, self.varName, arrays), report=report)
+
+  def intersection(self, arrays=None, report=None):
+    """
+    Description:
+    -----------
+    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+
+    Usage::
+
+    Related Pages:
+
+			https://underscorejs.org/#intersection
+
+    Attributes:
+    ----------
+    :param arrays:
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    arrays = JsUtils.jsConvertData(arrays, None)
+    if self.varName is None:
+      return JsArray("(function(){return _.intersection(%s, ...%s)})()" % (self.toStr(), arrays), report=report)
+
+    return JsArray("(function(){%s; return _.intersection(%s, ...%s)})()" % (self.toStr, self.varName, arrays), report=report)
+
+  def uniq(self, is_sorted=False, report=None):
+    """
+    Description:
+    -----------
+    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more of the arrays.
+
+    Usage::
+
+    Related Pages:
+
+			https://underscorejs.org/#arrays
+
+    Attributes:
+    ----------
+    :param is_sorted:
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    is_sorted = JsUtils.jsConvertData(is_sorted, None)
+    if is_sorted:
+       return JsArray("_.uniq(%s, %s)" % (self.varId, is_sorted), report=report)
+
+    return JsArray("_.uniq(%s)" % (self.varId), report=report)
+
+  @property
+  def every(self):
+    """
+    Description:
+    -----------
+    Returns true if all of the values in the list pass the predicate truth test.
+    Short-circuits and stops traversing the list if a false element is found. predicate is transformed through iteratee to facilitate shorthand syntaxes.
+    """
+    return JaArrayRejector("every", self.toStr(), self.varName, self._report)
+
+  @property
+  def some(self):
+    """
+    Description:
+    -----------
+    Returns true if any of the values in the list pass the predicate truth test.
+    Short-circuits and stops traversing the list if a true element is found. predicate is transformed through iteratee to facilitate shorthand syntaxes.
+    """
+    return JaArrayRejector("some", self.toStr(), self.varName, self._report)
+
+  @property
+  def reject(self):
+    """
+    Description:
+    -----------
+    Returns the values in list without the elements that the truth test (predicate) passes.
+    The opposite of filter. predicate is transformed through iteratee to facilitate shorthand syntaxes.
+    """
+    return JaArrayRejector("reject", self.toStr(), self.varName, self._report)
+
+  @property
+  def filter(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JaArrayRejector("filter", self.toStr(), self.varName, self._report)
+
+  def range(self, stop, start=0, step=1, report=None):
+    """
+    Description:
+    -----------
+    A function to create flexibly-numbered lists of integers, handy for each and map loops. start, if omitted, defaults to 0; step defaults to 1.
+    Returns a list of integers from start (inclusive) to stop (exclusive), incremented (or decremented) by step, exclusive.
+    Note that ranges that stop before they start are considered to be zero-length instead of negative — if you'd like a negative range, use a negative step.
+
+    Usage::
+
+    Related Pages:
+
+			https://underscorejs.org/#arrays
+
+    Attributes:
+    ----------
+    :param stop: Integer. The index of the last value
+    :param start: Integer. The index of the first value
+    :param step: Integer. The step
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    return JsArray("_.range(%s, %s, %s)" % (start, stop, step), report=report)
+
+  def object(self, keys, report=None):
+    """
+    Description:
+    -----------
+    Converts arrays into objects. Pass either a single list of [key, value] pairs, or a list of keys, and a list of values.
+    Passing by pairs is the reverse of pairs. If duplicate keys exist, the last value wins.
+
+    Related Pages:
+
+			https://underscorejs.org/#arrays
+
+    Attributes:
+    ----------
+    :param keys: List. the keys for the dictionary
+    :param report: Optional. The report object
+    """
+    report = report or self._report
+    report.jsImports.add('underscore')
+    return JsObject.JsObject("_.zip(%s, %s)" % (keys, self.varId), report=report)
+
+
+class JaArrayRejector(object):
+
+  def __init__(self, fncName, data, varName, report):
+    self._report, self.varName, self.data, self.fncName = report, varName, data, fncName
+
+  def modulo(self, n):
+    """
+
+    :param n:
+    """
+    if self.varName is None:
+      return JsArray("_.%s(%s, function(num){ return num %% %s == 0; })" % (self.fncName, self.data, n), report=self._report)
+
+    return JsArray("(function(){%s; return _.%s(%s, function(num){ return num %% %s == 0; })})()" % (self.data, self.fncName, self.varName, n), report=self._report)
+
+  def equal(self, val):
+    """
+
+    :param val:
+    """
+    val = JsUtils.jsConvertData(val, None)
+    if self.varName is None:
+      return JsArray("_.%s(%s, function(num){ return num == %s; })" % (self.fncName, self.data, val), report=self._report)
+
+    return JsArray("(function(){%s; return _.%s(%s, function(num){ return num == %s; })})()" % (self.data, self.fncName, self.varName, val), report=self._report)
+
+  def includes(self, values):
+    """
+
+    :param values:
+    """
+    values = JsUtils.jsConvertData(values, None)
+    if self.varName is None:
+      return JsArray("_.%s(%s, function(num){ return %s.includes(num); })" % (self.fncName, self.data, values), report=self._report)
+
+    return JsArray("(function(){%s; return _.%s(%s, function(num){ return %s.includes(num); })})()" % (self.data, self.fncName, self.varName, values), report=self._report)
+
+  def custom(self, js_expr):
+    """
+
+    :param js_expr:
+    """
+    if self.varName is None:
+      return JsArray("_.%s(%s, function(num){ %s; })" % (self.fncName, self.data, js_expr), report=self._report)
+
+    return JsArray("(function(){%s; return _.%s(%s, function(num){ %s; })})()" % (self.data, self.fncName, self.varName, js_expr), report=self._report)

@@ -425,6 +425,11 @@ class VisDataView(JsPackage):
     Related Pages:
 
 			https://visjs.github.io/vis-data/data/dataview.html
+
+		Attributes:
+    ----------
+    :param options:
+    :param data:
     """
     if data is None:
       if options is None:
@@ -474,6 +479,10 @@ class VisDataView(JsPackage):
     Related Pages:
 
 			https://visjs.github.io/vis-data/data/dataview.html
+
+		Attributes:
+    ----------
+    :param vanName:
     """
     return VisDataSet(src=self.src, data="%s.getDataSet()" % self.varId, varName=vanName)
 
@@ -709,7 +718,7 @@ class VisNetwork(JsPackage):
 
 			https://visjs.github.io/vis-network/docs/network/
     """
-    return self.fnc_closure("destroy()")
+    return JsObjects.JsVoid("%s.destroy()" % self.varId)
 
   def setData(self, data):
     """
@@ -727,7 +736,7 @@ class VisNetwork(JsPackage):
     ----------
     :param data:
     """
-    return self.fnc_closure("setData(%s)" % JsUtils.jsConvertData(data, None))
+    return JsObjects.JsVoid("%s.setData(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
   def setOptions(self, options):
     """
@@ -744,7 +753,7 @@ class VisNetwork(JsPackage):
     ----------
     :param options:
     """
-    return self.fnc_closure("setOptions(%s)" % JsUtils.jsConvertData(options, None))
+    return JsObjects.JsVoid("%s.setOptions(%s)" % (self.varId, JsUtils.jsConvertData(options, None)))
 
   def redraw(self):
     """
@@ -756,7 +765,7 @@ class VisNetwork(JsPackage):
 
 			https://visjs.github.io/vis-network/docs/network/
     """
-    return self.fnc_closure("redraw()")
+    return JsObjects.JsVoid("%s.redraw()" % self.varId)
 
   def setSize(self, width, height):
     """
@@ -770,15 +779,15 @@ class VisNetwork(JsPackage):
 
     Attributes:
     ----------
-    :param width:
-    :param height:
+    :param width: Integer. The width
+    :param height: Integer. The height
     """
     if isinstance(width, int):
       width = "%spx" % width
 
     if isinstance(height, int):
       height = "%spx" % height
-    return self.fnc_closure("setSize(%s, %s)" % (JsUtils.jsConvertData(width, None), JsUtils.jsConvertData(height, None)))
+    return JsObjects.JsVoid("%s.setSize(%s, %s)" % (self.varId, JsUtils.jsConvertData(width, None), JsUtils.jsConvertData(height, None)))
 
 
 class VisTimeline(JsPackage):
@@ -836,7 +845,7 @@ class VisGraph3D(JsPackage):
 
 			https://visjs.github.io/vis-graph3d/docs/graph3d/
     """
-    return self.fnc_closure("redraw()")
+    return JsObjects.JsVoid("%s.redraw()" % self.varName)
 
   def setData(self, data):
     """
@@ -922,3 +931,102 @@ class VisGraph3D(JsPackage):
     :param jsFnc:
     """
     return self.fnc_closure("on('cameraPositionChange', %s)" % jsFnc)
+
+
+class VisGraph2D(JsPackage):
+  lib_alias = {'css': 'vis', 'js': 'vis'}
+
+  def destroy(self):
+    """
+    Description:
+    -----------
+    Destroy the Graph2d. The Graph2d is removed from memory. all DOM elements and event listeners are cleaned up.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
+    """
+    return JsObjects.JsVoid("%s.destroy()" % self.varId)
+
+  def fit(self):
+    """
+    Description:
+    -----------
+    Adjust the visible window such that it fits all items.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
+    """
+    return JsObjects.JsVoid("%s.fit()" % self.varId)
+
+  def getCurrentTime(self):
+    """
+    Description:
+    -----------
+    Get the current time. Only applicable when option showCurrentTime is true.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
+    """
+    return JsObjects.JsVoid("%s.getCurrentTime()" % self.varId)
+
+  def getDataRange(self):
+    """
+    Description:
+    -----------
+    Get the range of all the items as an object containing min: Date and max: Date.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
+    """
+    return JsObjects.JsVoid("%s.getCurrentTime()" % self.varId)
+
+  def redraw(self):
+    """
+    Description:
+    -----------
+    Redraw the graph. Useful after the camera position is changed externally, when data is changed, or when the layout of the webpage changed.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
+    """
+    return JsObjects.JsVoid("%s.redraw()" % self.varId)
+
+  def setItems(self, items):
+    """
+    Description:
+    -----------
+    Set a data set with items for the Graph2d. items can be an Array with Objects, a DataSet, or a DataView.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
+
+    Attributes:
+    ----------
+    :param items:
+    """
+    items = JsUtils.jsConvertData(items, None)
+    return JsObjects.JsVoid("%s.setItems(%s)" % (self.varId, items))
+
+  def setOptions(self, options):
+    """
+    Description:
+    -----------
+    Set or update options. It is possible to change any option of the Graph2d at any time.
+    You can for example switch orientation on the fly.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
+
+    Attributes:
+    ----------
+    :param options:
+    """
+    options = JsUtils.jsConvertData(options, None)
+    return JsObjects.JsVoid("%s.setOptions(%s)" % (self.varId, options))

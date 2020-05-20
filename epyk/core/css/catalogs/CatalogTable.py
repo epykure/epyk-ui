@@ -1,7 +1,7 @@
 
 from epyk.core.css.catalogs import Catalog
 
-from epyk.core.css.styles.classes import CssStylesPivot, CssStylesTableExcel, CssStylesTable, CssStylesTabulator, CssStylesDiv
+from epyk.core.css.styles.classes import CssStylesPivot, CssStylesTableExcel, CssStylesTable, CssStylesTabulator, CssStylesDiv, CssStylesTableAgGrid
 
 
 class CatalogTable(Catalog.CatalogGroup):
@@ -201,3 +201,23 @@ class CatalogTable(Catalog.CatalogGroup):
   def table_content(self):
     """ """
     return self._set_class(CssStylesDiv.CssDivTableContent)
+
+  def ag_head(self):
+    """  """
+    return self._set_class(CssStylesTableAgGrid.CssAgHead)
+
+  def ag_row_odd(self):
+    """  """
+    return self._set_class(CssStylesTableAgGrid.CssAgOddRow)
+
+  def ag_row_even(self):
+    """  """
+    return self._set_class(CssStylesTableAgGrid.CssAgEvenRow)
+
+  def ag_cell_focus(self):
+    """  """
+    return self._set_class(CssStylesTableAgGrid.CssAgCellFocus)
+
+  def ag_cell(self):
+    """  """
+    return self._set_class(CssStylesTableAgGrid.CssAgCell)

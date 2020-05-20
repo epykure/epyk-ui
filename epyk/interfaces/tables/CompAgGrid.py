@@ -24,12 +24,11 @@ class AgGrid(object):
     if not cols and not rows:
       cols = list(records[0].keys())
 
-    table_options_dflts = {'selectable': False, 'index': '_row', 'layout': 'fitColumns', 'pagination': 'local',
-                           'paginationSize': 25, 'resizableRows': False, 'movableColumns': True}
+    table_options_dflts = {'headerHeight': 30, 'rowHeight': '50'}
     if options is not None:
       table_options_dflts.update(options)
 
-    table = html_tables.HtmlTableAgGrid.Table(self.parent.context.rptObj, records, width, height, htmlCode, options, profile)
+    table = html_tables.HtmlTableAgGrid.Table(self.parent.context.rptObj, records, width, height, htmlCode, table_options_dflts, profile)
     for c in cols + rows:
       table.add_column(c)
     self.parent.context.register(table)

@@ -5,7 +5,7 @@ List are standard and very popular HTML objects, please have a look at the below
 
 """
 
-
+from epyk.core.js import Imports
 from epyk.core.js import JsUtils
 from epyk.core.html import Html
 from epyk.core.html.options import OptList
@@ -342,7 +342,7 @@ class Items(Html.Html):
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 
-  def add_type(self, type, item_def):
+  def add_type(self, type, item_def, dependencies=None):
     """
     Description:
     ------------
@@ -351,7 +351,14 @@ class Items(Html.Html):
     ----------
     :param type: String.
     :param item_def: String.
+    :param dependencies: List. Optional. The external module dependencies
     """
+    if dependencies is not None:
+      for d in dependencies:
+        if d in Imports.JS_IMPORTS:
+          self._report.jsImports.add(d)
+        if d in Imports.CSS_IMPORTS:
+          self._report.cssImport.add(d)
     self.style.css.padding_left = 0
     self.css({"list-style": 'none'})
     self._jsStyles['items_type'] = type

@@ -260,3 +260,14 @@ class Table(GraphPlotly.Chart):
       trace.cells.values = data
     self._traces.append(trace)
     return self
+
+  @property
+  def _js__convertor__(self):
+    # TODO implement the else statement
+    return '''
+        if(data.python){
+          var dataset = {type: options.type, mode: data.mode = options.mode, cells: {values: data.values}, header: {values: data.header}}; 
+          if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataset[attr] = options.attrs[attr]} };
+          if(typeof options.marker !== undefined){ for(var attr in options.marker){dataset.marker[attr] = options.marker[attr]} }; 
+          result = [dataset];
+        } else { }'''

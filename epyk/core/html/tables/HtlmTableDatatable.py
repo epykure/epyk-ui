@@ -2,6 +2,7 @@
 from epyk.core.html import Html
 from epyk.core.js.packages import packageImport
 from epyk.core.js.packages import JsDatatable
+from epyk.core.js import JsUtils
 
 from epyk.core.data import DataClass
 from epyk.core.data import DataEnum
@@ -68,6 +69,9 @@ class Table(Html.Html):
     return self._js
 
   def build(self, data=None, options=None, profile=False):
+    if data:
+      return JsUtils.jsConvertFncs([self.js.clear(), self.js.rows.add(data, update=True)], toStr=True) # self.js.rows.add(data)
+
     return 'var %s = %s.DataTable(%s)' % (self.tableId, self.dom.jquery.varId, self.config)
 
   def __str__(self):

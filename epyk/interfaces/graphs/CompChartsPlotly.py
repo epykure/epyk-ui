@@ -1,165 +1,8 @@
 
 from epyk.core.html import graph
-from epyk.core.py import OrderedSet
 
 
-def xy(data, y_columns, x_axis):
-  """
-  Description:
-  ------------
-
-  Attributes:
-  ----------
-  :param data: List of dict. The Python recordset
-  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-  """
-  if data is None:
-    return []
-
-  agg_data = {}
-  for rec in data:
-    for y in y_columns:
-      if y in rec:
-        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-  data = []
-  for c in y_columns:
-    series = {'x': [], 'y': []}
-    for x, y in agg_data.get(c, {}).items():
-      series['x'].append(x)
-      series['y'].append(y)
-    data.append(series)
-  return data
-
-
-def xy_text(data, y_columns, x_axis, text=None):
-  """
-  Description:
-  ------------
-
-  Attributes:
-  ----------
-  :param data: List of dict. The Python recordset
-  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-  :param text: String. The column corresponding to the key in the dictionaries in the record
-  """
-  if text is None:
-    return xy(data, y_columns, x_axis)
-
-  agg_data, texts = {}, {}
-  for rec in data:
-    for y in y_columns:
-      if y in rec:
-        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-        texts.setdefault(y, {})[rec[x_axis]] = rec[text]
-  data = []
-  for c in y_columns:
-    series = {'x': [], 'y': [], 'text': []}
-    for x, y in agg_data.get(c, {}).items():
-      series['x'].append(x)
-      series['y'].append(y)
-      series['text'].append(texts.get(c, {}).get(x, ''))
-    data.append(series)
-  return data
-
-
-def xyz(data, y_columns, x_axis, z_axis):
-  """
-  Description:
-  ------------
-
-  Attributes:
-  ----------
-  :param data: List of dict. The Python recordset
-  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-  :param z_axis:
-  """
-  agg_data, agg_z = {}, {}
-  for rec in data:
-    for i, y in enumerate(y_columns):
-      if y in rec:
-        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-      if z_axis is not None and i < len(z_axis):
-        agg_z.setdefault(y, {})[rec[x_axis]] = agg_z.get(y, {}).get(rec[x_axis], 0) + float(rec[z_axis[i]])
-  labels, data = OrderedSet(), []
-  for c in y_columns:
-    series = {"x": [], "y": [], "z": []}
-    for x, y in agg_data[c].items():
-      labels.add(x)
-      series['x'].append(x)
-      series['y'].append(y)
-      series['z'].append(agg_z.get(c, {}).get(x, 0))
-    data.append(series)
-  is_data = {"labels": labels, 'datasets': [], 'series': []}
-  for i, l in enumerate(y_columns):
-    is_data["datasets"].append(data[i])
-    is_data["series"].append(l)
-  return is_data
-
-
-def x_yz(data, y_columns, x_axis, z_axis):
-  """
-  Description:
-  ------------
-
-  Attributes:
-  ----------
-  :param data: List of dict. The Python recordset
-  :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-  :param x_axis: String. The column corresponding to a key in the dictionaries in the record
-  :param z_axis:
-  """
-  agg_data, agg_z = {}, {}
-  for rec in data:
-    for i, y in enumerate(y_columns):
-      if y in rec:
-        agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
-      if z_axis is not None and i < len(z_axis):
-        agg_z.setdefault(y, {})[rec[x_axis]] = agg_z.get(y, {}).get(rec[x_axis], 0) + float(rec[z_axis[i]])
-  labels, data = OrderedSet(), []
-  for c in y_columns:
-    series = {"x": [], "y": [], "z": []}
-    for x, y in agg_data[c].items():
-      labels.add(x)
-      z = agg_z.get(c, {}).get(x, 0)
-      series['x'].append([x, x+1])
-      series['y'].append([y, y])
-      series['z'].append([z, z])
-    data.append(series)
-  is_data = {"labels": labels, 'datasets': [], 'series': []}
-  for i, l in enumerate(y_columns):
-    is_data["datasets"].append(data[i])
-    is_data["series"].append(l)
-  return is_data
-
-
-def surface(data, y_columns, x_axis, z_axis):
-  z_a, x_a, agg_y = set(), set(), {}
-  for rec in data:
-    if z_axis in rec:
-      z_a.add(rec[z_axis])
-    if x_axis in rec:
-      x_a.add(rec[x_axis])
-    if z_axis in rec and x_axis in rec:
-      agg_key = (rec[x_axis], rec[z_axis])
-      for y in y_columns:
-        agg_y.setdefault(agg_key, {})[y] = agg_y.get(agg_key, {}).get(y, 0) + float(rec[y])
-  z_array = sorted(list(z_a))
-  x_array = sorted(list(x_a))
-  naps = {'datasets': [], 'series': []}
-  for y in y_columns:
-    nap = []
-    for z in z_array:
-      row = [agg_y.get((x, z), {}).get(y) for x in x_array]
-      nap.append(row)
-    naps['datasets'].append(nap)
-    naps['series'].append(y)
-  return naps
-
-
-class Plotly(object):
+class Plotly2D(object):
   def __init__(self, context):
     self.parent = context
     self.chartFamily = "Plotly"
@@ -187,11 +30,11 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': 'lines+markers'})
-    data = xy(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     line_chart.options.responsive = True
     self.parent.context.register(line_chart)
-    for d in data:
+    for d in data['datasets']:
       line_chart.add_trace(d)
     return line_chart
 
@@ -217,10 +60,10 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None})
-    data = xy(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(bar_chart)
-    for d in data:
+    for d in data['datasets']:
       bar_chart.add_trace(d)
     return bar_chart
 
@@ -246,10 +89,10 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None, 'attrs': {'orientation': 'h'}})
-    data = xy(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(bar_chart)
-    for d in data:
+    for d in data['datasets']:
       bar_chart.add_trace(d, type='bar')
       bar_chart.data.orientation = 'h'
     return bar_chart
@@ -278,10 +121,10 @@ class Plotly(object):
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'text_column': text_column, 'type': 'scatter',
                     'mode': 'markers+text' if text_column is not None else 'markers'})
-    data = xy_text(record, y_columns, x_axis, text_column)
+    data = self.parent.context.rptObj.data.plotly.xy_text(record, y_columns, x_axis, text_column)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
-    for i, d in enumerate(data):
+    for i, d in enumerate(data['datasets']):
       sc_chart.add_trace(d, mode=options['mode'], type=options['type'])
       sc_chart.data.marker.color = self.parent.context.rptObj.theme.colors[i]
       if text_column is not None:
@@ -312,10 +155,10 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'lines', 'type': "scatter"})
-    data = xy(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(sc_chart)
-    for d in data:
+    for d in data['datasets']:
       sc_chart.add_trace(d)
     return sc_chart
 
@@ -341,10 +184,10 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers', 'type': "scattergl"})
-    data = xy(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(sc_chart)
-    for d in data:
+    for d in data['datasets']:
       sc_chart.add_trace(d, type="scattergl", mode='markers')
     return sc_chart
 
@@ -402,10 +245,10 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'pie', 'marker': {'colors': self.parent.context.rptObj.theme.charts}, 'mode': None, 'attrs': {'orientation': 'h'}})
-    data = xy(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     pie_chart = graph.GraphPlotly.Pie(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     self.parent.context.register(pie_chart)
-    for d in data:
+    for d in data['datasets']:
       pie_chart.add_trace({"label": d['x'], "values": d['y']})
       pie_chart.data.marker.colors = self.parent.context.rptObj.theme.charts
     return pie_chart
@@ -433,10 +276,10 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': "scatter", 'attrs': {'fill': "tozeroy"}})
-    data = xy(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(line_chart)
-    for d in data:
+    for d in data['datasets']:
       line_chart.add_trace(d)
       line_chart.data.type = options['type']
       line_chart.data.fill = "tozeroy"
@@ -465,137 +308,12 @@ class Plotly(object):
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers'})
-    data = xy(record, y_columns, x_axis)
+    data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     self.parent.context.register(line_chart)
-    for d in data:
+    for d in data['datasets']:
       line_chart.add_trace(d, mode=options['mode'])
     return line_chart
-
-  def ribbon(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
-    """
-    Description:
-    ------------
-    Create ribbons on the x axis
-
-    Related Pages:
-
-			https://plot.ly/javascript/ribbon-plots/
-
-    ttributes:
-    ----------
-    :param record:
-    :param y_columns:
-    :param x_axis:
-    :param z_axis:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
-    """
-    data = x_yz(record, y_columns, x_axis, z_axis)
-    line_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(line_chart)
-    for i, d in enumerate(data['datasets']):
-      line_chart.add_trace(d)
-      line_chart.data.showscale = False
-    return line_chart
-
-  def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
-    """
-
-    :param record:
-    :param y_columns:
-    :param x_axis:
-    :param z_axis:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
-    """
-
-    naps = surface(record, y_columns, x_axis, z_axis)
-    surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(surf_chart)
-    for i, d in enumerate(naps['datasets']):
-      surf_chart.add_trace({'z': d})
-      surf_chart.data.showscale = False
-    return surf_chart
-
-  def scatter3d(self, record, y_columns=None, x_axis=None, z_columns=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
-    """
-
-    https://plot.ly/javascript/3d-line-plots/
-
-    :param record:
-    :param y_columns:
-    :param x_axis:
-    :param z_columns:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
-    """
-    data = xyz(record, y_columns, x_axis, z_columns)
-    sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(sc_chart)
-    for i, series in enumerate(data['datasets']):
-      sc_chart.add_trace({'x': series['x'], 'y': series['y'], 'z': series['z']})
-      sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
-    return sc_chart
-
-  def maps(self, records, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
-
-    surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(surf_chart)
-    for d in records:
-      surf_chart.add_trace({'z': d})
-    return surf_chart
-
-  def mesh3d(self, records, intensity, x, y, z, i=None, j=None, k=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
-    """
-
-    https://plot.ly/javascript/3d-mesh/
-
-    :param records:
-    :param intensity:
-    :param x:
-    :param y:
-    :param z:
-    :param i:
-    :param j:
-    :param k:
-    :param profile:
-    :param options:
-    :param width:
-    :param height:
-    :param htmlCode:
-    """
-    data = {"intensity": [], 'x': [], 'y': [], 'z': []}
-    if i is not None:
-      data[i] = []
-    if j is not None:
-      data[j] = []
-    if k is not None:
-      data[k] = []
-    for rec in records:
-      data["intensity"].append(rec[intensity])
-      data["x"].append(rec[x])
-      data["y"].append(rec[y])
-      data["z"].append(rec[z])
-      if i is not None:
-        data["i"].append(rec[i])
-      if j is not None:
-        data["j"].append(rec[j])
-      if k is not None:
-        data["k"].append(rec[k])
-    mesh_chart = graph.GraphPlotly.Mesh3d(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(mesh_chart)
-    mesh_chart.add_trace(data)
-    return mesh_chart
 
   def number(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
@@ -765,3 +483,226 @@ class Plotly(object):
       candle_chart.add_trace(s)
     candle_chart.layout.no_background()
     return candle_chart
+
+
+class Plotly3D(object):
+  def __init__(self, context):
+    self.parent = context
+    self.chartFamily = "Plotly"
+
+  def scatter(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
+              height=(500, "px"), htmlCode=None):
+    """
+
+    https://plot.ly/javascript/3d-line-plots/
+
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'markers'})
+    data = self.parent.context.rptObj.data.plotly.xyz(record, y_columns, x_axis, z_axis)
+    sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
+    self.parent.context.register(sc_chart)
+    for i, series in enumerate(data['datasets']):
+      sc_chart.add_trace({'x': series['x'], 'y': series['y'], 'z': series['z']})
+      sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
+    return sc_chart
+
+  def line(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
+              height=(500, "px"), htmlCode=None):
+    """
+
+    https://plot.ly/javascript/3d-line-plots/
+
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'lines'})
+    data = self.parent.context.rptObj.data.plotly.xyz(record, y_columns, x_axis, z_axis)
+    sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
+    self.parent.context.register(sc_chart)
+    for i, series in enumerate(data['datasets']):
+      sc_chart.add_trace({'x': series['x'], 'y': series['y'], 'z': series['z']})
+      #sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
+    return sc_chart
+
+  def marker(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
+              height=(500, "px"), htmlCode=None):
+    """
+
+    https://plot.ly/javascript/3d-line-plots/
+
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'lines+markers'})
+    data = self.parent.context.rptObj.data.plotly.xyz(record, y_columns, x_axis, z_axis)
+    sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
+    self.parent.context.register(sc_chart)
+    for i, series in enumerate(data['datasets']):
+      sc_chart.add_trace({'x': series['x'], 'y': series['y'], 'z': series['z']})
+      sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
+    return sc_chart
+
+  def ribbon(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
+             height=(500, "px"), htmlCode=None):
+    """
+    Description:
+    ------------
+    Create ribbons on the x axis
+
+    Related Pages:
+
+      https://plot.ly/javascript/ribbon-plots/
+
+    ttributes:
+    ----------
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    options = options or {'delta': {"x": 1, 'y': 1, 'z': 0}}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'lines+markers'})
+    data = self.parent.context.rptObj.data.plotly.x_yz(record, y_columns, x_axis, z_axis, dy=options['delta']['y'], dx=options['delta']['x'], dz=options['delta']['z'])
+    line_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options or {}, htmlCode,
+                                           profile)
+    self.parent.context.register(line_chart)
+    for i, d in enumerate(data['datasets']):
+      line_chart.add_trace(d)
+      line_chart.data.showscale = False
+    return line_chart
+
+  def mesh3d(self, records, intensity, x, y, z, i=None, j=None, k=None, profile=None, options=None, width=(100, "%"),
+             height=(500, "px"), htmlCode=None):
+    """
+
+    https://plot.ly/javascript/3d-mesh/
+
+    :param records:
+    :param intensity:
+    :param x:
+    :param y:
+    :param z:
+    :param i:
+    :param j:
+    :param k:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    data = {"intensity": [], 'x': [], 'y': [], 'z': []}
+    if i is not None:
+      data[i] = []
+    if j is not None:
+      data[j] = []
+    if k is not None:
+      data[k] = []
+    for rec in records:
+      data["intensity"].append(rec[intensity])
+      data["x"].append(rec[x])
+      data["y"].append(rec[y])
+      data["z"].append(rec[z])
+      if i is not None:
+        data["i"].append(rec[i])
+      if j is not None:
+        data["j"].append(rec[j])
+      if k is not None:
+        data["k"].append(rec[k])
+    mesh_chart = graph.GraphPlotly.Mesh3d(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
+    self.parent.context.register(mesh_chart)
+    mesh_chart.add_trace(data)
+    return mesh_chart
+
+  def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
+              height=(500, "px"), htmlCode=None):
+    """
+
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param z_axis:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param htmlCode:
+    """
+    options = options or {}
+    options.update({'type': 'surface', 'mode': ''})
+    naps = self.parent.context.rptObj.data.plotly.surface(record, y_columns, x_axis, z_axis)
+    surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options, htmlCode, profile)
+    self.parent.context.register(surf_chart)
+    for i, d in enumerate(naps['datasets']):
+      surf_chart.add_trace({'z': d})
+      surf_chart.data.showscale = False
+    return surf_chart
+
+  def maps(self, records, profile=None, options=None, width=(100, "%"), height=(500, "px"), htmlCode=None):
+
+    options = options or {}
+    options.update({'type': 'surface', 'mode': ''})
+    surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options, htmlCode, profile)
+    self.parent.context.register(surf_chart)
+    for d in records:
+      surf_chart.add_trace({'z': d})
+    return surf_chart
+
+
+class Plotly(Plotly2D):
+
+  def __init__(self, context):
+    super(Plotly, self).__init__(context)
+    self._3d = Plotly3D(context)
+
+  def scatter3d(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"), height=(400, "px"), htmlCode=None):
+    return self._3d.scatter(record, y_columns=y_columns, x_axis=x_axis, z_axis=z_axis, profile=profile, options=options, width=width, height=height, htmlCode=htmlCode)
+
+  def line3d(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"), height=(400, "px"), htmlCode=None):
+    return self._3d.line(record, y_columns=y_columns, x_axis=x_axis, z_axis=z_axis, profile=profile, options=options, width=width, height=height, htmlCode=htmlCode)
+
+  def marker3d(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"), height=(400, "px"), htmlCode=None):
+    return self._3d.marker(record, y_columns=y_columns, x_axis=x_axis, z_axis=z_axis, profile=profile, options=options, width=width, height=height, htmlCode=htmlCode)
+
+  def ribbon(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"), height=(500, "px"), htmlCode=None):
+    return self._3d.ribbon(record, y_columns, x_axis, z_axis, profile, options, width, height, htmlCode)
+
+  def mesh3d(self, record, intensity, x, y, z, i=None, j=None, k=None, profile=None, options=None, width=(100, "%"), height=(500, "px"), htmlCode=None):
+    return self._3d.mesh3d(record, intensity, x, y, z, i, j, k, profile, options, width, height, htmlCode)
+
+  def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"), height=(500, "px"), htmlCode=None):
+    return self._3d.surface(record, y_columns, x_axis, z_axis, profile, options, width, height, htmlCode)
+
+  def maps(self, record, profile=None, options=None, width=(100, "%"), height=(500, "px"), htmlCode=None):
+    return self._3d.maps(record, profile, options, width, height, htmlCode)

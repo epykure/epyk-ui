@@ -1,6 +1,7 @@
 
 from epyk.core.html import Html
 
+from epyk.core.js import Imports
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlStepper
 from epyk.core.html.options import OptPanel
@@ -93,12 +94,12 @@ class Stepper(Html.Html):
 
         div.appendChild(span); li.appendChild(div);
         div.id = "svg_" + i;
-        window[step.shape](div, options, step.status); 
+        window[step.shape](div, options, step); 
         htmlObj.appendChild(li)
       })    
       '''
 
-  def add_shape(self, shape, shape_def):
+  def add_shape(self, shape, shape_def, dependencies=None):
     """
     Description:
     ------------
@@ -107,9 +108,17 @@ class Stepper(Html.Html):
     ----------
     :param shape: String.
     :param shape_def: String.
+    :param dependencies: List. Optional. The external module dependencies
     """
+    if dependencies is not None:
+      for d in dependencies:
+        if d in Imports.JS_IMPORTS:
+          self._report.jsImports.add(d)
+        if d in Imports.CSS_IMPORTS:
+          self._report.cssImport.add(d)
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[shape] = "function %s(htmlObj, options, status){%s}" % (shape, JsHtmlStepper.JsShapes().custom(shape_def))
+    constructors[shape] = "function %s(htmlObj, options, step){%s}" % (shape, JsHtmlStepper.JsShapes().custom(shape_def))
+    self.options.shape = shape
     return self
 
   def __str__(self):
@@ -118,5 +127,5 @@ class Stepper(Html.Html):
     constructors = self._report._props.setdefault("js", {}).setdefault("constructors", {})
     shapes = JsHtmlStepper.JsShapes()
     for s in shapes.shapes:
-      constructors[s] = "function %s(htmlObj, options, status){%s}" % (s, getattr(shapes, s)())
+      constructors[s] = "function %s(htmlObj, options, step){%s}" % (s, getattr(shapes, s)())
     return '<ul %s></ul>' % self.get_attrs(pyClassNames=self.style.get_classes())
