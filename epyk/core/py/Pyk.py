@@ -1,5 +1,7 @@
-import importlib, subprocess, sys, os
+import importlib, subprocess, sys, os, inspect
 
+class EpykMissingPykException(Exception):
+  pass
 
 
 class Pyk(object):
@@ -7,13 +9,21 @@ class Pyk(object):
 
   """
 
-  __stack = None
+  __pyk_dict = None
+  __instance = None
 
-  def __init__(self):
-    self.__stack = []
 
-  @staticmethod
-  def requires(pyk_file, components=None, autoinstall=False):
+  class __Pyk(object):
+    pass
+
+  def __new__(cls):
+    if cls.__instance is None:
+      cls.__instance = super(Pyk, cls).__new__(cls)
+      cls.__pyk_dict = {}
+    return cls.__instance
+
+  @classmethod
+  def requires(cls, pyk_file, components=None, autoinstall=False):
     """
     Description:
     ------------------
@@ -33,23 +43,44 @@ class Pyk(object):
     :param autoinstall: specify whether we need to check github or pypi
     :return: a pyk object
     """
+    cls()
 
     if pyk_file.endswith('.py'):
       pass
 
     try:
-      mod = importlib.import_module(pyk_file)
-      print(mod)
+      importlib.import_module(pyk_file)
     except (ModuleNotFoundError, ImportError):
       if not autoinstall:
         print("The package is not found on your environment, you will need to install it manually or use the autoinstall argument")
         raise
 
       subprocess.check_call([sys.executable, '-m', 'pip', 'install', pyk_file])
-      mod = importlib.import_module((pyk_file))
+      importlib.import_module((pyk_file))
+
+    if pyk_file not in cls.__pyk_dict:
+      raise EpykMissingPykException('The specified pyk file: %s does not call the exports function, if this is your file make sure to call this!' % pyk_file)
+
+    pyk_obj = cls.__Pyk()
+    if components:
+      for component in components:
+        setattr(pyk_obj, component, cls.__pyk_dict[pyk_file].get(component, 'Missing component'))
+    else:
+      for obj_name, obj in cls.__pyk_dict[pyk_file].items():
+        setattr(pyk_obj, obj_name, obj)
+
+    return pyk_obj
+
+
+
+  @classmethod
+  def exports(cls, obj_list=None):
+    pass
+
 
 
 
 
 if __name__ == '__main__':
-  Pyk.requires('flask2')
+  print(Pyk)
+  Pyk.requires('flask')
