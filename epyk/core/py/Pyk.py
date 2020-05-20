@@ -46,20 +46,22 @@ class Pyk(object):
     cls()
 
     if pyk_file.endswith('.py'):
-      pass
+      path_split = pyk_file.split(os.sep)
+      sys.path.append(os.sep.join(path_split[:-1]))
+      mod = importlib.import_module(path_split[-1].replace('.py', ''))
+    else:
+      try:
+        importlib.import_module(pyk_file)
+      except (ModuleNotFoundError, ImportError):
+        if not autoinstall:
+          print("The package is not found on your environment, you will need to install it manually or use the autoinstall argument")
+          raise
 
-    try:
-      importlib.import_module(pyk_file)
-    except (ModuleNotFoundError, ImportError):
-      if not autoinstall:
-        print("The package is not found on your environment, you will need to install it manually or use the autoinstall argument")
-        raise
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', pyk_file])
+        importlib.import_module((pyk_file))
 
-      subprocess.check_call([sys.executable, '-m', 'pip', 'install', pyk_file])
-      importlib.import_module((pyk_file))
-
-    if pyk_file not in cls.__pyk_dict:
-      raise EpykMissingPykException('The specified pyk file: %s does not call the exports function, if this is your file make sure to call this!' % pyk_file)
+      if pyk_file not in cls.__pyk_dict:
+        raise EpykMissingPykException('The specified pyk file: %s does not call the exports function, if this is your file make sure to call this!' % pyk_file)
 
     pyk_obj = cls.__Pyk()
     if components:
@@ -67,6 +69,7 @@ class Pyk(object):
         setattr(pyk_obj, component, cls.__pyk_dict[pyk_file].get(component, 'Missing component'))
     else:
       for obj_name, obj in cls.__pyk_dict[pyk_file].items():
+        print(obj_name, obj)
         setattr(pyk_obj, obj_name, obj)
 
     return pyk_obj
@@ -82,5 +85,4 @@ class Pyk(object):
 
 
 if __name__ == '__main__':
-  print(Pyk)
-  Pyk.requires('flask')
+  Pyk.requires(r"C:\Users\nelso\Downloads\list_filter.py")
