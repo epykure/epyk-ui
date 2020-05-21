@@ -136,6 +136,7 @@ def installed_packages():
 
 
 CDNJS_REPO = 'https://cdnjs.cloudflare.com/ajax/libs'
+NODEJS_PATH = r"C:\Angular\node_modules"
 
 # Mapping to match the folder names in Jupyter
 # If the folder are the same as the alias it is not included in this mapping
@@ -1161,10 +1162,10 @@ class ImportManager(object):
     self._report, ovr_version = report, {}
     if report is not None and report.ext_packages is not None:
       extend_imports(report.ext_packages)
-    if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
+    #if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
       # Force the version of some external Javascript or CSS packages
-      packages = importlib.import_module("%s.__init__" % self._report.run.report_name)
-      ovr_version = getattr(packages, 'MODULES', {})
+    #  packages = importlib.import_module("%s.__init__" % self._report.run.report_name)
+    #  ovr_version = getattr(packages, 'MODULES', {})
     if report is not None:
       # Apply the different reports overrides on the packages versions
       ovr_version.update(self._report._props.get('packages', {}))

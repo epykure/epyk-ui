@@ -222,6 +222,57 @@ class ChartJs(object):
     self.parent.context.register(bar_chart)
     return bar_chart
 
+  def custom(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+    """
+    Description:
+    ------------
+    Display a bar chart from ChartJs
+
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/scriptable/bar.html
+
+    Attributes:
+    ----------
+    :param record: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param profile:
+    :param width: Tuple. The width of the component in the page, default (100, '%')
+    :param height: Tuple. The height of the component in the page, default (330, "px")
+    :param options:
+    :param htmlCode:
+    """
+    if self.parent.context.rptObj.ext_packages is None:
+      self.parent.context.rptObj.ext_packages = {}
+    self.parent.context.rptObj.ext_packages.update({
+      'funnel-chart-js': {
+        'version': '1.1.2',
+        'req': [{'alias': 'Chart.js'}],
+        'website': 'https://www.npmjs.com/package/chartjs-plugin-funnel',
+        'modules': [
+          {'script': 'chart.funnel.min.js', 'path': '', 'cdnjs': '%s/funnel-chart-js/dist/' % options['npm_path'].replace("\\", "/")},
+        ]},
+      'chartjs-chart-sankey': {
+        'version': '0.1.3',
+        'website': 'https://www.npmjs.com/package/chartjs-chart-sankey',
+        'req': [{'alias': 'Chart.js'}],
+        'modules': [
+          {'script': 'chartjs-chart-sankey.min.js', 'path': '', 'cdnjs': '%s/chartjs-chart-sankey/dist/' % options['npm_path'].replace("\\", "/")}
+        ]}
+    })
+
+    options = options or {}
+    options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
+    data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)
+    bar_chart = graph.GraphChartJs.ChartExts(self.parent.context.rptObj, width, height, htmlCode, options, profile)
+    bar_chart.labels(data['labels'])
+    for i, d in enumerate(data['datasets']):
+      bar_chart.add_dataset(d, data['series'][i])
+    bar_chart.options.scales.y_axis().ticks.beginAtZero = True
+    self.parent.context.register(bar_chart)
+    return bar_chart
+
   def hbar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
