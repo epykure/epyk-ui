@@ -150,7 +150,7 @@ NOTEBOOK_MAPPING = {
 JS_IMPORTS = {
   # numbers formatting
   'accounting': {
-    'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting'},
+    'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting', 'npm': 'accounting'},
     'modules': [
       {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -158,7 +158,7 @@ JS_IMPORTS = {
 
   # data transformation
   'underscore': {
-    'register': {'alias': 'underscore', 'module': 'underscore-min'},
+    'register': {'alias': 'underscore', 'module': 'underscore-min', 'npm': 'underscore'},
     'modules': [
       {'script': 'underscore-min.js', 'version': '1.9.1', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -417,7 +417,7 @@ JS_IMPORTS = {
   #
   'json-formatter': {
     'website': 'https://azimi.me/json-formatter-js/',
-    'register': {'alias': 'JSONFormatter', 'module': 'json-formatter.umd.min'},
+    'register': {'alias': 'JSONFormatter', 'module': 'json-formatter.umd.min', 'npm': 'json-formatter-js'},
     'modules': [
       {'script': 'json-formatter.umd.min.js', 'version': '2.3.4', 'path': 'json-formatter-js@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"},
     ]},
@@ -425,7 +425,7 @@ JS_IMPORTS = {
   # Datatable pivot
   'pivot': {
     'req': [{'alias': 'jqueryui'}],
-    'register': {'alias': 'pivot', 'module': 'pivot.min'},
+    'register': {'alias': 'pivot', 'module': 'pivot.min', 'npm': 'pivottable'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
       {'script': 'pivot.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -497,7 +497,7 @@ JS_IMPORTS = {
   'jqueryui': {
     'req': [{'alias': 'jquery'}],
     'website': 'http://jquery.com/',
-    'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui'},
+    'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jqueryui'},
     'modules': [
       {'script': 'jquery-ui.min.js', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -664,7 +664,7 @@ JS_IMPORTS = {
   # Javascript dependencies for Plotly width CDN links
   'plotly.js': {
     'website': 'https://plot.ly/javascript/',
-    'register': {'alias': 'Plotly', 'module': 'plotly.min'},
+    'register': {'alias': 'Plotly', 'module': 'plotly.min', 'npm': 'plotly'},
     'req': [{'alias': 'd3'}],
     'modules': [
       {'script': 'plotly.min.js', 'version': '1.51.1', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -673,21 +673,21 @@ JS_IMPORTS = {
   'nvd3': {
     'website': 'http://nvd3.org/',
     'req': [{'alias': 'd3', 'version': '3.5.17'}],
-    'register': {'alias': 'nv', 'module': 'nv.d3.min'},
+    'register': {'alias': 'nv', 'module': 'nv.d3.min', 'npm': 'nvd3'},
     'modules': [
       {'script': 'nv.d3.min.js', 'version': '1.8.6', 'path': 'nvd3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # C3 modules width CDN links
   'c3': {
     'website': 'https://c3js.org/',
-    'register': {'alias': 'c3', 'module': 'c3.min'},
+    'register': {'alias': 'c3', 'module': 'c3.min', 'npm': 'c3'},
     'req': [{'alias': 'd3'}],
     'modules': [
       {'script': 'c3.min.js', 'version': '0.7.15', 'path': 'c3/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   'crossfilter': {
     'website': 'http://square.github.io/crossfilter/',
-    'register': {'alias': 'crossfilter2', 'module': 'crossfilter.min'},
+    'register': {'alias': 'crossfilter2', 'module': 'crossfilter.min', 'npm': 'crossfilter'},
     'modules': [
       {'script': 'crossfilter.min.js', 'version': '1.3.12', 'path': 'crossfilter/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
@@ -696,7 +696,7 @@ JS_IMPORTS = {
   # DC modules width CDN links
   'dc': {
     'website': 'https://dc-js.github.io/dc.js/examples/',
-    'register': {'alias': 'dc', 'module': 'dc.min'},
+    'register': {'alias': 'dc', 'module': 'dc.min', 'npm': 'dc'},
     'req': [{'alias': 'd3'}, {'alias': 'crossfilter'},
     ],
     'modules': [
@@ -705,7 +705,7 @@ JS_IMPORTS = {
   # billboard modules width CDN links
   'billboard': {
     'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
-    'register': {'alias': 'billboard', 'module': 'billboard.pkgd.min', 'npm': 'bb', 'init_fnc': 'var bb = billboard.bb'},
+    'register': {'alias': 'billboard', 'module': 'billboard.pkgd.min', 'npm': 'billboard.js', 'var': 'bb', 'init_fnc': 'var bb = billboard.bb'},
     'req': [{'alias': 'd3'}],
     'modules': [
       {'script': 'billboard.min.js', 'version': '1.12.8', 'path': 'billboard.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -741,7 +741,7 @@ JS_IMPORTS = {
   'popper': {
     'req': [{'alias': 'jquery'}],
     'website': 'https://popper.js.org/',
-    'register': {'alias': 'popper', 'module': 'popper.min'},
+    'register': {'alias': 'popper', 'module': 'popper.min', 'npm': 'popper'},
     'modules': [
       {'reqAlias': 'popper', 'script': 'popper.min.js', 'version': '1.14.6', 'path': 'popper.js/%(version)s/umd/', 'cdnjs': CDNJS_REPO}]},
 
@@ -781,7 +781,7 @@ JS_IMPORTS = {
   # https://github.com/mathjax/mathjax
   'mathjs': {
     'website': 'https://www.mathjax.org/',
-    'register': {'alias': 'mathjax', 'module': 'MathJax'},
+    'register': {'alias': 'mathjax', 'module': 'MathJax', 'npm': 'mathjax'},
     'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s', 'folder': 'mathjax'},
     'modules': [
       {'script': 'MathJax.js', 'version': '2.7.7', 'path': 'mathjax/%(version)s/', 'cdnjs': CDNJS_REPO}],
@@ -800,6 +800,7 @@ JS_IMPORTS = {
   # Code mirror
   'codemirror': {
     'website': 'https://codemirror.net/',
+    'register': {'alias': 'codemirror', 'npm': 'codemirror'},
     'modules': [
       {'script': 'codemirror.min.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
@@ -814,10 +815,19 @@ JS_IMPORTS = {
   # showdown
   'showdown': {
     'website': 'https://github.com/showdownjs/showdown',
+    'register': {'alias': 'showdown', 'npm': 'showdown'},
     'modules': [
       {'script': 'showdown.min.js', 'path': 'showdown/%(version)s/', 'version': '1.9.1', 'cdnjs': CDNJS_REPO}
     ]
   },
+
+  # Sortable framework
+  'sortable': {
+    'register': {'alias': 'Sortable', 'npm': 'sortablejs'},
+    'modules': [
+      {'script': 'Sortable.min.js', 'version': '1.10.1', 'path': 'Sortable/%(version)s/', 'cdnjs': CDNJS_REPO},
+    ],
+    'website': 'https://github.com/SortableJS/Sortable'},
 }
 
 

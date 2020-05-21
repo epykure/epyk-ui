@@ -3,7 +3,6 @@ import json
 import collections
 import datetime
 import time
-import logging
 
 try:
   basestring
@@ -56,6 +55,8 @@ class Report(object):
   @property
   def body(self):
     """
+    Description:
+    ------------
     Property that returns the Body element of the HTML page
     """
     if self.__body is None:
@@ -69,6 +70,8 @@ class Report(object):
   @property
   def theme(self):
     """
+    Description:
+    ------------
     Return the currently used :doc:`report/theme` for the report
     """
     if self._theme is None:
@@ -85,6 +88,8 @@ class Report(object):
 
   def imports(self, online=False):
     """
+    Description:
+    ------------
     Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to run.
     """
     if self.__import_manage is None:
@@ -206,16 +211,19 @@ class Report(object):
 
   def itemFromCode(self, htmlCode):
     """
+    Description:
+    ------------
 
     :param htmlCode:
 
     :rtype: html.Html.Html
-    :return:
     """
     return self.htmlCodes[htmlCode]
 
   def item(self, itemId):
     """
+    Description:
+    ------------
 
     :param itemId:
     :return:
@@ -241,24 +249,11 @@ class Report(object):
                     data=urlencode({'data': json.dumps(data)}).encode('utf-8')))
     response.read()
 
-  # -----------------------------------------------------------------------------------------
-  #                                    LOGGING AND DEBUGGING FUNCTIONS
-  # -----------------------------------------------------------------------------------------
-  def log(self, text, type='DEBUG'):
-    """
-    This will write some logs to your local user.log file in \system\logs.
-    """
-    log = logging.getLogger('user')
-    if type.upper() == 'INFO':
-      log.info("| %s [ %s ] >> %s" % (self.run.report_name, self.run.script_name, text))
-    elif type.upper() == 'WARNING':
-      log.warning("| %s [ %s ] >> %s" % (self.run.report_name, self.run.script_name, text))
-    else:
-      log.debug("| %s [ %s ] >> %s" % (self.run.report_name, self.run.script_name, text))
-
   @property
   def outs(self):
     """
+    Description:
+    ------------
 
     :return:
     """
@@ -288,6 +283,8 @@ class Report(object):
 
   def dumps(self, data):
     """
+    Description:
+    ------------
     Function used to dump the data before being sent to the Javascript layer
     This function relies on json.dumps with a special encoder in order to work with Numpy array and Pandas data structures.
 
