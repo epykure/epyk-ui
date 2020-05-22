@@ -180,7 +180,7 @@ class CountDownDate(Html.Html):
 
       htmlObj.innerHTML = "<b>"+ days +"d "+ hours +"h "+ minutes + "m "+ seconds +"s </b>"; 
       if ((distance < 0) && (options.delete)){clearInterval(htmlObj.id +"_interval")
-      }''' % {"report_name": self._report.run.report_name, "script_name": self._report.run.script_name}
+      }'''
 
   def __str__(self):
     self.jsUpdateDataFnc = '''var %(htmlId)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)

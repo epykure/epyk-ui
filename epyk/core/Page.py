@@ -1,11 +1,8 @@
-import os
+
 import json
-import importlib
 import collections
 import datetime
 import time
-import re
-import logging
 
 try:
   basestring
@@ -19,7 +16,6 @@ from epyk.core.css import Classes
 
 from epyk.core import html
 from epyk.core import js
-from epyk.core import py
 from epyk.core import data
 
 from epyk.core.html import symboles
@@ -29,47 +25,14 @@ from epyk.core.py import PyOuts
 from epyk.core.py import PyExt
 
 
-class ContextRun(object):
-  __slots__ = ['mac_address', 'host_name', 'current_user', 'report_name', 'script_name', 'local_path', 'url_root', 'title', 'is_local', 'url', 'username']
-  __internals_attrs = ['mac_address', 'local_path', 'is_local', 'url', 'username']
-
-  def __init__(self, report_name=None, script_name=None, current_user="local", host_name="script",
-               url_root='http://127.0.0.1', title=None, urlMaps=None):
-    self.report_name, self.script_name = report_name, script_name
-    self.current_user, self.host_name, self.mac_address, self.url_root = current_user, host_name, "", None
-    self.url = "#"
-    if report_name is not None:
-      mod = importlib.import_module('%s.__init__' % report_name)
-      self.local_path, _ = os.path.split(os.path.abspath(mod.__file__))
-    else:
-      self.local_path = os.getcwd()
-    self.title = self.script_name if title is None else title
-    self.is_local = True
-
-  def to_dict(self, inputs_scope=True):
-    """
-
-    :param inputs_scope: Boolean
-    :return:
-    """
-    if inputs_scope:
-      return dict([(s, getattr(self, s)) for s in self.__slots__ if s not in self.__internals_attrs])
-
-    return dict([(s, getattr(self, s)) for s in self.__slots__])
-
-  def __str__(self):
-    return str(self.to_dict())
-
-
 class Report(object):
   showNavMenu, withContainer = False, False
   ext_packages = None # For extension modules
 
-  def __init__(self, run_options=None):
+  def __init__(self):
     #
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
     self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet(), 'datasets': {}}}, None, None, None
-    self.run = self.run_context(run_options if run_options is not None else {})
 
     self.timestamp, self.runTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'), time.time() * 100
     self.content, self.shortcuts, self.exportCsv, self.jsSources = [], {}, {}, {}
@@ -89,16 +52,11 @@ class Report(object):
     self.jsImports, self.cssImport = set(), set()
     self.jsLocalImports, self.cssLocalImports = set(), set()
 
-  def run_context(self, run_options):
-    """
-
-    :return:
-    """
-    return ContextRun(**run_options)
-
   @property
   def body(self):
     """
+    Description:
+    ------------
     Property that returns the Body element of the HTML page
     """
     if self.__body is None:
@@ -112,6 +70,8 @@ class Report(object):
   @property
   def theme(self):
     """
+    Description:
+    ------------
     Return the currently used :doc:`report/theme` for the report
     """
     if self._theme is None:
@@ -128,6 +88,8 @@ class Report(object):
 
   def imports(self, online=False):
     """
+    Description:
+    ------------
     Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to run.
     """
     if self.__import_manage is None:
@@ -249,16 +211,19 @@ class Report(object):
 
   def itemFromCode(self, htmlCode):
     """
+    Description:
+    ------------
 
     :param htmlCode:
 
     :rtype: html.Html.Html
-    :return:
     """
     return self.htmlCodes[htmlCode]
 
   def item(self, itemId):
     """
+    Description:
+    ------------
 
     :param itemId:
     :return:
@@ -284,24 +249,11 @@ class Report(object):
                     data=urlencode({'data': json.dumps(data)}).encode('utf-8')))
     response.read()
 
-  # -----------------------------------------------------------------------------------------
-  #                                    LOGGING AND DEBUGGING FUNCTIONS
-  # -----------------------------------------------------------------------------------------
-  def log(self, text, type='DEBUG'):
-    """
-    This will write some logs to your local user.log file in \system\logs.
-    """
-    log = logging.getLogger('user')
-    if type.upper() == 'INFO':
-      log.info("| %s [ %s ] >> %s" % (self.run.report_name, self.run.script_name, text))
-    elif type.upper() == 'WARNING':
-      log.warning("| %s [ %s ] >> %s" % (self.run.report_name, self.run.script_name, text))
-    else:
-      log.debug("| %s [ %s ] >> %s" % (self.run.report_name, self.run.script_name, text))
-
   @property
   def outs(self):
     """
+    Description:
+    ------------
 
     :return:
     """
@@ -331,6 +283,8 @@ class Report(object):
 
   def dumps(self, data):
     """
+    Description:
+    ------------
     Function used to dump the data before being sent to the Javascript layer
     This function relies on json.dumps with a special encoder in order to work with Numpy array and Pandas data structures.
 

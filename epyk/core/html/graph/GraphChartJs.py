@@ -586,3 +586,12 @@ class ChartScatter(Chart):
       }
     '''
 
+
+class ChartExts(ChartPie):
+  __reqJs = ['Chart.js']
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(ChartExts, self).__init__(report, width, height, htmlCode, options, profile)
+    self.jsImports.add(options['npm'])
+    self._attrs['type'] = options['type']
+
