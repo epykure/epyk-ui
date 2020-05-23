@@ -127,7 +127,6 @@ class _Pyk(object):
     if pyk_file not in pyk_dict:
       raise EpykMissingPykException('The specified pyk file: %s does not call the exports function, if this is your file make sure to call this!' % pyk_file)
 
-    print(pyk_dict)
     return pyk_dict[pyk_file]
 
   def _exports(self, obj_dict):
