@@ -602,6 +602,35 @@ JS_IMPORTS = {
   #         {'reqAlias': 'd3_axis', 'script': 'd3-axis.min.js', 'version': '1.0.10', 'path': 'd3-axis/%(version)s/', 'cdnjs': CDNJS_REPO},
   #       ]},
 
+  # D3 ease
+  'd3-ease': {
+      'website': 'https://github.com/d3/d3-ease',
+      'register': {'alias': 'd3_ease', 'module': 'd3-ease.min'},
+      'modules': [
+        {'script': 'd3-ease.min.js', 'version': '1.0.3', 'path': 'd3-ease/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # D3 dispatch
+  'd3-dispatch': {
+      'website': 'https://github.com/d3/d3-dispatch',
+      'register': {'alias': 'd3_dispatch', 'module': 'd3-dispatch.min'},
+      'modules': [
+        {'script': 'd3-dispatch.min.js', 'version': '1.0.3', 'path': 'd3-dispatch/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # D3 transition
+  'd3-transition': {
+      'website': 'https://github.com/d3/d3-interpolate',
+      'register': {'alias': 'd3_transition', 'module': 'd3-transition.min'},
+      'req': [{'alias': 'd3-dispatch'}],
+      'modules': [
+        {'script': 'd3-transition.min.js', 'version': '1.1.1', 'path': 'd3-transition/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # D3 Selection
+  'd3-selection': {
+      'website': 'https://github.com/d3/d3-interpolate',
+      'register': {'alias': 'd3_selection', 'module': 'd3-selection.min'},
+      'modules': [
+        {'script': 'd3-selection.min.js', 'version': '1.2.0', 'path': 'd3-selection/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
   # D3 Interpolate
   'd3-interpolate': {
       'website': 'https://github.com/d3/d3-interpolate',
