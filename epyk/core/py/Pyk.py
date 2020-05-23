@@ -56,7 +56,8 @@ def register(rpt_obj, components):
     components = [components]
 
   for comp in components:
-    rpt_obj.context.register(comp)
+    rpt_obj.htmlItems[id(comp)] = comp
+    rpt_obj.content.append(id(comp))
 
 class _Pyk(object):
   """
@@ -79,11 +80,6 @@ class _Pyk(object):
       raise Exception("You need to call this object with the instance() method: _Pyk.instance()")
 
     _Pyk.__instance = self
-
-  def register(self, rpt_obj):
-    for obj_name, obj in inspect.getmembers(self):
-      if obj_name.startswith('pyk_'):
-        rpt_obj.context.register(obj)
 
   def _requires(self, pyk_file, autoinstall=False, autoreload=False):
     """
