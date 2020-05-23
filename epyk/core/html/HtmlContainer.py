@@ -306,8 +306,16 @@ class Div(Html.Html):
     return "%s.innerHTML = %s" % (self.dom.varId, js_data) #, "{%s}" % ",".join(js_options))
 
   def __str__(self):
-    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+    rows = []
+    for htmlObj in self.val:
+      if hasattr(htmlObj, 'html'):
+        if self._sort_propagate:
+          htmlObj.sortable(self._sort_options)
+        rows.append(htmlObj.html())
+      else:
+        rows.append(str(htmlObj))
+
+    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS
@@ -509,8 +517,12 @@ class TSection(Html.Html):
     return self
 
   def __str__(self):
-    cols = "".join([htmlObj.html() for i, htmlObj in enumerate(self.val)])
-    return '<%(section)s %(attr)s>%(cols)s</%(section)s>' % {'section': self.__section, 'cols': cols,
+    cols = []
+    for htmlObj in self.val:
+      if self._sort_propagate:
+        htmlObj.sortable(self._sort_options)
+      cols.append(htmlObj.html())
+    return '<%(section)s %(attr)s>%(cols)s</%(section)s>' % {'section': self.__section, 'cols': "".join(cols),
                   'attr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
@@ -837,6 +849,7 @@ class Row(Html.Html):
     Return the internal column in the row for the given index
 
     :param i: the column index
+
     :rtype: Col
     """
     return self.val[i]
@@ -941,9 +954,12 @@ class Grid(Html.Html):
     return self
 
   def __str__(self):
-    rows = [htmlObj.html() for htmlObj in self.val]
+    rows = []
+    for htmlObj in self.val:
+      if self._sort_propagate:
+        htmlObj.sortable(self._sort_options)
+      rows.append(htmlObj.html())
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))
-
 
   # -----------------------------------------------------------------------------------------
   #                                    EXPORT OPTIONS

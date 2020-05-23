@@ -10,6 +10,8 @@ from epyk.core.js import Js
 from epyk.core.js.html import JsHtml
 from epyk.core.js import packages
 from epyk.core.js.packages import JsQuery
+from epyk.core.js.packages import JsSortable
+from epyk.core.js.packages import packageImport
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.html import Aria
@@ -84,6 +86,7 @@ class Html(object):
     """ Create an python HTML object """
     self._triggerEvents, self.profile = set(), profile
     self._report, self._styleObj = report, None # The html object ID
+    self._on_ready_js, self._sort_propagate, self._sort_options = {}, False, None # For sortable items
     self._dom, self._container, self._sub_htmls, self._js, self.helper = None, None, [], None, ""
     self._events__keys = {}
     self.jsImports = report.jsImports
@@ -1035,6 +1038,35 @@ Attributes:
         %(jsFnc)s 
       })''' % {'jqId': self.jqId, 'jsFnc': jsFnc})
 
+  @packageImport('sortable')
+  def sortable(self, options=None, propagate=True, propagate_only=False):
+    """
+    Description:
+    ------------
+    Sortable is a JavaScript library for reorderable drag-and-drop lists.
+    
+    Related Pages:
+
+			https://github.com/SortableJS/Sortable
+
+    Attributes:
+    ----------
+    :param options: Dictionary. The sortable options
+    :param propagate: Boolean. Specify if the sub children should get the draggable property
+    :param propagate_only: Boolean. Specify if the first level of child is draggable
+
+    :rtype: JsSortable.Sortable
+    """
+    self._sort_propagate = propagate
+    if not propagate_only:
+      if 'sortable' not in self._on_ready_js:
+        self._on_ready_js['sortable'] = JsSortable.Sortable(self, varName="%s_sortable" % self.htmlId, selector=self.dom.varId, parent=self._report)
+        dflt_options = {"group": self.htmlId}
+        dflt_options.update(options or {})
+        self._sort_options = dflt_options
+        self._on_ready_js['sortable'].create(self.dom.varId, dflt_options)
+      return self._on_ready_js['sortable']
+
   # def filter(self, jsId, colName, allSelected=True, filterGrp=None, operation="=", itemType="string"):
   #   filterObj = {"operation": operation, 'itemType': itemType, 'allIfEmpty': allSelected, 'colName': colName, 'val': self.val, 'typeVal': 'js'}
   #   self._report.jsSources.setdefault(jsId, {}).setdefault('_filters', {})[self.htmlCode] = filterObj
@@ -1097,6 +1129,8 @@ http://python-docx.readthedocs.io/en/latest/
 
   def html(self):
     str_result = []
+    if self._on_ready_js:
+      self.onReady(list(self._on_ready_js.values()))
     for htmlObj in self._sub_htmls:
       str_result.append(htmlObj.html())
     if self.helper != "":
