@@ -6,32 +6,82 @@ class EpykMissingPykException(Exception):
 class EpykBoundRptObj(Exception):
   pass
 
-class Pyk(object):
+
+def requires(pyk_file, components=None, autoinstall=False):
+  """
+  Description:
+    ------------
+
+      This function will allow you to import components from another pyk file.
+      The pyk file can be located on your file system, or it can be on pypi or even github
+      if it's the latter options (pypi or github) you will need to use autoinstall=True
+
+  Usage:
+  -----------
+    requires(pyk_name, autoinstall=True)
+
+    requires('/usr/local/my_pyk_file.py', components=['obj1', 'obj2'])
+
+  :param pyk_file: the pyk to be imported into your project, this will be a name if installing from pypi or github or just a path if it's a local pyk)
+  :param components: list of objects to import, if None all the objects declared in the pyk file will be available
+  :param autoinstall: specify whether we need to check github or pypi
+  :return: a pyk object
+  """
+
+  pyk_obj = _Pyk.instance()
+  return pyk_obj._requires(pyk_file, components, autoinstall)
+
+def exports(obj_dict):
+  """
+  Description:
+  ------------
+
+    This function requries you to pass a dictionary with the object alias as key and the object as value
+    for as many objects as you wish
+    This will then be used by users who need to require your particular pyk file
+    You can pass epyk object in that dictionary as well as function if you need to
+
+  Usage:
+  ------
+
+    exports({'my_obj1': my_obj1, 'my_obj1': my_obj2})
+
+  :param obj__dict: dictionary with object name as key and object as value
+  """
+  pyk_obj = _Pyk.instance()
+  pyk_obj._exports(obj_dict)
+
+def register(rpt_obj, components):
+  if type(components) != list:
+    components = [components]
+
+  for comp in components:
+    rpt_obj.htmlItems[id(comp)] = comp
+    rpt_obj.content.append(id(comp))
+
+class _Pyk(object):
   """
 
   """
-
-  __pyk_dict = None
   __instance = None
-  __rpt_obj = None
+  __pyk_dict = {}
 
+  class Pyk(object):
+    pass
 
-  def __new__(cls):
-    if cls.__instance is None:
-      cls.__instance = super(Pyk, cls).__new__(cls)
-      cls.__pyk_dict = {}
-    return cls.__instance
+  @staticmethod
+  def instance():
+    if _Pyk.__instance is None:
+      _Pyk()
+    return _Pyk.__instance
 
-  class __Pyk(object):
+  def __init__(self):
+    if _Pyk.__instance is not None:
+      raise Exception("You need to call this object with the instance() method: _Pyk.instance()")
 
-    def register(self, rpt_obj):
-      for obj_name, obj in inspect.getmembers(self):
-        if obj_name.startswith('pyk_'):
-          rpt_obj.context.register(obj)
+    _Pyk.__instance = self
 
-
-  @classmethod
-  def requires(cls, pyk_file, components=None, autoinstall=False):
+  def _requires(self, pyk_file, autoinstall=False, autoreload=False):
     """
     Description:
     ------------
@@ -42,16 +92,18 @@ class Pyk(object):
 
     Usage:
     -----------
-      pyk.requires(pyk_name, autoinstall=True)
+      requires(pyk_name, autoinstall=True)
 
-      pyk.requires('/usr/local/my_pyk_file.py', components=['obj1', 'obj2'])
+      requires('/usr/local/my_pyk_file.py', components=['obj1', 'obj2'])
 
     :param pyk_file: the pyk to be imported into your project, this will be a name if installing from pypi or github or just a path if it's a local pyk)
     :param components: list of objects to import, if None all the objects declared in the pyk file will be available
     :param autoinstall: specify whether we need to check github or pypi
     :return: a pyk object
     """
-    cls()
+    pyk_dict = _Pyk.__pyk_dict
+    if pyk_file in pyk_dict and not autoreload:
+      return pyk_dict[pyk_file]
 
     if pyk_file.endswith('.py'):
       path_split = pyk_file.split(os.sep)
@@ -68,21 +120,12 @@ class Pyk(object):
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', pyk_file])
         importlib.import_module((pyk_file))
 
-      if pyk_file not in cls.__pyk_dict:
-        raise EpykMissingPykException('The specified pyk file: %s does not call the exports function, if this is your file make sure to call this!' % pyk_file)
+    if pyk_file not in pyk_dict:
+      raise EpykMissingPykException('The specified pyk file: %s does not call the exports function, if this is your file make sure to call this!' % pyk_file)
 
-    pyk_obj = cls.__Pyk()
-    if components:
-      for component in components:
-        setattr(pyk_obj, 'pyk_%s' % component, cls.__pyk_dict[pyk_file].get(component, 'Missing component'))
-    else:
-      for obj_name, obj in cls.__pyk_dict[pyk_file].items():
-        setattr(pyk_obj, 'pyk_%s' % obj_name, obj)
+    return pyk_dict[pyk_file]
 
-    return pyk_obj
-
-  @classmethod
-  def exports(cls, obj__dict=None):
+  def _exports(self, obj_dict):
     """
     Description:
     ------------
@@ -91,20 +134,26 @@ class Pyk(object):
       for as many objects as you wish
       This will then be used by users who need to require your particular pyk file
       You can pass epyk object in that dictionary as well as function if you need to
+
     Usage:
     ------
 
-        pyr.exports({'my_obj1': my_obj1, 'my_obj1': my_obj2})
+        exports({'my_obj1': my_obj1, 'my_obj1': my_obj2})
 
     :param obj__dict: dictionary with object name as key and object as value
     """
-    cls()
-    for obj_name, obj in obj__dict.items():
-      cls.__pyk_dict[obj_name] = obj
+    pyk_dict = _Pyk.__pyk_dict
+    pyk_obj = self.Pyk()
+    frame_found = False
+    for frame in inspect.stack():
+      if frame_found:
+        filename = frame.filename
+        break
 
+      if frame.function == 'exports':
+        frame_found = True
+    pyk_dict[filename] = {}
+    for obj_name, obj in obj_dict.items():
+      setattr(pyk_obj, obj_name, obj)
+      pyk_dict[filename] = pyk_obj
 
-
-
-
-if __name__ == '__main__':
-  Pyk.requires(r"C:\Users\nelso\Downloads\list_filter.py")
