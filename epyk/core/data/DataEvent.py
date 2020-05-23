@@ -14,6 +14,17 @@ class DataEvents(object):
     return JsObjects.JsObjects.get("data")
 
   @property
+  def event(self):
+    """
+    Description:
+    ------------
+    Interface to the standard event
+    """
+    from epyk.core.js.objects import JsEvents
+
+    return JsEvents.Event()
+
+  @property
   def mouse(self):
     """
     Description:
