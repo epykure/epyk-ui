@@ -921,10 +921,10 @@ Attributes:
     """
     dft_fnc = ""
     if preventDefault:
-      dft_fnc = self.js.objects.event.preventDefault()
+      dft_fnc = self._report.js.objects.event.preventDefault()
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self.js.objects.event.dataTransfer.text] + jsFncs, toStr=True)
+    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.dataTransfer.text] + jsFncs, toStr=True)
     self.attr["ondrop"] = "(function(event){%s; %s; return false})(event)" % (dft_fnc, str_fncs)
     self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     return self
