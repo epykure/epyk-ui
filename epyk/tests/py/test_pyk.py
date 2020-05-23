@@ -7,10 +7,10 @@ rpt_obj = Report()
 
 rpt_obj.ui.text("Here we have a text followed by a normal button")
 
-Pyk.register(rpt_obj, pyk_rpt.button)
+rpt_obj.register(pyk_rpt.button)
 
 rpt_obj.ui.text("Then we have an import button")
 
-Pyk.register(rpt_obj, pyk_rpt.imp)
+rpt_obj.register(pyk_rpt.imp)
 
 print(rpt_obj.outs.html_file())
