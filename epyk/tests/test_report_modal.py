@@ -51,7 +51,7 @@ rptObj = Report()
 # print(rptObj.js.addOnReady(rptObj.js.window.events.addClickListener(rptObj.js.if_('event.target == %s' % button.htmlId, button.), subEvents=['event'])))
 
 #########FOOTER#########
-nav = rptObj.ui.navigation.bar(title="test")
+# nav = rptObj.ui.navigation.bar(title="test")
 # nav.add_text("This is a huge text that I don't know what to do with")
 # nav + button
 # nav + imp
@@ -68,11 +68,16 @@ nav = rptObj.ui.navigation.bar(title="test")
 # start = time.time()
 
 div = rptObj.ui.div("toto")
+div.style.css_class.media({'.topnav li': {"float": None, 'width': '100%'},
+                           'topnav li line': {'stroke-width': 0},
+                           'topnav li [name=label]': {'width': '100%!IMPORTANT'}}, 'only', 'screen', {"and": [{'max-width': '600px'}]})
 # div.style.css.background_color = 'yellow'
-div.style.css.height = '50px'
+# div.style.css.height = '50px'
 
-div.style.css_class.media({div: {"background-color": "red"}}, 'only', 'screen', {"and": [{'max-width': '2000px'}]})
-print(div.style.css_class.get_ref())
+# div.style.css_class.media({div: {"background-color": "red"}}, 'only', 'screen', {"and": [{'max-width': '2000px'}]})
+# print(div.style.css_class.get_ref())
+#
+# rptObj.js.addOnLoad()
 
 # data_rest = rptObj.py.requests.csv(data_urls.COVID_ECDC_URL)
 # print(data_rest)
