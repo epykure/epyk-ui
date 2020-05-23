@@ -3,6 +3,7 @@
 """
 
 from epyk.core.Page import Report
+from epyk.core.py import Pyk
 from epyk.tests import data_urls
 from epyk.core.css.themes import ThemeBlue
 from epyk.core.css.themes import ThemeDark
@@ -40,8 +41,8 @@ rptObj = Report()
 # rptObj.ui.fields.today('test')
 # rptObj.ui.images.icon()
 ###########BUTTONS###########
-# button = rptObj.ui.buttons.button('Contact Sales')
-# imp = rptObj.ui.buttons.important('Get Started for Free')
+button = rptObj.ui.buttons.button('Contact Sales')
+imp = rptObj.ui.buttons.important('Get Started for Free')
 # rptObj.ui.modal.forms([d, i, i2], "http://127.0.0.1:5000", "POST")
 # rptObj.ui.modal.objects([d, i, i2], "POST", submit=False)
 # disclaimer = rptObj.ui.texts.paragraph(disc)

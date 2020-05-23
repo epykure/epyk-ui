@@ -29,7 +29,7 @@ def requires(pyk_file, components=None, autoinstall=False):
   """
 
   pyk_obj = _Pyk.instance()
-  pyk_obj._requires(pyk_file, components, autoinstall)
+  return pyk_obj._requires(pyk_file, components, autoinstall)
 
 def exports(obj_dict):
   """
@@ -51,12 +51,23 @@ def exports(obj_dict):
   pyk_obj = _Pyk.instance()
   pyk_obj._exports(obj_dict)
 
+def register(rpt_obj, components):
+  if type(components) != list:
+    components = [components]
+
+  for comp in components:
+    rpt_obj.htmlItems[id(comp)] = comp
+    rpt_obj.content.append(id(comp))
+
 class _Pyk(object):
   """
 
   """
   __instance = None
   __pyk_dict = {}
+
+  class Pyk(object):
+    pass
 
   @staticmethod
   def instance():
@@ -70,12 +81,7 @@ class _Pyk(object):
 
     _Pyk.__instance = self
 
-  def register(self, rpt_obj):
-    for obj_name, obj in inspect.getmembers(self):
-      if obj_name.startswith('pyk_'):
-        rpt_obj.context.register(obj)
-
-  def _requires(self, pyk_file, components=None, autoinstall=False):
+  def _requires(self, pyk_file, autoinstall=False, autoreload=False):
     """
     Description:
     ------------
@@ -96,6 +102,9 @@ class _Pyk(object):
     :return: a pyk object
     """
     pyk_dict = _Pyk.__pyk_dict
+    if pyk_file in pyk_dict and not autoreload:
+      return pyk_dict[pyk_file]
+
     if pyk_file.endswith('.py'):
       path_split = pyk_file.split(os.sep)
       sys.path.append(os.sep.join(path_split[:-1]))
@@ -114,14 +123,7 @@ class _Pyk(object):
     if pyk_file not in pyk_dict:
       raise EpykMissingPykException('The specified pyk file: %s does not call the exports function, if this is your file make sure to call this!' % pyk_file)
 
-    if components:
-      for component in components:
-        comp_obj = pyk_dict[pyk_file][component]
-        setattr(self, 'pyk_%s' % component, comp_obj)
-    else:
-      for obj_name, comp_obj in pyk_dict[pyk_file].items():
-        setattr(self, 'pyk_%s' % obj_name, comp_obj)
-    return self
+    return pyk_dict[pyk_file]
 
   def _exports(self, obj_dict):
     """
@@ -141,6 +143,7 @@ class _Pyk(object):
     :param obj__dict: dictionary with object name as key and object as value
     """
     pyk_dict = _Pyk.__pyk_dict
+    pyk_obj = self.Pyk()
     frame_found = False
     for frame in inspect.stack():
       if frame_found:
@@ -151,5 +154,6 @@ class _Pyk(object):
         frame_found = True
     pyk_dict[filename] = {}
     for obj_name, obj in obj_dict.items():
-      pyk_dict[filename][obj_name] = obj
+      setattr(pyk_obj, obj_name, obj)
+      pyk_dict[filename] = pyk_obj
 
