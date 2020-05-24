@@ -259,3 +259,7 @@ bb = DataPy.C3()
 datatable = DataPy.Datatable()
 
 events = DataEvent.DataEvents()
+
+loops = DataEvent.DataLoops()
+
+primitives = DataEvent.DataPrimitives()

@@ -600,6 +600,9 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.splice(%s, %s, %s)" % (self.varId, i, j, jsData))
 
   def __getitem__(self, index):
+    if not isinstance(index, int):
+      return JsObject.JsObject("%s[%s]" % (self.varId, index), report=self._report)
+
     if index < 0:
       return JsObject.JsObject("%s[%s %s]" % (self.varId, self.length, index), report=self._report)
 

@@ -69,3 +69,121 @@ class DataEvents(object):
     from epyk.core.js.objects import JsEvents
 
     return JsEvents.KeyboardEvent()
+
+
+class DataLoops(object):
+
+  @property
+  def value(self):
+    """
+    Description:
+    -----------
+    The value returned by forEach statement.
+
+    Note. For nested loop make sure you store the important information in new variable names.
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsObject.JsObject.get("value")
+
+  @property
+  def i(self):
+    """
+    Description:
+    ------------
+    The index value return in loop statement
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsNumber.JsNumber.get("index")
+
+
+class DataPrimitives(object):
+
+  def list(self, data=None, name=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data: List. The Python object used to feed the list
+    :param name: String. The variable name used on the JavaScript
+    """
+    from epyk.core.js.primitives import JsObjects
+
+    if data is not None:
+      setVar = True if name is not None else False
+      return JsObjects.JsArray.JsArray(data, varName=name, setVar=setVar)
+
+    return JsObjects.JsArray.JsArray.get(name)
+
+  def dict(self, data=None, name=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param name: String. The variable name used on the JavaScript
+    """
+    from epyk.core.js.primitives import JsObjects
+
+    if data is not None:
+      setVar = True if name is not None else False
+      return JsObjects.JsObject.JsObject(data, varName=name, setVar=setVar)
+
+    return JsObjects.JsObject.JsObject.get(name)
+
+  def str(self, data=None, name=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param name: String. The variable name used on the JavaScript
+    """
+    from epyk.core.js.primitives import JsObjects
+
+    if data is not None:
+      setVar = True if name is not None else False
+      return JsObjects.JsString.JsString(data, varName=name, setVar=setVar)
+
+    return JsObjects.JsString.JsString.get(name)
+
+  def float(self, data=None, name=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param name: String. The variable name used on the JavaScript
+    """
+    from epyk.core.js.primitives import JsObjects
+
+    if data is not None:
+      setVar = True if name is not None else False
+      return JsObjects.JsNumber.JsNumber(data, varName=name, setVar=setVar)
+
+    return JsObjects.JsNumber.JsNumber.get(name)
+
+  def int(self, data=None, name=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param name: String. The variable name used on the JavaScript
+    """
+    from epyk.core.js.primitives import JsObjects
+
+    if data is not None:
+      setVar = True if name is not None else False
+      return JsObjects.JsNumber.JsNumber(data, varName=name, setVar=setVar)
+
+    return JsObjects.JsNumber.JsNumber.get(name)
