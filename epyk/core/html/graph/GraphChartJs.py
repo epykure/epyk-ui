@@ -65,6 +65,10 @@ class Chart(Html.Html):
       self._options = OptChartJs.Options(self._report, attrs=self._options_init)
     return self._options
 
+  @property
+  def plugins(self):
+    return self.options.plugins
+
   def labels(self, labels):
     """
     Description:

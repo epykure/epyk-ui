@@ -1,4 +1,6 @@
 
+import os
+
 from epyk.core.html import graph
 
 
@@ -245,7 +247,7 @@ class ChartJs(object):
     """
     if self.parent.context.rptObj.ext_packages is None:
       self.parent.context.rptObj.ext_packages = {}
-    self.parent.context.rptObj.ext_packages.update({
+    chartjs_defined_package = {
       'funnel-chart-js': {
         'version': '1.1.2',
         'req': [{'alias': 'Chart.js'}],
@@ -260,8 +262,25 @@ class ChartJs(object):
         'modules': [
           {'script': 'chartjs-chart-sankey.min.js', 'path': '', 'cdnjs': '%s/chartjs-chart-sankey/dist/' % options['npm_path'].replace("\\", "/")}
         ]}
-    })
+    }
+    if options.get('npm') is not None and options['npm'] not in chartjs_defined_package:
+      folder = "dist"
+      if not os.path.exists('%s/%s/%s' % (options['npm_path'].replace("\\", "/"), options['npm'], folder)):
+        folder = 'build'
+        if not os.path.exists('%s/%s/%s' % (options['npm_path'].replace("\\", "/"), options['npm'], folder)):
+          raise Exception("Missing module %s/%s/dist or build in the package - use web npm feature to install package to your app " % (options['npm_path'].replace("\\", "/"), options['npm']))
 
+      chartjs_defined_package[options['npm']] = {
+        'req': [{'alias': 'Chart.js'}], 'version': 'N/A',
+        'modules': [
+          {'script': '%s.min.js' % options.get('script', options['npm']), 'path': '', 'cdnjs': '%s/%s/%s' % (options['npm_path'].replace("\\", "/"), options['npm'], folder) },
+      ]}
+
+      del options['npm_path']
+      if 'script' in options:
+        del options['script']
+
+    self.parent.context.rptObj.ext_packages.update(chartjs_defined_package)
     options = options or {}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {}})
     data = self.parent.context.rptObj.data.chartJs.y(record, y_columns, x_axis)

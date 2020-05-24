@@ -1,5 +1,6 @@
 
 from epyk.core.data import DataClass
+from epyk.core.js.packages import packageImport
 
 
 class OptionAxesTicks(DataClass):
@@ -596,6 +597,10 @@ class Options(DataClass):
   def legend(self):
     return self.sub_data("legend", OptionLegend)
 
+  @property
+  def plugins(self):
+    return self.sub_data("plugins", OptionChartJsPlugins)
+
   def add_title(self, text, color=None):
     """
 
@@ -718,3 +723,20 @@ class OptionsPolar(Options):
   def animation(self):
     return self.sub_data("animation", OptionPieAnimation)
 
+
+class OptionChartJsPlugins(DataClass):
+
+  @property
+  @packageImport('chartjs-plugin-zoom')
+  def zoom(self):
+    """
+    Description:
+    -----------
+    A zoom and pan plugin for Chart.js. Currently requires Chart.js >= 2.6.0
+
+    Related Pages:
+
+      https://github.com/chartjs/chartjs-plugin-zoom
+    """
+    from epyk.core.html.graph.exts import ChartJsZoom
+    return self.sub_data("zoom", ChartJsZoom.Zoom)

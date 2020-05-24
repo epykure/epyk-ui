@@ -748,6 +748,13 @@ JS_IMPORTS = {
       {'script': 'Chart.bundle.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO},
       {'script': 'Chart.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
+  # ChartJs Zoom plugin modules width CDN links
+  'chartjs-plugin-zoom': {
+    'website': 'https://www.chartjs.org/',
+    'req': [{'alias': 'Chart.js'}],
+    'modules': [
+      {'script': 'chartjs-plugin-zoom.min.js', 'version': '0.7.7', 'path': 'chartjs-plugin-zoom/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
   # ChartJs addon to add label width CDN links
   'chartjs-pie-labels': {
       'website': 'https://chartjs-plugin-datalabels.netlify.com/',
