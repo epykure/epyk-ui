@@ -227,6 +227,14 @@ JS_IMPORTS = {
     'website': 'http://tabulator.info/'
   },
 
+  'tabulator-drop': {
+    'req': [{'alias': 'tabulator'}],
+    'modules': [
+      {'script': 'formatters-drop.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': r'C:\Users\olivier\Documents\GitHub\tabulator-extensions'},
+    ],
+    'website': 'http://tabulator.info/'
+  },
+
   'tabulator-mutators-inputs': {
     'req': [{'alias': 'tabulator'}],
     'modules': [

@@ -1185,7 +1185,7 @@ http://tabulator.info/docs/4.5/columns
     Related Pages:
 http://tabulator.info/docs/4.0/modules
     """
-    return Extensions(self, self._attrs)
+    return Extensions(self._report, self._attrs, parent=self)
 
   @property
   def editors(self):

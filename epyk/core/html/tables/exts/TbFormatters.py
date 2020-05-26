@@ -8,7 +8,11 @@ class ExtsFormattors(DataGroup):
   @packageImport('tabulator-icons')
   def icon(self, css=None, tags=None, **kwargs):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param css:
     :param tags:
     :param kwargs:
@@ -135,7 +139,11 @@ class ExtsFormattors(DataGroup):
   def number_format(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", colors=None,
                               threshold=0, css=None, **kwargs):
     """
-
+    Description:
+    -----------
+    
+    Attributes:
+    ----------
     :param decimal: String. decimal point separator default "."
     :param thousand: String. thousands separator default ","
     :param precision: Integer. decimal places default 0
@@ -155,7 +163,11 @@ class ExtsFormattors(DataGroup):
   def number_difference(self, decimal=None, thousand=None, precision=None, symbol=None, format=None,
                                   colors=None, threshold=0, css=None, **kwargs):
     """
-
+    Description:
+    -----------
+    
+    Attributes:
+    ----------
     :param decimal: String. decimal point separator default "."
     :param thousand: String. thousands separator default ","
     :param precision: Integer. decimal places default 0
@@ -176,35 +188,67 @@ class ExtsFormattors(DataGroup):
   @packageImport('tabulator-numbers')
   def number_thresholds(self, thresholds, css, **kwargs):
     """
-
+    Description:
+    -----------
+    
+    Attributes:
+    ----------
     :param thresholds:
     :param css:
     :param kwargs:
     """  #
     self._attrs["formatter"] = 'numbersThreshold'
     self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css}
+    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
   @packageImport('tabulator-numbers')
   def number_thresholds_pivot(self, pivot, thresholds, css, **kwargs):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param pivot:
     :param thresholds:
     :param css:
     :param kwargs:
-    :return:
     """
     self._attrs["formatter"] = 'numbersThresholdPivot'
     self._attrs["formatterParams"] = {'thresholds': thresholds, 'css': css, 'pivot': pivot}
+    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
+    self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
+    return self
+
+  @packageImport('tabulator-drop')
+  def drag_and_drop(self, row_delimiter="\n", col_delimiter="\t", css=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param row_delimiter: String
+    :param col_delimiter: String
+    :param css:
+    :param kwargs:
+    """
+    self._attrs["formatter"] = 'dragAndDrop'
+    self._attrs["formatterParams"] = {'css': css, 'rowDelimiter': row_delimiter, 'colDelimiter': col_delimiter}
+    self._attrs["formatterParams"].update({k: v for k, v in locals().items() if k != 'self' and v is not None})
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
   @packageImport('tabulator-numbers')
   def intensity(self, steps, colors, intensity, css=None, **kwargs):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param steps:
     :param colors:
     :param intensity: String, The column used to deduce the intensity. Default the cell value
@@ -215,13 +259,18 @@ class ExtsFormattors(DataGroup):
     self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity}
     if css is not None:
       self._attrs["formatterParams"]['css'] = css
+    self._attrs["formatterParams"].update({k: v for k, v in locals().items() if k != 'self' and v is not None})
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
   @packageImport('tabulator-numbers')
   def quality(self, steps, colors, intensity, quality, css=None, **kwargs):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param steps:
     :param colors:
     :param intensity:
@@ -233,6 +282,7 @@ class ExtsFormattors(DataGroup):
     self._attrs["formatterParams"] = {'steps': steps, 'colors': colors, 'intensity': intensity, 'quality': quality}
     if css is not None:
       self._attrs["formatterParams"]['css'] = css
+    self._attrs["formatterParams"] = {k: v for k, v in locals().items() if k != 'self' and v is not None}
     self._attrs["formatterParams"].update(self._attrs["formatterParams"].pop('kwargs'))
     return self
 
