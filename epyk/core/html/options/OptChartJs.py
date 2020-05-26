@@ -740,3 +740,39 @@ class OptionChartJsPlugins(DataClass):
     """
     from epyk.core.html.graph.exts import ChartJsZoom
     return self.sub_data("zoom", ChartJsZoom.Zoom)
+
+  @property
+  @packageImport('chartjs-plugin-crosshair')
+  def crosshair(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://github.com/chartjs/chartjs-plugin-zoom
+    """
+    from epyk.core.html.graph.exts import ChartJsCrosshair
+    return self.sub_data("crosshair", ChartJsCrosshair.Crosshair)
+
+  @property
+  @packageImport('chartjs-plugin-annotation')
+  def annotation(self):
+    """
+    Description:
+    -----------
+    An annotation plugin for Chart.js >= 2.4.0
+
+    This plugin draws lines and boxes on the chart area.
+
+    Annotations work with line, bar, scatter and bubble charts that use linear, logarithmic, time, or category scales.
+    Annotations will not work on any chart that does not have exactly two axes, including pie, radar, and polar area charts.
+
+    Related Pages:
+
+      https://github.com/chartjs/chartjs-plugin-zoom
+    """
+    from epyk.core.html.graph.exts import ChartJsAnnotation
+    return self.sub_data("annotation", ChartJsAnnotation.Annotation)
+
+

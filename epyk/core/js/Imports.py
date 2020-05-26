@@ -748,6 +748,27 @@ JS_IMPORTS = {
       {'script': 'Chart.bundle.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO},
       {'script': 'Chart.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
+  # ChartJs Crosshair plugin modules width CDN links
+  'chartjs-plugin-dragdata': {
+    'website': 'https://www.chartjs.org/',
+    'req': [{'alias': 'Chart.js'}],
+    'modules': [
+      {'script': 'chartjs-plugin-dragdata.min.js', 'version': 'latest', 'path': 'chartjs-plugin-dragdata@%(version)s/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+
+  # ChartJs Crosshair plugin modules width CDN links
+  'chartjs-plugin-annotation': {
+    'website': 'https://www.chartjs.org/',
+    'req': [{'alias': 'Chart.js'}],
+    'modules': [
+      {'script': 'chartjs-plugin-annotation.min.js', 'version': '0.5.7', 'path': 'chartjs-plugin-annotation/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # ChartJs Crosshair plugin modules width CDN links
+  'chartjs-plugin-crosshair': {
+    'website': 'https://www.chartjs.org/',
+    'req': [{'alias': 'Chart.js'}],
+    'modules': [
+      {'script': 'chartjs-plugin-crosshair.js', 'version': '1.1.6', 'path': '', 'cdnjs': "https://chartjs-plugin-crosshair.netlify.app/"}]},
+
   # ChartJs Zoom plugin modules width CDN links
   'chartjs-plugin-zoom': {
     'website': 'https://www.chartjs.org/',

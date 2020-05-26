@@ -3,6 +3,7 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptChartJs
 
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import packageImport
 from epyk.core.js.primitives import JsObject
 
 from epyk.core.js.packages import JsChartJs
@@ -68,6 +69,22 @@ class Chart(Html.Html):
   @property
   def plugins(self):
     return self.options.plugins
+
+  @packageImport('chartjs-plugin-dragdata')
+  def dragData(self):
+    """
+    Description:
+    -----------
+    A plugin for Chart.js >= 2.4.0
+
+    Makes data points draggable. Supports touch events.
+
+    Related Pages:
+
+      https://github.com/chrispahm/chartjs-plugin-dragdata
+    """
+    self.options._attrs['dragData'] = True
+    return self.options
 
   def labels(self, labels):
     """

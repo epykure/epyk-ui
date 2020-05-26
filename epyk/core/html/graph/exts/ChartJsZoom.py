@@ -10,7 +10,12 @@ class ZoomRange(DataClass):
   @property
   def x(self):
     """
-    https://github.com/chartjs/chartjs-plugin-zoom
+    Description:
+    -----------
+
+    Related Pages:
+
+			https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["x"]
 
@@ -21,7 +26,12 @@ class ZoomRange(DataClass):
   @property
   def y(self):
     """
-    https://github.com/chartjs/chartjs-plugin-zoom
+    Description:
+    -----------
+
+    Related Pages:
+
+			https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["y"]
 
@@ -35,7 +45,12 @@ class ZoomAttrs(DataClass):
   @property
   def enabled(self):
     """
-    https://github.com/chartjs/chartjs-plugin-zoom
+    Description:
+    -----------
+
+    Related Pages:
+
+			https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["enabled"]
 
@@ -46,7 +61,12 @@ class ZoomAttrs(DataClass):
   @property
   def mode(self):
     """
-    https://github.com/chartjs/chartjs-plugin-zoom
+    Description:
+    -----------
+
+    Related Pages:
+
+			https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["mode"]
 
@@ -65,7 +85,12 @@ class ZoomAttrs(DataClass):
   @property
   def speed(self):
     """
-    https://github.com/chartjs/chartjs-plugin-zoom
+    Description:
+    -----------
+
+    Related Pages:
+
+			https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["speed"]
 
@@ -76,7 +101,12 @@ class ZoomAttrs(DataClass):
   @property
   def threshold(self):
     """
-    https://github.com/chartjs/chartjs-plugin-zoom
+    Description:
+    -----------
+
+    Related Pages:
+
+			https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["threshold"]
 
@@ -89,6 +119,8 @@ class ZoomPan(ZoomAttrs):
 
   def onPan(self, jsFncs):
     """
+    Description:
+    -----------
     Function called while the user is zooming
 
     :param jsFnc:
@@ -99,6 +131,8 @@ class ZoomPan(ZoomAttrs):
 
   def onPanComplete(self, jsFncs):
     """
+    Description:
+    -----------
     Function called while the user is zooming
 
     :param jsFnc:
@@ -113,6 +147,8 @@ class ZoomZoom(ZoomAttrs):
   @property
   def drag(self):
     """
+    Description:
+    -----------
     Enable drag-to-zoom behavior
     """
     return self._attrs["drag"]
@@ -124,7 +160,9 @@ class ZoomZoom(ZoomAttrs):
   @property
   def sensitivity(self):
     """
-    https://github.com/chartjs/chartjs-plugin-zoom
+    Related Pages:
+
+			https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["sensitivity"]
 
@@ -136,6 +174,8 @@ class ZoomZoom(ZoomAttrs):
     """
     Function called while the user is zooming
 
+    Attributes:
+    ----------
     :param jsFnc:
     """
     if not isinstance(jsFncs, list):
@@ -146,6 +186,8 @@ class ZoomZoom(ZoomAttrs):
     """
     Function called once zooming is completed
 
+    Attributes:
+    ----------
     :param jsFnc:
     """
     if not isinstance(jsFncs, list):
