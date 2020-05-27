@@ -1,7 +1,12 @@
+"""
+Draft version
 
+"""
 from epyk.core.js import Imports
 
+import re
 import os
+import json
 import subprocess
 
 
@@ -418,10 +423,406 @@ class NG(object):
     subprocess.run('ng generate %s %s' % (schematic, name), shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
 
+class RouteModule(object):
+
+  def __init__(self, app_path, app_name, file_name=None):
+    self._app_path, self._app_name = app_path, app_name
+    self.file_name = file_name or 'app-routing.module.ts'
+    self.modules, self.routes, self.ng_modules = {}, {}, None
+
+    # parse the Angular route module
+    imported_module_pattern = re.compile("import { (.*) } from '(.*)';")
+    imported_route_pattern = re.compile("{ path: '(.*)', component: (.*) }")
+
+    self.ngModule = "@NgModule"
+    with open(os.path.join(self._app_path, app_name, 'src', 'app', 'app-routing.module.ts')) as f:
+      content = f.read()
+      split_content = content.split("@NgModule")
+      for module_def in imported_module_pattern.findall(split_content[0]):
+        self.modules[module_def[0]] = module_def[1]
+
+      for alias, component in imported_route_pattern.findall(split_content[0]):
+        self.routes[component] = alias
+      self.ngModule = "%s%s" % (self.ngModule, split_content[1])
+
+  def add(self, component, alias, path):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param component:
+    :param alias:
+    :param path:
+    """
+    if self.ng_modules is None:
+      self.ng_modules = NgModules(self._app_path, self._app_name)
+      self.ng_modules.modules[component] = path
+    self.modules[component] = path
+    self.routes[component] = alias
+
+  def export(self, file_name=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param file_name: String. Optional. The filename
+    """
+    file_name = 'app-routing.module_new.ts' or self.file_name
+    with open(os.path.join(self._app_path, self._app_name, 'src', 'app', file_name), "w") as f:
+      for k, v in self.modules.items():
+        f.write("import { %s } from '%s';\n" % (k, v))
+      f.write("\n\n")
+      f.write("const routes: Routes = [\n")
+      for k, v in self.routes.items():
+        f.write("    { path: '%s', component: %s },\n" % (v, k))
+      f.write("]\n\n")
+      f.write("\n")
+      f.write(self.ngModule)
+    self.ng_modules.export(file_name)
+
+
+class NgModules(object):
+
+  def __init__(self, app_path, app_name, file_name=None):
+    self._app_path, self._app_name = app_path, app_name
+    self.file_name = file_name or 'app.module.ts'
+    self.modules, self.imports, self.declarations, self.providers, self.bootstrap = {}, [], [], [], []
+
+    # parse the Angular route module
+    imported_module_pattern = re.compile("import { (.*) } from '(.*)';")
+    with open(os.path.join(self._app_path, app_name, 'src', 'app', self.file_name)) as f:
+      content = f.read()
+      for module_def in imported_module_pattern.findall(content):
+        self.modules[module_def[0]] = module_def[1]
+
+      matches = re.search(r"\@NgModule\((.*)?\)", content, re.DOTALL)
+      json_stuff = re.sub(r"([a-z_\-\.A-Z0-9]+)", r'"\1"', matches.group(1))
+      json_stuff = re.sub(r",[\W]*?([\}\]])", r"\n\1", json_stuff)
+      json_dict = json.loads(json_stuff)
+      self.declarations = json_dict['declarations']
+      self.providers = json_dict['providers']
+      self.imports = json_dict['imports']
+      self.bootstrap = json_dict['bootstrap']
+
+    # Add mandatory core modules
+    self.add_import("HttpClientModule", '@angular/common/http')
+
+  def add(self, component, path):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param component: String. The component name
+    :param path: String. The component path
+    """
+    self.modules[component] = path
+
+  def add_import(self, component, path):
+    self.modules[component] = path
+
+    if component not in self.imports:
+      self.imports.append(component)
+
+  def export(self, file_name=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param file_name: String. Optional. The filename
+    """
+    file_name = 'app.module_new.ts' or self.file_name
+    with open(os.path.join(self._app_path, self._app_name, 'src', 'app', file_name), "w") as f:
+      for k, v in self.modules.items():
+        f.write("import { %s } from '%s';\n" % (k, v))
+      f.write("\n\n")
+      f.write("@NgModule({\n")
+      for name, vars in [("declarations", self.declarations), ('imports', self.imports), ('providers', self.providers), ('bootstrap', self.bootstrap)]:
+        f.write("  %s: [\n" % name)
+        for d in vars:
+          f.write("    %s,\n" % d)
+        f.write("  ],\n")
+      f.write("})\n\n")
+      f.write("export class AppModule { }")
+
+
+class ComponentSpec(object):
+
+  def __init__(self, app_path, app_name, alias, name):
+    self.imports, self.vars = {}, {}
+    self._app_path, self._app_name, self.__path = app_path, app_name, 'apps'
+    self.alias, self.name = alias, name
+    self.__comp_structure = {}
+
+  def export(self, path=None):
+    """
+    Description:
+    ------------
+    Export the spec of the component
+
+    TODO: make this generation more flexible
+
+    Attributes:
+    ----------
+    :param path:
+    """
+    self.__path = path or self.__path
+    module_path = os.path.join(self._app_path, self._app_name, 'src', 'app', self.__path)
+    if not os.path.exists(module_path):
+      os.makedirs(module_path)
+
+    with open(os.path.join(module_path, "app.%s.component.spec.ts" % self.alias), "w") as f:
+      f.write('''
+import { TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { %(name)s } from './app.component';
+
+describe('%(name)s', () => {
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        %(name)s
+      ],
+    }).compileComponents();
+  }));
+
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(%(name)s);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  });
+
+  it(`should have as title '%(alias)s'`, () => {
+    const fixture = TestBed.createComponent(%(name)s);
+    const app = fixture.componentInstance;
+    expect(app.title).toEqual('%(alias)s');
+  });
+
+  it('should render title', () => {
+    const fixture = TestBed.createComponent(%(name)s);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    expect(compiled.querySelector('.content span').textContent).toContain('%(alias)s app is running!');
+  });
+});
+''' % {"path": module_path, 'name': self.name, 'alias': self.alias})
+
+
+class Components(object):
+
+  def __init__(self, app, count=0):
+    self._app, self.count_comp = app, count
+
+  def chart(self, vars, alias=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param vars:
+    :param alias:
+    """
+    map_var_names = {}
+    alias = alias or self.count_comp
+    for k, v in vars.items():
+      map_var_names[k] = "%s%s" % (k, alias)
+      self._app.add_var(map_var_names[k], v)
+    map_var_names["ref"] = "chart%s" % alias
+    self._app.comps["chart%s" % alias] = "chart%s" % alias
+    self.count_comp += 1
+    self._app.htmls.append('''
+<div class="container">
+		<pr-chart [values]='%(values)s' [labels]='%(labels)s' type='{{ %(type)s }}' #%(ref)s></pr-chart>
+</div>''' % map_var_names)
+    return "chart%s" % alias
+
+  def table(self, vars, alias=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param vars:
+    :param alias:
+    """
+    map_var_names = {}
+    alias = alias or self.count_comp
+    for k, v in vars.items():
+      map_var_names[k] = "%s%s" % (k, alias)
+      self._app.add_var(map_var_names[k], v)
+    map_var_names["ref"] = "table%s" % alias
+    self._app.comps["table%s" % alias] = "table%s" % alias
+    self.count_comp += 1
+    self._app.htmls.append('''<pr-grid #%(ref)s></pr-grid>''' % map_var_names)
+    return "table%s" % alias
+
+  def input(self):
+    self._app.comps["input"] = "input"
+    self._app.htmls.append('''<input type='text' #input />''')
+
+  def button(self, value, name, fncs):
+    self._app.add_fnc(name, fncs)
+    self._app.htmls.append('''<button (click)="this.%s()">%s</button>''' % (name, value))
+
+
+class Page(object):
+
+  def __init__(self, report, app_path, app_name,  alias, name):
+    self.imports = {'Component': '@angular/core', 'HttpClient': '@angular/common/http',
+                    'HttpHeaders': '@angular/common/http', 'Injectable': '@angular/core',
+                    'ViewChild': '@angular/core'}
+    self.vars, self.__map_var_names, self._report = {}, {}, report
+    self._app_path, self._app_name = app_path, app_name
+    self.alias, self.__path, self.className, self.__components = alias, 'apps', name, None
+    self.__comp_structure, self.htmls, self.__fncs, self.__injectable_prop = {}, [], {}, {'providedIn': 'root'}
+    self.spec = ComponentSpec(app_path, app_name,  alias, name)
+    self.comps = {}
+
+  def add_var(self, name, value=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    :param value:
+    """
+    if value is not None:
+      if 'constructor' not in self.__comp_structure:
+        self.__comp_structure['constructor'] = []
+      self.__comp_structure['constructor'].append("this.%s = %s" % (name, json.dumps(value)))
+    self.vars[name] = value
+
+  def add_fnc(self, name, fncs):
+    self.__fncs[name] = fncs
+
+  def add_imports(self, name, path):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    :param path:
+    """
+    pass
+
+  @property
+  def components(self):
+    """
+    Description:
+    ------------
+
+    """
+    if self.__components is None:
+      self.__components = Components(self)
+    return self.__components
+
+  def constructor(self):
+    pass
+
+  def ngOnInit(self):
+    pass
+
+  def ngAfterViewInit(self):
+    return
+
+  @property
+  def name(self):
+    """
+    Description:
+    ------------
+    Return the prefix of the component module (without any extension)
+    """
+    return "app.%s.component" % self.alias
+
+  def http(self, end_point, jsFncs):
+    return "this.httpClient.post('http://127.0.0.1:5000/%s', {}).subscribe((data)=>{ %s });" % (end_point, ";".join(jsFncs))
+
+  @property
+  def path(self):
+    """
+    Description:
+    ------------
+    Return the full path of the component modules
+    """
+    return os.path.join("./", self.__path, self.name).replace("\\", "/")
+
+  def export(self, path=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param path:
+    """
+    self.__path = path or self.__path
+    module_path = os.path.join(self._app_path, self._app_name, 'src', 'app', self.__path)
+    if not os.path.exists(module_path):
+      os.makedirs(module_path)
+
+    self.spec.export(path=path)
+    with open(os.path.join(module_path, "%s.ts" % self.name), "w") as f:
+      for comp, path in self.imports.items():
+        f.write("import { %s } from '%s';\n" % (comp, path))
+      f.write("\n")
+      # All the applicatops need this as they will interact with a Flask backend
+      f.write("@Injectable({\n")
+      for k , v in self.__injectable_prop.items():
+        f.write(" %s: %s\n" % (k, json.dumps(v)))
+      f.write("})\n")
+      f.write("\n")
+      f.write("@Component({\n")
+      f.write("  selector: 'app-%s',\n" % self.alias)
+      f.write("  templateUrl: '%s',\n" % "./%s.html" % self.name)
+      f.write("  styleUrls: ['%s']\n" % "./%s.css" % self.name)
+      f.write("})\n")
+      f.write("\n")
+      f.write("export class %s {\n" % self.className)
+      f.write("  // Component link section\n")
+      for k, v in self.comps.items():
+        f.write("  @ViewChild('%s') %s: any;;\n" % (k, k))
+
+      f.write("  // Variable section\n")
+      for var in self.vars.keys():
+        f.write("  %s;\n" % var)
+      f.write("\n")
+      if 'constructor' in self.__comp_structure:
+        f.write("  constructor(private httpClient: HttpClient){\n")
+        f.write("    %s" % "; ".join(self.__comp_structure['constructor']))
+        f.write("  }\n")
+      f.write("\n")
+      for name, fnc_def in self.__fncs.items():
+        f.write("  %s(){ %s } \n" % (name, ";".join(fnc_def)))
+      f.write("}\n")
+    with open(os.path.join(module_path, "%s.html" % self.name), "w") as f:
+      f.write("".join(self.htmls))
+
+    with open(os.path.join(module_path, "%s.css" %  self.name), "w") as f:
+      f.write("")
+
+
 class Angular(object):
 
   def __init__(self, app_path, name=None):
     self._app_path, self._app_name = app_path, name
+    self.__route, self.__ng_modules = None, None
+    self.__page = None
 
   def create(self, node_path):
     """
@@ -514,4 +915,65 @@ class Angular(object):
     """
     app_name = app_name or self._app_name
     return NG(self._app_path, app_name)
+
+  def page(self, report, selector, name):
+    """
+
+    :param report:
+    :param selector:
+    :param name:
+    """
+    self.__page = Page(report, self._app_path, self._app_name, selector, name)
+    self.route.add(self.__page.className, self.__page.alias, self.__page.path)
+    return self.__page
+
+  def ng_modules(self, app_name=None, file_name=None):
+    """
+    Description:
+    ------------
+    Read the file app.module.ts
+
+    :param app_name: String. Optinal. THe Angular application name
+
+    :rtype: NgModules
+    """
+    if self.__ng_modules is None:
+      if self.__route is not None and self.__route.ng_modules is not None:
+        self.__ng_modules = self.__route.ng_modules
+      else:
+        self.__ng_modules = NgModules(self._app_path, app_name or self._app_name, file_name)
+    return self.__ng_modules
+
+  @property
+  def route(self, app_name=None, file_name=None):
+    """
+    Description:
+    ------------
+
+    Read the file app-routing.module.ts from the Angular app
+
+    Attributes:
+    ----------
+    :param app_name: String. Optinal. THe Angular application name
+    :param file_name: String. Optinal.
+
+    :rtype: RouteModule
+    """
+    if self.__route is None:
+      self.__route = RouteModule(self._app_path, app_name or self._app_name, file_name)
+    return self.__route
+
+  def publish(self, app_name=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param app_name:
+    """
+    if self.__page is not None:
+      self.__page.export()
+    if self.__route is not None:
+      self.route.export()
 
