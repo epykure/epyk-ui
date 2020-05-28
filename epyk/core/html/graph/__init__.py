@@ -9,3 +9,4 @@ from . import GraphD3
 from . import GraphPlotly
 from . import GraphSparklines
 from . import GraphCanvas
+from . import GraphGoogle

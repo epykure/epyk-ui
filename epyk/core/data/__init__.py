@@ -256,6 +256,8 @@ c3 = DataPy.C3()
 
 bb = DataPy.C3()
 
+google = DataPy.Google()
+
 datatable = DataPy.Datatable()
 
 events = DataEvent.DataEvents()

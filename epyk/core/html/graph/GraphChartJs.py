@@ -11,8 +11,7 @@ from epyk.core.js.packages import JsD3
 
 
 class Chart(Html.Html):
-  name, category, callFnc = 'ChartJs', 'Charts', 'chartJs'
-  data_out, data_format = 'chartjs', 'y'
+  name = 'ChartJs'
 
   def __init__(self,  report, width, height, htmlCode, options, profile):
     self.height = height[0]

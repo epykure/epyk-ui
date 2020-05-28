@@ -525,3 +525,38 @@ class Datatable(object):
     for rec in data:
       records.append([rec.get(c, dflt) for c in columns])
     return records
+
+
+class Google(object):
+
+  @staticmethod
+  def y(data, y_columns, x_axis):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data: List of dict. The Python recordset
+    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    """
+    is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
+    if data is None:
+      return is_data
+
+    agg_data = {}
+    for rec in data:
+      for y in y_columns:
+        if y in rec:
+          agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
+    labels, data = OrderedSet(), []
+    for c in y_columns:
+      for x, y in agg_data.get(c, {}).items():
+        labels.add(x)
+    is_data["labels"] = labels
+    for x in labels:
+      is_data["datasets"].append([x] + [agg_data.get(y, {}).get(x) for y in y_columns])
+    is_data["series"] = y_columns
+    is_data["x"] = x_axis
+    return is_data

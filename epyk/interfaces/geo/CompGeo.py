@@ -2,6 +2,7 @@
 from epyk.interfaces.geo import CompGeoPlotly
 from epyk.interfaces.geo import CompGeoDc
 from epyk.interfaces.geo import CompGeoChartJs
+from epyk.interfaces.geo import CompGeoGoogle
 
 
 class Geo(object):
@@ -42,3 +43,15 @@ class Geo(object):
 
     """
     return CompGeoPlotly.Plotly(self)
+
+  @property
+  def google(self):
+    """
+    Description:
+    ------------
+    
+    """
+    if not getattr(self.context.rptObj, '_with_google_imports', False):
+      raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")
+
+    return CompGeoGoogle.GeoGoogle(self)

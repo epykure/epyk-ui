@@ -12,6 +12,7 @@ from epyk.interfaces.graphs import CompChartsD3
 from epyk.interfaces.graphs import CompChartsVis
 from epyk.interfaces.graphs import CompChartsSvg
 from epyk.interfaces.graphs import CompChartsCanvas
+from epyk.interfaces.graphs import CompChartsGoogle
 
 
 class Graphs(object):
@@ -191,6 +192,20 @@ http://nvd3.org/
     Related Pages:
 """
     return CompChartsD3.D3(self)
+
+  @property
+  def google(self):
+    """
+    Description:
+    ------------
+    Google Charts interface
+
+    Related Pages:
+"""
+    if not getattr(self.context.rptObj, '_with_google_imports', False):
+      raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")
+
+    return CompChartsGoogle.ChartGoogle(self)
 
   @property
   def svg(self):

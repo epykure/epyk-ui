@@ -120,6 +120,10 @@ class DataSrc(object):
     return DataPy.NVD3()
 
   @property
+  def google(self):
+    return DataPy.Google()
+
+  @property
   def js(self):
     """
     Description:

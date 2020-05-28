@@ -1136,6 +1136,47 @@ CSS_IMPORTS = {
 _SERVICES = {}
 
 
+GOOGLE_EXTENSIONS = {
+  'charts': {'modules': [
+      {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
+    ],
+    'website': 'https://developers.google.com/chart/interactive/docs',
+    'launcher': "google.charts.load('current', {'packages':['corechart']})",
+
+  },
+  'geochart': {'modules': [
+        {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
+      ],
+      'website': 'https://developers.google.com/chart/interactive/docs',
+      'launcher': "google.charts.load('current', {'packages':['geochart']})",
+
+  },
+  'charts-gauge': {'modules': [
+        {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
+      ],
+      'website': 'https://developers.google.com/chart/interactive/docs',
+      'launcher': "google.charts.load('current', {'packages':['gauge']})",
+
+  },
+  'maps': {'modules': [
+      {'script': 'js?v=3.exp', 'version': '', 'path': 'api/', 'cdnjs': 'https://maps.googleapis.com/maps'},
+    ],
+    'website': 'https://developers.google.com/chart'
+  },
+  'streetview': {'modules': [
+      {'script': 'js?v=3.exp', 'version': '', 'path': 'api/', 'cdnjs': 'https://maps.googleapis.com/maps'},
+    ],
+    'website': 'https://developers.google.com/chart'
+  },
+  'visualization': {'modules': [
+      {'script': 'js?key=%(api_key)s&libraries=visualization', 'version': '', 'path': 'api/', 'cdnjs': 'https://maps.googleapis.com/maps'},
+    ],
+    'website': 'https://developers.google.com/chart',
+    'launcher': "google.charts.load('current', {'packages':['corechart']})",
+  },
+}
+
+
 def extend(reference, module_path, version, cdnjs_url=CDNJS_REPO, required=None):
   """
   Description:
@@ -1242,6 +1283,7 @@ class ImportManager(object):
     #  packages = importlib.import_module("%s.__init__" % self._report.run.report_name)
     #  ovr_version = getattr(packages, 'MODULES', {})
     if report is not None:
+      self._report._with_google_imports = False
       # Apply the different reports overrides on the packages versions
       ovr_version.update(self._report._props.get('packages', {}))
     self.jsImports, self.cssImports, self.moduleConfigs, self.reqVersion = {}, {}, {}, {}
@@ -1871,3 +1913,27 @@ class ImportManager(object):
             s['path'] = s['path'] % s
             packages.setdefault(c, []).append({"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
     return packages
+
+  def google_products(self, products, api_key=None):
+    """
+    Description:
+    ------------
+    Enable the google predefined products.
+
+    Those are by default disabled as they are sharing data with Google.
+
+    Attributes:
+    ----------
+    :param products: List. The various Google products to enable in the report
+    """
+    global JS_IMPORTS
+
+    for p in products:
+
+      self.addPackage("google-%s" % p, GOOGLE_EXTENSIONS[p])
+      JS_IMPORTS["google-%s" % p] = GOOGLE_EXTENSIONS[p]
+      if 'launcher' in GOOGLE_EXTENSIONS[p]:
+        self._report._props.setdefault('js', {}).setdefault("builders", []).append(GOOGLE_EXTENSIONS[p]['launcher'])
+        #print(GOOGLE_EXTENSIONS[p])
+    self._report._with_google_imports = True
+    # add the launchers
