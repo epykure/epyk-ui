@@ -49,7 +49,7 @@ class Geo(object):
     """
     Description:
     ------------
-    
+
     """
     if not getattr(self.context.rptObj, '_with_google_imports', False):
       raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")

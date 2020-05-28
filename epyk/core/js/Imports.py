@@ -1151,7 +1151,14 @@ GOOGLE_EXTENSIONS = {
       'launcher': "google.charts.load('current', {'packages':['geochart']})",
 
   },
-  'charts-gauge': {'modules': [
+  'tables': {'modules': [
+          {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
+        ],
+        'website': 'https://developers.google.com/chart/interactive/docs',
+        'launcher': "google.charts.load('current', {'packages':['table']})",
+
+    },
+  'gauge': {'modules': [
         {'script': 'loader.js', 'version': '', 'path': '/', 'cdnjs': 'https://www.gstatic.com/charts'},
       ],
       'website': 'https://developers.google.com/chart/interactive/docs',
