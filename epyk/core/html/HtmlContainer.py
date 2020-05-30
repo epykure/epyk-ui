@@ -19,9 +19,9 @@ class Panel(Html.Html):
   def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
     if isinstance(htmlObj, list) and htmlObj:
       for obj in htmlObj:
-        if hasattr(obj, 'inReport'):
+        if hasattr(obj, 'options'):
           obj.options.managed = False
-    elif htmlObj is not None and hasattr(htmlObj, 'inReport'):
+    elif htmlObj is not None and hasattr(htmlObj, 'options'):
       htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     component = []
     if title is not None:
@@ -47,12 +47,6 @@ class Panel(Html.Html):
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassDiv(self)
     return self._styleObj
-
-  def __add__(self, htmlObj):
-    """ Add items to a container """
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    self.val.append(htmlObj)
-    return self
 
   @property
   def dom(self):
@@ -217,8 +211,6 @@ class Div(Html.Html):
           if options.get('inline'):
             newHtmlObj[-1].style.css.display = 'inline-block'
           newHtmlObj[-1].options.managed = False
-          #if newHtmlObj[-1].css("display") != 'None':
-          #  newHtmlObj[-1].css({"display": 'inline-block'})
       htmlObj = newHtmlObj
     elif htmlObj is not None and hasattr(htmlObj, 'options'):
       htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
@@ -264,6 +256,7 @@ class Div(Html.Html):
     if not isinstance(self.val, list):
       self._vals = [self.val]
     self.val.append(htmlObj)
+    self.components[htmlObj.htmlId] = htmlObj
     return self
 
   @property
@@ -276,9 +269,6 @@ class Div(Html.Html):
     :rtype: OptPanel.OptionsDiv
     """
     return self.__options
-
-  def __getitem__(self, i):
-    return self.val[i]
 
   @property
   def style(self):
@@ -330,13 +320,6 @@ class Td(Html.Html):
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
 
-  def __add__(self, htmlObj):
-    """ Add items to a container """
-    if hasattr(htmlObj, 'inReport'):
-      htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    self.val.append(htmlObj)
-    return self
-
   def colspan(self, i):
     """
     Description:
@@ -371,9 +354,6 @@ class Td(Html.Html):
     self.attr['rowspan'] = i
     return self
 
-  def __getitem__(self, i):
-    return self.val[i]
-
   def __str__(self):
     content = [htmlObj.html() if hasattr(htmlObj, 'options') else str(htmlObj) for htmlObj in self.val]
     if self.header:
@@ -400,7 +380,7 @@ class Tr(Html.Html):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
       htmlObj = Td(self._report, htmlObj, self.header, None, (None, "%"), (None, "%"), 'center', self.__options, False)
-    self.val.append(htmlObj)
+    super(Tr, self).__add__(htmlObj)
     return self
 
   @property
@@ -418,20 +398,6 @@ class Tr(Html.Html):
     if self._dom is None:
       self._dom = JsHtmlPanels.JsHtmlTr(self, report=self._report)
     return self._dom
-
-  def __getitem__(self, i):
-    """
-    Description:
-    ------------
-    Return the internal column in the row for the given index
-
-    Attributes:
-    ----------
-    :param i: the column index
-
-    :rtype: Td
-    """
-    return self.val[i]
 
   def __str__(self):
     cols = [htmlObj.html() for i, htmlObj in enumerate(self.val)]
@@ -485,25 +451,12 @@ class TSection(Html.Html):
     """
     return self.__options
 
-  def __getitem__(self, i):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param i: Integer. The internal row based on the index
-
-    :rtype: Tr
-    """
-    return self.val[i]
-
   def __add__(self, row_data):
     """ Add items to a container """
     if not isinstance(row_data, Tr):
       row_data = Tr(self._report, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"), 'center', self.options, False)
 
-    self.val.append(row_data)
+    super(TSection, self).__add__(row_data)
     return self
 
   def __str__(self):
@@ -724,8 +677,7 @@ class Col(Html.Html):
     """
     if not hasattr(htmlObj, 'options'):
       htmlObj = self._report.ui.div(htmlObj)
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    self.val.append(htmlObj)
+    super(Col, self).__add__(htmlObj)
     return self
 
   def build(self, data=None, options=None, profile=False):
@@ -759,9 +711,6 @@ class Col(Html.Html):
     """
     self.attr["class"].add("col-%s" % n)
     return self
-
-  def __getitem__(self, i):
-    return self.val[i]
 
   def __str__(self):
     content = [htmlObj.html() for htmlObj in self.val]
@@ -814,19 +763,8 @@ class Row(Html.Html):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
       htmlObj = self._report.ui.layouts.col(htmlObj)
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    self.val.append(htmlObj)
+    super(Row, self).__add__(htmlObj)
     return self
-
-  def __getitem__(self, i):
-    """
-    Return the internal column in the row for the given index
-
-    :param i: the column index
-
-    :rtype: Col
-    """
-    return self.val[i]
 
   def __str__(self):
     cols = []
@@ -878,23 +816,9 @@ class Grid(Html.Html):
         row += htmlObj
         if dim is not None:
           row[-1].attr["class"].add("col-%s" % dim)
-    row.options.managed = False
-    self.val.append(row)
+    super(Grid, self).__add__(row)
     #self.colsAlign.append("left")
     return self
-
-  def __getitem__(self, i):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param i: Integer. The internal row based on the index
-
-    :rtype: Row
-    """
-    return self.val[i]
 
   @property
   def dom(self):
@@ -1241,20 +1165,10 @@ class Form(Html.Html):
     for i, htmlObj in enumerate(htmlObjs):
       self.__add__(htmlObj)
 
-  def __getitem__(self, i):
-    """
-    Return the internal column in the row for the given index
-
-    :param i: the column index
-    :rtype: Col
-    """
-    return self.val[i]
-
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set too late
     htmlObj.css({'text-align': 'left'})
-    self.val.append(htmlObj)
+    super(Form, self).__add__(htmlObj)
     return self
 
   def submit(self, method, action="#", text="Submit"):
@@ -1562,9 +1476,6 @@ class Header(Html.Html):
     self.val.append(htmlObj)
     return self
 
-  def __getitem__(self, i):
-    return self.val[i]
-
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<header %s>%s</header>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
@@ -1591,14 +1502,10 @@ class Section(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     if self.options.inline:
       htmlObj.style.css.display = 'inline-block'
-    self.val.append(htmlObj)
+    super(Section, self).__add__(htmlObj)
     return self
-
-  def __getitem__(self, i):
-    return self.val[i]
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
