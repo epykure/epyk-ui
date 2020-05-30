@@ -67,3 +67,15 @@ class OptionConfig(DataClass):
   @scrollZoom.setter
   def scrollZoom(self, val):
     self.set(val)
+
+  @property
+  def managed(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @managed.setter
+  def managed(self, bool):
+    self.set(bool)

@@ -5,8 +5,8 @@ from epyk.core.js.packages import JsDc
 
 
 class Chart(Html.Html):
-  name, category, callFnc = 'DC', 'Charts', 'dc'
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
+  name = 'DC Chart'
+  requirements = ('dc', 'crossfilter')
 
   def __init__(self,  report, width, height, title, options, htmlCode, profile):
     super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)

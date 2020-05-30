@@ -88,7 +88,7 @@ class Li(Html.Html):
 
     :return: self, the cell object to allow the chaining
     """
-    htmlObj.inReport = False
+    htmlObj.options.managed = False
     if self.innerPyHTML is not None:
       if not isinstance(self.innerPyHTML, list):
         self.innerPyHTML = [self.innerPyHTML]
@@ -151,7 +151,7 @@ class List(Html.Html):
 
     if self.items is None:
       self.items = []
-    htmlObj.inReport = False
+    htmlObj.options.managed = False
     self.items.append(htmlObj)
     return self
 
@@ -177,7 +177,7 @@ class List(Html.Html):
       self.items = []
     li_obj = Li(self._report, d)
     if hasattr(d, 'inReport'):
-      d.inReport = False
+      d.options.managed = False
     self.items.append(li_obj)
     return self
 
@@ -191,7 +191,7 @@ class List(Html.Html):
       self.items = []
     for d in self.val:
       li_obj = Li(self._report, d)
-      li_obj.inReport = False
+      li_obj.options.managed = False
       self._report.ui.register(li_obj)
       li_obj.css(self.options.li_css)
       if self.options.li_class:
@@ -235,7 +235,7 @@ class List(Html.Html):
 
 
 class Groups(Html.Html):
-  name, category, callFnc = 'Groups', 'Lists', 'groups'
+  name = 'Groups'
 
   def __init__(self, report, data, categories, size, color, width, height, htmlCode, helper, profile):
     super(Groups, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
@@ -270,7 +270,7 @@ class Groups(Html.Html):
     """
     self._lists__map[category] = len(self.val)
     html_li = List(self._report, data, color, width, height, htmlCode, helper, options, profile)
-    html_li.inReport = False
+    html_li.options.managed = False
     html_li.css({"margin-bottom": '5px'})
     self.val.append(html_li)
     self._lists__map_index.append(category)
@@ -379,7 +379,7 @@ class Items(Html.Html):
 
 class ListTournaments(Html.Html):
   name = 'Brackets'
-  __reqCss, __reqJs = ['jquery-brackets'], ['jquery-brackets']
+  requirements = ('jquery-brackets', )
 
   def __init__(self, report, records, width, height, options, profile):
     self.options = options

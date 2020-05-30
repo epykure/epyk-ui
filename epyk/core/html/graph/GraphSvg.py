@@ -3,6 +3,8 @@ from epyk.core.html import Html
 
 
 class SVG(Html.Html):
+  name = 'SVG'
+
   def __init__(self, report, width, height):
     super(SVG, self).__init__(report, "", css_attrs={"width": width, "height": height})
     self.origine = None
@@ -12,7 +14,7 @@ class SVG(Html.Html):
     self.html_objs = []
 
   def __add__(self, obj):
-    obj.inReport = False
+    obj.options.managed = False
     self.html_objs.append(obj)
 
   def __getitem__(self, i):
@@ -397,6 +399,8 @@ class Marker(SVG):
 
 
 class Defs(Html.Html):
+  name = 'SVG Defs'
+
   def __init__(self, report):
     super(Defs, self).__init__(report, "")
     self.html_objs = []
@@ -483,7 +487,7 @@ class ForeignObject(SVG):
     if not isinstance(htmlObj, list):
       htmlObj = [htmlObj]
     for h in htmlObj:
-      h.inReport = False
+      h.options.managed = False
       self.html_objs.append(h)
 
   def __str__(self):
@@ -503,6 +507,7 @@ class G(SVG):
 
 
 class SVGItem(Html.Html):
+  name = 'SVG Item'
 
   def fill(self, color):
     """
@@ -530,6 +535,8 @@ class SVGItem(Html.Html):
 
 
 class Polygone(SVGItem):
+  name = 'SVG Polygone'
+
   def __init__(self, report, points, fill):
     super(Polygone, self).__init__(report, points)
     self.set_attrs(({"points": " ".join(["%s,%s" % (x, y) for x, y in self.val]), "fill": fill}))
@@ -542,6 +549,8 @@ class Polygone(SVGItem):
 
 
 class Ellipse(SVGItem):
+  name = 'SVG Epplipse'
+
   def __init__(self, report, cx, cy, rx, ry):
     super(Ellipse, self).__init__(report, "")
     self.set_attrs({"cx": cx, "cy": cy, "rx": rx, "ry": ry})
@@ -554,6 +563,8 @@ class Ellipse(SVGItem):
 
 
 class Line(SVGItem):
+  name = 'SVG Line'
+
   def __init__(self, report, x1, y1, x2, y2):
     super(Line, self).__init__(report, "")
     self.set_attrs({"x1": x1, "y1": y1, "x2": x2, "y2": y2})
@@ -585,6 +596,8 @@ class Line(SVGItem):
 
 
 class Polyline(SVGItem):
+  name = 'SVG Polyline'
+
   def __init__(self, report, points, height, width, fill, options):
     super(Polyline, self).__init__(report, points, css_attrs={"width": width, "height": height})
     self.set_attrs({"fill": fill, "points": " ".join(["%s,%s" % (x, y) for x, y in self.val])})
@@ -619,6 +632,8 @@ class Polyline(SVGItem):
 
 
 class Rectangle(SVGItem):
+  name = 'SVG Rectangle'
+
   def __init__(self, report, x, y, width, height, fill, rx, ry):
     super(Rectangle, self).__init__(report, "", css_attrs={"width": width, "height": height})
     self.set_attrs({"x": x, "y": y, "fill": fill, "rx": rx, "ry": ry})
@@ -631,6 +646,8 @@ class Rectangle(SVGItem):
 
 
 class Circle(SVGItem):
+  name = 'SVG Circle'
+
   def __init__(self, report, x, y, r, fill):
     super(Circle, self).__init__(report, "")
     self.set_attrs({"cx": x, "cy": y, "r": r, "fill": fill})
@@ -642,6 +659,8 @@ class Circle(SVGItem):
 
 
 class Text(SVGItem):
+  name = 'SVG Text'
+
   def __init__(self, report, text, x, y):
     super(Text, self).__init__(report, text)
     self.set_attrs({"x": x, "y": y, 'fill': 'black'})
@@ -675,6 +694,8 @@ class Text(SVGItem):
 
 
 class TSpan(SVGItem):
+  name = 'SVG TSpan'
+
   def __init__(self, report, text, x, y):
     super(TSpan, self).__init__(report, text)
     self.set_attrs({"x": x, "y": y, 'fill': 'black'})
@@ -686,6 +707,8 @@ class TSpan(SVGItem):
 
 
 class Path(SVGItem):
+  name = 'SVG Path'
+
   def __init__(self, report, x, y, fill, origin, bespoke_path):
     super(Path, self).__init__(report, "")
     self.set_attrs({'fill': fill, "stroke": report.theme.greys[-1], "stroke-width": 1})

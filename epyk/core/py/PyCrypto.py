@@ -14,7 +14,7 @@ KEY = 'bAvGUC_7oazo4cIeNBt8t23bPe3Hvq8livGqQxSV-z0='
 
 class PyCrypto(object):
   class __internal(object):
-    _props, _context, jsOnLoadEvtsFnc = {}, {}, []
+    _props, _context = {}, {}
 
   def __init__(self, src=None):
     self.__src = src if src else self.__internal()

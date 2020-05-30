@@ -12,7 +12,7 @@ from epyk.core.css.styles import GrpClsList
 
 class Tree(Html.Html):
   name = 'List Expandable'
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  requirements = ('font-awesome', )
 
   def __init__(self, report, records, color, width, height, htmlCode, helper, option, profile):
     super(Tree, self).__init__(report, records, css_attrs={"width": width, 'height': height})
@@ -101,6 +101,7 @@ class Tree(Html.Html):
 
 
 class TreeInput(Tree):
+
   def set(self, ul, data):
     """
 
@@ -110,7 +111,7 @@ class TreeInput(Tree):
     for l in data:
       if l.get('items') is not None:
         sub_l = self._report.ui.list()
-        sub_l.inReport = False
+        sub_l.options.managed = False
         ul.add_item(sub_l)[-1].no_decoration
         ul[-1].add_label(l['label'], css={"color": l.get('color', 'none')})
         ul[-1].add_icon(self.options.icon_open if self.options.expanded else self.options.icon_close)
@@ -127,8 +128,8 @@ class TreeInput(Tree):
 
 
 class DropDown(Html.Html):
-  __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
-  name, category, callFnc = 'DropDown Select', 'Lists', 'dropdown'
+  requirements = ('bootstrap', 'jquery')
+  name = 'DropDown Select'
 
   def __init__(self, report, data, text, width, height, htmlCode, helper, options, profile):
     self.__options = {}

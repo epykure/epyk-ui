@@ -11,7 +11,7 @@ from epyk.core.html.options import OptText
 
 
 class Console(Html.Html):
-  name, category = 'Console', 'Rich'
+  name = 'Console'
 
   def __init__(self, report, data, width, height, htmlCode, helper, options, profile):
     super(Console, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
@@ -64,14 +64,14 @@ class Console(Html.Html):
 
 
 class Editor(Html.Html):
-  name, category, callFnc = 'Code Editor', 'Text', 'editor'
-  __reqCss, __reqJs = ['codemirror', 'font-awesome'], ['codemirror', 'font-awesome']
+  name = 'Code Editor'
+  requirements = ('codemirror', 'font-awesome')
 
   def __init__(self, report, vals, language, width, height, htmlCode, options, profile):
     super(Editor, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height,
             'box-sizing': 'border-box', 'margin': '5px 0'}, profile=profile)
     self.textarea = self._report.ui.texts.code(vals, height=height, language=language, options=options)
-    self.textarea.inReport = False
+    self.textarea.options.managed = False
     self.actions = []
 
   @property
@@ -108,7 +108,7 @@ class Editor(Html.Html):
     """
     icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(jsFncs)
     self.actions.append((icon, icon_button))
-    icon_button.inReport = False
+    icon_button.options.managed = False
     return self
 
   def toggle(self, jsFncs, icons=("fas fa-eye", "far fa-eye-slash"), tooltip=None):
@@ -129,7 +129,7 @@ class Editor(Html.Html):
     jsFncs.append(self.textarea.dom.toggle())
     jsFncs.append(icon_button.dom.switchClass(icons[0], icons[1]).r)
     icon_button.click(jsFncs)
-    icon_button.inReport = False
+    icon_button.options.managed = False
     self.actions.append((icons[0], icon_button))
     return self
 
@@ -206,13 +206,13 @@ class Editor(Html.Html):
 
 
 class Cell(Html.Html):
-  name, category, callFnc = 'Python Cell Runner', 'Text', 'pytestcell'
-  __reqCss, __reqJs = ['codemirror'], ['codemirror']
+  name = 'Python Cell Runner'
+  requirements = ('codemirror', )
 
   def __init__(self, report, vals, language, width, height, htmlCode, options, profile):
     super(Cell, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.textarea = self._report.ui.texts.code(vals, height=height, language=language, options=options)
-    self.textarea.inReport = False
+    self.textarea.options.managed = False
     self.textarea.style.add_classes.input.textarea()
     self._jsRun, self._jsSave = '', ''
     self.css({'padding': '10px', "min-height": "30px", 'box-sizing': 'border-box', 'display': 'inline-block'})
@@ -234,7 +234,7 @@ class Cell(Html.Html):
     """
     icon_button = self._report.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(jsFncs)
     self.actions.append((icon, icon_button))
-    icon_button.inReport = False
+    icon_button.options.managed = False
 
   def run(self, jsFncs, icon="fas fa-play", tooltip=None):
     """
@@ -279,8 +279,8 @@ class Cell(Html.Html):
 
 
 class Code(Html.Html):
-  name, category, callFnc = 'Code', 'Text', 'code'
-  __reqCss, __reqJs = ['codemirror'], ['codemirror']
+  name = 'Code'
+  requirements = ('codemirror', )
 
   def __init__(self, report, vals, color, width, height, htmlCode, options, helper, profile):
     super(Code, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
@@ -383,7 +383,7 @@ class Code(Html.Html):
 
 
 class Tags(Html.Html):
-  name, category, callFnc = 'Tags', None, 'tags'
+  name = 'Tags'
   # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, vals, title, icon, size, width, height, htmlCode, profile):

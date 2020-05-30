@@ -6,6 +6,7 @@ from epyk.core.js import JsUtils
 
 
 class Script(Html.Html):
+  name = 'D3 Script'
 
   def __init__(self, report, data, width, height, htmlCode, options, profile):
     super(Script, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)

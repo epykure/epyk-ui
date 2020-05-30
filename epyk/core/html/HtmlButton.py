@@ -24,20 +24,20 @@ class Button(Html.Html):
       text = [text]
     for obj in text:
       if hasattr(obj, 'inReport'):
-        obj.inReport = False
+        obj.options.managed = False
     super(Button, self).__init__(report, text, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self.add_icon(icon)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
     self.__options = OptButton.OptionsButton(self, options or {})
-    if tooltip is not None:
-      self.tooltip(tooltip)
+    self.tooltip(tooltip)
     self.set_attrs(name="data-count", value=0)
 
-  def __add__(self, htmlObj):
+  def __add__(self, component):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    self.val.append(htmlObj)
+    self.components[component.id] = component
+    component.options.managed = False
+    self.val.append(component)
     return self
 
   def __getitem__(self, i):
@@ -167,40 +167,18 @@ class Button(Html.Html):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)
 
-  @staticmethod
-  def matchMarkDown(val):
-    return val.startswith("[button ")
-
-  @classmethod
-  def jsMarkDown(self, vals):
-    return '[button url=""](%s)' % vals
-
-  @classmethod
-  def to_markdown(cls, val, regExpResult, rptObj):
-    res = re.search('\[button url="(.*)"\]\((.*)\)', val)
-    if res is not None:
-      if rptObj is not None:
-        getattr(rptObj, 'button')(res.group(2)).goTo(res.group(1))
-      return ["rptObj.ui.%s.button('%s').goTo('%s')" % (cls.category, res.group(2), res.group(1))]
-
-  # No export to this component as no interactivity is expected
-  def to_word(self, document): pass
-  def to_xls(self, workbook, worksheet, cursor): pass
-  def to_ppt(self, workbook, worksheet, cursor): pass
-
 
 class Checkbox(Html.Html):
-  name, category, callFnc = 'Check Box', 'Buttons', 'checkbox'
-  __reqCss, __reqJs = ['font-awesome', 'bootstrap'], ['font-awesome', 'bootstrap', 'jquery']
+  name = 'Check Box'
+  requirements = ('font-awesome', 'bootstrap', 'jquery')
 
-  def __init__(self, rptObj, records, title, color, width, height, align, htmlCode, filters, tooltip, icon, options, profile):
+  def __init__(self, rptObj, records, title, color, width, height, align, htmlCode, tooltip, icon, options, profile):
     if rptObj.http.get(htmlCode) is not None:
       selectedVals = set(rptObj.http[htmlCode].split(","))
       for rec in records:
         if rec["value"] in selectedVals:
           rec["checked"] = True
-    super(Checkbox, self).__init__(rptObj, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
-                                   globalFilter=filters, profile=profile)
+    super(Checkbox, self).__init__(rptObj, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     # Add the component title
     self.add_title(title, options={'content_table': False})
     self.css({'text-align': align, 'color': 'inherit' if color is None else color, 'padding': '5px'})
@@ -385,19 +363,17 @@ class Checkbox(Html.Html):
 
 
 class CheckButton(Html.Html):
-  name, category, callFnc = 'Check Button', 'Button', 'check'
+  name = 'Check Button'
 
-  def __init__(self, report, flag=False, tooltip=None, width=None, height=None, icon=None, label=None, htmlCode=None,
-               options=None, profile=None):
-    super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode,
-                                      css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, report, flag=False, tooltip=None, width=None, height=None, icon=None, label=None, htmlCode=None, options=None, profile=None):
+    super(CheckButton, self).__init__(report, 'Y' if flag else 'N', htmlCode=htmlCode,  css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon("fas fa-check" if flag else "fas fa-times").css({"width": "12px"})
     if flag:
       self.input.style.css.color = self._report.theme.success[1]
     else:
       self.input.style.css.color = self._report.theme.danger[1]
     self.input.style.middle()
-    self.input.inReport = False
+    self.input.options.managed = False
     self.isDisable = options.get("disable", False) if options is not None else False
     self.add_label(label, {"width": "none", "float": "none"}, position="after")
     self.add_icon(icon, {"float": 'none'}, position="after")
@@ -503,7 +479,7 @@ class CheckButton(Html.Html):
 
 
 class IconEdit(Html.Html):
-  name, category, callFnc = 'Icon', 'Icons', 'iconEdit'
+  name = 'Icon'
   cssCls = ["fa-layers", "fa-fw"]
 
   def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, profile):
@@ -521,6 +497,7 @@ class IconEdit(Html.Html):
 
 
 class Buttons(Html.Html):
+  name = 'Buttons'
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
     super(Buttons, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height, 'color': color},
@@ -529,7 +506,7 @@ class Buttons(Html.Html):
     for b in data:
       bt = report.ui.button(b, options={"group": "group_%s" % self.htmlId}).css({"margin-right": '5px'})
       bt.css(options.get("button_css", {}))
-      bt.inReport = False
+      bt.options.managed = False
       self.row.append(bt)
 
   def __getitem__(self, i):
@@ -541,6 +518,7 @@ class Buttons(Html.Html):
     Attributes:
     ----------
     :param i: Integer. The button index
+
     :rtype: Button
     """
     return self.row[i]
@@ -551,6 +529,7 @@ class Buttons(Html.Html):
 
 
 class ButtonMenuItem(object):
+  name = 'Button Menu Item'
 
   def __init__(self, report, selector, parent):
     self._report, self._selector = report, selector
@@ -601,18 +580,17 @@ class ButtonMenuItem(object):
 
 
 class ButtonMenu(Html.Html):
-  name, category, callFnc = 'ButtonMenu', 'buttons', 'menu'
+  name = 'Button Menu'
 
   def __init__(self, report, record, text, icon, width, height, htmlCode, tooltip, profile, options):
     super(ButtonMenu, self).__init__(report, record, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self.button = report.ui.button(text, icon, width, height, htmlCode, tooltip, profile, options)
-    self.__items = {}
-    self.button.inReport = False
+    self.button.options.managed = False
     self.set_attrs(name="data-count", value=0)
     self.style.css.position = "relative"
     self.style.css.display = "inline-block"
     self.container = report.ui.div()
-    self.container.inReport = False
+    self.container.options.managed = False
     self.container.attr['class'].add("dropdown-content")
     self.container.style.css.display = "none"
     self.container.style.css.position = "absolute"
@@ -620,9 +598,9 @@ class ButtonMenu(Html.Html):
     self._jsStyles = {"padding": '5px', 'cursor': 'pointer', 'display': 'block'}
 
   def __getitem__(self, i):
-    if i not in self.__items:
-      self.__items[i] = ButtonMenuItem(self._report, "document.getElementById('%s').querySelectorAll('a')[%s]" % (self.htmlId, i), self)
-    return self.__items[i]
+    if i not in self.components:
+      self.components[i] = ButtonMenuItem(self._report, "document.getElementById('%s').querySelectorAll('a')[%s]" % (self.htmlId, i), self)
+    return self.components[i]
 
   @property
   def _js__builder__(self):
@@ -653,7 +631,7 @@ class ButtonMenu(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     events = []
-    for comp in self.__items.values():
+    for comp in self.components.values():
       events.extend(comp._events)
     self.onReady(events)
     return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.button.html(), self.container.html())

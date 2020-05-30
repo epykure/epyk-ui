@@ -10,8 +10,8 @@ from epyk.core.css.styles import GrpClsTable
 
 
 class Table(Html.Html):
-  name, category, callFnc = 'Table', 'Tables', 'table'
-  __reqJs, __reqCss = ['ag-grid'], ['ag-grid']
+  name = 'Ag Grid Table'
+  requirements = ('ag-grid', )
 
   def __init__(self, report, records, width, height, htmlCode, options, profile):
     data, columns, self.__config = [], [], None

@@ -613,6 +613,18 @@ class Options(DataClass):
       self.title.fontColor = color
     return self
 
+  @property
+  def managed(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @managed.setter
+  def managed(self, bool):
+    self.set(bool)
+
 
 class OptionPieAnimation(DataClass):
   @property

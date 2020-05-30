@@ -523,7 +523,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     jsFncs = []
     for i, h in enumerate(htmlObjs):
-      h.inReport = False
+      h.options.managed = False
       jsFncs.append(self._report.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
       jsFncs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i), append=append).r)
     return JsUtils.jsConvertFncs(jsFncs, toStr=True)

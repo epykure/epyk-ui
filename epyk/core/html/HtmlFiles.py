@@ -1,6 +1,3 @@
-"""
-
-"""
 
 import json
 import io
@@ -56,8 +53,8 @@ class DownloadMemoryZip(Html.Html):
 
 
 class DropFile(Html.Html):
-  __reqCss, __reqJs = ['bootstrap', 'font-awesome'], ['bootstrap']
-  name, category, inputType, callFnc = 'Drop File Area', 'Input', "file", 'dropfile'
+  requirements = ('font-awesome', 'bootstrap')
+  name, inputType = 'Drop File Area', "file"
   #_grpCls = CssGrpClsFile.CssStylesDrop
 
   def __init__(self, report, vals, tooltip, report_name, file_type, profile):
@@ -108,9 +105,9 @@ class DropFile(Html.Html):
 
 
 class DropConfiguration(Html.Html):
-  __reqCss, __reqJs = ['bootstrap', 'font-awesome'], ['bootstrap']
+  requirements = ('font-awesome', 'bootstrap')
   #_grpCls = CssGrpClsFile.CssStylesDrop
-  name, category, inputType, callFnc = 'Drop Configuration Area', 'Input', "file", 'config'
+  name, inputType = 'Drop Configuration Area', "file"
 
   def __init__(self, report, vals, htmlCode, url, tablename):
     super(DropConfiguration, self).__init__(report, vals, code=htmlCode)

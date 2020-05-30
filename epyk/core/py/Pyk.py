@@ -51,13 +51,14 @@ def exports(obj_dict):
   pyk_obj = _Pyk.instance()
   pyk_obj._exports(obj_dict)
 
+
 def register(rpt_obj, components):
   if type(components) != list:
     components = [components]
 
   for comp in components:
-    rpt_obj.htmlItems[id(comp)] = comp
-    rpt_obj.content.append(id(comp))
+    rpt_obj.components[id(comp)] = comp
+
 
 class _Pyk(object):
   """

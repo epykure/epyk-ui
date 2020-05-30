@@ -339,7 +339,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     return html_toggle
 
   def checkboxes(self, records=None, title=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
-               htmlCode=None, globalFilter=None, tooltip='', dfColumn=None, icon="fas fa-check", options=None, profile=None):
+               htmlCode=None, tooltip='', dfColumn=None, icon="fas fa-check", options=None, profile=None):
     """
     Description:
     ------------
@@ -366,7 +366,6 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     :param height:
     :param align:
     :param htmlCode:
-    :param globalFilter:
     :param tooltip:
     :param dfColumn:
     :param icon:
@@ -374,13 +373,13 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     """
     if dfColumn is not None:
       if has_pandas and issubclass(type(records), pd.DataFrame):
-        if globalFilter:
-          dataId = id(records)
-          dataCode = "df_code_%s" % dataId
-          globalFilter = {'jsId': dataCode, 'colName': dfColumn, 'allSelected': options.get("all_selected", False), 'operation': 'in'}
-          if not dataCode in self.context.rptObj.jsSources:
-            self.context.rptObj.jsSources[dataCode] = {'dataId': dataId, 'containers': [], 'data': records}
-            self.context.rptObj.jsSources[dataCode]['containers'].append(self)
+        # if globalFilter:
+        #   dataId = id(records)
+        #   dataCode = "df_code_%s" % dataId
+        #   globalFilter = {'jsId': dataCode, 'colName': dfColumn, 'allSelected': options.get("all_selected", False), 'operation': 'in'}
+        #   if not dataCode in self.context.rptObj.jsSources:
+        #     self.context.rptObj.jsSources[dataCode] = {'dataId': dataId, 'containers': [], 'data': records}
+        #     self.context.rptObj.jsSources[dataCode]['containers'].append(self)
         if options.get("all_selected", False):
           records = [{"value": rec, "checked": True} for rec in records[dfColumn].unique().tolist()]
         else:
@@ -389,7 +388,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
       if not isinstance(records[0], dict):
         records = [{"value": rec} for rec in records]
     html_boxes = html.HtmlButton.Checkbox(self.context.rptObj, records, title, color, width,
-                                             height, align, htmlCode, globalFilter, tooltip, icon, options or {}, profile)
+                                             height, align, htmlCode, tooltip, icon, options or {}, profile)
     self.context.register(html_boxes)
     return html_boxes
 

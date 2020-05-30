@@ -5,7 +5,8 @@ from epyk.core.js.packages import JsDc
 
 
 class ChartGeoChoropleth(GraphDC.Chart):
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
+  name = 'DC Choropleth'
+  requirements = ('dc', 'crossfilter' )
 
   @property
   def dom(self):

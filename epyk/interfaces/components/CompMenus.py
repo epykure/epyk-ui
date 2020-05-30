@@ -74,7 +74,7 @@ class Menus(object):
       title_text = k.get("title")
       if title_text is not None:
         title_text = self.context.rptObj.ui.title(title_text, level=4)
-        title_text.inReport = False
+        title_text.options.managed = False
       menu_title.append(title_text)
       menu_items.append(k.get("children", []))
     html_list = self.context.rptObj.ui.list(menu_li, color, width, height, htmlCode, helper, options or {}, profile)
@@ -127,7 +127,7 @@ class Menus(object):
       title_text = k.get("title")
       if title_text is not None:
         title_text = self.context.rptObj.ui.title(title_text, level=4)
-        title_text.inReport = False
+        title_text.options.managed = False
       menu_title.append(title_text)
       menu_items.append(k.get("children", []))
     html_list = self.context.rptObj.ui.list(menu_li, color, width, height, htmlCode, helper, options or {}, profile)

@@ -11,7 +11,7 @@ from epyk.core.js import JsUtils
 
 
 class Media(Html.Html):
-  name, category, callFnc = 'Video', 'Media', 'video'
+  name = 'Video'
 
   def __init__(self, report, video, path, width, height, htmlCode, profile, options):
     if path is None:
@@ -56,7 +56,7 @@ class Media(Html.Html):
 
 
 class Audio(Html.Html):
-  name, category, callFnc = 'Video', 'Media', 'audio'
+  name = 'Video'
 
   def __init__(self, report, audio, path, width, height, htmlCode, profile, options):
     if path is None:
@@ -100,7 +100,7 @@ class Audio(Html.Html):
 
 
 class Youtube(Html.Html):
-  name, category, callFnc = 'Youtube Video', 'Media', 'youtube'
+  name = 'Youtube Video'
 
   def __init__(self, report, link, width, height, htmlCode, profile, options):
     super(Youtube, self).__init__(report, link, css_attrs={"width": width, 'height': height}, code=htmlCode, profile=profile)

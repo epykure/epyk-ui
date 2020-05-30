@@ -6,8 +6,8 @@ from epyk.core.html.options import OptInputs
 
 
 class DatePicker(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
-  name, category, callFnc = 'Date Picker', 'Dates', 'date'
+  requirements = ('jqueryui', )
+  name = 'Date Picker'
 
   def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
     dfltOptions = {'dateFormat': 'yy-mm-dd'}
@@ -91,8 +91,8 @@ class DatePicker(Html.Html):
 
 
 class TimePicker(Html.Html):
-  __reqCss, __reqJs = ['timepicker'], ['timepicker']
-  name, category, callFnc = 'Time Picker', 'Dates', 'date'
+  requirements = ('timepicker', )
+  name = 'Time Picker'
 
   def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
     super(TimePicker, self).__init__(report, None, htmlCode=htmlCode, profile=profile)
@@ -151,7 +151,7 @@ class TimePicker(Html.Html):
 
 
 class CountDownDate(Html.Html):
-  name, category, callFnc = 'Countdown', 'Dates', 'countdown'
+  name = 'Countdown'
 
   def __init__(self, report, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile):
     super(CountDownDate, self).__init__(report, yyyy_mm_dd, code=htmlCode, profile=profile,
@@ -190,7 +190,7 @@ class CountDownDate(Html.Html):
 
 
 class LastUpdated(Html.Html):
-  name, category, callFnc = 'Last Update', 'Text', 'update'
+  name = 'Last Update'
 
   def __init__(self, report, label, color, width, height, htmlCode, profile):
     super(LastUpdated, self).__init__(report, "%s %s" % (label or "Last update", time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),

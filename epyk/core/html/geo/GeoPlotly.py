@@ -319,6 +319,7 @@ class DataBubble(DataChoropleth):
 
 class Scatter(GraphPlotly.Chart):
 
+  requirements = ('plotly.js', )
   __reqJs = ['plotly.js']
 
   @property
@@ -355,6 +356,7 @@ class Scatter(GraphPlotly.Chart):
 
 
 class Chorolet(GraphPlotly.Chart):
+  requirements = ('plotly.js', )
 
   __reqJs = ['plotly.js']
 
@@ -392,6 +394,7 @@ class Chorolet(GraphPlotly.Chart):
 
 
 class Choropleth(GraphPlotly.Chart):
+  requirements = ('plotly.js', )
 
   __reqJs = ['plotly.js']
 
@@ -436,6 +439,7 @@ class Choropleth(GraphPlotly.Chart):
 
 
 class BubbleGeo(GraphPlotly.Chart):
+  requirements = ('plotly.js', )
 
   __reqJs = ['plotly.js']
 

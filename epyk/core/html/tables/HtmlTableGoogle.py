@@ -5,8 +5,8 @@ from epyk.core.js import JsUtils
 
 
 class Table(Html.Html):
-  name = 'Table'
-  __reqJs = ['google-tables']
+  name = 'Google Table'
+  requirements = ('google-tables', )
 
   def __init__(self, report, records, width, height, htmlCode, options, profile):
     data, columns, self.__config = [], [], None

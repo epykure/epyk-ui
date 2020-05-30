@@ -5,7 +5,6 @@ import json
 from epyk.core.js import Imports
 from epyk.core.js import Js
 from epyk.core.js import JsUtils
-from epyk.core.js.Imports import requires
 
 from epyk.core.html.templates import HtmlTmplBase
 
@@ -74,13 +73,15 @@ class PyOuts(object):
 
     :return: A python dictionary with the HTML results
     """
+    order_components = list(self._report.components.keys())
     if htmlParts is None:
       htmlParts, cssParts = [], {}
-      for objId in self._report.content:
-        if self._report.htmlItems[objId].inReport:
-          htmlParts.append(self._report.htmlItems[objId].html())
+      for component_id in order_components:
+        component = self._report.components[component_id]
+        if component.options.managed:
+          htmlParts.append(component.html())
         #
-        cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
+        cssParts.update(component.style.get_classes_css())
     onloadParts = list(self._report._jsText)
     for data_id, data in self._report._props.get("data", {}).get('sources', {}).items():
       onloadParts.append("var data_%s = %s" % (data_id, json.dumps(data)))
@@ -102,17 +103,19 @@ class PyOuts(object):
       onloadParts.append(b)
 
     # Add the component on ready functions
-    for objId in self._report.content:
-      obj_id = self._report.htmlItems[objId].dom.varId
-      if obj_id and obj_id in self._report._props.get('js', {}).get('onCompReady', {}):
-        onloadParts.append(self._report._props['js']['onCompReady'][obj_id])
-      for event, fncs in self._report.htmlItems[objId]._events['doc_ready'].items():
-        if fncs['profile']:
-          # Add the profiling feature if the variable is set to true
-          profile_var = self._report.js.performance.add_profiling(fncs['content'])
-          fncs['content'].append(self._report.js.console.log(self._report.js.objects.get(profile_var)))
-        str_fncs = JsUtils.jsConvertFncs(fncs['content'], toStr=True)
-        onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (obj_id, event, str_fncs))
+    for component_id in order_components:
+      component = self._report.components[component_id]
+      onloadParts.extend(component._browser_data['component_ready'])
+
+      for event, source_fncs in component._browser_data['mouse'].items():
+        for source, event_fncs in source_fncs.items():
+          str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
+          onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
+
+      for event, source_fncs in component._browser_data['keys'].items():
+        for source, event_fncs in source_fncs.get_event().items():
+          str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
+          onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
 
     # Add the page on document ready functions
     for on_ready_frg in self._report._props.get('js', {}).get('onReady', []):
@@ -307,10 +310,12 @@ class PyOuts(object):
     with open(file_path, "w") as f:
       htmlParts = []
       cssParts = dict(self._report.body.style.get_classes_css())
-      for objId in self._report.content:
-        if self._report.htmlItems[objId].inReport:
-          htmlParts.append(self._report.htmlItems[objId].html())
-        cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
+      order_components = list(self._report.components.keys())
+      for component_id in order_components:
+        component = self._report.components[component_id]
+        if component.options.managed:
+          htmlParts.append(component.html())
+        cssParts.update(component.style.get_classes_css())
       body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
       results = self._to_html_obj(htmlParts, cssParts)
       results['body'] = body
@@ -343,10 +348,11 @@ class PyOuts(object):
 
       file_Path = os.path.join(path, name)
       with open(file_Path, "w") as f:
-        for objId in self._report.content:
-          html_obj = self._report.htmlItems[objId]
-          if hasattr(html_obj, "to_markdown"):
-            f.write("%s\n" % html_obj.to_markdown(html_obj.vals))
+        order_components = list(self._report.components.keys())
+        for component_id in order_components:
+          component = self._report.components[component_id]
+          if hasattr(component, "to_markdown"):
+            f.write("%s\n" % component.to_markdown(component.vals))
       return file_Path
 
   def html(self):
@@ -362,106 +368,108 @@ class PyOuts(object):
     results['jsFrgs_in_req'] = require_js['jsFrgs']
     htmlParts = []
     cssParts = dict(self._report.body.style.get_classes_css())
-    for objId in self._report.content:
-      if self._report.htmlItems[objId].inReport:
-        htmlParts.append(self._report.htmlItems[objId].html())
-      cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
+    order_components = list(self._report.components.keys())
+    for component_id in order_components:
+      component = self._report.components[component_id]
+      if component.options.managed:
+        htmlParts.append(component.html())
+      cssParts.update(component.style.get_classes_css())
     body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
     results['body'] = body
     results['header'] = self._report.headers
     return self.html_tmpl.strip() % results
 
-  def pdf(self):
-    """
-
-    :return:
-    """
-    self.word()
-    # Then save the file to pdf
-
-  def word(self, path=None, name=None):
-    """
-    Description:
-    ------------
-    Writes the result to an Word document
-
-    Attributes:
-    ----------
-    :param path: The path in which the output files will be created
-    :param name: The filename without the extension
-
-    :return:
-    """
-    from docx import Document
-    from docx.shared import RGBColor
-
-    if path is None:
-      path = os.path.join(os.getcwd(), "outs", "office")
-    else:
-      path = os.path.join(path, "office")
-    if not os.path.exists(path):
-      os.makedirs(path, exist_ok=True)
-    timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
-    name = name or 'word_%s.docx' % timestamp
-    document = Document()
-    for objId in self._report.content:
-      if self._report.htmlItems[objId].inReport:
-        try:
-          self._report.htmlItems[objId].to_word(document)
-        except Exception as err:
-          error_title = document.add_heading().add_run("Error")
-          error_title.font.color.rgb = RGBColor(255, 0, 0)
-          error_title.font.italic = True
-          error_paragraph = document.add_paragraph().add_run((str(err)))
-          error_paragraph.font.color.rgb = RGBColor(255, 0, 0)
-          error_paragraph.font.italic = True
-    document.save(os.path.join(path, name))
-    return name
-
-  def excel(self, path=None, name=None):
-    """
-    Description:
-    ------------
-    Writes the result to an Excel document
-
-    Attributes:
-    ----------
-    :param path: The path in which the output files will be created
-    :param name: The filename without the extension
-
-    :return:
-    """
-    xls = requires("xlsxwriter", reason='Missing Package', install='xlsxwriter', source_script=__file__)
-
-    if path is None:
-      path = os.path.join(os.getcwd(), "outs", "office")
-    else:
-      path = os.path.join(path, "office")
-    if not os.path.exists(path):
-      os.makedirs(path, exist_ok=True)
-    timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
-    name = name or '%s_%s.xlsx' % (self._report.run.script_name, timestamp)
-    workbook = xls.Workbook(os.path.join(path, name))
-    worksheet = workbook.add_worksheet()
-    cursor = {'row': 0, 'col': 0}
-    for objId in self._report.content:
-      if self._report.htmlItems[objId].inReport:
-        try:
-          self._report.htmlItems[objId].to_xls(workbook, worksheet, cursor)
-        except Exception as err:
-          cell_format = workbook.add_format({'bold': True, 'font_color': 'red'})
-          worksheet.write(cursor['row'], 0, str(err), cell_format)
-          cursor['row'] += 2
-    workbook.close()
-    return name
-
-  def power_point(self):
-    """
-    Description:
-    ------------
-
-    :return:
-    """
+  # def pdf(self):
+  #   """
+  #
+  #   :return:
+  #   """
+  #   self.word()
+  #   # Then save the file to pdf
+  #
+  # def word(self, path=None, name=None):
+  #   """
+  #   Description:
+  #   ------------
+  #   Writes the result to an Word document
+  #
+  #   Attributes:
+  #   ----------
+  #   :param path: The path in which the output files will be created
+  #   :param name: The filename without the extension
+  #
+  #   :return:
+  #   """
+  #   from docx import Document
+  #   from docx.shared import RGBColor
+  #
+  #   if path is None:
+  #     path = os.path.join(os.getcwd(), "outs", "office")
+  #   else:
+  #     path = os.path.join(path, "office")
+  #   if not os.path.exists(path):
+  #     os.makedirs(path, exist_ok=True)
+  #   timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
+  #   name = name or 'word_%s.docx' % timestamp
+  #   document = Document()
+  #   for objId in self._report.content:
+  #     if self._report.htmlItems[objId].options.managed:
+  #       try:
+  #         self._report.htmlItems[objId].to_word(document)
+  #       except Exception as err:
+  #         error_title = document.add_heading().add_run("Error")
+  #         error_title.font.color.rgb = RGBColor(255, 0, 0)
+  #         error_title.font.italic = True
+  #         error_paragraph = document.add_paragraph().add_run((str(err)))
+  #         error_paragraph.font.color.rgb = RGBColor(255, 0, 0)
+  #         error_paragraph.font.italic = True
+  #   document.save(os.path.join(path, name))
+  #   return name
+  #
+  # def excel(self, path=None, name=None):
+  #   """
+  #   Description:
+  #   ------------
+  #   Writes the result to an Excel document
+  #
+  #   Attributes:
+  #   ----------
+  #   :param path: The path in which the output files will be created
+  #   :param name: The filename without the extension
+  #
+  #   :return:
+  #   """
+  #   xls = requires("xlsxwriter", reason='Missing Package', install='xlsxwriter', source_script=__file__)
+  #
+  #   if path is None:
+  #     path = os.path.join(os.getcwd(), "outs", "office")
+  #   else:
+  #     path = os.path.join(path, "office")
+  #   if not os.path.exists(path):
+  #     os.makedirs(path, exist_ok=True)
+  #   timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
+  #   name = name or '%s_%s.xlsx' % (self._report.run.script_name, timestamp)
+  #   workbook = xls.Workbook(os.path.join(path, name))
+  #   worksheet = workbook.add_worksheet()
+  #   cursor = {'row': 0, 'col': 0}
+  #   for objId in self._report.content:
+  #     if self._report.htmlItems[objId].options.managed:
+  #       try:
+  #         self._report.htmlItems[objId].to_xls(workbook, worksheet, cursor)
+  #       except Exception as err:
+  #         cell_format = workbook.add_format({'bold': True, 'font_color': 'red'})
+  #         worksheet.write(cursor['row'], 0, str(err), cell_format)
+  #         cursor['row'] += 2
+  #   workbook.close()
+  #   return name
+  #
+  # def power_point(self):
+  #   """
+  #   Description:
+  #   ------------
+  #
+  #   :return:
+  #   """
 
   @property
   def browser(self):

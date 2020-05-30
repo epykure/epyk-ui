@@ -8,6 +8,7 @@ from epyk.core.html.options import OptPanel
 
 
 class Step(object):
+  name = 'Step'
 
   def __init__(self, src, selector):
     self._src = src
@@ -22,6 +23,7 @@ class Step(object):
 
 
 class Stepper(Html.Html):
+  name = 'Stepper'
 
   def __init__(self, report, records, width, height, color, options):
     super(Stepper, self).__init__(report, records, css_attrs={"list-style-type": 'none', "width": width})

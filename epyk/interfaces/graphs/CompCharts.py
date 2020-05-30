@@ -20,7 +20,7 @@ class Graphs(object):
     self.context = context
 
   def skillbars(self, records=None, y_column=None, x_axis=None, title=None, width=(100, '%'),
-                height=(None, 'px'), htmlCode=None, colUrl=None, colTooltip=None, filters=None, profile=False):
+                height=(None, 'px'), htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -46,18 +46,12 @@ class Graphs(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param colUrl:
-    :param colTooltip:
-    :param filters:
     :param profile:
     """
     if y_column is None or x_axis is None:
       raise Exception("seriesName and axis must be defined")
 
-    #data = self.context.rptObj.js.data.records(records)
-    #jsDataObj = js.AresJs.Js(self.context.rptObj, records, profile=profile).fncs([('percentage', [x_axis], [y_column])])
-    html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, records, y_column, x_axis, title, width, height, htmlCode,
-                                            colUrl, colTooltip, filters, profile)
+    html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, records, y_column, x_axis, title, width, height, htmlCode,  profile)
     self.context.register(html_skillbar)
     return html_skillbar
 

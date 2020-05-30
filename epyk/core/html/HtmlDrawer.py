@@ -8,6 +8,7 @@ from epyk.core.js.html import JsHtmlStepper
 
 
 class Drawer(Html.Html):
+  name = 'Drawer'
 
   def __init__(self, report, width, height, options, helper, profile):
     super(Drawer, self).__init__(report, None, css_attrs={"width": width, "height": height})
@@ -16,7 +17,7 @@ class Drawer(Html.Html):
     self.style.css.position = 'relative'
 
     self.panels = report.ui.div()
-    self.panels.inReport = False
+    self.panels.options.managed = False
     self.panels.style.css.padding_right = 10
     self.panels.attr['name'] = 'drawer_panels'
 
@@ -24,13 +25,13 @@ class Drawer(Html.Html):
     self.handle.style.clear_all()
     self.handle.style.css.cursor = 'pointer'
 
-    self.handle.inReport = False
+    self.handle.options.managed = False
     self.handle.attr['name'] = 'drawer_handle'
 
     self.drawers = report.ui.div()
     self.drawers.style.clear_all()
     self.drawers.style.css.overflow_y = 'auto'
-    self.drawers.inReport = False
+    self.drawers.options.managed = False
     self.drawers.attr['name'] = 'drawer_content'
 
   @property
@@ -72,11 +73,11 @@ class Drawer(Html.Html):
     if not hasattr(link, 'inReport'):
       link = self._report.ui.div(link)
       link.style.css.padding = "0 5px"
-      link.inReport = False
+      link.options.managed = False
     if not hasattr(container, 'inReport'):
       container = self._report.ui.div(container)
     container.style.css.display = display
-    container.inReport = False
+    container.options.managed = False
     self.panels += container
     self.drawers += link
 

@@ -26,7 +26,7 @@ except ImportError:
 
 class PyRest(object):
   class __internal(object):
-    _props, _context, jsOnLoadEvtsFnc = {}, {}, []
+    _props, _context = {}, {}
 
   def __init__(self, src=None):
     self.__src = src if src else self.__internal()

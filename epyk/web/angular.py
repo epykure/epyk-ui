@@ -2,6 +2,8 @@
 Draft version
 
 """
+
+from epyk.core import Page
 from epyk.core.js import Imports
 
 import re
@@ -620,8 +622,8 @@ describe('%(name)s', () => {
 
 class Components(object):
 
-  def __init__(self, app, count=0):
-    self._app, self.count_comp = app, count
+  def __init__(self, app, count=0, report=None):
+    self._app, self.count_comp, self._report = app, count, report
 
   def chart(self, vars, alias=None):
     """
@@ -672,14 +674,13 @@ class Components(object):
     self._app.comps["input"] = "input"
     self._app.htmls.append('''<input type='text' #input />''')
 
-  def button(self, value, name, fncs):
-    self._app.add_fnc(name, fncs)
-    self._app.htmls.append('''<button (click)="this.%s()">%s</button>''' % (name, value))
+  def button(self, value):
+    return self._report.ui.button(value)
 
 
-class Page(object):
+class App(object):
 
-  def __init__(self, report, app_path, app_name,  alias, name):
+  def __init__(self, app_path, app_name, alias, name, report=None):
     self.imports = {'Component': '@angular/core', 'HttpClient': '@angular/common/http',
                     'HttpHeaders': '@angular/common/http', 'Injectable': '@angular/core',
                     'ViewChild': '@angular/core'}
@@ -729,7 +730,7 @@ class Page(object):
 
     """
     if self.__components is None:
-      self.__components = Components(self)
+      self.__components = Components(self, report=self._report)
     return self.__components
 
   def constructor(self):
@@ -777,6 +778,11 @@ class Page(object):
       os.makedirs(module_path)
 
     self.spec.export(path=path)
+    for objId in self._report.component.values():
+      if objId.options.managed:
+        print(objId.attr)
+        print(objId)
+
     with open(os.path.join(module_path, "%s.ts" % self.name), "w") as f:
       for comp, path in self.imports.items():
         f.write("import { %s } from '%s';\n" % (comp, path))
@@ -916,14 +922,23 @@ class Angular(object):
     app_name = app_name or self._app_name
     return NG(self._app_path, app_name)
 
-  def page(self, report, selector, name):
+  def page(self, selector, name, report=None):
     """
+    Description:
+    ------------
+    Create a specific Application as a component in the Angular framework.
 
-    :param report:
-    :param selector:
-    :param name:
+    Unlike a basic component, the application will be routed to be accessed directly.
+
+    Description:
+    ------------
+    :param report: Object. A report object
+    :param selector: String. The url route for this report in the Angular app
+    :param name: String. The component classname in the Angular framework
     """
-    self.__page = Page(report, self._app_path, self._app_name, selector, name)
+    report = report or Page.Report()
+    report.framework("ANGULAR")
+    self.__page = App(self._app_path, self._app_name, selector, name, report=report)
     self.route.add(self.__page.className, self.__page.alias, self.__page.path)
     return self.__page
 

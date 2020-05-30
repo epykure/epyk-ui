@@ -1,7 +1,7 @@
 
 import re
 import os
-import json
+import collections
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptText
@@ -15,7 +15,7 @@ from epyk.core.css.styles import GrpCls
 
 
 class Label(Html.Html):
-  name, category, callFnc = 'Label', 'Text', 'label'
+  name = 'Label'
 
   def __init__(self, report, text=None, color=None, align=None, width=None, height=None, htmlCode=None, tooltip=None,
                profile=None, options=None):
@@ -23,8 +23,8 @@ class Label(Html.Html):
     if not isinstance(text, list):
       text = [text]
     for obj in text:
-      if hasattr(obj, 'inReport'):
-        obj.inReport = False
+      if hasattr(obj, 'options'):
+        obj.options.managed = False
     super(Label, self).__init__(report, text, css_attrs={"width": width, "height": height, 'color': color, 'text-align': align},
                                 code=htmlCode, profile=profile)
     self.__options = OptText.OptionsText(self, options or {})
@@ -58,7 +58,7 @@ class Label(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     return self
 
@@ -296,7 +296,7 @@ class Position(Span):
 
 
 class Text(Html.Html):
-  name, category, callFnc = 'Text', 'Texts', 'text'
+  name = 'Text'
 
   def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, options, helper, profile):
     super(Text, self).__init__(report, text, css_attrs={"color": color, "width": width, "height": height},
@@ -408,22 +408,13 @@ class Text(Html.Html):
       self._vals = self._report.py.markdown.all(self.content)
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content, self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document):
-    """
-    Add to the internal document object a word text section
-    """
-    document.add_paragraph(self.vals)
-
 
 class Pre(Html.Html):
-  name, category, callFnc = 'Pre formatted text', 'Texts', 'preformat'
+  name = 'Pre formatted text'
 
   def __init__(self, report, vals, color, width, height, htmlCode, dataSrc, options, helper, profile):
     super(Pre, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, 'height': height, 'color': color},
-                              profile=profile, dataSrc=dataSrc)
+                              profile=profile)
     self.__options = OptText.OptionsText(self, options)
     self.css({"text-align": 'left'})
     self.add_helper(helper)
@@ -485,7 +476,7 @@ class Pre(Html.Html):
 
 
 class Paragraph(Html.Html):
-  name, category, callFnc = 'Paragraph', 'Texts', 'paragraph'
+  name = 'Paragraph'
 
   def __init__(self, report, text, color, background_color, border, width, height, htmlCode, encoding, dataSrc, helper, options, profile):
     tmpText = []
@@ -510,7 +501,7 @@ class Paragraph(Html.Html):
           tmpText.append(t)
       options["classes"].append(jsAttr)
     super(Paragraph, self).__init__(report, tmpText, code=htmlCode, css_attrs={'color': color, "width": width,
-           "height": height, "background-color": background_color}, dataSrc=dataSrc, profile=profile)
+           "height": height, "background-color": background_color}, profile=profile)
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
     if border:
@@ -549,30 +540,9 @@ class Paragraph(Html.Html):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document):
-    from docx.enum.text import WD_ALIGN_PARAGRAPH
-
-    p = document.add_paragraph(self.vals)
-    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-
-  def to_xls(self, workbook, worksheet, cursor):
-    """
-
-    :param workbook:
-    :param worksheet:
-    :param cursor:
-
-    :link xlxWritter Documentation: https://xlsxwriter.readthedocs.io/format.html
-    """
-    worksheet.write(cursor['row'], 0, "\n".join(self.vals))
-    cursor['row'] += 2
-
 
 class BlockQuote(Html.Html):
-  name, category, callFnc = 'Block quotation', 'Texts', 'blockquote'
+  name = 'Block quotation'
 
   def __init__(self, report, text, author, color, width, height, htmlCode, helper, options, profile):
     super(BlockQuote, self).__init__(report, {'text': text, 'author': author}, code=htmlCode, profile=profile,
@@ -596,27 +566,9 @@ class BlockQuote(Html.Html):
           <div style="text-align:right"></div>
       </blockquote>%s''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self._report.theme.colors[3], self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDownBlock(data): return re.match(">>>Quote:(.*)", data[0])
-
-  @staticmethod
-  def matchEndBlock(data): return data.endswith("<<<")
-
-  @classmethod
-  def convertMarkDownBlock(cls, data, report):
-    author = data[0].split(':')[-1]
-    getattr(report, 'blockquote')("\n".join([val for val in data[1:-1]]), author)
-    return ["report.blockquote(%s, '%s')" % (json.dumps([val for val in data[1:-1]]), author)]
-
-  @classmethod
-  def jsMarkDown(self, vals): return [">>>Quote:%s" % self.val['author'], [rec for rec in vals['text']], "<<<"]
-
 
 class Title(Html.Html):
-  name, category, callFnc = 'Title', 'texts', 'title'
+  name = 'Title'
 
   def __init__(self, report, text, level, name, contents, color, picture, icon, marginTop, htmlCode, width,
                height, align, options, profile):
@@ -718,76 +670,10 @@ class Title(Html.Html):
 
     return '<div %s><a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), anchor_name, val, self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val): return val.startswith("# ") or val.startswith("## ") or val.startswith("### ") or val.startswith("#### ")
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report=None):
-    helper, infoData = re.search("epyk:info<(.*)>", val), None
-    if helper is not None:
-      infoData = helper.group(1)
-      val = val.replace("epyk:info<%s>" % infoData, "")
-    for i in range(1, 5):
-      startIndex = i+1
-      if val.startswith("%s " % "".join(["#"] * i)):
-        if report is not None:
-          title = getattr(report.ui.texts, cls.callFnc)(val[startIndex:], level=i)
-          if infoData is not None:
-            title.info(infoData)
-        return ["report.ui.%s.title('%s', level=%s)" % (cls.category, val[startIndex:], i)]
-
-    if report is not None:
-      getattr(report.ui.texts, cls.callFnc)(val[2:])
-    return ["report.ui.%s.%s('%s')" % (val[2:], cls.category, cls.callFnc)]
-
-  @classmethod
-  def jsMarkDown(cls, vals, level=None):
-    if level == 1: return "# %s" % vals
-    if level == 2: return "## %s" % vals
-    if level == 3: return "### %s" % vals
-    return "#### %s" % vals
-
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_ppt(self, document, currentSlide, newSlide=False):
-    if newSlide:
-      blankSlide = document.slide_layouts[6]
-      currentSlide = document.slides.add_slide(blankSlide)
-    textbox = currentSlide.shapes.add_textbox(0, 0, 100, 100)
-    textbox.text_frame.text = self.vals
-    return currentSlide
-
-  def to_word(self, document):
-    if self.level is not None:
-      document.add_heading(self.vals, self.level)
-    else:
-      document.add_heading(self.vals)
-
-  def to_xls(self, workbook, worksheet, cursor):
-    """
-
-    Related Pages:
-
-			https://xlsxwriter.readthedocs.io/format.html
-
-    :param workbook:
-    :param worksheet:
-    :param cursor:
-
-    :return:
-    """
-    cell_format = workbook.add_format({'bold': True, 'font_color': self.color, 'font_size': self.size})
-    worksheet.write(cursor['row'], 0, self.vals, cell_format)
-    cursor['row'] += 2
-
 
 class Numeric(Html.Html):
-  name, category, callFnc = 'Number', 'Number', 'number'
-  __reqJs = ['accounting']
+  name = 'Number'
+  requirements = ('accounting', )
 
   def __init__(self, report, number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile):
     super(Numeric, self).__init__(report, number, code=htmlCode, profile=profile, css_attrs={"width": width, "color": color})
@@ -871,8 +757,8 @@ class Numeric(Html.Html):
 
 
 class Highlights(Html.Html):
-  name, category, callFnc = 'Highlights', 'Texts', 'highlights'
-  __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
+  name = 'Highlights'
+  requirements = ('bootstrap', )
 
   def __init__(self, report, text, title, icon, type, color, width, height, htmlCode, helper, profile):
     super(Highlights, self).__init__(report, text, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
@@ -891,13 +777,13 @@ class Highlights(Html.Html):
 
 
 class Fieldset(Html.Html):
-  name, category, callFnc = 'Fieldset', 'Texts', 'fieldset'
+  name = 'Fieldset'
 
   def __init__(self, report, legend, width, height, helper, options, profile):
     super(Fieldset, self).__init__(report, legend, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.css({'padding': '5px', 'border': '1px groove %s' % self._report.theme.greys[3], 'display': 'block', 'margin': '5px 0'})
-    self.components = []
+    self.components = collections.OrderedDict()
     self.__options = OptText.OptionsText(self, options)
 
   @property
@@ -918,14 +804,17 @@ class Fieldset(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
-    self.components.append(htmlObj)
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
+    self.components[id(htmlObj)] = htmlObj
     return self
 
-  def __getitem__(self, i):
-    return self.components[i]
+  def __getitem__(self, id):
+    if isinstance(id, int) and id not in self.components:
+      return list(self.components.items())[id][1]
+
+    return self.components[id]
 
   def __str__(self):
-    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.components])
+    str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.components.values()])
     val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
     return '<fieldset %s><legend style="width:auto">%s</legend>%s</fieldset>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, str_div, self.helper)

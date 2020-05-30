@@ -11,7 +11,6 @@ from epyk.core.html.entities import EntHtml4
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlJqueryUI
 from epyk.core.js.html import JsHtmlList
-from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsQueryUi
 
@@ -20,8 +19,8 @@ from epyk.core.css.styles import GrpClsJqueryUI
 
 
 class ProgressBar(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
-  name, category, callFnc = 'Progress Bar', 'Sliders', 'progressbar'
+  requirements = ('jqueryui', )
+  name = 'Progress Bar'
 
   def __init__(self, report, number, total, width, height, attrs, helper, options, htmlCode, profile):
     options['max'] = total
@@ -118,8 +117,8 @@ class ProgressBar(Html.Html):
 
 
 class Menu(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
-  name, category, callFnc = 'Menu', 'Menus', 'menu'
+  requirements = ('jqueryui', )
+  name = 'Menu'
 
   def __init__(self, report, records, width, height, attrs, helper, options, htmlCode, profile):
     super(Menu, self).__init__(report, records, css_attrs={"width": width, "height": height}, profile=profile)
@@ -199,8 +198,8 @@ class Menu(Html.Html):
 
 
 class Dialog(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
-  name, category, callFnc = 'Menu', 'Menus', 'menu'
+  requirements = ('jqueryui', )
+  name = 'Menu'
 
   def __init__(self, report, text, width, height, attrs, helper, options, htmlCode, profile):
     super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, profile=profile)
@@ -268,8 +267,8 @@ class Dialog(Html.Html):
 
 
 class Slider(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
-  name, category, callFnc = 'Slider', 'Sliders', 'slider'
+  requirements = ('jqueryui', )
+  name = 'Slider'
 
   def __init__(self, report, number, min, max, width, height, attrs, helper, options, htmlCode, profile):
     options.update({'max': max, 'min': min})
@@ -500,17 +499,16 @@ class SliderDates(SliderDate):
 
 
 class SkillBar(Html.Html):
-  name, category, callFnc = 'Skill Bars', 'Chart', 'skillbars'
+  name = 'Skill Bars'
 
-  def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, colUrl, colTooltip, filters, profile):
-    super(SkillBar, self).__init__(report, "", css_attrs={"width": width, "height": height}, htmlCode=htmlCode,
-                                   globalFilter=filters, profile=profile)
+  def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, profile):
+    super(SkillBar, self).__init__(report, "", css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.add_title(title, options={'content_table': False})
     self.innerPyHTML = report.ui.layouts.table(options={"header": False}) # data, y_column, x_axis)
-    self.innerPyHTML.inReport = False
+    self.innerPyHTML.options.managed = False
     for rec in data:
       value = report.ui.div(EntHtml4.NO_BREAK_SPACE).css({"width": '%spx' % rec[y_column], 'margin-left': "2px",  "background": report.theme.success[0]})
-      value.inReport = False
+      value.options.managed = False
       self.innerPyHTML += [rec[x_axis], value]
       self.innerPyHTML[-1][1].attr["align"] = 'left'
     self.innerPyHTML.style.clear()
@@ -531,102 +529,10 @@ class SkillBar(Html.Html):
   def __str__(self):
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @classmethod
-  def matchMarkDownBlock(cls, data): return True if data[0].strip() == "---SkillBar" else None
-
-  @staticmethod
-  def matchEndBlock(data): return data.endswith("---")
-
-  @classmethod
-  def convertMarkDownBlock(cls, data, report):
-    """
-    :category:
-    :rubric:
-    :example:
-      ---SkillBar
-      label|value|color
-      Test 1|35|yellow
-      Test 2|25|blue
-      ---
-    :dsc:
-
-    """
-    recordSet = []
-    header = data[1].strip().split("|")
-    for val in data[2:-1]:
-      label, value, color = val.strip().split("|")
-      recordSet.append({'value': value, 'label': label, 'color': color})
-    if report is not None:
-      getattr(report, 'skillbars')(recordSet)
-    return ["report.skillbars(%s)" % json.dumps(recordSet)]
-
-  @classmethod
-  def jsMarkDown(self, vals):
-    recordSet = ["---SkillBar", 'label|value|color']
-    for rec in vals:
-      recordSet.append("%(label)s|%(value)s|%(color)s" % rec)
-    recordSet.append("---")
-    return "&&".join(recordSet)
-
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_img(self):
-    """
-
-    :return:
-    """
-    pkg_matplotlib = requires("matplotlib.pyplot", reason='Missing Package', install='matplotlib', source_script=__file__)
-    pkg_numpy = requires("numpy", reason='Missing Package', install='numpy', source_script=__file__)
-
-    pkg_matplotlib.rcdefaults()
-    fig, ax = pkg_matplotlib.subplots()
-
-    # Example data
-    aggDf = self.vals.data.groupby([self.vals.xAxis])[self.vals.seriesNames[0]].sum().reset_index()
-    labels = aggDf[self.vals.xAxis]
-    values = aggDf[self.vals.seriesNames[0]]
-
-    y_pos = pkg_numpy.arange(len(labels))
-    performance = values
-    error = pkg_numpy.random.rand(len(labels))
-    ax.barh(y_pos, performance, xerr=error, align='center', color=self._report.theme.colors[7], ecolor='black')
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels(labels)
-    ax.invert_yaxis()  # labels read top-to-bottom
-    ax.set_xlabel(self.vals.xAxis)
-    ax.set_title(self.title)
-    return fig
-
-  def to_word(self, document):
-    """
-    Description:
-    -----------
-
-    :param document:
-
-    :return:
-    """
-    pkg_matplotlib = requires("matplotlib.pyplot", reason='Missing Package', install='matplotlib', source_script=__file__)
-    import os
-
-    fig = self.to_img()
-    imgsPath = os.path.join(self._report.run.local_path, "imgs")
-    if not os.path.exists(imgsPath):
-      os.mkdir(imgsPath)
-
-    # Add the picture to the document
-    pkg_matplotlib.savefig(os.path.join(imgsPath, "%s.png" % id(fig)))
-    document.add_picture(os.path.join(imgsPath, "%s.png" % id(fig)))
-    os.remove(os.path.join(imgsPath, "%s.png" % id(fig)))
-
 
 class OptionsBar(Html.Html):
-  name, category, callFnc = 'Options', 'Event', 'optionsbar'
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  requirements = ('font-awesome', )
+  name = 'Options'
 
   def __init__(self, report, recordset, width, height, color, options):
     super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height})
@@ -649,7 +555,7 @@ class OptionsBar(Html.Html):
     """ Add items to a container """
     icon = self._report.ui.icon(icon)
     icon.style.css.margin = "5px"
-    icon.inReport = False
+    icon.options.managed = False
     self.val.append(icon)
     return self
 
@@ -677,8 +583,8 @@ class OptionsBar(Html.Html):
 
 
 class SignIn(Html.Html):
-  name, category, callFnc = 'SignIn', 'Event', 'signin'
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  requirements = ('font-awesome', )
+  name = 'SignIn'
 
   def __init__(self, report, text, size, icon):
     super(SignIn, self).__init__(report, text, css_attrs={"width": size, 'height': size})
@@ -703,7 +609,8 @@ class SignIn(Html.Html):
 
 
 class Filters(Html.Html):
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  name = 'Filters'
+  requirements = ('font-awesome', )
 
   def __init__(self, report, items, width, height, htmlCode, helper, options, profile):
     super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
@@ -712,9 +619,9 @@ class Filters(Html.Html):
     self.input = self._report.ui.input()
     self.input.style.css.text_align = 'left'
     self.input.style.css.padding = '0 5px'
-    self.input.inReport = False
+    self.input.options.managed = False
     self.selections = self._report.ui.div()
-    self.selections.inReport = False
+    self.selections.options.managed = False
     self.selections.attr["name"] = "panel"
     self.selections.css({'height': '30px', 'padding': '5px 2px'})
     self.add_helper(helper)

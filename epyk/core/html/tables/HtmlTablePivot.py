@@ -16,7 +16,7 @@ from epyk.core.css.styles import GrpClsTable
 
 
 class PivotTable(Html.Html):
-  __reqJs, __reqCss = ["pivot"], ["pivot"]
+  requirements = ('pivot', )
   name = 'Pivot Table'
   js_fncs_opts = ('renderer', 'aggregator', 'onRefresh', 'filter', 'dataClass', 'onRefresh', 'renderers')
 

@@ -470,7 +470,7 @@ class JsScreen(object):
 
 class JsBase(object):
   class __internal(object):
-    _props, _context, jsOnLoadEvtsFnc, http = {}, {}, [], []
+    _props, _context, http = {}, {}, []
     jsImports, cssImport = set([]), set([])
 
   def __init__(self, src=None):

@@ -6,7 +6,8 @@ from epyk.core.js.packages import JsD3
 
 
 class Chart(Html.Html):
-  name = 'NVD3'
+  name = 'NVD3 Chart'
+  requirements = ('nvd3', )
 
   def __init__(self,  report, width, height, options, htmlCode, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]

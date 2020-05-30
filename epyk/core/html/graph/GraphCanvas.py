@@ -3,6 +3,8 @@ from epyk.core.js.objects import JsCanvas
 
 
 class Canvas(Html.Html):
+  name = 'Canvas'
+
   def __init__(self, report, width, height):
     super(Canvas, self).__init__(report, "", css_attrs={"width": width, "height": height})
     self.__ctx = None

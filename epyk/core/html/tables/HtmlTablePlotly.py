@@ -173,6 +173,8 @@ class DataTable(GraphPlotly.DataChart):
 
 
 class Table(GraphPlotly.Chart):
+  name = 'Plotly Table'
+  requirements = ('plotly.js', )
 
   __reqJs = ['plotly.js']
 

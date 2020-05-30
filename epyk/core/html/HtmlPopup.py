@@ -1,7 +1,3 @@
-"""
-
-"""
-
 
 from epyk.core.html import Html
 
@@ -10,8 +6,8 @@ from epyk.core.html import Html
 
 
 class Popup(Html.Html):
-  __reqCss, __reqJs = ['bootstrap', 'jquery-scrollbar'], ['jquery', 'jquery-scrollbar']
-  name, category, callFnc = 'Popup Container', 'Container', 'popup'
+  requirements = ('bootstrap', 'jquery-scrollbar')
+  name = 'Popup Container'
   # _grpCls = CssGrpClsInput.CssClassPopup
 
   def __init__(self, report, htmlObj, title, color, width, height, withBackground, draggable, margin, profile):
@@ -57,7 +53,7 @@ class Popup(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set too late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set too late
     htmlObj.container = "#%s_content" % self.htmlId
     if htmlObj.category in ['Input']:
       self.inputs.append((htmlObj.jqId, htmlObj.placeholder, htmlObj.val, htmlObj.__class__.__name__) )

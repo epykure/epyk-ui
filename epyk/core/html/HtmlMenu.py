@@ -8,7 +8,7 @@ from epyk.core.html.options import OptList
 
 
 class HtmlNavBar(Html.Html):
-  name, category = 'Nav Bar', 'System'
+  name = 'Nav Bar'
 
   def __init__(self, report, components, width, height, options, profile):
     super(HtmlNavBar, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
@@ -41,7 +41,7 @@ class HtmlNavBar(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to the footer """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     htmlObj.style.css.display = 'inline'
     if htmlObj.css('height') is None:
       htmlObj.style.css.vertical_align = 'middle'
@@ -103,7 +103,7 @@ class HtmlFooter(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to the footer """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     return self
 
@@ -124,7 +124,7 @@ class HtmlFooter(Html.Html):
 
 
 class ContextMenu(Html.Html):
-  name, category, callFnc = 'Context Menu', None, 'contextmenu'
+  name = 'Context Menu'
   source = None # The container
 
   def __init__(self, report, recordSet, width, height, visible, options, profile):
@@ -173,11 +173,11 @@ class ContextMenu(Html.Html):
           htmlObj = self._report.ui.div(htmlObj['value'])
       else:
         htmlObj = self._report.ui.div(htmlObj)
-    htmlObj.inReport = False
+    htmlObj.options.managed = False
     li_obj = Li(self._report, htmlObj) if not isinstance(htmlObj, Li) else htmlObj
     li_obj.css({"padding": "5px", 'cursor': 'pointer'})
     if hasattr(htmlObj, 'inReport'):
-      htmlObj.inReport = False
+      htmlObj.options.managed = False
     self.val.append(li_obj)
     return self
 

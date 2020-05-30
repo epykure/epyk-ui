@@ -6,20 +6,20 @@ from epyk.core.js.html import JsHtmlJqueryUI
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpChart
+from epyk.core.html.options import OptSparkline
 
 
 class Sparklines(Html.Html):
-  __reqJs = ['jquery-sparklines']
-  name, category, callFnc = 'sparkline', 'Charts', 'sparkline'
+  requirements = ('jquery-sparklines', )
+  name = 'Sparkline'
 
   def __init__(self, report, data, chart_type, title, options):
     super(Sparklines, self).__init__(report, data)
     self._jsStyles, self.title = {"type": chart_type}, None
     if title is not None:
       self.title = self._report.ui.title(title, level=4)
-      self.title.inReport = False
-    if options is not None:
-      self._jsStyles.update(options)
+      self.title.options.managed = False
+    self.__options = OptSparkline.OptionsSparkLine(self, options or {})
 
   @property
   def style(self):
@@ -33,27 +33,16 @@ class Sparklines(Html.Html):
       self._styleObj = GrpChart.ClassBSpartlines(self)
     return self._styleObj
 
-  def options(self, attrs):
+  @property
+  def options(self):
     """
     Description:
-    ------------
-    Add any option to the sparkline object
+    -----------
+    Property to set all the possible object for a button
 
-    Example
-    chartObj.options({"lineColor": 'yellow'})
-
-    Related Pages:
-
-			https://omnipotent.net/jquery.sparkline/#s-docs
-
-    Attributes:
-    ----------
-    :param attrs: A python dictionary
-
-    :return: The sparkline object
+    :rtype: OptSparkline.OptionsSparkLine
     """
-    self._jsStyles.update(attrs)
-    return self
+    return self.__options
 
   @property
   def dom(self):

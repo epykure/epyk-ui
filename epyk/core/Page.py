@@ -1,7 +1,6 @@
 
 import json
 import collections
-import datetime
 import time
 
 try:
@@ -30,24 +29,22 @@ class Report(object):
   ext_packages = None # For extension modules
 
   def __init__(self):
-    #
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
     self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet(), 'datasets': {}}, 'context': {'framework': 'JS'}}, None, None, None
+    self.components = collections.OrderedDict() # Components for the entire page
+    self.start_time = time.time()
 
-    self.timestamp, self.runTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'), time.time() * 100
-    self.content, self.shortcuts, self.jsSources = [], {}, {}
-    self.htmlItems, self.jsOnLoad, self.http, self.htmlCodes, self.htmlRefs = {}, [], {}, {}, {}
+    self.jsOnLoad, self.http = [], {} # to be deleted
     self._propagate = []
 
     self._scroll, self._contextMenu = set(), {}
-    self.logo, self._dbSettings, self.dbsDef, self._cssText, self._jsText = None, None, {}, [], []
+    self.logo, self._dbSettings, self.dbsDef, self._cssText, self._jsText = None, None, {}, [], [] # to be reviewed
 
     #
-    self.jsOnLoadFnc, self.jsWindowLoadFnc = OrderedSet(), OrderedSet()
-    self.jsOnLoadEvtsFnc = OrderedSet()
+    self.jsOnLoadFnc, self.jsWindowLoadFnc = OrderedSet(), OrderedSet() # to be deleted
+    self.jsOnLoadEvtsFnc = OrderedSet() # to be deleted
 
-    self.jsImports, self.cssImport = set(), set()
-    self.jsLocalImports, self.cssLocalImports = set(), set()
+    self.jsImports, self.jsLocalImports, self.cssImport, self.cssLocalImports = set(), set(), set(), set()
 
   @property
   def body(self):
@@ -236,28 +233,8 @@ class Report(object):
       ext_components = [ext_components]
 
     for comp in ext_components:
-      self.htmlItems[id(comp)] = comp
+      self.components[id(comp)] = comp
       self.content.append(id(comp))
-
-  def itemFromCode(self, htmlCode):
-    """
-    Description:
-    ------------
-
-    :param htmlCode:
-
-    :rtype: html.Html.Html
-    """
-    return self.htmlCodes[htmlCode]
-
-  def item(self, itemId):
-    """
-    Description:
-    ------------
-
-    :param itemId:
-    """
-    return self.htmlItems[itemId]
 
   # def socketSend(self, htmlCode, data, report_name=None, script_name=None):
   #   try:
@@ -296,19 +273,6 @@ class Report(object):
     if self._header_obj is None:
       self._header_obj = html.Header.Header(self)
     return self._header_obj
-
-  def export(self):
-    """
-    Description:
-    ------------
-    Static component export for Angular
-    """
-    ts_comps = []
-    ts_comps.append(html.HtmlButton.Button(self).component.ts())
-    ts_comps.append(html.HtmlButton.CheckButton(self).component.ts())
-    ts_comps.append(html.HtmlText.Label(self).component.ts())
-    ts_comps.append(html.HtmlText.Span(self).component.ts())
-    return ts_comps
 
   def dumps(self, data):
     """

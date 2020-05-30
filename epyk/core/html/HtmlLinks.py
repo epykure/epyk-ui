@@ -1,9 +1,7 @@
 
 import json
-import re
 
 from epyk.core.html import Html
-from epyk.core.js.Imports import requires
 
 # The list of CSS classes
 # from epyk.core.css.styles import GrpCls
@@ -11,7 +9,7 @@ from epyk.core.js.Imports import requires
 
 
 class ExternalLink(Html.Html):
-  name, category, callFnc = 'External link', 'Links', 'externallink'
+  name = 'External link'
 
   def __init__(self, report, text, url, icon, helper, height, decoration, options, profile):
     super(ExternalLink, self).__init__(report, {"text": text, "url": url}, css_attrs={'height': height}, profile=profile)
@@ -22,7 +20,7 @@ class ExternalLink(Html.Html):
       self.val['url'] = self.val['text']
     if 'target' in options:
       self.set_attrs(name="target", value=options['target'])
-    self.decoration, self.options, self.__url = decoration, options, {}
+    self.decoration, self.__url = decoration, {}
 
   @property
   def _js__builder__(self):
@@ -50,55 +48,9 @@ class ExternalLink(Html.Html):
     self.set_attrs(name="href", value=self.val['url'])
     return '<a %s>%s</a>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val['text'], self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val):
-    result = re.findall("\[([a-zA-Z 0-9]*)\]\(http([:a-zA-Z\/\.\ 0-9]*)\)", val)
-    if not result:
-      result = re.findall('\[([a-zA-Z 0-9]*)\]\(<a href\=\"http://([:a-zA-Z/.0-9]*)\">', val)
-    return result
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report):
-    for name, url in regExpResult:
-      val = val.replace("[%s](http%s)" % (name, url), "report.externallink('%s', 'http%s')" % (name, url))
-      if report is not None:
-        getattr(report, 'link')({'url': url, 'text': name})
-    return [val]
-
-  @classmethod
-  def jsMarkDown(cls, vals): return "[%s](%s)" % (vals['text'], vals['url'])
-
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document):
-    """
-
-    :param document:
-    :return:
-    """
-    pkg_docx = requires("docx", reason='Missing Package', install='python-docx', source_script=__file__)
-
-    p = document.add_paragraph()
-    hyperlink = pkg_docx.oxml.shared.OxmlElement('w:hyperlink')
-    r_id = p.part.relate_to(self.vals['url'], pkg_docx.opc.constants.RELATIONSHIP_TYPE.HYPERLINK, is_external=True)
-    hyperlink.set(pkg_docx.oxml.shared.qn('r:id'), r_id, )
-    new_run = pkg_docx.oxml.shared.OxmlElement('w:r')
-    new_run.append(pkg_docx.oxml.shared.OxmlElement('w:rPr'))
-    new_run.text = self.vals['text']
-    hyperlink.append(new_run)
-    p._p.append(hyperlink)
-
-  def to_xls(self, workbook, worksheet, cursor):
-    worksheet.write_url(cursor['row'], 0, self.vals['url'], string=self.vals['text'])
-    cursor['row'] += 2
-
 
 class DataLink(Html.Html):
-  name, category, callFnc = 'Data link', 'Links', 'linkdata'
+  name = 'Data link'
   # _grpCls = CssGrpClsText.CssClassHref
 
   def __init__(self, report, text, value, width, height, format, profile):
@@ -127,8 +79,8 @@ class DataLink(Html.Html):
 
 
 class Bridge(Html.Html):
-  reqCss, reqJs = [], ['jquery']
-  name, category, callFnc = 'Node Bridge', 'Links', 'bridge'
+  requirements = ('jquery', )
+  name = 'Node Bridge'
 
   def __init__(self, report, text, script_name, report_name, url, jsData, context):
     super(Bridge, self).__init__(report, text)
@@ -141,7 +93,7 @@ class Bridge(Html.Html):
       for htmlObj in jsData:
         if isinstance(htmlObj, str):
           try:
-            htmlObj = self.itemFromCode(htmlObj)
+            htmlObj = report.component(htmlObj.htmlId)
             self.pmts.append("%s: %s" % (htmlObj.htmlCode, htmlObj.val))
           except:
             # hook to assume the user is directly passing a key: value as a string

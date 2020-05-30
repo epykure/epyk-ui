@@ -8,16 +8,16 @@ from epyk.core.js.objects import JsComponents
 
 
 class Radio(Html.Html):
-  name, category, callFnc = 'Radio Buttons', 'Buttons', 'radio'
+  name = 'Radio Buttons'
 
   def __init__(self, report, vals, htmlCode, label, width, height, radioVisible, event,
                withRemoveButton, align, filters, tooltip, radioType, helper, profile):
     items = []
     for v in vals:
       r = report.ui.inputs.radio(v.get('checked', False), v['value'])
-      r.inReport = False
+      r.options.managed = False
       items.append(r)
-    super(Radio, self).__init__(report, items, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, globalFilter=filters, profile=profile)
+    super(Radio, self).__init__(report, items, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     for v in self.val:
       v.set_attrs(name="name", value="radio_%s" % self.htmlId)
 
@@ -26,7 +26,7 @@ class Radio(Html.Html):
 
   def __add__(self, val):
     r = self._report.ui.inputs.radio(False, val, group_name="radio_%s" % self.htmlId)
-    r.inReport = False
+    r.options.managed = False
     self._vals.append(r)
     return self
 
@@ -56,13 +56,13 @@ class Radio(Html.Html):
   def __str__(self):
     row = self._report.ui.layouts.div(self.val)
     row.css({"width": 'none'})
-    row.inReport = False
+    row.options.managed = False
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), row.html(), self.helper)
 
 
 class Tick(Html.Html):
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  name, category, callFnc = 'Tick', 'Icons', 'tick'
+  requirements = ('font-awesome', )
+  name = 'Tick'
 
   def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, options, profile):
     self._options = options
@@ -100,8 +100,8 @@ class Tick(Html.Html):
 
 
 class Switch(Html.Html):
-  __reqCss, __reqJs = ['bootstrap'], ['bootstrap', 'jquery']
-  name, category, callFnc = 'Switch Buttons', 'Buttons', 'switch'
+  requirements = ('bootstrap', 'jquery')
+  name = 'Switch Buttons'
 
   def __init__(self, report, records, label, color, width, height, htmlCode, profile):
     self.width, self.jsChange = width[0], ''
@@ -114,18 +114,18 @@ class Switch(Html.Html):
     #
     self.checkbox = report.ui.inputs.checkbox("", width=(None, "%"))
     self.checkbox.style.add_classes.radio.switch_checkbox()
-    self.checkbox.inReport = False
+    self.checkbox.options.managed = False
     #
     self.switch_label = report.ui.texts.label(report.entities.non_breaking_space, width=(50, "px"))
     self.switch_label.style.clear()
     self.switch_label.style.add_classes.radio.switch_label()
-    self.switch_label.inReport = False
+    self.switch_label.options.managed = False
     self.switch_label.style.css.line_height = "10px"
 
     self.switch_text = report.ui.tags.p(self.val['off'])
     self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold"})
     self.switch_text.tooltip(self.val.get('text', ''))
-    self.switch_text.inReport = False
+    self.switch_text.options.managed = False
 
     # self.css({"display": 'inline-block'})
     self.switch = self.dom.querySelector("label")

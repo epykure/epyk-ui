@@ -8,7 +8,8 @@ from epyk.core.html.options import OptGoogle
 
 
 class ChartGeoGoogle(Html.Html):
-  __reqJs = ['google-maps']
+  name = 'Google Chart'
+  requirements = ('google-maps', )
   js_fncs_opts = ('center', 'mapTypeId')
 
   def __init__(self,  report, width, height, options, htmlCode, profile):

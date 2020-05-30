@@ -40,7 +40,8 @@ from epyk.core.js.packages import JsD3
 
 
 class Chart(Html.Html):
-  name = 'Billboard'
+  name = 'Billboard Chart'
+  requirements = ('billboard', )
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     self.height = height[0]

@@ -4,40 +4,53 @@ from epyk.core.js import JsUtils
 
 class KeyCode(object):
 
-  def __init__(self):
-    self.__events = {}
+  def __init__(self, component):
+    self.__events_per_source, self._component = {}, component
 
-  def custom(self, rule, jsFnc, profile=False):
+  def custom(self, rule, jsFnc, profile=False, source_event=None):
     """
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param rule:
     :param jsFnc:
     :param profile:
+    :param source_event: String. Optional. The source component for the event
     """
+    source_event = source_event or self._component.dom.varId
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
-    self.__events[rule] = jsFnc
+    if source_event not in self.__events_per_source:
+      self.__events_per_source[source_event] = {}
+    self.__events_per_source[source_event].setdefault(rule, {})["content"] = jsFnc
+    self.__events_per_source[source_event][rule]['profile'] = profile
 
-  def key(self, key_code, jsFnc, profile=False, reset=False):
+  def key(self, key_code, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param key_code:
     :param jsFnc:
     :param profile:
     :param reset:
+    :param source_event: String. Optional. The source component for the event
     """
+    source_event = source_event or self._component.dom.varId
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
     tag = "event.which == %s" % key_code
-    if reset or tag not in self.__events:
-      self.__events[tag] = []
-    self.__events[tag].extend(jsFnc)
+    if reset or tag not in self.__events_per_source:
+      self.__events_per_source[source_event] = {}
+    self.__events_per_source[source_event].setdefault(tag, {}).setdefault("content", []).extend(jsFnc)
+    self.__events_per_source[source_event][tag]['profile'] = profile
 
-  def enter(self, jsFnc, profile=False, reset=False):
+
+  def enter(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -47,23 +60,11 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(13, jsFnc, profile, reset)
+    self.key(13, jsFnc, profile, reset, source_event)
 
-  def tab(self, jsFnc, profile=False, reset=False):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
-    :param jsFnc: Array. Tje Javascript events
-    :param profile:
-    :param reset: Boolean. To set if the event should be refreshed
-    """
-    self.key(9, jsFnc, profile, reset)
-
-  def backspace(self, jsFnc, profile=False, reset=False):
+  def tab(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -73,10 +74,25 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(8, jsFnc, profile, reset)
+    self.key(9, jsFnc, profile, reset, source_event)
 
-  def shift_with(self, key, jsFnc, profile=False):
+  def backspace(self, jsFnc, profile=False, reset=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFnc: Array. Tje Javascript events
+    :param profile:
+    :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
+    """
+    self.key(8, jsFnc, profile, reset, source_event)
+
+  def shift_with(self, key, jsFnc, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -86,10 +102,11 @@ class KeyCode(object):
     :param key:
     :param jsFnc:
     :param profile:
+    :param source_event: String. Optional. The source component for the event
     """
-    self.custom("(event.shiftKey) && (event.which == %s)" % ord(key), jsFnc, profile)
+    self.custom("(event.shiftKey) && (event.which == %s)" % ord(key), jsFnc, profile, source_event)
 
-  def shift(self, jsFnc, profile=False, reset=False):
+  def shift(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -99,10 +116,11 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(16, jsFnc, profile, reset)
+    self.key(16, jsFnc, profile, reset, source_event)
 
-  def control(self, jsFnc, profile=False, reset=False):
+  def control(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -112,10 +130,11 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(17, jsFnc, profile, reset)
+    self.key(17, jsFnc, profile, reset, source_event)
 
-  def alt(self, jsFnc, profile=False, reset=False):
+  def alt(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -125,10 +144,26 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(18, jsFnc, profile, reset)
+    self.key(18, jsFnc, profile, reset, source_event)
 
-  def space(self, jsFnc, profile=False, reset=False):
+  def space(self, jsFnc, profile=False, reset=False, source_event=None):
+    """
+    Description:
+    -----------
+    Add an event on the space key
+
+    Attributes:
+    ----------
+    :param jsFnc: Array. Tje Javascript events
+    :param profile:
+    :param reset: Boolean. To set if the event should be refreshed
+    :param source_event:
+    """
+    self.key(32, jsFnc, profile, reset, source_event)
+
+  def right(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -138,10 +173,11 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(32, jsFnc, profile, reset)
+    self.key(39, jsFnc, profile, reset, source_event)
 
-  def right(self, jsFnc, profile=False, reset=False):
+  def left(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -151,10 +187,11 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(39, jsFnc, profile, reset)
+    self.key(37, jsFnc, profile, reset, source_event)
 
-  def left(self, jsFnc, profile=False, reset=False):
+  def up(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -164,10 +201,11 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(37, jsFnc, profile, reset)
+    self.key(38, jsFnc, profile, reset, source_event)
 
-  def up(self, jsFnc, profile=False, reset=False):
+  def down(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -177,10 +215,11 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(38, jsFnc, profile, reset)
+    self.key(40, jsFnc, profile, reset, source_event)
 
-  def down(self, jsFnc, profile=False, reset=False):
+  def delete(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
     -----------
@@ -190,29 +229,19 @@ class KeyCode(object):
     :param jsFnc: Array. Tje Javascript events
     :param profile:
     :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
     """
-    self.key(40, jsFnc, profile, reset)
-
-  def delete(self, jsFnc, profile=False, reset=False):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
-    :param jsFnc: Array. Tje Javascript events
-    :param profile:
-    :param reset: Boolean. To set if the event should be refreshed
-    """
-    self.key(46, jsFnc, profile, reset)
+    self.key(46, jsFnc, profile, reset, source_event)
 
   def get_event(self):
     """
     Description:
     -----------
-
+    Return the complete definition for the key event.
     """
-    event = []
-    for k, jsFnc in self.__events.items():
-      event.append("if(%s){ %s }" % (k, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
+    event = {}
+    for source, event_fncs in self.__events_per_source.items():
+      event[source] = {"content": [], 'profile': False}
+      for rule, jsFnc in event_fncs.items():
+        event[source]["content"].append("if(%s){%s}" % (rule, JsUtils.jsConvertFncs(jsFnc['content'], toStr=True)))
     return event

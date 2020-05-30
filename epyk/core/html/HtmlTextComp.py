@@ -16,8 +16,8 @@ from epyk.core.css.styles import GrpClsText
 
 
 class UpDown(Html.Html):
-  name, category, callFnc = 'Up and Down', 'Texts', 'updown'
-  __reqCss, __reqJs = ['font-awesome'], ['accounting', 'font-awesome']
+  name  = 'Up and Down'
+  requirements = ('font-awesome', 'accounting')
 
   def __init__(self, report, rec, color, label, options, helper, profile):
     if rec is None:
@@ -72,8 +72,8 @@ class UpDown(Html.Html):
 
 
 class BlockText(Html.Html):
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  name, category, callFnc = 'Block text', 'Rich', 'blocktext'
+  requirements = ('font-awesome', )
+  name = 'Block text'
   # _grpCls = CssGrpClsText.CssClassTextBlock
 
   def __init__(self, report, recordSet, color, border, width, height, helper, options, profile):
@@ -119,8 +119,8 @@ class BlockText(Html.Html):
 
 
 class TextWithBorder(Html.Html):
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  name, category, callFnc = 'Text with Border and Icon', 'Rich', 'textborder'
+  requirements = ('font-awesome', )
+  name = 'Text with Border and Icon'
 
   def __init__(self, report, recordSet, width, height, align, helper, options, profile):
     super(TextWithBorder, self).__init__(report, recordSet, css_attrs={"width": width, "height": height}, profile=profile)
@@ -164,7 +164,7 @@ class TextWithBorder(Html.Html):
 
 
 class Number(Html.Html):
-  name, category, callFnc = 'Number', 'Rich', 'number'
+  name = 'Number'
 
   def __init__(self, report, number, label, width, height, profile, options):
     super(Number, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
@@ -189,8 +189,8 @@ class Number(Html.Html):
 
 
 class Delta(Html.Html):
-  __reqCss, __reqJs = ['jqueryui'], ['accounting', 'jqueryui']
-  name, category, callFnc = 'Delta Figures', 'Rich', 'delta'
+  requirements = ('jqueryui', 'accounting')
+  name = 'Delta Figures'
 
   def __init__(self, report, records, width, height, options, helper, profile):
     super(Delta, self).__init__(report, records, css_attrs={"width": width, "height": height}, profile=profile)
@@ -242,27 +242,10 @@ class Delta(Html.Html):
                    'htmlId': self.htmlId, "color": self.val['color'],
                    "greyColor": self._report.theme.greys[6], "helper": self.helper}
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val):
-    return True if val.startswith("@delta ") else None
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report=None):
-    curr, prev = val[6:].split(':')
-    if report is not None:
-      getattr(report, cls.callFnc)({'number': float(curr), 'prevNumber': float(prev)})
-    return ["report.%s( {'number': %s, 'prevNumber': %s} )" % (cls.callFnc, float(curr,), float(prev))]
-
-  @classmethod
-  def jsMarkDown(self, vals): return "@delta %s:%s" % (vals['number'], vals['prevNumber'])
-
 
 class Formula(Html.Html):
-  __reqJs = ['mathjs']
-  name, category, callFnc = 'Latex Formula', 'Texts', 'formula'
+  requirements = ('mathjs', )
+  name = 'Latex Formula'
 
   def __init__(self, report, text, width, color, helper, profile):
     super(Formula, self).__init__(report, text, css_attrs={"color": color, "width": width}, profile=profile)
@@ -276,24 +259,9 @@ class Formula(Html.Html):
   def __str__(self):
     return '<font %s>%s</font>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content, self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val): return True if val.startswith("$$") and val.strip().endswith("$$") else None
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report):
-    if report is not None:
-      getattr(report, 'formula')(val.strip())
-    return ["report.formula('%s')" % val.strip()]
-
-  @classmethod
-  def jsMarkDown(self, vals): return vals
-
 
 class TrafficLight(Html.Html):
-  name, category, callFnc = 'Light', 'Rich', 'light'
+  name = 'Light'
 
   def __init__(self, report, color, label, height, tooltip, helper, profile):
     # Small change to allow the direct use of boolean and none to define the color
@@ -363,7 +331,7 @@ class TrafficLight(Html.Html):
     :param profile:
     """
     self.action = self._report.ui.icon("fas fa-wrench")
-    self.action.inReport = False
+    self.action.options.managed = False
     self.action.tooltip("Click to try to resolve the issue")
     self.action.style.css.font_size = 8
     self.action.style.css.margin_top = 8
@@ -402,25 +370,9 @@ class TrafficLight(Html.Html):
 
     return '<div id="%s"><div %s></div></div>%s' % (self.htmlId, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val): return re.match("-\(\((.*)\)\)-", val)
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report=None):
-    if report is not None:
-      getattr(report, cls.callFnc)(regExpResult.group(1))
-    return ["report.%s('%s')" % (regExpResult.group(1), cls.callFnc)]
-
-  @classmethod
-  def jsMarkDown(self, val):
-    return "-((%s))-" % val
-
 
 class ContentsTable(Html.Html):
-  name, category, callFnc = 'Contents Table', None, 'contents'
+  name = 'Contents Table'
 
   def __init__(self, report, title, width, height, options, profile):
     self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
@@ -431,7 +383,7 @@ class ContentsTable(Html.Html):
     self.title += self._report.ui.text("[hide]").css({"width": '30px', 'display': 'inline-block', 'margin-left': '5px'})
     self.title[0].style.css.font_size = Defaults_css.font(6)
     self.title[0].style.css.font_weight = "bold"
-    self.title.inReport = False
+    self.title.options.managed = False
 
   def __getitem__(self, i):
     """
@@ -482,15 +434,15 @@ class ContentsTable(Html.Html):
 
   def __str__(self):
     div_link = self._report.ui.div(self.val)
-    div_link.inReport = False
+    div_link.options.managed = False
     self.title[-1].click([div_link.dom.toggle(), self.title[-1].dom.toggleText('[show]', '[hide]')])
     return '''<div %(attr)s>%(title)s%(links)s</div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
                                                             'title': self.title.html(), 'htmlId': self.htmlId, 'links': div_link.html()}
 
 
 class SearchResult(Html.Html):
-  name, category, callFnc = 'Search Result', 'Text', 'searchr'
-  __reqJs = ['jquery']
+  name = 'Search Result'
+  requirements = ('jquery', )
 
   def __init__(self, report, recordSet, pageNumber, width, height, options, profile):
     super(SearchResult, self).__init__(report, recordSet, css_attrs={"width": width, "height": height})
@@ -556,7 +508,7 @@ class SearchResult(Html.Html):
 
 
 class Composite(Html.Html):
-  name, category, callFnc = 'Composite', 'Rich', 'composite'
+  name = 'Composite'
 
   def __init__(self, report, schema, width, height, htmlCode, options, profile, helper):
     super(Composite, self).__init__(report, None, css_attrs={"width": width, "height": height})
@@ -616,7 +568,7 @@ class Composite(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     if not isinstance(self.val.val, list):
       self._vals = self.val._vals
     self.val.val.append(htmlObj)
@@ -671,7 +623,7 @@ class Composite(Html.Html):
     if comp is None:
       # delegate the htmlID to the main component
       new_comp = self._get_comp_map[schema_child['type']](htmlCode=self.htmlId, **schema_child.get('args', {}))
-      new_comp.inReport = False
+      new_comp.options.managed = False
       self._vals = new_comp
     else:
       new_comp = self._get_comp_map[schema_child['type']](**schema_child.get('args', {}))

@@ -929,6 +929,18 @@ class Options2D(DataClass):
   def timeAxis(self):
     return self.sub_data("timeAxis", OptionsTime)
 
+  @property
+  def managed(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @managed.setter
+  def managed(self, bool):
+    self.set(bool)
+
 
 class Options3D(DataClass):
 
@@ -1724,6 +1736,18 @@ class Options3D(DataClass):
   def zMin(self, val):
     self._attrs["zMin"] = val
 
+  @property
+  def managed(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @managed.setter
+  def managed(self, bool):
+    self.set(bool)
+
 
 class OptionsEditable(DataClass):
 
@@ -1966,6 +1990,18 @@ class OptionsTimeline(DataClass):
   @sequentialSelection.setter
   def sequentialSelection(self, val):
     self._attrs["sequentialSelection"] = val
+
+  @property
+  def managed(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @managed.setter
+  def managed(self, bool):
+    self.set(bool)
 
 
 class OptionLabel(DataClass):
@@ -2688,3 +2724,15 @@ class OptionsNetwork(DataClass):
     :rtype: OptionManipulation
     """
     return self.has_attribute(OptionManipulation)
+
+  @property
+  def managed(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @managed.setter
+  def managed(self, bool):
+    self.set(bool)

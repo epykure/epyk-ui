@@ -7,6 +7,7 @@ import logging
 
 from epyk.core.js import JsUtils
 from epyk.core.js import Js
+from epyk.core.js import Imports
 from epyk.core.js.html import JsHtml
 from epyk.core.js import packages
 from epyk.core.js.packages import JsQuery
@@ -17,6 +18,7 @@ from epyk.core.css.styles import GrpCls
 from epyk.core.html import Aria
 from epyk.core.html import Component
 from epyk.core.html import KeyCodes
+from epyk.core.html.options import Options
 
 try:  # For python 3
   import urllib.request as urllib2
@@ -40,6 +42,8 @@ def cleanData(value):
 # ---------------------------------------------------------------------------------------------------------
 def deprecated(func):
   """
+  Description:
+  -----------
   This is a decorator which can be used to mark functions
   as deprecated. It will result in a warning being emmitted
   when the function is used.
@@ -67,8 +71,34 @@ def inprogress(func):
   return new_func
 
 
+class Required(object):
+  js, css = None, None
+
+  def __init__(self):
+    self.js, self.css = {}, {}
+
+  def add(self, package, version=None):
+    """
+    Description:
+    -----------
+
+    TODO: Use the version number
+
+    Attributes:
+    ----------
+    :param package: String. The package alias
+    :param version: String. The package version number
+    """
+    if package in Imports.JS_IMPORTS:
+      self.js[package] = version or '*'
+    if package in Imports.CSS_IMPORTS:
+      self.css[package] = version or '*'
+
+
 class Html(object):
   """
+  Description:
+  -----------
   Parent class for all the HTML components. All the function defined here are available in the children classes.
   Child class can from time to time re implement the logic but the function will always get the same meaning (namely the same signature and return)
   """
@@ -76,44 +106,56 @@ class Html(object):
   # Those variables should not be used anymore and should be replaced by the __ ones
   # This is done in order to avoid having users to change them. Thanks to the name
   # mangling technique Python will make the change more difficult and easier to see
-  reqJs, reqCss = [], []
+  requirements = None
+
   htmlCode, _code, inReport, builder_name = None, None, True, None
   js_fncs_opts = () # list of options which should never be considered as string but JavaScript fragments
 
-  def __init__(self, report, vals, htmlCode=None, code=None, globalFilter=None, dataSrc=None, options=None, profile=None, css_attrs=None):
+  def __init__(self, report, vals, htmlCode=None, code=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
-    self.children = [] # Child component for this component
+    self.components = collections.OrderedDict() # Child component for this component
+
+    self.require = Required()
+    for package in self.requirements or []:
+      if isinstance(package, tuple):
+        self.require.add(package[0], package[1])
+      else:
+        self.require.add(package)
 
     self.profile = profile
-    self._report, self._styleObj = report, None # The html object ID
+    self._report = report # Should be renamed by page / and component
     self._on_ready_js, self._sort_propagate, self._sort_options = {}, False, None # For sortable items
-    self._dom, self._sub_htmls, self._js, self.helper = None, [], None, ""
-    self._events__keys, self._events__mouse, self._js__on_ready = {}, [], []
+    self._dom, self._sub_htmls, self._js, self.helper, self._styleObj = None, [], None, "", None
 
-    self.jsImports = report.jsImports
-    self.cssImport = report.cssImport
+    self._browser_data = {"mouse": collections.OrderedDict(), 'component_ready': [],
+                          'page_ready': collections.OrderedDict(), 'keys': collections.OrderedDict()}
+
+    self.jsImports = report.jsImports # to be deleted - because changed should be done only on the component self.require
+    self.cssImport = report.cssImport # to be deleted - because changed should be done only on the component self.require
+
+    self._code, self._jsStyles = code, {}  # to be deleted - because code => htmlCode, _jsStyles shold be renamed
+    self.innerPyHTML = None  # to be reviewed - not sure this is still usefull
+
+    self.__options = Options(self, options)
 
     self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
     if css_attrs is not None:
       self.css(css_attrs)
-    self.jsFncFrag, self._code, self._jsStyles, self._events = {}, code, {}, {"comp_ready": {}, 'doc_ready': {}}
-    self.innerPyHTML = None
+
     if code is not None:
       # Control to ensure the Javascript problem due to multiple references is highlighted during the report generation
-      if code in self._report.htmlRefs:
+      if code in self._report.components:
         raise Exception("Duplicated Html Code %s in the script !" % code)
 
-      self._report.htmlRefs[code] = True
-      self._report.htmlCodes[code] = self
+      self._report.components[code] = self
       if code[0].isdigit() or cleanData(code) != code:
         raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (code, cleanData(code)))
 
     if htmlCode is not None:
-      self._report.htmlRefs[htmlCode] = True
       if htmlCode[0].isdigit() or cleanData(htmlCode) != htmlCode:
         raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (htmlCode, cleanData(htmlCode)))
 
-      self._report.htmlCodes[htmlCode] = self
+      self._report.components[htmlCode] = self
       try:
         int(htmlCode[0])
         raise Exception("htmlCode cannot start with a number - %s" % htmlCode)
@@ -126,23 +168,10 @@ class Html(object):
         self.vals = self._report.http[htmlCode]
 
     self.pyStyle = None #list(getattr(self, '_%s__pyStyle' % self.__class__.__name__, []))
-    if hasattr(self, '_%s__reqJs' % self.__class__.__name__):
-      self.reqJs = list(getattr(self, '_%s__reqJs' % self.__class__.__name__, []))
-    if hasattr(self, '_%s__reqCss' % self.__class__.__name__):
-      self.reqCss = list(getattr(self, '_%s__reqCss' % self.__class__.__name__, []))
-    self.pyCssCls = set()
-    self.jsOnLoad, self.jsEvent, self.jsEventFnc = set(), {}, collections.defaultdict(set)
-    self._vals = vals
-    self.jsVal = "%s_data" % self.htmlId
-    if self._report is not None:
-       # Some components are not using _report because they are directly used for the display
-       if self.reqJs is not None:
-         for js in self.reqJs:
-           self._report.jsImports.add(js)
+    self.pyCssCls = set() # to be deleted
 
-       if self.reqCss is not None:
-         for css in self.reqCss:
-           self._report.cssImport.add(css)
+    self._vals = vals
+    self.jsVal = "%s_data" % self.htmlId # to be reviewed
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
 
   @property
@@ -196,6 +225,17 @@ class Html(object):
       self._dom = JsHtml.JsHtml(self, report=self._report)
     return self._dom
 
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the possible object for a button
+
+    :rtype: Options
+    """
+    return self.__options
+
   def prepend_child(self, htmlObj):
     """
     Description:
@@ -218,7 +258,7 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
-    htmlObj.inReport = False
+    htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
@@ -248,7 +288,7 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
-    htmlObj.inReport = False
+    htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
@@ -275,7 +315,7 @@ class Html(object):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._report.js.addOnReady(jsFncs)
+    self._browser_data['component_ready'].extend(JsUtils.jsConvertFncs(jsFncs))
 
   def add_menu(self, context_menu):
     """
@@ -318,7 +358,7 @@ Attributes:
         self.prepend_child(self.icon)
       else:
         self.append_child(self.icon)
-      #elf.icon.inReport = False
+      #elf.icon.options.managed = False
       if css is not None:
         self.icon.css(css)
     return self
@@ -455,7 +495,7 @@ Attributes:
         else:
           self.append_child(self.title)
       else:
-        self.title.inReport = False
+        self.title.options.managed = False
       if css == False:
         self.title.attr['css'] = {}
       elif css is not None:
@@ -535,7 +575,7 @@ Attributes:
     """
     if text is not None:
       self.helper = self._report.ui.rich.info(text)
-      self.helper.inReport = False
+      self.helper.options.managed = False
       if css is not None:
         self.helper.css(css)
     return self
@@ -553,8 +593,8 @@ Attributes:
 
     :rtype: KeyCodes.KeyCode
     """
-    keydown = KeyCodes.KeyCode()
-    self._events__keys['keydown'] = keydown
+    keydown = KeyCodes.KeyCode(component=self)
+    self._browser_data['keys']['keydown'] = keydown
     return keydown
 
   @property
@@ -570,8 +610,8 @@ Attributes:
 
     :rtype: KeyCodes.KeyCode
     """
-    keypress = KeyCodes.KeyCode()
-    self._events__keys['keypress'] = keypress
+    keypress = KeyCodes.KeyCode(component=self)
+    self._browser_data['keys']['keypress'] = keypress
     return keypress
 
   @property
@@ -587,8 +627,8 @@ Attributes:
 
     :rtype: KeyCodes.KeyCode
     """
-    keyup = KeyCodes.KeyCode()
-    self._events__keys['keyup'] = keyup
+    keyup = KeyCodes.KeyCode(component=self)
+    self._browser_data['keys']['keyup'] = keyup
     return keyup
 
   @property
@@ -632,9 +672,7 @@ Attributes:
     -----------
     Move the component to this position in the page
     """
-    comp_id = id(self)
-    self._report.content.remove(comp_id)
-    self._report.content.append(comp_id)
+    self._report.components.move_to_end(id(self))
 
   def css(self, key, value=None, reset=False):
     """
@@ -703,10 +741,11 @@ http://api.jquery.com/css/
 
     :return: The Python object self
     """
-    self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-html': 'true', 'data-placement': location})
-    if options is not None:
-      self.attr.update(options)
-    self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
+    if value is not None:
+      self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-html': 'true', 'data-placement': location})
+      if options is not None:
+        self.attr.update(options)
+      self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
     return self
 
   @packages.packageImport('bootstrap', 'bootstrap')
@@ -726,14 +765,15 @@ http://api.jquery.com/css/
     :param title: String. The tooltip title
     :param options: Dictionary all the options to be attached to the component
     """
-    self.attr["data-content"] = content
-    if title is not None:
-      self.attr["data-title"] = title
-    if options is not None:
-      for k, v in options.items():
-        self.attr["data-%s" % k] = title
-    self.attr["data-toggle"] = 'popover'
-    self._report._props['js']['onReady'].add("%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
+    if content is not None:
+      self.attr["data-content"] = content
+      if title is not None:
+        self.attr["data-title"] = title
+      if options is not None:
+        for k, v in options.items():
+          self.attr["data-%s" % k] = title
+      self.attr["data-toggle"] = 'popover'
+      self._report._props['js']['onReady'].add("%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
     return self
 
   def add_options(self, options=None, name=None, value=None):
@@ -857,10 +897,7 @@ Attributes:
     str_tag = " ".join(html_tags)
     return str_tag.strip()
 
-  # -------------------------------------------------------------
-  # Javascript Event wrappers
-  #
-  def on(self, event, jsFncs, profile=False):
+  def on(self, event, jsFncs, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -878,6 +915,7 @@ Attributes:
     :param event: A string with the Javascript event type from the dom_obj_event.asp
     :param jsFncs: A Javascript Python function
     :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console
+    :param source_event: A String.
 
     :return: self to allow the chains
     """
@@ -886,8 +924,11 @@ Attributes:
     # JsUtils.jsConvertFncs needs to be applied in order to freeze the function
     # span.on("mouseover", span.dom.css("color", "red").r)
     # span.on("mouseleave", span.dom.css("color", "blue"))
-    self._events['doc_ready'].setdefault(event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
-    self._events['doc_ready'][event]['profile'] = profile
+    source_event = source_event or self.dom.varId
+    if event not in self._browser_data['mouse']:
+      self._browser_data['mouse'][event] = {}
+    self._browser_data['mouse'][event].setdefault(source_event, {}).setdefault("content", []).extend(JsUtils.jsConvertFncs(jsFncs))
+    self._browser_data['mouse'][event][source_event]['profile'] = profile
     return self
 
   def drop(self, jsFncs, preventDefault=True, profile=False):
@@ -1074,37 +1115,6 @@ Attributes:
     """
     raise NotImplementedError('subclasses must override __str__()!')
 
-  def to_word(self, document):
-    """
-    Description:
-    -----------
-    Apply the corresponding function to produce the same result in a word document.
-    This function is very specific and it has to be defined in each class.
-
-    Related Pages:
-http://python-docx.readthedocs.io/en/latest/
-    """
-    raise NotImplementedError('''
-      subclasses must override to_word(), %s !
-      Go to http://python-docx.readthedocs.io/en/latest/user/quickstart.html for more details  
-    ''' % self.__class__.__name__)
-
-  def to_xls(self, workbook, worksheet, cursor):
-    """
-    Description:
-    -----------
-    Apply the corresponding function to produce the same result in a word document.
-    This function is very specific and it has to be defined in each class.
-
-    Related Pages:
-
-			https://xlsxwriter.readthedocs.io/
-    """
-    raise NotImplementedError('''
-      subclasses must override to_xls(), %s !
-      Go to https://xlsxwriter.readthedocs.io/working_with_tables.html for more details  
-    ''' % self.__class__.__name__)
-
   @property
   def component(self):
     """
@@ -1125,12 +1135,14 @@ http://python-docx.readthedocs.io/en/latest/
       str_result.append(htmlObj.html())
     if self.helper != "":
       self.helper.html()
-    #
-    for k_event, k_obj in self._events__keys.items():
-      self.on(k_event, k_obj.get_event())
+
+    # Propagate the external requirements to the page
+    for js in self.require.js:
+      self._report.jsImports.add(js)
+    for css in self.require.css:
+      self._report.cssImport.add(css)
 
     #if self.builder_name:
-    #  self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     for c in self.style.get_classes()['main']:
       if hasattr(c, 'get_ref'):
         self.pyCssCls.add(c.get_ref())
@@ -1138,7 +1150,6 @@ http://python-docx.readthedocs.io/en/latest/
     return "".join(str_result)
 
   def export(self, mode):
-    self._out_mode = mode
     return {'folder': self.__class__.__name__.lower(), 'class': "%sComponent" % self.__class__.__name__,
             'styleUrls': "", "externalVars": "", "componentFunctions": [], 'htmlTag': "app-epyk-%s" % self.__class__.__name__.lower()}
 

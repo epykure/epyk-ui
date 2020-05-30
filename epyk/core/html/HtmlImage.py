@@ -13,7 +13,7 @@ from epyk.core.js.html import JsHtml
 
 
 class Image(Html.Html):
-  name, category, callFnc = 'Picture', 'Image', 'img'
+  name = 'Picture'
 
   def __init__(self, report, image, path, align, htmlCode, width, height, profile, options):
     if path is None:
@@ -56,7 +56,7 @@ class Image(Html.Html):
 
 
 class AnimatedImage(Html.Html):
-  name, category, callFnc = 'Animated Picture', 'Images', 'animatedimg'
+  name = 'Animated Picture'
 
   def __init__(self, report, image, text, title, url, path, width, height, profile):
     if path is None:
@@ -64,14 +64,14 @@ class AnimatedImage(Html.Html):
     super(AnimatedImage, self).__init__(report, {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
                                         css_attrs={"width": width, "height": height, 'overflow': 'hidden', 'display': 'block'}, profile=profile)
     self.img = report.ui.img(image, path=path, width=(width[0]-5, width[1]), height=("auto", ''))
-    self.img.inReport = False
+    self.img.options.managed = False
     self.title = report.ui.tags.h2(title).css({"display": 'block'})
     self.text = report.ui.tags.p(text).css({"display": 'block'})
     self.a = report.ui.tags.a("Enter", url).css({"width": "100px"})
     self.a.style.add_classes.image.info_link()
     self.div = report.ui.div([self.title, self.text, self.a], width=(width[0]-2, width[1])).css({"padding": "5px"})
     self.div.style.add_classes.image.mask()
-    self.div.inReport = False
+    self.div.options.managed = False
 
   def __str__(self):
     return '''<div %(cssAttr)s>%(div)s%(img)s</div>
@@ -79,7 +79,7 @@ class AnimatedImage(Html.Html):
 
 
 class ImgCarrousel(Html.Html):
-  name, category, callFnc = 'Carrousel', 'Images', 'carrousel'
+  name = 'Carrousel'
 
   def __init__(self, report, images, path, selected, width, height, profile):
     if path is None:
@@ -96,7 +96,7 @@ class ImgCarrousel(Html.Html):
       img = report.ui.img(rec["image"], path=rec["path"], width=width, height=(height[0] - 60, height[1]))
       div = report.ui.layouts.div([report.ui.tags.h3(rec['title']), img], htmlCode="%s_img_%s" % (self.htmlCode, i)).css({"display": 'none', "text-align": "center"})
       div.set_attrs(name="name", value="%s_img" % self.htmlCode)
-      div.inReport = False
+      div.options.managed = False
       self.items.append(div)
     self.items[selected].css({"display": 'block'})
     self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0})
@@ -135,9 +135,9 @@ class ImgCarrousel(Html.Html):
 
   def __str__(self):
     img_cont = self._report.ui.layouts.div(self.items).css({"display": 'block', "width": "100%", "text-align": "center"})
-    img_cont.inReport = False
+    img_cont.options.managed = False
     points = self._report.ui.navigation.points(len(self.items))
-    points.inReport = False
+    points.options.managed = False
     points.click([
       self._report.js.getElementsByName("%s_img" % self.htmlCode).css({"display": 'none'}),
       self._report.js.getElementById("%s_img_' + data.position +'" % self.htmlCode).css({"display": 'block'})
@@ -148,8 +148,8 @@ class ImgCarrousel(Html.Html):
 
 
 class Icon(Html.Html):
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  name, category, callFnc = 'Icon', 'Images', 'icon'
+  requirements = ('font-awesome', )
+  name = 'Icon'
 
   def __init__(self, report, value, width, height, color, tooltip, profile):
     super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height}, profile=profile)
@@ -247,7 +247,7 @@ class Icon(Html.Html):
 
 
 class Emoji(Html.Html):
-  name, category, callFnc = 'Emoji', 'Images', 'emoji'
+  name = 'Emoji'
 
   def __init__(self, report, symbole, top, profile):
     super(Emoji, self).__init__(report, symbole, profile=profile)
@@ -283,7 +283,7 @@ class Emoji(Html.Html):
 
 class Badge(Html.Html):
   name = 'Badge'
-  __reqCss = ['bootstrap', 'font-awesome']
+  requirements = ('font-awesome', 'bootstrap')
 
   def __init__(self, report, text, label, icon, background_color, color, url, tooltip, options, profile):
     super(Badge, self).__init__(report, None, profile=profile)
@@ -297,14 +297,14 @@ class Badge(Html.Html):
     if url is not None:
       self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
           "padding": "2px", "width": "auto", "font-size": Defaults_css.font(-4)})
-      self.link.inReport = False
+      self.link.options.managed = False
     else:
       self.link = self._report.ui.text(text).css({'display': 'inline-block',
           "padding": "2px", "width": "auto", "font-size": Defaults_css.font(-4)})
     self.link.css(self.options.badge_css)
     self.link.css({"color": color, 'background-color': background_color, "border-radius": "10px",
                    'padding': '2px 2px 4px 2px', 'margin-left': '2px'})
-    self.link.inReport = False
+    self.link.options.managed = False
     self.attr['class'].add("badge") # From bootstrap
     if tooltip is not None:
       self.tooltip(tooltip)

@@ -12,7 +12,7 @@ from epyk.core.css.styles import GrpClsLayout
 
 
 class Hr(Html.Html):
-  name, category, callFnc = 'Line delimiter', 'Layouts', 'hr'
+  name = 'Line delimiter'
 
   def __init__(self, report, background_color, height, align, profile):
     super(Hr, self).__init__(report, "", profile=profile, css_attrs={"height": height,
@@ -37,56 +37,17 @@ class Hr(Html.Html):
   def __str__(self):
     return '<hr %s>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val): return True if val.strip() == '***' else None
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report=None):
-    if report is not None:
-      getattr(report, cls.callFnc)()
-    return ["report.%s()" % cls.callFnc]
-
-  @classmethod
-  def jsMarkDown(self, vals): return "***"
-
-  def to_word(self, document):
-    document.add_paragraph("_________________________________")
-
 
 class Newline(Html.Html):
-  name, category, callFnc = 'New line', 'Layouts', 'new_line'
+  name = 'New line'
 
   def __str__(self):
     return "".join(['<br />'] * self.val)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val): return True if val.strip() == '' else None
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report=None):
-    if report is not None:
-      getattr(report.ui.layouts, cls.callFnc)()
-    return ["report.ui.%s.%s()" % (cls.category.lower(), cls.callFnc)]
-
-  @classmethod
-  def jsMarkDown(self, vals): return ""
-
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document):
-    document.add_page_break()
-
 
 class Stars(Html.Html):
-  name, category, callFnc = 'Stars', 'Rich', 'stars'
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  name = 'Stars'
+  requirements = ('font-awesome', )
 
   def __init__(self, report, val, label, color, align, best, htmlCode, helper, profile):
     super(Stars, self).__init__(report, val, htmlCode=htmlCode, profile=profile)
@@ -167,8 +128,8 @@ class Stars(Html.Html):
 
 
 class Help(Html.Html):
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  name, category, callFnc = 'Info', 'Rich', 'info'
+  requirements = ('font-awesome', )
+  name = 'Info'
 
   def __init__(self, report, val, width, profile, options):
     super(Help, self).__init__(report, val, css_attrs={"width": width}, profile=profile)
@@ -198,19 +159,10 @@ class Help(Html.Html):
   def __str__(self):
     return '<i %s></i>' % self.get_attrs(pyClassNames=self.style.get_classes())
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document): pass
-
-  def to_pdf(self, document): pass
-
-  def to_xls(self, workbook, worksheet, cursor): pass
-
 
 class Loading(Html.Html):
-  name, category = 'Loading', 'Others'
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  requirements = ('font-awesome', )
+  name = 'Loading'
 
   def __init__(self, report, text, color, size, options):
     super(Loading, self).__init__(report, text)
@@ -254,7 +206,8 @@ class Loading(Html.Html):
 
 
 class HtmlJson(Html.Html):
-  __reqCss, __reqJs = ['json-formatter'], ['json-formatter']
+  name = 'Pretty Json'
+  requirements = ('json-formatter', )
 
   def __init__(self, report, data, width, height, options, profile):
     super(HtmlJson, self).__init__(report, data, profile=profile, css_attrs={"height": height, width: "width"})

@@ -5,8 +5,8 @@ from epyk.core.js import JsUtils
 
 
 class Chart(Html.Html):
-  name = 'Google'
-  __reqJs = ['google-charts']
+  name = 'Google Chart'
+  requirements = ('google-charts', )
 
   def __init__(self,  report, data, width, height, htmlCode, options, profile):
     self.height = height[0]

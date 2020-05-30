@@ -41,7 +41,7 @@ class Cell(Html.Html):
     :param htmlObj: Python HTML object
     :return: self, the cell object to allow the chaining
     """
-    htmlObj.inReport = False
+    htmlObj.options.managed = False
     self.innerPyHTML = htmlObj
     return self
 
@@ -53,7 +53,7 @@ class Cell(Html.Html):
 
 
 class Bespoke(Html.Html):
-  name, category, callFnc = 'Basic', 'Tables', 'basic'
+  name = 'Basic Table'
   # _grpCls = CssGrpClsTable.CssClassTableBespoke
 
   def __init__(self, report, recordSet, cols, rows, width, height, htmlCode, options, profile):
@@ -152,7 +152,7 @@ class Bespoke(Html.Html):
 
 
 class Excel(Html.Html):
-  name, category, callFnc = 'Excel', 'Tables', 'excel'
+  name = 'Excel'
   # _grpCls = CssGrpClsTable.CssClassTableExcel
 
   def __init__(self, report, recordSet, cols, rows, title, width, height, cellwidth, delimiter, htmlCode):

@@ -4,7 +4,7 @@ from epyk.core.js.html import JsHtml
 
 
 class HtmlGeneric(Html.Html):
-  category, name = 'Tags', 'tag'
+  name = 'tag'
 
   def __init__(self, report, tag, text, width, height, htmlCode, tooltip, options, profile):
     self.tag = tag
@@ -12,7 +12,7 @@ class HtmlGeneric(Html.Html):
     if tooltip:
       self.tooltip(tooltip)
     if options is not None and not options.get('managed', True):
-      self.inReport = False
+      self.options.managed = False
 
   def __getitem__(self, i):
     if not isinstance(self.val, list):
@@ -22,7 +22,7 @@ class HtmlGeneric(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     if not isinstance(self.val, list):
       self._vals = [] if self.val is None else [self.val]
     if htmlObj is not None:
@@ -60,7 +60,7 @@ class HtmlGeneric(Html.Html):
 
 
 class HtmlGenericLInk(HtmlGeneric):
-  category, name = 'Tags', 'tag'
+  name = 'tag'
 
   def preview(self, url):
     """
@@ -85,7 +85,7 @@ class HtmlGenericLInk(HtmlGeneric):
 
 
 class HtmlComment(Html.Html):
-  category, name = 'Tags', 'comment'
+  name = 'comment'
 
   def __str__(self):
     return '<!--%s-->' % self.val

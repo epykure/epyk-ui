@@ -64,8 +64,8 @@ def system_user_comments():
 
 
 class Comments(Html.Html):
-  name, category, callFnc = 'Comment', 'Text', 'comments'
-  __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery-scrollbar']
+  name = 'Comment'
+  requirements = ('jquery-scrollbar', )
   # _grpCls = CssGrpClsText.CssClassComment
 
   def __init__(self, report, htmlCode, recordset, title, pmts, db_service, width, height, httpCodes, readonly, profile):
@@ -77,7 +77,7 @@ class Comments(Html.Html):
     reply_table = 'system_comments_replies'
     self.privacy = 'public' if not db_service else db_service.get('privacy', 'public')
     self.code = htmlCode
-    super(Comments, self).__init__(report, recordset, width=width[0], widthUnit=width[1], code=htmlCode, profile=profile)
+    super(Comments, self).__init__(report, recordset, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
     self.css({"clear": 'both', "display": "inline-block", 'margin': '5px 0', 'padding': '0'})
     self.pmts, self._height, self.readonly = pmts, "%s%s" % (height[0], height[1]), readonly
     self.add_title(title, options={'content_table': False})
@@ -200,17 +200,10 @@ class Comments(Html.Html):
       ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'htmlId': self.htmlId, 'height': self._height,
              'inputTag': inputTag}
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document): pass
-  def to_xls(self, workbook, worksheet, cursor): pass
-  def to_ppt(self, workbook, worksheet, cursor): pass
-
 
 class Chat(Html.Html):
-  name, category, callFnc = 'Chat', 'Messaging', 'chat'
-  __reqCss, __reqJs = ['jquery-scrollbar'], ['jquery-scrollbar']
+  name = 'Chat'
+  requirements = ('jquery-scrollbar', )
   # _grpCls = CssGrpClsText.CssClassComment
 
   def __init__(self, report, htmlCode, title, pmts, dbService, width, height, httpCodes, readonly, profile, chatOptions):
@@ -230,7 +223,7 @@ class Chat(Html.Html):
       rec["time"] = str(rec["lst_mod_dt"]).split(".")[0]
       recordSet.append(rec)
     self.privacy = 'public' if not dbService else dbService.get('privacy', 'public')
-    super(Chat, self).__init__(report, recordSet, width=width[0], widthUnit=width[1], code=htmlCode, profile=profile)
+    super(Chat, self).__init__(report, recordSet, css_attrs={"width": width}, code=htmlCode, profile=profile)
     # Add internal HTML components
     self.add_title(title, options={'content_table': False})
     self._report.jsImports.add('socket.io')
@@ -300,10 +293,10 @@ class Bot(Html.Html):
     - Advice / Information
 
   """
-  name, category, callFnc = 'Bot', 'Messaging', 'bot'
+  name = 'Bot'
 
   def __init__(self, report, htmlCode, name, pmts, dbService, width, height, httpCodes, profile, botOptions):
-    super(Bot, self).__init__(report, [], width=width[0], widthUnit=width[1], code=htmlCode, profile=profile)
+    super(Bot, self).__init__(report, [], css_attrs={"width": width}, code=htmlCode, profile=profile)
     self.css({"position": 'fixed', "bottom": 0, 'margin': '10px', 'background': self._report.theme.greys[0],
               "right": 0, "display": "block", "padding": "5px", 'border': "1px solid %s" % self._report.theme.success[1],
               "z-index": 200})
@@ -343,15 +336,14 @@ class Bot(Html.Html):
 
 
 class Alert(Html.Html):
-  __reqJs, __reqCss = ['bootstrap'], ['bootstrap']
-  name, category, callFnc = 'Alert', 'Messagings', 'alert'
+  requirements = ('bootstrap', )
+  name = 'Alert'
   marginTop = 90
 
   def __init__(self, report, title, value, category, width, height, close_button=False,
                background_color=None, color='black', htmlCode=None, dataSrc=None, profile=False):
-    super(Alert, self).__init__(report, {'title': title, 'value': value, 'closure': close_button}, width=width[0],
-                                      widthUnit=width[1], height=height[0], heightUnit=height[1], code=htmlCode,
-                                      dataSrc=dataSrc, profile=profile)
+    super(Alert, self).__init__(report, {'title': title, 'value': value, 'closure': close_button},
+                                css_attrs={"width": width, 'height': height}, code=htmlCode, profile=profile)
     self.close_button = close_button
     self.attr["class"].add('alert')
     self.attr["class"].add('alert-%s' % category.lower())
@@ -379,12 +371,11 @@ class Alert(Html.Html):
 
 
 class News(Html.Html):
-  name, category, callFnc = 'News', 'Messaging', 'news'
-  __reqJs, __reqCss = ["jqueryui"], ["jqueryui"]
+  name = 'News'
+  requirements = ('jqueryui', )
 
   def __init__(self, report, title, value, label, link_script, icon, width, height, htmlCode, profile):
-    super(News, self).__init__(report, value, width=width[0], widthUnit=width[1],
-                               height=height[0], heightUnit=height[1], code=htmlCode, profile=profile)
+    super(News, self).__init__(report, value, css_attrs={"width": width, 'height': height}, code=htmlCode, profile=profile)
     self.css({"padding": '5px', "display": 'none', 'position': 'fixed', 'border': '1px solid %s' % self._report.theme.success[1],
               "background": self._report.theme.greys[0], 'bottom': '20px', 'right': '20px'})
     # Add internal HTML component to the new feed

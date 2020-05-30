@@ -23,8 +23,8 @@ def system_user_configuration():
 
 
 class ConfigTable(Html.Html):
-  name, category, callFnc = 'Config Table', 'Tables', 'config'
-  __reqCss, __reqJs = ['tabulator'], ['tabulator']
+  requirements = ('tabulator', )
+  name = 'Config Table'
 
   def __init__(self, report, htmlCode, visible, profile):
     pass

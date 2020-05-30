@@ -213,7 +213,7 @@ class Convertor(object):
     if res is not None:
       for grp in res.groups():
         i = self.__src.ui.tags.i("")
-        i.inReport = False
+        i.options.managed = False
         i.attr["class"] = [grp]
         val = val.replace("!(%s)" % grp, i.html())
     return val
@@ -232,7 +232,7 @@ class Convertor(object):
         text = results[2*i]
         url = results[2*i + 1]
         l = self.__src.ui.link(text, url)
-        l.inReport = False
+        l.options.managed = False
         val = val.replace("[%s](%s)" % (text, url), l.html())
     return val
 
@@ -249,7 +249,7 @@ class Convertor(object):
       for i, r in enumerate(res):
         if i % 2 == 1:
           b = self.__src.ui.tags.b(r)
-          b.inReport = False
+          b.options.managed = False
           tmp.append(b.html())
         else:
           tmp.append(r)
@@ -270,7 +270,7 @@ class Convertor(object):
       for i, r in enumerate(res):
         if i % 2:
           i = self.__src.ui.tags.i(r)
-          i.inReport = False
+          i.options.managed = False
           tmp.append(i.html())
         else:
           tmp.append(r)
@@ -291,7 +291,7 @@ class Convertor(object):
       for i, r in enumerate(res):
         if i % 2:
           u = self.__src.ui.tags.u(r)
-          u.inReport = False
+          u.options.managed = False
           tmp.append(u.html())
         else:
           tmp.append(r)
@@ -312,7 +312,7 @@ class Convertor(object):
       for i, r in enumerate(res):
         if i % 2:
           i = self.__src.ui.tags.delete(r)
-          i.inReport = False
+          i.options.managed = False
           tmp.append(i.html())
         else:
           tmp.append(r)
@@ -442,7 +442,7 @@ class MarkDown(object):
         if convert_line is None:
           htmlObjs.append(report.ui.texts.paragraph(block))
         else:
-          htmlObjs.append(report.htmlItems[report.content[-1]])
+          htmlObjs.append(report.components[report.content[-1]])
       else:
         block_data = lines
         for j, block in enumerate(data[i+1:]):
@@ -455,7 +455,7 @@ class MarkDown(object):
 
         for v in convert_block['convert'](block_data, report):
           block_data.append(v)
-        htmlObjs.append(report.htmlItems[report.content[-1]])
+        htmlObjs.append(report.components[report.content[-1]])
     return htmlObjs
 
   def parse(self, data, report=None, title=''):

@@ -15,7 +15,7 @@ from epyk.core.js.packages import JsSelect
 
 
 class Option(Html.Html):
-  name, category, callFnc = 'Select Option', 'Lists', None
+  name = 'Select Option'
   builder_name = False
 
   def __init__(self, report, value, text, icon, selected):
@@ -31,7 +31,7 @@ class Option(Html.Html):
 
 
 class Optgroup(Html.Html):
-  name, category, callFnc = 'Select Option', 'Lists', None
+  name = 'Select Option'
   builder_name = False
 
   def __init__(self, report, data, label):
@@ -44,12 +44,12 @@ class Optgroup(Html.Html):
 
 
 class Select(Html.Html):
-  __reqCss, __reqJs = ['select'], ['select']
-  name, category, callFnc = 'Select', 'Lists', 'select'
+  requirements = ('select', )
+  name = 'Select'
 
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
     super(Select, self).__init__(report, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
-                                 globalFilter=filter, profile=profile)
+                                 profile=profile)
     self.selected = None
     if multiple:
       self.attr['multiple'] = None
@@ -150,7 +150,7 @@ class Select(Html.Html):
     options, opt_groups = [], {}
     for val in self.val:
       opt = Option(self._report, val['value'], val['name'], None, self.selected is not None and self.selected == val['value'])
-      opt.inReport = False
+      opt.options.managed = False
       if 'group' in val:
         opt_groups.setdefault(val['group'], []).append(opt)
       else:
@@ -158,7 +158,7 @@ class Select(Html.Html):
     data = options
     for k in sorted(opt_groups):
       opt_rp = Optgroup(self._report, opt_groups[k], k)
-      opt_rp.inReport = False
+      opt_rp.options.managed = False
       data.append(opt_rp.html())
     self._report._props.setdefault('js', {}).setdefault("builders", []).append("%s.selectpicker(%s).selectpicker('refresh')" % (JsQuery.decorate_var(self.dom.varId, convert_var=False), json.dumps(self._jsStyles)))
     if self.attr.get("data-width") is not None:
@@ -167,31 +167,9 @@ class Select(Html.Html):
     data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
     return "<select %s>%s</select>" % (data_cls, "".join(data))
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_xls(self, workbook, worksheet, cursor):
-    if self.htmlId in self._report.http:
-      cell_title = self._jsStyles["title"] if self._jsStyles.get("title") is not None else 'Input'
-      cell_format = workbook.add_format({'bold': True})
-      worksheet.write(cursor['row'], 0, cell_title, cell_format)
-      cursor['row'] += 1
-      worksheet.write(cursor['row'], 0, self._report.http[self.htmlId])
-      cursor['row'] += 2
-
-  def to_word(self, document):
-    p = document.add_paragraph()
-    p.add_run("Selected: ")
-    selected = ""
-    for rec in self.vals:
-      if rec.get('selected', False):
-        selected = rec['value']
-    runner = p.add_run(selected)
-    runner.bold = True
-
 
 class Lookup(Select):
-  __reqCss, __reqJs = ['select'], ['select']
+  requirements = ('select', )
 
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
     super(Lookup, self).__init__(report, records, htmlCode, width, height, filter, profile, multiple, options)

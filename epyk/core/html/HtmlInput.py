@@ -20,18 +20,18 @@ from epyk.core.css.styles import GrpClsInput
 
 
 class Output(Html.Html):
-  name, category, callFnc = 'Output', 'Inputs', '_output'
+  name = 'Output'
 
   def __str__(self):
     return '<output %(strAttr)s>%(val)s</output>' % {'strAttr': self.get_attrs(pyClassNames=self.pyStyle), 'val': self.val}
 
 
 class Input(Html.Html):
-  name, category, callFnc = 'Input', 'Inputs', 'input'
+  name = 'Input'
 
   def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(Input, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'},
-                                globalFilter=filter, profile=profile, options=options)
+                                profile=profile, options=options)
     value = text['value'] if isinstance(text, dict) else text
     self.set_attrs(attrs={"placeholder": placeholder, "type": "text", "value": value, "spellcheck": False})
     self.set_attrs(attrs=attrs)
@@ -169,7 +169,7 @@ class Input(Html.Html):
 
 
 class InputRadio(Input):
-  name, category, callFnc = 'Input', 'Inputs', 'input'
+  name = 'Input'
 
   def __init__(self, report, flag, group_name, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputRadio, self).__init__(report, "", placeholder, width, height, htmlCode, filter, options, attrs, profile)
@@ -181,8 +181,8 @@ class InputRadio(Input):
 
 
 class AutoComplete(Input):
-  name, callFnc = 'Input Time', 'input'
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
+  name = 'Input Time'
+  requirements = ('jqueryui', )
 
   def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     if text is None:
@@ -231,8 +231,8 @@ class AutoComplete(Input):
 
 
 class InputTime(Input):
-  name, callFnc = 'Input Time', 'input'
-  __reqCss, __reqJs = ['timepicker'], ['timepicker']
+  name = 'Input Time'
+  requirements = ('timepicker', )
 
   def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     if text is None:
@@ -337,8 +337,8 @@ class InputTime(Input):
 
 
 class InputDate(Input):
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
-  name, callFnc = 'Input Time', 'input'
+  requirements = ('jqueryui', )
+  name = 'Input Time'
 
   def __init__(self, report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile)
@@ -452,7 +452,7 @@ class InputDate(Input):
 
 
 class InputInteger(Input):
-  name, callFnc = 'Input Number', 'input'
+  name = 'Input Number'
 
   def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputInteger, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
@@ -478,21 +478,21 @@ class InputInteger(Input):
 
 
 class InputRange(Input):
-  name, callFnc = 'Input Range', 'input'
+  name = 'Input Range'
 
   def __init__(self, report, text, min, max, step, placeholder, width, height, htmlCode, filter, options, attrs, profile):
     super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
     self.__options = OptInputs.OptionsInputRange(self, options)
     #
     self.input = report.ui.inputs.input(text, width=(None, "px"), placeholder=placeholder).css({"vertical-align": 'middle'})
-    self.input.inReport = False
+    self.input.options.managed = False
     self.append_child(self.input)
     #
     self.input.set_attrs(attrs={"type": "range", "min": min, "max": max, "step": step})
     if self.options.output:
       self.output = self._report.ui.inputs._output(text).css({
         "width": '15px', "text-align": 'center', "margin-left": '2px', 'color': self._report.theme.success[1]})
-      self.output.inReport = False
+      self.output.options.managed = False
       self.append_child(self.output)
       self.input.set_attrs(attrs={"oninput": "%s.value=this.value" % self.output.htmlId})
     self.css({"display": 'inline-block', "vertical-align": 'middle', "line-height": '%spx' % Defaults.LINE_HEIGHT})
@@ -526,6 +526,8 @@ class InputRange(Input):
 
 
 class Field(Html.Html):
+  name = 'Field'
+
   def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, profile):
     super(Field, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     # Add the component predefined elements
@@ -561,6 +563,7 @@ class Field(Html.Html):
 
 
 class FieldInput(Field):
+  name = 'Field Input'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.input(value, width=(None, "%"), placeholder=placeholder, options=options)
@@ -568,6 +571,7 @@ class FieldInput(Field):
 
 
 class FieldAutocomplete(Field):
+  name = 'Field Autocomplete'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.autocomplete(value, width=(None, "%"), placeholder=placeholder, options=options)
@@ -697,6 +701,7 @@ class FieldAutocomplete(Field):
 
 
 class FieldRange(Field):
+  name = 'Field Range'
 
   def __init__(self, report, value, min, max, step, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.d_range(value, min=min, max=max, step=step, width=(None, "%"), placeholder=placeholder, options=options)
@@ -704,6 +709,7 @@ class FieldRange(Field):
 
 
 class FieldCheckBox(Field):
+  name = 'Field Checkbox'
 
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.checkbox(value, width=(None, "%"), options=options)
@@ -712,6 +718,7 @@ class FieldCheckBox(Field):
 
 
 class FieldInteger(Field):
+  name = 'Field Integer'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.d_int(value, width=(None, "%"), placeholder=placeholder, options=options)
@@ -719,6 +726,7 @@ class FieldInteger(Field):
 
 
 class FieldPassword(Field):
+  name = 'Field Password'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.password(value, width=(None, "%"), placeholder=placeholder, options=options)
@@ -726,6 +734,7 @@ class FieldPassword(Field):
 
 
 class FieldTextArea(Field):
+  name = 'Field Textarea'
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.textarea(value, width=(100, "%"), placeholder=placeholder, options=options)
@@ -733,6 +742,7 @@ class FieldTextArea(Field):
 
 
 class FieldSelect(Field):
+  name = 'Field Select'
 
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.select(value, width=(100, "%"), options=options)
@@ -740,11 +750,10 @@ class FieldSelect(Field):
 
 
 class Checkbox(Html.Html):
-  name, category, callFnc = 'Checkbox', 'Inputs', 'checkbox'
+  name = 'Checkbox'
 
   def __init__(self, report, flag, label, group_name, width, height, htmlCode, filter, options, attrs, profile):
-    super(Checkbox, self).__init__(report, {"value": flag}, htmlCode=htmlCode,
-                                   css_attrs={"width": width, "height": height}, globalFilter=filter,
+    super(Checkbox, self).__init__(report, {"value": flag}, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
                                    profile=profile, options=options)
     self.set_attrs(attrs={"type": "checkbox"})
     self.set_attrs(attrs=attrs)
@@ -780,14 +789,14 @@ class Checkbox(Html.Html):
 
 
 class Radio(Html.Html):
-  name, category, callFnc = 'Radio', 'Inputs', 'radio'
+  name = 'Radio'
 
   def __init__(self, report, flag, label, group_name, icon, width, height, htmlCode, helper, options, profile):
     super(Radio, self).__init__(report, {"value": flag, 'text': label}, htmlCode=htmlCode,
                                          css_attrs={"width": width, 'height': height}, profile=profile)
     self.add_input("", position="before", css={"width": 'none', "vertical-align": 'middle'})
     self.add_label(label, position="after", css={"display": 'inline-block', "width": "None", 'float': 'none'})
-    self.input.inReport = False
+    self.input.options.managed = False
     self.input.set_attrs(name="data-content", value=label)
     if flag:
       self.input.set_attrs({"checked": json.dumps(flag)})
@@ -843,7 +852,7 @@ class Radio(Html.Html):
 
 
 class TextArea(Html.Html):
-  name, category, callFnc = 'Text Area', 'Inputs', 'textArea'
+  name = 'Text Area'
 
   def __init__(self, report, text, width, rows, placeholder, background_color, htmlCode, options, profile):
     super(TextArea, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, 'box-sizing': 'border-box'}, profile=profile)
@@ -906,7 +915,7 @@ class TextArea(Html.Html):
 
 
 class Search(Html.Html):
-  name, category, callFnc = 'Search', 'Inputs', 'search'
+  name = 'Search'
 
   def __init__(self, report, text, placeholder, color, height, htmlCode, tooltip, extensible, profile):
     super(Search, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"height": height}, profile=profile)

@@ -14,22 +14,22 @@ from epyk.core.css.styles import GrpClsContainer
 
 
 class Panel(Html.Html):
-  name, category, callFnc = 'Panel', 'Layouts', 'panel'
+  name = 'Panel'
 
   def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
     if isinstance(htmlObj, list) and htmlObj:
       for obj in htmlObj:
         if hasattr(obj, 'inReport'):
-          obj.inReport = False
+          obj.options.managed = False
     elif htmlObj is not None and hasattr(htmlObj, 'inReport'):
-      htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+      htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     component = []
     if title is not None:
       self.title = report.ui.title(title)
-      self.title.inReport = False
+      self.title.options.managed = False
       component.append(self.title)
     container = report.ui.div(htmlObj)
-    container.inReport = False
+    container.options.managed = False
     component.append(container)
     self.add_helper(helper)
     super(Panel, self).__init__(report, component, code=htmlCode, profile=profile,
@@ -50,7 +50,7 @@ class Panel(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     return self
 
@@ -78,8 +78,8 @@ class Panel(Html.Html):
 
 
 class PanelSplit(Html.Html):
-  __reqJs, __reqCss = ['jqueryui'], ['jqueryui']
-  name, category, callFnc = 'Panel Split', 'Layouts', 'panelsplit'
+  requirements = ('jqueryui', )
+  name = 'Panel Split'
 
   def __init__(self, report, width, height, left_width, left_obj, right_obj, resizable, helper, profile):
     super(PanelSplit, self).__init__(report, None, css_attrs={"width": width, "height": height, 'white-space': 'nowrap'}, profile=profile)
@@ -104,7 +104,7 @@ class PanelSplit(Html.Html):
     ----------
     :param html_obj:
     """
-    html_obj.inReport = False
+    html_obj.options.managed = False
     self.html_left = html_obj
     return self
 
@@ -118,7 +118,7 @@ class PanelSplit(Html.Html):
     ----------
     :param html_obj:
     """
-    html_obj.inReport = False
+    html_obj.options.managed = False
     self.html_right = html_obj
     return self
 
@@ -137,8 +137,8 @@ class PanelSplit(Html.Html):
 
 
 class PanelSlide(Panel):
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
-  name, category, callFnc = 'Slide Panel', 'Panels', 'slide'
+  requirements = ('font-awesome', )
+  name = 'Slide Panel'
 
   def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
     super(PanelSlide, self).__init__(report, htmlObj, None, color, width, height, htmlCode, helper, options, profile)
@@ -147,7 +147,7 @@ class PanelSlide(Panel):
                                               'line-height': "%spx" % Defaults.LINE_HEIGHT, 'font-size': "%spx" % Defaults.BIG_ICONS})
     self.text = self._report.ui.title(title).css({"display": 'inline-block', 'margin': 0})
     self.title = self._report.ui.div([self.icon, self.text])
-    self.title.inReport = False
+    self.title.options.managed = False
     self.title.css({"cursor": 'pointer', "padding": "0 2px 0 0"})
     self._vals, self.__clicks = [self.title] + self._vals, []
     self.__options = OptPanel.OptionPanelSliding(report, options)
@@ -202,7 +202,7 @@ class PanelSlide(Panel):
 
 
 class Div(Html.Html):
-  name, category, callFnc = 'Simple Container', 'Layouts', 'div'
+  name = 'Simple Container'
 
   def __init__(self, report, htmlObj, label, color, width, icon, height, editable, align, padding, htmlCode, tag,
                helper, options, profile):
@@ -213,15 +213,15 @@ class Div(Html.Html):
           newHtmlObj.append(report.ui.div(obj, label, color, width, icon, height, editable, align, padding, htmlCode, tag, helper, profile))
         else:
           newHtmlObj.append(obj)
-        if hasattr(newHtmlObj[-1], 'inReport'):
+        if hasattr(newHtmlObj[-1], 'options'):
           if options.get('inline'):
             newHtmlObj[-1].style.css.display = 'inline-block'
-          newHtmlObj[-1].inReport = False
+          newHtmlObj[-1].options.managed = False
           #if newHtmlObj[-1].css("display") != 'None':
           #  newHtmlObj[-1].css({"display": 'inline-block'})
       htmlObj = newHtmlObj
-    elif htmlObj is not None and hasattr(htmlObj, 'inReport'):
-      htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    elif htmlObj is not None and hasattr(htmlObj, 'options'):
+      htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     super(Div, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"color": color, "width": width, "height": height},
                               profile=profile)
     self.tag = tag
@@ -258,7 +258,7 @@ class Div(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     if self.options.inline:
       htmlObj.style.css.display = 'inline-block'
     if not isinstance(self.val, list):
@@ -317,21 +317,9 @@ class Div(Html.Html):
 
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document):
-    if isinstance(self.vals, list):
-      for val in self.vals:
-        if hasattr(val, 'inReport'):
-          val.to_word(document)
-    else:
-      if hasattr(self.vals, 'inReport'):
-        self.vals.to_word(document)
-
 
 class Td(Html.Html):
-  name, category, callFnc = 'Column', 'Layouts', 'col'
+  name = 'Cell'
 
   def __init__(self, report, htmlObjs, header, position, width, height, align, options, profile):
     self.position, self.rows_css, self.row_css_dflt, self.header = position, {}, {}, header
@@ -345,7 +333,7 @@ class Td(Html.Html):
   def __add__(self, htmlObj):
     """ Add items to a container """
     if hasattr(htmlObj, 'inReport'):
-      htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+      htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     return self
 
@@ -387,7 +375,7 @@ class Td(Html.Html):
     return self.val[i]
 
   def __str__(self):
-    content = [htmlObj.html() if hasattr(htmlObj, 'inReport') else str(htmlObj) for htmlObj in self.val]
+    content = [htmlObj.html() if hasattr(htmlObj, 'options') else str(htmlObj) for htmlObj in self.val]
     if self.header:
       return '<th %s>%s</th>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
 
@@ -395,7 +383,7 @@ class Td(Html.Html):
 
 
 class Tr(Html.Html):
-  name, category, callFnc = 'Column', 'Layouts', 'col'
+  name = 'Column'
 
   def __init__(self, report, htmlObjs, header, position, width, height, align, options, profile):
     self.position, self.header = position, header
@@ -451,6 +439,7 @@ class Tr(Html.Html):
 
 
 class Caption(Html.Html):
+  name = 'Table Caption'
 
   def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, options, profile):
     super(Caption, self).__init__(report, text, css_attrs={"width": width, "height": height, "color": color, 'text-align': align},
@@ -476,6 +465,7 @@ class Caption(Html.Html):
 
 
 class TSection(Html.Html):
+  name = 'Table Section'
 
   def __init__(self, report, type, rows=None, options=None, profile=None):
     super(TSection, self).__init__(report, [])
@@ -527,7 +517,7 @@ class TSection(Html.Html):
 
 
 class Table(Html.Html):
-  name, category, callFnc = 'Table', 'Layouts', 'table'
+  name = 'Table'
 
   def __init__(self, report, rows, width, height, helper, options, profile):
     super(Table, self).__init__(report, [], css_attrs={"width": width, "height": height, 'table-layout': 'auto',
@@ -693,7 +683,7 @@ class Table(Html.Html):
 
 
 class Col(Html.Html):
-  name, category, callFnc = 'Column', 'Layouts', 'col'
+  name = 'Column'
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
     self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
@@ -732,9 +722,9 @@ class Col(Html.Html):
 
     :return:
     """
-    if not hasattr(htmlObj, 'inReport'):
+    if not hasattr(htmlObj, 'options'):
       htmlObj = self._report.ui.div(htmlObj)
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     return self
 
@@ -777,26 +767,10 @@ class Col(Html.Html):
     content = [htmlObj.html() for htmlObj in self.val]
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document):
-    for i, htmlObj in enumerate(self.vals):
-      htmlObj.to_word(document)
-
-  def to_xls(self, workbook, worksheet, cursor):
-    for i, htmlObj in enumerate(self.vals):
-      try:
-        htmlObj.to_xls(workbook, worksheet, cursor)
-      except Exception as err:
-        cell_format = workbook.add_format({'bold': True, 'font_color': 'red'})
-        worksheet.write(cursor['row'], 0, str(err), cell_format)
-        cursor['row'] += 2
-
 
 class Row(Html.Html):
-  name, category, callFnc = 'Column', 'Layouts', 'col'
-  __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
+  name = 'Column'
+  requirements = ('bootstrap', )
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
     self.position = position
@@ -840,7 +814,7 @@ class Row(Html.Html):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
       htmlObj = self._report.ui.layouts.col(htmlObj)
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     return self
 
@@ -866,8 +840,8 @@ class Row(Html.Html):
 
 
 class Grid(Html.Html):
-  name, category, callFnc = 'Grid', 'Layouts', 'grid'
-  __reqCss, __reqJs = ['bootstrap'], ['bootstrap']
+  name = 'Grid'
+  requirements = ('bootstrap', )
 
   def __init__(self, report, rows, width, height, align, helper, options, profile):
     super(Grid, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
@@ -904,7 +878,7 @@ class Grid(Html.Html):
         row += htmlObj
         if dim is not None:
           row[-1].attr["class"].add("col-%s" % dim)
-    row.inReport = False
+    row.options.managed = False
     self.val.append(row)
     #self.colsAlign.append("left")
     return self
@@ -961,57 +935,16 @@ class Grid(Html.Html):
       rows.append(htmlObj.html())
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  def to_word(self, document):
-    for i, htmlObj in enumerate(self.vals):
-      try:
-        htmlObj.to_word(document)
-      except Exception as err:
-        from docx.shared import RGBColor
-
-        errotTitle = document.add_heading().add_run("Error")
-        errotTitle.font.color.rgb = RGBColor(255, 0, 0)
-        errotTitle.font.italic = True
-        errorParagraph = document.add_paragraph().add_run((str(err)))
-        errorParagraph.font.color.rgb = RGBColor(255, 0, 0)
-        errorParagraph.font.italic = True
-
-  def to_xls(self, workbook, worksheet, cursor):
-    for i, htmlObj in enumerate(self.vals):
-      try:
-        htmlObj.to_xls(workbook, worksheet, cursor)
-      except Exception as err:
-        cell_format = workbook.add_format({'bold': True, 'font_color': 'red'})
-        worksheet.write(cursor['row'], 0, str(err), cell_format)
-        cursor['row'] += 2
-
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val): return True if val == "[" else None
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report=None):
-    pass
-
-  @classmethod
-  def jsMarkDown(self, vals):
-    return '''
-      '''
-
 
 class Tabs(Html.Html):
-  name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
+  name = 'Tabs'
 
   def __init__(self, report, color, width, height, htmlCode, helper, options, profile):
     super(Tabs, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     self.__panels, self.__panel_objs, self.__selected = [], {}, None
     self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
     self.tabs_container = self._report.ui.div([])
-    self.tabs_container.inReport = False
+    self.tabs_container.options.managed = False
     self.add_helper(helper)
     self.__options = OptPanel.OptionPanelTabs(report, options)
 
@@ -1128,7 +1061,7 @@ class Tabs(Html.Html):
     :param css_tab:
     """
     div.css({"display": 'none'})
-    div.inReport = False
+    div.options.managed = False
     div.set_attrs(name="name", value=self.panels_name)
     self.__panels.append(name)
     if icon is not None:
@@ -1143,7 +1076,7 @@ class Tabs(Html.Html):
     tab.set_attrs(name="name", value=self.tabs_name)
     tab.set_attrs(name="data-index", value=len(self.__panels) - 1)
     tab_container = self._report.ui.div(tab, width=("100", "px"))
-    tab_container.inReport = False
+    tab_container.options.managed = False
     tab_container.css({'display': 'inline-block'})
     css_cls_name = None
     tab.click([
@@ -1156,7 +1089,7 @@ class Tabs(Html.Html):
         self._report.js.data.all.element.hide(),
         tab_container.dom.toggleClass(css_cls_name, propagate=True) if css_cls_name is not None else "",
         div.dom.show()])])
-    tab.inReport = False
+    tab.options.managed = False
     self.__panel_objs[name] = {"tab": tab_container, "content": div}
     if selected:
       self.__selected = name
@@ -1175,7 +1108,7 @@ class Tabs(Html.Html):
 
 
 class TabsArrowsDown(Tabs):
-  name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
+  name = 'Tabs'
 
   def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
     super(TabsArrowsDown, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked)
@@ -1184,7 +1117,7 @@ class TabsArrowsDown(Tabs):
 
 
 class TabsArrowsUp(Tabs):
-  name, category, callFnc = 'Tabs', 'Layouts', 'tabs'
+  name = 'Tabs'
 
   def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None):
     super(TabsArrowsUp, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked)
@@ -1193,7 +1126,7 @@ class TabsArrowsUp(Tabs):
 
 
 class IFrame(Html.Html):
-  name, category, callFnc = 'IFrame', 'Container', 'iframe'
+  name = 'IFrame'
 
   def __init__(self, report, url, width, height, helper, profile):
     super(IFrame, self).__init__(report, url, css_attrs={"width": width, "height": height}, profile=profile)
@@ -1209,8 +1142,8 @@ class IFrame(Html.Html):
 
 
 class Dialog(Html.Html):
-  name, category, callFnc = 'DialogMenu', 'Layouts', 'dialogs'
-  __reqCss, __reqJs = ['jqueryui'], ['jqueryui']
+  name = 'DialogMenu'
+  requirements = ('jqueryui', )
 
   def __init__(self, report, recordSet, width, height, helper, profile):
     super(Dialog, self).__init__(report, recordSet, css_attrs={"width": width, 'height': helper}, profile=profile)
@@ -1247,7 +1180,7 @@ class Dialog(Html.Html):
 
 class IconsMenu(Html.Html):
   name = 'Icons Menu'
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  requirements = ('font-awesome', )
 
   def __init__(self, icon_names, report, width, height, htmlCode, helper, profile):
     super(IconsMenu, self).__init__(report, None, css_attrs={"width": width, "height": height}, code=htmlCode,
@@ -1282,7 +1215,6 @@ class IconsMenu(Html.Html):
         self.prepend_child(self.icon)
       else:
         self.append_child(self.icon)
-      #elf.icon.inReport = False
       if css is not None:
         self.icon.css(css)
     return self
@@ -1299,7 +1231,7 @@ class IconsMenu(Html.Html):
 
 
 class Form(Html.Html):
-  name, category, callFnc = 'Generic Form', 'Forms', 'form'
+  name = 'Generic Form'
 
   def __init__(self, report, htmlObjs, helper):
     super(Form, self).__init__(report, [])
@@ -1320,7 +1252,7 @@ class Form(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set too late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set too late
     htmlObj.css({'text-align': 'left'})
     self.val.append(htmlObj)
     return self
@@ -1330,7 +1262,7 @@ class Form(Html.Html):
       self.attr.update({"action": action, "method": method})
 
     self.__submit = self._report.ui.button(text).set_attrs({"type": 'submit'})
-    self.__submit.inReport = False
+    self.__submit.options.managed = False
     if self._has_container:
       self[0] + self.__submit
     return self
@@ -1344,7 +1276,7 @@ class Form(Html.Html):
 
 
 class Modal(Html.Html):
-  name, category, callFnc = 'Modal Popup',  'Container', 'modal'
+  name = 'Modal Popup'
 
   def __init__(self, report, htmlObjs, header, footer, submit, helper):
     """
@@ -1360,13 +1292,13 @@ class Modal(Html.Html):
     self.doSubmit = submit
     if self.doSubmit:
       self.submit = report.ui.buttons.important("Submit").set_attrs({"type": 'submit'})
-      self.submit.inReport = False
+      self.submit.options.managed = False
     self.closeBtn = report.ui.texts.span('&times', width='auto')
     self.closeBtn.css(None, reset=True)
     self.closeBtn.style.add_classes.div.span_close()
     self.closeBtn.click(report.js.getElementById(self.htmlId).css({'display': "none"}))
     self.__header = report.ui.row([])
-    self.__header.inReport = False
+    self.__header.options.managed = False
     if header:
       for obj in header:
         self.__header + obj
@@ -1375,12 +1307,12 @@ class Modal(Html.Html):
       for obj in footer:
         self.__footer + obj
     self.__footer = report.ui.row([])
-    self.__footer.inReport = False
+    self.__footer.options.managed = False
     self.__body = report.ui.col([]).css({'position': 'relative',  'overflow-y': 'scroll'})
-    self.__body.inReport = False
+    self.__body.options.managed = False
     self.col = report.ui.col([self.__header, self.__body, self.__footer]).css({'width': 'auto'}, reset=True)
     self.col.style.add_classes.div.modal_content()
-    self.col.inReport = False
+    self.col.options.managed = False
     self.val.append(self.col)
     self.__outOfScopeClose = True
     for htmlObj in htmlObjs:
@@ -1436,7 +1368,7 @@ class Modal(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set too late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set too late
     self.__body += htmlObj
     return self
 
@@ -1451,8 +1383,8 @@ class Modal(Html.Html):
 
 
 class Indices(Html.Html):
-  name, category, callFnc = 'Index', 'Panels', 'index'
-  __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
+  name = 'Index'
+  requirements = ('font-awesome', )
 
   def __init__(self, report, count, width, height, htmlCode, options, profile):
     super(Indices, self).__init__(report, count, css_attrs={"width": width, "height": height}, profile=profile)
@@ -1465,17 +1397,17 @@ class Indices(Html.Html):
       div.css({"display": 'inline-block', "padding": "2px", "text-align": "center"})
       div.css(self.options.div_css)
       div.style.add_classes.div.background_hover()
-      div.inReport = False
+      div.options.managed = False
       self.items.append(div)
     #
     self.first = self._report.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
-    self.first.inReport = False
+    self.first.options.managed = False
     self.prev = self._report.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
-    self.prev.inReport = False
+    self.prev.options.managed = False
     self.next = self._report.ui.icon("fas fa-chevron-right", width=(20, 'px')).css({"display": 'inline-block'})
-    self.next.inReport = False
+    self.next.options.managed = False
     self.last = self._report.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
-    self.last.inReport = False
+    self.last.options.managed = False
 
   @property
   def options(self):
@@ -1509,7 +1441,7 @@ class Indices(Html.Html):
 
 
 class Points(Html.Html):
-  name, category, callFnc = 'Index', 'Panels', 'index'
+  name = 'Index'
 
   def __init__(self, report, count, width, height, htmlCode, options, profile):
     super(Points, self).__init__(report, count, css_attrs={"width": width, "height": height}, profile=profile)
@@ -1523,7 +1455,7 @@ class Points(Html.Html):
       div.css({"border": "1px solid %s" % self._report.theme.greys[5], "border-radius": "10px", "width": "15px", "height": "15px"})
       div.css(self.options.div_css)
       div.style.add_classes.div.background_hover()
-      div.inReport = False
+      div.options.managed = False
       self.items.append(div)
     self[self.options.selected].css({"background-color": self.options.background_color})
 
@@ -1604,6 +1536,7 @@ class Points(Html.Html):
 
 
 class Header(Html.Html):
+  name = 'Header'
 
   def __init__(self, report, htmlObj, width, height, htmlCode, helper, options, profile):
     super(Header, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
@@ -1623,7 +1556,7 @@ class Header(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     if self.options.inline:
       htmlObj.style.css.display = 'inline-block'
     self.val.append(htmlObj)
@@ -1638,6 +1571,7 @@ class Header(Html.Html):
 
 
 class Section(Html.Html):
+  name = 'Section'
 
   def __init__(self, report, htmlObj, width, height, htmlCode, helper, options, profile):
     super(Section, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
@@ -1657,7 +1591,7 @@ class Section(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    htmlObj.inReport = False # Has to be defined here otherwise it is set to late
+    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     if self.options.inline:
       htmlObj.style.css.display = 'inline-block'
     self.val.append(htmlObj)

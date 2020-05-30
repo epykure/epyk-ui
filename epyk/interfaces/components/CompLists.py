@@ -16,28 +16,6 @@ class Lists(object):
   def __init__(self, context):
     self.context = context
 
-  def _filter(self, recordSet, column, options=None):
-    """
-    Description:
-    ------------
-
-
-
-    Attributes:
-    ----------
-    :param recordSet:
-    :param column:
-    :param options: A dictionary with specific filtering options e.g {'allSelected': True, 'operation': 'in'}
-    """
-    dataId = id(recordSet)
-    dataCode = "df_code_%s" % dataId
-    globalFilter = {'jsId': dataCode, 'colName': column}
-    globalFilter.update({options})
-    if not dataCode in self.context.rptObj.jsSources:
-      self.context.rptObj.jsSources[dataCode] = {'dataId': dataId, 'containers': [], 'data': recordSet}
-      self.context.rptObj.jsSources[dataCode]['containers'].append(self)
-    return globalFilter
-
   def _recordSet(self, recordSet, column):
     """
     Description:
