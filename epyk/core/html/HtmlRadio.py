@@ -12,22 +12,15 @@ class Radio(Html.Html):
 
   def __init__(self, report, vals, htmlCode, label, width, height, radioVisible, event,
                withRemoveButton, align, filters, tooltip, radioType, helper, profile):
-    items = []
+    super(Radio, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     for v in vals:
       r = report.ui.inputs.radio(v.get('checked', False), v['value'])
-      r.options.managed = False
-      items.append(r)
-    super(Radio, self).__init__(report, items, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    for v in self.val:
-      v.set_attrs(name="name", value="radio_%s" % self.htmlId)
-
-  def __getitem__(self, i):
-    return self._vals[i]
+      r.set_attrs(name="name", value="radio_%s" % self.htmlId)
+      self.__add__(r)
 
   def __add__(self, val):
     r = self._report.ui.inputs.radio(False, val, group_name="radio_%s" % self.htmlId)
-    r.options.managed = False
-    self._vals.append(r)
+    super(Radio, self).__add__(r)
     return self
 
   def set_disable(self, text):

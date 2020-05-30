@@ -1,7 +1,6 @@
 
 import re
 import os
-import collections
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptText
@@ -55,12 +54,6 @@ class Label(Html.Html):
     :rtype: OptText.OptionsText
     """
     return self.__options
-
-  def __add__(self, htmlObj):
-    """ Add items to a container """
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    self.val.append(htmlObj)
-    return self
 
   def click(self, jsFncs, profile=False):
     """
@@ -800,12 +793,6 @@ class Fieldset(Html.Html):
     :rtype: OptText.OptionsText
     """
     return self.__options
-
-  def __add__(self, htmlObj):
-    """ Add items to a container """
-    htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    self.components[id(htmlObj)] = htmlObj
-    return self
 
   def __getitem__(self, id):
     if isinstance(id, int) and id not in self.components:

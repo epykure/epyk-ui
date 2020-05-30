@@ -385,17 +385,6 @@ class ContentsTable(Html.Html):
     self.title[0].style.css.font_weight = "bold"
     self.title.options.managed = False
 
-  def __getitem__(self, i):
-    """
-    Description:
-    ------------
-    Return the internal column in the row for the given index
-
-    :param i: the column index
-    :rtype: Col
-    """
-    return self.val[i]
-
   @property
   def style(self):
     """

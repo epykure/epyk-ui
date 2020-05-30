@@ -555,22 +555,8 @@ class OptionsBar(Html.Html):
     """ Add items to a container """
     icon = self._report.ui.icon(icon)
     icon.style.css.margin = "5px"
-    icon.options.managed = False
-    self.val.append(icon)
+    super(OptionsBar, self).__add__(icon)
     return self
-
-  def __getitem__(self, i):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param i: Integer. The internal row based on the index
-
-    :rtype: Row
-    """
-    return self.val[i]
 
   def draggable(self, options=None):
     self.css({'border-radius': '5px', "border": "1px dotted %s" % self._report.theme.success[1]})
