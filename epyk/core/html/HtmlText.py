@@ -794,6 +794,12 @@ class Fieldset(Html.Html):
     """
     return self.__options
 
+  def __add__(self, htmlObj):
+    """ Add items to a container """
+    htmlObj.options.managed = False  # Has to be defined here otherwise it is set to late
+    self.components[htmlObj.htmlId] = htmlObj
+    return self
+
   def __getitem__(self, id):
     if isinstance(id, int) and id not in self.components:
       return list(self.components.items())[id][1]
