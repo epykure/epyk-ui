@@ -783,7 +783,6 @@ class Fieldset(Html.Html):
     super(Fieldset, self).__init__(report, legend, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.css({'padding': '5px', 'border': '1px groove %s' % self._report.theme.greys[3], 'display': 'block', 'margin': '5px 0'})
-    self.components = collections.OrderedDict()
     self.__options = OptText.OptionsText(self, options)
 
   @property

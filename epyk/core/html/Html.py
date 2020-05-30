@@ -174,6 +174,19 @@ class Html(object):
     self.jsVal = "%s_data" % self.htmlId # to be reviewed
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
 
+  def __add__(self, component):
+    """ Add items to a container """
+    self.components[component.htmlId] = component
+    component.options.managed = False
+    self.val.append(component)
+    return self
+
+  def __getitem__(self, i):
+    if not isinstance(i, int) and i in self.components:
+      return list(self.components.items())[i][1]
+
+    return self.val[i]
+
   @property
   def style(self):
     if self._styleObj is None:

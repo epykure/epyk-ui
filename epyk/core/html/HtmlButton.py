@@ -33,16 +33,6 @@ class Button(Html.Html):
     self.tooltip(tooltip)
     self.set_attrs(name="data-count", value=0)
 
-  def __add__(self, component):
-    """ Add items to a container """
-    self.components[component.id] = component
-    component.options.managed = False
-    self.val.append(component)
-    return self
-
-  def __getitem__(self, i):
-    return self.val[i]
-
   @property
   def options(self):
     """
@@ -500,31 +490,14 @@ class Buttons(Html.Html):
   name = 'Buttons'
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
-    super(Buttons, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height, 'color': color},
-                                  profile=profile)
-    self.row = []
+    super(Buttons, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     for b in data:
       bt = report.ui.button(b, options={"group": "group_%s" % self.htmlId}).css({"margin-right": '5px'})
       bt.css(options.get("button_css", {}))
-      bt.options.managed = False
-      self.row.append(bt)
-
-  def __getitem__(self, i):
-    """
-    Description:
-    ------------
-    Get a button in this component
-
-    Attributes:
-    ----------
-    :param i: Integer. The button index
-
-    :rtype: Button
-    """
-    return self.row[i]
+      self.__add__(bt)
 
   def __str__(self):
-    str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.row])
+    str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)
 
 
