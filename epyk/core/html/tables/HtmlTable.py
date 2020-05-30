@@ -61,8 +61,7 @@ class Bespoke(Html.Html):
     self._fields = rows + cols
     for rec in recordSet:
       data.append([rec[c] for c in self._fields])
-    super(Bespoke, self).__init__(report, data, code=htmlCode, width=width[0], widthUnit=width[1], height=height[0],
-                                  heightUnit=height[1], profile=profile)
+    super(Bespoke, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.items = None
     self.css({"text-align": 'center', 'border-collapse': 'collapse'})
     self._style = {"rows": {"padding": '5px 0'}, "header": {"padding": '5px 0'}}
@@ -133,7 +132,7 @@ class Bespoke(Html.Html):
     Example
     simple_table.row_add({"column": "value"})
 
-    :param data: The row to be added to the table
+    :param row: The row to be added to the table
     :param missing: The data to put when a cell is missing
 
     :return: The python table

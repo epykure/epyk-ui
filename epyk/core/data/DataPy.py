@@ -560,3 +560,22 @@ class Google(object):
     is_data["series"] = y_columns
     is_data["x"] = x_axis
     return is_data
+
+  @staticmethod
+  def table(data, rows, cols):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param rows:
+    :param cols:
+    """
+    is_data = {"rows": rows, 'datasets': [], 'cols': cols, 'python': True}
+
+    for rec in data:
+      is_data['datasets'].append([rec.get(c, '') for c in rows + cols])
+
+    return is_data

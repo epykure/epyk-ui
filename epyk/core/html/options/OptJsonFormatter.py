@@ -33,12 +33,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
+    :param bool:
     """
-    return self._report._jsStyles.get('opts', {}).get('hoverPreviewEnabled', False)
+    return self._config_group_get('opts', False)
 
   @hoverPreviewEnabled.setter
   def hoverPreviewEnabled(self, bool):
-    self._report._jsStyles.setdefault('opts', {})['hoverPreviewEnabled'] = bool
+    self._config_group('opts', bool)
 
   @property
   def hoverPreviewArrayCount(self):
@@ -53,12 +54,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
+    :param num:
     """
-    return self._report._jsStyles.get('opts', {}).get('hoverPreviewArrayCount', 100)
+    return self._config_group_get('opts', 100)
 
   @hoverPreviewArrayCount.setter
   def hoverPreviewArrayCount(self, num):
-    self._report._jsStyles.setdefault('opts', {})['hoverPreviewArrayCount'] = num
+    self._config_group('opts', num)
 
   @property
   def hoverPreviewFieldCount(self):
@@ -73,12 +75,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
+    :param num:
     """
-    return self._report._jsStyles.get('opts', {}).get('hoverPreviewFieldCount', 5)
+    return self._config_group_get('opts', 5)
 
   @hoverPreviewFieldCount.setter
   def hoverPreviewFieldCount(self, num):
-    self._report._jsStyles.setdefault('opts', {})['hoverPreviewFieldCount'] = num
+    self._config_group('opts', num)
 
   @property
   def animateOpen(self):
@@ -93,12 +96,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
+    :param bool:
     """
-    return self._report._jsStyles.get('opts', {}).get('animateOpen', True)
+    return self._config_group_get('opts', True)
 
   @animateOpen.setter
   def animateOpen(self, bool):
-    self._report._jsStyles.setdefault('opts', {})['animateOpen'] = bool
+    self._config_group('opts', bool)
 
   @property
   def animateClose(self):
@@ -113,12 +117,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
+    :param bool:
     """
-    return self._report._jsStyles.get('opts', {}).get('animateClose', True)
+    return self._config_group_get('opts', True)
 
   @animateClose.setter
   def animateClose(self, bool):
-    self._report._jsStyles.setdefault('opts', {})['animateClose'] = bool
+    self._config_group('opts', bool)
 
   @property
   def useToJSON(self):
@@ -134,12 +139,13 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
+    :param bool:
     """
-    return self._report._jsStyles.get('opts', {}).get('useToJSON', True)
+    return self._config_group_get('opts', True)
 
   @useToJSON.setter
   def useToJSON(self, bool):
-    self._report._jsStyles.setdefault('opts', {})['useToJSON'] = bool
+    self._config_group('opts', bool)
 
   @property
   def sortPropertiesBy(self):
@@ -154,9 +160,10 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
+    :param bool:
     """
-    return self._report._jsStyles.get('opts', {}).get('sortPropertiesBy')
+    return self._config_group_get('opts', None)
 
   @sortPropertiesBy.setter
   def sortPropertiesBy(self, bool):
-    self._report._jsStyles.setdefault('opts', {})['sortPropertiesBy'] = bool
+    self._config_group('opts', bool)

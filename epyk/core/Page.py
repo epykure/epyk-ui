@@ -32,17 +32,14 @@ class Report(object):
   def __init__(self):
     #
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
-    self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet(), 'datasets': {}}}, None, None, None
+    self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet(), 'datasets': {}}, 'context': {'framework': 'JS'}}, None, None, None
 
     self.timestamp, self.runTime = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'), time.time() * 100
-    self.content, self.shortcuts, self.exportCsv, self.jsSources = [], {}, {}, {}
-    self._dbBindings, self._dbErrors = {}, collections.defaultdict(int)
-    self.currentTitleObj, self.navBarContent, self.sideBarActions = {}, {'content': []}, []
+    self.content, self.shortcuts, self.jsSources = [], {}, {}
     self.htmlItems, self.jsOnLoad, self.http, self.htmlCodes, self.htmlRefs = {}, [], {}, {}, {}
-    self.notifications = collections.defaultdict(list)
-    self.interruptReport, self._propagate = (False, None), []
+    self._propagate = []
 
-    self.sourceDef, self.localFiles, self.libDef, self._run, self._scroll, self._contextMenu = {}, {}, {}, {}, set(), {}
+    self._scroll, self._contextMenu = set(), {}
     self.logo, self._dbSettings, self.dbsDef, self._cssText, self._jsText = None, None, {}, [], []
 
     #
@@ -209,6 +206,15 @@ class Report(object):
     """
     return data.Data.DataSrc(self)
 
+  def framework(self, name):
+    """
+    Description:
+    ------------
+
+    :param name:
+    """
+    self._props['context']['framework'] = name.upper()
+
   def register(self, ext_components):
     """
     Description:
@@ -250,28 +256,27 @@ class Report(object):
     ------------
 
     :param itemId:
-    :return:
     """
     return self.htmlItems[itemId]
 
-  def socketSend(self, htmlCode, data, report_name=None, script_name=None):
-    try:
-      from urllib.parse import urlparse, urlencode
-      from urllib.request import urlopen, Request
-      from urllib.error import HTTPError
-    except ImportError:
-      from urlparse import urlparse
-      from urllib import urlencode
-      from urllib2 import urlopen, Request, HTTPError
-
-    urls = [htmlCode]
-    if report_name or report_name is None:
-      urls.append(self.run.report_name if report_name is None else report_name)
-      if script_name or script_name is None:
-        urls.append(self.run.script_name if script_name is None else script_name)
-    response = urlopen(Request("%s%smessage/%s" % (self.run.url_root, self._urlsApp["index"].replace("/index", "/"), "/".join(urls)),
-                    data=urlencode({'data': json.dumps(data)}).encode('utf-8')))
-    response.read()
+  # def socketSend(self, htmlCode, data, report_name=None, script_name=None):
+  #   try:
+  #     from urllib.parse import urlparse, urlencode
+  #     from urllib.request import urlopen, Request
+  #     from urllib.error import HTTPError
+  #   except ImportError:
+  #     from urlparse import urlparse
+  #     from urllib import urlencode
+  #     from urllib2 import urlopen, Request, HTTPError
+  #
+  #   urls = [htmlCode]
+  #   if report_name or report_name is None:
+  #     urls.append(self.run.report_name if report_name is None else report_name)
+  #     if script_name or script_name is None:
+  #       urls.append(self.run.script_name if script_name is None else script_name)
+  #   response = urlopen(Request("%s%smessage/%s" % (self.run.url_root, self._urlsApp["index"].replace("/index", "/"), "/".join(urls)),
+  #                   data=urlencode({'data': json.dumps(data)}).encode('utf-8')))
+  #   response.read()
 
   @property
   def outs(self):

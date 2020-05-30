@@ -14,13 +14,14 @@ class OptionsSlider(Options):
     Related Pages:
 
 			https://api.jqueryui.com/slider/#option-animate
+
+		:param animate:
     """
-    return self._report._jsStyles.get('animate', False)
+    return self._config_get(False)
 
   @animate.setter
   def animate(self, value):
-    self._report._jsStyles["animate"] = value
-    return self
+    self._config(value)
 
   @property
   def classes(self):
@@ -34,13 +35,14 @@ class OptionsSlider(Options):
     Related Pages:
 
 			https://api.jqueryui.com/slider/#option-classes
+
+		:param classes:
     """
-    return self._report._jsStyles.get('classes')
+    return self._config_get('classes')
 
   @classes.setter
   def classes(self, value):
-    self._report._jsStyles["classes"] = value
-    return self
+    self._config(value)
 
   @property
   def disabled(self):
@@ -52,13 +54,14 @@ class OptionsSlider(Options):
     Related Pages:
 
 			https://api.jqueryui.com/slider/#option-disabled
+
+		:param disabled:
     """
-    return self._report._jsStyles.get('disabled', False)
+    return self._config_get(False)
 
   @disabled.setter
   def disabled(self, value):
-    self._report._jsStyles["disabled"] = value
-    return self
+    self._config(value)
 
   @property
   def max(self):
@@ -70,13 +73,14 @@ class OptionsSlider(Options):
     Related Pages:
 
 			https://api.jqueryui.com/slider/#option-max
+
+		:param max:
     """
-    return self._report._jsStyles.get('max', 100)
+    return self._config_get(100)
 
   @max.setter
   def max(self, value):
-    self._report._jsStyles["max"] = value
-    return self
+    self._config(value)
 
   @property
   def min(self):
@@ -88,13 +92,14 @@ class OptionsSlider(Options):
     Related Pages:
 
 			https://api.jqueryui.com/slider/#option-min
+
+		:param min:
     """
-    return self._report._jsStyles.get('min', 0)
+    return self._config_get(0)
 
   @min.setter
   def min(self, value):
-    self._report._jsStyles["min"] = value
-    return self
+    self._config(value)
 
   @property
   def orientation(self):
@@ -108,12 +113,11 @@ class OptionsSlider(Options):
 
 			https://api.jqueryui.com/slider/#option-orientation
     """
-    return self._report._jsStyles.get('orientation', "horizontal")
+    return self._config_get("horizontal")
 
   @orientation.setter
   def orientation(self, value):
-    self._report._jsStyles["orientation"] = value
-    return self
+    self._config(value)
 
   @property
   def range(self):
@@ -126,12 +130,11 @@ class OptionsSlider(Options):
 
 			https://api.jqueryui.com/slider/#option-range
     """
-    return self._report._jsStyles.get('range', False)
+    return self._config_get(False)
 
   @range.setter
   def range(self, value):
-    self._report._jsStyles["range"] = value
-    return self
+    self._config(value)
 
   @property
   def step(self):
@@ -145,12 +148,11 @@ class OptionsSlider(Options):
 
 			https://api.jqueryui.com/slider/#option-step
     """
-    return self._report._jsStyles.get('step', 1)
+    return self._config_get(1)
 
   @step.setter
   def step(self, value):
-    self._report._jsStyles["step"] = value
-    return self
+    self._config(value)
 
   @property
   def value(self):
@@ -164,12 +166,11 @@ class OptionsSlider(Options):
 
 			https://api.jqueryui.com/slider/#option-value
     """
-    return self._report._jsStyles.get('value', 0)
+    return self._config_get(0)
 
   @value.setter
   def value(self, value):
-    self._report._jsStyles["value"] = value
-    return self
+    self._config(value)
 
   @property
   def values(self):
@@ -183,12 +184,11 @@ class OptionsSlider(Options):
 
 			https://api.jqueryui.com/slider/#option-values
     """
-    return self._report._jsStyles.get('values', 0)
+    return self._config_get(0)
 
   @values.setter
   def values(self, value):
-    self._report._jsStyles["values"] = value
-    return self
+    self._config(value)
 
 
 class OptionsProgBar(Options):
@@ -204,12 +204,11 @@ class OptionsProgBar(Options):
 
 			https://api.jqueryui.com/progressbar/#option-classes
     """
-    return self._report._jsStyles.get('classes')
+    return self._config_get(None)
 
   @classes.setter
   def classes(self, value):
-    self._report._jsStyles["classes"] = value
-    return self
+    self._config(value)
 
   @property
   def background(self):
@@ -218,12 +217,11 @@ class OptionsProgBar(Options):
     ------------
 
     """
-    return self._report._jsStyles['css'].get('background')
+    return self._config_group_get('css', None)
 
   @background.setter
   def background(self, value):
-    self._report._jsStyles['css']["background"] = value
-    return self
+    self._config_group('css', value)
 
   def css(self, attrs):
     """
@@ -232,8 +230,7 @@ class OptionsProgBar(Options):
 
     :param attrs:
     """
-    self._report._jsStyles['css'].update(attrs)
-    return self
+    self._config_group('css', attrs)
 
   @property
   def disabled(self):
@@ -246,12 +243,11 @@ class OptionsProgBar(Options):
 
 			https://api.jqueryui.com/progressbar/#option-disabled
     """
-    return self._report._jsStyles.get('disabled', False)
+    return self._config_get(None)
 
   @disabled.setter
   def disabled(self, bool):
-    self._report._jsStyles["disabled"] = bool
-    return self
+    self._config(bool)
 
   @property
   def max(self):
@@ -264,12 +260,11 @@ class OptionsProgBar(Options):
 
 			https://api.jqueryui.com/progressbar/#option-max
     """
-    return self._report._jsStyles.get('max', 100)
+    return self._config_get(100)
 
   @max.setter
-  def max(self, bool):
-    self._report._jsStyles["max"] = bool
-    return self
+  def max(self, num):
+    self._config(num)
 
   @property
   def value(self):
@@ -282,12 +277,11 @@ class OptionsProgBar(Options):
 
 			https://api.jqueryui.com/progressbar/#option-value
     """
-    return self._report._jsStyles.get('value', False)
+    return self._config_get(None)
 
   @value.setter
-  def value(self, bool):
-    self._report._jsStyles["value"] = bool
-    return self
+  def value(self, val):
+    self._config(val)
 
 
 class OptionsMenu(Options):
@@ -305,12 +299,11 @@ class OptionsMenu(Options):
 
 			https://api.jqueryui.com/menu/#option-classes
     """
-    return self._report._jsStyles.get('classes', {})
+    return self._config_get({})
 
   @classes.setter
   def classes(self, value):
-    self._report._jsStyles["classes"] = value
-    return self
+    self._config(value)
 
   @property
   def disabled(self):
@@ -323,12 +316,11 @@ class OptionsMenu(Options):
 
 			https://api.jqueryui.com/menu/#option-disabled
     """
-    return self._report._jsStyles.get('disabled', False)
+    return self._config_get(False)
 
   @disabled.setter
   def disabled(self, bool):
-    self._report._jsStyles["disabled"] = bool
-    return self
+    self._config(bool)
 
   @property
   def icons(self):
@@ -341,12 +333,11 @@ class OptionsMenu(Options):
 
 			https://api.jqueryui.com/menu/#option-icons
     """
-    return self._report._jsStyles.get('icons')
+    return self._config_get(None)
 
   @icons.setter
   def icons(self, bool):
-    self._report._jsStyles["icons"] = bool
-    return self
+    self._config(bool)
 
   @property
   def position(self):
@@ -361,12 +352,11 @@ class OptionsMenu(Options):
 
 			https://api.jqueryui.com/menu/#option-position
     """
-    return self._report._jsStyles.get('position')
+    return self._config_get(None)
 
   @position.setter
   def position(self, bool):
-    self._report._jsStyles["position"] = bool
-    return self
+    self._config(bool)
 
 
 class OptionDialog(Options):
@@ -382,12 +372,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-appendTo
     """
-    return self._report._jsStyles.get('appendTo', 'body')
+    return self._config_get('body')
 
   @appendTo.setter
   def appendTo(self, bool):
-    self._report._jsStyles["appendTo"] = bool
-    return self
+    self._config(bool)
 
   @property
   def autoOpen(self):
@@ -401,12 +390,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-autoOpen
     """
-    return self._report._jsStyles.get('autoOpen', True)
+    return self._config_get(True)
 
   @autoOpen.setter
   def autoOpen(self, bool):
-    self._report._jsStyles["autoOpen"] = bool
-    return self
+    self._config(bool)
 
   @property
   def classes(self):
@@ -421,12 +409,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-classes
     """
-    return self._report._jsStyles.get('classes', {})
+    return self._config_get({})
 
   @classes.setter
   def classes(self, value):
-    self._report._jsStyles["classes"] = value
-    return self
+    self._config(value)
 
   @property
   def closeOnEscape(self):
@@ -439,12 +426,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-closeOnEscape
     """
-    return self._report._jsStyles.get('closeOnEscape', True)
+    return self._config_get(True)
 
   @closeOnEscape.setter
   def closeOnEscape(self, value):
-    self._report._jsStyles["closeOnEscape"] = value
-    return self
+    self._config(value)
 
   @property
   def closeText(self):
@@ -457,12 +443,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-closeText
     """
-    return self._report._jsStyles.get('closeText', True)
+    return self._config_get(True)
 
   @closeText.setter
   def closeText(self, value):
-    self._report._jsStyles["closeText"] = value
-    return self
+    self._config(value)
 
   @property
   def draggable(self):
@@ -475,12 +460,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-draggable
     """
-    return self._report._jsStyles.get('draggable', True)
+    return self._config_get(True)
 
   @draggable.setter
   def draggable(self, value):
-    self._report._jsStyles["draggable"] = value
-    return self
+    self._config(value)
 
   @property
   def height(self):
@@ -493,12 +477,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-height
     """
-    return self._report._jsStyles.get('draggable', 'auto')
+    return self._config_get('auto')
 
   @height.setter
   def height(self, value):
-    self._report._jsStyles["height"] = value
-    return self
+    self._config(value)
 
   @property
   def hide(self):
@@ -511,12 +494,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-hide
     """
-    return self._report._jsStyles.get('draggable', None)
+    return self._config_get(None)
 
   @hide.setter
   def hide(self, value):
-    self._report._jsStyles["hide"] = value
-    return self
+    self._config(value)
 
   @property
   def maxHeight(self):
@@ -529,12 +511,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-maxHeight
     """
-    return self._report._jsStyles.get('maxHeight', None)
+    return self._config_group_get("option", None)
 
   @maxHeight.setter
   def maxHeight(self, value):
-    self._report._jsStyles["maxHeight"] = value
-    return self
+    self._config_group("option", value)
 
   @property
   def maxWidth(self):
@@ -547,12 +528,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-maxWidth
     """
-    return self._report._jsStyles.get("option", {})('maxWidth', None)
+    return self._config_group_get("option", None)
 
   @maxWidth.setter
   def maxWidth(self, value):
-    self._report._jsStyles.setdefault("option", {})["maxWidth"] = value
-    return self
+    self._config_group("option", value)
 
   @property
   def minHeight(self):
@@ -565,12 +545,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-minHeight
     """
-    return self._report._jsStyles.get("option", {})('minHeight', None)
+    return self._config_group_get("option", None)
 
   @minHeight.setter
   def minHeight(self, value):
-    self._report._jsStyles.setdefault("option", {})["minHeight"] = value
-    return self
+    self._config_group("option", value)
 
   @property
   def minWidth(self):
@@ -583,11 +562,27 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-minWidth
     """
-    return self._report._jsStyles.get("option", {})('minWidth', None)
+    return self._config_group_get("option", None)
 
   @minWidth.setter
   def minWidth(self, value):
-    self._report._jsStyles.setdefault("option", {})["minWidth"] = value
+    self._config_group("option", value)
+
+  def position(self, my="center", at="center", of="window"):
+    """
+    Description:
+    ------------
+    Specifies where the dialog should be displayed when opened. The dialog will handle collisions such that as much of the dialog is visible as possible.
+
+    Related Pages:
+
+			https://api.jqueryui.com/dialog/#option-position
+
+    :param my: String.
+    :param at: String.
+    :param of: String.
+    """
+    self._config({"my": my, "at": at, "of": of})
     return self
 
   @property
@@ -600,27 +595,13 @@ class OptionDialog(Options):
 
     Related Pages:
 
-			https://api.jqueryui.com/dialog/#option-modal
+      https://api.jqueryui.com/dialog/#option-modal
     """
-    return self._report._jsStyles.get("option", {})('modal', True)
-
-  def position(self, my="center", at="center", of="window"):
-    """
-    Description:
-    ------------
-    Specifies where the dialog should be displayed when opened. The dialog will handle collisions such that as much of the dialog is visible as possible.
-
-    Related Pages:
-
-			https://api.jqueryui.com/dialog/#option-position
-    """
-    self._report._jsStyles['position'] = {"my": "center", "at": "center", "of": "window"}
-    return self
+    return self._config_group_get("option", None)
 
   @modal.setter
   def modal(self, value):
-    self._report._jsStyles.setdefault("option", {})["modal"] = value
-    return self
+    self._config_group("option", value)
 
   @property
   def resizable(self):
@@ -633,12 +614,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-resizable
     """
-    return self._report._jsStyles.get("option", {})('resizable', True)
+    return self._config_group_get("option", None)
 
   @resizable.setter
   def resizable(self, value):
-    self._report._jsStyles.setdefault("option", {})["resizable"] = value
-    return self
+    self._config_group("option", value)
 
   @property
   def title(self):
@@ -651,12 +631,11 @@ class OptionDialog(Options):
 
 			https://api.jqueryui.com/dialog/#option-title
     """
-    return self._report._jsStyles.get('title', None)
+    return self._config_get(None)
 
   @title.setter
   def title(self, value):
-    self._report._jsStyles["title"] = value
-    return self
+    self._config(value)
 
   @property
   def width(self):
@@ -668,13 +647,14 @@ class OptionDialog(Options):
     Related Pages:
 
 			https://api.jqueryui.com/dialog/#option-title
+
+		:param width:
     """
-    return self._report._jsStyles.get('width', 300)
+    return self._config_get(300)
 
   @width.setter
   def width(self, value):
-    self._report._jsStyles["width"] = value
-    return self
+    self._config(value)
 
 
 class OptionBar(Options):

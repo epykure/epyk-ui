@@ -2,37 +2,31 @@
 from epyk.core.html.options import Options
 
 
-class OptionsPanelPoints(object):
-
-  def __init__(self, src, options):
-    self.src = src
-    self.__background_color = options.get("background-color", src.theme.success[1])
-    self.__div_css = options.get("div_css", {})
-    self.__selected = options.get("selected", 0)
+class OptionsPanelPoints(Options):
 
   @property
   def background_color(self):
-    return self.__background_color
+    return self.get(self._report._report.theme.success[1])
 
   @background_color.setter
   def background_color(self, val):
-    self.__background_color = val
+    self.set(val)
 
   @property
   def div_css(self):
-    return self.__div_css
+    return self.get({})
 
   @div_css.setter
   def div_css(self, css):
-    self.__div_css = css
+    self.set(css)
 
   @property
   def selected(self):
-    return self.__selected
+    return self.get(0)
 
   @selected.setter
   def selected(self, num):
-    self.__selected = num
+    self.set(num)
 
 
 class OptionPanelSliding(Options):
@@ -105,8 +99,7 @@ class OptionPanelTabs(Options):
     The default CSS style for the clicked tab.
     This must be changed before adding components
     """
-    dflt = {"border-bottom": "1px solid %s" % self._report.theme.success[1]}
-    return self.get(dflt)
+    return self.get({"border-bottom": "1px solid %s" % self._report.theme.success[1]})
 
   @css_tab_clicked.setter
   def css_tab_clicked(self, attrs):
@@ -250,15 +243,10 @@ class OptionsStepper(Options):
     :param type: String. The state
     :param colors: List or Dictionary. The color definition
     """
-    if not 'colors' in self._report._jsStyles:
-      self._report._jsStyles['colors'] = {}
     if not isinstance(colors[0], dict):
       s = 100 / (len(colors) - 1)
-      tmp_colors = []
-      for i, c in enumerate(colors):
-        tmp_colors.append({"color": c, 'offset': "%s%%" % int(i * s)})
-      colors = tmp_colors
-    self._report._jsStyles['colors'][type] = colors
+      colors = [{"color": c, 'offset': "%s%%" % int(i * s)} for i, c in enumerate(colors)]
+    self._config_group('colors', colors, name=type)
 
   @property
   def success(self):
@@ -267,7 +255,7 @@ class OptionsStepper(Options):
     ------------
     Add the success colors
     """
-    return self._report._jsStyles.get('colors', {}).get('success', [])
+    return self._config_group_get('colors', {})
 
   @success.setter
   def success(self, colors):
@@ -280,7 +268,7 @@ class OptionsStepper(Options):
     ------------
 
     """
-    return self._report._jsStyles['colors'].get('error', [])
+    return self._config_group_get('colors', {})
 
   @error.setter
   def error(self, colors):
@@ -293,7 +281,7 @@ class OptionsStepper(Options):
     ------------
 
     """
-    return self._report._jsStyles['colors'].get('pending', [])
+    return self._config_group_get('colors', {})
 
   @pending.setter
   def pending(self, colors):
@@ -306,7 +294,7 @@ class OptionsStepper(Options):
     ------------
     The list of
     """
-    return self._report._jsStyles['colors'].get('waiting', [])
+    return self._config_group_get('colors', {})
 
   @waiting.setter
   def waiting(self, colors):
@@ -319,7 +307,7 @@ class OptionsStepper(Options):
     ------------
 
     """
-    return self._report._jsStyles.get('colors', {}).get('blink')
+    return self._config_group_get('colors', {})
 
   @blink.setter
   def blink(self, colors):
@@ -429,9 +417,9 @@ class OptionsStepper(Options):
 
   @svg_style.setter
   def svg_style(self, css):
-    if not 'svg_style' in self._report._jsStyles:
-      self._report._jsStyles['svg_style'] = {}
-    self._report._jsStyles['svg_style'].update(css)
+    attrs = self._config_get({})
+    attrs.update(css)
+    self._config(attrs)
 
   @property
   def text_color(self):
@@ -457,9 +445,9 @@ class OptionsStepper(Options):
 
   @text_style.setter
   def text_style(self, css):
-    if not 'title_style' in self._report._jsStyles:
-      self._report._jsStyles['text_style'] = {}
-    self._report._jsStyles['text_style'].update(css)
+    attrs = self._config_get({})
+    attrs.update(css)
+    self._config(attrs)
 
 
 class OptionGrid(Options):

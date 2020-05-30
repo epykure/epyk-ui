@@ -7,7 +7,6 @@ from epyk.core.html.options import OptButton
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
-from epyk.core.js.packages import JsQuery
 from epyk.core.js.statements import JsIf
 from epyk.core.js.objects import JsComponents
 
@@ -17,7 +16,7 @@ from epyk.core.css import Defaults_css
 
 
 class Button(Html.Html):
-  name, category, callFnc = 'Button', 'buttons', 'button'
+  name = 'button'
 
   def __init__(self, report, text=None, icon=None, width=None, height=None, htmlCode=None, tooltip=None, profile=False, options=None):
     text = text or []
@@ -160,6 +159,9 @@ class Button(Html.Html):
     self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)
     self.set_attrs(name="onmouseout", value="this.style.backgroundColor=\'white\';this.style.color=\'%s\';" % color)
     return self
+
+  def properties(self):
+    return {"tag": self.name}
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])

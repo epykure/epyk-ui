@@ -72,25 +72,27 @@ class Html(object):
   Parent class for all the HTML components. All the function defined here are available in the children classes.
   Child class can from time to time re implement the logic but the function will always get the same meaning (namely the same signature and return)
   """
-  cssCls = None
+  #cssCls = None
   # Those variables should not be used anymore and should be replaced by the __ ones
   # This is done in order to avoid having users to change them. Thanks to the name
   # mangling technique Python will make the change more difficult and easier to see
   reqJs, reqCss = [], []
-  htmlCode, dataSrc, _code, inReport, builder_name = None, None, None, True, None
-  _out_mode = 'html'
+  htmlCode, _code, inReport, builder_name = None, None, True, None
   js_fncs_opts = () # list of options which should never be considered as string but JavaScript fragments
 
-  def __init__(self, report, vals, htmlCode=None, code=None, width=None, widthUnit=None, height=None,
-               heightUnit=None, globalFilter=None, dataSrc=None, options=None, profile=None, css_attrs=None):
+  def __init__(self, report, vals, htmlCode=None, code=None, globalFilter=None, dataSrc=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
-    self._triggerEvents, self.profile = set(), profile
+    self.children = [] # Child component for this component
+
+    self.profile = profile
     self._report, self._styleObj = report, None # The html object ID
     self._on_ready_js, self._sort_propagate, self._sort_options = {}, False, None # For sortable items
-    self._dom, self._container, self._sub_htmls, self._js, self.helper = None, None, [], None, ""
-    self._events__keys = {}
+    self._dom, self._sub_htmls, self._js, self.helper = None, [], None, ""
+    self._events__keys, self._events__mouse, self._js__on_ready = {}, [], []
+
     self.jsImports = report.jsImports
     self.cssImport = report.cssImport
+
     self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
     if css_attrs is not None:
       self.css(css_attrs)
@@ -141,15 +143,6 @@ class Html(object):
        if self.reqCss is not None:
          for css in self.reqCss:
            self._report.cssImport.add(css)
-    # Add the CSS dimension
-    if width is not None:
-      self.css({'width': "%s%s" % (width, widthUnit)})
-    if height is not None:
-      self.css('height', "%s%s" % (height, heightUnit))
-    if htmlCode is not None and globalFilter is not None:
-      self.filter(**globalFilter)
-    if dataSrc is not None:
-      self.dataSrc = dataSrc
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
 
   @property
@@ -856,10 +849,7 @@ Attributes:
       cssClass = 'class="%s"' % " ".join(pyClsNames) if len(pyClsNames) > 0 else ""
 
     if withId:
-      if self._out_mode == 'angular':
-        self.attr['[id]'] = "this.id"
-      else:
-        self.attr['id'] = self.htmlId
+      self.attr['id'] = self.htmlId
     html_tags = ['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]
     for tag in [cssStyle, cssClass]:
       if tag:

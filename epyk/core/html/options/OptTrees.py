@@ -65,7 +65,6 @@ class OptionsTree(Options):
     self._config(css)
 
 
-
 class OptDropDown(Options):
 
   @property
@@ -74,13 +73,12 @@ class OptDropDown(Options):
     Description:
     ------------
     """
-    return self._report._jsStyles.get('autoFocus', False)
+    return self._config_get(False)
 
   @width.setter
   def width(self, value):
     if isinstance(value, int):
       value = "%spx" % value
     #
-    self._report._jsStyles["a"]["width"] = value
-    self._report._jsStyles["ul"]["left"] = value
-    return self
+    self._config_group_get("a", value)
+    self._config_group_get("ul", value, name="left")

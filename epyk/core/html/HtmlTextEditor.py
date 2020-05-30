@@ -387,7 +387,7 @@ class Tags(Html.Html):
   # _grpCls = GrpCls.CssGrpClassBase
 
   def __init__(self, report, vals, title, icon, size, width, height, htmlCode, profile):
-    super(Tags, self).__init__(report, vals, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
+    super(Tags, self).__init__(report, vals, css_attrs={"width": width, "height": height},
                                code=htmlCode, profile=profile)
     self.title, self.icon = title, icon
     self.css({"margin-top": "5px", "font-size": "%s%s" % (size[0], size[1]), "font-family": report.style.defaults.font.family})

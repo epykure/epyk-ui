@@ -1,5 +1,4 @@
 
-from epyk.core.js.packages import packageImport
 from epyk.core.html.options import Options
 from epyk.core.js import Imports
 

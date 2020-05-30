@@ -7,43 +7,63 @@ class OptionConfig(DataClass):
   @property
   def responsive(self):
     """
-    https://plot.ly/javascript/configuration-options/
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plot.ly/javascript/configuration-options/
     """
-    return self._attrs["responsive"]
+    return self.get(True)
 
   @responsive.setter
   def responsive(self, val):
-    self._attrs["responsive"] = val
+    self.set(val)
 
   @property
   def editable(self):
     """
-    https://plot.ly/javascript/configuration-options/
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plot.ly/javascript/configuration-options/
     """
-    return self._attrs["editable"]
+    return self.get(False)
 
   @editable.setter
   def editable(self, val):
-    self._attrs["editable"] = val
+    self.set(val)
 
   @property
   def staticPlot(self):
     """
-    https://plot.ly/javascript/configuration-options/
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plot.ly/javascript/configuration-options/
     """
-    return self._attrs["staticPlot"]
+    return self.get(None)
 
   @staticPlot.setter
   def staticPlot(self, val):
-    self._attrs["staticPlot"] = val
+    self.set(val)
 
   @property
   def scrollZoom(self):
     """
-    https://plot.ly/javascript/configuration-options/
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://plot.ly/javascript/configuration-options/
     """
-    return self._attrs["scrollZoom"]
+    return self.get(None)
 
   @scrollZoom.setter
   def scrollZoom(self, val):
-    self._attrs["scrollZoom"] = val
+    self.set(val)

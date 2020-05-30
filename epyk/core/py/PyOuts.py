@@ -8,7 +8,6 @@ from epyk.core.js import JsUtils
 from epyk.core.js.Imports import requires
 
 from epyk.core.html.templates import HtmlTmplBase
-from epyk.core.html.templates import HtmlAngComponents
 
 
 class OutBrowsers(object):
@@ -318,131 +317,6 @@ class PyOuts(object):
       results['header'] = self._report.headers
       f.write(HtmlTmplBase.STATIC_PAGE % results)
     return file_path
-
-  def angular_component(self, app_path, attrs):
-    """
-    Description:
-    ------------
-
-    :param app_path:
-    :param attrs:
-    """
-    app_path = os.path.join(app_path, 'src', 'app')
-    component_path = os.path.join(app_path, 'components', 'epyks', attrs['folder'])
-    if not os.path.exists(component_path):
-      os.makedirs(component_path)
-
-    with open(os.path.join(component_path, "%s.component.html" % attrs['folder']), "w") as f:
-      f.write(attrs['html'])
-
-    with open(os.path.join(component_path, "%s.component.spec.ts" % attrs['folder']), "w") as f:
-      f.write(HtmlAngComponents.COMPONENT_SPEC % {'class': "Epyk%sComponent" % attrs['folder'], 'folder': attrs['folder']})
-
-    with open(os.path.join(component_path, "%s.component.ts" % attrs['folder']), "w") as f:
-      f.write(HtmlAngComponents.COMPONENT % attrs)
-
-  def angular(self, name, app_path, build_components=False):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param app_path: String. The Angular App path
-    """
-    if build_components:
-      for ts_comp in self._report.export():
-        self.angular_component(app_path=app_path, attrs=ts_comp)
-
-    #HtmlText.Text.ts(app_path)
-    # HtmlButton.Button.ts(app_path)
-
-    # results, htmlAppParts = {}, []
-    # cssParts = dict(self._report.body.style.get_classes_css())
-    # for objId in self._report.content:
-    #   if self._report.htmlItems[objId].inReport:
-    #     htmlParts.append(self._report.htmlItems[objId].html())
-    #   cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
-    # results = self._to_html_obj(htmlParts, cssParts)
-
-    #
-    # app_path = os.path.join(app_path, 'src', 'app')
-    # component_path = os.path.join(app_path, 'components')
-    #
-    # # Add the component on ready functions
-    # for objId in self._report.content:
-    #   if not self._report.htmlItems[objId].inReport:
-    #     continue
-    #
-    #   obj_id = self._report.htmlItems[objId].dom.varId
-    #   ang_comp = self._report.htmlItems[objId].export(mode='angular')
-    #   htmlAppParts.append("<%(htmlTag)s></%(htmlTag)s>" % ang_comp)
-    #   for event, fncs in self._report.htmlItems[objId]._events['doc_ready'].items():
-    #     function_name = "on%s" % event.capitalize()
-    #     ang_comp["componentFunctions"].append("%s(event){ %s }" % (function_name, "; ".join(fncs['content'])))
-    #     self._report.htmlItems[objId].attr["(%s)" % event] = "%s($event)" % function_name
-    #     self._report.htmlItems[objId].attr["[id]"] = "this.id"
-    #
-    #   htmlParts = self._report.htmlItems[objId].html()
-    #   cssParts.update(self._report.htmlItems[objId].style.get_classes_css())
-    #
-    #   if os.path.exists(app_path):
-    #     if not os.path.exists(component_path):
-    #       os.mkdir(component_path)
-    #     report_path = os.path.join(component_path, ang_comp['folder'])
-    #     if not os.path.exists(report_path):
-    #       os.mkdir(report_path)
-    #     #
-    #     with open(os.path.join(report_path, "%s.component.html" % ang_comp['folder']), "w") as f:
-    #       f.write(htmlParts)
-    #
-    #     with open(os.path.join(report_path, "%s.component.spec.ts" % ang_comp['folder']), "w") as f:
-    #       f.write(HtmlAngComponents.COMPONENT_SPEC % ang_comp)
-    #
-    #     with open(os.path.join(report_path, "%s.component.ts" % ang_comp['folder']), "w") as f:
-    #       ang_comp['componentFunctionText'] = "\n".join(ang_comp["componentFunctions"])
-    #       f.write(HtmlAngComponents.COMPONENT % ang_comp)
-    #
-    #   if obj_id and obj_id in self._report._props.get('js', {}).get('onCompReady', {}):
-    #     print(self._report._props['js']['onCompReady'][obj_id])
-    #
-    #   for event, fncs in self._report.htmlItems[objId]._events['doc_ready'].items():
-    #     str_fncs = JsUtils.jsConvertFncs(fncs['content'], toStr=True)
-    #     print("%s.addEventListener('%s', function(event){%s})" % (obj_id, event, str_fncs))
-    #
-    # ang_comp_app = {'class': "%sComponent" % name.capitalize(), 'folder': name, 'htmlTag': "rpt-epyk-%s" % name,
-    #                 'externalVars': '', 'styleUrls': "styleUrls: ['./%s.component.css']" % name}
-    # report_path = os.path.join(component_path, ang_comp_app['folder'])
-    # if not os.path.exists(report_path):
-    #   os.mkdir(report_path)
-    # with open(os.path.join(report_path, "%s.component.spec.ts" % ang_comp_app['folder']), "w") as f:
-    #   f.write(HtmlAngComponents.COMPONENT_SPEC % ang_comp_app)
-    #
-    # with open(os.path.join(report_path, "%s.component.ts" % ang_comp_app['folder']), "w") as f:
-    #   ang_comp_app['componentFunctionText'] = ""
-    #   f.write(HtmlAngComponents.COMPONENT % ang_comp_app)
-    #
-    # with open(os.path.join(report_path, "%s.component.css" % ang_comp_app['folder']), "w") as f:
-    #   f.write("%s\n%s" % ("\n".join([v for v in cssParts.values()]), "\n".join(self._report._cssText)))
-    #
-    # with open(os.path.join(report_path, "%s.component.html" % ang_comp_app['folder']), "w") as f:
-    #   f.write("\n".join(htmlAppParts))
-
-    #
-    # for k, v in self._report._props.get('js', {}).get('functions', {}).items():
-    #   sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
-    #   print("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
-    #
-    # for c, d in self._report._props.get('js', {}).get("constructors", {}).items():
-    #   print(d)
-    #
-    # for b in self._report._props.get('js', {}).get("builders", []):
-    #   print(d)
-    #
-    #
-    #   # Update the main angular.json file with the assets
-    #
-    # print(app_path)
 
   def markdown_file(self, path=None, name=None):
     """

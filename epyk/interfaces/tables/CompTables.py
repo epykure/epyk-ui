@@ -7,6 +7,7 @@ from epyk.interfaces.tables import CompTablesPlotly
 from epyk.interfaces.tables import CompTableD3
 from epyk.interfaces.tables import CompAgGrid
 from epyk.interfaces.tables import CompPivot
+from epyk.interfaces.tables import CompTableGoogle
 
 
 class Tables(object):
@@ -44,6 +45,17 @@ class Tables(object):
 http://tabulator.info/
     """
     return CompTabulator.Tabulators(self)
+
+  @property
+  def google(self):
+    """
+    Description:
+    -----------
+    """
+    if not getattr(self.context.rptObj, '_with_google_imports', False):
+      raise Exception("Google produce must be added using for example rptObj.imports().google_products(['charts'])")
+
+    return CompTableGoogle.Google(self)
 
   @property
   def pivots(self):

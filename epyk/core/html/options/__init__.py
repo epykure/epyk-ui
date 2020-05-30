@@ -47,6 +47,47 @@ class Options(DataClass):
     """
     self._report._jsStyles[name or sys._getframe().f_back.f_code.co_name] = value
 
+  def _config_group_get(self, group, dflt=None, name=None):
+    """
+    Description:
+    ------------
+    Get second level configuration options
+
+    Attributes:
+    ----------
+    :param group: String. The group attribute name
+    :param name: String. The attribute name
+    """
+    return self._report._jsStyles.get(group, {}).get(name or sys._getframe().f_back.f_code.co_name, dflt)
+
+  def _config_group(self, group, value, name=None):
+    """
+    Description:
+    ------------
+    Set second level configuration options
+
+    Attributes:
+    ----------
+    :param group: String. The group name
+    :param value: Object. The value for the name
+    :param name: String. The attribute name
+    """
+    if not group in self._report._jsStyles:
+      self._report._jsStyles[group] = {}
+    self._report._jsStyles[group][name or sys._getframe().f_back.f_code.co_name] = value
+
+  @property
+  def managed(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(True)
+
+  @managed.setter
+  def managed(self, bool):
+    self.set(bool)
+
   def details(self):
     """
     Description:

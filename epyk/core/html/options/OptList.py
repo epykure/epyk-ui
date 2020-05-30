@@ -2,31 +2,27 @@
 from epyk.core.html.options import Options
 
 
-class OptionsLi(object):
-  def __init__(self, src, options):
-    self.src = src
-    self._li_css = options.get("li_css", {})
-    self.li_class = options.get("li_class", [])
+class OptionsLi(Options):
 
   @property
   def li_css(self):
     """
     """
-    return self._li_css
+    return self.get({})
 
   @li_css.setter
   def li_css(self, css):
-    self._li_css = css
+    self.set(css)
 
   @property
   def li_class(self):
     """
     """
-    return self._li_class
+    return self.get([])
 
   @li_class.setter
   def li_class(self, cls_names):
-    self._li_class = cls_names
+    self.set(cls_names)
 
 
 class OptionsItems(Options):

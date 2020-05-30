@@ -282,11 +282,11 @@ class Emoji(Html.Html):
 
 
 class Badge(Html.Html):
-  name, category, callFnc = 'Badge', 'Images', 'badge'
+  name = 'Badge'
   __reqCss = ['bootstrap', 'font-awesome']
 
   def __init__(self, report, text, label, icon, background_color, color, url, tooltip, options, profile):
-    super(Badge, self).__init__(report, None, css_attrs={}, profile=profile)
+    super(Badge, self).__init__(report, None, profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     self.__options = OptButton.OptionsBadge(self, options)
     if self.options.badge_position == 'left':
@@ -321,7 +321,4 @@ class Badge(Html.Html):
     return self.__options
 
   def __str__(self):
-    if self.link is not None:
-      return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)
-
     return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)

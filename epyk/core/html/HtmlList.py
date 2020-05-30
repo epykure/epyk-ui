@@ -16,7 +16,7 @@ from epyk.core.js.html import JsHtmlList
 
 
 class Li(Html.Html):
-  name, category, callFnc = 'Entries', 'Lists', 'list_entries'
+  name = 'Entries'
 
   def __init__(self, report, text):
     super(Li, self).__init__(report, text)
@@ -238,8 +238,7 @@ class Groups(Html.Html):
   name, category, callFnc = 'Groups', 'Lists', 'groups'
 
   def __init__(self, report, data, categories, size, color, width, height, htmlCode, helper, profile):
-    super(Groups, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0],
-                                 heightUnit=height[1], code=htmlCode, profile=profile)
+    super(Groups, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
     self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',

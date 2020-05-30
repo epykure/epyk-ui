@@ -15,7 +15,7 @@ class Popup(Html.Html):
   # _grpCls = CssGrpClsInput.CssClassPopup
 
   def __init__(self, report, htmlObj, title, color, width, height, withBackground, draggable, margin, profile):
-    super(Popup, self).__init__(report, [], width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1],
+    super(Popup, self).__init__(report, [], css_attrs={"width": width, "height": height},
                                 profile=profile)
     self.inputs, self.height, self.width = [], "%s%s" % (height[0], height[1]) if height is not None else "100%", width
     if htmlObj is not None:

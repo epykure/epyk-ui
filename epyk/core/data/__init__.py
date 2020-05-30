@@ -10,7 +10,7 @@ from epyk.core.data import DataEvent
 class DataClass(object):
 
   def __init__(self, report, attrs=None, options=None):
-    self._report, self.options, self._attrs = report, options, attrs or {}
+    self._report, self.options, self._attrs = report, options, dict(attrs or {})
     self.__sub_levels, self.__sub__enum_levels = set(), set()
 
   def __getitem__(self, i):

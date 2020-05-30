@@ -195,7 +195,7 @@ http://openexchangerates.github.io/accounting.js/#documentation
 
   @symbol.setter
   def symbol(self, value):
-    self._report._jsStyles["type_number"] = "money"
+    self._config("money", name="type_number")
     self._config(value)
 
   @property
@@ -239,7 +239,7 @@ class OptionsConsole(OptionsText):
     Description:
     ------------
     """
-    return self._attrs.get('timestamp', False)
+    return self.get(False)
 
   @timestamp.setter
   def timestamp(self, bool):
@@ -254,7 +254,7 @@ class OptionsComposite(Options):
     Description:
     ------------
     """
-    return self._attrs.get('reset_class', False)
+    return self.get(False)
 
   @reset_class.setter
   def reset_class(self, bool):

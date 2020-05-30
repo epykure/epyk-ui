@@ -1246,11 +1246,11 @@ class Dialog(Html.Html):
 
 
 class IconsMenu(Html.Html):
-  name, category, callFnc = 'Icons Menu', 'Layouts', 'menu'
+  name = 'Icons Menu'
   __reqCss, __reqJs = ['font-awesome'], ['font-awesome']
 
   def __init__(self, icon_names, report, width, height, htmlCode, helper, profile):
-    super(IconsMenu, self).__init__(report, None, width=width, css_attrs={"width": width, "height": height}, code=htmlCode,
+    super(IconsMenu, self).__init__(report, None, css_attrs={"width": width, "height": height}, code=htmlCode,
                                     profile=profile)
     self._jsActions, self._definedActions = {}, []
     self._icons, self.icon = [], None
@@ -1457,7 +1457,7 @@ class Indices(Html.Html):
   def __init__(self, report, count, width, height, htmlCode, options, profile):
     super(Indices, self).__init__(report, count, css_attrs={"width": width, "height": height}, profile=profile)
     self.items = []
-    self.__options = OptPanel.OptionsPanelPoints(report, options)
+    self.__options = OptPanel.OptionsPanelPoints(self, options)
     for i in range(count):
       div = self._report.ui.div(i, width=(15, "px"))
       div.attr["name"] = self.htmlId
@@ -1515,7 +1515,7 @@ class Points(Html.Html):
     super(Points, self).__init__(report, count, css_attrs={"width": width, "height": height}, profile=profile)
     self.items = []
     self.css({"text-align": "center"})
-    self.__options = OptPanel.OptionsPanelPoints(report, options)
+    self.__options = OptPanel.OptionsPanelPoints(self, options)
     for i in range(count):
       div = self._report.ui.div(self._report.entities.non_breaking_space)
       div.attr["name"] = self.htmlId
@@ -1547,7 +1547,6 @@ class Points(Html.Html):
     ----------
     :param jsFncs: Array. The Javascript functions
     :param profile:
-    :return:
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
