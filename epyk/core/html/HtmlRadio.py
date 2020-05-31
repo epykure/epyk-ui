@@ -59,7 +59,7 @@ class Tick(Html.Html):
 
   def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, options, profile):
     self._options = options
-    super(Tick, self).__init__(report, '', code=htmlCode, profile=profile,
+    super(Tick, self).__init__(report, '', htmlCode=htmlCode, profile=profile,
                                css_attrs={"width": width, 'height': height, 'float': 'left' if position is None else position})
     if tooltip is not None:
       self.tooltip(tooltip)

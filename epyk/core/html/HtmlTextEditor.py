@@ -14,7 +14,7 @@ class Console(Html.Html):
   name = 'Console'
 
   def __init__(self, report, data, width, height, htmlCode, helper, options, profile):
-    super(Console, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Console, self).__init__(report, data, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow": 'auto', 'box-sizing': 'border-box', 'color': self._report.theme.greys[-1],
               'background': self._report.theme.colors[0]})
     self.__options = OptText.OptionsConsole(self, options)
@@ -68,7 +68,7 @@ class Editor(Html.Html):
   requirements = ('codemirror', 'font-awesome')
 
   def __init__(self, report, vals, language, width, height, htmlCode, options, profile):
-    super(Editor, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height,
+    super(Editor, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height,
             'box-sizing': 'border-box', 'margin': '5px 0'}, profile=profile)
     self.textarea = self._report.ui.texts.code(vals, height=height, language=language, options=options)
     self.textarea.options.managed = False
@@ -210,7 +210,7 @@ class Cell(Html.Html):
   requirements = ('codemirror', )
 
   def __init__(self, report, vals, language, width, height, htmlCode, options, profile):
-    super(Cell, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Cell, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.textarea = self._report.ui.texts.code(vals, height=height, language=language, options=options)
     self.textarea.options.managed = False
     self.textarea.style.add_classes.input.textarea()
@@ -283,7 +283,7 @@ class Code(Html.Html):
   requirements = ('codemirror', )
 
   def __init__(self, report, vals, color, width, height, htmlCode, options, helper, profile):
-    super(Code, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
+    super(Code, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
     self.add_helper(helper)
     self.__options = OptCodeMirror.OptionsCode(self, options)
     self.css({'display': 'block', 'margin': '5px 0'})
@@ -388,7 +388,7 @@ class Tags(Html.Html):
 
   def __init__(self, report, vals, title, icon, size, width, height, htmlCode, profile):
     super(Tags, self).__init__(report, vals, css_attrs={"width": width, "height": height},
-                               code=htmlCode, profile=profile)
+                               htmlCode=htmlCode, profile=profile)
     self.title, self.icon = title, icon
     self.css({"margin-top": "5px", "font-size": "%s%s" % (size[0], size[1]), "font-family": report.style.defaults.font.family})
 

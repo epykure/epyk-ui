@@ -18,7 +18,7 @@ class Image(Html.Html):
   def __init__(self, report, image, path, align, htmlCode, width, height, profile, options):
     if path is None:
       path = Defaults.SERVER_PATH if report.run.report_name is None else "%s/%s" % (Defaults.SERVER_PATH, report.run.report_name)
-    super(Image, self).__init__(report, {'path': path, 'image': image}, code=htmlCode, profile=profile,
+    super(Image, self).__init__(report, {'path': path, 'image': image}, htmlCode=htmlCode, profile=profile,
                                 css_attrs={"width": width, "height": height})
     self._jsStyles = options
     if align is not None:

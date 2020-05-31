@@ -108,10 +108,10 @@ class Html(object):
   # mangling technique Python will make the change more difficult and easier to see
   requirements = None
 
-  htmlCode, _code, inReport, builder_name = None, None, True, None
+  htmlCode, _code, builder_name = None, None, None
   js_fncs_opts = () # list of options which should never be considered as string but JavaScript fragments
 
-  def __init__(self, report, vals, htmlCode=None, code=None, options=None, profile=None, css_attrs=None):
+  def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
     self.components = collections.OrderedDict() # Child component for this component
 
@@ -133,7 +133,7 @@ class Html(object):
     self.jsImports = report.jsImports # to be deleted - because changed should be done only on the component self.require
     self.cssImport = report.cssImport # to be deleted - because changed should be done only on the component self.require
 
-    self._code, self._jsStyles = code, {}  # to be deleted - because code => htmlCode, _jsStyles shold be renamed
+    self._jsStyles = {}  # to be deleted - because code => htmlCode, _jsStyles shold be renamed
     self.innerPyHTML = None  # to be reviewed - not sure this is still usefull
 
     self.__options = Options(self, options)
@@ -142,31 +142,19 @@ class Html(object):
     if css_attrs is not None:
       self.css(css_attrs)
 
-    if code is not None:
-      # Control to ensure the Javascript problem due to multiple references is highlighted during the report generation
-      if code in self._report.components:
-        raise Exception("Duplicated Html Code %s in the script !" % code)
-
-      self._report.components[code] = self
-      if code[0].isdigit() or cleanData(code) != code:
-        raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (code, cleanData(code)))
-
     if htmlCode is not None:
       if htmlCode[0].isdigit() or cleanData(htmlCode) != htmlCode:
         raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (htmlCode, cleanData(htmlCode)))
 
+      if htmlCode in self._report.components:
+        raise Exception("Duplicated Html Code %s in the script !" % htmlCode)
+
       self._report.components[htmlCode] = self
-      try:
-        int(htmlCode[0])
-        raise Exception("htmlCode cannot start with a number - %s" % htmlCode)
-
-      except: pass
-
       self.htmlCode = htmlCode
       # self._report.jsGlobal.reportHtmlCode.add(htmlCode)
       if htmlCode in self._report.http:
         self.vals = self._report.http[htmlCode]
-        
+
     self._vals = vals
     self.jsVal = "%s_data" % self.htmlId # to be reviewed
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
@@ -193,6 +181,9 @@ class Html(object):
 
   @property
   def htmlId(self):
+    """
+
+    """
     if self._code is not None:
       # This is a special code used to update components but not to store the results to the breadcrumb
       # Indeed for example for components like paragraph this does not really make sense to use the htmlCode

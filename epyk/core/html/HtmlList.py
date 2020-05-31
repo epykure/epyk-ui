@@ -111,7 +111,7 @@ class List(Html.Html):
   name = 'List'
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
-    super(List, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
+    super(List, self).__init__(report, [], css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.__options = OptList.OptionsLi(self, options)
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
@@ -238,7 +238,7 @@ class Groups(Html.Html):
   name = 'Groups'
 
   def __init__(self, report, data, categories, size, color, width, height, htmlCode, helper, profile):
-    super(Groups, self).__init__(report, [], css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
+    super(Groups, self).__init__(report, [], css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
     self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',

@@ -32,7 +32,7 @@ class Panel(Html.Html):
     container.options.managed = False
     component.append(container)
     self.add_helper(helper)
-    super(Panel, self).__init__(report, component, code=htmlCode, profile=profile,
+    super(Panel, self).__init__(report, component, htmlCode=htmlCode, profile=profile,
                                 css_attrs={"color": color, "width": width, "height": height})
     container.set_attrs(name="name", value="panel_%s" % self.htmlId)
 
@@ -214,7 +214,7 @@ class Div(Html.Html):
       htmlObj = newHtmlObj
     elif htmlObj is not None and hasattr(htmlObj, 'options'):
       htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    super(Div, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"color": color, "width": width, "height": height},
+    super(Div, self).__init__(report, htmlObj, htmlCode=htmlCode, css_attrs={"color": color, "width": width, "height": height},
                               profile=profile)
     self.tag = tag
     self.__options = OptPanel.OptionsDiv(self, options)
@@ -409,7 +409,7 @@ class Caption(Html.Html):
 
   def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, options, profile):
     super(Caption, self).__init__(report, text, css_attrs={"width": width, "height": height, "color": color, 'text-align': align},
-                               code=htmlCode, profile=profile)
+                                  htmlCode=htmlCode, profile=profile)
     self.__options = OptText.OptionsText(self, options)
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -864,7 +864,7 @@ class Tabs(Html.Html):
   name = 'Tabs'
 
   def __init__(self, report, color, width, height, htmlCode, helper, options, profile):
-    super(Tabs, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
+    super(Tabs, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     self.__panels, self.__panel_objs, self.__selected = [], {}, None
     self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
     self.tabs_container = self._report.ui.div([])
@@ -1107,7 +1107,7 @@ class IconsMenu(Html.Html):
   requirements = ('font-awesome', )
 
   def __init__(self, icon_names, report, width, height, htmlCode, helper, profile):
-    super(IconsMenu, self).__init__(report, None, css_attrs={"width": width, "height": height}, code=htmlCode,
+    super(IconsMenu, self).__init__(report, None, css_attrs={"width": width, "height": height}, htmlCode=htmlCode,
                                     profile=profile)
     self._jsActions, self._definedActions = {}, []
     self._icons, self.icon = [], None
@@ -1453,7 +1453,7 @@ class Header(Html.Html):
   name = 'Header'
 
   def __init__(self, report, htmlObj, width, height, htmlCode, helper, options, profile):
-    super(Header, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Header, self).__init__(report, htmlObj, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionsDiv(self, options)
     self.add_helper(helper)
 
@@ -1485,7 +1485,7 @@ class Section(Html.Html):
   name = 'Section'
 
   def __init__(self, report, htmlObj, width, height, htmlCode, helper, options, profile):
-    super(Section, self).__init__(report, htmlObj, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Section, self).__init__(report, htmlObj, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionsDiv(self, options)
     self.add_helper(helper)
 

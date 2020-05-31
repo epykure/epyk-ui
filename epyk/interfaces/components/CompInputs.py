@@ -18,7 +18,7 @@ class Inputs(object):
   def __init__(self, context):
     self.context = context
 
-  def d_text(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_text(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
             options=None, attrs=None, profile=None):
     """
     Description:
@@ -39,18 +39,18 @@ class Inputs(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
     """
-    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
-                                      options or {}, attrs or {}, profile)
+    options = options or {}
+    attrs = attrs or {}
+    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
     html_input.style.css.margin_bottom = '2px'
     self.context.register(html_input)
     return html_input
 
-  def d_radio(self, flag=False, group_name=None, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_radio(self, flag=False, group_name=None, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
             options=None, attrs=None, profile=None):
     """
     Description:
@@ -71,18 +71,18 @@ class Inputs(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
     """
-    html_input = html.HtmlInput.InputRadio(self.context.rptObj, flag, group_name, placeholder, width, height, htmlCode, filter,
-                                           options or {}, attrs or {}, profile)
+    options = options or {}
+    attrs = attrs or {}
+    html_input = html.HtmlInput.InputRadio(self.context.rptObj, flag, group_name, placeholder, width, height, htmlCode,
+                                           options, attrs, profile)
     self.context.register(html_input)
     return html_input
 
-  def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
-            options=None, attrs=None, profile=None):
+  def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -108,20 +108,18 @@ class Inputs(object):
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
     """
     attrs = attrs or {}
-    html_search = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
+    html_search = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode,
                                        options, attrs, profile)
     attrs.update({"type": 'search'})
     self.context.register(html_search)
     return html_search
 
-  def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
-            options=None, attrs=None, profile=None):
+  def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
 
     Description:
@@ -141,7 +139,6 @@ class Inputs(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
@@ -149,11 +146,9 @@ class Inputs(object):
     """
     attrs = attrs or {}
     attrs.update({"type": 'password'})
-    return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height,
-                                                      htmlCode, filter, options, attrs, profile))
+    return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile))
 
-  def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, filter=None,
-            options=None, attrs=None, profile=None):
+  def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -173,20 +168,17 @@ class Inputs(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
     """
     dflt_options = {'timeFormat': 'HH:mm:ss'}
     dflt_options.update(options or {})
-    html_input_t = html.HtmlInput.InputTime(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
-                                            dflt_options, attrs or {}, profile)
+    html_input_t = html.HtmlInput.InputTime(self.context.rptObj, text, placeholder, width, height, htmlCode, dflt_options, attrs or {}, profile)
     self.context.register(html_input_t)
     return html_input_t
 
-  def d_date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), htmlCode=None, filter=None,
-            options=None, attrs=None, profile=None):
+  def d_date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -206,18 +198,15 @@ class Inputs(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
     """
-    html_date = html.HtmlInput.InputDate(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
-                                         options, attrs or {}, profile)
+    html_date = html.HtmlInput.InputDate(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs or {}, profile)
     self.context.register(html_date)
     return html_date
 
-  def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
-            options=None, attrs=None, profile=None):
+  def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
 
     Description:
@@ -236,25 +225,22 @@ class Inputs(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
-    :return:
     """
     attrs = attrs or {}
     attrs.update({"type": 'number'})
-    html_integer = html.HtmlInput.InputInteger(self.context.rptObj, value, placeholder, width, height, htmlCode, filter,
-                                               options, attrs, profile)
+    html_integer = html.HtmlInput.InputInteger(self.context.rptObj, value, placeholder, width, height, htmlCode, options, attrs, profile)
     self.context.register(html_integer)
     return html_integer
 
-  def d_range(self, value, min=0, max=100, step=1, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def d_range(self, value, min=0, max=100, step=1, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
               options=None, attrs=None, profile=None):
     attrs = attrs or {}
     attrs.update({"type": 'range'})
     html_range = html.HtmlInput.InputRange(self.context.rptObj, value, min, max, step, placeholder, width, height,
-                                           htmlCode, filter, options or {}, attrs, profile)
+                                           htmlCode, options or {}, attrs, profile)
     self.context.register(html_range)
     return html_range
 
@@ -312,13 +298,11 @@ class Inputs(object):
     """
     dfltOptions = {"spellcheck": False, 'selectable': False}
     dfltOptions.update(options or {})
-    html_t_area = html.HtmlInput.TextArea(self.context.rptObj, text, width, rows, placeholder, background_color,
-                                          htmlCode, dfltOptions, profile)
+    html_t_area = html.HtmlInput.TextArea(self.context.rptObj, text, width, rows, placeholder, background_color, htmlCode, dfltOptions, profile)
     self.context.register(html_t_area)
     return html_t_area
 
-  def autocomplete(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
-                    options=None, attrs=None, profile=None):
+  def autocomplete(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -342,22 +326,20 @@ class Inputs(object):
     ----------
     :param text:
     :param placeholder:
-    :param size:
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
     """
-    html_input = html.HtmlInput.AutoComplete(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
-                                             options or {}, attrs or {}, profile)
+    options = options or {}
+    attrs = attrs or {}
+    html_input = html.HtmlInput.AutoComplete(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.context.register(html_input)
     return html_input
 
-  def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
-            options=None, attrs=None, profile=None):
+  def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -374,11 +356,9 @@ class Inputs(object):
     ----------
     :param text:
     :param placeholder:
-    :param size:
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
@@ -386,10 +366,9 @@ class Inputs(object):
     :rtype: html.HtmlInput.Input
     :return:
     """
-    return self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    return self.d_text(text, placeholder, width, height, htmlCode, options, attrs, profile)
 
-  def hidden(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
-            options=None, attrs=None, profile=None):
+  def hidden(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -406,23 +385,20 @@ class Inputs(object):
     ----------
     :param text:
     :param placeholder:
-    :param size:
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
 
     :rtype: html.HtmlInput.Input
     """
-    input = self.d_text(text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    input = self.d_text(text, placeholder, width, height, htmlCode, options, attrs, profile)
     input.style.css.display = None
     return input
 
-  def checkbox(self, flag, label="", group_name=None, width=(None, "%"), height=(None, "px"),
-               htmlCode=None, filter=None, options=None, attrs=None, profile=None):
+  def checkbox(self, flag, label="", group_name=None, width=(None, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -441,18 +417,18 @@ class Inputs(object):
     :param width:
     :param height:
     :param htmlCode:
-    :param filter:
     :param options:
     :param attrs:
     :param profile:
     """
+    options = options or {}
+    attrs = attrs or {}
     html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, label, group_name, width, height, htmlCode,
-                                         filter, options or {}, attrs or {}, profile)
+                                         options, attrs, profile)
     self.context.register(html_coech)
     return html_coech
 
-  def radio(self, flag, label=None, group_name=None, icon=None, width=(None, "%"), height=(None, "px"),
-            htmlCode=None, helper=None, options=None, profile=None):
+  def radio(self, flag, label=None, group_name=None, icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -576,7 +552,7 @@ class Inputs(object):
     self.context.register(html_s)
     return html_s
 
-  def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, filter=None,
+  def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
             options=None, attrs=None, profile=None):
     """
     Description:
@@ -598,7 +574,7 @@ class Inputs(object):
     """
     label = self.context.rptObj.ui.texts.label(label).css({"display": 'block', 'text-align': 'left', 'margin-top': '10px',
                                                            "position": "absolute", "z-index": '20px', "font-size": '14px'})
-    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, filter,
+    html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode,
                                       options or {}, attrs or {}, profile).css({"margin-top": '10px'})
     div = self.context.rptObj.ui.div([label, html_input])
     div.input = html_input

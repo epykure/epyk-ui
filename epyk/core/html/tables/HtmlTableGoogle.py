@@ -10,7 +10,7 @@ class Table(Html.Html):
 
   def __init__(self, report, records, width, height, htmlCode, options, profile):
     data, columns, self.__config = [], [], None
-    super(Table, self).__init__(report, records, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Table, self).__init__(report, records, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = options
 
   @property

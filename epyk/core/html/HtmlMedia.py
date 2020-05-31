@@ -22,7 +22,7 @@ class Media(Html.Html):
       if not os.path.exists(file_path):
         raise Exception("Missing file %s in %s" % (video, os.path.join(report.run.local_path, "static")))
 
-    super(Media, self).__init__(report, {'path': path, 'video': video}, code=htmlCode,
+    super(Media, self).__init__(report, {'path': path, 'video': video}, htmlCode=htmlCode,
                                 css_attrs={"width": width, 'height': height}, profile=profile)
     self._jsStyles = options
     self.add_options(name="type", value='video/%s' % video.split(".")[-1])
@@ -67,7 +67,7 @@ class Audio(Html.Html):
       if not os.path.exists(file_path):
         raise Exception("Missing file %s in %s" % (audio, os.path.join(report.run.local_path, "static")))
 
-    super(Audio, self).__init__(report, {'path': path, 'audio': audio}, css_attrs={"width": width, 'height': height}, code=htmlCode, profile=profile)
+    super(Audio, self).__init__(report, {'path': path, 'audio': audio}, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
     self._jsStyles = options
     self.add_options(name="type", value='audio/%s' % {'mp3': 'mpeg'}.get(audio.split(".")[-1].lower(), audio.split(".")[-1]))
     self.set_attrs(name="controls", value="controls")
@@ -103,7 +103,7 @@ class Youtube(Html.Html):
   name = 'Youtube Video'
 
   def __init__(self, report, link, width, height, htmlCode, profile, options):
-    super(Youtube, self).__init__(report, link, css_attrs={"width": width, 'height': height}, code=htmlCode, profile=profile)
+    super(Youtube, self).__init__(report, link, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
     self._jsStyles = options
     self._jsStyles['src'] = link
 

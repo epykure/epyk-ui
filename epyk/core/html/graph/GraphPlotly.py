@@ -17,7 +17,7 @@ class Chart(Html.Html):
 
   def __init__(self,  report, width, height, options, htmlCode, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
-    super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Chart, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self._d3, self._attrs, self._traces, self._layout, self._options = None, None, [], None, None
     self._options_init = options
     self.layout.autosize = True

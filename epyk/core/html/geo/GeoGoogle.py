@@ -13,7 +13,7 @@ class ChartGeoGoogle(Html.Html):
   js_fncs_opts = ('center', 'mapTypeId')
 
   def __init__(self,  report, width, height, options, htmlCode, profile):
-    super(ChartGeoGoogle, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(ChartGeoGoogle, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.style.css.margin = "10px 0"
     self.__options = OptGoogle.OptionMaps(self, options)
 

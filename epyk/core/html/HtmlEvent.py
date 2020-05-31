@@ -599,7 +599,7 @@ class Filters(Html.Html):
   requirements = ('font-awesome', )
 
   def __init__(self, report, items, width, height, htmlCode, helper, options, profile):
-    super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
+    super(Filters, self).__init__(report, items, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.__options = OptList.OptionsTagItems(self, options)
     self._jsStyles['delete'] = 'function(){this.parentNode.remove()}'
     self.input = self._report.ui.input()

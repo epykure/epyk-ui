@@ -77,7 +77,7 @@ class Comments(Html.Html):
     reply_table = 'system_comments_replies'
     self.privacy = 'public' if not db_service else db_service.get('privacy', 'public')
     self.code = htmlCode
-    super(Comments, self).__init__(report, recordset, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
+    super(Comments, self).__init__(report, recordset, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.css({"clear": 'both', "display": "inline-block", 'margin': '5px 0', 'padding': '0'})
     self.pmts, self._height, self.readonly = pmts, "%s%s" % (height[0], height[1]), readonly
     self.add_title(title, options={'content_table': False})
@@ -223,7 +223,7 @@ class Chat(Html.Html):
       rec["time"] = str(rec["lst_mod_dt"]).split(".")[0]
       recordSet.append(rec)
     self.privacy = 'public' if not dbService else dbService.get('privacy', 'public')
-    super(Chat, self).__init__(report, recordSet, css_attrs={"width": width}, code=htmlCode, profile=profile)
+    super(Chat, self).__init__(report, recordSet, css_attrs={"width": width}, htmlCode=htmlCode, profile=profile)
     # Add internal HTML components
     self.add_title(title, options={'content_table': False})
     self._report.jsImports.add('socket.io')
@@ -296,7 +296,7 @@ class Bot(Html.Html):
   name = 'Bot'
 
   def __init__(self, report, htmlCode, name, pmts, dbService, width, height, httpCodes, profile, botOptions):
-    super(Bot, self).__init__(report, [], css_attrs={"width": width}, code=htmlCode, profile=profile)
+    super(Bot, self).__init__(report, [], css_attrs={"width": width}, htmlCode=htmlCode, profile=profile)
     self.css({"position": 'fixed', "bottom": 0, 'margin': '10px', 'background': self._report.theme.greys[0],
               "right": 0, "display": "block", "padding": "5px", 'border': "1px solid %s" % self._report.theme.success[1],
               "z-index": 200})
@@ -343,7 +343,7 @@ class Alert(Html.Html):
   def __init__(self, report, title, value, category, width, height, close_button=False,
                background_color=None, color='black', htmlCode=None, dataSrc=None, profile=False):
     super(Alert, self).__init__(report, {'title': title, 'value': value, 'closure': close_button},
-                                css_attrs={"width": width, 'height': height}, code=htmlCode, profile=profile)
+                                css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
     self.close_button = close_button
     self.attr["class"].add('alert')
     self.attr["class"].add('alert-%s' % category.lower())
@@ -375,7 +375,7 @@ class News(Html.Html):
   requirements = ('jqueryui', )
 
   def __init__(self, report, title, value, label, link_script, icon, width, height, htmlCode, profile):
-    super(News, self).__init__(report, value, css_attrs={"width": width, 'height': height}, code=htmlCode, profile=profile)
+    super(News, self).__init__(report, value, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
     self.css({"padding": '5px', "display": 'none', 'position': 'fixed', 'border': '1px solid %s' % self._report.theme.success[1],
               "background": self._report.theme.greys[0], 'bottom': '20px', 'right': '20px'})
     # Add internal HTML component to the new feed

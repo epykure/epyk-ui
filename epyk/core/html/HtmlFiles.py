@@ -110,7 +110,7 @@ class DropConfiguration(Html.Html):
   name, inputType = 'Drop Configuration Area', "file"
 
   def __init__(self, report, vals, htmlCode, url, tablename):
-    super(DropConfiguration, self).__init__(report, vals, code=htmlCode)
+    super(DropConfiguration, self).__init__(report, vals, htmlCode=htmlCode)
     self.tooltip('Drop your files here', location='bottom')
     self.code = htmlCode
     for action in ["dragover", "dragleave", "dragenter"]:

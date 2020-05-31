@@ -133,7 +133,7 @@ class DropDown(Html.Html):
 
   def __init__(self, report, data, text, width, height, htmlCode, helper, options, profile):
     self.__options = {}
-    super(DropDown, self).__init__(report, text, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+    super(DropDown, self).__init__(report, text, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self._vals, self.text = data, text
     self.css({'padding': 0, 'margin': "1px", "display": "block", "z-index": 10, 'cursor': 'pointer', 'position': 'relative'})
     self._jsStyles = {"a": {'text-decoration': 'none', 'line-height': '%spx' % Defaults.LINE_HEIGHT, 'padding': '0 10px', "width": '%spx' % options.get("width")},

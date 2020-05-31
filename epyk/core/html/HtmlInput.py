@@ -29,7 +29,7 @@ class Output(Html.Html):
 class Input(Html.Html):
   name = 'Input'
 
-  def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+  def __init__(self, report, text, placeholder, width, height, htmlCode, options, attrs, profile):
     super(Input, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'},
                                 profile=profile, options=options)
     value = text['value'] if isinstance(text, dict) else text
@@ -171,8 +171,8 @@ class Input(Html.Html):
 class InputRadio(Input):
   name = 'Input'
 
-  def __init__(self, report, flag, group_name, placeholder, width, height, htmlCode, filter, options, attrs, profile):
-    super(InputRadio, self).__init__(report, "", placeholder, width, height, htmlCode, filter, options, attrs, profile)
+  def __init__(self, report, flag, group_name, placeholder, width, height, htmlCode, options, attrs, profile):
+    super(InputRadio, self).__init__(report, "", placeholder, width, height, htmlCode, options, attrs, profile)
     self.set_attrs({"type": 'radio'})
     if flag:
       self.set_attrs({"checked": json.dumps(flag)})
@@ -184,10 +184,10 @@ class AutoComplete(Input):
   name = 'Input Time'
   requirements = ('jqueryui', )
 
-  def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+  def __init__(self, report, text, placeholder, width, height, htmlCode, options, attrs, profile):
     if text is None:
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
-    super(AutoComplete, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    super(AutoComplete, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options = OptInputs.OptionAutoComplete(self, options)
 
   @property
@@ -234,10 +234,10 @@ class InputTime(Input):
   name = 'Input Time'
   requirements = ('timepicker', )
 
-  def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
+  def __init__(self, report, text, placeholder, width, height, htmlCode, options, attrs, profile):
     if text is None:
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
-    super(InputTime, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+    super(InputTime, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options = OptInputs.OptionsTimePicker(self, options)
 
   @property
@@ -340,8 +340,8 @@ class InputDate(Input):
   requirements = ('jqueryui', )
   name = 'Input Time'
 
-  def __init__(self, report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile):
-    super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+  def __init__(self, report, records, placeholder, width, height, htmlCode, options, attrs, profile):
+    super(InputDate, self).__init__(report, records, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options = OptInputs.OptionsDatePicker(self, options)
 
   @property
@@ -454,8 +454,8 @@ class InputDate(Input):
 class InputInteger(Input):
   name = 'Input Number'
 
-  def __init__(self, report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile):
-    super(InputInteger, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+  def __init__(self, report, text, placeholder, width, height, htmlCode, options, attrs, profile):
+    super(InputInteger, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options = OptInputs.OptionsInputInteger(self, options)
 
   @property
@@ -480,8 +480,8 @@ class InputInteger(Input):
 class InputRange(Input):
   name = 'Input Range'
 
-  def __init__(self, report, text, min, max, step, placeholder, width, height, htmlCode, filter, options, attrs, profile):
-    super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, filter, options, attrs, profile)
+  def __init__(self, report, text, min, max, step, placeholder, width, height, htmlCode, options, attrs, profile):
+    super(InputRange, self).__init__(report, text, placeholder, width, height, htmlCode, options, attrs, profile)
     self.__options = OptInputs.OptionsInputRange(self, options)
     #
     self.input = report.ui.inputs.input(text, width=(None, "px"), placeholder=placeholder).css({"vertical-align": 'middle'})
@@ -529,7 +529,7 @@ class Field(Html.Html):
   name = 'Field'
 
   def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, profile):
-    super(Field, self).__init__(report, "", code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Field, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     # Add the component predefined elements
     self.add_label(label)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
@@ -752,7 +752,7 @@ class FieldSelect(Field):
 class Checkbox(Html.Html):
   name = 'Checkbox'
 
-  def __init__(self, report, flag, label, group_name, width, height, htmlCode, filter, options, attrs, profile):
+  def __init__(self, report, flag, label, group_name, width, height, htmlCode, options, attrs, profile):
     super(Checkbox, self).__init__(report, {"value": flag}, htmlCode=htmlCode, css_attrs={"width": width, "height": height},
                                    profile=profile, options=options)
     self.set_attrs(attrs={"type": "checkbox"})

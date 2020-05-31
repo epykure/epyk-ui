@@ -21,7 +21,7 @@ class PivotTable(Html.Html):
   js_fncs_opts = ('renderer', 'aggregator', 'onRefresh', 'filter', 'dataClass', 'onRefresh', 'renderers')
 
   def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
-    super(PivotTable, self).__init__(report, recordSet, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+    super(PivotTable, self).__init__(report, recordSet, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     # Add the extra HTML components
     self.add_helper(helper)
     self.__options = OptTable.OptionsPivot(self, options)

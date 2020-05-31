@@ -45,7 +45,7 @@ class Chart(Html.Html):
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     self.height = height[0]
-    super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height},
+    super(Chart, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height},
                                 profile=profile)
     self._d3, self._datasets, self._options, self._data_attrs, self._attrs = None, [], None, {}, {}
     self._options_init = options

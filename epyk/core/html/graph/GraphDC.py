@@ -9,7 +9,7 @@ class Chart(Html.Html):
   requirements = ('dc', 'crossfilter')
 
   def __init__(self,  report, width, height, title, options, htmlCode, profile):
-    super(Chart, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Chart, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.style.css.margin = "10px 0"
 
   @property

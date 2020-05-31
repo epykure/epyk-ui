@@ -9,7 +9,7 @@ class Script(Html.Html):
   name = 'D3 Script'
 
   def __init__(self, report, data, width, height, htmlCode, options, profile):
-    super(Script, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Script, self).__init__(report, data, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__loader = ""
     self._jsStyles.update(options)
     self._jsStyles.update({"wdith": width[0], "height": height[0]})

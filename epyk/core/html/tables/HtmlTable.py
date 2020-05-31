@@ -61,7 +61,7 @@ class Bespoke(Html.Html):
     self._fields = rows + cols
     for rec in recordSet:
       data.append([rec[c] for c in self._fields])
-    super(Bespoke, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Bespoke, self).__init__(report, data, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.items = None
     self.css({"text-align": 'center', 'border-collapse': 'collapse'})
     self._style = {"rows": {"padding": '5px 0'}, "header": {"padding": '5px 0'}}
@@ -157,7 +157,7 @@ class Excel(Html.Html):
 
   def __init__(self, report, recordSet, cols, rows, title, width, height, cellwidth, delimiter, htmlCode):
     self.recordSet, self.delimiter = recordSet, delimiter
-    super(Excel, self).__init__(report, [], code=htmlCode, width=width[0], widthUnit=width[1], height=height[0], heightUnit=height[1])
+    super(Excel, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height})
     self._jsStyles = {'header': rows + cols, 'cellwidth': cellwidth}
     self.css({'display': 'inline-block', 'overflow': 'auto', 'padding': 0, 'vertical-align': 'top'})
     self.add_title(title, options={'content_table': False})

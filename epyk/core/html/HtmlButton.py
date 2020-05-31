@@ -25,7 +25,7 @@ class Button(Html.Html):
     for obj in text:
       if hasattr(obj, 'inReport'):
         obj.options.managed = False
-    super(Button, self).__init__(report, text, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+    super(Button, self).__init__(report, text, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self.add_icon(icon)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
@@ -151,6 +151,7 @@ class Button(Html.Html):
     return self
 
   def properties(self):
+    print(self.get_attrs(pyClassNames=self.style.get_classes()))
     return {"tag": self.name, 'selector': self.htmlId}
 
   def __str__(self):
@@ -473,7 +474,7 @@ class IconEdit(Html.Html):
   cssCls = ["fa-layers", "fa-fw"]
 
   def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, profile):
-    super(IconEdit, self).__init__(report, '', code=htmlCode, profile=profile,
+    super(IconEdit, self).__init__(report, '', htmlCode=htmlCode, profile=profile,
                                    css_attrs={"width": width, 'height': height, 'float': 'left' if position is None else position})
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -490,7 +491,7 @@ class Buttons(Html.Html):
   name = 'Buttons'
 
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
-    super(Buttons, self).__init__(report, [], code=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
+    super(Buttons, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     for b in data:
       bt = report.ui.button(b, options={"group": "group_%s" % self.htmlId}).css({"margin-right": '5px'})
       bt.css(options.get("button_css", {}))
@@ -556,7 +557,7 @@ class ButtonMenu(Html.Html):
   name = 'Button Menu'
 
   def __init__(self, report, record, text, icon, width, height, htmlCode, tooltip, profile, options):
-    super(ButtonMenu, self).__init__(report, record, code=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+    super(ButtonMenu, self).__init__(report, record, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self.button = report.ui.button(text, icon, width, height, htmlCode, tooltip, profile, options)
     self.button.options.managed = False
     self.set_attrs(name="data-count", value=0)

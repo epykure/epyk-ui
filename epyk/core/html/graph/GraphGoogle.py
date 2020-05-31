@@ -10,7 +10,7 @@ class Chart(Html.Html):
 
   def __init__(self,  report, data, width, height, htmlCode, options, profile):
     self.height = height[0]
-    super(Chart, self).__init__(report, data, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Chart, self).__init__(report, data, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self._d3, self._chart, self._datasets, self._options, self._data_attrs, self._attrs = None, None, [], None, {}, {}
     self.__options = options
     self.style.css.margin_top = 10

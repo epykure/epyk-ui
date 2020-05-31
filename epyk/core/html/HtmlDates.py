@@ -154,7 +154,7 @@ class CountDownDate(Html.Html):
   name = 'Countdown'
 
   def __init__(self, report, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile):
-    super(CountDownDate, self).__init__(report, yyyy_mm_dd, code=htmlCode, profile=profile,
+    super(CountDownDate, self).__init__(report, yyyy_mm_dd, htmlCode=htmlCode, profile=profile,
                                         css_attrs={"width": width, "height": height})
     self._jsStyles = {"delete": True}
     self.timeInMilliSeconds = timeInMilliSeconds

@@ -25,7 +25,7 @@ class Label(Html.Html):
       if hasattr(obj, 'options'):
         obj.options.managed = False
     super(Label, self).__init__(report, text, css_attrs={"width": width, "height": height, 'color': color, 'text-align': align},
-                                code=htmlCode, profile=profile)
+                                htmlCode=htmlCode, profile=profile)
     self.__options = OptText.OptionsText(self, options or {})
     self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block', 'line-height': '23px',
               'vertical-align': 'middle', 'text-align': 'left'})
@@ -124,7 +124,7 @@ class Span(Html.Html):
   def __init__(self, report, text="", color=None, align=None, width=None, height=None, htmlCode=None, tooltip=None,
                options=None, profile=None):
     super(Span, self).__init__(report, text, css_attrs={"width": width, "height": height, "color": color, 'text-align': align},
-                               code=htmlCode, profile=profile)
+                               htmlCode=htmlCode, profile=profile)
     self.css({'line-height': '%spx' % Default_html.LINE_HEIGHT, 'margin': '0 5px', 'display': 'inline-block', 'vertical-align': 'middle'})
     self.__options = OptText.OptionsText(self, options)
     if tooltip is not None:
@@ -293,7 +293,7 @@ class Text(Html.Html):
 
   def __init__(self, report, text, color, align, width, height, htmlCode, tooltip, options, helper, profile):
     super(Text, self).__init__(report, text, css_attrs={"color": color, "width": width, "height": height},
-                               code=htmlCode, profile=profile)
+                               htmlCode=htmlCode, profile=profile)
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
     self._jsStyles = {"reset": self.options.reset, "markdown": self.options.markdown, "maxlength": self.options.limit_char}
@@ -406,7 +406,7 @@ class Pre(Html.Html):
   name = 'Pre formatted text'
 
   def __init__(self, report, vals, color, width, height, htmlCode, dataSrc, options, helper, profile):
-    super(Pre, self).__init__(report, vals, code=htmlCode, css_attrs={"width": width, 'height': height, 'color': color},
+    super(Pre, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, 'height': height, 'color': color},
                               profile=profile)
     self.__options = OptText.OptionsText(self, options)
     self.css({"text-align": 'left'})
@@ -493,7 +493,7 @@ class Paragraph(Html.Html):
         else:
           tmpText.append(t)
       options["classes"].append(jsAttr)
-    super(Paragraph, self).__init__(report, tmpText, code=htmlCode, css_attrs={'color': color, "width": width,
+    super(Paragraph, self).__init__(report, tmpText, htmlCode=htmlCode, css_attrs={'color': color, "width": width,
            "height": height, "background-color": background_color}, profile=profile)
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
@@ -538,7 +538,7 @@ class BlockQuote(Html.Html):
   name = 'Block quotation'
 
   def __init__(self, report, text, author, color, width, height, htmlCode, helper, options, profile):
-    super(BlockQuote, self).__init__(report, {'text': text, 'author': author}, code=htmlCode, profile=profile,
+    super(BlockQuote, self).__init__(report, {'text': text, 'author': author}, htmlCode=htmlCode, profile=profile,
                                      css_attrs={"width": width, "height": height, 'color': color, "white-space": 'nowrap'})
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
@@ -572,7 +572,7 @@ class Title(Html.Html):
       for cssAttr in cssStyles.group(1).split(","):
         cssKey, cssVal = cssAttr.split(":")
         options[cssKey.strip()] = cssVal.strip()
-    super(Title, self).__init__(report, text, code=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Title, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptText.OptionsTitle(self, options)
     self._name, self.level, self.picture = name, level, picture
     self.add_icon(icon)
@@ -669,7 +669,7 @@ class Numeric(Html.Html):
   requirements = ('accounting', )
 
   def __init__(self, report, number, title, label, icon, color, tooltip, htmlCode, options, helper, width, profile):
-    super(Numeric, self).__init__(report, number, code=htmlCode, profile=profile, css_attrs={"width": width, "color": color})
+    super(Numeric, self).__init__(report, number, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "color": color})
     # Add the components label and icon
     self.add_label(label, css={"float": None, "width": 'none'})
     self.add_icon(icon)
@@ -754,7 +754,7 @@ class Highlights(Html.Html):
   requirements = ('bootstrap', )
 
   def __init__(self, report, text, title, icon, type, color, width, height, htmlCode, helper, profile):
-    super(Highlights, self).__init__(report, text, css_attrs={"width": width, "height": height}, code=htmlCode, profile=profile)
+    super(Highlights, self).__init__(report, text, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
     # Add the components title and icon
