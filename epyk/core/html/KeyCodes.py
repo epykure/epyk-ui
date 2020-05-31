@@ -49,7 +49,6 @@ class KeyCode(object):
     self.__events_per_source[source_event].setdefault(tag, {}).setdefault("content", []).extend(jsFnc)
     self.__events_per_source[source_event][tag]['profile'] = profile
 
-
   def enter(self, jsFnc, profile=False, reset=False, source_event=None):
     """
     Description:
@@ -232,6 +231,21 @@ class KeyCode(object):
     :param source_event: String. Optional. The source component for the event
     """
     self.key(46, jsFnc, profile, reset, source_event)
+
+  def escape(self, jsFnc, profile=False, reset=False, source_event=None):
+    """
+    Description:
+    -----------
+    Keycode 27, the escape key
+
+    Attributes:
+    ----------
+    :param jsFnc: Array. Tje Javascript events
+    :param profile:
+    :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
+    """
+    self.key(27, jsFnc, profile, reset, source_event)
 
   def get_event(self):
     """
