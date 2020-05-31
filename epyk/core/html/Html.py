@@ -156,7 +156,6 @@ class Html(object):
 
     self._report.components[self.htmlCode] = self
     self._vals = vals
-    self.jsVal = "%s_data" % self.__htmlCode # to be reviewed
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
 
   def __add__(self, component):
@@ -360,7 +359,6 @@ Attributes:
         self.prepend_child(self.icon)
       else:
         self.append_child(self.icon)
-      #elf.icon.options.managed = False
       if css is not None:
         self.icon.css(css)
     return self
