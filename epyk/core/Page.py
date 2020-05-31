@@ -203,6 +203,33 @@ class Report(object):
     """
     return data.Data.DataSrc(self)
 
+  def register(self, ext_components):
+    """
+    Description:
+    ------------
+
+      This function allows you to register external epyk objects (namely coming from Pyk Reports)
+      by registering them you this will engrave the object within your report
+      The example below will add obj1 and obj2 from an external pyk report previously required,
+      then create a div and then add obj3 from an external file
+
+    Usage:
+    ------
+
+      rptObj.register([obj1, obj2])
+      rptObj.ui.div('this is a div')
+      rptObj.register(obj3)
+    """
+    if type(ext_components) != list:
+      ext_components = [ext_components]
+
+    for comp in ext_components:
+
+      if comp.htmlCode in self.components:
+        raise Exception("Duplicated Html Code %s in the script !" % comp.htmlCode)
+
+      self.components[comp.htmlCode] = comp
+
   def framework(self, name):
     """
     Description:
