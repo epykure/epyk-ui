@@ -48,6 +48,8 @@ class JsDomEvents(object):
 
 			https://www.w3schools.com/jsref/event_onblur.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -755,6 +757,39 @@ class JsDoms(JsObject.JsObject):
     if getattr(self, '_jq', None) is None:
       self._jq = JsQuery.JQuery(self._report, selector="jQuery('#%s')" % self._id, setVar=False)
     return self._jq
+
+  def addEventListener(self, event, jsFncs):
+    """
+    Description:
+    ------------
+    The addEventListener() method attaches an event handler to the specified element.
+
+    Related Pages:
+
+			https://www.w3schools.com/jsref/met_element_addeventlistener.asp
+
+    Attributes:
+    ----------
+    :param event:
+    :param jsFncs:
+    """
+    self._js.append('addEventListener("%s", function(){%s})' % (event, ";".join(JsUtils.jsConvertFncs(jsFncs))))
+    return self
+
+  def dispatchEvent(self, event):
+    """
+    Description:
+    ------------
+    Dispatches an Event at the specified EventTarget, (synchronously) invoking the affected EventListeners in the appropriate order.
+    The normal event processing rules (including the capturing and optional bubbling phase) also apply to events dispatched manually with dispatchEvent().
+
+    Attributes:
+    ----------
+    :param event: event is the Event object to be dispatched.
+    """
+    event = JsUtils.jsConvertData(event, None)
+    self._js.append('dispatchEvent(%s)' % event)
+    return self
 
   def addOnReady(self, jsFncs):
     """

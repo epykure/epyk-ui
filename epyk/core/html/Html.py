@@ -775,6 +775,29 @@ http://api.jquery.com/css/
       self._report._props['js']['onReady'].add("%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
     return self
 
+  @packages.packageImport('jqueryui', 'jqueryui')
+  def draggable(self, options=None, source_event=None):
+    """
+    Description:
+    -----------
+    Allow elements to be moved using the mouse.
+
+    Related Pages:
+
+			https://jqueryui.com/draggable/
+
+    Attributes:
+    ----------
+    :param options: Dictionary. Optional. The Jquery UI draggable options
+    :param source_event: String. Optional. The source DOM object for the draggable property
+    """
+    if options is not None:
+      options = JsUtils.jsConvertData(options, None)
+      self._browser_data['component_ready'].append("%s.draggable(%s)" % (source_event or self.dom.jquery_ui.varId, options))
+    else:
+      self._browser_data['component_ready'].append("%s.draggable()" % (source_event or self.dom.jquery_ui.varId))
+    return self
+
   def add_options(self, options=None, name=None, value=None):
     """
     Description:

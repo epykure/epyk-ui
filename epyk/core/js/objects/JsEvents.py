@@ -13,6 +13,47 @@ from epyk.core.js.objects.JsData import JsClipboardData
 
 class Event(object):
 
+  def getEvent(self, varName):
+    return JsObject.JsObject.get(varName)
+
+  def createEvent(self, varName, type='Event'):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+			https://developer.mozilla.org/fr/docs/Web/API/Document/createEvent
+
+    Attributes:
+    ----------
+    :param type:
+    :param varName:
+    """
+    return "var %s = document.createEvent('%s')" % (varName, type)
+
+  def initEvent(self, name, varName=None, bubbles=True, cancelable=True):
+    """
+    Description:
+    ------------
+    The Event.initEvent() method is used to initialize the value of an event created using Document.createEvent().
+
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Event/initEvent
+
+    Attributes:
+    ----------
+    :param name:
+    :param bubbles:
+    :param cancelable:
+    """
+    name = JsUtils.jsConvertData(name, None)
+    bubbles = JsUtils.jsConvertData(bubbles, None)
+    cancelable = JsUtils.jsConvertData(cancelable, None)
+    varName = varName or "document.createEvent('Event')"
+    return JsObject.JsObject.get("%s.initEvent(%s, %s, %s)" % (varName, name, bubbles, cancelable))
+
   def cancelBubble(self):
     """
     Description:
