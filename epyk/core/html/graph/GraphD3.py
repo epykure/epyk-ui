@@ -42,7 +42,7 @@ class Script(Html.Html):
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
         js_options.append("'%s': {%s}" % (k, ", ".join(row)))
       else:
-        if k in self.js_fncs_opts or str(v).strip().startswith("function"):
+        if self.options.isJsContent(k) or str(v).strip().startswith("function"):
           js_options.append("%s: %s" % (k, v))
         else:
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))

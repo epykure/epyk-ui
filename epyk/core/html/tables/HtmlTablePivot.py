@@ -18,7 +18,6 @@ from epyk.core.css.styles import GrpClsTable
 class PivotTable(Html.Html):
   requirements = ('pivot', )
   name = 'Pivot Table'
-  js_fncs_opts = ('renderer', 'aggregator', 'onRefresh', 'filter', 'dataClass', 'onRefresh', 'renderers')
 
   def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
     super(PivotTable, self).__init__(report, recordSet, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
@@ -60,23 +59,6 @@ class PivotTable(Html.Html):
       if (options.showUI){%(jqId)s.pivotUI(data, options)}
       else {%(jqId)s.pivot(data, options)}
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
-
-  # def build(self, data=None, options=None, profile=False):
-  #   jsAggFncs = "{%s}" % ", ".join(["'%s': function(attributeArray) {return function(data, rowKey, colKey) {return %s}}" % (name, aggFncs.toJs(self.aggOptions)) for name, aggFncs in self.__aggFncs.items()])
-  #   preFnc, endFnc = "", ""
-  #   return """ %(preFnc)s;
-  #     var tpl = $.pivotUtilities.aggregatorTemplates; window['options_%(htmlCode)s'] = %(options)s; %(addinOptions)s;
-  #     window['options_%(htmlCode)s'].aggregators = %(agg)s;
-  #     window['options_%(htmlCode)s'].onRefresh = function (config) {
-  #         %(jqId)s.find('.pvtVal').each(function( index, items ) {
-  #           if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
-  #         %(jqId)s.find('.pvtTotal').each(function( index, items ) {
-  #           if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
-  #         %(jqId)s.find('.pvtGrandTotal').each(function( index, items ) {
-  #           if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
-  #     };
-  #     %(jqId)s.pivotUI([], window['options_%(htmlCode)s'])
-  #     """ % {'jqId': self.jqId, 'options': json.dumps(self.__pivot), 'agg': jsAggFncs, 'htmlCode': self.htmlCode, 'addinOptions': ";".join(self.addinOptions), "preFnc": preFnc}
 
   def sub_total(self):
     """

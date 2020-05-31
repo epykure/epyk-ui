@@ -72,7 +72,7 @@ class Comments(Html.Html):
     if httpCodes is None:
       self.httpCodeStr = ''
     else:
-      self.httpCodeStr = '#%s' % '#'.join([report.http[code] for code in httpCodes])
+      self.httpCodeStr = '#%s' % '#'.join([report.inputs[code] for code in httpCodes])
     com_table = 'system_comments'
     reply_table = 'system_comments_replies'
     self.privacy = 'public' if not db_service else db_service.get('privacy', 'public')

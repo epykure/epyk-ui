@@ -164,8 +164,8 @@ class Checkbox(Html.Html):
   requirements = ('font-awesome', 'bootstrap', 'jquery')
 
   def __init__(self, rptObj, records, title, color, width, height, align, htmlCode, tooltip, icon, options, profile):
-    if rptObj.http.get(htmlCode) is not None:
-      selectedVals = set(rptObj.http[htmlCode].split(","))
+    if rptObj.inputs.get(htmlCode) is not None:
+      selectedVals = set(rptObj.inputs[htmlCode].split(","))
       for rec in records:
         if rec["value"] in selectedVals:
           rec["checked"] = True

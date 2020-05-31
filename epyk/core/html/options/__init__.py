@@ -15,6 +15,7 @@ class Options(DataClass):
 
   def __init__(self, report, attrs=None, options=None):
     super(Options, self).__init__(report, attrs, options)
+    self.js_type = {}
     if attrs is not None:
       for k, v in attrs.items():
         if hasattr(self, k):
@@ -75,6 +76,19 @@ class Options(DataClass):
     if not group in self._report._jsStyles:
       self._report._jsStyles[group] = {}
     self._report._jsStyles[group][name or sys._getframe().f_back.f_code.co_name] = value
+
+  def isJsContent(self, property_name):
+    """
+    Description:
+    ------------
+    Check if the content of a property is defined to always be a JavaScript fragment.
+    Thus the frameowrk will not convert it to a Json content
+
+    Attributes:
+    ----------
+    :param property_name:
+    """
+    return self.js_type.get(property_name, False)
 
   @property
   def managed(self):

@@ -28,21 +28,22 @@ class Report(object):
   showNavMenu, withContainer = False, False
   ext_packages = None # For extension modules
 
-  def __init__(self):
+  def __init__(self, inputs=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param inputs: Dictionary. The global input data for the defined components in the page.
+                               Passing data for a given component with an htmlCode will override the value.
+    """
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
     self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet(), 'datasets': {}}, 'context': {'framework': 'JS'}}, None, None, None
     self.components = collections.OrderedDict() # Components for the entire page
-    self.start_time = time.time()
-
-    self.jsOnLoad, self.http = [], {} # to be deleted
-    self._propagate = []
-
+    self.start_time, self.inputs, self._propagate = time.time(), inputs or {}, []
     self._scroll, self._contextMenu = set(), {}
     self.logo, self._dbSettings, self.dbsDef, self._cssText, self._jsText = None, None, {}, [], [] # to be reviewed
-
-    #
-    self.jsOnLoadFnc, self.jsWindowLoadFnc = OrderedSet(), OrderedSet() # to be deleted
-    self.jsOnLoadEvtsFnc = OrderedSet() # to be deleted
 
     self.jsImports, self.jsLocalImports, self.cssImport, self.cssLocalImports = set(), set(), set(), set()
 

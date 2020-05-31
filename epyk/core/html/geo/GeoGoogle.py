@@ -10,7 +10,6 @@ from epyk.core.html.options import OptGoogle
 class ChartGeoGoogle(Html.Html):
   name = 'Google Chart'
   requirements = ('google-maps', )
-  js_fncs_opts = ('center', 'mapTypeId')
 
   def __init__(self,  report, width, height, options, htmlCode, profile):
     super(ChartGeoGoogle, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
@@ -58,7 +57,7 @@ class ChartGeoGoogle(Html.Html):
 
     js_options = []
     for k, v in self._jsStyles.items():
-      if k in self.js_fncs_opts or str(v).strip().startswith("function"):
+      if self.options.isJsContent(k) or str(v).strip().startswith("function"):
         js_options.append("%s: %s" % (k, v))
       else:
         js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
