@@ -440,20 +440,6 @@ class Components(object):
     """
     return CompTags.Tags(self)
 
-#   def register(self, html_comp):
-#     """
-#     Description:
-#     ------------
-#     Internal function to register a HTML component based on its memory id.
-#
-#     Related Pages:
-# :param html_comp: The html component
-#
-#     return the html component
-#     """
-#     self.rptObj.components[html_comp.htmlCode] = html_comp
-#     return html_comp
-
   def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"), options=None, profile=None):
     """
     Description:
