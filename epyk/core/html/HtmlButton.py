@@ -151,7 +151,7 @@ class Button(Html.Html):
     return self
 
   def properties(self):
-    return {"tag": self.name}
+    return {"tag": self.name, 'selector': self.htmlId}
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])

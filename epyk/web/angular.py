@@ -6,6 +6,7 @@ Draft version
 from epyk.core import Page
 from epyk.core.js import Imports
 
+import sys
 import re
 import os
 import json
@@ -778,10 +779,9 @@ class App(object):
       os.makedirs(module_path)
 
     self.spec.export(path=path)
-    for objId in self._report.component.values():
-      if objId.options.managed:
-        print(objId.attr)
-        print(objId)
+    for component in self._report.components.values():
+      if component.options.managed:
+        print(component.properties())
 
     with open(os.path.join(module_path, "%s.ts" % self.name), "w") as f:
       for comp, path in self.imports.items():
@@ -922,7 +922,7 @@ class Angular(object):
     app_name = app_name or self._app_name
     return NG(self._app_path, app_name)
 
-  def page(self, selector, name, report=None):
+  def page(self, selector=None, name=None, report=None, auto_route=False):
     """
     Description:
     ------------
@@ -936,10 +936,16 @@ class Angular(object):
     :param selector: String. The url route for this report in the Angular app
     :param name: String. The component classname in the Angular framework
     """
+    if name is None:
+      script = os.path.split(sys._getframe().f_back.f_code.co_filename)[1][:-3]
+      name = "".join([s.capitalize() for s in script.split("_")])
+      if selector is None:
+        selector = script.replace("_", "-")
     report = report or Page.Report()
     report.framework("ANGULAR")
     self.__page = App(self._app_path, self._app_name, selector, name, report=report)
-    self.route.add(self.__page.className, self.__page.alias, self.__page.path)
+    if auto_route:
+      self.route.add(self.__page.className, self.__page.alias, self.__page.path)
     return self.__page
 
   def ng_modules(self, app_name=None, file_name=None):
