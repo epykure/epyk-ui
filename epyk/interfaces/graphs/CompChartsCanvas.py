@@ -31,5 +31,4 @@ class Canvas(object):
     if not isinstance(width, tuple):
       width = (width, "px")
     html_svg = graph.GraphCanvas.Canvas(self.parent.context.rptObj, width, height)
-    self.parent.context.register(html_svg)
     return html_svg

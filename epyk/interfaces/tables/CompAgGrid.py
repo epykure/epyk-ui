@@ -31,5 +31,4 @@ class AgGrid(object):
     table = html_tables.HtmlTableAgGrid.Table(self.parent.context.rptObj, records, width, height, htmlCode, table_options_dflts, profile)
     for c in cols + rows:
       table.add_column(c)
-    self.parent.context.register(table)
     return table

@@ -34,7 +34,6 @@ class Rich(object):
     if options is not None:
       dflt_options.update(options)
     html_delta = html.HtmlTextComp.Delta(self.context.rptObj, rec or {}, width, height, dflt_options, helper, profile)
-    self.context.register(html_delta)
     return html_delta
 
   def stars(self, val=None, label=None, color=None, align='left', best=5, htmlCode=None, helper=None, profile=None):
@@ -68,7 +67,6 @@ class Rich(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     html_star = html.HtmlOthers.Stars(self.context.rptObj, val, label, color, align, best, htmlCode, helper, profile)
-    self.context.register(html_star)
     return html_star
 
   def light(self, color=None, height=(None, 'px'), label=None, tooltip=None, helper=None, profile=None):
@@ -100,7 +98,6 @@ class Rich(object):
     if isinstance(color, bool):
       color = self.context.rptObj.theme.success[1] if color else self.context.rptObj.theme.danger[1]
     html_traffic = html.HtmlTextComp.TrafficLight(self.context.rptObj, color, label, height, tooltip, helper, profile)
-    self.context.register(html_traffic)
     return html_traffic
 
   def info(self, text=None, options=None, profile=None):
@@ -128,7 +125,6 @@ class Rich(object):
     :param profile: Optional, A boolean to store the performances for each components
     """
     html_help = html.HtmlOthers.Help(self.context.rptObj, text, width=(10, "px"), profile=profile, options=options or {})
-    self.context.register(html_help)
     return html_help
 
   def countdown(self, yyyy_mm_dd, label=None, icon="fas fa-stopwatch", timeInMilliSeconds=1000, width=(100, '%'), height=(None, 'px'),
@@ -165,7 +161,6 @@ class Rich(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     html_cd = html.HtmlDates.CountDownDate(self.context.rptObj, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile)
-    self.context.register(html_cd)
     return html_cd
 
   def update(self, label=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
@@ -192,7 +187,6 @@ class Rich(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     html_dt = html.HtmlDates.LastUpdated(self.context.rptObj, label, color, width, height, htmlCode, profile)
-    self.context.register(html_dt)
     return html_dt
 
   def console(self, content="", width=(100, "%"), height=(200, "px"), htmlCode=None, options=None, profile=None):
@@ -219,7 +213,6 @@ class Rich(object):
     html_div = html.HtmlTextEditor.Console(self.context.rptObj, content, width, height, htmlCode, None, dflt_options, profile)
     html_div.css({"border": "1px solid %s" % html_div._report.theme.greys[4], "background": html_div._report.theme.greys[2],
                   'padding': '5px'})
-    self.context.register(html_div)
     return html_div
 
   def search_input(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
@@ -253,7 +246,6 @@ class Rich(object):
     """
     html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
                                    extensible, profile)
-    self.context.register(html_s)
     return html_s
 
   def search_results(self, records=None, results_per_page=20, width=(100, "%"), height=(None, "px"), options=None, profile=None):
@@ -270,7 +262,6 @@ class Rich(object):
     """
     records = records or []
     html_help = html.HtmlTextComp.SearchResult(self.context.rptObj, records, pageNumber=results_per_page, width=width, height=height, profile=profile, options=options or {})
-    self.context.register(html_help)
     return html_help
 
   def composite(self, schema, width=(None, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
@@ -299,5 +290,4 @@ class Rich(object):
     :param profile:
     """
     html_help = html.HtmlTextComp.Composite(self.context.rptObj, schema, width=width, height=height, htmlCode=htmlCode, profile=profile, options=options or {}, helper=helper)
-    self.context.register(html_help)
     return html_help

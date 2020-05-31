@@ -440,19 +440,19 @@ class Components(object):
     """
     return CompTags.Tags(self)
 
-  def register(self, html_comp):
-    """
-    Description:
-    ------------
-    Internal function to register a HTML component based on its memory id.
-
-    Related Pages:
-:param html_comp: The html component
-
-    return the html component
-    """
-    self.rptObj.components[html_comp.htmlCode] = html_comp
-    return html_comp
+#   def register(self, html_comp):
+#     """
+#     Description:
+#     ------------
+#     Internal function to register a HTML component based on its memory id.
+#
+#     Related Pages:
+# :param html_comp: The html component
+#
+#     return the html component
+#     """
+#     self.rptObj.components[html_comp.htmlCode] = html_comp
+#     return html_comp
 
   def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"), options=None, profile=None):
     """
@@ -466,7 +466,6 @@ class Components(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     html_contents = html.HtmlTextComp.ContentsTable(self.rptObj, title, width, height, options, profile)
-    self.register(html_contents)
     html_contents.style.css.top = top
     if left is not None:
       html_contents.style.css.left = left
@@ -491,7 +490,7 @@ class Components(object):
     :param args: The python attributes used in the HTML component contructor
     :param kwargs: The python attributes used in the HTML component contructor
     """
-    return self.register(htmlCls(self.rptObj, *args, **kwargs))
+    return htmlCls(self.rptObj, *args, **kwargs)
 
   def _tags(self, vals=None, title="", icon="", width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
     """
@@ -510,7 +509,7 @@ class Components(object):
 
     :rtype: html.HtmlTextEditor.Tags
     """
-    return self.register(html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile))
+    return html.HtmlTextEditor.Tags(self.rptObj, vals, title, icon, width, height, htmlCode, profile)
 
   def loading(self, text="Loading", color=None, options=None):
     """
@@ -529,7 +528,6 @@ class Components(object):
     :param options:
     """
     html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, options or {})
-    self.register(html_loading)
     return html_loading
 
   def form(self, action=None, method=None, helper=None):
@@ -549,7 +547,6 @@ class Components(object):
     :param helper:
     """
     form = html.HtmlContainer.Form(self.rptObj, [], action, method, helper)
-    self.register(form)
     return form
 
   def json(self, data=None, width=(None, '%'), height=(100, '%'), options=None, profile=None):
@@ -574,7 +571,6 @@ class Components(object):
     h_json = html.HtmlOthers.HtmlJson(self.rptObj, data, width, height, options, profile)
     if height[1] != '%':
       h_json.style.css.overflow = 'auto'
-    self.register(h_json)
     return h_json
 
   def postit(self, components=None, anchor=None):

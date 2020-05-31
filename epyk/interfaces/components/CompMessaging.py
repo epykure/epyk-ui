@@ -42,12 +42,11 @@ class Messaging(object):
     :param httpCodes:
     :param readonly:
     :param profile:
-    :return:
     """
     if recordset is None:
       recordset = []
-    return self.context.register(html.HtmlMessaging.Comments(self.context.rptObj, htmlCode, recordset, title, pmts,
-                                                             dbService, width, height, httpCodes, readonly, profile))
+    return html.HtmlMessaging.Comments(self.context.rptObj, htmlCode, recordset, title, pmts,
+                                                             dbService, width, height, httpCodes, readonly, profile)
 
   def chat(self, htmlCode, title="", pmts=None, dbService=None, width=(100, '%'),
                height=(200, 'px'), httpCodes=None, readonly=False, profile=None, chatOptions=None):
@@ -67,10 +66,9 @@ class Messaging(object):
     :param readonly:
     :param profile:
     :param chatOptions:
-    :return:
     """
-    return self.context.register(html.HtmlMessaging.Chat(self.context.rptObj, htmlCode, title, pmts, dbService, width,
-                                                         height, httpCodes, readonly, profile, chatOptions))
+    return html.HtmlMessaging.Chat(self.context.rptObj, htmlCode, title, pmts, dbService, width,
+                                                         height, httpCodes, readonly, profile, chatOptions)
 
   def bot(self, htmlCode, name="Roxane", pmts=None, dbService=None, width=(250, 'px'),
                height=(200, 'px'), httpCodes=None, profile=None, botOptions=None):
@@ -89,10 +87,9 @@ class Messaging(object):
     :param httpCodes:
     :param profile:
     :param botOptions:
-    :return:
     """
-    return self.context.register(html.HtmlMessaging.Bot(self.context.rptObj, htmlCode, name, pmts, dbService, width,
-                                                        height, httpCodes, profile, botOptions))
+    return html.HtmlMessaging.Bot(self.context.rptObj, htmlCode, name, pmts, dbService, width,
+                                                        height, httpCodes, profile, botOptions)
 
   def alert(self, category, title, value, htmlCode=None, background_color=None, close_button=True, width=(320, 'px'),
              height=(None, None), color='black', profile=False, dataSrc=None):
@@ -132,6 +129,7 @@ class Messaging(object):
     :param color:
     :param profile:
     :param dataSrc:
+
     :rtype: html.HtmlMessaging.Alert
     """
     if not getattr(self.context.rptObj, "alerts", True):
@@ -139,8 +137,8 @@ class Messaging(object):
 
     ui_prop = self.context.rptObj._props.setdefault("ui", {})
     ui_prop.setdefault("notifications", {})["count"] = ui_prop.get("notifications", {}).get("count", 0) + 1
-    return self.context.register(html.HtmlMessaging.Alert(self.context.rptObj, title, value, category, width,
-                  height, close_button, background_color, color, htmlCode, dataSrc, profile))
+    return html.HtmlMessaging.Alert(self.context.rptObj, title, value, category, width,
+                  height, close_button, background_color, color, htmlCode, dataSrc, profile)
 
 
   def danger(self, title, value, htmlCode=None, close_button=True, width=(320, 'px'),
@@ -179,6 +177,7 @@ class Messaging(object):
     :param color:
     :param profile:
     :param dataSrc:
+
     :rtype: html.HtmlMessaging.Alert
     """
     if not getattr(self.context.rptObj, "alerts", True):
@@ -186,8 +185,8 @@ class Messaging(object):
 
     ui_prop = self.context.rptObj._props.setdefault("ui", {})
     ui_prop.setdefault("notifications", {})["count"] = ui_prop.get("notifications", {}).get("count", 0) + 1
-    return self.context.register(html.HtmlMessaging.Alert(self.context.rptObj, title, value, 'danger', width,
-                  height, close_button, self.context.rptObj.getColor('danger', 0), color, htmlCode, dataSrc, profile))
+    return html.HtmlMessaging.Alert(self.context.rptObj, title, value, 'danger', width,
+                  height, close_button, self.context.rptObj.getColor('danger', 0), color, htmlCode, dataSrc, profile)
 
   def info(self, title, value, htmlCode=None, close_button=True, width=(320, 'px'),
            height=(None, None), color='black', profile=False, dataSrc=None):
@@ -219,8 +218,8 @@ class Messaging(object):
 
     ui_prop = self.context.rptObj._props.setdefault("ui", {})
     ui_prop.setdefault("notifications", {})["count"] = ui_prop.get("notifications", {}).get("count", 0) + 1
-    return self.context.register(html.HtmlMessaging.Alert(self.context.rptObj, title, value, 'info', width,
-                  height, close_button, self.context.rptObj.getColor('info', 0), color, htmlCode, dataSrc, profile))
+    return html.HtmlMessaging.Alert(self.context.rptObj, title, value, 'info', width,
+                  height, close_button, self.context.rptObj.getColor('info', 0), color, htmlCode, dataSrc, profile)
 
   def success(self, title, value, htmlCode=None, close_button=True, width=(320, 'px'), height=(None, 'black'),
               color='black', profile=False, dataSrc=None):
@@ -258,10 +257,10 @@ class Messaging(object):
 
     ui_prop = self.context.rptObj._props.setdefault("ui", {})
     ui_prop.setdefault("notifications", {})["count"] = ui_prop.get("notifications", {}).get("count", 0) + 1
-    return self.context.register(html.HtmlMessaging.Alert(self.context.rptObj, title, value, 'success', width,
+    return html.HtmlMessaging.Alert(self.context.rptObj, title, value, 'success', width,
                                                           height, close_button,
                                                           self.context.rptObj.getColor('success', 0), color, htmlCode,
-                                                          dataSrc, profile))
+                                                          dataSrc, profile)
 
   def warning(self, title, value, htmlCode=None, close_button=True, width=(320, 'px'), height=(None, None),
               color='black', profile=False, dataSrc=None):
@@ -300,8 +299,8 @@ class Messaging(object):
 
     ui_prop = self.context.rptObj._props.setdefault("ui", {})
     ui_prop.setdefault("notifications", {})["count"] = ui_prop.get("notifications", {}).get("count", 0) + 1
-    return self.context.register(html.HtmlMessaging.Alert(self.context.rptObj, title, value, 'warning', width,
-                  height, close_button, self.context.rptObj.getColor('warning', 0), color, htmlCode, dataSrc, profile))
+    return html.HtmlMessaging.Alert(self.context.rptObj, title, value, 'warning', width,
+                  height, close_button, self.context.rptObj.getColor('warning', 0), color, htmlCode, dataSrc, profile)
 
   def news(self, title, value, label=None, link_script=None, icon=None, htmlCode=None, width=(320, 'px'), height=(None, None),
            profile=False):
@@ -331,5 +330,5 @@ class Messaging(object):
     :param height:
     :param profile:
     """
-    return self.context.register(html.HtmlMessaging.News(self.context.rptObj, title, value, label, link_script, icon, width,
-                                                          height, htmlCode, profile))
+    return html.HtmlMessaging.News(self.context.rptObj, title, value, label, link_script, icon, width,
+                                                          height, htmlCode, profile)

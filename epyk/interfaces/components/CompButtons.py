@@ -77,7 +77,6 @@ class Buttons(object):
     """
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
                                          tooltip=tooltip, profile=profile, options=options)
-    self.context.register(html_button)
     return html_button
 
   def important(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
@@ -115,7 +114,6 @@ class Buttons(object):
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
                                          tooltip=tooltip, profile=profile, options=options)
     html_button.style.add_classes.button.important()
-    self.context.register(html_button)
     return html_button
 
   def validate(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
@@ -148,7 +146,6 @@ class Buttons(object):
     """
     html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-check-circle', width, height, htmlCode=htmlCode,
                                       tooltip=tooltip, profile=profile, options=options)
-    self.context.register(html_but)
     return html_but
 
   def remove(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
@@ -184,7 +181,6 @@ class Buttons(object):
     """
     html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-trash-alt', width, height, htmlCode=htmlCode,
                              tooltip=tooltip, profile=profile, options=options)
-    self.context.register(html_but)
     return html_but
 
   def phone(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
@@ -219,7 +215,6 @@ class Buttons(object):
     """
     html_button = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-phone', width, height, htmlCode=htmlCode,
                                          tooltip=tooltip, profile=profile, options=options)
-    self.context.register(html_button)
     return html_button
 
   def mail(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
@@ -252,7 +247,6 @@ class Buttons(object):
     """
     html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-envelope', width, height, htmlCode=htmlCode,
                                       tooltip=tooltip, profile=profile, options=options)
-    self.context.register(html_but)
     return html_but
 
   def radio(self, recordSet=None, checked=None, htmlCode=None, label=None, width=(100, '%'), height=(None, "px"), radioVisible=False,
@@ -304,7 +298,6 @@ class Buttons(object):
       recordSet = tmpVals
     html_radio = html.HtmlRadio.Radio(self.context.rptObj, recordSet, htmlCode, label, width,
                       height, radioVisible, event, withRemoveButton, align, filters, tooltip, radioType, helper, profile)
-    self.context.register(html_radio)
     return html_radio
 
   def toggle(self, recordSet=None, label=None, color=None, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
@@ -335,7 +328,6 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     :param profile:
     """
     html_toggle = html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, width, height, htmlCode, profile)
-    self.context.register(html_toggle)
     return html_toggle
 
   def checkboxes(self, records=None, title=None, color=None, width=(100, "%"), height=(None, "px"), align='left',
@@ -389,7 +381,6 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
         records = [{"value": rec} for rec in records]
     html_boxes = html.HtmlButton.Checkbox(self.context.rptObj, records, title, color, width,
                                              height, align, htmlCode, tooltip, icon, options or {}, profile)
-    self.context.register(html_boxes)
     return html_boxes
 
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(20, "px"), label=None, icon=None, htmlCode=None,
@@ -423,7 +414,6 @@ Attributes:
     :param options: Optional. Specific Python options available for this component
     """
     html_but = html.HtmlButton.CheckButton(self.context.rptObj, flag, tooltip, width, height, icon, label, htmlCode, options or {}, profile)
-    self.context.register(html_but)
     return html_but
 
   def zipfile(self, text, fileName, css_cls=None, css_attr=None, profile=None):
@@ -453,7 +443,6 @@ Attributes:
 
     """
     html_file = html.HtmlFiles.DownloadMemoryZip(self.context.rptObj, text, fileName, css_cls, css_attr, profile)
-    self.context.register(html_file)
     return html_file
 
   def menu(self, record, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
@@ -488,5 +477,4 @@ Attributes:
     """
     html_button = html.HtmlButton.ButtonMenu(self.context.rptObj, record, text, icon, width, height, htmlCode=htmlCode,
                                               tooltip=tooltip, profile=profile, options=options)
-    self.context.register(html_button)
     return html_button

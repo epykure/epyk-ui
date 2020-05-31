@@ -43,10 +43,9 @@ class Links(object):
     #if url.startswith("http"):
     #  url = "/%s" % url
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, dft_options, profile)
-    self.context.register(html_link)
     return html_link
 
-  def button(self, text, url, icon=None, helper=None, width=(None, 'px'), height=(None, 'px'), decoration=False, options=None, profile=None):
+  def button(self, text, url, icon=None, helper=None, height=(None, 'px'), decoration=False, options=None, profile=None):
     """
     Description:
     ------------
@@ -67,14 +66,11 @@ class Links(object):
     :param profile:
     :return:
     """
-    if isinstance(width, int):
-      width = (width, 'px')
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration,
                                             dft_options, profile)
-    self.context.register(html_link)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     return html_link
@@ -152,7 +148,6 @@ class Links(object):
     if url is not None and url.startswith("www."):
       url = "//%s" % url
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, options, profile)
-    self.context.register(html_link)
     return html_link
 
   def data(self, text, value, width=(100, '%'), height=(None, 'px'), format='txt', profile=None):
@@ -180,7 +175,6 @@ class Links(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     html_data = html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width, height=height, format=format, profile=profile)
-    self.context.register(html_data)
     return html_data
 
   def bridge(self, text, script_name, report_name, url, jsData=None, context=None):
@@ -203,5 +197,4 @@ Attributes:
     :param context:
     """
     html_bridge = html.HtmlLinks.Bridge(self.context.rptObj, text, script_name, report_name, url, jsData, context)
-    self.context.register(html_bridge)
     return html_bridge

@@ -36,7 +36,6 @@ class Code(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code
 
   def xml(self, text="", color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None, options=None, helper=None, profile=None):
@@ -68,7 +67,6 @@ class Code(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code
 
   def sql(self, text="", color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None, options=None, helper=None, profile=None):
@@ -100,7 +98,6 @@ class Code(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code
 
   def r(self, text="", color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None, options=None, helper=None, profile=None):
@@ -132,7 +129,6 @@ class Code(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code
 
   def python(self, text="", color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None, options=None, helper=None, profile=None):
@@ -164,7 +160,6 @@ class Code(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code
 
   def javascript(self, text="", color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None, options=None, helper=None, profile=None):
@@ -196,7 +191,6 @@ class Code(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code
 
   def markdown(self, text="", color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None, options=None, helper=None, profile=None):
@@ -228,7 +222,6 @@ class Code(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code
 
   def rst(self, text="", color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None, options=None, helper=None, profile=None):
@@ -260,7 +253,6 @@ class Code(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code
 
   def code(self, language, text="", color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None, options=None, helper=None, profile=None):
@@ -293,5 +285,4 @@ class Code(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code

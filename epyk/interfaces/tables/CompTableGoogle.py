@@ -35,5 +35,4 @@ class Google(object):
     table = html_tables.HtmlTableGoogle.Table(self.parent.context.rptObj, data, width, height, htmlCode, table_options_dflts, profile)
     for c in cols + rows:
       table.add_column(c)
-    self.parent.context.register(table)
     return table

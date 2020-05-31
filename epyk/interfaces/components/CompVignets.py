@@ -100,7 +100,6 @@ class Vignets(object):
     :param profile:
     """
     html_number = html.HtmlTextComp.Number(self.context.rptObj, number, label, width, height, profile, options or {})
-    self.context.register(html_number)
     return html_number
 
   def link(self):
@@ -138,7 +137,6 @@ class Vignets(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     html_blocktext = html.HtmlTextComp.BlockText(self.context.rptObj, recordSet, color, border, width, height, helper, options, profile)
-    self.context.register(html_blocktext)
     return html_blocktext
 
   def text(self, recordSet=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, options=None, profile=None):
@@ -165,7 +163,6 @@ class Vignets(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     html_text = html.HtmlTextComp.TextWithBorder(self.context.rptObj, recordSet, width, height, align, helper, options, profile)
-    self.context.register(html_text)
     return html_text
 
   def bars(self):

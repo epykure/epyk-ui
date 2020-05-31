@@ -64,7 +64,6 @@ class Sliders(object):
       number = minimum
     html_slider = html.HtmlEvent.Slider(self.context.rptObj, number, minimum, maximum, width, height,  attrs or {}, helper,
                                         options or {}, htmlCode, profile)
-    self.context.register(html_slider)
     return html_slider
 
   def date(self, value, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
@@ -89,7 +88,6 @@ class Sliders(object):
     options = options or {}
     html_slider = html.HtmlEvent.SliderDate(self.context.rptObj, value, min, max, width, height, attrs or {}, helper,
                                             options or {}, htmlCode, profile)
-    self.context.register(html_slider)
     return html_slider
 
   def date_range(self, value1, value2, min=None, max=None, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
@@ -116,7 +114,6 @@ class Sliders(object):
     options['range'] = True
     html_slider = html.HtmlEvent.SliderDates(self.context.rptObj, [value1, value2], min, max, width, height, attrs or {}, helper,
                                              options or {}, htmlCode, profile)
-    self.context.register(html_slider)
     return html_slider
 
   def range(self, values, min=0, max=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
@@ -142,7 +139,6 @@ class Sliders(object):
     options['range'] = True
     html_slider = html.HtmlEvent.Range(self.context.rptObj, values, min, max, width, height, attrs or {}, helper,
                                          options or {}, htmlCode, profile)
-    self.context.register(html_slider)
     return html_slider
 
 
@@ -178,5 +174,4 @@ class Sliders(object):
     """
     html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper,
                                          options or {}, htmlCode, profile)
-    self.context.register(html_pr)
     return html_pr

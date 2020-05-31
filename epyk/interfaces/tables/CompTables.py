@@ -122,7 +122,7 @@ http://tabulator.info/
     :param visible:
     :param profile:
     """
-    return self.context.register(html_tables.HtmlTableConfig.ConfigTable(self.context.rptObj, htmlCode, visible, profile))
+    return html_tables.HtmlTableConfig.ConfigTable(self.context.rptObj, htmlCode, visible, profile)
 
   def basic(self, records, cols, rows, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
     """
@@ -146,7 +146,6 @@ http://tabulator.info/
     :param profile:
     """
     table = html_tables.HtmlTable.Bespoke(self.context.rptObj, records, cols, rows, width, height, htmlCode, options, profile)
-    self.context.register(table)
     return table
 
   def grid(self, records, cols, rows, width=(None, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=None):
@@ -175,5 +174,4 @@ http://tabulator.info/
     # table.style.add_classes.table.grid_row_header()
     table.style.add_classes.table.grid_vals()
     # table.style.add_classes.table.grid_no_header()
-    self.context.register(table)
     return table

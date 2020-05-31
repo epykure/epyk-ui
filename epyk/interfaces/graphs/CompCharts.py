@@ -52,7 +52,6 @@ class Graphs(object):
       raise Exception("seriesName and axis must be defined")
 
     html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, records, y_column, x_axis, title, width, height, htmlCode,  profile)
-    self.context.register(html_skillbar)
     return html_skillbar
 
   def sparkline(self, chart_type, data, title=None, options=None, column=None):
@@ -86,7 +85,6 @@ class Graphs(object):
         pass
 
     html_chart = html.graph.GraphSparklines.Sparklines(self.context.rptObj, data, chart_type, title, options)
-    self.context.register(html_chart)
     return html_chart
 
   @property

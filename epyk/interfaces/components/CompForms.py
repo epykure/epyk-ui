@@ -22,7 +22,6 @@ class Forms(object):
     :param helper:
     """
     form = html.HtmlContainer.Form(self.context.rptObj, [], helper)
-    self.context.register(form)
     return form
 
   def date(self, htmlCode="Current", helper=None):
@@ -54,7 +53,6 @@ class Forms(object):
                                    "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
     form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
     form._has_container = True
-    self.context.register(form)
     return form
 
   def dates(self, htmlCode1="current", htmlCode2="Previous",  helper=None):
@@ -90,7 +88,6 @@ class Forms(object):
              "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
     form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
     form._has_container = True
-    self.context.register(form)
     return form
 
   def input(self, htmlCode, helper=None):
@@ -110,7 +107,6 @@ class Forms(object):
     inp = self.context.rptObj.ui.fields.input()
     inp.input.set_attrs({"name": htmlCode})
     form = html.HtmlContainer.Form(self.context.rptObj, [inp], helper)
-    self.context.register(form)
     return form
 
   def inputs(self, records, helper=None):
@@ -145,5 +141,4 @@ class Forms(object):
                                    "text-align": 'center', "width": 'none', "padding": '5px', "border-radius": '5px'})
     form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
     form._has_container = True
-    self.context.register(form)
     return form

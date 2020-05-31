@@ -34,7 +34,6 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def column(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -65,7 +64,6 @@ class ChartGoogle(object):
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options,
                                              profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def bar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -94,7 +92,6 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def scatter(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -124,7 +121,6 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def histogram(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -157,7 +153,6 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def area(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -185,7 +180,6 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def bubble(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -216,7 +210,6 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def pie(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -244,7 +237,6 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def treemap(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -271,7 +263,6 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def candlestick(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -300,7 +291,7 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
+
     return line_chart
 
   def gauge(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -328,7 +319,6 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def geo(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -360,5 +350,4 @@ class ChartGoogle(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.parent.context.rptObj.theme.charts, 'attrs': {'fill': None}})
     data = self.parent.context.rptObj.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.parent.context.rptObj, data, width, height, htmlCode, options, profile)
-    self.parent.context.register(line_chart)
     return line_chart

@@ -100,15 +100,13 @@ class Lists(object):
         for rec in records:
           if rec["value"] in selected:
             rec["selected"] = True
-      return self.context.register(
-        html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height, filter, profile, multiple, options))
+      return html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height, filter, profile, multiple, options)
 
     if selected is not None:
       for rec in records:
         if rec["value"] == selected:
           rec["selected"] = True
     html_select = html.HtmlSelect.Select(self.context.rptObj, records, htmlCode, width, height, filter, profile, multiple, options)
-    self.context.register(html_select)
     return html_select
 
   def lookup(self, lookupData=None, htmlCode=None, label=None, selected=None, width=(100, "%"), height=(None, "%"), column=None, filter=None, profile=None, multiple=False, options=None):
@@ -129,7 +127,7 @@ class Lists(object):
 
     Attributes:
     ----------
-    :param records: The input data. Can be a list or a dataFrame
+    :param lookupData: The input data. Can be a list or a dataFrame
     :param htmlCode: Optional. The component identifier code (for bot
     :param label: Optional. The HTML label attached to the component
     :param selected: The selected values
@@ -143,7 +141,6 @@ class Lists(object):
     """
     options = {} if options is None else options
     html_select = html.HtmlSelect.Lookup(self.context.rptObj, lookupData, htmlCode, width, height, filter, profile, multiple, options)
-    self.context.register(html_select)
     return html_select
 
   def item(self, text=None):
@@ -165,7 +162,6 @@ class Lists(object):
     http://astronautweb.co/snippet/font-awesome/
     """
     html_item = html.HtmlList.Li(self.context.rptObj, text)
-    self.context.register(html_item)
     return html_item
 
   def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None,
@@ -189,7 +185,6 @@ class Lists(object):
     """
     html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
                                    helper, options or {}, profile)
-    self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list
 
@@ -203,7 +198,6 @@ class Lists(object):
       records = sorted(list(values))
 
     html_item = html.HtmlList.Items(self.context.rptObj, 'text', records, width, height, options, htmlCode, profile, helper)
-    self.context.register(html_item)
     html_item.css({"list-style-type": 'none'})
     html_item.style.css.padding_left = '15px'
     return html_item
@@ -402,7 +396,6 @@ class Lists(object):
         # This object is expecting a list of lists
         data = [data]
     html_obj = html.HtmlList.Groups(self.context.rptObj, data, categories, color, width, height, htmlCode, helper, profile)
-    self.context.register(html_obj)
     return html_obj
 
   def tree(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
@@ -427,7 +420,6 @@ class Lists(object):
     :param profile:
     """
     html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options, profile)
-    self.context.register(html_tree)
     return html_tree
 
   def dropdown(self, recordSet=None, text="", width=('auto', ""), height=(32, 'px'), htmlCode=None, helper=None, options=None, profile=None):
@@ -457,7 +449,6 @@ class Lists(object):
     dftl_options.update(options or {})
     html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, text, width, height, htmlCode, helper, dftl_options, profile)
     html_d.style.css.display = 'inline-block'
-    self.context.register(html_d)
     return html_d
 
   def checks(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):
@@ -497,7 +488,6 @@ class Lists(object):
       dft_options.update(options)
 
     html_list = html.HtmlList.Items(self.context.rptObj, 'check', data or [], width, height, dft_options, htmlCode, profile, helper)
-    self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list
 
@@ -538,7 +528,6 @@ class Lists(object):
       dft_options.update(options)
 
     html_list = html.HtmlList.Items(self.context.rptObj, 'badge', data or [], width, height, dft_options, htmlCode, profile, helper)
-    self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list
 
@@ -579,7 +568,6 @@ class Lists(object):
       dft_options.update(options)
 
     html_list = html.HtmlList.Items(self.context.rptObj, 'icon', data or [], width, height, dft_options, htmlCode,profile, helper)
-    self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list
 
@@ -612,12 +600,11 @@ class Lists(object):
 
     html_list = html.HtmlList.Items(self.context.rptObj, 'radio', data or [], width, height, options or {}, htmlCode, profile, helper)
     html_list._jsStyles['group'] = group_name
-    self.context.register(html_list)
     html_list.css({"list-style": 'none'})
     return html_list
 
   def brackets(self, recordSet=None, width=('auto', ""), height=(550, 'px'), options=None, profile=None):
-    return self.context.register(html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options or {}, profile))
+    return html.HtmlList.ListTournaments(self.context.rptObj, recordSet, width, height, options or {}, profile)
 
   def chips(self, items=None, category='group', placeholder="", width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
@@ -660,5 +647,4 @@ class Lists(object):
       dflt_options.update(options)
     html_f = html.HtmlEvent.Filters(self.context.rptObj, items or [], width, height, htmlCode, helper, dflt_options, profile)
     html_f.input.attr['placeholder'] = placeholder
-    self.context.register(html_f)
     return html_f

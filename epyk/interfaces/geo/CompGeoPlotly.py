@@ -33,7 +33,7 @@ class Plotly(object):
     """
     return PlotlyBubble(self.parent)
 
-  def scattermapbox(self, record, lon_columns=None, lat_columns=None, text_columns=None, title=None, filters=None,
+  def scattermapbox(self, record, lon_columns=None, lat_columns=None, text_columns=None,
                     profile=None, options=None,  width=(100, "%"), height=(430, "px"), htmlCode=None):
     """
     Description:
@@ -69,10 +69,9 @@ class Plotly(object):
         series[-1]['lat'].append(rec.get(lat_columns[i], 0))
         if text_columns is not None:
           series[-1]['text'].append(rec.get(text_columns[i], 0))
-    line_chart = geo.GeoPlotly.Scatter(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                        filters, profile)
+    line_chart = geo.GeoPlotly.Scatter(self.parent.context.rptObj, width, height, options or {}, htmlCode,
+                                      profile)
     line_chart.options.responsive = True
-    self.parent.context.register(line_chart)
     for i, s in enumerate(series):
       line_chart.add_trace(s)
       line_chart.data.marker.color = self.parent.context.rptObj.theme.colors[::-1][i]
@@ -85,7 +84,7 @@ class Plotly(object):
     # line_chart.layout.mapbox.zoom = 3
     return line_chart
 
-  def density(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def density(self, record, y_columns=None, x_axis=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
     Description:
@@ -104,18 +103,14 @@ class Plotly(object):
     :param record:
     :param y_columns:
     :param x_axis:
-    :param title:
-    :param filters:
     :param profile:
     :param options:
     :param width:
     :param height:
     :param htmlCode:
     """
-    line_chart = geo.GeoPlotly.Scatter(self.parent.context.rptObj, width, height, title, options or {}, htmlCode,
-                                       filters, profile)
+    line_chart = geo.GeoPlotly.Scatter(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     line_chart.options.responsive = True
-    self.parent.context.register(line_chart)
     line_chart.add_trace({"lon": [-112.8352], 'lat': [48.4113], 'z': [20], 'text': [0.0875]}, type="densitymapbox")
     line_chart.data.marker.color = "fuchsia"
     line_chart.data.marker.size = 4
@@ -126,7 +121,7 @@ class Plotly(object):
     line_chart.layout.zoom = 3
     return line_chart
 
-  def chorolet(self, record, y_columns=None, x_axis=None, title=None, filters=None, profile=None, options=None,
+  def chorolet(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
     Description:
@@ -146,7 +141,6 @@ class Plotly(object):
     :param y_columns:
     :param x_axis:
     :param title:
-    :param filters:
     :param profile:
     :param options:
     :param width:
@@ -154,9 +148,8 @@ class Plotly(object):
     :param htmlCode:
     """
     data = {"locations": ["NY", "MA", "VT"], "z": [-50, -10, -20]}
-    line_chart = geo.GeoPlotly.Chorolet(self.parent.context.rptObj, width, height, options or {}, htmlCode, filters, profile)
+    line_chart = geo.GeoPlotly.Chorolet(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     line_chart.options.responsive = True
-    self.parent.context.register(line_chart)
     data['geojson'] = "https://raw.githubusercontent.com/python-visualization/folium/master/examples/data/us-states.json"
     line_chart.add_trace(data)
     line_chart.layout.mapbox.center.lat = 38
@@ -212,7 +205,6 @@ class PlotlyBubble(object):
     elif long_col is not None and lat_col is not None:
       records = self.parent.context.rptObj.data.plotly.locations(record, long_col, lat_col, size_col, dftl_options.get('scale', False))
       points = ['lon', 'lat']
-    self.parent.context.register(map_chart)
     for record in records:
       map_chart.add_trace({p: record[p] for p in points})
       #map_chart.data.marker.colorbar.title = "Test"
@@ -479,7 +471,6 @@ class PlotlyChoropleth(object):
     line_chart.options.responsive = True
     for record in records:
       line_chart.add_trace(record)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def europe(self, record, size_col=None, country_col=None, profile=None, options=None, width=(100, "%"), height=(430, "px"), htmlCode=None):
@@ -627,7 +618,7 @@ class PlotlyChoropleth(object):
     map_chart.layout.geo.scope = 'north america'
     return map_chart
 
-  def usa(self, record, y_column=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def usa(self, record, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
     Description:
     -----------
@@ -651,13 +642,12 @@ class PlotlyChoropleth(object):
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode:
     """
-    map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, title, options or {}, htmlCode, profile)
+    map_chart = geo.GeoPlotly.Choropleth(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     map_chart.options.responsive = True
     data = {}
     for rec in record:
       if x_axis in rec:
         data[rec[x_axis]] = data.get(x_axis, 0) + float(rec.get(y_column, 0))
-    self.parent.context.register(map_chart)
     locations = list(data.keys())
     map_chart.add_trace({'locations': locations, 'z': [data[k] for k in locations]})
     map_chart.data.locationmode = 'USA-states'

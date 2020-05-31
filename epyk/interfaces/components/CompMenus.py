@@ -46,7 +46,6 @@ class Menus(object):
 
     col = self.context.rptObj.ui.col([html_list, html_div])
     col.css({"background-color": "#333", "position": "fixed", "margin": 0, "top": 0, "left": 0, "color": 'white'})
-    self.context.register(col)
     return col
 
   def bottom(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
@@ -191,7 +190,6 @@ class Menus(object):
     html_obj = html.HtmlButton.Buttons(self.context.rptObj, data or [], color, width, height, htmlCode, helper,
                                        dfl_button_css, profile)
     html_obj.css({"border": "1px solid %s" % html_obj._report.theme.greys[4], "padding": "2px"})
-    self.context.register(html_obj)
     return html_obj
 
   def right(self):
@@ -330,7 +328,6 @@ class Menus(object):
     """
     html_pr = html.HtmlEvent.Menu(self.context.rptObj, data, width, height,  attrs or {}, helper,
                                          options or {}, htmlCode, profile)
-    self.context.register(html_pr)
     return html_pr
 
   def contextual(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None,
@@ -356,5 +353,4 @@ Attributes:
     :param profile: Optional. A flag to set the component performance storage
     """
     html_menu = html.HtmlMenu.ContextMenu(self.context.rptObj, records or [], width, height, visible, options or {}, profile)
-    self.context.register(html_menu)
     return html_menu

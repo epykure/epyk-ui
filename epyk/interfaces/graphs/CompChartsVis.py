@@ -35,8 +35,6 @@ class Vis2D(object):
     #line_chart.groups.add(sorted(list(labels)))
     for d in data:
       line_chart.add_items(d)
-
-    self.parent.context.register(line_chart)
     return line_chart
 
   def scatter(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -64,8 +62,6 @@ class Vis2D(object):
     #line_chart.groups.add(sorted(list(labels)))
     for d in data:
       line_chart.add_items(d)
-
-    self.parent.context.register(line_chart)
     return line_chart
 
   def bar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -92,8 +88,6 @@ class Vis2D(object):
     line_chart.options.height = height[0]
     for d in data:
       line_chart.add_items(d)
-
-    self.parent.context.register(line_chart)
     return line_chart
 
   def timeline(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
@@ -124,14 +118,11 @@ http://www.chartjs.org/
     line_chart.options.editable = True
     line_chart.options.showCurrentTime = True
     line_chart.add_items(series)
-
-    self.parent.context.register(line_chart)
     return line_chart
 
   def network(self, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     line_chart = graph.GraphVis.ChartNetwork(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.options.height = height[0]
-    self.parent.context.register(line_chart)
     return line_chart
 
 
@@ -160,7 +151,6 @@ class Vis3D(object):
     line_chart = graph.GraphVis.Chart3DLine(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     for d in data:
       line_chart.add_items(d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def bar(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"), options=None, htmlCode=None):
@@ -182,8 +172,6 @@ class Vis3D(object):
     line_chart = graph.GraphVis.Chart3DBar(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     for d in data:
       line_chart.add_items(d)
-
-    self.parent.context.register(line_chart)
     return line_chart
 
   def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"), options=None, htmlCode=None):
@@ -205,7 +193,6 @@ class Vis3D(object):
     line_chart = graph.GraphVis.Chart3D(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     for d in data:
       line_chart.add_items(d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def scatter(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"), options=None, htmlCode=None):
@@ -227,8 +214,6 @@ class Vis3D(object):
     line_chart = graph.GraphVis.Chart3DScatter(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     for d in data:
       line_chart.add_items(d)
-
-    self.parent.context.register(line_chart)
     return line_chart
 
 

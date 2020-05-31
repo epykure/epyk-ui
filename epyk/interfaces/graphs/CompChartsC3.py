@@ -35,7 +35,6 @@ class C3(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def spline(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -66,7 +65,6 @@ class C3(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def step(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -98,7 +96,6 @@ class C3(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def area(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -129,7 +126,6 @@ class C3(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def area_step(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -161,7 +157,6 @@ class C3(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def timeseries(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -218,7 +213,6 @@ class C3(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def hbar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -274,7 +268,6 @@ class C3(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def pie(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -305,7 +298,6 @@ class C3(object):
     pie_chart = graph.GraphC3.ChartPie(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     pie_chart.labels(data['labels'])
     pie_chart.add_dataset(data['series'][0], data['labels'])
-    self.parent.context.register(pie_chart)
     return pie_chart
 
   def donut(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -335,7 +327,6 @@ class C3(object):
     pie_chart = graph.GraphC3.ChartDonut(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     pie_chart.labels(data['labels'])
     pie_chart.add_dataset(data['series'][0], data['labels'])
-    self.parent.context.register(pie_chart)
     return pie_chart
 
   def gauge(self, value, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -360,7 +351,6 @@ class C3(object):
     """
     g_chart = graph.GraphC3.ChartGauge(self.parent.context.rptObj, width, height, htmlCode, options or {}, profile)
     g_chart.add_dataset(text, value)
-    self.parent.context.register(g_chart)
     return g_chart
 
   def stanford(self, record, y_columns=None, x_axis=None, epoch_col=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -387,5 +377,4 @@ class C3(object):
     line_chart.epoch(epoch, epoch_col)
     for i, y in enumerate(y_columns):
       line_chart.add_dataset(y, series[i])
-    self.parent.context.register(line_chart)
     return line_chart

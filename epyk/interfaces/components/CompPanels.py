@@ -42,7 +42,6 @@ class Panels(object):
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper, dflt_options, profile)
     html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
-    self.context.register(html_tabs)
     return html_tabs
 
   def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
@@ -81,7 +80,6 @@ class Panels(object):
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(self.context.rptObj, color, width, height, htmlCode, helper,
                                         dflt_options, profile)
-    self.context.register(html_tabs)
     return html_tabs
 
   def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
@@ -118,7 +116,6 @@ class Panels(object):
     html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.options.css_tab["height"] = "30px"
     html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.success[1], "color": "white"}
-    self.context.register(html_tabs)
     return html_tabs
 
   def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
@@ -156,7 +153,6 @@ class Panels(object):
     html_tabs.options.css_tab["color"] = html_tabs._report.theme.greys[-1]
     html_tabs.options.css_tab["height"] = "30px"
     html_tabs.options.css_tab_clicked = {"background": html_tabs._report.theme.success[1], "color": "white"}
-    self.context.register(html_tabs)
     return html_tabs
 
   def menu(self, color=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=False):
@@ -192,7 +188,6 @@ class Panels(object):
     html_tabs.options.css_tab["background"] = html_tabs._report.theme.greys[0]
     html_tabs.options.css_tab_clicked = {'color': html_tabs._report.theme.greys[0], 'background': html_tabs._report.theme.success[1]}
     html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs._report.theme.success[1]})
-    self.context.register(html_tabs)
     return html_tabs
 
   def sliding(self, htmlObjs, title, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=False):
@@ -220,7 +215,6 @@ class Panels(object):
       htmlObjs = [htmlObjs]
     html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, width, height,
                                                htmlCode, helper, options or {}, profile)
-    self.context.register(html_slide)
     return html_slide
 
   def split(self, left=None, right=None, width=(100, '%'), height=(200, 'px'), left_width=(160, 'px'), resizable=True,
@@ -255,7 +249,6 @@ class Panels(object):
     :param profile:
     """
     html_split = html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, left_width, left, right, resizable, helper, profile)
-    self.context.register(html_split)
     return html_split
 
   def filters(self, items=None, category='group', width=(100, "%"), height=(60, "px"), htmlCode=None, helper=None, options=None, profile=None):

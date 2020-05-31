@@ -71,7 +71,6 @@ class DC(object):
         self.set_crossfilter(record, y_columns, x_axis)
         cross_filter = self.set_crossfilter(record, y_columns, x_axis, line_chart.htmlCode)
         line_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def series(self, record=None, y_columns=None, x_axis=None, series_type='line', title=None, profile=None, options=None, width=(100, "%"),
@@ -119,7 +118,6 @@ class DC(object):
     elif series_type == 'bar':
       line_chart.dom.bar().height(height[0]).x().seriesAccessorByKey(1).keyAccessor(0).valueAccessor()# .dimension("%s_dim" % line_id).group("%(cId)s_dim.group().reduceSum(function(d) {return d.y ;})" % {'cId': line_id})
       line_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def scatter(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
@@ -152,7 +150,6 @@ class DC(object):
       if record is not None:
         cross_filter = self.set_crossfilter(record, y_columns, x_axis, line_chart.htmlCode)
         line_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def step(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
@@ -182,7 +179,6 @@ Attributes:
       if record is not None:
         cross_filter = self.set_crossfilter(record, y_columns, x_axis, line_chart.htmlCode)
         line_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
-      self.parent.context.register(line_chart)
     return line_chart
 
   def bar(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
@@ -211,7 +207,6 @@ Attributes:
       if record is not None:
         cross_filter = self.set_crossfilter(record, y_columns, x_axis, bar_chart.htmlCode)
         bar_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
-    self.parent.context.register(bar_chart)
     return bar_chart
 
   def hbar(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
@@ -238,7 +233,6 @@ Attributes:
     if record is not None:
       cross_filter = self.set_crossfilter(record, y_column, x_axis, bar_chart.htmlCode)
       bar_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
-    self.parent.context.register(bar_chart)
     return bar_chart
 
   def pie(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
@@ -268,7 +262,6 @@ Attributes:
     if record is not None:
       cross_filter = self.set_crossfilter(record, y_column, x_axis, pie_chart.htmlCode)
       pie_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
-    self.parent.context.register(pie_chart)
     return pie_chart
 
   def sunburst(self, record=None, y_column=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
@@ -295,7 +288,6 @@ Attributes:
     line_id = pie_chart.htmlCode
     self.parent.context.rptObj._props.setdefault('js', {}).setdefault('datasets', {})['data_cf_%s' % line_id] = "var %(cId)s_cf = crossfilter(%(data)s); var %(cId)s_dim = %(cId)s_cf.dimension(function(d) {return +d['%(x)s'];})" % {'cId': line_id, 'data': record, 'x': x_axis}
     pie_chart.dom.dimension("%s_dim" % line_id).group("%(cId)s_dim.group().reduceSum(function(d) {return d['%(y)s'] ;})" % {'cId': line_id, 'y': y_column})
-    self.parent.context.register(pie_chart)
     return pie_chart
 
   def bubble(self, record=None, y_columns=None, x_axis=None, r_axis=None, title=None, profile=None, options=None, width=(100, "%"),
@@ -330,5 +322,4 @@ Attributes:
       if record is not None:
         cross_filter = self.set_crossfilter(record, y_columns, x_axis, bubble_chart.htmlCode, extra_cols=[(r_axis, int)])
         bubble_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
-    self.parent.context.register(bubble_chart)
     return bubble_chart

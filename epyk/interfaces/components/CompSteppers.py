@@ -33,7 +33,6 @@ class Steppers(object):
     if options is not None:
       dft_options.update(options)
     st = html.HtmlStepper.Stepper(self.context.rptObj, records, width, height, color, dft_options)
-    self.context.register(st)
     st.style.add_classes.div.stepper()
     st.style.css_class.media({'.cssdivstepper li': {"float": None, 'width': '100%'},
                                '.cssdivstepper li line': {'stroke-width': 0},
@@ -84,5 +83,4 @@ class Steppers(object):
     if options is not None:
       dft_options.update(options)
     st = html.HtmlStepper.Stepper(self.context.rptObj, records, width, height, color, dft_options)
-    self.context.register(st)
     return st

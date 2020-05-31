@@ -51,7 +51,6 @@ class Plotly(object):
     options = options or {}
     options.update({'type': 'table', 'mode': ''})
     h_table = html_tables.HtmlTablePlotly.Table(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(h_table)
     h_table.add_trace(data_rows + data_cols)
     h_table.options.responsive = True
     h_table.data.header.values = [[h] for h in header]

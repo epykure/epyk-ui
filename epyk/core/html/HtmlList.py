@@ -192,7 +192,6 @@ class List(Html.Html):
     for d in self.val:
       li_obj = Li(self._report, d)
       li_obj.options.managed = False
-      self._report.ui.register(li_obj)
       li_obj.css(self.options.li_css)
       if self.options.li_class:
         li_obj.attr["class"].add(self.options.li_class)

@@ -54,7 +54,6 @@ class Numbers(object):
     html_label.position(3, {"font-size": defaults_css.font(5), "font-weight": "bold"})
     html_label.position(4, {"font-size": defaults_css.font(5), "font-weight": "bold"})
     html_label.digits(True)
-    self.context.register(html_label)
     return html_label
 
   def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
@@ -89,7 +88,6 @@ class Numbers(object):
       dflt_options.update(options)
     html_number = html.HtmlText.Numeric(self.context.rptObj, number, title, label, icon, color, tooltip, htmlCode,
                                         dflt_options, helper, width, profile)
-    self.context.register(html_number)
     return html_number
 
   def pound(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
@@ -216,7 +214,7 @@ class Numbers(object):
     html_number.money(symbol, format="%v %s")
     return html_number
 
-  def plotly(self, value, title=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
+  def plotly(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"),
              htmlCode=None):
     """
 
@@ -225,7 +223,6 @@ class Numbers(object):
       - :class:`epyk.core.graph.GraphPlotly.Indicator`
 
     :param value:
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -233,12 +230,11 @@ class Numbers(object):
     :param htmlCode:
     :return:
     """
-    ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, title, options or {}, htmlCode, profile)
-    self.context.register(ind)
+    ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, options or {}, htmlCode, profile)
     ind.add_trace({'value': value}, mode="number")
     return ind
 
-  def plotly_with_delta(self, value, title=None, profile=None, options=None, width=(100, "%"),
+  def plotly_with_delta(self, value, profile=None, options=None, width=(100, "%"),
                         height=(330, "px"), htmlCode=None):
     """
     Underlying HTML Objects:
@@ -246,7 +242,6 @@ class Numbers(object):
       - :class:`epyk.core.graph.GraphPlotly.Indicator`
 
     :param value:
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -254,7 +249,6 @@ class Numbers(object):
     :param htmlCode:
     :return:
     """
-    ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, title, options or {}, htmlCode, profile)
-    self.context.register(ind)
+    ind = graph.GraphPlotly.Indicator(self.context.rptObj, width, height, options or {}, htmlCode, profile)
     ind.add_trace({'value': value}, mode="number+delta")
     return ind

@@ -46,7 +46,6 @@ class Texts(object):
     if not isinstance(width, tuple):
       width = (width, 'px')
     text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options or {}, helper, profile)
-    self.context.register(text_comp)
     return text_comp
 
   def label(self, text="", color=None, align='center', width=(100, "px"), height=('auto', ""), htmlCode=None,
@@ -87,7 +86,6 @@ class Texts(object):
       dflt_options.update(options)
     html_label = html.HtmlText.Label(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip,
                                      profile, dflt_options)
-    self.context.register(html_label)
     return html_label
 
   def span(self, text="", color=None, align='center', width=None, height=None, htmlCode=None,
@@ -129,7 +127,6 @@ class Texts(object):
     if height is None:
       height = (Defaults_html.LINE_HEIGHT, 'px')
     html_label = html.HtmlText.Span(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options, profile)
-    self.context.register(html_label)
     return html_label
 
   def highlights(self, text=None, title="", icon=None, type="danger", color=None, width=(None, "%"),
@@ -167,7 +164,6 @@ class Texts(object):
     """
     html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, color, width,
                                           height, htmlCode, helper, profile)
-    self.context.register(html_light)
     return html_light
 
   def formula(self, text=None, width=(100, "%"), color=None, helper=None, profile=None):
@@ -198,7 +194,6 @@ class Texts(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     html_formula = html.HtmlTextComp.Formula(self.context.rptObj, text, width, color, helper, profile)
-    self.context.register(html_formula)
     return html_formula
 
   def code(self, text="", language='python', color=None, width=(90, '%'), height=(200, 'px'), htmlCode=None,
@@ -235,7 +230,6 @@ class Texts(object):
     if options is not None:
       dflt_options.update(options)
     html_code = html.HtmlTextEditor.Code(self.context.rptObj, text, color, width, height, htmlCode, dflt_options, helper, profile)
-    self.context.register(html_code)
     return html_code
 
   def paragraph(self, text="", color=None, background_color=None, border=False, width=(100, "%"),
@@ -275,7 +269,6 @@ class Texts(object):
       dflt_options.update(options)
     html_paragraph = html.HtmlText.Paragraph(self.context.rptObj, text, color, background_color, border, width, height,
                                              htmlCode, encoding, dataSrc, helper, dflt_options, profile)
-    self.context.register(html_paragraph)
     return html_paragraph
 
   def preformat(self, text=None, color=None, width=(90, '%'), height=(None, 'px'), htmlCode=None, dataSrc=None,
@@ -316,7 +309,6 @@ class Texts(object):
     if options is not None:
       dflt_options.update(options)
     html_pre = html.HtmlText.Pre(self.context.rptObj, text, color, width, height, htmlCode, dataSrc, dflt_options, helper, profile)
-    self.context.register(html_pre)
     return html_pre
 
   def blockquote(self, text=None, author=None, color=None, width=(None, '%'), height=(None, 'px'),
@@ -352,7 +344,6 @@ class Texts(object):
     :param profile:
     """
     html_blockquote = html.HtmlText.BlockQuote(self.context.rptObj, text, author, color, width, height, htmlCode, helper, options, profile)
-    self.context.register(html_blockquote)
     return html_blockquote
 
   def up_down(self, rec=None, color=None, label=None, options=None, helper=None, profile=None):
@@ -388,7 +379,6 @@ class Texts(object):
     if options is not None:
       dflt_options.update(options)
     html_up_down = html.HtmlTextComp.UpDown(self.context.rptObj, rec, color, label, dflt_options, helper, profile)
-    self.context.register(html_up_down)
     return html_up_down
 
   def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', htmlCode=None,
@@ -427,7 +417,6 @@ class Texts(object):
       dflt_options.update(options)
     html_number = html.HtmlText.Numeric(self.context.rptObj, number, title, label, icon, color, tooltip, htmlCode,
                                         dflt_options, helper, width, profile)
-    self.context.register(html_number)
     return html_number
 
   def title(self, text=None, level=None, name=None, contents=None, color=None, picture=None, icon=None,
@@ -472,7 +461,6 @@ class Texts(object):
       dflt_options.update(options)
     html_title = html.HtmlText.Title(self.context.rptObj, text, level, name, contents, color, picture, icon,
                                      marginTop, htmlCode, width, height, align, dflt_options, profile)
-    self.context.register(html_title)
     return html_title
 
   def fieldset(self, legend="", width=(100, "%"), height=(None, "px"), helper=None, options=None, profile=None):
@@ -505,5 +493,4 @@ class Texts(object):
     """
     html_fieldset = html.HtmlText.Fieldset(self.context.rptObj, legend, width=width, height=height, helper=helper,
                                            options=options, profile=profile)
-    self.context.register(html_fieldset)
     return html_fieldset

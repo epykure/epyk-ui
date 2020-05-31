@@ -32,7 +32,6 @@ class Layouts(object):
     :param profile: Optional, Activate the profiler
     """
     html_new_line = html.HtmlOthers.Newline(self.context.rptObj, count, profile=profile)
-    self.context.register(html_new_line)
     return html_new_line
 
   def hr(self, count=1, color=None, background_color=None, height=(None, 'px'), align=None, profile=None):
@@ -67,7 +66,6 @@ class Layouts(object):
     hr_html = self.context.rptObj.ui.div()
     for _ in range(count):
       hr_item = html.HtmlOthers.Hr(self.context.rptObj, background_color, height, align, profile)
-      self.context.register(hr_item)
       hr_html += hr_item
     return hr_html
 
@@ -108,7 +106,6 @@ class Layouts(object):
     :param profile:
     """
     html_col = html.HtmlContainer.Col(self.context.rptObj, htmlObjs, position, width, height, align, helper, options or {}, profile)
-    self.context.register(html_col)
     return html_col
 
   def row(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
@@ -151,7 +148,6 @@ class Layouts(object):
     if options is not None:
       dft_option.update(options)
     html_col = html.HtmlContainer.Row(self.context.rptObj, htmlObjs, position, width, height, align, helper, dft_option, profile)
-    self.context.register(html_col)
     return html_col
 
   def table(self, htmlObjs=None, width=(100, '%'), height=(None, 'px'), helper=None, options=None, profile=None):
@@ -178,7 +174,6 @@ class Layouts(object):
     :param profile:
     """
     html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, helper, options, profile)
-    self.context.register(html_row)
     return html_row
 
   def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
@@ -210,7 +205,6 @@ class Layouts(object):
     :param profile:
     """
     html_grid = html.HtmlContainer.Grid(self.context.rptObj, rows, width, height, align, helper, options, profile)
-    self.context.register(html_grid)
     return html_grid
 
   def panel(self, htmlObjs=None, title=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
@@ -234,7 +228,6 @@ class Layouts(object):
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
     html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs or [], title, color, width, height, htmlCode, helper, options, profile)
-    self.context.register(html_panel)
     return html_panel
 
   def div(self, htmlObjs=None, label=None, color=None, width=(100, "%"), icon=None, height=(None, "px"), editable=False,
@@ -275,7 +268,6 @@ class Layouts(object):
       htmlObjs = [htmlObjs]
     html_div = html.HtmlContainer.Div(self.context.rptObj, htmlObjs or [], label, color, width, icon, height,
                                       editable, align, padding, htmlCode, tag, helper, options or {}, profile)
-    self.context.register(html_div)
     return html_div
 
   def popup(self, htmlObj=None, title=None, color=None, width=(100, '%'), height=(None, 'px'),
@@ -311,8 +303,8 @@ class Layouts(object):
     :rtype: html.HtmlPopup.Popup
     :return:
     """
-    return self.context.register(html.HtmlPopup.Popup(self.context.rptObj, htmlObj, title, color, width, height,
-                                                      withBackground, draggable, margin, profile))
+    return html.HtmlPopup.Popup(self.context.rptObj, htmlObj, title, color, width, height,
+                                                      withBackground, draggable, margin, profile)
 
   def iframe(self, url, width=(100, "%"), height=(100, "%"), helper=None, profile=None):
     """
@@ -336,7 +328,6 @@ class Layouts(object):
     :param profile:
     """
     html_frame = html.HtmlContainer.IFrame(self.context.rptObj, url, width, height, helper, profile)
-    self.context.register(html_frame)
     return html_frame
 
   def dialogs(self, record=None, width=(100, "%"), height=(200, "px"), helper=None, profile=None):
@@ -351,10 +342,8 @@ class Layouts(object):
     :param height:
     :param helper:
     :param profile:
-    :return:
     """
     html_dialog = html.HtmlContainer.Dialog(self.context.rptObj, record, width, height, helper, profile)
-    self.context.register(html_dialog)
     return html_dialog
 
   def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, profile=None):
@@ -385,7 +374,6 @@ class Layouts(object):
     if not isinstance(icon_names, list):
       icon_names = [icon_names]
     html_icon = html.HtmlContainer.IconsMenu(icon_names, self.context.rptObj, width, height, htmlCode, helper, profile)
-    self.context.register(html_icon)
     return html_icon
 
   def form(self, htmlObj=None, helper=None):
@@ -401,10 +389,8 @@ class Layouts(object):
     ----------
     :param htmlObj:
     :param helper:
-    :return:
     """
     form = html.HtmlContainer.Form(self.context.rptObj, htmlObj, helper)
-    self.context.register(form)
     return form
 
   def header(self, htmlObjs=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
@@ -439,7 +425,6 @@ class Layouts(object):
       if htmlObjs is not None and not isinstance(htmlObjs, list):
         htmlObjs = [htmlObjs]
       html_obj = html.HtmlContainer.Header(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
-      self.context.register(html_obj)
       return html_obj
 
   def section(self, htmlObjs=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
@@ -473,5 +458,4 @@ class Layouts(object):
       if htmlObjs is not None and not isinstance(htmlObjs, list):
         htmlObjs = [htmlObjs]
       html_obj = html.HtmlContainer.Section(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
-      self.context.register(html_obj)
       return html_obj

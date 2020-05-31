@@ -47,7 +47,6 @@ class Inputs(object):
     attrs = attrs or {}
     html_input = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
     html_input.style.css.margin_bottom = '2px'
-    self.context.register(html_input)
     return html_input
 
   def d_radio(self, flag=False, group_name=None, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
@@ -79,7 +78,6 @@ class Inputs(object):
     attrs = attrs or {}
     html_input = html.HtmlInput.InputRadio(self.context.rptObj, flag, group_name, placeholder, width, height, htmlCode,
                                            options, attrs, profile)
-    self.context.register(html_input)
     return html_input
 
   def d_search(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
@@ -116,7 +114,6 @@ class Inputs(object):
     html_search = html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode,
                                        options, attrs, profile)
     attrs.update({"type": 'search'})
-    self.context.register(html_search)
     return html_search
 
   def password(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
@@ -146,7 +143,7 @@ class Inputs(object):
     """
     attrs = attrs or {}
     attrs.update({"type": 'password'})
-    return self.context.register(html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile))
+    return html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
 
   def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
     """
@@ -175,7 +172,6 @@ class Inputs(object):
     dflt_options = {'timeFormat': 'HH:mm:ss'}
     dflt_options.update(options or {})
     html_input_t = html.HtmlInput.InputTime(self.context.rptObj, text, placeholder, width, height, htmlCode, dflt_options, attrs or {}, profile)
-    self.context.register(html_input_t)
     return html_input_t
 
   def d_date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
@@ -203,7 +199,6 @@ class Inputs(object):
     :param profile:
     """
     html_date = html.HtmlInput.InputDate(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs or {}, profile)
-    self.context.register(html_date)
     return html_date
 
   def d_int(self, value="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
@@ -232,7 +227,6 @@ class Inputs(object):
     attrs = attrs or {}
     attrs.update({"type": 'number'})
     html_integer = html.HtmlInput.InputInteger(self.context.rptObj, value, placeholder, width, height, htmlCode, options, attrs, profile)
-    self.context.register(html_integer)
     return html_integer
 
   def d_range(self, value, min=0, max=100, step=1, placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
@@ -241,7 +235,6 @@ class Inputs(object):
     attrs.update({"type": 'range'})
     html_range = html.HtmlInput.InputRange(self.context.rptObj, value, min, max, step, placeholder, width, height,
                                            htmlCode, options or {}, attrs, profile)
-    self.context.register(html_range)
     return html_range
 
   def _output(self, value="", options=None, profile=False):
@@ -265,7 +258,6 @@ class Inputs(object):
     :param profile:
     """
     html_output = html.HtmlInput.Output(self.context.rptObj, value)
-    self.context.register(html_output)
     return html_output
 
   def textarea(self, text="", width=(100, '%'), rows=5, placeholder=None, background_color=None, htmlCode=None,
@@ -299,7 +291,6 @@ class Inputs(object):
     dfltOptions = {"spellcheck": False, 'selectable': False}
     dfltOptions.update(options or {})
     html_t_area = html.HtmlInput.TextArea(self.context.rptObj, text, width, rows, placeholder, background_color, htmlCode, dfltOptions, profile)
-    self.context.register(html_t_area)
     return html_t_area
 
   def autocomplete(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
@@ -336,7 +327,6 @@ class Inputs(object):
     options = options or {}
     attrs = attrs or {}
     html_input = html.HtmlInput.AutoComplete(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
-    self.context.register(html_input)
     return html_input
 
   def input(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
@@ -425,7 +415,6 @@ class Inputs(object):
     attrs = attrs or {}
     html_coech = html.HtmlInput.Checkbox(self.context.rptObj, flag, label, group_name, width, height, htmlCode,
                                          options, attrs, profile)
-    self.context.register(html_coech)
     return html_coech
 
   def radio(self, flag, label=None, group_name=None, icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
@@ -457,7 +446,6 @@ class Inputs(object):
     """
     html_radio = html.HtmlInput.Radio(self.context.rptObj, flag, label, group_name, icon, width, height, htmlCode,
                                       helper, options, profile)
-    self.context.register(html_radio)
     return html_radio
 
   def editor(self, text="", language='python', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, profile=None):
@@ -487,7 +475,6 @@ class Inputs(object):
     if options is not None:
       dflt_options.update(options)
     editor = html.HtmlTextEditor.Editor(self.context.rptObj, text, language, width, height, htmlCode, dflt_options, profile)
-    self.context.register(editor)
     return editor
 
   def cell(self, text=None, language='python', width=(100, "%"), height=(100, "px"), htmlCode=None, options=None, profile=None):
@@ -515,7 +502,6 @@ class Inputs(object):
     if options is not None:
       dflt_options.update(options)
     html_cell = html.HtmlTextEditor.Cell(self.context.rptObj, text, language, width, height, htmlCode, dflt_options, profile)
-    self.context.register(html_cell)
     return html_cell
 
   def search(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
@@ -549,7 +535,6 @@ class Inputs(object):
     """
     html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
                                    extensible, profile)
-    self.context.register(html_s)
     return html_s
 
   def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,
@@ -579,7 +564,6 @@ class Inputs(object):
     div = self.context.rptObj.ui.div([label, html_input])
     div.input = html_input
     div.label = label
-    self.context.register(html_input)
     html_input.on('focus', [
       "document.getElementById('%s').animate({'marginTop': ['10px', '-8px']}, {duration: 50, easing: 'linear', iterations: 1, fill: 'both'})" % label.htmlCode,
     ])

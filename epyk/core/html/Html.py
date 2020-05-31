@@ -133,7 +133,7 @@ class Html(object):
     self.jsImports = report.jsImports # to be deleted - because changed should be done only on the component self.require
     self.cssImport = report.cssImport # to be deleted - because changed should be done only on the component self.require
 
-    self._jsStyles = {}  # to be deleted - because code => htmlCode, _jsStyles shold be renamed
+    self._jsStyles = {}  # to be deleted - because code => htmlCode, _jsStyles should be renamed
     self.innerPyHTML = None  # to be reviewed - not sure this is still usefull
 
     self.__options = Options(self, options)
@@ -142,7 +142,6 @@ class Html(object):
     if css_attrs is not None:
       self.css(css_attrs)
 
-
     if htmlCode is not None:
       if htmlCode[0].isdigit() or cleanData(htmlCode) != htmlCode:
         raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (htmlCode, cleanData(htmlCode)))
@@ -150,12 +149,12 @@ class Html(object):
       if htmlCode in self._report.components:
         raise Exception("Duplicated Html Code %s in the script !" % htmlCode)
 
-      self._report.components[htmlCode] = self
       self.__htmlCode = htmlCode
       # self._report.jsGlobal.reportHtmlCode.add(htmlCode)
       if htmlCode in self._report.http:
         self.vals = self._report.http[htmlCode]
 
+    self._report.components[self.htmlCode] = self
     self._vals = vals
     self.jsVal = "%s_data" % self.__htmlCode # to be reviewed
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
@@ -163,7 +162,6 @@ class Html(object):
   def __add__(self, component):
     """ Add items to a container """
     if hasattr(component, 'htmlCode'):
-      self.components[component.htmlCode] = component
       component.options.managed = False
     self.val.append(component)
     return self
@@ -185,7 +183,11 @@ class Html(object):
     """
     Description:
     -----------
+    Unique reference for any HTML component in the framework. This must be defined in the interface and cannot be changed
+    in the report.
 
+    This reference can be used in the Python to get the html object from components in the page but it is also
+    used in any web framework by the JavaScript to get the DOM object and apply the necessary transformations.
     """
     if self.__htmlCode is not None:
       return self.__htmlCode
@@ -1158,10 +1160,6 @@ class Body(Html):
     if self._styleObj is None:
       self._styleObj = GrpCls.ClassPage(self)
     return self._styleObj
-
-  @property
-  def htmlCode(self):
-    return "body"
 
   @property
   def dom(self):

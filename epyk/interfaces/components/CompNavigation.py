@@ -206,7 +206,6 @@ class Navigation(object):
     dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
     dflt_options.update(options or {})
     html_indices = html.HtmlContainer.Indices(self.context.rptObj, count, width, height, None, dflt_options, profile)
-    self.context.register(html_indices)
     return html_indices
 
   def points(self, count, selected=0, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
@@ -232,7 +231,6 @@ class Navigation(object):
     dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
     dflt_options.update(options or {})
     html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, None, dflt_options, profile)
-    self.context.register(html_points)
     return html_points
 
   def dots(self, count, selected=1, position="right", width=(100, '%'), height=(None, 'px'), options=None,
@@ -258,7 +256,6 @@ class Navigation(object):
     dflt_options = {"div_css": {"margin": "2px", "float": position}, "selected": selected}
     dflt_options.update(options or {})
     html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, None, dflt_options, profile)
-    self.context.register(html_points)
     return html_points
 
   def path(self, records, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
@@ -328,7 +325,6 @@ class Navigation(object):
     html_nav.style.css.line_height = height[0]
     #html_nav.val[-1].style.css.display = 'block' # scroll object must be block to keep the height, this screws up the display
     self.context.rptObj.body.style.css.padding_top = height[0]
-    self.context.register(html_nav)
     return html_nav
 
   def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
@@ -388,7 +384,6 @@ class Navigation(object):
     :param profile: get profiling info
     """
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
-    self.context.register(footer)
     return footer
 
   def side(self, components=None, anchor=None, size=262, position='right', profile=False):

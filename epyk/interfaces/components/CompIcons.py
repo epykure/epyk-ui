@@ -37,7 +37,6 @@ class Icons(object):
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, profile)
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline-block"
-    self.context.register(html_edit)
     return html_edit
 
   def edit(self, text=None, position=None, tooltip="Edit", width=(None, 'px'), height=(None, 'px'), htmlCode=None, profile=None):
@@ -656,7 +655,6 @@ class Icons(object):
       icon.icon.dom.switchClass(icons[0] if flag else icons[1], icons[1] if flag else icons[0]),
       icon.icon.dom.transition('background', self.context.rptObj.theme.success[0], duration=.2, reverse=True)
     ])
-    self.context.register(icon)
     return icon
 
   def epyk(self, align="center", format='logo'):
@@ -709,7 +707,6 @@ class Icons(object):
 
     """
     bar = html.HtmlEvent.SignIn(self.context.rptObj, text, width, icon)
-    self.context.register(bar)
     return bar
 
   def bar(self, records=None, color=None, width=(70, 'px'), height=(None, 'px'), options=None):
@@ -732,5 +729,4 @@ Attributes:
     records = records or []
     options = options or {}
     html_opts = html.HtmlEvent.OptionsBar(self.context.rptObj, records, width, height, color, options)
-    self.context.register(html_opts)
     return html_opts

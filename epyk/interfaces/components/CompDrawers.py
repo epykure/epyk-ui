@@ -23,7 +23,6 @@ class Drawers(object):
     """
     h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)
     h_drawer.style.css.min_height = 200
-    self.context.register(h_drawer)
     return h_drawer
 
   def left(self, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
@@ -43,7 +42,6 @@ class Drawers(object):
     options = options or {}
     options["side"] = 'right'
     h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)
-    self.context.register(h_drawer)
     return h_drawer
 
   def right(self, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
@@ -63,7 +61,6 @@ class Drawers(object):
     options = options or {}
     options["side"] = 'right'
     h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)
-    self.context.register(h_drawer)
     return h_drawer
 
   def no_handle(self, component, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
@@ -86,6 +83,5 @@ class Drawers(object):
     options["side"] = 'right'
     h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)
     h_drawer.set_handle(component)
-    self.context.register(h_drawer)
     return h_drawer
 

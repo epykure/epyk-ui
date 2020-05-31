@@ -40,7 +40,6 @@ class Media(object):
     if options is not None:
       dft_options.update(options)
     html_media = html.HtmlMedia.Media(self.context.rptObj, value, path, width, height, htmlCode, profile, dft_options)
-    self.context.register(html_media)
     return html_media
 
   def audio(self, value, path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
@@ -74,7 +73,6 @@ class Media(object):
     if options is not None:
       dft_options.update(options)
     html_audio = html.HtmlMedia.Audio(self.context.rptObj, value, path, width, height, htmlCode, profile, dft_options)
-    self.context.register(html_audio)
     return html_audio
 
   def youtube(self, link, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
@@ -106,7 +104,6 @@ class Media(object):
     if options is not None:
       dflt_options.update(options)
     html_youtube = html.HtmlMedia.Youtube(self.context.rptObj, link, width, height, htmlCode, profile, dflt_options)
-    self.context.register(html_youtube)
     return html_youtube
 
   # def camera(self):

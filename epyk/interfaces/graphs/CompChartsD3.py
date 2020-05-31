@@ -38,7 +38,6 @@ class D3(object):
       self.parent.context.rptObj.jsImports.add("d3")
     d3_chart = GraphD3.Script(self.parent.context.rptObj, data or [], width, height, htmlCode, options or {}, profile)
     d3_chart.builder_name = "%s%s" % (d3_chart.builder_name, name)
-    self.parent.context.register(d3_chart)
     return d3_chart
 
   def cloud(self, data, width=(300, "px"), height=(330, "px"), htmlCode=None, options=None, profile=None):

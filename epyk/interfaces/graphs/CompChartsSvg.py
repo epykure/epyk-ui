@@ -32,7 +32,6 @@ class SVG(object):
     if not isinstance(width, tuple):
       width = (width, "px")
     html_svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
-    self.parent.context.register(html_svg)
     return html_svg
 
   def line(self, x1=0, y1=None, x2=None, y2=None, width=(500, "px"), height=(300, "px"), options=None):
@@ -66,7 +65,6 @@ class SVG(object):
       y1 = 0 if height[1] == "%" else height[0] / 2
     html_svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     html_svg.line(x1, y1, x2, y2)
-    self.parent.context.register(html_svg)
     return html_svg
 
   def circle(self, x, y, r, width=(500, "px"), height=(300, "px"), options=None):
@@ -94,7 +92,6 @@ class SVG(object):
     """
     html_svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     html_svg.circle(x, y, r)
-    self.parent.context.register(html_svg)
     return html_svg
 
   def arrow_right(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), htmlCode=None, options=None):
@@ -163,7 +160,6 @@ class SVG(object):
     """
     html_svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     html_svg.ellipse(cx, cy, rx, ry)
-    self.parent.context.register(html_svg)
     return html_svg
 
   def polyline(self, points, width=(500, "px"), height=(300, "px"), options=None):
@@ -188,7 +184,6 @@ class SVG(object):
     """
     html_svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     html_svg.polyline(points)
-    self.parent.context.register(html_svg)
     return html_svg
 
   def polygone(self, points, width=(500, "px"), height=(300, "px"), options=None):
@@ -213,7 +208,6 @@ class SVG(object):
     """
     html_svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     html_svg.polygon(points)
-    self.parent.context.register(html_svg)
     return html_svg
 
   def triangle(self, point1, point2=None, point3=None, fill='None', width=(500, "px"), height=(300, "px"), options=None):
@@ -245,7 +239,6 @@ class SVG(object):
       point3 = (point1[1], point1[1])
     tri = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     tri.triangle([point1, point2, point3, point1], fill=fill, options=options)
-    self.parent.context.register(tri)
     return tri
 
   def axes(self, size=10, width=(500, "px"), height=(300, "px"), htmlCode=None):
@@ -277,7 +270,6 @@ class SVG(object):
     pl = svg.polyline([(size, size), (size, height[0]-size), (width[0]-size, height[0]-size)]).css({'stroke': "black"})
     pl.marker_start(m.url)
     pl.marker_end(m.url)
-    self.parent.context.register(svg)
     return svg
 
   def rectangle(self, x, y, width=(500, "px"), height=(300, "px"), fill=None, rx=0, ry=0):
@@ -293,7 +285,6 @@ class SVG(object):
     """
     rect = graph.GraphSvg.SVG(self.parent.context.rptObj, (900, "px"), (200, "px"))
     rect.rect(x, y, width, height, fill, rx=rx, ry=ry)
-    self.parent.context.register(rect)
     return rect
 
   def heart(self, w, h, fill='none', width=(500, "px"), height=(300, "px")):
@@ -311,7 +302,6 @@ class SVG(object):
     svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     svg.polygon([(w, w), (3/4 * h, 3/4 * h), (h, w), (h, 3/4 * w), (9/10 * h, 6/10 * w), (8.5/10 * h, 6/10 * w), (3/4 * h, 3/4 * w),
                  (2/3 * h, 6/10 * w), (6/10 * h, 6/10 * w), (w, 3/4 * w), (w, w)], fill=fill)
-    self.parent.context.register(svg)
     return svg
 
   def star(self, fill='none', width=(500, "px"), height=(300, "px")):
@@ -328,7 +318,6 @@ class SVG(object):
     svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     svg.polygon([(100, 10), (40, 180), (190, 60), (10, 60), (160, 180)], fill=fill)
     svg[-1].css({"stroke": 'none'})
-    self.parent.context.register(svg)
     return svg
 
   def path(self, x=0, y=0, fill='none', origin=False, bespoke_path=None):
@@ -341,5 +330,4 @@ class SVG(object):
     :param bespoke_path:
     """
     path = graph.GraphSvg.Path(self.parent.context.rptObj, x, y, fill, origin, bespoke_path)
-    self.parent.context.register(path)
     return path

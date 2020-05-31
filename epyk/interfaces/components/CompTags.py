@@ -38,8 +38,7 @@ class Tags(object):
     html_a = html.HtmlTags.HtmlGenericLInk(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                             height, htmlCode, tooltip, options, profile)
     html_a.set_attrs(name="href", value=url)
-    html_a.style.clear()#
-    self.context.register(html_a)
+    html_a.style.clear()
     return html_a
 
   def aside(self, text="", width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None,
@@ -71,7 +70,6 @@ class Tags(object):
     html_a = html.HtmlTags.HtmlGenericLInk(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                            height, htmlCode, tooltip, options, profile)
     html_a.style.clear()
-    self.context.register(html_a)
     return html_a
 
   def b(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -100,7 +98,6 @@ class Tags(object):
     html_b = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                        height, htmlCode, tooltip, options, profile)
     html_b.style.clear()
-    self.context.register(html_b)
     return html_b
 
   def h1(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -131,7 +128,6 @@ class Tags(object):
     html_h1 = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
     html_h1.style.clear_all()
-    self.context.register(html_h1)
     return html_h1
 
   def h2(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -162,7 +158,6 @@ class Tags(object):
     html_h2 = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
     html_h2.style.clear_all()
-    self.context.register(html_h2)
     return html_h2
 
   def h3(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -193,7 +188,6 @@ class Tags(object):
     html_h3 = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
     html_h3.style.clear_all()
-    self.context.register(html_h3)
     return html_h3
 
   def delete(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -216,7 +210,6 @@ class Tags(object):
     """
     html_d = html.HtmlTags.HtmlGeneric(self.context.rptObj, 'del', text, width,  height, htmlCode, tooltip, options, profile)
     html_d.style.clear()
-    self.context.register(html_d)
     return html_d
 
   def u(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -246,7 +239,6 @@ class Tags(object):
     html_u = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                        height, htmlCode, tooltip, options, profile)
     html_u.style.clear()
-    self.context.register(html_u)
     return html_u
 
   def p(self, text, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -276,7 +268,6 @@ class Tags(object):
     html_p = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                        height, htmlCode, tooltip, options, profile)
     html_p.style.clear()
-    self.context.register(html_p)
     return html_p
 
   def bdi(self, text, width=(100, "%"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -311,7 +302,6 @@ class Tags(object):
     """
     html_bdi = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_bdi)
     return html_bdi
 
   def bdo(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -344,7 +334,6 @@ class Tags(object):
     """
     html_bdo = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_bdo)
     return html_bdo
 
   def ol(self, text=None, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -373,7 +362,6 @@ class Tags(object):
     :param profile: Boolean flag to set the profiling mode for the component
     """
     html_sup = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width, height, htmlCode, tooltip, options, profile)
-    self.context.register(html_sup)
     return html_sup
 
   def em(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -401,7 +389,6 @@ class Tags(object):
     """
     html_em = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_em)
     return html_em
 
   def strong(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -429,7 +416,6 @@ class Tags(object):
     """
     html_strong = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
-    self.context.register(html_strong)
     return html_strong
 
   def samp(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -458,7 +444,6 @@ class Tags(object):
     """
     html_samp = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
-    self.context.register(html_samp)
     return html_samp
 
   def kbd(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -486,7 +471,6 @@ class Tags(object):
     """
     html_kbd = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_kbd)
     return html_kbd
 
   def var(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -514,7 +498,6 @@ class Tags(object):
     """
     html_var = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_var)
     return html_var
 
   def sup(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -542,7 +525,6 @@ class Tags(object):
     """
     html_sup = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_sup)
     return html_sup
 
   def wbr(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -570,7 +552,6 @@ class Tags(object):
     """
     html_wbr = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_wbr)
     return html_wbr
 
   def time(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -598,7 +579,6 @@ class Tags(object):
     """
     html_time = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
-    self.context.register(html_time)
     return html_time
 
   def sub(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -627,7 +607,6 @@ class Tags(object):
     """
     html_sub = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
-    self.context.register(html_sub)
     return html_sub
 
   def small(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -655,7 +634,6 @@ class Tags(object):
     """
     html_small = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
-    self.context.register(html_small)
     return html_small
 
   def s(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -683,7 +661,6 @@ class Tags(object):
     """
     html_s = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
-    self.context.register(html_s)
     return html_s
 
   def i(self, text, width=(None, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -711,7 +688,6 @@ class Tags(object):
     """
     html_i = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                         height, htmlCode, tooltip, options, profile)
-    self.context.register(html_i)
     return html_i
 
   def q(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -741,7 +717,6 @@ class Tags(object):
     """
     html_q = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                        height, htmlCode, tooltip, options, profile)
-    self.context.register(html_q)
     return html_q
 
   def mark(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -771,7 +746,6 @@ class Tags(object):
     """
     html_mark = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                           height, htmlCode, tooltip, options, profile)
-    self.context.register(html_mark)
     return html_mark
 
   def nav(self, text=None, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -801,7 +775,6 @@ class Tags(object):
     """
     html_mark = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                           height, htmlCode, tooltip, options, profile)
-    self.context.register(html_mark)
     return html_mark
 
   def ins(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -829,7 +802,6 @@ class Tags(object):
     """
     html_ins = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_ins)
     return html_ins
 
   def dfn(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -857,7 +829,6 @@ class Tags(object):
     """
     html_dfn = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_dfn)
     return html_dfn
 
   def cite(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -885,7 +856,6 @@ class Tags(object):
     """
     html_cite = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                           height, htmlCode, tooltip, options, profile)
-    self.context.register(html_cite)
     return html_cite
 
   def abbr(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -913,7 +883,6 @@ class Tags(object):
     """
     html_abbr = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_abbr)
     return html_abbr
 
   def meter(self, text, width=(100, "px"), height=(None, "px"), htmlCode=None, tooltip='', options=None, profile=None):
@@ -942,7 +911,6 @@ class Tags(object):
     """
     html_abbr = html.HtmlTags.HtmlGeneric(self.context.rptObj, sys._getframe().f_code.co_name, text, width,
                                          height, htmlCode, tooltip, options, profile)
-    self.context.register(html_abbr)
     return html_abbr
 
   def comment(self, text):
@@ -960,5 +928,4 @@ class Tags(object):
     :param text: String with the content to be added to the component
     """
     html_comm = html.HtmlTags.HtmlComment(self.context.rptObj, text)
-    self.context.register(html_comm)
     return html_comm

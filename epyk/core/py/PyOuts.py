@@ -78,6 +78,9 @@ class PyOuts(object):
       htmlParts, cssParts = [], {}
       for component_id in order_components:
         component = self._report.components[component_id]
+        if component.name == 'Body':
+          continue
+
         if component.options.managed:
           htmlParts.append(component.html())
         #
@@ -105,6 +108,9 @@ class PyOuts(object):
     # Add the component on ready functions
     for component_id in order_components:
       component = self._report.components[component_id]
+      if component.name == 'Body':
+        continue
+
       onloadParts.extend(component._browser_data['component_ready'])
 
       for event, source_fncs in component._browser_data['mouse'].items():
@@ -313,6 +319,9 @@ class PyOuts(object):
       order_components = list(self._report.components.keys())
       for component_id in order_components:
         component = self._report.components[component_id]
+        if component.name == 'Body':
+          continue
+
         if component.options.managed:
           htmlParts.append(component.html())
         cssParts.update(component.style.get_classes_css())
@@ -351,6 +360,9 @@ class PyOuts(object):
         order_components = list(self._report.components.keys())
         for component_id in order_components:
           component = self._report.components[component_id]
+          if component.name == 'Body':
+            continue
+
           if hasattr(component, "to_markdown"):
             f.write("%s\n" % component.to_markdown(component.vals))
       return file_Path
@@ -371,6 +383,9 @@ class PyOuts(object):
     order_components = list(self._report.components.keys())
     for component_id in order_components:
       component = self._report.components[component_id]
+      if component.name == 'Body':
+        continue
+
       if component.options.managed:
         htmlParts.append(component.html())
       cssParts.update(component.style.get_classes_css())

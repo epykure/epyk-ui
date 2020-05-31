@@ -40,7 +40,6 @@ class Modals(object):
     modal = html.HtmlContainer.Modal(self.context.rptObj, [], header, footer, False, helper)
     modal += form
     modal.form = form
-    self.context.register(modal)
     return modal
 
   def disclaimer(self, disc_list, header=None, footer=None, submit=True, validation_text='AGREE', action=None, add_buttons=None, to_html=True, helper=None):
@@ -85,7 +84,6 @@ class Modals(object):
           submitBtn.click(modal.close())
         submitRow + submitBtn
       modal.col + submitRow
-    self.context.register(modal)
     return modal
 
   def dialog(self, text, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
@@ -116,5 +114,4 @@ class Modals(object):
     """
     html_pr = html.HtmlEvent.Dialog(self.context.rptObj, text, width, height,  attrs or {}, helper,
                                          options or {}, htmlCode, profile)
-    self.context.register(html_pr)
     return html_pr

@@ -32,7 +32,6 @@ class Tabulators(object):
     for c in cols + rows:
       table.add_column(c)
       #col_def.cssClass.center() # = "dt-center, dt-test"
-    self.parent.context.register(table)
     return table
 
   def heatmap(self):

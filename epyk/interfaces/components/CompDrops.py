@@ -38,5 +38,4 @@ Attributes:
 
     :return:
     """
-    return self.context.register(html.HtmlFiles.DropFile(self.context.rptObj, placeholder, tooltip, report_name,
-                                                         file_type, profile))
+    return html.HtmlFiles.DropFile(self.context.rptObj, placeholder, tooltip, report_name, file_type, profile)

@@ -35,7 +35,6 @@ class Nvd3(object):
     line_chart = graph.GraphNVD3.ChartScatter(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d, data['labels'][i])
-    self.parent.context.register(line_chart)
     line_chart.dom.x(column="x").y(column="y")
     return line_chart
 
@@ -66,7 +65,6 @@ class Nvd3(object):
     line_chart.dom.useInteractiveGuideline(True)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d, data['labels'][i])
-    self.parent.context.register(line_chart)
     line_chart.dom.x(column="x").y(column="y")
     return line_chart
 
@@ -97,7 +95,6 @@ class Nvd3(object):
     line_chart.dom.useInteractiveGuideline(True)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d, data['labels'][i])
-    self.parent.context.register(line_chart)
     line_chart.dom.x(column="x").y(column="y")
     return line_chart
 
@@ -128,7 +125,6 @@ class Nvd3(object):
     line_chart.dom.useInteractiveGuideline(True)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d, data['labels'][i])
-    self.parent.context.register(line_chart)
     line_chart.dom.x(column="x").y(column="y")
     return line_chart
 
@@ -159,7 +155,6 @@ class Nvd3(object):
     if y_columns is not None and len(y_columns) > 1:
       # Change automatically the underlying chart object to add a multibars chart
       bar_chart.dom._selector = "nv.models.multiBarChart()"
-    self.parent.context.register(bar_chart)
     bar_chart.dom.x(column="label").y(column="y")
     for i, d in enumerate(data['datasets']):
       bar_chart.add_trace(d, data['labels'][i])
@@ -190,7 +185,6 @@ class Nvd3(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.parent.context.rptObj.data.nvd3.labely(record, y_columns, x_axis)
     bar_chart = graph.GraphNVD3.ChartHorizontalBar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(bar_chart)
     bar_chart.dom.x(column="label").y(column="y")
     for i, d in enumerate(data['datasets']):
       bar_chart.add_trace(d, data['labels'][i])
@@ -224,7 +218,6 @@ class Nvd3(object):
     if y_columns is not None and len(y_columns) > 1:
       # Change automatically the underlying chart object to add a multibars chart
       bar_chart.dom._selector = "nv.models.multiBarChart()"
-    self.parent.context.register(bar_chart)
     bar_chart.dom.x(column="label").y(column="y")
     for i, d in enumerate(data['datasets']):
       bar_chart.add_trace(d, data['labels'][i])
@@ -257,7 +250,6 @@ class Nvd3(object):
     histo_chart.dom.x(column="label").y(column="y")
     for i, d in enumerate(data['datasets']):
       histo_chart.add_trace(d, data['labels'][i])
-    self.parent.context.register(histo_chart)
     return histo_chart
 
   def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -289,7 +281,6 @@ class Nvd3(object):
     histo_chart.dom.x(column="label").y(column="y")
     for i, d in enumerate(data['datasets']):
       histo_chart.add_trace(d, data['labels'][i])
-    self.parent.context.register(histo_chart)
     return histo_chart
 
   def area(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -319,7 +310,6 @@ class Nvd3(object):
     for i, d in enumerate(data['datasets']):
       area_chart.add_trace(d, data['labels'][i])
     area_chart.dom.x(column="label").y(column="y")
-    self.parent.context.register(area_chart)
     return area_chart
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -346,7 +336,6 @@ class Nvd3(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.parent.context.rptObj.data.nvd3.xy(record, y_columns, x_axis)
     pie_chart = graph.GraphNVD3.ChartPie(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(pie_chart)
     pie_chart.dom.x(column="x").y(column="y")
     for i, d in enumerate(data['datasets']):
       pie_chart.add_trace(d, data['labels'][i])
@@ -376,7 +365,6 @@ class Nvd3(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis})
     data = self.parent.context.rptObj.data.nvd3.xy(record, y_columns, x_axis)
     pie_chart = graph.GraphNVD3.ChartPie(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(pie_chart)
     pie_chart.dom.x(column="x").y(column="y").donut(True)
     for i, d in enumerate(data['datasets']):
       pie_chart.add_trace(d, data['labels'][i])
@@ -402,7 +390,6 @@ class Nvd3(object):
       value = value / total * 100
       total = 100
     pie_chart = graph.GraphNVD3.ChartPie(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(pie_chart)
     pie_chart.dom.x(column="x").y(column="y").donut(True).title(text or "%s%%" % value)
     pie_chart.dom.arcsRadius([
       {"inner": 0.7, "outer": 1},
@@ -431,7 +418,6 @@ class Nvd3(object):
     chart = graph.GraphNVD3.ChartParallelCoord(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     chart.set_dimension_names(dimensions)
     chart.add_trace(records)
-    self.parent.context.register(chart)
     return chart
 
   def sunburst(self, records, name, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -450,7 +436,6 @@ class Nvd3(object):
     #options.update({'y_columns': y_columns, 'x_column': name})
     chart = graph.GraphNVD3.ChartSunbrust(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     chart.add_trace(records, name=name)
-    self.parent.context.register(chart)
     return chart
 
   def candlestick(self, records, closes, highs, lows, opens, x_axis, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -486,7 +471,6 @@ class Nvd3(object):
     candle_chart = graph.GraphNVD3.ChartCandlestick(self.parent.context.rptObj, width, height, options, htmlCode, profile)
     candle_chart.dom.x(column='date').y(column='close')
     candle_chart.dom.xAxis.tickDateFormat()
-    self.parent.context.register(candle_chart)
     for s in all_series:
       candle_chart.add_trace(s)
     return candle_chart
@@ -521,7 +505,6 @@ class Nvd3(object):
     ohlc_chart = graph.GraphNVD3.ChartOhlcBar(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     ohlc_chart.dom.x(column='date').y(column='close')
     ohlc_chart.dom.xAxis.tickDateFormat()
-    self.parent.context.register(ohlc_chart)
     for s in all_series:
       ohlc_chart.add_trace(s)
     return ohlc_chart
@@ -531,7 +514,6 @@ class Nvd3(object):
     Description:
     ------------
 
-    :param title:
     :param profile:
     :param options:
     :param width:
@@ -541,7 +523,6 @@ class Nvd3(object):
     box_chart = graph.GraphNVD3.ChartBoxPlot(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     box_chart.dom.q1('q1').q2('median').q3('q3').wh('maxRegularValue').wl('minRegularValue').outliers('outliers').staggerLabels(True)
     box_chart.dom.itemColor("seriesColor").x('title')
-    self.parent.context.register(box_chart)
     return box_chart
 
   def forceDirected(self, profile=None, options=None, width=(400, "px"), height=(330, "px"), htmlCode=None):
@@ -557,5 +538,4 @@ class Nvd3(object):
     """
     force_chart = graph.GraphNVD3.ChartForceDirected(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     force_chart.dom.width(width[0]).height(height[0]).nodeExtras("name").color('color')
-    self.parent.context.register(force_chart)
     return force_chart

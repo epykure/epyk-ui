@@ -38,7 +38,6 @@ class Trees(object):
     :param profile:
     """
     html_tree = html.HtmlTrees.Tree(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
-    self.context.register(html_tree)
     return html_tree
 
   def inputs(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
@@ -61,7 +60,6 @@ class Trees(object):
     :param profile:
     """
     html_tree = html.HtmlTrees.TreeInput(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
-    self.context.register(html_tree)
     return html_tree
 
   def menu(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
@@ -85,7 +83,6 @@ class Trees(object):
     #TODO Ask if this module is still maintained
     """
     html_tree = html.HtmlEvent.Menu(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
-    self.context.register(html_tree)
     return html_tree
 
   def dropdown(self, recordSet=None, text="", width=(100, "%"), height=(32, 'px'), htmlCode=None,
@@ -120,5 +117,4 @@ class Trees(object):
     dftl_options.update(options or {})
     html_d = html.HtmlTrees.DropDown(self.context.rptObj, recordSet, text, width, height, htmlCode, helper,
                                      dftl_options, profile)
-    self.context.register(html_d)
     return html_d

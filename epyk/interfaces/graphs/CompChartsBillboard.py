@@ -35,7 +35,6 @@ class Billboard(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def line_range(self, record, y_columns=None, x_axis=None, range=5, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -67,7 +66,6 @@ class Billboard(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def bubble(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -99,7 +97,6 @@ class Billboard(object):
     for i, d in enumerate(data['datasets']):
       bubble_chart.add_dataset(data['series'][i], d)
       bubble_chart.data.labels = True
-    self.parent.context.register(bubble_chart)
     return bubble_chart
 
   def radar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -131,7 +128,6 @@ class Billboard(object):
     for i, d in enumerate(data['datasets']):
       radar_chart.add_dataset(data['series'][i], d)
       radar_chart.data.labels = True
-    self.parent.context.register(radar_chart)
     return radar_chart
 
   def spline(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -162,7 +158,6 @@ class Billboard(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def step(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -194,7 +189,6 @@ class Billboard(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def area(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -225,7 +219,6 @@ class Billboard(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def area_step(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -257,7 +250,6 @@ class Billboard(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def timeseries(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -314,7 +306,6 @@ class Billboard(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def stacked(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -346,7 +337,6 @@ class Billboard(object):
     line_chart.data.groups = [data['series']]
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def hbar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -402,7 +392,6 @@ class Billboard(object):
     line_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       line_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(line_chart)
     return line_chart
 
   def pie(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -433,7 +422,6 @@ class Billboard(object):
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(pie_chart)
     return pie_chart
 
   def donut(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
@@ -464,7 +452,6 @@ class Billboard(object):
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(data['series'][i], d)
-    self.parent.context.register(pie_chart)
     return pie_chart
 
   def gauge(self, value, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
@@ -489,5 +476,4 @@ class Billboard(object):
     """
     g_chart = graph.GraphBillboard.ChartGauge(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     g_chart.add_dataset(text, value)
-    self.parent.context.register(g_chart)
     return g_chart

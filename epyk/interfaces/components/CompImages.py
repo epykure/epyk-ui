@@ -44,7 +44,6 @@ class Images(object):
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
-    self.context.register(html_image)
     return html_image
 
   def circular(self, image=None, path=None, width=(100, "%"), height=('auto', ""), align="center", htmlCode=None,
@@ -83,7 +82,6 @@ class Images(object):
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
-    self.context.register(html_image)
     # add the css styles
     html_image.style.css.padding = 5
     html_image.style.css.borders_light()
@@ -234,7 +232,6 @@ class Images(object):
     :param profile:
     """
     html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, profile)
-    self.context.register(html_id)
     return html_id
 
   def carrousel(self, images, path=None, selected=0, width=(100, "%"), height=(300, "px"), profile=None):
@@ -269,7 +266,6 @@ class Images(object):
       raise Exception("This height cannot be in percentage")
 
     html_i = html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, selected, width, height, profile)
-    self.context.register(html_i)
     return html_i
 
   def emoji(self, symbole=None, top=(20, 'px'), profile=None):
@@ -296,7 +292,6 @@ class Images(object):
     :param profile:
     """
     html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbole, top, profile)
-    self.context.register(html_emoji)
     return html_emoji
 
   def icon(self, icon=None, width=(None, 'px'), height=(None, "px"), color=None, tooltip=None, profile=None):
@@ -327,7 +322,6 @@ class Images(object):
     """
     html_icon = html.HtmlImage.Icon(self.context.rptObj, icon, width=width, height=height, color=color, tooltip=tooltip,
                                     profile=profile)
-    self.context.register(html_icon)
     return html_icon
 
   def badge(self, text=None, label=None, icon=None, background_color=None, color=None, url=None,
@@ -368,7 +362,6 @@ class Images(object):
     """
     html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, background_color, color, url,
                                       tooltip, options or {}, profile)
-    self.context.register(html_badge)
     return html_badge
 
   def color(self, code, color=None, width=(110, 'px'), height=(25, 'px'), options=None, helper=None, profile=None):

@@ -33,7 +33,6 @@ class Plotly2D(object):
     data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
     line_chart.options.responsive = True
-    self.parent.context.register(line_chart)
     for d in data['datasets']:
       line_chart.add_trace(d)
     return line_chart
@@ -62,7 +61,6 @@ class Plotly2D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None})
     data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(bar_chart)
     for d in data['datasets']:
       bar_chart.add_trace(d)
     return bar_chart
@@ -91,7 +89,6 @@ class Plotly2D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'bar', 'mode': None, 'attrs': {'orientation': 'h'}})
     data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     bar_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(bar_chart)
     for d in data['datasets']:
       bar_chart.add_trace(d, type='bar')
       bar_chart.data.orientation = 'h'
@@ -123,7 +120,6 @@ class Plotly2D(object):
                     'mode': 'markers+text' if text_column is not None else 'markers'})
     data = self.parent.context.rptObj.data.plotly.xy_text(record, y_columns, x_axis, text_column)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(sc_chart)
     for i, d in enumerate(data['datasets']):
       sc_chart.add_trace(d, mode=options['mode'], type=options['type'])
       sc_chart.data.marker.color = self.parent.context.rptObj.theme.colors[i]
@@ -157,7 +153,6 @@ class Plotly2D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'lines', 'type': "scatter"})
     data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(sc_chart)
     for d in data['datasets']:
       sc_chart.add_trace(d)
     return sc_chart
@@ -186,7 +181,6 @@ class Plotly2D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers', 'type': "scattergl"})
     data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     sc_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(sc_chart)
     for d in data['datasets']:
       sc_chart.add_trace(d, type="scattergl", mode='markers')
     return sc_chart
@@ -218,7 +212,6 @@ class Plotly2D(object):
           series[histo_axis[0]].append(float(rec[y]))
         data.append(series)
     histo_chart = graph.GraphPlotly.Bar(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(histo_chart)
     for d in data:
       histo_chart.add_trace(d, type='histogram')
     return histo_chart
@@ -247,7 +240,6 @@ class Plotly2D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': 'pie', 'marker': {'colors': self.parent.context.rptObj.theme.charts}, 'mode': None, 'attrs': {'orientation': 'h'}})
     data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     pie_chart = graph.GraphPlotly.Pie(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(pie_chart)
     for d in data['datasets']:
       pie_chart.add_trace({"label": d['x'], "values": d['y']})
       pie_chart.data.marker.colors = self.parent.context.rptObj.theme.charts
@@ -278,7 +270,6 @@ class Plotly2D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'type': "scatter", 'attrs': {'fill': "tozeroy"}})
     data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(line_chart)
     for d in data['datasets']:
       line_chart.add_trace(d)
       line_chart.data.type = options['type']
@@ -310,7 +301,6 @@ class Plotly2D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'mode': 'markers'})
     data = self.parent.context.rptObj.data.plotly.xy(record, y_columns, x_axis)
     line_chart = graph.GraphPlotly.Line(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(line_chart)
     for d in data['datasets']:
       line_chart.add_trace(d, mode=options['mode'])
     return line_chart
@@ -336,7 +326,6 @@ class Plotly2D(object):
     options = options or {}
     options.update({'type': 'indicator', 'mode': "number"})
     ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(ind)
     ind.add_trace({'value': value}, mode=options["mode"])
     return ind
 
@@ -361,7 +350,6 @@ class Plotly2D(object):
     options = options or {}
     options.update({'type': 'indicator', 'mode': "number+delta", "delta": {'reference': delta}})
     ind = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(ind)
     ind.add_trace({'value': value}, mode=options["mode"])
     ind.data.delta.reference = delta
     return ind
@@ -392,7 +380,6 @@ class Plotly2D(object):
     options = options or {}
     options.update({'type': 'indicator', 'mode': "gauge+number"})
     gau = graph.GraphPlotly.Indicator(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(gau)
     gau.add_trace({'value': value}, mode=options['mode'], type=options['type'])
     return gau
 
@@ -405,7 +392,6 @@ class Plotly2D(object):
         series['theta'].append(rec[theta_axis])
       all_series.append(series)
     spolar_chart = graph.GraphPlotly.ScatterPolar(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(spolar_chart)
     for d in all_series:
       spolar_chart.add_trace(d, mode="line")
       spolar_chart.data.marker.color = None
@@ -418,7 +404,6 @@ class Plotly2D(object):
     for c in cols:
       series.append([rec.get(c) for rec in records])
     box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(box_chart)
     for s in series:
       box_chart.add_trace({axis: s})
     return box_chart
@@ -442,7 +427,6 @@ class Plotly2D(object):
         series[i].append(rec.get(c))
       x.append(rec.get(x_axis))
     box_chart = graph.GraphPlotly.Box(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(box_chart)
     for s in series:
       box_chart.add_trace({'y': s, 'x': x})
     return box_chart
@@ -478,7 +462,6 @@ class Plotly2D(object):
       all_series.append(series)
 
     candle_chart = graph.GraphPlotly.CandleStick(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(candle_chart)
     for s in all_series:
       candle_chart.add_trace(s)
     candle_chart.layout.no_background()
@@ -510,7 +493,6 @@ class Plotly3D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'markers'})
     data = self.parent.context.rptObj.data.plotly.xyz(record, y_columns, x_axis, z_axis)
     sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(sc_chart)
     for i, series in enumerate(data['datasets']):
       sc_chart.add_trace({'x': series['x'], 'y': series['y'], 'z': series['z']})
       sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
@@ -536,7 +518,6 @@ class Plotly3D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'lines'})
     data = self.parent.context.rptObj.data.plotly.xyz(record, y_columns, x_axis, z_axis)
     sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(sc_chart)
     for i, series in enumerate(data['datasets']):
       sc_chart.add_trace({'x': series['x'], 'y': series['y'], 'z': series['z']})
       #sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
@@ -562,7 +543,6 @@ class Plotly3D(object):
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'z_axis': z_axis, 'type': 'scatter3d', 'mode': 'lines+markers'})
     data = self.parent.context.rptObj.data.plotly.xyz(record, y_columns, x_axis, z_axis)
     sc_chart = graph.GraphPlotly.Scatter3D(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(sc_chart)
     for i, series in enumerate(data['datasets']):
       sc_chart.add_trace({'x': series['x'], 'y': series['y'], 'z': series['z']})
       sc_chart.data.line.color = self.parent.context.rptObj.theme.colors[i]
@@ -596,7 +576,6 @@ class Plotly3D(object):
     data = self.parent.context.rptObj.data.plotly.x_yz(record, y_columns, x_axis, z_axis, dy=options['delta']['y'], dx=options['delta']['x'], dz=options['delta']['z'])
     line_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options or {}, htmlCode,
                                            profile)
-    self.parent.context.register(line_chart)
     for i, d in enumerate(data['datasets']):
       line_chart.add_trace(d)
       line_chart.data.showscale = False
@@ -641,7 +620,6 @@ class Plotly3D(object):
       if k is not None:
         data["k"].append(rec[k])
     mesh_chart = graph.GraphPlotly.Mesh3d(self.parent.context.rptObj, width, height, options or {}, htmlCode, profile)
-    self.parent.context.register(mesh_chart)
     mesh_chart.add_trace(data)
     return mesh_chart
 
@@ -663,7 +641,6 @@ class Plotly3D(object):
     options.update({'type': 'surface', 'mode': ''})
     naps = self.parent.context.rptObj.data.plotly.surface(record, y_columns, x_axis, z_axis)
     surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(surf_chart)
     for i, d in enumerate(naps['datasets']):
       surf_chart.add_trace({'z': d})
       surf_chart.data.showscale = False
@@ -674,7 +651,6 @@ class Plotly3D(object):
     options = options or {}
     options.update({'type': 'surface', 'mode': ''})
     surf_chart = graph.GraphPlotly.Surface(self.parent.context.rptObj, width, height, options, htmlCode, profile)
-    self.parent.context.register(surf_chart)
     for d in records:
       surf_chart.add_trace({'z': d})
     return surf_chart
