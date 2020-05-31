@@ -28,20 +28,20 @@ class Report(object):
   showNavMenu, withContainer = False, False
   ext_packages = None # For extension modules
 
-  def __init__(self, httpsData=None):
+  def __init__(self, inputs=None):
     """
     Description:
     ------------
 
-    :param httpsData: Doctionary with the initial value of the defined components
+    Attributes:
+    ----------
+    :param inputs: Dictionary. The global input data for the defined components in the page.
+                               Passing data for a given component with an htmlCode will override the value.
     """
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
     self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet(), 'datasets': {}}, 'context': {'framework': 'JS'}}, None, None, None
     self.components = collections.OrderedDict() # Components for the entire page
-    self.start_time, self.http = time.time(), httpsData or {}
-
-    self._propagate = []
-
+    self.start_time, self.inputs, self._propagate = time.time(), inputs or {}, []
     self._scroll, self._contextMenu = set(), {}
     self.logo, self._dbSettings, self.dbsDef, self._cssText, self._jsText = None, None, {}, [], [] # to be reviewed
 

@@ -150,8 +150,8 @@ class Html(object):
 
       self.__htmlCode = htmlCode
       # self._report.jsGlobal.reportHtmlCode.add(htmlCode)
-      if htmlCode in self._report.http:
-        self.vals = self._report.http[htmlCode]
+      if htmlCode in self._report.inputs:
+        self.vals = self._report.inputs[htmlCode]
 
     self._report.components[self.htmlCode] = self
     self._vals = vals

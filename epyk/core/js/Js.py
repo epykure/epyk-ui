@@ -325,7 +325,7 @@ class JsBreadCrumb(object):
     self._src = src
     self._selector = "breadcrumb"
     self._anchor = None
-    self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = {pmts: %s}" % (self._selector, json.dumps(self._src.http)))
+    self._src._props.setdefault('js', {}).setdefault('builders', []).append("%s = {pmts: %s}" % (self._selector, json.dumps(self._src.inputs)))
 
   def add(self, key, jsData):
     """
