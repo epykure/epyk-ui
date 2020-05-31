@@ -414,3 +414,20 @@ class JsDataTransfer(object):
     :return:
     """
     return JsString.JsString("%s.getData(%s)" % (self.varId, format), isPyData=False)
+
+
+class JsClipboardData(object):
+
+  def __init__(self, varName):
+    self.varId = varName
+
+  @property
+  def text(self):
+    """
+    Example
+
+    Documentation
+
+    :return:
+    """
+    return JsString.JsString("%s.getData('text')" % self.varId, isPyData=False)

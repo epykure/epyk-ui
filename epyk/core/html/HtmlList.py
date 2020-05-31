@@ -334,7 +334,7 @@ class Items(Html.Html):
       self._dom = JsHtmlList.JsItem(self, report=self._report)
     return self._dom
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     if not isinstance(jsFncs, list):
       jsFncs = []
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)

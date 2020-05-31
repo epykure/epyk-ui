@@ -104,7 +104,7 @@ class ImgCarrousel(Html.Html):
   def __getitem__(self, i):
     return self.items[i]
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------

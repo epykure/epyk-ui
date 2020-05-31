@@ -8,6 +8,7 @@ from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsNumber
 
 from epyk.core.js.objects.JsData import JsDataTransfer
+from epyk.core.js.objects.JsData import JsClipboardData
 
 
 class Event(object):
@@ -51,6 +52,22 @@ class Event(object):
 			https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
     """
     return JsDataTransfer("event.dataTransfer")
+
+  @property
+  def clipboardData(self):
+    """
+    Description:
+    ------------
+    The DataTransfer object is used to hold the data that is being dragged during a drag and drop operation.
+    It may hold one or more data items, each of one or more data types. For more information about drag and drop, see HTML Drag and Drop API.
+
+    This object is available from the dataTransfer property of all drag events.
+
+    Related Pages:
+
+      https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
+    """
+    return JsClipboardData("event.clipboardData")
 
   @property
   def timeStamp(self):

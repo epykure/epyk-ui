@@ -1383,7 +1383,7 @@ class Points(Html.Html):
     """
     return self.__options
 
-  def on(self, event, jsFncs, profile=False):
+  def on(self, event, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------

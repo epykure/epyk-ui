@@ -959,13 +959,13 @@ Attributes:
     self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     return self
 
-  def hover(self, jsFncs, profile=False):
-    return self.on("mouseover", jsFncs, profile)
+  def hover(self, jsFncs, profile=False, source_event=None):
+    return self.on("mouseover", jsFncs, profile, source_event)
 
-  def click(self, jsFncs, profile=False):
-    return self.on("click", jsFncs, profile)
+  def click(self, jsFncs, profile=False, source_event=None):
+    return self.on("click", jsFncs, profile, source_event)
 
-  def mouse(self, on_fncs=None, out_fncs=None, profile=False):
+  def mouse(self, on_fncs=None, out_fncs=None, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -993,10 +993,24 @@ Attributes:
     """
     self.style.css.cursor = 'pointer'
     if on_fncs is not None:
-      self.on("mouseenter", on_fncs, profile)
+      self.on("mouseenter", on_fncs, profile, source_event)
     if out_fncs is not None:
-      self.on("mouseleave", out_fncs, profile)
+      self.on("mouseleave", out_fncs, profile, source_event)
     return self
+
+  def paste(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.clipboardData.text] + jsFncs, toStr=True)
+    self.on("paste", str_fncs, profile, source_event)
 
   def contextMenu(self, menu, jsFncs, profile=False):
     """
@@ -1040,8 +1054,6 @@ Attributes:
 
     options, js_options = options or self._jsStyles, []
     for k, v in options.items():
-      if self.options.isJsContent(k):
-        print(k, self.options.isJsContent(k))
       if isinstance(v, dict):
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
         js_options.append("'%s': {%s}" % (k, ", ".join(row)))
@@ -1060,17 +1072,6 @@ Attributes:
     Component refresh function. Javascript function which can be called in any Javascript event
     """
     return self.build(self.val, self._jsStyles)
-
-  def paste(self, jsFnc):
-    """ Generic click function """
-    self._report.jsOnLoadFnc.add('''%(jqId)s.on('paste', function(event) { 
-       var data;
-       if (window.clipboardData && window.clipboardData.getData) { // IE
-            data = window.clipboardData.getData('Text'); }
-        else if (event.originalEvent.clipboardData && event.originalEvent.clipboardData.getData) { // other browsers
-            data = event.originalEvent.clipboardData.getData('text/plain')} 
-        %(jsFnc)s 
-      })''' % {'jqId': self.jqId, 'jsFnc': jsFnc})
 
   @packageImport('sortable')
   def sortable(self, options=None, propagate=True, propagate_only=False):
