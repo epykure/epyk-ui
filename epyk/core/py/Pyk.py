@@ -57,7 +57,10 @@ def register(rpt_obj, components):
     components = [components]
 
   for comp in components:
-    rpt_obj.components[id(comp)] = comp
+    if comp.htmlCode in rpt_obj.components:
+      raise Exception("Duplicated Html Code %s in the script !" % comp.htmlCode)
+
+    rpt_obj.components[comp.htmlCode] = comp
 
 
 class _Pyk(object):
