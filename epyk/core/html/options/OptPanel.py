@@ -477,3 +477,48 @@ class OptionGrid(Options):
   @noGutters.setter
   def noGutters(self, bool):
     self.set(bool)
+
+
+class OptionPopup(Options):
+
+  @property
+  def background(self):
+    """
+    Description:
+    ------------
+    Boolean to mention if the popup should have a grey background
+    """
+    return self.get(True)
+
+  @background.setter
+  def background(self, bool):
+    self.set(bool)
+
+  @property
+  def draggable(self):
+    """
+    Description:
+    ------------
+    Boolean to set the popup draggable.
+    """
+    return self.get(True)
+
+  @draggable.setter
+  def draggable(self, bool):
+    self.set(bool)
+
+  @property
+  def margin(self):
+    """
+    Description:
+    ------------
+    Set the margin. By default the value will be in percentage but the unit can be supplied
+    """
+    return self.get(10)
+
+  @margin.setter
+  def margin(self, num):
+    if isinstance(num, int):
+      self.set("%s%%" % num)
+    else:
+      self.set(num)

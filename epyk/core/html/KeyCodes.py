@@ -222,6 +222,7 @@ class KeyCode(object):
     """
     Description:
     -----------
+    Keycode 46, the sup key
 
     Attributes:
     ----------
