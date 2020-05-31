@@ -25,6 +25,7 @@ class OptionsPivot(Options):
 
   @aggregator.setter
   def aggregator(self, attrs):
+    self.js_type['aggregator'] = True
     self._config(attrs)
 
   @property
@@ -127,6 +128,7 @@ class OptionsPivot(Options):
 
   @dataClass.setter
   def dataClass(self, attrs):
+    self.js_type['dataClass'] = True
     self._config(attrs)
 
   @property
@@ -144,6 +146,7 @@ class OptionsPivot(Options):
 
   @filter.setter
   def filter(self, attrs):
+    self.js_type['filter'] = True
     self._config(attrs)
 
   @property
@@ -289,6 +292,7 @@ class OptionsPivotUI(OptionsPivot):
 
   @onRefresh.setter
   def onRefresh(self, attrs):
+    self.js_type['onRefresh'] = True
     self._config(attrs)
 
   @property
@@ -373,6 +377,7 @@ class OptionsPivotUI(OptionsPivot):
 
   @renderers.setter
   def renderers(self, value):
+    self.js_type['renderers'] = True
     self._config(value)
 
   @property

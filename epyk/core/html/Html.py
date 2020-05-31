@@ -107,9 +107,7 @@ class Html(object):
   # This is done in order to avoid having users to change them. Thanks to the name
   # mangling technique Python will make the change more difficult and easier to see
   requirements = None
-
   builder_name = None
-  js_fncs_opts = () # list of options which should never be considered as string but JavaScript fragments
 
   def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
@@ -134,6 +132,7 @@ class Html(object):
     self.cssImport = report.cssImport # to be deleted - because changed should be done only on the component self.require
 
     self._jsStyles = {}  # to be deleted - because code => htmlCode, _jsStyles should be renamed
+
     self.innerPyHTML = None  # to be reviewed - not sure this is still usefull
 
     self.__options = Options(self, options)
@@ -1038,16 +1037,20 @@ Attributes:
       js_data = "{%s}" % ",".join(tmp_data)
     else:
       js_data = JsUtils.jsConvertData(data, None)
+
     options, js_options = options or self._jsStyles, []
     for k, v in options.items():
+      if self.options.isJsContent(k):
+        print(k, self.options.isJsContent(k))
       if isinstance(v, dict):
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
         js_options.append("'%s': {%s}" % (k, ", ".join(row)))
       else:
-        if k in self.js_fncs_opts or str(v).strip().startswith("function"):
+        if self.options.isJsContent(k) or str(v).strip().startswith("function"):
           js_options.append("%s: %s" % (k, v))
         else:
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+
     return "%s(%s, %s, %s)" % (self.builder_name, self.dom.varId, js_data, "{%s}" % ",".join(js_options))
 
   def refresh(self):

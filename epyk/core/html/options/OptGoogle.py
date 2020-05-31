@@ -36,6 +36,7 @@ class OptionMaps(Options):
 
   @center.setter
   def center(self, point):
+    self.js_type['center'] = True
     if isinstance(point, tuple):
       self._config("new google.maps.LatLng(%s, %s)" % (point[0], point[1]))
     else:
@@ -56,4 +57,5 @@ class OptionMaps(Options):
 
   @mapTypeId.setter
   def mapTypeId(self, type_map):
+    self.js_type['mapTypeId'] = True
     self._config("google.maps.MapTypeId.%s" % type_map.upper())
