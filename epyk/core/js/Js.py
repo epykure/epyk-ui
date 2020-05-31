@@ -186,7 +186,7 @@ class JsConsole(object):
 
     return JsFncs.JsFunction("console.table(%s)" % jsData)
 
-  def time(self, htmlId):
+  def time(self, htmlCode):
     """
     Description:
     ------------
@@ -198,12 +198,12 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param htmlId: Use the label parameter to give the timer a name
+    :param htmlCode: Use the label parameter to give the timer a name
     :return: A Python Javascript Number
     """
-    return JsNumber.JsNumber("console.time('%s')" % htmlId, isPyData=False)
+    return JsNumber.JsNumber("console.time('%s')" % htmlCode, isPyData=False)
 
-  def timeEnd(self, htmlId):
+  def timeEnd(self, htmlCode):
     """
     Description:
     ------------
@@ -215,10 +215,10 @@ class JsConsole(object):
 
     Attributes:
     ----------
-    :param htmlId: The name of the timer to end
+    :param htmlCode: The name of the timer to end
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
-    return JsFncs.JsFunction("console.timeEnd('%s')" % htmlId)
+    return JsFncs.JsFunction("console.timeEnd('%s')" % htmlCode)
 
   def _assert(self, jsData, strInfo, jsFnc=None):
     """
@@ -1030,7 +1030,7 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     self._src._props['js']['onReady'].add(";".join(JsUtils.jsConvertFncs(jsFncs)))
     return self
 
-  def profile(self, type, htmlId, mark, recordsCount=""):
+  def profile(self, type, htmlCode, mark, recordsCount=""):
     """
     Description:
     ------------
@@ -1038,11 +1038,11 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     Attributes:
     ----------
     :param type:
-    :param htmlId:
+    :param htmlCode:
     :param mark:
     :param recordsCount:
     """
-    return "profileObj.push({type: '%s', htmlId: '%s', mark: '%s', records: %s})" % (type, htmlId, mark, recordsCount)
+    return "profileObj.push({type: '%s', htmlCode: '%s', mark: '%s', records: %s})" % (type, htmlCode, mark, recordsCount)
 
 
   # -----------------------------------------------------------------

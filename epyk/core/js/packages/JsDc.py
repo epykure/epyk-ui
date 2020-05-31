@@ -16,7 +16,7 @@ class DC(JsPackage):
     self.src, self._sub_chart = src, None
     if parent is not None:
       # for series chart the selector is specific
-      self._selector = "new dc.%s('#%s')" % (self.chartFnc, parent.htmlId)
+      self._selector = "new dc.%s('#%s')" % (self.chartFnc, parent.htmlCode)
     self.varName, self.setVar = varName, setVar
     self.src.jsImports.add(self.lib_alias['js'])
     self.src.cssImport.add(self.lib_alias['css'])

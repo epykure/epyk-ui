@@ -93,7 +93,7 @@ class Bridge(Html.Html):
       for htmlObj in jsData:
         if isinstance(htmlObj, str):
           try:
-            htmlObj = report.component(htmlObj.htmlId)
+            htmlObj = report.component(htmlObj.htmlCode)
             self.pmts.append("%s: %s" % (htmlObj.htmlCode, htmlObj.val))
           except:
             # hook to assume the user is directly passing a key: value as a string

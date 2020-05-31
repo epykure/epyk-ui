@@ -2,7 +2,7 @@ from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
 
 class HtmlComp(object):
-  htmlId = "test"
+  htmlCode = "test"
 
 
 # ------------------------------------------------------------------------------------------------------------------

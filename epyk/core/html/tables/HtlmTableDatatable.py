@@ -40,7 +40,7 @@ class Table(Html.Html):
     """
     Return the Javascript variable of the chart
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   @property
   def config(self):

@@ -37,7 +37,7 @@ class Table(Html.Html):
     """
     Return the Javascript variable of the chart
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   @property
   def config(self):
@@ -86,7 +86,7 @@ class Table(Html.Html):
     if data:
       return self.js.setData(data)
 
-    return 'var %s =  new Tabulator("#%s", %s)' % (self.tableId, self.htmlId, self.config)
+    return 'var %s =  new Tabulator("#%s", %s)' % (self.tableId, self.htmlCode, self.config)
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

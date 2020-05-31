@@ -208,8 +208,8 @@ class JsHtml(JsNodeDom.JsDoms):
   display_value = "inline-block"
 
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlId = varName if varName is not None else htmlObj.htmlId
-    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
+    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
     self._src, self._report = htmlObj, report
     self._js = []
     self._jquery, self._jquery_ui, self._d3 = None, None, None
@@ -222,7 +222,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     :return:
     """
-    return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.content.toStr()))
+    return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.content.toStr()))
 
   @property
   def by_name(self):
@@ -280,7 +280,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
-      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId), setVar=False)
+      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode), setVar=False)
     return self._jquery
 
   @property
@@ -292,7 +292,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(src=self._src, selector="d3.select('#%s')" % self._src.htmlId)
+      self._d3 = JsD3.D3Select(src=self._src, selector="d3.select('#%s')" % self._src.htmlCode)
     return self._d3
 
   @property
@@ -304,7 +304,7 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery_ui is None:
-      self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId), setVar=False)
+      self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode), setVar=False)
     return self._jquery_ui
 
   @property
@@ -557,7 +557,7 @@ class JsHtmlRich(JsHtml):
 
     """
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlId, self.content.toStr()))
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlCode, self.content.toStr()))
 
   @property
   def content(self):
@@ -595,9 +595,9 @@ class JsHtmlRich(JsHtml):
                     frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0;  
                     return frag.firstChild.outerHTML})(%s)''' % (json.dumps({}), value)
     if new_line:
-      return JsObjects.JsObjects.get("%s.innerHTML += (%s+'\\r\\n')" % (self.htmlId, value))
+      return JsObjects.JsObjects.get("%s.innerHTML += (%s+'\\r\\n')" % (self.htmlCode, value))
 
-    return JsObjects.JsObjects.get("%s.innerHTML += %s)" % (self.htmlId, value))
+    return JsObjects.JsObjects.get("%s.innerHTML += %s)" % (self.htmlCode, value))
 
   def empty(self):
     """
@@ -620,7 +620,7 @@ class JsHtmlButton(JsHtml):
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
       offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s}}
-      ''' % (self.htmlId, self.varName, self.getAttribute('data-locked'), self.getAttribute('name')))
+      ''' % (self.htmlCode, self.varName, self.getAttribute('data-locked'), self.getAttribute('name')))
 
   @property
   def content(self):
@@ -720,7 +720,7 @@ class JsHtmlButtonMenu(JsHtmlButton):
     """
     return JsObjects.JsObjects.get('''
         {%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), label: %s.innerHTML, name: %s}}
-        ''' % (self.htmlId, self.content.toStr(), self._src.label.dom.varName, self.getAttribute('name')))
+        ''' % (self.htmlCode, self.content.toStr(), self._src.label.dom.varName, self.getAttribute('name')))
 
   @property
   def content(self):
@@ -736,7 +736,7 @@ class JsHtmlIcon(JsHtml):
     :return:
     """
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self._src.dom.getAttribute("class")))
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self._src.dom.getAttribute("class")))
 
   @property
   def content(self):
@@ -752,7 +752,7 @@ class JsHtmlList(JsHtml):
     :return:
     """
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.varName))
+      "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.varName))
 
   @property
   def content(self):
@@ -768,7 +768,7 @@ class JsHtmlBackground(JsHtml):
     :return:
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-      self.htmlId, self.content.toStr()))
+      self.htmlCode, self.content.toStr()))
 
   @property
   def content(self):

@@ -179,7 +179,7 @@ class Excel(Html.Html):
 
   @property
   def jqId(self):
-    return "$('#%s table')" % self.htmlId
+    return "$('#%s table')" % self.htmlCode
 
   def onDocumentLoadFnc(self):
     self.addGlobalFnc("%s(htmlObj, data, jsStyles)" % self.__class__.__name__, ''' htmlObj.empty();
@@ -216,9 +216,9 @@ class Excel(Html.Html):
           line.split(lineDelimiter).forEach(function(rec){tr.append("<td><input type='text'  value='"+ rec +"'/></td>")
         }); tbody.append(tr)}}) ''')
     if self.delimiter is None:
-      delimiter = '<input id="%s_delimiter" type="text" value="%s" placeholder="Line delimiter"/>' % (self.htmlId, self.delimiter)
+      delimiter = '<input id="%s_delimiter" type="text" value="%s" placeholder="Line delimiter"/>' % (self.htmlCode, self.delimiter)
     else:
       delimiter = '<input id="%s_delimiter" type="text" value="%s" style="display:none" placeholder="Line delimiter"/>' % (
-          self.htmlId, self.delimiter)
+          self.htmlCode, self.delimiter)
     return '<div %(strAttr)s>%(delimiter)s<table style="width:100%%"></table></div>' % {
       'strAttr': self.get_attrs(pyClassNames=self.defined), 'delimiter': delimiter}

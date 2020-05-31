@@ -202,7 +202,7 @@ class Editor(Html.Html):
           <span style="display:inline-block;float:right;margin-right:5px;font-style:italic">%(timestamp)s</span>
         </div> 
         %(textarea)s''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'timestamp': timestamp,
-                           "textarea": self.textarea.html(), 'htmlId': self.htmlId, 'actions': actions}
+                           "textarea": self.textarea.html(), 'actions': actions}
 
 
 class Cell(Html.Html):
@@ -364,8 +364,8 @@ class Code(Html.Html):
           js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
     #
     constructors[
-      self.builder_name] = "var %(editorId)s = CodeMirror.fromTextArea(%(htmlId)s, {%(options)s}); %(editorId)s.setSize(null, '%(height)s'); function %(name)s(htmlObj, data, options){%(builder)s}" % {"editorId": self.editorId,
-        'htmlId': self.htmlId, 'options': ",".join(js_options), 'name': self.builder_name, 'builder': self._js__builder__, 'height': self.attr['css']['height']}
+      self.builder_name] = "var %(editorId)s = CodeMirror.fromTextArea(%(htmlCode)s, {%(options)s}); %(editorId)s.setSize(null, '%(height)s'); function %(name)s(htmlObj, data, options){%(builder)s}" % {"editorId": self.editorId,
+        'htmlCode': self.htmlCode, 'options': ",".join(js_options), 'name': self.builder_name, 'builder': self._js__builder__, 'height': self.attr['css']['height']}
     return "%s(%s, %s, %s)" % (self.builder_name, self.editorId, js_data, "{%s}" % ",".join(js_options))
 
   @property
@@ -375,7 +375,7 @@ class Code(Html.Html):
     ------------
     Return the Javascript variable of the bespoke
     """
-    return "editor_%s" % self.htmlId
+    return "editor_%s" % self.htmlCode
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
@@ -394,24 +394,24 @@ class Tags(Html.Html):
 
   @property
   def val(self):
-    return "%(breadCrumVar)s['params']['%(htmlId)s']" % {"htmlId": self.htmlId, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
+    return "%(breadCrumVar)s['params']['%(htmlCode)s']" % {"htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
 
   def jsEmpty(self):
-    return "%(breadCrumVar)s['params']['%(htmlId)s'] = []; $('#%(htmlId)s_tags').text('')" % {"htmlId": self.htmlId, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
+    return "%(breadCrumVar)s['params']['%(htmlCode)s'] = []; $('#%(htmlCode)s_tags').text('')" % {"htmlCode": self.htmlCode, "breadCrumVar": self._report.jsGlobal.breadCrumVar}
 
   def jsAdd(self, jsData):
     jsData = JsUtils.jsConvertData(jsData, None)
-    self.addGlobalFnc('RemoveSelection(srcObj, htmlId)', 'srcObj.parent().remove()',
+    self.addGlobalFnc('RemoveSelection(srcObj, htmlCode)', 'srcObj.parent().remove()',
        fncDsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
     return '''
-      $('#%(htmlId)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlId)s\\\")' style='margin-left:10px' class='far fa-times-circle'></i></span>")
-      ''' % {"htmlId": self.htmlId, "jsData": jsData, 'whiteColor': self._report.theme.greys[0], "baseColor": self._report.theme.colors[9]}
+      $('#%(htmlCode)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlCode)s\\\")' style='margin-left:10px' class='far fa-times-circle'></i></span>")
+      ''' % {"htmlCode": self.htmlCode, "jsData": jsData, 'whiteColor': self._report.theme.greys[0], "baseColor": self._report.theme.colors[9]}
 
   def __str__(self):
     return '''
       <div %(attr)s>
         <div style='margin:0;display:inline-block;vertical-align:middle;width:90px;float:left;padding:2px 5px 0 5px;height:30px;border:1px solid %(greyColor)s'>
           <i class="%(icon)s" style="margin-right:10px"></i>%(title)s</div>
-        <div id='%(htmlId)s_tags' style='padding:2px 5px 0 5px;border:1px solid %(greyColor)s;height:30px'></div>
-      </div>''' % {"attr": self.get_attrs(pyClassNames=self.defined), "title": self.title, 'icon': self.icon,
-                   'htmlId': self.htmlId, 'greyColor': self._report.theme.greys[2]}
+        <div id='%(htmlCode)s_tags' style='padding:2px 5px 0 5px;border:1px solid %(greyColor)s;height:30px'></div>
+      </div>''' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes()), "title": self.title, 'icon': self.icon,
+                   'htmlCode': self.htmlCode, 'greyColor': self._report.theme.greys[2]}

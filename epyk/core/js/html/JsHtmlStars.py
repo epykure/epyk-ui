@@ -13,7 +13,7 @@ class Stars(JsHtml.JsHtmlRich):
     The Javascript data object. A dictionary with all the specific metadata attached to the component
     """
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s.dataset.level, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.varName))
+      "{%s: {value: %s.dataset.level, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.varName))
 
   @property
   def content(self):

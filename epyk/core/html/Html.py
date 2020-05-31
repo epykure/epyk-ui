@@ -108,7 +108,7 @@ class Html(object):
   # mangling technique Python will make the change more difficult and easier to see
   requirements = None
 
-  htmlCode, _code, builder_name = None, None, None
+  builder_name = None
   js_fncs_opts = () # list of options which should never be considered as string but JavaScript fragments
 
   def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
@@ -125,7 +125,7 @@ class Html(object):
     self.profile = profile
     self._report = report # Should be renamed by page / and component
     self._on_ready_js, self._sort_propagate, self._sort_options = {}, False, None # For sortable items
-    self._dom, self._sub_htmls, self._js, self.helper, self._styleObj = None, [], None, "", None
+    self._dom, self._sub_htmls, self._js, self.helper, self._styleObj, self.__htmlCode = None, [], None, "", None, None
 
     self._browser_data = {"mouse": collections.OrderedDict(), 'component_ready': [],
                           'page_ready': collections.OrderedDict(), 'keys': collections.OrderedDict()}
@@ -142,6 +142,7 @@ class Html(object):
     if css_attrs is not None:
       self.css(css_attrs)
 
+
     if htmlCode is not None:
       if htmlCode[0].isdigit() or cleanData(htmlCode) != htmlCode:
         raise Exception("htmlCode %s cannot start with a number or contain, suggestion %s " % (htmlCode, cleanData(htmlCode)))
@@ -150,19 +151,19 @@ class Html(object):
         raise Exception("Duplicated Html Code %s in the script !" % htmlCode)
 
       self._report.components[htmlCode] = self
-      self.htmlCode = htmlCode
+      self.__htmlCode = htmlCode
       # self._report.jsGlobal.reportHtmlCode.add(htmlCode)
       if htmlCode in self._report.http:
         self.vals = self._report.http[htmlCode]
 
     self._vals = vals
-    self.jsVal = "%s_data" % self.htmlId # to be reviewed
+    self.jsVal = "%s_data" % self.__htmlCode # to be reviewed
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
 
   def __add__(self, component):
     """ Add items to a container """
-    if hasattr(component, 'htmlId'):
-      self.components[component.htmlId] = component
+    if hasattr(component, 'htmlCode'):
+      self.components[component.htmlCode] = component
       component.options.managed = False
     self.val.append(component)
     return self
@@ -180,17 +181,14 @@ class Html(object):
     return self._styleObj
 
   @property
-  def htmlId(self):
+  def htmlCode(self):
     """
+    Description:
+    -----------
 
     """
-    if self._code is not None:
-      # This is a special code used to update components but not to store the results to the breadcrumb
-      # Indeed for example for components like paragraph this does not really make sense to use the htmlCode
-      return self._code
-
-    if self.htmlCode is not None:
-      return self.htmlCode
+    if self.__htmlCode is not None:
+      return self.__htmlCode
 
     return "%s_%s" % (self.__class__.__name__.lower(), id(self))
 
@@ -891,7 +889,7 @@ Attributes:
       cssClass = 'class="%s"' % " ".join(pyClsNames) if len(pyClsNames) > 0 else ""
 
     if withId:
-      self.attr['id'] = self.htmlId
+      self.attr['id'] = self.htmlCode
     html_tags = ['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]
     for tag in [cssStyle, cssClass]:
       if tag:
@@ -1093,8 +1091,8 @@ Attributes:
     self._sort_propagate = propagate
     if not propagate_only:
       if 'sortable' not in self._on_ready_js:
-        self._on_ready_js['sortable'] = JsSortable.Sortable(self, varName="%s_sortable" % self.htmlId, selector=self.dom.varId, parent=self._report)
-        dflt_options = {"group": self.htmlId}
+        self._on_ready_js['sortable'] = JsSortable.Sortable(self, varName="%s_sortable" % self.htmlCode, selector=self.dom.varId, parent=self._report)
+        dflt_options = {"group": self.htmlCode}
         dflt_options.update(options or {})
         self._sort_options = dflt_options
         self._on_ready_js['sortable'].create(self.dom.varId, dflt_options)
@@ -1162,7 +1160,7 @@ class Body(Html):
     return self._styleObj
 
   @property
-  def htmlId(self):
+  def htmlCode(self):
     return "body"
 
   @property

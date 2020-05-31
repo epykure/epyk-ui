@@ -13,7 +13,7 @@ class Radio(JsHtml.JsHtmlRich):
     :return:
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s, selected: %s}}
-        ''' % (self.htmlId, self.content.toStr(), self.getAttribute('name'), self.selected.toStr()))
+        ''' % (self.htmlCode, self.content.toStr(), self.getAttribute('name'), self.selected.toStr()))
 
   @property
   def content(self):
@@ -43,7 +43,7 @@ class Check(JsHtml.JsHtmlRich):
     :return:
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s}}
-        ''' % (self.htmlId, self.content.toStr(), self.getAttribute('name')))
+        ''' % (self.htmlCode, self.content.toStr(), self.getAttribute('name')))
 
   @property
   def content(self):

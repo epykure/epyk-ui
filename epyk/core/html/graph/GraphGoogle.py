@@ -22,7 +22,7 @@ class Chart(Html.Html):
     -----------
     Return the Javascript variable of the chart
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   def build(self, data=None, options=None, profile=False):
     return '''

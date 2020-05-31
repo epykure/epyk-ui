@@ -176,7 +176,7 @@ class ClassHtml(Properties.CssMixin):
     ------------
     Unique identifier for the CSS object on the Javascript side
     """
-    return "%s_css" % self.htmlObj.htmlId
+    return "%s_css" % self.htmlObj.htmlCode
 
   @property
   def css(self):
@@ -202,7 +202,7 @@ class ClassHtml(Properties.CssMixin):
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).no_border()
     return self._css_class
 
   @property
@@ -385,7 +385,7 @@ class ClassHtml(Properties.CssMixin):
       if no_default:
         self._css_class = ""
       else:
-        self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
+        self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).no_border()
     else:
       self._css_class = Defaults_css.DEFAULT_STYLE
     self.htmlObj.attr['class'] = self.classList['main']
@@ -433,8 +433,8 @@ class ClassHtml(Properties.CssMixin):
     if self.__css_virtual and not '_attrs' in self.__css_virtual:
       self.__css_virtual["_attrs"] = self.__css_virtual.get('_temp', {})
       self.__css_virtual["_attrs"].update(dict(self.css.attrs))
-      self.__css_virtual['classname'] = "style_%s" % self.htmlObj.htmlId
-      meta_cls = type('Style%s' % self.htmlObj.htmlId, (CssStyle.Style,), self.__css_virtual)
+      self.__css_virtual['classname'] = "style_%s" % self.htmlObj.htmlCode
+      meta_cls = type('Style%s' % self.htmlObj.htmlCode, (CssStyle.Style,), self.__css_virtual)
       self.css.attrs = {} # empty the css inline section
       self.classList['main'].add(meta_cls(self.htmlObj._report))
       self.htmlObj.attr['css'] = {}

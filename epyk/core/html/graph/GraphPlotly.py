@@ -29,7 +29,7 @@ class Chart(Html.Html):
     """
     Return the Javascript variable of the chart
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   def click_legend(self, jsFnc, profile=False):
     """
@@ -211,7 +211,7 @@ class Chart(Html.Html):
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
+      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
 
   def add_trace(self, data, type=None, mode=None):

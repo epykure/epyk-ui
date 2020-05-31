@@ -34,7 +34,7 @@ class Panel(Html.Html):
     self.add_helper(helper)
     super(Panel, self).__init__(report, component, htmlCode=htmlCode, profile=profile,
                                 css_attrs={"color": color, "width": width, "height": height})
-    container.set_attrs(name="name", value="panel_%s" % self.htmlId)
+    container.set_attrs(name="name", value="panel_%s" % self.htmlCode)
 
   @property
   def style(self):
@@ -118,15 +118,15 @@ class PanelSplit(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).extend([
-      '$("#%(htmlId)s_left").resizable({handleSelector: ".splitter", resizeHeight: false});' % {'htmlId': self.htmlId},
-      '$("#%(htmlId)s_right").resizable({handleSelector: ".splitter-horizontal", resizeWidth: true})' % {
-        'htmlId': self.htmlId}])
+      '$("#%(htmlCode)s_left").resizable({handleSelector: ".splitter", resizeHeight: false});' % {'htmlCode': self.htmlCode},
+      '$("#%(htmlCode)s_right").resizable({handleSelector: ".splitter-horizontal", resizeWidth: true})' % {
+        'htmlCode': self.htmlCode}])
     return '''
       <div %(attrs)s>
-        <div style="%(css_left)s" id="%(htmlId)s_left" class="panel-left">%(left)s</div>
-        <div style="%(css_right)s" id="%(htmlId)s_right" class="panel-right">%(right)s</div>
+        <div style="%(css_left)s" id="%(htmlCode)s_left" class="panel-left">%(left)s</div>
+        <div style="%(css_right)s" id="%(htmlCode)s_right" class="panel-right">%(right)s</div>
       </div>
-      ''' % {"attrs": self.get_attrs(pyClassNames=self.style.get_classes()), "htmlId": self.htmlId, 'left': self.html_left.html(),
+      ''' % {"attrs": self.get_attrs(pyClassNames=self.style.get_classes()), "htmlCode": self.htmlCode, 'left': self.html_left.html(),
              'right': self.html_right.html(), 'css_left': css_defaults.inline(self.css_left), 'css_right': css_defaults.inline(self.css_right)}
 
 
@@ -189,7 +189,7 @@ class PanelSlide(Panel):
       self._vals[1].style.css.display = 'none'
       self.icon.set_icon(self.options.icon_closed)
     self.title.click(self.__clicks + [
-      self._report.js.getElementsByName("panel_%s" % self.htmlId).first.toggle(),
+      self._report.js.getElementsByName("panel_%s" % self.htmlCode).first.toggle(),
       self.icon.dom.switchClass(icon_current, icon_change)])
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
@@ -256,7 +256,7 @@ class Div(Html.Html):
     if not isinstance(self.val, list):
       self._vals = [self.val]
     self.val.append(htmlObj)
-    self.components[htmlObj.htmlId] = htmlObj
+    self.components[htmlObj.htmlCode] = htmlObj
     return self
 
   @property
@@ -866,7 +866,7 @@ class Tabs(Html.Html):
   def __init__(self, report, color, width, height, htmlCode, helper, options, profile):
     super(Tabs, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     self.__panels, self.__panel_objs, self.__selected = [], {}, None
-    self.tabs_name, self.panels_name = "button_%s" % self.htmlId, "panel_%s" % self.htmlId
+    self.tabs_name, self.panels_name = "button_%s" % self.htmlCode, "panel_%s" % self.htmlCode
     self.tabs_container = self._report.ui.div([])
     self.tabs_container.options.managed = False
     self.add_helper(helper)
@@ -1092,11 +1092,11 @@ class Dialog(Html.Html):
   #   dialogWindow.append(table);
   #   dialogWindow.append('<input type="text">');
   #   var d = dialogWindow.dialog( { modal: false, title: %(title)s, show: 'puff', fluid: true,
-  #       close: function () {$(this).remove()}, appendTo: "#%(htmlId)s", resizable: false,
+  #       close: function () {$(this).remove()}, appendTo: "#%(htmlCode)s", resizable: false,
   #       buttons: [{text: "Close", click: function() { $( this ).dialog("close")} } ]
   #   });
-  #   d.parent().draggable({containment: '#%(htmlId)s'});
-  #   event.preventDefault()''' % {'title': title, 'htmlId': self.htmlId}
+  #   d.parent().draggable({containment: '#%(htmlCode)s'});
+  #   event.preventDefault()''' % {'title': title, 'htmlCode': self.htmlCode}
 
   def __str__(self):
     return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
@@ -1210,7 +1210,7 @@ class Modal(Html.Html):
     self.closeBtn = report.ui.texts.span('&times', width='auto')
     self.closeBtn.css(None, reset=True)
     self.closeBtn.style.add_classes.div.span_close()
-    self.closeBtn.click(report.js.getElementById(self.htmlId).css({'display': "none"}))
+    self.closeBtn.click(report.js.getElementById(self.htmlCode).css({'display': "none"}))
     self.__header = report.ui.row([])
     self.__header.options.managed = False
     if header:
@@ -1264,10 +1264,10 @@ class Modal(Html.Html):
     return self.__body
 
   def show(self):
-    return self._report.js.getElementById(self.htmlId).css({'display': 'block'})
+    return self._report.js.getElementById(self.htmlCode).css({'display': 'block'})
 
   def close(self):
-    return self._report.js.getElementById(self.htmlId).css({'display': 'none'})
+    return self._report.js.getElementById(self.htmlCode).css({'display': 'none'})
 
   def close_on_background(self):
     """
@@ -1275,7 +1275,7 @@ class Modal(Html.Html):
     ------------
     Will allow an event to close the modal if a click event is detected anywhere outside the modal
     """
-    modal = self._report.js.getElementById(self.htmlId)
+    modal = self._report.js.getElementById(self.htmlCode)
     self._report.js.addOnReady(self._report.js.window.events.
                                       addClickListener(self._report.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})),
                                                        subEvents=['event']))
@@ -1306,7 +1306,7 @@ class Indices(Html.Html):
     self.__options = OptPanel.OptionsPanelPoints(self, options)
     for i in range(count):
       div = self._report.ui.div(i, width=(15, "px"))
-      div.attr["name"] = self.htmlId
+      div.attr["name"] = self.htmlCode
       div.attr["data-position"] = i + 1
       div.css({"display": 'inline-block', "padding": "2px", "text-align": "center"})
       div.css(self.options.div_css)
@@ -1364,7 +1364,7 @@ class Points(Html.Html):
     self.__options = OptPanel.OptionsPanelPoints(self, options)
     for i in range(count):
       div = self._report.ui.div(self._report.entities.non_breaking_space)
-      div.attr["name"] = self.htmlId
+      div.attr["name"] = self.htmlCode
       div.attr["data-position"] = i # keep the python indexation
       div.css({"border": "1px solid %s" % self._report.theme.greys[5], "border-radius": "10px", "width": "15px", "height": "15px"})
       div.css(self.options.div_css)

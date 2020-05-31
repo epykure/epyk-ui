@@ -5,8 +5,8 @@ from epyk.core.html import Html
 class SVG(Html.Html):
   name = 'SVG'
 
-  def __init__(self, report, width, height):
-    super(SVG, self).__init__(report, "", css_attrs={"width": width, "height": height})
+  def __init__(self, report, width, height, htmlCode=None):
+    super(SVG, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height})
     self.origine = None
     if width is not None:
       self.set_attrs({"viewBox": "0 0 %s %s" % (width[0], height[0]), "version": '1.1', 'preserveAspectRatio': 'xMinYMin meet'})
@@ -337,8 +337,7 @@ class RadialGradient(Html.Html):
 
 class Marker(SVG):
   def __init__(self, report, htmlCode, viewBox, refX, refY):
-    super(Marker, self).__init__(report, None, None)
-    self.htmlCode = htmlCode
+    super(Marker, self).__init__(report, None, None, htmlCode=htmlCode)
     self.set_attrs({'id': htmlCode, "viewBox": viewBox, "refX": refX, "refY": refY})
     self.html_objs = []
 

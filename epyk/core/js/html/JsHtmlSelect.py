@@ -28,9 +28,9 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
     :param is_on_val: Boolean. Change either the on or the off value displayed
     """
     value = JsUtils.jsConvertData(value, None)
-    return JsObjects.JsObjects.get(''' if(%(text)s == %(htmlId)s_data.%(switch_type)s){ %(htmlObj)s };
-       %(htmlId)s_data.%(switch_type)s = %(value)s
-       ''' % {'htmlId': self._src.htmlId, 'switch_type': 'on' if is_on_val else 'off', 'value': value,
+    return JsObjects.JsObjects.get(''' if(%(text)s == %(htmlCode)s_data.%(switch_type)s){ %(htmlObj)s };
+       %(htmlCode)s_data.%(switch_type)s = %(value)s
+       ''' % {'htmlCode': self._src.htmlCode, 'switch_type': 'on' if is_on_val else 'off', 'value': value,
               'text': self._src.switch_text.dom.content.toStr(), 'htmlObj': self._src.switch_text.build(value)})
 
 
@@ -45,7 +45,7 @@ class Tick(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, label: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlId, self.content.toStr(), self._src.span.dom.content.toStr()))
+        self.htmlCode, self.content.toStr(), self._src.span.dom.content.toStr()))
 
   @property
   def content(self):
@@ -69,7 +69,7 @@ class DomSelect(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, text: %s, options_text: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlId, self.content.toStr(), self.text, self.options_text))
+        self.htmlCode, self.content.toStr(), self.text, self.options_text))
 
   @property
   def content(self):

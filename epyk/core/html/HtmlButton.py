@@ -152,7 +152,7 @@ class Button(Html.Html):
 
   def properties(self):
     print(self.get_attrs(pyClassNames=self.style.get_classes()))
-    return {"tag": self.name, 'selector': self.htmlId}
+    return {"tag": self.name, 'selector': self.htmlCode}
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
@@ -193,7 +193,7 @@ class Checkbox(Html.Html):
             if(bcIndex > -1) {delete %(breadCrumVar)s['params']['%(htmlCode)s'].splice(bcIndex, 1)};
             $(this).html('<i class="fas fa-times %(disableCls)s"></i>'); pItem.addClass("%(disableCls)s")}
         })''' % {'jsData': jsData, 'jqId': self.dom.jquery.varId, 'disableCls': self._report.style.cssName("CssLabelContainerDisabled"),
-                 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': self.htmlId, 'reset': json.dumps(reset)}
+                 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': self.htmlCode, 'reset': json.dumps(reset)}
 
   def jsAdd(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None, isUnique=False):
     """
@@ -230,7 +230,7 @@ class Checkbox(Html.Html):
           var pItem = $(this).next(); var bcIndex = %(breadCrumVar)s['params']['%(htmlCode)s'].indexOf(pItem.text());
           if(bcIndex > -1) {delete %(breadCrumVar)s['params']['%(htmlCode)s'].splice(bcIndex, 1)};
           if (ldata.indexOf($(this).data('content')) > -1){$(this).parent().remove()}
-        })}''' % {'jsData': jsData, 'jqId': self.dom.jquery.varId, 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': self.htmlId}
+        })}''' % {'jsData': jsData, 'jqId': self.dom.jquery.varId, 'breadCrumVar': self._report.jsGlobal.breadCrumVar, 'htmlCode': self.htmlCode}
 
   def jsItemState(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):
     """
@@ -276,7 +276,7 @@ class Checkbox(Html.Html):
         if self.htmlCode is not None:
           fnc.insert(0, self.jsAddUrlParam(self.htmlCode, self.val, isPyData=False))
         self._report.jsOnLoadEvtsFnc.add('''
-          $( document ).on('%(eventKey)s', '#%(htmlId)s label', function(event) {
+          $( document ).on('%(eventKey)s', '#%(htmlCode)s label', function(event) {
             if(($(this).find("i").attr("class") !== undefined) && ($(this).find("i").attr("class").includes('fas fa-times'))) {return {}};
             var useAsync = false; var isChecked = false; var htmlContent = $(this).find('span').find('i').length; 
             if (htmlContent == 0) {$(this).find('span').html('<i class="%(icon)s" style="padding:2px"></i>'); isChecked = true} else {$(this).find('span').html('<div style="width:16px;display:inline-block">&nbsp;</div>')}
@@ -286,16 +286,16 @@ class Checkbox(Html.Html):
               var body_loading_count = parseInt($('#body_loading span').text()); $('#body_loading span').html(body_loading_count - 1);
               if ($('#body_loading span').html() == '0') {$('#body_loading').remove()} }
             if (returnVal != undefined) {return returnVal}
-          })''' % {'htmlId': self.htmlId, 'eventKey': eventKey, 'data': self.jsQueryData,
+          })''' % {'htmlCode': self.htmlCode, 'eventKey': eventKey, 'data': self.jsQueryData,
                    'jsFnc': ";".join([f for f in fnc if f is not None]), 'icon': self._jsStyles['icon'],
                    'jsInfo': self._report.jsInfo('process(es) running', 'body_loading')})
 
   def __str__(self):
     if self.selectAll:
-      self.addGlobalFnc("CheckBoxSelectAll(event, srcObj, htmlId)", '''
+      self.addGlobalFnc("CheckBoxSelectAll(event, srcObj, htmlCode)", '''
         $(srcObj).find('div').toggleClass("fa-check");
         var ldata = $(srcObj).find('div').hasClass("fa-check");
-        $('#'+ htmlId).find('span').each(function(){
+        $('#'+ htmlCode).find('span').each(function(){
           var itemCode = $(this).data('content');
           if(typeof ldata === "boolean"){
             if (ldata === true && $(this).find("i").attr("class") === undefined){$(this).trigger("click")}
@@ -303,54 +303,12 @@ class Checkbox(Html.Html):
           else if (ldata.indexOf(itemCode) > -1){if ($(this).find("i").attr("class") === undefined){$(this).trigger("click")}}
         })''')
       selectTag = '''
-        <div onclick='event.stopPropagation();CheckBoxSelectAll(event, this, "%(htmlId)s");' style='vertical-align:middle;white-space:nowrap;margin-bottom:5px;cursor:pointer;padding:0'>
+        <div onclick='event.stopPropagation();CheckBoxSelectAll(event, this, "%(htmlCode)s");' style='vertical-align:middle;white-space:nowrap;margin-bottom:5px;cursor:pointer;padding:0'>
           <div style='box-sizing:border-box;margin:0;padding:0;border:1px solid %(color)s;font-size:10px;width:11px;height:11px;display:inline-block;color:%(color)s' class="fas">&nbsp;</div>
           <label style='cursor:inherit;margin:0;padding:0;font-style:italic;color:%(color)s;white-space:nowrap'>Select All</label>
-        </div>''' % {"color": self._report.theme.colors[5], 'htmlId': self.htmlId}
+        </div>''' % {"color": self._report.theme.colors[5], 'htmlCode': self.htmlCode}
 
     return '<div %(strAttr)s><div name="checks"></div></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
-
-  def to_word(self, document):
-    from docx.shared import RGBColor
-
-    selections = self._report.http.get(self.htmlCode).split(',')
-    for rec in self.vals:
-      p = document.add_paragraph(style='ListBullet')
-      runner = p.add_run(rec['value'])
-      if rec['value'] in selections:
-        runner.font.color.rgb = RGBColor(0x42, 0x24, 0xE9)
-
-  def to_xls(self, workbook, worksheet, cursor):
-    selections = self._report.http.get(self.htmlCode).split(',')
-    cellTitle = self.title if self.title != '' else 'Checkbox:'
-    cell_format = workbook.add_format({'bold': True})
-    worksheet.write(cursor['row'], 0, cellTitle, cell_format)
-    cursor['row'] += 1
-    for rec in self.vals:
-      cell_format = workbook.add_format({})
-      if rec['value'] in selections:
-        cell_format = workbook.add_format({'bold': True, 'font_color': self._report.theme.colors[5]})
-      worksheet.write(cursor['row'], 0, rec['value'], cell_format)
-      cursor['row'] += 1
-    cursor['row'] += 1
-
-  @staticmethod
-  def matchMarkDown(val):
-    return re.match("\+\+\+(.*)", val) or re.match("\-\-\-(.*)", val)
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report):
-    param = True if val.startswith("+") else False
-    if report is not None:
-      getattr(report, cls.callFnc)(param, regExpResult.group(1))
-    return ["report.%s(%s, %s)" % (cls.callFnc, param, regExpResult.group(1))]
-
-  @classmethod
-  def jsMarkDown(self, vals):
-    if vals:
-      return "+++" % self.label
-
-    return "---%s" % self.label
 
 
 class CheckButton(Html.Html):
@@ -493,7 +451,7 @@ class Buttons(Html.Html):
   def __init__(self, report, data, color, width, height, htmlCode, helper, options, profile):
     super(Buttons, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     for b in data:
-      bt = report.ui.button(b, options={"group": "group_%s" % self.htmlId}).css({"margin-right": '5px'})
+      bt = report.ui.button(b, options={"group": "group_%s" % self.htmlCode}).css({"margin-right": '5px'})
       bt.css(options.get("button_css", {}))
       self.__add__(bt)
 
@@ -573,7 +531,7 @@ class ButtonMenu(Html.Html):
 
   def __getitem__(self, i):
     if i not in self.components:
-      self.components[i] = ButtonMenuItem(self._report, "document.getElementById('%s').querySelectorAll('a')[%s]" % (self.htmlId, i), self)
+      self.components[i] = ButtonMenuItem(self._report, "document.getElementById('%s').querySelectorAll('a')[%s]" % (self.htmlCode, i), self)
     return self.components[i]
 
   @property

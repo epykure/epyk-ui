@@ -32,7 +32,7 @@ class ClassButton(GrpCls.ClassHtml):
     :rtype: Classes.CatalogButton.CatalogButton
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).basic()
+      self._css_class = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).basic()
     return self._css_class
 
 
@@ -88,7 +88,7 @@ class ClassButtonMenu(GrpCls.ClassHtml):
     """
     if self._css_btn_content_hover is None:
       self._css_btn_content_hover = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'],
-                                                            html_id=self.htmlObj.htmlId).content()
+                                                            html_id=self.htmlObj.htmlCode).content()
     return self._css_btn_content_hover
 
   @property
@@ -103,7 +103,7 @@ class ClassButtonMenu(GrpCls.ClassHtml):
     """
     if self._css_btn_link_hover is None:
       self._css_btn_link_hover = Classes.CatalogButton.CatalogButton(self.htmlObj._report, self.classList['main'],
-                                                                        html_id=self.htmlObj.htmlId).content_link()
+                                                                        html_id=self.htmlObj.htmlCode).content_link()
     return self._css_btn_link_hover
 
 # class CssClassButtonCheckBox(CssGrpCls.CssGrpClass):

@@ -109,8 +109,8 @@ class BlockText(Html.Html):
 
   def __str__(self):
     items = ['<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
-    items.append('<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlId, Defaults_css.font(3)))
-    items.append('<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.htmlId)
+    items.append('<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (self.htmlCode, Defaults_css.font(3)))
+    items.append('<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.htmlCode)
     #if self.val.get('button') is not None:
     #  items.append('<a href="#" %s><i></i></a>' % (self._report.style.getClsTag(['CssHrefNoDecoration', 'CssButtonBasic'])))
     items.append('</div>')
@@ -239,7 +239,7 @@ class Delta(Html.Html):
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
       </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), "size": Defaults_css.font(12),
-                   'htmlId': self.htmlId, "color": self.val['color'],
+                   'htmlCode': self.htmlCode, "color": self.val['color'],
                    "greyColor": self._report.theme.greys[6], "helper": self.helper}
 
 
@@ -366,9 +366,9 @@ class TrafficLight(Html.Html):
 
   def __str__(self):
     if self.action is not None:
-      return '<div id="%s"><div %s></div>%s</div>%s' % (self.htmlId, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.action.html(), self.helper)
+      return '<div id="%s"><div %s></div>%s</div>%s' % (self.htmlCode, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.action.html(), self.helper)
 
-    return '<div id="%s"><div %s></div></div>%s' % (self.htmlId, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.helper)
+    return '<div id="%s"><div %s></div></div>%s' % (self.htmlCode, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.helper)
 
 
 class ContentsTable(Html.Html):
@@ -426,7 +426,7 @@ class ContentsTable(Html.Html):
     div_link.options.managed = False
     self.title[-1].click([div_link.dom.toggle(), self.title[-1].dom.toggleText('[show]', '[hide]')])
     return '''<div %(attr)s>%(title)s%(links)s</div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
-                                                            'title': self.title.html(), 'htmlId': self.htmlId, 'links': div_link.html()}
+                                                            'title': self.title.html(), 'htmlCode': self.htmlCode, 'links': div_link.html()}
 
 
 class SearchResult(Html.Html):
@@ -610,8 +610,8 @@ class Composite(Html.Html):
     if 'args' in schema_child and 'url' in schema_child['args']:
       schema_child['args']['url'] = schema_child['args']['url'] % ref_map
     if comp is None:
-      # delegate the htmlID to the main component
-      new_comp = self._get_comp_map[schema_child['type']](htmlCode=self.htmlId, **schema_child.get('args', {}))
+      # delegate the htmlCode to the main component
+      new_comp = self._get_comp_map[schema_child['type']](htmlCode=self.htmlCode, **schema_child.get('args', {}))
       new_comp.options.managed = False
       self._vals = new_comp
     else:
@@ -637,7 +637,7 @@ class Composite(Html.Html):
         schema_child['attrs']['data-target'] = schema_child['attrs']['data-target'] % ref_map
       new_comp.set_attrs(schema_child['attrs'])
     if 'ref' in schema_child:
-      ref_map[schema_child['ref']] = new_comp.htmlId
+      ref_map[schema_child['ref']] = new_comp.htmlCode
     for child in schema_child.get('children', []):
       self._set_comp(new_comp, child, builders, ref_map)
     if comp is not None:

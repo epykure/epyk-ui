@@ -425,8 +425,8 @@ class Slider(Html.Html):
           <span style="float:left;display:inline-block">%(min)s</span>
           <span style="float:right;display:inline-block">%(max)s</span>
         </div>
-        <div id="%(htmlId)s"></div>
-      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min, "htmlId": self.htmlId,
+        <div id="%(htmlCode)s"></div>
+      </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min, "htmlCode": self.htmlCode,
                              "max": self.options.max, "helper": self.helper}
 
 

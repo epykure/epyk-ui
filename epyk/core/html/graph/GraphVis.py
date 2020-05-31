@@ -23,7 +23,7 @@ class Chart(Html.Html):
     """
     Return the Javascript variable of the chart
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   @property
   def options(self):

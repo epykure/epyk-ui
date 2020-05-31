@@ -48,8 +48,8 @@ imp = rptObj.ui.buttons.important('Get Started for Free')
 # disclaimer = rptObj.ui.texts.paragraph(disc)
 
 # dis = rptObj.ui.modal.disclaimer(disc)
-# button.click(rptObj.js.getElementById(dis.htmlId).css({'display': 'block'}))
-# print(rptObj.js.addOnReady(rptObj.js.window.events.addClickListener(rptObj.js.if_('event.target == %s' % button.htmlId, button.), subEvents=['event'])))
+# button.click(rptObj.js.getElementById(dis.htmlCode).css({'display': 'block'}))
+# print(rptObj.js.addOnReady(rptObj.js.window.events.addClickListener(rptObj.js.if_('event.target == %s' % button.htmlCode, button.), subEvents=['event'])))
 
 #########FOOTER#########
 # nav = rptObj.ui.navigation.bar(title="test")

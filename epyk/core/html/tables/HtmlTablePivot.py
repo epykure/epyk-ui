@@ -65,9 +65,9 @@ class PivotTable(Html.Html):
   #   jsAggFncs = "{%s}" % ", ".join(["'%s': function(attributeArray) {return function(data, rowKey, colKey) {return %s}}" % (name, aggFncs.toJs(self.aggOptions)) for name, aggFncs in self.__aggFncs.items()])
   #   preFnc, endFnc = "", ""
   #   return """ %(preFnc)s;
-  #     var tpl = $.pivotUtilities.aggregatorTemplates; window['options_%(htmlId)s'] = %(options)s; %(addinOptions)s;
-  #     window['options_%(htmlId)s'].aggregators = %(agg)s;
-  #     window['options_%(htmlId)s'].onRefresh = function (config) {
+  #     var tpl = $.pivotUtilities.aggregatorTemplates; window['options_%(htmlCode)s'] = %(options)s; %(addinOptions)s;
+  #     window['options_%(htmlCode)s'].aggregators = %(agg)s;
+  #     window['options_%(htmlCode)s'].onRefresh = function (config) {
   #         %(jqId)s.find('.pvtVal').each(function( index, items ) {
   #           if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
   #         %(jqId)s.find('.pvtTotal').each(function( index, items ) {
@@ -75,8 +75,8 @@ class PivotTable(Html.Html):
   #         %(jqId)s.find('.pvtGrandTotal').each(function( index, items ) {
   #           if (parseFloat(items.innerText.replace(',', '.')) < 0){ $(items).css('color', 'red')}});
   #     };
-  #     %(jqId)s.pivotUI([], window['options_%(htmlId)s'])
-  #     """ % {'jqId': self.jqId, 'options': json.dumps(self.__pivot), 'agg': jsAggFncs, 'htmlId': self.htmlId, 'addinOptions': ";".join(self.addinOptions), "preFnc": preFnc}
+  #     %(jqId)s.pivotUI([], window['options_%(htmlCode)s'])
+  #     """ % {'jqId': self.jqId, 'options': json.dumps(self.__pivot), 'agg': jsAggFncs, 'htmlCode': self.htmlCode, 'addinOptions': ";".join(self.addinOptions), "preFnc": preFnc}
 
   def sub_total(self):
     """

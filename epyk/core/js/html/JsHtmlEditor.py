@@ -62,7 +62,7 @@ class Editor(JsHtml.JsHtmlRich):
 class CodeMirror(JsHtml.JsHtmlRich):
 
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlId = varName if varName is not None else htmlObj.htmlId
+    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
     self.varName, self.varData, self.__var_def = "%s.getWrapperElement()" % htmlObj.editorId, "", None
     self._src, self._report = htmlObj, report
     self._js = []

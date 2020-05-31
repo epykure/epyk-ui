@@ -18,7 +18,7 @@ class Table(Html.Html):
     """
     Return the Javascript variable of the chart
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   def add_column(self, c):
     pass

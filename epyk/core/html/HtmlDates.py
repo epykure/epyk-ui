@@ -165,7 +165,7 @@ class CountDownDate(Html.Html):
 
   @property
   def jqId(self):
-    return "$('#%s span')" % self.htmlId
+    return "$('#%s span')" % self.htmlCode
 
   @property
   def _js__builder__(self):
@@ -183,8 +183,8 @@ class CountDownDate(Html.Html):
       }'''
 
   def __str__(self):
-    self.jsUpdateDataFnc = '''var %(htmlId)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)
-              ''' % {'htmlId': self.htmlId, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds}
+    self.jsUpdateDataFnc = '''var %(htmlCode)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)
+              ''' % {'htmlCode': self.htmlCode, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds}
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.jsUpdateDataFnc)
     return '<div %s><span></span>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 

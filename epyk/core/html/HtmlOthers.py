@@ -218,7 +218,7 @@ class HtmlJson(Html.Html):
     """
     Return the Javascript variable of the json object
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   @property
   def _js__builder__(self):

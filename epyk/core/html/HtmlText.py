@@ -42,7 +42,7 @@ class Label(Html.Html):
 
     :return:
     """
-    return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlId)
+    return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlCode)
 
   @property
   def options(self):
@@ -143,11 +143,11 @@ class Span(Html.Html):
 
   @property
   def id_container(self):
-    return self.htmlId
+    return self.htmlCode
 
   @property
   def id_jquery(self):
-    return JsNodeDom.JsDoms.get("$('#%s')" % self.htmlId)
+    return JsNodeDom.JsDoms.get("$('#%s')" % self.htmlCode)
 
   @property
   def id_html(self):
@@ -161,7 +161,7 @@ class Span(Html.Html):
 
     :return:
     """
-    return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlId)
+    return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlCode)
 
   @property
   def dom(self):
@@ -592,14 +592,14 @@ class Title(Html.Html):
       self.css({'display': 'block', "margin-right": "10px"})
     if hasattr(report, '_content_table') and self.__options.content_table:
       # Special attribute set in the base component interface
-      div = self._report.ui.div(htmlCode="%s_anchor" % self.htmlId)
+      div = self._report.ui.div(htmlCode="%s_anchor" % self.htmlCode)
       if self._report.body.css('padding-top') is None:
         div.style.css.margin_top = - 10
       else:
         div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
       div.style.css.position = "absolute"
       div.style.css.z_index = -1
-      report._content_table.add(text, level or 4, "#%s_anchor" % self.htmlId)
+      report._content_table.add(text, level or 4, "#%s_anchor" % self.htmlCode)
       report._content_table[-1].click([
         self.dom.transition(["color", "font-size"], ['red', '102%'], duration=[0.5, 0.5], reverse=True)])
 
@@ -797,7 +797,7 @@ class Fieldset(Html.Html):
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.options.managed = False  # Has to be defined here otherwise it is set to late
-    self.components[htmlObj.htmlId] = htmlObj
+    self.components[htmlObj.htmlCode] = htmlObj
     return self
 
   def __getitem__(self, id):

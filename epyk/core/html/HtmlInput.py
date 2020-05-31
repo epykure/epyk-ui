@@ -303,7 +303,7 @@ class InputTime(Input):
     else {
         if (data.value == ''){data.time = new Date()} else{data.time = data.value};
         if (data.options._change.length > 0) {data.options.change = function(time){
-            let data = {event_val: time.getHours() +':'+ time.getMinutes() +':'+ time.getSeconds(), event_code: htmlId};
+            let data = {event_val: time.getHours() +':'+ time.getMinutes() +':'+ time.getSeconds(), event_code: htmlCode};
             eval(data.options._change.join(";"))}};
         jQuery(htmlObj).timepicker(data.options); jQuery(htmlObj).timepicker('setTime', data.time)}
 
@@ -494,7 +494,7 @@ class InputRange(Input):
         "width": '15px', "text-align": 'center', "margin-left": '2px', 'color': self._report.theme.success[1]})
       self.output.options.managed = False
       self.append_child(self.output)
-      self.input.set_attrs(attrs={"oninput": "%s.value=this.value" % self.output.htmlId})
+      self.input.set_attrs(attrs={"oninput": "%s.value=this.value" % self.output.htmlCode})
     self.css({"display": 'inline-block', "vertical-align": 'middle', "line-height": '%spx' % Defaults.LINE_HEIGHT})
 
   @property
@@ -804,7 +804,7 @@ class Radio(Html.Html):
     if group_name is not None:
       self.input.set_attrs(name="name", value=group_name)
     else:
-      self.input.set_attrs(name="name", value=self.htmlId)
+      self.input.set_attrs(name="name", value=self.htmlCode)
     self.input.set_attrs(attrs={"type": "radio"})
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
@@ -929,7 +929,7 @@ class Search(Html.Html):
       self.style.add_classes.layout.search_extension()
     self.add_input(text).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
     self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
-    self.add_icon("fas fa-search").icon.attr['id'] = "%s_button" % self.htmlId
+    self.add_icon("fas fa-search").icon.attr['id'] = "%s_button" % self.htmlCode
     self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute'})
     self.tooltip(tooltip)
 

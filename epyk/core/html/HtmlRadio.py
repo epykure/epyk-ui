@@ -15,11 +15,11 @@ class Radio(Html.Html):
     super(Radio, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     for v in vals:
       r = report.ui.inputs.radio(v.get('checked', False), v['value'])
-      r.set_attrs(name="name", value="radio_%s" % self.htmlId)
+      r.set_attrs(name="name", value="radio_%s" % self.htmlCode)
       self.__add__(r)
 
   def __add__(self, val):
-    r = self._report.ui.inputs.radio(False, val, group_name="radio_%s" % self.htmlId)
+    r = self._report.ui.inputs.radio(False, val, group_name="radio_%s" % self.htmlCode)
     super(Radio, self).__add__(r)
     return self
 
@@ -123,7 +123,7 @@ class Switch(Html.Html):
     # self.css({"display": 'inline-block'})
     self.switch = self.dom.querySelector("label")
     # data should be stored for this object
-    self._report._props.setdefault('js', {}).setdefault("builders", []).append("var %s_data = %s" % (self.htmlId, records))
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append("var %s_data = %s" % (self.htmlCode, records))
 
   @property
   def dom(self):
@@ -192,7 +192,7 @@ class Switch(Html.Html):
         var input_check = this.parentNode.querySelector('input');
         if(input_check.checked){%(clickOn)s; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.off; input_check.checked = false}
         else {%(clickOff)s; input_check.checked = true; this.parentNode.querySelector('p').innerHTML = %(htmlCode)s_data.on}
-        ''' % {'clickOn': JsUtils.jsConvertFncs(self._clicks["off"], toStr=True), "htmlCode": self.htmlId,
+        ''' % {'clickOn': JsUtils.jsConvertFncs(self._clicks["off"], toStr=True), "htmlCode": self.htmlCode,
                'clickOff': JsUtils.jsConvertFncs(self._clicks["on"], toStr=True)}).toStr())
     return '''
       <div %s>%s %s %s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()),

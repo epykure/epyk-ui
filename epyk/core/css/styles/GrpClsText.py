@@ -28,5 +28,5 @@ class ContentTable(GrpCls.ClassHtml):
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).table_content()
+      self._css_class = Classes.CatalogTable.CatalogTable(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).table_content()
     return self._css_class

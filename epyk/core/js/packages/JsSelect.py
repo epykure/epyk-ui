@@ -43,8 +43,8 @@ class JSelect(JsPackage):
   lib_set_var = False
 
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlId = varName if varName is not None else htmlObj.htmlId
-    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
+    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
     self._src, self._report = htmlObj, report
     self._js, self._jquery = [], None
 
@@ -277,7 +277,7 @@ class JSelect(JsPackage):
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
-      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId))
+      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode))
     return self._jquery
 
   def ajaxSelectPicker(self, options):
@@ -330,4 +330,4 @@ class JSelect(JsPackage):
 
     :return: A Javascript reference
     """
-    return self.htmlId
+    return self.htmlCode

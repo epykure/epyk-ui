@@ -47,7 +47,7 @@ class DownloadMemoryZip(Html.Html):
   def __str__(self):
     self.click('''
         $.ajax({url: %(url)s, type: "POST", contentType: attr("enctype", "multipart/form-data"), data: '%(archive)s', success: success})
-        ''' % {'htmlId': self.htmlId, 'url': "''", 'archive': '' #self.zf
+        ''' % {'url': "''", 'archive': '' #self.zf
                })
     return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
 
@@ -100,8 +100,8 @@ class DropFile(Html.Html):
   def __str__(self):
     return '''
       <div %(strAttr)s><b><i class="fas fa-cloud-upload-alt" style="font-size:20px"></i>&nbsp;&nbsp;%(vals)s</b></div>
-      <input id="%(htmlId)s_report" style="display:none;" value="%(envs)s"/>
-      ''' % {'htmlId': self.htmlId, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'vals': self.vals, 'envs': self.report_name}
+      <input id="%(htmlCode)s_report" style="display:none;" value="%(envs)s"/>
+      ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'vals': self.vals, 'envs': self.report_name}
 
 
 class DropConfiguration(Html.Html):
@@ -131,5 +131,5 @@ class DropConfiguration(Html.Html):
   def __str__(self):
     return '''
       <div %(strAttr)s><b><i class="fas fa-cloud-upload-alt" style="font-size:20px"></i>&nbsp;&nbsp;%(vals)s</b></div>
-      <input id="%(htmlId)s_report" style="display:none;" value="%(envs)s"/>
-      ''' % {'htmlId': self.htmlId, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'vals': self.vals, 'envs': self._report.run.report_name}
+      <input id="%(htmlCode)s_report" style="display:none;" value="%(envs)s"/>
+      ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'vals': self.vals, 'envs': self._report.run.report_name}

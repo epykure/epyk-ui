@@ -311,7 +311,7 @@ class Stepper(JsHtml.JsHtmlRich):
 
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (
-      self.htmlId, self.content.toStr()))
+      self.htmlCode, self.content.toStr()))
 
   @property
   def content(self):

@@ -747,8 +747,8 @@ class Context2D(object):
 class Canvas(JsNodeDom.JsDoms):
 
   def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlId = varName if varName is not None else htmlObj.htmlId
-    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlId, "", None
+    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
     self._src, self._report = htmlObj, report
     self._js, self.__2d_context = [], None
     self._jquery, self._jquery_ui = None, None
@@ -788,7 +788,7 @@ class Canvas(JsNodeDom.JsDoms):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.value, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-      self.htmlId, self.varName))
+      self.htmlCode, self.varName))
 
   @property
   def events(self):
@@ -809,7 +809,7 @@ class Canvas(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
-      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId))
+      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode))
     return self._jquery
 
   @property
@@ -820,5 +820,5 @@ class Canvas(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery_ui is None:
-      self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlId))
+      self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode))
     return self._jquery_ui

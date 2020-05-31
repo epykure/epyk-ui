@@ -115,7 +115,7 @@ class Comments(Html.Html):
       recordset.append({'id': rec['com_id'], 'value': rec['comment'], 'user': rec['username'], 'time': datetime.date.strftime(rec['lst_mod_dt'], '%Y-%m-%d %H:%M:%S'), 'replies': com_replies, 'nb_replies': len(com_replies)})
 
   @property
-  def jqId(self): return "$('#%s_comms')" % self.htmlId
+  def jqId(self): return "$('#%s_comms')" % self.htmlCode
 
   @property
   def val(self): return "$(this).val()"
@@ -150,11 +150,11 @@ class Comments(Html.Html):
     return "addComment(%s, %s, '%s', Today())" % (self.jqId, jsData, self._report.user)
 
   def __str__(self):
-    self._report.jsOnLoadFnc.add("$('#%(htmlId)s_text').on('keypress', function (e) {if(e.which === 13){var timeStamp = new Date().getTime(); %(save)s; addComment($('#%(htmlId)s_comms'), $(this).val(), '%(user)s', Today(), [], 0, '%(user)s_' + timeStamp); $(this).val('')}})" % {'save': self.save(), 'htmlId': self.htmlId, 'user': self._report.run.current_user})
+    self._report.jsOnLoadFnc.add("$('#%(htmlCode)s_text').on('keypress', function (e) {if(e.which === 13){var timeStamp = new Date().getTime(); %(save)s; addComment($('#%(htmlCode)s_comms'), $(this).val(), '%(user)s', Today(), [], 0, '%(user)s_' + timeStamp); $(this).val('')}})" % {'save': self.save(), 'htmlCode': self.htmlCode, 'user': self._report.run.current_user})
     self.addGlobalFnc('replyComment(htmlObj, user, parentId)', '''$('.comments_reply_inputs').remove(); 
     var inputReply = $('<input class="comments_reply_inputs" style="display:block;margin-left:20px" id=' + htmlObj.attr("id") + '_text type="text" placeholder="Add Reply" />');
     htmlObj.append(inputReply);
-    inputReply.on('keypress', function (e) {if(e.which === 13){%(saveReply)s; addReply(htmlObj, $('#%(htmlId)s_comms'), $(this).val(), '%(user)s', Today()); $(this).remove()}})''' % {'saveReply': self.saveReply(), 'htmlId': self.htmlId, 'user': self._report.run.current_user})
+    inputReply.on('keypress', function (e) {if(e.which === 13){%(saveReply)s; addReply(htmlObj, $('#%(htmlCode)s_comms'), $(this).val(), '%(user)s', Today()); $(this).remove()}})''' % {'saveReply': self.saveReply(), 'htmlCode': self.htmlCode, 'user': self._report.run.current_user})
     self.addGlobalFnc('addComment(htmlObj, data, user, timeStamp, replies, nbReplies, comId)', r'''
       var countComs = parseInt($('#'+ htmlObj.attr('id') + '_count').text()) + 1 + nbReplies; 
       var div = $("<div style='margin:5px;padding:0;text-align:left'>");
@@ -168,8 +168,8 @@ class Comments(Html.Html):
       htmlObj.prepend(commentTxt);
       button.on('click', function(e) {replyComment(commentTxt, user, comId);});
       htmlObj.prepend(div); 
-      replies.forEach(function(rec) {addReply(commentTxt, $('#%(htmlId)s_comms'), rec.comment, rec.username, rec.lst_mod_dt)});
-      $('#'+ htmlObj.attr('id') +'_count').text(countComs)''' % {'htmlId': self.htmlId, r'color': self._report.theme.greys[-1], 'grey': self._report.theme.greys[6]})
+      replies.forEach(function(rec) {addReply(commentTxt, $('#%(htmlCode)s_comms'), rec.comment, rec.username, rec.lst_mod_dt)});
+      $('#'+ htmlObj.attr('id') +'_count').text(countComs)''' % {'htmlCode': self.htmlCode, r'color': self._report.theme.greys[-1], 'grey': self._report.theme.greys[6]})
     self.addGlobalFnc('addReply(htmlObj, parentObj, data, user, timeStamp)', '''
       var replyCount = parseInt($('#'+ $.escapeSelector(htmlObj.attr('id')) + '_nbRep').text()) + 1;
       if (replyCount == 1) 
@@ -188,16 +188,16 @@ class Comments(Html.Html):
     ''' % {'color': self._report.theme.greys[-1], 'grey': self._report.theme.greys[6]})
     inputTag = ''
     if not self.readonly:
-      inputTag = '<input spellcheck=”false” style="display:block" id="%s_text" type="text" placeholder="Add public comment" />' % self.htmlId
+      inputTag = '<input spellcheck=”false” style="display:block" id="%s_text" type="text" placeholder="Add public comment" />' % self.htmlCode
     return '''
       <div %(attr)s>
-        <span><p style="display:inline-block;margin:0;padding:0;cursor:pointer" id="%(htmlId)s_comms_count">0</p> Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
+        <span><p style="display:inline-block;margin:0;padding:0;cursor:pointer" id="%(htmlCode)s_comms_count">0</p> Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
         %(inputTag)s
         <div class='scroll_content' style="margin:0;padding:5px 0;height:%(height)s;overflow:auto">
-          <div id="%(htmlId)s_comms"></div>
+          <div id="%(htmlCode)s_comms"></div>
         </div>
       </div>
-      ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'htmlId': self.htmlId, 'height': self._height,
+      ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'htmlCode': self.htmlCode, 'height': self._height,
              'inputTag': inputTag}
 
 
@@ -229,10 +229,10 @@ class Chat(Html.Html):
     self._report.jsImports.add('socket.io')
     self._report.jsOnLoadFnc.add("var socket = io.connect('%s')" % self._report.run.url_root)
     self._report.jsOnLoadFnc.add("socket.on('message_%s_%s_%s', function(data) {%s})" % (
-      self._report.run.report_name, self._report.run.script_name, self.htmlId, self.jsAppend()))
+      self._report.run.report_name, self._report.run.script_name, self.htmlCode, self.jsAppend()))
 
   @property
-  def jqId(self): return "$('#%s_comms')" % self.htmlId
+  def jqId(self): return "$('#%s_comms')" % self.htmlCode
 
   @property
   def val(self): return "$(this).val()"
@@ -249,31 +249,31 @@ class Chat(Html.Html):
 
   def __str__(self):
     self._report.jsOnLoadFnc.add('''
-      $('#%(htmlId)s_text').on('keypress', function (e) {if(e.which === 13){
+      $('#%(htmlCode)s_text').on('keypress', function (e) {if(e.which === 13){
         var timeStamp = new Date().getTime(); var content = $(this).val();
         var data = {user: '%(user)s', text: content, timestamp: timeStamp, ext_system: %(chatOptions)s};
         %(postMessage)s; $(this).val('')}})
-      ''' % {'htmlId': self.htmlId, 'user': self._report.run.current_user, 'chatOptions': json.dumps(self.chatOptions),
-             "postMessage": self._report.jsPost('%s/socket/%s/%s/%s' % (self._report._urlsApp['index'].replace("/index", ""), self.htmlId, self._report.run.report_name, self._report.run.script_name))})
+      ''' % {'htmlCode': self.htmlCode, 'user': self._report.run.current_user, 'chatOptions': json.dumps(self.chatOptions),
+             "postMessage": self._report.jsPost('%s/socket/%s/%s/%s' % (self._report._urlsApp['index'].replace("/index", ""), self.htmlCode, self._report.run.report_name, self._report.run.script_name))})
     self.addGlobalFnc('addChatMessage(htmlObj, data, user, timeStamp, oldMsg)', r'''
       var div = $("<div style='margin:5px;padding:0;text-align:left'>");
       var color = "%(color)s"; if(oldMsg){color = "%(grey)s"};
       div.append("<p style='margin:0;padding:0;display:inline-block;color:"+ color +";font-weight:bold'>"+ user +"</p>");
       div.append("<p style='margin:0;padding:0;display:inline-block;margin-left:10px;color:%(grey)s'>"+ timeStamp +"</p>");
       var commentTxt = $("<p style='margin:0 5px 20px 5px;padding:0;color:"+ color +";text-align:left'>"+ data +"</p>");
-      htmlObj.prepend(commentTxt); htmlObj.prepend(div)''' % {'htmlId': self.htmlId, 'color': self._report.theme.greys[-1], 'grey': self._report.theme.greys[6]})
+      htmlObj.prepend(commentTxt); htmlObj.prepend(div)''' % {'htmlCode': self.htmlCode, 'color': self._report.theme.greys[-1], 'grey': self._report.theme.greys[6]})
     inputTag = ''
     if not self.readonly:
-      inputTag = '<input spellcheck="false" style="display:block" id="%s_text" type="text" placeholder="Write a message" />' % self.htmlId
+      inputTag = '<input spellcheck="false" style="display:block" id="%s_text" type="text" placeholder="Write a message" />' % self.htmlCode
     return '''
       <div %(attr)s>
-        <span><p style="display:inline-block;margin:0;padding:0;cursor:pointer" id="%(htmlId)s_comms_count">0</p> Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
+        <span><p style="display:inline-block;margin:0;padding:0;cursor:pointer" id="%(htmlCode)s_comms_count">0</p> Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
         %(inputTag)s
         <div class='scroll_content' style="margin:0;padding:5px 0;height:%(height)s;overflow:auto">
-          <div id="%(htmlId)s_comms"></div>
+          <div id="%(htmlCode)s_comms"></div>
         </div>
       </div>
-      ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'htmlId': self.htmlId, 'height': self._height,
+      ''' % {'attr': self.get_attrs(pyClassNames=self.defined), 'htmlCode': self.htmlCode, 'height': self._height,
              'inputTag': inputTag}
 
   # -----------------------------------------------------------------------------------------

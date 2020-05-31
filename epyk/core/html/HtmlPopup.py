@@ -32,7 +32,7 @@ class Popup(Html.Html):
       if draggable:
         self._report.jsImports.add('jqueryui')
         self._report.cssImport.add('jqueryui')
-        self._report.jsOnLoadFnc.add("$('#%s > table').draggable();" % self.htmlId)
+        self._report.jsOnLoadFnc.add("$('#%s > table').draggable();" % self.htmlCode)
     else:
       self.frameWidth = "100%"
       self.margin = None
@@ -49,12 +49,12 @@ class Popup(Html.Html):
     if self._title is None:
       raise Exception("No title defined for this popup window")
 
-    return "$('#title_%s span').text()" % self.htmlId
+    return "$('#title_%s span').text()" % self.htmlCode
 
   def __add__(self, htmlObj):
     """ Add items to a container """
     htmlObj.options.managed = False # Has to be defined here otherwise it is set too late
-    htmlObj.container = "#%s_content" % self.htmlId
+    htmlObj.container = "#%s_content" % self.htmlCode
     if htmlObj.category in ['Input']:
       self.inputs.append((htmlObj.jqId, htmlObj.placeholder, htmlObj.val, htmlObj.__class__.__name__) )
     self.val.append(htmlObj)
@@ -78,7 +78,7 @@ class Popup(Html.Html):
 
   def jsTitle(self, jsData='data', jsDataKey=None, isPyData=False, jsParse=False, jsFnc=None):
     jsData = self._jsData(jsData, jsDataKey, jsParse, isPyData, jsFnc)
-    return '''$('#title_%(htmlId)s span').text(%(jsData)s)''' % {'htmlId': self.htmlId, 'jsData': jsData}
+    return '''$('#title_%(htmlCode)s span').text(%(jsData)s)''' % {'htmlCode': self.htmlCode, 'jsData': jsData}
 
   def submit(self, jsFncs, label='Submit'):
     button = self._report.button(label)
@@ -92,7 +92,7 @@ class Popup(Html.Html):
         fncs.append(htmlObj.jsLoadFromSrc(htmlObj.dataSrc.get('jsDataKey')))
       elif getattr(htmlObj, 'dataSrc') is not None and htmlObj.dataSrc['type'] == 'url':
         fncs.append(self._report.jsPost(htmlObj.dataSrc['url']))
-    fncs.append("$('#%s').show()" % self.htmlId)
+    fncs.append("$('#%s').show()" % self.htmlCode)
     fncs.append(self.jsResize())
     return ";".join(fncs)
 
@@ -100,26 +100,26 @@ class Popup(Html.Html):
     return '''
       var resizeEvent = window.document.createEvent('UIEvents');
       resizeEvent.initUIEvent('resize', true, false, window, 0);
-      window.dispatchEvent(resizeEvent)''' % {'htmlId': self.htmlId}
+      window.dispatchEvent(resizeEvent)'''
 
   def jsShow(self, x=None, y=20, absolute=False):
     if self.margin is None:
       if x is None:
         x = - self.width / 2
       if absolute:
-        return ";".join(["$('#%(htmlId)s').css({'left': %(x)s, 'top': %(y)s})" % {'htmlId': self.htmlId, 'x': x, 'y': y}, super(Popup, self).jsShow(), self.jsResize()])
+        return ";".join(["$('#%(htmlCode)s').css({'left': %(x)s, 'top': %(y)s})" % {'htmlCode': self.htmlCode, 'x': x, 'y': y}, super(Popup, self).jsShow(), self.jsResize()])
 
-      return ";".join(["$('#%(htmlId)s').css({'left': event.clientX + %(x)s, 'top': event.clientY + %(y)s})" % {
-        'htmlId': self.htmlId, 'x': x, 'y': y}, super(Popup, self).jsShow(), self.jsResize()])
+      return ";".join(["$('#%(htmlCode)s').css({'left': event.clientX + %(x)s, 'top': event.clientY + %(y)s})" % {
+        'htmlCode': self.htmlCode, 'x': x, 'y': y}, super(Popup, self).jsShow(), self.jsResize()])
 
     #TODO: Fix Problem resizing content
-    return ";".join(["$('#%(htmlId)s').css({'padding': '10%% %(margin)s%%'})" % {'htmlId': self.htmlId, 'margin': self.margin},
+    return ";".join(["$('#%(htmlCode)s').css({'padding': '10%% %(margin)s%%'})" % {'htmlCode': self.htmlCode, 'margin': self.margin},
                     super(Popup, self).jsShow(), self.jsResize(), '''
-                    if ($('#%(htmlId)s_content').height() > $(window).height()-150){
-                      $('#%(htmlId)s_content').css({'height': $(window).height()-150 + 'px'})};
-                    ''' % {'htmlId': self.htmlId}])
+                    if ($('#%(htmlCode)s_content').height() > $(window).height()-150){
+                      $('#%(htmlCode)s_content').css({'height': $(window).height()-150 + 'px'})};
+                    ''' % {'htmlCode': self.htmlCode}])
 
-  def hide(self): return "$('#%s').hide()" % self.htmlId
+  def hide(self): return "$('#%s').hide()" % self.htmlCode
 
   def html(self):
     """ Return the HTML display of a split container"""
@@ -132,36 +132,36 @@ class Popup(Html.Html):
       self._report.style.cssCls('CssPopupTableTitleContent')
       trTitle = '''
         <tr>
-          <th name="title" id="title_%(htmlId)s" style="height:30px">
+          <th name="title" id="title_%(htmlCode)s" style="height:30px">
             <span style="margin-right:10px">%(title)s</span>
-            <i onclick="$('#%(htmlId)s').hide()" style="margin:0 2px 0 2px;cursor:pointer" class="fas fa-window-close"></i>
+            <i onclick="$('#%(htmlCode)s').hide()" style="margin:0 2px 0 2px;cursor:pointer" class="fas fa-window-close"></i>
           </th>
-        </tr>''' % {'htmlId': self.htmlId, 'title': self._title}
+        </tr>''' % {'htmlCode': self.htmlCode, 'title': self._title}
     else:
-      closePopup = '''<i onclick="$('#%(htmlId)s').hide()" style="margin:0 2px 0 2px;cursor:pointer" class="fas fa-window-close"></i>''' % {'htmlId': self.htmlId}
+      closePopup = '''<i onclick="$('#%(htmlCode)s').hide()" style="margin:0 2px 0 2px;cursor:pointer" class="fas fa-window-close"></i>''' % {'htmlCode': self.htmlCode}
 
     content = '''
-      <table id="%(htmlId)s_table" style="width:%(frameWidth)s;margin:auto">
+      <table id="%(htmlCode)s_table" style="width:%(frameWidth)s;margin:auto">
         %(title)s
         <tr>
           <td style="padding:10px">
             <div style="width:100%%;text-align:right">%(closePopup)s</div>
-            <div  class='scroll_content' id="%(htmlId)s_content" style="height:%(height)s;overflow:auto;width:100%%">%(objects)s</div>
+            <div  class='scroll_content' id="%(htmlCode)s_content" style="height:%(height)s;overflow:auto;width:100%%">%(objects)s</div>
           </td>
         </tr>
-      </table>''' % {'title': trTitle, 'htmlId': self.htmlId, 'objects': "\n".join([val.html() for val in self.vals]),
+      </table>''' % {'title': trTitle, 'htmlCode': self.htmlCode, 'objects': "\n".join([val.html() for val in self.vals]),
                      'height': self.height, "frameWidth": self.frameWidth, 'closePopup': closePopup}
 
     self._report.jsOnLoadFnc.add(''' 
-      $('#%(htmlId)s').on('click', function(e) {if(e.target == this) {$('#%(htmlId)s').hide()}});
-      $('.scroll_content').mCustomScrollbar()''' % {"htmlId": self.htmlId})
+      $('#%(htmlCode)s').on('click', function(e) {if(e.target == this) {$('#%(htmlCode)s').hide()}});
+      $('.scroll_content').mCustomScrollbar()''' % {"htmlCode": self.htmlCode})
     return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), content)
 
   @property
   def val(self):
-    return '$("#%s").html()' % self.htmlId
+    return '$("#%s").html()' % self.htmlCode
 
-  def jsUpdate(self, data=''): return '$("#%s").html(%s)' % (self.htmlId, data)
+  def jsUpdate(self, data=''): return '$("#%s").html(%s)' % (self.htmlCode, data)
 
   def to_word(self, document):
     pass

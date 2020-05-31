@@ -15,7 +15,7 @@ from epyk.core.js import JsUtils
 
 class JsDomEvents(object):
   class __internal(object):
-    htmlId = None
+    htmlCode = None
 
   def __init__(self, src=None):
     self._src = src if src is not None else self.__internal()
@@ -313,20 +313,20 @@ class JsDomEvents(object):
 
     :return: The Javascript string of this function
     """
-    item = "document.getElementById('%(htmlId)s')" % {'htmlId': self._src.htmlId}
+    item = "document.getElementById('%(htmlCode)s')" % {'htmlCode': self._src.htmlCode}
     if withFocus:
       return JsFncs.JsFunction('(function(){var clickEvent = new Event("%(event)s"); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)})()' % {"event": event, "elem": item})
 
     return JsFncs.JsFunction('(function(){var clickEvent = new Event("%(event)s"); %(elem)s.dispatchEvent(clickEvent)})()' % {"event": event, "elem": item})
 
   def toStr(self):
-    if self._src.htmlId is None:
+    if self._src.htmlCode is None:
       raise Exception("Selector not defined, use this() or new() first")
 
     if len(self._js) == 0:
-      return self._src.htmlId
+      return self._src.htmlCode
 
-    strData = "document.getElementById('%(htmlId)s').%(items)s" % {'htmlId': self._src.htmlId, 'items': ".".join(self._js)}
+    strData = "document.getElementById('%(htmlCode)s').%(items)s" % {'htmlCode': self._src.htmlCode, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
     return strData
 

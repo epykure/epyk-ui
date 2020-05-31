@@ -22,7 +22,7 @@ class Chart(Html.Html):
     ------------
     Return the Javascript variable of the chart
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   @property
   def data(self):
@@ -56,7 +56,7 @@ class Chart(Html.Html):
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
+      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
 
   def convert(self, data, options, profile=False):
@@ -84,7 +84,7 @@ class Chart(Html.Html):
 
   def build(self, data=None, options=None, profile=False):
     if data:
-      return "d3.select('#%(htmlId)s').datum(%(data)s).transition().duration(500).call(%(chart)s); nv.utils.windowResize(%(chart)s.update)" % {'htmlId': self.htmlId, 'data': self.convert(data, options, profile), 'chart': self.dom.var}
+      return "d3.select('#%(htmlCode)s').datum(%(data)s).transition().duration(500).call(%(chart)s); nv.utils.windowResize(%(chart)s.update)" % {'htmlCode': self.htmlCode, 'data': self.convert(data, options, profile), 'chart': self.dom.var}
 
     return JsUtils.jsConvertFncs([self.dom.set_var(True), self.dom.xAxis, self.d3.datum(self._datasets).call(self.dom.var),
                 "nv.utils.windowResize(function() { %s.update() })" % self.dom.var], toStr=True)[4:]

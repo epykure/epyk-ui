@@ -333,7 +333,7 @@ class JQueryUiDatePicker(JQueryUI):
 
     :return:
     """
-    return "$('#%s input').datepicker( 'option', '%s', %s)" % (self.src.htmlId, name, json.dumps(value))
+    return "$('#%s input').datepicker( 'option', '%s', %s)" % (self.src.htmlCode, name, json.dumps(value))
 
   def refresh(self):
     """

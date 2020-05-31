@@ -459,7 +459,7 @@ class JsHistory(object):
 
     Usage::
 
-      htmlObj.js.js.window.history.updateState(self.htmlId, self.val)
+      htmlObj.js.js.window.history.updateState(self.htmlCode, self.val)
 
     Related Pages:
 

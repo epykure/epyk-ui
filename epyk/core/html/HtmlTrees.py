@@ -188,18 +188,3 @@ class DropDown(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return "<ul %s></ul>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
-
-  def to_word(self, document):
-    p = document.add_paragraph()
-    p.add_run("Selected: ")
-    runner = p.add_run(self._report.http.get(self.htmlCode, self.vals))
-    runner.bold = True
-
-  def to_xls(self, workbook, worksheet, cursor):
-    if self.htmlId in self._report.http:
-      cellTitle = self.title if self.title != "" else 'Input'
-      cell_format = workbook.add_format({'bold': True})
-      worksheet.write(cursor['row'], 0, cellTitle, cell_format)
-      cursor['row'] += 1
-      worksheet.write(cursor['row'], 0, self._report.http[self.htmlId])
-      cursor['row'] += 2

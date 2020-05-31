@@ -9,7 +9,7 @@ from epyk.core.js.packages import DataAttrs
 
 class JsPlotly(JsPackage):
 
-  def newPlot(self, data=None, layout=None, config=None, htmlId=None):
+  def newPlot(self, data=None, layout=None, config=None, htmlCode=None):
     """
     Description:
     ------------
@@ -24,14 +24,14 @@ class JsPlotly(JsPackage):
     :param data: array of objects, see documentation (defaults to [])
     :param layout: object, see documentation (defaults to {})
     :param config: object, see documentation (defaults to {})
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     data = JsUtils.jsConvertData(data or [], None)
     layout = JsUtils.jsConvertData(layout or {}, None)
     config = JsUtils.jsConvertData(config or {}, None)
-    return JsObject.JsObject.get("Plotly.newPlot(%s, %s, %s, %s)" % (htmlId or self.src.dom.varName, data, layout, config))
+    return JsObject.JsObject.get("Plotly.newPlot(%s, %s, %s, %s)" % (htmlCode or self.src.dom.varName, data, layout, config))
 
-  def react(self, data=None, layout=None, config=None, htmlId=None):
+  def react(self, data=None, layout=None, config=None, htmlCode=None):
     """
     Description:
     ------------
@@ -46,14 +46,14 @@ class JsPlotly(JsPackage):
     :param data: array of objects, see documentation (defaults to [])
     :param layout: object, see documentation (defaults to {})
     :param config: object, see documentation (defaults to {})
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     data = JsUtils.jsConvertData(data or [], None)
     layout = JsUtils.jsConvertData(layout or {}, None)
     config = JsUtils.jsConvertData(config or {}, None)
-    return JsObject.JsObject.get("Plotly.react(%s, %s, %s, %s)" % (htmlId or self.src.dom.varName, data, layout, config))
+    return JsObject.JsObject.get("Plotly.react(%s, %s, %s, %s)" % (htmlCode or self.src.dom.varName, data, layout, config))
 
-  def restyle(self, update=None, traceIndices=None, htmlId=None):
+  def restyle(self, update=None, traceIndices=None, htmlCode=None):
     """
     Description:
     ------------
@@ -67,16 +67,16 @@ class JsPlotly(JsPackage):
     ----------
     :param update: object, see below for examples (defaults to {})
     :param traceIndices: array of integer indices into existing value of data (optional, default behaviour is to apply to all traces)
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     update = JsUtils.jsConvertData(update or {}, None)
     if traceIndices is None:
-      return JsObject.JsObject.get("Plotly.restyle(%s, %s)" % (htmlId or self.src.dom.varName, update))
+      return JsObject.JsObject.get("Plotly.restyle(%s, %s)" % (htmlCode or self.src.dom.varName, update))
 
     traceIndices = JsUtils.jsConvertData(traceIndices, None)
-    return JsObject.JsObject.get("Plotly.restyle(%s, %s, %s)" % (htmlId or self.src.dom.varName, update, traceIndices))
+    return JsObject.JsObject.get("Plotly.restyle(%s, %s, %s)" % (htmlCode or self.src.dom.varName, update, traceIndices))
 
-  def relayout(self, update=None, htmlId=None):
+  def relayout(self, update=None, htmlCode=None):
     """
     Description:
     ------------
@@ -89,12 +89,12 @@ class JsPlotly(JsPackage):
     Attributes:
     ----------
     :param update: object, see below for examples (defaults to {})
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     update = JsUtils.jsConvertData(update or {}, None)
-    return JsObject.JsObject.get("Plotly.relayout(%s, %s)" % (htmlId or self.src.dom.varName, update))
+    return JsObject.JsObject.get("Plotly.relayout(%s, %s)" % (htmlCode or self.src.dom.varName, update))
 
-  def update(self, data_update=None, layout_update=None, traceIndices=None, htmlId=None):
+  def update(self, data_update=None, layout_update=None, traceIndices=None, htmlCode=None):
     """
     Description:
     ------------
@@ -109,15 +109,15 @@ class JsPlotly(JsPackage):
     :param data_update: object, see Plotly.restyle above (defaults to {})
     :param layout_update: object, see Plotly.relayout above (defaults to {})
     :param traceIndices: array of integer indices into existing value of data, see Plotly.restyle above (optional, default behaviour is to apply to all traces)
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     data_update = JsUtils.jsConvertData(data_update or {}, None)
     layout_update = JsUtils.jsConvertData(layout_update or {}, None)
     if traceIndices is None:
-      return JsObject.JsObject.get("Plotly.update(%s, %s, %s)" % (htmlId or self.src.dom.varName, data_update, layout_update))
+      return JsObject.JsObject.get("Plotly.update(%s, %s, %s)" % (htmlCode or self.src.dom.varName, data_update, layout_update))
 
     traceIndices = JsUtils.jsConvertData(traceIndices, None)
-    return JsObject.JsObject.get("Plotly.update(%s, %s, %s, %s)" % (htmlId or self.src.dom.varName, data_update, layout_update, traceIndices))
+    return JsObject.JsObject.get("Plotly.update(%s, %s, %s, %s)" % (htmlCode or self.src.dom.varName, data_update, layout_update, traceIndices))
 
   def validate(self, data, layout):
     """
@@ -175,7 +175,7 @@ class JsPlotly(JsPackage):
     template = JsUtils.jsConvertData(template, None)
     return JsObject.JsObject.get("Plotly.validateTemplate(%s, %s)" % (figure, template))
 
-  def addTraces(self, traces, position=None, htmlId=None):
+  def addTraces(self, traces, position=None, htmlCode=None):
     """
     Description:
     ------------
@@ -189,16 +189,16 @@ class JsPlotly(JsPackage):
     ----------
     :param traces:
     :param position:
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     traces = JsUtils.jsConvertData(traces, None)
     if position is None:
-      return JsObject.JsObject.get("Plotly.addTraces(%s, %s)" % (htmlId or self.src.dom.varName, traces))
+      return JsObject.JsObject.get("Plotly.addTraces(%s, %s)" % (htmlCode or self.src.dom.varName, traces))
 
     position = JsUtils.jsConvertData(position, None)
-    return JsObjects.JsVoid("Plotly.addTraces(%s, %s, %s)" % (htmlId or self.src.dom.varName, traces, position))
+    return JsObjects.JsVoid("Plotly.addTraces(%s, %s, %s)" % (htmlCode or self.src.dom.varName, traces, position))
 
-  def deleteTraces(self, positions, htmlId=None):
+  def deleteTraces(self, positions, htmlCode=None):
     """
     Description:
     ------------
@@ -211,12 +211,12 @@ class JsPlotly(JsPackage):
     Attributes:
     ----------
     :param positions:
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     positions = JsUtils.jsConvertData(positions, None)
-    return JsObject.JsObject.get("Plotly.deleteTraces(%s, %s)" % (htmlId or self.src.dom.varName, positions))
+    return JsObject.JsObject.get("Plotly.deleteTraces(%s, %s)" % (htmlCode or self.src.dom.varName, positions))
 
-  def moveTraces(self, currentPosition, destPosition=None, htmlId=None):
+  def moveTraces(self, currentPosition, destPosition=None, htmlCode=None):
     """
     Description:
     ------------
@@ -230,15 +230,15 @@ class JsPlotly(JsPackage):
     ----------
     :param currentPosition:
     :param destPosition:
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     currentPosition = JsUtils.jsConvertData(currentPosition, None)
     if destPosition is None:
-      return JsObject.JsObject.get("Plotly.moveTraces(%s, %s)" % (htmlId or self.src.dom.varName, currentPosition))
+      return JsObject.JsObject.get("Plotly.moveTraces(%s, %s)" % (htmlCode or self.src.dom.varName, currentPosition))
 
-    return JsObject.JsObject.get("Plotly.moveTraces(%s, %s, %s)" % (htmlId or self.src.dom.varName, currentPosition, destPosition))
+    return JsObject.JsObject.get("Plotly.moveTraces(%s, %s, %s)" % (htmlCode or self.src.dom.varName, currentPosition, destPosition))
 
-  def extendTraces(self, tracesExtension, indexTraces, htmlId=None):
+  def extendTraces(self, tracesExtension, indexTraces, htmlCode=None):
     """
     Description:
     ------------
@@ -252,13 +252,13 @@ class JsPlotly(JsPackage):
     ----------
     :param tracesExtension:
     :param indexTraces:
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     tracesExtension = JsUtils.jsConvertData(tracesExtension, None)
     indexTraces = JsUtils.jsConvertData(indexTraces, None)
-    return JsObject.JsObject.get("Plotly.extendTraces(%s, %s, %s)" % (htmlId or self.src.dom.varName, tracesExtension, indexTraces))
+    return JsObject.JsObject.get("Plotly.extendTraces(%s, %s, %s)" % (htmlCode or self.src.dom.varName, tracesExtension, indexTraces))
 
-  def prependTraces(self, tracesNew, indexTraces, htmlId=None):
+  def prependTraces(self, tracesNew, indexTraces, htmlCode=None):
     """
     Description:
     ------------
@@ -272,13 +272,13 @@ class JsPlotly(JsPackage):
     ----------
     :param tracesNew:
     :param indexTraces:
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     tracesNew = JsUtils.jsConvertData(tracesNew, None)
     indexTraces = JsUtils.jsConvertData(indexTraces, None)
-    return JsObject.JsObject.get("Plotly.prependTraces(%s, %s, %s)" % (htmlId or self.src.dom.varName, tracesNew, indexTraces))
+    return JsObject.JsObject.get("Plotly.prependTraces(%s, %s, %s)" % (htmlCode or self.src.dom.varName, tracesNew, indexTraces))
 
-  def animate(self, frameOrGroupNameOrFrameList, animationAttributes, htmlId=None):
+  def animate(self, frameOrGroupNameOrFrameList, animationAttributes, htmlCode=None):
     """
     Description:
     ------------
@@ -292,11 +292,11 @@ class JsPlotly(JsPackage):
     ----------
     :param frameOrGroupNameOrFrameList: A frame to be animated or an array of frames to be animated in sequence.
     :param animationAttributes: An object, see documentation for examples.
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     frameOrGroupNameOrFrameList = JsUtils.jsConvertData(frameOrGroupNameOrFrameList, None)
     animationAttributes = JsUtils.jsConvertData(animationAttributes, None)
-    return JsObject.JsObject.get("Plotly.animate(%s, %s, %s)" % (htmlId or self.src.dom.varName, frameOrGroupNameOrFrameList, animationAttributes))
+    return JsObject.JsObject.get("Plotly.animate(%s, %s, %s)" % (htmlCode or self.src.dom.varName, frameOrGroupNameOrFrameList, animationAttributes))
 
   def purge(self):
     """
@@ -310,7 +310,7 @@ class JsPlotly(JsPackage):
     """
     return JsObject.JsObject.get("Plotly.purge()")
 
-  def toImage(self, format, htmlId=None):
+  def toImage(self, format, htmlCode=None):
     """
     Description:
     ------------
@@ -323,12 +323,12 @@ class JsPlotly(JsPackage):
     Attributes:
     ----------
     :param format:
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     format = JsUtils.jsConvertData(format, None)
-    return JsObjects.JsPromise("Plotly.toImage(%s, %s)" % (htmlId or self.src.dom.varName, format))
+    return JsObjects.JsPromise("Plotly.toImage(%s, %s)" % (htmlCode or self.src.dom.varName, format))
 
-  def downloadImage(self, format, htmlId=None):
+  def downloadImage(self, format, htmlCode=None):
     """
     Description:
     ------------
@@ -341,10 +341,10 @@ class JsPlotly(JsPackage):
     Attributes:
     ----------
     :param format:
-    :param htmlId: DOM node or string id of a DOM node
+    :param htmlCode: DOM node or string id of a DOM node
     """
     format = JsUtils.jsConvertData(format, None)
-    return JsObject.JsObject.get("Plotly.downloadImage(%s, %s)" % (htmlId or self.src.dom.varName, format))
+    return JsObject.JsObject.get("Plotly.downloadImage(%s, %s)" % (htmlCode or self.src.dom.varName, format))
 
 
 class JsPlotlyLegend(object):
@@ -514,7 +514,7 @@ class JsPlotlyTrace(object):
 
   def __init__(self, htmlObj, varName=None, isPyData=True, report=None):
     self._src, self.chartId, self._report = htmlObj, varName, report
-    self._layout, self.varName = None, "document.getElementById('%s')" % htmlObj.htmlId
+    self._layout, self.varName = None, "document.getElementById('%s')" % htmlObj.htmlCode
 
   def mode(self):
     pass
@@ -548,10 +548,10 @@ class Line(JsPlotlyTrace):
     return self._layout
 
   def add_trace(self, x, y):
-    return JsObject.JsObject.get("Plotly.addTraces('%s', {y: %s, x: %s})" % (self._src.htmlId, y, x))
+    return JsObject.JsObject.get("Plotly.addTraces('%s', {y: %s, x: %s})" % (self._src.htmlCode, y, x))
 
   def deleteTraces(self, i):
-    return JsObject.JsObject.get("Plotly.deleteTraces('%s', %s)" % (self._src.htmlId, i))
+    return JsObject.JsObject.get("Plotly.deleteTraces('%s', %s)" % (self._src.htmlCode, i))
 
 
 class Bar(JsPlotlyTrace):

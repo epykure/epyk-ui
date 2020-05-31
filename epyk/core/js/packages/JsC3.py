@@ -169,11 +169,11 @@ class C3(JsPackage):
 
   @property
   def legend(self):
-    return C3Legend("%s.legend" % self.src.htmlId)
+    return C3Legend("%s.legend" % self.src.htmlCode)
 
   @property
   def value(self):
-    return JsObjects.JsObjects.get("{'%s': arguments[0], timestamp: Date.now(), offset: new Date().getTimezoneOffset()}" % self.src.htmlId)
+    return JsObjects.JsObjects.get("{'%s': arguments[0], timestamp: Date.now(), offset: new Date().getTimezoneOffset()}" % self.src.htmlCode)
 
   @property
   def content(self):

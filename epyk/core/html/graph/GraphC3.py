@@ -29,7 +29,7 @@ class Chart(Html.Html):
     -----------
     Return the Javascript variable of the chart
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   @property
   def js(self):
@@ -76,7 +76,7 @@ class Chart(Html.Html):
 
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlId, setVar=False)
+      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
 
   def convert(self, data, options, profile=False):
@@ -521,7 +521,7 @@ class ChartLine(Chart):
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
-    self._attrs["bindto"] = "#%s" % self.htmlId
+    self._attrs["bindto"] = "#%s" % self.htmlCode
 
   def labels(self, labels, series_id='x'):
     self.data.x = series_id

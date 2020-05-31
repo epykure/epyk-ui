@@ -124,5 +124,5 @@ class Drawer(Html.Html):
         <div name='drawer' style='clear:both;%(side)s:0;overflow-y:hidden'>
           %(handle)s%(drawer)s
         </div>
-      </div>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlId': self.htmlId,
+      </div>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode,
                    'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(), 'side': position[self.options.side]}

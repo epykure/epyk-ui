@@ -30,7 +30,7 @@ class ClassDiv(GrpCls.ClassHtml):
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).no_border()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).no_border()
     return self._css_class
 
 
@@ -60,7 +60,7 @@ class ClassModal(GrpCls.ClassHtml):
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).modal()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).modal()
     return self._css_class
 
 
@@ -98,7 +98,7 @@ class ClassDrawer(GrpCls.ClassHtml):
     :rtype: Classes.CatalogDiv.CatalogDrawer
     """
     if self._css_class_drawer is None:
-      self._css_class_drawer = Classes.CatalogDiv.CatalogDrawer(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlId).drawer()
+      self._css_class_drawer = Classes.CatalogDiv.CatalogDrawer(self.htmlObj._report, self.classList['main'], html_id=self.htmlObj.htmlCode).drawer()
     return self._css_class_drawer
 
   @property
@@ -113,7 +113,7 @@ class ClassDrawer(GrpCls.ClassHtml):
     """
     if self._css_class_nav is None:
       self._css_class_nav = Classes.CatalogDiv.CatalogDrawer(self.htmlObj._report, self.classList['main'],
-                                                                html_id=self.htmlObj.htmlId).drawer()
+                                                                html_id=self.htmlObj.htmlCode).drawer()
     return self._css_class_nav
 
   @property
@@ -128,7 +128,7 @@ class ClassDrawer(GrpCls.ClassHtml):
     """
     if self._css_class_handle is None:
       self._css_class_handle = Classes.CatalogDiv.CatalogDrawer(self.htmlObj._report, self.classList['main'],
-                                                                html_id=self.htmlObj.htmlId).handle()
+                                                                html_id=self.htmlObj.htmlCode).handle()
     return self._css_class_handle
 
   @property
@@ -143,6 +143,6 @@ class ClassDrawer(GrpCls.ClassHtml):
     """
     if self._css_class_content is None:
       self._css_class_content = Classes.CatalogDiv.CatalogDrawer(self.htmlObj._report, self.classList['main'],
-                                                                html_id=self.htmlObj.htmlId).content()
+                                                                html_id=self.htmlObj.htmlCode).content()
     return self._css_class_content
 

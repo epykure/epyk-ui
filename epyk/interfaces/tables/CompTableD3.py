@@ -19,7 +19,7 @@ class D3(object):
     """
     table = self.parent.context.rptObj.ui.div(width=width, height=height, htmlCode=htmlCode, options=options,
                                               profile=profile)
-    d3_table = table.js.d3.select("#%s" % table.htmlId, varName='d3Table').rappend('table')
+    d3_table = table.js.d3.select("#%s" % table.htmlCode, varName='d3Table').rappend('table')
     if header is None and records is not None:
       header = list(records[0].keys())
     table.onReady(

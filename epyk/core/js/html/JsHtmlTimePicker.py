@@ -9,7 +9,7 @@ class TimePicker(JsHtml.JsHtml):
   def val(self):
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.timepicker('getTime'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlId, self._src.dom.jquery.varId))
+        self.htmlCode, self._src.dom.jquery.varId))
 
   @property
   def content(self):

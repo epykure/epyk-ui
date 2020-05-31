@@ -76,12 +76,12 @@ class ChartJs(JsPackage):
   lib_alias = {'js': 'Chart.js'}
 
   class __internal(object):
-    jqId, htmlId, jsImports, cssImport = 'chart', '', set([]), set([])
+    jqId, htmlCode, jsImports, cssImport = 'chart', '', set([]), set([])
 
-  def __init__(self, htmlId=None, config=None, src=None, varName=None, selector=None, setVar=False):
+  def __init__(self, htmlCode=None, config=None, src=None, varName=None, selector=None, setVar=False):
     self.src = src if src is not None else self.__internal()
     if selector is None:
-      self._selector = 'new Chart(%s.getContext("2d"), %s)' % (htmlId, config.toStr())
+      self._selector = 'new Chart(%s.getContext("2d"), %s)' % (htmlCode, config.toStr())
     else:
       self._selector = selector
     self.varName, self.setVar = varName or self._selector, setVar
@@ -240,7 +240,7 @@ class ChartJs(JsPackage):
     -----------
 
     """
-    return JsObjects.JsString.JsString("{%(htmlId)s: {point: %(chart)s.data.datasets[0].data[activePoints[0]['_index']], label: %(chart)s.data.labels[activePoints[0]['_index']]}}" % {'htmlId': self.src.htmlId, "chart": self.varName}, isPyData=False)
+    return JsObjects.JsString.JsString("{%(htmlCode)s: {point: %(chart)s.data.datasets[0].data[activePoints[0]['_index']], label: %(chart)s.data.labels[activePoints[0]['_index']]}}" % {'htmlCode': self.src.htmlCode, "chart": self.varName}, isPyData=False)
 
   def update(self, config=None):
     """
@@ -2506,8 +2506,8 @@ class DataSetBubble(DataAttrs):
 #     self._opts_attrs.setdefault("scales", {})["yAxes"] = []
 #     return ChartJsOptScale(self._opts_attrs.setdefault("scales", {})["yAxes"])
 #
-#   def build(self, htmlId, varName):
-#     return "var %s = new Chart(document.getElementById('%s'), %s)" % (varName, htmlId, self)
+#   def build(self, htmlCode, varName):
+#     return "var %s = new Chart(document.getElementById('%s'), %s)" % (varName, htmlCode, self)
 #
 #
 # class ChartJsTypeBar(ChartJsType):

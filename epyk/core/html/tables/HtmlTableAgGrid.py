@@ -72,13 +72,13 @@ class Table(Html.Html):
     """
     Return the Javascript variable of the chart
     """
-    return "%s_obj" % self.htmlId
+    return "%s_obj" % self.htmlCode
 
   def build(self, data=None, options=None, profile=False):
     if data:
       return self.js.setRowData(data)
 
-    return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlId)s, %(tableId)s)' % {'tableId': self.tableId, 'config': self.config, 'htmlId': self.dom.varName}
+    return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {'tableId': self.tableId, 'config': self.config, 'htmlCode': self.dom.varName}
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

@@ -16,7 +16,7 @@ class JsHtmlDatePicker(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-      self.htmlId, self._src.dom.jquery.varId))
+      self.htmlCode, self._src.dom.jquery.varId))
 
   @property
   def content(self):
@@ -39,7 +39,7 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.progressbar('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlId, self._src.dom.jquery.varId))
+        self.htmlCode, self._src.dom.jquery.varId))
 
   @property
   def content(self):
@@ -81,7 +81,7 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlId, self._src.dom.jquery.varId))
+        self.htmlCode, self._src.dom.jquery.varId))
 
   @property
   def content(self):
@@ -104,7 +104,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.slider('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlId, self._src.dom.jquery.varId))
+        self.htmlCode, self._src.dom.jquery.varId))
 
   @property
   def content(self):
@@ -127,7 +127,7 @@ class JsHtmlSliderRange(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.slider('values'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlId, self._src.dom.jquery.varId))
+        self.htmlCode, self._src.dom.jquery.varId))
 
   @property
   def content(self):
@@ -150,7 +150,7 @@ class JsHtmlSliderDate(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlId, self.content.toStr()))
+        self.htmlCode, self.content.toStr()))
 
   @property
   def content(self):
@@ -173,7 +173,7 @@ class JsHtmlSliderDates(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlId, self.content.toStr()))
+        self.htmlCode, self.content.toStr()))
 
   @property
   def content(self):
@@ -194,7 +194,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     ------------
     """
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlId, self.region))
+      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.region))
 
   @property
   def content(self):

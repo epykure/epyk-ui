@@ -17,7 +17,7 @@ class Chart(Html.Html):
     """
     Return the Javascript variable of the chart
     """
-    return "chart_%s" % self.htmlId
+    return "chart_%s" % self.htmlCode
 
   def crossFilter(self, dimension, group):
     """

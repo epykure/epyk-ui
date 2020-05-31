@@ -134,8 +134,8 @@ class RawData(object):
     :param profile:
 
     """
-    self._data["schema"][self._data_id].setdefault('containers', {})[html_obj.htmlId] = {'fncs': [], 'outs': None, "profile": profile}
-    return ContainerData(self._report, self._data["schema"][self._data_id]['containers'][html_obj.htmlId])
+    self._data["schema"][self._data_id].setdefault('containers', {})[html_obj.htmlCode] = {'fncs': [], 'outs': None, "profile": profile}
+    return ContainerData(self._report, self._data["schema"][self._data_id]['containers'][html_obj.htmlCode])
 
   def toTsv(self, colNames=None, profile=False):
     """
