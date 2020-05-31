@@ -97,7 +97,7 @@ class SVG(object):
     self.parent.context.register(html_svg)
     return html_svg
 
-  def arrow_right(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), options=None):
+  def arrow_right(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), htmlCode=None, options=None):
     """
 
     :param x1:
@@ -110,12 +110,12 @@ class SVG(object):
     """
     line = self.line(x1, y1, x2 or width[0]-size, y2, width, height, options)
     defs = line.defs()
-    m = defs.marker("arrow", "0 0 10 10", 5, 5)
+    m = defs.marker(htmlCode or "arrow_right", "0 0 10 10", 5, 5)
     m.arrow(size)
     line[0].marker_end(m.url)
     return line
 
-  def arrow_left(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), options=None):
+  def arrow_left(self, x1=0, y1=None, x2=None, y2=None, size=10, width=(500, "px"), height=(300, "px"), htmlCode=None, options=None):
     """
 
     Usage::
@@ -132,7 +132,7 @@ class SVG(object):
     """
     line = self.line(x1+size, y1, x2, y2, width, height, options)
     defs = line.defs()
-    m = defs.marker("arrow", "0 0 10 10", 5, 5)
+    m = defs.marker(htmlCode or "arrow_left", "0 0 10 10", 5, 5)
     m.arrow(size).orient("auto-start-reverse")
     line[0].marker_start(m.url)
     return line
@@ -248,7 +248,7 @@ class SVG(object):
     self.parent.context.register(tri)
     return tri
 
-  def axes(self, size=10, width=(500, "px"), height=(300, "px")):
+  def axes(self, size=10, width=(500, "px"), height=(300, "px"), htmlCode=None):
     """
     Description:
     ------------
@@ -271,7 +271,7 @@ class SVG(object):
     svg = graph.GraphSvg.SVG(self.parent.context.rptObj, width, height)
     svg.origine = (size, height[0]-size)
     defs = svg.defs()
-    m = defs.marker("arrow", "0 0 10 10", 5, 5)
+    m = defs.marker(htmlCode or "arrow", "0 0 10 10", 5, 5)
     m.arrow().orient("auto-start-reverse")
     m.markerWidth(size).markerHeight(size)
     pl = svg.polyline([(size, size), (size, height[0]-size), (width[0]-size, height[0]-size)]).css({'stroke': "black"})
@@ -339,7 +339,6 @@ class SVG(object):
     :param fill:
     :param origin:
     :param bespoke_path:
-    :return:
     """
     path = graph.GraphSvg.Path(self.parent.context.rptObj, x, y, fill, origin, bespoke_path)
     self.parent.context.register(path)

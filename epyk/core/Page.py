@@ -233,8 +233,7 @@ class Report(object):
       ext_components = [ext_components]
 
     for comp in ext_components:
-      self.components[id(comp)] = comp
-      self.content.append(id(comp))
+      self.components[comp.htmlCode] = comp
 
   # def socketSend(self, htmlCode, data, report_name=None, script_name=None):
   #   try:

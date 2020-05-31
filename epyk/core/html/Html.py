@@ -672,7 +672,7 @@ Attributes:
     -----------
     Move the component to this position in the page
     """
-    self._report.components.move_to_end(id(self))
+    self._report.components.move_to_end(self.htmlCode)
 
   def css(self, key, value=None, reset=False):
     """

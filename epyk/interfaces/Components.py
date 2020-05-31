@@ -451,7 +451,7 @@ class Components(object):
 
     return the html component
     """
-    self.rptObj.components[id(html_comp)] = html_comp
+    self.rptObj.components[html_comp.htmlCode] = html_comp
     return html_comp
 
   def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"), options=None, profile=None):
