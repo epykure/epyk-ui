@@ -166,10 +166,7 @@ class Html(object):
       # self._report.jsGlobal.reportHtmlCode.add(htmlCode)
       if htmlCode in self._report.http:
         self.vals = self._report.http[htmlCode]
-
-    self.pyStyle = None #list(getattr(self, '_%s__pyStyle' % self.__class__.__name__, []))
-    self.pyCssCls = set() # to be deleted
-
+        
     self._vals = vals
     self.jsVal = "%s_data" % self.htmlId # to be reviewed
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
@@ -1156,10 +1153,6 @@ Attributes:
     for css in self.require.css:
       self._report.cssImport.add(css)
 
-    #if self.builder_name:
-    for c in self.style.get_classes()['main']:
-      if hasattr(c, 'get_ref'):
-        self.pyCssCls.add(c.get_ref())
     str_result.append(str(self))
     return "".join(str_result)
 

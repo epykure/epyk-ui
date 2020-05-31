@@ -23,7 +23,7 @@ class Output(Html.Html):
   name = 'Output'
 
   def __str__(self):
-    return '<output %(strAttr)s>%(val)s</output>' % {'strAttr': self.get_attrs(pyClassNames=self.pyStyle), 'val': self.val}
+    return '<output %(strAttr)s>%(val)s</output>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val}
 
 
 class Input(Html.Html):

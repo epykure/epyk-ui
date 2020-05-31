@@ -155,7 +155,7 @@ class Popup(Html.Html):
     self._report.jsOnLoadFnc.add(''' 
       $('#%(htmlId)s').on('click', function(e) {if(e.target == this) {$('#%(htmlId)s').hide()}});
       $('.scroll_content').mCustomScrollbar()''' % {"htmlId": self.htmlId})
-    return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.pyStyle), content)
+    return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), content)
 
   @property
   def val(self):

@@ -24,7 +24,7 @@ class Row(Html.Html):
 
   def __str__(self):
     data = [v.html() for v in self.val]
-    return "<tr %s>%s</tr>" % (self.get_attrs(pyClassNames=self.pyStyle), "".join(data))
+    return "<tr %s>%s</tr>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(data))
 
 
 class Cell(Html.Html):

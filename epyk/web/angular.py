@@ -465,7 +465,7 @@ class RouteModule(object):
     self.modules[component] = path
     self.routes[component] = alias
 
-  def export(self, file_name=None):
+  def export(self, file_name=None, target_path=None):
     """
     Description:
     ------------
@@ -475,7 +475,10 @@ class RouteModule(object):
     :param file_name: String. Optional. The filename
     """
     file_name = 'app-routing.module_new.ts' or self.file_name
-    with open(os.path.join(self._app_path, self._app_name, 'src', 'app', file_name), "w") as f:
+    if target_path is None:
+      target_path = []
+    target_path.append(file_name)
+    with open(os.path.join(self._app_path, self._app_name, *target_path), "w") as f:
       for k, v in self.modules.items():
         f.write("import { %s } from '%s';\n" % (k, v))
       f.write("\n\n")
@@ -532,7 +535,7 @@ class NgModules(object):
     if component not in self.imports:
       self.imports.append(component)
 
-  def export(self, file_name=None):
+  def export(self, file_name=None, target_path=None):
     """
     Description:
     ------------
@@ -542,7 +545,10 @@ class NgModules(object):
     :param file_name: String. Optional. The filename
     """
     file_name = 'app.module_new.ts' or self.file_name
-    with open(os.path.join(self._app_path, self._app_name, 'src', 'app', file_name), "w") as f:
+    if target_path is None:
+      target_path = []
+    target_path.append(file_name)
+    with open(os.path.join(self._app_path, self._app_name, *target_path), "w") as f:
       for k, v in self.modules.items():
         f.write("import { %s } from '%s';\n" % (k, v))
       f.write("\n\n")
@@ -564,7 +570,7 @@ class ComponentSpec(object):
     self.alias, self.name = alias, name
     self.__comp_structure = {}
 
-  def export(self, path=None):
+  def export(self, path=None, target_path=None):
     """
     Description:
     ------------
@@ -575,9 +581,13 @@ class ComponentSpec(object):
     Attributes:
     ----------
     :param path:
+    :param target_path: for example ['src', 'app']
     """
     self.__path = path or self.__path
-    module_path = os.path.join(self._app_path, self._app_name, 'src', 'app', self.__path)
+    if target_path is None:
+      target_path = []
+    target_path.append(self.__path)
+    module_path = os.path.join(self._app_path, self._app_name, *target_path)
     if not os.path.exists(module_path):
       os.makedirs(module_path)
 
@@ -764,7 +774,7 @@ class App(object):
     """
     return os.path.join("./", self.__path, self.name).replace("\\", "/")
 
-  def export(self, path=None):
+  def export(self, path=None, target_path=None):
     """
     Description:
     ------------
@@ -772,13 +782,17 @@ class App(object):
     Attributes:
     ----------
     :param path:
+    :param target_path: for example ['src', 'app']
     """
     self.__path = path or self.__path
-    module_path = os.path.join(self._app_path, self._app_name, 'src', 'app', self.__path)
+    if target_path is None:
+      target_path = []
+    target_path.append(self.__path)
+    module_path = os.path.join(self._app_path, self._app_name, *target_path)
     if not os.path.exists(module_path):
       os.makedirs(module_path)
 
-    self.spec.export(path=path)
+    self.spec.export(path=path, target_path=None)
     for component in self._report.components.values():
       if component.options.managed:
         print(component.properties())
@@ -984,7 +998,7 @@ class Angular(object):
       self.__route = RouteModule(self._app_path, app_name or self._app_name, file_name)
     return self.__route
 
-  def publish(self, app_name=None):
+  def publish(self, app_name=None, target_path=None):
     """
     Description:
     ------------
@@ -992,9 +1006,10 @@ class Angular(object):
     Attributes:
     ----------
     :param app_name:
+    :param target_path: List  for example ['src', 'app']
     """
     if self.__page is not None:
-      self.__page.export()
+      self.__page.export(target_path=target_path)
     if self.__route is not None:
       self.route.export()
 

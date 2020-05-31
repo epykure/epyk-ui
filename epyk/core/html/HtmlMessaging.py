@@ -367,7 +367,7 @@ class Alert(Html.Html):
       htmlObj.append('<strong>'+ data.title +'!</strong>&nbsp;'+ data.value)''')
 
   def __str__(self):
-    return "<div %s></div>" % self.get_attrs(pyClassNames=self.pyStyle)
+    return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
 
 
 class News(Html.Html):
@@ -391,4 +391,4 @@ class News(Html.Html):
     return "%(js_data)s;%(jqId)s.show().delay(1000);%(jqId)s.fadeOut(1000)" % {"js_data": js_data, "jqId": self.jqId}
 
   def __str__(self):
-    return "<div %s><p id='content'></p></div>" % self.get_attrs(pyClassNames=self.pyStyle)
+    return "<div %s><p id='content'></p></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
