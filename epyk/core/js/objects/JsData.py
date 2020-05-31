@@ -424,10 +424,60 @@ class JsClipboardData(object):
   @property
   def text(self):
     """
-    Example
+    Description:
+    ------------
+    The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
+    If the drag operation does not include data, this method returns an empty string
 
-    Documentation
+    Related Pages:
 
-    :return:
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
     """
     return JsString.JsString("%s.getData('text')" % self.varId, isPyData=False)
+
+  @property
+  def plain(self):
+    """
+    Description:
+    ------------
+    The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
+    If the drag operation does not include data, this method returns an empty string
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
+    """
+    return JsString.JsString("%s.getData('text/plain')" % self.varId, isPyData=False)
+
+  @property
+  def uri(self):
+    """
+    Description:
+    ------------
+    The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
+    If the drag operation does not include data, this method returns an empty string
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
+    """
+    return JsString.JsString("%s.getData('text/uri-list')" % self.varId, isPyData=False)
+
+  def getData(self, format):
+    """
+    Description:
+    ------------
+    The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
+    If the drag operation does not include data, this method returns an empty string
+
+    Example data types are text/plain and text/uri-list.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
+
+    Attributes:
+    ----------
+    :param format: String. The data format
+    """
+    return JsString.JsString("%s.getData('%s')" % (self.varId, format), isPyData=False)

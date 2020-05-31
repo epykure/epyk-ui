@@ -58,14 +58,14 @@ class Event(object):
     """
     Description:
     ------------
-    The DataTransfer object is used to hold the data that is being dragged during a drag and drop operation.
-    It may hold one or more data items, each of one or more data types. For more information about drag and drop, see HTML Drag and Drop API.
+    The ClipboardEvent.clipboardData property holds a DataTransfer object, which can be used:
 
-    This object is available from the dataTransfer property of all drag events.
+      - to specify what data should be put into the clipboard from the cut and copy event handlers, typically with a setData(format, data) call;
+      - to obtain the data to be pasted from the paste event handler, typically with a getData(format) call.
 
     Related Pages:
 
-      https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
+      https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent/clipboardData
     """
     return JsClipboardData("event.clipboardData")
 

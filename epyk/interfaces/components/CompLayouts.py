@@ -34,7 +34,7 @@ class Layouts(object):
     html_new_line = html.HtmlOthers.Newline(self.context.rptObj, count, profile=profile)
     return html_new_line
 
-  def hr(self, count=1, color=None, background_color=None, height=(None, 'px'), align=None, profile=None):
+  def hr(self, count=1, background_color=None, height=(None, 'px'), align=None, profile=None):
     """
     Description:
     ------------
@@ -57,7 +57,6 @@ class Layouts(object):
     Attributes:
     ----------
     :param count: The number of HR tag to be added
-    :param color: Optional. The color code for the font
     :param background_color: Optional. The component background color
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. The content position. Values (left, right, center). Default center
@@ -300,8 +299,8 @@ class Layouts(object):
     :param draggable:
     :param margin:
     :param profile:
+
     :rtype: html.HtmlPopup.Popup
-    :return:
     """
     return html.HtmlPopup.Popup(self.context.rptObj, htmlObj, title, color, width, height,
                                                       withBackground, draggable, margin, profile)
@@ -419,7 +418,6 @@ class Layouts(object):
       :param width:
       :param height:
       :param htmlCode:
-      :param tag:
       :param profile:
       """
       if htmlObjs is not None and not isinstance(htmlObjs, list):
