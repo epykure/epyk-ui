@@ -34,7 +34,7 @@ class Navigation(object):
     else:
       du.style.css.bottom = bottom
     du.style.add_classes.div.background_hover()
-    self.context.rptObj.js.addOnReady(
+    self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
         self.context.rptObj.js.if_(self.context.rptObj.js.window.scrollY > 50, [du.dom.show()]).else_(du.dom.hide())
       ]))
@@ -72,7 +72,7 @@ class Navigation(object):
     else:
       dd.style.css.top = top
     dd.style.add_classes.div.background_hover()
-    self.context.rptObj.js.addOnReady(
+    self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
         self.context.rptObj.js.if_(self.context.rptObj.js.window.scrollY < (self.context.rptObj.js.window.scrollMaxY - 50), [dd.dom.show()]).else_(dd.dom.hide())
       ]))
@@ -114,7 +114,7 @@ class Navigation(object):
     dd.style.add_classes.div.background_hover()
     if tooltip is not None:
       dd.tooltip(tooltip)
-    self.context.rptObj.js.addOnReady(
+    self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
         self.context.rptObj.js.if_(self.context.rptObj.js.window.scrollY > y, [dd.dom.show()]).else_(dd.dom.hide())
       ]))
@@ -180,7 +180,7 @@ class Navigation(object):
     :param profile:
     """
     p = self.context.rptObj.ui.sliders.progressbar(position, height=height, options=options, profile=profile)
-    self.context.rptObj.js.addOnReady(
+    self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
         p.build(self.context.rptObj.js.window.scrollPercentage)]))
     return p

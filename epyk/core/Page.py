@@ -39,7 +39,9 @@ class Report(object):
                                Passing data for a given component with an htmlCode will override the value.
     """
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
-    self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet(), 'datasets': {}}, 'context': {'framework': 'JS'}}, None, None, None
+    self._tags, self._header_obj, self.__import_manage = None, None, None
+    self._props = {'js': {'onReady': OrderedSet(), 'events': {}, 'datasets': {}, 'builders': OrderedSet()},
+                   'context': {'framework': 'JS'}}
     self.components = collections.OrderedDict() # Components for the entire page
     self.start_time, self.inputs, self._propagate = time.time(), inputs or {}, []
     self._scroll, self._contextMenu = set(), {}

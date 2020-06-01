@@ -7,8 +7,6 @@ from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsNumber
 
-from epyk.core.js.objects.JsData import JsDataTransfer
-from epyk.core.js.objects.JsData import JsClipboardData
 
 
 class Event(object):
@@ -91,7 +89,9 @@ class Event(object):
     Related Pages:
 
 			https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
-    """
+    """#
+    from epyk.core.js.objects.JsData import JsDataTransfer
+
     return JsDataTransfer("event.dataTransfer")
 
   @property
@@ -108,6 +108,8 @@ class Event(object):
 
       https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent/clipboardData
     """
+    from epyk.core.js.objects.JsData import JsClipboardData
+
     return JsClipboardData("event.clipboardData")
 
   @property

@@ -262,7 +262,7 @@ class Html(object):
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
-    self._report.js.addOnLoad([self.dom.insertBefore(htmlObj.dom)])
+    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.insertBefore(htmlObj.dom)], toStr=True))
     return self
 
   def append_child(self, htmlObj):
@@ -292,7 +292,7 @@ class Html(object):
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
-    self._report.js.addOnLoad([self.dom.appendChild(htmlObj.dom)])
+    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.appendChild(htmlObj.dom)], toStr=True))
     return self
 
   def onReady(self, jsFncs):
@@ -1223,7 +1223,7 @@ class Body(Html):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._report.js.addOnReady(jsFncs)
+    self._report.js.onReady(jsFncs)
 
   def onLoad(self, jsFncs):
     """

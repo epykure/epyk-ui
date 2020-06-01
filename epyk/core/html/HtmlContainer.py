@@ -1276,8 +1276,7 @@ class Modal(Html.Html):
     Will allow an event to close the modal if a click event is detected anywhere outside the modal
     """
     modal = self._report.js.getElementById(self.htmlCode)
-    self._report.js.addOnReady(self._report.js.window.events.
-                                      addClickListener(self._report.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})),
+    self._report.js.onReady(self._report.js.window.events.addClickListener(self._report.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})),
                                                        subEvents=['event']))
 
   def __add__(self, htmlObj):

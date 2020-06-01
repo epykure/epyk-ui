@@ -86,6 +86,17 @@ class DataLoops(object):
     return JsObjects.JsObject.JsObject.get("value")
 
   @property
+  def dom(self):
+    """
+    Description:
+    -----------
+
+    :return:
+    """
+    from epyk.core.js.objects import JsNodeDom
+    return JsNodeDom.JsDoms.new(varName="value", setVar=False)
+
+  @property
   def i(self):
     """
     Description:
