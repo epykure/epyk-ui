@@ -11,7 +11,6 @@ from epyk.core.js import Imports
 from epyk.core.js.html import JsHtml
 from epyk.core.js import packages
 from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import JsSortable
 from epyk.core.js.packages import packageImport
 
 from epyk.core.css.styles import GrpCls
@@ -1115,6 +1114,8 @@ Attributes:
 
     :rtype: JsSortable.Sortable
     """
+    from epyk.core.js.packages import JsSortable
+
     self._sort_propagate = propagate
     if not propagate_only:
       if 'sortable' not in self._on_ready_js:
