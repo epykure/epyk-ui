@@ -581,6 +581,23 @@ class JsBase(object):
 
     return JsQuery.JQuery(None)
 
+  def socketio(self, htmlCode=None):
+    """
+    Description:
+    ------------
+    This object must be created on the Python side.
+
+    The various function will be the one generating the Javascript string.
+    This is just a Python wrapper on top of the library.
+
+    Related Pages:
+
+			https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm
+    """
+    from epyk.core.js.packages import JsSocketIO
+
+    return JsSocketIO.SocketIO(htmlCode, self._src)
+
   @property
   def d3(self):
     """

@@ -97,11 +97,11 @@ class Li(Html.Html):
       self.innerPyHTML = htmlObj
     return self
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     if self.innerPyHTML is not None:
       return self.innerPyHTML.click(jsFncs, profile)
 
-    return super(Li, self).click(jsFncs, profile)
+    return super(Li, self).click(jsFncs, profile, source_event)
 
   def __str__(self):
     return "<li %s>%s</li>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
@@ -178,6 +178,7 @@ class List(Html.Html):
     li_obj = Li(self._report, d)
     if hasattr(d, 'inReport'):
       d.options.managed = False
+    li_obj.options.managed = False
     self.items.append(li_obj)
     return self
 
