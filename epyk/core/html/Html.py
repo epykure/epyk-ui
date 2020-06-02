@@ -257,7 +257,7 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
-    htmlObj.options.managed = False
+    #htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
@@ -287,7 +287,7 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
-    htmlObj.options.managed = False
+    #htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
@@ -561,6 +561,8 @@ Attributes:
     Description:
     -----------
     Add an elementary helper icon
+
+    The helper is not managed by the main page and should be written in the component
 
     Usage::
 
