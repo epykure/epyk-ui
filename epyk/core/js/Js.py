@@ -598,6 +598,7 @@ class JsBase(object):
 
     return JsSocketIO.SocketIO(htmlCode, self._src)
 
+
   @property
   def d3(self):
     """
@@ -687,7 +688,7 @@ class JsBase(object):
         jsObj = JsArray.JsArray(jsObj, setVar=True)
       else:
         jsObj = JsObject.JsObject(jsObj, setVar=True)
-    self.__switch = JsSwitch.JsSwitch(jsObj, self._context)
+    self.__switch = JsSwitch.JsSwitch(jsObj, self._src)
     return self.__switch
 
   def while_(self, pivot, jsFnc=None, iterVar='i', start=0, step=1):
