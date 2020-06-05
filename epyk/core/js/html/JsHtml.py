@@ -107,6 +107,24 @@ class ContentFormatters(object):
     self._report = report
     self.selector = selector
 
+  def __ge__(self, obj):
+    return "%s >= %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __gt__(self, obj):
+    return "%s > %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __le__(self, obj):
+    return "%s <= %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __lt__(self, obj):
+    return "%s < %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __eq__(self, obj):
+    return "%s == %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __ne__(self, obj):
+    return "%s <> %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
   @packageImport("showdown")
   def fromMarkdown(self, options=None):
     """

@@ -943,8 +943,8 @@ class Search(Html.Html):
   def _js__builder__(self):
     return '''htmlObj.find('input').val(data)'''
 
-  def click(self, jsFncs, profile=False):
-    return self.icon.click(jsFncs, profile)
+  def click(self, jsFncs, profile=False, source_event=None):
+    return self.icon.click(jsFncs, profile, source_event)
 
   def enter(self, jsFncs, profile=False):
     """

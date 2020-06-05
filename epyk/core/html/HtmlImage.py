@@ -223,7 +223,7 @@ class Icon(Html.Html):
     self.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
     return self
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -235,7 +235,7 @@ class Icon(Html.Html):
     :return:
     """
     self.style.css.cursor = "pointer"
-    return super(Icon, self).click(jsFncs, profile)
+    return super(Icon, self).click(jsFncs, profile, source_event)
 
   @property
   def _js__builder__(self):
