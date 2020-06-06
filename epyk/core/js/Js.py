@@ -670,10 +670,11 @@ class JsBase(object):
     """
     return JsFncs.JsFunction("return %s" % jsData)
 
-  def switch(self, jsObj):
+  def switch(self, variable):
     """
     Description:
     ------------
+    switch statement is used to perform different actions based on different conditions.
 
     Related Pages:
 
@@ -681,42 +682,13 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param variable: String or Js Object. Variable on which we will apply the switch
     """
-    if not hasattr(jsObj, 'varName'):
-      if isinstance(jsObj, list):
-        jsObj = JsArray.JsArray(jsObj, setVar=True)
-      else:
-        jsObj = JsObject.JsObject(jsObj, setVar=True)
-    self.__switch = JsSwitch.JsSwitch(jsObj, self._src)
+    if hasattr(variable, 'dom'):
+      variable = variable.dom.content
+    variable = JsUtils.jsConvertData(variable, None)
+    self.__switch = JsSwitch.JsSwitch(variable)
     return self.__switch
-
-  def while_(self, pivot, jsFnc=None, iterVar='i', start=0, step=1):
-    """
-    Description:
-    ------------
-
-    :param jsCond:
-    """
-    jsPivot = JsUtils.jsConvertData(pivot, jsFnc)
-    if isPyData and isinstance(pivot, (list, range)):
-      self.__while = JsWhile.JsWhile(jsPivot, ruleType='array', iterVar=iterVar, start=start, step=step, context=self._context)
-    elif isPyData and isinstance(pivot, dict):
-      self.__while = JsWhile.JsWhile(jsPivot, ruleType='dict', iterVar=iterVar, start=start, step=step, context=self._context)
-    else:
-      self.__while = JsWhile.JsWhile(jsPivot, self._context)
-    return self.__while
-
-  def for_(self, iterable, jsDataKey=None, isPyData=False, jsFnc=None, iterVar='i', start=0, step=1):
-    """
-    Description:
-    ------------
-
-    :param iterable:
-    """
-    jsIterable = JsUtils.jsConvert(iterable, jsDataKey, isPyData, jsFnc)
-    self.__for = JsFor.JsFor(jsIterable, iterVar, start, step, self._context)
-    return self.__for
 
   def clipboard(self, jsData):
     """

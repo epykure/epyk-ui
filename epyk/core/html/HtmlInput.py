@@ -124,7 +124,7 @@ class Input(Html.Html):
     self.style.addCls(["CssInputInValid", "CssInputValid"])
     return self
 
-  def enter(self, jsFncs, profile=False):
+  def enter(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -138,13 +138,15 @@ class Input(Html.Html):
     ----------
     :param jsFncs:
     :param profile:
+    :param source_event:
 
     :return: The python object itself
     """
 
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self.keydown.enter(jsFncs + [self.dom.select()], profile)
+    jsFncs.append(self.dom.select())
+    self.keydown.enter(jsFncs, profile, source_event=source_event)
     return self
 
   def readonly(self, flag=True):
