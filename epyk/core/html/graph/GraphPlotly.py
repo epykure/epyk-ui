@@ -5,7 +5,7 @@ from epyk.core.html.options import OptPlotly
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObject
 
-from epyk.core.data import DataClass
+from epyk.core.data.DataClass import DataClass
 
 from epyk.core.js.packages import JsPlotly
 from epyk.core.js.packages import JsD3

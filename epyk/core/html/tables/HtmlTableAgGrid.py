@@ -1,9 +1,9 @@
 
 from epyk.core.html import Html
 
-from epyk.core.data import DataClass
+from epyk.core.data.DataClass import DataClass
 from epyk.core.js.packages import JsAgGrid
-from epyk.core.data import DataGroup
+from epyk.core.data.DataClass import DataGroup
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable

@@ -28,7 +28,7 @@ The method to group the different charts ::jsGroups
 '''
 
 
-from epyk.core.data import DataClass
+from epyk.core.data.DataClass import DataClass
 
 from epyk.core.html import Html
 
