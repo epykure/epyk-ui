@@ -9,6 +9,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
 from epyk.core.js.objects.JsNodeDom import JsDoms
+from epyk.core.js.objects.JsNodeDom import JsDomsList
 from epyk.core.js.objects.JsEvents import Event
 
 
@@ -17,7 +18,7 @@ class _Selector(object):
   def __init__(self, component=None):
     self._js = []
     if component is not None:
-      self._js.append(component.htmlCode)
+      self._js.append("#%s" % component.htmlCode)
 
   def with_attribute(self, name, value=None, startswith=False, containing=False, endswith=False):
     """
@@ -60,7 +61,7 @@ class _Selector(object):
     ----------
     :param element: String. The HTML type (tag)
     """
-    self._js.append(">+s" % element)
+    self._js.append(" + %s" % element)
     return self
 
   def with_child_element(self, element):
@@ -77,7 +78,7 @@ class _Selector(object):
     ----------
     :param element: String. The HTML type (tag)
     """
-    self._js.append(">%s" % element)
+    self._js.append(" > %s" % element)
     return self
 
   def elements(self, tags):
@@ -190,6 +191,8 @@ class _Selector(object):
     ----------
     :param selector: String or Selector. The id to exclude
     """
+    if hasattr(selector, 'htmlCode'):
+      selector = "[id='%s']" % selector.htmlCode
     self._js.append(":not(%s)" % selector)
     return self
 
@@ -323,10 +326,10 @@ class _Selector(object):
     return self
 
   def toStr(self):
-    return "".join(self._js)
+    return JsUtils.jsConvertData("".join(self._js), None)
 
   def __str__(self):
-    return self.toStr()
+    return str(self.toStr())
 
 
 dom = JsDoms.new(varName="document", setVar=False)
@@ -359,6 +362,41 @@ window = JsWindow.JsWindow()
 
 alert = JsWindow.JsWindow().alert
 
+
+def querySelectorAll(selector):
+  """
+  Description:
+  ------------
+  The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
+
+  Related Pages:
+
+			https://www.w3schools.com/jsref/met_document_queryselectorall.asp
+
+  Attributes:
+  ----------
+  :param selector: String. CSS selectors
+  """
+  return JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, None), isPyData=False)
+
+
+def querySelector(selector):
+  """
+  Description:
+  ------------
+  The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
+
+  Related Pages:
+
+			https://www.w3schools.com/jsref/met_document_queryselector.asp
+
+  Attributes:
+  ----------
+  :param selector: String. CSS selectors
+  """
+  return JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, None))
+
+
 getElementById = JsBase.getElementById
 getElementsByName = JsBase.getElementsByName
 getElementsByTagName = JsBase.getElementsByTagName
@@ -373,6 +411,19 @@ maths = JsMaths.JsMaths()
 
 
 def comment(value):
+  """
+  Description:
+  ------------
+  Javascript Comment section.
+
+  Related Pages:
+
+			https://www.w3schools.com/js/js_comments.asp
+
+  Attributes:
+  ----------
+  :param value: String. the Value
+  """
   return JsObjects.JsVoid("/*%s*/" % value)
 
 

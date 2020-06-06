@@ -1788,6 +1788,15 @@ class JsDomsList(JsArray.JsArray):
       self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
     return self
 
+  def log(self):
+    """
+    Description:
+    ------------
+    Add a print to the loop to assist on the implementation
+    """
+    self._js.append("for(let e of %s){ console.log(e) }" % self.varId)
+    return self
+
   def attr(self, type, jsObject=None):
     """
     Description:
