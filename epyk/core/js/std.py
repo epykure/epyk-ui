@@ -332,9 +332,6 @@ class _Selector(object):
     return str(self.toStr())
 
 
-dom = JsDoms.new(varName="document", setVar=False)
-
-
 def selector(component=None):
   """
   Description:

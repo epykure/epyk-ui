@@ -200,24 +200,21 @@ class Div(Html.Html):
 
   def __init__(self, report, htmlObj, label, color, width, icon, height, editable, align, padding, htmlCode, tag,
                helper, options, profile):
-    if isinstance(htmlObj, list) and htmlObj:
-      newHtmlObj = []
-      for obj in htmlObj:
-        if isinstance(obj, list) and obj:
-          newHtmlObj.append(report.ui.div(obj, label, color, width, icon, height, editable, align, padding, htmlCode, tag, helper, profile))
-        else:
-          newHtmlObj.append(obj)
-        if hasattr(newHtmlObj[-1], 'options'):
-          if options.get('inline'):
-            newHtmlObj[-1].style.css.display = 'inline-block'
-          newHtmlObj[-1].options.managed = False
-      htmlObj = newHtmlObj
-    elif htmlObj is not None and hasattr(htmlObj, 'options'):
-      htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    super(Div, self).__init__(report, htmlObj, htmlCode=htmlCode, css_attrs={"color": color, "width": width, "height": height},
-                              profile=profile)
-    self.tag = tag
+    super(Div, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"color": color, "width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionsDiv(self, options)
+    if not isinstance(htmlObj, list):
+      htmlObj = [htmlObj]
+    for obj in htmlObj:
+      if isinstance(obj, list) and obj:
+        component = report.ui.div(obj, label, color, width, icon, height, editable, align, padding, htmlCode, tag, helper, profile)
+      else:
+        component = obj
+
+      if hasattr(component, 'options'):
+        self.__add__(component)
+      else:
+        self.val.append(obj)
+    self.tag = tag
     # Add the component predefined elements
     self.add_icon(icon)
     self.add_label(label)

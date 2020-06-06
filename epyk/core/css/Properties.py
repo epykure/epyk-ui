@@ -1817,6 +1817,8 @@ class CssMixin(object):
   @padding_bottom.setter
   def padding_bottom(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"padding-bottom": val})
 
   @property
