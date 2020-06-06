@@ -283,3 +283,22 @@ class Panels(object):
     chip = self.context.rptObj.ui.chips(items, category, width=width, height=height, htmlCode=htmlCode, helper=helper, options=options, profile=profile)
     chip.input.style.css.display = False
     return chip
+
+  def nav(self, width=(100, '%'), height=(100, '%'), options=None, profile=None, helper=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. A dictionary with the components properties
+    :param profile: Optional. A flag to set the component performance storage
+    :param helper:
+    """
+    dflt_options = {"position": 'top'}
+    if options is not None:
+      dflt_options.update(options)
+    h_drawer = html.HtmlMenu.PanelsBar(self.context.rptObj, width, height, dflt_options, helper, profile)
+    return h_drawer

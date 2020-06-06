@@ -17,17 +17,14 @@ from epyk.core.js.fncs import JsFncs
 from epyk.core.js.objects import JsData
 from epyk.core.js.objects import JsNodeAttributes
 from epyk.core.js.objects import JsNodeDom
-from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.primitives import JsString
-from epyk.core.js.statements import JsFor
 
 # All the predefined Javascript Statements
 from epyk.core.js.statements import JsIf
 from epyk.core.js.statements import JsSwitch
-from epyk.core.js.statements import JsWhile
 
 
 class JsConsole(object):
@@ -1255,6 +1252,38 @@ class JsBase(object):
     :param isPyData:
     """
     return JsObject.JsObject(data, varName, setVar, isPyData, report=self._src)
+
+  def querySelectorAll(self, selector):
+    """
+    Description:
+    ------------
+    The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
+
+    Related Pages:
+
+  			https://www.w3schools.com/jsref/met_document_queryselectorall.asp
+
+    Attributes:
+    ----------
+    :param selector: String. CSS selectors
+    """
+    return JsNodeDom.JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, None), isPyData=False)
+
+  def querySelector(self, selector):
+    """
+    Description:
+    ------------
+    The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
+
+    Related Pages:
+
+  			https://www.w3schools.com/jsref/met_document_queryselector.asp
+
+    Attributes:
+    ----------
+    :param selector: String. CSS selectors
+    """
+    return JsNodeDom.JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, None))
 
   def activeElement(self):
     """

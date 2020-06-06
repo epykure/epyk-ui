@@ -1,5 +1,10 @@
 
+import collections
+
 from epyk.core.html import Html
+
+from epyk.core.js import expr
+from epyk.core.css import Selector
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsMenu
@@ -196,3 +201,75 @@ class ContextMenu(Html.Html):
       <nav %(attr)s name='context_menus'>
         <ul style='list-style:none;padding:0px;margin:0'>%(val)s</ul>
       </nav>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': str_vals}
+
+
+class PanelsBar(Html.Html):
+  name = 'Pabel'
+
+  def __init__(self, report, width, height, options, helper, profile):
+    super(PanelsBar, self).__init__(report, None, css_attrs={"width": width, "height": height})
+    self.menus = report.ui.div(options={'inline': True})
+    self.menus.options.managed = False
+    self.panels = report.ui.div()
+    self.panels.options.managed = False
+    self.menu_mapping = collections.OrderedDict()
+    #
+    self.panels.style.css.display = False
+    self.panels.style.css.position = 'absolute'
+    #
+    self.style.css.position = 'relative'
+    self.__options = options
+    if options.get('position', 'top') == 'top':
+      self.panels.style.css.padding_bottom = 10
+      self.menus.style.css.top = 0
+      self.panels.style.css.border_bottom = '1px solid %s' % report.theme.colors[-1]
+    else:
+      self.style.css.position = 'relative'
+      self.panels.style.css.border_top = '1px solid %s' % report.theme.colors[-1]
+      self.panels.style.css.bottom = 0
+      self.menus.style.css.bottom = 0
+
+    self.menus.style.css.position = 'absolute'
+    self.menus.style.css.background = report.theme.colors[-1]
+    self.menus.style.css.color = report.theme.colors[0]
+    self.menus.style.css.padding = '5px 0'
+
+  def add_panel(self, text, content):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param content:
+    """
+    content.style.css.padding = "0 5px"
+    if not hasattr(text, 'htmlCode'):
+      text = self._report.ui.div(text)
+    text.style.css.display = 'inline-block'
+    text.style.css.width = 'auto'
+    text.style.css.cursor = 'pointer'
+    text.style.css.padding = '0 5px'
+    self.menu_mapping[text] = content
+    self.menus += text
+    self.panels += content
+    return self
+
+  def __str__(self):
+    css_menu = {"height": "auto", 'display': 'block', 'margin-top': '30px'} if self.__options['position'] == 'top' else {"height": "auto", 'display': 'block', 'margin-bottom': '30px'}
+    for menu_item, panel in self.menu_mapping.items():
+      menu_item.click([
+        self._report.js.querySelectorAll(Selector.Selector(self.panels).with_child_element("div").excluding(panel)).css({"display": 'none'}),
+        #
+        expr.if_(self._report.js.querySelector(Selector.Selector(self.panels)).getAttribute("data-panel") == menu_item.htmlCode, [
+          self._report.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", ""),
+          self._report.js.querySelector(Selector.Selector(self.panels)).css({"display": 'none'})
+        ]).else_([
+          self._report.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", menu_item.htmlCode),
+          self._report.js.querySelector(Selector.Selector(self.panels)).css(css_menu),
+          self._report.js.querySelector(Selector.Selector(panel)).css({'display': 'block'})
+        ])
+      ])
+
+    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.menus.html(), self.panels.html())

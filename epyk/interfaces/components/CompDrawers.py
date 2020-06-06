@@ -63,6 +63,20 @@ class Drawers(object):
     h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)
     return h_drawer
 
+  def down(self):
+    """
+
+    :return:
+    """
+    pass
+
+  def up(self):
+    """
+
+    :return:
+    """
+    pass
+
   def no_handle(self, component, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
     """
     Description:
