@@ -862,14 +862,6 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'socket.io.js', 'version': '2.3.0', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
-  # for asynchronous and event-based programs
-  'rxjs': {
-    'website': 'http://reactivex.io/rxjs/manual/installation.html',
-    'register': {'alias': 'rxjs', 'module': 'rxjs'},
-    'modules': [
-      {'script': 'rxjs.umd.min.js', 'version': '6.5.5', 'path': 'rxjs/%(version)s/', 'cdnjs': CDNJS_REPO}],
-  },
-
   # Code mirror
   'codemirror': {
     'website': 'https://codemirror.net/',
