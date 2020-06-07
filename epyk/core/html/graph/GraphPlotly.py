@@ -264,7 +264,6 @@ class Chart(Html.Html):
 
 
 class Line(Chart):
-  __reqJs = ['plotly.js']
 
   @property
   def dom(self):
@@ -289,7 +288,6 @@ class Line(Chart):
 
 
 class Bar(Chart):
-  __reqJs = ['plotly.js']
 
   @property
   def chart(self):
@@ -2176,8 +2174,6 @@ class DataCandle(DataChart):
 
 class Pie(Chart):
 
-  __reqJs = ['plotly.js']
-
   @property
   def chart(self):
     """
@@ -2238,7 +2234,6 @@ class Pie(Chart):
 
 
 class Surface(Chart):
-  __reqJs = ['plotly.js']
 
   @property
   def chart(self):
@@ -2279,7 +2274,6 @@ class Surface(Chart):
 
 
 class Scatter3D(Chart):
-  __reqJs = ['plotly.js']
 
   @property
   def chart(self):
@@ -2335,7 +2329,6 @@ class Scatter3D(Chart):
 
 
 class Mesh3d(Chart):
-  __reqJs = ['plotly.js']
 
   @property
   def chart(self):
@@ -2361,8 +2354,6 @@ class Mesh3d(Chart):
 
 
 class Indicator(Chart):
-
-  __reqJs = ['plotly.js']
 
   @property
   def chart(self):
@@ -2393,8 +2384,6 @@ class Indicator(Chart):
 
 class ScatterPolar(Chart):
 
-  __reqJs = ['plotly.js']
-
   @property
   def chart(self):
     """
@@ -2416,7 +2405,6 @@ class ScatterPolar(Chart):
 
 
 class Box(Chart):
-  __reqJs = ['plotly.js']
 
   @property
   def chart(self):
@@ -2450,7 +2438,6 @@ class Box(Chart):
 
 
 class CandleStick(Chart):
-  __reqJs = ['plotly.js']
 
   @property
   def chart(self):

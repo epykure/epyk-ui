@@ -493,7 +493,6 @@ class BBPoints(DataClass):
 
 
 class ChartLine(Chart):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'line'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
@@ -595,22 +594,18 @@ class ChartLine(Chart):
 
 
 class ChartSpline(ChartLine):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'spline'
 
 
 class ChartArea(ChartLine):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'area'
 
 
 class ChartBar(ChartLine):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'bar'
 
 
 class ChartScatter(ChartLine):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'scatter'
 
   @property
@@ -637,7 +632,6 @@ class ChartScatter(ChartLine):
 
 
 class ChartPie(ChartLine):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'pie'
 
   @property
@@ -679,12 +673,10 @@ class ChartPie(ChartLine):
 
 
 class ChartDonut(ChartPie):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'donut'
 
 
 class ChartGauge(ChartPie):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'gauge'
 
   def build(self, data=None, options=None, profile=False):
@@ -702,11 +694,9 @@ class ChartGauge(ChartPie):
 
 
 class ChartBubble(ChartLine):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'bubble'
 
 
 class ChartRadar(ChartLine):
-  __reqJs, __reqCss = ['billboard'], ['billboard']
   _type = 'radar'
 

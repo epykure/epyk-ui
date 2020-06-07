@@ -224,29 +224,6 @@ class Alert(Html.Html):
       (function fade(){(s.opacity-=.1)<0?s.display="none": setTimeout(fade, options.time)})();
       '''
 
-  def subscribe(self, socket, channel, jsFncs=None):
-    """
-    Description:
-    ------------
-    Subscribe to a socket channel.
-    Data received from the socket are defined as a dictionary with a field data.
-
-    The content of data will be used by this component.
-
-    Related Pages:
-
-      https://timepicker.co/options/
-
-    Attributes:
-    ----------
-    :param socket: Socket. A python socket object
-    :param channel: String. The channel on which events will be received
-    :param jsFncs: List. Optional. The other Javascript functions to be triggered
-    """
-    jsFncs = jsFncs if jsFncs is not None else []
-    self.onReady([socket.on(channel, [self.build(socket.message['data'])] + jsFncs)])
-    return self
-
   def __str__(self):
     return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
 
@@ -304,29 +281,6 @@ class News(Html.Html):
     :rtype: OptNet.OptionsNews
     """
     return self.__options
-
-  def subscribe(self, socket, channel, jsFncs=None):
-    """
-    Description:
-    ------------
-    Subscribe to a socket channel.
-    Data received from the socket are defined as a dictionary with a field data.
-
-    The content of data will be used by this component.
-
-    Related Pages:
-
-      https://timepicker.co/options/
-
-    Attributes:
-    ----------
-    :param socket: Socket. A python socket object
-    :param channel: String. The channel on which events will be received
-    :param jsFncs: List. Optional. The other Javascript functions to be triggered
-    """
-    jsFncs = jsFncs if jsFncs is not None else []
-    self.onReady([socket.on(channel, [self.build(socket.message['data'])] + jsFncs)])
-    return self
 
   def __str__(self):
     return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())

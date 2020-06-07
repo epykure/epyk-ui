@@ -45,4 +45,4 @@ class Chart(Html.Html):
 
 
 class ChartLine(Chart):
-  __reqJs = ['google-charts']
+  pass
