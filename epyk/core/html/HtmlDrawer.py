@@ -126,3 +126,22 @@ class Drawer(Html.Html):
         </div>
       </div>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode,
                    'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(), 'side': position[self.options.side]}
+
+
+class DrawerMulti(Html.Html):
+  name = 'Drawer'
+
+  def __init__(self, report, width, height, options, helper, profile):
+    super(DrawerMulti, self).__init__(report, None, css_attrs={"width": width, "height": height})
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a drawer
+
+    :rtype: OptPanel.OptionDrawer
+    """
+    return self.__options
+

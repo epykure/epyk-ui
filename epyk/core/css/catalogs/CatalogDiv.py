@@ -5,6 +5,7 @@ from epyk.core.css.styles.classes import CssStylesDrop
 from epyk.core.css.styles.classes import CssStylesDivEvents
 from epyk.core.css.styles.classes import CssStylesDiv
 from epyk.core.css.styles.classes import CssStylesCommon
+from epyk.core.css.styles.classes import CssStylesDivComms
 from epyk.core.css.styles.classes import CssStylesDivDrawers
 
 
@@ -112,6 +113,18 @@ class CatalogDiv(Catalog.CatalogGroup):
   def stepper(self):
     """  """
     return self._set_class(CssStylesDiv.CssDivStepper)
+
+  def bubble_container(self):
+    """  """
+    return self._set_class(CssStylesDivComms.CssSpeechBubble)
+
+  def bubble_content(self):
+    """  """
+    return self._set_class(CssStylesDivComms.CssSpeechBubbleContent)
+
+  def bubble_arrow(self):
+    """  """
+    return self._set_class(CssStylesDivComms.CssSpeechBubbleArrow)
 
 
 class CatalogDrawer(Catalog.CatalogGroup):

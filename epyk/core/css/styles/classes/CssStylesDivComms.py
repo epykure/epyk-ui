@@ -34,3 +34,20 @@ class CssContentEditable(CssStyle.Style):
 
   def customize(self):
     self.focus.css({'outline': "1px solid %s" % self.rptObj.theme.success[1]})
+
+
+class CssSpeechBubble(CssStyle.Style):
+  classname = "speech-bubble"
+  _attrs = {"border-radius": '4px', 'margin': '0 auto 10px', 'padding': '5px', 'position': 'relative'}
+
+
+class CssSpeechBubbleContent(CssStyle.Style):
+  classname = "speech-bubble-ds"
+  _attrs = {"border": '1px solid #a7a7a7', 'border-radius': '4px', 'box-shadow': '4px 4px 0 rgba(0, 0, 0, 0.2)',
+            'display': 'inline-block', 'margin': '0 auto 40px', 'padding': '0 5px', 'position': 'relative'}
+
+
+class CssSpeechBubbleArrow(CssStyle.Style):
+  classname = "speech-bubble-ds__arrow"
+  _attrs = {"border-left": '21px solid transparent', "border-top": '20px solid rgba(0, 0, 0, 0.2)',
+            'bottom': '-25px', 'position': 'absolute', 'right': '10px'}

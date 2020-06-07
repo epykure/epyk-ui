@@ -12,7 +12,15 @@ class SocketIO(object):
     """
     if src is not None:
       src.jsImports.add('socket.io')
+    self._src = src
     self._selector = htmlCode or "socket_%s" % id(self)
+
+  @property
+  def message(self):
+    """
+
+    """
+    return JsObjects.JsObject.JsObject.get("data")
 
   def send(self, msg):
     """
@@ -86,19 +94,24 @@ class SocketIO(object):
     """
     Description:
     ------------
+    This function will automatically add the socket to the page object.
+    This must be defined first in order to be used in the various components
 
     Attributes:
     ----------
-    :param url:
-    :param port:
-    :param namespace:
+    :param url: String. The server url
+    :param port: Integer. The server port
+    :param namespace: String. Optional. The server namespace (or room)
     """
     if url is None:
+      self._src._props['js']['builders'].add("var %s = io.connect()" % self._selector)
       return JsObjects.JsVoid("var %s = io.connect()" % self._selector)
 
     if namespace is None:
+      self._src._props['js']['builders'].add("var %s = io.connect('%s:%s')" % (self._selector, url, port))
       return JsObjects.JsVoid("var %s = io.connect('%s:%s')" % (self._selector, url, port))
 
+    self._src._props['js']['builders'].add("var %s = io.connect('%s:%s/%s')" % (self._selector, url, port, namespace))
     return JsObjects.JsVoid("var %s = io.connect('%s:%s/%s')" % (self._selector, url, port, namespace))
 
   def on(self, eventType, jsFncs):
