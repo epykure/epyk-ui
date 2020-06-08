@@ -4,7 +4,6 @@ from epyk.core.js.Js import JsWindow
 from epyk.core.js.Js import JsBase
 from epyk.core.js.Js import JsMaths
 
-
 from epyk.core.css import Selector
 
 from epyk.core.js import JsUtils
@@ -13,7 +12,6 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js.objects.JsNodeDom import JsDoms
 from epyk.core.js.objects.JsNodeDom import JsDomsList
 from epyk.core.js.objects.JsEvents import Event
-
 
 
 def selector(component=None):

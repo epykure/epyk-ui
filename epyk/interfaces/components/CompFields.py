@@ -331,6 +331,34 @@ class Fields(object):
     html_input = html.HtmlInput.FieldInteger(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
     return html_input
 
+  def file(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
+              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      rptObj.ui.fields.integer(label="test")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.FieldFile`
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param placeholder:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    html_input = html.HtmlInput.FieldFile(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
+    return html_input
+
   def password(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
               height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """

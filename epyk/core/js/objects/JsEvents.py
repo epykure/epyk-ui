@@ -8,7 +8,6 @@ from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsNumber
 
 
-
 class Event(object):
 
   def getEvent(self, varName):
@@ -222,7 +221,7 @@ class KeyboardEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_key_altkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.altKey")
+    return JsBoolean.JsBoolean.get(varName="event.altKey")
 
   @property
   def charCode(self):
@@ -235,7 +234,7 @@ class KeyboardEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_key_charcode.asp
     """
-    return JsString.JsString(varName="event.charCode")
+    return JsString.JsString.get(varName="event.charCode")
 
   @property
   @JsUtils.incompatibleBrowser(["Internet Explorer"])
@@ -329,7 +328,7 @@ class KeyboardEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_key_shiftkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.shiftKey")
+    return JsBoolean.JsBoolean.get(varName="event.shiftKey")
 
   @property
   def which(self):
@@ -358,7 +357,7 @@ class MouseEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_altkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.altKey")
+    return JsBoolean.JsBoolean.get(varName="event.altKey")
 
   @property
   def button(self):
@@ -470,7 +469,7 @@ class MouseEvent(UIEvent):
 
     https://www.w3schools.com/jsref/event_shiftkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.shiftKey")
+    return JsBoolean.JsBoolean.get(varName="event.shiftKey")
 
   @property
   def ctrlKey(self):
@@ -507,7 +506,7 @@ class TouchEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_touch_altkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.altKey")
+    return JsBoolean.JsBoolean.get(varName="event.altKey")
 
   @property
   def ctrlKey(self):
@@ -546,7 +545,7 @@ class TouchEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_touch_shiftkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.shiftKey")
+    return JsBoolean.JsBoolean.get(varName="event.shiftKey")
 
   @property
   def targetTouches(self):

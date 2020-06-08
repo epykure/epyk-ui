@@ -141,6 +141,8 @@ class Catalog(object):
     """
     Description:
     ------------
+
+    :rtype: CatalogInput.CatalogInput
     """
     if "inputs" not in self.__ctx:
       self.__ctx['inputs'] = CatalogInput.CatalogInput(self.__rptObj, self.__class_list_type)
