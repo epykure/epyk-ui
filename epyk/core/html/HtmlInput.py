@@ -120,8 +120,7 @@ class Input(Html.Html):
     self.attr["pattern"] = pattern
     if required:
       self.attr["required"] = None
-    #self.style.add_classes.input.
-    self.style.addCls(["CssInputInValid", "CssInputValid"])
+    self.style.add_classes.input.is_valid()
     return self
 
   def enter(self, jsFncs, profile=False, source_event=None):
@@ -537,6 +536,7 @@ class Field(Html.Html):
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
     self.input = input
+    self.input.options.managed = False
     self.append_child(self.input)
     self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
     self.css({"margin-top": '2px'})
@@ -725,6 +725,14 @@ class FieldInteger(Field):
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.d_int(value, width=(None, "%"), placeholder=placeholder, options=options)
     super(FieldInteger, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+
+
+class FieldFile(Field):
+  name = 'Field Integer'
+
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.inputs.file(value, width=(None, "%"), placeholder=placeholder, options=options)
+    super(FieldFile, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
 class FieldPassword(Field):
