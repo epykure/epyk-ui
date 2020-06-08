@@ -156,7 +156,7 @@ class PanelSlide(Panel):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------

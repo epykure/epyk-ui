@@ -1,6 +1,4 @@
 
-import re
-
 from epyk.core.html import Html
 from epyk.core.css import Colors
 
@@ -16,7 +14,7 @@ from epyk.core.css.styles import GrpClsText
 
 
 class UpDown(Html.Html):
-  name  = 'Up and Down'
+  name = 'Up and Down'
   requirements = ('font-awesome', 'accounting')
 
   def __init__(self, report, rec, color, label, options, helper, profile):
@@ -340,7 +338,7 @@ class TrafficLight(Html.Html):
     self.action.click(jsFncs, profile)
     return self
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -354,7 +352,7 @@ class TrafficLight(Html.Html):
     self.style.css.cursor = "pointer"
     jsFncs = [self.dom.querySelector("div").toggle("background-color", "rgb(%s, %s, %s)" % (success[0], success[1], success[2]),
                                                    self._report.theme.danger[1])] + jsFncs
-    return super(TrafficLight, self).click(jsFncs, profile)
+    return super(TrafficLight, self).click(jsFncs, profile, source_event)
 
   @property
   def _js__builder__(self):

@@ -55,7 +55,7 @@ class Label(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Add a click event for a component
 
@@ -76,7 +76,7 @@ class Label(Html.Html):
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    self.on("click", jsFncs)
+    self.on("click", jsFncs, profile, source_event=source_event)
     return self
 
   def selectable(self, flag=False):
@@ -181,7 +181,7 @@ class Span(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self._report)
     return self._dom
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -207,7 +207,7 @@ class Span(Html.Html):
     :return: The htmlObj
     """
     self.css({"cursor": "pointer"})
-    self.on("click", jsFncs, profile)
+    self.on("click", jsFncs, profile, source_event)
     return self
 
   @property
@@ -301,7 +301,7 @@ class Text(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -314,7 +314,7 @@ class Text(Html.Html):
     :param profile:
     """
     self.style.css.cursor = 'pointer'
-    return super(Text, self).click(jsFncs, profile)
+    return super(Text, self).click(jsFncs, profile, source_event)
 
   @property
   def val(self):

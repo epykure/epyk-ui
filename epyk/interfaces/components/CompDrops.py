@@ -9,7 +9,7 @@ class DropData(object):
   def __init__(self, context):
     self.context = context
 
-  def dropfile(self, placeholder='Drop your files here', tooltip=None, report_name=None, file_type="OUTPUTS", profile=None):
+  def dropfile(self, placeholder='Drop your files here', tooltip=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -30,12 +30,10 @@ Attributes:
     ----------
     :param placeholder:
     :param tooltip:
-    :param report_name:
-    :param file_type:
     :param profile:
 
     :rtype: html.HtmlFiles.DropFile
 
     :return:
     """
-    return html.HtmlFiles.DropFile(self.context.rptObj, placeholder, tooltip, report_name, file_type, profile)
+    return html.HtmlFiles.DropFile(self.context.rptObj, placeholder, tooltip, options, profile)

@@ -1,6 +1,5 @@
 
 import re
-import json
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptSliders

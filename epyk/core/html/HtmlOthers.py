@@ -83,7 +83,7 @@ class Stars(Html.Html):
       self._dom = JsHtmlStars.Stars(self, report=self._report)
     return self._dom
 
-  def click(self, js_fncs=None, profile=False):
+  def click(self, js_fncs=None, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -112,7 +112,7 @@ class Stars(Html.Html):
                self.build(data=JsObjects.JsObjects.get("data"), options=self._jsStyles)] + js_fncs
     str_fncs = JsUtils.jsConvertFncs(js_fncs)
     for span in self._spans:
-      span.click(str_fncs, profile)
+      span.click(str_fncs, profile, source_event=source_event)
     return self
 
   @property

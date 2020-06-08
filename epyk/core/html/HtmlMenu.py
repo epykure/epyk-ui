@@ -120,7 +120,7 @@ class HtmlFooter(Html.Html):
     """
     return self.val[i]
 
-  def add_menu(self):
+  def add_menu(self, context_menu):
     pass
 
   def __str__(self):
