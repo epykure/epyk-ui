@@ -1,6 +1,9 @@
 
 from epyk.core.html import Html
 
+from epyk.core.js import expr
+from epyk.core.css import Selector
+
 from epyk.core.html import Defaults
 from epyk.core.html.options import OptPanel
 from epyk.core.css.styles import GrpClsContainer
@@ -202,11 +205,26 @@ class DrawerMulti(Html.Html):
     link.options.managed = False
     if not hasattr(container, 'options'):
       container = self._report.ui.div(container)
+      container.style.css.padding = 5
     container.options.managed = False
     link.style.css.writing_mode = "vertical-rl"
     link.style.css.text_orientation = "mixed"
     self.handle += link
     self.drawers += container
+    link.click([
+      self._report.js.querySelectorAll(Selector.Selector(self.drawers).with_child_element("div").excluding(container)).css({"display": 'none'}),
+      expr.if_(self.panels.dom.getAttribute("data-panel") == container.htmlCode, [
+        self.drawers.dom.toggle_transition("margin-right" if self.options.side == 'left' else "margin-left", "-%s" % self.options.width, "0px"),
+        container.dom.css({"display": 'none'}),
+        self.panels.dom.setAttribute("data-panel", '')])
+      .else_([
+        expr.if_(self._report.js.querySelector(Selector.Selector(self.drawers)).css("margin-left") != "0px", [
+          self.drawers.dom.toggle_transition("margin-right" if self.options.side == 'left' else "margin-left", "0px", "-%s" % self.options.width),
+        ]),
+        self.panels.dom.setAttribute("data-panel", container.htmlCode),
+        container.dom.css({'display': 'block'})
+      ])
+    ])
 
   @property
   def style(self):
@@ -226,11 +244,9 @@ class DrawerMulti(Html.Html):
     if self.options.side == 'left':
       self.drawers.style.css.width = self.options.width
       self.drawers.style.css.margin_right = "-%s" % self.options.width
-      self.handle.click([self.drawers.dom.toggle_transition("margin-right", "0px", "-%s" % self.options.width)])
     else:
       self.drawers.style.css.width = self.options.width
       self.drawers.style.css.margin_left = "-%s" % self.options.width
-      self.handle.click([self.drawers.dom.toggle_transition("margin-left", "0px", "-%s" % self.options.width)])
     return '''
       <div %(attr)s>
         %(panels)s
