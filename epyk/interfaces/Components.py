@@ -40,6 +40,7 @@ class Components(object):
 
     # Special shortcut for some components
     self.button = self.buttons.button #: shortcut for button :func:`epyk.interfaces.components.CompButtons.Buttons.button`
+    self.toggle = self.buttons.toggle #: shortcut for Toogle button :func:`epyk.interfaces.components.CompButtons.Buttons.toggle`
     self.input = self.inputs.input #: shortcut for input :func:`epyk.interfaces.components.CompInputs.Inputs.input`
     self.div = self.layouts.div #: shortcut for div :func:`epyk.interfaces.components.CompLayouts.Layouts.div`
     self.grid = self.layouts.grid #: shortcut for grid :func:`epyk.interfaces.components.CompLayouts.Layouts.grid`

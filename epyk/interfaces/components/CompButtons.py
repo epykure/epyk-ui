@@ -300,7 +300,7 @@ class Buttons(object):
                       height, radioVisible, event, withRemoveButton, align, filters, tooltip, radioType, helper, profile)
     return html_radio
 
-  def toggle(self, recordSet=None, label=None, color=None, width=(150, '%'), height=(20, 'px'), htmlCode=None, profile=None):
+  def toggle(self, recordSet=None, label=None, color=None, width=(None, '%'), height=(20, 'px'), htmlCode=None, profile=None):
     """
     Description:
     ------------
