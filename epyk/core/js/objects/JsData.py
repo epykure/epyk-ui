@@ -188,6 +188,57 @@ class RawData(object):
     return data
 
 
+class Datamap(object):
+
+  def __init__(self, components=None, attrs=None):
+    self.__data = []
+    if components is not None:
+      for c in components:
+        self.add(c)
+    if attrs is not None:
+      for k, v in attrs.items():
+        self.attr(k, v)
+
+  def add(self, component, htmlCode=None):
+    """
+    Description:
+    -----------
+
+    :param component:
+    :param htmlCode:
+    """
+    self.__data.append((htmlCode or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
+    return self
+
+  def attr(self, k, v):
+    """
+    Description:
+    -----------
+
+    :param k:
+    :param v:
+    """
+    self.__data.append((JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
+    return self
+
+  def attrs(self, data):
+    """
+    Description:
+    -----------
+
+    :param data:
+    """
+    for k, v in data.items():
+      self.attr(k, v)
+    return self
+
+  def toStr(self):
+    return "{%s}" % ",".join(["%s: %s" % (k, v) for k, v in self.__data])
+
+  def __str__(self):
+    return self.toStr()
+
+
 class JsData(object):
 
   def __init__(self, src):
@@ -235,6 +286,14 @@ class JsData(object):
       return CrossFilter(self._src, varName=var_name, data=data, setVar=False)
 
     return CrossFilter(self._src, varName=JsUtils.getJsValid(var_name), data=data)
+
+  def datamap(self, components=None, attrs=None):
+    """
+    Description:
+    -----------
+
+    """
+    return Datamap(components, attrs)
 
   def dataset(self, data, var_name=None, options=None):
     """

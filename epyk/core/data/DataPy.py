@@ -312,6 +312,41 @@ class Vis(object):
       data.append(series)
     return data
 
+  @staticmethod
+  def timeline(data, start, content, end=None, type=None, group=None, options=None):
+    """
+    Description:
+    -----------
+    Data transformation for the Vis Timeline chart
+
+    Attributes:
+    ----------
+    :param data:
+    :param start: String: The column in the record for the start date
+    :param content: String:
+    :param end: String: Optional. The column in the record for the end date
+    :param type: String. Optional.
+    :param group:
+    :param options:
+    """
+    is_data = {'datasets': [], 'python': True}
+    if data is None:
+      return is_data
+
+    options = options or {}
+    for rec in data:
+      row = {"start": rec[start], 'content': rec.get(content, '')}
+      if end is not None and end in rec:
+        row['end'] = rec[end]
+      if type is not None and type in rec:
+        row['type'] = rec[type]
+      elif 'type' in options:
+        row['type'] = options['type']
+      if group is not None and group in rec:
+        row['group'] = rec[group]
+      is_data['datasets'].append(row)
+    return is_data
+
 
 class ChartJs(object):
 

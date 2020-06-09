@@ -175,3 +175,19 @@ class OptionsChat(Options):
   def markdown(self, values):
     values = {} if values is True else values
     self._config(values, 'showdown')
+
+
+class OptionFiles(Options):
+
+  @property
+  def extensions(self):
+    """
+    Description:
+    ------------
+    List all the allowed file extensions
+    """
+    return self._config_get(None)
+
+  @extensions.setter
+  def extensions(self, values):
+    self._config(values)

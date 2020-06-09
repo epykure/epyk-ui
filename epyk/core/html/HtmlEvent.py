@@ -646,6 +646,19 @@ class Filters(Html.Html):
     self.keydown.enter([JsUtils.jsConvertFncs(jsFncs, toStr=True), self.dom.add(self.dom.input)] + jsFncs + [self.input.dom.empty()], profile)
     return self
 
+  def drop(self, jsFncs, preventDefault=True, profile=False):
+    """
+    Description:
+    -----------
+
+    :param jsFncs:
+    :param preventDefault:
+    :param profile:
+    """
+    self.style.css.border = "1px dashed black"
+    self.tooltip("Drag and drop values here")
+    return super(Filters, self).drop(jsFncs, preventDefault, profile)
+
   def delete(self, jsFncs, profile=False):
     """
     Description:
@@ -713,5 +726,7 @@ class Filters(Html.Html):
           div.appendChild(icon)}
         panel.appendChild(div);
     }'''
+    if not self.options.visible:
+      self.input.style.css.display = False
     return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
           'input': self.input.html(), 'selections': self.selections.html(),  'helper': self.helper}

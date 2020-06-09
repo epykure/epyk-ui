@@ -292,7 +292,7 @@ class Items(Html.Html):
     super(Items, self).__init__(report, records, css_attrs={"width": width, 'height': height})
     self.__options = OptList.OptionsItems(self, options)
     self._prefix, self._jsStyles['items_type'] = "ListDyn_", type
-    self._jsStyles['click'] = None
+    self._jsStyles['click'], self._jsStyles['draggable'] = None, False
 
   @property
   def _js__builder__(self):
@@ -339,6 +339,25 @@ class Items(Html.Html):
     if not isinstance(jsFncs, list):
       jsFncs = []
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self
+
+  def draggable(self, jsFncs=None, options=None, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param options:
+    :param profile:
+    :param source_event:
+    """
+    jsFncs = jsFncs or []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    jsFncs.append('event.dataTransfer.setData("text", value)')
+    self._jsStyles['draggable'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 
   def add_type(self, type, item_def, dependencies=None):

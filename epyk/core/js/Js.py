@@ -595,7 +595,6 @@ class JsBase(object):
 
     return JsSocketIO.SocketIO(htmlCode, self._src)
 
-
   @property
   def d3(self):
     """

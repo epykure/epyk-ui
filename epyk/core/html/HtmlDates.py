@@ -66,6 +66,8 @@ class DatePicker(Html.Html):
 
   def add_options(self, options=None, name=None, value=None):
     """
+    Description:
+    -----------
     Add TimePicker options
 
     Related Pages:
