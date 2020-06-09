@@ -1,6 +1,4 @@
 
-import re
-
 from epyk.core.html import Html
 from epyk.core.html.options import OptSliders
 from epyk.core.html.options import OptList
@@ -96,23 +94,6 @@ class ProgressBar(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
-
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val):
-    return re.match("%%%%([0-9]*)%", val)
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report):
-    if report is not None:
-      getattr(report, 'progressbar')(regExpResult.group(1))
-    return ["report.progressbar(%s)" % regExpResult.group(1)]
-
-  @classmethod
-  def to_markdown(self, vals):
-    return "%%%%" + str(vals) + "%"
 
 
 class Menu(Html.Html):
