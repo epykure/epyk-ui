@@ -3,6 +3,8 @@ from epyk.core.data import Data
 from epyk.core.data import DataPy
 from epyk.core.data import DataEvent
 
+from epyk.core.js.objects.JsData import Datamap
+
 
 # Shortcut data in the framework.
 # All those features are available in the report object but this allow a shortcut when the context is not necessary
@@ -27,3 +29,5 @@ events = DataEvent.DataEvents()
 loops = DataEvent.DataLoops()
 
 primitives = DataEvent.DataPrimitives()
+
+datamap = Datamap

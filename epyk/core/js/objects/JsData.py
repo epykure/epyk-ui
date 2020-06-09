@@ -1,6 +1,4 @@
 
-import json
-
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsBoolean

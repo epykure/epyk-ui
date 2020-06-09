@@ -536,7 +536,6 @@ class Field(Html.Html):
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     # add the input item
     self.input = input
-    self.input.options.managed = False
     self.append_child(self.input)
     self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
     self.css({"margin-top": '2px'})
