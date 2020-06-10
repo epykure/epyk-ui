@@ -1,8 +1,7 @@
 import time
 
 from epyk.core.html import Html
-
-from epyk.core.html.options import OptInputs
+from epyk.core.js.html import JsHtmlJqueryUI
 
 
 class DatePicker(Html.Html):
@@ -24,6 +23,19 @@ class DatePicker(Html.Html):
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto',
               'margin-top': '2px'})
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    The Javascript Dom proxy to the input object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
+    return self._dom
 
   # @property
   # def options(self):
@@ -124,6 +136,19 @@ class TimePicker(Html.Html):
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", 'margin-top': '2px'})
 
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    The Javascript Dom proxy to the input object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
+    return self._dom
+
   # @property
   # def options(self):
   #   """
@@ -158,6 +183,8 @@ class TimePicker(Html.Html):
 
 			https://timepicker.co/options/
 
+    Attributes:
+    ----------
     :param jsFnc:
     """
     self.input.change(jsFnc)

@@ -28,6 +28,28 @@ class JsHtmlDatePicker(JsHtml.JsHtml):
     return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.dom.jquery.varId)
 
 
+class JsHtmlDateFieldPicker(JsHtml.JsHtml):
+
+  @property
+  def val(self):
+    """
+    Description:
+    ------------
+    """
+    return JsObjects.JsObjects.get(
+      "{%s: {value: %s.val, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+      self.htmlCode, self.content.toStr()))
+
+  @property
+  def content(self):
+    """
+    Description:
+    ------------
+
+    """
+    return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.input.dom.jquery.varId)
+
+
 class JsHtmlProgressBar(JsHtml.JsHtml):
 
   @property
@@ -55,6 +77,8 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param val:
     :param jsFnc:
     """
