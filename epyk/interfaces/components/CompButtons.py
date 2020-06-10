@@ -416,35 +416,6 @@ Attributes:
     html_but = html.HtmlButton.CheckButton(self.context.rptObj, flag, tooltip, width, height, icon, label, htmlCode, options or {}, profile)
     return html_but
 
-  def zipfile(self, text, fileName, css_cls=None, css_attr=None, profile=None):
-    """
-    Description:
-    -----------
-
-    Usage::
-
-      rptObj.ui.buttons.zipfile('zip', 'C:\pathname')
-
-    Underlying HTML Objects:
-
-      - :class:`epyk.core.html.HtmlFiles.DownloadMemoryZip`
-
-    Related Pages:
-
-			https://newseasandbeyond.wordpress.com/2014/01/27/creating-in-memory-zip-file-with-python/
-
-    Attributes:
-    ----------
-    :param text: String. The text
-    :param fileName: String. The filename
-    :param css_cls: CSS Class Object. The CSS class to attach to the object
-    :param css_attr:
-    :param profile:
-
-    """
-    html_file = html.HtmlFiles.DownloadMemoryZip(self.context.rptObj, text, fileName, css_cls, css_attr, profile)
-    return html_file
-
   def menu(self, record, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:

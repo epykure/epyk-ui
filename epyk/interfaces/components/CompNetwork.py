@@ -289,7 +289,7 @@ class Network(object):
 
     Usage::
 
-      rptObj.ui.drops.dropfile()
+      rptObj.ui.network.dropfile()
 
     Related Pages:
 Attributes:
@@ -298,8 +298,8 @@ Attributes:
     :param tooltip:
     :param profile:
 
-    :rtype: html.HtmlFiles.DropFile
+    :rtype: html.HtmlNetwork.DropFile
 
     :return:
     """
-    return html.HtmlFiles.DropFile(self.context.rptObj, placeholder, tooltip, options, profile)
+    return html.HtmlNetwork.DropFile(self.context.rptObj, placeholder, tooltip, options, profile)

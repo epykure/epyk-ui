@@ -1,7 +1,6 @@
 from . import HtmlButton
 from . import HtmlContainer
 from . import HtmlEvent
-from . import HtmlFiles
 from . import HtmlLinks
 from . import HtmlImage
 from . import HtmlInput
