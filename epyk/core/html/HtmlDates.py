@@ -14,7 +14,7 @@ class DatePicker(Html.Html):
     # Add all the internal components input, label, icon and helper
     self.input = self._report.ui.inputs.d_date(self.val, width=width, height=height, options=options).css({"padding": 0})
     self.prepend_child(self.input)
-    if not self.options.inline:
+    if not self.input.options.inline:
       self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
     else:
       self.icon = None
@@ -25,25 +25,29 @@ class DatePicker(Html.Html):
     self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto',
               'margin-top': '2px'})
 
-  @property
-  def options(self):
-    """
-    Description:
-    -----------
-    The progress bar is designed to display the current percent complete for a process.
-    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
-
-    Related Pages:
-
-			https://api.jqueryui.com/menu
-
-    :rtype: OptInputs.OptionsDatePicker
-    """
-    return self.input.options
+  # @property
+  # def options(self):
+  #   """
+  #   Description:
+  #   -----------
+  #   The progress bar is designed to display the current percent complete for a process.
+  #   The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
+  #
+  #   Related Pages:
+  #
+	# 		https://api.jqueryui.com/menu
+  #
+  #   :rtype: OptInputs.OptionsDatePicker
+  #   """
+  #   return self.input.options
 
   def select(self, jsFncs):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param jsFncs:
     """
     if not isinstance(jsFncs, list):
@@ -120,21 +124,21 @@ class TimePicker(Html.Html):
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.css({"color": color or 'inherit', "vertical-align": "middle", 'margin-top': '2px'})
 
-  @property
-  def options(self):
-    """
-    Description:
-    -----------
-    The progress bar is designed to display the current percent complete for a process.
-    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
-
-    Related Pages:
-
-			https://api.jqueryui.com/menu
-
-    :rtype: OptInputs.OptionsTimePicker
-    """
-    return self.input.options
+  # @property
+  # def options(self):
+  #   """
+  #   Description:
+  #   -----------
+  #   The progress bar is designed to display the current percent complete for a process.
+  #   The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
+  #
+  #   Related Pages:
+  #
+	# 		https://api.jqueryui.com/menu
+  #
+  #   :rtype: OptInputs.OptionsTimePicker
+  #   """
+  #   return self.input.options
 
   def change(self, jsFnc):
     """
