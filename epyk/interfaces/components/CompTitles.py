@@ -28,9 +28,11 @@ class Titles(object):
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
-    html_title.style.css.border_left = '10px solid %s' % self.context.rptObj.theme.colors[-1]
-    html_title.style.css.font_size = Defaults_css.font(12)
+    html_title.style.css.border_left = '5px solid %s' % self.context.rptObj.theme.colors[-1]
+    html_title.style.css.font_size = Defaults_css.font(15)
     html_title.style.css.text_transform = 'uppercase'
+    html_title.style.css.margin_left = 2
+    html_title.style.css.padding_left = 2
     html_title.style.css.bold()
     return html_title
 

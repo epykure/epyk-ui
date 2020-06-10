@@ -9,14 +9,15 @@ class DatePicker(Html.Html):
   requirements = ('jqueryui', )
   name = 'Date Picker'
 
-  def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
-    dfltOptions = {'dateFormat': 'yy-mm-dd'}
-    dfltOptions.update(options)
+  def __init__(self, report, value, label, icon, width, height, color, htmlCode, profile, options, helper):
     super(DatePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
     # Add all the internal components input, label, icon and helper
-    self.input = self._report.ui.inputs.d_date(self.val, options=dfltOptions).css({"padding": 0})
+    self.input = self._report.ui.inputs.d_date(self.val, width=width, height=height, options=options).css({"padding": 0})
     self.prepend_child(self.input)
-    self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
+    if not self.options.inline:
+      self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
+    else:
+      self.icon = None
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
@@ -39,6 +40,16 @@ class DatePicker(Html.Html):
     :rtype: OptInputs.OptionsDatePicker
     """
     return self.input.options
+
+  def select(self, jsFncs):
+    """
+
+    :param jsFncs:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.input.options.onSelect = jsFncs
+    return self
 
   def excluded_dates(self, dts=None, jsFncs=None):
     """

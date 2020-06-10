@@ -18,7 +18,7 @@ class Fields(object):
   def __init__(self, context):
     self.context = context
 
-  def date(self, value, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
+  def date(self, value, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"), htmlCode=None,
             profile=None, options=None, helper=None):
     """
     Description:
@@ -48,10 +48,13 @@ class Fields(object):
     :param options: Optional. Specific Python options available for this component
     :param helper: Optional. A tooltip helper
     """
-    html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options or {}, helper)
+    dftl_options = {'dateFormat': 'yy-mm-dd'}
+    if options is not None:
+      dftl_options.update(options)
+    html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, width, height, color, htmlCode, profile, dftl_options, helper)
     return html_dt
 
-  def today(self, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
+  def today(self, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"), htmlCode=None,
             profile=None, options=None, helper=None):
     """
     Description:
@@ -80,11 +83,14 @@ class Fields(object):
     :param options: Optional. Specific Python options available for this component
     :param helper: Optional. A tooltip helper
     """
+    dftl_options = {'dateFormat': 'yy-mm-dd'}
+    if options is not None:
+      dftl_options.update(options)
     value = self.context.rptObj.py.dates.today
-    html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options or {}, helper)
+    html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, width, height, color, htmlCode, profile, dftl_options, helper)
     return html_dt
 
-  def cob(self, label=None, icon="far fa-calendar-alt", color=None, htmlCode=None,
+  def cob(self, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"), htmlCode=None,
           profile=None, options=None, helper=None):
     """
     Description:
@@ -114,8 +120,11 @@ class Fields(object):
     :param filters: Optional. The filtering properties for this component
     :param helper: Optional. A tooltip helper
     """
+    dftl_options = {'dateFormat': 'yy-mm-dd'}
+    if options is not None:
+      dftl_options.update(options)
     value = self.context.rptObj.py.dates.cob
-    html_cob = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options or {}, helper)
+    html_cob = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, width, height, color, htmlCode, profile, dftl_options, helper)
     return html_cob
 
   def now(self, deltatime=0, label=None, icon="far fa-clock", color=None, htmlCode=None, profile=None,
