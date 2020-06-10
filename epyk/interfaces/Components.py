@@ -18,7 +18,6 @@ from epyk.interfaces.components import CompImages
 from epyk.interfaces.components import CompLinks
 from epyk.interfaces.components import CompSliders
 from epyk.interfaces.components import CompNetwork
-from epyk.interfaces.components import CompDrops
 from epyk.interfaces.components import CompForms
 from epyk.interfaces.components import CompTags
 from epyk.interfaces.components import CompFields
@@ -387,15 +386,6 @@ class Components(object):
     This will mainly rely on bootstrap for the display of the different objects in the page.
     """
     return CompLayouts.Layouts(self)
-
-  @property
-  def drops(self):
-    """
-    Description:
-    ------------
-    Group all the UI components dedicated to drop data.
-    """
-    return CompDrops.DropData(self)
 
   @property
   def forms(self):
