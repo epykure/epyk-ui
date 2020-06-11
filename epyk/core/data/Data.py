@@ -88,6 +88,22 @@ class DataJs(object):
     JsUtils.getJsValid(varName, fail=True)
     return JsObjects.JsObjects().new(value, varName=varName, report=self._report)
 
+  def server(self, hostname, port=8080):
+    """
+    Description:
+    ------------
+    Configuration data for server interaction.
+    This will only help on centralising the configuration in the final page.
+
+    Attributes:
+    ----------
+    :param hostname: String. The server hostname
+    :param port: Integer. The server port
+    """
+    from epyk.core.data import DataCore
+
+    return DataCore.ServerConfig(hostname, port, self._report)
+
 
 class DataSrc(object):
   class __internal(object):

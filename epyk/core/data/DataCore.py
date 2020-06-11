@@ -440,3 +440,129 @@ class DataGlobal(object):
     """
     self.__filters_groups = {}
     return self
+
+
+class ServerNameSpaceConfig(object):
+  def __init__(self, config, name, alias, endPoints):
+    self.__config, self.end_points, self.name, self.alias = config, {}, name, alias
+    if endPoints is not None:
+      self.endPoints(endPoints)
+
+  @property
+  def address(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+
+    """
+    return JsObjects.JsObject.JsObject.get(self.__config.varId)[self.alias]['u']
+
+  def endPoint(self, name):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    """
+    self.end_points[name] = "http://%s:%s/%s/%s" % (self.__config.hostname, self.name, self.__config.port, name)
+    return self
+
+  def endPoints(self, names):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param names:
+    """
+    for name in names:
+      self.endPoint(name)
+    return self
+
+
+class ServerConfig(object):
+
+  def __init__(self, hostname, port, report=None):
+    self.varId = "server_config_%s" % id(self)
+    report._props["js"]["configs"][self.varId] = self
+    self.__namespaces, self.__end_points, self.host, self.port = {}, {}, hostname, port
+
+  def getNamespace(self, alias):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param alias:
+    """
+    return self.__namespaces[alias]
+
+  def addNamespace(self, name, alias=None, endPoints=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    :param alias:
+    :param endPoints:
+    """
+    if alias is None:
+      alias = name
+    self.__namespaces[alias] = ServerNameSpaceConfig(self, name, alias, endPoints)
+    return self
+
+  def endPoint(self, name):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    """
+    self.__end_points[name] = "http://%s:%s/%s" % (self.host, self.port, name)
+    return self
+
+  def endPoints(self, names):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param names:
+    """
+    for name in names:
+      self.__end_points[name] = "http://%s:%s/%s" % (self.host, self.port, name)
+    return self
+
+  def get(self, name):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    """
+    if not name in self.__end_points:
+      raise Exception("Missing end point in the server configuration - %s" % name)
+
+    return JsObjects.JsObject.JsObject.get(self.varId)[name]
+
+  def toStr(self):
+    for np, np_val in self.__namespaces.items():
+      self.__end_points[np] = {'e': np_val.end_points, 'n': np_val.name, 'u': "http://%s:%s/%s" % (self.host, self.port, np_val.name)}
+    return "var %s = %s" % (self.varId, JsUtils.jsConvertData(self.__end_points, None))
+
+  def __str__(self):
+    return self.toStr()
