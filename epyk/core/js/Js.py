@@ -845,6 +845,7 @@ class JsBase(object):
     :rtype: JsObjects.XMLHttpRequest
     """
     method_type = JsUtils.jsConvertData('POST', None)
+    url = JsUtils.jsConvertData(url, None)
     request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url).send(jsData)
     return request
 

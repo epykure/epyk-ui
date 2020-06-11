@@ -3,6 +3,7 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptVis
 
 from epyk.core.js import JsUtils
+from epyk.core.css.styles import GrpClsCharts
 from epyk.core.js.packages import JsVis
 
 
@@ -312,6 +313,12 @@ class ChartTimeline(Chart):
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartTimeline, self).__init__(report, width, height, htmlCode, options, profile)
     self.items, self.__grps, self.__cats = [], None, None
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsCharts.ClassVisTimeline(self)
+    return self._styleObj
 
   @property
   def options(self):

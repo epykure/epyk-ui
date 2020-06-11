@@ -90,7 +90,7 @@ class SocketIO(object):
     roomId = JsUtils.jsConvertData(roomId, None)
     return JsObjects.JsVoid("%s.leave(%s)" % (self._selector, roomId))
 
-  def connect(self, url=None, port=None, namespace=None):
+  def connect(self, url=None, port=None, namespace=None, from_config=None):
     """
     Description:
     ------------
@@ -102,8 +102,13 @@ class SocketIO(object):
     :param url: String. The server url
     :param port: Integer. The server port
     :param namespace: String. Optional. The server namespace (or room)
+    :param from_config: Python Object. An internal Server configuration object (page.js.server())
     """
-    if url is None:
+    if from_config is not None:
+      self._src._props['js']['builders'].add("var %s = io.connect(%s)" % (self._selector, from_config.address))
+      return JsObjects.JsVoid("var %s = io.connect(%s)" % (self._selector, from_config.address))
+
+    elif url is None:
       self._src._props['js']['builders'].add("var %s = io.connect()" % self._selector)
       return JsObjects.JsVoid("var %s = io.connect()" % self._selector)
 

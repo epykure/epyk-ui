@@ -72,3 +72,11 @@ class CatalogChart(Catalog.CatalogGroup):
   def sparklines(self):
     """  """
     return self._set_class(CssStylesChart.CssSparklines)
+
+  def vis_items(self):
+    """  """
+    return self._set_class(CssStylesChart.CssVisItems)
+
+  def vis_items_overflow(self):
+    """  """
+    return self._set_class(CssStylesChart.CssVisItemsOverlow)

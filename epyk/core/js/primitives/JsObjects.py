@@ -631,7 +631,10 @@ class XMLHttpRequest(object):
   def toStr(self):
     request = ["var %s = new XMLHttpRequest()" % self.varId]
     request.append("%s.responseType = '%s'" % (self.varId, self.__responseType))
-    request.append("%s.open(%s, '%s%s')" % (self.varId, self.method, self.url, self.__url_prefix))
+    if self.__url_prefix:
+      request.append("%s.open(%s, %s+'%s')" % (self.varId, self.method, self.url, self.__url_prefix))
+    else:
+      request.append("%s.open(%s, %s)" % (self.varId, self.method, self.url))
     for k, v in self.__headers.items():
       request.append("%s.setRequestHeader('%s', '%s')" % (self.varId, k, v))
     if self.__req_success is not None:

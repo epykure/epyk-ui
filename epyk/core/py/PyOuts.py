@@ -96,6 +96,9 @@ class PyOuts(object):
     for c, d in self._report._props.get('js', {}).get("constructors", {}).items():
       onloadParts.append(d)
 
+    for c, d in self._report._props.get('js', {}).get("configs", {}).items():
+      onloadParts.append(str(d))
+
     for c, d in self._report._props.get('js', {}).get("datasets", {}).items():
       onloadParts.append(d)
 
