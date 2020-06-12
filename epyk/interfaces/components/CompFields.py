@@ -565,3 +565,156 @@ class Fields(object):
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, options, profile)
     html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
     return html_input
+
+  def months(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+             helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      rptObj.ui.fields.select(["a", "b"], label="Check")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.FieldSelect`
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    import calendar
+
+    if value is None:
+      dt = datetime.datetime.today()
+      value = dt.month
+    if options is not None and 'align' in options:
+      self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
+    values = [{"name": calendar.month_name[i], 'value': i} for i in range(12)]
+    html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options, profile)
+    html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
+    if html_input.input.selected is None:
+      html_input.input.selected = value
+    return html_input
+
+  def weeks(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+             helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      rptObj.ui.fields.select(["a", "b"], label="Check")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.FieldSelect`
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    dt = datetime.datetime.today()
+    if value is None:
+      value = datetime.datetime.utcnow().isocalendar()[1]
+    values = []
+    for i in range(52):
+      d = "%s-W%s" % (dt.year, i)
+      start_date = datetime.datetime.strptime(d + '-1', "%Y-W%W-%w")
+      end_date = start_date + datetime.timedelta(days=5)
+      values.append({"value": i+1, 'name': "W%s [%s - %s]" % (i+1, start_date.strftime('%d/%m'), end_date.strftime('%d/%m'))})
+    if options is not None and 'align' in options:
+      self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
+    html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options, profile)
+    html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
+    if html_input.input.selected is None:
+      html_input.input.selected = value
+    return html_input
+
+  def years(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+             helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      rptObj.ui.fields.select(["a", "b"], label="Check")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.FieldSelect`
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    dt = datetime.datetime.today()
+    if value is None:
+      value = dt.year
+    if options is not None and 'align' in options:
+      self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
+    values = [{"name": i, 'value': i} for i in range(dt.year+1)][::-1]
+    html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options, profile)
+    html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
+    if html_input.input.selected is None:
+      html_input.input.selected = value
+    return html_input
+
+  def days(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+             helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      rptObj.ui.fields.select(["a", "b"], label="Check")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.FieldSelect`
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    import calendar
+
+    if value is None:
+      dt = datetime.datetime.today()
+      value = dt.weekday()
+    if options is not None and 'align' in options:
+      self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
+    values = [{"name": calendar.day_name[i], 'value': i} for i in range(7)]
+    html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper, options, profile)
+    html_input.input.attr['data-width'] = '%spx' % html.Defaults.INPUTS_MIN_WIDTH
+    if html_input.input.selected is None:
+      html_input.input.selected = value
+    return html_input
