@@ -421,14 +421,14 @@ class News(Html.Html):
 class Room(Html.Html):
   name = 'room'
 
-  def __init__(self, report, width, height, htmlCode, options, profile):
+  def __init__(self, report, img, width, height, htmlCode, options, profile):
     super(Room, self).__init__(report, "", css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
     self.__options = OptNet.OptionsNews(self, options)
     color = 'green'
     self.css({"padding": '5px', 'position': 'fixed', 'bottom': '10px', 'right': '20px', 'border-radius': '30px',
               'border': '1px solid %s' % color, 'background-repeat': 'no-repeat', 'z-index': 100,
               'background-position': 'center', 'background-size': 'cover', 'cursor': 'pointer',
-              'background-image': 'url(C:/Users/olivier/Pictures/viber_image_2020-06-11_13-06-54.jpg)'})
+              'background-image': 'url(%s)' % img})
     self.status = self._report.ui.div()
     self.status.options.managed = False
     self.status.attr['name'] = "status"

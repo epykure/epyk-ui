@@ -275,14 +275,15 @@ class Network(object):
       dflt_options.update(options)
     return html.HtmlNetwork.News(self.context.rptObj, value, width, height, htmlCode, dflt_options, profile)
 
-  def room(self, htmlCode=None, width=(60, 'px'), height=(60, 'px'), options=None, profile=False):
+  def room(self, img, htmlCode=None, width=(60, 'px'), height=(60, 'px'), options=None, profile=False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param htmlCode:
+    :param img: String. The image path on the server or locally to be used
+    :param htmlCode: String. Optional. The id for this component
     :param width:
     :param height:
     :param options:
@@ -291,7 +292,7 @@ class Network(object):
     dflt_options = {"dated": True, 'markdown': True}
     if options is not None:
       dflt_options.update(options)
-    return html.HtmlNetwork.Room(self.context.rptObj, width, height, htmlCode, dflt_options, profile)
+    return html.HtmlNetwork.Room(self.context.rptObj, img, width, height, htmlCode, dflt_options, profile)
 
   def dropfile(self, placeholder='Drop your files here', tooltip=None, options=None, profile=None):
     """
