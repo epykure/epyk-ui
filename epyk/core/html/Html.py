@@ -1107,7 +1107,7 @@ Attributes:
     if data is None:
       data = socket.message
     jsFncs = jsFncs if jsFncs is not None else []
-    self.onReady([socket.on(channel, [self.build(data, options, profile)] + jsFncs)])
+    socket.on(channel, [self.build(data, options, profile)] + jsFncs)
     return self
 
   @packageImport('sortable')

@@ -843,6 +843,44 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.innerText = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     return self
 
+  def textContent(self, jsString=None, append=False, valType=None):
+    """
+    Description:
+    ------------
+    The textContent property returns the text with spacing, but without inner element tags.
+
+    Usage::
+
+      select.label.dom.innerText("test Change")
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_node_innertext.asp
+
+    Attributes:
+    ----------
+    :param jsString: Optional, The Javascript String to be added
+    :param append: Boolean. Mention if the component should replace or append the data
+    :param valType: Type: The type of data expected in the component
+
+    :return: The JsObj to allow the chaining
+    """
+    if jsString is None:
+      return JsString.JsString("%s.textContent" % self.varId, isPyData=False)
+
+    if append:
+      if valType == int:
+        self._js.append("%s.textContent = parseInt(%s.textContent) + %s" % (
+        self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+      elif valType == float:
+        self._js.append("%s.textContent = parseFloat(%s.textContent) + %s" % (
+        self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+      else:
+        self._js.append("%s.textContent += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    else:
+      self._js.append("%s.textContent = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    return self
+
   def innerHTML(self, jsString=None, append=False, valType=None):
     """
     Description:
@@ -969,7 +1007,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append('%s.setAttribute("class", "%s")' % (self.varId, clsName))
     return self
 
-  def css(self, type, jsObject=None):
+  def css(self, type, jsObject=None, duration=None):
     """
     Description:
     -----------
@@ -1143,7 +1181,7 @@ class JsDoms(JsObject.JsObject):
     """
     return self.css("display", "none")
 
-  def show(self):
+  def show(self, display_value=None, duration=None):
     """
     Description:
     ------------
@@ -1156,7 +1194,10 @@ class JsDoms(JsObject.JsObject):
 
 			https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
-    return self.css("display", self.display_value)
+    self.css("display", display_value or self.display_value)
+    if duration is not None:
+      self._js.append("setTimeout(function(){%s.style.display = 'none'}, %s)" % (self.varId, duration))
+    return self
 
   def toggle(self, attr="display", jsVal1=None, jsVal2="none"):
     """

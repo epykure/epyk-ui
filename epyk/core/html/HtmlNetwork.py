@@ -1,10 +1,3 @@
-"""
-All those components are a bit special as they would require to work properly:
-  - A server in order to interact dynamically
-  - A database source
-
-This can definition be configured but by default it is using the ones of the server.
-"""
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptNet
@@ -24,11 +17,14 @@ class Comments(Html.Html):
     self.__options = OptNet.OptionsChat(self, options)
     self.css({'padding': '5px'})
     self.input = None
+    self.counter = report.ui.texts.span("0", width=(None, 'px'))
+    self.counter.options.managed = False
+    self.counter.attr["name"] = "count"
+    self.counter.css({"display": "inline-block", "margin": 0, "padding": 0, "cursor": "pointer"})
     if not self.options.readonly:
       self.input = report.ui.input()
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
-      self.input.enter([self.js.add(self.input.dom.content)])
 
   @property
   def options(self):
@@ -73,16 +69,87 @@ class Comments(Html.Html):
         htmlObj.querySelector("div").prepend(dateNews);
         '''
 
+  def enter(self, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    if self.options.readonly:
+      self.options.readonly = False
+      self.input = self._report.ui.input()
+      self.input.options.managed = False
+      self.input.style.css.text_align = 'left'
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.input.enter(jsFncs + [
+      self.js.add(self.input.dom.content),
+      self.input.dom.empty()])
+    return self
+
+  def send(self, socket, channel=None, jsFncs=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param socket:
+    :param channel:
+    :param jsFncs:
+    :param profile:
+    """
+    if self.options.readonly:
+      self.options.readonly = False
+      self.input = self._report.ui.input()
+      self.input.options.managed = False
+      self.input.style.css.text_align = 'left'
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.input.enter(jsFncs + [
+      socket.emit(channel or 'message', self.input.dom.content),
+      self.input.dom.empty()])
+    return self
+
+  def subscribe(self, socket, channel, data=None, options=None, jsFncs=None, profile=False):
+    """
+    Description:
+    ------------
+    Subscribe to a socket channel.
+    Data received from the socket are defined as a dictionary with a field data.
+
+    The content of data will be used by this component.
+
+    Related Pages:
+
+      https://timepicker.co/options/
+
+    Attributes:
+    ----------
+    :param socket: Socket. A python socket object
+    :param channel: String. The channel on which events will be received
+    """
+    if data is None:
+      data = socket.message
+    jsFncs = jsFncs if jsFncs is not None else []
+    socket.on(channel, [self.js.add(data)] + jsFncs)
+    return self
+
   def __str__(self):
     return '''
       <div %(attr)s>
-        <span><p style="display:inline-block;margin:0;padding:0;cursor:pointer" id="%(htmlCode)s_comms_count">0</p> Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
+        <span>%(counter)s Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
         %(inputTag)s
-        <div class='scroll_content' style="margin:0;padding:5px 0;overflow:auto">
-          <div id="%(htmlCode)s_comms"></div>
+        <div class='scroll_content' style="height:%(height)spx;margin:0;padding:5px 0;overflow:auto">
+          <div name="comms"></div>
         </div>
       </div>
-      ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode,
+      ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), "counter": self.counter.html(),
+             'height': int(self.css("height")[:-2]) - 70,
              'inputTag': '' if self.input is None else self.input.html()}
 
 
@@ -135,11 +202,14 @@ class Chat(Html.Html):
     self.__options = OptNet.OptionsChat(self, options)
     self.css({'padding': '5px'})
     self.input = None
+    self.counter = report.ui.texts.span("0", width=(None, 'px'))
+    self.counter.options.managed = False
+    self.counter.attr["name"] = "count"
+    self.counter.css({"display": "none", "margin": 0, "padding": 0, "cursor": "pointer"})
     if not self.options.readonly:
       self.input = report.ui.input()
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
-      self.input.enter([self.js.add(self.input.dom.content)])
 
   @property
   def options(self):
@@ -184,14 +254,75 @@ class Chat(Html.Html):
       htmlObj.querySelector("div").prepend(dateNews);
       '''
 
+  def enter(self, jsFncs, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.input.enter(jsFncs + [
+      self.js.add(self.input.dom.content),
+      self.input.dom.empty()])
+    return self
+
+  def send(self, socket, channel=None, jsFncs=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param socket:
+    :param channel:
+    :param jsFncs:
+    :param profile:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.input.enter(jsFncs + [
+      socket.emit(channel or 'message', self.input.dom.content),
+      self.input.dom.empty()])
+    return self
+
+  def subscribe(self, socket, channel, data=None, options=None, jsFncs=None, profile=False):
+    """
+    Description:
+    ------------
+    Subscribe to a socket channel.
+    Data received from the socket are defined as a dictionary with a field data.
+
+    The content of data will be used by this component.
+
+    Related Pages:
+
+      https://timepicker.co/options/
+
+    Attributes:
+    ----------
+    :param socket: Socket. A python socket object
+    :param channel: String. The channel on which events will be received
+    """
+    if data is None:
+      data = socket.message
+    jsFncs = jsFncs if jsFncs is not None else []
+    socket.on(channel, [self.js.add(data)] + jsFncs)
+    return self
+
   def __str__(self):
     return '''
       <div %(attr)s>
         %(inputTag)s
         <div style="margin:0;padding:5px 0;height:%(height)spx;overflow:auto"></div>
+        %(counter)s
       </div>
       ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode, 'height': int(self.css("height")[:-2]) - 70,
-             'inputTag': '' if self.input is None else self.input.html()}
+             'inputTag': '' if self.input is None else self.input.html(), "counter": self.counter.html()}
 
 
 class Alert(Html.Html):
@@ -285,6 +416,55 @@ class News(Html.Html):
 
   def __str__(self):
     return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
+
+
+class Room(Html.Html):
+  name = 'room'
+
+  def __init__(self, report, width, height, htmlCode, options, profile):
+    super(Room, self).__init__(report, "", css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
+    self.__options = OptNet.OptionsNews(self, options)
+    color = 'green'
+    self.css({"padding": '5px', 'position': 'fixed', 'bottom': '10px', 'right': '20px', 'border-radius': '30px',
+              'border': '1px solid %s' % color, 'background-repeat': 'no-repeat', 'z-index': 100,
+              'background-position': 'center', 'background-size': 'cover', 'cursor': 'pointer',
+              'background-image': 'url(C:/Users/olivier/Pictures/viber_image_2020-06-11_13-06-54.jpg)'})
+    self.status = self._report.ui.div()
+    self.status.options.managed = False
+    self.status.attr['name'] = "status"
+    self.status.css({"width": "15px", "height": "15px", "background": color, "border-radius": "20px",
+                     "border": "1px solid %s" % color, "bottom": "0px", "position": "absolute", "right": 0})
+    self.dots = self._report.ui.div(".")
+    self.dots.attr['name'] = "dots"
+    self.dots.options.managed = False
+    self.dots.css({"bottom": "-5px", "position": "absolute", "left": "-25px", 'font-size': '30px', 'display': 'none'})
+
+    keyframe_name = "dots"
+    self.dots.style.css.animation = "%s 1s infinite" % keyframe_name
+    attrs = {"0%, 20%": {"color": "rgba(0,0,0,0)", "text-shadow": ".25em 0 0 rgba(0,0,0,0),.5em 0 0 rgba(0,0,0,0)"},
+             "40%": {"text-shadow": ".25em 0 0 rgba(0,0,0,0),.5em 0 0 rgba(0,0,0,0)"},
+             "60%": {"text-shadow": ".25em 0 0 %s,.5em 0 0 rgba(0,0,0,0)" % report.theme.greys[-1]},
+             "80%, 100%": {"text-shadow": ".25em 0 0 %s,.5em 0 0 %s" % (report.theme.greys[-1], report.theme.greys[-1])}}
+    self.dots.style.css_class.keyframes(keyframe_name, attrs)
+
+  @property
+  def js(self):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :return: A Javascript Dom object
+
+    :rtype: JsComponents.Chat
+    """
+    if self._js is None:
+      self._js = JsComponents.Room(self, report=self._report)
+    return self._js
+
+  def __str__(self):
+    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.dots.html(), self.status.html())
 
 
 class DropFile(Html.Html):

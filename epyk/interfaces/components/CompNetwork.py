@@ -36,7 +36,7 @@ class Network(object):
     :param height:
     :param profile:
     """
-    dflt_options = {'readonly': False, 'markdown': True, 'dated': True}
+    dflt_options = {'readonly': True, 'markdown': True, 'dated': True}
     if options is not None:
       dflt_options.update(options)
     return html.HtmlNetwork.Comments(self.context.rptObj, recordSet, width, height, htmlCode, dflt_options, profile)
@@ -124,7 +124,7 @@ class Network(object):
     Description:
     ------------Function to add when the python run some tags to put on the top of your report messages.
 
-    The type of the messages can be different according to its criticallity.
+    The type of the messages can be different according to its criticality.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
     All the notification can be hidden directly from the report by setting the flag alerts = False
@@ -274,6 +274,24 @@ class Network(object):
     if options is not None:
       dflt_options.update(options)
     return html.HtmlNetwork.News(self.context.rptObj, value, width, height, htmlCode, dflt_options, profile)
+
+  def room(self, htmlCode=None, width=(60, 'px'), height=(60, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param htmlCode:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    dflt_options = {"dated": True, 'markdown': True}
+    if options is not None:
+      dflt_options.update(options)
+    return html.HtmlNetwork.Room(self.context.rptObj, width, height, htmlCode, dflt_options, profile)
 
   def dropfile(self, placeholder='Drop your files here', tooltip=None, options=None, profile=None):
     """

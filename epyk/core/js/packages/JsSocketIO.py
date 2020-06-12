@@ -132,11 +132,14 @@ class SocketIO(object):
     ----------
     :param eventType:
     :param jsFncs:
+
+    :return: self to allow the chaining
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     eventType = JsUtils.jsConvertData(eventType, None)
-    return JsObjects.JsVoid("%s.on(%s, function(data) {%s})" % (self._selector, eventType, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    self._src.js.onReady("%s.on(%s, function(data) {%s})" % (self._selector, eventType, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self
 
   def emit(self, eventType, jsData=None):
     """

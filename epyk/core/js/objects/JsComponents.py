@@ -187,5 +187,22 @@ class Chat(JsPackage):
 
   def add(self, message):
     return JsObjects.JsVoid('''
-      %(builder)s
-      ''' % {"builder": self._src.build(message)})
+      %(builder)s; %(counter)s
+      ''' % {"builder": self._src.build(message), 'counter': self._src.dom.querySelector(' [name=count]').innerText(1, append=True, valType=int).r})
+
+
+class Room(JsPackage):
+
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
+    self._src, self._report = htmlObj, report
+    self._js, self._jquery = [], None
+
+  def typing(self):
+    """
+
+    """
+    return self._src.dom.querySelector("div[name=dots]").show(duration=3000)
+
+
