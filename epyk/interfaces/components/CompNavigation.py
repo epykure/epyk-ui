@@ -400,7 +400,8 @@ class Navigation(object):
     :param profile:
     """
     d = self.context.rptObj.ui.div(components)
-    d.css({"background": self.context.rptObj.theme.colors[2], "position": 'absolute', 'top': 0, 'height': '100%', 'overflow-x': 'hidden', 'width': "%spx" % size})
+    d.css({"background": self.context.rptObj.theme.colors[2], "position": 'absolute', 'top': 0, 'height': '100%',
+           'overflow-x': 'hidden', 'width': "%spx" % size, 'z-index': 10})
     if position == 'left':
       d.css({'left': 0, 'margin-left': "-%spx" % size, 'border-right': '1px solid %s' % self.context.rptObj.theme.colors[5], 'padding': '5px'})
     else:

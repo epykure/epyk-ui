@@ -489,18 +489,19 @@ class DropFile(Html.Html):
     """
     return self.__options
 
-  def transfert(self, url, jsFncs, preventDefault=True, profile=False):
+  def transfer(self, url):
     """
     Description:
     -----------
+    Create a Ajax transfer to a distant server
 
     Attributes:
     ----------
-    :param url:
-    :param jsFncs:
-    :param preventDefault:
-    :param profile:
+    :param url: String. The transfer end point on the server
     """
+    # TODO add if else statement for the allowed and forbidden extensions
+    post = self._report.js.post(url, self._report.js.objects.get("form_data"))
+    return post
 
   def drop(self, jsFncs, preventDefault=True, profile=False):
     """
@@ -512,9 +513,9 @@ class DropFile(Html.Html):
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param preventDefault: Boolean.
-    :param profile:
+    :param jsFncs: List. The Javascript series of functions
+    :param preventDefault: Boolean. Prevent default on the JavaScript event
+    :param profile: Boolean. Profiling
 
     :return: Return self to allow the chaining
     """
@@ -523,36 +524,11 @@ class DropFile(Html.Html):
       dft_fnc = self._report.js.objects.event.preventDefault()
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
+    form_data = self._report.js.data.formdata()
+    jsFncs = [form_data.new("form_data"),  form_data.append("file", self._report.js.objects.event.dataTransfer.files[0])] + jsFncs
     str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.dataTransfer.files] + jsFncs, toStr=True)
     self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     self.on("drop", ["%s; %s; return false" % (dft_fnc, str_fncs)])
-    return self
-
-  def drop2(self, url=None, jsData=None, jsFncs=None, httpCodes=None, isPyData=True, refresh=True, extensions=None):
-    data = []
-    if jsFncs is None:
-      jsFncs = [self._report.jsReloadPage()]
-    elif not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-
-    if jsData is not None:
-      for rec in jsData:
-        if isinstance(rec, tuple):
-          if isPyData:
-            data.append("data.append('%s', %s)" % (rec[0], json.dumps(rec[1])))
-          else:
-            data.append("data.append('%s', %s)" % (rec[0], rec[1]))
-        else:
-          data.append("data.append('%s', %s)" % (rec.htmlCode, rec.val))
-    super(DropFile, self).drop('''
-      event.originalEvent.preventDefault(); event.originalEvent.stopPropagation();
-      var files = event.originalEvent.dataTransfer.files; var data = new FormData();
-      $.each(event.originalEvent.dataTransfer.files, function(i, file) { 
-        var fileExt = '.' + file.name.split('.').pop();
-        if(%(extensions)s == null) {data.append(file.name, file)} else {
-          if(%(extensions)s.indexOf(fileExt) >= 0) { data.append(file.name, file)}}});
-      %(jsData)s; %(ajax)s''' % {"jsData": ";".join(data), "extensions": json.dumps(extensions),
-                                 "ajax": self._report.jsAjax(url, success=";".join(jsFncs) if refresh else '' ) })
     return self
 
   def __str__(self):

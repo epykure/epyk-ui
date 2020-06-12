@@ -233,8 +233,53 @@ class Datamap(object):
   def toStr(self):
     return "{%s}" % ",".join(["%s: %s" % (k, v) for k, v in self.__data])
 
+  def update(self, attrs):
+    self.attrs(attrs)
+    return self
+
   def __str__(self):
     return self.toStr()
+
+
+class FormData(object):
+  alias = None
+
+  def new(self, varName, varType="let"):
+    """
+    Description:
+    ------------
+
+    :param varName:
+    :param varType:
+    """
+    self.alias = varName
+    return "%s %s = new FormData()" % (varType, varName)
+
+  def get(self, varName):
+    """
+    Description:
+    ------------
+
+    :param varName:
+    """
+    self.alias = varName
+    return self
+
+  def append(self, name, value):
+    """
+    Description:
+    ------------
+
+    :param name:
+    :param value:
+    """
+    return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(name, None), value)
+
+  def update(self, attrs):
+    pass
+
+  def toStr(self):
+    return self.alias
 
 
 class JsData(object):
@@ -284,6 +329,14 @@ class JsData(object):
       return CrossFilter(self._src, varName=var_name, data=data, setVar=False)
 
     return CrossFilter(self._src, varName=JsUtils.getJsValid(var_name), data=data)
+
+  def formdata(self):
+    """
+    Description:
+    -----------
+
+    """
+    return FormData()
 
   def datamap(self, components=None, attrs=None):
     """
