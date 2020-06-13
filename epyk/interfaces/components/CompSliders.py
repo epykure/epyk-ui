@@ -132,7 +132,6 @@ class Sliders(object):
                                          options or {}, htmlCode, profile)
     return html_slider
 
-
   def progressbar(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
                   helper=None, options=None, profile=None):
     """
