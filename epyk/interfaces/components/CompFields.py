@@ -817,8 +817,6 @@ class Timelines(object):
     if not isinstance(start_date, datetime.datetime):
       start_date = datetime.datetime(*[int(x) for x in start_date.split("-")])
     end_date = start_date + datetime.timedelta(days=7)
-    start = start_date.strftime("%b %d")
-    end = end_date.strftime("%b %d")
     if today < end_date:
       next_day = today
       while next_day < end_date:
@@ -828,10 +826,76 @@ class Timelines(object):
 
         remaining_days += 1
         next_day += datetime.timedelta(days=1)
-    div = self.context.rptObj.ui.div("%s - %s" % (start, end), width=width, height=height, options=options, profile=profile)
+    div = self.context.rptObj.ui.div("%s - %s" % (start_date.strftime("%b %d"), end_date.strftime("%b %d")), width=width, height=height, options=options, profile=profile)
     div.style.css.background = self.context.rptObj.theme.colors[1]
     div.style.css.border_radius = 20
     div.style.css.padding = 2
     div.style.css.text_align = 'center'
     div.tooltip("%s days remaining" % remaining_days)
     return div
+
+  def categories(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+                 helper=None, options=None, profile=None):
+    values = ["Documentation", 'Analysis', 'Design', 'Implementation', 'Training']
+    html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper,
+                                            options, profile)
+    return html_input
+
+  def milestone(self, completion_date, icon=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param completion_date:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    today, remaining_days = datetime.datetime.now(), 0
+    if not isinstance(completion_date, datetime.datetime):
+      completion_date = datetime.datetime(*[int(x) for x in completion_date.split("-")])
+    if icon is None:
+      icon = "fas fa-fire-alt"
+    ms = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, profile=profile)
+    if completion_date > today:
+      next_day = today
+      while next_day < completion_date:
+        if next_day.weekday() in [6, 5]:
+          next_day += datetime.timedelta(days=1)
+          continue
+
+        remaining_days += 1
+        next_day += datetime.timedelta(days=1)
+      ms.tooltip("to be completed in %s (%s days left)" % (completion_date.strftime("%b %d"), remaining_days))
+      ms.icon.style.css.color = self.context.rptObj.theme.danger[1]
+    else:
+      ms.tooltip("Completed in %s" % completion_date.strftime("%b %d"))
+      ms.icon.style.css.color = self.context.rptObj.theme.greys[6]
+    return ms
+
+  def meeting(self, time, icon=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param time:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    dflt_options = {"working_hours": 8}
+    if options is not None:
+      dflt_options.update(options)
+    if icon is None:
+      icon = "far fa-handshake"
+    ms = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, profile=profile)
+    ms.tooltip("%s hours (%s days)" % (time, time / dflt_options["working_hours"]))
+    return ms
