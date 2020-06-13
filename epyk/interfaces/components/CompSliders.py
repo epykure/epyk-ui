@@ -165,3 +165,27 @@ class Sliders(object):
     html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper,
                                          options or {}, htmlCode, profile)
     return html_pr
+
+  def progress(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
+                  helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param number:
+    :param total:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param attrs:
+    :param helper:
+    :param options:
+    :param profile: 
+    """
+    progress = self.progressbar(number, total, width, height, htmlCode, attrs, helper, options, profile)
+    progress.style.css.border_radius = '50px'
+    progress.style.css.background = self.context.rptObj.theme.greys[4]
+    progress.options.css({"border-radius": "50px", "border-color": self.context.rptObj.theme.greys[5]})
+    return progress
