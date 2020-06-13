@@ -836,9 +836,27 @@ class Timelines(object):
 
   def categories(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
                  helper=None, options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param value:
+    :param label:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
     values = ["Documentation", 'Analysis', 'Design', 'Implementation', 'Training']
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper,
                                             options, profile)
+    if html_input.input.selected is None:
+      html_input.input.selected = value
     return html_input
 
   def milestone(self, completion_date, icon=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, profile=None):
@@ -898,4 +916,36 @@ class Timelines(object):
       icon = "far fa-handshake"
     ms = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, profile=profile)
     ms.tooltip("%s hours (%s days)" % (time, time / dflt_options["working_hours"]))
+    return ms
+
+  def workload(self, value, width=(25, 'px'), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param value:
+    :param width:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
+    dflt_options = {"working_hours": 8}
+    if options is not None:
+      dflt_options.update(options)
+    width = (width[0] * (value / dflt_options["working_hours"]), 'px')
+    height = width
+    ms = self.context.rptObj.ui.div(value, width=width, height=height, htmlCode=htmlCode, profile=profile)
+    ms.style.css.border_radius = 20
+    ms.style.css.text_align = "center"
+    ms.style.css.color = "white"
+    ms.style.css.line_height = "%s%s" % (height[0], height[1])
+    ms.style.css.vertical_align = "middle"
+    if value < (dflt_options["working_hours"] -2):
+      ms.style.css.background = self.context.rptObj.theme.success[1]
+    elif value < dflt_options["working_hours"]:
+      ms.style.css.background = self.context.rptObj.theme.warning[1]
+    else:
+      ms.style.css.background = self.context.rptObj.theme.danger[1]
     return ms
