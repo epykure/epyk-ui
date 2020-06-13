@@ -1,3 +1,4 @@
+import os
 from epyk.core import html
 
 
@@ -322,3 +323,45 @@ Attributes:
     :return:
     """
     return html.HtmlNetwork.DropFile(self.context.rptObj, placeholder, tooltip, options, profile)
+
+  def upload(self, icon=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
+    if icon is None:
+      icon = "fas fa-file-upload"
+    file = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, profile=profile)
+    return file
+
+  def download(self, name, icon=None, path=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    :param name:
+    :param icon:
+    :param path:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
+    mapped_file = {"excel": 'far fa-file-excel', 'pdf': 'far fa-file-pdf', 'code': 'far fa-file-code', 'csv': 'fas fa-file-csv',
+                   'word': 'fa-file-word'}
+    extension = name.split(".")[-1]
+    if extension in mapped_file:
+      icon = mapped_file[extension]
+    if icon is None:
+      icon = "fas fa-file-upload"
+
+    file = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, profile=profile)
+    file.tooltip(r"Download file: %(path)s\%(name)s" % {"path": path, "name": name})
+    if path is not None:
+      file.click(['''
+        var link = document.createElement("a");
+        link.href = 'file://localhost/%(path)s';
+        link.target="_blank";
+        link.setAttribute('download', '%(name)s');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        ''' % {"path": os.path.join(path, name), "name": name}])
+    return file
