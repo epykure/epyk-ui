@@ -285,25 +285,27 @@ class Badge(Html.Html):
   name = 'Badge'
   requirements = ('font-awesome', 'bootstrap')
 
-  def __init__(self, report, text, label, icon, background_color, color, url, tooltip, options, profile):
-    super(Badge, self).__init__(report, None, profile=profile)
+  def __init__(self, report, text, width, height, label, icon, background_color, color, url, tooltip, options, profile):
+    super(Badge, self).__init__(report, None, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     self.__options = OptButton.OptionsBadge(self, options)
     if self.options.badge_position == 'left':
       self.add_icon(icon, css={"float": 'None', 'margin-left': "5px"}, position="after")
     else:
       self.add_icon(icon, css={"float": 'left', 'margin-left': "5px"})
+    if hasattr(self.icon, 'css') and width[0] is not None:
+      self.icon.css({"font-size": "%s%s" % (width[0], width[1])})
     self.link = None
     if url is not None:
       self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "2px", "width": "auto", "font-size": Defaults_css.font(-4)})
+          "padding": "2px", "width": "auto"})
       self.link.options.managed = False
     else:
       self.link = self._report.ui.text(text).css({'display': 'inline-block',
-          "padding": "2px", "width": "auto", "font-size": Defaults_css.font(-4)})
+          "padding": "2px", "width": "auto"})
     self.link.css(self.options.badge_css)
-    self.link.css({"color": color, 'background-color': background_color, "border-radius": "10px",
-                   'padding': '2px 2px 4px 2px', 'margin-left': '2px'})
+    self.link.css({"color": color, "border-radius": "20px", 'margin-left': '2px', 'position': 'relative', 'right': '12px',
+                   'background': background_color, 'top': "-5px"})
     self.link.options.managed = False
     self.attr['class'].add("badge") # From bootstrap
     if tooltip is not None:
