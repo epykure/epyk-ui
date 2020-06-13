@@ -11,7 +11,7 @@ class Icons(object):
   def get(self):
     return JsFontAwesome
 
-  def awesome(self, icon, text=None, tooltip=None, position=None, width=(None, 'px'), height=(None, 'px'),
+  def awesome(self, icon, text=None, tooltip=None, position=None, width=(25, 'px'), height=(25, 'px'),
               htmlCode=None, profile=None):
     """
     Description:
@@ -731,7 +731,7 @@ Attributes:
     html_opts = html.HtmlEvent.OptionsBar(self.context.rptObj, records, width, height, color, options)
     return html_opts
 
-  def avatar(self, img, width=(30, 'px'), height=(None, ''), options=None, profile=None):
+  def avatar(self, img, name=None, width=(30, 'px'), height=(None, ''), options=None, profile=None):
     """
     Description:
     ------------
@@ -752,4 +752,6 @@ Attributes:
               'background-repeat': 'no-repeat',
               'background-position': 'center', 'background-size': 'cover', 'cursor': 'pointer',
               'background-image': 'url(%s)' % img})
+    if name is not None:
+      avatar.tooltip(name)
     return avatar

@@ -8,7 +8,7 @@ class Titles(object):
   def __init__(self, context):
     self.context = context
 
-  def head(self, text=None, options=None, tooltip="", width=(100, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def head(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -36,7 +36,7 @@ class Titles(object):
     html_title.style.css.bold()
     return html_title
 
-  def headline(self, text=None, options=None, tooltip="", width=(100, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def headline(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -60,7 +60,7 @@ class Titles(object):
     html_title.style.css.font_style = 'italic'
     return html_title
 
-  def title(self, text=None, options=None, tooltip="", width=(100, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def title(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -82,7 +82,7 @@ class Titles(object):
     html_title.style.css.font_size = Defaults_css.font(6)
     return html_title
 
-  def rubric(self, text=None, options=None, tooltip="", width=(100, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def rubric(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
     """
     Description:
     ------------

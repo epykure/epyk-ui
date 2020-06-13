@@ -79,6 +79,29 @@ class Buttons(object):
                                          tooltip=tooltip, profile=profile, options=options)
     return html_button
 
+  def small(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None,
+             profile=None, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
+    html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
+                                         tooltip=tooltip, profile=profile, options=options)
+    html_button.style.css.line_height = 12
+    html_button.style.css.padding = 2
+    return html_button
+
   def important(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:

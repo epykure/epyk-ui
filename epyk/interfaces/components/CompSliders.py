@@ -182,7 +182,7 @@ class Sliders(object):
     :param attrs:
     :param helper:
     :param options:
-    :param profile: 
+    :param profile:
     """
     progress = self.progressbar(number, total, width, height, htmlCode, attrs, helper, options, profile)
     progress.style.css.border_radius = '50px'

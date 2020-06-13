@@ -348,6 +348,14 @@ class Components(object):
     return CompFields.Fields(self)
 
   @property
+  def timelines(self):
+    """
+    Description:
+    ------------
+    """
+    return CompFields.Timelines(self)
+
+  @property
   def icons(self):
     """
     Description:
@@ -438,7 +446,10 @@ class Components(object):
     Add a content table to the page
 
     Related Pages:
-:param width: Optional. A tuple with the integer for the component width and its unit
+
+    Attributes:
+    ----------
+    :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
     """

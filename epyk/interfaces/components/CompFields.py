@@ -718,3 +718,120 @@ class Fields(object):
     if html_input.input.selected is None:
       html_input.input.selected = value
     return html_input
+
+
+class Timelines(object):
+  def __init__(self, context):
+    self.context = context
+
+  def view(self, start_date, end_date, width=(100, "%"), height=(None, "px"), options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param start_date:
+    :param end_date:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    if not isinstance(start_date, datetime.datetime):
+      start_date = datetime.datetime(*[int(x) for x in start_date.split("-")])
+    if not isinstance(end_date, datetime.datetime):
+      end_date = datetime.datetime(*[int(x) for x in end_date.split("-")])
+
+    today, remaining_days = datetime.datetime.now(), 0
+    dt = start_date
+    while dt < end_date:
+      if not dt.weekday() in [6, 5]:
+        if dt >= today:
+          remaining_days += 1
+      dt += datetime.timedelta(days=1)
+    div = self.context.rptObj.ui.div("%s - %s" % (start_date.strftime("%b %d"), end_date.strftime("%b %d")), width=width, height=height, options=options, profile=profile)
+    div.style.css.background = self.context.rptObj.theme.colors[1]
+    div.style.css.border_radius = 20
+    div.style.css.padding = 2
+    div.style.css.text_align = 'center'
+    div.tooltip("%s days remaining" % remaining_days)
+    if end_date < today:
+      div.style.css.background = self.context.rptObj.theme.greys[6]
+      div.style.css.color = self.context.rptObj.theme.greys[0]
+    return div
+
+  def period(self, start_date, days, width=(100, "%"), height=(None, "px"), options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param start_date:
+    :param days:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    today, remaining_days = datetime.datetime.now(), 0
+    if not isinstance(start_date, datetime.datetime):
+      start_date = datetime.datetime(*[int(x) for x in start_date.split("-")])
+    end_date = start_date
+    for _ in range(days):
+      if end_date >= today:
+        remaining_days += 1
+      if end_date.weekday() == 4:
+        # akip weekends
+        end_date += datetime.timedelta(days=3)
+      else:
+        end_date += datetime.timedelta(days=1)
+    if end_date >= today:
+      remaining_days += 1
+    div = self.context.rptObj.ui.div("%s - %s" % (start_date.strftime("%b %d"), end_date.strftime("%b %d")), width=width, height=height, options=options, profile=profile)
+    div.style.css.background = self.context.rptObj.theme.colors[1]
+    div.style.css.border_radius = 20
+    div.style.css.padding = 2
+    div.style.css.text_align = 'center'
+    div.tooltip("%s days remaining" % remaining_days)
+    if end_date < today:
+      div.style.css.background = self.context.rptObj.theme.greys[6]
+      div.style.css.color = self.context.rptObj.theme.greys[0]
+    return div
+
+  def week(self, start_date, width=(100, "%"), height=(None, "px"), options=None, profile=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param start_date:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    today, remaining_days = datetime.datetime.now(), 0
+    if not isinstance(start_date, datetime.datetime):
+      start_date = datetime.datetime(*[int(x) for x in start_date.split("-")])
+    end_date = start_date + datetime.timedelta(days=7)
+    start = start_date.strftime("%b %d")
+    end = end_date.strftime("%b %d")
+    if today < end_date:
+      next_day = today
+      while next_day < end_date:
+        if next_day.weekday() in [6, 5]:
+          next_day += datetime.timedelta(days=1)
+          continue
+
+        remaining_days += 1
+        next_day += datetime.timedelta(days=1)
+    div = self.context.rptObj.ui.div("%s - %s" % (start, end), width=width, height=height, options=options, profile=profile)
+    div.style.css.background = self.context.rptObj.theme.colors[1]
+    div.style.css.border_radius = 20
+    div.style.css.padding = 2
+    div.style.css.text_align = 'center'
+    div.tooltip("%s days remaining" % remaining_days)
+    return div
