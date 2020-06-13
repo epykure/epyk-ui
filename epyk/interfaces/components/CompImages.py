@@ -324,7 +324,7 @@ class Images(object):
                                     profile=profile)
     return html_icon
 
-  def badge(self, text=None, label=None, icon=None, background_color=None, color=None, url=None,
+  def badge(self, text="", label=None, icon=None, background_color=None, color=None, url=None,
             tooltip=None, options=None, profile=None):
     """
     Description:
