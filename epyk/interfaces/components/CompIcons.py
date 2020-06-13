@@ -730,3 +730,26 @@ Attributes:
     options = options or {}
     html_opts = html.HtmlEvent.OptionsBar(self.context.rptObj, records, width, height, color, options)
     return html_opts
+
+  def avatar(self, img, width=(30, 'px'), height=(None, ''), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+Attributes:
+    ----------
+    :param img:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    img = img.replace("\\", "/")
+    if height[0] is None:
+      height = width
+    avatar = self.context.rptObj.ui.div("&nbsp;", width=width, height=height, options=options, profile=profile)
+    avatar.css({"padding": '5px', 'border-radius': '30px',
+              'background-repeat': 'no-repeat',
+              'background-position': 'center', 'background-size': 'cover', 'cursor': 'pointer',
+              'background-image': 'url(%s)' % img})
+    return avatar

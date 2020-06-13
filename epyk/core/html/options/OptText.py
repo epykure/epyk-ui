@@ -259,3 +259,42 @@ class OptionsComposite(Options):
   @reset_class.setter
   def reset_class(self, bool):
     self.set(bool)
+
+
+class OptionsStatus(Options):
+
+  @property
+  def states(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @states.setter
+  def states(self, bool):
+    self.set(bool)
+
+  @property
+  def color(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get('white')
+
+  @color.setter
+  def color(self, color):
+    self.set(color)
+
+  @property
+  def background(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get('grey')
+
+  @background.setter
+  def background(self, color):
+    self.set(color)

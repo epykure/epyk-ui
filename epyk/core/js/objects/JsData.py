@@ -233,6 +233,9 @@ class Datamap(object):
   def toStr(self):
     return "{%s}" % ",".join(["%s: %s" % (k, v) for k, v in self.__data])
 
+  def get(self, value, dflt=None):
+    return JsObject.JsObject.get("{%s}[%s]" % (",".join(["%s: %s" % (k, v) for k, v in self.__data]), JsUtils.jsConvertData(value, None)))
+
   def update(self, attrs):
     self.attrs(attrs)
     return self

@@ -649,6 +649,9 @@ class Col(Html.Html):
       self.css({'display': 'inline-block'})
     self.attr["class"].add('col')
     self.style.justify_content = self.position
+    if self.position == 'middle':
+      # Bootstrap vertical align middle
+      self.attr["class"].add('my-auto')
 
   @property
   def options(self):

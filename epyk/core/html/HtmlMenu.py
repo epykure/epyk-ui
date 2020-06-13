@@ -137,12 +137,10 @@ class ContextMenu(Html.Html):
     self.__options = OptList.OptionsLi(self, options)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
               'padding': 0, 'margin': 0, 'background-color': self._report.theme.greys[0],
-              'border': '1px solid %s' % self._report.theme.success[0], 'border-radius': '2px'
-              }
-             )
+              'border': '1px solid %s' % self._report.theme.success[0], 'border-radius': '2px'})
     self.style.css.shadow_box()
     for rec in recordSet:
-      self += rec
+      self.__add__(rec)
 
   @property
   def options(self):
@@ -161,12 +159,20 @@ class ContextMenu(Html.Html):
     self += {"value": value, 'icon': icon}
     return self
 
+  def add(self, htmlObj):
+    """
+
+    :param htmlObj:
+    """
+    self.__add__(htmlObj)
+    return self.val[-1].val
+
   def __add__(self, htmlObj):
     """
 
     :param d:
     """
-    if not hasattr(htmlObj, 'inReport'):
+    if not hasattr(htmlObj, 'options'):
       if isinstance(htmlObj, dict):
         if htmlObj['icon'] is not None:
           i = self._report.ui.icon(htmlObj['icon'])
@@ -178,11 +184,10 @@ class ContextMenu(Html.Html):
           htmlObj = self._report.ui.div(htmlObj['value'])
       else:
         htmlObj = self._report.ui.div(htmlObj)
-    htmlObj.options.managed = False
     li_obj = Li(self._report, htmlObj) if not isinstance(htmlObj, Li) else htmlObj
     li_obj.css({"padding": "5px", 'cursor': 'pointer'})
-    if hasattr(htmlObj, 'inReport'):
-      htmlObj.options.managed = False
+    li_obj.options.managed = False
+    htmlObj.options.managed = False
     self.val.append(li_obj)
     return self
 

@@ -291,3 +291,23 @@ class Rich(object):
     """
     html_help = html.HtmlTextComp.Composite(self.context.rptObj, schema, width=width, height=height, htmlCode=htmlCode, profile=profile, options=options or {}, helper=helper)
     return html_help
+
+  def status(self, status, width=(None, "%"), height=(None, "px"), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param status:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    :param options:
+    """
+    dflt_options = {'states': {"Done": 'green', 'In Progress': 'orange', 'Blocked': 'red'}}
+    if options is not None:
+      dflt_options.update(options)
+    html_help = html.HtmlTextComp.Status(self.context.rptObj, status, width=width, height=height, htmlCode=htmlCode, profile=profile, options=dflt_options)
+    return html_help
