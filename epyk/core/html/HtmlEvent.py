@@ -23,8 +23,8 @@ class ProgressBar(Html.Html):
     options['max'] = total
     super(ProgressBar, self).__init__(report, number, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'}, profile=profile)
     self.add_helper(helper)
-    self._jsStyles = {'css': {"background": self._report.theme.success[1]}}
     self.__options = OptSliders.OptionsProgBar(self, options)
+    self.options.background = self._report.theme.success[1]
 
   @property
   def options(self):
@@ -45,8 +45,8 @@ class ProgressBar(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      options.value = parseFloat(data); jQuery(htmlObj).progressbar(options).find('div').css(options.css);
-      %(jqId)s.progressbar(options).find('div').attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")");
+      options.value = parseFloat(data);
+      %(jqId)s.progressbar(options).find('div').attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")").css(options.css);
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
