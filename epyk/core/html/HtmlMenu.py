@@ -73,6 +73,7 @@ class HtmlNavBar(Html.Html):
 
 
 class HtmlFooter(Html.Html):
+  name = 'footer'
 
   def __init__(self, report, components, width, height, profile):
     super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
@@ -278,3 +279,49 @@ class PanelsBar(Html.Html):
       ])
 
     return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.menus.html(), self.panels.html())
+
+
+class Shortcut(Html.Html):
+  name = 'shortcut'
+
+  def __init__(self, report, components, width, height, htmlCode, options, profile):
+    super(Shortcut, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.logo = None
+    for component in components:
+      if not hasattr(component, 'options'):
+        component = report.ui.icons.awesome(component, htmlCode='button'),
+      self.__add__(component)
+    self.css({"background": report.theme.colors[1], "position": 'absolute', 'top': 0, 'overflow-x': 'hidden',
+              'z-index': 20, 'text-align': 'center'})
+
+  def __add__(self, component):
+    """ Add items to a container """
+    if hasattr(component, 'htmlCode'):
+      component.options.managed = False
+    #
+    component.style.css.width = self.css("width")
+    component.style.css.text_align = 'center'
+    component.style.css.margin = 'auto'
+    component.style.css.display = 'block'
+    self.val.append(component)
+    return self
+
+  def add_logo(self, icon, path=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param icon:
+    :param path:
+    """
+    self.logo = self._report.ui.icons.epyk()
+    return self
+
+  def __str__(self):
+    if self.logo is None:
+      self.logo = self._report.ui.icons.epyk()
+    self.logo.style.css.margin_right = 10
+    str_div = "".join([self.logo.html()] + [v.html() if hasattr(v, 'html') else str(v) for v in self.val])
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)

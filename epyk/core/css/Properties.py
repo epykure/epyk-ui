@@ -1571,6 +1571,8 @@ class CssMixin(object):
   @margin_right.setter
   def margin_right(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"margin-right": val})
 
   @property

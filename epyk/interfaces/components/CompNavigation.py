@@ -401,7 +401,7 @@ class Navigation(object):
     """
     d = self.context.rptObj.ui.div(components)
     d.css({"background": self.context.rptObj.theme.colors[2], "position": 'absolute', 'top': 0, 'height': '100%',
-           'overflow-x': 'hidden', 'width': "%spx" % size, 'z-index': 10})
+           'overflow-x': 'hidden', 'width': "%spx" % size, 'z-index': 20})
     if position == 'left':
       d.css({'left': 0, 'margin-left': "-%spx" % size, 'border-right': '1px solid %s' % self.context.rptObj.theme.colors[5], 'padding': '5px'})
     else:
@@ -450,6 +450,32 @@ class Navigation(object):
     if options is not None:
       dflt_options.update(options)
     h_drawer = html.HtmlMenu.PanelsBar(self.context.rptObj, width, height, dflt_options, helper, profile)
+    return h_drawer
+
+  def shortcut(self, components=None, logo=None, size=(40, 'px'), options=None, profile=None, htmlCode=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param components:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    dflt_options = {"position": 'left'}
+    if options is not None:
+      dflt_options.update(options)
+
+    if dflt_options["position"] in ['top', 'bottom']:
+      width = (100, '%')
+      height = size
+    else:
+      width = size
+      height = (100, '%')
+    h_drawer = html.HtmlMenu.Shortcut(self.context.rptObj, components or [], width, height, htmlCode, dflt_options, profile)
     return h_drawer
 
 
