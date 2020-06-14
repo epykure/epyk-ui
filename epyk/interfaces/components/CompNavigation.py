@@ -384,6 +384,7 @@ class Navigation(object):
     :param profile: get profiling info
     """
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
+    footer.style.css.color = self.context.rptObj.theme.greys[4]
     return footer
 
   def side(self, components=None, anchor=None, size=262, position='right', profile=False):

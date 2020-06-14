@@ -80,6 +80,7 @@ class Titles(object):
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
     html_title.style.css.font_size = Defaults_css.font(6)
+    html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     return html_title
 
   def rubric(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):

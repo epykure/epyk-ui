@@ -11,6 +11,8 @@ class DatePicker(Html.Html):
   def __init__(self, report, value, label, icon, width, height, color, htmlCode, profile, options, helper):
     super(DatePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
     # Add all the internal components input, label, icon and helper
+    if width[0] is not None and width[1] == 'px':
+      width = (width[0] - 30, width[1])
     self.input = self._report.ui.inputs.d_date(self.val, width=width, height=height, options=options).css({"padding": 0})
     self.prepend_child(self.input)
     if not self.input.options.inline:

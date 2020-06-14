@@ -45,7 +45,10 @@ class Texts(object):
     """
     if not isinstance(width, tuple):
       width = (width, 'px')
-    text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options or {}, helper, profile)
+    dfl_options = {"reset": False, "markdown": False, "maxlength": None}
+    if options is not None:
+      dfl_options.update(options)
+    text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, dfl_options, helper, profile)
     return text_comp
 
   def label(self, text="", color=None, align='center', width=(100, "px"), height=('auto', ""), htmlCode=None,

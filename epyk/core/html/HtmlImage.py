@@ -36,24 +36,6 @@ class Image(Html.Html):
     self.attr["src"] = "%(path)s/%(image)s" % self.val
     return '<img %s></img>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val): return re.findall("!\[([a-zA-Z 0-9]*)\]\(([:a-zA-Z \-\"/.0-9]*)\)", val)
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report=None):
-    for name, image in regExpResult:
-      val = val.replace("![%s](%s)" % (name, image), "report.img('%s')" % image)
-      if report is not None:
-        getattr(report, 'img')(image)
-    return [val]
-
-  @classmethod
-  def jsMarkDown(cls, vals):
-    return "![alt text](%s/images/%s)" % (vals['path'], vals['image'])
-
 
 class AnimatedImage(Html.Html):
   name = 'Animated Picture'

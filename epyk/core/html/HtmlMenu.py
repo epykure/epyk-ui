@@ -109,6 +109,8 @@ class HtmlFooter(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to the footer """
+    if not hasattr(htmlObj, 'options'):
+      htmlObj = self._report.ui.div(htmlObj)
     htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     return self
@@ -287,26 +289,57 @@ class Shortcut(Html.Html):
   def __init__(self, report, components, width, height, htmlCode, options, profile):
     super(Shortcut, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.logo = None
+    self.__options = options
     for component in components:
       if not hasattr(component, 'options'):
-        component = report.ui.icons.awesome(component, htmlCode='button'),
+        component = report.ui.icons.awesome(component)
       self.__add__(component)
-    self.css({"background": report.theme.colors[1], "position": 'absolute', 'top': 0, 'overflow-x': 'hidden',
-              'z-index': 20, 'text-align': 'center'})
+    self.css({"background": report.theme.colors[1], "position": 'fixed', 'overflow': 'hidden', 'z-index': 20})
+    self.style.css.padding = 0
+    if options['position'] in ['left', 'right']:
+      self.css({'text-align': 'center'})
+    elif options['position'] == 'top':
+      self.css({'top': '0'})
+    elif options['position'] == 'bottom':
+      self.css({'bottom': '0'})
+
+  @property
+  def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: GrpClsMenu.ClassShortcut
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsMenu.ClassShortcut(self)
+    return self._styleObj
 
   def __add__(self, component):
     """ Add items to a container """
     if hasattr(component, 'htmlCode'):
       component.options.managed = False
-    #
-    component.style.css.width = self.css("width")
-    component.style.css.text_align = 'center'
+
+    if self.__options['position'] in ['left', 'right']:
+      component.style.css.width = self.css("width")
+      component.style.css.text_align = 'center'
+      component.style.css.display = 'block'
+      component.style.css.margin_bottom = 5
+
+    if self.__options['position'] == 'top':
+      component.style.css.line_height = self.css("height")
+      component.style.css.height = self.css("height")
+      component.style.css.vertical_align = 'top'
+      if component.style.css.position is None:
+        component.style.css.position = 'relative'
+      component.style.css.top = -3
+      component.style.css.display = 'inline-block'
+
     component.style.css.margin = 'auto'
-    component.style.css.display = 'block'
     self.val.append(component)
     return self
 
-  def add_logo(self, icon, path=None):
+  def add_logo(self, icon, path=None, align="center", width=(32, 'px'), height=(32, 'px')):
     """
     Description:
     ------------
@@ -315,13 +348,22 @@ class Shortcut(Html.Html):
     ----------
     :param icon:
     :param path:
+    :param align:
+    :param width:
+    :param height:
     """
-    self.logo = self._report.ui.icons.epyk()
+    self.logo = self._report.ui.img(icon, path=path, align=align, width=width, height=height)
+    self.logo.style.css.margin_top = 5
+    if self.__options['position'] in ['left', 'right']:
+      self.logo.style.css.margin_bottom = 15
+      self.logo.style.css.margin_right = 0
+    else:
+      self.logo.style.css.margin_right = 10
     return self
 
   def __str__(self):
     if self.logo is None:
       self.logo = self._report.ui.icons.epyk()
-    self.logo.style.css.margin_right = 10
+    self.logo.options.managed = False
     str_div = "".join([self.logo.html()] + [v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)

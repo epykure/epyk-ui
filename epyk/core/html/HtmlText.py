@@ -296,7 +296,7 @@ class Text(Html.Html):
                                htmlCode=htmlCode, profile=profile)
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
-    self._jsStyles = {"reset": self.options.reset, "markdown": self.options.markdown, "maxlength": self.options.limit_char}
+    #self._jsStyles = {"reset": self.options.reset, "markdown": self.options.markdown, "maxlength": self.options.limit_char}
     self.css({'text-align': align})
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -389,16 +389,11 @@ class Text(Html.Html):
       '''
 
   def __str__(self):
-    if self.options.limit_char and len(self.content) > self.options.limit_char:
-      self.set_attrs(name="title", value=self.content)
-      if self.options.markdown:
-        self._vals = self._report.py.markdown.all(self.content[:self.options.limit_char])
-      else:
-        self._vals = self.content[:self.options.limit_char]
-      return '<div %s>%s...</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content, self.helper)
-
     if self.options.markdown:
-      self._vals = self._report.py.markdown.all(self.content)
+      # Delegate to the JavaScript builder
+      self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+      return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+
     return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content, self.helper)
 
 
