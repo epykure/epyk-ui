@@ -60,7 +60,7 @@ class PyOuts(object):
     self._report, self._options = report, options
     self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
 
-  def _to_html_obj(self, htmlParts=None, cssParts=None):
+  def _to_html_obj(self, htmlParts=None, cssParts=None, split_js=False):
     """
     Description:
     ------------
@@ -85,7 +85,7 @@ class PyOuts(object):
           htmlParts.append(component.html())
         #
         cssParts.update(component.style.get_classes_css())
-    onloadParts = list(self._report._jsText)
+    onloadParts, onloadPartsCommon = list(self._report._jsText), {}
     for data_id, data in self._report._props.get("data", {}).get('sources', {}).items():
       onloadParts.append("var data_%s = %s" % (data_id, json.dumps(data)))
 
@@ -93,9 +93,11 @@ class PyOuts(object):
       sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
       onloadParts.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
 
-    for c, d in self._report._props.get('js', {}).get("constructors", {}).items():
-      onloadParts.append(d)
-
+    if split_js:
+      onloadPartsCommon = self._report._props.get('js', {}).get("constructors", {})
+    else:
+      for c, d in self._report._props.get('js', {}).get("constructors", {}).items():
+        onloadParts.append(d)
     for c, d in self._report._props.get('js', {}).get("configs", {}).items():
       onloadParts.append(str(d))
 
@@ -140,6 +142,7 @@ class PyOuts(object):
       'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), "\n".join(self._report._cssText)),
       'cssContainer': ";".join(["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
       'content': "\n".join(htmlParts),
+      'jsFrgsCommon': onloadPartsCommon, # This is only used in some specific web frameworks and it is better to keep the data as list
       'jsFrgs': ";".join(onloadParts),
       'cssImports': importMng.cssResolve(self._report.cssImport, self._report.cssLocalImports, excluded=self.excluded_packages),
       'jsImports': importMng.jsResolve(self._report.jsImports, self._report.jsLocalImports, excluded=self.excluded_packages)
@@ -299,7 +302,7 @@ class PyOuts(object):
         f.write(results["cssStyle"])
     return path
 
-  def html_file(self, path=None, name=None):
+  def html_file(self, path=None, name=None, split_files=False):
     """
     Description:
     ------------
@@ -320,25 +323,57 @@ class PyOuts(object):
       os.makedirs(path, exist_ok=True)
     if name is None:
       name = int(time.time())
-    file_path = os.path.join(path, "%s.html" % name)
-    with open(file_path, "w") as f:
-      htmlParts = []
-      cssParts = dict(self._report.body.style.get_classes_css())
-      order_components = list(self._report.components.keys())
-      for component_id in order_components:
-        component = self._report.components[component_id]
-        if component.name == 'Body':
-          continue
+    html_file_path = os.path.join(path, "%s.html" % name)
+    htmlParts = []
+    cssParts = dict(self._report.body.style.get_classes_css())
+    order_components = list(self._report.components.keys())
+    for component_id in order_components:
+      component = self._report.components[component_id]
+      if component.name == 'Body':
+        continue
 
-        if component.options.managed:
-          htmlParts.append(component.html())
-        cssParts.update(component.style.get_classes_css())
-      body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
-      results = self._to_html_obj(htmlParts, cssParts)
+      if component.options.managed:
+        htmlParts.append(component.html())
+      cssParts.update(component.style.get_classes_css())
+    body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
+    results = self._to_html_obj(htmlParts, cssParts, split_js=split_files)
+    if split_files:
+      results['cssImports'] = '%s\n<link rel="stylesheet" href="%s.css" type="text/css">\n\n' % (results['cssImports'], name)
+      body = '%s\n\n<script language="javascript" type="text/javascript" src="%s.js"></script>' % (body, name)
+      with open(os.path.join(path, "%s.css" % name), "w") as f:
+        f.write(results['cssStyle'])
+
+      with open(os.path.join(path, "%s.js" % name), "w") as f:
+        f.write(";".join(results['jsFrgsCommon'].values()))
+
+    with open(html_file_path, "w") as f:
       results['body'] = body
       results['header'] = self._report.headers
       f.write(HtmlTmplBase.STATIC_PAGE % results)
-    return file_path
+    return html_file_path
+
+  def web(self):
+    """
+    Description:
+    ------------
+    Return the complete page structure to allow the various web framework to split the code accordingly.
+    Fragments will then be used by the various framework to create the corresponding pages
+    """
+    htmlParts = []
+    cssParts = dict(self._report.body.style.get_classes_css())
+    order_components = list(self._report.components.keys())
+    for component_id in order_components:
+      component = self._report.components[component_id]
+      if component.name == 'Body':
+        continue
+
+      if component.options.managed:
+        htmlParts.append(component.html())
+      cssParts.update(component.style.get_classes_css())
+    body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
+    results = self._to_html_obj(htmlParts, cssParts, split_js=True)
+    results['body'] = body.replace("<body", "<div").replace("</body>", "</div>")
+    return results
 
   def markdown_file(self, path=None, name=None):
     """
@@ -401,98 +436,6 @@ class PyOuts(object):
     results['body'] = body
     results['header'] = self._report.headers
     return self.html_tmpl.strip() % results
-
-  # def pdf(self):
-  #   """
-  #
-  #   :return:
-  #   """
-  #   self.word()
-  #   # Then save the file to pdf
-  #
-  # def word(self, path=None, name=None):
-  #   """
-  #   Description:
-  #   ------------
-  #   Writes the result to an Word document
-  #
-  #   Attributes:
-  #   ----------
-  #   :param path: The path in which the output files will be created
-  #   :param name: The filename without the extension
-  #
-  #   :return:
-  #   """
-  #   from docx import Document
-  #   from docx.shared import RGBColor
-  #
-  #   if path is None:
-  #     path = os.path.join(os.getcwd(), "outs", "office")
-  #   else:
-  #     path = os.path.join(path, "office")
-  #   if not os.path.exists(path):
-  #     os.makedirs(path, exist_ok=True)
-  #   timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
-  #   name = name or 'word_%s.docx' % timestamp
-  #   document = Document()
-  #   for objId in self._report.content:
-  #     if self._report.htmlItems[objId].options.managed:
-  #       try:
-  #         self._report.htmlItems[objId].to_word(document)
-  #       except Exception as err:
-  #         error_title = document.add_heading().add_run("Error")
-  #         error_title.font.color.rgb = RGBColor(255, 0, 0)
-  #         error_title.font.italic = True
-  #         error_paragraph = document.add_paragraph().add_run((str(err)))
-  #         error_paragraph.font.color.rgb = RGBColor(255, 0, 0)
-  #         error_paragraph.font.italic = True
-  #   document.save(os.path.join(path, name))
-  #   return name
-  #
-  # def excel(self, path=None, name=None):
-  #   """
-  #   Description:
-  #   ------------
-  #   Writes the result to an Excel document
-  #
-  #   Attributes:
-  #   ----------
-  #   :param path: The path in which the output files will be created
-  #   :param name: The filename without the extension
-  #
-  #   :return:
-  #   """
-  #   xls = requires("xlsxwriter", reason='Missing Package', install='xlsxwriter', source_script=__file__)
-  #
-  #   if path is None:
-  #     path = os.path.join(os.getcwd(), "outs", "office")
-  #   else:
-  #     path = os.path.join(path, "office")
-  #   if not os.path.exists(path):
-  #     os.makedirs(path, exist_ok=True)
-  #   timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
-  #   name = name or '%s_%s.xlsx' % (self._report.run.script_name, timestamp)
-  #   workbook = xls.Workbook(os.path.join(path, name))
-  #   worksheet = workbook.add_worksheet()
-  #   cursor = {'row': 0, 'col': 0}
-  #   for objId in self._report.content:
-  #     if self._report.htmlItems[objId].options.managed:
-  #       try:
-  #         self._report.htmlItems[objId].to_xls(workbook, worksheet, cursor)
-  #       except Exception as err:
-  #         cell_format = workbook.add_format({'bold': True, 'font_color': 'red'})
-  #         worksheet.write(cursor['row'], 0, str(err), cell_format)
-  #         cursor['row'] += 2
-  #   workbook.close()
-  #   return name
-  #
-  # def power_point(self):
-  #   """
-  #   Description:
-  #   ------------
-  #
-  #   :return:
-  #   """
 
   @property
   def browser(self):

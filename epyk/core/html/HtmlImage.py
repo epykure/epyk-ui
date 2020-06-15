@@ -34,7 +34,7 @@ class Image(Html.Html):
 
   def __str__(self):
     self.attr["src"] = "%(path)s/%(image)s" % self.val
-    return '<img %s></img>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<img %s />%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
 
 class AnimatedImage(Html.Html):

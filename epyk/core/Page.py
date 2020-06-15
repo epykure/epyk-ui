@@ -40,8 +40,15 @@ class Report(object):
     """
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
     self._tags, self._header_obj, self.__import_manage = None, None, None
-    self._props = {'js': {'onReady': OrderedSet(), 'events': {}, 'datasets': {}, 'configs': {}, 'builders': OrderedSet()},
-                   'context': {'framework': 'JS'}}
+    self._props = {'js': {
+        'onReady': OrderedSet(), # JavaScript framework triggered after the HTML. Impact the entire page
+        'events': {},
+        'constructors': {}, # Static and generic builders
+        'datasets': {}, # Input data used in the various component (Page global variables)
+        'configs': {}, # Global server configurations used for connection to the backend
+        'builders': OrderedSet()}, # Trigger the component generation using the Js Constructor
+        'context': {'framework': 'JS'} # Used on the Python side to make some decisions
+    }
     self.components = collections.OrderedDict() # Components for the entire page
     self.start_time, self.inputs, self._propagate = time.time(), inputs or {}, []
     self._scroll, self._contextMenu = set(), {}

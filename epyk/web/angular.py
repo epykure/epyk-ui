@@ -51,6 +51,14 @@ def requirements(report):
   return npms
 
 
+JS_MODULES_IMPORTS = {
+  'showdown': '''
+import Showdown from 'showdown';
+var showdown = Showdown;
+'''
+}
+
+
 class NGModule(object):
 
   def __init__(self, ang_app_path):
@@ -692,9 +700,11 @@ class Components(object):
 class App(object):
 
   def __init__(self, app_path, app_name, alias, name, report=None):
-    self.imports = {'Component': '@angular/core', 'HttpClient': '@angular/common/http',
-                    'HttpHeaders': '@angular/common/http', 'Injectable': '@angular/core',
-                    'ViewChild': '@angular/core'}
+    self.imports = {'Component': '@angular/core',
+                    #'HttpClient': '@angular/common/http',
+                    #'HttpHeaders': '@angular/common/http', 'Injectable': '@angular/core',
+                    #'ViewChild': '@angular/core'
+                    }
     self.vars, self.__map_var_names, self._report = {}, {}, report
     self._app_path, self._app_name = app_path, app_name
     self.alias, self.__path, self.className, self.__components = alias, 'apps', name, None
@@ -792,23 +802,24 @@ class App(object):
     if not os.path.exists(module_path):
       os.makedirs(module_path)
 
+    page = self._report.outs.web()
+
     self.spec.export(path=path, target_path=None)
-    for component in self._report.components.values():
-      if component.options.managed:
-        print(component.properties())
+    self.__fncs['ngAfterViewInit'] = [page['jsFrgs']]
 
     with open(os.path.join(module_path, "%s.ts" % self.name), "w") as f:
       for comp, path in self.imports.items():
         f.write("import { %s } from '%s';\n" % (comp, path))
+      f.write("import { %s } from './%s.js';" % (", ".join(list(page['jsFrgsCommon'].keys())),  self.alias.replace("-", "_")))
       f.write("\n")
       # All the applicatops need this as they will interact with a Flask backend
-      f.write("@Injectable({\n")
-      for k , v in self.__injectable_prop.items():
-        f.write(" %s: %s\n" % (k, json.dumps(v)))
-      f.write("})\n")
+      #f.write("@Injectable({\n")
+      #for k , v in self.__injectable_prop.items():
+      #  f.write(" %s: %s\n" % (k, json.dumps(v)))
+      #f.write("})\n")
       f.write("\n")
       f.write("@Component({\n")
-      f.write("  selector: 'app-%s',\n" % self.alias)
+      f.write("  selector: '%s',\n" % self.alias)
       f.write("  templateUrl: '%s',\n" % "./%s.html" % self.name)
       f.write("  styleUrls: ['%s']\n" % "./%s.css" % self.name)
       f.write("})\n")
@@ -830,11 +841,19 @@ class App(object):
       for name, fnc_def in self.__fncs.items():
         f.write("  %s(){ %s } \n" % (name, ";".join(fnc_def)))
       f.write("}\n")
+
+    with open(os.path.join(module_path, "%s.js" % self.alias.replace("-", "_")), "w") as f:
+      for js_dep in JS_MODULES_IMPORTS:
+        if js_dep in self._report.jsImports:
+          f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
+      for buider in page['jsFrgsCommon'].values():
+        f.write("export %s;\n" % buider)
+
     with open(os.path.join(module_path, "%s.html" % self.name), "w") as f:
-      f.write("".join(self.htmls))
+      f.write("%(cssImports)s\n\n%(body)s" % page)
 
     with open(os.path.join(module_path, "%s.css" %  self.name), "w") as f:
-      f.write("")
+      f.write(page['cssStyle'])
 
 
 class Angular(object):
