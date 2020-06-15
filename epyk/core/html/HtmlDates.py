@@ -20,11 +20,11 @@ class DatePicker(Html.Html):
     else:
       self.icon = None
     if self.icon is not None:
-      self.icon.click(self.input.dom.events.trigger("click").toStr())
+      self.icon.click([self.input.dom.events.trigger("click").toStr()])
+      self.icon.tooltip(self.input.dom.content)
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-    self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto',
-              'margin-top': '2px'})
+    self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto', 'margin-top': '2px'})
 
   @property
   def dom(self):
@@ -39,22 +39,6 @@ class DatePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
     return self._dom
 
-  # @property
-  # def options(self):
-  #   """
-  #   Description:
-  #   -----------
-  #   The progress bar is designed to display the current percent complete for a process.
-  #   The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
-  #
-  #   Related Pages:
-  #
-	# 		https://api.jqueryui.com/menu
-  #
-  #   :rtype: OptInputs.OptionsDatePicker
-  #   """
-  #   return self.input.options
-
   def select(self, jsFncs):
     """
     Description:
@@ -66,6 +50,8 @@ class DatePicker(Html.Html):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
+    if self.icon is not None:
+      jsFncs.append(self.icon.dom.setattr("title", self.input.dom.content))
     self.input.options.onSelect = jsFncs
     return self
 

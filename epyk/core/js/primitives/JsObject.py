@@ -478,7 +478,7 @@ class JsObject(object):
     if self.varName is None:
       raise Exception("Not name defined for this object")
 
-    if self._frozen:
+    if getattr(self, '_frozen', False):
       print("Warning, try to change a frozen variable")
 
     return JsObject("%s[%s] = %s" % (self.varName, JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(value, None)), setVar=False)

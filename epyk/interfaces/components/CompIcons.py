@@ -798,3 +798,40 @@ Attributes:
     html_badge = html.HtmlImage.Badge(self.context.rptObj, text, width, height, None, icon, background_color, color, url,
                                       tooltip, options or {}, profile)
     return html_badge
+
+  def date(self, value, label=None, icon="far fa-calendar-alt", color=None, width=(None, "px"), height=(None, "px"),
+           htmlCode=None, profile=None, options=None, helper=None):
+    """
+    Description:
+    ------------
+    This component is based on the Jquery Date Picker object.
+
+    Usage::
+
+      rptObj.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlDates.DatePicker`
+
+    Related Pages:
+
+      https://jqueryui.com/datepicker/
+
+    Attributes:
+    ----------
+    :param value: Optional. The value to be displayed to the time component. Default now
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param color: Optional. The font color in the component. Default inherit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
+    """
+    dftl_options = {'dateFormat': 'yy-mm-dd'}
+    if options is not None:
+      dftl_options.update(options)
+    html_dt = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, width, height, color, htmlCode, profile, dftl_options, helper)
+    html_dt.input.style.css.width = 0
+    return html_dt

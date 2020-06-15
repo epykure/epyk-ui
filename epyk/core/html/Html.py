@@ -742,10 +742,14 @@ http://api.jquery.com/css/
     :return: The Python object self
     """
     if value is not None:
-      self.attr.update({'title': value, 'data-toggle': 'tooltip', 'data-html': 'true', 'data-placement': location})
+      self.attr.update({'data-toggle': 'tooltip', 'data-html': 'true', 'data-placement': location})
       if options is not None:
         self.attr.update(options)
       self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
+      if hasattr(value, 'toStr'):
+        self.onReady(self.dom.setattr("title", value))
+      else:
+        self.attr.update({'title': value})
     return self
 
   @packages.packageImport('bootstrap', 'bootstrap')
