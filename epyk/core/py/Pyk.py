@@ -7,7 +7,7 @@ class EpykBoundRptObj(Exception):
   pass
 
 
-def requires(pyk_file, components=None, autoinstall=False):
+def requires(pyk_file, autoinstall=None, autoreload=False):
   """
   Description:
     ------------
@@ -20,7 +20,7 @@ def requires(pyk_file, components=None, autoinstall=False):
   -----------
     requires(pyk_name, autoinstall=True)
 
-    requires('/usr/local/my_pyk_file.py', components=['obj1', 'obj2'])
+    requires('/usr/local/my_pyk_file.py')
 
   :param pyk_file: the pyk to be imported into your project, this will be a name if installing from pypi or github or just a path if it's a local pyk)
   :param components: list of objects to import, if None all the objects declared in the pyk file will be available
@@ -29,7 +29,7 @@ def requires(pyk_file, components=None, autoinstall=False):
   """
 
   pyk_obj = _Pyk.instance()
-  return pyk_obj._requires(pyk_file, components, autoinstall)
+  return pyk_obj._requires(pyk_file, autoinstall, autoreload)
 
 def exports(obj_dict):
   """
@@ -98,8 +98,6 @@ class _Pyk(object):
     -----------
       requires(pyk_name, autoinstall=True)
 
-      requires('/usr/local/my_pyk_file.py', components=['obj1', 'obj2'])
-
     :param pyk_file: the pyk to be imported into your project, this will be a name if installing from pypi or github or just a path if it's a local pyk)
     :param components: list of objects to import, if None all the objects declared in the pyk file will be available
     :param autoinstall: specify whether we need to check github or pypi
@@ -142,7 +140,7 @@ class _Pyk(object):
     Usage:
     ------
 
-        exports({'my_obj1': my_obj1, 'my_obj1': my_obj2})
+      exports({'my_obj1': my_obj1, 'my_obj1': my_obj2})
 
     :param obj__dict: dictionary with object name as key and object as value
     """
