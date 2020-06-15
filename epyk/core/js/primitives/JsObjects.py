@@ -620,7 +620,8 @@ class XMLHttpRequest(object):
     else:
       jsonData = self.data
     if jsonData:
-      self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, json.dumps(jsonData))
+      #self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, JsUtils.jsConvertData(jsonData, None))
+      self.__req_send = "%s.send(%s)" % (self.varId, JsUtils.jsConvertData(jsonData, None))
     elif encodeURIData is not None:
       self.__url_prefix = "?%s" % "&".join(["%s=%s" % (k, v) for k, v in encodeURIData.items()])
       self.__req_send = "%s.send()" % self.varId
@@ -631,7 +632,10 @@ class XMLHttpRequest(object):
   def toStr(self):
     request = ["var %s = new XMLHttpRequest()" % self.varId]
     request.append("%s.responseType = '%s'" % (self.varId, self.__responseType))
-    request.append("%s.open(%s, '%s%s')" % (self.varId, self.method, self.url, self.__url_prefix))
+    if self.__url_prefix:
+      request.append("%s.open(%s, %s+'%s')" % (self.varId, self.method, self.url, self.__url_prefix))
+    else:
+      request.append("%s.open(%s, %s)" % (self.varId, self.method, self.url))
     for k, v in self.__headers.items():
       request.append("%s.setRequestHeader('%s', '%s')" % (self.varId, k, v))
     if self.__req_success is not None:

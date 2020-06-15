@@ -5,72 +5,123 @@ from epyk.core.js.primitives import JsObject
 
 class JsWhile(object):
 
-  def __init__(self, jsCondition, ruleType='boolean', iterVar="i", start=0, step=1, context=None):
-    """
-    Marks a block of statements to be executed while a condition is true
+  def __init__(self, jsPivot, options=None):
 
-    Documentation:
-      - https://www.w3schools.com/jsref/jsref_while.asp
-
-    :param jsCondition:
-    :param ruleType:
-    :param iterVar:
-    :param start:
-    :param step:
-    :param context:
-    """
-    self._context, self.__whileId, self.__iterVar, self.__next = context, None, None, None
-    self.__whileDataId = None
-    if ruleType == 'array':
-      self.step = step
-      self.__jsObj = JsObject.JsObject(jsCondition, setVar=True)
-      self.__iterVar = iterVar
-      self.__val = JsObject.JsObject("{key: %(keys)s, value: %(dico)s[%(keys)s]}" % {"dico": self.__jsObj, "keys": iterVar}, isPyData=False, setVar=True)
-      self.next("%s+=%s" % (self.__iterVar, self.step))
-      # Should add undefined in order not to stop in the zero values in the iterator
-      self.__while = ["var %s = %s" % (self.__jsObj, jsCondition), "var %s = %s" % (self.__iterVar, start),
-                      "while(%s[i] !== undefined)" % self.__jsObj.varName]
-    elif ruleType == 'dict':
-      self.__jsObj = JsObject.JsObject(jsCondition, setVar=True)
-      self.__iterVar = "%s_keys" % self.__jsObj.varName
-      self.__val = JsObject.JsObject("{key: %(keys)s[k], value: %(dico)s[%(keys)s[k]]}" % {"dico": self.__jsObj, "keys": self.__iterVar}, isPyData=False, setVar=True)
-      self.next("k += 1")
-      # Should add undefined in order not to stop in the zero values in the iterator
-      self.__while = ["var %s = %s" % (self.__jsObj, jsCondition), "var %s = %s" % (self.__iterVar, self.__jsObj.keys()),
-                      "var k = 0", "while(%s[k] !== undefined)" %  self.__iterVar]
-    else:
-      self.__while = ["while(%s)" % jsCondition]
-    self.__jsFncs = []
+    self.options = {"var": 'i'}
+    if options is not None:
+      self.options.update(options)
+    self.__jsFncs, self.__next = [], None
+    self.__pivot = jsPivot
 
   def next(self, rule):
     """
+    Description:
+    -----------
 
-    :return:
+    Attributes:
+    ----------
+    :param rule:
     """
     self.__next = rule
     return self
 
-  def js(self, jsFncs, isPyData=False, jsFncVal=None):
+  def fncs(self, jsFncs, reset=True):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param jsFncs:
-    :param isPyData:
-    :param jsFncVal:
-    :return:
+    :param reset:
     """
-    if jsFncVal is None:
-      jsFncVal = self.__val.varName
-    jsIterable = JsUtils.jsConvertFncs(jsFncs, isPyData, jsFncVal)
-    self.__jsFncs.extend(jsIterable)
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    if reset:
+      self.__jsFncs = jsFncs
+    else:
+      self.__jsFncs.extend(jsFncs)
     return self
-
+#
   def toStr(self):
+    print(self.__pivot)
     if self.__next is None:
       raise Exception("next() function must be used to avoid infinite loops !!")
 
-    self.__jsFncs.append(self.__next)
-    strData = "%s{%s}" % (";".join(self.__while), ";".join(self.__jsFncs))
+    fncs = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
+    return "while(%s){%s; %s}" % (self.__pivot, fncs, self.__next)
 
-    self.__jsFncs = []
-    return strData
 
+class JsWhileIterable(object):
+
+  def __init__(self, jsIterable, options=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsIterable:
+    :param options: Dictionary. While options
+    """
+    self.__js_it = jsIterable
+    self.options = {"var": 'x'}
+    if options is not None:
+      self.options.update(options)
+    self.options['it'] = JsUtils.jsConvertData(self.__js_it, None)
+
+  @property
+  def var(self):
+    """
+    Description:
+    -----------
+`   Return the variable reference for this loop
+    """
+    return self.options['var']
+
+  @var.setter
+  def var(self, value):
+    """
+    Description:
+    -----------
+`   Return the variable reference for this loop
+
+    Attributes:
+    ----------
+    :param value: String. The value reference for the JavaScript variable
+    """
+    self.options['var'] = value
+
+  @property
+  def value(self):
+    """
+    Description:
+    -----------
+    return the value during the while loop
+    """
+    return JsObject.JsObject.get("%(it)s[%(var)s]" % self.options)
+
+  def fncs(self, jsFncs, reset=True):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: Array. The PyJs functions
+    :param reset: Boolean. Reset the JavaScript functions for this loop
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    if reset:
+      self.__jsFncs = jsFncs
+    else:
+      self.__jsFncs.extend(jsFncs)
+    return self
+
+  def toStr(self):
+    """
+
+    """
+    self.options['jsFncs'] = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
+    return "var %(var)s = 0; while(%(it)s[%(var)s]){%(jsFncs)s; %(var)s++}" % self.options

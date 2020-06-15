@@ -13,8 +13,8 @@ class Sparklines(Html.Html):
   requirements = ('jquery-sparklines', )
   name = 'Sparkline'
 
-  def __init__(self, report, data, chart_type, title, options):
-    super(Sparklines, self).__init__(report, data)
+  def __init__(self, report, data, chart_type, title, width, height, options):
+    super(Sparklines, self).__init__(report, data, css_attrs={'width': width, 'height': height})
     self._jsStyles, self.title = {"type": chart_type}, None
     if title is not None:
       self.title = self._report.ui.title(title, level=4)
@@ -60,7 +60,7 @@ class Sparklines(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlSparkline(self, report=self._report)
     return self._dom
 
-  def click(self, jsFnc, profile=False):
+  def click(self, jsFnc, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -80,7 +80,7 @@ class Sparklines(Html.Html):
     self.onReady("%s.bind('sparklineClick', function(event) { %s })" % (self.dom.jquery.varId, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
     return self
 
-  def hover(self, jsFnc, profile=False):
+  def hover(self, jsFnc, profile=False, source_event=None):
     """
     Description:
     ------------

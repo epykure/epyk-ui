@@ -1,5 +1,10 @@
 
+import collections
+
 from epyk.core.html import Html
+
+from epyk.core.js import expr
+from epyk.core.css import Selector
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsMenu
@@ -68,6 +73,7 @@ class HtmlNavBar(Html.Html):
 
 
 class HtmlFooter(Html.Html):
+  name = 'footer'
 
   def __init__(self, report, components, width, height, profile):
     super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
@@ -103,6 +109,8 @@ class HtmlFooter(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to the footer """
+    if not hasattr(htmlObj, 'options'):
+      htmlObj = self._report.ui.div(htmlObj)
     htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     self.val.append(htmlObj)
     return self
@@ -115,7 +123,7 @@ class HtmlFooter(Html.Html):
     """
     return self.val[i]
 
-  def add_menu(self):
+  def add_menu(self, context_menu):
     pass
 
   def __str__(self):
@@ -132,12 +140,10 @@ class ContextMenu(Html.Html):
     self.__options = OptList.OptionsLi(self, options)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
               'padding': 0, 'margin': 0, 'background-color': self._report.theme.greys[0],
-              'border': '1px solid %s' % self._report.theme.success[0], 'border-radius': '2px'
-              }
-             )
+              'border': '1px solid %s' % self._report.theme.success[0], 'border-radius': '2px'})
     self.style.css.shadow_box()
     for rec in recordSet:
-      self += rec
+      self.__add__(rec)
 
   @property
   def options(self):
@@ -156,12 +162,20 @@ class ContextMenu(Html.Html):
     self += {"value": value, 'icon': icon}
     return self
 
+  def add(self, htmlObj):
+    """
+
+    :param htmlObj:
+    """
+    self.__add__(htmlObj)
+    return self.val[-1].val
+
   def __add__(self, htmlObj):
     """
 
     :param d:
     """
-    if not hasattr(htmlObj, 'inReport'):
+    if not hasattr(htmlObj, 'options'):
       if isinstance(htmlObj, dict):
         if htmlObj['icon'] is not None:
           i = self._report.ui.icon(htmlObj['icon'])
@@ -173,11 +187,10 @@ class ContextMenu(Html.Html):
           htmlObj = self._report.ui.div(htmlObj['value'])
       else:
         htmlObj = self._report.ui.div(htmlObj)
-    htmlObj.options.managed = False
     li_obj = Li(self._report, htmlObj) if not isinstance(htmlObj, Li) else htmlObj
     li_obj.css({"padding": "5px", 'cursor': 'pointer'})
-    if hasattr(htmlObj, 'inReport'):
-      htmlObj.options.managed = False
+    li_obj.options.managed = False
+    htmlObj.options.managed = False
     self.val.append(li_obj)
     return self
 
@@ -196,3 +209,161 @@ class ContextMenu(Html.Html):
       <nav %(attr)s name='context_menus'>
         <ul style='list-style:none;padding:0px;margin:0'>%(val)s</ul>
       </nav>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': str_vals}
+
+
+class PanelsBar(Html.Html):
+  name = 'Pabel'
+
+  def __init__(self, report, width, height, options, helper, profile):
+    super(PanelsBar, self).__init__(report, None, css_attrs={"width": width, "height": height})
+    self.menus = report.ui.div(options={'inline': True})
+    self.menus.options.managed = False
+    self.panels = report.ui.div()
+    self.panels.options.managed = False
+    self.menu_mapping = collections.OrderedDict()
+    #
+    self.panels.style.css.display = False
+    self.panels.style.css.position = 'absolute'
+    #
+    self.style.css.position = 'relative'
+    self.__options = options
+    if options.get('position', 'top') == 'top':
+      self.panels.style.css.padding_bottom = 10
+      self.menus.style.css.top = 0
+      self.panels.style.css.border_bottom = '1px solid %s' % report.theme.colors[-1]
+    else:
+      self.style.css.position = 'relative'
+      self.panels.style.css.border_top = '1px solid %s' % report.theme.colors[-1]
+      self.panels.style.css.bottom = 0
+      self.menus.style.css.bottom = 0
+
+    self.menus.style.css.position = 'absolute'
+    self.menus.style.css.background = report.theme.colors[-1]
+    self.menus.style.css.color = report.theme.colors[0]
+    self.menus.style.css.padding = '5px 0'
+
+  def add_panel(self, text, content):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param content:
+    """
+    content.style.css.padding = "0 5px"
+    if not hasattr(text, 'htmlCode'):
+      text = self._report.ui.div(text)
+    text.style.css.display = 'inline-block'
+    text.style.css.width = 'auto'
+    text.style.css.cursor = 'pointer'
+    text.style.css.padding = '0 5px'
+    self.menu_mapping[text] = content
+    self.menus += text
+    self.panels += content
+    return self
+
+  def __str__(self):
+    css_menu = {"height": "auto", 'display': 'block', 'margin-top': '30px'} if self.__options['position'] == 'top' else {"height": "auto", 'display': 'block', 'margin-bottom': '30px'}
+    for menu_item, panel in self.menu_mapping.items():
+      menu_item.click([
+        self._report.js.querySelectorAll(Selector.Selector(self.panels).with_child_element("div").excluding(panel)).css({"display": 'none'}),
+        #
+        expr.if_(self._report.js.querySelector(Selector.Selector(self.panels)).getAttribute("data-panel") == menu_item.htmlCode, [
+          self._report.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", ""),
+          self._report.js.querySelector(Selector.Selector(self.panels)).css({"display": 'none'})
+        ]).else_([
+          self._report.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", menu_item.htmlCode),
+          self._report.js.querySelector(Selector.Selector(self.panels)).css(css_menu),
+          self._report.js.querySelector(Selector.Selector(panel)).css({'display': 'block'})
+        ])
+      ])
+
+    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.menus.html(), self.panels.html())
+
+
+class Shortcut(Html.Html):
+  name = 'shortcut'
+
+  def __init__(self, report, components, width, height, htmlCode, options, profile):
+    super(Shortcut, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.logo = None
+    self.__options = options
+    for component in components:
+      if not hasattr(component, 'options'):
+        component = report.ui.icons.awesome(component)
+      self.__add__(component)
+    self.css({"background": report.theme.colors[1], "position": 'fixed', 'overflow': 'hidden', 'z-index': 20})
+    self.style.css.padding = 0
+    if options['position'] in ['left', 'right']:
+      self.css({'text-align': 'center'})
+    elif options['position'] == 'top':
+      self.css({'top': '0'})
+    elif options['position'] == 'bottom':
+      self.css({'bottom': '0'})
+
+  @property
+  def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: GrpClsMenu.ClassShortcut
+    """
+    if self._styleObj is None:
+      self._styleObj = GrpClsMenu.ClassShortcut(self)
+    return self._styleObj
+
+  def __add__(self, component):
+    """ Add items to a container """
+    if hasattr(component, 'htmlCode'):
+      component.options.managed = False
+
+    if self.__options['position'] in ['left', 'right']:
+      component.style.css.width = self.css("width")
+      component.style.css.text_align = 'center'
+      component.style.css.display = 'block'
+      component.style.css.margin_bottom = 5
+
+    if self.__options['position'] == 'top':
+      component.style.css.line_height = self.css("height")
+      component.style.css.height = self.css("height")
+      component.style.css.vertical_align = 'top'
+      if component.style.css.position is None:
+        component.style.css.position = 'relative'
+      component.style.css.top = -3
+      component.style.css.display = 'inline-block'
+
+    component.style.css.margin = 'auto'
+    self.val.append(component)
+    return self
+
+  def add_logo(self, icon, path=None, align="center", width=(32, 'px'), height=(32, 'px')):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param icon:
+    :param path:
+    :param align:
+    :param width:
+    :param height:
+    """
+    self.logo = self._report.ui.img(icon, path=path, align=align, width=width, height=height)
+    self.logo.style.css.margin_top = 5
+    if self.__options['position'] in ['left', 'right']:
+      self.logo.style.css.margin_bottom = 15
+      self.logo.style.css.margin_right = 0
+    else:
+      self.logo.style.css.margin_right = 10
+    return self
+
+  def __str__(self):
+    if self.logo is None:
+      self.logo = self._report.ui.icons.epyk()
+    self.logo.options.managed = False
+    str_div = "".join([self.logo.html()] + [v.html() if hasattr(v, 'html') else str(v) for v in self.val])
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)

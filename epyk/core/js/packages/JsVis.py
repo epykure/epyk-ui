@@ -793,6 +793,107 @@ class VisNetwork(JsPackage):
 class VisTimeline(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
 
+  def addItem(self, data):
+    """
+    Description:
+    -----------#
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    return JsObjects.JsVoid("%s.itemsData.add(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
+    #return JsObjects.JsVoid("console.log(%s)" % (self.varId))#, JsUtils.jsConvertData(data, None)))
+
+  def addItems(self, data):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    return JsObjects.JsVoid("%s.forEach(function(data) {%s.itemsData.add(data)})" % (JsUtils.jsConvertData(data, None), self.varId))
+
+  def setItems(self, data):
+    """
+    Description:
+    -----------
+    Replace the DataSet of the DataView. Parameter data can be a DataSet or a DataView.
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    return JsObjects.JsVoid("%s.setItems(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
+
+  def setGroups(self, groups):
+    """
+    Description:
+    -----------
+    Set a data set with groups for the Graph2d. groups can be an Array with Objects, a DataSet, or a DataView.
+    For each of the groups, the items of the Graph2d are filtered on the property group, which must correspond with the id of the group.
+
+    https://visjs.github.io/vis-timeline/docs/graph2d/
+
+    Attributes:
+    ----------
+    :param groups:
+    """
+    return JsObjects.JsVoid("%s.setGroups(%s)" % (self.varId, JsUtils.jsConvertData(groups, None)))
+
+  def setOptions(self, options):
+    """
+    Description:
+    -----------
+    Set or update options. It is possible to change any option of the Graph2d at any time.
+    You can for example switch orientation on the fly.
+
+    https://visjs.github.io/vis-timeline/docs/graph2d/
+
+    Attributes:
+    ----------
+    :param options:
+    """
+    return JsObjects.JsVoid("%s.setOptions(%s)" % (self.varId, JsUtils.jsConvertData(options, None)))
+
+  def destroy(self):
+    """
+    Description:
+    -----------
+    Destroy the Graph2d. The Graph2d is removed from memory. all DOM elements and event listeners are cleaned up.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
+    """
+    return JsObjects.JsVoid("%s.destroy()" % self.varId)
+
+  def redraw(self):
+    """
+    Description:
+    -----------
+    Force a redraw of the Graph2d. Can be useful to manually redraw when option autoResize=false.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
+    """
+    return JsObjects.JsVoid("%s.redraw()" % self.varId)
+
+  def fit(self):
+    """
+    Description:
+    -----------
+    Adjust the visible window such that it fits all items.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
+    """
+    return JsObjects.JsVoid("%s.fit()" % self.varId)
+
 
 class VisGraph3D(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}

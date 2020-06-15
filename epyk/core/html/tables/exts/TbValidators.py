@@ -1,7 +1,7 @@
 
 
 from epyk.core.js.packages import packageImport
-from epyk.core.data import DataGroup
+from epyk.core.data.DataClass import DataGroup
 
 
 class ExtsValidators(DataGroup):

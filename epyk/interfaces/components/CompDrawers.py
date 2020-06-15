@@ -39,9 +39,10 @@ class Drawers(object):
     :param profile: Optional. A flag to set the component performance storage
     :param helper:
     """
-    options = options or {}
-    options["side"] = 'right'
-    h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)
+    dflt_options = {"side": "left"}
+    if options is not None:
+      dflt_options.update(options)
+    h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, dflt_options, helper, profile)
     return h_drawer
 
   def right(self, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
@@ -58,9 +59,21 @@ class Drawers(object):
     :param profile: Optional. A flag to set the component performance storage
     :param helper:
     """
-    options = options or {}
-    options["side"] = 'right'
-    h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)
+    dflt_options = {"side": "right"}
+    if options is not None:
+      dflt_options.update(options)
+    h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, dflt_options, helper, profile)
+    return h_drawer
+
+  def multi(self, component, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
+    """
+
+    :return:
+    """
+    dflt_options = {"side": "right"}
+    if options is not None:
+      dflt_options.update(options)
+    h_drawer = html.HtmlDrawer.DrawerMulti(self.context.rptObj, component, width, height, dflt_options, helper, profile)
     return h_drawer
 
   def no_handle(self, component, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):

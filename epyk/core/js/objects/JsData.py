@@ -1,6 +1,4 @@
 
-import json
-
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsBoolean
@@ -188,6 +186,105 @@ class RawData(object):
     return data
 
 
+class Datamap(object):
+
+  def __init__(self, components=None, attrs=None):
+    self.__data = []
+    if components is not None:
+      for c in components:
+        self.add(c)
+    if attrs is not None:
+      for k, v in attrs.items():
+        self.attr(k, v)
+
+  def add(self, component, htmlCode=None):
+    """
+    Description:
+    -----------
+
+    :param component:
+    :param htmlCode:
+    """
+    self.__data.append((htmlCode or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
+    return self
+
+  def attr(self, k, v):
+    """
+    Description:
+    -----------
+
+    :param k:
+    :param v:
+    """
+    self.__data.append((JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
+    return self
+
+  def attrs(self, data):
+    """
+    Description:
+    -----------
+
+    :param data:
+    """
+    for k, v in data.items():
+      self.attr(k, v)
+    return self
+
+  def toStr(self):
+    return "{%s}" % ",".join(["%s: %s" % (k, v) for k, v in self.__data])
+
+  def get(self, value, dflt=None):
+    return JsObject.JsObject.get("{%s}[%s]" % (",".join(["%s: %s" % (k, v) for k, v in self.__data]), JsUtils.jsConvertData(value, None)))
+
+  def update(self, attrs):
+    self.attrs(attrs)
+    return self
+
+  def __str__(self):
+    return self.toStr()
+
+
+class FormData(object):
+  alias = None
+
+  def new(self, varName, varType="let"):
+    """
+    Description:
+    ------------
+
+    :param varName:
+    :param varType:
+    """
+    self.alias = varName
+    return "%s %s = new FormData()" % (varType, varName)
+
+  def get(self, varName):
+    """
+    Description:
+    ------------
+
+    :param varName:
+    """
+    self.alias = varName
+    return self
+
+  def append(self, name, value):
+    """
+    Description:
+    ------------
+
+    :param name:
+    :param value:
+    """
+    return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(name, None), value)
+
+  def update(self, attrs):
+    pass
+
+  def toStr(self):
+    return self.alias
+
+
 class JsData(object):
 
   def __init__(self, src):
@@ -235,6 +332,22 @@ class JsData(object):
       return CrossFilter(self._src, varName=var_name, data=data, setVar=False)
 
     return CrossFilter(self._src, varName=JsUtils.getJsValid(var_name), data=data)
+
+  def formdata(self):
+    """
+    Description:
+    -----------
+
+    """
+    return FormData()
+
+  def datamap(self, components=None, attrs=None):
+    """
+    Description:
+    -----------
+
+    """
+    return Datamap(components, attrs)
 
   def dataset(self, data, var_name=None, options=None):
     """
@@ -414,3 +527,70 @@ class JsDataTransfer(object):
     :return:
     """
     return JsString.JsString("%s.getData(%s)" % (self.varId, format), isPyData=False)
+
+
+class JsClipboardData(object):
+
+  def __init__(self, varName):
+    self.varId = varName
+
+  @property
+  def text(self):
+    """
+    Description:
+    ------------
+    The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
+    If the drag operation does not include data, this method returns an empty string
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
+    """
+    return JsString.JsString("%s.getData('text')" % self.varId, isPyData=False)
+
+  @property
+  def plain(self):
+    """
+    Description:
+    ------------
+    The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
+    If the drag operation does not include data, this method returns an empty string
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
+    """
+    return JsString.JsString("%s.getData('text/plain')" % self.varId, isPyData=False)
+
+  @property
+  def uri(self):
+    """
+    Description:
+    ------------
+    The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
+    If the drag operation does not include data, this method returns an empty string
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
+    """
+    return JsString.JsString("%s.getData('text/uri-list')" % self.varId, isPyData=False)
+
+  def getData(self, format):
+    """
+    Description:
+    ------------
+    The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
+    If the drag operation does not include data, this method returns an empty string
+
+    Example data types are text/plain and text/uri-list.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
+
+    Attributes:
+    ----------
+    :param format: String. The data format
+    """
+    return JsString.JsString("%s.getData('%s')" % (self.varId, format), isPyData=False)

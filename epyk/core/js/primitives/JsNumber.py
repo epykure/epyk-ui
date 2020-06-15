@@ -1,4 +1,6 @@
 """
+Description:
+------------
 Wrapper to the Number Javascript primitives
 
 Most of the documentation in this module is coming from the website https://www.w3schools.com/jsref/jsref_number.asp
@@ -25,79 +27,86 @@ class JsNumber(JsObject.JsObject):
   @property
   def NEGATIVE_INFINITY(self):
     """
+    Description:
+    ------------
     The NEGATIVE_INFINITY property represents negative infinity.
     Negative infinity can be explained as something that is lower than any other number.
 
-    Example
-    jsObj.objects.number.get("MyNumber").NEGATIVE_INFINITY
+    Usage::
+
+      jsObj.objects.number.get("MyNumber").NEGATIVE_INFINITY
 
     Related Pages:
 
 			https://www.w3schools.com/jsref/jsref_negative_infinity.asp
-
-    :return:
     """
     return JsNumber("Number.NEGATIVE_INFINITY")
 
   @classmethod
   def POSITIVE_INFINITY(self):
     """
+    Description:
+    ------------
     The POSITIVE_INFINITY property represents positive infinity.
     Positive infinity can be explained as something that is higher than any other number.
 
-    Example
-    jsObj.objects.number.get("MyNumber").POSITIVE_INFINITY
+    Usage::
+
+      jsObj.objects.number.get("MyNumber").POSITIVE_INFINITY
 
     Related Pages:
 
 			https://www.w3schools.com/jsref/jsref_positive_infinity.asp
-
-    :return:
     """
     return JsNumber("Number.POSITIVE_INFINITY")
 
   @classmethod
   def MAX_VALUE(self):
     """
+    Description:
+    ------------
     The MAX_VALUE property returns the largest number possible in JavaScript.
 
     This static property has a value of 1.7976931348623157e+308.
 
-    Example
-    jsObj.objects.number.get("MyNumber").MAX_VALUE
+    Usage::
+
+      jsObj.objects.number.get("MyNumber").MAX_VALUE
 
     Related Pages:
 
 			https://www.w3schools.com/jsref/jsref_max_value.asp
-
-    :return:
     """
     return JsNumber("Number.MAX_VALUE")
 
   @property
   def MIN_VALUE(self):
     """
+    Description:
+    ------------
     The MIN_VALUE property returns the smallest positive number possible in JavaScript.
 
     This static property has a value of 5e-324.
 
-    Example
-    jsObj.objects.number.get("MyNumber").MIN_VALUE
+    Usage::
+
+      jsObj.objects.number.get("MyNumber").MIN_VALUE
 
     Related Pages:
 
 			https://www.w3schools.com/jsref/jsref_min_value.asp
-
-    :return:
     """
     return JsNumber("Number.MIN_VALUE")
 
   def isNaN(self):
     """
+    Description:
+    ------------
     Check whether the value is NaN
 
-    Example
-    string.parseFloat().isNaN()
+    Usage::
+
+      string.parseFloat().isNaN()
 
     Related Pages:
 
@@ -110,12 +119,17 @@ class JsNumber(JsObject.JsObject):
 
   def add(self, n):
     """
+    Description:
+    ------------
     Add a value to a Javascript Number.
     The value will be added and it will return a new number object on the Javascript side
 
-    Example
-    jsNumber.add(34.5)
+    Usage::
 
+      jsNumber.add(34.5)
+
+    Attributes:
+    ----------
     :param n: The number value
 
     :return: A new Python Javascript Number
@@ -124,12 +138,17 @@ class JsNumber(JsObject.JsObject):
 
   def sub(self, n):
     """
+    Description:
+    ------------
     Subtract a value to a Javascript Number.
     The value will be subtracted and it will return a new number object on the Javascript side
 
-    Example
-    jsNumber.sub(34.5)
+    Usage::
 
+      jsNumber.sub(34.5)
+
+    Attributes:
+    ----------
     :param n: The number value
 
     :return: A new Python Javascript Number
@@ -138,10 +157,13 @@ class JsNumber(JsObject.JsObject):
 
   def toExponential(self):
     """
+    Description:
+    ------------
     Convert a number into an exponential notation
 
-    Example
-    jsObj.objects.number.get("MyNumber").toExponential()
+    Usage::
+
+      jsObj.objects.number.get("MyNumber").toExponential()
 
     Related Pages:
 
@@ -153,15 +175,20 @@ class JsNumber(JsObject.JsObject):
 
   def toFixed(self, digits=2):
     """
+    Description:
+    ------------
     Convert a number into a string, keeping only two decimals
 
-    Example
-    jsObj.objects.number.get("MyNumber").toFixed()
+    Usage::
+
+      jsObj.objects.number.get("MyNumber").toFixed()
 
     Related Pages:
 
 			https://www.w3schools.com/jsref/jsref_tofixed.asp
 
+    Attributes:
+    ----------
     :param digits: Optional. The number of digits after the decimal point. Default is 2 (2 digits after the decimal point)
 
     :return: A Javascript Number
@@ -170,10 +197,13 @@ class JsNumber(JsObject.JsObject):
 
   def isFinite(self):
     """
+    Description:
+    ------------
     Check whether a value is a finite number
 
-    Example
-    jsObj.objects.number.get("MyNumber").isFinite()
+    Usage::
+
+      jsObj.objects.number.get("MyNumber").isFinite()
 
     Related Pages:
 
@@ -186,15 +216,20 @@ class JsNumber(JsObject.JsObject):
 
   def toPrecision(self, n):
     """
+    Description:
+    ------------
     Format a number into a specified length:
 
-    Example
-    rptObj.js.number(varName="myNumber").toPrecision(10) for 5776 returns 5776.000000
+    Usage::
+
+      rptObj.js.number(varName="myNumber").toPrecision(10) for 5776 returns 5776.000000
 
     Related Pages:
 
 			https://www.w3schools.com/jsref/jsref_toprecision.asp
 
+    Attributes:
+    ----------
     :param n: Optional. The number of digits. If omitted, it returns the entire number (without any formatting)
 
     :return: A Javascript Number
@@ -241,6 +276,8 @@ class JsNumber(JsObject.JsObject):
 
   def formatMoney(self, jsObj, decPlaces=0, countryCode='UK'):
     """
+    Description:
+    ------------
     Wrapper function
 
     Related Pages:
@@ -248,9 +285,10 @@ class JsNumber(JsObject.JsObject):
 			https://en.wikipedia.org/wiki/Decimal_separator
     https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
 
+    Attributes:
+    ----------
     :param jsObj: The base Javascript Python object
     :param decPlaces: The number of decimal
-    :return:
     """
     thouSeparator, decSeparator = (",", ".") if countryCode.upper() in ["UK", 'US'] else (" ", ".")
     jsObj.extendProto(self, "formatMoney", '''

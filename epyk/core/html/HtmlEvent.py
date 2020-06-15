@@ -1,7 +1,4 @@
 
-import re
-import json
-
 from epyk.core.html import Html
 from epyk.core.html.options import OptSliders
 from epyk.core.html.options import OptList
@@ -26,8 +23,8 @@ class ProgressBar(Html.Html):
     options['max'] = total
     super(ProgressBar, self).__init__(report, number, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'}, profile=profile)
     self.add_helper(helper)
-    self._jsStyles = {'css': {"background": self._report.theme.success[1]}}
     self.__options = OptSliders.OptionsProgBar(self, options)
+    self.options.background = self._report.theme.success[1]
 
   @property
   def options(self):
@@ -48,8 +45,8 @@ class ProgressBar(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      options.value = parseFloat(data); jQuery(htmlObj).progressbar(options).find('div').css(options.css);
-      %(jqId)s.progressbar(options).find('div').attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")");
+      options.value = parseFloat(data);
+      %(jqId)s.progressbar(options).find('div').attr("data-toggle", "tooltip").attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")").css(options.css);
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
@@ -97,23 +94,6 @@ class ProgressBar(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
-
-  # -----------------------------------------------------------------------------------------
-  #                                    MARKDOWN SECTION
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val):
-    return re.match("%%%%([0-9]*)%", val)
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report):
-    if report is not None:
-      getattr(report, 'progressbar')(regExpResult.group(1))
-    return ["report.progressbar(%s)" % regExpResult.group(1)]
-
-  @classmethod
-  def to_markdown(self, vals):
-    return "%%%%" + str(vals) + "%"
 
 
 class Menu(Html.Html):
@@ -647,6 +627,19 @@ class Filters(Html.Html):
     self.keydown.enter([JsUtils.jsConvertFncs(jsFncs, toStr=True), self.dom.add(self.dom.input)] + jsFncs + [self.input.dom.empty()], profile)
     return self
 
+  def drop(self, jsFncs, preventDefault=True, profile=False):
+    """
+    Description:
+    -----------
+
+    :param jsFncs:
+    :param preventDefault:
+    :param profile:
+    """
+    self.style.css.border = "1px dashed black"
+    self.tooltip("Drag and drop values here")
+    return super(Filters, self).drop(jsFncs, preventDefault, profile)
+
   def delete(self, jsFncs, profile=False):
     """
     Description:
@@ -714,5 +707,7 @@ class Filters(Html.Html):
           div.appendChild(icon)}
         panel.appendChild(div);
     }'''
+    if not self.options.visible:
+      self.input.style.css.display = False
     return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
           'input': self.input.html(), 'selections': self.selections.html(),  'helper': self.helper}

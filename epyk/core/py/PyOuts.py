@@ -96,6 +96,9 @@ class PyOuts(object):
     for c, d in self._report._props.get('js', {}).get("constructors", {}).items():
       onloadParts.append(d)
 
+    for c, d in self._report._props.get('js', {}).get("configs", {}).items():
+      onloadParts.append(str(d))
+
     for c, d in self._report._props.get('js', {}).get("datasets", {}).items():
       onloadParts.append(d)
 
@@ -126,6 +129,11 @@ class PyOuts(object):
     # Add the page on document ready functions
     for on_ready_frg in self._report._props.get('js', {}).get('onReady', []):
       onloadParts.append(on_ready_frg)
+    # Add the document events functions
+    for event, source_fncs in self._report._props.get('js', {}).get('events', []).items():
+      for source, event_fncs in source_fncs.get_event().items():
+        str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
+        onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
 
     importMng = Imports.ImportManager(online=True, report=self._report)
     results = {

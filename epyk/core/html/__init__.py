@@ -1,7 +1,6 @@
 from . import HtmlButton
 from . import HtmlContainer
 from . import HtmlEvent
-from . import HtmlFiles
 from . import HtmlLinks
 from . import HtmlImage
 from . import HtmlInput
@@ -16,7 +15,7 @@ from . import HtmlTextEditor
 from . import HtmlMedia
 from . import Html
 from . import HtmlPopup
-from . import HtmlMessaging
+from . import HtmlNetwork
 from . import HtmlDates
 from . import templates
 from . import HtmlTrees

@@ -1,15 +1,3 @@
-"""
-
-"""
-
-# Check if pandas is available in the current environment
-# if it is the case this module can handle DataFrame directly
-try:
-  import pandas as pd
-  has_pandas = True
-
-except:
-  has_pandas = False
 
 from epyk.core import html
 
@@ -143,6 +131,36 @@ class Inputs(object):
     """
     attrs = attrs or {}
     attrs.update({"type": 'password'})
+    return html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
+
+  def file(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):
+    """
+    Input file object.
+
+    Description:
+    ------------
+    Input field that will hide characters typed in
+
+    Usage::
+
+      rptObj.ui.inputs.file()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlInput.File`
+
+    :param text:
+    :param placeholder:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param attrs:
+    :param profile:
+    :return:
+    """
+    attrs = attrs or {}
+    attrs.update({"type": 'file'})
     return html.HtmlInput.Input(self.context.rptObj, text, placeholder, width, height, htmlCode, options, attrs, profile)
 
   def d_time(self, text="", placeholder='', width=(139, "px"), height=(None, "px"), htmlCode=None, options=None, attrs=None, profile=None):

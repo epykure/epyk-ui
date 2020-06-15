@@ -456,7 +456,7 @@ class Style(object):
   classname, classnames = None, None
 
   def __init__(self, rptObj, css_ovrs=None, selector_ovrs=None, html_id=None):
-    self.rptObj, self.html_id, self.cls_ref = rptObj, html_id, None
+    self.rptObj, self.html_id, self.cls_ref, self.__has_changed = rptObj, html_id, None, False
     css_ovrs = css_ovrs or {}
     self.__keyframes, self.__media = {}, {}
     selector_ids = dict(getattr(self, '_selectors', {}))
@@ -789,7 +789,6 @@ class Style(object):
     :param value:
     :param important:
     :param change:
-    :return:
     """
     return self.attrs.css(key, value, important, change)
 

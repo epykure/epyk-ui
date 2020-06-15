@@ -134,3 +134,24 @@ class CssNVD3HideGrid(CssStyle.Style):
 class CssSparklines(CssStyle.Style):
   classname = "jqstooltip"
   _attrs = {"-webkit-box-sizing": "content-box", "-moz-box-sizing": "content-box", "box-sizing": "content-box"}
+
+
+# --------------------------------------------------------------------------------------------------------------
+#
+#                                   VIS SECTION
+# --------------------------------------------------------------------------------------------------------------
+class CssVisItems(CssStyle.Style):
+  classname = "vis-item"
+  _attrs = {'box-shadow': '5px 5px 20px rgba(128,128,128, 0.5)'}
+
+  def customize(self):
+    self.css({'border-color': self.rptObj.theme.colors[-1], 'background-color': self.rptObj.theme.colors[2]}, change=False)
+
+
+class CssVisItemsOverlow(CssStyle.Style):
+  classname = "vis-item-overflow"
+  _attrs = {}
+
+  def customize(self):
+    self.css({'border': "1px solid %s" % self.rptObj.theme.success[1], 'background': self.rptObj.theme.colors[0]})
+

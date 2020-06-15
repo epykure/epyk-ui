@@ -1,6 +1,6 @@
 
-from epyk.core.data import DataClass
-from epyk.core.data import DataEnum
+from epyk.core.data.DataClass import DataClass
+from epyk.core.data.DataClass import DataEnum
 
 
 class EnumAlign(DataEnum):

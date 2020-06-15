@@ -137,3 +137,72 @@ class Switch(JsPackage):
     Set the switch component to True
     """
     return JsObjects.JsObjects.get("%s.querySelector('input').checked = true; %s.querySelector('p').innerHTML = %s_data.on" % (self.varName, self.varName, self.htmlCode))
+
+
+class Alerts(JsPackage):
+
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
+    self._src, self._report = htmlObj, report
+    self._js, self._jquery = [], None
+
+  def replay(self, time=None):
+    """
+
+    :return:
+    """
+    time = time or self._src.options.time
+    return JsObjects.JsVoid('''
+    var s = %(varName)s.style; s.opacity = 1; %(varName)s.style.display = 'block';
+    (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade, %(time)s)})();
+    ''' % {'varName': self.varName, 'time': time})
+
+
+class News(JsPackage):
+
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
+    self._src, self._report = htmlObj, report
+    self._js, self._jquery = [], None
+
+  def reset(self):
+    """
+
+    :return:
+    """
+    return JsObjects.JsVoid('''
+      %(varName)s.innerHTML = '';  
+      ''' % {'varName': self.varName})
+
+
+class Chat(JsPackage):
+
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
+    self._src, self._report = htmlObj, report
+    self._js, self._jquery = [], None
+
+  def add(self, message):
+    return JsObjects.JsVoid('''
+      %(builder)s; %(counter)s
+      ''' % {"builder": self._src.build(message), 'counter': self._src.dom.querySelector(' [name=count]').innerText(1, append=True, valType=int).r})
+
+
+class Room(JsPackage):
+
+  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
+    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
+    self._src, self._report = htmlObj, report
+    self._js, self._jquery = [], None
+
+  def typing(self):
+    """
+
+    """
+    return self._src.dom.querySelector("div[name=dots]").show(duration=3000)
+
+

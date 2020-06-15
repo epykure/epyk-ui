@@ -14,7 +14,8 @@ class CssInput(CssStyle.Style):
 
   def customize(self):
     self.attrs.css({"background": self.rptObj.theme.colors[0], "color": self.rptObj.theme.greys[-1],
-                    'font-family': Defaults_css.Font.family, 'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH,
+                    'font-family': Defaults_css.Font.family,
+                    #'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH,
                     'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
                     'border': '1px solid %s' % self.rptObj.theme.colors[0],
                     'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})

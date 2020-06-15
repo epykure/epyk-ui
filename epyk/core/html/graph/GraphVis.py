@@ -3,6 +3,7 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptVis
 
 from epyk.core.js import JsUtils
+from epyk.core.css.styles import GrpClsCharts
 from epyk.core.js.packages import JsVis
 
 
@@ -68,7 +69,6 @@ class Chart(Html.Html):
 
 
 class ChartLine(Chart):
-  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
@@ -125,7 +125,6 @@ class ChartLine(Chart):
 
 
 class ChartBar(ChartLine):
-  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartBar, self).__init__(report, width, height, htmlCode, options, profile)
@@ -133,7 +132,6 @@ class ChartBar(ChartLine):
 
 
 class ChartScatter(ChartLine):
-  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartScatter, self).__init__(report, width, height, htmlCode, options, profile)
@@ -142,7 +140,6 @@ class ChartScatter(ChartLine):
 
 
 class Chart3D(Chart):
-  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(Chart3D, self).__init__(report, width, height, htmlCode, options, profile)
@@ -229,7 +226,6 @@ class Chart3D(Chart):
 
 
 class Chart3DScatter(Chart3D):
-  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(Chart3DScatter, self).__init__(report, width, height, htmlCode, options, profile)
@@ -238,7 +234,6 @@ class Chart3DScatter(Chart3D):
 
 
 class Chart3DLine(Chart3D):
-  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(Chart3DLine, self).__init__(report, width, height, htmlCode, options, profile)
@@ -247,7 +242,6 @@ class Chart3DLine(Chart3D):
 
 
 class Chart3DBar(Chart3D):
-  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(Chart3DBar, self).__init__(report, width, height, htmlCode, options, profile)
@@ -256,7 +250,6 @@ class Chart3DBar(Chart3D):
 
 
 class ChartNetwork(Chart):
-  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartNetwork, self).__init__(report, width, height, htmlCode, options, profile)
@@ -316,15 +309,22 @@ class ChartNetwork(Chart):
 
 
 class ChartTimeline(Chart):
-  __reqJs, __reqCss = ['vis'], ['vis']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartTimeline, self).__init__(report, width, height, htmlCode, options, profile)
-    self.items, self.__grps = [], None
+    self.items, self.__grps, self.__cats = [], None, None
+
+  @property
+  def style(self):
+    if self._styleObj is None:
+      self._styleObj = GrpClsCharts.ClassVisTimeline(self)
+    return self._styleObj
 
   @property
   def options(self):
     """
+    Description:
+    ------------
 
     :rtype: Options2D
     """
@@ -335,44 +335,59 @@ class ChartTimeline(Chart):
   @property
   def js(self):
     """
+    Description:
+    ------------
     Javascript base function
 
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
     :return: A Javascript object
+
     :rtype: Js.JsBase
     """
     if self._js is None:
-      self._js = JsVis.VisTimeline(self._report, varName=self.chartId)
+      self._js = JsVis.VisTimeline(selector=self.chartId, src=self)
     return self._js
 
   @property
   def groups(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
     if self.__grps is None:
       self.__grps = JsVis.VisGroups(self._report, setVar=True, varName="%s_group" % self.chartId)
     return self.__grps
 
-  def add_item(self, start, content, group=0, end=None, style=None):
+  def setGroups(self, groups):
     """
+    Description:
+    ------------
+    Add group labels to the timeline.
 
-    :param start:
-    :param content:
-    :param group:
-    :param end:
+    Attributes:
+    ----------
+    :param groups:
     """
-    self.items.append({"start": start, "content": str(content), "group": group})
+    self.__cats = "%s.setGroups(%s)" % (self.chartId, JsUtils.jsConvertData(groups, None))
     return self
 
   def add_items(self, records):
-    for rec in records:
-      self.add_item(rec['x'], rec['y'], rec.get('group', rec.get("group", 0)))
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param records:
+    """
+    self.items.extend(records)
     return self
 
   def getCtx(self):
-    #return "new vis.Timeline(%s, %s, %s, %s)" % (self.dom.varId, self.items, self.groups.varId, self.options)
+    if self.__cats is not None:
+      return "new vis.Timeline(%s, %s, %s); %s" % (self.dom.varId, self.items, self.options, self.__cats)
+
     return "new vis.Timeline(%s, %s, %s)" % (self.dom.varId, self.items, self.options)

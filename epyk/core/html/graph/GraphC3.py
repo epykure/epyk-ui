@@ -1,5 +1,5 @@
 
-from epyk.core.data import DataClass
+from epyk.core.data.DataClass import DataClass
 
 from epyk.core.html import Html
 
@@ -516,7 +516,6 @@ class C3Points(DataClass):
 
 
 class ChartLine(Chart):
-  __reqJs, __reqCss = ['c3'], ['c3']
   _type = 'line'
 
   def __init__(self, report, width, height, htmlCode, options, profile):
@@ -617,22 +616,18 @@ class ChartLine(Chart):
 
 
 class ChartSpline(ChartLine):
-  __reqJs, __reqCss = ['c3'], ['c3']
   _type = 'spline'
 
 
 class ChartArea(ChartLine):
-  __reqJs, __reqCss = ['c3'], ['c3']
   _type = 'area'
 
 
 class ChartBar(ChartLine):
-  __reqJs, __reqCss = ['c3'], ['c3']
   _type = 'bar'
 
 
 class ChartScatter(ChartLine):
-  __reqJs, __reqCss = ['c3'], ['c3']
   _type = 'scatter'
 
   @property
@@ -659,7 +654,6 @@ class ChartScatter(ChartLine):
 
 
 class ChartPie(ChartLine):
-  __reqJs, __reqCss = ['c3'], ['c3']
   _type = 'pie'
 
   @property
@@ -701,12 +695,10 @@ class ChartPie(ChartLine):
 
 
 class ChartDonut(ChartPie):
-  __reqJs, __reqCss = ['c3'], ['c3']
   _type = 'donut'
 
 
 class ChartGauge(ChartPie):
-  __reqJs, __reqCss = ['c3'], ['c3']
   _type = 'gauge'
 
   def build(self, data=None, options=None, profile=False):
@@ -724,7 +716,6 @@ class ChartGauge(ChartPie):
 
 
 class ChartStanford(ChartPie):
-  __reqJs, __reqCss = ['c3'], ['c3']
   _type = 'stanford'
 
   @property

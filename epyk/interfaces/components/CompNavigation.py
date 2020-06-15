@@ -34,7 +34,7 @@ class Navigation(object):
     else:
       du.style.css.bottom = bottom
     du.style.add_classes.div.background_hover()
-    self.context.rptObj.js.addOnReady(
+    self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
         self.context.rptObj.js.if_(self.context.rptObj.js.window.scrollY > 50, [du.dom.show()]).else_(du.dom.hide())
       ]))
@@ -72,7 +72,7 @@ class Navigation(object):
     else:
       dd.style.css.top = top
     dd.style.add_classes.div.background_hover()
-    self.context.rptObj.js.addOnReady(
+    self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
         self.context.rptObj.js.if_(self.context.rptObj.js.window.scrollY < (self.context.rptObj.js.window.scrollMaxY - 50), [dd.dom.show()]).else_(dd.dom.hide())
       ]))
@@ -114,7 +114,7 @@ class Navigation(object):
     dd.style.add_classes.div.background_hover()
     if tooltip is not None:
       dd.tooltip(tooltip)
-    self.context.rptObj.js.addOnReady(
+    self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
         self.context.rptObj.js.if_(self.context.rptObj.js.window.scrollY > y, [dd.dom.show()]).else_(dd.dom.hide())
       ]))
@@ -180,7 +180,7 @@ class Navigation(object):
     :param profile:
     """
     p = self.context.rptObj.ui.sliders.progressbar(position, height=height, options=options, profile=profile)
-    self.context.rptObj.js.addOnReady(
+    self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
         p.build(self.context.rptObj.js.window.scrollPercentage)]))
     return p
@@ -384,6 +384,7 @@ class Navigation(object):
     :param profile: get profiling info
     """
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
+    footer.style.css.color = self.context.rptObj.theme.greys[4]
     return footer
 
   def side(self, components=None, anchor=None, size=262, position='right', profile=False):
@@ -400,7 +401,8 @@ class Navigation(object):
     :param profile:
     """
     d = self.context.rptObj.ui.div(components)
-    d.css({"background": self.context.rptObj.theme.colors[2], "position": 'absolute', 'top': 0, 'height': '100%', 'overflow-x': 'hidden', 'width': "%spx" % size})
+    d.css({"background": self.context.rptObj.theme.colors[2], "position": 'absolute', 'top': 0, 'height': '100%',
+           'overflow-x': 'hidden', 'width': "%spx" % size, 'z-index': 20})
     if position == 'left':
       d.css({'left': 0, 'margin-left': "-%spx" % size, 'border-right': '1px solid %s' % self.context.rptObj.theme.colors[5], 'padding': '5px'})
     else:
@@ -431,6 +433,51 @@ class Navigation(object):
     p.style.css.cursor = "pointer"
     p.click([self.context.rptObj.js.window.scrollTo(y=self.context.rptObj.js.objects.this.offsetTop)])
     return p
+
+  def panel(self, width=(100, '%'), height=(100, '%'), options=None, profile=None, helper=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. A dictionary with the components properties
+    :param profile: Optional. A flag to set the component performance storage
+    :param helper:
+    """
+    dflt_options = {"position": 'top'}
+    if options is not None:
+      dflt_options.update(options)
+    h_drawer = html.HtmlMenu.PanelsBar(self.context.rptObj, width, height, dflt_options, helper, profile)
+    return h_drawer
+
+  def shortcut(self, components=None, logo=None, size=(40, 'px'), options=None, profile=None, htmlCode=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param components:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    dflt_options = {"position": 'left'}
+    if options is not None:
+      dflt_options.update(options)
+
+    if dflt_options["position"] in ['top', 'bottom']:
+      width = (100, '%')
+      height = size
+    else:
+      width = size
+      height = (100, '%')
+    h_drawer = html.HtmlMenu.Shortcut(self.context.rptObj, components or [], width, height, htmlCode, dflt_options, profile)
+    return h_drawer
 
 
 class Banners(object):

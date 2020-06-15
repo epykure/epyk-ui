@@ -230,7 +230,9 @@ class OptionsProgBar(Options):
 
     :param attrs:
     """
-    self._config_group('css', attrs)
+    css_attrs = self._config_get('css', {})
+    css_attrs.update(attrs)
+    self._config(css_attrs)
 
   @property
   def disabled(self):

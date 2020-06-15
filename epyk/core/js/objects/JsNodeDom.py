@@ -48,6 +48,8 @@ class JsDomEvents(object):
 
 			https://www.w3schools.com/jsref/event_onblur.asp
 
+    Attributes:
+    ----------
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -756,6 +758,39 @@ class JsDoms(JsObject.JsObject):
       self._jq = JsQuery.JQuery(self._report, selector="jQuery('#%s')" % self._id, setVar=False)
     return self._jq
 
+  def addEventListener(self, event, jsFncs):
+    """
+    Description:
+    ------------
+    The addEventListener() method attaches an event handler to the specified element.
+
+    Related Pages:
+
+			https://www.w3schools.com/jsref/met_element_addeventlistener.asp
+
+    Attributes:
+    ----------
+    :param event:
+    :param jsFncs:
+    """
+    self._js.append('addEventListener("%s", function(){%s})' % (event, ";".join(JsUtils.jsConvertFncs(jsFncs))))
+    return self
+
+  def dispatchEvent(self, event):
+    """
+    Description:
+    ------------
+    Dispatches an Event at the specified EventTarget, (synchronously) invoking the affected EventListeners in the appropriate order.
+    The normal event processing rules (including the capturing and optional bubbling phase) also apply to events dispatched manually with dispatchEvent().
+
+    Attributes:
+    ----------
+    :param event: event is the Event object to be dispatched.
+    """
+    event = JsUtils.jsConvertData(event, None)
+    self._js.append('dispatchEvent(%s)' % event)
+    return self
+
   def addOnReady(self, jsFncs):
     """
     Description:
@@ -806,6 +841,44 @@ class JsDoms(JsObject.JsObject):
         self._js.append("%s.innerText += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     else:
       self._js.append("%s.innerText = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    return self
+
+  def textContent(self, jsString=None, append=False, valType=None):
+    """
+    Description:
+    ------------
+    The textContent property returns the text with spacing, but without inner element tags.
+
+    Usage::
+
+      select.label.dom.innerText("test Change")
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_node_innertext.asp
+
+    Attributes:
+    ----------
+    :param jsString: Optional, The Javascript String to be added
+    :param append: Boolean. Mention if the component should replace or append the data
+    :param valType: Type: The type of data expected in the component
+
+    :return: The JsObj to allow the chaining
+    """
+    if jsString is None:
+      return JsString.JsString("%s.textContent" % self.varId, isPyData=False)
+
+    if append:
+      if valType == int:
+        self._js.append("%s.textContent = parseInt(%s.textContent) + %s" % (
+        self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+      elif valType == float:
+        self._js.append("%s.textContent = parseFloat(%s.textContent) + %s" % (
+        self.varId, self.varId, JsUtils.jsConvertData(jsString, None)))
+      else:
+        self._js.append("%s.textContent += %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
+    else:
+      self._js.append("%s.textContent = %s" % (self.varId, JsUtils.jsConvertData(jsString, None)))
     return self
 
   def innerHTML(self, jsString=None, append=False, valType=None):
@@ -934,7 +1007,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append('%s.setAttribute("class", "%s")' % (self.varId, clsName))
     return self
 
-  def css(self, type, jsObject=None):
+  def css(self, type, jsObject=None, duration=None):
     """
     Description:
     -----------
@@ -1108,7 +1181,7 @@ class JsDoms(JsObject.JsObject):
     """
     return self.css("display", "none")
 
-  def show(self):
+  def show(self, display_value=None, duration=None):
     """
     Description:
     ------------
@@ -1121,7 +1194,10 @@ class JsDoms(JsObject.JsObject):
 
 			https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
-    return self.css("display", self.display_value)
+    self.css("display", display_value or self.display_value)
+    if duration is not None:
+      self._js.append("setTimeout(function(){%s.style.display = 'none'}, %s)" % (self.varId, duration))
+    return self
 
   def toggle(self, attr="display", jsVal1=None, jsVal2="none"):
     """
@@ -1751,6 +1827,15 @@ class JsDomsList(JsArray.JsArray):
         split_css = type.split("-")
         type = "%s%s" % (split_css[0], split_css[1].title())
       self._js.append("for(let e of %s){ e.style.%s = %s }" % (self.varId, type, JsUtils.jsConvertData(jsObject, None)))
+    return self
+
+  def log(self):
+    """
+    Description:
+    ------------
+    Add a print to the loop to assist on the implementation
+    """
+    self._js.append("for(let e of %s){ console.log(e) }" % self.varId)
     return self
 
   def attr(self, type, jsObject=None):

@@ -1,34 +1,30 @@
 
-import os
 import json
+import os
 
+from epyk.core.html import KeyCodes
 
 from epyk.core.js import Imports
-
-from epyk.core.js import JsUtils
-from epyk.core.js import JsNavigator
-from epyk.core.js import JsWindow
 from epyk.core.js import JsLocation
 from epyk.core.js import JsMaths
+from epyk.core.js import JsNavigator
 from epyk.core.js import JsPerformance
-
-# All the predefined Javascript Statements
-from epyk.core.js.statements import JsIf
-from epyk.core.js.statements import JsFor
-from epyk.core.js.statements import JsWhile
-from epyk.core.js.statements import JsSwitch
+from epyk.core.js import JsUtils
+from epyk.core.js import JsWindow
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
-from epyk.core.js.primitives import JsArray
-from epyk.core.js.primitives import JsObjects
-from epyk.core.js.primitives import JsObject
-from epyk.core.js.primitives import JsNumber
-from epyk.core.js.primitives import JsString
-
+from epyk.core.js.objects import JsData
 from epyk.core.js.objects import JsNodeAttributes
 from epyk.core.js.objects import JsNodeDom
-from epyk.core.js.objects import JsData
+from epyk.core.js.primitives import JsNumber
+from epyk.core.js.primitives import JsObject
+from epyk.core.js.primitives import JsObjects
+from epyk.core.js.primitives import JsString
+
+# All the predefined Javascript Statements
+from epyk.core.js.statements import JsIf
+from epyk.core.js.statements import JsSwitch
 
 
 class JsConsole(object):
@@ -582,6 +578,23 @@ class JsBase(object):
 
     return JsQuery.JQuery(None)
 
+  def socketio(self, htmlCode=None):
+    """
+    Description:
+    ------------
+    This object must be created on the Python side.
+
+    The various function will be the one generating the Javascript string.
+    This is just a Python wrapper on top of the library.
+
+    Related Pages:
+
+			https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm
+    """
+    from epyk.core.js.packages import JsSocketIO
+
+    return JsSocketIO.SocketIO(htmlCode, self._src)
+
   @property
   def d3(self):
     """
@@ -653,10 +666,11 @@ class JsBase(object):
     """
     return JsFncs.JsFunction("return %s" % jsData)
 
-  def switch(self, jsObj):
+  def switch(self, variable):
     """
     Description:
     ------------
+    switch statement is used to perform different actions based on different conditions.
 
     Related Pages:
 
@@ -664,42 +678,60 @@ class JsBase(object):
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param variable: String or Js Object. Variable on which we will apply the switch
     """
-    if not hasattr(jsObj, 'varName'):
-      if isinstance(jsObj, list):
-        jsObj = JsArray.JsArray(jsObj, setVar=True)
-      else:
-        jsObj = JsObject.JsObject(jsObj, setVar=True)
-    self.__switch = JsSwitch.JsSwitch(jsObj, self._context)
+    if hasattr(variable, 'dom'):
+      variable = variable.dom.content
+    variable = JsUtils.jsConvertData(variable, None)
+    self.__switch = JsSwitch.JsSwitch(variable)
     return self.__switch
 
-  def while_(self, pivot, jsFnc=None, iterVar='i', start=0, step=1):
+  def clipboard(self, jsData):
+    """
+    Description:
+    ------------
+    Copy the full URL to rhe clipboard
+
+    Related Pages:
+
+      https://isabelcastillo.com/hidden-input-javascript
+    """
+    return JsFncs.JsFunction('''
+        var elInput = document.createElement('input'); 
+        elInput.setAttribute('type', 'text');
+        elInput.setAttribute('value', %s); document.body.appendChild(elInput);
+        document.execCommand('copy', false, elInput.select()); elInput.remove()''' % JsUtils.jsConvertData(jsData, None))
+
+  def _addImport(self, importAlias):
     """
     Description:
     ------------
 
-    :param jsCond:
+    :param importAlias:
     """
-    jsPivot = JsUtils.jsConvertData(pivot, jsFnc)
-    if isPyData and isinstance(pivot, (list, range)):
-      self.__while = JsWhile.JsWhile(jsPivot, ruleType='array', iterVar=iterVar, start=start, step=step, context=self._context)
-    elif isPyData and isinstance(pivot, dict):
-      self.__while = JsWhile.JsWhile(jsPivot, ruleType='dict', iterVar=iterVar, start=start, step=step, context=self._context)
-    else:
-      self.__while = JsWhile.JsWhile(jsPivot, self._context)
-    return self.__while
+    self._src._props.setdefault('js', {}).setdefault('imports', set([])).add(importAlias)
+    return self
 
-  def for_(self, iterable, jsDataKey=None, isPyData=False, jsFnc=None, iterVar='i', start=0, step=1):
+  @staticmethod
+  def typeof(jsData, type=None):
     """
     Description:
     ------------
+    The typeof function
 
-    :param iterable:
+    Related Pages:
+
+			https://www.w3schools.com/js/js_datatypes.asp
+
+    Attributes:
+    ----------
+    :param jsData: String. A String corresponding to a JavaScript object
+    :param type: String. The type of object
     """
-    jsIterable = JsUtils.jsConvert(iterable, jsDataKey, isPyData, jsFnc)
-    self.__for = JsFor.JsFor(jsIterable, iterVar, start, step, self._context)
-    return self.__for
+    if type is None:
+      return JsObjects.JsBoolean.JsBoolean("typeof %s" % jsData)
+
+    return JsObjects.JsVoid("typeof %s === '%s'" % (jsData, type))
 
   def custom(self, jsData, jsDataKey=None, isPyData=False, jsFnc=None):
     """
@@ -744,16 +776,6 @@ class JsBase(object):
       self._src.jsLocalImports.add("%s/js/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
     else:
       self._src.jsLocalImports.add("%s/%s" % (path, filename))
-    return self
-
-  def _addImport(self, importAlias):
-    """
-    Description:
-    ------------
-
-    :param importAlias:
-    """
-    self._src._props.setdefault('js', {}).setdefault('imports', set([])).add(importAlias)
     return self
 
   def extendProto(self, pyClass, fncName, jsFncs, pmts=None):
@@ -823,6 +845,7 @@ class JsBase(object):
     :rtype: JsObjects.XMLHttpRequest
     """
     method_type = JsUtils.jsConvertData('POST', None)
+    url = JsUtils.jsConvertData(url, None)
     request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url).send(jsData)
     return request
 
@@ -930,90 +953,58 @@ class JsBase(object):
     self._src._props.setdefault('js', {}).setdefault('functions', {})[fncName] = {'content': ";".join(jsData), 'pmt': pmts}
     return self
 
-  def clipboard(self, jsData):
+  @property
+  def keydown(self):
     """
     Description:
-    ------------
-    Copy the full URL to rhe clipboard
+    -----------
+    The onkeydown event occurs when the user is pressing a key (on the keyboard).
 
     Related Pages:
 
-			https://isabelcastillo.com/hidden-input-javascript
-    """
-    return JsFncs.JsFunction('''
-        var elInput = document.createElement('input'); 
-        elInput.setAttribute('type', 'text');
-        elInput.setAttribute('value', %s); document.body.appendChild(elInput);
-        document.execCommand('copy', false, elInput.select()); elInput.remove()''' % JsUtils.jsConvertData(jsData, None))
+      https://www.w3schools.com/jsref/event_onkeydown.asp
 
-  def addOnLoad(self, jsFncs):
+    :rtype: KeyCodes.KeyCode
     """
-    Description:
-    ------------
-    Add javascript fragment dedicated to build the HTML page during the onLoad event.
+    keydown = KeyCodes.KeyCode(component=self, source_event='document')
+    self._src._props['js'].setdefault('events', {})['keydown'] = keydown
+    return keydown
 
-    Attributes:
-    ----------
-    :param jsFncs: The Javascript functions to be added to this section
-    """
-    self._src._props.setdefault('js', {}).setdefault('builders', []).append(";".join(JsUtils.jsConvertFncs(jsFncs)))
-    return self
-
-  def addKeyEvent(self, jsFncs, keyCode=None, keyCondition=None, event="onkeyup"):
+  @property
+  def keypress(self):
     """
     Description:
-    ------------
-    Add keyboard event to the document
-
-    Either the keyCode or the keyCondition can be None
+    -----------
+    The onkeypress event occurs when the user presses a key (on the keyboard).
 
     Related Pages:
-http://gcctech.org/csc/javascript/javascript_keycodes.htm
 
-    Attributes:
-    ----------
-    :param jsFncs: The Javascript function
-    :param keyCode: Optional. The keycode as an integer
-    :param keyCondition: Optional. A special condition based on the code
+      https://www.w3schools.com/jsref/event_onkeypress.asp
+
+    :rtype: KeyCodes.KeyCode
     """
-    if keyCode is None and keyCondition is None:
-      raise Exception("keyCode or keyCondition must be defined")
+    keypress = KeyCodes.KeyCode(component=self, source_event='document')
+    self._src._props['js'].setdefault('events', {})['keypress'] = keypress
+    return keypress
 
-    if keyCode is not None and keyCondition is not None:
-      raise Exception("keyCode or keyCondition cannot be both defined")
-
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-
-    if keyCode is not None:
-      keyCondition = "e.which == %s" % keyCode
-    self._src._props.setdefault('js', {}).setdefault('builders', []).append("document.%s = function(e){if(%s) {%s}}" % (event, keyCondition, ";".join(JsUtils.jsConvertFncs(jsFncs))))
-    return self
-
-  def preload(self, ajaxParams):
+  @property
+  def keyup(self):
     """
     Description:
-    ------------
-    Preload feature to be able to produce pre cached files.
-    Those files will be produced in a asynchrone way and they will facilitate the fluidity in the web dashboard.
-    The success file is only used as an indicator to check if the preload function has to be started. If the file is already present it will not be triggered.
-    The status will be based on the return of the service in the query return (true / false
+    -----------
+    The onkeypress event occurs when the user presses a key (on the keyboard)
 
-    Tip: Put a variable result to your service return in order to change the icon according to the status of your asynchronous call
+    Related Pages:
 
-    Usage::
+      https://www.w3schools.com/jsref/event_onkeypress.asp
 
-      report.preload([{'url': "Test.py", 'success': 'test.csv'}])
-
-    Attributes:
-    ----------
-    :param ajaxParams:
-
-    :return: The Python object itself
+    :rtype: KeyCodes.KeyCode
     """
-    pass
+    keyup = KeyCodes.KeyCode(component=self, source_event='document')
+    self._src._props['js'].setdefault('events', {})['keyup'] = keyup
+    return keyup
 
-  def addOnReady(self, jsFncs):
+  def onReady(self, jsFncs):
     """
     Description:
     ------------
@@ -1044,12 +1035,8 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     """
     return "profileObj.push({type: '%s', htmlCode: '%s', mark: '%s', records: %s})" % (type, htmlCode, mark, recordsCount)
 
-
-  # -----------------------------------------------------------------
-  #                         DOCUMENTATION FUNCTIONS
-  #
-  # https://www.w3schools.com/jsref/dom_obj_document.a
-  def getElementById(self, idName):
+  @staticmethod
+  def getElementById(idName):
     """
     Description:
     ------------
@@ -1067,7 +1054,8 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     """
     return JsNodeDom.JsDoms("document.getElementById('%s')" % idName)
 
-  def getElementsByName(self, name):
+  @staticmethod
+  def getElementsByName(name):
     """
     Description:
     ------------
@@ -1089,7 +1077,8 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     """
     return JsNodeDom.JsDomsList.get(varName="document.getElementsByName(%s)" % JsUtils.jsConvertData(name, None))
 
-  def getElementsByTagName(self, tagName, i=0):
+  @staticmethod
+  def getElementsByTagName(tagName, i=0):
     """
     Description:
     ------------
@@ -1107,6 +1096,26 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     :param i:
     """
     return JsNodeDom.JsDoms("document.getElementsByTagName('%s')[%s]" % (tagName, i), varName="%s_%s" % (tagName, i), setVar=True)
+
+  @staticmethod
+  def getElementsByClassName(clsName):
+    """
+    Description:
+    ------------
+    The getElementsByClassName() method returns a collection of all elements in the document with the specified class name, as a NodeList object.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
+
+    Attributes:
+    ----------
+    :param clsName: Required. The class name of the elements you want to get.
+
+    :return: A NodeList object, representing a collection of elements with the specified class name.
+             The elements in the returned collection are sorted as they appear in the source code.
+    """
+    return JsNodeDom.JsDoms("document.getElementsByClassName(%s)" % clsName)
 
   def createElement(self, tagName, varName=None, setVar=True, dom_id=None):
     """
@@ -1130,6 +1139,7 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
       dom_obj.attr("id", dom_id)
     return dom_obj
 
+  @staticmethod
   def createTextNode(self, jsString=None):
     """
     Description:
@@ -1191,6 +1201,8 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
   @property
   def data(self):
     """
+    Description:
+    ------------
 
     :rtype: JsData.JsData
     """
@@ -1243,6 +1255,38 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     """
     return JsObject.JsObject(data, varName, setVar, isPyData, report=self._src)
 
+  def querySelectorAll(self, selector):
+    """
+    Description:
+    ------------
+    The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s), as a static NodeList object.
+
+    Related Pages:
+
+  			https://www.w3schools.com/jsref/met_document_queryselectorall.asp
+
+    Attributes:
+    ----------
+    :param selector: String. CSS selectors
+    """
+    return JsNodeDom.JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, None), isPyData=False)
+
+  def querySelector(self, selector):
+    """
+    Description:
+    ------------
+    The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
+
+    Related Pages:
+
+  			https://www.w3schools.com/jsref/met_document_queryselector.asp
+
+    Attributes:
+    ----------
+    :param selector: String. CSS selectors
+    """
+    return JsNodeDom.JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, None))
+
   def activeElement(self):
     """
     Description:
@@ -1257,7 +1301,8 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     """
     return JsNodeDom.JsDoms("document.activeElement")
 
-  def title(self, text=None):
+  @staticmethod
+  def title(text=None):
     """
     Description:
     ------------
@@ -1272,42 +1317,9 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     :param text: A String, representing the title of the document
     """
     if text is None:
-      return JsString.JsString(text)
+      return JsString.JsString("document.title")
 
-    return "document.title = %s" % JsUtils.jsConvertData(text, None)
-
-  def getElementsByClassName(self, clsName):
-    """
-    Description:
-    ------------
-    The getElementsByClassName() method returns a collection of all elements in the document with the specified class name, as a NodeList object.
-
-    Related Pages:
-
-			https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
-
-    Attributes:
-    ----------
-    :param clsName: Required. The class name of the elements you want to get.
-
-    :return: A NodeList object, representing a collection of elements with the specified class name.
-             The elements in the returned collection are sorted as they appear in the source code.
-    """
-    return "document.getElementsByClassName(%s)" % clsName
-
-  def hasFocus(self):
-    """
-    Description:
-    ------------
-    The hasFocus() method returns a Boolean value indicating whether the document (or any element inside the document) has focus.
-
-    Related Pages:
-
-			https://www.w3schools.com/jsref/met_document_hasfocus.asp
-
-    :return: A Boolean value, incidating whether the document or any element in the document has focus:
-    """
-    return "document.hasFocus()"
+    return JsObjects.JsVoid("document.title = %s" % JsUtils.jsConvertData(text, None))
 
   def execCommand(self, command, showUI, value):
     """
@@ -1387,91 +1399,8 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     """
     return "document.writeln(%s)" % jsString
 
-  # -----------------------------------------------------------------
-  #                         DATA TYPES
-  #
-  # def date(self, data=None, varName=None, setVariable=False):
-  #   """
-  #   Create or get a Javascript Date object.
-  #
-  #   Example
-  #   rptObj.js.date(setVariable=False).getMonth()
-  #
-  #   Documentation
-  #   https://www.w3schools.com/jsref/jsref_obj_date.asp
-  #
-  #   :param data: The object data
-  #   :param varName: The array javascript reference
-  #   :param setVariable: A flag to force the variable to be defined on the Javascript side
-  #   :return: A Python JsDate object
-  #   """
-  #   if data is not None and varName is not None:
-  #     setVariable = True
-  #   return JsDate.JsDate(data, varName, setVariable)
-  #
-  # def array(self, data=None, varName=None, setVariable=False):
-  #   """
-  #   Create or get a Javascript Array object.
-  #
-  #   Example
-  #   rptObj.js.array([], varName="myList")
-  #
-  #   Documentation
-  #   https://www.w3schools.com/jsref/jsref_obj_array.asp
-  #
-  #   :param data: The object data
-  #   :param varName: The array javascript reference
-  #   :param setVariable: A flag to force the variable to be defined on the Javascript side
-  #   :return: A Python JsArray object
-  #   """
-  #   if data is not None and varName is not None:
-  #     setVariable = True
-  #   return JsArray.JsArray(data, varName, setVariable)
-  #
-  # def object(self, data=None, varName=None, setVariable=False):
-  #   """
-  #
-  #   :param varName:
-  #   :param varType:
-  #   :return:
-  #   """
-  #   if data is not None and varName is not None:
-  #     setVariable = True
-  #   return JsObject.JsObject(data, varName, setVariable)
-  #
-  # def number(self, data=None, varName=None, setVariable=False):
-  #   """
-  #   Create or get a Javascript Number object.
-  #
-  #   Example
-  #   rptObj.js.number(0, varName="myNumber")
-  #   rptObj.js.number(varName="myNumber") + 76
-  #
-  #   Documentation
-  #   https://www.w3schools.com/jsref/jsref_obj_number.asp
-  #
-  #   :param data: The object data
-  #   :param varName: The array javascript reference
-  #   :param setVariable: A flag to force the variable to be defined on the Javascript side
-  #   :return: A Python JsNumber object
-  #   """
-  #   if data is not None and varName is not None:
-  #     setVariable = True
-  #   return JsNumber.JsNumber(data, varName, setVariable)
-  #
-  # def string(self, data=None, varName=None, setVariable=False):
-  #   """
-  #
-  #   :param data:
-  #   :param varName:
-  #   :param setVariable:
-  #   :return: A Python JsString object
-  #   """
-  #   if data is not None and varName is not None:
-  #     setVariable = True
-  #   return JsString.JsString(JsUtils.jsConvertData(data, None), varName=varName, setVar=setVariable)
-
-  def parseFloat(self, jsString):
+  @staticmethod
+  def parseFloat(jsString):
     """
     Description:
     ------------
@@ -1489,7 +1418,8 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     """
     return JsNumber.JsNumber("parseFloat(%s)" % jsString, isPyData=False)
 
-  def parseInt(self, jsString):
+  @staticmethod
+  def parseInt(jsString):
     """
     Description:
     ------------
@@ -1507,7 +1437,8 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
     """
     return JsNumber.JsNumber("parseInt(%s)" % jsString, isPyData=False)
 
-  def parseDate(self, jsString):
+  @staticmethod
+  def parseDate(jsString):
     """
     Description:
     ------------
@@ -1543,43 +1474,6 @@ http://gcctech.org/csc/javascript/javascript_keycodes.htm
       return "window['%s']" % varName
 
     return varName
-
-  def addToDataDict(self, key, jsVal, jsDataKey=None, isPyData=True, jsFnc=None, jsData="data"):
-    """
-
-    Attributes:
-    ----------
-    :param key:
-    :param jsVal:
-    :param varType:
-    :param jsDataKey:
-    :param isPyData:
-    :param jsFnc:
-    :param jsData:
-    """
-    jsVal = JsUtils.jsConvert(jsVal, jsDataKey, isPyData, jsFnc)
-    return "%s['%s'] = %s" % (jsData, key, jsVal)
-
-  def getItem(self, htmlCode):
-    """
-
-    :param htmlCode:
-
-    :return:
-    """
-    if not htmlCode in self._context.get('htmlCodes', []):
-      raise Exception("HTML Code - %s - not defined in the current report" % htmlCode)
-
-    return "$('#%s')" % htmlCode
-
-  def typeof(self, jsData):
-    """
-
-    :param jsData:
-
-    :return:
-    """
-    return JsFncs.JsTypeOf(JsUtils.jsConvertData(jsData, None))
 
   def info(self, jsData, cssStyle=None, icon="fas fa-spinner fa-spin", seconds=10000):
     """

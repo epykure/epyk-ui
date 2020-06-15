@@ -107,6 +107,24 @@ class ContentFormatters(object):
     self._report = report
     self.selector = selector
 
+  def __ge__(self, obj):
+    return "%s >= %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __gt__(self, obj):
+    return "%s > %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __le__(self, obj):
+    return "%s <= %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __lt__(self, obj):
+    return "%s < %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __eq__(self, obj):
+    return "%s == %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
+  def __ne__(self, obj):
+    return "%s <> %s" % (self.selector, JsUtils.jsConvertData(obj, None))
+
   @packageImport("showdown")
   def fromMarkdown(self, options=None):
     """
@@ -402,7 +420,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     return self.css("display", "none")
 
-  def show(self, inline=True):
+  def show(self, inline=True, duration=None):
     """
     Description:
     -----------
@@ -418,7 +436,11 @@ class JsHtml(JsNodeDom.JsDoms):
     Attributes:
     ----------
     :param inline: String
+    :param duration: Integer. A time in second for the component display
     """
+    if duration is not None:
+      return super(JsHtml, self).show('inline-block' if inline else self.display_value, duration)
+
     return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else self.display_value), None)
 
   def select(self):
@@ -595,7 +617,8 @@ class JsHtmlRich(JsHtml):
                     frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0;  
                     return frag.firstChild.outerHTML})(%s)''' % (json.dumps({}), value)
     if new_line:
-      return JsObjects.JsObjects.get("%s.innerHTML += (%s+'\\r\\n')" % (self.htmlCode, value))
+      return JsObjects.JsObjects.get("%s.innerHTML += (%s+'<br />')" % (self.htmlCode, value))
+      #return JsObjects.JsObjects.get("%s.innerHTML += (%s+'\\r\\n')" % (self.htmlCode, value))
 
     return JsObjects.JsObjects.get("%s.innerHTML += %s)" % (self.htmlCode, value))
 

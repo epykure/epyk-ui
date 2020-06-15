@@ -7,7 +7,7 @@ TODO: Split the component_properies class attribute into two decorators
 
 import sys
 
-from epyk.core.data import DataClass
+from epyk.core.data.DataClass import DataClass
 
 
 class Options(DataClass):

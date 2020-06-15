@@ -1,6 +1,6 @@
 
 
-from epyk.core.data import DataClass
+from epyk.core.data.DataClass import DataClass
 
 
 class Scroller(DataClass):

@@ -11,7 +11,7 @@ class Icons(object):
   def get(self):
     return JsFontAwesome
 
-  def awesome(self, icon, text=None, tooltip=None, position=None, width=(None, 'px'), height=(None, 'px'),
+  def awesome(self, icon, text=None, tooltip=None, position=None, width=(25, 'px'), height=(25, 'px'),
               htmlCode=None, profile=None):
     """
     Description:
@@ -730,3 +730,71 @@ Attributes:
     options = options or {}
     html_opts = html.HtmlEvent.OptionsBar(self.context.rptObj, records, width, height, color, options)
     return html_opts
+
+  def avatar(self, img, name=None, width=(30, 'px'), height=(None, ''), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+Attributes:
+    ----------
+    :param img:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    img = img.replace("\\", "/")
+    if height[0] is None:
+      height = width
+    avatar = self.context.rptObj.ui.div("&nbsp;", width=width, height=height, options=options, profile=profile)
+    avatar.css({"padding": '5px', 'border-radius': '30px',
+              'background-repeat': 'no-repeat',
+              'background-position': 'center', 'background-size': 'cover', 'cursor': 'pointer',
+              'background-image': 'url(%s)' % img})
+    if name is not None:
+      avatar.tooltip(name)
+    return avatar
+
+  def badge(self, text="", icon=None, width=(25, "px"), height=(25, "px"), background_color=None, color=None, url=None,
+            tooltip=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Display a badge component using Bootstrap
+
+    Usage::
+
+      rptObj.ui.images.badge("Test badge", "Label", icon="fas fa-align-center")
+      rptObj.ui.images.badge("This is a badge", background_color="red", color="white")
+      rptObj.ui.images.badge(12, icon="far fa-bell", options={"badge_position": 'right'})
+
+      b = rptObj.ui.images.badge(7688, icon="fab fa-python", options={'badge_css': {'color': 'white', "background": 'red'}})
+      b.options.badge_css = {"background": 'green'}
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlImage.Badge`
+
+    Related Pages:
+
+        https://getbootstrap.com/docs/4.0/components/badge/
+
+    Attributes:
+    ----------
+    :param text: The content of the badge
+    :param icon: Optional, A String with the icon to display from font-awesome
+    :param background_color: Optional, The background color of the badge
+    :param color: Optional, The text color of the badge
+    :param url:
+    :param tooltip: Optional, The text to display in the tooltip
+    :param options:
+    :param profile: Optional, A boolean to store the performances for each components
+    """
+    if background_color is None:
+      background_color = self.context.rptObj.theme.greys[0]
+    if color is None:
+      color = self.context.rptObj.theme.success[1]
+    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, width, height, None, icon, background_color, color, url,
+                                      tooltip, options or {}, profile)
+    return html_badge

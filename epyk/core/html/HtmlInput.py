@@ -120,11 +120,10 @@ class Input(Html.Html):
     self.attr["pattern"] = pattern
     if required:
       self.attr["required"] = None
-    #self.style.add_classes.input.
-    self.style.addCls(["CssInputInValid", "CssInputValid"])
+    self.style.add_classes.input.is_valid()
     return self
 
-  def enter(self, jsFncs, profile=False):
+  def enter(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -138,13 +137,15 @@ class Input(Html.Html):
     ----------
     :param jsFncs:
     :param profile:
+    :param source_event:
 
     :return: The python object itself
     """
 
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self.keydown.enter(jsFncs + [self.dom.select()], profile)
+    jsFncs.append(self.dom.select())
+    self.keydown.enter(jsFncs, profile, source_event=source_event)
     return self
 
   def readonly(self, flag=True):
@@ -448,6 +449,9 @@ class InputDate(Input):
   def __str__(self):
     # Javascript builder is mandatory for this object
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    if self.options.inline:
+      return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
 
 
@@ -485,14 +489,12 @@ class InputRange(Input):
     self.__options = OptInputs.OptionsInputRange(self, options)
     #
     self.input = report.ui.inputs.input(text, width=(None, "px"), placeholder=placeholder).css({"vertical-align": 'middle'})
-    self.input.options.managed = False
     self.append_child(self.input)
     #
     self.input.set_attrs(attrs={"type": "range", "min": min, "max": max, "step": step})
     if self.options.output:
       self.output = self._report.ui.inputs._output(text).css({
         "width": '15px', "text-align": 'center', "margin-left": '2px', 'color': self._report.theme.success[1]})
-      self.output.options.managed = False
       self.append_child(self.output)
       self.input.set_attrs(attrs={"oninput": "%s.value=this.value" % self.output.htmlCode})
     self.css({"display": 'inline-block', "vertical-align": 'middle', "line-height": '%spx' % Defaults.LINE_HEIGHT})
@@ -725,6 +727,14 @@ class FieldInteger(Field):
     super(FieldInteger, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
 
 
+class FieldFile(Field):
+  name = 'Field Integer'
+
+  def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
+    input = report.ui.inputs.file(value, width=(None, "%"), placeholder=placeholder, options=options)
+    super(FieldFile, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+
+
 class FieldPassword(Field):
   name = 'Field Password'
 
@@ -796,7 +806,6 @@ class Radio(Html.Html):
                                          css_attrs={"width": width, 'height': height}, profile=profile)
     self.add_input("", position="before", css={"width": 'none', "vertical-align": 'middle'})
     self.add_label(label, position="after", css={"display": 'inline-block', "width": "None", 'float': 'none'})
-    self.input.options.managed = False
     self.input.set_attrs(name="data-content", value=label)
     if flag:
       self.input.set_attrs({"checked": json.dumps(flag)})
@@ -943,8 +952,8 @@ class Search(Html.Html):
   def _js__builder__(self):
     return '''htmlObj.find('input').val(data)'''
 
-  def click(self, jsFncs, profile=False):
-    return self.icon.click(jsFncs, profile)
+  def click(self, jsFncs, profile=False, source_event=None):
+    return self.icon.click(jsFncs, profile, source_event)
 
   def enter(self, jsFncs, profile=False):
     """

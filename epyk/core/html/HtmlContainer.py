@@ -156,7 +156,7 @@ class PanelSlide(Panel):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -200,24 +200,21 @@ class Div(Html.Html):
 
   def __init__(self, report, htmlObj, label, color, width, icon, height, editable, align, padding, htmlCode, tag,
                helper, options, profile):
-    if isinstance(htmlObj, list) and htmlObj:
-      newHtmlObj = []
-      for obj in htmlObj:
-        if isinstance(obj, list) and obj:
-          newHtmlObj.append(report.ui.div(obj, label, color, width, icon, height, editable, align, padding, htmlCode, tag, helper, profile))
-        else:
-          newHtmlObj.append(obj)
-        if hasattr(newHtmlObj[-1], 'options'):
-          if options.get('inline'):
-            newHtmlObj[-1].style.css.display = 'inline-block'
-          newHtmlObj[-1].options.managed = False
-      htmlObj = newHtmlObj
-    elif htmlObj is not None and hasattr(htmlObj, 'options'):
-      htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
-    super(Div, self).__init__(report, htmlObj, htmlCode=htmlCode, css_attrs={"color": color, "width": width, "height": height},
-                              profile=profile)
-    self.tag = tag
+    super(Div, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"color": color, "width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionsDiv(self, options)
+    if not isinstance(htmlObj, list):
+      htmlObj = [htmlObj]
+    for obj in htmlObj:
+      if isinstance(obj, list) and obj:
+        component = report.ui.div(obj, label, color, width, icon, height, editable, align, padding, htmlCode, tag, helper, profile)
+      else:
+        component = obj
+
+      if hasattr(component, 'options'):
+        self.__add__(component)
+      else:
+        self.val.append(obj)
+    self.tag = tag
     # Add the component predefined elements
     self.add_icon(icon)
     self.add_label(label)
@@ -641,7 +638,7 @@ class Col(Html.Html):
   def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
     self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
     super(Col, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptPanel.OptionGrid(report, options)
+    self.__options, self.__set_size = OptPanel.OptionGrid(report, options), None
     self.style.clear_all(no_default=True)
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
@@ -652,6 +649,9 @@ class Col(Html.Html):
       self.css({'display': 'inline-block'})
     self.attr["class"].add('col')
     self.style.justify_content = self.position
+    if self.position == 'middle':
+      # Bootstrap vertical align middle
+      self.attr["class"].add('my-auto')
 
   @property
   def options(self):
@@ -709,7 +709,13 @@ class Col(Html.Html):
     ----------
 
     """
-    self.attr["class"].add("col-%s" % n)
+    if self.__set_size is None:
+      if not n:
+        self.__set_size = False
+        return self
+
+      self.__set_size = "col-%s" % n
+      self.attr["class"].add(self.__set_size)
     return self
 
   def __str__(self):
@@ -1276,8 +1282,7 @@ class Modal(Html.Html):
     Will allow an event to close the modal if a click event is detected anywhere outside the modal
     """
     modal = self._report.js.getElementById(self.htmlCode)
-    self._report.js.addOnReady(self._report.js.window.events.
-                                      addClickListener(self._report.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})),
+    self._report.js.onReady(self._report.js.window.events.addClickListener(self._report.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})),
                                                        subEvents=['event']))
 
   def __add__(self, htmlObj):
@@ -1383,7 +1388,7 @@ class Points(Html.Html):
     """
     return self.__options
 
-  def on(self, event, jsFncs, profile=False):
+  def on(self, event, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------

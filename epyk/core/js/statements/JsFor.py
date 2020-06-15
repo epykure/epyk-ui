@@ -1,12 +1,13 @@
 
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsObject
 
 
 class JsFor(object):
 
-  def __init__(self, jsIterable, iterVar="i", start=0, step=1, context=None):
+  def __init__(self, end, options=None):
     """
+    Description:
+    -----------
     The for statement creates a loop that is executed as long as a condition is true.
 
     The loop will continue to run as long as the condition is true. It will only stop when the condition becomes false.
@@ -16,48 +17,164 @@ class JsFor(object):
 			https//www.w3schools.com/jsref/jsref_for.asp
     https://www.w3schools.com/js/js_performance.asp
 
-    :param jsIterable:
-    :param iterVar:
-    :param start:
-    :param step:
-    :param context:
+    Attributes:
+    ----------
+    :param end:
+    :param options: Dictionary
     """
-    self._context = context
-    if not hasattr(jsIterable, 'toStr'):
-      self.__jsObj = JsObject.JsObject(jsIterable, setVar=True)
-    else:
-      self.__jsObj = jsIterable
-    self._js = [
-      "var %s = %s" % (self.__jsObj.varName, jsIterable),
-      "var l = %s.length" % self.__jsObj.varName,
-      "for(var %(iterVar)s = %(start)s; %(iterVar)s < l; i+=%(step)s)" % {"step": step, 'start': start, 'iterVar': iterVar}]
-    self.__iterVar = iterVar
+    self.options = {"var": 'i', 'start': 0, 'step': 1, 'end': end}
+    if options is not None:
+      self.options.update(options)
     self.__jsFncs = []
 
-  def js(self, jsFncs, isPyData=False, jsFncVal=None):
+  @property
+  def var(self):
     """
 
-    :param jsFncs:
-    :param isPyData:
-    :param jsFncVal:
     :return:
     """
-    if jsFncVal is None:
-      jsFncVal = "%s[%s]" % (self.__jsObj.varName, self.__iterVar)
-    jsIterable = JsUtils.jsConvertFncs(jsFncs, isPyData, jsFncVal)
-    self.__jsFncs.extend(jsIterable)
+    return self.options['var']
+
+  @var.setter
+  def var(self, value):
+    """
+
+    :return:
+    """
+    self.options['var'] = value
+
+  @property
+  def start(self):
+    """
+
+    :return:
+    """
+    return self.options['start']
+
+  @start.setter
+  def start(self, value):
+    """
+
+    :return:
+    """
+    self.options['start'] = value
+
+  @property
+  def end(self):
+    """
+
+    :return:
+    """
+    return self.options['end']
+
+  @end.setter
+  def end(self, value):
+    """
+
+    :return:
+    """
+    self.options['end'] = value
+
+  @property
+  def step(self):
+    """
+
+    :return:
+    """
+    return self.options['step']
+
+  @step.setter
+  def step(self, value):
+    """
+
+    :return:
+    """
+    self.options['step'] = value
+
+  def fncs(self, jsFncs, reset=True):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param reset:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    if reset:
+      self.__jsFncs = jsFncs
+    else:
+      self.__jsFncs.extend(jsFncs)
     return self
 
   def toStr(self):
     """
 
-    :return:
     """
-    #if self.__forid is None:
-    #  raise Exception("Javascript For loop not correctly defined")
+    self.options['expr'] = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
+    return "for(var %(var)s = %(start)s; %(var)s < %(end)s; %(var)s++){%(expr)s}" % self.options
 
-    strData = ";".join(self._js) + "{%s}"
-    strData %= ";".join(self.__jsFncs)
-    self.__jsFncs, self.__jsObj = [], None  # empty the stack
-    return "".join(strData)
 
+class JsIterable(object):
+
+  def __init__(self, jsIterable, options=None):
+    """
+
+    Attributes:
+    ----------
+    :param jsIterable:
+    """
+    self.__js_it = jsIterable
+    self.options = {"var": 'x', 'type': 'in'}
+    if options is not None:
+      self.options.update(options)
+
+  @property
+  def var(self):
+    """
+    Description:
+    -----------
+`   Return the variable reference for this loop
+    """
+    return self.options['var']
+
+  @var.setter
+  def var(self, value):
+    """
+    Description:
+    -----------
+`   Return the variable reference for this loop
+
+    Attributes:
+    ----------
+    :param value: String. The value reference for the JavaScript variable
+    """
+    self.options['var'] = value
+
+  def fncs(self, jsFncs, reset=True):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param reset:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    if reset:
+      self.__jsFncs = jsFncs
+    else:
+      self.__jsFncs.extend(jsFncs)
+    return self
+
+  def toStr(self):
+    """
+
+    """
+    jsNfncs = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
+    jsIter = JsUtils.jsConvertData(self.__js_it, None)
+    return "for(var %s %s %s){%s}" % (self.var, self.options['type'], jsIter, jsNfncs)

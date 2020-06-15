@@ -90,8 +90,8 @@ class Vis2D(object):
       line_chart.add_items(d)
     return line_chart
 
-  def timeline(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-               options=None, htmlCode=None):
+  def timeline(self, record=None, start=None, content=None, end=None, type=None, group=None, profile=None,
+               width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     -----------
@@ -102,22 +102,24 @@ http://www.chartjs.org/
     Attributes:
     ----------
     :param record:
-    :param y_columns:
-    :param x_axis:
+    :param start:
+    :param content:
+    :param end:
+    :param type:
+    :param group:
     :param profile:
     :param height:
+    :param options:
     :param htmlCode:
     """
-    series = []
-    for rec in record:
-      for i, y in enumerate(y_columns):
-        if y in rec:
-          series.append({"x": rec[x_axis], "y": rec[y], 'group': i})
+
+    data = self.parent.context.rptObj.data.vis.timeline(record, start, content, end, type, group, options)
     line_chart = graph.GraphVis.ChartTimeline(self.parent.context.rptObj, width, height, htmlCode, options, profile)
     line_chart.options.height = height[0]
     line_chart.options.editable = True
     line_chart.options.showCurrentTime = True
-    line_chart.add_items(series)
+    if data['datasets']:
+      line_chart.add_items(data['datasets'])
     return line_chart
 
   def network(self, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):

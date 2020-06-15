@@ -4,8 +4,8 @@ from epyk.core.js.packages import packageImport
 from epyk.core.js.packages import JsDatatable
 from epyk.core.js import JsUtils
 
-from epyk.core.data import DataClass
-from epyk.core.data import DataEnum
+from epyk.core.data.DataClass import DataClass
+from epyk.core.data.DataClass import DataEnum
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable

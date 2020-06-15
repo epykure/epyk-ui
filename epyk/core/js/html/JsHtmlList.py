@@ -28,6 +28,11 @@ class JsItemsDef(object):
     if(options.click != null){ 
       item.style.cursor = 'pointer';
       item.onclick = function(event){ var value = this.innerHTML; options.click(event, value) }  };
+    if(options.draggable != false){ 
+      item.setAttribute('draggable', true);
+      item.style.cursor = 'grab';
+      item.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value) }
+    };
     if(typeof data === 'object'){ item.innerHTML = data.text} else { item.innerHTML = data }'''
     return self._item(item_def)
 

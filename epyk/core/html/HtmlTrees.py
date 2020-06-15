@@ -79,7 +79,7 @@ class Tree(Html.Html):
     self._jsStyles['click_node'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -163,7 +163,7 @@ class DropDown(Html.Html):
     """
     return self.__options
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     if not isinstance(jsFncs, list):
       jsFncs = []
     self._jsStyles['click'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(jsFncs, toStr=True)

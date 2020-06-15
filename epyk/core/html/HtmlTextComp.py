@@ -1,6 +1,4 @@
 
-import re
-
 from epyk.core.html import Html
 from epyk.core.css import Colors
 
@@ -16,7 +14,7 @@ from epyk.core.css.styles import GrpClsText
 
 
 class UpDown(Html.Html):
-  name  = 'Up and Down'
+  name = 'Up and Down'
   requirements = ('font-awesome', 'accounting')
 
   def __init__(self, report, rec, color, label, options, helper, profile):
@@ -340,7 +338,7 @@ class TrafficLight(Html.Html):
     self.action.click(jsFncs, profile)
     return self
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -354,7 +352,7 @@ class TrafficLight(Html.Html):
     self.style.css.cursor = "pointer"
     jsFncs = [self.dom.querySelector("div").toggle("background-color", "rgb(%s, %s, %s)" % (success[0], success[1], success[2]),
                                                    self._report.theme.danger[1])] + jsFncs
-    return super(TrafficLight, self).click(jsFncs, profile)
+    return super(TrafficLight, self).click(jsFncs, profile, source_event)
 
   @property
   def _js__builder__(self):
@@ -646,3 +644,44 @@ class Composite(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).extend(list(self.__builders))
     return self.val.html()
+
+
+class Status(Html.Html):
+  name = 'status'
+
+  def __init__(self, report, status, width, height, htmlCode, profile, options):
+    super(Status, self).__init__(report, status, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptText.OptionsStatus(self, options)
+    self.style.css.text_align = 'center'
+    self.style.css.line_height = 30
+    self.style.css.margin = 2
+    self.style.css.padding = '10px auto'
+    self.context = self._report.ui.menus.contextual()
+    self.contextMenu(self.context, jsFncs=[])
+
+  @property
+  def options(self):
+    """
+
+    :rtype: ptText.OptionsStatus
+    """
+    return self.__options
+
+  @property
+  def _js__builder__(self):
+    return '''
+        if(options.showdown){var converter = new showdown.Converter(options.showdown); var content = converter.makeHtml(data)}  else {var content = data}
+        htmlObj.innerHTML = content;
+        if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
+
+  def __str__(self):
+    color_map = self._report.js.data.datamap().attrs(self.options.states)
+    for k, v in self.options.states.items():
+      item = self.context.add(k)
+      item.click([
+        self.context.source.build(item.dom.content),
+        self.context.source.dom.css({"background": color_map.get(item.dom.content)}),
+        self.context.dom.hide()])
+    self.style.css.background = self.options.states.get(self.val, self.options.background)
+    self.style.css.color = self.options.color
+    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)

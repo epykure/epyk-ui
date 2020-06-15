@@ -159,7 +159,7 @@ class Switch(Html.Html):
       self._js = JsComponents.Switch(self, report=self._report)
     return self._js
 
-  def click(self, onFncs=None, offFncs=None):
+  def click(self, onFncs=None, offFncs=None, source_event=None):
     """
     Description:
     ------------

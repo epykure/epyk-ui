@@ -324,7 +324,7 @@ class Images(object):
                                     profile=profile)
     return html_icon
 
-  def badge(self, text=None, label=None, icon=None, background_color=None, color=None, url=None,
+  def badge(self, text="", label=None, icon=None, width=(25, "px"), height=(25, "px"), background_color=None, color=None, url=None,
             tooltip=None, options=None, profile=None):
     """
     Description:
@@ -360,7 +360,11 @@ class Images(object):
     :param options:
     :param profile: Optional, A boolean to store the performances for each components
     """
-    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, label, icon, background_color, color, url,
+    if background_color is None:
+      background_color = self.context.rptObj.theme.greys[0]
+    if color is None:
+      color = self.context.rptObj.theme.success[1]
+    html_badge = html.HtmlImage.Badge(self.context.rptObj, text, width, height, label, icon, background_color, color, url,
                                       tooltip, options or {}, profile)
     return html_badge
 

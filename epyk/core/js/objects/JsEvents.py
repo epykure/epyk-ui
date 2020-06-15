@@ -7,10 +7,49 @@ from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsNumber
 
-from epyk.core.js.objects.JsData import JsDataTransfer
-
 
 class Event(object):
+
+  def getEvent(self, varName):
+    return JsObject.JsObject.get(varName)
+
+  def createEvent(self, varName, type='Event'):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+			https://developer.mozilla.org/fr/docs/Web/API/Document/createEvent
+
+    Attributes:
+    ----------
+    :param type:
+    :param varName:
+    """
+    return "var %s = document.createEvent('%s')" % (varName, type)
+
+  def initEvent(self, name, varName=None, bubbles=True, cancelable=True):
+    """
+    Description:
+    ------------
+    The Event.initEvent() method is used to initialize the value of an event created using Document.createEvent().
+
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/Event/initEvent
+
+    Attributes:
+    ----------
+    :param name:
+    :param bubbles:
+    :param cancelable:
+    """
+    name = JsUtils.jsConvertData(name, None)
+    bubbles = JsUtils.jsConvertData(bubbles, None)
+    cancelable = JsUtils.jsConvertData(cancelable, None)
+    varName = varName or "document.createEvent('Event')"
+    return JsObject.JsObject.get("%s.initEvent(%s, %s, %s)" % (varName, name, bubbles, cancelable))
 
   def cancelBubble(self):
     """
@@ -49,8 +88,28 @@ class Event(object):
     Related Pages:
 
 			https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
-    """
+    """#
+    from epyk.core.js.objects.JsData import JsDataTransfer
+
     return JsDataTransfer("event.dataTransfer")
+
+  @property
+  def clipboardData(self):
+    """
+    Description:
+    ------------
+    The ClipboardEvent.clipboardData property holds a DataTransfer object, which can be used:
+
+      - to specify what data should be put into the clipboard from the cut and copy event handlers, typically with a setData(format, data) call;
+      - to obtain the data to be pasted from the paste event handler, typically with a getData(format) call.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent/clipboardData
+    """
+    from epyk.core.js.objects.JsData import JsClipboardData
+
+    return JsClipboardData("event.clipboardData")
 
   @property
   def timeStamp(self):
@@ -162,7 +221,7 @@ class KeyboardEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_key_altkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.altKey")
+    return JsBoolean.JsBoolean.get(varName="event.altKey")
 
   @property
   def charCode(self):
@@ -175,7 +234,7 @@ class KeyboardEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_key_charcode.asp
     """
-    return JsString.JsString(varName="event.charCode")
+    return JsString.JsString.get(varName="event.charCode")
 
   @property
   @JsUtils.incompatibleBrowser(["Internet Explorer"])
@@ -269,7 +328,7 @@ class KeyboardEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_key_shiftkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.shiftKey")
+    return JsBoolean.JsBoolean.get(varName="event.shiftKey")
 
   @property
   def which(self):
@@ -298,7 +357,7 @@ class MouseEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_altkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.altKey")
+    return JsBoolean.JsBoolean.get(varName="event.altKey")
 
   @property
   def button(self):
@@ -410,7 +469,7 @@ class MouseEvent(UIEvent):
 
     https://www.w3schools.com/jsref/event_shiftkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.shiftKey")
+    return JsBoolean.JsBoolean.get(varName="event.shiftKey")
 
   @property
   def ctrlKey(self):
@@ -447,7 +506,7 @@ class TouchEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_touch_altkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.altKey")
+    return JsBoolean.JsBoolean.get(varName="event.altKey")
 
   @property
   def ctrlKey(self):
@@ -486,7 +545,7 @@ class TouchEvent(UIEvent):
 
 			https://www.w3schools.com/jsref/event_touch_shiftkey.asp
     """
-    return JsBoolean.JsBoolean(varName="event.shiftKey")
+    return JsBoolean.JsBoolean.get(varName="event.shiftKey")
 
   @property
   def targetTouches(self):

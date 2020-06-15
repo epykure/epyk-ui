@@ -31,13 +31,17 @@ class OptionsText(Options):
 
 			https://github.com/showdownjs/showdown
     """
-    return self._config_get(False, 'showdown')
+    return self._config_get(False)
 
   @markdown.setter
   @packageImport("showdown")
   def markdown(self, values):
-    values = {} if values is True else values
-    self._config(values, 'showdown')
+    if isinstance(values, bool):
+      self._config(values)
+      self._config({} if values is True else values, 'showdown')
+    else:
+      self._config(True)
+      self._config(values, 'showdown')
 
   @property
   def showdown(self):
@@ -56,7 +60,7 @@ class OptionsText(Options):
   @showdown.setter
   @packageImport("showdown")
   def showdown(self, values):
-    values = {} if values is True else values
+    self._config(True, 'markdown')
     self._config(values)
 
   @property
@@ -259,3 +263,42 @@ class OptionsComposite(Options):
   @reset_class.setter
   def reset_class(self, bool):
     self.set(bool)
+
+
+class OptionsStatus(Options):
+
+  @property
+  def states(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @states.setter
+  def states(self, bool):
+    self.set(bool)
+
+  @property
+  def color(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get('white')
+
+  @color.setter
+  def color(self, color):
+    self.set(color)
+
+  @property
+  def background(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get('grey')
+
+  @background.setter
+  def background(self, color):
+    self.set(color)

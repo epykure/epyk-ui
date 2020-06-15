@@ -54,7 +54,7 @@ class Graphs(object):
     html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, records, y_column, x_axis, title, width, height, htmlCode,  profile)
     return html_skillbar
 
-  def sparkline(self, chart_type, data, title=None, options=None, column=None):
+  def sparkline(self, chart_type, data, title=None, options=None, column=None, width=(None, "%"), height=(None, "px")):
     """
     Description:
     ------------
@@ -84,7 +84,7 @@ class Graphs(object):
       if isinstance(data, list):
         pass
 
-    html_chart = html.graph.GraphSparklines.Sparklines(self.context.rptObj, data, chart_type, title, options)
+    html_chart = html.graph.GraphSparklines.Sparklines(self.context.rptObj, data, chart_type, title, width, height, options)
     return html_chart
 
   @property

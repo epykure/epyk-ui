@@ -1,22 +1,24 @@
 import time
 
 from epyk.core.html import Html
-
-from epyk.core.html.options import OptInputs
+from epyk.core.js.html import JsHtmlJqueryUI
 
 
 class DatePicker(Html.Html):
   requirements = ('jqueryui', )
   name = 'Date Picker'
 
-  def __init__(self, report, value, label, icon, color, htmlCode, profile, options, helper):
-    dfltOptions = {'dateFormat': 'yy-mm-dd'}
-    dfltOptions.update(options)
+  def __init__(self, report, value, label, icon, width, height, color, htmlCode, profile, options, helper):
     super(DatePicker, self).__init__(report, value, htmlCode=htmlCode, profile=profile)
     # Add all the internal components input, label, icon and helper
-    self.input = self._report.ui.inputs.d_date(self.val, options=dfltOptions).css({"padding": 0})
+    if width[0] is not None and width[1] == 'px':
+      width = (width[0] - 30, width[1])
+    self.input = self._report.ui.inputs.d_date(self.val, width=width, height=height, options=options).css({"padding": 0})
     self.prepend_child(self.input)
-    self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
+    if not self.input.options.inline:
+      self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
+    else:
+      self.icon = None
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
@@ -25,20 +27,47 @@ class DatePicker(Html.Html):
               'margin-top': '2px'})
 
   @property
-  def options(self):
+  def dom(self):
+    """
+    Description:
+    ------------
+    The Javascript Dom proxy to the input object
+
+    :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
+    """
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
+    return self._dom
+
+  # @property
+  # def options(self):
+  #   """
+  #   Description:
+  #   -----------
+  #   The progress bar is designed to display the current percent complete for a process.
+  #   The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
+  #
+  #   Related Pages:
+  #
+	# 		https://api.jqueryui.com/menu
+  #
+  #   :rtype: OptInputs.OptionsDatePicker
+  #   """
+  #   return self.input.options
+
+  def select(self, jsFncs):
     """
     Description:
     -----------
-    The progress bar is designed to display the current percent complete for a process.
-    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
-    Related Pages:
-
-			https://api.jqueryui.com/menu
-
-    :rtype: OptInputs.OptionsDatePicker
+    Attributes:
+    ----------
+    :param jsFncs:
     """
-    return self.input.options
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.input.options.onSelect = jsFncs
+    return self
 
   def excluded_dates(self, dts=None, jsFncs=None):
     """
@@ -66,6 +95,8 @@ class DatePicker(Html.Html):
 
   def add_options(self, options=None, name=None, value=None):
     """
+    Description:
+    -----------
     Add TimePicker options
 
     Related Pages:
@@ -108,20 +139,33 @@ class TimePicker(Html.Html):
     self.css({"color": color or 'inherit', "vertical-align": "middle", 'margin-top': '2px'})
 
   @property
-  def options(self):
+  def dom(self):
     """
     Description:
-    -----------
-    The progress bar is designed to display the current percent complete for a process.
-    The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
+    ------------
+    The Javascript Dom proxy to the input object
 
-    Related Pages:
-
-			https://api.jqueryui.com/menu
-
-    :rtype: OptInputs.OptionsTimePicker
+    :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
-    return self.input.options
+    if self._dom is None:
+      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self._report)
+    return self._dom
+
+  # @property
+  # def options(self):
+  #   """
+  #   Description:
+  #   -----------
+  #   The progress bar is designed to display the current percent complete for a process.
+  #   The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
+  #
+  #   Related Pages:
+  #
+	# 		https://api.jqueryui.com/menu
+  #
+  #   :rtype: OptInputs.OptionsTimePicker
+  #   """
+  #   return self.input.options
 
   def change(self, jsFnc):
     """
@@ -141,6 +185,8 @@ class TimePicker(Html.Html):
 
 			https://timepicker.co/options/
 
+    Attributes:
+    ----------
     :param jsFnc:
     """
     self.input.change(jsFnc)
@@ -174,9 +220,9 @@ class CountDownDate(Html.Html):
       var now = new Date().getTime(); var distance = endDate.getTime() - now;
 
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance %% (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance %% (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance %% (1000 * 60)) / 1000);
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       htmlObj.innerHTML = "<b>"+ days +"d "+ hours +"h "+ minutes + "m "+ seconds +"s </b>"; 
       if ((distance < 0) && (options.delete)){clearInterval(htmlObj.id +"_interval")

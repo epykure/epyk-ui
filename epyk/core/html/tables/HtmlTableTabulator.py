@@ -6,10 +6,10 @@ from epyk.core.html import Html
 from epyk.core.js.packages import JsTabulator
 from epyk.core.js.primitives import JsObjects
 
-from epyk.core.data import DataClass
-from epyk.core.data import DataEnum
-from epyk.core.data import DataGroup
-from epyk.core.data import DataEnumMulti
+from epyk.core.data.DataClass import DataClass
+from epyk.core.data.DataClass import DataEnum
+from epyk.core.data.DataClass import DataGroup
+from epyk.core.data.DataClass import DataEnumMulti
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable

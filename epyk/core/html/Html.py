@@ -11,7 +11,6 @@ from epyk.core.js import Imports
 from epyk.core.js.html import JsHtml
 from epyk.core.js import packages
 from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import JsSortable
 from epyk.core.js.packages import packageImport
 
 from epyk.core.css.styles import GrpCls
@@ -151,7 +150,7 @@ class Html(object):
       self.__htmlCode = htmlCode
       # self._report.jsGlobal.reportHtmlCode.add(htmlCode)
       if htmlCode in self._report.inputs:
-        self.vals = self._report.inputs[htmlCode]
+        vals = self._report.inputs[htmlCode]
 
     self._report.components[self.htmlCode] = self
     self._vals = vals
@@ -258,11 +257,11 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
-    htmlObj.options.managed = False
+    #htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
-    self._report.js.addOnLoad([self.dom.insertBefore(htmlObj.dom)])
+    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.insertBefore(htmlObj.dom)], toStr=True))
     return self
 
   def append_child(self, htmlObj):
@@ -288,11 +287,11 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
-    htmlObj.options.managed = False
+    #htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore
     self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
-    self._report.js.addOnLoad([self.dom.appendChild(htmlObj.dom)])
+    self._report._props.setdefault('js', {}).setdefault('builders', []).add(JsUtils.jsConvertFncs([self.dom.appendChild(htmlObj.dom)], toStr=True))
     return self
 
   def onReady(self, jsFncs):
@@ -563,6 +562,8 @@ Attributes:
     -----------
     Add an elementary helper icon
 
+    The helper is not managed by the main page and should be written in the component
+
     Usage::
 
       Attributes:
@@ -775,6 +776,18 @@ http://api.jquery.com/css/
       self._report._props['js']['onReady'].add("%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
     return self
 
+  def draggable(self, jsFncs=None, options=None, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+
+    """
+    jsFncs = jsFncs or []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.attr["draggable"] = True
+    return self.on("dragstart", jsFncs + ['event.dataTransfer.setData("text", event.target.innerHTML)'], profile=profile, source_event=source_event)
+
   def add_options(self, options=None, name=None, value=None):
     """
     Description:
@@ -959,13 +972,13 @@ Attributes:
     self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     return self
 
-  def hover(self, jsFncs, profile=False):
-    return self.on("mouseover", jsFncs, profile)
+  def hover(self, jsFncs, profile=False, source_event=None):
+    return self.on("mouseover", jsFncs, profile, source_event)
 
-  def click(self, jsFncs, profile=False):
-    return self.on("click", jsFncs, profile)
+  def click(self, jsFncs, profile=False, source_event=None):
+    return self.on("click", jsFncs, profile, source_event)
 
-  def mouse(self, on_fncs=None, out_fncs=None, profile=False):
+  def mouse(self, on_fncs=None, out_fncs=None, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -993,10 +1006,24 @@ Attributes:
     """
     self.style.css.cursor = 'pointer'
     if on_fncs is not None:
-      self.on("mouseenter", on_fncs, profile)
+      self.on("mouseenter", on_fncs, profile, source_event)
     if out_fncs is not None:
-      self.on("mouseleave", out_fncs, profile)
+      self.on("mouseleave", out_fncs, profile, source_event)
     return self
+
+  def paste(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.clipboardData.text] + jsFncs, toStr=True)
+    self.on("paste", str_fncs, profile, source_event)
 
   def contextMenu(self, menu, jsFncs, profile=False):
     """
@@ -1040,8 +1067,6 @@ Attributes:
 
     options, js_options = options or self._jsStyles, []
     for k, v in options.items():
-      if self.options.isJsContent(k):
-        print(k, self.options.isJsContent(k))
       if isinstance(v, dict):
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
         js_options.append("'%s': {%s}" % (k, ", ".join(row)))
@@ -1061,16 +1086,29 @@ Attributes:
     """
     return self.build(self.val, self._jsStyles)
 
-  def paste(self, jsFnc):
-    """ Generic click function """
-    self._report.jsOnLoadFnc.add('''%(jqId)s.on('paste', function(event) { 
-       var data;
-       if (window.clipboardData && window.clipboardData.getData) { // IE
-            data = window.clipboardData.getData('Text'); }
-        else if (event.originalEvent.clipboardData && event.originalEvent.clipboardData.getData) { // other browsers
-            data = event.originalEvent.clipboardData.getData('text/plain')} 
-        %(jsFnc)s 
-      })''' % {'jqId': self.jqId, 'jsFnc': jsFnc})
+  def subscribe(self, socket, channel, data=None, options=None, jsFncs=None, profile=False):
+    """
+    Description:
+    ------------
+    Subscribe to a socket channel.
+    Data received from the socket are defined as a dictionary with a field data.
+
+    The content of data will be used by this component.
+
+    Related Pages:
+
+      https://timepicker.co/options/
+
+    Attributes:
+    ----------
+    :param socket: Socket. A python socket object
+    :param channel: String. The channel on which events will be received
+    """
+    if data is None:
+      data = socket.message
+    jsFncs = jsFncs if jsFncs is not None else []
+    socket.on(channel, [self.build(data, options, profile)] + jsFncs)
+    return self
 
   @packageImport('sortable')
   def sortable(self, options=None, propagate=True, propagate_only=False):
@@ -1091,6 +1129,8 @@ Attributes:
 
     :rtype: JsSortable.Sortable
     """
+    from epyk.core.js.packages import JsSortable
+
     self._sort_propagate = propagate
     if not propagate_only:
       if 'sortable' not in self._on_ready_js:
@@ -1134,8 +1174,6 @@ Attributes:
     str_result = []
     if self._on_ready_js:
       self.onReady(list(self._on_ready_js.values()))
-    for htmlObj in self._sub_htmls:
-      str_result.append(htmlObj.html())
     if self.helper != "":
       self.helper.html()
 
@@ -1199,7 +1237,7 @@ class Body(Html):
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
-    self._report.js.addOnReady(jsFncs)
+    self._report.js.onReady(jsFncs)
 
   def onLoad(self, jsFncs):
     """

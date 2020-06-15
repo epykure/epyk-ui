@@ -429,7 +429,6 @@ class CheckButton(Html.Html):
 
 class IconEdit(Html.Html):
   name = 'Icon'
-  cssCls = ["fa-layers", "fa-fw"]
 
   def __init__(self, report, position, icon, text, tooltip, width, height, htmlCode, profile):
     super(IconEdit, self).__init__(report, '', htmlCode=htmlCode, profile=profile,
@@ -438,7 +437,10 @@ class IconEdit(Html.Html):
       self.tooltip(tooltip)
     # Add the internal components icons and helper
     self.add_span(text, css={"float": 'right'})
-    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()})
+    if width[0] is not None and width[1] == 'px':
+      self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': "%s%s" % (width[0], width[1])})
+    else:
+      self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()})
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
 
   def __str__(self):

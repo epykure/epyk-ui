@@ -312,6 +312,41 @@ class Vis(object):
       data.append(series)
     return data
 
+  @staticmethod
+  def timeline(data, start, content, end=None, type=None, group=None, options=None):
+    """
+    Description:
+    -----------
+    Data transformation for the Vis Timeline chart
+
+    Attributes:
+    ----------
+    :param data:
+    :param start: String: The column in the record for the start date
+    :param content: String:
+    :param end: String: Optional. The column in the record for the end date
+    :param type: String. Optional.
+    :param group:
+    :param options:
+    """
+    is_data = {'datasets': [], 'python': True}
+    if data is None:
+      return is_data
+
+    options = options or {}
+    for rec in data:
+      row = {"start": rec[start], 'content': rec.get(content, '')}
+      if end is not None and end in rec:
+        row['end'] = rec[end]
+      if type is not None and type in rec:
+        row['type'] = rec[type]
+      elif 'type' in options:
+        row['type'] = options['type']
+      if group is not None and group in rec:
+        row['group'] = rec[group]
+      is_data['datasets'].append(row)
+    return is_data
+
 
 class ChartJs(object):
 
@@ -328,7 +363,7 @@ class ChartJs(object):
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     """
     is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
-    if data is None:
+    if data is None or y_columns is None:
       return is_data
 
     agg_data = {}
@@ -390,6 +425,10 @@ class ChartJs(object):
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
     :param z_axis:
     """
+    is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
+    if y_columns is None:
+      return is_data
+
     agg_data, agg_r = {}, {}
     for rec in data:
       for i, y in enumerate(y_columns):
@@ -397,14 +436,13 @@ class ChartJs(object):
           agg_data.setdefault(y, {})[rec[x_axis]] = agg_data.get(y, {}).get(rec[x_axis], 0) + float(rec[y])
         if z_axis is not None and i < len(z_axis):
           agg_r.setdefault(y, {})[rec[x_axis]] = agg_r.get(y, {}).get(rec[x_axis], 0) + float(rec[z_axis[i]])
-    labels, data = OrderedSet(), []
+    data = []
     for c in y_columns:
       series = []
-      for x, y in agg_data[c].items():
-        labels.add(x)
+      for x, y in agg_data.get(c, {}).items():
+        is_data["labels"].add(x)
         series.append({"x": x, "y": y, 'r': agg_r.get(c, {}).get(x, 1)})
       data.append(series)
-    is_data = {"labels": labels, 'datasets': [], 'series': [], 'python': True}
     for i, l in enumerate(y_columns):
       is_data["datasets"].append(data[i])
       is_data["series"].append(l)

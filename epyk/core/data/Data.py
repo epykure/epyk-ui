@@ -17,11 +17,10 @@ import json
 import pickle
 import importlib
 
-from epyk.core.data import DataDb
+
 from epyk.core.data import DataPy
 from epyk.core.data import DataGrpc
 from epyk.core.data import DataOffice
-from epyk.core.data import DataCore
 
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
@@ -46,6 +45,8 @@ class DataJs(object):
     :param varName: String. The Javascript variable name
     :param data: Dictionary of lists. Object passed to the Javascript layer
     """
+    from epyk.core.data import DataCore
+
     return DataCore.DataGlobal(varName, data, self._report)
 
   def list(self, varName, data):
@@ -86,6 +87,22 @@ class DataJs(object):
     """
     JsUtils.getJsValid(varName, fail=True)
     return JsObjects.JsObjects().new(value, varName=varName, report=self._report)
+
+  def server(self, hostname, port=8080):
+    """
+    Description:
+    ------------
+    Configuration data for server interaction.
+    This will only help on centralising the configuration in the final page.
+
+    Attributes:
+    ----------
+    :param hostname: String. The server hostname
+    :param port: Integer. The server port
+    """
+    from epyk.core.data import DataCore
+
+    return DataCore.ServerConfig(hostname, port, self._report)
 
 
 class DataSrc(object):
@@ -134,6 +151,8 @@ class DataSrc(object):
 
   @property
   def db(self):
+    from epyk.core.data import DataDb
+
     return DataDb.DataDb(self._report)
 
   @property

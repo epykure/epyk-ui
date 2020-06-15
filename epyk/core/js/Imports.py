@@ -860,7 +860,7 @@ JS_IMPORTS = {
     'register': {'alias': 'socketio', 'module': 'socket.io'},
     'req': [{'alias': 'jquery'}],
     'modules': [
-      {'script': 'socket.io.js', 'version': '2.2.0', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'socket.io.js', 'version': '2.3.0', 'path': 'socket.io/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Code mirror
   'codemirror': {

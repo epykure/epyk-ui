@@ -12,6 +12,7 @@ from epyk.core.js.packages import JsD3
 
 class Chart(Html.Html):
   name = 'ChartJs Chart'
+  requirements = ('Chart.js', )
 
   def __init__(self,  report, width, height, htmlCode, options, profile):
     self.height = height[0]
@@ -214,7 +215,6 @@ class Datasets(object):
 
 
 class ChartLine(Chart):
-  __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartLine, self).__init__(report, width, height, htmlCode, options, profile)
@@ -288,7 +288,6 @@ class ChartLine(Chart):
 
 
 class ChartBubble(Chart):
-  __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartBubble, self).__init__(report, width, height, htmlCode, options, profile)
@@ -337,7 +336,6 @@ class ChartBubble(Chart):
 
 
 class ChartBar(ChartLine):
-  __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartBar, self).__init__(report, width, height, htmlCode, options, profile)
@@ -374,7 +372,6 @@ class ChartBar(ChartLine):
 
 
 class ChartPolar(Chart):
-  __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartPolar, self).__init__(report, width, height, htmlCode, options, profile)
@@ -437,7 +434,6 @@ class ChartPolar(Chart):
 
 
 class ChartHBar(ChartBar):
-  __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartBar, self).__init__(report, width, height, htmlCode, options, profile)
@@ -445,7 +441,6 @@ class ChartHBar(ChartBar):
 
 
 class ChartPie(Chart):
-  __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartPie, self).__init__(report, width, height, htmlCode, options, profile)
@@ -504,7 +499,6 @@ class ChartPie(Chart):
 
 
 class ChartRadar(Chart):
-  __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartRadar, self).__init__(report, width, height, htmlCode, options, profile)
@@ -557,7 +551,6 @@ class ChartRadar(Chart):
 
 
 class ChartScatter(Chart):
-  __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartScatter, self).__init__(report, width, height, htmlCode, options, profile)
@@ -608,7 +601,6 @@ class ChartScatter(Chart):
 
 
 class ChartExts(ChartPie):
-  __reqJs = ['Chart.js']
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartExts, self).__init__(report, width, height, htmlCode, options, profile)

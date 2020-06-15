@@ -39,7 +39,9 @@ class Report(object):
                                Passing data for a given component with an htmlCode will override the value.
     """
     self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
-    self._props, self._tags, self._header_obj, self.__import_manage = {'js': {'onReady': OrderedSet(), 'datasets': {}}, 'context': {'framework': 'JS'}}, None, None, None
+    self._tags, self._header_obj, self.__import_manage = None, None, None
+    self._props = {'js': {'onReady': OrderedSet(), 'events': {}, 'datasets': {}, 'configs': {}, 'builders': OrderedSet()},
+                   'context': {'framework': 'JS'}}
     self.components = collections.OrderedDict() # Components for the entire page
     self.start_time, self.inputs, self._propagate = time.time(), inputs or {}, []
     self._scroll, self._contextMenu = set(), {}
@@ -231,33 +233,32 @@ class Report(object):
 
       self.components[comp.htmlCode] = comp
 
+  def get_components(self, htmlcodes):
+    """
+    Description:
+    ------------
+    retrieve the components based on their ID.
+    This should be used when the htmlCode is defined for a component.
+
+    Attributes:
+    ----------
+    :param htmlcodes:
+    """
+    if not isinstance(htmlcodes, list):
+      return self.components[htmlcodes]
+
+    return [self.components[htmlcode] for htmlcode in htmlcodes]
+
   def framework(self, name):
     """
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param name:
     """
     self._props['context']['framework'] = name.upper()
-
-  # def socketSend(self, htmlCode, data, report_name=None, script_name=None):
-  #   try:
-  #     from urllib.parse import urlparse, urlencode
-  #     from urllib.request import urlopen, Request
-  #     from urllib.error import HTTPError
-  #   except ImportError:
-  #     from urlparse import urlparse
-  #     from urllib import urlencode
-  #     from urllib2 import urlopen, Request, HTTPError
-  #
-  #   urls = [htmlCode]
-  #   if report_name or report_name is None:
-  #     urls.append(self.run.report_name if report_name is None else report_name)
-  #     if script_name or script_name is None:
-  #       urls.append(self.run.script_name if script_name is None else script_name)
-  #   response = urlopen(Request("%s%smessage/%s" % (self.run.url_root, self._urlsApp["index"].replace("/index", "/"), "/".join(urls)),
-  #                   data=urlencode({'data': json.dumps(data)}).encode('utf-8')))
-  #   response.read()
 
   @property
   def outs(self):
@@ -265,7 +266,6 @@ class Report(object):
     Description:
     ------------
 
-    :return:
     """
     return PyOuts.PyOuts(self)
 
@@ -296,7 +296,10 @@ class Report(object):
 
 			https://docs.python.org/2/library/json.html
 
+    Attributes:
+    ----------
     :param data: The python dictionary or data structure
+
     :return: The serialised data
     """
     return json.dumps(data, cls=js.JsEncoder.Encoder, allow_nan=False)

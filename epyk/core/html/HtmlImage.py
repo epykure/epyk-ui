@@ -36,24 +36,6 @@ class Image(Html.Html):
     self.attr["src"] = "%(path)s/%(image)s" % self.val
     return '<img %s></img>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
 
-  # -----------------------------------------------------------------------------------------
-  #                                    EXPORT OPTIONS
-  # -----------------------------------------------------------------------------------------
-  @staticmethod
-  def matchMarkDown(val): return re.findall("!\[([a-zA-Z 0-9]*)\]\(([:a-zA-Z \-\"/.0-9]*)\)", val)
-
-  @classmethod
-  def convertMarkDown(cls, val, regExpResult, report=None):
-    for name, image in regExpResult:
-      val = val.replace("![%s](%s)" % (name, image), "report.img('%s')" % image)
-      if report is not None:
-        getattr(report, 'img')(image)
-    return [val]
-
-  @classmethod
-  def jsMarkDown(cls, vals):
-    return "![alt text](%s/images/%s)" % (vals['path'], vals['image'])
-
 
 class AnimatedImage(Html.Html):
   name = 'Animated Picture'
@@ -104,7 +86,7 @@ class ImgCarrousel(Html.Html):
   def __getitem__(self, i):
     return self.items[i]
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -223,7 +205,7 @@ class Icon(Html.Html):
     self.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
     return self
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -235,7 +217,7 @@ class Icon(Html.Html):
     :return:
     """
     self.style.css.cursor = "pointer"
-    return super(Icon, self).click(jsFncs, profile)
+    return super(Icon, self).click(jsFncs, profile, source_event)
 
   @property
   def _js__builder__(self):
@@ -285,25 +267,27 @@ class Badge(Html.Html):
   name = 'Badge'
   requirements = ('font-awesome', 'bootstrap')
 
-  def __init__(self, report, text, label, icon, background_color, color, url, tooltip, options, profile):
-    super(Badge, self).__init__(report, None, profile=profile)
+  def __init__(self, report, text, width, height, label, icon, background_color, color, url, tooltip, options, profile):
+    super(Badge, self).__init__(report, None, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     self.__options = OptButton.OptionsBadge(self, options)
     if self.options.badge_position == 'left':
       self.add_icon(icon, css={"float": 'None', 'margin-left': "5px"}, position="after")
     else:
       self.add_icon(icon, css={"float": 'left', 'margin-left': "5px"})
+    if hasattr(self.icon, 'css') and width[0] is not None:
+      self.icon.css({"font-size": "%s%s" % (width[0], width[1])})
     self.link = None
     if url is not None:
       self.link = self._report.ui.links.external(text, url).css({"color": "inherit", 'display': 'inline-block',
-          "padding": "2px", "width": "auto", "font-size": Defaults_css.font(-4)})
+          "padding": "2px", "width": "auto"})
       self.link.options.managed = False
     else:
       self.link = self._report.ui.text(text).css({'display': 'inline-block',
-          "padding": "2px", "width": "auto", "font-size": Defaults_css.font(-4)})
+          "padding": "2px", "width": "auto"})
     self.link.css(self.options.badge_css)
-    self.link.css({"color": color, 'background-color': background_color, "border-radius": "10px",
-                   'padding': '2px 2px 4px 2px', 'margin-left': '2px'})
+    self.link.css({"color": color, "border-radius": "20px", 'margin-left': '2px', 'position': 'relative', 'right': '12px',
+                   'background': background_color, 'top': "-5px"})
     self.link.options.managed = False
     self.attr['class'].add("badge") # From bootstrap
     if tooltip is not None:

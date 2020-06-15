@@ -176,25 +176,3 @@ class Links(object):
     """
     html_data = html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width, height=height, format=format, profile=profile)
     return html_data
-
-  def bridge(self, text, script_name, report_name, url, jsData=None, context=None):
-    """
-    Description:
-    ------------
-
-    Underlying HTML Objects:
-
-      - :class:`epyk.core.html.HtmlLinks.Bridge`
-
-    Related Pages:
-Attributes:
-    ----------
-    :param text:
-    :param script_name:
-    :param report_name:
-    :param url:
-    :param jsData:
-    :param context:
-    """
-    html_bridge = html.HtmlLinks.Bridge(self.context.rptObj, text, script_name, report_name, url, jsData, context)
-    return html_bridge

@@ -34,7 +34,7 @@ class Layouts(object):
     html_new_line = html.HtmlOthers.Newline(self.context.rptObj, count, profile=profile)
     return html_new_line
 
-  def hr(self, count=1, color=None, background_color=None, height=(None, 'px'), align=None, profile=None):
+  def hr(self, count=1, background_color=None, height=(None, 'px'), align=None, profile=None):
     """
     Description:
     ------------
@@ -57,7 +57,6 @@ class Layouts(object):
     Attributes:
     ----------
     :param count: The number of HR tag to be added
-    :param color: Optional. The color code for the font
     :param background_color: Optional. The component background color
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. The content position. Values (left, right, center). Default center
@@ -270,8 +269,7 @@ class Layouts(object):
                                       editable, align, padding, htmlCode, tag, helper, options or {}, profile)
     return html_div
 
-  def popup(self, htmlObj=None, title=None, color=None, width=(100, '%'), height=(None, 'px'),
-            withBackground=True, draggable=False, margin=10, profile=None):
+  def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
     ------------
@@ -291,20 +289,20 @@ class Layouts(object):
 
     Attributes:
     ----------
-    :param htmlObj:
-    :param title:
-    :param color:
+    :param components:
     :param width:
     :param height:
-    :param withBackground:
-    :param draggable:
-    :param margin:
+    :param options:
     :param profile:
+
     :rtype: html.HtmlPopup.Popup
-    :return:
     """
-    return html.HtmlPopup.Popup(self.context.rptObj, htmlObj, title, color, width, height,
-                                                      withBackground, draggable, margin, profile)
+    dfl_options = {"background": True, 'draggable': False, 'margin': 10}
+    if options is not None:
+      dfl_options.update(options)
+    if not dfl_options["background"] and width[0] == 100:
+      width = (None, '%')
+    return html.HtmlPopup.Popup(self.context.rptObj, components, width, height, dfl_options, profile)
 
   def iframe(self, url, width=(100, "%"), height=(100, "%"), helper=None, profile=None):
     """
@@ -419,7 +417,6 @@ class Layouts(object):
       :param width:
       :param height:
       :param htmlCode:
-      :param tag:
       :param profile:
       """
       if htmlObjs is not None and not isinstance(htmlObjs, list):

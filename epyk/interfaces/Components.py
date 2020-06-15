@@ -17,8 +17,7 @@ from epyk.interfaces.components import CompRich
 from epyk.interfaces.components import CompImages
 from epyk.interfaces.components import CompLinks
 from epyk.interfaces.components import CompSliders
-from epyk.interfaces.components import CompMessaging
-from epyk.interfaces.components import CompDrops
+from epyk.interfaces.components import CompNetwork
 from epyk.interfaces.components import CompForms
 from epyk.interfaces.components import CompTags
 from epyk.interfaces.components import CompFields
@@ -40,6 +39,7 @@ class Components(object):
 
     # Special shortcut for some components
     self.button = self.buttons.button #: shortcut for button :func:`epyk.interfaces.components.CompButtons.Buttons.button`
+    self.toggle = self.buttons.toggle #: shortcut for Toogle button :func:`epyk.interfaces.components.CompButtons.Buttons.toggle`
     self.input = self.inputs.input #: shortcut for input :func:`epyk.interfaces.components.CompInputs.Inputs.input`
     self.div = self.layouts.div #: shortcut for div :func:`epyk.interfaces.components.CompLayouts.Layouts.div`
     self.grid = self.layouts.grid #: shortcut for grid :func:`epyk.interfaces.components.CompLayouts.Layouts.grid`
@@ -102,7 +102,7 @@ class Components(object):
     return CompCodes.Code(self)
 
   @property
-  def messaging(self):
+  def network(self):
     """
     Description:
     ------------
@@ -111,7 +111,7 @@ class Components(object):
     This category will group (chat, RSS streams, forum, bot ...).
     Those components are interactive and they would require underlying services and databases in order to fully work
     """
-    return CompMessaging.Messaging(self)
+    return CompNetwork.Network(self)
 
   @property
   def sliders(self):
@@ -348,6 +348,14 @@ class Components(object):
     return CompFields.Fields(self)
 
   @property
+  def timelines(self):
+    """
+    Description:
+    ------------
+    """
+    return CompFields.Timelines(self)
+
+  @property
   def icons(self):
     """
     Description:
@@ -386,15 +394,6 @@ class Components(object):
     This will mainly rely on bootstrap for the display of the different objects in the page.
     """
     return CompLayouts.Layouts(self)
-
-  @property
-  def drops(self):
-    """
-    Description:
-    ------------
-    Group all the UI components dedicated to drop data.
-    """
-    return CompDrops.DropData(self)
 
   @property
   def forms(self):
@@ -447,7 +446,10 @@ class Components(object):
     Add a content table to the page
 
     Related Pages:
-:param width: Optional. A tuple with the integer for the component width and its unit
+
+    Attributes:
+    ----------
+    :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
     """

@@ -171,7 +171,7 @@ class JsArray(JsObject.JsObject):
     jsFnc = JsUtils.jsConvertFncs(jsFnc)
     return JsFncs.JsFunction("%s.findIndex(function(value, index, arr){%s})" % (self.varId, ";".join(jsFnc)))
 
-  def forEach(self, jsFnc):
+  def forEach(self, jsFnc, value="value"):
     """
     Description:
     -----------
@@ -193,7 +193,7 @@ class JsArray(JsObject.JsObject):
     :return: Void, The Javascript String
     """
     jsFnc = JsUtils.jsConvertFncs(jsFnc)
-    return JsFncs.JsFunction("%s.forEach(function(value, index, arr){%s})" % (self.varId, ";".join(jsFnc)))
+    return JsFncs.JsFunction("%s.forEach(function(%s, index, arr){%s})" % (self.varId, value, ";".join(jsFnc)))
 
   def map(self, jsFnc):
     """
@@ -596,7 +596,7 @@ class JsArray(JsObject.JsObject):
 
     :return: A new Array, containing the removed items (if any)
     """
-    jsData = JsUtils.jsConvert(jsData, jsFnc)
+    jsData = JsUtils.jsConvertData(jsData, jsFnc)
     return JsArray("%s.splice(%s, %s, %s)" % (self.varId, i, j, jsData))
 
   def __getitem__(self, index):

@@ -2,6 +2,8 @@
 from epyk.core.js.packages import packageImport
 from epyk.core.html.options import Options
 
+from epyk.core.js import JsUtils
+
 
 class OptionsInput(Options):
 
@@ -1024,6 +1026,18 @@ class OptionsDatePicker(OptionsInput):
     self._config(value)
 
   @property
+  def inline(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @inline.setter
+  def inline(self, bool):
+    self.set(bool)
+
+  @property
   def firstDay(self):
     """
     Description:
@@ -1258,8 +1272,9 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get(None)
 
   @onSelect.setter
-  def onSelect(self, value):
-    self._config(value)
+  def onSelect(self, values):
+    values = JsUtils.jsConvertFncs(values, toStr=True)
+    self._config("function(dateText, inst){let data = dateText; %s}" % values)
 
   @property
   def prevText(self):

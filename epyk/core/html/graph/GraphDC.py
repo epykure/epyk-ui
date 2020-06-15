@@ -41,7 +41,6 @@ class Chart(Html.Html):
 
 
 class ChartLine(Chart):
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
 
   @property
   def dom(self):
@@ -64,7 +63,6 @@ class ChartLine(Chart):
 
 
 class ChartBar(Chart):
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
 
   @property
   def dom(self):
@@ -86,7 +84,6 @@ class ChartBar(Chart):
 
 
 class ChartRow(Chart):
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
 
   @property
   def dom(self):
@@ -99,7 +96,6 @@ class ChartRow(Chart):
 
 
 class ChartScatter(Chart):
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
 
   @property
   def dom(self):
@@ -122,7 +118,6 @@ class ChartScatter(Chart):
 
 
 class ChartBubble(Chart):
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
 
   @property
   def dom(self):
@@ -145,7 +140,6 @@ class ChartBubble(Chart):
 
 
 class ChartPie(Chart):
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
 
   @property
   def dom(self):
@@ -166,7 +160,6 @@ class ChartPie(Chart):
 
 
 class ChartSunburst(Chart):
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
 
   @property
   def dom(self):
@@ -179,7 +172,6 @@ class ChartSunburst(Chart):
 
 
 class ChartSeries(Chart):
-  __reqCss, __reqJs = ['dc'], ['dc', 'crossfilter']
 
   @property
   def dom(self):

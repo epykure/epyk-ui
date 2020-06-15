@@ -4,8 +4,8 @@ from epyk.core.js import JsUtils
 
 class KeyCode(object):
 
-  def __init__(self, component):
-    self.__events_per_source, self._component = {}, component
+  def __init__(self, component, source_event=None):
+    self.__events_per_source, self._component, self.source_event = {}, component, source_event or component.dom.varId
 
   def custom(self, rule, jsFnc, profile=False, source_event=None):
     """
@@ -19,7 +19,7 @@ class KeyCode(object):
     :param profile:
     :param source_event: String. Optional. The source component for the event
     """
-    source_event = source_event or self._component.dom.varId
+    source_event = source_event or self.source_event
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
     if source_event not in self.__events_per_source:
@@ -40,7 +40,7 @@ class KeyCode(object):
     :param reset:
     :param source_event: String. Optional. The source component for the event
     """
-    source_event = source_event or self._component.dom.varId
+    source_event = source_event or self.source_event
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
     tag = "event.which == %s" % key_code
@@ -48,7 +48,6 @@ class KeyCode(object):
       self.__events_per_source[source_event] = {}
     self.__events_per_source[source_event].setdefault(tag, {}).setdefault("content", []).extend(jsFnc)
     self.__events_per_source[source_event][tag]['profile'] = profile
-
 
   def enter(self, jsFnc, profile=False, reset=False, source_event=None):
     """
@@ -223,6 +222,7 @@ class KeyCode(object):
     """
     Description:
     -----------
+    Keycode 46, the sup key
 
     Attributes:
     ----------
@@ -232,6 +232,21 @@ class KeyCode(object):
     :param source_event: String. Optional. The source component for the event
     """
     self.key(46, jsFnc, profile, reset, source_event)
+
+  def escape(self, jsFnc, profile=False, reset=False, source_event=None):
+    """
+    Description:
+    -----------
+    Keycode 27, the escape key
+
+    Attributes:
+    ----------
+    :param jsFnc: Array. Tje Javascript events
+    :param profile:
+    :param reset: Boolean. To set if the event should be refreshed
+    :param source_event: String. Optional. The source component for the event
+    """
+    self.key(27, jsFnc, profile, reset, source_event)
 
   def get_event(self):
     """
