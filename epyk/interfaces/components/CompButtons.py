@@ -59,8 +59,8 @@ class Buttons(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_button.asp
-    http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+      https://www.w3schools.com/tags/tag_button.asp
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
     ----------
@@ -95,8 +95,8 @@ class Buttons(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_button.asp
-    http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+      https://www.w3schools.com/tags/tag_button.asp
+      http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
     ----------
@@ -131,8 +131,8 @@ class Buttons(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_button.asp
-    http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
+        https://www.w3schools.com/tags/tag_button.asp
+        http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
     ----------
