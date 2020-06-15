@@ -151,7 +151,6 @@ class Button(Html.Html):
     return self
 
   def properties(self):
-    print(self.get_attrs(pyClassNames=self.style.get_classes()))
     return {"tag": self.name, 'selector': self.htmlCode}
 
   def __str__(self):
