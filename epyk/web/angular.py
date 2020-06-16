@@ -4,6 +4,7 @@ Draft version
 """
 
 from epyk.core import Page
+from epyk.web import node
 from epyk.core.js import Imports
 
 import sys
@@ -852,16 +853,11 @@ class App(object):
     with open(os.path.join(module_path, "%s.html" % self.name), "w") as f:
       f.write("%(cssImports)s\n\n%(body)s" % page)
 
-    with open(os.path.join(module_path, "%s.css" %  self.name), "w") as f:
+    with open(os.path.join(module_path, "%s.css" % self.name), "w") as f:
       f.write(page['cssStyle'])
 
 
-class Angular(object):
-
-  def __init__(self, app_path, name=None):
-    self._app_path, self._app_name = app_path, name
-    self.__route, self.__ng_modules = None, None
-    self.__page = None
+class Angular(node.Node):
 
   def create(self, node_path):
     """
@@ -869,74 +865,6 @@ class Angular(object):
     ------------
 
     """
-
-  def npm(self, packages):
-    """
-    Description:
-    ------------
-    Use npm install on a package.
-    Can be done directly on the nodeJs app using the command line:
-      npm install package1 package2 .....
-
-    Attributes:
-    ----------
-    :param packages: List. The list of packages to install retrieved from requirements()
-    """
-    subprocess.run('npm install %s --save' % " ".join(packages), shell=True, cwd=self._app_path)
-    print("%s packages installed" % len(packages))
-
-  def ls(self):
-    """
-    Description:
-    ------------
-    Search the registry for packages matching terms
-    """
-    subprocess.run('npm ls', shell=True, cwd=self._app_path)
-
-  def docs(self, package):
-    """
-    Description:
-    ------------
-    Display the README.md / documentation / npmjs.org page of a give library
-
-    :param package: String. The package alias
-    """
-    subprocess.run('npm docs %s' % package, shell=True, cwd=self._app_path)
-
-  def update(self, packages):
-    """
-    Description:
-    ------------
-    Update all the packages listed to the latest version (specified by the tag config). Also install missing packages
-
-    Attributes:
-    ----------
-    :param packages:
-    """
-    subprocess.run('npm update %s' % " ".join(packages), shell=True, cwd=self._app_path)
-    print("%s packages updated" % len(packages))
-
-  def uninstall(self, packages):
-    """
-    Description:
-    ------------
-    Uninstall a package, completely removing everything npm installed on its behalf
-
-    Attributes:
-    ----------
-    :param packages:
-    """
-    subprocess.run('npm uninstall %s' % " ".join(packages), shell=True, cwd=self._app_path)
-    print("%s packages uninstalled" % len(packages))
-
-  def install(self):
-    """
-    Description:
-    ------------
-    Install or update Angular on the defined path
-    """
-    subprocess.run('npm install -g @angular/cli', shell=True, cwd=self._app_path)
-    print("Angular CLI installed")
 
   def ng(self, app_name=None):
     """
@@ -976,10 +904,10 @@ class Angular(object):
         selector = script.replace("_", "-")
     report = report or Page.Report()
     report.framework("ANGULAR")
-    self.__page = App(self._app_path, self._app_name, selector, name, report=report)
+    self._page = App(self._app_path, self._app_name, selector, name, report=report)
     if auto_route:
-      self.route.add(self.__page.className, self.__page.alias, self.__page.path)
-    return self.__page
+      self.route.add(self._page.className, self._page.alias, self._page.path)
+    return self._page
 
   def ng_modules(self, app_name=None, file_name=None):
     """
@@ -991,12 +919,12 @@ class Angular(object):
 
     :rtype: NgModules
     """
-    if self.__ng_modules is None:
-      if self.__route is not None and self.__route.ng_modules is not None:
-        self.__ng_modules = self.__route.ng_modules
+    if self._fmw_modules is None:
+      if self._route is not None and self._route.ng_modules is not None:
+        self._fmw_modules = self._route.ng_modules
       else:
-        self.__ng_modules = NgModules(self._app_path, app_name or self._app_name, file_name)
-    return self.__ng_modules
+        self._fmw_modules = NgModules(self._app_path, app_name or self._app_name, file_name)
+    return self._fmw_modules
 
   @property
   def route(self, app_name=None, file_name=None):
@@ -1013,9 +941,9 @@ class Angular(object):
 
     :rtype: RouteModule
     """
-    if self.__route is None:
-      self.__route = RouteModule(self._app_path, app_name or self._app_name, file_name)
-    return self.__route
+    if self._route is None:
+      self._route = RouteModule(self._app_path, app_name or self._app_name, file_name)
+    return self._route
 
   def publish(self, app_name=None, target_path=None):
     """
@@ -1027,8 +955,8 @@ class Angular(object):
     :param app_name:
     :param target_path: List  for example ['src', 'app']
     """
-    if self.__page is not None:
-      self.__page.export(target_path=target_path)
-    if self.__route is not None:
+    if self._page is not None:
+      self._page.export(target_path=target_path)
+    if self._route is not None:
       self.route.export()
 

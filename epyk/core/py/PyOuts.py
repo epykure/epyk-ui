@@ -338,12 +338,16 @@ class PyOuts(object):
     body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
     results = self._to_html_obj(htmlParts, cssParts, split_js=split_files)
     if split_files:
-      results['cssImports'] = '%s\n<link rel="stylesheet" href="%s.css" type="text/css">\n\n' % (results['cssImports'], name)
-      body = '%s\n\n<script language="javascript" type="text/javascript" src="%s.js"></script>' % (body, name)
-      with open(os.path.join(path, "%s.css" % name), "w") as f:
+      results['cssImports'] = '%s\n<link rel="stylesheet" href="./css/%s.css" type="text/css">\n\n' % (results['cssImports'], name)
+      body = '%s\n\n<script language="javascript" type="text/javascript" src="./js/%s.js"></script>' % (body, name)
+      if not os.path.exists(os.path.join(path, 'css')):
+        os.makedirs(os.path.join(path, 'css'), exist_ok=True)
+      with open(os.path.join(path, 'css', "%s.css" % name), "w") as f:
         f.write(results['cssStyle'])
 
-      with open(os.path.join(path, "%s.js" % name), "w") as f:
+      if not os.path.exists(os.path.join(path, 'js')):
+        os.makedirs(os.path.join(path, 'js'), exist_ok=True)
+      with open(os.path.join(path, 'js', "%s.js" % name), "w") as f:
         f.write(";".join(results['jsFrgsCommon'].values()))
 
     with open(html_file_path, "w") as f:
@@ -374,6 +378,34 @@ class PyOuts(object):
     results = self._to_html_obj(htmlParts, cssParts, split_js=True)
     results['body'] = body.replace("<body", "<div").replace("</body>", "</div>")
     return results
+
+  def publish(self, server, app_path, selector=None, name=None, module=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param server:
+    :param app_path:
+    :param name:
+    """
+    from epyk.web import angular, node, vue, react
+
+    app = None
+    if server.upper() == 'NODE':
+      app = node.Node(app_path=app_path, name=name or 'node')
+      app.page(report=self._report, selector=selector or 'app-root', name=module)
+    elif server.upper() == 'ANGULAR':
+      app = angular.Angular(app_path=app_path, name=name or 'angular')
+      app.page(report=self._report, selector=selector or 'app-root', name=module)
+    elif server.upper() == 'VUE':
+      app = vue.VueJs(app_path=app_path, name=name or 'vue')
+      app.page(report=self._report, selector=selector or 'app-root', name=module)
+    elif server.upper() == 'REACT':
+      app = react.React(app_path=app_path, name=name or 'react')
+      app.page(report=self._report, selector=selector or 'app-root', name=module)
+    app.publish()
 
   def markdown_file(self, path=None, name=None):
     """
