@@ -26,7 +26,9 @@ class App(object):
     ------------
     Add external modules to the application
 
-    https://www.w3schools.com/nodejs/nodejs_modules.asp
+    Related Pages:
+
+      https://www.w3schools.com/nodejs/nodejs_modules.asp
 
     Attributes:
     ----------
@@ -154,7 +156,9 @@ class Node(object):
     ------------
     The file you have just created must be initiated by Node.js before any action can take place.
 
-    https://www.w3schools.com/nodejs/nodejs_get_started.asp
+    Related Pages:
+
+      https://www.w3schools.com/nodejs/nodejs_get_started.asp
 
     Attributes:
     ----------

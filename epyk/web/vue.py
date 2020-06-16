@@ -116,7 +116,7 @@ class App(object):
     #  href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
     #  @import "https://use.fontawesome.com/releases/v5.13.0/css/all.css"
     page['cssImports'] = page['cssImports'].replace('<link rel="stylesheet" href=', "@import ").replace(' type="text/css">', "")
-    with open(os.path.join(module_path, "%s.vue" %  self.name), "w") as f:
+    with open(os.path.join(module_path, "%s.vue" % self.name), "w") as f:
       f.write('''
 <template>
   %(body)s
@@ -193,7 +193,7 @@ class VueJs(node.Node):
     """
     Description:
     ------------
-    Publishh the Vue.js application
+    Publish the Vue.js application
 
     Attributes:
     ----------
