@@ -853,7 +853,7 @@ class App(object):
     with open(os.path.join(module_path, "%s.html" % self.name), "w") as f:
       f.write("%(cssImports)s\n\n%(body)s" % page)
 
-    with open(os.path.join(module_path, "%s.css" %  self.name), "w") as f:
+    with open(os.path.join(module_path, "%s.css" % self.name), "w") as f:
       f.write(page['cssStyle'])
 
 
