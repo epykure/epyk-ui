@@ -16,6 +16,7 @@ from epyk.core.css import Classes
 from epyk.core import html
 from epyk.core import js
 from epyk.core import data
+from epyk.core import auth
 
 from epyk.core.html import symboles
 from epyk.core.html import entities
@@ -38,7 +39,7 @@ class Report(object):
     :param inputs: Dictionary. The global input data for the defined components in the page.
                                Passing data for a given component with an htmlCode will override the value.
     """
-    self._css, self._ui, self._js, self._py, self._theme, self.__body = {}, None, None, None, None, None
+    self._css, self._ui, self._js, self._py, self._theme, self._auth, self.__body = {}, None, None, None, None, None, None
     self._tags, self._header_obj, self.__import_manage = None, None, None
     self._props = {'js': {
         'onReady': OrderedSet(), # JavaScript framework triggered after the HTML. Impact the entire page
@@ -200,6 +201,23 @@ class Report(object):
     return self._py
 
   @property
+  def auth(self):
+    """
+    Description:
+    ------------
+    Auth interface to allow easy signin pages
+
+    Related Pages:
+
+      https://developers.google.com/identity/sign-in/web/sign-in
+
+    :return: Python Auth Object
+    """
+    if self._auth is None:
+      self._auth = auth.Auth(self)
+    return self._auth
+
+  @property
   def data(self):
     """
     Description:
@@ -301,7 +319,7 @@ class Report(object):
 
     Related Pages:
 
-			https://docs.python.org/2/library/json.html
+      https://docs.python.org/2/library/json.html
 
     Attributes:
     ----------

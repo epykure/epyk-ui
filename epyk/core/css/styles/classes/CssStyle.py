@@ -65,7 +65,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_element_comma.asp
+	  https://www.w3schools.com/cssref/sel_element_comma.asp
 
     :param element_types:
     :return:
@@ -85,7 +85,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_element_element.asp
+	  https://www.w3schools.com/cssref/sel_element_element.asp
 
     :param element:
     :return:
@@ -102,7 +102,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_element_element.asp
+	  https://www.w3schools.com/cssref/sel_element_element.asp
 
     :param element:
     :return:
@@ -119,7 +119,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_element_pluss.asp
+	  https://www.w3schools.com/cssref/sel_element_pluss.asp
 
     :param element:
     :return:
@@ -133,7 +133,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_gen_sibling.asp
+	  https://www.w3schools.com/cssref/sel_gen_sibling.asp
 
     :param element:
     :return:
@@ -169,7 +169,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_element_element.asp
+	  https://www.w3schools.com/cssref/sel_element_element.asp
 
     :param class_name:
     :return:
@@ -198,7 +198,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_id.asp
+	  https://www.w3schools.com/cssref/sel_id.asp
 
     :param htmlObj:
     :return:
@@ -212,7 +212,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_not.asp
+	  https://www.w3schools.com/cssref/sel_not.asp
 
     :param element:
     :return:
@@ -226,7 +226,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_firstchild.asp
+	  https://www.w3schools.com/cssref/sel_firstchild.asp
 
     :return:
     """
@@ -239,7 +239,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_firstletter.asp
+	  https://www.w3schools.com/cssref/sel_firstletter.asp
 
     :return:
     """
@@ -252,7 +252,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_firstline.asp
+	  https://www.w3schools.com/cssref/sel_firstline.asp
 
     :return:
     """
@@ -265,7 +265,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_first-of-type.asp
+	  https://www.w3schools.com/cssref/sel_first-of-type.asp
 
     :return:
     """
@@ -278,7 +278,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_in-range.asp
+	  https://www.w3schools.com/cssref/sel_in-range.asp
 
     :return:
     """
@@ -291,7 +291,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_last-child.asp
+	  https://www.w3schools.com/cssref/sel_last-child.asp
 
     :return:
     """
@@ -304,7 +304,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_last-of-type.asp
+	  https://www.w3schools.com/cssref/sel_last-of-type.asp
 
     :return:
     """
@@ -317,7 +317,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_link.asp
+	  https://www.w3schools.com/cssref/sel_link.asp
 
     :return:
     """
@@ -330,7 +330,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_nth-child.asp
+	  https://www.w3schools.com/cssref/sel_nth-child.asp
 
     :param n:
     :return:
@@ -344,7 +344,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_nth-last-child.asp
+	  https://www.w3schools.com/cssref/sel_nth-last-child.asp
 
     :param n:
     :return:
@@ -358,7 +358,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_nth-last-of-type.asp
+	  https://www.w3schools.com/cssref/sel_nth-last-of-type.asp
 
     :param n:
     :return:
@@ -372,7 +372,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_nth-of-type.asp
+	  https://www.w3schools.com/cssref/sel_nth-of-type.asp
 
     :param n:
     :return:
@@ -386,7 +386,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_only-of-type.asp
+	  https://www.w3schools.com/cssref/sel_only-of-type.asp
 
     :return:
     """
@@ -399,7 +399,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_only-child.asp
+	  https://www.w3schools.com/cssref/sel_only-child.asp
 
     :return:
     """
@@ -412,7 +412,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_placeholder.asp
+	  https://www.w3schools.com/cssref/sel_placeholder.asp
 
     :return:
     """
@@ -425,7 +425,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_read-only.asp
+	  https://www.w3schools.com/cssref/sel_read-only.asp
 
     :return:
     """
@@ -438,7 +438,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_read-write.asp
+	  https://www.w3schools.com/cssref/sel_read-write.asp
 
     :return:
     """
@@ -540,7 +540,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+	  https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
     https://www.w3schools.com/css/css3_animations.asp
 
     :param effect: Effect Class.
@@ -589,7 +589,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_hover.asp
+	  https://www.w3schools.com/cssref/sel_hover.asp
 
     :return:
     """
@@ -604,7 +604,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_checked.asp
+	  https://www.w3schools.com/cssref/sel_checked.asp
 
     :return:
     """
@@ -619,7 +619,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_disabled.asp
+	  https://www.w3schools.com/cssref/sel_disabled.asp
 
     :return:
     """
@@ -634,7 +634,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_focus.asp
+	  https://www.w3schools.com/cssref/sel_focus.asp
 
     :return:
     """
@@ -649,7 +649,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_empty.asp
+	  https://www.w3schools.com/cssref/sel_empty.asp
 
     :return:
     """
@@ -664,7 +664,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_enabled.asp
+	  https://www.w3schools.com/cssref/sel_enabled.asp
 
     :return:
     """
@@ -679,7 +679,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_invalid.asp
+	  https://www.w3schools.com/cssref/sel_invalid.asp
 
     :return:
     """
@@ -694,7 +694,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_valid.asp
+	  https://www.w3schools.com/cssref/sel_valid.asp
 
     :return:
     """
@@ -709,7 +709,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_visited.asp
+	  https://www.w3schools.com/cssref/sel_visited.asp
 
     :return:
     """
@@ -724,7 +724,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_before.asp
+	  https://www.w3schools.com/cssref/sel_before.asp
 
     :return:
     """
@@ -739,7 +739,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_after.asp
+	  https://www.w3schools.com/cssref/sel_after.asp
 
     :return:
     """
@@ -763,7 +763,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_active.asp
+	  https://www.w3schools.com/cssref/sel_active.asp
 
     :return:
     """
@@ -804,7 +804,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
+	  https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
     :param attrs: String. Required. Percentage of the animation duration.
     :param rule: not or only or and see documentation for more info
     :param media_type: the media to which the rule will need to be applied
@@ -843,7 +843,7 @@ class Style(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
+	  https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
 
     :param effects: Effect Class.
     :param name: String. Required. Defines the name of the animation.

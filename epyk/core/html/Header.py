@@ -229,7 +229,7 @@ class Header(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_meta.asp
+	  https://www.w3schools.com/tags/tag_meta.asp
 
     :rtype: Meta
     """
@@ -249,7 +249,7 @@ class Header(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_title.asp
+      https://www.w3schools.com/tags/tag_title.asp
 
     Attributes:
     ----------
@@ -265,11 +265,9 @@ class Header(object):
     Specify a dedicated path for the relative paths in the page.
     Basically the images will use this path as base if present in the page
 
-    Usage::
+    Related Pages:
 
-      Related Pages:
-
-			https://www.w3schools.com/tags/tag_base.asp
+      https://www.w3schools.com/tags/tag_base.asp
 
     Attributes:
     ----------

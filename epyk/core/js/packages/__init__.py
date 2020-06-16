@@ -12,10 +12,10 @@ def packageImport(jsPackage=None, cssPackage=None):
 
   Usage::
 
-      import epyk.core.js.packages
-  @packageImport('myJsPackage', 'myCssPackage')
-  def myHtmlComponent()
-    pass
+    import epyk.core.js.packages
+    @packageImport('myJsPackage', 'myCssPackage')
+    def myHtmlComponent()
+      pass
   """
   def wrap(func):
     def inner(rptObj, *args, **kwargs):

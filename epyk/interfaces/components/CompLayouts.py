@@ -246,7 +246,7 @@ class Layouts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_div.asp
+      https://www.w3schools.com/tags/tag_div.asp
 
     Attributes:
     ----------

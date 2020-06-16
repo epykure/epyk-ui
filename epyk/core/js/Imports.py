@@ -893,6 +893,12 @@ JS_IMPORTS = {
       {'script': 'Sortable.min.js', 'version': '1.10.1', 'path': 'Sortable/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
     'website': 'https://github.com/SortableJS/Sortable'},
+
+  'google-platform': {
+    'website': 'https://apis.google.com/',
+    'req': [],
+    'modules': [
+      {'script': 'platform.js', 'version': '', 'path': 'js/', 'cdnjs': 'https://apis.google.com'}]},
 }
 
 

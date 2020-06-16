@@ -52,7 +52,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_debugger.asp
+      https://www.w3schools.com/jsref/jsref_debugger.asp
 
     :return: The Javascript Keyword to trigger the browser debugger
     """
@@ -71,7 +71,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_console_clear.asp
+      https://www.w3schools.com/jsref/met_console_clear.asp
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
@@ -89,7 +89,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_console_log.asp
+      https://www.w3schools.com/jsref/met_console_log.asp
 
     Attributes:
     ----------
@@ -502,7 +502,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
+      https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
     """
     return JsNodeDom.JsDoms.get("document.documentElement")
 
@@ -515,7 +515,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/obj_screen.asp
+      https://www.w3schools.com/jsref/obj_screen.asp
     """
     return JsScreen()
 
@@ -542,7 +542,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/obj_location.asp
+      https://www.w3schools.com/jsref/obj_location.asp
 
     :rtype: JsLocation.JsLocation
     """
@@ -572,7 +572,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://jquery.com/
+      https://jquery.com/
     """
     from epyk.core.js.packages import JsQuery
 
@@ -589,7 +589,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm
+      https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm
     """
     from epyk.core.js.packages import JsSocketIO
 
@@ -606,7 +606,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://d3js.org/
+      https://d3js.org/
     """
     from epyk.core.js.packages import JsD3
 
@@ -625,7 +625,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
+      https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
 
     Attributes:
     ----------
@@ -643,7 +643,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_if_else.asp
+      https://www.w3schools.com/js/js_if_else.asp
 
     Attributes:
     ----------
@@ -661,8 +661,7 @@ class JsBase(object):
     ------------
     Javascript return keyword
 
-    Related Pages:
-:param jsData: The Javascript expression
+    :param jsData: The Javascript expression
     """
     return JsFncs.JsFunction("return %s" % jsData)
 
@@ -674,7 +673,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_switch.asp
+      https://www.w3schools.com/js/js_switch.asp
 
     Attributes:
     ----------
@@ -721,7 +720,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_datatypes.asp
+      https://www.w3schools.com/js/js_datatypes.asp
 
     Attributes:
     ----------
@@ -790,7 +789,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_object_prototypes.asp
+      https://www.w3schools.com/js/js_object_prototypes.asp
 
     Attributes:
     ----------
@@ -813,7 +812,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/xml/xml_http.asp
+      https://www.w3schools.com/xml/xml_http.asp
 
     Usage::
 
@@ -901,7 +900,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
+        https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 
     :rtype: JsBreadCrumb
 
@@ -923,7 +922,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://redfin.github.io/react-server/annotated-src/navigateTo.html
+        https://redfin.github.io/react-server/annotated-src/navigateTo.html
 
     Attributes:
     ----------
@@ -1012,7 +1011,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jquery/event_ready.asp
+      https://www.w3schools.com/jquery/event_ready.asp
 
     Attributes:
     ----------
@@ -1263,7 +1262,7 @@ class JsBase(object):
 
     Related Pages:
 
-  			https://www.w3schools.com/jsref/met_document_queryselectorall.asp
+      https://www.w3schools.com/jsref/met_document_queryselectorall.asp
 
     Attributes:
     ----------
@@ -1279,7 +1278,7 @@ class JsBase(object):
 
     Related Pages:
 
-  			https://www.w3schools.com/jsref/met_document_queryselector.asp
+      https://www.w3schools.com/jsref/met_document_queryselector.asp
 
     Attributes:
     ----------
@@ -1295,7 +1294,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_document_activeelement.asp
+      https://www.w3schools.com/jsref/prop_document_activeelement.asp
 
     :return: A reference to the element object in the document that has focus
     """
@@ -1310,7 +1309,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_doc_title.asp
+      https://www.w3schools.com/jsref/prop_doc_title.asp
 
     Attributes:
     ----------
@@ -1329,7 +1328,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_document_execcommand.asp
+      https://www.w3schools.com/jsref/met_document_execcommand.asp
 
     Attributes:
     ----------
@@ -1351,7 +1350,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_createevent.asp
+      https://www.w3schools.com/jsref/event_createevent.asp
 
     Attributes:
     ----------
@@ -1372,7 +1371,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_document_createattribute.asp
+      https://www.w3schools.com/jsref/met_document_createattribute.asp
 
     Attributes:
     ----------
@@ -1390,7 +1389,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_doc_writeln.asp
+      https://www.w3schools.com/jsref/met_doc_writeln.asp
 
     :param jsString: Optional. What to write to the output stream.
                      Multiple arguments can be listed and they will be appended to the document in order of occurrence
@@ -1408,7 +1407,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_parseint.asp
+      https://www.w3schools.com/jsref/jsref_parseint.asp
 
     Attributes:
     ----------
@@ -1427,7 +1426,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_parseint.asp
+      https://www.w3schools.com/jsref/jsref_parseint.asp
 
     Attributes:
     ----------
@@ -1446,7 +1445,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_parse.asp
+      https://www.w3schools.com/jsref/jsref_parse.asp
 
     Attributes:
     ----------
@@ -1483,7 +1482,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
+      https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
 
     Attributes:
     ----------
