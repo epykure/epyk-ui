@@ -2,7 +2,6 @@
 import subprocess
 import sys
 import os
-import re
 
 from epyk.core import Page
 
