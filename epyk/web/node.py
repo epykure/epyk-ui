@@ -6,8 +6,8 @@ class Node(object):
 
   def __init__(self, app_path, name=None):
     self._app_path, self._app_name = app_path, name
-    self.__route, self.__vue_modules = None, None
-    self.__page = None
+    self._route, self._fmw_modules = None, None
+    self._page = None
 
   def npm(self, packages):
     """

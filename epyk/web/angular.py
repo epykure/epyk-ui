@@ -904,10 +904,10 @@ class Angular(node.Node):
         selector = script.replace("_", "-")
     report = report or Page.Report()
     report.framework("ANGULAR")
-    self.__page = App(self._app_path, self._app_name, selector, name, report=report)
+    self._page = App(self._app_path, self._app_name, selector, name, report=report)
     if auto_route:
-      self.route.add(self.__page.className, self.__page.alias, self.__page.path)
-    return self.__page
+      self.route.add(self._page.className, self._page.alias, self._page.path)
+    return self._page
 
   def ng_modules(self, app_name=None, file_name=None):
     """
@@ -919,12 +919,12 @@ class Angular(node.Node):
 
     :rtype: NgModules
     """
-    if self.__ng_modules is None:
-      if self.__route is not None and self.__route.ng_modules is not None:
-        self.__ng_modules = self.__route.ng_modules
+    if self._fmw_modules is None:
+      if self._route is not None and self._route.ng_modules is not None:
+        self._fmw_modules = self._route.ng_modules
       else:
-        self.__ng_modules = NgModules(self._app_path, app_name or self._app_name, file_name)
-    return self.__ng_modules
+        self._fmw_modules = NgModules(self._app_path, app_name or self._app_name, file_name)
+    return self._fmw_modules
 
   @property
   def route(self, app_name=None, file_name=None):
@@ -941,9 +941,9 @@ class Angular(node.Node):
 
     :rtype: RouteModule
     """
-    if self.__route is None:
-      self.__route = RouteModule(self._app_path, app_name or self._app_name, file_name)
-    return self.__route
+    if self._route is None:
+      self._route = RouteModule(self._app_path, app_name or self._app_name, file_name)
+    return self._route
 
   def publish(self, app_name=None, target_path=None):
     """
@@ -955,8 +955,8 @@ class Angular(node.Node):
     :param app_name:
     :param target_path: List  for example ['src', 'app']
     """
-    if self.__page is not None:
-      self.__page.export(target_path=target_path)
-    if self.__route is not None:
+    if self._page is not None:
+      self._page.export(target_path=target_path)
+    if self._route is not None:
       self.route.export()
 
