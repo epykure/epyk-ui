@@ -32,6 +32,21 @@ and improve directly the final product. Any work done on the side within Jupyter
 
 ![](./epyk/static/images/benefits.PNG)
 
+Examples are available for some web servers:
+
+In Python
+- [Tornado](https://github.com/epykure/epyk-tornado)
+- [Flask](https://github.com/epykure/epyk-flask)
+- [Django](https://github.com/epykure/epyk-django)
+- [Uvicorn](https://github.com/marlyk/epyk-uvicorn)
+
+In JavaScript, TypeScript or Rust
+- [Angular](https://github.com/epykure/epyk-angular) 
+- [Vue]()
+- [React](https://github.com/epykure/epyk-react)
+- [Node](https://github.com/epykure/epyk-nodejs)
+- [Deno]()
+
 Usage
 ======
 
@@ -59,19 +74,52 @@ button.click([
 page.outs.html_file(path="/templates", name="test")
 ```
 
-Go to the next level and add real time flux in few lines or code
+Go to the next level and add real time flux in few lines or code.
 
+![](./epyk/static/images/sockets.PNG)
+
+On the client side
 ```py
 page = Report()
-
 page.headers.dev()
 
+socket.connect(url="127.0.0.1", port=3000, namespace="/news")
+input = rptObj.ui.input()
 
-page.outs.html_file(path="/templates", name="listener")
+pie = rptObj.ui.charts.chartJs.polar([], y_columns=[1], x_axis="x")
+
+container.subscribe(socket, 'news received', data=socket.message['content'])
+pie.subscribe(socket, 'news received', data=socket.message['pie'])
+
+rptObj.ui.button("Send").click([
+  socket.emit("new news", input.dom.content)
+])
+
+page.outs.html_file(path="/templates", name="socket_example")
 ```
 
-Export the result in a local HTML page.
 
-More example are available on Github or in Jupyter
+On the server side (using socketio)
+```py
+from flask import Flask, render_template_string
+from flask_socketio import SocketIO, emit
+
+app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
+
+ 
+@socketio.on('new news', namespace='/news')
+def new_news(message):
+  values = getSeries(5, 100)
+  result_pie = chart_data.chartJs.y(values, [1, 4, 5], 'g')
+  emit('news received', {"content": message, 'pie': result_pie}, broadcast=True)
+
+```
+
+Export the result in a local HTML page. More example are available on the [official repository](https://github.com/epykure/epyk-templates)
+
+More example are available on Github or in [Jupyter](https://nbviewer.jupyter.org/github/epykure/epyk-templates-notebooks/blob/master/index.ipynb)
 
 Please get in touch if there is any feature you feel Epyk-UI needs.
