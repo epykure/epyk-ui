@@ -1,7 +1,5 @@
 
-<div align="center" >
-    <img src="https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo_whole_big.png">
-</div>
+![](https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo_whole_big.png)
 
 A module to link Python ecosystem to the JavaScript one.
 
