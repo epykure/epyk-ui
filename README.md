@@ -1,5 +1,7 @@
 
-![](https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo_whole_big.png)
+<div align="center" >
+    <img src="https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo_whole_big.png">
+</div>
 
 A module to link Python ecosystem to the JavaScript one.
 
@@ -76,8 +78,9 @@ page.outs.html_file(path="/templates", name="test")
 
 Go to the next level and add real time flux in few lines or code.
 
-<img width="100%" src="https://github.com/epykure/epyk-ui/blob/master/epyk/static/images/sockets.PNG?raw=true">
-
+<div align="center" >
+    <img src="https://github.com/epykure/epyk-ui/blob/master/epyk/static/images/sockets.PNG?raw=true">
+</div>
 
 On the client side
 ```py
