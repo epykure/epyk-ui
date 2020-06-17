@@ -76,9 +76,8 @@ page.outs.html_file(path="/templates", name="test")
 
 Go to the next level and add real time flux in few lines or code.
 
-<p style="text-align:center">
-  <img src="https://github.com/epykure/epyk-ui/blob/master/epyk/static/images/sockets.PNG?raw=true">
-</p>
+<img width="100%" src="https://github.com/epykure/epyk-ui/blob/master/epyk/static/images/sockets.PNG?raw=true">
+
 
 On the client side
 ```py
