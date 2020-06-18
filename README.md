@@ -9,8 +9,9 @@ The goal of Epyk is to ensure the implementation of a coherent system using a mi
 With Epyk the user stays in the Python layer to drive and optimize the data transformation.
 This Framework also encourages the implementation of Micro services and cloud based architecture.
 
-![](./epyk/static/images/concept.PNG)
-
+<div align="center" >
+    <img width=400 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/concept.PNG">
+</div>
 
 Compatibility
 ================================
