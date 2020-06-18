@@ -24,7 +24,7 @@ class Li(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to a container """
-    if not hasattr(htmlObj, 'inReport'):
+    if not hasattr(htmlObj, 'options'):
       raise Exception("This can only be used for HTML components")
 
     self.set_html_content(htmlObj)

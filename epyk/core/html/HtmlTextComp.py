@@ -609,6 +609,7 @@ class Composite(Html.Html):
       schema_child['args']['url'] = schema_child['args']['url'] % ref_map
     if comp is None:
       # delegate the htmlCode to the main component
+      del self._report.components[self.htmlCode]
       new_comp = self._get_comp_map[schema_child['type']](htmlCode=self.htmlCode, **schema_child.get('args', {}))
       new_comp.options.managed = False
       self._vals = new_comp
