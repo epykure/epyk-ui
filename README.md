@@ -23,7 +23,10 @@ The Framework can be included within a Jupyter or JupyterLab project. But this w
 
 Web pages generated are compatible with the common modern web frameworks
 
-![](./epyk/static/images/architecture.PNG)
+<div align="center" >
+    <img width=600 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/architecture.PNG">
+</div>
+
 
 But the target is to be full stack developers and be flexible enought to integrate our UI pages to any existing ecosystems.
 Thus some outs features are available to wrap page to be visible on any server
