@@ -10,7 +10,7 @@ With Epyk the user stays in the Python layer to drive and optimize the data tran
 This Framework also encourages the implementation of Micro services and cloud based architecture.
 
 <div align="center" >
-    <img width=400 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/concept.PNG">
+    <img width=500 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/concept.PNG">
 </div>
 
 Compatibility
