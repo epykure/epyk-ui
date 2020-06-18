@@ -26,7 +26,7 @@ class OutBrowsers(object):
 
     Attributes:
     ----------
-    :param path: Output path in which the static files will be generated
+    :param path: String. Output path in which the static files will be generated
     :param target: String. Load the data in a new tab in the browser
     :param open_browser: Boolean. Flag to open the browser automatically
 
@@ -50,6 +50,57 @@ class OutBrowsers(object):
     with open(os.path.join(path, "RunnerCodepen.html"), "w") as f:
       f.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
     launcher_file = os.path.join(path, "RunnerCodepen.html")
+    if open_browser:
+      webbrowser.open(launcher_file)
+    return launcher_file
+
+  def stackblitz(self, path=None, target="_blank", open_browser=True):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+			https://stackblitz.com/docs
+
+    Attributes:
+    ----------
+    :param path: String. Output path in which the static files will be generated
+    :param target: String. Load the data in a new tab in the browser
+    :param open_browser: Boolean. Flag to open the browser automatically
+    """
+    import webbrowser
+
+    results = self._context._to_html_obj()
+    results['jsFrgs'] = results['jsFrgs'].replace('"', "'")
+    results['cssImports'] = results['cssImports'].replace('"', "'")
+    results['content'] = results['content'].replace('"', "'")
+    with open(os.path.join(path, "RunnerStackblitz.html"), "w") as f:
+      f.write('''
+<html lang="en">
+<head></head>
+<body>
+<form id="mainForm" method="post" action="https://stackblitz.com/run" target="_self">
+<input type="hidden" name="project[files][index.js]" value="
+%(jsFrgs)s
+">
+<input type="hidden" name="project[files][index.html]" value="
+%(cssImports)s
+<style>
+%(cssStyle)s
+</style>
+%(content)s
+">
+<input type="hidden" name="project[description]" value="Epyk Example">
+<input type="hidden" name="project[dependencies]" value="{&quot;rxjs&quot;:&quot;5.5.6&quot;}">
+<input type="hidden" name="project[template]" value="javascript">
+<input type="hidden" name="project[settings]" value="{&quot;compile&quot;:{&quot;clearConsole&quot;:false}}">
+</form>
+<script>document.getElementById("mainForm").submit();</script>
+
+</body></html>
+''' % results)
+    launcher_file = os.path.join(path, "RunnerStackblitz.html")
     if open_browser:
       webbrowser.open(launcher_file)
     return launcher_file
@@ -291,7 +342,7 @@ class PyOuts(object):
       with open(os.path.join(path, "%s.js" % name), "w") as f:
         f.write(results["jsFrgs"])
 
-      # FOr all the doms and imports
+      # For all the doms and imports
       with open(os.path.join(path, "%s.html" % name), "w") as f:
         f.write("%s\n" % results["cssImports"])
         f.write("%s\n" % results["jsImports"])
@@ -390,11 +441,14 @@ class PyOuts(object):
     :param app_path:
     :param name:
     """
-    from epyk.web import angular, node, vue, react
+    from epyk.web import angular, node, vue, react, deno
 
     app = None
     if server.upper() == 'NODE':
       app = node.Node(app_path=app_path, name=name or 'node')
+      app.page(report=self._report, selector=selector or 'app-root', name=module)
+    elif server.upper() == 'DENO':
+      app = deno.Deno(app_path=app_path, name=name or 'deno')
       app.page(report=self._report, selector=selector or 'app-root', name=module)
     elif server.upper() == 'ANGULAR':
       app = angular.Angular(app_path=app_path, name=name or 'angular')
