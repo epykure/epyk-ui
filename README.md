@@ -34,7 +34,9 @@ Thus some outs features are available to wrap page to be visible on any server
 This encourage the collaboration and break the IT silos. It can fully work in an Agile way of working as developers, business analysts, product owners and users can work on the same stack 
 and improve directly the final product. Any work done on the side within Jupyter or standalone Python scripts can be easily integrated !
 
-![](./epyk/static/images/benefits.PNG)
+<div align="center" >
+    <img width=600 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/benefits.PNG">
+</div>
 
 Examples are available for some web servers:
 
