@@ -4,7 +4,9 @@
 
 
 def angular():
-  pass
+  """
+  Generate an Angular Application from the Epyk page
+  """
 
 
 def vue():
@@ -16,6 +18,10 @@ def react():
 
 
 def node():
+  pass
+
+
+def jupyter():
   pass
 
 

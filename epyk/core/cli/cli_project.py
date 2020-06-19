@@ -1,12 +1,39 @@
+"""
+Main command lines for Epyk
+"""
 
 
 def new():
-  pass
+  """
+  Create a new Epyk Structure.
+
+  THis structure should be easy to integrate any Python exnsting project:
+
+  The structure can be the ones below
+  ui/
+    pages/
+    views/
+    packages/
+    settings.py
+    transpile.py
+    serve.py
+  """
 
 
 def page():
-  pass
+  """
+  Create a new page in the current project
+
+  basically it can be something like the below:
+
+  def page():
+    '''
+    '''
+
+  """
 
 
 def transpile():
-  pass
+  """
+  Transpile to HTML a report
+  """
