@@ -45,13 +45,14 @@ In Python
 - [Flask](https://github.com/epykure/epyk-flask)
 - [Django](https://github.com/epykure/epyk-django)
 - [Uvicorn](https://github.com/marlyk/epyk-uvicorn)
+- [FastAPI](https://github.com/epykure/epyk-fastapi)
 
 In JavaScript, TypeScript or Rust
 - [Angular](https://github.com/epykure/epyk-angular) 
-- [Vue]()
+- [Vue](https://github.com/epykure/epyk-vue)
 - [React](https://github.com/epykure/epyk-react)
 - [Node](https://github.com/epykure/epyk-nodejs)
-- [Deno]()
+- [Deno](https://github.com/epykure/epyk-deno)
 
 Usage
 ======
