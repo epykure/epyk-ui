@@ -18,7 +18,6 @@ def add():
   """
 
 
-
 def info():
   """
   Get package information from NPM repository and check if the current version in the project is the same
