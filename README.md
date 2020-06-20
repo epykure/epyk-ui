@@ -117,7 +117,11 @@ button.click([
 page.outs.html_file(path="/templates", name="test")
 ```
 
-Go to the next level and add real time flux in few lines or code.
+Go to the next level and add real time flux in few lines or code. Epyk allows to integrate concepts of Reactive programming thanks
+to Python 3 and asyncio. All the features available in JavaScript (socket, websocket, observable ...) can be used as long as the underlying webserver is compatible.
+
+If the underlying web server is not compatible with those modern feature, Ajax (post, get...) are also available.
+More examples are available in the []template / interactive](https://github.com/epykure/epyk-templates/tree/master/interactives) section.
 
 <div align="center" >
     <img src="https://github.com/epykure/epyk-ui/blob/master/epyk/static/images/sockets.PNG?raw=true">
