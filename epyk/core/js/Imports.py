@@ -229,7 +229,7 @@ JS_IMPORTS = {
   'tabulator-drop': {
     'req': [{'alias': 'tabulator'}],
     'modules': [
-      {'script': 'formatters-drop.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': r'C:\Users\olivier\Documents\GitHub\tabulator-extensions'},
+      {'script': 'formatters-drop.js', 'version': 'NA', 'path': 'formatters/', 'cdnjs': r'https://raw.githubusercontent.com/epykure/tabulator-extensions/master'},
     ],
     'website': 'http://tabulator.info/'
   },
