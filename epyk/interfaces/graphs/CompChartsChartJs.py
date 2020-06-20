@@ -40,7 +40,7 @@ class ChartJs(object):
       line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
-  def timeseries(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
+  def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"), htmlCode=None):
     """
     Description:
     ------------
@@ -125,7 +125,7 @@ class ChartJs(object):
       pie_chart.add_dataset(d, data['series'][i])
     return pie_chart
 
-  def area(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -156,7 +156,7 @@ class ChartJs(object):
       line_chart.dataset().fill = True
     return line_chart
 
-  def step(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -187,7 +187,7 @@ class ChartJs(object):
       line_chart.dataset().steppedLine = 'before'
     return line_chart
 
-  def bar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -285,7 +285,7 @@ class ChartJs(object):
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     return bar_chart
 
-  def hbar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -347,7 +347,7 @@ class ChartJs(object):
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     return bar_chart
 
-  def scatter(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -377,7 +377,7 @@ class ChartJs(object):
       line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
-  def bubble(self, record, y_columns=None, x_axis=None, r_values=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def bubble(self, record=None, y_columns=None, x_axis=None, r_values=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -407,7 +407,7 @@ class ChartJs(object):
       line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
-  def polar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def polar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
@@ -437,7 +437,7 @@ class ChartJs(object):
       polar_chart.add_dataset(d, data['series'][i])
     return polar_chart
 
-  def radar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
+  def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, htmlCode=None):
     """
     Description:
     ------------
