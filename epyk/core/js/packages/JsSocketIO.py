@@ -79,7 +79,7 @@ class SocketIO(object):
     Description:
     ------------
 
-    Usage::
+    Related Pages:
 
       https://www.tutorialspoint.com/socket.io/socket.io_rooms.htm
 

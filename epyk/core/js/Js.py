@@ -11,6 +11,7 @@ from epyk.core.js import JsNavigator
 from epyk.core.js import JsPerformance
 from epyk.core.js import JsUtils
 from epyk.core.js import JsWindow
+from epyk.core.js import JsWebSocket
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
@@ -590,10 +591,32 @@ class JsBase(object):
     Related Pages:
 
       https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm
+
+    Attributes:
+    ----------
+    :param htmlCode: String. The websocket id (variable name) on the JavaScript side
     """
     from epyk.core.js.packages import JsSocketIO
 
     return JsSocketIO.SocketIO(htmlCode, self._src)
+
+  def websocket(self, htmlCode=None, secured=False):
+    """
+    Description:
+    ------------
+    WebSocket client applications use the WebSocket API to communicate with WebSocket servers using the WebSocket protocol.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+      https://javascript.info/websocket
+
+    Attributes:
+    ----------
+    :param htmlCode: String. The websocket id (variable name) on the JavaScript side
+    :param secured: Boolean. To define the right protocol for the websocket connection we or wss
+    """
+    return JsWebSocket.WebSocket(htmlCode, self._src, secured)
 
   @property
   def d3(self):
