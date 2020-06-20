@@ -12,7 +12,8 @@ Modules wrapped as part of this script
 import hashlib
 import os
 import json
-import socket
+
+TMP_PATH = None  # path for all the temporary files
 
 try:
     from urllib.parse import urlparse, urlencode
@@ -220,9 +221,14 @@ class PyRest(object):
     :param delimiter: String. The line delimiter
     :param encoding: String. The encoding format
     :param with_header: Boolean. A flag to mention if the header is available. (it will be used for the keys)
-    :param store_location: Optional. String. The temp folder to cache the data locally
+    :param store_location: Optional. String. The temp folder to cache the data locally. False will cancel the temps data retrievall
     """
     has_file = str(hashlib.sha1(url.encode()).hexdigest())
+    if store_location is not False:
+      # False will override the fact that we do not want to get stored data for this call
+      store_location = store_location or TMP_PATH
+    else:
+      store_location = None
     if store_location is not None:
       file_path = os.path.join(store_location, has_file)
       if os.path.isfile(file_path):
@@ -259,6 +265,10 @@ class PyRest(object):
     :param store_location: Optional. String. The temp folder to cache the data locally
     """
     has_file = str(hashlib.sha1(url.encode()).hexdigest())
+    if store_location is not False:
+      store_location = store_location or TMP_PATH
+    else:
+      store_location = None
     if store_location is not None:
       file_path = os.path.join(store_location, has_file)
       if os.path.isfile(file_path):
