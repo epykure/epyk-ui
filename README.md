@@ -22,6 +22,8 @@ Install Epyk
 
 > pip install epyk
 
+The below code will write a simple interactive dashboard relying on internal mock data.
+
 ```py
 from epyk.core.Page import Report
 
