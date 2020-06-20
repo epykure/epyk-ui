@@ -136,7 +136,6 @@ def installed_packages():
 
 
 CDNJS_REPO = 'https://cdnjs.cloudflare.com/ajax/libs'
-NODEJS_PATH = r"C:\Angular\node_modules"
 
 # Mapping to match the folder names in Jupyter
 # If the folder are the same as the alias it is not included in this mapping
