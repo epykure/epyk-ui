@@ -59,6 +59,8 @@ var showdown = Showdown;
 '''
 }
 
+COMPONENT_NAME_TEMPLATE = "app.%s.component"
+
 
 class NGModule(object):
 
@@ -447,7 +449,7 @@ class RouteModule(object):
     imported_route_pattern = re.compile("{ path: '(.*)', component: (.*) }")
 
     self.ngModule = "@NgModule"
-    with open(os.path.join(self._app_path, app_name, 'src', 'app', 'app-routing.module.ts')) as f:
+    with open(os.path.join(self._app_path, 'src', 'app', 'app-routing.module.ts')) as f:
       content = f.read()
       split_content = content.split("@NgModule")
       for module_def in imported_module_pattern.findall(split_content[0]):
@@ -470,8 +472,8 @@ class RouteModule(object):
     """
     if self.ng_modules is None:
       self.ng_modules = NgModules(self._app_path, self._app_name)
-      self.ng_modules.modules[component] = path
-    self.modules[component] = path
+      self.ng_modules.modules[component] = "./%s/%s" % (path, COMPONENT_NAME_TEMPLATE % alias)
+    self.modules[component] = "./%s/%s" % (path, COMPONENT_NAME_TEMPLATE % alias)
     self.routes[component] = alias
 
   def export(self, file_name=None, target_path=None):
@@ -487,7 +489,7 @@ class RouteModule(object):
     if target_path is None:
       target_path = []
     target_path.append(file_name)
-    with open(os.path.join(self._app_path, self._app_name, *target_path), "w") as f:
+    with open(os.path.join(self._app_path, 'src', 'app', *target_path), "w") as f:
       for k, v in self.modules.items():
         f.write("import { %s } from '%s';\n" % (k, v))
       f.write("\n\n")
@@ -509,7 +511,7 @@ class NgModules(object):
 
     # parse the Angular route module
     imported_module_pattern = re.compile("import { (.*) } from '(.*)';")
-    with open(os.path.join(self._app_path, app_name, 'src', 'app', self.file_name)) as f:
+    with open(os.path.join(self._app_path, 'src', 'app', self.file_name)) as f:
       content = f.read()
       for module_def in imported_module_pattern.findall(content):
         self.modules[module_def[0]] = module_def[1]
@@ -557,7 +559,7 @@ class NgModules(object):
     if target_path is None:
       target_path = []
     target_path.append(file_name)
-    with open(os.path.join(self._app_path, self._app_name, *target_path), "w") as f:
+    with open(os.path.join(self._app_path, 'src', 'app', *target_path), "w") as f:
       for k, v in self.modules.items():
         f.write("import { %s } from '%s';\n" % (k, v))
       f.write("\n\n")
@@ -600,7 +602,7 @@ class ComponentSpec(object):
     if not os.path.exists(module_path):
       os.makedirs(module_path)
 
-    with open(os.path.join(module_path, "app.%s.component.spec.ts" % self.alias), "w") as f:
+    with open(os.path.join(module_path, "%s.spec.ts" % COMPONENT_NAME_TEMPLATE % self.alias), "w") as f:
       f.write('''
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -645,62 +647,10 @@ class Components(object):
   def __init__(self, app, count=0, report=None):
     self._app, self.count_comp, self._report = app, count, report
 
-  def chart(self, vars, alias=None):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param vars:
-    :param alias:
-    """
-    map_var_names = {}
-    alias = alias or self.count_comp
-    for k, v in vars.items():
-      map_var_names[k] = "%s%s" % (k, alias)
-      self._app.add_var(map_var_names[k], v)
-    map_var_names["ref"] = "chart%s" % alias
-    self._app.comps["chart%s" % alias] = "chart%s" % alias
-    self.count_comp += 1
-    self._app.htmls.append('''
-<div class="container">
-		<pr-chart [values]='%(values)s' [labels]='%(labels)s' type='{{ %(type)s }}' #%(ref)s></pr-chart>
-</div>''' % map_var_names)
-    return "chart%s" % alias
-
-  def table(self, vars, alias=None):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param vars:
-    :param alias:
-    """
-    map_var_names = {}
-    alias = alias or self.count_comp
-    for k, v in vars.items():
-      map_var_names[k] = "%s%s" % (k, alias)
-      self._app.add_var(map_var_names[k], v)
-    map_var_names["ref"] = "table%s" % alias
-    self._app.comps["table%s" % alias] = "table%s" % alias
-    self.count_comp += 1
-    self._app.htmls.append('''<pr-grid #%(ref)s></pr-grid>''' % map_var_names)
-    return "table%s" % alias
-
-  def input(self):
-    self._app.comps["input"] = "input"
-    self._app.htmls.append('''<input type='text' #input />''')
-
-  def button(self, value):
-    return self._report.ui.button(value)
-
 
 class App(object):
 
-  def __init__(self, app_path, app_name, alias, name, report=None):
+  def __init__(self, app_path, app_name, alias, name, report=None, target_folder="apps"):
     self.imports = {'Component': '@angular/core',
                     #'HttpClient': '@angular/common/http',
                     #'HttpHeaders': '@angular/common/http', 'Injectable': '@angular/core',
@@ -708,7 +658,7 @@ class App(object):
                     }
     self.vars, self.__map_var_names, self._report = {}, {}, report
     self._app_path, self._app_name = app_path, app_name
-    self.alias, self.__path, self.className, self.__components = alias, 'apps', name, None
+    self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
     self.__comp_structure, self.htmls, self.__fncs, self.__injectable_prop = {}, [], {}, {'providedIn': 'root'}
     self.spec = ComponentSpec(app_path, app_name,  alias, name)
     self.comps = {}
@@ -771,7 +721,7 @@ class App(object):
     ------------
     Return the prefix of the component module (without any extension)
     """
-    return "app.%s.component" % self.alias
+    return COMPONENT_NAME_TEMPLATE % self.alias
 
   def http(self, end_point, jsFncs):
     return "this.httpClient.post('http://127.0.0.1:5000/%s', {}).subscribe((data)=>{ %s });" % (end_point, ";".join(jsFncs))
@@ -799,19 +749,17 @@ class App(object):
     if target_path is None:
       target_path = []
     target_path.append(self.__path)
-    module_path = os.path.join(self._app_path, self._app_name, *target_path)
+    module_path = os.path.join(self._app_path, *target_path)
     if not os.path.exists(module_path):
       os.makedirs(module_path)
-
     page = self._report.outs.web()
-
-    self.spec.export(path=path, target_path=None)
+    self.spec.export(path=module_path, target_path=None)
     self.__fncs['ngAfterViewInit'] = [page['jsFrgs']]
 
     with open(os.path.join(module_path, "%s.ts" % self.name), "w") as f:
       for comp, path in self.imports.items():
         f.write("import { %s } from '%s';\n" % (comp, path))
-      f.write("import { %s } from './%s.js';" % (", ".join(list(page['jsFrgsCommon'].keys())),  self.alias.replace("-", "_")))
+      f.write("import { %s } from './module_%s.js';" % (", ".join(list(page['jsFrgsCommon'].keys())),  self.alias.replace("-", "_")))
       f.write("\n")
       # All the applicatops need this as they will interact with a Flask backend
       #f.write("@Injectable({\n")
@@ -843,7 +791,7 @@ class App(object):
         f.write("  %s(){ %s } \n" % (name, ";".join(fnc_def)))
       f.write("}\n")
 
-    with open(os.path.join(module_path, "%s.js" % self.alias.replace("-", "_")), "w") as f:
+    with open(os.path.join(module_path, "module_%s.js" % self.alias.replace("-", "_")), "w") as f:
       for js_dep in JS_MODULES_IMPORTS:
         if js_dep in self._report.jsImports:
           f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
@@ -858,13 +806,6 @@ class App(object):
 
 
 class Angular(node.Node):
-
-  def create(self, node_path):
-    """
-    Description:
-    ------------
-
-    """
 
   def ng(self, app_name=None):
     """
@@ -883,7 +824,7 @@ class Angular(node.Node):
     app_name = app_name or self._app_name
     return NG(self._app_path, app_name)
 
-  def page(self, selector=None, name=None, report=None, auto_route=False):
+  def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="apps"):
     """
     Description:
     ------------
@@ -904,9 +845,9 @@ class Angular(node.Node):
         selector = script.replace("_", "-")
     report = report or Page.Report()
     report.framework("ANGULAR")
-    self._page = App(self._app_path, self._app_name, selector, name, report=report)
+    self._page = App(self._app_path, self._app_name, selector, name, report=report, target_folder=target_folder)
     if auto_route:
-      self.route.add(self._page.className, self._page.alias, self._page.path)
+      self.route().add(self._page.className, self._page.alias, self._page.path)
     return self._page
 
   def ng_modules(self, app_name=None, file_name=None):
@@ -926,7 +867,6 @@ class Angular(node.Node):
         self._fmw_modules = NgModules(self._app_path, app_name or self._app_name, file_name)
     return self._fmw_modules
 
-  @property
   def route(self, app_name=None, file_name=None):
     """
     Description:
@@ -958,5 +898,5 @@ class Angular(node.Node):
     if self._page is not None:
       self._page.export(target_path=target_path)
     if self._route is not None:
-      self.route.export()
+      self._route.export()
 

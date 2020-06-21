@@ -433,7 +433,7 @@ class PyOuts(object):
     results['body'] = body.replace("<body", "<div").replace("</body>", "</div>")
     return results
 
-  def publish(self, server, app_path, selector=None, name=None, module=None):
+  def publish(self, server, app_path, selector, name=None, module=None, target_folder="apps", auto_route=False):
     """
     Description:
     ------------
@@ -455,7 +455,10 @@ class PyOuts(object):
       app.page(report=self._report, selector=selector or 'app-root', name=module)
     elif server.upper() == 'ANGULAR':
       app = angular.Angular(app_path=app_path, name=name or 'angular')
-      app.page(report=self._report, selector=selector or 'app-root', name=module)
+      component = module or selector.capitalize()
+      app.page(report=self._report, selector=selector, name=component, target_folder=target_folder)
+      if auto_route:
+        app.route().add(component, selector, "apps")
     elif server.upper() == 'VUE':
       app = vue.VueJs(app_path=app_path, name=name or 'vue')
       app.page(report=self._report, selector=selector or 'app-root', name=module)
