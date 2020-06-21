@@ -1,6 +1,8 @@
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
+from epyk.core.data import primitives
+from epyk.core.data import datamap
 
 
 class SocketState(object):
@@ -11,11 +13,14 @@ class SocketState(object):
 
 
 class HttpCode(object):
-
   NORMAL_CLOSURE = 1000
   SHUTDOWN_SERVER = 1001
   LOST_CONNECTION = 1006
+
+  MESSAGE_TYPE_NOT_CONSISTENT = 1007
+  MESSAGE_VIOLATE_POLICY = 1008
   MESSAGE_TOO_BIG = 1009
+
   UNEXPECTED_ERROR = 1011
 
 
@@ -41,7 +46,9 @@ class WebSocket(object):
     """
     To get connection state, additionally there’s socket.readyState property with values:
 
-    https://javascript.info/websocket
+    Related Pages:
+
+			https://javascript.info/websocket
     """
     return SocketState
 
@@ -50,7 +57,9 @@ class WebSocket(object):
     """
     To get connection state, additionally there’s socket.readyState property with values:
 
-    https://tools.ietf.org/html/rfc6455#section-7.4.1
+    Related Pages:
+
+			https://tools.ietf.org/html/rfc6455#section-7.4.1
     """
     return HttpCode
 
@@ -61,40 +70,10 @@ class WebSocket(object):
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
-  def connect(self, url=None, port=None, protocol=None, from_config=None):
-    """
-    Description:
-    ------------
-    n order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will automatically attempt to open the connection to the server.
-
-    Related Pages:
-
-      https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
-
-    Attributes:
-    ----------
-    :param url: String. The URL to which to connect; this should be the URL to which the WebSocket server will respond.
-        This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for local connections.
-    :param protocol: String or List. Either a single protocol string or an array of protocol strings.
-    :param from_config:
-    """
-    if from_config is not None:
-      self.__connect = "new WebSocket(%s)" % from_config.address
-      return JsObjects.JsVoid("var %s = new WebSocket(%s)" % (self._selector, from_config.address))
-
-    prefix = "wss" if self.secured else 'ws'
-    if protocol is None:
-      self.__connect = "new WebSocket('%s://%s:%s')" % (prefix, url, port)
-      return JsObjects.JsVoid("var %s = new WebSocket('%s://%s:%s')" % (self._selector, prefix, url, port))
-
-    protocol = JsUtils.jsConvertData(protocol, None)
-    self.__connect = "new WebSocket('%s://%s:%s', %s)" % (prefix, url, port, protocol)
-    return JsObjects.JsVoid("var %s = new WebSocket('%s://%s:%s', %s)" % (self._selector, prefix, url, port, protocol))
-
   def reconnect(self):
     return JsObjects.JsVoid("if(%(varName)s.readyState > 1){ %(varName)s = %(connect)s}" % {"varName": self._selector, "connect": self.__connect})
 
-  def onconnect(self, url=None, port=None, protocol=None, from_config=None):
+  def connect(self, url=None, port=None, protocol=None, from_config=None):
     """
     Description:
     ------------
@@ -134,7 +113,9 @@ class WebSocket(object):
     Description:
     ------------
 
-    https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
     Attributes:
     ----------
@@ -150,7 +131,9 @@ class WebSocket(object):
     Description:
     ------------
 
-    https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
     Attributes:
     ----------
@@ -166,7 +149,9 @@ class WebSocket(object):
     Description:
     ------------
 
-    https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
     Attributes:
     ----------
@@ -182,7 +167,9 @@ class WebSocket(object):
     Description:
     ------------
 
-    https://javascript.info/websocket
+    Related Pages:
+
+			https://javascript.info/websocket
 
     Attributes:
     ----------
@@ -206,18 +193,39 @@ class WebSocket(object):
     """
     Description:
     ------------
+    Basic way to send a text message to the server
 
-    https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
     Attributes:
     ----------
-    :param data:
+    :param data: String. The message to be sent
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsVoid("%(varName)s.send(%(data)s)" % {"varName": self._selector, "connect": self.__connect, "data": data})
 
-  def sendText(self):
-    pass
+  def sendText(self, components, attrs=None):
+    """
+    Description:
+    ------------
+    Send a complex message from components.
+
+    Related Pages:
+
+			https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+
+    Attributes:
+    ----------
+    :param components: List. The list of HTML components (it will get the dom.content automatically)
+    :param attrs: Dictionary. Attach some static attributes to the request
+    """
+    dftl_attrs = {"type": 'message', 'date': primitives.date()}
+    if attrs is not None:
+      dftl_attrs.update(attrs)
+    data = JsUtils.jsConvertData(datamap(components, attrs=dftl_attrs), None)
+    return JsObjects.JsVoid("%(varName)s.send(JSON.stringify(%(data)s))" % {"varName": self._selector, "connect": self.__connect, "data": data})
 
   def close(self, code=1000, reason=None):
     """
@@ -228,6 +236,11 @@ class WebSocket(object):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+
+    Attributes:
+    ----------
+    :param code: Integer. The HTTP code to be sent to the server for the closure
+    :param reason: String. The message to be sent to the server for the closure
     """
     if reason is None:
       return JsObjects.JsVoid("%s.close(%s)" % (self._selector, code))

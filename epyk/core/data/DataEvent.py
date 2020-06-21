@@ -250,3 +250,24 @@ class DataPrimitives(object):
       return JsObjects.JsNumber.JsNumber(data, varName=name, setVar=setVar)
 
     return JsObjects.JsNumber.JsNumber.get(name)
+
+  def date(self, data=None, name=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param name:
+    """
+    from epyk.core.js.primitives import JsObjects
+
+    if data is not None:
+      setVar = True if name is not None else False
+      return JsObjects.JsDate.JsDate(data, varName=name, setVar=setVar)
+
+    if data is None and name is None:
+      return JsObjects.JsDate.JsDate(data, varName=name, setVar=False)
+
+    return JsObjects.JsDate.JsDate.get(name)
