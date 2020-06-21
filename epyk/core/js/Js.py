@@ -635,6 +635,25 @@ class JsBase(object):
     """
     return JsWebSocket.Worker(htmlCode, self._src, server)
 
+  def serverSentEvent(self, htmlCode=None):
+    """
+    Description:
+    ------------
+    SSE is a native HTML5 feature that allows the server to keep the HTTP connection open and push data changes to the client.
+    Server-sent Streaming is really ideal for server-push notifications, device monitoring and all other tasks that do not require real-time push back from the client.
+
+    Related Pages:
+
+      https://medium.com/code-zen/python-generator-and-html-server-sent-events-3cdf14140e56
+      https://www.w3schools.com/html/html5_serversentevents.asp
+      https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+
+    Attributes:
+    ----------
+    :param htmlCode: String. The EventSource id (variable name) on the JavaScript side
+    """
+    return JsWebSocket.ServerSentEvent(htmlCode, self._src)
+
   @property
   def d3(self):
     """

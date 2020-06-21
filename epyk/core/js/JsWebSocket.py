@@ -347,3 +347,156 @@ class Worker(object):
       https://www.w3schools.com/html/html5_webworkers.asp
     """
     return JsObjects.JsVoid("%s.terminate(); %s = undefined" % (self._selector, self._selector))
+
+  def close(self):
+    """
+    Description:
+    ------------
+    Proxy to the terminate method
+    """
+    return self.terminate()
+
+
+class ServerSentEvent(object):
+
+  def __init__(self, htmlCode=None, src=None, server=False):
+    """
+    Description:
+    ------------
+
+    """
+    self._src, self.__server = src, server
+    self._selector = htmlCode or "sse_%s" % id(self)
+    self._src._props['js']['builders'].add("var %s" % self._selector)
+
+  @property
+  def message(self):
+    """
+
+    """
+    return JsObjects.JsObject.JsObject.get("event.data")
+
+  def connect(self, url=None, port=None, from_config=None, options=None):
+    """
+    Description:
+    ------------
+    n order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will automatically attempt to open the connection to the server.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+
+    Attributes:
+    ----------
+    :param url: String. The URL to which to connect; this should be the URL to which the WebSocket server will respond.
+        This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for local connections.
+    :param protocol: String or List. Either a single protocol string or an array of protocol strings.
+    :param from_config:
+    """
+    if from_config is not None:
+      self._src._props['js']['builders'].add("%s = new EventSource(%s)" % (self._selector, from_config.address))
+      self.__connect = "new EventSource(%s)" % from_config.address
+      return JsObjects.JsVoid("%s = new EventSource(%s)" % (self._selector, from_config.address))
+
+    self._src._props['js']['builders'].add("%s = new EventSource('%s:%s')" % (self._selector, url, port))
+    self.__connect = "new EventSource('%s:%s')" % (url, port)
+    return JsObjects.JsVoid("%s = new EventSource('%s:%s')" % (self._selector, url, port))
+
+  def onmessage(self, jsFncs):
+    """
+    Description:
+    ------------
+    The EventSource object is used to receive server-sent event notifications:
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html5_serversentevents.asp
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._src.js.onReady("%s.onmessage = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self
+
+  def onerror(self, jsFncs):
+    """
+    Description:
+    ------------
+    When an error occurs
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html5_serversentevents.asp
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._src.js.onReady("%s.onerror = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self
+
+  def onopen(self, jsFncs):
+    """
+    Description:
+    ------------
+    When a connection to the server is opened
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html5_serversentevents.asp
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._src.js.onReady("%s.onopen = function (event) { %s }" % (self._selector, JsUtils.jsConvertFncs(jsFncs, toStr=True)))
+    return self
+
+  def addEventListener(self, eventType, jsFncs):
+    """
+    Description:
+    ------------
+
+    :param eventType:
+    :param jsFncs:
+    """
+    return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {"varName": self._selector, 'eventType': eventType, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
+
+  def on(self, eventType, jsFncs):
+    self._src.js.onReady(self.addEventListener(eventType, jsFncs))
+
+  def receive(self, jsFncs):
+    """
+    Description:
+    ------------
+    The EventSource object is used to receive server-sent event notifications:
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html5_serversentevents.asp
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
+    return JsObjects.JsVoid("%(varName)s.onmessage = function (event) { %(data)s }" % {"varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
+
+  def close(self):
+    """
+    Description:
+    ------------
+    By default, if the connection between the client and server closes, the connection is restarted.
+    The connection is terminated with the .close() method.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+    """
+    return JsObjects.JsVoid("%s.close(); %s = undefined" % (self._selector, self._selector))
