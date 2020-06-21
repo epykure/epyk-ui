@@ -905,6 +905,7 @@ class JsBase(object):
     method_type = JsUtils.jsConvertData('POST', None)
     url = JsUtils.jsConvertData(url, None)
     request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url).send(jsData)
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     return request
 
   def request_rpc(self, varName, method_type, fnc, url, extra_params=None):
