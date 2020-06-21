@@ -4,7 +4,7 @@ This module will replace the Python Import module if specified
 
 Related Pages:
 
-			https://requirejs.org/docs/api.html#mechanics
+      https://requirejs.org/docs/api.html#mechanics
 """
 
 from epyk.core.js.packages import JsPackage

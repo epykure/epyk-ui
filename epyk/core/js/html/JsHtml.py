@@ -138,7 +138,7 @@ class ContentFormatters(object):
 
     Related Pages:
 
-			https://github.com/showdownjs/showdown
+      https://github.com/showdownjs/showdown
 
     Attributes:
     ----------
@@ -159,7 +159,7 @@ class ContentFormatters(object):
 
       Related Pages:
 
-			https://openexchangerates.github.io/accounting.js/
+      https://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------
@@ -177,7 +177,7 @@ class ContentFormatters(object):
 
     Related Pages:
 
-			https://openexchangerates.github.io/accounting.js/
+      https://openexchangerates.github.io/accounting.js/
 
     Attributes:
     ----------
@@ -346,7 +346,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Related Pages:
 
-			https://github.com/square/crossfilter/wiki/API-Reference#group_all
+      https://github.com/square/crossfilter/wiki/API-Reference#group_all
 
     :return:
     """
@@ -372,7 +372,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Related Pages:
 
-			https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style
+      https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style
 
     Attributes:
     ----------
@@ -416,7 +416,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Related Pages:
 
-			https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+      https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
     return self.css("display", "none")
 
@@ -431,7 +431,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Related Pages:
 
-			https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+      https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
     Attributes:
     ----------
@@ -463,7 +463,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Related Pages:
 
-			https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+      https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
     Attributes:
     ----------

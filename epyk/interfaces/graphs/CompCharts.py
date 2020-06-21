@@ -35,7 +35,7 @@ class Graphs(object):
 
     Related Pages:
 
-			https://www.w3schools.com/howto/howto_css_skill_bar.asp
+      https://www.w3schools.com/howto/howto_css_skill_bar.asp
 
     Attributes:
     ----------
@@ -67,7 +67,7 @@ class Graphs(object):
 
     Related Pages:
 
-			https://omnipotent.net/jquery.sparkline/#s-about
+      https://omnipotent.net/jquery.sparkline/#s-about
 
     Attributes:
     ----------
@@ -135,7 +135,7 @@ class Graphs(object):
 
     Related Pages:
 
-			https://naver.github.io/billboard.js/
+      https://naver.github.io/billboard.js/
 
     :return: A Python Billboard Object
     """
@@ -208,7 +208,7 @@ http://nvd3.org/
 
     Related Pages:
 
-			https://www.w3schools.com/graphics/svg_intro.asp
+      https://www.w3schools.com/graphics/svg_intro.asp
     """
     return CompChartsSvg.SVG(self)
 

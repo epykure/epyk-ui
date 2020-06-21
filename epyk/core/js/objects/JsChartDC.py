@@ -67,7 +67,7 @@ class JsBase(JsPackage):
 
     Related Pages:
 
-			https://dc-js.github.io/dc.js/docs/html/dc.baseMixin.html
+      https://dc-js.github.io/dc.js/docs/html/dc.baseMixin.html
 
     :param groupId: Optional. The group ID
 
@@ -91,7 +91,7 @@ class JsBase(JsPackage):
 
     Related Pages:
 
-			https://dc-js.github.io/dc.js/docs/html/dc.baseMixin.html
+      https://dc-js.github.io/dc.js/docs/html/dc.baseMixin.html
 
     :return:
     """
@@ -140,7 +140,7 @@ class JsBase(JsPackage):
 
     Related Pages:
 
-			https://dc-js.github.io/dc.js/docs/html/dc.coordinateGridMixin.html
+      https://dc-js.github.io/dc.js/docs/html/dc.coordinateGridMixin.html
 
     :param brushOn:
     :return:
@@ -330,7 +330,7 @@ class JsPie(JsBase):
 
     Related Pages:
 
-			https://dc-js.github.io/dc.js/docs/html/dc.pieChart.html
+      https://dc-js.github.io/dc.js/docs/html/dc.pieChart.html
 
     :param title:
 

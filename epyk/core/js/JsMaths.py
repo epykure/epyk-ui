@@ -3,7 +3,7 @@ Wrapper for the Javascript Math module
 
 Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_math.asp
+      https://www.w3schools.com/jsref/jsref_obj_math.asp
 """
 
 
@@ -23,7 +23,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_e.asp
+      https//www.w3schools.com/jsref/jsref_e.asp
 
     :return: Returns Euler's number (approx. 2.718)
     """
@@ -39,7 +39,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_ln2.asp
+      https//www.w3schools.com/jsref/jsref_ln2.asp
 
     :return: Returns the natural logarithm of 2 (approx. 0.693)
     """
@@ -55,7 +55,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_ln10.asp
+      https://www.w3schools.com/jsref/jsref_ln10.asp
 
     :return: Returns the natural logarithm of 10 (approx. 2.302)
     """
@@ -71,7 +71,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_log2e.asp
+      https//www.w3schools.com/jsref/jsref_log2e.asp
 
     :return: Returns the base-2 logarithm of E (approx. 1.442)
     """
@@ -87,7 +87,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_sqrt1_2.asp
+      https//www.w3schools.com/jsref/jsref_sqrt1_2.asp
 
     :return: Returns the square root of 1/2 (approx. 0.707)
     """
@@ -106,7 +106,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_sqrt2.asp
+      https//www.w3schools.com/jsref/jsref_sqrt2.asp
 
     :return: Returns the square root of 2 (approx. 1.414)
     """
@@ -131,7 +131,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_random.asp
+      https://www.w3schools.com/js/js_random.asp
 
     :return: A Number, representing a number from 0 up to but not including 1
     """
@@ -151,7 +151,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_min.asp
+      https://www.w3schools.com/jsref/jsref_min.asp
 
     :param args: Optional. One or more numbers to compare
 
@@ -169,7 +169,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_max.asp
+      https://www.w3schools.com/jsref/jsref_max.asp
     https://www.jstips.co/en/javascript/calculate-the-max-min-value-from-an-array/
 
     :param args: Optional. One or more numbers to compare
@@ -191,7 +191,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_floor.asp
+      https//www.w3schools.com/jsref/jsref_floor.asp
 
     :param number: Required. The number you want to round
 
@@ -209,7 +209,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_trunc.asp
+      https//www.w3schools.com/jsref/jsref_trunc.asp
 
     :param number: Required. A number
 
@@ -224,7 +224,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_abs.asp
+      https//www.w3schools.com/jsref/jsref_abs.asp
 
     :param number: Required. A number
 
@@ -239,7 +239,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_cos.asp
+      https//www.w3schools.com/jsref/jsref_cos.asp
 
     :param number: Returns the cosine of x (x is in radians)
 
@@ -254,7 +254,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_sin.asp
+      https//www.w3schools.com/jsref/jsref_sin.asp
 
     :param number: Returns the sinus of x (x is in radians)
 
@@ -269,7 +269,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_log.asp
+      https//www.w3schools.com/jsref/jsref_log.asp
 
     :param number: Required. A number
 
@@ -284,7 +284,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_exp.asp
+      https//www.w3schools.com/jsref/jsref_exp.asp
 
     :param number: Required. A number
 
@@ -305,7 +305,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_round.asp
+      https//www.w3schools.com/jsref/jsref_round.asp
 
     :param number: Required. The number to be rounded
 
@@ -324,7 +324,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_sqrt.asp
+      https//www.w3schools.com/jsref/jsref_sqrt.asp
 
     :param number: Required. A number
 
@@ -342,7 +342,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_ceil.asp
+      https//www.w3schools.com/jsref/jsref_ceil.asp
 
     :param number: Required. The number you want to round
 
@@ -362,7 +362,7 @@ class JsMaths(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_pow.asp
+      https//www.w3schools.com/jsref/jsref_pow.asp
 
     :param number: Required. The base
     :param power: Required. The exponent

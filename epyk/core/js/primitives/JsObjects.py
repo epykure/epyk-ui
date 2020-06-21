@@ -97,7 +97,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/obj_mouseevent.asp
+      https://www.w3schools.com/jsref/obj_mouseevent.asp
     """
     return JsEvents.MouseEvent()
 
@@ -110,7 +110,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/obj_event.asp
+      https://www.w3schools.com/jsref/obj_event.asp
     """
     return JsEvents.Event()
 
@@ -157,7 +157,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_number.asp
+      https://www.w3schools.com/jsref/jsref_number.asp
 
     :return: A Python JsNumber primitive
     """
@@ -172,7 +172,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_string.asp
+      https://www.w3schools.com/jsref/jsref_obj_string.asp
 
     :return: A Python JsString primitive
     """
@@ -202,7 +202,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_array.asp
+      https://www.w3schools.com/jsref/jsref_obj_array.asp
 
     :return: A Python JsArray primitive
     """
@@ -217,7 +217,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_date.asp
+      https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     :return: A Python JsDate object
     """
@@ -232,7 +232,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_boolean.asp
+      https://www.w3schools.com/jsref/jsref_obj_boolean.asp
 
     :return: A Python JsBoolean primitive
     """
@@ -258,7 +258,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_datatypes.asp
+      https://www.w3schools.com/js/js_datatypes.asp
 
     :return: A Python Js Null object
     """
@@ -273,7 +273,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_undefined.asp
+      https://www.w3schools.com/jsref/jsref_undefined.asp
 
     :return: A Python Js undefined object
     """
@@ -305,7 +305,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_booleans.asp
+      https://www.w3schools.com/js/js_booleans.asp
 
     :return: A Python Js True object
     """
@@ -320,7 +320,7 @@ class JsObjects(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_booleans.asp
+      https://www.w3schools.com/js/js_booleans.asp
     
     :return: A Python Js False object
     """
@@ -414,7 +414,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState
     """
     return JsNumber.JsNumber("%s.readyState" % self.varId)
 
@@ -426,7 +426,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/status
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/status
     """
     return JsNumber.JsNumber("%s.status" % self.varId)
 
@@ -438,7 +438,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType
     """
     if value is not None:
       self.__responseType = value
@@ -455,7 +455,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseText
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseText
     """
     return JsString.JsString("%s.responseText" % self.varId, isPyData=False)
 
@@ -467,7 +467,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/timeout
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/timeout
 
     Attributes:
     ----------
@@ -482,7 +482,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/abort_event
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/abort_event
     """
 
   def addEventListener(self, event, jsFncs):
@@ -492,7 +492,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/error_event
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/error_event
 
     Attributes:
     ----------
@@ -508,7 +508,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/open
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/open
 
     Attributes:
     ----------
@@ -529,7 +529,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
 
     Attributes:
     ----------
@@ -546,7 +546,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
 
     Attributes:
     ----------
@@ -569,7 +569,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/timeout
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/timeout
 
     Attributes:
     ----------
@@ -590,7 +590,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials
 
     Attributes:
     ----------
@@ -607,7 +607,7 @@ class XMLHttpRequest(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send
+      https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send
 
     Attributes:
     ----------

@@ -36,7 +36,7 @@ class Sliders(object):
 
     Related Pages:
 
-			https://jqueryui.com/slider/
+      https://jqueryui.com/slider/
 
     Attributes:
     ----------
@@ -149,7 +149,7 @@ class Sliders(object):
 
     Related Pages:
 
-			https://jqueryui.com/progressbar/
+      https://jqueryui.com/progressbar/
 
     Attributes:
     ----------

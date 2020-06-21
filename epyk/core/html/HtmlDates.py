@@ -87,7 +87,7 @@ class DatePicker(Html.Html):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
 
     Attributes:
     ----------
@@ -169,7 +169,7 @@ class TimePicker(Html.Html):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
 
     Attributes:
     ----------

@@ -15,7 +15,7 @@ class Line(DataClass):
 
     Related Pages:
 
-			https://www.npmjs.com/package/chartjs-plugin-crosshair
+      https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
     return self.get('#F66')
 
@@ -31,7 +31,7 @@ class Line(DataClass):
 
     Related Pages:
 
-			https://www.npmjs.com/package/chartjs-plugin-crosshair
+      https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
     return self.get(1)
 
@@ -51,7 +51,7 @@ class Sync(DataClass):
 
     Related Pages:
 
-			https://chartjs-plugin-crosshair.netlify.app/options.html
+      https://chartjs-plugin-crosshair.netlify.app/options.html
     """
     return self.get(True)
 
@@ -68,7 +68,7 @@ class Sync(DataClass):
 
     Related Pages:
 
-			https://www.npmjs.com/package/chartjs-plugin-crosshair
+      https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
     return self.get(1)
 
@@ -85,7 +85,7 @@ class Sync(DataClass):
 
     Related Pages:
 
-			https://www.npmjs.com/package/chartjs-plugin-crosshair
+      https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
     return self.get(True)
 
@@ -105,7 +105,7 @@ class Zoom(DataClass):
 
     Related Pages:
 
-			https://www.npmjs.com/package/chartjs-plugin-crosshair
+      https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
     return self.get(True)
 
@@ -122,7 +122,7 @@ class Zoom(DataClass):
 
     Related Pages:
 
-			https://www.npmjs.com/package/chartjs-plugin-crosshair
+      https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
     return self.get('rgba(66,133,244,0.2)')
 
@@ -139,7 +139,7 @@ class Zoom(DataClass):
 
     Related Pages:
 
-			https://www.npmjs.com/package/chartjs-plugin-crosshair
+      https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
     return self.get('#48F')
 
@@ -156,7 +156,7 @@ class Zoom(DataClass):
 
     Related Pages:
 
-			https://www.npmjs.com/package/chartjs-plugin-crosshair
+      https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
     return self.get('Reset Zoom')
 
@@ -173,7 +173,7 @@ class Zoom(DataClass):
 
     Related Pages:
 
-			https://www.npmjs.com/package/chartjs-plugin-crosshair
+      https://www.npmjs.com/package/chartjs-plugin-crosshair
     """
     return self.get('reset-zoom')
 
@@ -192,7 +192,7 @@ class Crosshair(DataClass):
 
     Related Pages:
 
-			https://chartjs-plugin-crosshair.netlify.app/options.html
+      https://chartjs-plugin-crosshair.netlify.app/options.html
     """
     return self.sub_data("line", Line)
 
@@ -205,7 +205,7 @@ class Crosshair(DataClass):
 
     Related Pages:
 
-			https://chartjs-plugin-crosshair.netlify.app/options.html
+      https://chartjs-plugin-crosshair.netlify.app/options.html
     """
     return self.sub_data("sync", Sync)
 
@@ -218,7 +218,7 @@ class Crosshair(DataClass):
 
     Related Pages:
 
-			https://chartjs-plugin-crosshair.netlify.app/options.html
+      https://chartjs-plugin-crosshair.netlify.app/options.html
     """
     return self.sub_data("zoom", Zoom)
 
@@ -247,7 +247,7 @@ class Crosshair(DataClass):
 
     Related Pages:
 
-			https://chartjs-plugin-crosshair.netlify.app/options.html
+      https://chartjs-plugin-crosshair.netlify.app/options.html
 
     Attributes:
     ----------
@@ -265,7 +265,7 @@ class Crosshair(DataClass):
 
     Related Pages:
 
-			https://chartjs-plugin-crosshair.netlify.app/options.html
+      https://chartjs-plugin-crosshair.netlify.app/options.html
 
     Attributes:
     ----------

@@ -15,7 +15,7 @@ class DragOptions(DataClass):
 
     Related Pages:
 
-			https://github.com/chrispahm/chartjs-plugin-dragdata
+      https://github.com/chrispahm/chartjs-plugin-dragdata
     """
     return self.get(True)
 

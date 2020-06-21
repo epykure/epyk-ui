@@ -22,7 +22,7 @@ class DataAggregators(object):
 
     Related Pages:
 
-			https://underscorejs.org/#max
+      https://underscorejs.org/#max
 
     Attributes:
     ----------
@@ -40,7 +40,7 @@ class DataAggregators(object):
 
     Related Pages:
 
-			https://underscorejs.org/#min
+      https://underscorejs.org/#min
 
     Attributes:
     ----------
@@ -127,7 +127,7 @@ class DataAggregators(object):
 
     Related Pages:
 
-			https://underscorejs.org/#pluck
+      https://underscorejs.org/#pluck
     """
     self._report.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
@@ -329,7 +329,7 @@ class DataFilters(object):
 
     Related Pages:
 
-			https://underscorejs.org/#sortBy
+      https://underscorejs.org/#sortBy
 
     Attributes:
     ----------

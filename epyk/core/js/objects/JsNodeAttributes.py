@@ -11,7 +11,7 @@ class JsAttributes(JsObject.JsObject):
 
   Related Pages:
 
-			https://www.w3schools.com/jsref/dom_obj_attributes.asp
+      https://www.w3schools.com/jsref/dom_obj_attributes.asp
 
   """
 
@@ -24,7 +24,7 @@ class JsAttributes(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_attr_name.asp
+      https://www.w3schools.com/jsref/prop_attr_name.asp
 
     :return: A String, representing the name of the attribute
     """
@@ -37,7 +37,7 @@ class JsAttributes(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_attr_value.asp
+      https://www.w3schools.com/jsref/prop_attr_value.asp
 
     :return: Specifies the value of the attribute
     """
@@ -50,7 +50,7 @@ class JsAttributes(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_attr_specified.asp
+      https://www.w3schools.com/jsref/prop_attr_specified.asp
 
     :return: A Boolean, returns true if the attribute is specified, otherwise false
     """
@@ -62,7 +62,7 @@ class JsAttributes(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_namednodemap_item.asp
+      https://www.w3schools.com/jsref/met_namednodemap_item.asp
 
     :param i: Required. The index of the node in the NamedNodeMap you want to return
 
@@ -76,7 +76,7 @@ class JsAttributes(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_namednodemap_removenameditem.asp
+      https://www.w3schools.com/jsref/met_namednodemap_removenameditem.asp
 
     :param type: Required. The name of the node in the namedNodeMap you want to remove
     :return: 	A Node object, representing the removed attribute node
@@ -91,7 +91,7 @@ class JsAttributes(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_namednodemap_setnameditem.asp
+      https://www.w3schools.com/jsref/met_namednodemap_setnameditem.asp
 
     :return: A Node object, representing the replaced node (if any), otherwise null
     """
@@ -103,7 +103,7 @@ class JsAttributes(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_namednodemap_getnameditem.asp
+      https://www.w3schools.com/jsref/met_namednodemap_getnameditem.asp
 
     :param nodeName: Required. The name of the node in the namedNodeMap you want to return
 

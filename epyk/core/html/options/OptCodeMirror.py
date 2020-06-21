@@ -14,7 +14,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
 
@@ -34,7 +34,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("")
 
@@ -55,7 +55,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get()
 
@@ -75,7 +75,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get()
 
@@ -92,7 +92,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(2)
 
@@ -109,7 +109,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
 
@@ -126,7 +126,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(4)
 
@@ -143,7 +143,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 
@@ -161,7 +161,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
 
@@ -179,7 +179,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("ltr")
 
@@ -196,7 +196,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 
@@ -214,7 +214,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("default")
 
@@ -231,7 +231,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 
@@ -248,7 +248,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
 
@@ -265,7 +265,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(1)
 
@@ -282,7 +282,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
 
@@ -300,7 +300,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("native")
 
@@ -318,7 +318,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 
@@ -336,7 +336,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("textarea")
 
@@ -353,7 +353,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 
@@ -370,7 +370,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get("")
 
@@ -387,7 +387,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 
@@ -404,7 +404,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
 
@@ -422,7 +422,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 
@@ -439,7 +439,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
 
@@ -456,7 +456,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(1250)
 
@@ -473,7 +473,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get()
 
@@ -491,7 +491,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 
@@ -508,7 +508,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(True)
 
@@ -526,7 +526,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(530)
 
@@ -543,7 +543,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(0)
 
@@ -561,7 +561,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(1)
 
@@ -583,7 +583,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 
@@ -604,7 +604,7 @@ class OptionsCode(Options):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#config
+      https://codemirror.net/doc/manual.html#config
     """
     return self._config_get(False)
 

@@ -12,7 +12,7 @@ class DataBreakPoints(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/responsive.breakpoints
+      https://datatables.net/reference/option/responsive.breakpoints
     """
     return self._attrs["name"]
 
@@ -28,7 +28,7 @@ class DataBreakPoints(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/responsive.breakpoints
+      https://datatables.net/reference/option/responsive.breakpoints
     """
     return self._attrs["width"]
 
@@ -47,7 +47,7 @@ class DataDetails(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/responsive.details
+      https://datatables.net/reference/option/responsive.details
     """
     return self._attrs["type"]
 
@@ -64,7 +64,7 @@ class DataDetails(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/responsive.details.display
+      https://datatables.net/reference/option/responsive.details.display
     """
     return self._attrs["display"]
 
@@ -81,7 +81,7 @@ class DataDetails(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/responsive.details.renderer
+      https://datatables.net/reference/option/responsive.details.renderer
     """
     return self._attrs["renderer"]
 
@@ -97,7 +97,7 @@ class DataDetails(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/responsive.details.target
+      https://datatables.net/reference/option/responsive.details.target
     """
     return self._attrs["target"]
 
@@ -121,7 +121,7 @@ class Responsive(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/responsive.details
+      https://datatables.net/reference/option/responsive.details
 
     :rtype: DataDetails
     """
@@ -137,7 +137,7 @@ class Responsive(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/responsive.breakpoints
+      https://datatables.net/reference/option/responsive.breakpoints
 
     :rtype: DataBreakPoints
     """
@@ -155,7 +155,7 @@ class Responsive(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/responsive.details.target
+      https://datatables.net/reference/option/responsive.details.target
     """
     return self._attrs["orthogonal"]
 

@@ -24,7 +24,7 @@ class Menus(object):
 
     Related Pages:
 
-        https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+      https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
     menu_li, menu_title, menu_items = [], [], []
@@ -64,7 +64,7 @@ class Menus(object):
 
     Related Pages:
 
-        https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+      https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
     menu_li, menu_title, menu_items = [], [], []
@@ -117,7 +117,7 @@ class Menus(object):
 
     Related Pages:
 
-        https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
+      https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
     menu_li, menu_title, menu_items, menu_divs = [], [], [], []

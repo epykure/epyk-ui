@@ -299,7 +299,7 @@ class DataSrc(object):
 
     Related Pages:
 
-			https://www.geeksforgeeks.org/working-with-pdf-files-in-python/
+      https://www.geeksforgeeks.org/working-with-pdf-files-in-python/
 
     Attributes:
     ----------
@@ -329,7 +329,7 @@ class DataSrc(object):
 
     Related Pages:
 
-			https://en.wikipedia.org/wiki/SOAP
+      https://en.wikipedia.org/wiki/SOAP
     https://python-zeep.readthedocs.io/en/master/
 
     Attributes:
@@ -355,7 +355,7 @@ class DataSrc(object):
 
     Related Pages:
 
-			https://jsonrpcclient.readthedocs.io/en/latest/api.html
+      https://jsonrpcclient.readthedocs.io/en/latest/api.html
 
     Attributes:
     ----------
@@ -403,7 +403,7 @@ class DataSrc(object):
 
     Related Pages:
 
-			https://pypi.org/project/beautifulsoup4/
+      https://pypi.org/project/beautifulsoup4/
 
     Attributes:
     ----------
@@ -432,7 +432,7 @@ class DataSrc(object):
 
     Related Pages:
 
-			https://pypi.org/project/beautifulsoup4/
+      https://pypi.org/project/beautifulsoup4/
 
     Attributes:
     ----------
@@ -467,7 +467,7 @@ class DataSrc(object):
 
     Related Pages:
 
-			https://en.wikipedia.org/wiki/Rapid_control_prototyping
+      https://en.wikipedia.org/wiki/Rapid_control_prototyping
     https://gurujsonrpc.appspot.com/
     https://jsonrpcclient.readthedocs.io/en/latest/
 
@@ -500,7 +500,7 @@ class DataSrc(object):
 
     Related Pages:
 
-			https://grpc.io/docs/tutorials/basic/python/
+      https://grpc.io/docs/tutorials/basic/python/
     https://grpc.io/docs/quickstart/python.html
 
     Attributes:

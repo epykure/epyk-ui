@@ -97,7 +97,7 @@ class Components(object):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html
+      https://codemirror.net/doc/manual.html
     """
     return CompCodes.Code(self)
 
@@ -404,7 +404,7 @@ class Components(object):
 
     Related Pages:
 
-			https://www.w3schools.com/html/html_forms.asp
+      https://www.w3schools.com/html/html_forms.asp
     """
     return CompForms.Forms(self)
 
@@ -545,7 +545,7 @@ class Components(object):
 
     Related Pages:
 
-			https://github.com/mohsen1/json-formatter-js
+      https://github.com/mohsen1/json-formatter-js
 
     Attributes:
     ----------

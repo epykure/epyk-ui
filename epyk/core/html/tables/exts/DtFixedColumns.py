@@ -11,7 +11,7 @@ class FixedColumns(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/fixedColumns
+      https://datatables.net/reference/option/fixedColumns
     """
     self.leftColumns = 2
     return self
@@ -25,7 +25,7 @@ class FixedColumns(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/fixedColumns.heightMatch
+      https://datatables.net/reference/option/fixedColumns.heightMatch
     """
     return self._attrs["heightMatch"]
 

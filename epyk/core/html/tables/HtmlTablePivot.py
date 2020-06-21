@@ -254,7 +254,7 @@ class PivotRendererC3(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
 
     """
     self._report.jsImports.add('pivot-c3')
@@ -269,7 +269,7 @@ class PivotRendererC3(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
@@ -283,7 +283,7 @@ class PivotRendererC3(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
@@ -297,7 +297,7 @@ class PivotRendererC3(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
@@ -311,7 +311,7 @@ class PivotRendererC3(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
@@ -325,7 +325,7 @@ class PivotRendererC3(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-c3')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
@@ -345,7 +345,7 @@ class PivotRendererPlotly(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/plotly.html
+      https://pivottable.js.org/examples/plotly.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -359,7 +359,7 @@ class PivotRendererPlotly(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -373,7 +373,7 @@ class PivotRendererPlotly(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -387,7 +387,7 @@ class PivotRendererPlotly(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -401,7 +401,7 @@ class PivotRendererPlotly(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -415,7 +415,7 @@ class PivotRendererPlotly(object):
 
     Related Pages:
 
-			https://pivottable.js.org/examples/c3.html
+      https://pivottable.js.org/examples/c3.html
     """
     self._report.jsImports.add('pivot-plotly')
     self.options['renderers'] = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"

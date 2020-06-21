@@ -24,7 +24,7 @@ class Layouts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_br.asp
+      https://www.w3schools.com/tags/tag_br.asp
 
     Attributes:
     ----------
@@ -52,7 +52,7 @@ class Layouts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_hr.asp
+      https://www.w3schools.com/tags/tag_hr.asp
 
     Attributes:
     ----------
@@ -90,7 +90,7 @@ class Layouts(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.0/layout/grid/
+      https://getbootstrap.com/docs/4.0/layout/grid/
     https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
     Attributes:
@@ -130,7 +130,7 @@ class Layouts(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.0/layout/grid/
+      https://getbootstrap.com/docs/4.0/layout/grid/
     https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
     Attributes:
@@ -192,7 +192,7 @@ class Layouts(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.0/layout/grid/
+      https://getbootstrap.com/docs/4.0/layout/grid/
 
     Attributes:
     ----------
@@ -285,7 +285,7 @@ class Layouts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_div.asp
+      https://www.w3schools.com/tags/tag_div.asp
 
     Attributes:
     ----------
@@ -409,7 +409,7 @@ class Layouts(object):
 
       Related Pages:
 
-  			https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header
 
       Attributes:
       ----------
@@ -441,7 +441,7 @@ class Layouts(object):
 
       Related Pages:
 
-  			https://www.w3schools.com/tags/tag_section.asp
+      https://www.w3schools.com/tags/tag_section.asp
 
       Attributes:
       ----------

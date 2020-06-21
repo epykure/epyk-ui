@@ -86,7 +86,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
     Related Pages:
 
-			https://codemirror.net/3/doc/manual.html#keymaps
+      https://codemirror.net/3/doc/manual.html#keymaps
     """
     return JsObjects.JsObjects.get("%s.execCommand('selectAll')" % self._src.editorId)
 
@@ -98,7 +98,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
     Related Pages:
 
-			https://codemirror.net/3/doc/manual.html#keymaps
+      https://codemirror.net/3/doc/manual.html#keymaps
     """
     return JsObjects.JsObjects.get("%s.execCommand('singleSelection')" % self._src.editorId)
 
@@ -111,7 +111,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
     Related Pages:
 
-			https://codemirror.net/3/doc/manual.html#keymaps
+      https://codemirror.net/3/doc/manual.html#keymaps
     """
     return JsObjects.JsObjects.get("%s.execCommand('killLine')" % self._src.editorId)
 
@@ -123,7 +123,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
     Related Pages:
 
-			https://codemirror.net/3/doc/manual.html#keymaps
+      https://codemirror.net/3/doc/manual.html#keymaps
     """
     return JsObjects.JsObjects.get("%s.execCommand('deleteLine')" % self._src.editorId)
 

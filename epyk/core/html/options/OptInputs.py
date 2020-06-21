@@ -28,7 +28,7 @@ class OptionsInput(Options):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_rows.asp
+      https://www.w3schools.com/tags/att_rows.asp
     """
     return self._report.attr.get('disabled', False)
 
@@ -104,7 +104,7 @@ http://openexchangerates.github.io/accounting.js/
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_textarea_maxlength.asp
+      https://www.w3schools.com/tags/att_textarea_maxlength.asp
     """
     return self._report.attr.get('maxlength')
 
@@ -121,7 +121,7 @@ http://openexchangerates.github.io/accounting.js/
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_textarea_name.asp
+      https://www.w3schools.com/tags/att_textarea_name.asp
     """
     return self._report.attr.get('name')
 
@@ -138,7 +138,7 @@ http://openexchangerates.github.io/accounting.js/
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_input_placeholder.asp
+      https://www.w3schools.com/tags/att_input_placeholder.asp
     """
     return self._report.attr.get('placeholder', "")
 
@@ -155,7 +155,7 @@ http://openexchangerates.github.io/accounting.js/
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_textarea_required.asp
+      https://www.w3schools.com/tags/att_textarea_required.asp
     """
     return self._report.attr.get('required')
 
@@ -176,7 +176,7 @@ http://openexchangerates.github.io/accounting.js/
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_textarea_wrap.asp
+      https://www.w3schools.com/tags/att_textarea_wrap.asp
     """
     return self._report.attr.get('wrap', "")
 
@@ -193,7 +193,7 @@ http://openexchangerates.github.io/accounting.js/
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_global_spellcheck.asp
+      https://www.w3schools.com/tags/att_global_spellcheck.asp
     """
     return self._report.attr.get('spellcheck', False)
 
@@ -210,7 +210,7 @@ http://openexchangerates.github.io/accounting.js/
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_input_readonly.asp
+      https://www.w3schools.com/tags/att_input_readonly.asp
     """
     return self._report.attr.get('readOnly', False)
 
@@ -290,7 +290,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -308,7 +308,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -325,7 +325,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -342,7 +342,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -359,7 +359,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -376,7 +376,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -393,7 +393,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -411,7 +411,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -429,7 +429,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -447,7 +447,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -464,7 +464,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(15)
 
@@ -481,7 +481,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -498,7 +498,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -515,7 +515,7 @@ class OptionsTimePicker(OptionsInput):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     return self._config_get(True)
 
@@ -538,7 +538,7 @@ class OptionAutoComplete(Options):
 
     Related Pages:
 
-			https://api.jqueryui.com/autocomplete/#option-appendTo
+      https://api.jqueryui.com/autocomplete/#option-appendTo
     """
     return self._config_get(None)
 
@@ -555,7 +555,7 @@ class OptionAutoComplete(Options):
 
     Related Pages:
 
-			https://api.jqueryui.com/autocomplete/#option-autoFocus
+      https://api.jqueryui.com/autocomplete/#option-autoFocus
     """
     return self._config_get(False)
 
@@ -574,7 +574,7 @@ class OptionAutoComplete(Options):
 
     Related Pages:
 
-			https://api.jqueryui.com/autocomplete/#option-classes
+      https://api.jqueryui.com/autocomplete/#option-classes
     """
     return self._config_get([])
 
@@ -592,7 +592,7 @@ class OptionAutoComplete(Options):
 
     Related Pages:
 
-			https://api.jqueryui.com/autocomplete/#option-delay
+      https://api.jqueryui.com/autocomplete/#option-delay
     """
     return self._config_get(300)
 
@@ -609,7 +609,7 @@ class OptionAutoComplete(Options):
 
     Related Pages:
 
-			https://api.jqueryui.com/autocomplete/#option-delay
+      https://api.jqueryui.com/autocomplete/#option-delay
     """
     return self._config_get(True)
 
@@ -627,7 +627,7 @@ class OptionAutoComplete(Options):
 
     Related Pages:
 
-			https://api.jqueryui.com/autocomplete/#option-minLength
+      https://api.jqueryui.com/autocomplete/#option-minLength
     """
     return self._config_get(0)
 
@@ -643,7 +643,7 @@ class OptionAutoComplete(Options):
 
     Related Pages:
 
-			https://api.jqueryui.com/dialog/#option-position
+      https://api.jqueryui.com/dialog/#option-position
     """
     self._config({"my": my, "at": at, "of": of})
     return self
@@ -657,7 +657,7 @@ class OptionAutoComplete(Options):
 
     Related Pages:
 
-			https://api.jqueryui.com/autocomplete/#option-source
+      https://api.jqueryui.com/autocomplete/#option-source
     """
     return self._config_get([])
 
@@ -677,7 +677,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-altField
+      https://api.jqueryui.com/datepicker/#option-altField
     """
     return self._config_get("")
 
@@ -694,7 +694,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-altFormat
+      https://api.jqueryui.com/datepicker/#option-altFormat
     """
     return self._config_get("")
 
@@ -711,7 +711,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-appendText
+      https://api.jqueryui.com/datepicker/#option-appendText
     """
     return self._config_get("")
 
@@ -728,7 +728,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-autoSize
+      https://api.jqueryui.com/datepicker/#option-autoSize
     """
     return self._config_get(False)
 
@@ -745,7 +745,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-beforeShow
+      https://api.jqueryui.com/datepicker/#option-beforeShow
     """
     return self._config_get(None)
 
@@ -762,7 +762,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-beforeShowDay
+      https://api.jqueryui.com/datepicker/#option-beforeShowDay
     """
     return self._config_get(None)
 
@@ -779,7 +779,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-buttonImage
+      https://api.jqueryui.com/datepicker/#option-buttonImage
     """
     return self._config_get("")
 
@@ -796,7 +796,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-buttonImageOnly
+      https://api.jqueryui.com/datepicker/#option-buttonImageOnly
     """
     return self._config_get(None)
 
@@ -813,7 +813,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-buttonText
+      https://api.jqueryui.com/datepicker/#option-buttonText
     """
     return self._config_get("...")
 
@@ -830,7 +830,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-calculateWeek
+      https://api.jqueryui.com/datepicker/#option-calculateWeek
     """
     return self._config_get(None)
 
@@ -847,7 +847,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-changeMonth
+      https://api.jqueryui.com/datepicker/#option-changeMonth
     """
     return self._config_get(False)
 
@@ -864,7 +864,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-changeYear
+      https://api.jqueryui.com/datepicker/#option-changeYear
     """
     return self._config_get(False)
 
@@ -881,7 +881,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-closeText
+      https://api.jqueryui.com/datepicker/#option-closeText
     """
     return self._config_get("Done")
 
@@ -898,7 +898,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-constrainInput
+      https://api.jqueryui.com/datepicker/#option-constrainInput
     """
     return self._config_get(True)
 
@@ -915,7 +915,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-currentText
+      https://api.jqueryui.com/datepicker/#option-currentText
     """
     return self._config_get("Today")
 
@@ -932,7 +932,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-dateFormat
+      https://api.jqueryui.com/datepicker/#option-dateFormat
     """
     return self._config_get("mm/dd/yy")
 
@@ -949,7 +949,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-dayNames
+      https://api.jqueryui.com/datepicker/#option-dayNames
     """
     return self._config_get([])
 
@@ -966,7 +966,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-dayNamesMin
+      https://api.jqueryui.com/datepicker/#option-dayNamesMin
     """
     return self._config_get([])
 
@@ -983,7 +983,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-dayNamesShort
+      https://api.jqueryui.com/datepicker/#option-dayNamesShort
     """
     return self._config_get([])
 
@@ -1000,7 +1000,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-defaultDate
+      https://api.jqueryui.com/datepicker/#option-defaultDate
     """
     return self._config_get(None)
 
@@ -1017,7 +1017,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-duration
+      https://api.jqueryui.com/datepicker/#option-duration
     """
     return self._config_get("normal")
 
@@ -1046,7 +1046,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-firstDay
+      https://api.jqueryui.com/datepicker/#option-firstDay
     """
     return self._config_get(0)
 
@@ -1063,7 +1063,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-gotoCurrent
+      https://api.jqueryui.com/datepicker/#option-gotoCurrent
     """
     return self._config_get(False)
 
@@ -1080,7 +1080,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-hideIfNoPrevNext
+      https://api.jqueryui.com/datepicker/#option-hideIfNoPrevNext
     """
     return self._config_get(False)
 
@@ -1097,7 +1097,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-isRTL
+      https://api.jqueryui.com/datepicker/#option-isRTL
     """
     return self._config_get(False)
 
@@ -1114,7 +1114,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-maxDate
+      https://api.jqueryui.com/datepicker/#option-maxDate
     """
     return self._config_get(None)
 
@@ -1131,7 +1131,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-minDate
+      https://api.jqueryui.com/datepicker/#option-minDate
     """
     return self._config_get(None)
 
@@ -1148,7 +1148,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-monthNames
+      https://api.jqueryui.com/datepicker/#option-monthNames
     """
     return self._config_get([])
 
@@ -1165,7 +1165,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-monthNamesShort
+      https://api.jqueryui.com/datepicker/#option-monthNamesShort
     """
     return self._config_get([])
 
@@ -1182,7 +1182,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-navigationAsDateFormat
+      https://api.jqueryui.com/datepicker/#option-navigationAsDateFormat
     """
     return self._config_get(None)
 
@@ -1199,7 +1199,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-nextText
+      https://api.jqueryui.com/datepicker/#option-nextText
     """
     return self._config_get("Next")
 
@@ -1216,7 +1216,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-numberOfMonths
+      https://api.jqueryui.com/datepicker/#option-numberOfMonths
     """
     return self._config_get(1)
 
@@ -1233,7 +1233,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-onChangeMonthYear
+      https://api.jqueryui.com/datepicker/#option-onChangeMonthYear
     """
     return self._config_get(None)
 
@@ -1250,7 +1250,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-onClose
+      https://api.jqueryui.com/datepicker/#option-onClose
     """
     return self._config_get(None)
 
@@ -1267,7 +1267,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-onSelect
+      https://api.jqueryui.com/datepicker/#option-onSelect
     """
     return self._config_get(None)
 
@@ -1285,7 +1285,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-prevText
+      https://api.jqueryui.com/datepicker/#option-prevText
     """
     return self._config_get("Prev")
 
@@ -1302,7 +1302,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-selectOtherMonths
+      https://api.jqueryui.com/datepicker/#option-selectOtherMonths
     """
     return self._config_get(False)
 
@@ -1319,7 +1319,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-shortYearCutoff
+      https://api.jqueryui.com/datepicker/#option-shortYearCutoff
     """
     return self._config_get("+10")
 
@@ -1336,7 +1336,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-showAnim
+      https://api.jqueryui.com/datepicker/#option-showAnim
     """
     return self._config_get("show")
 
@@ -1353,7 +1353,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-showButtonPanel
+      https://api.jqueryui.com/datepicker/#option-showButtonPanel
     """
     return self._config_get(False)
 
@@ -1370,7 +1370,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-showCurrentAtPos
+      https://api.jqueryui.com/datepicker/#option-showCurrentAtPos
     """
     return self._config_get(0)
 
@@ -1387,7 +1387,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-showMonthAfterYear
+      https://api.jqueryui.com/datepicker/#option-showMonthAfterYear
     """
     return self._config_get(False)
 
@@ -1404,7 +1404,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-showOn
+      https://api.jqueryui.com/datepicker/#option-showOn
     """
     return self._config_get("focus")
 
@@ -1421,7 +1421,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-showOptions
+      https://api.jqueryui.com/datepicker/#option-showOptions
     """
     return self._config_get({})
 
@@ -1438,7 +1438,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-showOtherMonths
+      https://api.jqueryui.com/datepicker/#option-showOtherMonths
     """
     return self._config_get(False)
 
@@ -1455,7 +1455,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-showWeek
+      https://api.jqueryui.com/datepicker/#option-showWeek
     """
     return self._config_get(False)
 
@@ -1472,7 +1472,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-stepMonths
+      https://api.jqueryui.com/datepicker/#option-stepMonths
     """
     return self._config_get(1)
 
@@ -1489,7 +1489,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-weekHeader
+      https://api.jqueryui.com/datepicker/#option-weekHeader
     """
     return self._config_get("wk")
 
@@ -1506,7 +1506,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-yearRange
+      https://api.jqueryui.com/datepicker/#option-yearRange
     """
     return self._config_get("c-10:c+10")
 
@@ -1523,7 +1523,7 @@ class OptionsDatePicker(OptionsInput):
 
     Related Pages:
 
-			https://api.jqueryui.com/datepicker/#option-yearSuffix
+      https://api.jqueryui.com/datepicker/#option-yearSuffix
     """
     return self._config_get("")
 
@@ -1543,7 +1543,7 @@ class OptionsTextarea(OptionsInput):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_rows.asp
+      https://www.w3schools.com/tags/att_rows.asp
     """
     return self._report.attr.get('rows', "")
 

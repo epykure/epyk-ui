@@ -12,7 +12,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get()
 
@@ -29,7 +29,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(True)
 
@@ -46,7 +46,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(0)
 
@@ -63,7 +63,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(False)
 
@@ -80,7 +80,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(0)
 
@@ -97,7 +97,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(False)
 
@@ -114,7 +114,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(None)
 
@@ -131,7 +131,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(150)
 
@@ -148,7 +148,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get("cubic-bezier(1, 0, 0, 1)")
 
@@ -165,7 +165,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(".my-handle")
 
@@ -182,7 +182,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(".ignore-elements")
 
@@ -199,7 +199,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(True)
 
@@ -216,7 +216,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(".item")
 
@@ -233,7 +233,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get("data-id")
 
@@ -250,7 +250,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get("sortable-ghost")
 
@@ -267,7 +267,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get("sortable-chosen")
 
@@ -284,7 +284,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get("sortable-drag")
 
@@ -301,7 +301,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(1)
 
@@ -318,7 +318,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(False)
 
@@ -335,7 +335,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(1)
 
@@ -353,7 +353,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get('horizontal')
 
@@ -370,7 +370,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(False)
 
@@ -387,7 +387,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get("sortable-fallback")
 
@@ -404,7 +404,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(False)
 
@@ -421,7 +421,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(0)
 
@@ -438,7 +438,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(False)
 
@@ -455,7 +455,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(True)
 
@@ -472,7 +472,7 @@ class OptionsSortable(Options):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
     """
     return self.get(5)
 

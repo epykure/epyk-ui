@@ -26,7 +26,7 @@ class Config(DataAttrs):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
     """
     return self._attrs["duration"]
 
@@ -43,7 +43,7 @@ class Config(DataAttrs):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
     """
     return self._attrs["lazy"]
 
@@ -60,7 +60,7 @@ class Config(DataAttrs):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/configuration/animations.html
+      https://www.chartjs.org/docs/latest/configuration/animations.html
     """
     return self._attrs["easing"]
 
@@ -250,7 +250,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
     ----------
@@ -275,7 +275,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
     """
     return JsObjects.JsObject.JsObject("%s.reset()" % self.toStr())
 
@@ -291,7 +291,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: 'this' for chainability
     """
@@ -308,7 +308,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: 'this' for chainability
     """
@@ -327,7 +327,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: 'this' for chainability
     """
@@ -342,7 +342,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: png data url of the image on the canvas
     """
@@ -356,7 +356,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     :return: HTML string of a legend for this chart
     """
@@ -370,7 +370,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
     ----------
@@ -389,7 +389,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
     ----------
@@ -406,7 +406,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
     ----------
@@ -429,7 +429,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
     ----------
@@ -449,7 +449,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
 
     Attributes:
     ----------
@@ -469,7 +469,7 @@ class ChartJs(JsPackage):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/developers/api.html
+      https://www.chartjs.org/docs/latest/developers/api.html
     """
     return JsObjects.JsObject.JsObject("%s.destroy()" % self.toStr())
 
@@ -820,7 +820,7 @@ class OptionsLegend(DataAttrs):
 
     Related Pages:
 
-			https://www.chartjs.org/docs/latest/configuration/legend.html
+      https://www.chartjs.org/docs/latest/configuration/legend.html
 
     :param flag:
     :return:

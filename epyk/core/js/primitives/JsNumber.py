@@ -38,7 +38,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_negative_infinity.asp
+      https://www.w3schools.com/jsref/jsref_negative_infinity.asp
     """
     return JsNumber("Number.NEGATIVE_INFINITY")
 
@@ -56,7 +56,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_positive_infinity.asp
+      https://www.w3schools.com/jsref/jsref_positive_infinity.asp
     """
     return JsNumber("Number.POSITIVE_INFINITY")
 
@@ -75,7 +75,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_max_value.asp
+      https://www.w3schools.com/jsref/jsref_max_value.asp
     """
     return JsNumber("Number.MAX_VALUE")
 
@@ -94,7 +94,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_min_value.asp
+      https://www.w3schools.com/jsref/jsref_min_value.asp
     """
     return JsNumber("Number.MIN_VALUE")
 
@@ -110,7 +110,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_isnan_number.asp
+      https//www.w3schools.com/jsref/jsref_isnan_number.asp
 
     :return: A Javascript boolean
     """
@@ -167,7 +167,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_toexponential.asp
+      https//www.w3schools.com/jsref/jsref_toexponential.asp
 
     :return: A Javascript Number
     """
@@ -185,7 +185,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_tofixed.asp
+      https://www.w3schools.com/jsref/jsref_tofixed.asp
 
     Attributes:
     ----------
@@ -207,7 +207,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_isfinite_number.asp
+      https://www.w3schools.com/jsref/jsref_isfinite_number.asp
 
     :return: A Javascript boolean
     """
@@ -226,7 +226,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_toprecision.asp
+      https://www.w3schools.com/jsref/jsref_toprecision.asp
 
     Attributes:
     ----------
@@ -282,7 +282,7 @@ class JsNumber(JsObject.JsObject):
 
     Related Pages:
 
-			https://en.wikipedia.org/wiki/Decimal_separator
+      https://en.wikipedia.org/wiki/Decimal_separator
     https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
 
     Attributes:

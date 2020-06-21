@@ -178,7 +178,7 @@ def getJsValid(value, fail=True):
 
   Related Pages:
 
-			https://www.w3schools.com/js/js_conventions.asp
+      https://www.w3schools.com/js/js_conventions.asp
 
   :param value: The Javascript variable name
   :param fail: Boolean to raise an exception if the name is not valid on the Javascript side
@@ -333,7 +333,7 @@ class JsFile(object):
 
     Related Pages:
 
-			https://codepen.io/
+      https://codepen.io/
 
     :param rptObj: The report object
     :param cssObj: The internal CSS object from the page

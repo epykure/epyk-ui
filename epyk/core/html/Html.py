@@ -249,7 +249,7 @@ class Html(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_node_insertbefore.asp
+      https://www.w3schools.com/jsref/met_node_insertbefore.asp
 
     Attributes:
     ----------
@@ -278,7 +278,7 @@ class Html(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_node_appendchild.asp
+      https://www.w3schools.com/jsref/met_node_appendchild.asp
 
     Attributes:
     ----------
@@ -371,7 +371,7 @@ Attributes:
 
       Related Pages:
 
-			https://www.w3schools.com/tags/tag_label.asp
+      https://www.w3schools.com/tags/tag_label.asp
 
     Attributes:
     ----------
@@ -406,7 +406,7 @@ Attributes:
 
       Related Pages:
 
-			https://fontawesome.com/how-to-use/on-the-web/styling/layering
+      https://fontawesome.com/how-to-use/on-the-web/styling/layering
 
     Attributes:
     ----------
@@ -589,7 +589,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onkeydown.asp
+      https://www.w3schools.com/jsref/event_onkeydown.asp
 
     :rtype: KeyCodes.KeyCode
     """
@@ -606,7 +606,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onkeypress.asp
+      https://www.w3schools.com/jsref/event_onkeypress.asp
 
     :rtype: KeyCodes.KeyCode
     """
@@ -623,7 +623,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onkeypress.asp
+      https://www.w3schools.com/jsref/event_onkeypress.asp
 
     :rtype: KeyCodes.KeyCode
     """
@@ -639,7 +639,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3.org/TR/html-aria/#allowed-aria-roles-states-and-properties
+      https://www.w3.org/TR/html-aria/#allowed-aria-roles-states-and-properties
     """
     return Aria.Aria(self)
 
@@ -732,7 +732,7 @@ http://api.jquery.com/css/
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.1/components/tooltips/
+      https://getbootstrap.com/docs/4.1/components/tooltips/
 
     Attributes:
     ----------
@@ -761,7 +761,7 @@ http://api.jquery.com/css/
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.4/components/popovers/
+      https://getbootstrap.com/docs/4.4/components/popovers/
 
     Attributes:
     ----------
@@ -922,7 +922,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jquery/event_on.asp
+      https://www.w3schools.com/jquery/event_on.asp
     https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/dom_obj_event.asp
 
@@ -1123,7 +1123,7 @@ Attributes:
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
 
     Attributes:
     ----------

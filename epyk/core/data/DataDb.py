@@ -22,7 +22,7 @@ class NoSql(object):
 
     Related Pages:
 
-			https://www.w3schools.com/python/python_mongodb_getstarted.asp
+      https://www.w3schools.com/python/python_mongodb_getstarted.asp
     https://www.mongodb.com/dr/fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-4.0.3-signed.msi/download
 
     :param host: Optional, Database hostname. Default localhost
@@ -40,7 +40,7 @@ class NoSql(object):
 
     Related Pages:
 
-			https://neo4j.com/developer/python/
+      https://neo4j.com/developer/python/
     https://community.neo4j.com/?_ga=2.69585106.394662973.1539480121-615400289.1539480121
 
     :param host: Optional, Database hostname. Default localhost
@@ -110,7 +110,7 @@ class DataDb(object):
 
     Related Pages:
 
-			https://www.sqlalchemy.org/
+      https://www.sqlalchemy.org/
 
     :return: A dictionary with the database names in each context
     """
@@ -131,7 +131,7 @@ class DataDb(object):
 
     Related Pages:
 
-			https://www.sqlalchemy.org/
+      https://www.sqlalchemy.org/
 
     :rtype: epyk.core.py.PySql.SqlConn
     :return:
@@ -173,7 +173,7 @@ class DataDb(object):
 
     Related Pages:
 
-			https://www.sqlalchemy.org/
+      https://www.sqlalchemy.org/
 
     :rtype: epyk.core.py.PySql.SqlConn
 
@@ -208,7 +208,7 @@ class DataDb(object):
 
     Related Pages:
 
-			https://docs.sqlalchemy.org/en/13/core/metadata.html
+      https://docs.sqlalchemy.org/en/13/core/metadata.html
 
     :param table_names:
 
@@ -339,7 +339,7 @@ class DataDb(object):
 
     Related Pages:
 
-			https://www.599cd.com/access/studentdatabases/
+      https://www.599cd.com/access/studentdatabases/
 
     :param name: The filename
     :param db_path: The database full path
@@ -364,7 +364,7 @@ class DataDb(object):
 
     Related Pages:
 
-			https://www.postgresql.org/
+      https://www.postgresql.org/
     https://docs.sqlalchemy.org/en/13/dialects/postgresql.html#sqlalchemy.dialects.postgresql.dml.Insert.on_conflict_do_update.params.where
 
     :param name: Database name
@@ -397,7 +397,7 @@ class DataDb(object):
 
     Related Pages:
 
-			https://dev.mysql.com/
+      https://dev.mysql.com/
 
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
@@ -427,7 +427,7 @@ class DataDb(object):
 
     Related Pages:
 
-			https://mariadb.org/
+      https://mariadb.org/
 
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost

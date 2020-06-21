@@ -48,7 +48,7 @@ class DC(object):
 
     Related Pages:
 
-			https://square.github.io/crossfilter/
+      https://square.github.io/crossfilter/
     https://dc-js.github.io/dc.js/
 
     Attributes:
@@ -81,7 +81,7 @@ class DC(object):
 
     Related Pages:
 
-			https://square.github.io/crossfilter/
+      https://square.github.io/crossfilter/
     https://dc-js.github.io/dc.js/
 
     Attributes:
@@ -128,7 +128,7 @@ class DC(object):
 
     Related Pages:
 
-			https://square.github.io/crossfilter/
+      https://square.github.io/crossfilter/
     https://dc-js.github.io/dc.js/
 
     Attributes:
@@ -243,7 +243,7 @@ Attributes:
 
     Related Pages:
 
-			https://square.github.io/crossfilter/
+      https://square.github.io/crossfilter/
     https://dc-js.github.io/dc.js/
 
     Attributes:
@@ -270,7 +270,7 @@ Attributes:
 
     Related Pages:
 
-			https://square.github.io/crossfilter/
+      https://square.github.io/crossfilter/
     https://dc-js.github.io/dc.js/
 
     :param data:
@@ -298,7 +298,7 @@ Attributes:
 
     Related Pages:
 
-			https://square.github.io/crossfilter/
+      https://square.github.io/crossfilter/
     https://dc-js.github.io/dc.js/
     https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
 

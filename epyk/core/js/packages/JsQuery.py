@@ -35,7 +35,7 @@ class Jsjqxhr(object):
 
     Related Pages:
 
-			https://api.jquery.com/jQuery.ajax/#jqXHR
+      https://api.jquery.com/jQuery.ajax/#jqXHR
 
     :param jsFncs: The Javascript Functions
 
@@ -54,7 +54,7 @@ class Jsjqxhr(object):
 
     Related Pages:
 
-			https://api.jquery.com/jQuery.ajax/#jqXHR
+      https://api.jquery.com/jQuery.ajax/#jqXHR
 
     :param jsFncs: The Javascript Functions
 
@@ -73,7 +73,7 @@ class Jsjqxhr(object):
 
     Related Pages:
 
-			https://api.jquery.com/jQuery.ajax/#jqXHR
+      https://api.jquery.com/jQuery.ajax/#jqXHR
 
     :param jsFncs: The Javascript Functions
 
@@ -174,7 +174,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_hide_show.asp
+      https//www.w3schools.com/jquery/jquery_hide_show.asp
     http://api.jquery.com/hide/
 
     :param speed:
@@ -198,7 +198,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_hide_show.asp
+      https//www.w3schools.com/jquery/jquery_hide_show.asp
     http://api.jquery.com/show/
 
     :param speed:
@@ -222,7 +222,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_fade.asp
+      https//www.w3schools.com/jquery/jquery_fade.asp
     http://api.jquery.com/fadein/
 
     :param speed:
@@ -246,7 +246,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_fade.asp
+      https//www.w3schools.com/jquery/jquery_fade.asp
     http://api.jquery.com/fadeout/
 
     :param speed:
@@ -292,7 +292,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_fade.asp
+      https//www.w3schools.com/jquery/jquery_fade.asp
     https://api.jquery.com/fadeto/
 
     :param duration: A string or number determining how long the animation will run.
@@ -321,7 +321,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_slide.asp
+      https//www.w3schools.com/jquery/jquery_slide.asp
     https://api.jquery.com/slideDown/#slideDown-duration-complete
 
     :param speed: A string or number determining how long the animation will run.
@@ -344,7 +344,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_slide.asp
+      https//www.w3schools.com/jquery/jquery_slide.asp
     https://api.jquery.com/slideUp/#slideUp-duration-complete
 
     :param speed: A string or number determining how long the animation will run.
@@ -367,7 +367,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_slide.asp
+      https//www.w3schools.com/jquery/jquery_slide.asp
     https://api.jquery.com/slideToggle/#slideToggle-duration-complete
 
     :param speed: A string or number determining how long the animation will run.
@@ -393,7 +393,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://www.w3schools.com/jquery/jquery_animate.asp
+      https://www.w3schools.com/jquery/jquery_animate.asp
     https://api.jquery.com/animate/#animate-properties-duration-easing-complete
 
     :param params: An object of CSS properties and values that the animation will move toward.
@@ -413,7 +413,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_stop.asp
+      https//www.w3schools.com/jquery/jquery_stop.asp
     https://api.jquery.com/stop/#stop-clearQueue-jumpToEnd
 
     :param stopAll: A Boolean indicating whether to remove queued animation as well
@@ -429,7 +429,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_dom_remove.asp
+      https//www.w3schools.com/jquery/jquery_dom_remove.asp
     https://api.jquery.com/remove/#remove-selector
 
     :param selector: A selector expression that filters the set of matched elements to be removed.
@@ -446,7 +446,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_dom_remove.asp
+      https//www.w3schools.com/jquery/jquery_dom_remove.asp
     https://api.jquery.com/empty/#empty
 
     :return:
@@ -459,7 +459,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
+      https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
     https://api.jquery.com/siblings/#siblings-selector
 
     :param selector: A string containing a selector expression to match elements against.
@@ -477,7 +477,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
+      https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
     https://api.jquery.com/next/#next-selector
 
     :param selector: A string containing a selector expression to match elements against.
@@ -496,7 +496,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
+      https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
     https://api.jquery.com/prev/#prev-selector
 
     :param selector: A string containing a selector expression to match elements against.
@@ -514,7 +514,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_traversing_filtering.asp
+      https//www.w3schools.com/jquery/jquery_traversing_filtering.asp
     https://api.jquery.com/first/#first
 
     :return:
@@ -527,7 +527,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/traversing_children.asp
+      https//www.w3schools.com/jquery/traversing_children.asp
 
     :param selector: Optional. Specifies a selector expression to narrow down the search for children
     :return:
@@ -543,7 +543,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/jquery_traversing_filtering.asp
+      https//www.w3schools.com/jquery/jquery_traversing_filtering.asp
 
     :return:
     """
@@ -579,7 +579,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/prepend/#prepend-content-content
+      https://api.jquery.com/prepend/#prepend-content-content
 
     :param jsData:
     :param jsFnc:
@@ -618,7 +618,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/find/#entry-examples
+      https://api.jquery.com/find/#entry-examples
 
     :param criteria: Selector or element An element or a jQuery object to match elements against.
 
@@ -633,7 +633,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/each/#each-function
+      https://api.jquery.com/each/#each-function
 
     :param jsFncs: A function to execute for each matched element.
 
@@ -648,7 +648,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/jQuery.cssHooks/#jQuery-cssHooks1
+      https://api.jquery.com/jQuery.cssHooks/#jQuery-cssHooks1
 
     :param key:
     :param value:
@@ -671,7 +671,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/attr/#attr-attributeName
+      https://api.jquery.com/attr/#attr-attributeName
 
     :param key: The name of the attribute to get.
     :param value: A value to set for the attribute. If null, the specified attribute will be removed
@@ -690,7 +690,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/val/#val
+      https://api.jquery.com/val/#val
 
     :param jsData:
     :param jsFnc:
@@ -707,7 +707,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/text/#text
+      https://api.jquery.com/text/#text
 
     :param jsData:
     :param jsFnc:
@@ -766,7 +766,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
+      https//api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
 
     :return:
     """
@@ -780,7 +780,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//api.jquery.com/jQuery.getScript/
+      https//api.jquery.com/jQuery.getScript/
 
     :param url:
     :param jsData:
@@ -800,7 +800,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
+      https//api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
 
     :param script:
     :param jsData:
@@ -835,7 +835,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/load/#load-url-data-complete
+      https://api.jquery.com/load/#load-url-data-complete
 
     :param url: A string containing the URL to which the request is sent.
     :param jsData: A plain object or string that is sent to the server with the request.
@@ -856,7 +856,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/ajaxError/
+      https://api.jquery.com/ajaxError/
 
     :param jsFncs:
     :return:
@@ -870,7 +870,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/ajaxStart/
+      https://api.jquery.com/ajaxStart/
 
     :return:
     """
@@ -883,7 +883,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/ajaxStop/
+      https://api.jquery.com/ajaxStop/
 
     :param jsFncs:
     :return:
@@ -897,7 +897,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/ajaxSuccess/
+      https://api.jquery.com/ajaxSuccess/
 
     :param jsFncs:
     :return:
@@ -910,7 +910,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https://api.jquery.com/ajaxSend/
+      https://api.jquery.com/ajaxSend/
 
     :param jsFncs:
     :return:
@@ -975,7 +975,7 @@ class JQuery(JsPackage):
 
     Related Pages:
 
-			https//www.w3schools.com/jquery/ajax_ajax.asp
+      https//www.w3schools.com/jquery/ajax_ajax.asp
 
     :return:
     :param type: Specifies the type of request. (GET or POST)

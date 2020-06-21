@@ -22,7 +22,7 @@ class CM(JsPackage):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#option_viewportMargin
+      https://codemirror.net/doc/manual.html#option_viewportMargin
 
     Attributes:
     ----------
@@ -43,7 +43,7 @@ class CM(JsPackage):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#option_viewportMargin
+      https://codemirror.net/doc/manual.html#option_viewportMargin
 
     Attributes:
     ----------
@@ -62,7 +62,7 @@ class CM(JsPackage):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#option_viewportMargin
+      https://codemirror.net/doc/manual.html#option_viewportMargin
 
     :return: A Boolean
     """
@@ -77,7 +77,7 @@ class CM(JsPackage):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#option_viewportMargin
+      https://codemirror.net/doc/manual.html#option_viewportMargin
 
     Attributes:
     ----------
@@ -98,7 +98,7 @@ class CM(JsPackage):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#api
+      https://codemirror.net/doc/manual.html#api
 
     :return: The Javascript object
     """
@@ -112,7 +112,7 @@ class CM(JsPackage):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#api
+      https://codemirror.net/doc/manual.html#api
 
     :return: The Javascript string fragment
     """
@@ -126,7 +126,7 @@ class CM(JsPackage):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#commands
+      https://codemirror.net/doc/manual.html#commands
 
     :return: The Javascript string fragment
     """
@@ -141,7 +141,7 @@ class CM(JsPackage):
 
     Related Pages:
 
-			https://codemirror.net/doc/manual.html#api
+      https://codemirror.net/doc/manual.html#api
 
     :return: The Javascript string fragment
     """

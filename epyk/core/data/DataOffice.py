@@ -27,7 +27,7 @@ class DataOffice(object):
 
     Related Pages:
 
-			https://python-docx.readthedocs.io/en/latest/
+      https://python-docx.readthedocs.io/en/latest/
 
     :param filename: The filename with the extension
     :param path: The path of the file
@@ -50,7 +50,7 @@ class DataOffice(object):
 
     Related Pages:
 
-			https://python-pptx.readthedocs.io/en/latest/user/quickstart.html
+      https://python-pptx.readthedocs.io/en/latest/user/quickstart.html
 
     :param filename: The filename with the extension
     :param path: The path of the file
@@ -71,7 +71,7 @@ class DataOffice(object):
 
     Related Pages:
 
-			https://www.geeksforgeeks.org/reading-excel-file-using-python/
+      https://www.geeksforgeeks.org/reading-excel-file-using-python/
 
     :param filename: The filename with the extension
     :param path: The path of the file

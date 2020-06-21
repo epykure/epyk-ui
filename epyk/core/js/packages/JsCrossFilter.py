@@ -22,7 +22,7 @@ class CrossFilter(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -39,7 +39,7 @@ class CrossFilter(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -55,7 +55,7 @@ class CrossFilter(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -73,7 +73,7 @@ class CrossFilter(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsNumber.JsNumber("%s.size()" % self.varId)
 
@@ -86,7 +86,7 @@ class CrossFilter(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -103,7 +103,7 @@ class CrossFilter(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -223,7 +223,7 @@ class Quicksort(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -242,7 +242,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     self._js.append("filter(%s)" % JsUtils.jsConvertData(jsData, None))
     return self
@@ -255,7 +255,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -270,7 +270,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -301,7 +301,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -316,7 +316,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return self.fnc("filterAll()")
 
@@ -328,7 +328,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
     """
     return JsObjects.JsNumber.JsNumber("%s.id()" % self.varId)
 
@@ -341,7 +341,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -362,7 +362,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -381,7 +381,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return self.fnc_closure("dispose()")
 
@@ -393,7 +393,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     groupObj = Group(selector="%s.group()" % self.varId, varName=varName, setVar=True)
     return groupObj
@@ -406,7 +406,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     groupObj = GroupAll(selector="%s.groupAll()" % self.varId, varName=varName, setVar=True)
     return groupObj
@@ -427,7 +427,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.hasCurrentFilter()" % self.varId)
 
@@ -440,7 +440,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
     ----------
@@ -457,7 +457,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
     ----------
@@ -473,7 +473,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
     ----------
@@ -489,7 +489,7 @@ class Dimension(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
     ----------
@@ -508,7 +508,7 @@ class Group(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsNumber.JsNumber("%s.size()" % self.varId)
 
@@ -521,7 +521,7 @@ class Group(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -539,7 +539,7 @@ class Group(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
     ----------
@@ -557,7 +557,7 @@ class Group(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -574,7 +574,7 @@ class Group(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     :param orderValue:
     """
@@ -586,7 +586,7 @@ class Group(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     groupObj = Group("%s.orderNatural()" % self.toStr())
     return groupObj
@@ -599,7 +599,7 @@ class Group(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     :param k:
     """
@@ -616,7 +616,7 @@ class Group(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsArray.JsArray("%s.all()" % self.varId)
 
@@ -629,7 +629,7 @@ class Group(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsObject.JsObject("%s.dispose()" % self.toStr())
 
@@ -644,7 +644,7 @@ class GroupAll(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
 
     Attributes:
     ----------
@@ -662,7 +662,7 @@ class GroupAll(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -680,7 +680,7 @@ class GroupAll(JsPackage):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
     return JsObjects.JsNumber.JsNumber("%s.value()" % self.varId)
 

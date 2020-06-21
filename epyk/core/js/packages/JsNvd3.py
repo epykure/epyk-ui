@@ -146,7 +146,7 @@ class JsNvd3(JsPackage):
 
     Related Pages:
 
-			https://nvd3-community.github.io/nvd3/examples/documentation.html
+      https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param value: A python integer
 
@@ -161,7 +161,7 @@ class JsNvd3(JsPackage):
 
     Related Pages:
 
-			https://nvd3-community.github.io/nvd3/examples/documentation.html
+      https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param value:
 
@@ -177,7 +177,7 @@ class JsNvd3(JsPackage):
 
     Related Pages:
 
-			https://nvd3-community.github.io/nvd3/examples/documentation.html
+      https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param options: A python dictionary with the options
     """
@@ -559,7 +559,7 @@ class JsNvd3Bar(JsNvd3):
 
     Related Pages:
 
-			https://nvd3-community.github.io/nvd3/examples/documentation.html
+      https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param value:
     """
@@ -966,7 +966,7 @@ http://nvd3.org/examples/pie.html
 
     Related Pages:
 
-			https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
+      https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
     Attributes:
     ----------
@@ -983,7 +983,7 @@ http://nvd3.org/examples/pie.html
 
     Related Pages:
 
-			https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
+      https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
     Attributes:
     ----------
@@ -1038,7 +1038,7 @@ http://nvd3.org/examples/pie.html
 
     Related Pages:
 
-			https://nvd3-community.github.io/nvd3/examples/documentation.html
+      https://nvd3-community.github.io/nvd3/examples/documentation.html
 
     :param text:
 

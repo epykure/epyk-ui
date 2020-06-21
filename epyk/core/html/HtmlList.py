@@ -51,7 +51,7 @@ class Li(Html.Html):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_label.asp
+      https://www.w3schools.com/tags/tag_label.asp
 
     Attributes:
     ----------

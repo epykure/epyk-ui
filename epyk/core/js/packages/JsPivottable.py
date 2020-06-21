@@ -2,7 +2,7 @@
 
 Related Pages:
 
-			https://github.com/nicolaskruchten/pivottable/wiki/Parameters
+      https://github.com/nicolaskruchten/pivottable/wiki/Parameters
 """
 
 from epyk.core.js import JsUtils

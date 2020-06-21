@@ -89,7 +89,7 @@ class NGModule(object):
 
     Related Pages:
 
-			https://angular.io/cli/generate#component-command
+      https://angular.io/cli/generate#component-command
 
     Attributes:
     ----------
@@ -105,7 +105,7 @@ class NGModule(object):
 
     Related Pages:
 
-			https://angular.io/cli/generate#directive-command
+      https://angular.io/cli/generate#directive-command
 
     Attributes:
     ----------
@@ -121,7 +121,7 @@ class NGModule(object):
 
     Related Pages:
 
-			https://angular.io/cli/generate#enum-command
+      https://angular.io/cli/generate#enum-command
 
     Attributes:
     ----------
@@ -259,7 +259,7 @@ class NG(object):
 
     Related Pages:
 
-			https://angular.io/cli/lint
+      https://angular.io/cli/lint
 
 		Attributes:
     ----------
@@ -279,7 +279,7 @@ class NG(object):
 
     Related Pages:
 
-			https://angular.io/cli/new
+      https://angular.io/cli/new
 
 		Attributes:
     ----------
@@ -300,7 +300,7 @@ class NG(object):
 
     Related Pages:
 
-			https://angular.io/cli
+      https://angular.io/cli
 
 		Attributes:
     ----------
@@ -315,7 +315,7 @@ class NG(object):
 
     Related Pages:
 
-			https://angular.io/cli
+      https://angular.io/cli
 
 		Attributes:
     ----------
@@ -338,7 +338,7 @@ class NG(object):
 
     Related Pages:
 
-			https://angular.io/cli
+      https://angular.io/cli
 
 		Attributes:
     ----------
@@ -356,7 +356,7 @@ class NG(object):
 
     Related Pages:
 
-			https://angular.io/cli
+      https://angular.io/cli
 
     Attributes:
     ----------
@@ -376,7 +376,7 @@ class NG(object):
 
     Related Pages:
 
-			https://angular.io/cli
+      https://angular.io/cli
 
     Attributes:
     ----------
@@ -404,7 +404,7 @@ class NG(object):
 
     Related Pages:
 
-			https://angular.io/cli/serve
+      https://angular.io/cli/serve
     """
     subprocess.run('ng serve --open', shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
@@ -425,7 +425,7 @@ class NG(object):
 
     Related Pages:
 
-			https://angular.io/cli/generate
+      https://angular.io/cli/generate
 
     Attributes:
     ----------
@@ -874,7 +874,7 @@ class Angular(node.Node):
 
     Related Pages:
 
-			https://angular.io/cli/
+      https://angular.io/cli/
 
     Attributes:
     ----------

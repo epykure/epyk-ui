@@ -317,7 +317,7 @@ class JsData(object):
 
     Related Pages:
 
-			https://github.com/crossfilter/crossfilter/wiki/API-Reference
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference
 
     Attributes:
     ----------
@@ -358,7 +358,7 @@ class JsData(object):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/index.html
+      https://visjs.github.io/vis-data/data/index.html
 
     Attributes:
     ----------
@@ -382,7 +382,7 @@ class JsData(object):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataview.html
+      https://visjs.github.io/vis-data/data/dataview.html
 
     Attributes:
     ----------
@@ -437,7 +437,7 @@ class JsDataTransfer(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/files
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/files
 
     :return:
     """
@@ -449,7 +449,7 @@ class JsDataTransfer(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/dropEffect
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/dropEffect
 
     :return:
     """
@@ -468,7 +468,7 @@ class JsDataTransfer(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/effectAllowed
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/effectAllowed
 
     :return:
     """
@@ -489,7 +489,7 @@ class JsDataTransfer(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/clearData
+      https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/clearData
 
     :return:
     """

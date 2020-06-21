@@ -36,7 +36,7 @@ class PyDates(object):
 
     Related Pages:
 
-			https://docs.python.org/2/library/datetime.html
+      https://docs.python.org/2/library/datetime.html
 
     :return: A string date in the format YYYY-MM-DD
     """
@@ -52,7 +52,7 @@ class PyDates(object):
 
     Related Pages:
 
-			https://docs.python.org/2/library/datetime.html
+      https://docs.python.org/2/library/datetime.html
 
     :return: Return a string timestamp
     """
@@ -190,7 +190,7 @@ class PyDates(object):
 
     Related Pages:
 
-			https://support.office.com/en-gb/article/date-function-e36c0c8c-4104-49da-ab83-82328b832349?ui=en-US&rs=en-GB&ad=GB
+      https://support.office.com/en-gb/article/date-function-e36c0c8c-4104-49da-ab83-82328b832349?ui=en-US&rs=en-GB&ad=GB
 
     :param xlDate:
 

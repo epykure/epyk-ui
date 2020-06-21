@@ -38,7 +38,7 @@ class Label(Html.Html):
 
     Related Pages:
 
-			https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
+      https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
 
     :return:
     """
@@ -67,7 +67,7 @@ class Label(Html.Html):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+      https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/event_onload.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
@@ -157,7 +157,7 @@ class Span(Html.Html):
 
     Related Pages:
 
-			https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
+      https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
 
     :return:
     """
@@ -196,7 +196,7 @@ class Span(Html.Html):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+      https://www.w3schools.com/js/js_htmldom_eventlistener.asp
     https://www.w3schools.com/jsref/event_onload.asp
 
     Attributes:

@@ -23,7 +23,7 @@ class IntersectionObserverEntry(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/boundingClientRect
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/boundingClientRect
     """
 
   @property
@@ -35,7 +35,7 @@ class IntersectionObserverEntry(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/intersectionRatio
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/intersectionRatio
     """
 
   @property
@@ -47,7 +47,7 @@ class IntersectionObserverEntry(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/intersectionRect
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/intersectionRect
     """
 
   @property
@@ -59,7 +59,7 @@ class IntersectionObserverEntry(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/isIntersecting
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/isIntersecting
     """
 
   @property
@@ -71,7 +71,7 @@ class IntersectionObserverEntry(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/rootBounds
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/rootBounds
     """
 
   @property
@@ -83,7 +83,7 @@ class IntersectionObserverEntry(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/target
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/target
     """
 
   @property
@@ -95,7 +95,7 @@ class IntersectionObserverEntry(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/time
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/time
     """
     return JsNumber.JsNumber("%s.time")
 
@@ -115,7 +115,7 @@ class IntersectionObserver(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root
     """
     return JsObject.JsObject("%s.root", isPyData=False)
 
@@ -128,7 +128,7 @@ class IntersectionObserver(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin
     """
     return JsString.JsString("%s.rootMargin", isPyData=False)
 
@@ -144,7 +144,7 @@ class IntersectionObserver(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds
     """
     return JsArray.JsArray("%s.thresholds", isPyData=False)
 
@@ -156,7 +156,7 @@ class IntersectionObserver(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/observe
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/observe
 
     Attributes:
     ----------
@@ -184,7 +184,7 @@ class IntersectionObserver(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/takeRecords
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/takeRecords
 
     :return: An array of IntersectionObserverEntry objects, one for each target element whose intersection with the root has changed since the last time the intersections were checked.
     """
@@ -198,7 +198,7 @@ class IntersectionObserver(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/unobserve
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/unobserve
 
     Attributes:
     ----------

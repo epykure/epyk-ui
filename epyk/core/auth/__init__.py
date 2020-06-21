@@ -1,5 +1,5 @@
 from epyk.core.js.packages import packageImport
-
+from epyk.core.js.fncs import JsFncs
 
 class Auth(object):
 
@@ -8,7 +8,7 @@ class Auth(object):
         self._report = report
 
     @packageImport('google-platform')
-    def google_sign_in(self, client_id, scopes=['profile', 'email'], insert_button=False, debug=False):
+    def google_sign_in(self, client_id, scopes=['profile', 'email'], insert_button=True, debug=False):
         """
         Description:
         -------------
@@ -17,7 +17,7 @@ class Auth(object):
 
         Related Pages:
 
-            https://developers.google.com/identity/sign-in/web/sign-in
+      https://developers.google.com/identity/sign-in/web/sign-in
 
         :param client_id: the google webapp client id defined here: https://console.developers.google.com/apis/credentials
         :param insert_button: choose whether the button will be inserted when this function is called or not
@@ -42,4 +42,44 @@ class Auth(object):
         self._report.js.registerFunction('onSignIn', fnc_list, ['googleUser'])
         return g_button
 
+    def facebook_sign_in(self, client_id, scopes=['public_profile', 'email'], insert_button=True, graphVersion='v7.0', type='login_with', debug=False):
+        """
 
+        :param client_id:
+        :param insert_button:
+        :param graphVersion:
+        :param type:
+        :param debug:
+        :return:
+        """
+        accepted_types = ('login_with', 'continue_with')
+
+        if type not in accepted_types:
+            raise Exception('Specified type: %s not in accepted values. Accepted values are as follows: %s' % (type, ', '.join(accepted_types)))
+
+        headers = self._report.headers
+        headers.addScripts("https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v%s&appID=%s" % (graphVersion, client_id))
+        returnFbResponse = '''function statusChangeCallback(response) {
+                                return response;
+                                }
+        '''
+        jsCheckLogin = '''function checkLoginState() {               
+                            FB.getLoginStatus(function(response) {   
+                              return response;
+                            });
+                          }'''
+        jsInitFnc = '''window.fbAsyncInit = function() {FB.init({
+                        appId: '%s',
+                        cookie: true,
+                        xfbml: true,
+                        version: '%s'
+                        });
+                    };''' % (client_id, graphVersion)
+
+        self._report.js.onReady([returnFbResponse, jsCheckLogin, jsInitFnc])
+        fb_button = self._report.ui.div()
+        fb_button.style.no_class()
+        fb_button.style.clear_style()
+        fb_button.style.add_classes.external('fb-login-button')
+        fb_button.attr.update({'data-size': 'large', 'data-button-type': type, 'data-layout': 'default', 'data-auto-logout-link': 'true',
+                               'data-use-continue-as': 'false', 'data-width': '', 'onlogin': "checkLoginState();", 'scopes': ','.join(scopes)})

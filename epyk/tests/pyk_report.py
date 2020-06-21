@@ -3,7 +3,7 @@ from epyk.core.py import Pyk
 rptObj = Report()
 
 
-button = rptObj.ui.buttons.button('Contact Sales')
-imp = rptObj.ui.buttons.important('Get Started for Free')
+button = rptObj.ui.buttons.button('This is button')
+imp = rptObj.ui.buttons.important('This is an important button')
 
 Pyk.exports({'button': button, 'imp': imp})

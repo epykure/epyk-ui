@@ -29,7 +29,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_stoppropagation.asp
+      https://www.w3schools.com/jsref/event_stoppropagation.asp
 
     :return: The Python Dom object
     """
@@ -46,7 +46,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onblur.asp
+      https://www.w3schools.com/jsref/event_onblur.asp
 
     Attributes:
     ----------
@@ -68,7 +68,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onclick.asp
+      https://www.w3schools.com/jsref/event_onclick.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -88,7 +88,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onchange.asp
+      https://www.w3schools.com/jsref/event_onchange.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -105,7 +105,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_ondblclick.asp
+      https://www.w3schools.com/jsref/event_ondblclick.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -122,7 +122,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onfocusin.asp
+      https://www.w3schools.com/jsref/event_onfocusin.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -139,7 +139,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onfocusin.asp
+      https://www.w3schools.com/jsref/event_onfocusin.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -154,7 +154,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onfocusout.asp
+      https://www.w3schools.com/jsref/event_onfocusout.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -169,7 +169,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onkeydown.asp
+      https://www.w3schools.com/jsref/event_onkeydown.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -184,7 +184,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onkeypress.asp
+      https://www.w3schools.com/jsref/event_onkeypress.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -199,7 +199,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onkeyup.asp
+      https://www.w3schools.com/jsref/event_onkeyup.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -214,7 +214,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onmousedown.asp
+      https://www.w3schools.com/jsref/event_onmousedown.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -229,7 +229,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onmouseenter.asp
+      https://www.w3schools.com/jsref/event_onmouseenter.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -247,7 +247,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onmouseleave.asp
+      https://www.w3schools.com/jsref/event_onmouseleave.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -262,7 +262,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onmouseover.asp
+      https://www.w3schools.com/jsref/event_onmouseover.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -277,7 +277,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onmouseup.asp
+      https://www.w3schools.com/jsref/event_onmouseup.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -292,7 +292,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onmouseout.asp
+      https://www.w3schools.com/jsref/event_onmouseout.asp
 
     :param jsFncs: An array of Js functions or string. Or a string with the Js
 
@@ -307,7 +307,7 @@ class JsDomEvents(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_html_focus.asp
+      https://www.w3schools.com/jsref/met_html_focus.asp
     https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
 
     :param event: The event name
@@ -362,7 +362,7 @@ class JsDomsTransforms(object):
 
       Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
 
     Attributes:
     ----------
@@ -385,7 +385,7 @@ class JsDomsTransforms(object):
 
       Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX
     https://www.w3schools.com/jsref/prop_style_transform.asp
 
     Attributes:
@@ -403,7 +403,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_style_transform.asp
+      https://www.w3schools.com/jsref/prop_style_transform.asp
 
     Attributes:
     ----------
@@ -420,7 +420,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_style_transform.asp
+      https://www.w3schools.com/jsref/prop_style_transform.asp
 
     Attributes:
     ----------
@@ -440,7 +440,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/perspective
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/perspective
 
     Attributes:
     ----------
@@ -458,7 +458,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale
 
     Attributes:
     ----------
@@ -476,7 +476,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleX
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleX
 
     Attributes:
     ----------
@@ -492,7 +492,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleY
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleY
 
     Attributes:
     ----------
@@ -508,7 +508,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skew
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skew
 
     Attributes:
     ----------
@@ -532,7 +532,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewX
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewX
 
     Attributes:
     ----------
@@ -550,7 +550,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewY
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewY
 
     Attributes:
     ----------
@@ -572,7 +572,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate
 
     Attributes:
     ----------
@@ -590,7 +590,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate3d
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate3d
 
     Attributes:
     ----------
@@ -611,7 +611,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX
 
     Attributes:
     ----------
@@ -629,7 +629,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateY
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateY
 
     Attributes:
     ----------
@@ -646,7 +646,7 @@ class JsDomsTransforms(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateZ
+      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateZ
 
     Attributes:
     ----------
@@ -669,7 +669,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_date.asp
+      https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     Attributes:
     ----------
@@ -702,7 +702,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_document_queryselectorall.asp
+      https://www.w3schools.com/jsref/met_document_queryselectorall.asp
 
     Attributes:
     ----------
@@ -735,7 +735,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_style_transform.asp
+      https://www.w3schools.com/jsref/prop_style_transform.asp
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function
     """
     return JsDomsTransforms(self._report, self.varId)
@@ -766,7 +766,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_addeventlistener.asp
+      https://www.w3schools.com/jsref/met_element_addeventlistener.asp
 
     Attributes:
     ----------
@@ -799,7 +799,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jquery/event_ready.asp
+      https://www.w3schools.com/jquery/event_ready.asp
 
     Attributes:
     ----------
@@ -819,7 +819,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_node_innertext.asp
+      https://www.w3schools.com/jsref/prop_node_innertext.asp
 
     Attributes:
     ----------
@@ -893,7 +893,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_html_innerhtml.asp
+      https://www.w3schools.com/jsref/prop_html_innerhtml.asp
 
     Attributes:
     ----------
@@ -931,7 +931,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_setattribute.asp
+      https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
     ----------
@@ -963,7 +963,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_setattribute.asp
+      https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
     ----------
@@ -987,7 +987,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_setattribute.asp
+      https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
     ----------
@@ -1019,7 +1019,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_setattribute.asp
+      https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
     ----------
@@ -1082,7 +1082,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/css3_pr_transition.asp
+      https://www.w3schools.com/cssref/css3_pr_transition.asp
 
     Attributes:
     ----------
@@ -1127,7 +1127,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/css3_pr_transition.asp
+      https://www.w3schools.com/cssref/css3_pr_transition.asp
 
     Attributes:
     ----------
@@ -1177,7 +1177,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+      https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
     return self.css("display", "none")
 
@@ -1192,7 +1192,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+      https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
     self.css("display", display_value or self.display_value)
     if duration is not None:
@@ -1269,7 +1269,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight
+      https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight
     """
     return JsNumber.JsNumber("%s.clientHeight" % self.varId)
 
@@ -1326,7 +1326,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_node_firstchild.asp
+      https://www.w3schools.com/jsref/prop_node_firstchild.asp
 
     :return: A new JsDom python object
     """
@@ -1341,7 +1341,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_node_nextsibling.asp
+      https://www.w3schools.com/jsref/prop_node_nextsibling.asp
     """
     return JsDoms("%s.nextSibling" % self.varId)
 
@@ -1353,7 +1353,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_node_contains.asp
+      https://www.w3schools.com/jsref/met_node_contains.asp
 
     Attributes:
     ----------
@@ -1375,7 +1375,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_getattribute.asp
+      https://www.w3schools.com/jsref/met_element_getattribute.asp
 
     Attributes:
     ----------
@@ -1393,7 +1393,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_getattributenode.asp
+      https://www.w3schools.com/jsref/met_element_getattributenode.asp
 
     Attributes:
     ----------
@@ -1428,7 +1428,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_getboundingclientrect.asp
+      https://www.w3schools.com/jsref/met_element_getboundingclientrect.asp
     https://developer.mozilla.org/en-US/docs/Web/API/DOMRect
     """
     return JsNodeDomRect.JsDOMRect("%s.getBoundingClientRect()" % self.varId)
@@ -1446,7 +1446,7 @@ class JsDoms(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_node_haschildnodes.asp
+      https://www.w3schools.com/jsref/met_node_haschildnodes.asp
 
     :return: A Boolean, returns true if the node has child nodes, false otherwise
     """
@@ -1494,7 +1494,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_node_childnodes.asp
+      https://www.w3schools.com/jsref/prop_node_childnodes.asp
 
     :return: A NodeList object, representing a collection of nodes. The nodes in the returned collection are sorted as they appear in the source code
     """
@@ -1514,7 +1514,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_element_tagname.asp
+      https://www.w3schools.com/jsref/prop_element_tagname.asp
 
     :return: A String, representing the tag name of the element in uppercase
     """
@@ -1529,7 +1529,7 @@ Attributes:
 
     Related Pages:
 
-			https://developer.mozilla.org/fr/docs/Web/API/HTMLElement/offsetTop
+      https://developer.mozilla.org/fr/docs/Web/API/HTMLElement/offsetTop
     """
     return JsString.JsString("%s.offsetTop" % self.varId, isPyData=False)
 
@@ -1563,7 +1563,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_html_classname.asp
+      https://www.w3schools.com/jsref/prop_html_classname.asp
 
     Attributes:
     ----------
@@ -1591,7 +1591,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_node_clonenode.asp
+      https://www.w3schools.com/jsref/met_node_clonenode.asp
 
     Attributes:
     ----------
@@ -1613,7 +1613,7 @@ Attributes:
 
     Related Pages:
 
-			https://developer.mozilla.org/fr/docs/Web/API/ChildNode/remove
+      https://developer.mozilla.org/fr/docs/Web/API/ChildNode/remove
     """
     return JsFncs.JsFunction("%s.remove()" % self.varId)
 
@@ -1625,7 +1625,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_node_removechild.asp
+      https://www.w3schools.com/jsref/met_node_removechild.asp
 
     Attributes:
     ----------
@@ -1647,7 +1647,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_node_appendchild.asp
+      https://www.w3schools.com/jsref/met_node_appendchild.asp
 
     Attributes:
     ----------
@@ -1670,7 +1670,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_node_insertbefore.asp
+      https://www.w3schools.com/jsref/met_node_insertbefore.asp
 
     Attributes:
     ----------
@@ -1708,7 +1708,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_onclick.asp
+      https://www.w3schools.com/jsref/event_onclick.asp
 
     Attributes:
     ----------
@@ -1744,7 +1744,7 @@ Attributes:
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
+      https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
 
     Attributes:
     ----------
@@ -1802,7 +1802,7 @@ class JsDomsList(JsArray.JsArray):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_setattribute.asp
+      https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
     ----------
@@ -1852,7 +1852,7 @@ class JsDomsList(JsArray.JsArray):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_setattribute.asp
+      https://www.w3schools.com/jsref/met_element_setattribute.asp
 
     Attributes:
     ----------

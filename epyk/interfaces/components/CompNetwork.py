@@ -27,7 +27,7 @@ class Network(object):
 
     Related Pages:
 
-        https://leaverou.github.io/bubbly/
+      https://leaverou.github.io/bubbly/
     http://manos.malihu.gr/jquery-custom-content-scroller/
 
     Attributes:
@@ -102,7 +102,7 @@ class Network(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.0/components/alerts/
+      https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
     ----------
@@ -141,7 +141,7 @@ class Network(object):
 
     Related Pages:
 
-        https://getbootstrap.com/docs/4.0/components/alerts/
+      https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
     ----------
@@ -172,7 +172,7 @@ class Network(object):
 
     Related Pages:
 
-        https://getbootstrap.com/docs/4.0/components/alerts/
+      https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
     ----------
@@ -203,7 +203,7 @@ class Network(object):
 
     Related Pages:
 
-        https://getbootstrap.com/docs/4.0/components/alerts/
+      https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
     ----------
@@ -234,7 +234,7 @@ class Network(object):
 
     Related Pages:
 
-        https://getbootstrap.com/docs/4.0/components/alerts/
+      https://getbootstrap.com/docs/4.0/components/alerts/
 
     Attributes:
     ----------

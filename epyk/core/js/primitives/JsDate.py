@@ -25,7 +25,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_date.asp
+      https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     Attributes:
     ----------
@@ -59,7 +59,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_date.asp
+      https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     Attributes:
     ----------
@@ -100,7 +100,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_now.asp
+      https://www.w3schools.com/jsref/jsref_now.asp
 
     :return: A Number, representing the number of milliseconds since midnight January 1, 1970
     """
@@ -121,7 +121,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_toisostring.asp
+      https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A Python / Javascript object
     """
@@ -136,7 +136,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_getdate.asp
+      https://www.w3schools.com/jsref/jsref_getdate.asp
 
     :return:
     """
@@ -155,7 +155,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_getday.asp
+      https://www.w3schools.com/jsref/jsref_getday.asp
 
     :return:
     """
@@ -175,7 +175,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_getfullyear.asp
+      https://www.w3schools.com/jsref/jsref_getfullyear.asp
 
     :return: A Number, representing the year of the specified date
     """
@@ -196,7 +196,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_gethours.asp
+      https://www.w3schools.com/jsref/jsref_gethours.asp
 
     :return: A Number, from 0 to 23, representing the hour
     """
@@ -217,7 +217,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_getmilliseconds.asp
+      https://www.w3schools.com/jsref/jsref_getmilliseconds.asp
 
     :return: A Number, from 0 to 999, representing milliseconds
     """
@@ -238,7 +238,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_getmonth.asp
+      https://www.w3schools.com/jsref/jsref_getmonth.asp
 
     :return: A Number, from 0 to 11, representing the month
     """
@@ -258,7 +258,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_getmonth.asp
+      https://www.w3schools.com/jsref/jsref_getmonth.asp
 
     :return: A Number, from 0 to 11, representing the month
     """
@@ -278,7 +278,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_setdate.asp
+      https://www.w3schools.com/jsref/jsref_setdate.asp
 
     Attributes:
     ----------
@@ -302,7 +302,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_setmonth.asp
+      https://www.w3schools.com/jsref/jsref_setmonth.asp
 
     Attributes:
     ----------
@@ -329,7 +329,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_todatestring.asp
+      https://www.w3schools.com/jsref/jsref_todatestring.asp
 
     :return: A String, representing the date as a string
     """
@@ -350,7 +350,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_toisostring.asp
+      https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A String, representing the date and time using the ISO standard format
     """
@@ -371,7 +371,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_toisostring.asp
+      https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A Python / Javascript object
     """
@@ -391,7 +391,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_toisostring.asp
+      https://www.w3schools.com/jsref/jsref_toisostring.asp
 
     :return: A Python / Javascript object
     """
@@ -450,7 +450,7 @@ class JsDate(JsObject.JsObject):
 
     Related Pages:
 
-			https://stackoverflow.com/questions/563406/add-days-to-javascript-date
+      https://stackoverflow.com/questions/563406/add-days-to-javascript-date
 
     Attributes:
     ----------

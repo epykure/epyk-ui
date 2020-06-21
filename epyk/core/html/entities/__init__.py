@@ -35,7 +35,7 @@ class Entities(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_html_entities_4.asp
+      https://www.w3schools.com/charsets/ref_html_entities_4.asp
     """
     return EntHtml4
 
@@ -45,7 +45,7 @@ class Entities(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_html_entities_a.asp
+      https://www.w3schools.com/charsets/ref_html_entities_a.asp
     """
     return EntHtml5_A
 
@@ -55,7 +55,7 @@ class Entities(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_html_entities_b.asp
+      https://www.w3schools.com/charsets/ref_html_entities_b.asp
     """
     return EntHtml5_B
 
@@ -65,7 +65,7 @@ class Entities(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_html_entities_c.asp
+      https://www.w3schools.com/charsets/ref_html_entities_c.asp
     """
     return EntHtml5_C
 
@@ -75,7 +75,7 @@ class Entities(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_html_entities_d.asp
+      https://www.w3schools.com/charsets/ref_html_entities_d.asp
     """
     return EntHtml5_D
 

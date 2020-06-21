@@ -20,7 +20,7 @@ class Timepicker(JsPackage):
 
     Related Pages:
 
-			https://timepicker.co/options/
+      https://timepicker.co/options/
     """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
@@ -35,7 +35,7 @@ class Timepicker(JsPackage):
 
     Related Pages:
 
-			https://stackoverflow.com/questions/32378842/setting-the-hour-and-minute-of-timepicker-dynamically
+      https://stackoverflow.com/questions/32378842/setting-the-hour-and-minute-of-timepicker-dynamically
 
     Attributes:
     ----------

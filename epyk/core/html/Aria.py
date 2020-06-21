@@ -54,7 +54,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-atomic
+      https://www.w3.org/TR/wai-aria-1.1/#aria-atomic
     """
     return self.htmlObj.attr.get("aria-atomic", False)
 
@@ -74,7 +74,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-autocomplete
+      https://www.w3.org/TR/wai-aria-1.1/#aria-autocomplete
     """
     return self.htmlObj.attr.get("aria-autocomplete", False)
 
@@ -96,7 +96,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-busy
+      https://www.w3.org/TR/wai-aria-1.1/#aria-busy
 
     :return:
     """
@@ -117,7 +117,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-checked
+      https://www.w3.org/TR/wai-aria-1.1/#aria-checked
 
     :return:
     """
@@ -139,7 +139,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-colcount
+      https://www.w3.org/TR/wai-aria-1.1/#aria-colcount
     """
     return self.htmlObj.attr.get("aria-colcount", 0)
 
@@ -159,7 +159,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-colindex
+      https://www.w3.org/TR/wai-aria-1.1/#aria-colindex
     """
     return self.htmlObj.attr.get("aria-colindex", 0)
 
@@ -179,7 +179,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-colspan
+      https://www.w3.org/TR/wai-aria-1.1/#aria-colspan
     """
     return self.htmlObj.attr.get("aria-colspan", 0)
 
@@ -196,7 +196,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-controls
+      https://www.w3.org/TR/wai-aria-1.1/#aria-controls
     """
     return self.htmlObj.attr.get("aria-controls")
 
@@ -216,7 +216,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-current
+      https://www.w3.org/TR/wai-aria-1.1/#aria-current
     """
     return self.htmlObj.attr.get("aria-current")
 
@@ -235,7 +235,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-describedby
+      https://www.w3.org/TR/wai-aria-1.1/#aria-describedby
     """
     return self.htmlObj.attr.get("aria-describedby")
 
@@ -254,7 +254,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-details
+      https://www.w3.org/TR/wai-aria-1.1/#aria-details
     """
     return self.htmlObj.attr.get("aria-details")
 
@@ -275,7 +275,7 @@ class Aria(object):
 
     Related Pages:
 
-			https://www.w3.org/TR/wai-aria-1.1/#aria-disabled
+      https://www.w3.org/TR/wai-aria-1.1/#aria-disabled
     """
     return self.htmlObj.attr.get("aria-disabled", False)
 

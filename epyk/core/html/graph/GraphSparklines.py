@@ -70,7 +70,7 @@ class Sparklines(Html.Html):
 
     Related Pages:
 
-			https://omnipotent.net/jquery.sparkline/#interactive
+      https://omnipotent.net/jquery.sparkline/#interactive
 
     Attributes:
     ----------

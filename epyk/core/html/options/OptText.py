@@ -29,7 +29,7 @@ class OptionsText(Options):
 
     Related Pages:
 
-			https://github.com/showdownjs/showdown
+      https://github.com/showdownjs/showdown
     """
     return self._config_get(False)
 
@@ -53,7 +53,7 @@ class OptionsText(Options):
 
     Related Pages:
 
-			https://github.com/showdownjs/showdown
+      https://github.com/showdownjs/showdown
     """
     return self._config_get(False)
 

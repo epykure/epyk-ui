@@ -19,7 +19,7 @@ class Dc(object):
 
     Related Pages:
 
-			https://jsfiddle.net/djmartin_umich/9VJHe/
+      https://jsfiddle.net/djmartin_umich/9VJHe/
       http://bl.ocks.org/KatiRG/cccd23dd7a830da0de5c
 
     Attributes:

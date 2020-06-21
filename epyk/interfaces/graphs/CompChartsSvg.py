@@ -21,7 +21,7 @@ class SVG(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/SVG
+      https://developer.mozilla.org/en-US/docs/Web/SVG
       https://www.w3schools.com/graphics/svg_intro.asp
 
     Attributes:
@@ -46,7 +46,7 @@ class SVG(object):
 
     Related Pages:
 
-			https://www.w3schools.com/graphics/svg_line.asp
+      https://www.w3schools.com/graphics/svg_line.asp
 
     Attributes:
     ----------
@@ -146,7 +146,7 @@ class SVG(object):
 
     Related Pages:
 
-			https://www.w3schools.com/graphics/svg_ellipse.asp
+      https://www.w3schools.com/graphics/svg_ellipse.asp
 
     Attributes:
     ----------
@@ -173,7 +173,7 @@ class SVG(object):
 
     Related Pages:
 
-			https://www.w3schools.com/graphics/svg_polyline.asp
+      https://www.w3schools.com/graphics/svg_polyline.asp
 
     Attributes:
     ----------
@@ -197,7 +197,7 @@ class SVG(object):
 
     Related Pages:
 
-			https://www.w3schools.com/graphics/tryit.asp?filename=trysvg_polygon
+      https://www.w3schools.com/graphics/tryit.asp?filename=trysvg_polygon
 
     Attributes:
     ----------
@@ -221,7 +221,7 @@ class SVG(object):
 
     Related Pages:
 
-			https://www.w3schools.com/graphics/svg_polyline.asp
+      https://www.w3schools.com/graphics/svg_polyline.asp
 
     Attributes:
     ----------
