@@ -84,6 +84,11 @@ class HtmlFooter(Html.Html):
       for c in components:
         self.__add__(c)
 
+    # Set the colors
+    self.style.css.background_color = report.theme.greys[0]
+    self.style.css.border_top = "1px solid %s" % report.theme.greys[4]
+    self.style.css.color = report.theme.greys[6]
+
   @property
   def sections(self):
     if not self.__col_lst:

@@ -504,7 +504,7 @@ JS_IMPORTS = {
   'jqueryui': {
     'req': [{'alias': 'jquery'}],
     'website': 'http://jquery.com/',
-    'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jqueryui'},
+    'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist'},
     'modules': [
       {'script': 'jquery-ui.min.js', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 

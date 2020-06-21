@@ -365,7 +365,7 @@ class Navigation(object):
     div.style.css.padding = "5px 15px"
     return div
 
-  def footer(self, components=None, width=(100, '%'), height=('120', 'px'), profile=False):
+  def footer(self, components=None, width=(100, '%'), height=('80', 'px'), profile=False):
     """
     Description:
     ------------
@@ -384,7 +384,6 @@ class Navigation(object):
     :param profile: get profiling info
     """
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
-    footer.style.css.color = self.context.rptObj.theme.greys[4]
     return footer
 
   def side(self, components=None, anchor=None, size=262, position='right', profile=False):
