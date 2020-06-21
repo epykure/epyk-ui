@@ -1,8 +1,6 @@
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
-from epyk.core.data import primitives
-from epyk.core.data import datamap
 
 
 class SocketState(object):
@@ -221,6 +219,9 @@ class WebSocket(object):
     :param components: List. The list of HTML components (it will get the dom.content automatically)
     :param attrs: Dictionary. Attach some static attributes to the request
     """
+    from epyk.core.data import primitives
+    from epyk.core.data import datamap
+
     dftl_attrs = {"type": 'message', 'date': primitives.date()}
     if attrs is not None:
       dftl_attrs.update(attrs)
