@@ -57,8 +57,15 @@ class Auth(object):
         if type not in accepted_types:
             raise Exception('Specified type: %s not in accepted values. Accepted values are as follows: %s' % (type, ', '.join(accepted_types)))
 
-        headers = self._report.headers
-        headers.addScripts("https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v%s&appID=%s" % (graphVersion, client_id))
+        getFbSdk = '''(function(d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id)) return;
+                            js = d.createElement(s); js.id = id;
+                            js.src = "https://connect.facebook.net/en_US/sdk.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                          }(document, 'script', 'facebook-jssdk'));
+                            '''
+
         returnFbResponse = '''function statusChangeCallback(response) {
                                 return response;
                                 }
@@ -76,7 +83,7 @@ class Auth(object):
                         });
                     };''' % (client_id, graphVersion)
 
-        self._report.js.onReady([returnFbResponse, jsCheckLogin, jsInitFnc])
+        self._report.js.onReady([getFbSdk, returnFbResponse, jsCheckLogin, jsInitFnc])
         fb_button = self._report.ui.div()
         fb_button.style.no_class()
         fb_button.style.clear_style()
