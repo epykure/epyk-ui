@@ -304,7 +304,7 @@ class JsRegisteredFunctions(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_function_definition.asp
+      https://www.w3schools.com/js/js_function_definition.asp
 
     :param jsFnc:
     :param pmts:
@@ -334,7 +334,7 @@ class JsRegisteredFunctions(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_function_definition.asp
+      https://www.w3schools.com/js/js_function_definition.asp
 
     :param fnc_name:
     :param jsFnc:

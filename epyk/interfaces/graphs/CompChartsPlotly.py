@@ -14,7 +14,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plot.ly/javascript/
+      https://plot.ly/javascript/
     https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
     Attributes:
@@ -44,7 +44,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/bar-charts/
+      https://plotly.com/javascript/bar-charts/
 
     Attributes:
     ----------
@@ -72,7 +72,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/bar-charts/
+      https://plotly.com/javascript/bar-charts/
 
     Attributes:
     ----------
@@ -102,7 +102,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/text-and-annotations/
+      https://plotly.com/javascript/text-and-annotations/
 
     Attributes:
     ----------
@@ -135,7 +135,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plot.ly/javascript/
+      https://plot.ly/javascript/
     https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
     Attributes:
@@ -164,7 +164,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/line-and-scatter/
+      https://plotly.com/javascript/line-and-scatter/
 
     Attributes:
     ----------
@@ -190,7 +190,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
+      https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
     https://plot.ly/javascript/
 
     :param record:
@@ -223,7 +223,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/pie-charts/
+      https://plotly.com/javascript/pie-charts/
 
     Attributes:
     ----------
@@ -253,7 +253,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/filled-area-plots/
+      https://plotly.com/javascript/filled-area-plots/
 
     Attributes:
     ----------
@@ -284,7 +284,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/bubble-charts/
+      https://plotly.com/javascript/bubble-charts/
 
     Attributes:
     ----------
@@ -312,7 +312,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/indicator/
+      https://plotly.com/javascript/indicator/
 
     Attributes:
     ----------
@@ -336,7 +336,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/indicator/
+      https://plotly.com/javascript/indicator/
 
     Attributes:
     ----------
@@ -366,7 +366,7 @@ class Plotly2D(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/gauge-charts/
+      https://plotly.com/javascript/gauge-charts/
 
     Attributes:
     ----------

@@ -17,7 +17,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/linechart
+      https://developers.google.com/chart/interactive/docs/gallery/linechart
 
     Attributes:
     ----------
@@ -75,7 +75,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/barchart
+      https://developers.google.com/chart/interactive/docs/gallery/barchart
 
     Attributes:
     ----------
@@ -104,7 +104,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/scatterchart
+      https://developers.google.com/chart/interactive/docs/gallery/scatterchart
 
     Attributes:
     ----------
@@ -136,7 +136,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/histogram
+      https://developers.google.com/chart/interactive/docs/gallery/histogram
 
     Attributes:
     ----------
@@ -163,7 +163,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/areachart
+      https://developers.google.com/chart/interactive/docs/gallery/areachart
 
     Attributes:
     ----------
@@ -193,7 +193,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/bubblechart
+      https://developers.google.com/chart/interactive/docs/gallery/bubblechart
 
     Attributes:
     ----------
@@ -220,7 +220,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/piechart
+      https://developers.google.com/chart/interactive/docs/gallery/piechart
 
     Attributes:
     ----------
@@ -246,7 +246,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/treemap
+      https://developers.google.com/chart/interactive/docs/gallery/treemap
 
     Attributes:
     ----------
@@ -274,7 +274,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/candlestickchart
+      https://developers.google.com/chart/interactive/docs/gallery/candlestickchart
 
     Attributes:
     ----------
@@ -302,7 +302,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/gauge
+      https://developers.google.com/chart/interactive/docs/gallery/gauge
 
     Attributes:
     ----------
@@ -333,7 +333,7 @@ class ChartGoogle(object):
 
     Related Pages:
 
-			https://developers.google.com/chart/interactive/docs/gallery/geochart
+      https://developers.google.com/chart/interactive/docs/gallery/geochart
 
     Attributes:
     ----------

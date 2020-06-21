@@ -40,7 +40,7 @@ class Chart(Html.Html):
 
     Related Pages:
 
-			https://c3js.org/reference.html#api-show
+      https://c3js.org/reference.html#api-show
 
     :return: A Javascript object
 
@@ -58,7 +58,7 @@ class Chart(Html.Html):
 
     Related Pages:
 
-			https://c3js.org/reference.html#data-onclick
+      https://c3js.org/reference.html#data-onclick
 
 		Attributes:
     ----------
@@ -171,7 +171,7 @@ class C3Selection(DataClass):
 
     Related Pages:
 
-			https://c3js.org/reference.html#data-selection-enabled
+      https://c3js.org/reference.html#data-selection-enabled
     """
     return self._attrs["enabled"]
 
@@ -279,7 +279,7 @@ class JsData(DataClass):
 
     Related Pages:
 
-			https://c3js.org/reference.html#data-types
+      https://c3js.org/reference.html#data-types
     """
     return self._attrs["types"]
 
@@ -367,7 +367,7 @@ class JsScales(DataClass):
 
     Related Pages:
 
-			https://c3js.org/reference.html#axis-y2-show
+      https://c3js.org/reference.html#axis-y2-show
 
     :rtype: C3Axis
     """

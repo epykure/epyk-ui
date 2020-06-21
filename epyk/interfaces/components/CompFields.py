@@ -35,7 +35,7 @@ class Fields(object):
 
     Related Pages:
 
-			https://jqueryui.com/datepicker/
+      https://jqueryui.com/datepicker/
 
     Attributes:
     ----------
@@ -71,7 +71,7 @@ class Fields(object):
 
     Related Pages:
 
-			https://jqueryui.com/datepicker/
+      https://jqueryui.com/datepicker/
 
     Attributes:
     ----------
@@ -107,7 +107,7 @@ class Fields(object):
 
     Related Pages:
 
-			https://jqueryui.com/datepicker/
+      https://jqueryui.com/datepicker/
 
     Attributes:
     ----------
@@ -145,7 +145,7 @@ class Fields(object):
 
     Related Pages:
 
-			https://github.com/jonthornton/jquery-timepicker
+      https://github.com/jonthornton/jquery-timepicker
 
     Attributes:
     ----------
@@ -179,7 +179,7 @@ class Fields(object):
 
     Related Pages:
 
-			https://github.com/jonthornton/jquery-timepicker
+      https://github.com/jonthornton/jquery-timepicker
 
     Attributes:
     ----------
@@ -442,7 +442,7 @@ class Fields(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_input_type_checkbox.asp
+      https://www.w3schools.com/tags/att_input_type_checkbox.asp
 
     Attributes:
     ----------
@@ -476,7 +476,7 @@ class Fields(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_input_type_radio.asp
+      https://www.w3schools.com/tags/att_input_type_radio.asp
 
     Attributes:
     ----------
@@ -516,7 +516,7 @@ class Fields(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_input_type_range.asp
+      https://www.w3schools.com/tags/att_input_type_range.asp
 
     Attributes:
     ----------

@@ -23,7 +23,7 @@ class Sortable(JsPackage):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
 
 		:rtype: OptSortable.OptionsSortable
     """
@@ -37,7 +37,7 @@ class Sortable(JsPackage):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
 
     Attributes:
     ----------
@@ -55,7 +55,7 @@ class Sortable(JsPackage):
 
     Related Pages:
 
-			https://github.com/SortableJS/toArray
+      https://github.com/SortableJS/toArray
     """
     return self.fnc_closure("toArray()")
 
@@ -67,7 +67,7 @@ class Sortable(JsPackage):
 
     Related Pages:
 
-			https://github.com/SortableJS/Sortable
+      https://github.com/SortableJS/Sortable
 
     Attributes:
     ----------
@@ -84,7 +84,7 @@ class Sortable(JsPackage):
 
     Related Pages:
 
-			https://github.com/SortableJS/save
+      https://github.com/SortableJS/save
     """
     return self.fnc_closure("destroy()")
 
@@ -96,7 +96,7 @@ class Sortable(JsPackage):
 
     Related Pages:
 
-			https://github.com/SortableJS/destroy
+      https://github.com/SortableJS/destroy
     """
     return self.fnc_closure("destroy()")
 

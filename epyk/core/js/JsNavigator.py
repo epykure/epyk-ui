@@ -19,7 +19,7 @@ class JsGeolocation(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/fr/docs/Web/API/Geolocation/getCurrentPosition
+      https://developer.mozilla.org/fr/docs/Web/API/Geolocation/getCurrentPosition
     https://www.w3schools.com/html/html5_geolocation.asp
     https://developer.kaiostech.com/api/geolocation/getposition
 
@@ -41,7 +41,7 @@ class JsGeolocation(object):
 
     Related Pages:
 
-			https://www.w3schools.com/html/html5_geolocation.asp
+      https://www.w3schools.com/html/html5_geolocation.asp
 
     :param callbackFnc: A callback function that takes a Position object as an input parameter.
     :param watchId: The ID number returned by the Geolocation.watchPosition() method when installing the handler you wish to remove.
@@ -56,7 +56,7 @@ class JsGeolocation(object):
 
     Related Pages:
 
-			https://www.w3schools.com/html/html5_geolocation.asp
+      https://www.w3schools.com/html/html5_geolocation.asp
 
     :param watchId: The ID number returned by the Geolocation.watchPosition() method when installing the handler you wish to remove.
     """
@@ -76,7 +76,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://w3c.github.io/geolocation-api/#navi-geo
+      https://w3c.github.io/geolocation-api/#navi-geo
     https://www.w3schools.com/html/html5_geolocation.asp
     """
     return JsGeolocation(self._rptObj)
@@ -88,7 +88,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_nav_language.asp
+      https://www.w3schools.com/jsref/prop_nav_language.asp
 
     :return:
     """
@@ -102,7 +102,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_nav_language.asp
+      https://www.w3schools.com/jsref/prop_nav_language.asp
 
     :return:
     """
@@ -115,7 +115,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_window_navigator.asp
+      https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.appCodeName", isPyData=False)
 
@@ -126,7 +126,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_window_navigator.asp
+      https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.appName", isPyData=False)
 
@@ -137,7 +137,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_window_navigator.asp
+      https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.product", isPyData=False)
 
@@ -148,7 +148,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_window_navigator.asp
+      https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.appVersion", isPyData=False)
 
@@ -165,7 +165,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_window_navigator.asp
+      https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.onLine", isPyData=False)
 
@@ -176,7 +176,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_window_navigator.asp
+      https://www.w3schools.com/js/js_window_navigator.asp
     """
     return JsString.JsString("navigator.platform", isPyData=False)
 
@@ -187,7 +187,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_window_navigator.asp
+      https://www.w3schools.com/js/js_window_navigator.asp
 
     """
     return JsString.JsString("navigator.userAgent", isPyData=False)
@@ -198,7 +198,7 @@ class JsNavigator(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_nav_javaenabled.asp
+      https://www.w3schools.com/jsref/met_nav_javaenabled.asp
 
     :return:
     """

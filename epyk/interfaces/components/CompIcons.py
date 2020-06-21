@@ -778,7 +778,7 @@ Attributes:
 
     Related Pages:
 
-        https://getbootstrap.com/docs/4.0/components/badge/
+      https://getbootstrap.com/docs/4.0/components/badge/
 
     Attributes:
     ----------

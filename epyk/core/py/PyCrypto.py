@@ -98,7 +98,7 @@ class PyCrypto(object):
 
     Related Pages:
 
-			https://docs.python.org/2/library/uuid.html
+      https://docs.python.org/2/library/uuid.html
 
     :return: A unique ID (based on the timestamp
     """
@@ -114,7 +114,7 @@ class PyCrypto(object):
 
     Related Pages:
 
-			https://cryptography.io/en/latest/fernet/
+      https://cryptography.io/en/latest/fernet/
     """
     from cryptography.fernet import Fernet
     return Fernet.generate_key()
@@ -128,7 +128,7 @@ class PyCrypto(object):
 
     Related Pages:
 
-			https://cryptography.io/en/latest/hazmat/primitives/key-derivation-functions/
+      https://cryptography.io/en/latest/hazmat/primitives/key-derivation-functions/
 
     :param text: The text to be encrypted
     :param salt: Optional. The salt used for the encryption (default None)

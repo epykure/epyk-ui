@@ -22,7 +22,7 @@ def selector(component=None):
 
   Related Pages:
 
-			https://www.w3schools.com/cssref/css_selectors.asp
+      https://www.w3schools.com/cssref/css_selectors.asp
 
   Attributes:
   ----------
@@ -50,7 +50,7 @@ def querySelectorAll(selector):
 
   Related Pages:
 
-			https://www.w3schools.com/jsref/met_document_queryselectorall.asp
+      https://www.w3schools.com/jsref/met_document_queryselectorall.asp
 
   Attributes:
   ----------
@@ -67,7 +67,7 @@ def querySelector(selector):
 
   Related Pages:
 
-			https://www.w3schools.com/jsref/met_document_queryselector.asp
+      https://www.w3schools.com/jsref/met_document_queryselector.asp
 
   Attributes:
   ----------
@@ -97,7 +97,7 @@ def comment(value):
 
   Related Pages:
 
-			https://www.w3schools.com/js/js_comments.asp
+      https://www.w3schools.com/js/js_comments.asp
 
   Attributes:
   ----------

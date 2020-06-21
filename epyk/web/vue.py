@@ -27,7 +27,7 @@ class VueCli(object):
 
     Related Pages:
 
-			https://cli.vuejs.org/guide/installation.html
+      https://cli.vuejs.org/guide/installation.html
 
     """
     subprocess.run('vue --version', shell=True, cwd=self._vue_app_path)
@@ -40,7 +40,7 @@ class VueCli(object):
 
     Related Pages:
 
-			https://cli.vuejs.org/guide/creating-a-project.html
+      https://cli.vuejs.org/guide/creating-a-project.html
 
     Attributes:
     ----------
@@ -59,7 +59,7 @@ class VueCli(object):
 
     Related Pages:
 
-			https://cli.vuejs.org/guide/creating-a-project.html#vue-create
+      https://cli.vuejs.org/guide/creating-a-project.html#vue-create
     """
     subprocess.run('vue ui', shell=True, cwd=self._vue_app_path)
 

@@ -29,7 +29,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https//www.w3schools.com/js/js_type_conversion.asp
+      https//www.w3schools.com/js/js_type_conversion.asp
 
     Attributes:
     ----------
@@ -60,7 +60,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_date.asp
+      https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     :param data: Optional, The object data
     :param varName: Optional, The object variable name
@@ -84,7 +84,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
 
     :param report: The internal report object
 
@@ -103,7 +103,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_date.asp
+      https://www.w3schools.com/jsref/jsref_obj_date.asp
 
     :param varName: The Javascript object reference
     :param report: The internal report object
@@ -299,7 +299,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
+      https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen
 
     :return: A Python Javascript Boolean
@@ -319,7 +319,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
+      https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
 
     :return: The object that was passed to the function
@@ -340,7 +340,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
+      https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
 
     :return: A Javascript Boolean
@@ -356,7 +356,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
 
     :param obj: The object on which to define the property.
     :param prop: The name or Symbol of the property to be defined or modified.
@@ -372,7 +372,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames
 
     :param obj: The object whose enumerable and non-enumerable properties are to be returned.
 
@@ -389,7 +389,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
+      https://medium.com/@wlodarczyk_j/object-freeze-vs-object-seal-ba6d7553a436
     https://www.w3schools.com/Js/js_object_es5.asp
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal
 
@@ -408,7 +408,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 
     :param target: The target object.
     :param sources: The source object(s).
@@ -431,7 +431,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 
     :param proto: The object which should be the prototype of the newly-created object.
     :param propertiesObject: Optional. If specified and not undefined, an object whose enumerable own properties (that is, those properties defined upon itself and not enumerable properties along its prototype chain) specify property descriptors to be added to the newly-created object, with the corresponding property names.
@@ -450,7 +450,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_entries.asp
+      https://www.w3schools.com/jsref/jsref_entries.asp
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
 
     :return: A new Array, containing the selected elements
@@ -467,7 +467,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_objects.asp
+      https://www.w3schools.com/js/js_objects.asp
     https://www.w3schools.com/js/js_object_es5.asp
 
     :param key: The key to add to the object
@@ -498,7 +498,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_object_es5.asp
+      https://www.w3schools.com/js/js_object_es5.asp
 
     :param key: The String used as key
 
@@ -515,7 +515,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
     https://www.w3schools.com/js/js_object_es5.asp
 
     :return: A new Array, containing the selected elements
@@ -549,7 +549,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://www.w3schools.com/JS/js_number_methods.asp
+      https://www.w3schools.com/JS/js_number_methods.asp
 
     :param explicit: Optional, default True. Parameter to force the String conversion on the Js side
 
@@ -571,7 +571,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_isarray.asp
+      https://www.w3schools.com/jsref/jsref_isarray.asp
 
     :return: A Javascript Boolean
     """
@@ -649,7 +649,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://underscorejs.org/#clone
+      https://underscorejs.org/#clone
 
     Attributes:
     ----------
@@ -693,7 +693,7 @@ class JsObject(object):
 
     Related Pages:
 
-			https://underscorejs.org/#pick
+      https://underscorejs.org/#pick
 
     Attributes:
     ----------

@@ -42,7 +42,7 @@ class Meta(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_meta.asp
+      https://www.w3schools.com/tags/tag_meta.asp
 
     Attributes:
     ----------
@@ -63,7 +63,7 @@ class Meta(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_meta.asp
+      https://www.w3schools.com/tags/tag_meta.asp
 
     Attributes:
     ----------
@@ -105,7 +105,7 @@ class Meta(object):
 
     Related Pages:
 
-			https://www.w3schools.com/html/html_head.asp
+      https://www.w3schools.com/html/html_head.asp
 
     Attributes:
     ----------
@@ -128,7 +128,7 @@ class Meta(object):
 
     Related Pages:
 
-			https://www.w3schools.com/html/html_head.asp
+      https://www.w3schools.com/html/html_head.asp
 
     Attributes:
     ----------
@@ -237,6 +237,19 @@ class Header(object):
       self.__meta = Meta()
     return self.__meta
 
+  def addScripts(self, src, attrs=None):
+    """
+
+    :param src:
+    :param attrs:
+    :return:
+    """
+    attr_list = []
+    if attrs is not None:
+      for k, v in attrs.items():
+        attr_list.append('%s="%s"' % (k, v))
+    self._scripts.append('<script src="%s" %s></script>' % (src, ' '.join(attr_list)))
+
   def title(self, value):
     """
     Description:
@@ -292,7 +305,7 @@ class Header(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_link.asp
+      https://www.w3schools.com/tags/tag_link.asp
 
     Attributes:
     ----------
@@ -308,5 +321,6 @@ class Header(object):
     if self._headers.get("title") is not None:
       result.append("<title>%s</title>" % self._headers.get("title"))
     result.append("<link rel='icon' href='%s' type='image/x-icon'/ >" % self._favicon_url)
+    result.extend(self._scripts)
     return "\n".join(result)
 

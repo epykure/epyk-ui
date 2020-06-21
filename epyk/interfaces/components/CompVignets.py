@@ -31,7 +31,7 @@ class Vignets(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/event_bubbles.asp
+      https://www.w3schools.com/jsref/event_bubbles.asp
 
     Attributes:
     ----------
@@ -89,7 +89,7 @@ class Vignets(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_input_type_number.asp
+      https://www.w3schools.com/tags/att_input_type_number.asp
 
     Attributes:
     ----------
@@ -124,7 +124,7 @@ class Vignets(object):
 
     Related Pages:
 
-			https://www.w3schools.com/htmL/html_blocks.asp
+      https://www.w3schools.com/htmL/html_blocks.asp
 
     Attributes:
     ----------

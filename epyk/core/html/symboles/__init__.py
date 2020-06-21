@@ -22,7 +22,7 @@ class Symboles(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_utf_geometric.asp
+      https://www.w3schools.com/charsets/ref_utf_geometric.asp
     """
     return SymbShapes
 
@@ -32,7 +32,7 @@ class Symboles(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_utf_punctuation.asp
+      https://www.w3schools.com/charsets/ref_utf_punctuation.asp
     """
     return SymbPunctuations
 
@@ -42,7 +42,7 @@ class Symboles(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_utf_math.asp
+      https://www.w3schools.com/charsets/ref_utf_math.asp
     """
     return SymbMaths
 
@@ -52,7 +52,7 @@ class Symboles(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_emoji.asp
+      https://www.w3schools.com/charsets/ref_emoji.asp
     """
     return SymbEmojis
 
@@ -62,7 +62,7 @@ class Symboles(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_utf_letterlike.asp
+      https://www.w3schools.com/charsets/ref_utf_letterlike.asp
     """
     return SymbLetters
 
@@ -72,7 +72,7 @@ class Symboles(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_utf_currency.asp
+      https://www.w3schools.com/charsets/ref_utf_currency.asp
     """
     return SymbCurrencies
 
@@ -82,7 +82,7 @@ class Symboles(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_emoji_smileys.asp
+      https://www.w3schools.com/charsets/ref_emoji_smileys.asp
     """
     return SymbSmileys
 
@@ -92,7 +92,7 @@ class Symboles(object):
 
     Related Pages:
 
-			https://www.w3schools.com/html/html_symbols.asp
+      https://www.w3schools.com/html/html_symbols.asp
     https://www.w3schools.com/charsets/ref_utf_math.asp
     """
     return SymbHtml
@@ -103,7 +103,7 @@ class Symboles(object):
 
     Related Pages:
 
-			https://www.w3schools.com/charsets/ref_utf_arrows.asp
+      https://www.w3schools.com/charsets/ref_utf_arrows.asp
     """
     return SymbArrows
 

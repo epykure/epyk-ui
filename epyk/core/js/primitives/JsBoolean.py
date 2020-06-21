@@ -34,7 +34,7 @@ class JsBoolean(JsObject.JsObject):
 
     Related Pages:
 
-			https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
+      https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
 
     :return: The Python Javascript Boolean Object
     """

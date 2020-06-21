@@ -84,7 +84,7 @@ class Inputs(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search
+      https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search
     https://css-tricks.com/webkit-html5-search-inputs/
 
     Attributes:
@@ -294,7 +294,7 @@ class Inputs(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_textarea.asp
+      https://www.w3schools.com/tags/tag_textarea.asp
 
     Attributes:
     ----------
@@ -328,7 +328,7 @@ class Inputs(object):
 
     Related Pages:
 
-			https://jqueryui.com/autocomplete/
+      https://jqueryui.com/autocomplete/
 
 
     Attributes:
@@ -450,7 +450,7 @@ class Inputs(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/att_input_type_radio.asp
+      https://www.w3schools.com/tags/att_input_type_radio.asp
 
     Attributes:
     ----------
@@ -538,7 +538,7 @@ class Inputs(object):
 
     Related Pages:
 
-			https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
+      https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
 
     Attributes:
     ----------

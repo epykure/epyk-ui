@@ -223,7 +223,7 @@ class C3(object):
 
     Related Pages:
 
-			https://c3js.org/samples/axes_rotated.html
+      https://c3js.org/samples/axes_rotated.html
 
     Attributes:
     ----------
@@ -248,7 +248,7 @@ class C3(object):
 
     Related Pages:
 
-			https://c3js.org/samples/axes_rotated.html
+      https://c3js.org/samples/axes_rotated.html
 
     Attributes:
     ----------
@@ -278,8 +278,8 @@ class C3(object):
 
     Related Pages:
 
-			https://c3js.org/samples/chart_pie.html
-			https://c3js.org/reference.html#pie-label-show
+      https://c3js.org/samples/chart_pie.html
+  https://c3js.org/reference.html#pie-label-show
 
     Attributes:
     ----------
@@ -337,7 +337,7 @@ class C3(object):
 
     Related Pages:
 
-        https://c3js.org/samples/chart_gauge.html
+      https://c3js.org/samples/chart_gauge.html
 
     Attributes:
     ----------

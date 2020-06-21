@@ -3,7 +3,7 @@ Base Class to create a database and perform SQL operations using the sqlalchemy 
 
 Related Pages:
 
-			https://www.pythonsheets.com/notes/python-sqlalchemy.html#join-joined-two-tables-via-join-statement
+      https://www.pythonsheets.com/notes/python-sqlalchemy.html#join-joined-two-tables-via-join-statement
 
 """
 
@@ -82,7 +82,7 @@ class SqlConn(object):
 
     Related Pages:
 
-			https://www.sqlalchemy.org/
+      https://www.sqlalchemy.org/
 
     :param filename: The database schema python file name
     :param reset: Boolean, flag to specify is the schema needs to be fully reloaded
@@ -353,7 +353,7 @@ class SqlConn(object):
 
     Related Pages:
 
-			https://docs.sqlalchemy.org/en/13/core/dml.html
+      https://docs.sqlalchemy.org/en/13/core/dml.html
 
     :param table_name: Optional, The database table name
     :return: self
@@ -441,7 +441,7 @@ class SqlConn(object):
 
     Related Pages:
 
-			https://docs.sqlalchemy.org/en/13/core/dml.html
+      https://docs.sqlalchemy.org/en/13/core/dml.html
     https://docs.sqlalchemy.org/en/13/core/dml.html
 
     :param table_name: The database table name
@@ -649,7 +649,7 @@ class SqlConn(object):
 
     Related Pages:
 
-			https://docs.sqlalchemy.org/en/13/core/connections.html#sqlalchemy.engine.ResultProxy
+      https://docs.sqlalchemy.org/en/13/core/connections.html#sqlalchemy.engine.ResultProxy
 
     :param table_name: The database table name
     :param validate: Boolean, Validation check before dropping the table
@@ -673,7 +673,7 @@ class SqlConn(object):
 
     Related Pages:
 
-			https://docs.sqlalchemy.org/en/13/core/connections.html#sqlalchemy.engine.ResultProxy
+      https://docs.sqlalchemy.org/en/13/core/connections.html#sqlalchemy.engine.ResultProxy
 
     :return: The SQL Result proxy
     """

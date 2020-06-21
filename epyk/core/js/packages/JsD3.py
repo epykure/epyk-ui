@@ -77,7 +77,7 @@ class D3Select(JsPackage):
 
     Related Pages:
 
-			https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_data
+      https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_data
 
     Attributes:
     ----------
@@ -127,7 +127,7 @@ http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
     Related Pages:
 
-			https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_datum
+      https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_datum
 
     :param datasets: If a value is not specified, returns the bound datum for the first (non-null) element in the selection.
     """
@@ -149,7 +149,7 @@ http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
     Related Pages:
 
-			https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_enter
+      https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_enter
     """
     return self.fnc("enter()")
 
@@ -162,7 +162,7 @@ http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
     Related Pages:
 
-			https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_exit
+      https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_exit
     """
     return self.fnc("exit()")
 
@@ -174,7 +174,7 @@ http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
     Related Pages:
 
-			https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
+      https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
 
     Attributes:
     ----------
@@ -262,7 +262,7 @@ http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
     Related Pages:
 
-			https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
+      https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
     """
     return self.fnc("remove()")
 
@@ -274,7 +274,7 @@ http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
     Related Pages:
 
-			https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
+      https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
 
     Attributes:
     ----------
@@ -291,7 +291,7 @@ http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
     Related Pages:
 
-			https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_append
+      https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_append
     """
     return self.fnc("order()")
   #

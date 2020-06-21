@@ -6,7 +6,7 @@ It's part of the High Resolution Time API, but is enhanced by the Performance Ti
 
 Related Pages:
 
-			https://developer.mozilla.org/fr/docs/Web/API/Performance
+      https://developer.mozilla.org/fr/docs/Web/API/Performance
 
 """
 
@@ -33,7 +33,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
 
     :param jsFnc: The Javascript functions
 
@@ -57,7 +57,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMarks
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMarks
 
     :return: Void, the String for the Javascript side
     """
@@ -79,7 +79,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMeasures
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearMeasures
 
     :param name: Optional, The name of the mark to be cleared
 
@@ -101,7 +101,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearResourceTimings
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/clearResourceTimings
 
     :return: This method has no return value, but only the String for the Javascript side
     """
@@ -115,7 +115,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntries
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntries
 
     :return: An array of PerformanceEntry objects
     """
@@ -131,7 +131,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https//developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByName
+      https//developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByName
 
     :param name: The name of the entry to retrieve.
     :param type: Optional, The type of entry to retrieve such as "mark"
@@ -157,7 +157,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/getEntriesByType
 
     :param type: The type of entry to retrieve such as "mark"
 
@@ -175,7 +175,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/mark
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/mark
 
     :param name: A DOMString representing the name of the mark.
 
@@ -193,7 +193,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/measure
 
     :param name: A DOMString representing the name of the measure
     :param startMark: Optional, A DOMString representing the name of the measure's starting mark
@@ -226,7 +226,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
 
     :return: A Javascript Number
     """
@@ -241,7 +241,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/setResourceTimingBufferSize
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/setResourceTimingBufferSize
 
     :return: Void, the String for the Javascript side
     """
@@ -256,7 +256,7 @@ class JsPerformance(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Performance/toJSON
+      https://developer.mozilla.org/en-US/docs/Web/API/Performance/toJSON
 
     :return: A JSON object that is the serialization of the Performance object.
     """

@@ -27,7 +27,7 @@ class VisDataSet(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataset.html
+      https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
     ----------
@@ -46,7 +46,7 @@ class VisDataSet(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataset.html
+      https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
     ----------
@@ -68,7 +68,7 @@ class VisDataSet(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataset.html
+      https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
     ----------
@@ -86,7 +86,7 @@ class VisDataSet(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataset.html
+      https://visjs.github.io/vis-data/data/dataset.html
     """
     return JsObjects.JsObject.JsObject("%s.flush()" % self.varId)
 
@@ -116,7 +116,7 @@ class VisDataSet(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataset.html
+      https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
     ----------
@@ -134,7 +134,7 @@ class VisDataSet(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataset.html
+      https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
     ----------
@@ -161,7 +161,7 @@ class VisDataSet(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataset.html
+      https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
     ----------
@@ -181,7 +181,7 @@ class VisDataSet(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataset.html
+      https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
     ----------
@@ -202,7 +202,7 @@ class VisDataSet(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataset.html
+      https://visjs.github.io/vis-data/data/dataset.html
 
     Attributes:
     ----------
@@ -278,7 +278,7 @@ class VisDataOptions(DataAttrs):
 
     Related Pages:
 
-			https://visjs.github.io/vis-timeline/examples/timeline/interaction/clickToUse.html
+      https://visjs.github.io/vis-timeline/examples/timeline/interaction/clickToUse.html
 
     Related Pages:
 :param flag:
@@ -424,7 +424,7 @@ class VisDataView(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataview.html
+      https://visjs.github.io/vis-data/data/dataview.html
 
 		Attributes:
     ----------
@@ -450,7 +450,7 @@ class VisDataView(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataview.html
+      https://visjs.github.io/vis-data/data/dataview.html
 
     Attributes:
     ----------
@@ -478,7 +478,7 @@ class VisDataView(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataview.html
+      https://visjs.github.io/vis-data/data/dataview.html
 
 		Attributes:
     ----------
@@ -495,7 +495,7 @@ class VisDataView(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataview.html
+      https://visjs.github.io/vis-data/data/dataview.html
 
     Attributes:
     ----------
@@ -515,7 +515,7 @@ class VisDataView(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataview.html
+      https://visjs.github.io/vis-data/data/dataview.html
     https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
 
     Attributes:
@@ -532,7 +532,7 @@ class VisDataView(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataview.html
+      https://visjs.github.io/vis-data/data/dataview.html
     https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
 
     Attributes:
@@ -549,7 +549,7 @@ class VisDataView(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-data/data/dataview.html
+      https://visjs.github.io/vis-data/data/dataview.html
     """
     return self.fnc_closure("refresh()")
 
@@ -584,7 +584,7 @@ class VisDataGroups(DataAttrs):
 
     Related Pages:
 
-			https://visjs.github.io/vis-timeline/docs/timeline/
+      https://visjs.github.io/vis-timeline/docs/timeline/
 
     Attributes:
     ----------
@@ -640,7 +640,7 @@ class VisNetworkEdge(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-network/docs/network/
+      https://visjs.github.io/vis-network/docs/network/
 
     Attributes:
     ----------
@@ -655,7 +655,7 @@ class VisNetworkEdge(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-network/docs/network/
+      https://visjs.github.io/vis-network/docs/network/
     """
 
   def moveNode(self, nodeId, x, y):
@@ -716,7 +716,7 @@ class VisNetwork(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-network/docs/network/
+      https://visjs.github.io/vis-network/docs/network/
     """
     return JsObjects.JsVoid("%s.destroy()" % self.varId)
 
@@ -730,7 +730,7 @@ class VisNetwork(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-network/docs/network/
+      https://visjs.github.io/vis-network/docs/network/
 
     Attributes:
     ----------
@@ -747,7 +747,7 @@ class VisNetwork(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-network/docs/network/
+      https://visjs.github.io/vis-network/docs/network/
 
     Attributes:
     ----------
@@ -763,7 +763,7 @@ class VisNetwork(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-network/docs/network/
+      https://visjs.github.io/vis-network/docs/network/
     """
     return JsObjects.JsVoid("%s.redraw()" % self.varId)
 
@@ -775,7 +775,7 @@ class VisNetwork(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-network/docs/network/
+      https://visjs.github.io/vis-network/docs/network/
 
     Attributes:
     ----------
@@ -907,7 +907,7 @@ class VisGraph3D(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-graph3d/docs/graph3d/
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
     """
     return self.fnc_closure("animationStart()")
 
@@ -920,7 +920,7 @@ class VisGraph3D(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-graph3d/docs/graph3d/
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
     """
     return self.fnc_closure("animationStop()")
 
@@ -932,7 +932,7 @@ class VisGraph3D(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-graph3d/docs/graph3d/
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
     """
     return "getCameraPosition()"
 
@@ -944,7 +944,7 @@ class VisGraph3D(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-graph3d/docs/graph3d/
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
     """
     return JsObjects.JsVoid("%s.redraw()" % self.varName)
 
@@ -956,7 +956,7 @@ class VisGraph3D(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-graph3d/docs/graph3d/
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:
     ----------
@@ -972,7 +972,7 @@ class VisGraph3D(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-graph3d/docs/graph3d/
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:
     ----------
@@ -988,7 +988,7 @@ class VisGraph3D(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-graph3d/docs/graph3d/
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:
     ----------
@@ -1008,7 +1008,7 @@ class VisGraph3D(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-graph3d/docs/graph3d/
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:
     ----------
@@ -1025,7 +1025,7 @@ class VisGraph3D(JsPackage):
 
     Related Pages:
 
-			https://visjs.github.io/vis-graph3d/docs/graph3d/
+      https://visjs.github.io/vis-graph3d/docs/graph3d/
 
     Attributes:
     ----------

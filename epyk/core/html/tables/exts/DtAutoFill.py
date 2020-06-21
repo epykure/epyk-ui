@@ -17,7 +17,7 @@ class AutoFill(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/autoFill.alwaysAsk
+      https://datatables.net/reference/option/autoFill.alwaysAsk
     """
     return self._attrs["alwaysAsk"]
 
@@ -34,7 +34,7 @@ class AutoFill(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/autoFill.columns
+      https://datatables.net/reference/option/autoFill.columns
     """
     return self._attrs["alwaysAsk"]
 
@@ -51,7 +51,7 @@ class AutoFill(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/autoFill.enable
+      https://datatables.net/reference/option/autoFill.enable
     """
     return self._attrs["enable"]
 
@@ -68,7 +68,7 @@ class AutoFill(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/autoFill.focus
+      https://datatables.net/reference/option/autoFill.focus
     """
     return self._attrs["focus"]
 
@@ -85,7 +85,7 @@ class AutoFill(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/autoFill.horizontal
+      https://datatables.net/reference/option/autoFill.horizontal
     """
     return self._attrs["horizontal"]
 
@@ -102,7 +102,7 @@ class AutoFill(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/autoFill.update
+      https://datatables.net/reference/option/autoFill.update
     """
     return self._attrs["update"]
 
@@ -119,7 +119,7 @@ class AutoFill(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/autoFill.vertical
+      https://datatables.net/reference/option/autoFill.vertical
     """
     return self._attrs["vertical"]
 

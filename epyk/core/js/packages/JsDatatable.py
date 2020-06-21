@@ -25,7 +25,7 @@ class SelectAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/select.blurable()
+      https://datatables.net/reference/api/select.blurable()
 
     :return:
     """
@@ -37,7 +37,7 @@ class SelectAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/select.info()
+      https://datatables.net/reference/api/select.info()
 
     :param jsFlag: Value to set for the information summary display state - true to enable, false to disable.
     :return:
@@ -53,7 +53,7 @@ class SelectAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/select.items()
+      https://datatables.net/reference/api/select.items()
 
     :return:
     """
@@ -65,7 +65,7 @@ class SelectAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/select.selector()
+      https://datatables.net/reference/api/select.selector()
 
     :return:
     """
@@ -77,7 +77,7 @@ class SelectAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/select.style()
+      https://datatables.net/reference/api/select.style()
 
     :return:
     """
@@ -95,7 +95,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().deselect()
+      https://datatables.net/reference/api/column().deselect()
 
     :return: DataTables API instance for chaining
     """
@@ -107,7 +107,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cell().select()
+      https://datatables.net/reference/api/cell().select()
 
     :return: DataTables API instance for chaining
     """
@@ -119,7 +119,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cell().render()
+      https://datatables.net/reference/api/cell().render()
 
     :return: DataTables API instance for chaining
     """
@@ -131,7 +131,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cell().node()
+      https://datatables.net/reference/api/cell().node()
 
     :return: DataTables API instance for chaining
     """
@@ -143,7 +143,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().nodes()
+      https://datatables.net/reference/api/column().nodes()
 
     :return:
     """
@@ -157,7 +157,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cell().invalidate()
+      https://datatables.net/reference/api/cell().invalidate()
 
     :return: DataTables API instance for chaining
     """
@@ -169,7 +169,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cell().index()
+      https://datatables.net/reference/api/cell().index()
 
     :return:
     """
@@ -181,7 +181,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cell().cache()
+      https://datatables.net/reference/api/cell().cache()
 
     :return:
     """
@@ -192,7 +192,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cell().data()
+      https://datatables.net/reference/api/cell().data()
 
     :return:
     """
@@ -204,7 +204,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cell().focus()
+      https://datatables.net/reference/api/cell().focus()
 
     :return:
     """
@@ -216,7 +216,7 @@ class CellAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cell.blur()
+      https://datatables.net/reference/api/cell.blur()
 
     :return:
     """
@@ -234,7 +234,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().deselect()
+      https://datatables.net/reference/api/column().deselect()
 
     :return: DataTables API instance for chaining
     """
@@ -246,7 +246,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().select()
+      https://datatables.net/reference/api/column().select()
 
     :return: DataTables API instance for chaining
     """
@@ -258,7 +258,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().cache()
+      https://datatables.net/reference/api/column().cache()
 
     :return:
     """
@@ -269,7 +269,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().data()
+      https://datatables.net/reference/api/column().data()
 
     :return:
     """
@@ -281,7 +281,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().dataSrc()
+      https://datatables.net/reference/api/column().dataSrc()
 
     :return:
     """
@@ -292,7 +292,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().footer()
+      https://datatables.net/reference/api/column().footer()
 
     :return:
     """
@@ -303,7 +303,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().header()
+      https://datatables.net/reference/api/column().header()
 
     :return:
     """
@@ -314,7 +314,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().index()
+      https://datatables.net/reference/api/column().index()
 
     :return:
     """
@@ -326,7 +326,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().nodes()
+      https://datatables.net/reference/api/column().nodes()
 
     :return:
     """
@@ -339,7 +339,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().nodes()
+      https://datatables.net/reference/api/column().nodes()
 
     :return:
     """
@@ -353,7 +353,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().order()
+      https://datatables.net/reference/api/column().order()
 
     :return:
     """
@@ -364,7 +364,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().search()
+      https://datatables.net/reference/api/column().search()
 
     :return:
     """
@@ -376,7 +376,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().visible()
+      https://datatables.net/reference/api/column().visible()
 
     :return: DataTables API instance for chaining
     """
@@ -388,7 +388,7 @@ class ColumnAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/draw()
+      https://datatables.net/reference/api/draw()
 
     :return: DataTables API instance for chaining
     """
@@ -414,7 +414,7 @@ class RowChildAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().child.hide()
+      https://datatables.net/reference/api/row().child.hide()
 
     :return:
     """
@@ -438,7 +438,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/
+      https://datatables.net/reference/api/
 
     :param strFnc: The function string
     :param varId: The object reference for the Javascript side
@@ -456,7 +456,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().deselect()
+      https://datatables.net/reference/api/row().deselect()
 
     :return: DataTables API instance for chaining
     """
@@ -468,7 +468,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().select()
+      https://datatables.net/reference/api/row().select()
 
     :return: DataTables API instance for chaining
     """
@@ -480,7 +480,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().scrollTo()
+      https://datatables.net/reference/api/row().scrollTo()
 
     :param animate: Animate the scroll (true) or not (false).
 
@@ -494,7 +494,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().cache()
+      https://datatables.net/reference/api/row().cache()
 
     :param dtype: Specify which cache the data should be read from. Can take one of two values: search or order.
                   Defaults to order if no value is given.
@@ -513,7 +513,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().data()
+      https://datatables.net/reference/api/row().data()
 
     :return: DataTables API instance for chaining
     """
@@ -526,7 +526,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().id()
+      https://datatables.net/reference/api/row().id()
 
     :param hash: Append a hash (#) to the start of the row id. This can be useful for then using the id as a selector
 
@@ -541,7 +541,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().index()
+      https://datatables.net/reference/api/row().index()
 
     :return: Row index
     """
@@ -553,7 +553,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().invalidate()
+      https://datatables.net/reference/api/row().invalidate()
 
     :param source:
 
@@ -567,7 +567,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().node()
+      https://datatables.net/reference/api/row().node()
 
     :return:
     """
@@ -579,7 +579,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().nodes()
+      https://datatables.net/reference/api/column().nodes()
 
     :return:
     """
@@ -593,7 +593,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().remove()
+      https://datatables.net/reference/api/row().remove()
 
     :param update:
 
@@ -611,7 +611,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row.add()
+      https://datatables.net/reference/api/row.add()
 
     :param jsData: The input data
     :param toArray: Boolean. Convert a python dictionary to a list
@@ -643,7 +643,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/draw()
+      https://datatables.net/reference/api/draw()
 
     :return:
     """
@@ -659,7 +659,7 @@ class RowAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row().child
+      https://datatables.net/reference/api/row().child
 
     :param namespace: Boolean to set the level of this method, selected rows or namespace
     """
@@ -679,7 +679,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/table().body()
+      https://datatables.net/reference/api/table().body()
 
     :return:
     """
@@ -692,7 +692,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/row()
+      https://datatables.net/reference/api/row()
     """
     return RowAPI(self.src, selector="%s.row()" % self.varId, setVar=False, parent=self._parent)
 
@@ -703,7 +703,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/rows()
+      https://datatables.net/reference/api/rows()
     """
     return RowAPI(self.src, selector="%s.rows()" % self.varId, setVar=False, parent=self._parent)
 
@@ -713,7 +713,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/columns.adjust()
+      https://datatables.net/reference/api/columns.adjust()
     """
     return JsObjects.JsVoid("%s.columns.adjust()" % self.varId)
 
@@ -723,7 +723,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/table().container()
+      https://datatables.net/reference/api/table().container()
     """
     return JsQuery.JQuery(self.src, selector="jQuery(%s.table().container())" % self.varId, setVar=False, parent=self._parent)
 
@@ -733,7 +733,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/table().container()
+      https://datatables.net/reference/api/table().container()
     """
     return JsNodeDom.JsDoms(None, report=self.src, varName="%s.table().container()" % self.varId, setVar=False)
 
@@ -743,7 +743,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/table().footer()
+      https://datatables.net/reference/api/table().footer()
     """
 
   def header(self):
@@ -752,7 +752,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/table().header()
+      https://datatables.net/reference/api/table().header()
 
     :return:
     """
@@ -763,7 +763,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/table().node()
+      https://datatables.net/reference/api/table().node()
     """
     return self.fnc("nodes()")
 
@@ -773,7 +773,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/column().nodes()
+      https://datatables.net/reference/api/column().nodes()
     """
     return JsQuery.JQuery(selector="%s.nodes().to$()" % self.varId, setVar=False)
 
@@ -783,7 +783,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/clear()
+      https://datatables.net/reference/api/clear()
 
     :param update: Boolean
     :return:
@@ -800,7 +800,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/data()
+      https://datatables.net/reference/api/data()
 
     :return:
     """
@@ -813,7 +813,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/destroy()
+      https://datatables.net/reference/api/destroy()
 
     :param remove: Boolean, Completely remove the table from the DOM (true) or leave it in the DOM in its original plain un-enhanced HTML state (default, false).
     :param checkUndefined: Boolean
@@ -828,7 +828,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/draw()
+      https://datatables.net/reference/api/draw()
 
     :return:
     """
@@ -845,7 +845,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/order()
+      https://datatables.net/reference/api/order()
 
     :return:
     """
@@ -860,7 +860,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/page()
+      https://datatables.net/reference/api/page()
 
     :return:
     """
@@ -874,7 +874,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/search()
+      https://datatables.net/reference/api/search()
 
     :param jsData:
     :return:
@@ -887,7 +887,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/settings()
+      https://datatables.net/reference/api/settings()
 
     :return:
     """
@@ -899,7 +899,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/state()
+      https://datatables.net/reference/api/state()
 
     :return:
     """
@@ -911,7 +911,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/cells()
+      https://datatables.net/reference/api/cells()
     https://datatables.net/reference/api/cell()
 
     :return:
@@ -954,7 +954,7 @@ class DatatableAPI(JsPackage):
 
     Related Pages:
 
-			https://datatables.net/reference/api/select()
+      https://datatables.net/reference/api/select()
 
     TODO add the select true
     :return:

@@ -21,7 +21,7 @@ class Canvas(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/ref_canvas.asp
+      https://www.w3schools.com/tags/ref_canvas.asp
 
     Attributes:
     ----------

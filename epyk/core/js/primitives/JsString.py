@@ -15,7 +15,7 @@ If necessary the tests folder can be updated in order to catch some specific reg
 
 Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_string.asp
+      https://www.w3schools.com/jsref/jsref_obj_string.asp
 """
 
 
@@ -62,7 +62,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_length_string.asp
+      https//www.w3schools.com/jsref/jsref_length_string.asp
 
     :return: The length of a string
     """
@@ -87,7 +87,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_indexof.asp
+      https//www.w3schools.com/jsref/jsref_indexof.asp
 
     :param searchvalue: Required. The string to search for
     :param start: Optional. Default 0. At which position to start the search
@@ -105,7 +105,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_lastindexof.asp
+      https://www.w3schools.com/jsref/jsref_lastindexof.asp
 
     :param searchvalue: Required. The string to search for
     :param start: Optional. Default 0. At which position to start the search
@@ -123,7 +123,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_substring.asp
+      https://www.w3schools.com/jsref/jsref_substring.asp
 
     :param start: Required. The position where to start the extraction. First character is at index 0
     :param end: Optional. The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the string
@@ -140,7 +140,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_substr.asp
+      https//www.w3schools.com/jsref/jsref_substr.asp
 
     :param start: Required. The position where to start the extraction. First character is at index 0.
     :param length: Optional. The number of characters to extract. If omitted, it extracts the rest of the string
@@ -160,7 +160,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_string_methods.asp
+      https://www.w3schools.com/js/js_string_methods.asp
 
     :param searchvalue: Required. The value, or regular expression, that will be replaced by the new value
     :param newvalue: Required. The value to replace the search value with
@@ -179,7 +179,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_slice_string.asp
+      https//www.w3schools.com/jsref/jsref_slice_string.asp
 
     :param start: Required. The position where to begin the extraction. First character is at position 0
     :param end: Optional. The position (up to, but not including) where to end the extraction.
@@ -195,7 +195,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_search.asp
+      https//www.w3schools.com/jsref/jsref_search.asp
 
     :param searchvalue: Required. A regular expression. A string will automatically be converted to a regular expression.
 
@@ -213,7 +213,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_concat_string.asp
+      https//www.w3schools.com/jsref/jsref_concat_string.asp
 
     :param args: Required. The strings to be joined
     :param newVarName: The new Javascript Variable Name
@@ -246,7 +246,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_conventions.asp
+      https://www.w3schools.com/js/js_conventions.asp
 
     :return: The Python Javascript String transformed to be a variable name
     """
@@ -265,7 +265,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_trim_string.asp
+      https//www.w3schools.com/jsref/jsref_trim_string.asp
 
     :return: A String, representing the string with removed whitespace from both ends
     """
@@ -277,7 +277,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_charat.asp
+      https//www.w3schools.com/jsref/jsref_charat.asp
 
     :param i: Required. An integer representing the index of the character you want to return
 
@@ -291,7 +291,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_charcodeat.asp
+      https//www.w3schools.com/jsref/jsref_charcodeat.asp
 
     :param i: Required. A number representing the index of the character you want to return
 
@@ -307,7 +307,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_tolocalelowercase.asp
+      https//www.w3schools.com/jsref/jsref_tolocalelowercase.asp
 
     :return: A String, representing the value of a string converted to lowercase according to the host's current locale
     """
@@ -319,7 +319,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_touppercase.asp
+      https//www.w3schools.com/jsref/jsref_touppercase.asp
 
     :return: A String, representing the value of a string converted to uppercase
     """
@@ -332,7 +332,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_includes.asp
+      https//www.w3schools.com/jsref/jsref_includes.asp
 
     :param searchvalue: Required. The string to search for
     :param start: Optional. Default 0. At which position to start the search
@@ -355,7 +355,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_startswith.asp
+      https//www.w3schools.com/jsref/jsref_startswith.asp
 
     :param searchvalue: Required. The string to search for
     :param start: Optional. Default 0. At which position to start the search
@@ -377,7 +377,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_endswith.asp
+      https//www.w3schools.com/jsref/jsref_endswith.asp
 
     :param searchvalue: Required. The string to search for
     :param length: Optional. Specify the length of the string to search. If omitted, the default value is the length of the string
@@ -398,7 +398,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_repeat.asp
+      https//www.w3schools.com/jsref/jsref_repeat.asp
 
     :param count: Required. The number of times the original string value should be repeated in the new string
 
@@ -413,7 +413,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_split.asp
+      https//www.w3schools.com/jsref/jsref_split.asp
 
     :param separator: Optional. Specifies the character, or the regular expression, to use for splitting the string.
                                 If omitted, the entire string will be returned (an array with only one item)
@@ -435,7 +435,7 @@ class JsString(JsObject.JsObject):
 
     Related Pages:
 
-			https://stackoverflow.com/questions/5164883/the-confusion-about-the-split-function-of-javascript
+      https://stackoverflow.com/questions/5164883/the-confusion-about-the-split-function-of-javascript
 
     :param rptObj: The report object in order to register the prototype extension
     :param separator: Optional. Specifies the character, or the regular expression, to use for splitting the string.

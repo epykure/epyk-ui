@@ -518,7 +518,7 @@ class MarkDown(object):
 
     Related Pages:
 
-			https://en.wikipedia.org/wiki/ReStructuredText
+      https://en.wikipedia.org/wiki/ReStructuredText
     https://mail.python.org/pipermail/python-dev/2002-April/022131.html
 
     :param report: The report object

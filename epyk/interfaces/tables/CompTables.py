@@ -78,7 +78,7 @@ https://pivottable.js.org/examples/
 
     Related Pages:
 
-			https://github.com/d3/d3/wiki/Gallery
+      https://github.com/d3/d3/wiki/Gallery
 
     :rtype: CompTableD3.D3
     """
@@ -105,7 +105,7 @@ http://tabulator.info/
 
     Related Pages:
 
-			https://datatables.net/
+      https://datatables.net/
 
     :rtype: CompDatatable.Datatables
     """

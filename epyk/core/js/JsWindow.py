@@ -35,7 +35,7 @@ class JsLocalStorage(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_storage_key.asp
+      https://www.w3schools.com/jsref/met_storage_key.asp
 
     Attributes:
     ----------
@@ -91,7 +91,7 @@ class JsLocalStorage(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_storage_setitem.asp
+      https://www.w3schools.com/jsref/met_storage_setitem.asp
 
     Attributes:
     ----------
@@ -119,7 +119,7 @@ class JsLocalStorage(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_storage_getitem.asp
+      https://www.w3schools.com/jsref/met_storage_getitem.asp
 
     Attributes:
     ----------
@@ -145,7 +145,7 @@ class JsLocalStorage(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_storage_removeitem.asp
+      https://www.w3schools.com/jsref/met_storage_removeitem.asp
 
     Attributes:
     ----------
@@ -171,7 +171,7 @@ class JsLocalStorage(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_storage_clear.asp
+      https://www.w3schools.com/jsref/met_storage_clear.asp
 
     :return: Void
     """
@@ -247,7 +247,7 @@ class JsSessionStorage(object):
 
     Related Pages:
 
-			https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp
+      https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp
 
     Attributes:
     ----------
@@ -292,7 +292,7 @@ class JsSessionStorage(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_storage_removeitem.asp
+      https://www.w3schools.com/jsref/met_storage_removeitem.asp
 
     Attributes:
     ----------
@@ -314,7 +314,7 @@ class JsSessionStorage(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_win_sessionstorage.asp
+      https://www.w3schools.com/jsref/prop_win_sessionstorage.asp
     """
     return JsFncs.JsFunction("sessionStorage.clear()")
 
@@ -346,7 +346,7 @@ class JsHistory(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_his_length.asp
+      https://www.w3schools.com/jsref/prop_his_length.asp
 
     :return: A Number, representing the number of entries in the session history
     """
@@ -364,7 +364,7 @@ class JsHistory(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_his_back.asp
+      https://www.w3schools.com/jsref/met_his_back.asp
 
     :return: The Javascript String to be added to the page
     """
@@ -378,7 +378,7 @@ class JsHistory(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_his_forward.asp
+      https://www.w3schools.com/jsref/met_his_forward.asp
 
     :return: The Javascript String to be added to the page
     """
@@ -392,7 +392,7 @@ class JsHistory(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_his_go.asp
+      https://www.w3schools.com/jsref/met_his_go.asp
 
     Attributes:
     ----------
@@ -412,7 +412,7 @@ class JsHistory(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/History_API
+      https://developer.mozilla.org/en-US/docs/Web/API/History_API
 
     Attributes:
     ----------
@@ -435,7 +435,7 @@ class JsHistory(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/History_API
+      https://developer.mozilla.org/en-US/docs/Web/API/History_API
 
     Attributes:
     ----------
@@ -463,7 +463,7 @@ class JsHistory(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/History_API
+      https://developer.mozilla.org/en-US/docs/Web/API/History_API
 
     Attributes:
     ----------
@@ -537,7 +537,7 @@ class JsWindowEvent(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event
+      https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event
 
     Attributes:
     ----------
@@ -581,7 +581,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
+      https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
 
     Attributes:
     ----------
@@ -598,7 +598,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_win_innerheight.asp
+      https://www.w3schools.com/jsref/prop_win_innerheight.asp
 
     Attributes:
     ----------
@@ -642,7 +642,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollMaxY
+      https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollMaxY
     """
     return JsNumber.JsNumber("(%s.scrollMaxY || (document.documentElement.scrollHeight - document.documentElement.clientHeight))" % windowId)
 
@@ -690,7 +690,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_win_close.asp
+      https://www.w3schools.com/jsref/met_win_close.asp
 
     Attributes:
     ----------
@@ -732,7 +732,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/Jsref/met_win_open.asp
+      https://www.w3schools.com/Jsref/met_win_open.asp
 
     Attributes:
     ----------
@@ -795,7 +795,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/Jsref/met_win_moveby.asp
+      https://www.w3schools.com/Jsref/met_win_moveby.asp
 
     Attributes:
     ----------
@@ -815,7 +815,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/Jsref/met_win_focus.asp
+      https://www.w3schools.com/Jsref/met_win_focus.asp
 
     Attributes:
     ----------
@@ -833,7 +833,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/uk/docs/Web/API/Window/scroll
+      https://developer.mozilla.org/uk/docs/Web/API/Window/scroll
 
     Attributes:
     ----------
@@ -877,7 +877,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/Jsref/met_win_print.asp
+      https://www.w3schools.com/Jsref/met_win_print.asp
 
     Attributes:
     ----------
@@ -900,7 +900,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_win_alert.asp
+      https://www.w3schools.com/jsref/met_win_alert.asp
 
     Attributes:
     ----------
@@ -926,7 +926,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_win_atob.asp
+      https://www.w3schools.com/jsref/met_win_atob.asp
 
     Attributes:
     ----------
@@ -948,7 +948,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_win_btoa.asp
+      https://www.w3schools.com/jsref/met_win_btoa.asp
 
     Attributes:
     ----------
@@ -972,7 +972,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_win_setinterval.asp
+      https://www.w3schools.com/jsref/met_win_setinterval.asp
 
     #TODO: Add a control on setInterval to only have one created
 
@@ -1011,7 +1011,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_win_clearinterval.asp
+      https://www.w3schools.com/jsref/met_win_clearinterval.asp
 
     #TODO: Check if interval is unique
 
@@ -1055,7 +1055,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_win_settimeout.asp
+      https://www.w3schools.com/jsref/met_win_settimeout.asp
 
     Attributes:
     ----------
@@ -1075,7 +1075,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_win_cleartimeout.asp
+      https://www.w3schools.com/jsref/met_win_cleartimeout.asp
 
     Attributes:
     ----------
@@ -1091,7 +1091,7 @@ class JsWindow(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_getcomputedstyle.asp
+      https://www.w3schools.com/jsref/jsref_getcomputedstyle.asp
 
     Attributes:
     ----------

@@ -15,7 +15,7 @@ class Selector(object):
 
     Related Pages:
 
-        https://www.w3schools.com/cssref/sel_attribute_value.asp
+      https://www.w3schools.com/cssref/sel_attribute_value.asp
 
     Attributes:
     ----------
@@ -42,7 +42,7 @@ class Selector(object):
 
     Related Pages:
 
-        https://www.w3schools.com/cssref/sel_element_gt.asp
+      https://www.w3schools.com/cssref/sel_element_gt.asp
 
     Attributes:
     ----------
@@ -59,7 +59,7 @@ class Selector(object):
 
     Related Pages:
 
-        https://www.w3schools.com/cssref/sel_element_gt.asp
+      https://www.w3schools.com/cssref/sel_element_gt.asp
 
     Attributes:
     ----------
@@ -92,7 +92,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/css_selectors.asp
+      https://www.w3schools.com/cssref/css_selectors.asp
 
     Attributes:
     ----------
@@ -109,7 +109,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_focus.asp
+      https://www.w3schools.com/cssref/sel_focus.asp
     """
     self._js.append(":focus")
     return self
@@ -122,7 +122,7 @@ class Selector(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/sel_hover.asp
+      https://www.w3schools.com/cssref/sel_hover.asp
     """
     self._js.append(":hover")
     return self

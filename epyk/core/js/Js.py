@@ -113,7 +113,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_console_info.asp
+      https://www.w3schools.com/jsref/met_console_info.asp
 
     Attributes:
     ----------
@@ -132,7 +132,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_console_warn.asp
+      https://www.w3schools.com/jsref/met_console_warn.asp
 
     Attributes:
     ----------
@@ -151,7 +151,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_console_error.asp
+      https://www.w3schools.com/jsref/met_console_error.asp
 
     Attributes:
     ----------
@@ -170,7 +170,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_console_table.asp
+      https://www.w3schools.com/jsref/met_console_table.asp
 
     Attributes:
     ----------
@@ -191,7 +191,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_console_time.asp
+      https://www.w3schools.com/jsref/met_console_time.asp
 
     Attributes:
     ----------
@@ -208,7 +208,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_console_timeend.asp
+      https://www.w3schools.com/jsref/met_console_timeend.asp
 
     Attributes:
     ----------
@@ -225,7 +225,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_console_assert.asp
+      https://www.w3schools.com/jsref/met_console_assert.asp
 
     Attributes:
     ----------
@@ -243,7 +243,7 @@ class JsConsole(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_obj_error.asp
+      https://www.w3schools.com/jsref/jsref_obj_error.asp
 
     Attributes:
     ----------
@@ -278,7 +278,7 @@ class JsJson(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_json_parse.asp
+      https://www.w3schools.com/js/js_json_parse.asp
       https://www.w3schools.com/jsref/jsref_parse_json.asp
 
     Attributes:
@@ -302,7 +302,7 @@ class JsJson(object):
 
     Related Pages:
 
-			https://www.w3schools.com/js/js_json_stringify.asp
+      https://www.w3schools.com/js/js_json_stringify.asp
 
     Attributes:
     ----------
@@ -364,7 +364,7 @@ class JsBreadCrumb(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_loc_hash.asp
+      https://www.w3schools.com/jsref/prop_loc_hash.asp
     """
     return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, None)))
 
@@ -395,7 +395,7 @@ class JsScreen(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_screen_availheight.asp
+      https://www.w3schools.com/jsref/prop_screen_availheight.asp
     """
     return JsNumber.JsNumber("screen.availHeight")
 
@@ -408,7 +408,7 @@ class JsScreen(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_screen_availwidth.asp
+      https://www.w3schools.com/jsref/prop_screen_availwidth.asp
     """
     return JsNumber.JsNumber("screen.availWidth")
 
@@ -421,7 +421,7 @@ class JsScreen(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_screen_colordepth.asp
+      https://www.w3schools.com/jsref/prop_screen_colordepth.asp
     """
     return JsNumber.JsNumber("screen.colorDepth")
 
@@ -434,7 +434,7 @@ class JsScreen(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_screen_height.asp
+      https://www.w3schools.com/jsref/prop_screen_height.asp
     """
     return JsNumber.JsNumber("screen.height")
 
@@ -447,7 +447,7 @@ class JsScreen(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_screen_pixeldepth.asp
+      https://www.w3schools.com/jsref/prop_screen_pixeldepth.asp
     """
     return JsNumber.JsNumber("screen.pixelDepth")
 
@@ -460,7 +460,7 @@ class JsScreen(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_screen_width.asp
+      https://www.w3schools.com/jsref/prop_screen_width.asp
     """
     return JsNumber.JsNumber("screen.width")
 
@@ -959,7 +959,7 @@ class JsBase(object):
 
     Related Pages:
 
-        https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
+      https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
 
     :rtype: JsBreadCrumb
 
@@ -981,7 +981,7 @@ class JsBase(object):
 
     Related Pages:
 
-        https://redfin.github.io/react-server/annotated-src/navigateTo.html
+      https://redfin.github.io/react-server/annotated-src/navigateTo.html
 
     Attributes:
     ----------
@@ -1102,7 +1102,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_document_getelementbyid.asp
+      https://www.w3schools.com/jsref/met_document_getelementbyid.asp
 
     Attributes:
     ----------
@@ -1123,7 +1123,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp
+      https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp
 
     Attributes:
     ----------
@@ -1146,7 +1146,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
+      https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
 
     Attributes:
     ----------
@@ -1183,7 +1183,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_document_createelement.asp
+      https://www.w3schools.com/jsref/met_document_createelement.asp
 
     Attributes:
     ----------
@@ -1206,7 +1206,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/met_document_createtextnode.asp
+      https://www.w3schools.com/jsref/met_document_createtextnode.asp
 
     Attributes:
     ----------
@@ -1224,7 +1224,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp
+      https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp
 
     Attributes:
     ----------
@@ -1242,7 +1242,7 @@ class JsBase(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
+      https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
 
     Attributes:
     ----------

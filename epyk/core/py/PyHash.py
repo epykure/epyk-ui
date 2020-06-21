@@ -2,7 +2,7 @@
 Interface to the SipHash module available in the below packages
 Related Pages:
 
-			https://pypi.org/project/siphash/
+      https://pypi.org/project/siphash/
 """
 
 
@@ -95,7 +95,7 @@ class SipHash(object):
 
       Related Pages:
 
-			https://github.com/bozhu/siphash-python
+      https://github.com/bozhu/siphash-python
 
       :param text: The String to be hashed
       """

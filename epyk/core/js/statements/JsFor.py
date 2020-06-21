@@ -14,7 +14,7 @@ class JsFor(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/jsref_for.asp
+      https//www.w3schools.com/jsref/jsref_for.asp
     https://www.w3schools.com/js/js_performance.asp
 
     Attributes:

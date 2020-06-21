@@ -104,7 +104,7 @@ class SearchPanes(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.cascadePanes
+      https://datatables.net/reference/option/searchPanes.cascadePanes
     """
     return self._attrs['cascadePanes']
 
@@ -125,7 +125,7 @@ class SearchPanes(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.clear
+      https://datatables.net/reference/option/searchPanes.clear
     """
     return self._attrs['clear']
 
@@ -147,7 +147,7 @@ class SearchPanes(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.columns
+      https://datatables.net/reference/option/searchPanes.columns
     """
     return self._attrs['columns']
 
@@ -167,7 +167,7 @@ class SearchPanes(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.controls
+      https://datatables.net/reference/option/searchPanes.controls
     """
     return self._attrs['controls']
 
@@ -184,7 +184,7 @@ class SearchPanes(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.dataLength
+      https://datatables.net/reference/option/searchPanes.dataLength
     """
     return self._attrs['dataLength']
 
@@ -201,7 +201,7 @@ class SearchPanes(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.emptyMessage
+      https://datatables.net/reference/option/searchPanes.emptyMessage
     """
     return self._attrs['emptyMessage']
 
@@ -219,7 +219,7 @@ class SearchPanes(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.hideCount
+      https://datatables.net/reference/option/searchPanes.hideCount
     """
     return self._attrs['hideCount']
 
@@ -238,7 +238,7 @@ class SearchPanes(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.layout
+      https://datatables.net/reference/option/searchPanes.layout
     """
     return self._attrs['layout']
 
@@ -255,7 +255,7 @@ class SearchPanes(DataClass):
     However if the value of searchPanes.orderable is set to false then the ordering buttons will no longer be displayed in any of the panes.
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.orderable
+      https://datatables.net/reference/option/searchPanes.orderable
     """
     return self._attrs['orderable']
 
@@ -272,7 +272,7 @@ class SearchPanes(DataClass):
     However if the value of searchPanes.orderable is set to false then the ordering buttons will no longer be displayed in any of the panes.
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.orderable
+      https://datatables.net/reference/option/searchPanes.orderable
     """
     return self._attrs['orderable']
 
@@ -325,7 +325,7 @@ class SearchPanes(DataClass):
 
     Related Pages:
 
-			https://datatables.net/reference/option/searchPanes.dtOpts
+      https://datatables.net/reference/option/searchPanes.dtOpts
     """
     return self.sub_data('dtOps', self.DtOps)
 

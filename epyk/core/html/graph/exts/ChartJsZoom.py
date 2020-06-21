@@ -15,7 +15,7 @@ class ZoomRange(DataClass):
 
     Related Pages:
 
-			https://github.com/chartjs/chartjs-plugin-zoom
+      https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["x"]
 
@@ -31,7 +31,7 @@ class ZoomRange(DataClass):
 
     Related Pages:
 
-			https://github.com/chartjs/chartjs-plugin-zoom
+      https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["y"]
 
@@ -50,7 +50,7 @@ class ZoomAttrs(DataClass):
 
     Related Pages:
 
-			https://github.com/chartjs/chartjs-plugin-zoom
+      https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["enabled"]
 
@@ -66,7 +66,7 @@ class ZoomAttrs(DataClass):
 
     Related Pages:
 
-			https://github.com/chartjs/chartjs-plugin-zoom
+      https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["mode"]
 
@@ -90,7 +90,7 @@ class ZoomAttrs(DataClass):
 
     Related Pages:
 
-			https://github.com/chartjs/chartjs-plugin-zoom
+      https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["speed"]
 
@@ -106,7 +106,7 @@ class ZoomAttrs(DataClass):
 
     Related Pages:
 
-			https://github.com/chartjs/chartjs-plugin-zoom
+      https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["threshold"]
 
@@ -162,7 +162,7 @@ class ZoomZoom(ZoomAttrs):
     """
     Related Pages:
 
-			https://github.com/chartjs/chartjs-plugin-zoom
+      https://github.com/chartjs/chartjs-plugin-zoom
     """
     return self._attrs["sensitivity"]
 

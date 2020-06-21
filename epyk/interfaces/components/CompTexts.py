@@ -26,7 +26,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_font.asp
+      https://www.w3schools.com/tags/tag_font.asp
 
     Attributes:
     ----------
@@ -71,7 +71,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_label.asp
+      https://www.w3schools.com/tags/tag_label.asp
 
     Attributes:
     ----------
@@ -112,7 +112,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_span.asp
+      https://www.w3schools.com/tags/tag_span.asp
 
     Attributes:
     ----------
@@ -149,7 +149,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.3/components/alerts/
+      https://getbootstrap.com/docs/4.3/components/alerts/
 
     Attributes:
     ----------
@@ -216,7 +216,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://v4-alpha.getbootstrap.com/content/code/
+      https://v4-alpha.getbootstrap.com/content/code/
 
     Attributes:
     ----------
@@ -252,7 +252,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/html/html_styles.asp
+      https://www.w3schools.com/html/html_styles.asp
 
     Attributes:
     ----------
@@ -293,7 +293,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/html/html_styles.asp
+      https://www.w3schools.com/html/html_styles.asp
       https://www.w3schools.com/tags/tag_pre.asp
 
     Attributes:
@@ -332,7 +332,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://v4-alpha.getbootstrap.com/content/typography/
+      https://v4-alpha.getbootstrap.com/content/typography/
       https://www.w3schools.com/TAGS/tag_blockquote.asp
 
     Attributes:
@@ -365,7 +365,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://fontawesome.com/
+      https://fontawesome.com/
 
     Attributes:
     ----------
@@ -440,7 +440,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_hn.asp
+      https://www.w3schools.com/tags/tag_hn.asp
 
     Attributes:
     ----------
@@ -483,7 +483,7 @@ class Texts(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_legend.asp
+      https://www.w3schools.com/tags/tag_legend.asp
       https://www.w3schools.com/tags/tag_fieldset.asp
 
     Attributes:

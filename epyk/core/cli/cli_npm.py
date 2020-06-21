@@ -27,5 +27,4 @@ def info():
 def cdnjs():
   """
   Get package information from CDNJS
-
   """

@@ -3,7 +3,7 @@ Mapping table for the pre defined HTML colors
 
 Related Pages:
 
-			https://www.rapidtables.com/web/color/RGB_Color.html
+      https://www.rapidtables.com/web/color/RGB_Color.html
 """
 
 import random
@@ -600,7 +600,7 @@ class DefinedColors(object):
 
     Related Pages:
 
-			https://www.rapidtables.com/web/color/RGB_Color.html
+      https://www.rapidtables.com/web/color/RGB_Color.html
     """
     return HexColors
 
@@ -613,7 +613,7 @@ class DefinedColors(object):
 
     Related Pages:
 
-			https://www.rapidtables.com/web/color/RGB_Color.html
+      https://www.rapidtables.com/web/color/RGB_Color.html
     """
     return RgbColors
 

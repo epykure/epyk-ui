@@ -24,7 +24,7 @@ class Panels(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.0/components/navs/
+      https://getbootstrap.com/docs/4.0/components/navs/
 
 		Attributes:
     ----------
@@ -62,7 +62,7 @@ class Panels(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.0/components/navs/
+      https://getbootstrap.com/docs/4.0/components/navs/
 
 		Attributes:
     ----------
@@ -94,7 +94,7 @@ class Panels(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.0/components/navs/
+      https://getbootstrap.com/docs/4.0/components/navs/
 
 		Attributes:
     ----------
@@ -130,7 +130,7 @@ class Panels(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.0/components/navs/
+      https://getbootstrap.com/docs/4.0/components/navs/
 
 		Attributes:
     ----------
@@ -167,7 +167,7 @@ class Panels(object):
 
     Related Pages:
 
-			https://getbootstrap.com/docs/4.0/components/navs/
+      https://getbootstrap.com/docs/4.0/components/navs/
 
 		Attributes:
     ----------
@@ -235,7 +235,7 @@ class Panels(object):
 
     Related Pages:
 
-			https://codepen.io/rstrahl/pen/eJZQej
+      https://codepen.io/rstrahl/pen/eJZQej
 
     Attributes:
     ----------
@@ -267,7 +267,7 @@ class Panels(object):
 
     Related Pages:
 
-			https://www.w3schools.com/howto/howto_css_contact_chips.asp
+      https://www.w3schools.com/howto/howto_css_contact_chips.asp
 
     Attributes:
     ----------

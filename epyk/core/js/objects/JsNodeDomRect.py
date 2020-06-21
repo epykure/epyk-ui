@@ -20,7 +20,7 @@ class JsDOMRect(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/x
+      https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/x
     """
     return JsNumber.JsNumber("%s.x" % self.varId)
 
@@ -33,7 +33,7 @@ class JsDOMRect(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/y
+      https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/y
     """
     return JsNumber.JsNumber("%s.y" % self.varId)
 
@@ -46,7 +46,7 @@ class JsDOMRect(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/width
+      https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/width
     """
     return JsNumber.JsNumber("%s.width" % self.varId)
 
@@ -59,7 +59,7 @@ class JsDOMRect(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/height
+      https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/height
     """
     return JsNumber.JsNumber("%s.height" % self.varId)
 
@@ -73,7 +73,7 @@ class JsDOMRect(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/top
+      https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/top
     """
     return JsNumber.JsNumber("%s.top" % self.varId)
 
@@ -87,7 +87,7 @@ class JsDOMRect(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/right
+      https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/right
     """
     return JsNumber.JsNumber("%s.top" % self.varId)
 
@@ -101,7 +101,7 @@ class JsDOMRect(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/bottom
+      https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/bottom
     """
     return JsNumber.JsNumber("%s.top" % self.varId)
 
@@ -115,6 +115,6 @@ class JsDOMRect(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/left
+      https://developer.mozilla.org/en-US/docs/Web/API/DOMRectReadOnly/left
     """
     return JsNumber.JsNumber("%s.left" % self.varId)

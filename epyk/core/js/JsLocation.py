@@ -5,7 +5,7 @@ The location object is part of the window object and is accessed through the win
 
 Related Pages:
 
-			https//www.w3schools.com/jsref/obj_location.asp
+      https//www.w3schools.com/jsref/obj_location.asp
 
 """
 
@@ -28,7 +28,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/obj_location.asp
+      https//www.w3schools.com/jsref/obj_location.asp
 
     :return: Return the hostname property
     """
@@ -44,7 +44,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/obj_location.asp
+      https//www.w3schools.com/jsref/obj_location.asp
 
     :return: Return the pathname property
     """
@@ -60,7 +60,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/prop_loc_host.asp
+      https//www.w3schools.com/jsref/prop_loc_host.asp
 
     :return: Return the hostname and port of the current URL
     """
@@ -76,7 +76,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/prop_loc_hash.asp
+      https//www.w3schools.com/jsref/prop_loc_hash.asp
 
     :return: A String, representing the anchor part of the URL, including the hash sign (#)
     """
@@ -89,7 +89,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/prop_loc_search.asp
+      https//www.w3schools.com/jsref/prop_loc_search.asp
 
     :return: A String, representing the querystring part of a URL, including the question mark (?)
     """
@@ -102,7 +102,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/prop_loc_port.asp
+      https//www.w3schools.com/jsref/prop_loc_port.asp
 
     :return: A String, representing the port number of a URL.
     """
@@ -118,7 +118,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/prop_loc_origin.asp
+      https//www.w3schools.com/jsref/prop_loc_origin.asp
 
     :return: A String, representing the protocol (including ://), the domain name (or IP address) and port number (including the colon sign (:) of the URL.
              For URL's using the "file:" protocol, the return value differs between browser
@@ -134,7 +134,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/prop_loc_href.asp
+      https://www.w3schools.com/jsref/prop_loc_href.asp
 
     :param href: Set the href property
 
@@ -156,7 +156,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https://www.w3schools.com/Jsref/met_win_open.asp
+      https://www.w3schools.com/Jsref/met_win_open.asp
 
     :param url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with about:blank is opened
     :param name: Optional. Specifies the target attribute or the name of the window. Default _blank
@@ -202,7 +202,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/met_loc_reload.asp
+      https//www.w3schools.com/jsref/met_loc_reload.asp
 
     :param forceGet: Optional. Specifies the type of reloading:
           false - Default. Reloads the current page from the cache.
@@ -219,7 +219,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/met_loc_assign.asp
+      https//www.w3schools.com/jsref/met_loc_assign.asp
 
     :param url: Required. Specifies the URL of the page to navigate to
 
@@ -236,7 +236,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https//www.w3schools.com/jsref/met_loc_replace.asp
+      https//www.w3schools.com/jsref/met_loc_replace.asp
 
     :param url: Required. Specifies the URL of the page to navigate to
     :param secured: Optional. If the http is missing. This will be used to fix the url
@@ -254,7 +254,7 @@ class JsLocation(object):
 
     Related Pages:
 
-			https://www.w3schools.com/jsref/dom_obj_form.asp
+      https://www.w3schools.com/jsref/dom_obj_form.asp
 
     :param url: The target url
     :param data: A python dictionary

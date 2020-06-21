@@ -18,7 +18,7 @@ class JsCookies(object):
 
     Related Pages:
 
-			https//www.w3schools.com/js/js_cookies.asp
+      https//www.w3schools.com/js/js_cookies.asp
 
     :return:
     """

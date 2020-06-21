@@ -101,7 +101,7 @@ def load_package(package_name, pip_attrs=None, action='install'):
 
   Related Pages:
 
-			https://pypi.org/
+      https://pypi.org/
 
   Attributes:
   ----------
@@ -898,6 +898,12 @@ JS_IMPORTS = {
     'req': [],
     'modules': [
       {'script': 'platform.js', 'version': '', 'path': 'js/', 'cdnjs': 'https://apis.google.com'}]},
+
+  'facebook-sdk': {
+    'website': 'https://connect.facebook.net',
+    'req': [],
+    'modules': [
+      {'script': 'sdk.js', 'version': '', 'path': 'en-GB/', 'cdnjs': 'https://connect.facebook.net'}]},
 }
 
 

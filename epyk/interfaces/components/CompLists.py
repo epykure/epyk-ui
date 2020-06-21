@@ -59,7 +59,7 @@ class Lists(object):
 
     Related Pages:
 
-			https://silviomoreto.github.io/bootstrap-select/examples/
+      https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
     https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
 
@@ -121,7 +121,7 @@ class Lists(object):
 
     Related Pages:
 
-			https://silviomoreto.github.io/bootstrap-select/examples/
+      https://silviomoreto.github.io/bootstrap-select/examples/
     https://www.npmjs.com/package/bootstrap-select-v4
     https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
 
@@ -217,7 +217,7 @@ class Lists(object):
 
     Related Pages:
 
-        https://www.w3schools.com/html/html_lists.asp
+      https://www.w3schools.com/html/html_lists.asp
     https://www.w3.org/wiki/CSS/Properties/list-style-type
     """
     html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
@@ -280,7 +280,7 @@ class Lists(object):
 
     Related Pages:
 
-			https://www.w3schools.com/html/html_lists.asp
+      https://www.w3schools.com/html/html_lists.asp
 
     Attributes:
     ----------
@@ -308,7 +308,7 @@ class Lists(object):
 
     Related Pages:
 
-			https://www.w3schools.com/cssref/pr_list-style-type.asp
+      https://www.w3schools.com/cssref/pr_list-style-type.asp
 
     Attributes:
     ----------
@@ -340,7 +340,7 @@ class Lists(object):
 
     Related Pages:
 
-        https://www.w3schools.com/cssref/pr_list-style-type.asp
+      https://www.w3schools.com/cssref/pr_list-style-type.asp
 
     Attributes:
     ----------
@@ -622,7 +622,7 @@ class Lists(object):
 
     Related Pages:
 
-			https://www.w3schools.com/howto/howto_css_contact_chips.asp
+      https://www.w3schools.com/howto/howto_css_contact_chips.asp
 
     Attributes:
     ----------

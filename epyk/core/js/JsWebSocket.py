@@ -48,7 +48,7 @@ class WebSocket(object):
 
     Related Pages:
 
-			https://javascript.info/websocket
+      https://javascript.info/websocket
     """
     return SocketState
 
@@ -59,7 +59,7 @@ class WebSocket(object):
 
     Related Pages:
 
-			https://tools.ietf.org/html/rfc6455#section-7.4.1
+      https://tools.ietf.org/html/rfc6455#section-7.4.1
     """
     return HttpCode
 
@@ -169,7 +169,7 @@ class WebSocket(object):
 
     Related Pages:
 
-			https://javascript.info/websocket
+      https://javascript.info/websocket
 
     Attributes:
     ----------
@@ -197,7 +197,7 @@ class WebSocket(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+      https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
     Attributes:
     ----------
@@ -214,7 +214,7 @@ class WebSocket(object):
 
     Related Pages:
 
-			https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+      https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
     Attributes:
     ----------

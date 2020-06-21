@@ -154,7 +154,7 @@ class Buttons(object):
 
     Related Pages:
 
-        https://www.w3schools.com/tags/tag_button.asp
+      https://www.w3schools.com/tags/tag_button.asp
         http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -187,7 +187,7 @@ class Buttons(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_button.asp
+      https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -221,7 +221,7 @@ class Buttons(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_button.asp
+      https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -255,7 +255,7 @@ class Buttons(object):
 
     Related Pages:
 
-			https://www.w3schools.com/tags/tag_button.asp
+      https://www.w3schools.com/tags/tag_button.asp
     http://www.kodingmadesimple.com/2015/04/custom-twitter-bootstrap-buttons-icons-images.html
 
     Attributes:
@@ -290,7 +290,7 @@ class Buttons(object):
 
     Related Pages:
 
-			https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp
+      https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp
 
     Attributes:
     ----------
@@ -370,7 +370,7 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
 
     Related Pages:
 
-			https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
+      https://www.w3schools.com/howto/howto_css_custom_checkbox.asp
 
     Attributes:
     ----------
@@ -455,7 +455,7 @@ Attributes:
 
     Related Pages:
 
-			https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
+      https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
 
     Attributes:
     ----------

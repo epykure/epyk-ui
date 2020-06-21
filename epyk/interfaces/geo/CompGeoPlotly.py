@@ -16,7 +16,7 @@ class Plotly(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/mapbox-county-choropleth/
+      https://plotly.com/javascript/mapbox-county-choropleth/
     """
     return PlotlyChoropleth(self.parent)
 
@@ -29,7 +29,7 @@ class Plotly(object):
 
     Related Pages:
 
-			https://plotly.com/javascript/bubble-maps/
+      https://plotly.com/javascript/bubble-maps/
     """
     return PlotlyBubble(self.parent)
 
