@@ -618,6 +618,23 @@ class JsBase(object):
     """
     return JsWebSocket.WebSocket(htmlCode, self._src, secured)
 
+  def worker(self, htmlCode=None, server=False):
+    """
+    Description:
+    ------------
+    A web worker is a JavaScript running in the background, without affecting the performance of the page.
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html5_webworkers.asp
+
+    Attributes:
+    ----------
+    :param htmlCode: String. The webworker id (variable name) on the JavaScript side
+    :param server: Boolean.
+    """
+    return JsWebSocket.Worker(htmlCode, self._src, server)
+
   @property
   def d3(self):
     """

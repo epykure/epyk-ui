@@ -246,3 +246,104 @@ class WebSocket(object):
       return JsObjects.JsVoid("%s.close(%s)" % (self._selector, code))
 
     return JsObjects.JsVoid("%s.close(%s, '%s')" % (self._selector, code, reason))
+
+
+class Worker(object):
+
+  def __init__(self, htmlCode=None, src=None, server=False):
+    """
+    Description:
+    ------------
+
+    """
+    self._src, self.__server = src, server
+    self._selector = htmlCode or "worker_%s" % id(self)
+    self._src._props['js']['builders'].add("var %s" % self._selector)
+
+  @property
+  def message(self):
+    """
+    Description:
+    ------------
+
+    """
+    return JsObjects.JsObject.JsObject.get("event.data")
+
+  def connect(self, script=None, content=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html5_webworkers.asp
+      https://www.html5rocks.com/en/tutorials/workers/basics/
+
+    Attributes:
+    ----------
+    :param script: String.
+    :param content: String.
+    """
+    if not self.__server or content is not None:
+      # load the file and put this to Js Blobs
+      if script is not None:
+        with open(script) as f:
+          self._src._props['js']['workers']['js_%s' % self._selector] = f.read()
+      else:
+        self._src._props['js']['workers']['js_%s' % self._selector] = content
+      self._src._props['js']['builders'].add('''
+        var blob_%(selector)s = new Blob([document.querySelector('#js_%(selector)s').textContent ], {type: "text/javascript"})
+        %(selector)s = new Worker(window.URL.createObjectURL(blob_%(selector)s))''' % {'selector': self._selector})
+    else:
+      self._src._props['js']['builders'].add("%s = new Worker('%s')" % (self._selector, script))
+    return JsObjects.JsVoid("%s = new Worker('%s')" % (self._selector, script))
+
+  def postMessage(self, data):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.html5rocks.com/en/tutorials/workers/basics/
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsVoid("%s.postMessage(%s)" % (self._selector, data))
+
+  def on(self, eventType, jsFncs):
+    self._src.js.onReady(self.addEventListener(eventType, jsFncs))
+
+  def addEventListener(self, eventType, jsFncs):
+    """
+    Description:
+    ------------
+
+    :param eventType:
+    :param jsFncs:
+    """
+    return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {"varName": self._selector, 'eventType': eventType, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
+
+  def receive(self, jsFncs):
+    """
+    Description:
+    ------------
+
+    :param jsFncs:
+    """
+    return JsObjects.JsVoid("%(varName)s.onmessage = function (event) {%(data)s}" % {"varName": self._selector, "data": JsUtils.jsConvertFncs(jsFncs, toStr=True)})
+
+  def terminate(self):
+    """
+    Description:
+    ------------
+    When a web worker object is created, it will continue to listen for messages (even after the external script is finished) until it is terminated.
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html5_webworkers.asp
+    """
+    return JsObjects.JsVoid("%s.terminate(); %s = undefined" % (self._selector, self._selector))

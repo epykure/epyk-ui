@@ -401,6 +401,9 @@ class PyOuts(object):
       with open(os.path.join(path, 'js', "%s.js" % name), "w") as f:
         f.write(";".join(results['jsFrgsCommon'].values()))
 
+    # Add the worker sections when no server available
+    for js_id, wk_content in self._report._props.get('js', {}).get("workers", {}).items():
+      body += '\n<script id="%s" type="javascript/worker">\n%s\n</script>' % (js_id, wk_content)
     with open(html_file_path, "w") as f:
       results['body'] = body
       results['header'] = self._report.headers

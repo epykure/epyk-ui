@@ -44,6 +44,7 @@ class Report(object):
     self._props = {'js': {
         'onReady': OrderedSet(), # JavaScript framework triggered after the HTML. Impact the entire page
         'events': {},
+        'workers': {}, # Local worker sections
         'constructors': {}, # Static and generic builders
         'datasets': {}, # Input data used in the various component (Page global variables)
         'configs': {}, # Global server configurations used for connection to the backend
