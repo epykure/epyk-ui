@@ -5,7 +5,6 @@ Draft version
 
 from epyk.core import Page
 from epyk.web import node
-from epyk.core.js import Imports
 
 import sys
 import re
@@ -24,32 +23,6 @@ def app(path, name=None):
   :param path:
   """
   return Angular(path, name)
-
-
-def requirements(report):
-  """
-  Description:
-  ------------
-  Get the list of all the packages required in the Angular Application
-
-  Packages can be installed in the app using the command
-    > nmp install package1 package2 .....
-
-  Attributes:
-  ----------
-  :param report: Python object. The report object
-  """
-  npms = []
-  importMng = Imports.ImportManager(online=True, report=report)
-  for req in importMng.cleanImports(report.jsImports, Imports.JS_IMPORTS):
-    if 'register' in Imports.JS_IMPORTS[req]:
-      if 'npm' in Imports.JS_IMPORTS[req]['register']:
-        npms.append(Imports.JS_IMPORTS[req]['register']['npm'])
-      else:
-        print("No npm requirement defined for %s" % req)
-    else:
-      print("No npm requirement defined for %s" % req)
-  return npms
 
 
 JS_MODULES_IMPORTS = {
@@ -410,6 +383,38 @@ class NG(object):
     """
     subprocess.run('ng serve --open', shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
+  def npm(self, packages):
+    """
+    Description:
+    ------------
+    This will add the npm requirements to the Angular app but also update directly the angular.json for anything needed
+    at the start of the application.
+
+    This is mainly used for generic and common libraries like Jquery and Jquery UI
+
+    Attributes:
+    ----------
+    :param packages:
+    """
+    subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=os.path.join(self._app_path, self._app_name))
+    map_modules = {
+      "jquery": "./node_modules/jquery/dist/jquery.min.js",
+      "jquery-ui-dist": "./node_modules/jquery-ui-dist/jquery-ui.js",
+    }
+    angular_conf_path = os.path.join(self._app_path, self._app_name, "angular.json")
+    with open(angular_conf_path) as f:
+      angular_conf = json.load(f)
+    config_updated = False
+    scripts = angular_conf["projects"][self._app_name]["architect"]['build']['options']["scripts"]
+    for mod, path in map_modules.items():
+      if mod in packages:
+        if path not in scripts:
+          config_updated = True
+          scripts.append(path)
+    if config_updated:
+      with open(angular_conf_path, "w") as f:
+        json.dump(angular_conf, f, indent=2)
+
   @property
   def create(self):
     """
@@ -661,7 +666,7 @@ class App(object):
     self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
     self.__comp_structure, self.htmls, self.__fncs, self.__injectable_prop = {}, [], {}, {'providedIn': 'root'}
     self.spec = ComponentSpec(app_path, app_name,  alias, name)
-    self.comps = {}
+    self.comps, self.module_path = {}, None
 
   def add_var(self, name, value=None):
     """
@@ -749,14 +754,14 @@ class App(object):
     if target_path is None:
       target_path = []
     target_path.append(self.__path)
-    module_path = os.path.join(self._app_path, *target_path)
-    if not os.path.exists(module_path):
-      os.makedirs(module_path)
+    self.module_path = os.path.join(self._app_path, *target_path)
+    if not os.path.exists(self.module_path):
+      os.makedirs(self.module_path)
     page = self._report.outs.web()
-    self.spec.export(path=module_path, target_path=None)
+    self.spec.export(path=self.module_path, target_path=None)
     self.__fncs['ngAfterViewInit'] = [page['jsFrgs']]
 
-    with open(os.path.join(module_path, "%s.ts" % self.name), "w") as f:
+    with open(os.path.join(self.module_path, "%s.ts" % self.name), "w") as f:
       for comp, path in self.imports.items():
         f.write("import { %s } from '%s';\n" % (comp, path))
       f.write("import { %s } from './module_%s.js';" % (", ".join(list(page['jsFrgsCommon'].keys())),  self.alias.replace("-", "_")))
@@ -791,23 +796,70 @@ class App(object):
         f.write("  %s(){ %s } \n" % (name, ";".join(fnc_def)))
       f.write("}\n")
 
-    with open(os.path.join(module_path, "module_%s.js" % self.alias.replace("-", "_")), "w") as f:
+    with open(os.path.join(self.module_path, "module_%s.js" % self.alias.replace("-", "_")), "w") as f:
       for js_dep in JS_MODULES_IMPORTS:
         if js_dep in self._report.jsImports:
           f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
       for buider in page['jsFrgsCommon'].values():
         f.write("export %s;\n" % buider)
 
-    with open(os.path.join(module_path, "%s.html" % self.name), "w") as f:
+    with open(os.path.join(self.module_path, "%s.html" % self.name), "w") as f:
       f.write("%(cssImports)s\n\n%(body)s" % page)
 
-    with open(os.path.join(module_path, "%s.css" % self.name), "w") as f:
+    with open(os.path.join(self.module_path, "%s.css" % self.name), "w") as f:
       f.write(page['cssStyle'])
 
 
 class Angular(node.Node):
 
+  def create(self, name):
+    """
+    Description:
+    ------------
+    To create a new project, run:
+
+    Related Pages:
+
+      https://cli.vuejs.org/guide/creating-a-project.html
+
+    Attributes:
+    ----------
+    :param name: String. The application name
+    """
+    subprocess.run('ng new %s' % name, shell=True, cwd=self._app_path)
+
+  def serve(self, app_name, port=8081):
+    """
+    Description:
+    ------------
+    Return the version of Angular.js on the server
+
+    Related Pages:
+
+      https://cli.vuejs.org/guide/cli-service.html#using-the-binary
+
+    """
+    path = os.path.join(self._app_path, app_name)
+    subprocess.run('ng serve -- --port %s' % port, shell=True, cwd=path)
+
   def ng(self, app_name=None):
+    """
+    Description:
+    ------------
+    Angular specific command lines
+
+    Related Pages:
+
+      https://angular.io/cli/
+
+    Attributes:
+    ----------
+    :param app_name: String. The angular application name
+    """
+    app_name = app_name or self._app_name
+    return NG(self._app_path, app_name)
+
+  def cli(self, app_name):
     """
     Description:
     ------------
@@ -897,6 +949,7 @@ class Angular(node.Node):
     """
     if self._page is not None:
       self._page.export(target_path=target_path)
+    node.requirements(self._page._report, self._page.module_path)
     if self._route is not None:
       self._route.export()
 

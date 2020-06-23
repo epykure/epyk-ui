@@ -10,6 +10,37 @@ from epyk.core import Page
 from epyk.core.js import Imports
 
 
+def requirements(report, app_path=None):
+  """
+  Description:
+  ------------
+  Get the list of all the packages required in the Node Application
+
+  Packages can be installed in the app using the command
+    > nmp install package1 package2 .....
+
+  Attributes:
+  ----------
+  :param report: Python object. The report object
+  """
+  npms = []
+  importMng = Imports.ImportManager(online=True, report=report)
+  for req in importMng.cleanImports(report.jsImports, Imports.JS_IMPORTS):
+    if 'register' in Imports.JS_IMPORTS[req]:
+      if 'npm' in Imports.JS_IMPORTS[req]['register']:
+        npm_name = Imports.JS_IMPORTS[req]['register']['npm']
+        npms.append(npm_name)
+        if app_path is not None:
+          npm_package_path = os.path.join(app_path, npm_name)
+          if not os.path.exists(npm_package_path):
+            print("Missing package: %s" % npm_name)
+      else:
+        print("No npm requirement defined for %s" % req)
+    else:
+      print("No npm requirement defined for %s" % req)
+  return npms
+
+
 class App(object):
 
   def __init__(self, app_path, app_name, alias, name, report=None):
@@ -120,12 +151,42 @@ fs.readFile('./%s.html', function (err, html) {
 }); ''' % (js_reqs, self.name))
 
 
+class Cli(object):
+
+  def __init__(self, app_path):
+    self._app_path = app_path
+
+  def angular(self):
+    """
+    https://cli.angular.io/
+
+    """
+    subprocess.run('npm install -g @angular/cli', shell=True, cwd=self._app_path)
+
+  def vue(self):
+    """
+    https://cli.vuejs.org/
+    """
+    subprocess.run('npm install -g @vue/cli', shell=True, cwd=self._app_path)
+
+  def react(self):
+    return
+
+
 class Node(object):
 
   def __init__(self, app_path, name=None):
     self._app_path, self._app_name = app_path, name
     self._route, self._fmw_modules = None, None
     self._page = None
+
+  @property
+  def clis(self):
+    if self._app_name is not None:
+      path = os.path.join(self._app_path, self._app_name)
+    else:
+      path = self._app_path
+    return Cli(path)
 
   def npm(self, packages):
     """

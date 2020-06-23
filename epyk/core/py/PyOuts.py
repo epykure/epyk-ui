@@ -461,7 +461,8 @@ class PyOuts(object):
         app.route().add(component, selector, "apps")
     elif server.upper() == 'VUE':
       app = vue.VueJs(app_path=app_path, name=name or 'vue')
-      app.page(report=self._report, selector=selector or 'app-root', name=module)
+      component = module or selector.capitalize()
+      app.page(report=self._report, selector=selector, name=component, auto_route=auto_route, target_folder=target_folder)
     elif server.upper() == 'REACT':
       app = react.React(app_path=app_path, name=name or 'react')
       app.page(report=self._report, selector=selector or 'app-root', name=module)
