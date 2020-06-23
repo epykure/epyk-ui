@@ -842,6 +842,22 @@ class Angular(node.Node):
     path = os.path.join(self._app_path, app_name)
     subprocess.run('ng serve -- --port %s' % port, shell=True, cwd=path)
 
+  def router(self, app_name):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://stackoverflow.com/questions/44990030/how-to-add-a-routing-module-to-an-existing-module-in-angular-cli-version-1-1-1
+
+    Attributes:
+    ----------
+    :param app_name:
+    """
+    path = os.path.join(self._app_path, app_name)
+    subprocess.run('ng generate module app-routing --module app --flat', shell=True, cwd=path)
+
   def ng(self, app_name=None):
     """
     Description:
