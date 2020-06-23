@@ -17,8 +17,8 @@ var showdown = Showdown;
 
 
 class NpxCli(object):
-  def __init__(self, vue_app_path):
-    self._vue_app_path = vue_app_path
+  def __init__(self, app_path, app_name):
+    self._react_app_path = os.path.join(app_path, app_name)
 
   def create(self, name=None):
     """
@@ -36,9 +36,9 @@ class NpxCli(object):
     :param name:
     """
     if name is None:
-      subprocess.run('npx create-react-app --help', shell=True, cwd=self._vue_app_path)
+      subprocess.run('npx create-react-app --help', shell=True, cwd=self._react_app_path)
     else:
-      subprocess.run('npx create-react-app %s' % name, shell=True, cwd=self._vue_app_path)
+      subprocess.run('npx create-react-app %s' % name, shell=True, cwd=self._react_app_path)
 
   def build(self):
     """
@@ -51,7 +51,7 @@ class NpxCli(object):
 
       https://create-react-app.dev/docs/getting-started/
     """
-    subprocess.run('npm run build', shell=True, cwd=self._vue_app_path)
+    subprocess.run('npm run build', shell=True, cwd=self._react_app_path)
 
   def start(self):
     """
@@ -63,7 +63,7 @@ class NpxCli(object):
 
       https://create-react-app.dev/docs/getting-started/
     """
-    subprocess.run('npm test', shell=True, cwd=self._vue_app_path)
+    subprocess.run('npm test', shell=True, cwd=self._react_app_path)
 
   def test(self):
     """
@@ -75,7 +75,20 @@ class NpxCli(object):
 
       https://create-react-app.dev/docs/getting-started/
     """
-    subprocess.run('npm test', shell=True, cwd=self._vue_app_path)
+    subprocess.run('npm test', shell=True, cwd=self._react_app_path)
+
+  def npm(self, packages):
+    """
+    Description:
+    ------------
+    This will add the npm requirements to the Angular app but also update directly the angular.json for anything needed
+    at the start of the application.
+
+    Attributes:
+    ----------
+    :param packages: List. The packages names to install
+    """
+    subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self._react_app_path)
 
 
 class App(object):
@@ -246,7 +259,8 @@ class React(node.Node):
     ----------
     :param app_name: String. The React.js application name
     """
-    return NpxCli(self._app_path)
+    app_name = app_name or self._app_name
+    return NpxCli(self._app_path, app_name)
 
   def router(self, app_name):
     """
