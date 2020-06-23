@@ -399,6 +399,7 @@ class NG(object):
     subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=os.path.join(self._app_path, self._app_name))
     map_modules = {
       "jquery": "./node_modules/jquery/dist/jquery.min.js",
+      "chart.js": "./node_modules/chart.js/dist/Chart.js",
       "jquery-ui-dist": "./node_modules/jquery-ui-dist/jquery-ui.js",
     }
     angular_conf_path = os.path.join(self._app_path, self._app_name, "angular.json")
