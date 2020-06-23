@@ -451,8 +451,11 @@ class PyOuts(object):
       app = node.Node(app_path=app_path, name=name or 'node')
       app.page(report=self._report, selector=selector or 'app-root', name=module)
     elif server.upper() == 'DENO':
+      component = module or selector.capitalize()
       app = deno.Deno(app_path=app_path, name=name or 'deno')
-      app.page(report=self._report, selector=selector or 'app-root', name=module)
+      app.page(report=self._report, selector=selector, name=component, target_folder=target_folder)
+      if auto_route:
+        app.launcher(component, target_folder)
     elif server.upper() == 'ANGULAR':
       app = angular.Angular(app_path=app_path, name=name or 'angular')
       component = module or selector.capitalize()
