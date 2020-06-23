@@ -463,13 +463,13 @@ class PyOuts(object):
       app = angular.Angular(app_path=app_path, name=name or 'angular')
       app.page(report=self._report, selector=selector, name=component, target_folder=target_folder)
       if auto_route:
-        app.route().add(component, selector, "apps")
+        app.route().add(component, selector, target_folder)
     elif server.upper() == 'VUE':
       app = vue.VueJs(app_path=app_path, name=name or 'vue')
       app.page(report=self._report, selector=selector, name=component, auto_route=auto_route, target_folder=target_folder)
     elif server.upper() == 'REACT':
       app = react.React(app_path=app_path, name=name or 'react')
-      app.page(report=self._report, selector=selector or 'app-root', name=module)
+      app.page(report=self._report, selector=selector or 'app-root', name=module, auto_route=auto_route, target_folder=target_folder)
     app.publish()
     return app
 

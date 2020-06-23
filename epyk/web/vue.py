@@ -124,7 +124,6 @@ class App(object):
     :param path: String. The .vue module path
     """
     index_router = os.path.join(self._app_path, 'src', 'router', "index.js")
-    print(index_router)
     if not os.path.exists(index_router):
       raise Exception("Router is not installed, run: vue add router in the Vue app")
 
@@ -292,7 +291,6 @@ class VueJs(node.Node):
       if selector is None:
         selector = script.replace("_", "-")
     report = report or Page.Report()
-    report.framework("VUE")
     self._page = App(self._app_path, self._app_name, selector, name, report=report, target_folder=target_folder)
     self.__route = auto_route
     return self._page

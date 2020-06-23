@@ -158,19 +158,40 @@ class Cli(object):
 
   def angular(self):
     """
-    https://cli.angular.io/
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://cli.angular.io/
 
     """
     subprocess.run('npm install -g @angular/cli', shell=True, cwd=self._app_path)
 
   def vue(self):
     """
-    https://cli.vuejs.org/
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://cli.vuejs.org/
     """
     subprocess.run('npm install -g @vue/cli', shell=True, cwd=self._app_path)
 
   def react(self):
-    return
+    """
+    Description:
+    ------------
+    react.cli is ReactJS command line interface.
+    Using this cli you can generate modules and components very easily. This cli was created for React-Redux-Boilerplate.
+    If your project does not have a similar architecture, you can not use this tool.
+
+    Related Pages:
+
+      https://github.com/Babunashvili/react.cli#readme
+    """
+    subprocess.run('npm install react.cli -g', shell=True, cwd=self._app_path)
 
 
 class Node(object):
