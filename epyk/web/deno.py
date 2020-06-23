@@ -75,7 +75,7 @@ for await (const req of server) {
   req.respond({ body: text });    
 } ''' % (target_path, app_name))
 
-  def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="apps"):
+  def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="views"):
     """
     Description:
     ------------
@@ -96,13 +96,17 @@ for await (const req of server) {
     self.selector = selector
     self.auto_route = auto_route
 
-  def publish(self):
+  def publish(self, target_path=None):
     """
     Description:
     ------------
+    Publish the application to the target path within the Deno Server
 
+    Attributes:
+    ----------
+    :param target_path: String. The target path for the transpiled views
     """
-    out_path = os.path.join(self._app_path, self.target_folder)
+    out_path = os.path.join(self._app_path, target_path or self.target_folder)
     if not os.path.exists(out_path):
       os.makedirs(out_path)
     self._report.outs.html_file(path=out_path, name=self.name)

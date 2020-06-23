@@ -437,39 +437,41 @@ class PyOuts(object):
     """
     Description:
     ------------
+    Publish the HTML page to a distant web server.
 
     Attributes:
     ----------
-    :param server:
-    :param app_path:
-    :param name:
+    :param server: String. The webserver type (angular, react, vue, node, deno)
+    :param app_path: String. The webserver path
+    :param name: String. The application name in the webserver
     """
     from epyk.web import angular, node, vue, react, deno
 
     app = None
+    component = module or selector.capitalize()
     if server.upper() == 'NODE':
       app = node.Node(app_path=app_path, name=name or 'node')
-      app.page(report=self._report, selector=selector or 'app-root', name=module)
+      app.page(report=self._report, selector=selector, name=component, target_folder=target_folder)
+      if auto_route:
+        app.launcher(component, target_folder)
     elif server.upper() == 'DENO':
-      component = module or selector.capitalize()
       app = deno.Deno(app_path=app_path, name=name or 'deno')
       app.page(report=self._report, selector=selector, name=component, target_folder=target_folder)
       if auto_route:
         app.launcher(component, target_folder)
     elif server.upper() == 'ANGULAR':
       app = angular.Angular(app_path=app_path, name=name or 'angular')
-      component = module or selector.capitalize()
       app.page(report=self._report, selector=selector, name=component, target_folder=target_folder)
       if auto_route:
         app.route().add(component, selector, "apps")
     elif server.upper() == 'VUE':
       app = vue.VueJs(app_path=app_path, name=name or 'vue')
-      component = module or selector.capitalize()
       app.page(report=self._report, selector=selector, name=component, auto_route=auto_route, target_folder=target_folder)
     elif server.upper() == 'REACT':
       app = react.React(app_path=app_path, name=name or 'react')
       app.page(report=self._report, selector=selector or 'app-root', name=module)
     app.publish()
+    return app
 
   def markdown_file(self, path=None, name=None):
     """

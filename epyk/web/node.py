@@ -43,12 +43,12 @@ def requirements(report, app_path=None):
 
 class App(object):
 
-  def __init__(self, app_path, app_name, alias, name, report=None):
+  def __init__(self, app_path, app_name, alias, name, report=None, target_folder="views"):
     self.imports = collections.OrderedDict({"http": 'http', 'url': 'url', 'fs': 'fs'})
     self.import_launchers = []
     self.vars, self.__map_var_names, self._report = {}, {}, report
     self._app_path, self._app_name = app_path, app_name
-    self.alias, self.__path, self.className, self.__components = alias, 'apps', name, None
+    self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
     self.comps = {}
 
   def require(self, module, alias=None, launcher=""):
@@ -123,7 +123,7 @@ class App(object):
     if target_path is None:
       target_path = []
     target_path.append(self.__path)
-    module_path = os.path.join(self._app_path, self._app_name, *target_path)
+    module_path = os.path.join(self._app_path, *target_path)
     if not os.path.exists(module_path):
       os.makedirs(module_path)
     self._report.outs.html_file(path=module_path, name=self.name)
@@ -211,7 +211,86 @@ class Node(object):
     """
     subprocess.run('npm ls', shell=True, cwd=self._app_path)
 
-  def run(self, name):
+  def launcher(self, app_name, target_path, port=3000):
+    """
+    Description:
+    ------------
+    Create a single launcher for the application.
+
+    Attributes:
+    ----------
+    :param app_name: String. The deno path (This should contain the deno.exe file)
+    :param target_path: String. The target path for the views
+    """
+    out_path = os.path.join(self._app_path, "launchers")
+    if not os.path.exists(out_path):
+      os.makedirs(out_path)
+    router_path = os.path.join(out_path, "launcher_%s.js" % app_name)
+    with open(os.path.join(self._app_path, "run_%s.bat" % app_name), "w") as f:
+      f.write("node.exe ./launchers/launcher_%s.js" % app_name)
+    with open(router_path, "w") as f:
+      f.write('''
+var http = require('http');
+var url = require('url');
+var fs = require('fs');
+
+fs.readFile('./%s/%s.html', function (err, html) {
+    if (err) {throw err;}       
+    http.createServer(function(request, response) {  
+        response.writeHeader(200, {"Content-Type": "text/html"});  
+        response.write(html);  
+        response.end();  
+    }).listen(%s);
+}); ''' % (target_path, app_name, port))
+
+  def launch(self, app_name, target_folder=None, port=3000):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param app_name: String
+    :param target_folder: String.
+    :param port: Integer.
+    """
+    out_path = os.path.join(self._app_path, "launchers")
+    router_path = os.path.join(out_path, "launcher_%s.js" % app_name)
+    target_folder = target_folder or self.target_folder
+    if not os.path.exists(router_path) and target_folder is not None:
+      self.launcher(app_name, target_folder, port)
+    self.run(name="./launchers/launcher_%s.js" % app_name)
+
+  def router(self, target_folder, port=3000):
+    """
+    Description:
+    ------------
+    Create a simple router file for your different views on your server.
+
+    Attributes:
+    ----------
+    :param target_folder: String. The target path where the views are stored
+    :param port: Integer.
+    """
+    router_path = os.path.join(self._app_path, "server.js")
+    with open(router_path, "w") as f:
+      f.write('''
+var http = require('http');
+var fs = require('fs');
+var parser = require('url');
+
+http.createServer(function(request, response) {
+    url = parser.parse(request.url, true);  
+    fs.readFile('./%s'+ url.path +'.html', function (err, html) {
+      if (err) {throw err;} 
+      response.writeHeader(200, {"Content-Type": "text/html"});  
+      response.write(html);  
+      response.end();  
+    });
+}).listen(%s);
+ ''' % (target_folder, port))
+
+  def run(self, name, port=3000):
     """
     Description:
     ------------
@@ -224,8 +303,21 @@ class Node(object):
     Attributes:
     ----------
     :param name: String. The script name
+    :param port: Integer. The port number for the node server
     """
-    subprocess.run('node %s' % name, shell=True, cwd=self._app_path)
+    print("Node server url: 127.0.0.1:%s" % port)
+    subprocess.run('node %s --port %s' % (name, port), shell=True, cwd=self._app_path)
+
+  def inspect(self, name, from_launcher=False):
+    """
+
+    :param name:
+    :param from_launcher:
+    """
+    if from_launcher:
+      subprocess.run('node --inspect ./launchers/launcher_%s.js' % name, shell=True, cwd=self._app_path)
+    else:
+      subprocess.run('node --inspect %s ' % name, shell=True, cwd=self._app_path)
 
   def docs(self, package):
     """
@@ -274,7 +366,7 @@ class Node(object):
     subprocess.run('npm install -g @vue/cli', shell=True, cwd=self._app_path)
     print("Angular CLI installed")
 
-  def page(self, selector=None, name=None, report=None, auto_route=False):
+  def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="views"):
     """
     Description:
     ------------
@@ -295,20 +387,22 @@ class Node(object):
     report = report or Page.Report()
     report.framework("NODE")
     self._page = App(self._app_path, self._app_name, selector, name, report=report)
-    #if auto_route:
-    #  self.route.add(self.__page.className, self.__page.alias, self.__page.path)
+    self.auto_route = auto_route
+    self.target_folder = target_folder
     return self._page
 
-  def publish(self, app_name=None, target_path=None):
+  def publish(self, target_folder=None):
     """
     Description:
     ------------
-    Publishh the Vue.js application
+    Publish the Node.js application
 
     Attributes:
     ----------
-    :param app_name:
-    :param target_path: List  for example ['src', 'app']
+    :param target_folder: String. The target path for the transpiled views
     """
+    out_path = os.path.join(self._app_path, target_folder or self.target_folder)
     if self._page is not None:
-      self._page.export(target_path=target_path)
+      self._page.export(target_path=target_folder)
+    if self.auto_route:
+      self.launcher(self.name, out_path)
