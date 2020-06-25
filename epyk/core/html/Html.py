@@ -156,6 +156,10 @@ class Html(object):
     self._vals = vals
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
 
+  def add(self, component):
+    """ Add items to a container """
+    return self.__add__(component)
+
   def __add__(self, component):
     """ Add items to a container """
     if hasattr(component, 'htmlCode'):
@@ -257,6 +261,7 @@ class Html(object):
     :return: The htmlObj
     """
     self._sub_htmls.append(htmlObj)
+    self.components[htmlObj.htmlCode] = htmlObj
     #htmlObj.options.managed = False
     # add a flag to propagate on the Javascript the fact that some child nodes will be added
     # in this case innerHYML cannot be used anymore

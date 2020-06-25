@@ -465,6 +465,18 @@ class OptionGrid(Options):
     self.set(bool)
 
   @property
+  def classe(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get("container-fluid")
+
+  @classe.setter
+  def classe(self, cls):
+    self.set(cls)
+
+  @property
   def noGutters(self):
     """
     Description:

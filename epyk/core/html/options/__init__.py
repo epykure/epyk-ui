@@ -101,6 +101,8 @@ class Options(DataClass):
   @managed.setter
   def managed(self, bool):
     self.set(bool)
+    #for component in self._report.components.values():
+    #  component.options.managed = bool
 
   def details(self):
     """

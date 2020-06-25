@@ -291,13 +291,13 @@ class PanelsBar(Html.Html):
 class Shortcut(Html.Html):
   name = 'shortcut'
 
-  def __init__(self, report, components, width, height, htmlCode, options, profile):
+  def __init__(self, report, components, logo, width, height, htmlCode, options, profile):
     super(Shortcut, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
-    self.logo = None
+    self.logo = logo
+    if hasattr(self.logo, 'options'):
+      self.logo.options.managed = False
     self.__options = options
     for component in components:
-      if not hasattr(component, 'options'):
-        component = report.ui.icons.awesome(component)
       self.__add__(component)
     self.css({"background": report.theme.colors[1], "position": 'fixed', 'overflow': 'hidden', 'z-index': 20})
     self.style.css.padding = 0
@@ -322,8 +322,12 @@ class Shortcut(Html.Html):
 
   def __add__(self, component):
     """ Add items to a container """
-    if hasattr(component, 'htmlCode'):
-      component.options.managed = False
+    if not hasattr(component, 'options'):
+      component = self._report.ui.icons.awesome(component)
+      component.icon.style.css.font_size = 20
+      component.style.css.margin_bottom = 5
+      component.style.css.margin_top = 5
+    component.options.managed = False
 
     if self.__options['position'] in ['left', 'right']:
       component.style.css.width = self.css("width")
@@ -358,17 +362,22 @@ class Shortcut(Html.Html):
     :param height:
     """
     self.logo = self._report.ui.img(icon, path=path, align=align, width=width, height=height)
-    self.logo.style.css.margin_top = 5
-    if self.__options['position'] in ['left', 'right']:
-      self.logo.style.css.margin_bottom = 15
-      self.logo.style.css.margin_right = 0
-    else:
-      self.logo.style.css.margin_right = 10
     return self
 
   def __str__(self):
     if self.logo is None:
       self.logo = self._report.ui.icons.epyk()
-    self.logo.options.managed = False
+    else:
+      self.logo.style.css.margin_top = 5
+      self.logo.style.css.display = 'block'
+      self.logo.style.css.width = self.css("width")
+      self.logo.style.css.height = self.css("width")
+      if self.__options['position'] in ['left', 'right']:
+        self.logo.style.css.margin_bottom = 15
+        self.logo.style.css.margin_right = 0
+      else:
+        self.logo.style.css.margin_right = 10
+    self.logo.style.css.margin_bottom = 40
+    self._report.body.style.css.padding_left = "%spx" % (int(self.css("width")[:-2]) + 5)
     str_div = "".join([self.logo.html()] + [v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)

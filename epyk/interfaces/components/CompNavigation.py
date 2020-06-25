@@ -460,10 +460,11 @@ class Navigation(object):
     Attributes:
     ----------
     :param components:
-    :param width:
-    :param height:
+    :param logo:
+    :param size:
     :param options:
     :param profile:
+    :param htmlCode:
     """
     dflt_options = {"position": 'left'}
     if options is not None:
@@ -475,7 +476,7 @@ class Navigation(object):
     else:
       width = size
       height = (100, '%')
-    h_drawer = html.HtmlMenu.Shortcut(self.context.rptObj, components or [], width, height, htmlCode, dflt_options, profile)
+    h_drawer = html.HtmlMenu.Shortcut(self.context.rptObj, components or [], logo, width, height, htmlCode, dflt_options, profile)
     return h_drawer
 
 

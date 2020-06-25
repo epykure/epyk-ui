@@ -790,8 +790,9 @@ class Grid(Html.Html):
   def __init__(self, report, rows, width, height, align, helper, options, profile):
     super(Grid, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionGrid(report, options)
+    self.style.clear(no_default=True)
     self.css({'overflow-x': 'hidden', 'padding': 0})
-    self.attr["class"].add("container-fluid")
+    self.attr["class"].add(self.options.classe)
     if align == 'center':
       self.css({'margin': 'auto'})
     if rows is not None:
