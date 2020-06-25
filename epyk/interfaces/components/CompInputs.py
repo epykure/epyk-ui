@@ -466,7 +466,7 @@ class Inputs(object):
                                       helper, options, profile)
     return html_radio
 
-  def editor(self, text="", language='python', width=(100, "%"), height=(None, "px"), htmlCode=None, options=None, profile=None):
+  def editor(self, text="", language='python', width=(100, "%"), height=(300, "px"), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------

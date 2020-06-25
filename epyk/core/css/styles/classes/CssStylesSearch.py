@@ -18,7 +18,7 @@ class CssSearchExt(CssStyle.Style):
 
 class CssSearch(CssStyle.Style):
   _attrs = {'width': 'auto', 'display': 'inline-block', 'border': 'none', 'background-repeat': 'no-repeat',
-            'padding': '5px 20px 5px 40px'}
+            'padding': '5px 0px'}
   _focus = {'outline': 0}
 
   def customize(self):
