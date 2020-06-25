@@ -475,8 +475,8 @@ class DropFile(Html.Html):
     super(DropFile, self).__init__(report, vals, profile=profile)
     self.__options = OptNet.OptionFiles(self, options)
     self.tooltip(tooltip, location='bottom')
-    self.css({"display": "inline-block", "width": '100%', 'text-align': 'center', 'margin': '0 5px',
-              'border': "1px dashed %s" % report.theme.colors[-1]})
+    self.css({"display": "inline-block", "width": '100%', 'text-align': 'center',
+              "color": self._report.theme.success[0], "margin-top": '5px', 'border': "1px dashed %s" % report.theme.colors[-1]})
 
   @property
   def options(self):
@@ -500,7 +500,7 @@ class DropFile(Html.Html):
     :param url: String. The transfer end point on the server
     """
     # TODO add if else statement for the allowed and forbidden extensions
-    post = self._report.js.post(url, self._report.js.objects.get("form_data"))
+    post = self._report.js.post(url, self._report.js.objects.get("form_data"), is_json=False)
     return post
 
   def drop(self, jsFncs, preventDefault=True, profile=False):

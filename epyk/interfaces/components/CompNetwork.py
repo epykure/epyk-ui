@@ -295,7 +295,7 @@ class Network(object):
       dflt_options.update(options)
     return html.HtmlNetwork.Room(self.context.rptObj, img, width, height, htmlCode, dflt_options, profile)
 
-  def dropfile(self, placeholder='Drop your files here', tooltip=None, options=None, profile=None):
+  def dropfile(self, placeholder='Drop your files here', tooltip='Drop your files here', options=None, profile=None):
     """
     Description:
     ------------

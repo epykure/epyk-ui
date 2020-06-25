@@ -1,6 +1,7 @@
 
 from epyk.core.html import Html
 from epyk.core.css import Colors
+from epyk.core.js.packages import JsQuery
 
 from epyk.core.html.options import OptText
 from epyk.core.js.html import JsHtml
@@ -442,8 +443,9 @@ class SearchResult(Html.Html):
   @property
   def _js__builder__(self):
     return '''
-      jHtmlObj = jQuery(htmlObj);
+      jHtmlObj = %(jquery)s; jHtmlObj.empty();
       if (typeof options.currPage == 'undefined'){options.currPage = 0}; var pageNumber = options.pageNumber;
+      console.log(data);
       data.slice(options.currPage * pageNumber).forEach( function(rec){
         var newItem = $('<div style="margin:5px 10px 5px 10px;"></div>') ; 
         var title = $('<div>'+ rec['title'] + '</div>').css( options.title );
@@ -486,7 +488,7 @@ class SearchResult(Html.Html):
           href.click({page: options.currPage+1, rec: data}, function(e){%(class)s(htmlObj, e.data.rec, options, e.data.page)});
           paginate.append(href)};
         jHtmlObj.append(paginate)
-      } ''' % {"class": self.__class__.__name__}
+      } ''' % {"class": self.__class__.__name__, 'jquery': JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
