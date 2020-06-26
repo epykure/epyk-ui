@@ -182,7 +182,7 @@ class ContextMenu(Html.Html):
     """
     if not hasattr(htmlObj, 'options'):
       if isinstance(htmlObj, dict):
-        if htmlObj['icon'] is not None:
+        if htmlObj.get('icon') is not None:
           i = self._report.ui.icon(htmlObj['icon'])
           i.css({'display': 'inline', 'margin-right': '5px'})
           v = self._report.ui.text(htmlObj['value'])

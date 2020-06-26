@@ -8,10 +8,11 @@ from epyk.core.css import Defaults as Defaults_css
 
 
 class CssIcon(CssStyle.Style):
-  _attrs = {'margin': '4px 10px', 'cursor': 'pointer'}
+  _attrs = {'cursor': 'pointer'}
 
   def customize(self):
-    self.hover.css({"color": self.rptObj.theme.colors[5]})
+    self.css({"color": self.rptObj.theme.success[1]})
+    self.hover.css({"color": self.rptObj.theme.colors[-1]})
 
 
 class CssStdIcon(CssStyle.Style):
@@ -40,7 +41,7 @@ class CssSmallIconRight(CssStyle.Style):
 
 
 class CssSmallIconRed(CssStyle.Style):
-  attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'cursor': 'pointer'}
+  _attrs = {'display': 'inline-block', 'margin': '0 5px 0 0', 'cursor': 'pointer'}
 
   def customize(self):
     self.css({"color": self.rptObj.theme.danger[1],
@@ -49,7 +50,7 @@ class CssSmallIconRed(CssStyle.Style):
 
 
 class CssOutIcon(CssStyle.Style):
-  attrs = {'display': 'inline-block', 'margin': '0 0 0 20px', 'cursor': 'pointer'}
+  _attrs = {'display': 'inline-block', 'margin': '0 0 0 20px', 'cursor': 'pointer'}
 
   def customize(self):
     self.css({"color": self.rptObj.theme.danger[1],
@@ -58,7 +59,7 @@ class CssOutIcon(CssStyle.Style):
 
 
 class CssBigIcon(CssStyle.Style):
-  attrs = {'display': 'inline-block', 'margin': '0 10px 0 10px', 'cursor': 'pointer'}
+  _attrs = {'display': 'inline-block', 'margin': '0 10px 0 10px', 'cursor': 'pointer'}
 
   def customize(self):
     self.css({"color": self.rptObj.theme.danger[1],

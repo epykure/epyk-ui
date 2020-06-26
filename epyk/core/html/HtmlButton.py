@@ -437,10 +437,24 @@ class IconEdit(Html.Html):
     # Add the internal components icons and helper
     self.add_span(text, css={"float": 'right'})
     if width[0] is not None and width[1] == 'px':
-      self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': "%s%s" % (width[0], width[1])})
+      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0], width[1])})
     else:
-      self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()})
+      self.add_icon(icon, {"margin": "2px", 'font-size': Defaults_css.font()})
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
+
+  def click(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
+    self.icon.style.add_classes.icon.basic()
+    return super(IconEdit, self).click(jsFncs, profile, source_event)
 
   def __str__(self):
     return "<span %s></span>" % (self.get_attrs(pyClassNames=self.style.get_classes()))

@@ -50,6 +50,19 @@ class Catalog(object):
     return self.__ctx['button']
 
   @property
+  def icon(self):
+    """
+    Description:
+    ------------
+    CSS Classes specific to the Icons components
+
+    :rtype: CatalogIcons.CatalogIcon
+    """
+    if "icon" not in self.__ctx:
+      self.__ctx['icon'] = CatalogIcons.CatalogIcon(self.__rptObj, self.__class_list_type)
+    return self.__ctx['icon']
+
+  @property
   def layout(self):
     """
     Description:

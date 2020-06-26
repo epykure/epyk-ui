@@ -1046,6 +1046,8 @@ Attributes:
     :param jsFncs:
     :param profile:
     """
+    if not hasattr(menu, 'source'):
+      menu = self._report.ui.menus.contextual(menu)
     menu.source = self
     # event.stopPropagation(); %(jqId)s.css({left: event.pageX + 1, top: event.pageY + 1, display: 'block'}); event.preventDefault()
     new_js_fncs = jsFncs + [self._report.js.objects.mouseEvent.stopPropagation(),

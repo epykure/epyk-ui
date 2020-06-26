@@ -16,8 +16,8 @@ class Hr(Html.Html):
 
   def __init__(self, report, background_color, height, align, profile):
     super(Hr, self).__init__(report, "", profile=profile, css_attrs={"height": height,
-                             'border-color': background_color or report.theme.greys[2],
-                             'background-color': background_color or report.theme.greys[2]})
+                             'border-color': background_color or report.theme.greys[5],
+                             'background-color': background_color or report.theme.greys[5]})
     if align == "center":
       self.style.css.margin = "auto"
 
