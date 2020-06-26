@@ -303,10 +303,11 @@ class Menus(object):
     :param profile:
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    div.style.css.background = self.context.rptObj.theme.greys[1]
+    div.style.css.margin = "2px 0 0 0"
     for d in data:
       div += self.context.rptObj.ui.images.badge(icon=d, text="", width=(15, 'px'), options={"badge_position": 'right'})
       div.style.css.padding = "0 2px 2px 2px"
-      div.style.css.margin = 0
       div[-1].style.clear(no_default=True)
       div[-1].attr["class"].add("badge")
       div[-1].style.css.width = 25
