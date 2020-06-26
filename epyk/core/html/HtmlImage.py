@@ -304,5 +304,19 @@ class Badge(Html.Html):
     """
     return self.__options
 
+  def click(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
+    self.icon.style.add_classes.icon.standard()
+    return super(Badge, self).click(jsFncs, profile, source_event)
+
   def __str__(self):
     return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)

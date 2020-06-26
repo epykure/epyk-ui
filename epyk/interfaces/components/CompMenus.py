@@ -304,8 +304,18 @@ class Menus(object):
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     for d in data:
-      div += self.context.rptObj.ui.images.badge(icon=d, text="", options={"badge_position": 'right'})
+      div += self.context.rptObj.ui.images.badge(icon=d, text="", width=(15, 'px'), options={"badge_position": 'right'})
+      div.style.css.padding = "0 2px 2px 2px"
+      div.style.css.margin = 0
+      div[-1].style.clear(no_default=True)
+      div[-1].attr["class"].add("badge")
+      div[-1].style.css.width = 25
+      div[-1].style.css.padding = 0
+      div[-1].style.css.height = False
+      div[-1].style.css.text_align = 'center'
       div[-1].style.css.cursor = 'pointer'
+      div[-1].style.css.margin = 0
+      div[-1].icon.style.css.float = None
     return div
 
   def selections(self, data, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,

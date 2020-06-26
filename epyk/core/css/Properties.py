@@ -1362,10 +1362,16 @@ class CssMixin(object):
 
   @height.setter
   def height(self, val):
-    val = val if val is not None else 'None'
-    if isinstance(val, int):
-      val = "%spx" % val
-    self.htmlObj.css({"height": val})
+    if val is False:
+      if "height" in self.htmlObj.attrs:
+        del self.htmlObj.attrs['height']
+      if "height" in self.htmlObj.orign_htmlObj.attr["css"]:
+        del self.htmlObj.orign_htmlObj.attr["css"]["height"]
+    else:
+      val = val if val is not None else 'None'
+      if isinstance(val, int):
+        val = "%spx" % val
+      self.htmlObj.css({"height": val})
 
   @property
   def hyphens(self): return self.htmlObj.css("hyphens")
@@ -2379,10 +2385,16 @@ class CssMixin(object):
 
   @width.setter
   def width(self, val):
-    val = val if val is not None else 'None'
-    if isinstance(val, int):
-      val = "%spx" % val
-    self.htmlObj.css({"width": val})
+    if val is False:
+      if "width" in self.htmlObj.attrs:
+        del self.htmlObj.attrs['width']
+      if "width" in self.htmlObj.orign_htmlObj.attr["css"]:
+        del self.htmlObj.orign_htmlObj.attr["css"]["width"]
+    else:
+      val = val if val is not None else 'None'
+      if isinstance(val, int):
+        val = "%spx" % val
+      self.htmlObj.css({"width": val})
 
   @property
   def word_break(self): return self.htmlObj.css("word-break")

@@ -16,12 +16,10 @@ class CssIcon(CssStyle.Style):
 
 
 class CssStdIcon(CssStyle.Style):
-  _attrs = {'display': 'inline-block', 'margin': '0 0 0 20px', 'cursor': 'pointer'}
+  _attrs = {'cursor': 'pointer'}
 
   def customize(self):
-    self.css({"color": self.rptObj.theme.colors[5],
-              'font-size': '%s%s' % (Defaults_css.Icon.big, Defaults_css.Icon.unit)})
-    self.hover.css({"color": self.rptObj.theme.colors[5]})
+    self.hover.css({"color": self.rptObj.theme.success[1]})
 
 
 class CssSmallIcon(CssStyle.Style):
