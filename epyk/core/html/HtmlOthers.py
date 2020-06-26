@@ -269,6 +269,7 @@ class Breadcrumb(Html.Html):
             data = report.ui.div(rec, width=("auto", '')) if options['selected'] == rec else report.ui.link(rec)
           data.style.css.display = 'inline-block'
         self.add(data)
+    self.style.background = report.theme.greys[1]
 
   def __add__(self, component):
     """ Add items to a container """

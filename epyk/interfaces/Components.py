@@ -523,7 +523,7 @@ class Components(object):
     Description:
     ------------
     Add Breadcrum information to the page
-    
+
     Attributes:
     ----------
     :param values:
