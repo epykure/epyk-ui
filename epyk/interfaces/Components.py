@@ -518,6 +518,26 @@ class Components(object):
     html_loading = html.HtmlOthers.Loading(self.rptObj, text, color, options or {})
     return html_loading
 
+  def breadcrumb(self, values, selected=None, width=(100, '%'), height=(30, 'px'), options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add Breadcrum information to the page
+    
+    Attributes:
+    ----------
+    :param values:
+    :param selected:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    options = options or {}
+    options['selected'] = selected
+    html_breadcrumb = html.HtmlOthers.Breadcrumb(self.rptObj, values, width, height, options, profile)
+    return html_breadcrumb
+
   def form(self, action=None, method=None, helper=None):
     """
     Description:

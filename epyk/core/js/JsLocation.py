@@ -17,14 +17,92 @@ from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
 
 
+class URLSearchParams(object):
+
+  def __init__(self, queryString):
+    self.queryString = queryString
+
+  def get(self, key):
+    """
+    Description:
+    ------------
+    Get the value of a request parameter in the url
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+
+    Attributes:
+    ----------
+    :param key: String. The url parameter.
+    """
+    key = JsUtils.jsConvertData(key, None)
+    return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().get(%s)" % (self.queryString, key))
+
+  def getAll(self, key):
+    """
+    Description:
+    ------------
+    Get all the values of a request parameter in the url
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+
+    Attributes:
+    ----------
+    :param key: The url parameter.
+    """
+    key = JsUtils.jsConvertData(key, None)
+    return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().getAll(%s)" % (self.queryString, key))
+
+  def has(self, key):
+    """
+    Description:
+    ------------
+    Check if a given parameter is in the url
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+
+    Attributes:
+    ----------
+    :param key: The url parameter.
+    """
+    key = JsUtils.jsConvertData(key, None)
+    return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().has(%s)" % (self.queryString, key))
+
+  def append(self, key, value):
+    """
+    Description:
+    ------------
+    Append a key, value to the url parameter object
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+
+    Attributes:
+    ----------
+    :param key: The url parameter.
+    """
+    key = JsUtils.jsConvertData(key, None)
+    value = JsUtils.jsConvertData(value, None)
+    return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().append(%s, %s)" % (self.queryString, key, value))
+
+
 class JsLocation(object):
   @property
   def hostname(self):
     """
+    Description:
+    ------------
     The hostname property sets or returns the hostname of a URL.
 
-    Example
-    rptObj.location.hostname
+    Usage::
+
+      rptObj.location.hostname
 
     Related Pages:
 
@@ -37,10 +115,13 @@ class JsLocation(object):
   @property
   def pathname(self):
     """
+    Description:
+    ------------
     The hostname property sets or returns the hostname of a URL.
 
-    Example
-    jsObj.location.pathname
+    Usage::
+
+      jsObj.location.pathname
 
     Related Pages:
 
@@ -53,10 +134,13 @@ class JsLocation(object):
   @property
   def host(self):
     """
+    Description:
+    ------------
     The host property sets or returns the hostname and port of a URL.
 
-    Example
-    jsObj.location.host
+    Usage::
+
+      jsObj.location.host
 
     Related Pages:
 
@@ -69,10 +153,13 @@ class JsLocation(object):
   @property
   def hash(self):
     """
+    Description:
+    ------------
     The hash property sets or returns the anchor part of a URL, including the hash sign (#)
 
-    Example
-    jsObj.location.hash
+    Usage::
+
+      jsObj.location.hash
 
     Related Pages:
 
@@ -85,6 +172,8 @@ class JsLocation(object):
   @property
   def search(self):
     """
+    Description:
+    ------------
     The search property sets or returns the querystring part of a URL, including the question mark (?).
 
     Related Pages:
@@ -96,8 +185,19 @@ class JsLocation(object):
     return JsString.JsString("location.search", isPyData=False)
 
   @property
+  def urlSearchParams(self):
+    """
+    Description:
+    ------------
+
+    """
+    return URLSearchParams("location.search")
+
+  @property
   def port(self):
     """
+    Description:
+    ------------
     The port property sets or returns the port number the server uses for a URL.
 
     Related Pages:
@@ -111,10 +211,13 @@ class JsLocation(object):
   @property
   def origin(self):
     """
+    Description:
+    ------------
     The origin property returns the protocol, hostname and port number of a URL.
 
-    Example
-    rptObj.js.location.origin + rptObj.js.location.pathname
+    Usage::
+
+      rptObj.js.location.origin + rptObj.js.location.pathname
 
     Related Pages:
 
@@ -127,15 +230,20 @@ class JsLocation(object):
 
   def href(self, href=None, secured=False):
     """
+    Description:
+    ------------
     The href property sets or returns the entire URL of the current p
 
-    Example
-    rptObj.js.location.href("https://www.w3schools.com/howto/howto_js_fullscreen.asp")
+    Usage::
+
+      rptObj.js.location.href("https://www.w3schools.com/howto/howto_js_fullscreen.asp")
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_loc_href.asp
 
+    Attributes:
+    ----------
     :param href: Set the href property
 
     :return: A String, representing the entire URL of the page, including the protocol (like http://)
@@ -149,15 +257,20 @@ class JsLocation(object):
 
   def open_new_tab(self, url, name="_blank", specs=None, replace=None, windowId="window", secured=False):
     """
+    Description:
+    ------------
     Opens a new browser window in a new tab (duplicated but part of the Window module)
 
-    Example
-    rptObj.js.location.open_new_tab("www.google.fr")
+    Usage::
+
+      rptObj.js.location.open_new_tab("www.google.fr")
 
     Related Pages:
 
       https://www.w3schools.com/Jsref/met_win_open.asp
 
+    Attributes:
+    ----------
     :param url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with about:blank is opened
     :param name: Optional. Specifies the target attribute or the name of the window. Default _blank
     :param specs: Optional. A comma-separated list of items, no whitespaces.
@@ -176,14 +289,20 @@ class JsLocation(object):
 
   def mail(self, mails, subject, body):
     """
+    Description:
+    ------------
     The mailto link when clicked opens users default email program or software. A new email page is created with "To" field containing the address of the name specified on the link by default.
 
-    Example
-    rptObj.js.location.mail(["test@gmail.com"], "This is a test", "This is the email's content")
+    Usage::
 
-    Documentation
-    http://www.tutorialspark.com/html5/HTML5_email_mailto.php
+      rptObj.js.location.mail(["test@gmail.com"], "This is a test", "This is the email's content")
 
+    Related Pages:
+
+      http://www.tutorialspark.com/html5/HTML5_email_mailto.php
+
+    Attributes:
+    ----------
     :param mails: A list of email addresses
     :param subject: The email's subject
     :param body: The email's content
@@ -196,6 +315,8 @@ class JsLocation(object):
 
   def reload(self, forceGet=False):
     """
+    Description:
+    ------------
     The reload() method is used to reload the current document.
 
     The reload() method does the same as the reload button in your browser.
@@ -204,6 +325,8 @@ class JsLocation(object):
 
       https//www.w3schools.com/jsref/met_loc_reload.asp
 
+    Attributes:
+    ----------
     :param forceGet: Optional. Specifies the type of reloading:
           false - Default. Reloads the current page from the cache.
           true - Reloads the current page from the server
@@ -215,12 +338,16 @@ class JsLocation(object):
 
   def assign(self, url):
     """
+    Description:
+    ------------
     The assign() method loads a new document.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/met_loc_assign.asp
 
+    Attributes:
+    ----------
     :param url: Required. Specifies the URL of the page to navigate to
 
     :return: Void
@@ -230,6 +357,8 @@ class JsLocation(object):
 
   def replace(self, url, secured=False):
     """
+    Description:
+    ------------
     The replace() method replaces the current document with a new one.
 
     The difference between this method and assign(), is that replace() removes the URL of the current document from the document history, meaning that it is not possible to use the "back" button to navigate back to the original document.
@@ -238,6 +367,8 @@ class JsLocation(object):
 
       https//www.w3schools.com/jsref/met_loc_replace.asp
 
+    Attributes:
+    ----------
     :param url: Required. Specifies the URL of the page to navigate to
     :param secured: Optional. If the http is missing. This will be used to fix the url
 
@@ -250,16 +381,19 @@ class JsLocation(object):
 
   def postTo(self, url, data, method="POST", target="_blank"):
     """
+    Description:
+    ------------
     This method will create a internal form and submit the response exactly like a post of a form to another page
 
     Related Pages:
 
       https://www.w3schools.com/jsref/dom_obj_form.asp
 
+    Attributes:
+    ----------
     :param url: The target url
     :param data: A python dictionary
     :param method: Optional. The method used to send the data. Default POST
-
     """
     inputs = []
     for k, v in data.items():

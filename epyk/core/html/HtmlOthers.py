@@ -210,7 +210,7 @@ class HtmlJson(Html.Html):
   requirements = ('json-formatter', )
 
   def __init__(self, report, data, width, height, options, profile):
-    super(HtmlJson, self).__init__(report, data, profile=profile, css_attrs={"height": height, width: "width"})
+    super(HtmlJson, self).__init__(report, data, profile=profile, css_attrs={"height": height, "width": width})
     self.__options = OptJsonFormatter.OptionsJsonFmt(self, options)
 
   @property
@@ -251,3 +251,32 @@ class HtmlJson(Html.Html):
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
     return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
+
+
+class Breadcrumb(Html.Html):
+  name = 'Breadcrumb'
+
+  def __init__(self, report, data, width, height, options, profile):
+    super(Breadcrumb, self).__init__(report, [], profile=profile, css_attrs={"height": height, "width": width})
+    self.style.css.line_height = height[0]
+    self.style.css.vertical_align = 'middle'
+    if data is not None:
+      for rec in data:
+        if not hasattr(rec, 'options'):
+          if isinstance(rec, dict):
+            data = report.ui.div(rec['text'], width=("auto", '')) if options['selected'] == rec['text'] else report.ui.link(rec['text'], rec['url'])
+          else:
+            data = report.ui.div(rec, width=("auto", '')) if options['selected'] == rec else report.ui.link(rec)
+          data.style.css.display = 'inline-block'
+        self.add(data)
+
+  def __add__(self, component):
+    """ Add items to a container """
+    if hasattr(component, 'htmlCode'):
+      component.options.managed = False
+    self.val.append(component)
+    return self
+
+  def __str__(self):
+    rows = [htmlObj.html() if hasattr(htmlObj, 'html') else str(htmlObj) for htmlObj in self.val]
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), " / ".join(rows))
