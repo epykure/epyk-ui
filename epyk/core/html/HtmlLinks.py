@@ -1,6 +1,4 @@
 
-import json
-
 from epyk.core.html import Html
 
 # The list of CSS classes
@@ -69,9 +67,7 @@ class DataLink(Html.Html):
 
   @property
   def _js__builder__(self):
-    return '''
-      var b = new Blob([data.value]); htmlObj.href = URL.createObjectURL(b);
-      htmlObj.innerHTML = data.text'''
+    return ''' var b = new Blob([data.value]); htmlObj.href = URL.createObjectURL(b); htmlObj.innerHTML = data.text'''
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

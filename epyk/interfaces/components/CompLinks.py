@@ -75,47 +75,6 @@ class Links(object):
     html_link.style.css.padding = "0 10px"
     return html_link
 
-  def script(self, script_name, report_name=None, icon="fab fa-python", options=None, profile=None):
-    """
-    Description:
-    ------------
-    Direct link to another report within the server.
-
-    This is only dedicated to move between reports internally.
-    If the target is to move between nodes, the function to use is rather bridge
-
-    Usage::
-
-      rptObj.ui.links.script("TestParams")
-
-    Underlying HTML Objects:
-
-      - :class:`epyk.core.html.HtmlLinks.ExternalLink`
-
-    Attributes:
-    ----------
-
-    :param script_name: The destination script name
-    :param report_name: Optional, the report name. Default current one
-    :param options: Optional, the link properties
-
-    :rtype: html.HtmlLinks.ExternalLink
-
-    :return:
-    """
-    script_name = script_name.replace(".py", "")
-    text = script_name
-    if report_name is None:
-      report_name = self.context.rptObj.run.report_name
-      mod = importlib.import_module("%s.%s" % (self.context.rptObj.run.report_name, script_name))
-      text = mod.TITLE
-    if 'name' in options:
-      text = options['name']
-      del options['name']
-
-    url = "%s/run/%s/%s" % (self.context.rptObj._urlsApp['report'], report_name, script_name)
-    return self.link(text, url, icon=icon, options=options, profile=profile)
-
   def link(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, options=None, profile=None):
     """
     Description:

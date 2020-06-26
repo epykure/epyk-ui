@@ -28,7 +28,7 @@ class Titles(object):
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
-    html_title.style.css.border_left = '5px solid %s' % self.context.rptObj.theme.colors[-1]
+    # html_title.style.css.border_left = '5px solid %s' % self.context.rptObj.theme.colors[-1]
     html_title.style.css.font_size = Defaults_css.font(15)
     html_title.style.css.text_transform = 'uppercase'
     html_title.style.css.margin_left = 2
@@ -55,7 +55,9 @@ class Titles(object):
     if options is not None:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(4)
+    html_title.style.css.font_size = Defaults_css.font(8)
+    html_title.style.css.text_align = 'left'
+    html_title.style.css.margin_top = 5
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
     html_title.style.css.font_style = 'italic'
     return html_title
@@ -79,8 +81,34 @@ class Titles(object):
     if options is not None:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
-    html_title.style.css.font_size = Defaults_css.font(6)
+    html_title.style.css.font_size = Defaults_css.font(12)
+    html_title.style.css.text_align = 'left'
+    html_title.style.css.margin_top = 10
     html_title.style.css.color = self.context.rptObj.theme.colors[-1]
+    return html_title
+
+  def section(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param options:
+    :param tooltip:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param profile:
+    """
+    dflt_options = {'markdown': False}
+    if options is not None:
+      dflt_options.update(options)
+    html_title = html.HtmlTags.HtmlGeneric(self.context.rptObj, "div", text, width, height, htmlCode, tooltip, dflt_options, profile)
+    html_title.style.css.font_size = Defaults_css.font(8)
+    html_title.style.css.margin_top = 20
+    html_title.style.css.margin_bottom = 10
     return html_title
 
   def rubric(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
