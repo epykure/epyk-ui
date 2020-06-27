@@ -977,8 +977,10 @@ Attributes:
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.dataTransfer.text] + jsFncs, toStr=True)
-    self.attr["ondrop"] = "(function(event){%s; %s; return false})(event)" % (dft_fnc, str_fncs)
-    self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
+    # By default change the box shadow of this component
+    self.attr["ondrop"] = "(function(event){%s; %s; %s; return false})(event)" % (dft_fnc, str_fncs, self.dom.css('box-shadow', 'none').r)
+    self.attr["ondragover"] = "(function(event){%s; %s})(event)" % (dft_fnc, self.dom.css('box-shadow', 'inset 0px 0px 0px 2px %s' % self._report.theme.success[1]).r)
+    self.attr["ondragleave"] = "(function(event){%s; %s})(event)" % (dft_fnc, self.dom.css('box-shadow', 'none').r)
     return self
 
   def hover(self, jsFncs, profile=False, source_event=None):
