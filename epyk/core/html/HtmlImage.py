@@ -130,11 +130,19 @@ class ImgCarrousel(Html.Html):
 
 
 class Icon(Html.Html):
-  requirements = ('font-awesome', )
   name = 'Icon'
 
-  def __init__(self, report, value, width, height, color, tooltip, profile):
+  def __init__(self, report, value, width, height, color, tooltip, options, profile):
+    self.requirements = (options['icon_family'],)
     super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height}, profile=profile)
+    if options['icon_family'] == 'office-ui-fabric-core':
+      self.attr['class'].add("ms-Icon")
+      if not value.startswith("ms-Icon--"):
+        value = "ms-Icon--%s" % value
+    elif options['icon_family'] == 'material-design-icons':
+      self.attr['class'].add("material-icons")
+      self._vals = value
+      value = ""
     if value is not None:
       self.attr['class'].add(value)
     self.attr['aria-hidden'] = 'true'
@@ -225,7 +233,7 @@ class Icon(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<i %s></i>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return '<i %s>%s</i>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
 
 
 class Emoji(Html.Html):
@@ -272,9 +280,9 @@ class Badge(Html.Html):
     self.add_label(label, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     self.__options = OptButton.OptionsBadge(self, options)
     if self.options.badge_position == 'left':
-      self.add_icon(icon, css={"float": 'None', 'margin-left': "5px"}, position="after")
+      self.add_icon(icon, css={"float": 'None', 'margin-left': "5px"}, position="after", family=options.get("icon_family"))
     else:
-      self.add_icon(icon, css={"float": 'left', 'margin-left': "5px"})
+      self.add_icon(icon, css={"float": 'left', 'margin-left': "5px"}, family=options.get("icon_family"))
     if hasattr(self.icon, 'css') and width[0] is not None:
       self.icon.css({"font-size": "%s%s" % (width[0], width[1])})
     self.link = None

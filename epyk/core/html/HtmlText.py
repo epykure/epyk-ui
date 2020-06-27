@@ -570,7 +570,7 @@ class Title(Html.Html):
     super(Title, self).__init__(report, text, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptText.OptionsTitle(self, options)
     self._name, self.level, self.picture = name, level, picture
-    self.add_icon(icon)
+    self.add_icon(icon, family=options.get("icon_family"))
     if contents is not None:
       self._name = contents.add(text, level or 1, name)
     if level is not None:
@@ -667,7 +667,7 @@ class Numeric(Html.Html):
     super(Numeric, self).__init__(report, number, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "color": color})
     # Add the components label and icon
     self.add_label(label, css={"float": None, "width": 'none'})
-    self.add_icon(icon)
+    self.add_icon(icon, family=options.get("icon_family"))
     self.add_helper(helper, css={"line-height": '20px'})
     self.add_title(title, level=4, css={"margin-bottom": 0}, options={'content_table': False})
 
@@ -748,13 +748,13 @@ class Highlights(Html.Html):
   name = 'Highlights'
   requirements = ('bootstrap', )
 
-  def __init__(self, report, text, title, icon, type, color, width, height, htmlCode, helper, profile):
+  def __init__(self, report, text, title, icon, type, color, width, height, htmlCode, helper, options, profile):
     super(Highlights, self).__init__(report, text, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.add_helper(helper)
     self.color = color if color is not None else self._report.theme.greys[9]
     # Add the components title and icon
     self.add_title(title, css={"width": "none", "font-weight": 'bold'}, options={'content_table': False})
-    self.add_icon(icon, {"float": "left"})
+    self.add_icon(icon, {"float": "left"}, family=options.get("icon_family"))
     # Change the style of the component
     self.css({"margin": "5px", 'padding': "5px"})
     self.attr['class'].add('alert alert-%s' % type)

@@ -463,7 +463,7 @@ class Inputs(object):
     :param profile:
     """
     html_radio = html.HtmlInput.Radio(self.context.rptObj, flag, label, group_name, icon, width, height, htmlCode,
-                                      helper, options, profile)
+                                      helper, options or {}, profile)
     return html_radio
 
   def editor(self, text="", language='python', width=(100, "%"), height=(300, "px"), htmlCode=None, options=None, profile=None):
@@ -523,7 +523,7 @@ class Inputs(object):
     return html_cell
 
   def search(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
-             tooltip='', extensible=False, profile=None):
+             tooltip='', extensible=False, options=None, profile=None):
     """
     Description:
     ------------
@@ -551,8 +551,7 @@ class Inputs(object):
     :param extensible:
     :param profile:
     """
-    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
-                                   extensible, profile)
+    html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip, extensible, options or {}, profile)
     return html_s
 
   def label(self, label, text="", placeholder='', width=(100, "%"), height=(None, "px"), htmlCode=None,

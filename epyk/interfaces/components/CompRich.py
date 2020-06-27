@@ -128,7 +128,7 @@ class Rich(object):
     return html_help
 
   def countdown(self, yyyy_mm_dd, label=None, icon="fas fa-stopwatch", timeInMilliSeconds=1000, width=(100, '%'), height=(None, 'px'),
-                htmlCode=None, helper=None, profile=None):
+                htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -160,7 +160,7 @@ class Rich(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_cd = html.HtmlDates.CountDownDate(self.context.rptObj, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile)
+    html_cd = html.HtmlDates.CountDownDate(self.context.rptObj, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, options or {}, profile)
     return html_cd
 
   def update(self, label=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):
@@ -216,7 +216,7 @@ class Rich(object):
     return html_div
 
   def search_input(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
-                   tooltip=None, extensible=False, profile=None):
+                   tooltip=None, extensible=False, options=None, profile=None):
     """
     Description:
     ------------
@@ -245,7 +245,7 @@ class Rich(object):
     :param profile:
     """
     html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
-                                   extensible, profile)
+                                   extensible, options or {}, profile)
     return html_s
 
   def search_results(self, records=None, results_per_page=20, width=(100, "%"), height=(None, "px"), options=None, profile=None):

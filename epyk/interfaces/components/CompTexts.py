@@ -133,7 +133,7 @@ class Texts(object):
     return html_label
 
   def highlights(self, text=None, title="", icon=None, type="danger", color=None, width=(None, "%"),
-                 height=(None, "px"), htmlCode=None, helper=None, profile=None):
+                 height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -166,7 +166,7 @@ class Texts(object):
     :param profile:
     """
     html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, color, width,
-                                          height, htmlCode, helper, profile)
+                                          height, htmlCode, helper, options or {}, profile)
     return html_light
 
   def formula(self, text=None, width=(100, "%"), color=None, helper=None, profile=None):

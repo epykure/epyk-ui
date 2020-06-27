@@ -336,7 +336,7 @@ class Html(object):
     self._report._contextMenu[self.dom.jquery.varName] = context_menu
     return self
 
-  def add_icon(self, text, css=None, position="before"):
+  def add_icon(self, text, css=None, position="before", family=None):
     """
     Description:
     ------------
@@ -357,7 +357,7 @@ Attributes:
     """
     self.icon = ""
     if text is not None:
-      self.icon = self._report.ui.images.icon(text).css({"margin-right": '5px'})
+      self.icon = self._report.ui.images.icon(text, family=family).css({"margin-right": '5px'})
       if position == "before":
         self.prepend_child(self.icon)
       else:

@@ -274,7 +274,7 @@ class Buttons(object):
 
   def radio(self, recordSet=None, checked=None, htmlCode=None, label=None, width=(100, '%'), height=(None, "px"), radioVisible=False,
             event=None, withRemoveButton=False, column=None, align='left', filters=None, tooltip='', allSelected=False,
-            radioType="row", helper=None, profile=None):
+            radioType="row", helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -320,7 +320,7 @@ class Buttons(object):
       tmpVals[0]['checked'] = True
       recordSet = tmpVals
     html_radio = html.HtmlRadio.Radio(self.context.rptObj, recordSet, htmlCode, label, width,
-                      height, radioVisible, event, withRemoveButton, align, filters, tooltip, radioType, helper, profile)
+                      height, radioVisible, event, withRemoveButton, align, filters, tooltip, radioType, helper, options or {}, profile)
     return html_radio
 
   def toggle(self, recordSet=None, label=None, color=None, width=(None, '%'), height=(20, 'px'), htmlCode=None, profile=None):

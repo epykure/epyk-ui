@@ -530,7 +530,7 @@ class InputRange(Input):
 class Field(Html.Html):
   name = 'Field'
 
-  def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, profile):
+  def __init__(self, report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     super(Field, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     # Add the component predefined elements
     self.add_label(label)
@@ -538,7 +538,7 @@ class Field(Html.Html):
     # add the input item
     self.input = input
     self.append_child(self.input)
-    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
+    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]}, family=options.get("icon_family"))
     self.css({"margin-top": '2px'})
 
   @property
@@ -569,7 +569,7 @@ class FieldInput(Field):
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.input(value, width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldInput, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    super(FieldInput, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
 class FieldAutocomplete(Field):
@@ -577,7 +577,7 @@ class FieldAutocomplete(Field):
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.autocomplete(value, width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldAutocomplete, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    super(FieldAutocomplete, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
   def change(self, jsFnc, profile=None):
     """
@@ -707,7 +707,7 @@ class FieldRange(Field):
 
   def __init__(self, report, value, min, max, step, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.d_range(value, min=min, max=max, step=step, width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldRange, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    super(FieldRange, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
 class FieldCheckBox(Field):
@@ -715,7 +715,7 @@ class FieldCheckBox(Field):
 
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.checkbox(value, width=(None, "%"), options=options)
-    super(FieldCheckBox, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, profile)
+    super(FieldCheckBox, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, options, profile)
     self.style.css.line_height = Defaults.LINE_HEIGHT
 
 
@@ -724,7 +724,7 @@ class FieldInteger(Field):
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.d_int(value, width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldInteger, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    super(FieldInteger, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
 class FieldFile(Field):
@@ -732,7 +732,7 @@ class FieldFile(Field):
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.file(value, width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldFile, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    super(FieldFile, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
 class FieldPassword(Field):
@@ -740,7 +740,7 @@ class FieldPassword(Field):
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.password(value, width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldPassword, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    super(FieldPassword, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
 class FieldTextArea(Field):
@@ -748,7 +748,7 @@ class FieldTextArea(Field):
 
   def __init__(self, report, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.inputs.textarea(value, width=(100, "%"), placeholder=placeholder, options=options)
-    super(FieldTextArea, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, profile)
+    super(FieldTextArea, self).__init__(report, input, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
 
 
 class FieldSelect(Field):
@@ -756,7 +756,7 @@ class FieldSelect(Field):
 
   def __init__(self, report, value, label, icon, width, height, htmlCode, helper, options, profile):
     input = report.ui.select(value, width=(100, "%"), options=options)
-    super(FieldSelect, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, profile)
+    super(FieldSelect, self).__init__(report, input, label, "", icon, width, height, htmlCode, helper, options, profile)
 
 
 class Checkbox(Html.Html):
@@ -818,7 +818,7 @@ class Radio(Html.Html):
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
-    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]})
+    self.add_icon(icon, position="after", css={"margin-left": '5px', 'color': self._report.theme.success[1]}, family=options.get("icon_family"))
 
   @property
   def dom(self):
@@ -926,7 +926,7 @@ class TextArea(Html.Html):
 class Search(Html.Html):
   name = 'Search'
 
-  def __init__(self, report, text, placeholder, color, height, htmlCode, tooltip, extensible, profile):
+  def __init__(self, report, text, placeholder, color, height, htmlCode, tooltip, extensible, options, profile):
     super(Search, self).__init__(report, "", htmlCode=htmlCode, css_attrs={"height": height}, profile=profile)
     self.color = self._report.theme.colors[-1] if color is None else color
     self.css({"display": "inline-block", "margin-bottom": '2px', 'box-sizing': 'border-box'})
@@ -938,7 +938,7 @@ class Search(Html.Html):
       self.style.add_classes.layout.search_extension()
     self.add_input(text).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
     self.input.css({"text-align": 'left', 'padding-left': '%spx' % Defaults.LINE_HEIGHT})
-    self.add_icon("fas fa-search").icon.attr['id'] = "%s_button" % self.htmlCode
+    self.add_icon("fas fa-search", family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
     self.icon.css({"margin": '6px 0 6px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute'})
     self.tooltip(tooltip)
 

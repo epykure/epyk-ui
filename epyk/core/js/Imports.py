@@ -915,6 +915,18 @@ CSS_IMPORTS = {
     ]
   },
 
+  # material design icons
+  'material-design-icons': {
+    'register': {'alias': 'icons', 'module': 'icons', 'npm': 'material-design-icons'},
+    'modules': [{'script': 'material-icons.min.css', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO}],
+    'website': 'https://google.github.io/material-design-icons/'},
+
+  # fluent ui icons
+  'office-ui-fabric-core': {
+    'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm': '@fluentui/react'},
+    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/11.0.0/css/', 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
+    'website': 'https://developer.microsoft.com/en-us/fluentui#/styles/web/icons'},
+
   # QUnit package width CDN links
   'qunit': {
     'website': 'https://qunitjs.com',

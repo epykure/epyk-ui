@@ -12,7 +12,7 @@ class Icons(object):
     return JsFontAwesome
 
   def awesome(self, icon, text=None, tooltip=None, position=None, width=(25, 'px'), height=(25, 'px'),
-              htmlCode=None, profile=None):
+              htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -34,7 +34,34 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, profile)
+    html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, options or {}, profile)
+    html_edit.style.css.float = position
+    html_edit.style.css.display = "inline-block"
+    return html_edit
+
+  def fluent(self, icon, text=None, tooltip=None, position=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      rptObj.ui.icons.awesome(icon="fas fa-align-center")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
+    ms-Icon ms-Icon--AdminDLogoInverse32
+    Attributes:
+    ----------
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, options or {}, profile)
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline-block"
     return html_edit

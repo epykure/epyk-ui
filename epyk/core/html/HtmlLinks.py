@@ -12,7 +12,7 @@ class ExternalLink(Html.Html):
   def __init__(self, report, text, url, icon, helper, height, decoration, options, profile):
     super(ExternalLink, self).__init__(report, {"text": text, "url": url}, css_attrs={'height': height}, profile=profile)
     # Add the internal components icon and helper
-    self.add_icon(icon)
+    self.add_icon(icon, family=options.get("icon_family"))
     self.add_helper(helper)
     if not 'url' in self.val:
       self.val['url'] = self.val['text']

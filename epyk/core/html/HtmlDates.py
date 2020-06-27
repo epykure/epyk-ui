@@ -16,7 +16,7 @@ class DatePicker(Html.Html):
     self.input = self._report.ui.inputs.d_date(self.val, width=width, height=height, options=options).css({"padding": 0})
     self.prepend_child(self.input)
     if not self.input.options.inline:
-      self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
+      self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after", family=options.get("icon_family"))
     else:
       self.icon = None
     if self.icon is not None:
@@ -117,7 +117,7 @@ class TimePicker(Html.Html):
     self.input = self._report.ui.inputs.d_time(value, options=options)
     self.input.set_attrs(name="class", value='time').css({"padding": 0})
     self.prepend_child(self.input)
-    self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after")
+    self.add_icon(icon, css={"margin-left": '5px', 'color': self._report.theme.success[1]}, position="after", family=options.get("icon_family"))
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
@@ -185,14 +185,13 @@ class TimePicker(Html.Html):
 class CountDownDate(Html.Html):
   name = 'Countdown'
 
-  def __init__(self, report, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, profile):
-    super(CountDownDate, self).__init__(report, yyyy_mm_dd, htmlCode=htmlCode, profile=profile,
-                                        css_attrs={"width": width, "height": height})
+  def __init__(self, report, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, options, profile):
+    super(CountDownDate, self).__init__(report, yyyy_mm_dd, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
     self._jsStyles = {"delete": True}
     self.timeInMilliSeconds = timeInMilliSeconds
     # Add the underlying components
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
-    self.add_icon(icon)
+    self.add_icon(icon, family=options.get("icon_family"))
     self.add_helper(helper)
 
   @property

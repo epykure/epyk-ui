@@ -154,8 +154,13 @@ class Menus(object):
     col.css({"background-color": "#333", "margin": 0, "color": 'white'})
     return col
 
-  def icons(self):
-    pass
+  def icons(self, data, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
+
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    div.style.css.background = self.context.rptObj.theme.greys[1]
+    div.style.css.margin = "2px 0 0 0"
+    for d in data:
+      div += self.context.rptObj.ui.icons.fluent(icon=d, text="", width=(15, 'px'), options={"icon_family": 'fluent'})
 
   def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
               htmlCode=None, helper=None, options=None, profile=None):
@@ -284,10 +289,14 @@ class Menus(object):
 
     Usage::
 
-      tb = rptObj.ui.menus.toolbar(["fas fa-paint-brush", "fas fa-code"])
+      tb = page.ui.menus.toolbar(["fas fa-paint-brush", "fas fa-code"])
       tb[1].link.val = 4589
       tb[1].tooltip("This is a tooltip")
       tb[0].style.css.color = 'red'
+
+      # with other icon families
+      page.ui.menus.toolbar(["face"], options={"icon_family": 'material-design-icons'})
+      page.ui.menus.toolbar(["Mail", "AdminALogo32"], options={"icon_family": 'office-ui-fabric-core'})
 
     Underlying HTML Objects:
 
@@ -302,11 +311,12 @@ class Menus(object):
     :param options:
     :param profile:
     """
+    options = options or {}
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     div.style.css.background = self.context.rptObj.theme.greys[1]
     div.style.css.margin = "2px 0 0 0"
     for d in data:
-      div += self.context.rptObj.ui.images.badge(icon=d, text="", width=(15, 'px'), options={"badge_position": 'right'})
+      div += self.context.rptObj.ui.images.badge(icon=d, text="", width=(15, 'px'), options={"badge_position": 'right', "icon_family": options.get("icon_family")})
       div.style.css.padding = "0 2px 2px 2px"
       div[-1].style.clear(no_default=True)
       div[-1].attr["class"].add("badge")
@@ -337,8 +347,7 @@ class Menus(object):
     :param profile:
     :return:
     """
-    html_pr = html.HtmlEvent.Menu(self.context.rptObj, data, width, height,  attrs or {}, helper,
-                                         options or {}, htmlCode, profile)
+    html_pr = html.HtmlEvent.Menu(self.context.rptObj, data, width, height,  attrs or {}, helper, options or {}, htmlCode, profile)
     return html_pr
 
   def contextual(self, records=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None,

@@ -24,6 +24,8 @@ from epyk.core.py import OrderedSet
 from epyk.core.py import PyOuts
 from epyk.core.py import PyExt
 
+from epyk.web import apps
+
 
 class Report(object):
   showNavMenu, withContainer = False, False
@@ -329,3 +331,18 @@ class Report(object):
     :return: The serialised data
     """
     return json.dumps(data, cls=js.JsEncoder.Encoder, allow_nan=False)
+
+  @property
+  def apps(self):
+    """
+    Description:
+    ------------
+    Change the report to a web application.
+
+    This will add extra features available on the target framework.
+    For example this HTML page can be transformed to an Angular app, a React App or a Vue one.
+    """
+    self._props['web'] = {
+      'modules': {}
+    }
+    return apps.AppRoute(self)

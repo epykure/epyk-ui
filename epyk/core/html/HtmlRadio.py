@@ -11,7 +11,7 @@ class Radio(Html.Html):
   name = 'Radio Buttons'
 
   def __init__(self, report, vals, htmlCode, label, width, height, radioVisible, event,
-               withRemoveButton, align, filters, tooltip, radioType, helper, profile):
+               withRemoveButton, align, filters, tooltip, radioType, helper, options, profile):
     super(Radio, self).__init__(report, [], htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     for v in vals:
       r = report.ui.inputs.radio(v.get('checked', False), v['value'])
@@ -65,7 +65,7 @@ class Tick(Html.Html):
       self.tooltip(tooltip)
     # Add the internal components icons and helper
     self.add_span(text, css={"float": 'right'})
-    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()})
+    self.add_icon(icon, {"color": self._report.theme.success[1], "margin": "2px", 'font-size': Defaults_css.font()}, family=options.get("icon_family"))
     self.icon.style.add_classes.div.background_hover()
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
     self.style.css.float = position

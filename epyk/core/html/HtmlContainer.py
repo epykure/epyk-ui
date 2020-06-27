@@ -216,7 +216,7 @@ class Div(Html.Html):
         self.val.append(obj)
     self.tag = tag
     # Add the component predefined elements
-    self.add_icon(icon)
+    self.add_icon(icon, family=options.get("icon_family"))
     self.add_label(label)
     self.add_helper(helper)
 

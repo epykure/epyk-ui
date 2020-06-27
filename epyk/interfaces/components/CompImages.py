@@ -294,7 +294,7 @@ class Images(object):
     html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbole, top, profile)
     return html_emoji
 
-  def icon(self, icon=None, width=(None, 'px'), height=(None, "px"), color=None, tooltip=None, profile=None):
+  def icon(self, icon=None, family=None, width=(None, 'px'), height=(None, "px"), color=None, tooltip=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -320,8 +320,10 @@ class Images(object):
     :param tooltip:
     :param profile:
     """
+    options = options or {}
+    options['icon_family'] = family or 'font-awesome'
     html_icon = html.HtmlImage.Icon(self.context.rptObj, icon, width=width, height=height, color=color, tooltip=tooltip,
-                                    profile=profile)
+                                    options=options, profile=profile)
     return html_icon
 
   def badge(self, text="", label=None, icon=None, width=(25, "px"), height=(25, "px"), background_color=None, color=None, url=None,
