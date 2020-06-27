@@ -194,11 +194,11 @@ JS_IMPORTS = {
 
   # module are written from the first one to load to the last one
   'bootstrap': {
-    'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap'},
+    'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap', 'npm_path': 'dist/js'},
     'req': [{'alias': 'jquery'}, {'alias': '@popperjs/core'}],
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
-      {'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
+      {'script': 'bootstrap.min.js', 'version': '4.5.0', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
       #{'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/js/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'},
     ],
     'website': 'https://getbootstrap.com/'},
@@ -310,7 +310,7 @@ JS_IMPORTS = {
 
   # module for the awesome icons
   'font-awesome': {
-    'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free'},
+    'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free', 'npm_path': 'js'},
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                 'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
     'modules': [{'script': 'fontawesome.js', 'version': '5.13.0', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
@@ -947,14 +947,14 @@ CSS_IMPORTS = {
 
   # fluent ui icons
   'office-ui-fabric-core': {
-    'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm': '@fluentui/react'},
-    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/11.0.0/css/', 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
+    'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm_path': 'dist/css'},
+    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/%(version)s/css/', 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
     'website': 'https://developer.microsoft.com/en-us/fluentui#/styles/web/icons'},
 
   # fluent ui icons
   'office-ui-fabric-react': {
-    'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm': '@fluentui/react', 'npm_path': 'dist/css'},
-    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/11.0.0/css/', 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
+    'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm_path': 'dist/css'},
+    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/%(version)s/css/', 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
     'website': 'https://developer.microsoft.com/en-us/fluentui#/styles/web/icons'},
 
   # QUnit package width CDN links
@@ -1090,19 +1090,27 @@ CSS_IMPORTS = {
   # Bootstrap style width CDN links
   'bootstrap': {
     'website': 'https://getbootstrap.com/',
+    'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap', 'npm_path': 'dist/css'},
     'req': [{'alias': 'font-awesome'}],
     'modules': [
-      {'script': 'bootstrap.min.css', 'version': '4.4.1', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
+      {'script': 'bootstrap.min.css', 'version': '4.5.0', 'path': 'twitter-bootstrap/%(version)s/css/', 'cdnjs': CDNJS_REPO}
       #{'script': 'bootstrap.min.css', 'version': '4.4.1', 'path': 'bootstrap/%(version)s/css/', 'cdnjs': 'https://stackpath.bootstrapcdn.com'}
     ]},
 
   # Font awesome style width CDN links
   'font-awesome': {
+    'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free', 'npm_path': 'css'},
     'website': 'https://fontawesome.com/',
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                     'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
     'modules': [
-      {'script': 'all.css', 'version': '5.13.0', 'path': 'releases/v%(version)s/css/', 'cdnjs': 'https://use.fontawesome.com'}]},
+      {'script': 'all.css', 'version': '5.13.0', 'path': 'releases/v%(version)s/css/', 'cdnjs': 'https://use.fontawesome.com'}],
+    'assets': [
+      {'script': 'fa-brands-400.woff2', 'version': '5.13.0', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
+      {'script': 'fa-regular-400.woff2', 'version': '5.13.0', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
+      {'script': 'fa-solid-900.woff2', 'version': '5.13.0', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
+    ]
+  },
 
   # NVD3 Components width CDN links
   'nvd3': {
@@ -1510,9 +1518,10 @@ class ImportManager(object):
           node_sub_path = CSS_IMPORTS.get(css_alias, {}).get('register', {}).get('npm_path')
           if node_sub_path is not None:
             css_file = os.path.split(urlModule)[1]
-            package_path = os.path.join(self._report._node_modules[0], "node_modules", css_alias, node_sub_path, css_file)
+            npm_alias = CSS_IMPORTS[css_alias]['register'].get('npm', css_alias)
+            package_path = os.path.join(self._report._node_modules[0], "node_modules", npm_alias, node_sub_path, css_file)
             if os.path.exists(package_path):
-              urlModule = os.path.join(self._report._node_modules[1], css_alias, node_sub_path, css_file).replace("\\", "/")
+              urlModule = os.path.join(self._report._node_modules[1], npm_alias, node_sub_path, css_file).replace("\\", "/")
         css.append('<link rel="stylesheet" href="%s" type="text/css">' % urlModule)
     if local_css is not None:
       for localCssFile in local_css:
@@ -1563,10 +1572,11 @@ class ImportManager(object):
         if self._report._node_modules is not None:
           node_sub_path = JS_IMPORTS.get(js_alias, {}).get('register', {}).get('npm_path')
           if node_sub_path is not None:
-            css_file = os.path.split(url_module)[1]
-            package_path = os.path.join(self._report._node_modules[0], "node_modules", js_alias, node_sub_path, css_file)
+            js_file = os.path.split(url_module)[1]
+            npm_alias = JS_IMPORTS[js_alias]['register'].get('npm', js_alias)
+            package_path = os.path.join(self._report._node_modules[0], "node_modules", npm_alias, node_sub_path, js_file)
             if os.path.exists(package_path):
-              url_module = os.path.join(self._report._node_modules[1], js_alias, node_sub_path, css_file).replace("\\", "/")
+              url_module = os.path.join(self._report._node_modules[1], npm_alias, node_sub_path, js_file).replace("\\", "/")
 
         if '/mode/' in url_module:
           js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
@@ -2052,7 +2062,8 @@ def npm(packages, path="", is_node_server=False, update=False):
     for p in packages:
       for category in [JS_IMPORTS, CSS_IMPORTS]:
         if p in category and 'register' in category[p] and 'npm_path' in category[p]['register']:
-          dst_path = os.path.join(package_path, p, category[p]['register']['npm_path'])
+          npm_alias = category[p]['register'].get('npm', p)
+          dst_path = os.path.join(package_path, npm_alias, category[p]['register']['npm_path'])
           module_exist = os.path.exists(dst_path)
           if not module_exist:
             os.makedirs(dst_path)
@@ -2068,6 +2079,10 @@ def npm(packages, path="", is_node_server=False, update=False):
               mod['path'] = mod['path'] % mod
               request = Request("%(cdnjs)s/%(path)s/%(script)s" % mod)
               response = urlopen(request).read()
+              if 'npm_path' in mod:
+                dst_path = os.path.join(package_path, npm_alias, mod['npm_path'])
+                if not os.path.exists(dst_path):
+                  os.makedirs(dst_path)
               with open(os.path.join(dst_path, mod['script']), "wb") as f:
                 f.write(response)
           else:
