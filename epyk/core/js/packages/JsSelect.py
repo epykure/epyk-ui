@@ -302,8 +302,8 @@ class JSelect(JsPackage):
     ----------
     :param options:
     """
-    self._src.cssImport.add('select-ajax')
-    self._src.jsImports.add('select-ajax')
+    self._src.cssImport.add('ajax-bootstrap-select')
+    self._src.jsImports.add('ajax-bootstrap-select')
     opts = []
     for k, v in options.items():
       if not isinstance(v, (dict, int)) and v.startswith("function"):

@@ -215,6 +215,7 @@ JS_IMPORTS = {
   # AG Grid tables
   'ag-grid': {
     'website': 'https://www.ag-grid.com/javascript-grid/',
+    'register': {'alias': 'aggrid', 'npm': 'ag-grid-community', 'npm_path': 'dist'},
     'modules': [
       {'script': 'ag-grid-community.min.js', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -523,7 +524,7 @@ JS_IMPORTS = {
   'jqueryui': {
     'req': [{'alias': 'jquery'}],
     'website': 'http://jquery.com/',
-    'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist'},
+    'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist', 'npm_path': ''},
     'modules': [
       {'script': 'jquery-ui.min.js', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -829,9 +830,9 @@ JS_IMPORTS = {
       {'reqAlias': 'popper', 'script': 'popper.min.js', 'version': '1.14.6', 'path': 'popper.js/%(version)s/umd/', 'cdnjs': CDNJS_REPO}]},
 
   # Javascript module for the simple select component. issue with Bootstrap 4 width CDN links
-  'select': {
+  'bootstrap-select': {
     'website': 'http://silviomoreto.github.io/bootstrap-select/',
-    'register': {'alias': 'selectBs', 'module': 'bootstrap-select.min'},
+    'register': {'alias': 'selectBs', 'module': 'bootstrap-select.min', 'npm_path': 'dist/js'},
     'req': [
       {'alias': 'jquery'},
       {'alias': 'bootstrap'}],
@@ -839,10 +840,10 @@ JS_IMPORTS = {
       {'reqAlias': 'selectBs', 'script': 'bootstrap-select.min.js', 'version': '1.13.9', 'path': 'bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO},
     ]},
 
-  'select-ajax': {
+  'ajax-bootstrap-select': {
     'website': 'https://github.com/truckingsim/Ajax-Bootstrap-Select',
-    'register': {'alias': 'selectAjax', 'module': 'ajax-bootstrap-select.min'},
-    'req': [{"alias": 'select'}
+    'register': {'alias': 'selectAjax', 'module': 'ajax-bootstrap-select.min', 'npm_path': 'dist/js'},
+    'req': [{"alias": 'bootstrap-select'}
     ], 'modules': [
       {'script': 'ajax-bootstrap-select.min.js', 'version': '1.4.5', 'path': 'ajax-bootstrap-select/%(version)s/js/', 'cdnjs': CDNJS_REPO}
     ]
@@ -929,6 +930,7 @@ JS_IMPORTS = {
 CSS_IMPORTS = {
   'jqueryui': {
     'website': 'http://jquery.com/',
+    'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist', 'npm_path': ''},
     'modules': [
       {'script': 'jquery-ui.min.css', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO},
     ]
@@ -1139,16 +1141,18 @@ CSS_IMPORTS = {
   #'epyk': {'req': ['bootstrap'], 'modules': ['bdi.css'], 'website': 'internal lib', 'version': '0'},
 
   # Javascript module for the simple select component. issue with Bootstrap 4 width CDN links
-  'select': {
+  'bootstrap-select': {
     'website': 'https://github.com/silviomoreto/bootstrap-select',
+    'register': {'alias': 'select', 'npm_path': 'dist/css'},
     'req': [{'alias': 'jqueryui'}, {'alias': 'bootstrap'}],
     'modules': [
       {'script': 'bootstrap-select.min.css', 'version': '1.13.6', 'path': 'bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]},
 
-  'select-ajax': {
+  'ajax-bootstrap-select': {
     'website': 'https://github.com/truckingsim/Ajax-Bootstrap-Select',
-    'req': [{"alias": 'select'}],
+    'register': {'alias': 'select', 'npm_path': 'dist/css'},
+    'req': [{"alias": 'bootstrap-select'}],
     'modules': [
           {'script': 'ajax-bootstrap-select.min.css', 'version': '1.4.5', 'path': 'ajax-bootstrap-select/%(version)s/css/', 'cdnjs': CDNJS_REPO}
     ]
@@ -1191,6 +1195,7 @@ CSS_IMPORTS = {
   # AG Grid tables
   'ag-grid': {
     'website': 'https://www.ag-grid.com/javascript-grid/',
+    'register': {'alias': 'aggrid', 'npm': 'ag-grid-community', 'npm_path': 'dist/styles'},
     'modules': [
       {'script': 'ag-grid.min.css', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}]},
 }

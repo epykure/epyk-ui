@@ -44,7 +44,7 @@ class Optgroup(Html.Html):
 
 
 class Select(Html.Html):
-  requirements = ('select', )
+  requirements = ('bootstrap-select', )
   name = 'Select'
 
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
@@ -169,7 +169,7 @@ class Select(Html.Html):
 
 
 class Lookup(Select):
-  requirements = ('select', )
+  requirements = ('bootstrap-select', )
 
   def __init__(self, report, records, htmlCode, width, height, filter, profile, multiple, options):
     super(Lookup, self).__init__(report, records, htmlCode, width, height, filter, profile, multiple, options)
