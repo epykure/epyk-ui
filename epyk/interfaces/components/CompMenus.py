@@ -155,12 +155,22 @@ class Menus(object):
     return col
 
   def icons(self, data, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
 
+    :param data:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     div.style.css.background = self.context.rptObj.theme.greys[1]
     div.style.css.margin = "2px 0 0 0"
     for d in data:
       div += self.context.rptObj.ui.icons.fluent(icon=d, text="", width=(15, 'px'), options={"icon_family": 'fluent'})
+    return div
 
   def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
               htmlCode=None, helper=None, options=None, profile=None):
