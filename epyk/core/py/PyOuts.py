@@ -252,7 +252,7 @@ class PyOuts(object):
       for f in os.listdir(os.path.join(nb_path, 'static', 'components')):
         self.excluded_packages.append(Imports.NOTEBOOK_MAPPING.get(f, f))
     except:
-      self.excluded_packages = ['bootstrap', 'jquery', 'moment', 'jqueryui', 'mathjs']
+      self.excluded_packages = ['bootstrap', 'jquery', 'moment', 'jqueryui', 'mathjax']
     return self
 
   def w3cTryIt(self, path=None, name=None):

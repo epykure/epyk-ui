@@ -153,7 +153,7 @@ CDNJS_REPO = 'https://cdnjs.cloudflare.com/ajax/libs'
 # If the folder are the same as the alias it is not included in this mapping
 # Purpose is to not double load the modules in Jupyter
 NOTEBOOK_MAPPING = {
-  'MathJax': 'mathjs',
+  'MathJax': 'mathjax',
   'jquery-ui': 'jqueryui',
 
 }
@@ -161,7 +161,7 @@ NOTEBOOK_MAPPING = {
 JS_IMPORTS = {
   # numbers formatting
   'accounting': {
-    'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting', 'npm': 'accounting'},
+    'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting', 'npm': 'accounting', 'npm_path': ''},
     'modules': [
       {'script': 'accounting.min.js', 'version': '0.4.1', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -169,7 +169,7 @@ JS_IMPORTS = {
 
   # data transformation
   'underscore': {
-    'register': {'alias': 'underscore', 'module': 'underscore-min', 'npm': 'underscore'},
+    'register': {'alias': 'underscore', 'module': 'underscore-min', 'npm': 'underscore', 'npm_path': ''},
     'modules': [
       {'script': 'underscore-min.js', 'version': '1.9.1', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
     ],
@@ -221,7 +221,7 @@ JS_IMPORTS = {
   # module for tabulator
   'tabulator': {
     'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
-    'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator'},
+    'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator', 'npm_path': ''},
     'modules': [
       # core only needed for Jupyter for some reasons
       #{'script': 'tabulator_core.min.js', 'version': '4.4.3', 'path': 'tabulator/%(version)s/js/', 'cdnjs': CDNJS_REPO}, # 'reqAlias': 'tabulator_core',
@@ -510,9 +510,9 @@ JS_IMPORTS = {
       {'script': 'qunit.min.js', 'version': '2.9.2', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Used to produce sparkline charts in a document and in Tabulator
-  'jquery-sparklines': {
+  'jquery-sparkline': {
     'req': [{'alias': 'jquery'}],
-    'register': {'alias': 'sparklines', 'module': 'jquery.sparkline.min', 'npm': 'sparklines'},
+    'register': {'alias': 'sparklines', 'module': 'jquery.sparkline.min', 'npm': 'jquery-sparkline', 'npm_path': ''},
     'website': 'https://omnipotent.net/jquery.sparkline/#s-about',
     'modules': [
       {'script': 'jquery.sparkline.min.js', 'version': '2.1.2', 'path': 'jquery-sparklines/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -592,7 +592,7 @@ JS_IMPORTS = {
   # Javascript dependencies for D3 and NVD2 components width CDN links
   'd3': {
     'website': 'https://d3js.org/',
-    'register': {'alias': 'd3', 'module': 'd3.min', 'npm': 'd3'},
+    'register': {'alias': 'd3', 'module': 'd3.min', 'npm': 'd3', 'npm_path': 'dist'},
     'req': [{'alias': 'jquery'}],
     'modules': [
       {'reqAlias': 'd3', 'reqMod': 'ignore', 'script': 'd3.min.js', 'version': '5.16.0', 'path': 'd3/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -768,7 +768,7 @@ JS_IMPORTS = {
   # ChartJs modules width CDN links
   'Chart.js': {
     'website': 'https://www.chartjs.org/',
-    'register': {'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js'},
+    'register': {'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
     'req': [{'alias': 'd3'}],
     'modules': [
       {'script': 'Chart.bundle.min.js', 'version': '2.9.3', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO},
@@ -862,7 +862,7 @@ JS_IMPORTS = {
   # Javascript package to display mathematical formulas
   # https://codingislove.com/display-maths-formulas-webpage/
   # https://github.com/mathjax/mathjax
-  'mathjs': {
+  'mathjax': {
     'website': 'https://www.mathjax.org/',
     'register': {'alias': 'mathjax', 'module': 'MathJax', 'npm': 'mathjax'},
     'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s', 'folder': 'mathjax'},
@@ -883,9 +883,9 @@ JS_IMPORTS = {
   # Code mirror
   'codemirror': {
     'website': 'https://codemirror.net/',
-    'register': {'alias': 'codemirror', 'npm': 'codemirror'},
+    'register': {'alias': 'codemirror', 'npm': 'codemirror', 'npm_path': 'lib'},
     'modules': [
-      {'script': 'codemirror.min.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'codemirror.js', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]
   },
 
@@ -1170,8 +1170,9 @@ CSS_IMPORTS = {
   # Code mirror
   'codemirror': {
     'website': 'https://codemirror.net/',
+    'register': {'alias': 'codemirror', 'npm': 'codemirror', 'npm_path': 'lib'},
     'modules': [
-      {'script': 'codemirror.min.css', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+      {'script': 'codemirror.css', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # Leaflet
@@ -1379,6 +1380,18 @@ class ImportManager(object):
           mainKeys.append(k)
           versions.append(v)
         import_cict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions}
+
+  @property
+  def requirements(self):
+    """
+    Description:
+    ------------
+    Retrieve all the requirements
+    """
+    module_alias = set(self.cleanImports(self._report.jsImports, JS_IMPORTS))
+    for css in self.cleanImports(self._report.cssImport, CSS_IMPORTS):
+      module_alias.add(css)
+    return module_alias
 
   def getModules(self, modules, alias, folder=None, module_details=None):
     """
@@ -2087,4 +2100,5 @@ def npm(packages, path="", is_node_server=False, update=False):
                 f.write(response)
           else:
             print(" PYK_NPM >> %s package already installed" % p)
-
+        else:
+          print(" [WARNING] PYK_NPM >> No configuration for %s" % p)

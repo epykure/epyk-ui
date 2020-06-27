@@ -95,15 +95,20 @@ class Report(object):
     else:
       self._theme = theme
 
-  def node_modules(self, path, alias=None):
+  def node_modules(self, path, alias=None, install=False, update=False):
     """
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param path:
     :param alias:
+    :param install:
+    :param update:
     """
-    self._node_modules = (path, alias or path)
+    if path is not None:
+      self._node_modules = (path, alias or path, install, update)
 
   def imports(self, online=False):
     """

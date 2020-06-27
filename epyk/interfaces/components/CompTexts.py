@@ -173,7 +173,7 @@ class Texts(object):
     """
     Description:
     ------------
-    Interface to the mathjs Formulas object
+    Interface to the mathjax Formulas object
 
     Usage::
 
@@ -185,7 +185,7 @@ class Texts(object):
 
     Related Pages:
 
-      https://mathjs.org/docs/index.html
+      https://mathjax.org/docs/index.html
 
 
     Attributes:

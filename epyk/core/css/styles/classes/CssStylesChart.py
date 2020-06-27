@@ -130,7 +130,7 @@ class CssNVD3HideGrid(CssStyle.Style):
 
 
 # Bootstrap issue
-# https://stackoverflow.com/questions/18894820/jquery-sparklines-and-twitter-bootstrap-3-tooltip-style-overrides
+# https://stackoverflow.com/questions/18894820/jquery-sparkline-and-twitter-bootstrap-3-tooltip-style-overrides
 class CssSparklines(CssStyle.Style):
   classname = "jqstooltip"
   _attrs = {"-webkit-box-sizing": "content-box", "-moz-box-sizing": "content-box", "box-sizing": "content-box"}

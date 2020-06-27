@@ -243,7 +243,7 @@ class Delta(Html.Html):
 
 
 class Formula(Html.Html):
-  requirements = ('mathjs', )
+  requirements = ('mathjax', )
   name = 'Latex Formula'
 
   def __init__(self, report, text, width, color, helper, profile):

@@ -10,7 +10,7 @@ from epyk.core.html.options import OptSparkline
 
 
 class Sparklines(Html.Html):
-  requirements = ('jquery-sparklines', )
+  requirements = ('jquery-sparkline', )
   name = 'Sparkline'
 
   def __init__(self, report, data, chart_type, title, width, height, options):
