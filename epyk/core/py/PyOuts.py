@@ -353,7 +353,7 @@ class PyOuts(object):
         f.write(results["cssStyle"])
     return path
 
-  def html_file(self, path=None, name=None, split_files=False):
+  def html_file(self, path=None, name=None, split_files=False, install_modules=False):
     """
     Description:
     ------------
@@ -408,6 +408,8 @@ class PyOuts(object):
       results['body'] = body
       results['header'] = self._report.headers
       f.write(HtmlTmplBase.STATIC_PAGE % results)
+    if install_modules and self._report._node_modules is not None:
+      Imports.npm(self._report.imports().requirements, path=self._report._node_modules[0], is_node_server=False)
     return html_file_path
 
   def web(self):

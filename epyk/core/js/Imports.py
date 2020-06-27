@@ -2103,7 +2103,3 @@ def npm(packages, path="", is_node_server=False, update=False):
                   os.makedirs(dst_path)
               with open(os.path.join(dst_path, mod['script']), "wb") as f:
                 f.write(response)
-          else:
-            print(" PYK_NPM >> %s package already installed" % p)
-        else:
-          print(" [WARNING] PYK_NPM >> No configuration for %s" % p)
