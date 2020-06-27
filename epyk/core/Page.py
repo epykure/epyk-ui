@@ -30,6 +30,7 @@ from epyk.web import apps
 class Report(object):
   showNavMenu, withContainer = False, False
   ext_packages = None # For extension modules
+  _node_modules = None # Path for the external packages (default to the CDNJS is not available)
 
   def __init__(self, inputs=None):
     """
@@ -93,6 +94,16 @@ class Report(object):
       self._theme = theme
     else:
       self._theme = theme
+
+  def node_modules(self, path, alias=None):
+    """
+    Description:
+    ------------
+
+    :param path:
+    :param alias:
+    """
+    self._node_modules = (path, alias or path)
 
   def imports(self, online=False):
     """

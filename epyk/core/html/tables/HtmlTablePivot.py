@@ -16,7 +16,7 @@ from epyk.core.css.styles import GrpClsTable
 
 
 class PivotTable(Html.Html):
-  requirements = ('pivot', )
+  requirements = ('pivottable', )
   name = 'Pivot Table'
 
   def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
@@ -76,7 +76,6 @@ class PivotTable(Html.Html):
 
 
 class PivotUITable(PivotTable):
-  __reqJs, __reqCss = ["pivot"], ["pivot"]
 
   def __init__(self, report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile):
     super(PivotUITable, self).__init__(report, recordSet, rows, cols, width, height, htmlCode, helper, options, profile)

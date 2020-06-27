@@ -12,6 +12,18 @@ import sys
 import json
 import importlib
 import collections
+import subprocess
+
+
+try:
+    from urllib.parse import urlparse, urlencode
+    from urllib.request import urlopen, Request, ProxyHandler, build_opener, install_opener
+    from urllib.error import HTTPError
+except ImportError:
+    from urlparse import urlparse
+    from urllib import urlencode
+    from urllib2 import urlopen, Request, HTTPError, ProxyHandler, build_opener, install_opener
+
 
 # To fully disable the automatic pip install request when a package is missing
 AUTOLOAD = False
@@ -183,7 +195,7 @@ JS_IMPORTS = {
   # module are written from the first one to load to the last one
   'bootstrap': {
     'register': {'alias': 'bootstrap', 'module': 'bootstrap.min', 'name': 'bootstrap'},
-    'req': [{'alias': 'jquery'}, {'alias': 'popper'}],
+    'req': [{'alias': 'jquery'}, {'alias': '@popperjs/core'}],
     'modules': [
       # Better to use the bundle version to avoid the import issue with popper.js
       {'script': 'bootstrap.min.js', 'version': '4.4.1', 'path': 'twitter-bootstrap/%(version)s/js/', 'cdnjs': CDNJS_REPO},
@@ -430,9 +442,9 @@ JS_IMPORTS = {
     ]},
 
   # Datatable pivot
-  'pivot': {
+  'pivottable': {
     'req': [{'alias': 'jqueryui'}],
-    'register': {'alias': 'pivot', 'module': 'pivot.min', 'npm': 'pivottable'},
+    'register': {'alias': 'pivot', 'module': 'pivot.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
       {'script': 'pivot.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -445,7 +457,7 @@ JS_IMPORTS = {
 
   # Pivot Table SubTotal
   'pivot-sub-total': {
-    'req': [{'alias': 'pivot'}],
+    'req': [{'alias': 'pivottable'}],
     'register': {'alias': 'subtotal', 'module': 'subtotal'},
     'website': 'http://nagarajanchinnasamy.com/subtotal/examples/',
     'modules': [
@@ -453,16 +465,22 @@ JS_IMPORTS = {
 
   # Pivot Table pivot C3 renderer
   'pivot-c3': {
-    'req': [{'alias': 'c3'}],
-    'register': {'alias': 'pivot_c3', 'module': 'c3_renderers.min'},
+    'req': [
+      {'alias': 'c3'},
+      {'alias': 'pivottable'}
+    ],
+    'register': {'alias': 'pivot_c3', 'module': 'c3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
       {'script': 'c3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Pivot Table pivot plotly renderer
   'pivot-plotly': {
-    'req': [{'alias': 'plotly.js'}],
-    'register': {'alias': 'pivot_plotly', 'module': 'plotly_renderers.min'},
+    'req': [
+      {'alias': 'plotly.js'},
+      {'alias': 'pivottable'}
+    ],
+    'register': {'alias': 'pivot_plotly', 'module': 'plotly_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
       {'script': 'plotly_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -471,8 +489,9 @@ JS_IMPORTS = {
   'pivot-d3': {
       'req': [
         {'alias': 'd3', 'version': '3.5.5'},
+        {'alias': 'pivottable'}
       ],
-      'register': {'alias': 'pivot_d3', 'module': 'd3_renderers.min'},
+      'register': {'alias': 'pivot_d3', 'module': 'd3_renderers.min', 'npm': 'pivottable', 'npm_path': 'dist'},
       'website': 'https://github.com/nicolaskruchten/pivottable',
       'modules': [
         {'script': 'd3_renderers.min.js', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -480,7 +499,7 @@ JS_IMPORTS = {
   # Jquery package width CDN links
   'jquery': {
     'website': 'http://jquery.com/',
-    'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery'},
+    'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery', 'npm_path': 'dist'},
     'modules': [
       {'script': 'jquery.min.js', 'version': '3.4.1', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -802,10 +821,10 @@ JS_IMPORTS = {
   # 'meter': {'req': ['d3'], 'modules': ['d3.meter.js'], 'website': '', 'version': '', "status": 'deprecated'},
 
   # Popper tooltips used by bootstrap in the dropdown components
-  'popper': {
+  '@popperjs/core': {
     'req': [{'alias': 'jquery'}],
-    'website': 'https://popper.js.org/',
-    'register': {'alias': 'popper', 'module': 'popper.min', 'npm': 'popper'},
+    'website': 'https://github.com/popperjs/popper-core',
+    'register': {'alias': 'popper', 'module': 'popper.min', 'npm': '@popperjs/core', 'npm_path': 'dist/umd'},
     'modules': [
       {'reqAlias': 'popper', 'script': 'popper.min.js', 'version': '1.14.6', 'path': 'popper.js/%(version)s/umd/', 'cdnjs': CDNJS_REPO}]},
 
@@ -835,8 +854,8 @@ JS_IMPORTS = {
 
   # Vis Javascript Packages
   'vis': {
+    'register': {'alias': 'vis', 'module': 'vis.min', 'npm': 'vis', 'npm_path': 'dist'},
     'website': 'http://visjs.org/',
-    'register': {'alias': 'vis', 'module': 'vis.min'},
     'modules': [
       {'script': 'vis.min.js', 'version': '4.21.0', 'path': 'vis/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -879,7 +898,7 @@ JS_IMPORTS = {
   # showdown
   'showdown': {
     'website': 'https://github.com/showdownjs/showdown',
-    'register': {'alias': 'showdown', 'npm': 'showdown'},
+    'register': {'alias': 'showdown', 'npm': 'showdown', 'npm_path': 'dist'},
     'modules': [
       {'script': 'showdown.min.js', 'path': 'showdown/%(version)s/', 'version': '1.9.1', 'cdnjs': CDNJS_REPO}
     ]
@@ -917,13 +936,24 @@ CSS_IMPORTS = {
 
   # material design icons
   'material-design-icons': {
-    'register': {'alias': 'icons', 'module': 'icons', 'npm': 'material-design-icons'},
-    'modules': [{'script': 'material-icons.min.css', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO}],
+    'register': {'alias': 'icons', 'module': 'icons', 'npm': 'material-design-icons', 'npm_path': 'iconfont'},
+    'modules': [{'script': 'material-icons.css', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO}],
+    'assets': [
+        {'script': 'MaterialIcons-Regular.ttf', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+        {'script': 'MaterialIcons-Regular.woff', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+        {'script': 'MaterialIcons-Regular.woff2', 'version': '3.0.1', 'path': 'material-design-icons/%(version)s/iconfont/', 'cdnjs': CDNJS_REPO},
+    ],
     'website': 'https://google.github.io/material-design-icons/'},
 
   # fluent ui icons
   'office-ui-fabric-core': {
     'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm': '@fluentui/react'},
+    'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/11.0.0/css/', 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
+    'website': 'https://developer.microsoft.com/en-us/fluentui#/styles/web/icons'},
+
+  # fluent ui icons
+  'office-ui-fabric-react': {
+    'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm': '@fluentui/react', 'npm_path': 'dist/css'},
     'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/11.0.0/css/', 'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
     'website': 'https://developer.microsoft.com/en-us/fluentui#/styles/web/icons'},
 
@@ -1117,13 +1147,14 @@ CSS_IMPORTS = {
   },
 
   # Pivot table style with CDN Links
-  'pivot': {
+  'pivottable': {
     'website': 'https://github.com/nicolaskruchten/pivottable',
     'modules': [
       {'script': 'pivot.min.css', 'version': '2.23.0', 'path': 'pivottable/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Vis style with CDN Links
   'vis': {
+    'register': {'alias': 'vis', 'module': 'vis', 'npm': 'vis', 'npm_path': 'dist'},
     'website': 'http://visjs.org/',
     'modules': [
       {'script': 'vis.min.css', 'version': '4.21.0', 'path': 'vis/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -1475,6 +1506,13 @@ class ImportManager(object):
         continue
 
       for urlModule in list(self.cssImports[css_alias]['main']):
+        if self._report._node_modules is not None:
+          node_sub_path = CSS_IMPORTS.get(css_alias, {}).get('register', {}).get('npm_path')
+          if node_sub_path is not None:
+            css_file = os.path.split(urlModule)[1]
+            package_path = os.path.join(self._report._node_modules[0], "node_modules", css_alias, node_sub_path, css_file)
+            if os.path.exists(package_path):
+              urlModule = os.path.join(self._report._node_modules[1], css_alias, node_sub_path, css_file).replace("\\", "/")
         css.append('<link rel="stylesheet" href="%s" type="text/css">' % urlModule)
     if local_css is not None:
       for localCssFile in local_css:
@@ -1522,6 +1560,14 @@ class ImportManager(object):
 
       extra_configs = "?%s" % self.moduleConfigs[js_alias] if js_alias in self.moduleConfigs else ""
       for url_module in list(self.jsImports[js_alias]['main']):
+        if self._report._node_modules is not None:
+          node_sub_path = JS_IMPORTS.get(js_alias, {}).get('register', {}).get('npm_path')
+          if node_sub_path is not None:
+            css_file = os.path.split(url_module)[1]
+            package_path = os.path.join(self._report._node_modules[0], "node_modules", js_alias, node_sub_path, css_file)
+            if os.path.exists(package_path):
+              url_module = os.path.join(self._report._node_modules[1], js_alias, node_sub_path, css_file).replace("\\", "/")
+
         if '/mode/' in url_module:
           js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
         else:
@@ -1967,3 +2013,63 @@ class ImportManager(object):
         #print(GOOGLE_EXTENSIONS[p])
     self._report._with_google_imports = True
     # add the launchers
+
+
+def npm(packages, path="", is_node_server=False, update=False):
+  """
+  Description:
+  ------------
+  Install files using the npm structure is compatible.
+  This will allow to run the script totally locally (without dependencyy on internet)
+
+  Attributes:
+  ----------
+  :param packages: List. All the packages to be added to the install
+  :param path: String. The install path (if node server, the folder root for /node_modules
+  :param is_node_server: Boolean. Specify is npm from NodeJs must be used to install the package
+  :param update: Boolean. Specify is the version of the package needs to be updated
+  """
+  if is_node_server:
+    if not isinstance(packages, list):
+      packages = [packages]
+    if update:
+      subprocess.run('npm update %s' % " ".join(packages), shell=True, cwd=path)
+    else:
+      to_be_installed = []
+      for p in packages:
+        package_path = os.path.join(path, 'node_modules', p)
+        if not os.path.exists(package_path):
+          to_be_installed.append(p)
+      if to_be_installed:
+        subprocess.run('npm install %s' % " ".join(to_be_installed), shell=True, cwd=path)
+        print(" PYK_NPM >> All packages installed [%s]" % " ".join(to_be_installed))
+      else:
+        print(" PYK_NPM >> packages already installed")
+  else:
+    package_path = os.path.join(path, 'node_modules')
+    if not os.path.exists(package_path):
+      os.makedirs(package_path)
+    for p in packages:
+      for category in [JS_IMPORTS, CSS_IMPORTS]:
+        if p in category and 'register' in category[p] and 'npm_path' in category[p]['register']:
+          dst_path = os.path.join(package_path, p, category[p]['register']['npm_path'])
+          module_exist = os.path.exists(dst_path)
+          if not module_exist:
+            os.makedirs(dst_path)
+            update = True
+          if update:
+            for mod in category[p]['modules']:
+              mod['path'] = mod['path'] % mod
+              request = Request("%(cdnjs)s/%(path)s/%(script)s" % mod)
+              response = urlopen(request).read()
+              with open(os.path.join(dst_path, mod['script']), "wb") as f:
+                f.write(response)
+            for mod in category[p].get('assets', []):
+              mod['path'] = mod['path'] % mod
+              request = Request("%(cdnjs)s/%(path)s/%(script)s" % mod)
+              response = urlopen(request).read()
+              with open(os.path.join(dst_path, mod['script']), "wb") as f:
+                f.write(response)
+          else:
+            print(" PYK_NPM >> %s package already installed" % p)
+
