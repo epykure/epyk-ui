@@ -146,6 +146,30 @@ class Select(Html.Html):
       jsFncs.append("if (%s === ''){ %s }" % (self.dom.content.toStr(), JsUtils.jsConvertFncs(emtpyFncs, toStr=True)))
     return self.on("change", jsFncs, profile)
 
+  def ajax(self, url, jsData="function (){return {q: '{{{q}}}'}}", is_json=True, method="POST", options=None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://github.com/truckingsim/Ajax-Bootstrap-Select
+
+    Attributes:
+    ----------
+    :param options:
+    """
+    self.options.liveSearch = True
+    options = options or {}
+    if 'ajax' not in options:
+      options['ajax'] = {}
+    options['ajax']['type'] = method
+    options['ajax']['url'] = url
+    options['ajax']['data'] = jsData
+    if is_json:
+      options['ajax']['dataType'] = 'json'
+    return self.onReady(self.js.ajaxSelectPicker(options))
+
   def __str__(self):
     options, opt_groups = [], {}
     for val in self.val:
