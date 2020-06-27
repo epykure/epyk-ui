@@ -353,7 +353,7 @@ class PyOuts(object):
         f.write(results["cssStyle"])
     return path
 
-  def html_file(self, path=None, name=None, split_files=False, install_modules=False):
+  def html_file(self, path=None, name=None, split_files=False, install_modules=False, options=None):
     """
     Description:
     ------------
@@ -368,6 +368,7 @@ class PyOuts(object):
 
     :return: The file full path
     """
+    options = options or {}
     if path is None:
       path = os.path.join(os.getcwd(), "outs")
     if not os.path.exists(path):
@@ -389,8 +390,8 @@ class PyOuts(object):
     body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
     results = self._to_html_obj(htmlParts, cssParts, split_js=split_files)
     if split_files:
-      results['cssImports'] = '%s\n<link rel="stylesheet" href="./css/%s.css" type="text/css">\n\n' % (results['cssImports'], name)
-      body = '%s\n\n<script language="javascript" type="text/javascript" src="./js/%s.js"></script>' % (body, name)
+      results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (results['cssImports'], options.get("css_route", './css'), name)
+      body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (body, options.get("js_route", './js'), name)
       if not os.path.exists(os.path.join(path, 'css')):
         os.makedirs(os.path.join(path, 'css'), exist_ok=True)
       with open(os.path.join(path, 'css', "%s.css" % name), "w") as f:
