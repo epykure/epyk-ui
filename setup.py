@@ -16,7 +16,7 @@ def install_required():
 setuptools.setup(
     name="epyk",
     author="epykure",
-    version="1.0.14",
+    version="1.0.18",
     author_email="smith.pyotr@gmail.com",
     description="",
     long_description=long_description,
@@ -30,12 +30,19 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=install_required(),
     package_data={'epyk': [os.path.join('static', 'images', '*'), os.path.join('static', 'images', 'logo', '*')]},
-    entry_points={"console_scripts": ["epyk = epyk.core.cli.command_line_fncs:main"]},
+    entry_points={"console_scripts": [
+      "epyk = epyk.core.cli.cli_export:main", # For common quick page transformation
+      "epyk_project = epyk.core.cli.cli_project:main", # For project structure
+      "epyk_npm = epyk.core.cli.cli_npm:main", # For Import management
+    ]},
     python_requires=">=2.7",
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 2.7",
         "License :: OSI Approved :: GNU General Public License (GPL)",
         "Operating System :: OS Independent",
+        "Programming Language :: Python :: Implementation :: Jython",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: IronPython",
     ],
 )

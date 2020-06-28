@@ -1,30 +1,234 @@
 """
+Dedicated CLI for the External packages management.
 
 epyk_npm.exe
 """
 
+import sys
+import os
+import argparse
 
-def install():
-  """
-  Install the package following the below route:
-    - Test if the package existing in NPM
-    - Test if the package is availalbe on CDNJS
-  """
-
-
-def add():
-  """
-  Add an extra external package in the project repository
-  """
+from epyk.core.js import Imports
+from epyk.core.cli import utils
 
 
-def info():
+def install_all_parser(subparser):
   """
-  Get package information from NPM repository and check if the current version in the project is the same
+  Description:
+  ------------
+  Paser for the intall all CLI
+
+  Attributes:
+  ----------
+  :param subparser: subparser
   """
+  subparser.set_defaults(func=install_all)
+  subparser.add_argument('-p', '--path', required=True, help='''The UI project path''')
 
 
-def cdnjs():
+def install_all(args):
   """
-  Get package information from CDNJS
+  Description:
+  ------------
+  Install all the internally defined packages locally.
+  This will mimic the structure of NPM in order to facilitate the links.
+
+  Attributes:
+  ----------
+  :param parser: -p, The project path
   """
+  packages = set(Imports.CSS_IMPORTS.keys()) | set(Imports.JS_IMPORTS.keys())
+  project_path = args.path or os.getcwd()
+  reports_path = utils.get_report_path(project_path, raise_error=False)
+  sys.path.append(os.path.join(reports_path, '..'))
+  static_path = "static"
+  if os.path.exists(os.path.join(reports_path, '..', "ui_settings.py")):
+    settings = __import__("ui_settings", fromlist=['object'])
+    static_path = settings.PACKAGE_PATH
+  module_path = os.path.join(reports_path, static_path)
+  if not os.path.exists(module_path):
+    os.makedirs(module_path)
+  Imports.npm(packages, path=module_path, is_node_server=False, update=False)
+
+
+def install_parser(subparser):
+  """
+  Description:
+  ------------
+  Parser for the install CLI
+
+  Attributes:
+  ----------
+  :param subparser: subparser
+  """
+  subparser.set_defaults(func=install)
+  subparser.add_argument('-pkg', '--packages', required=True, help='''The packages list comma separated''')
+  subparser.add_argument('-p', '--path', help='''The UI project path''')
+
+
+def install(args):
+  """
+  Description:
+  ------------
+  Install only the defined packages locally.
+  Those packages can be only the ones that the React or Vue scripters will be using.
+
+  The install will rely on the version and configuration in the Imports module
+
+  Attributes:
+  ----------
+  :param parser: -pkg, String, The packages list comma separated
+  :param parser: -p, The project path
+  """
+  project_path = args.path or os.getcwd()
+  reports_path = utils.get_report_path(project_path, raise_error=False)
+  sys.path.append(os.path.join(reports_path, '..'))
+  static_path = "static"
+  if os.path.exists(os.path.join(reports_path, '..', "ui_settings.py")):
+    settings = __import__("ui_settings", fromlist=['object'])
+    static_path = settings.PACKAGE_PATH
+  module_path = os.path.join(reports_path, static_path)
+  if not os.path.exists(module_path):
+    os.makedirs(module_path)
+  Imports.npm(args.packages.split(","), path=args.path, is_node_server=False, update=False)
+
+
+def update_parser(subparser):
+  """
+  Description:
+  ------------
+  Parser for the update CLI
+
+  Attributes:
+  ----------
+  :param subparser: subparser
+  """
+  subparser.set_defaults(func=update)
+  subparser.add_argument('-pkg', '--packages', required=True, help='''The packages list comma separated''')
+  subparser.add_argument('-p', '--path', help='''The UI project path''')
+
+
+def update(args):
+  """
+  Description:
+  ------------
+  Install only the defined packages locally.
+
+  The install will rely on the version and configuration in the Imports module
+
+  Attributes:
+  ----------
+  :param parser: -pkg, String, The packages list comma separated
+  :param parser: -p, The project path
+  """
+  project_path = args.path or os.getcwd()
+  reports_path = utils.get_report_path(project_path, raise_error=False)
+  sys.path.append(os.path.join(reports_path, '..'))
+  static_path = "static"
+  if os.path.exists(os.path.join(reports_path, '..', "ui_settings.py")):
+    settings = __import__("ui_settings", fromlist=['object'])
+    static_path = settings.PACKAGE_PATH
+  module_path = os.path.join(reports_path, static_path)
+  if not os.path.exists(module_path):
+    os.makedirs(module_path)
+  Imports.npm(args.packages.split(","), path=args.path, is_node_server=False, update=True)
+
+
+def npm_parser(subparser):
+  """
+  Description:
+  ------------
+  Parser for the npm CLI
+
+  Attributes:
+  ----------
+  :param subparser: subparser
+  """
+  subparser.set_defaults(func=npm)
+  subparser.add_argument('-pkg', '--packages', required=True, help='''The packages list comma separated''')
+  subparser.add_argument('-s', '--server', help='''''')
+  subparser.add_argument('-p', '--path', help='''The UI project path''')
+
+
+def npm(args):
+  """
+  Description:
+  ------------
+  Install the external packages relying on the NPM Javascript command line availabke on the NodeJs server.
+  This will not install the packages using the definition in Imports but on the ones in the NPM configuration.
+
+  Attributes:
+  ----------
+  :param parser: -pkg, String, The packages list comma separated
+  :param parser: -s, Path of the NodeJs server
+  :param parser: -p, The project path
+  """
+  if args.server is None:
+    project_path = args.path or os.getcwd()
+    reports_path = utils.get_report_path(project_path, raise_error=False)
+    sys.path.append(os.path.join(reports_path, '..'))
+    if os.path.exists(os.path.join(reports_path, '..', "ui_settings.py")):
+      settings = __import__("ui_settings", fromlist=['object'])
+      args.server = settings.NODE_SERVER_PATH
+  if args.server is None:
+    raise Exception("NodeJs server path not found")
+
+  Imports.npm(args.packages.split(","), path=args.server, is_node_server=True, update=False)
+
+
+def requirements_parser(parser):
+  """
+  Description:
+  ------------
+  Paser for the requirements CLI
+
+  Attributes:
+  ----------
+  :param subparser: subparser
+  """
+  parser.set_defaults(func=requirements)
+  parser.add_argument('-p', "--path", help="The UI work ath")
+  parser.add_argument('-r', "--page", required=True, help="The report name")
+
+
+def requirements(args):
+  """
+  Description:
+  ------------
+  Get the list of external modules required for a script.
+
+  Attributes:
+  ----------
+  :param parser: -p, the workspace path (Optional if run directly in the project root)
+  :param parser: -r, The page name (without the .py extension)
+  """
+  project_path = args.path or os.getcwd()
+  sys.path.append(project_path)
+
+  reprot_path = utils.get_report_path(project_path)
+  sys.path.append(reprot_path)
+  mod = __import__(args.page, fromlist=['object'])
+  page = utils.get_page(mod)
+  page.html()
+  return page.imports().requirements
+
+
+def main():
+  """
+  Description:
+  ------------
+
+  """
+  parser_map = {'npm': (npm_parser, '''Add packages to the Nodejs server'''),
+                'update': (update_parser, '''Update the selected external modules on the Python server'''),
+                'install': (install_parser, '''Install the selected external module on the Python server'''),
+                'required': (requirements_parser, '''Get all the external packages required for a page'''),
+                'install_all': (install_all_parser, '''Install all the external packages defined in the framework''')}
+  arg_parser = argparse.ArgumentParser(prog='epyk')
+  subparser = arg_parser.add_subparsers(title='Commands', dest='command')
+  subparser.required = True
+  for func, parser_init in parser_map.items():
+    new_parser = subparser.add_parser(func, help=parser_init[1])
+    parser_init[0](new_parser)
+  args = arg_parser.parse_args(sys.argv[1:])
+  return args.func(args)
