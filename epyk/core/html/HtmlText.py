@@ -759,9 +759,14 @@ class Highlights(Html.Html):
     self.css({"margin": "5px", 'padding': "5px"})
     self.attr['class'].add('alert alert-%s' % type)
     self.set_attrs(name='role', value="alert")
+    self.dom.display_value = "block"
+
+  @property
+  def _js__builder__(self):
+    return ''' htmlObj.querySelector('div[name=content]').innerHTML = data '''
 
   def __str__(self):
-    return "<div %s><div>%s</div></div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    return "<div %s><div name='content'>%s</div></div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
 
 
 class Fieldset(Html.Html):

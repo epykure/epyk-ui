@@ -1196,7 +1196,7 @@ class JsDoms(JsObject.JsObject):
     """
     self.css("display", display_value or self.display_value)
     if duration is not None:
-      self._js.append("setTimeout(function(){%s.style.display = 'none'}, %s)" % (self.varId, duration))
+      self._js.append("setTimeout(function(){%s.style.display = 'none'}, %s)" % (self.varId, duration * 1000))
     return self
 
   def toggle(self, attr="display", jsVal1=None, jsVal2="none"):

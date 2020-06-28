@@ -169,6 +169,48 @@ class Texts(object):
                                           height, htmlCode, helper, options or {}, profile)
     return html_light
 
+  def note(self, text=None, title="", icon=None, type="success", color=None, width=(None, "%"),
+                 height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+    Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages.
+
+    Usage::
+
+      rptObj.ui.texts.highlights("Test content", title="Test", icon="fab fa-angellist")
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlText.Highlights`
+
+    Related Pages:
+
+      https://getbootstrap.com/docs/4.3/components/alerts/
+
+    Attributes:
+    ----------
+    :param text: Optional. The string value to be displayed in the component
+    :param title:
+    :param icon:
+    :param type: Optional, The type of the warning. Can be (primary, secondary, success, danger, warning, info, light,
+                 dark). Default danger
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param profile:
+    """
+    if type not in ['success', 'warning', 'danger']:
+      raise Exception("This type %s is not recognised" % type)
+
+    html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, color, width,
+                                          height, htmlCode, helper, options or {}, profile)
+    html_light.style.css.border_left = "4px solid %s" % getattr(self.context.rptObj.theme, type)[1]
+    html_light.style.css.border_radius = 0
+    return html_light
+
   def formula(self, text=None, width=(100, "%"), color=None, helper=None, profile=None):
     """
     Description:

@@ -420,7 +420,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     return self.css("display", "none")
 
-  def show(self, inline=True, duration=None):
+  def show(self, inline=None, duration=None):
     """
     Description:
     -----------

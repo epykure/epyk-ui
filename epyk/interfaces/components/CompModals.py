@@ -86,8 +86,7 @@ class Modals(object):
       modal.col + submitRow
     return modal
 
-  def dialog(self, text, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None,
-                  helper=None, options=None, profile=None):
+  def dialog(self, text, width=(100, '%'), height=(20, 'px'), htmlCode=None, attrs=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
