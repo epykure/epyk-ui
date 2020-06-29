@@ -410,6 +410,7 @@ class NG(object):
     if self.envs is not None:
       for env in self.envs:
         subprocess.run(env, shell=True, cwd=os.path.join(self._app_path, self._app_name))
+    packages = node.npm_packages(packages)
     subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=os.path.join(self._app_path, self._app_name))
     map_modules = {
       "jquery": "./node_modules/jquery/dist/jquery.min.js",

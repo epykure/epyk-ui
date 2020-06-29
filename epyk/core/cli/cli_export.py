@@ -98,7 +98,9 @@ def angular(args):
   page = utils.get_page(mod)
   app = page.outs.publish(server="angular", app_path=angular_app_path, module="MyModule", selector='mymodule', target_folder=view_folder, auto_route=auto_route)
   if install_modules:
-    app.cli().npm(page.imports().requirements)
+    server_path, app_name = os.path.split(angular_app_path)
+    app._app_path = server_path
+    app.cli(app_name).npm(page.imports().requirements)
 
 
 def vue_parser(subparser):
@@ -222,6 +224,7 @@ def main():
   parser_map = {
     'transpile': (transpile_parser, '''Transpile a script to web objects'''),
     'html': (html_parser, '''Fast HTML transpilation'''),
+    'angular': (angular_parser, '''Transpile to an Angular format'''),
 
   }
   arg_parser = argparse.ArgumentParser(prog='epyk')

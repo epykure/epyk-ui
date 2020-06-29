@@ -41,6 +41,27 @@ def requirements(report, app_path=None):
   return npms
 
 
+def npm_packages(packages):
+  """
+  Description:
+  ------------
+  Return the NPM named to be used to import the various packages.
+
+  TODO: Fully align the names
+
+  Attributes:
+  ----------
+  :param packages: List. All the packages
+  """
+  mapped_packages = []
+  for p in packages:
+    if p in Imports.JS_IMPORTS:
+      mapped_packages.append(Imports.JS_IMPORTS[p].get('register', {}).get('npm', p))
+    else:
+      mapped_packages.append(p)
+  return mapped_packages
+
+
 class App(object):
 
   def __init__(self, app_path, app_name, alias, name, report=None, target_folder="views"):
@@ -260,6 +281,7 @@ class Node(object):
     if self.envs is not None:
       for env in self.envs:
         subprocess.run(env, shell=True, cwd=self._app_path)
+    packages = node.npm_packages(packages)
     subprocess.run('npm install %s --save' % " ".join(packages), shell=True, cwd=self._app_path)
     print("%s packages installed" % len(packages))
 

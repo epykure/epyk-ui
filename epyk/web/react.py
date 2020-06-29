@@ -91,6 +91,7 @@ class NpxCli(object):
     if self.envs is not None:
       for env in self.envs:
         subprocess.run(env, shell=True, cwd=self._react_app_path)
+    packages = node.npm_packages(packages)
     subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self._react_app_path)
 
 
