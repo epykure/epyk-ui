@@ -857,7 +857,6 @@ class App(object):
     self.__fncs['ngAfterViewInit'] = [page['jsFrgs']]
 
     with open(os.path.join(self.module_path, "%s.ts" % self.name), "w") as f:
-
       for comp, path in self.imports.items():
         f.write("import { %s } from '%s';\n" % (comp, path))
       for path, classNames in self._report._props.get('web', {}).get('modules', {}).items():
@@ -865,6 +864,9 @@ class App(object):
       if page['jsFrgsCommon']:
         f.write("import { %s } from './module_%s.js';" % (", ".join(list(page['jsFrgsCommon'].keys())),  self.alias.replace("-", "_")))
       f.write("\n")
+      if 'jquery' in self._report.jsImports:
+        f.write("\ndeclare var $: any;")
+        f.write("\n")
       # All the applicatops need this as they will interact with a Flask backend
       #f.write("@Injectable({\n")
       #for k , v in self.__injectable_prop.items():
