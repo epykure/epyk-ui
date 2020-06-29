@@ -32,6 +32,27 @@ class PyRest(object):
   def __init__(self, src=None):
     self.__src = src if src else self.__internal()
 
+  def proxy(self, username, password, proxy_host, proxy_port, protocols=None):
+    """
+    Description:
+    ------------
+    Set the proxy connexions for the Python requests.
+
+    Attributes:
+    ----------
+    :param username: String. The username
+    :param password: String. The user password
+    :param proxy_host: String. The proxy server hostname
+    :param proxy_port: Integer. The proxy server port
+    :param protocols: List. Protocoles for the proxy. Default [('http', 'http://'), ('https', 'https://')]
+    """
+    if protocols is None:
+      protocols = [('http', 'http://'), ('httpd', 'httpd://')]
+    proxies = {k: '%s://%s:%s@%s:%s' % (v, username, password, proxy_host, proxy_port) for k, v in protocols}
+    proxy = ProxyHandler(proxies)
+    opener = build_opener(proxy)
+    install_opener(opener)
+
   def http_server(self, port=5000, service_name=""):
     """
     Description:

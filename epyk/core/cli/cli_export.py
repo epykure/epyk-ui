@@ -41,15 +41,17 @@ def transpile(args):
   report_path = utils.get_report_path(project_path, raise_error=False)
   sys.path.append(report_path)
   ui_setting_path = os.path.join(report_path, '..', 'ui_settings.py')
-  install_modules, split_files, view_folder = False, False, 'views'
+  install_modules, split_files, view_folder, packages_path, package_url = False, False, 'views', 'static', None
   if os.path.exists(ui_setting_path):
     settings = __import__('ui_settings')
     install_modules = settings.INSTALL_MODULES
     split_files = settings.SPLIT_FILES
     view_folder = settings.VIEWS_FOLDER
+    packages_path = settings.PACKAGE_PATH
+    package_url = settings.SERVER_PACKAGE_URL
   mod = __import__(args.name, fromlist=['object'])
   page = utils.get_page(mod)
-  page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
+  page.node_modules(os.path.join(report_path, '..', packages_path), alias=package_url)
   output = page.outs.html_file(path=view_folder, name=args.name, split_files=split_files, install_modules=install_modules,
                                options={"css_route": '/css', "js_route": '/js'})
   print(output)

@@ -22,8 +22,8 @@ import 'jquery-ui-dist/jquery-ui.min.js';
 
 
 class VueCli(object):
-  def __init__(self, vue_app_path):
-    self._vue_app_path = vue_app_path
+  def __init__(self, vue_app_path, env):
+    self._vue_app_path, self.envs = vue_app_path, env
 
   def version(self):
     """
@@ -70,6 +70,9 @@ class VueCli(object):
 
     :param packages:
     """
+    if self.envs is not None:
+      for env in self.envs:
+        subprocess.run(env, shell=True, cwd=self._vue_app_path)
     subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self._vue_app_path)
 
   def add_router(self):
@@ -226,7 +229,7 @@ class VueJs(node.Node):
       https://vuejs.org/v2/guide/installation.html
     """
     path = os.path.join(self._app_path, app_name)
-    return VueCli(path)
+    return VueCli(path, self.envs)
 
   def serve(self, app_name, port=8081):
     """

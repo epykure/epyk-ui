@@ -7,11 +7,6 @@ from epyk.core import Page
 
 from epyk.web import node
 
-from epyk.web.components import CompAngular
-from epyk.web.components import CompAngularClr
-from epyk.web.components import CompAngularMaterialDesign
-from epyk.web.components import CompAngularPrimeNg
-
 import sys
 import re
 import os
@@ -210,8 +205,8 @@ class NGModule(object):
 
 
 class NG(object):
-  def __init__(self, app_path, app_name=None):
-    self._app_path, self._app_name = app_path, app_name
+  def __init__(self, app_path, app_name=None, env=None):
+    self._app_path, self._app_name, self.envs  = app_path, app_name, env
 
   def e2e(self, app_name=None):
     """
@@ -304,6 +299,9 @@ class NG(object):
     ----------
     :param package: String. The package name
     """
+    if self.envs is not None:
+      for env in self.envs:
+        subprocess.run(env, shell=True, cwd=os.path.join(self._app_path, self._app_name))
     subprocess.run('ng add %s' % package, shell=True, cwd=os.path.join(self._app_path, self._app_name))
     print("%s packages installed" % package)
 
@@ -409,6 +407,9 @@ class NG(object):
     ----------
     :param packages: List. The packages names to install
     """
+    if self.envs is not None:
+      for env in self.envs:
+        subprocess.run(env, shell=True, cwd=os.path.join(self._app_path, self._app_name))
     subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=os.path.join(self._app_path, self._app_name))
     map_modules = {
       "jquery": "./node_modules/jquery/dist/jquery.min.js",
@@ -669,40 +670,42 @@ describe('%(name)s', () => {
 ''' % {"path": module_path, 'name': self.name, 'alias': self.alias})
 
 
-class CompModules(object):
-
-  def clarity(self):
-    pass
-
-  def primeNg(self):
-    pass
-
-  def material(self):
-    pass
-
-
 class Components(object):
 
   def __init__(self, app, count=0, report=None):
     self._app, self.count_comp, self._report = app, count, report
 
-  @property
-  def install(self):
-    """
-
-    :return:
-    """
-    return CompModules()
-
   def router(self):
     """
+    Description:
+    ------------
 
-    :return:
     """
-    return CompAngular.Router(self._report, None)
+    from epyk.web.components.angular import standards
 
-  def clarity(self):
-    return
+    return standards.Router(self._report, None)
+
+  @property
+  def materials(self):
+    """
+    Description:
+    ------------
+
+    """
+    from epyk.web.components.angular import materials
+
+    return materials.Components(self._report)
+
+  @property
+  def primeng(self):
+    """
+    Description:
+    ------------
+
+    """
+    from epyk.web.components.angular import primeng
+
+    return primeng.Components(self._report)
 
 
 class App(object):
@@ -714,11 +717,33 @@ class App(object):
                     #'ViewChild': '@angular/core'
                     }
     self.vars, self.__map_var_names, self._report, self.file_name = {}, {}, report, None
-    self._app_path, self._app_name = app_path, app_name
+    self._app_path, self._app_name, self._node_path = app_path, app_name, app_path
     self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
     self.__comp_structure, self.htmls, self.__fncs, self.__injectable_prop = {}, [], {}, {'providedIn': 'root'}
     self.spec = ComponentSpec(app_path, app_name,  alias, name)
     self.comps, self.module_path = {}, None
+
+  @property
+  def clarity(self):
+    """
+    Description:
+    ------------
+
+    """
+    from epyk.web.components.angular import clarity
+
+    return clarity.Package(self._report, self)
+
+  @property
+  def bootstrap(self):
+    """
+    Description:
+    ------------
+
+    """
+    from epyk.web.components.angular import bootstrap
+
+    return bootstrap.Package(self._report, self)
 
   def add_var(self, name, value=None):
     """
@@ -823,6 +848,7 @@ class App(object):
       target_path = []
     target_path.append(self.__path)
     self.module_path = os.path.join(self._app_path, *target_path)
+    print("export  to: %s" % self.module_path)
     if not os.path.exists(self.module_path):
       os.makedirs(self.module_path)
     page = self._report.outs.web()
@@ -830,9 +856,13 @@ class App(object):
     self.__fncs['ngAfterViewInit'] = [page['jsFrgs']]
 
     with open(os.path.join(self.module_path, "%s.ts" % self.name), "w") as f:
+
       for comp, path in self.imports.items():
         f.write("import { %s } from '%s';\n" % (comp, path))
-      f.write("import { %s } from './module_%s.js';" % (", ".join(list(page['jsFrgsCommon'].keys())),  self.alias.replace("-", "_")))
+      for path, classNames in self._report._props.get('web', {}).get('modules', {}).items():
+        f.write("import { %s } from '%s';\n" % (",".join(classNames), path))
+      if page['jsFrgsCommon']:
+        f.write("import { %s } from './module_%s.js';" % (", ".join(list(page['jsFrgsCommon'].keys())),  self.alias.replace("-", "_")))
       f.write("\n")
       # All the applicatops need this as they will interact with a Flask backend
       #f.write("@Injectable({\n")
@@ -864,12 +894,13 @@ class App(object):
         f.write("  %s(){ %s } \n" % (name, ";".join(fnc_def)))
       f.write("}\n")
 
-    with open(os.path.join(self.module_path, "module_%s.js" % self.alias.replace("-", "_")), "w") as f:
-      for js_dep in JS_MODULES_IMPORTS:
-        if js_dep in self._report.jsImports:
-          f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
-      for buider in page['jsFrgsCommon'].values():
-        f.write("export %s;\n" % buider)
+    if page['jsFrgsCommon']:
+      with open(os.path.join(self.module_path, "module_%s.js" % self.alias.replace("-", "_")), "w") as f:
+        for js_dep in JS_MODULES_IMPORTS:
+          if js_dep in self._report.jsImports:
+            f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
+        for buider in page['jsFrgsCommon'].values():
+          f.write("export %s;\n" % buider)
 
     with open(os.path.join(self.module_path, "%s.html" % self.name), "w") as f:
       f.write("%(cssImports)s\n\n%(body)s" % page)
@@ -957,7 +988,7 @@ export class AppRoutingModule { }
     :param app_name: String. The angular application name
     """
     app_name = app_name or self._app_name
-    return NG(self._app_path, app_name)
+    return NG(self._app_path, app_name, self.envs)
 
   def cli(self, app_name):
     """
@@ -974,7 +1005,7 @@ export class AppRoutingModule { }
     :param app_name: String. The angular application name
     """
     app_name = app_name or self._app_name
-    return NG(self._app_path, app_name)
+    return NG(self._app_path, app_name, self.envs)
 
   def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="apps"):
     """

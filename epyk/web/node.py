@@ -153,8 +153,8 @@ fs.readFile('./%s.html', function (err, html) {
 
 class Cli(object):
 
-  def __init__(self, app_path):
-    self._app_path = app_path
+  def __init__(self, app_path, env):
+    self._app_path, self.envs = app_path, env
 
   def angular(self):
     """
@@ -166,6 +166,9 @@ class Cli(object):
       https://cli.angular.io/
 
     """
+    if self.envs is not None:
+      for env in self.envs:
+        subprocess.run(env, shell=True, cwd=self._app_path)
     subprocess.run('npm install -g @angular/cli', shell=True, cwd=self._app_path)
 
   def vue(self):
@@ -177,6 +180,9 @@ class Cli(object):
 
       https://cli.vuejs.org/
     """
+    if self.envs is not None:
+      for env in self.envs:
+        subprocess.run(env, shell=True, cwd=self._app_path)
     subprocess.run('npm install -g @vue/cli', shell=True, cwd=self._app_path)
 
   def react(self):
@@ -191,6 +197,9 @@ class Cli(object):
 
       https://github.com/Babunashvili/react.cli#readme
     """
+    if self.envs is not None:
+      for env in self.envs:
+        subprocess.run(env, shell=True, cwd=self._app_path)
     subprocess.run('npm install react.cli -g', shell=True, cwd=self._app_path)
 
 
@@ -199,15 +208,42 @@ class Node(object):
   def __init__(self, app_path, name=None):
     self._app_path, self._app_name = app_path, name
     self._route, self._fmw_modules = None, None
-    self._page = None
+    self._page, self.envs = None, None
 
   @property
   def clis(self):
+    """
+    Description:
+    ------------
+    All the CLI for the most popular web frameworks
+    """
     if self._app_name is not None:
       path = os.path.join(self._app_path, self._app_name)
     else:
       path = self._app_path
-    return Cli(path)
+    return Cli(path, self.envs)
+
+  def proxy(self, username, password, proxy_host, proxy_port, protocols=None):
+    """
+    Description:
+    ------------
+    Set NPM proxy
+
+    Attributes:
+    ----------
+    :param username:
+    :param password:
+    :param proxy_host:
+    :param proxy_port:
+    :param protocols:
+    """
+    if self.envs is None:
+      self.envs = []
+    self.envs.append('npm config set strict-ssl false --global')
+    if protocols is None:
+      protocols = ["https-proxy", "proxy"]
+    for protocol in protocols:
+      self.envs.append('npm config set %s "http://%s:%s@%s:%s"' % (protocol, username, password, proxy_host, proxy_port))
 
   def npm(self, packages):
     """
@@ -221,6 +257,9 @@ class Node(object):
     ----------
     :param packages: List. The list of packages to install retrieved from requirements()
     """
+    if self.envs is not None:
+      for env in self.envs:
+        subprocess.run(env, shell=True, cwd=self._app_path)
     subprocess.run('npm install %s --save' % " ".join(packages), shell=True, cwd=self._app_path)
     print("%s packages installed" % len(packages))
 
@@ -362,6 +401,9 @@ http.createServer(function(request, response) {
     ----------
     :param packages: List. The list of packages to be installed
     """
+    if self.envs is not None:
+      for env in self.envs:
+        subprocess.run(env, shell=True, cwd=self._app_path)
     subprocess.run('npm update %s' % " ".join(packages), shell=True, cwd=self._app_path)
     print("%s packages updated" % len(packages))
 
@@ -377,15 +419,6 @@ http.createServer(function(request, response) {
     """
     subprocess.run('npm uninstall %s' % " ".join(packages), shell=True, cwd=self._app_path)
     print("%s packages uninstalled" % len(packages))
-
-  def install(self):
-    """
-    Description:
-    ------------
-    Install or update Vue.Js on the defined path
-    """
-    subprocess.run('npm install -g @vue/cli', shell=True, cwd=self._app_path)
-    print("Angular CLI installed")
 
   def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="views"):
     """
@@ -427,3 +460,4 @@ http.createServer(function(request, response) {
       self._page.export(target_path=target_folder)
     if self.auto_route:
       self.launcher(self.name, out_path)
+

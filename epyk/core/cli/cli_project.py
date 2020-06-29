@@ -233,7 +233,7 @@ def transpile_all(args):
       mod = __import__(view_name, fromlist=['object'])
       try:
         page = utils.get_page(mod)
-        page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
+        page.node_modules(os.path.join(reports_path, '..', settings.PACKAGE_PATH), alias=settings.SERVER_PACKAGE_URL)
         output = page.outs.html_file(path=os.path.join(reports_path, '..', settings.VIEWS_FOLDER), name=view_name, split_files=settings.SPLIT_FILES, install_modules=settings.INSTALL_MODULES, options={"css_route": '/css', "js_route": '/js'})
         print(output)
       except Exception as err:

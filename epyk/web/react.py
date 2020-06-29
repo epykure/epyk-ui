@@ -17,8 +17,8 @@ var showdown = Showdown;
 
 
 class NpxCli(object):
-  def __init__(self, app_path, app_name):
-    self._react_app_path = os.path.join(app_path, app_name)
+  def __init__(self, app_path, app_name, env):
+    self._react_app_path, self.envs = os.path.join(app_path, app_name), env
 
   def create(self, name=None):
     """
@@ -88,6 +88,9 @@ class NpxCli(object):
     ----------
     :param packages: List. The packages names to install
     """
+    if self.envs is not None:
+      for env in self.envs:
+        subprocess.run(env, shell=True, cwd=self._react_app_path)
     subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self._react_app_path)
 
 
@@ -260,7 +263,7 @@ class React(node.Node):
     :param app_name: String. The React.js application name
     """
     app_name = app_name or self._app_name
-    return NpxCli(self._app_path, app_name)
+    return NpxCli(self._app_path, app_name, self.envs)
 
   def router(self, app_name):
     """
