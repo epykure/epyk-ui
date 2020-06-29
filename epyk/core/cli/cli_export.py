@@ -41,17 +41,18 @@ def transpile(args):
   report_path = utils.get_report_path(project_path, raise_error=False)
   sys.path.append(report_path)
   ui_setting_path = os.path.join(report_path, '..', 'ui_settings.py')
-  install_modules, split_files, view_folder, packages_path, package_url = False, False, 'views', 'static', None
+  install_modules, split_files, view_folder = False, False, 'views'
   if os.path.exists(ui_setting_path):
     settings = __import__('ui_settings')
     install_modules = settings.INSTALL_MODULES
     split_files = settings.SPLIT_FILES
     view_folder = settings.VIEWS_FOLDER
-    packages_path = settings.PACKAGE_PATH
-    package_url = settings.SERVER_PACKAGE_URL
   mod = __import__(args.name, fromlist=['object'])
   page = utils.get_page(mod)
-  page.node_modules(os.path.join(report_path, '..', packages_path), alias=package_url)
+  page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
+  if not os.path.exists(view_folder):
+    # If it is not an aboslute path
+    view_folder = os.path.join(report_path, '..', '..', view_folder)
   output = page.outs.html_file(path=view_folder, name=args.name, split_files=split_files, install_modules=install_modules,
                                options={"css_route": '/css', "js_route": '/js'})
   print(output)
@@ -222,11 +223,6 @@ def main():
     'transpile': (transpile_parser, '''Transpile a script to web objects'''),
     'html': (html_parser, '''Fast HTML transpilation'''),
 
-    'deploy': (create_deploy_parser,      '''Deploy latest changes'''),
-    'db': (create_db_parser, '''Performs operation on local DB (Sqlite)'''),
-    'get_packages': (create_import_pkg_parser,  '''Downloads Javascript and CSS packages to allow offline development'''),
-    'version': (create_version_parser, '''Informs on current package version'''),
-    'notebooks': (create_notebook_parser, '''Donwloads or Upload Jupyter notebooks online''')
   }
   arg_parser = argparse.ArgumentParser(prog='epyk')
   subparser = arg_parser.add_subparsers(title='Commands', dest='command')

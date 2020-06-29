@@ -16,7 +16,7 @@ def install_required():
 setuptools.setup(
     name="epyk",
     author="epykure",
-    version="1.0.18",
+    version="1.0.19",
     author_email="smith.pyotr@gmail.com",
     description="",
     long_description=long_description,

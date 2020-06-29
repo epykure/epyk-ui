@@ -64,15 +64,39 @@ def app_parser(subparser):
   :param subparser: subparser
   """
   subparser.set_defaults(func=app)
-  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+  subparser.add_argument('-t', '--type', required=True, help='''The application framework''')
+  subparser.add_argument('-s', '--server', required=True, help='''The NodeJs server path''')
+  subparser.add_argument('-n', '--name', required=True, help='''The Application name''')
 
 
 def app(args):
   """
 
   :param args:
-  :return:
   """
+  if args.type.upper() == 'REACT':
+    from epyk.web import react
+
+    node_app = react.React(args.server)
+    node_app.clis.react()
+    node_app.create(args.name)
+
+  elif args.type.upper() == 'VUE':
+    from epyk.web import vue
+
+    node_app = vue.VueJs(args.server)
+    node_app.clis.vue()
+    node_app.create(args.name)
+    node_app.cli(args.name).linter()
+    node_app.cli(args.name).add_router()
+
+  elif args.type.upper() == 'ANGULAR':
+    from epyk.web import angular
+
+    node_app = angular.Angular(args.server)
+    node_app.clis.angular()
+    node_app.create(args.name)
+    node_app.router(args.name)
 
 
 def add_parser(subparser):
@@ -126,9 +150,9 @@ def add(args):
       f.write('''
 SPLIT_FILES = False # Split the HTML, JS and CSS 
 INSTALL_MODULES = False # Install the modules locally
-VIEWS_FOLDER = 'views' # Destination folder for the transpiled files
+VIEWS_FOLDER = 'ui/views' # Destination folder for the transpiled files
 
-PACKAGE_PATH = r"..\static" # 
+PACKAGE_PATH = "static" # 
 SERVER_PACKAGE_URL = None # When using a server the path for the static folder
 
 # Section dedicated to the web Applications
@@ -233,11 +257,14 @@ def transpile_all(args):
       mod = __import__(view_name, fromlist=['object'])
       try:
         page = utils.get_page(mod)
-        page.node_modules(os.path.join(reports_path, '..', settings.PACKAGE_PATH), alias=settings.SERVER_PACKAGE_URL)
-        output = page.outs.html_file(path=os.path.join(reports_path, '..', settings.VIEWS_FOLDER), name=view_name, split_files=settings.SPLIT_FILES, install_modules=settings.INSTALL_MODULES, options={"css_route": '/css', "js_route": '/js'})
+        page.node_modules(settings.PACKAGE_PATH, alias=settings.SERVER_PACKAGE_URL)
+        if not os.path.exists(settings.VIEWS_FOLDER):
+          # If it is not an aboslute path
+          settings.VIEWS_FOLDER = os.path.join(reports_path, '..', '..', settings.VIEWS_FOLDER)
+        output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=view_name, split_files=settings.SPLIT_FILES, install_modules=settings.INSTALL_MODULES, options={"css_route": '/css', "js_route": '/js'})
         print(output)
       except Exception as err:
-        print("Error with " % view_name)
+        print("Error with view: %s" % view_name)
         print(err)
 
 

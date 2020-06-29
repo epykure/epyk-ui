@@ -165,7 +165,7 @@ class Report(object):
 
 	    https://www.w3schools.com/html/default.asp
 
-    :rtype: :doc:`Components.Components <report/ui>`
+    :rtype: Components.Components
 
     :return: Python HTML object
     """
