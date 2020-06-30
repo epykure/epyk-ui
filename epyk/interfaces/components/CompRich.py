@@ -311,3 +311,33 @@ class Rich(object):
       dflt_options.update(options)
     html_help = html.HtmlTextComp.Status(self.context.rptObj, status, width=width, height=height, htmlCode=htmlCode, profile=profile, options=dflt_options)
     return html_help
+
+  def markdown(self, text="", width=(90, '%'), height=(100, '%'), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      rptObj.ui.inputs.editor()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlTextEditor.Editor`
+
+    Attributes:
+    ----------
+    :param text:
+    :param color:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param helper:
+    :param profile:
+    """
+    dflt_options = {"lineNumbers": False, 'mode': 'markdown', 'autoRefresh': True}
+    if options is not None:
+      dflt_options.update(options)
+    md = html.HtmlTextEditor.Markdown(self.context.rptObj, text, width, height, htmlCode, dflt_options, profile)
+    return md

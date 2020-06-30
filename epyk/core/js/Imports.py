@@ -890,6 +890,15 @@ JS_IMPORTS = {
     ]
   },
 
+  # highlight
+  'highlight.js': {
+    'website': 'https://highlightjs.org/',
+    'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
+    'modules': [
+      {'script': 'highlight.min.js', 'version': '10.1.1', 'path': 'highlight.js/%(version)s/',
+       'cdnjs': CDNJS_REPO}
+    ]},
+
   # Leaflet
   'leaflet': {
     'website': 'https://leafletjs.com/',
@@ -1177,6 +1186,14 @@ CSS_IMPORTS = {
     'register': {'alias': 'codemirror', 'npm': 'codemirror', 'npm_path': 'lib'},
     'modules': [
       {'script': 'codemirror.css', 'version': '5.52.2', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
+    ]},
+
+  # highlight
+  'highlight.js': {
+    'website': 'https://highlightjs.org/',
+    'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
+    'modules': [
+      {'script': 'default.min.css', 'version': '10.1.1', 'path': 'highlight.js/%(version)s/styles/', 'cdnjs': CDNJS_REPO}
     ]},
 
   # Leaflet

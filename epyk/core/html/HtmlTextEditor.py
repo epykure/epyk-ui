@@ -415,3 +415,24 @@ class Tags(Html.Html):
         <div id='%(htmlCode)s_tags' style='padding:2px 5px 0 5px;border:1px solid %(greyColor)s;height:30px'></div>
       </div>''' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes()), "title": self.title, 'icon': self.icon,
                    'htmlCode': self.htmlCode, 'greyColor': self._report.theme.greys[2]}
+
+
+class Markdown(Html.Html):
+  name = 'markdown'
+  requirements = ('highlight.js', 'showdown')
+
+  def __init__(self, report, vals, width, height, htmlCode, dflt_options, profile):
+    super(Markdown, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box', 'margin': '5px 0'}, profile=profile)
+    self.actions = []
+
+  @property
+  def _js__builder__(self):
+    return '''
+      if (data !== ''){
+        var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data);
+        htmlObj.innerHTML = data;
+        document.querySelectorAll('pre code').forEach((block) => {hljs.highlightBlock(block)})}'''
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '''<div %(attr)s></div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes())}
