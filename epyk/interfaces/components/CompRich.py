@@ -336,7 +336,7 @@ class Rich(object):
     :param helper:
     :param profile:
     """
-    dflt_options = {"lineNumbers": False, 'mode': 'markdown', 'autoRefresh': True}
+    dflt_options = {"markdown": True}
     if options is not None:
       dflt_options.update(options)
     md = html.HtmlTextEditor.Markdown(self.context.rptObj, text, width, height, htmlCode, dflt_options, profile)
