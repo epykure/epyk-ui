@@ -190,6 +190,9 @@ class Lists(object):
 
   def items(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None, profile=None, helper=None):
     """
+    Description:
+    ------------
+    Default list with text items
     """
     if column is not None:
       values = set()
@@ -198,6 +201,22 @@ class Lists(object):
       records = sorted(list(values))
 
     html_item = html.HtmlList.Items(self.context.rptObj, 'text', records, width, height, options, htmlCode, profile, helper)
+    html_item.css({"list-style-type": 'none'})
+    html_item.style.css.padding_left = '15px'
+    return html_item
+
+  def box(self, records=None, width=(100, "%"), height=(None, "%"), column=None, options=None, htmlCode=None, profile=None, helper=None):
+    """
+    Description:
+    ------------
+    Special list configuration for a list of box with a title with a text and a list of icons
+    """
+    if column is not None:
+      values = set()
+      for rec in records:
+        values.add(rec[column])
+      records = sorted(list(values))
+    html_item = html.HtmlList.Items(self.context.rptObj, 'box', records, width, height, options, htmlCode, profile, helper)
     html_item.css({"list-style-type": 'none'})
     html_item.style.css.padding_left = '15px'
     return html_item

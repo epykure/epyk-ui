@@ -158,6 +158,49 @@ class JsItemsDef(object):
     item.innerHTML = data ; item.href ='#' '''
     return self._item(item_def)
 
+  def box(self, report):
+    """
+    This will represent a title with a text and a list of icons
+    :param report:
+    """
+    report.jsImports.add('font-awesome')
+    report.cssImport.add('font-awesome')
+    item_def = '''
+    var item = document.createElement("DIV"); 
+    item.style.borderRadius = "5px";
+    item.style.padding = "2px";
+    
+    item.setAttribute('data-valid', true);
+    var title = document.createElement("DIV"); 
+    title.setAttribute('name', 'value');
+    if (typeof data.color !== 'undefined'){
+      item.style.border = "1px solid " + data.color;
+      title.style.color = data.color;
+    }
+    title.style.fontWeight = 'bold';
+    title.innerHTML = data.title;
+    var text = document.createElement("DIV"); 
+    text.innerHTML = data.text;
+    
+    item.appendChild(title); item.appendChild(text);
+    var icons = document.createElement("DIV"); 
+    icons.style.textAlign = 'right';
+    if(typeof data.icons !== 'undefined') {
+      data.icons.forEach(function(rec){
+          var icon_dom = document.createElement("I"); 
+          icon_dom.style.marginRight = '5px';
+          rec.icon.split(" ").forEach(function(s){icon_dom.classList.add(s)}); 
+          if(typeof rec.color !== 'undefined'){ icon_dom.style.color = rec.color}
+          if(typeof rec.tooltip !== 'undefined'){ icon_dom.setAttribute('title', rec.tooltip)}
+          if(rec.click != null){ icon_dom.style.cursor = 'pointer';
+            icon_dom.onclick = function(event){ var value = data.title; eval(rec.click)}};
+          icons.appendChild(icon_dom)
+      })
+    }
+    item.appendChild(icons);
+    '''
+    return self._item(item_def)
+
   def custom(self, item_def):
     """
     Description:
