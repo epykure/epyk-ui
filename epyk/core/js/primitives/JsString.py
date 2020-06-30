@@ -58,6 +58,8 @@ class JsString(JsObject.JsObject):
   @property
   def length(self):
     """
+    Description:
+    ------------
     The length property of an array returns the length of an array (the number of array elements).
 
     Related Pages:
@@ -71,15 +73,32 @@ class JsString(JsObject.JsObject):
     newObj._js.extend(self._js)
     return newObj
 
+  def prepend(self, data):
+    """
+    Description:
+    ------------
+    Prepend Object to the String Javascript Object
+
+    Attributes:
+    ----------
+    :param data: Obhect. String or other Javascript objects
+    """
+    self.varData = "%s + %s" % (JsUtils.jsConvertData(data, None), self.varData)
+    return self
+
   def add(self, strVal):
     """
+    Description:
+    ------------
+    Add object to the String Javascript object
 
-    :param str:
+    Attributes:
+    ----------
+    :param str: Object. String or other Javascript objects
 
-    :return:
+    :return: return a new JString object
     """
-    strVal = JsUtils.jsConvertData(strVal, None)
-    return JsString("%s + %s" % (self.varId, strVal), isPyData=False)
+    return JsString("%s + %s" % (self.varId, JsUtils.jsConvertData(strVal, None)), isPyData=False)
 
   def indexOf(self, searchvalue, start=0):
     """

@@ -445,7 +445,6 @@ class SearchResult(Html.Html):
     return '''
       jHtmlObj = %(jquery)s; jHtmlObj.empty();
       if (typeof options.currPage == 'undefined'){options.currPage = 0}; var pageNumber = options.pageNumber;
-      console.log(data);
       data.slice(options.currPage * pageNumber).forEach( function(rec){
         var newItem = $('<div style="margin:5px 10px 5px 10px;"></div>') ; 
         var title = $('<div>'+ rec['title'] + '</div>').css( options.title );

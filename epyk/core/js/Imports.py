@@ -314,7 +314,7 @@ JS_IMPORTS = {
     'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free', 'npm_path': 'js'},
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                 'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
-    'modules': [{'script': 'fontawesome.js', 'version': '5.13.0', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
+    'modules': [{'script': 'fontawesome.js', 'version': '5.13.1', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
     'website': 'https://fontawesome.com/'},
 
   # Javascript packages to handle DataTables
@@ -1106,11 +1106,11 @@ CSS_IMPORTS = {
     'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                     'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
     'modules': [
-      {'script': 'all.css', 'version': '5.13.0', 'path': 'releases/v%(version)s/css/', 'cdnjs': 'https://use.fontawesome.com'}],
+      {'script': 'all.css', 'version': '5.13.1', 'path': 'releases/v%(version)s/css/', 'cdnjs': 'https://use.fontawesome.com'}],
     'assets': [
-      {'script': 'fa-brands-400.woff2', 'version': '5.13.0', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
-      {'script': 'fa-regular-400.woff2', 'version': '5.13.0', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
-      {'script': 'fa-solid-900.woff2', 'version': '5.13.0', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
+      {'script': 'fa-brands-400.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
+      {'script': 'fa-regular-400.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
+      {'script': 'fa-solid-900.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/', 'cdnjs': 'https://use.fontawesome.com', 'npm_path': 'webfonts'},
     ]
   },
 
@@ -1197,7 +1197,8 @@ CSS_IMPORTS = {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'register': {'alias': 'aggrid', 'npm': 'ag-grid-community', 'npm_path': 'dist/styles'},
     'modules': [
-      {'script': 'ag-grid.min.css', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'ag-grid.min.css', 'version': '23.1.1', 'path': 'ag-grid/%(version)s/styles/', 'cdnjs': CDNJS_REPO}]}
+
 }
 
 

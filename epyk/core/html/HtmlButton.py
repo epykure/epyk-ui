@@ -61,6 +61,24 @@ class Button(Html.Html):
   def _js__builder__(self):
     return "htmlObj.innerHTML = data"
 
+  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
+    """
+    Description:
+    -----------
+    Click event which redirect to another page.
+
+    Attributes:
+    ----------
+    :param jsFncs: List. The Javascript Events triggered before the redirection
+    :param profile: Boolean. Optional
+    :param source_event: String. Optional. The event source.
+    """
+    jsFncs = jsFncs or []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    jsFncs.append(self.js.location.open_new_tab(url, name))
+    return self.click(jsFncs, profile, source_event)
+
   @property
   def style(self):
     """
@@ -455,6 +473,23 @@ class IconEdit(Html.Html):
     """
     self.icon.style.add_classes.icon.basic()
     return super(IconEdit, self).click(jsFncs, profile, source_event)
+
+  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
+    jsFncs = jsFncs or []
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    jsFncs.append(self.js.location.open_new_tab(url, name))
+    return self.click(jsFncs, profile, source_event)
 
   def __str__(self):
     return "<span %s></span>" % (self.get_attrs(pyClassNames=self.style.get_classes()))

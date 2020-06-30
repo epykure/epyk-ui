@@ -17,6 +17,7 @@ class HtmlNavBar(Html.Html):
 
   def __init__(self, report, components, width, height, options, profile):
     super(HtmlNavBar, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    self.scroll = None
     if components is not None:
       if not isinstance(components, list):
         components = [components]
@@ -68,6 +69,10 @@ class HtmlNavBar(Html.Html):
     return val
 
   def __str__(self):
+    if self.scroll is not None:
+      self.val.append(self.scroll)
+      if self.scroll.css('width') == '100%':
+        self.scroll.style.css.width = None
     str_h = "".join([h.html() for h in self.val])
     return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_h)
 

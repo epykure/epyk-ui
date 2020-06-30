@@ -318,13 +318,18 @@ class Navigation(object):
       title = self.context.rptObj.ui.div(title, height=(100, "%"))
       title.style.css.text_transform = "uppercase"
       title.style.css.margin_left = 5
+      title.style.css.margin_right = 5
       title.style.css.bold()
       components.append(title)
-    components.append(self.context.rptObj.ui.navigation.scroll())
+    scroll = self.context.rptObj.ui.navigation.scroll()
+    scroll_height = 5
+    scroll.style.css.display = "block"
+    scroll.options.managed = False
+    scroll.style.css.height = scroll_height
     html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
+    html_nav.scroll = scroll
     html_nav.style.css.line_height = height[0]
-    #html_nav.val[-1].style.css.display = 'block' # scroll object must be block to keep the height, this screws up the display
-    self.context.rptObj.body.style.css.padding_top = height[0]
+    self.context.rptObj.body.style.css.padding_top = height[0] + scroll_height + 5
     return html_nav
 
   def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):

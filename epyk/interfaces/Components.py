@@ -524,6 +524,13 @@ class Components(object):
     ------------
     Add Breadcrum information to the page
 
+    Usage::
+        page.ui.breadcrumb([
+          {"text": 'part 1', 'url': 'part1'},
+          {"text": 'part 2', 'url': 'part2'},
+          {"text": 'part 3', 'url': 'part3'},
+        ])
+
     Attributes:
     ----------
     :param values:

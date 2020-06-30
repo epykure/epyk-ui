@@ -166,8 +166,6 @@ class Report(object):
 	    https://www.w3schools.com/html/default.asp
 
     :rtype: Components.Components
-
-    :return: Python HTML object
     """
     if self._ui is None:
       self._ui = Components.Components(self)

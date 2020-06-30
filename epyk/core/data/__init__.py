@@ -4,6 +4,7 @@ from epyk.core.data import DataPy
 from epyk.core.data import DataEvent
 
 from epyk.core.js.objects.JsData import Datamap
+from epyk.core.js.JsLocation import URLSearchParams
 
 
 # Shortcut data in the framework.
@@ -31,3 +32,5 @@ loops = DataEvent.DataLoops()
 primitives = DataEvent.DataPrimitives()
 
 datamap = Datamap
+
+http = URLSearchParams("location.search")

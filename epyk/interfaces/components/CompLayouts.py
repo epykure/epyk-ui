@@ -6,7 +6,7 @@ class Layouts(object):
   def __init__(self, context):
     self.context = context
 
-  def new_line(self, count=1, profile=None):
+  def br(self, count=1, profile=None):
     """
     Description:
     ------------
@@ -33,6 +33,33 @@ class Layouts(object):
     """
     html_new_line = html.HtmlOthers.Newline(self.context.rptObj, count, profile=profile)
     return html_new_line
+
+  def new_line(self, count=1, profile=None):
+    """
+    Description:
+    ------------
+    Wrapper around the Br html tag.
+
+    The <br> tag inserts a single line break.
+
+    Usage::
+
+      rptObj.ui.layouts.new_line(10)
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlOthers.Newline`
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/tag_br.asp
+
+    Attributes:
+    ----------
+    :param count: Optional, The number of empty line to put. Default 1
+    :param profile: Optional, Activate the profiler
+    """
+    return self.br(count, profile)
 
   def hr(self, count=1, background_color=None, height=(None, 'px'), align=None, profile=None):
     """
