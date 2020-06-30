@@ -503,7 +503,7 @@ class DropFile(Html.Html):
     post = self._report.js.post(url, self._report.js.objects.get("form_data"), is_json=False)
     return post
 
-  def drop(self, jsFncs, preventDefault=True, profile=False):
+  def drop(self, jsFncs, jsData=None, preventDefault=True, profile=False):
     """
     Description:
     -----------
@@ -514,6 +514,7 @@ class DropFile(Html.Html):
     Attributes:
     ----------
     :param jsFncs: List. The Javascript series of functions
+    :param jsData: Data. A datamap objection of a dictionary
     :param preventDefault: Boolean. Prevent default on the JavaScript event
     :param profile: Boolean. Profiling
 
@@ -525,8 +526,11 @@ class DropFile(Html.Html):
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     form_data = self._report.js.data.formdata()
-    jsFncs = [form_data.new("form_data"),  form_data.append("file", self._report.js.objects.event.dataTransfer.files[0])] + jsFncs
-    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.dataTransfer.files] + jsFncs, toStr=True)
+    newJsFncs = [form_data.new("form_data"),  form_data.append("file", self._report.js.objects.event.dataTransfer.files[0])]
+    if jsData is not None:
+      newJsFncs.extend(form_data.update(jsData))
+    newJsFncs.extend(jsFncs)
+    str_fncs = JsUtils.jsConvertFncs(["var data = %s" % self._report.js.objects.event.dataTransfer.files] + newJsFncs, toStr=True)
     self.attr["ondragover"] = "(function(event){%s})(event)" % dft_fnc
     self.on("drop", ["%s; %s; return false" % (dft_fnc, str_fncs)])
     return self

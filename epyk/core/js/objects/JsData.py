@@ -189,7 +189,7 @@ class RawData(object):
 class Datamap(object):
 
   def __init__(self, components=None, attrs=None):
-    self.__data = []
+    self._data = []
     if components is not None:
       for c in components:
         self.add(c)
@@ -202,10 +202,12 @@ class Datamap(object):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param component:
     :param htmlCode:
     """
-    self.__data.append((htmlCode or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
+    self._data.append((htmlCode or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
     return self
 
   def attr(self, k, v):
@@ -213,10 +215,12 @@ class Datamap(object):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param k:
     :param v:
     """
-    self.__data.append((JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
+    self._data.append((JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
     return self
 
   def attrs(self, data):
@@ -224,6 +228,8 @@ class Datamap(object):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param data:
     """
     for k, v in data.items():
@@ -231,10 +237,10 @@ class Datamap(object):
     return self
 
   def toStr(self):
-    return "{%s}" % ",".join(["%s: %s" % (k, v) for k, v in self.__data])
+    return "{%s}" % ",".join(["%s: %s" % (k, v) for k, v in self._data])
 
   def get(self, value, dflt=None):
-    return JsObject.JsObject.get("{%s}[%s]" % (",".join(["%s: %s" % (k, v) for k, v in self.__data]), JsUtils.jsConvertData(value, None)))
+    return JsObject.JsObject.get("{%s}[%s]" % (",".join(["%s: %s" % (k, v) for k, v in self._data]), JsUtils.jsConvertData(value, None)))
 
   def update(self, attrs):
     self.attrs(attrs)
@@ -252,6 +258,8 @@ class FormData(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param varName:
     :param varType:
     """
@@ -263,6 +271,8 @@ class FormData(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param varName:
     """
     self.alias = varName
@@ -273,13 +283,30 @@ class FormData(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param name:
     :param value:
     """
     return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(name, None), value)
 
   def update(self, attrs):
-    pass
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param attrs:
+    """
+    appends = []
+    if isinstance(attrs, Datamap):
+      for k, v in attrs._data:
+        appends.append(self.append(k, v))
+    else:
+      for k, v in attrs.items():
+        appends.append(self.append(k, JsUtils.jsConvertData(v, None)))
+    return appends
 
   def toStr(self):
     return self.alias
