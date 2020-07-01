@@ -1,11 +1,10 @@
 
-import re
+import os
 
 from epyk.core.html import Html
 from epyk.core.html import Defaults
 from epyk.core.html.options import OptButton
 
-from epyk.core.css import Defaults_css
 from epyk.core.css.styles import GrpClsImage
 
 # The list of Javascript classes
@@ -17,12 +16,16 @@ class Image(Html.Html):
 
   def __init__(self, report, image, path, align, htmlCode, width, height, profile, options):
     if path is None:
-      path = Defaults.SERVER_PATH if report.run.report_name is None else "%s/%s" % (Defaults.SERVER_PATH, report.run.report_name)
+      path = Defaults.SERVER_PATH or os.path.split(image)[0]
     super(Image, self).__init__(report, {'path': path, 'image': image}, htmlCode=htmlCode, profile=profile,
                                 css_attrs={"width": width, "height": height})
     self._jsStyles = options
     if align is not None:
-      self.css({"text-align": align})
+      # https://www.w3schools.com/howto/howto_css_image_center.asp
+      if align == "center":
+        self.css({"margin-left": "auto", "margin-right": "auto", "display": "block"})
+      elif align == "right":
+        self.css({"margin-left": "auto", "margin-right": "0", "display": "block"})
 
   @property
   def _js__builder__(self):
@@ -42,7 +45,7 @@ class AnimatedImage(Html.Html):
 
   def __init__(self, report, image, text, title, url, path, width, height, profile):
     if path is None:
-      path = Defaults.SERVER_PATH if report.run.report_name is None else "%s/%s" % (Defaults.SERVER_PATH, report.run.report_name)
+      path = Defaults.SERVER_PATH or os.path.split(image)[0]
     super(AnimatedImage, self).__init__(report, {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
                                         css_attrs={"width": width, "height": height, 'overflow': 'hidden', 'display': 'block'}, profile=profile)
     self.img = report.ui.img(image, path=path, width=(width[0]-5, width[1]), height=("auto", ''))
@@ -65,7 +68,7 @@ class ImgCarrousel(Html.Html):
 
   def __init__(self, report, images, path, selected, width, height, profile):
     if path is None:
-      path = Defaults.SERVER_PATH if report.run.report_name is None else "%s/%s" % (Defaults.SERVER_PATH, report.run.report_name)
+      path = Defaults.SERVER_PATH or os.path.split(images[0])[0]
     self.items, self.__click_items = [], []
     super(ImgCarrousel, self).__init__(report, "", css_attrs={"width": width, "height": height}, profile=profile)
     for i, rec in enumerate(images):
@@ -133,7 +136,7 @@ class Icon(Html.Html):
   name = 'Icon'
 
   def __init__(self, report, value, width, height, color, tooltip, options, profile):
-    self.requirements = (options['icon_family'],)
+    self.requirements = (options['icon_family'], )
     super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height}, profile=profile)
     if options['icon_family'] == 'office-ui-fabric-core':
       self.attr['class'].add("ms-Icon")

@@ -328,16 +328,14 @@ class Rich(object):
     Attributes:
     ----------
     :param text:
-    :param color:
     :param width:
     :param height:
     :param htmlCode:
     :param options:
-    :param helper:
     :param profile:
     """
     dflt_options = {"markdown": True}
     if options is not None:
       dflt_options.update(options)
-    md = html.HtmlTextEditor.Markdown(self.context.rptObj, text, width, height, htmlCode, dflt_options, profile)
+    md = html.HtmlTextEditor.MarkdownReader(self.context.rptObj, text, width, height, htmlCode, dflt_options, profile)
     return md

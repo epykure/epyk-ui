@@ -348,6 +348,7 @@ class TrafficLight(Html.Html):
     ----------
     :param jsFncs:
     :param profile:
+    :param source_event:
     """
     success = Colors.getHexToRgb(self._report.theme.success[1])
     self.style.css.cursor = "pointer"
@@ -397,13 +398,30 @@ class ContentsTable(Html.Html):
       self._styleObj = GrpClsText.ContentTable(self)
     return self._styleObj
 
-  def add(self, text, level, anchor):
+  @property
+  def _js__builder__(self):
+    return '''
+      var menu = htmlObj.querySelector("div[name=menu]");
+      menu.innerHTML = "";
+      data.forEach(function(rec){
+        var link = document.createElement("a");  
+        link.innerHTML = rec.text ; link.href = rec.anchor;
+        link.style.display = 'block'; link.style.width = '100%';
+        link.style.paddingLeft = Math.max(0, (rec.level - 1) * 5) + "px";
+        menu.appendChild(link)
+      }) '''
+
+  def anchor(self, text, level, anchor):
     """
     Description:
     ------------
+    Add link to the content table
 
+    Attributes:
+    ----------
     :param text:
     :param level:
+    :param anchor:
     """
     href = self._report.ui.link(text, url=anchor)
     href.style.css.font_size = Defaults_css.font(2)
@@ -422,6 +440,7 @@ class ContentsTable(Html.Html):
 
   def __str__(self):
     div_link = self._report.ui.div(self.val)
+    div_link.attr["name"] = "menu"
     div_link.options.managed = False
     self.title[-1].click([div_link.dom.toggle(), self.title[-1].dom.toggleText('[show]', '[hide]')])
     return '''<div %(attr)s>%(title)s%(links)s</div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
@@ -491,7 +510,6 @@ class SearchResult(Html.Html):
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
-    #self._report.style.cssCls('CssDivPagination')
     return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(pyClassNames=self.style.get_classes())
 
 

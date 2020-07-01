@@ -417,12 +417,12 @@ class Tags(Html.Html):
                    'htmlCode': self.htmlCode, 'greyColor': self._report.theme.greys[2]}
 
 
-class Markdown(Html.Html):
+class MarkdownReader(Html.Html):
   name = 'markdown'
   requirements = ('highlight.js', 'showdown')
 
   def __init__(self, report, vals, width, height, htmlCode, dflt_options, profile):
-    super(Markdown, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box', 'margin': '5px 0'}, profile=profile)
+    super(MarkdownReader, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box', 'margin': '5px 0'}, profile=profile)
     self.actions = []
 
   @property

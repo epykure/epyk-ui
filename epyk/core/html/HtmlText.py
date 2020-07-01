@@ -594,7 +594,7 @@ class Title(Html.Html):
         div.style.css.margin_top = - int(self._report.body.css('padding-top')[:-2]) - 10
       div.style.css.position = "absolute"
       div.style.css.z_index = -1
-      report._content_table.add(text, level or 4, "#%s_anchor" % self.htmlCode)
+      report._content_table.anchor(text, level or 4, "#%s_anchor" % self.htmlCode)
       report._content_table[-1].click([
         self.dom.transition(["color", "font-size"], ['red', '102%'], duration=[0.5, 0.5], reverse=True)])
 

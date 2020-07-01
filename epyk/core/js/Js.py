@@ -1572,3 +1572,30 @@ class JsBase(object):
       self.createElement("div", varName="popup_info").css(cssStyle).text(jsData),
       self.body.appendChild(self.objects.dom("popup_info")),
       self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
+
+  def mail(self, mails, subject=None, body=None, cc=None, bcc=None):
+    """
+    Description:
+    ------------
+    Create an email
+
+    Related Pages:
+
+      https://www.w3docs.com/snippets/html/how-to-create-mailto-links.html
+
+    Attributes:
+    ----------
+    :param mails:
+    :param subject:
+    :param body:
+    :param bcc:
+    """
+    if isinstance(mails, list):
+      mails = [mails]
+    mail_data = []
+    for label, value in [("cc", cc), ('bcc', bcc), ("subject", subject), ("body", body)]:
+      if isinstance(value, list):
+        mail_data.append("%s=%s" % (label, ",".join(value)))
+      else:
+        mail_data.append("%s=%s" % (label, value))
+    return "mailto:%s&%s" % (";".join(mails), "&".join(mail_data))
