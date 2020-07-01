@@ -47,8 +47,8 @@ class PyRest(object):
     :param protocols: List. Protocoles for the proxy. Default [('http', 'http://'), ('https', 'https://')]
     """
     if protocols is None:
-      protocols = [('http', 'http://'), ('httpd', 'httpd://')]
-    proxies = {k: '%s://%s:%s@%s:%s' % (v, username, password, proxy_host, proxy_port) for k, v in protocols}
+      protocols = [('http', 'http://'), ('https', 'https://')]
+    proxies = {k: '%s%s:%s@%s:%s' % (v, username, password, proxy_host, proxy_port) for k, v in protocols}
     proxy = ProxyHandler(proxies)
     opener = build_opener(proxy)
     install_opener(opener)
