@@ -309,10 +309,31 @@ class ChartNetwork(Chart):
 
 
 class ChartTimeline(Chart):
+  requirements = ('vis-timeline', )
 
   def __init__(self, report, width, height, htmlCode, options, profile):
     super(ChartTimeline, self).__init__(report, width, height, htmlCode, options, profile)
     self.items, self.__grps, self.__cats = [], None, None
+
+  def addClassName(self, id, css, css_hover=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param id:
+    :param css:
+    """
+    from epyk.core.css.styles.classes import CssStyle
+
+    class CssHoverColor(CssStyle.Style):
+      _attrs = css
+      _hover = css_hover or []
+      classname = 'vis-item.%s .vis-item-overflow' % id
+
+    self.style.add_classes.custom(CssHoverColor)
+    return self
 
   @property
   def style(self):

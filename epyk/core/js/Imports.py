@@ -860,6 +860,13 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'vis.min.js', 'version': '4.21.0', 'path': 'vis/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
+  # Vis Timeline style with CDN Links
+  'vis-timeline': {
+    'register': {'npm': 'vis-timeline', 'npm_path': 'dist'},
+    'website': 'http://visjs.org/',
+    'modules': [
+      {'script': 'vis-timeline-graph2d.min.js', 'version': '7.3.7', 'path': 'vis-timeline/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
   # Javascript package to display mathematical formulas
   # https://codingislove.com/display-maths-formulas-webpage/
   # https://github.com/mathjax/mathjax
@@ -1179,6 +1186,13 @@ CSS_IMPORTS = {
     'website': 'http://visjs.org/',
     'modules': [
       {'script': 'vis.min.css', 'version': '4.21.0', 'path': 'vis/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
+  # Vis Timeline style with CDN Links
+  'vis-timeline': {
+    'register': {'alias': 'vis', 'module': 'vis', 'npm': 'vis-timeline', 'npm_path': 'dist'},
+    'website': 'http://visjs.org/',
+    'modules': [
+      {'script': 'vis-timeline-graph2d.min.css', 'version': '7.3.7', 'path': 'vis-timeline/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Code mirror
   'codemirror': {

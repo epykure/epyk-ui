@@ -791,7 +791,7 @@ class VisNetwork(JsPackage):
 
 
 class VisTimeline(JsPackage):
-  lib_alias = {'css': 'vis', 'js': 'vis'}
+  lib_alias = {'css': 'vis-timeline', 'js': 'vis-timeline'}
 
   def addItem(self, data):
     """
@@ -893,6 +893,62 @@ class VisTimeline(JsPackage):
       https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return JsObjects.JsVoid("%s.fit()" % self.varId)
+
+  def addCustomTime(self, dt, code):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param dt:
+    :param id:
+    """
+    dt = JsUtils.jsConvertData(dt, None)
+    code = JsUtils.jsConvertData(code, None)
+    return JsObjects.JsVoid("%s.addCustomTime(new Date(%s), %s)" % (self.varId, dt, code))
+
+  def setCustomTimeMarker(self, text, code, flag=False):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param text:
+    :param code:
+    :param flag:
+    """
+    text = JsUtils.jsConvertData(text, None)
+    code = JsUtils.jsConvertData(code, None)
+    flag = JsUtils.jsConvertData(flag, None)
+    return JsObjects.JsVoid("%s.setCustomTimeMarker(%s, %s, %s)" % (self.varId, text, code, flag))
+
+  def setCustomTimeTitle(self, text, code):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param text:
+    :param code:
+    """
+    text = JsUtils.jsConvertData(text, None)
+    code = JsUtils.jsConvertData(code, None)
+    return JsObjects.JsVoid("%s.setCustomTimeTitle(%s, %s)" % (self.varId, text, code))
+
+  def removeCustomTime(self, code):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param code:
+    """
+    code = JsUtils.jsConvertData(code, None)
+    return JsObjects.JsVoid("%s.removeCustomTime(%s)" % (self.varId, code))
 
 
 class VisGraph3D(JsPackage):

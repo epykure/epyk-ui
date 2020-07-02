@@ -336,6 +336,8 @@ class Vis(object):
     options = options or {}
     for rec in data:
       row = {"start": rec[start], 'content': rec.get(content, '')}
+      if 'className' in rec:
+        row['className'] = rec['className']
       if end is not None and end in rec:
         row['end'] = rec[end]
       if type is not None and type in rec:
