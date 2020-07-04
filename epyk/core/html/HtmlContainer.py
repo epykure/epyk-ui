@@ -737,7 +737,7 @@ class Row(Html.Html):
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)
     self.attr["class"].add('row')
-    self.style.justify_content = self.position
+    self.style.css.justify_content = self.position
 
   @property
   def options(self):
@@ -770,7 +770,7 @@ class Row(Html.Html):
     if not isinstance(htmlObj, Col):
       if not isinstance(htmlObj, list):
         htmlObj = [htmlObj]
-      htmlObj = self._report.ui.layouts.col(htmlObj)
+      htmlObj = self._report.ui.layouts.col(htmlObj, position=self.position)
     super(Row, self).__add__(htmlObj)
     return self
 
