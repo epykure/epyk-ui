@@ -227,8 +227,126 @@ class LastUpdated(Html.Html):
   name = 'Last Update'
 
   def __init__(self, report, label, color, width, height, htmlCode, profile):
-    super(LastUpdated, self).__init__(report, "%s %s" % (label or "Last update", time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
+    self._label = label or "Last update: "
+    super(LastUpdated, self).__init__(report, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
                                       htmlCode, css_attrs={"width": width, "height": height, "color": color}, profile=profile)
+
+  def refresh(self):
+    """
+    Description:
+    ------------
+    Javascript shortcut to change the timestamp to this component
+    """
+    return self.dom.innerHTML(self._report.js.objects.date().getStrTimeStamp().prepend(self._label))
 
   def __str__(self):
     return '<div %(strAttr)s>%(content)s</div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'content': self.val}
+
+
+class Calendar(Html.Html):
+  name = 'Calendar'
+
+  def __init__(self, report, content, width, height, align, options, htmlCode, profile):
+    super(Calendar, self).__init__(report,  content, htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    self.tasks, self.caption = {}, ""
+    self.style.css.border_collapse = "collapse"
+    self.style.css.border_spacing = 0
+    if align is not None:
+      if align == 'center':
+        self.style.css.margin_left = 'auto'
+        self.style.css.margin_right = 'auto'
+
+  def task(self, name, start, capacity, end=None, weekend=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    :param start:
+    :param capacity: Float. A figure in percentage
+    :param end:
+    """
+    if name not in self.tasks:
+      self.tasks[name] = self._report.theme.charts[len(self.tasks)]
+      i = 0
+      for dt in self._vals:
+        if 'date' in dt:
+          if dt["weekend"] and not weekend:
+            continue
+
+          if start <= dt['date']:
+            if not isinstance(capacity, list):
+              value = capacity
+            else:
+              if i >= len(capacity):
+                value = capacity[-1]
+              else:
+                value = capacity[i]
+            if end is not None and end >= dt['date']:
+              dt['tasks'].append({"name": name, 'capacity': value, 'color': self.tasks[name]})
+              i +=1
+            elif end is None:
+              dt['tasks'].append({"name": name, 'capacity': value, 'color': self.tasks[name]})
+              i +=1
+    else:
+      i = 0
+      for dt in self._vals:
+        if 'date' in dt:
+          if dt["weekend"] and not weekend:
+            continue
+
+          if start <= dt['date']:
+            if not isinstance(capacity, list):
+              value = capacity
+            else:
+              if i >= len(capacity):
+                value = capacity[-1]
+              else:
+                value = capacity[i]
+
+            if end is not None and end >= dt['date']:
+              for t in dt['tasks']:
+                if t['name'] == name:
+                  t['capacity'] = value
+                  i += 1
+                  break
+            elif end is None:
+              for t in dt['tasks']:
+                if t['name'] == name:
+                  t['capacity'] = value
+                  i += 1
+                  break
+
+  def __str__(self):
+    header = ["<th style='width:%s%%;background:grey;color:white;padding:5px 2px;text-align:center'>%s</th>" % (100 / len(self.labels), d) for d in self.labels]
+    body, row = [], []
+    for i, day in enumerate(self.val):
+      if 'number' in day:
+        total_capacity = 0
+        for t in day.get("tasks", []):
+          total_capacity += t.get("capacity", 0)
+        if total_capacity > 100:
+          day["total_capacity"] = total_capacity
+          numer_day = "<div style='font-size:20px;text-align:center;color:red;font-weight:bold;cursor:pointer' title='overload: %(total_capacity)s%%'>%(number)s</div>" % day
+        else:
+          numer_day = "<div style='font-size:20px;text-align:center'>%(number)s</div>" % day
+        tasks = "<div>%s</div>" % "".join(["<div style='width:100%%;height:20px;display:block;vertical-align:middle'><div style='background:%(color)s;width:100%%;height:%(capacity)s%%;display:inline-block' title='%(name)s: %(capacity)s%%'></div></div>" % t for t in day.get("tasks", [])])
+        if day.get("today", False):
+          row.append("<td style='padding:0;border-bottom:1px solid grey;background:%s'>%s%s</td>" % (self._report.theme.success[0], numer_day, tasks))
+        else:
+          row.append("<td style='padding:0;border-bottom:1px solid grey'>%s%s</td>" % (numer_day, tasks))
+        #row.append("<td style='padding:0'>%s%s<div style='background:yellow;width:100%%;height:20px;display:block'><div><div style='background: orange;width:100%%;height:10px;display:block'><div></td>" % day)
+      else:
+        row.append("<td style='padding:0'></td>")
+      if i % len(self.labels) == 0:
+        body.append("<tr>%s</tr>" % "".join(row))
+        row = []
+    if row:
+      for i in range(7 - len(row)):
+        row.append("<td style='padding:0'></td>")
+      body.append("<tr>%s</tr>" % "".join(row))
+    return '<table %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</table>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'caption': self.caption, 'header': "".join(header), 'content': "".join(body)}
+

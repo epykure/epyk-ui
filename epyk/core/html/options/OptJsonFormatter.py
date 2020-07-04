@@ -167,3 +167,22 @@ class OptionsJsonFmt(Options):
   @sortPropertiesBy.setter
   def sortPropertiesBy(self, bool):
     self._config_group('opts', bool)
+
+
+class OptionsLegend(Options):
+
+  @property
+  def style(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param css_attrs:
+    """
+    return self.get({})
+
+  @style.setter
+  def style(self, css_attrs):
+    self.set(css_attrs)

@@ -31,6 +31,7 @@ from epyk.interfaces.components import CompSteps
 from epyk.interfaces.components import CompDrawers
 from epyk.interfaces.components import CompSteppers
 from epyk.interfaces.components import CompTitles
+from epyk.interfaces.components import CompCalendars
 
 
 class Components(object):
@@ -438,6 +439,14 @@ class Components(object):
     Those tags can be considered as normal HTML component, which means Js and CSS features are also available
     """
     return CompTags.Tags(self)
+
+  @property
+  def calendars(self):
+    """
+    Description:
+    ------------
+    """
+    return CompCalendars.Calendar(self)
 
   def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"), options=None, profile=None):
     """

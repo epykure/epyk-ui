@@ -12,6 +12,7 @@ from epyk.core.js import JsUtils
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsLayout
+from epyk.core.css import Defaults
 
 
 class Hr(Html.Html):
@@ -284,3 +285,30 @@ class Breadcrumb(Html.Html):
   def __str__(self):
     rows = [htmlObj.html() if hasattr(htmlObj, 'html') else str(htmlObj) for htmlObj in self.val]
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), " / ".join(rows))
+
+
+class Legend(Html.Html):
+  name = 'Legend'
+
+  def __init__(self, report, recordse, width, height, align, options, profile):
+    super(Legend, self).__init__(report, recordse, css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptJsonFormatter.OptionsLegend(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the input component properties
+
+    :rtype: OptJsonFormatter.OptionsLegend
+    """
+    return self.__options
+
+  def __str__(self):
+    divs = []
+    css_inline = Defaults.inline(self.options.style)
+    for val in self.val:
+      val["css_inline"] = css_inline
+      divs.append("<div><div style='background:%(color)s;%(css_inline)s'></div>%(name)s</div>" % val)
+    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(divs))
