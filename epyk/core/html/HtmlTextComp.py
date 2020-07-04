@@ -405,13 +405,15 @@ class ContentsTable(Html.Html):
     return '''
       var menu = htmlObj.querySelector("div[name=menu]");
       menu.innerHTML = "";
-      data.forEach(function(rec){
-        var link = document.createElement("a");  
-        link.innerHTML = rec.text ; link.href = rec.anchor;
-        link.style.display = 'block'; link.style.width = '100%';
-        link.style.paddingLeft = Math.max(0, (rec.level - 1) * 5) + "px";
-        menu.appendChild(link)
-      }) '''
+      if ((data == null) || (data.length == 0)){ htmlObj.style.display = 'none'}
+      else{ 
+        data.forEach(function(rec){
+          var link = document.createElement("a");  
+          link.innerHTML = rec.text ; link.href = rec.anchor;
+          link.style.display = 'block'; link.style.width = '100%';
+          link.style.paddingLeft = Math.max(0, (rec.level - 1) * 5) + "px";
+          menu.appendChild(link)
+      })} '''
 
   def anchor(self, text, level, anchor):
     """

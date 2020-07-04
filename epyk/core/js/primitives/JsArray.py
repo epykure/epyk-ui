@@ -52,11 +52,10 @@ class JsArray(JsObject.JsObject):
       data = []
     return cls(data=data, varName=varName, setVar=True, report=report)
 
-
   # ------------------------------------------------------------------
   #                     ARRAY TRANSFORMATION FUNCTIONS
   #
-  def some(self, jsFnc):
+  def some_(self, jsFnc):
     """
     Description:
     -----------
@@ -78,7 +77,7 @@ class JsArray(JsObject.JsObject):
 
     return JsBoolean.JsBoolean("%s.some(%s)" % (self.varId, jsFnc), isPyData=False)
 
-  def every(self, jsFncs, jsValue=None):
+  def every_(self, jsFncs, jsValue=None):
     """
     Description:
     -----------
@@ -104,7 +103,7 @@ class JsArray(JsObject.JsObject):
 
     return JsFncs.JsFunction("%s.every(function(val, index, arr){%s}, %s)" % (self.varId, ";".join(jsFncs), jsValue))
 
-  def filter(self, jsFncs, jsValue=None):
+  def filter_(self, jsFncs, jsValue=None):
     """
     Description:
     -----------
@@ -275,7 +274,6 @@ class JsArray(JsObject.JsObject):
 
     jsFnc = JsUtils.jsConvertFncs(jsFnc)
     return JsNumber.JsNumber("%s.reduce(function (r, o, i){%s})" % (self.varId, ";".join(jsFnc)))
-
 
   #------------------------------------------------------------------
   #             ARRAY TRANSFORMATION ON DATA
@@ -555,6 +553,70 @@ class JsArray(JsObject.JsObject):
     :return: An Array, representing the array after it has been reversed
     """
     return JsArray("%s.reverse()" % self.varId, isPyData=False)
+
+  def flat(self, depth=1):
+    """
+    Description:
+    -----------
+    The flat() method creates a new array with all sub-array elements concatenated into it recursively up to the specified depth.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
+
+    Attributes:
+    ----------
+    :param depth: Integer. The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
+    """
+    return JsArray("%s.flat(%s)" % (self.varId, JsUtils.jsConvertData(depth, None)), isPyData=False)
+
+  def flatMap(self, jsFnc):
+    """
+    Description:
+    -----------
+    The flatMap() method first maps each element using a mapping function, then flattens the result into a new array.
+    It is identical to a map() followed by a flat() of depth 1, but flatMap() is often quite useful, as merging both into one method is slightly more efficient.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap
+
+    Attributes:
+    ----------
+    :param jsFnc: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+
+    :return: An Array containing the results of calling the provided function for each element in the original array.
+    """
+    jsFnc = JsUtils.jsConvertFncs(jsFnc)
+    if self.varName is not None:
+      return JsArray("%s = %s" % (self.varId, JsArray(
+        "%s.flatMap(function(value, index, arr){%s; return value})" % (self.varId, ";".join(jsFnc)), isPyData=False)),
+                     isPyData=False)
+
+    return JsArray("%s.flatMap(function(value, index, arr){%s})" % (self.varId, ";".join(jsFnc)), isPyData=False)
+
+  def includes(self, element, start=0):
+    """
+    Description:
+    -----------
+    The includes() method determines whether an array contains a specified element.
+
+    This method returns true if the array contains the element, and false if not.
+
+    Note: The includes() method is case sensitive.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_includes_array.asp
+
+    Attributes:
+    ----------
+    :param element: Object. Required. The element to search for
+    :param start: Integer. Optional. Default 0. At which position in the array to start the search
+    """
+    from epyk.core.js.primitives import JsBoolean
+
+    return JsBoolean.JsBoolean("%s.includes(%s, %s)" % (self.varId, JsUtils.jsConvertData(element, None), start), isPyData=False)
 
   def unshift(self, *args):
     """
@@ -1084,7 +1146,11 @@ class JaArrayRejector(object):
 
   def modulo(self, n):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param n:
     """
     if self.varName is None:
@@ -1094,7 +1160,11 @@ class JaArrayRejector(object):
 
   def equal(self, val):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param val:
     """
     val = JsUtils.jsConvertData(val, None)
@@ -1105,7 +1175,11 @@ class JaArrayRejector(object):
 
   def includes(self, values):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param values:
     """
     values = JsUtils.jsConvertData(values, None)
@@ -1116,7 +1190,11 @@ class JaArrayRejector(object):
 
   def custom(self, js_expr):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param js_expr:
     """
     if self.varName is None:
