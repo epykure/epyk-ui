@@ -79,8 +79,19 @@ class Calendar(object):
     :param profile:
     """
     today = datetime.date.today()
+    content = content or {}
+    dfl_options = {
+      'overload': {'font-size': Defaults.font(5), 'text-align': 'center', 'color': self.context.rptObj.theme.danger[1],
+                   'font-weight': 'bold', 'cursor': 'pointer'},
+      'number': {"font-size": Defaults.font(5), "text-align": "center"},
+      'today': {"padding": "0 0 5px 0", "border-bottom": "1px solid grey"},
+      'header': {'font-size': Defaults.font(3), "background": self.context.rptObj.theme.colors[-1],
+                 "color": self.context.rptObj.theme.colors[0], "padding": "5px 2px", "text-align": "center"}
+    }
+    if options is not None:
+      dfl_options.update(options)
     days_data = []
-    html_table = html.HtmlDates.Calendar(self.context.rptObj, days_data, width, height, align, options or {}, htmlCode, profile)
+    html_table = html.HtmlDates.Calendar(self.context.rptObj, days_data, width, height, align, dfl_options, htmlCode, profile)
     html_table.labels =["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October",
                         "November", "December"]
     return html_table

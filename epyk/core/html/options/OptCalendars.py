@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html.options import Options
 
@@ -12,7 +14,7 @@ class OptionDays(Options):
 
     Attributes:
     ----------
-    :param css_attrs:
+    :param css_attrs: Dictionary. CSS attributes
     """
     return self.get({})
 
@@ -25,10 +27,11 @@ class OptionDays(Options):
     """
     Description:
     ------------
+    Overload style of the day number when workload is above 100%
 
     Attributes:
     ----------
-    :param css_attrs:
+    :param css_attrs: Dictionary. CSS attributes
     """
     return self.get({})
 
@@ -41,10 +44,11 @@ class OptionDays(Options):
     """
     Description:
     ------------
+    CSS Style for the day number
 
     Attributes:
     ----------
-    :param css_attrs:
+    :param css_attrs: Dictionary. CSS attributes
     """
     return self.get({})
 
@@ -57,10 +61,11 @@ class OptionDays(Options):
     """
     Description:
     ------------
+    CSS Style for the today cell
 
     Attributes:
     ----------
-    :param css_attrs:
+    :param css_attrs: Dictionary. CSS attributes
     """
     return self.get({})
 
@@ -73,10 +78,11 @@ class OptionDays(Options):
     """
     Description:
     ------------
+    CSS Style for the table header
 
     Attributes:
     ----------
-    :param css_attrs:
+    :param css_attrs: Dictionary. CSS attributes
     """
     return self.get({})
 

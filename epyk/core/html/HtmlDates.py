@@ -5,8 +5,11 @@ import time
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptCalendars
+
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsQuery
 from epyk.core.js.html import JsHtmlJqueryUI
+
 from epyk.core.css import Defaults
 
 
@@ -346,23 +349,24 @@ class Calendar(Html.Html):
     body, row = [], []
     for i, day in enumerate(self.val):
       if 'number' in day:
-        total_capacity = 0
+        total_capacity, tooltip = 0, ["<b>%s</b>" % day['date']]
         for t in day.get("tasks", []):
-          total_capacity += t.get("capacity", 0)
+          c = t.get("capacity", 0)
+          total_capacity += c
+          tooltip.append("<div>%s: %s%%</div>" % (t['name'], c))
         if total_capacity > 100:
           day["total_capacity"] = total_capacity
           day["style"] = Defaults.inline(self.options.overload)
-          numer_day = "<div style='%(style)s' title='overload: %(total_capacity)s%%'>%(number)s</div>" % day
+          numer_day = "<div style='%(style)s' data-html='true' data-toggle='tooltip' title='overload: %(total_capacity)s%%'>%(number)s</div>" % day
         else:
           day["style"] = Defaults.inline(self.options.number)
           numer_day = "<div style='%(style)s'>%(number)s</div>" % day
         tasks = "<div>%s</div>" % "".join(["<div style='width:100%%;height:20px;display:block;vertical-align:middle'><div style='background:%(color)s;width:100%%;height:%(capacity)s%%;display:inline-block' title='%(name)s: %(capacity)s%%'></div></div>" % t for t in day.get("tasks", [])])
         cell_style = Defaults.inline(self.options.today)
         if day.get("today", False):
-          row.append("<td style='%s;background:%s'>%s%s</td>" % (cell_style, self._report.theme.success[0], numer_day, tasks))
+          row.append("<td data-placement='right' data-toggle='tooltip' data-html='true' title='<div>%s</div>' style='%s;background:%s'>%s%s</td>" % ("".join(tooltip), cell_style, self._report.theme.success[0], numer_day, tasks))
         else:
-          row.append("<td style='%s'>%s%s</td>" % (cell_style, numer_day, tasks))
-        #row.append("<td style='padding:0'>%s%s<div style='background:yellow;width:100%%;height:20px;display:block'><div><div style='background: orange;width:100%%;height:10px;display:block'><div></td>" % day)
+          row.append("<td data-placement='right' data-toggle='tooltip' data-html='true' title='<div>%s</div>' style='%s'>%s%s</td>" % ("".join(tooltip), cell_style, numer_day, tasks))
       else:
         row.append("<td style='padding:0'></td>")
       if i % len(self.labels) == 0:
@@ -372,5 +376,7 @@ class Calendar(Html.Html):
       for i in range(7 - len(row)):
         row.append("<td style='padding:0'></td>")
       body.append("<tr>%s</tr>" % "".join(row))
+
+    self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
     return '<table %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</table>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'caption': self.caption, 'header': "".join(header), 'content': "".join(body)}
 
