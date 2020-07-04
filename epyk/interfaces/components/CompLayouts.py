@@ -202,7 +202,7 @@ class Layouts(object):
     html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, helper, options, profile)
     return html_row
 
-  def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
+  def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -230,7 +230,7 @@ class Layouts(object):
     :param helper:
     :param profile:
     """
-    html_grid = html.HtmlContainer.Grid(self.context.rptObj, rows, width, height, align, helper, options, profile)
+    html_grid = html.HtmlContainer.Grid(self.context.rptObj, rows, width, height, align, position, options, profile)
     return html_grid
 
   def panel(self, htmlObjs=None, title=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,

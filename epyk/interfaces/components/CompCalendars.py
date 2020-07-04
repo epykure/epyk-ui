@@ -4,6 +4,7 @@
 import datetime
 
 from epyk.core import html
+from epyk.core.css import Defaults
 
 
 class Calendar(object):
@@ -26,9 +27,19 @@ class Calendar(object):
     :param htmlCode:
     :param profile:
     """
+
     today = datetime.date.today()
     content = content or {}
-    options = options or {}
+    dfl_options = {
+      'overload': {'font-size': Defaults.font(5), 'text-align': 'center', 'color': self.context.rptObj.theme.danger[1],
+                   'font-weight': 'bold', 'cursor': 'pointer'},
+      'number': {"font-size": Defaults.font(5), "text-align": "center"},
+      'today': {"padding": "0 0 5px 0", "border-bottom": "1px solid grey"},
+      'header': {'font-size': Defaults.font(3), "background": self.context.rptObj.theme.colors[-1],
+                 "color": self.context.rptObj.theme.colors[0], "padding": "5px 2px", "text-align": "center"}
+    }
+    if options is not None:
+      dfl_options.update(options)
     year = year or today.year
     start = datetime.date(year, month, 1)
     days_data, tasks = [], {}
@@ -37,7 +48,7 @@ class Calendar(object):
         tasks[t] = None
     sorted_tasks = sorted(list(tasks))
     for i, t in enumerate(sorted_tasks):
-      tasks[t] = options.get('colors', {}).get(t, self.context.rptObj.theme.charts[i])
+      tasks[t] = dfl_options.get('colors', {}).get(t, self.context.rptObj.theme.charts[i])
     for _ in range(start.weekday() + 1):
       days_data.append({})
     while start.month == month:
@@ -47,7 +58,7 @@ class Calendar(object):
         tasks_view.append({"name": t, 'capacity': day_tasks.get(t, 0), 'color': tasks[t]})
       days_data.append({'today': today == start, "number": start.day, 'tasks': tasks_view, 'date': start.isoformat(), 'weekend': start.weekday() >= 5})
       start += datetime.timedelta(days=1)
-    html_table = html.HtmlDates.Calendar(self.context.rptObj, days_data, width, height, align, options or {}, htmlCode, profile)
+    html_table = html.HtmlDates.Calendar(self.context.rptObj, days_data, width, height, align, dfl_options, htmlCode, profile)
     html_table.tasks = tasks
     html_table.caption = "%s %s" % (datetime.date(year, month, 1).strftime("%B"), year)
     return html_table
@@ -136,4 +147,4 @@ class Calendar(object):
         row.append([calendar, self.context.rptObj.ui.calendars.legend(calendar.tasks)])
       else:
         row.append(calendar)
-    return self.context.rptObj.ui.row(row, position=poaition, profile=profile)
+    return self.context.rptObj.ui.grid([row], position=poaition, profile=profile)

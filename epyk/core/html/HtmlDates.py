@@ -4,7 +4,10 @@
 import time
 
 from epyk.core.html import Html
+from epyk.core.html.options import OptCalendars
+from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlJqueryUI
+from epyk.core.css import Defaults
 
 
 class DatePicker(Html.Html):
@@ -248,6 +251,7 @@ class Calendar(Html.Html):
 
   def __init__(self, report, content, width, height, align, options, htmlCode, profile):
     super(Calendar, self).__init__(report,  content, htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    self.__options = OptCalendars.OptionDays(self, options)
     self.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     self.tasks, self.caption = {}, ""
     self.style.css.border_collapse = "collapse"
@@ -256,6 +260,23 @@ class Calendar(Html.Html):
       if align == 'center':
         self.style.css.margin_left = 'auto'
         self.style.css.margin_right = 'auto'
+
+  @property
+  def options(self):
+    """
+    Description:
+    -----------
+    Property to set all the Calendar properties
+
+    :rtype: OptCalendars.OptionDays
+    """
+    return self.__options
+
+  def click(self, jsFncs, profile=False, source_event=None):
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self.__click = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self
 
   def task(self, name, start, capacity, end=None, weekend=False):
     """
@@ -321,7 +342,7 @@ class Calendar(Html.Html):
                   break
 
   def __str__(self):
-    header = ["<th style='width:%s%%;background:grey;color:white;padding:5px 2px;text-align:center'>%s</th>" % (100 / len(self.labels), d) for d in self.labels]
+    header = ["<th style='width:%s%%;%s'>%s</th>" % (100 / len(self.labels), Defaults.inline(self.options.header), d) for d in self.labels]
     body, row = [], []
     for i, day in enumerate(self.val):
       if 'number' in day:
@@ -330,14 +351,17 @@ class Calendar(Html.Html):
           total_capacity += t.get("capacity", 0)
         if total_capacity > 100:
           day["total_capacity"] = total_capacity
-          numer_day = "<div style='font-size:20px;text-align:center;color:red;font-weight:bold;cursor:pointer' title='overload: %(total_capacity)s%%'>%(number)s</div>" % day
+          day["style"] = Defaults.inline(self.options.overload)
+          numer_day = "<div style='%(style)s' title='overload: %(total_capacity)s%%'>%(number)s</div>" % day
         else:
-          numer_day = "<div style='font-size:20px;text-align:center'>%(number)s</div>" % day
+          day["style"] = Defaults.inline(self.options.number)
+          numer_day = "<div style='%(style)s'>%(number)s</div>" % day
         tasks = "<div>%s</div>" % "".join(["<div style='width:100%%;height:20px;display:block;vertical-align:middle'><div style='background:%(color)s;width:100%%;height:%(capacity)s%%;display:inline-block' title='%(name)s: %(capacity)s%%'></div></div>" % t for t in day.get("tasks", [])])
+        cell_style = Defaults.inline(self.options.today)
         if day.get("today", False):
-          row.append("<td style='padding:0;border-bottom:1px solid grey;background:%s'>%s%s</td>" % (self._report.theme.success[0], numer_day, tasks))
+          row.append("<td style='%s;background:%s'>%s%s</td>" % (cell_style, self._report.theme.success[0], numer_day, tasks))
         else:
-          row.append("<td style='padding:0;border-bottom:1px solid grey'>%s%s</td>" % (numer_day, tasks))
+          row.append("<td style='%s'>%s%s</td>" % (cell_style, numer_day, tasks))
         #row.append("<td style='padding:0'>%s%s<div style='background:yellow;width:100%%;height:20px;display:block'><div><div style='background: orange;width:100%%;height:10px;display:block'><div></td>" % day)
       else:
         row.append("<td style='padding:0'></td>")

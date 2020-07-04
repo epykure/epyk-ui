@@ -789,9 +789,9 @@ class Grid(Html.Html):
   name = 'Grid'
   requirements = ('bootstrap', )
 
-  def __init__(self, report, rows, width, height, align, helper, options, profile):
+  def __init__(self, report, rows, width, height, align, position, options, profile):
     super(Grid, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
-    self.__options = OptPanel.OptionGrid(report, options)
+    self.__options, self.position = OptPanel.OptionGrid(report, options), position
     self.style.clear(no_default=True)
     self.css({'overflow-x': 'hidden', 'padding': 0})
     self.attr["class"].add(self.options.classe)
@@ -816,7 +816,9 @@ class Grid(Html.Html):
     if isinstance(row_data, Row):
       row = row_data
     else:
-      row = self._report.ui.layouts.row()
+      row = self._report.ui.layouts.row(position=self.position)
+      row.style.clear(no_default=True)
+      row.attr["class"].add("row")
       for htmlObjWithDim in row_data:
         if isinstance(htmlObjWithDim, tuple):
           htmlObj, dim = htmlObjWithDim
