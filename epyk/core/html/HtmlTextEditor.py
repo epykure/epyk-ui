@@ -457,7 +457,7 @@ class MarkdownReader(Html.Html):
           let tooltipId = "#"+ htmlObj.id +"_tooltip";
           for(var key in options.links) {
             let text = options.links[key]; document.querySelector(tooltipId).innerHTML = text.content;
-            data = data.replace(eval(text.f), '<a href="" onmouseout="document.querySelector(\\\''+ tooltipId +'\\\').style.display = \\\'none\\\'" onmouseover="this.style.cursor = \\\'help\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style.left = event.pageX + 15 + \\\'px\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style.top = event.pageY + 5 + \\\'px\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style.display = \\\'block\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style. position = \\\'absolute\\\'">'+ key +'</a>')
+            data = data.replace(eval(text.f), '<a style="color:grey" href="" onmouseout="document.querySelector(\\\''+ tooltipId +'\\\').style.display = \\\'none\\\'" onmouseover="this.style.cursor = \\\'help\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style.left = event.pageX + 15 + \\\'px\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style.top = event.pageY + 5 + \\\'px\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style.display = \\\'block\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style. position = \\\'absolute\\\'">'+ key +'</a>')
         }}
         var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data); htmlObj.innerHTML = data;
         document.querySelectorAll('pre code').forEach((block) => {hljs.highlightBlock(block)});
