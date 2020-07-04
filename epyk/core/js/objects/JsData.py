@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsObject
@@ -15,6 +17,8 @@ from epyk.core.js import JsUtils
 
 class DataLoop(object):
   """
+  Description:
+  -----------
   Data Class used for all the loop and map in the Javascript side.
   This will get the below attributes
 
@@ -27,6 +31,8 @@ class DataLoop(object):
 
 class DataReduce(object):
   """
+  Description:
+  -----------
 
   rVal  :
   val   :
@@ -43,6 +49,8 @@ class DataSort(object):
 
 class DataEach(object):
   """
+  Description:
+  -----------
   Data Class for the Jquery each loop
 
   index : index
@@ -53,6 +61,8 @@ class DataEach(object):
 
 class DataAll(object):
   """
+  Description:
+  -----------
   Data Class for the Jquery each loop
 
   index : index
@@ -68,6 +78,8 @@ class ContainerData(object):
   @property
   def fnc(self):
     """
+    Description:
+    -----------
     All the predefined transformation functions.
     """
     return JsFncs.FncOnRecords(self._report._props, self._schema)
@@ -75,6 +87,8 @@ class ContainerData(object):
   @property
   def to(self):
     """
+    Description:
+    -----------
     All the possible object transformation to deal with external packages
     """
     return JsFncs.FncToObject(self._report._props, self._schema)
@@ -82,6 +96,8 @@ class ContainerData(object):
   @property
   def filter(self):
     """
+    Description:
+    -----------
 
     """
     return JsFncs.FncFiltere(self, self._report._props, self._schema)
@@ -100,6 +116,8 @@ class RawData(object):
   @classmethod
   def get(cls, report, varName):
     """
+    Description:
+    -----------
     Return the internal RawData object
 
     :return: A internal data object
@@ -108,10 +126,12 @@ class RawData(object):
 
   def setId(self, jqId):
     """
+    Description:
+    -----------
     Change the Id variable name for the javascript data source.
 
-    Example
-
+    Attributes:
+    ----------
     :param jqId:
 
     :return: The Python object
@@ -121,22 +141,25 @@ class RawData(object):
 
   def attach(self, html_obj, profile=False):
     """
+    Description:
+    -----------
     Attach the data object to a HTML Object.
 
     This function is automatically used in the different components in order
     to guarantee the link of the data. This will also ensure that the same data set will be store only once in the page
 
-    Example
-
+    Attributes:
+    ----------
     :param html_obj:
     :param profile:
-
     """
     self._data["schema"][self._data_id].setdefault('containers', {})[html_obj.htmlCode] = {'fncs': [], 'outs': None, "profile": profile}
     return ContainerData(self._report, self._data["schema"][self._data_id]['containers'][html_obj.htmlCode])
 
   def toTsv(self, colNames=None, profile=False):
     """
+    Description:
+    -----------
 
     :return: A String with the Javascript function to be used
     """
@@ -153,14 +176,17 @@ class RawData(object):
   @property
   def fnc(self):
     """
+    Description:
+    -----------
 
-    :return:
     """
     return JsFncs.FncOnRecords(self, self._report._props, self._schema)
 
   @property
   def filter(self):
     """
+    Description:
+    -----------
 
     """
     return JsFncs.FncFiltere(self, self._report._props, self._schema)
@@ -168,6 +194,8 @@ class RawData(object):
   @property
   def to(self):
     """
+    Description:
+    -----------
 
     """
     return JsFncs.FncToObject(self, self._report._props, self._schema)
@@ -424,16 +452,20 @@ class JsData(object):
 
   def records(self, data):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param data:
-
-    :return:
     """
     return RawData(self._src, data)
 
   @property
   def null(self):
     """
+    Description:
+    -----------
     Javascript null reference
     """
     return JsObject.JsObject("null", isPyData=False)
@@ -447,17 +479,17 @@ class JsDataTransfer(object):
   @property
   def text(self):
     """
-    Example
+    Description:
+    -----------
 
-    Documentation
-
-    :return:
     """
     return JsString.JsString("%s.getData('text')" % self.varId, isPyData=False)
 
   @property
   def files(self):
     """
+    Description:
+    -----------
     The DataTransfer.files property is a list of the files in the drag operation. If the operation includes no files, the list is empty.
 
     This feature can be used to drag files from a user's desktop to the browser.
@@ -465,20 +497,18 @@ class JsDataTransfer(object):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/files
-
-    :return:
     """
     return JsArray.JsArray.get("%s.files" % self.varId)
 
   @property
   def dropEffect(self, flag=False):
     """
+    Description:
+    -----------
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/dropEffect
-
-    :return:
     """
     if flag == False:
       return JsBoolean.JsBoolean("%s.dropEffect" % self.varId)
@@ -492,12 +522,12 @@ class JsDataTransfer(object):
   @property
   def effectAllowed(self, flag=False):
     """
+    Description:
+    -----------
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/effectAllowed
-
-    :return:
     """
     if flag == False:
       return JsBoolean.JsBoolean("%s.effectAllowed" % self.varId)
@@ -510,6 +540,8 @@ class JsDataTransfer(object):
 
   def clearData(self, format=None):
     """
+    Description:
+    -----------
     Remove the data associated with a given type. The type argument is optional.
     If the type is empty or not specified, the data associated with all types is removed.
     If data for the specified type does not exist, or the data transfer contains no data, this method will have no effect.
@@ -517,8 +549,6 @@ class JsDataTransfer(object):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/clearData
-
-    :return:
     """
     if format is None:
       return JsFncs.JsFunction("%s.clearData()" % self.varId)
@@ -528,16 +558,18 @@ class JsDataTransfer(object):
 
   def setDragImage(self):
     """
+    Description:
+    -----------
 
-    :return:
     """
 
   def setData(self, data, format='text'):
     """
+    Description:
+    -----------
 
     :param data:
     :param format:
-    :return:
     """
     format = JsUtils.jsConvertData(format, None)
     data = JsUtils.jsConvertData(data, None)
@@ -545,13 +577,10 @@ class JsDataTransfer(object):
 
   def getData(self, format="text"):
     """
-
-    Example
-
-    Documentation
+    Description:
+    -----------
 
     :param format:
-    :return:
     """
     return JsString.JsString("%s.getData(%s)" % (self.varId, format), isPyData=False)
 

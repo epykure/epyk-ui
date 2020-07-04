@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.py import OrderedSet
 
@@ -7,7 +9,11 @@ class Plotly(object):
   @staticmethod
   def surface(data, y_columns, x_axis, z_axis):
       """
+      Description:
+      -----------
 
+      Attributes:
+      ----------
       :param data:
       :param y_columns:
       :param x_axis:
@@ -270,6 +276,8 @@ class Vis(object):
   @staticmethod
   def xyz(data, y_columns, x_axis, z_axis):
     """
+    Description:
+    ------------
 
     :param data:
     :param y_columns:
@@ -293,6 +301,8 @@ class Vis(object):
   @staticmethod
   def xy(data, y_columns, x_axis):
     """
+    Description:
+    ------------
 
     :param data:
     :param y_columns:
@@ -614,8 +624,6 @@ class Google(object):
     :param cols:
     """
     is_data = {"rows": rows, 'datasets': [], 'cols': cols, 'python': True}
-
     for rec in data:
       is_data['datasets'].append([rec.get(c, '') for c in rows + cols])
-
     return is_data

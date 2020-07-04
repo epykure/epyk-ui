@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import json
 import os
@@ -369,6 +371,10 @@ class JsBreadCrumb(object):
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_loc_hash.asp
+
+    Attributes:
+    ----------
+    :param jsData:
     """
     return JsObject.JsObject('%s["anchor"] = %s' % (self._selector, JsUtils.jsConvertData(jsData, None)))
 
@@ -832,7 +838,7 @@ class JsBase(object):
     :param filename: String. The file name
     :param path: String. optional. The file path
 
-    :return:
+    :return: self
     """
     if path is None:
       self._src.jsLocalImports.add("%s/js/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
@@ -1403,7 +1409,7 @@ class JsBase(object):
 
     :return: A Boolean, false if the command is not supported, otherwise true
     """
-    return "document.execCommand('%s')" % command
+    return JsObjects.JsVoid("document.execCommand('%s')" % command)
 
   def createEvent(self, type):
     """
@@ -1461,7 +1467,7 @@ class JsBase(object):
 
     :return: No return value
     """
-    return "document.writeln(%s)" % jsString
+    return JsObjects.JsVoid("document.writeln(%s)" % jsString)
 
   @staticmethod
   def parseFloat(jsString):
@@ -1598,4 +1604,4 @@ class JsBase(object):
         mail_data.append("%s=%s" % (label, ",".join(value)))
       else:
         mail_data.append("%s=%s" % (label, value))
-    return "mailto:%s&%s" % (";".join(mails), "&".join(mail_data))
+    return JsObjects.JsVoid("mailto:%s&%s" % (";".join(mails), "&".join(mail_data)))

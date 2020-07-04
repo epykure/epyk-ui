@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import json
 
@@ -24,6 +26,8 @@ class FmtNumber(object):
 
   def toFixed(self, value=None):
     """
+    Description:
+    -----------
     The toFixed() method converts a number into a string, keeping a specified number of decimals.
 
     https://www.w3schools.com/jsref/jsref_tofixed.asp
@@ -37,6 +41,8 @@ class FmtNumber(object):
 
   def toPrecision(self, value=None):
     """
+    Description:
+    -----------
     The toPrecision() method formats a number to a specified length.
 
     https://www.w3schools.com/jsref/jsref_toprecision.asp
@@ -50,6 +56,8 @@ class FmtNumber(object):
 
   def toExponential(self):
     """
+    Description:
+    -----------
     The toExponential() method converts a number into an exponential notation.
 
     https://www.w3schools.com/jsref/jsref_toexponential.asp
@@ -66,6 +74,8 @@ class Formatters(object):
   @property
   def number(self):
     """
+    Description:
+    -----------
 
     https://www.w3schools.com/jsref/jsref_obj_number.asp
 
@@ -75,6 +85,8 @@ class Formatters(object):
   @packageImport("accounting")
   def toNumber(self, digit=0, thousand_sep="."):
     """
+    Description:
+    -----------
 
     https://openexchangerates.github.io/accounting.js/
 
@@ -87,6 +99,8 @@ class Formatters(object):
   @packageImport("accounting")
   def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
     """
+    Description:
+    -----------
 
     https://openexchangerates.github.io/accounting.js/
 
@@ -331,9 +345,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Interface to the main Javascript Classes and Primitives
-
-    Related Pages:
-:return:
     """
     return JsObjects.JsObjects(self)
 
@@ -347,8 +358,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Related Pages:
 
       https://github.com/square/crossfilter/wiki/API-Reference#group_all
-
-    :return:
     """
     return JsCrossFilter.CrossFilter
 
@@ -639,7 +648,6 @@ class JsHtmlButton(JsHtml):
     Description:
     -----------
 
-    :return:
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
       offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s}}
@@ -664,9 +672,10 @@ class JsHtmlButton(JsHtml):
       ], 5000),
     ])
 
+    Attributes:
+    ----------
     :param flag:
     :param multiple:
-    :return:
     """
     i_loading = '<i class="fas fa-spinner fa-spin" style="margin-right:5px"></i>'
     fnc = self.disable(False) if multiple else self.disable(flag)
@@ -683,11 +692,16 @@ class JsHtmlButton(JsHtml):
 
     :param time:
     :param color:
-    :return:
     """
     return JsFncs.JsFunction("var bgColor = %s.style.borderColor; %s.style.borderColor = '%s'; setTimeout(function() {%s.style.borderColor = bgColor}, %s)" % (self.varName, self.varName, color, self.varName, time))
 
   def disable(self, bool=True):
+    """
+    Description:
+    -----------
+
+    :param bool:
+    """
     bool = JsUtils.jsConvertData(bool, None)
     return JsFncs.JsFunctions("%s.disabled = %s" % (self.varName, bool))
 
@@ -697,7 +711,6 @@ class JsHtmlButton(JsHtml):
     -----------
 
     :param by_name:
-    :return:
     """
     if by_name:
       fncs = JsFncs.JsFunctions(self.by_name.css("color", ''))
@@ -739,7 +752,6 @@ class JsHtmlButtonMenu(JsHtmlButton):
     Description:
     -----------
 
-    :return:
     """
     return JsObjects.JsObjects.get('''
         {%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), label: %s.innerHTML, name: %s}}
@@ -755,8 +767,8 @@ class JsHtmlIcon(JsHtml):
   @property
   def val(self):
     """
-
-    :return:
+    Description:
+    -----------
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self._src.dom.getAttribute("class")))
@@ -787,8 +799,9 @@ class JsHtmlBackground(JsHtml):
   @property
   def val(self):
     """
+    Description:
+    -----------
 
-    :return:
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
       self.htmlCode, self.content.toStr()))

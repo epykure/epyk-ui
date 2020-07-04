@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptSliders
@@ -411,6 +413,7 @@ class Slider(Html.Html):
 
 
 class Range(Slider):
+  name = "Slider Range"
 
   @property
   def _js__builder__(self):
@@ -419,6 +422,7 @@ class Range(Slider):
 
 
 class SliderDate(Slider):
+  name = "Slider Date"
 
   def __init__(self, report, number, min, max, width, height, attrs, helper, options, htmlCode, profile):
     super(SliderDate, self).__init__(report, number, min, max, width, height, attrs, helper, options, htmlCode, profile)
@@ -444,7 +448,7 @@ class SliderDate(Slider):
     -----------
     The Javascript Dom object
 
-    :rtype: JsHtmlJqueryUI.JsHtmlSlider
+    :rtype: JsHtmlJqueryUI.JsHtmlSliderDate
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlSliderDate(self, report=self._report)
@@ -471,7 +475,7 @@ class SliderDates(SliderDate):
     -----------
     The Javascript Dom object
 
-    :rtype: JsHtmlJqueryUI.JsHtmlSlider
+    :rtype: JsHtmlJqueryUI.JsHtmlSliderDates
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, report=self._report)

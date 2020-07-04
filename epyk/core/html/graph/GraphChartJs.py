@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptChartJs
@@ -32,6 +34,10 @@ class Chart(Html.Html):
 
   @property
   def d3(self):
+    """
+
+    :rtype: JsD3.D3Select
+    """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
@@ -48,7 +54,7 @@ class Chart(Html.Html):
 
     :return: A Javascript object
 
-    :rtype: JsChartJs.JsChart
+    :rtype: JsChartJs.ChartJs
     """
     if self._js is None:
       self._js = JsChartJs.ChartJs(selector="window['%s']" % self.chartId, src=self)
@@ -124,7 +130,7 @@ class Chart(Html.Html):
 
     return self._datasets[i]
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -142,7 +148,7 @@ class Chart(Html.Html):
       tmpJsFncs.append("if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(jsFncs, toStr=True))
     return super(Chart, self).click(tmpJsFncs, profile)
 
-  def hover(self, jsFncs, profile=False):
+  def hover(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -226,7 +232,7 @@ class ChartLine(Chart):
     Description:
     ------------
 
-    :rtype: OptionsPolar
+    :rtype: OptChartJs.OptionsLine
     """
     if self._options is None:
       self._options = OptChartJs.OptionsLine(self._report, attrs=self._options_init)
@@ -345,7 +351,7 @@ class ChartBar(ChartLine):
   def options(self):
     """
 
-    :rtype: OptionsPolar
+    :rtype: OptChartJs.OptionsBar
     """
     if self._options is None:
       self._options = OptChartJs.OptionsBar(self._report, attrs=self._options_init)
@@ -381,7 +387,7 @@ class ChartPolar(Chart):
   def options(self):
     """
 
-    :rtype: OptionsPolar
+    :rtype: OptChartJs.OptionsPolar
     """
     if self._options is None:
       self._options = OptChartJs.OptionsPolar(self._report, attrs=self._options_init)
@@ -450,7 +456,7 @@ class ChartPie(Chart):
   def options(self):
     """
 
-    :rtype: OptionsPie
+    :rtype: OptChartJs.OptionsPie
     """
     if self._options is None:
       self._options = OptChartJs.OptionsPie(self._report, attrs=self._options_init)

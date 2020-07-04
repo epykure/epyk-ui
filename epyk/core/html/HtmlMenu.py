@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import collections
 
@@ -39,6 +41,8 @@ class HtmlNavBar(Html.Html):
 
   def move(self):
     """
+    Description:
+    -----------
 
     """
     super(HtmlNavBar, self).move()
@@ -58,9 +62,10 @@ class HtmlNavBar(Html.Html):
 
   def add_text(self, text):
     """
+    Description:
+    -----------
 
     :param text:
-    :return:
     """
     val = self._report.ui.text(text)
     self.__add__(val)
@@ -127,6 +132,8 @@ class HtmlFooter(Html.Html):
 
   def __getitem__(self, i):
     """
+    Description:
+    -----------
     Return the internal column in the row for the given index
 
     :param i: the column index
@@ -158,6 +165,8 @@ class ContextMenu(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    -----------
 
     :rtype: OptList.OptionsLi
     """
@@ -182,8 +191,10 @@ class ContextMenu(Html.Html):
 
   def __add__(self, htmlObj):
     """
+    Description:
+    -----------
 
-    :param d:
+    :param htmlObj:
     """
     if not hasattr(htmlObj, 'options'):
       if isinstance(htmlObj, dict):

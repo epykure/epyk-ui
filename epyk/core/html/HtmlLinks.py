@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 
@@ -26,6 +28,8 @@ class ExternalLink(Html.Html):
 
   def no_decoration(self, color=None):
     """
+    Description:
+    -----------
     Property to remove the list default style
     """
     self.style.css.text_decoration = None
@@ -36,6 +40,14 @@ class ExternalLink(Html.Html):
     return self
 
   def build(self, data=None, options=None, profile=False):
+    """
+    Description:
+    -----------
+
+    :param data:
+    :param options:
+    :param profile:
+    """
     if not isinstance(data, dict):
       data = {"text": data}
     if "url" not in data:
@@ -59,6 +71,8 @@ class DataLink(Html.Html):
   @property
   def no_decoration(self):
     """
+    Description:
+    -----------
     Property to remove the list default style
     """
     self.style.css.text_decoration = None

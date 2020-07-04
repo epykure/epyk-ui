@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptVis
@@ -22,6 +24,8 @@ class Chart(Html.Html):
   @property
   def chartId(self):
     """
+    Description:
+    -----------
     Return the Javascript variable of the chart
     """
     return "%s_obj" % self.htmlCode
@@ -29,6 +33,8 @@ class Chart(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    -----------
 
     :rtype: OptVis.Options2D
     """
@@ -96,6 +102,8 @@ class ChartLine(Chart):
   @property
   def groups(self):
     """
+    Description:
+    -----------
 
     :rtype: JsVis.VisGroups
     """
@@ -105,6 +113,8 @@ class ChartLine(Chart):
 
   def add_item(self, x, y, group, label=None, end=None):
     """
+    Description:
+    -----------
 
     :param x:
     :param y:
@@ -162,7 +172,7 @@ class Chart3D(Chart):
 
     :return: A Javascript object
 
-    :rtype: JsVis.VisGraph2D
+    :rtype: JsVis.VisGraph3D
     """
     if self._js is None:
       self._js = JsVis.VisGraph3D(selector="window['%s']" % self.chartId, src=self)
@@ -171,6 +181,8 @@ class Chart3D(Chart):
   @property
   def options(self):
     """
+    Description:
+    -----------
 
     :rtype: OptVis.Options3D
     """
@@ -181,6 +193,8 @@ class Chart3D(Chart):
   @property
   def groups(self):
     """
+    Description:
+    -----------
 
     :rtype: JsVis.VisGroups
     """
@@ -191,10 +205,11 @@ class Chart3D(Chart):
   @property
   def js(self):
     """
+    Description:
+    -----------
 
     :rtype: JsVis.VisGraph3D
     """
-
     if self._js is None:
       self._js = JsVis.VisGraph3D(self._report, varName=self.chartId)
     return self._js
@@ -206,6 +221,8 @@ class Chart3D(Chart):
 
   def add_item(self, x, y, z, group=0, style=None):
     """
+    Description:
+    -----------
 
     :param x:
     :param y:
@@ -258,8 +275,10 @@ class ChartNetwork(Chart):
   @property
   def options(self):
     """
+    Description:
+    ------------
 
-    :rtype: Options2D
+    :rtype: OptVis.OptionsNetwork
     """
     if self._options is None:
       self._options = OptVis.OptionsNetwork(self._report, attrs=self._options_init)
@@ -268,13 +287,16 @@ class ChartNetwork(Chart):
   @property
   def js(self):
     """
+    Description:
+    ------------
     Javascript base function
 
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
     :return: A Javascript object
-    :rtype: Js.JsBase
+
+    :rtype: JsVis.VisNetwork
     """
     if self._js is None:
       self._js = JsVis.VisNetwork(self._report, selector=self.chartId, setVar=False)
@@ -283,8 +305,10 @@ class ChartNetwork(Chart):
   @property
   def groups(self):
     """
+    Description:
+    ------------
 
-    :return:
+    :rtype: JsVis.VisGroups
     """
     if self.__grps is None:
       self.__grps = JsVis.VisGroups(self._report, setVar=True, varName="%s_group" % self.chartId)
@@ -292,6 +316,8 @@ class ChartNetwork(Chart):
 
   def add_node(self, label, id=None, group=0):
     """
+    Description:
+    ------------
 
     :param label:
     :param id:
@@ -301,6 +327,15 @@ class ChartNetwork(Chart):
     return self
 
   def add_edge(self, fromId, toId, title=None, relation=None):
+    """
+    Description:
+    -----------
+
+    :param fromId:
+    :param toId:
+    :param title:
+    :param relation:
+    """
     self._edges.append({'from': fromId, 'to': toId})
     return self
 
@@ -337,6 +372,12 @@ class ChartTimeline(Chart):
 
   @property
   def style(self):
+    """
+    Description:
+    ------------
+
+    :rtype: GrpClsCharts.ClassVisTimeline
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsCharts.ClassVisTimeline(self)
     return self._styleObj
@@ -347,7 +388,7 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
-    :rtype: Options2D
+    :rtype: OptVis.OptionsTimeline
     """
     if self._options is None:
       self._options = OptVis.OptionsTimeline(self._report, attrs=self._options_init)
@@ -365,7 +406,7 @@ class ChartTimeline(Chart):
 
     :return: A Javascript object
 
-    :rtype: Js.JsBase
+    :rtype: JsVis.VisTimeline
     """
     if self._js is None:
       self._js = JsVis.VisTimeline(selector=self.chartId, src=self)
@@ -377,6 +418,7 @@ class ChartTimeline(Chart):
     Description:
     ------------
 
+    :rtype: JsVis.VisGroups
     """
     if self.__grps is None:
       self.__grps = JsVis.VisGroups(self._report, setVar=True, varName="%s_group" % self.chartId)

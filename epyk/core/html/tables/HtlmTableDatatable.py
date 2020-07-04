@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 from epyk.core.js.packages import packageImport
@@ -31,6 +33,12 @@ class Table(Html.Html):
 
   @property
   def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: GrpClsTable.Datatable
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Datatable(self)
     return self._styleObj
@@ -38,12 +46,20 @@ class Table(Html.Html):
   @property
   def tableId(self):
     """
+    Description:
+    -----------
     Return the Javascript variable of the chart
     """
     return "%s_obj" % self.htmlCode
 
   @property
   def config(self):
+    """
+    Description:
+    -----------
+
+    :rtype: TableConfig
+    """
     if self.__config is None:
       self.__config = TableConfig(self._report)
     return self.__config
@@ -58,6 +74,8 @@ class Table(Html.Html):
   @property
   def js(self):
     """
+    Description:
+    -----------
     Return the Javascript internal object
 
     :return: A Javascript object
@@ -1124,14 +1142,6 @@ class TableConfig(DataClass):
     self._attrs["stateSave"] = val
 
   @property
-  def pagingType(self):
-    return self._attrs["pagingType"]
-
-  @pagingType.setter
-  def pagingType(self, val):
-    self._attrs["pagingType"] = val
-
-  @property
   def scrollY(self):
     """
     Description:
@@ -1192,14 +1202,6 @@ class TableConfig(DataClass):
   @displayLength.setter
   def displayLength(self, val):
     self._attrs["displayLength"] = val
-
-  @property
-  def scrollCollapse(self):
-    return self._attrs["scrollCollapse"]
-
-  @scrollCollapse.setter
-  def scrollCollapse(self, val):
-    self._attrs["scrollCollapse"] = val
 
   @property
   def lengthMenu(self):
@@ -1323,8 +1325,10 @@ class TableConfig(DataClass):
   @packageImport('datatables-row-group', 'datatables-row-group')
   def rowGroup(self):
     """
+    Description:
+    -----------
 
-    :return:
+    :rtype: DtFixedColumns.FixedColumns
     """
     from epyk.core.html.tables.exts import DtFixedColumns
     return self.sub_data("rowGroup", DtFixedColumns.FixedColumns)
@@ -1375,6 +1379,8 @@ class TableConfig(DataClass):
     Related Pages:
 
       https://datatables.net/extensions/scroller/
+
+    :rtype: DtScroller.Scroller
     """
     from epyk.core.html.tables.exts import DtScroller
     return self.sub_data("scroller", DtScroller.Scroller)
@@ -1394,6 +1400,8 @@ class TableConfig(DataClass):
     Related Pages:
 
       https://datatables.net/extensions/searchpanes
+
+    :rtype: DtSearchPanes.SearchPanes
     """
     from epyk.core.html.tables.exts import DtSearchPanes
     self._attrs['dom'] = 'Prftip'

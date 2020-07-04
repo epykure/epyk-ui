@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 
@@ -37,7 +39,7 @@ class ChartGeoGoogle(Html.Html):
 
     :return: A Javascript object
 
-    :rtype: JsChartJs.JsChart
+    :rtype: JsGoogleAPI.GoogleMapsAPI
     """
     if self._js is None:
       self._js = JsGoogleAPI.GoogleMapsAPI(selector="window['%s']" % self.chartId, src=self)
@@ -54,7 +56,6 @@ class ChartGeoGoogle(Html.Html):
     return self.__options
 
   def build(self, data=None, options=None, profile=False):
-
     js_options = []
     for k, v in self._jsStyles.items():
       if self.options.isJsContent(k) or str(v).strip().startswith("function"):

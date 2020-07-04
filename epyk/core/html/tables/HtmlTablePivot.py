@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 Module in charge of the PivotTable library
 
@@ -30,6 +33,12 @@ class PivotTable(Html.Html):
 
   @property
   def style(self):
+    """
+    Description:
+    ------------
+
+    :rtype: GrpClsTable.Pivot
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Pivot(self)
     return self._styleObj

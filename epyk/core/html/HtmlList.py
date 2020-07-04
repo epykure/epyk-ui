@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 List of all the different templates configurations available for displaying bespoke lists.
 This list can be extended and it is easy to test a new configuration by different defining the HTML template in the common list object.

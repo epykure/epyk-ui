@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import re
 import json
@@ -370,7 +372,7 @@ class CheckButton(Html.Html):
     ----------
     :return: A Javascript Dom object
 
-    :rtype: JsQueryUi.Autocomplete
+    :rtype: JsComponents.CheckButton
     """
     if self._js is None:
       self._js = JsComponents.CheckButton(self, report=self._report)
@@ -528,7 +530,7 @@ class ButtonMenuItem(object):
     ----------
     :return: A Javascript Dom object
 
-    :rtype: JsQueryUi.Autocomplete
+    :rtype: JsComponents.Menu
     """
     if self._js is None:
       self._js = JsComponents.Menu(self._src, varName=self._selector, report=self._report)
@@ -604,7 +606,7 @@ class ButtonMenu(Html.Html):
 
       self.style.css.margin = "5px"
 
-    :rtype: GrpClsButton.ClassButton
+    :rtype: GrpClsButton.ClassButtonMenu
     """
     if self._styleObj is None:
       self._styleObj = GrpClsButton.ClassButtonMenu(self)

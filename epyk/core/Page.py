@@ -9,7 +9,7 @@ except NameError:
   basestring = str
 
 from epyk.core.js import Imports
-from epyk.interfaces import Components
+from epyk.interfaces import Interface
 from epyk.core.css.themes import Theme
 from epyk.core.css import Classes
 
@@ -67,6 +67,8 @@ class Report(object):
     Description:
     ------------
     Property that returns the Body element of the HTML page
+
+    :rtype: html.Html.Body
     """
     if self.__body is None:
       self.__body = html.Html.Body(self, None, htmlCode='body')
@@ -82,6 +84,8 @@ class Report(object):
     Description:
     ------------
     Return the currently used :doc:`report/theme` for the report
+
+    :rtype: Theme.ThemeDefault
     """
     if self._theme is None:
       self._theme = Theme.ThemeDefault()
@@ -165,10 +169,10 @@ class Report(object):
 
 	    https://www.w3schools.com/html/default.asp
 
-    :rtype: Components.Components
+    :rtype: Interface.Components
     """
     if self._ui is None:
-      self._ui = Components.Components(self)
+      self._ui = Interface.Components(self)
     return self._ui
 
   @property
@@ -194,6 +198,8 @@ class Report(object):
 
       https://www.w3schools.com/js/default.asp
 
+    :rtype: js.Js.JsBase
+
     :return: Python HTML object
     """
     if self._js is None:
@@ -211,6 +217,8 @@ class Report(object):
 
       https://www.w3schools.com/js/default.asp
 
+    :rtype: PyExt.PyExt
+
     :return: Python HTML object
     """
     if self._py is None:
@@ -227,6 +235,8 @@ class Report(object):
     Related Pages:
 
       https://developers.google.com/identity/sign-in/web/sign-in
+
+    :rtype: auth.Auth
 
     :return: Python Auth Object
     """
@@ -307,14 +317,18 @@ class Report(object):
     """
     Description:
     ------------
-
+    Link to the possible output formats for a page
     """
     return PyOuts.PyOuts(self)
 
   @property
   def headers(self):
     """
+    Description:
+    ------------
     Property to the HTML page header
+
+    :rtype: html.Header.Header
     """
     if self._header_obj is None:
       self._header_obj = html.Header.Header(self)

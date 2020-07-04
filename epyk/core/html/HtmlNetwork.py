@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptNet
@@ -457,7 +459,7 @@ class Room(Html.Html):
     ----------
     :return: A Javascript Dom object
 
-    :rtype: JsComponents.Chat
+    :rtype: JsComponents.Room
     """
     if self._js is None:
       self._js = JsComponents.Room(self, report=self._report)

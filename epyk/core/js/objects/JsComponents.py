@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
@@ -149,8 +151,9 @@ class Alerts(JsPackage):
 
   def replay(self, time=None):
     """
+    Description:
+    -----------
 
-    :return:
     """
     time = time or self._src.options.time
     return JsObjects.JsVoid('''
@@ -169,8 +172,9 @@ class News(JsPackage):
 
   def reset(self):
     """
+    Description:
+    -----------
 
-    :return:
     """
     return JsObjects.JsVoid('''
       %(varName)s.innerHTML = '';  
@@ -201,6 +205,8 @@ class Room(JsPackage):
 
   def typing(self):
     """
+    Description:
+    -----------
 
     """
     return self._src.dom.querySelector("div[name=dots]").show(duration=3000)

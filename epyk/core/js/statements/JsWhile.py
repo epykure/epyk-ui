@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObject
@@ -6,7 +8,6 @@ from epyk.core.js.primitives import JsObject
 class JsWhile(object):
 
   def __init__(self, jsPivot, options=None):
-
     self.options = {"var": 'i'}
     if options is not None:
       self.options.update(options)
@@ -42,9 +43,8 @@ class JsWhile(object):
     else:
       self.__jsFncs.extend(jsFncs)
     return self
-#
+
   def toStr(self):
-    print(self.__pivot)
     if self.__next is None:
       raise Exception("next() function must be used to avoid infinite loops !!")
 
@@ -120,8 +120,5 @@ class JsWhileIterable(object):
     return self
 
   def toStr(self):
-    """
-
-    """
     self.options['jsFncs'] = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
     return "var %(var)s = 0; while(%(it)s[%(var)s]){%(jsFncs)s; %(var)s++}" % self.options

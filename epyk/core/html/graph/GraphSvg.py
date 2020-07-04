@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 
@@ -35,6 +37,8 @@ class SVG(Html.Html):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs
+
+    :rtype: Defs
     """
     self.html_objs.append(Defs(self._report))
     return self.html_objs[-1]
@@ -84,6 +88,8 @@ class SVG(Html.Html):
     :param fill:
     :param rx:
     :param ry:
+
+    :rtype: Rectangle
     """
     self.html_objs.append(Rectangle(self._report, x, y, width, height, fill, rx, ry))
     return self.html_objs[-1]
@@ -722,6 +728,8 @@ class Path(SVGItem):
 
   def markers(self, marker_code):
     """
+    Description:
+    ------------
 
     :param marker_code:
     """
@@ -758,6 +766,8 @@ class Path(SVGItem):
 
   def curve_to(self, x1, y1, x2, y2):
     """
+    Description:
+    ------------
 
     https://www.w3.org/TR/svg-paths/
 
@@ -765,7 +775,6 @@ class Path(SVGItem):
     :param y1:
     :param x2:
     :param y2:
-    :return:
     """
     if self.origin is not None:
       x1 = self.origin[0] + x1
@@ -777,6 +786,8 @@ class Path(SVGItem):
 
   def smooth_curve_to(self, x1, y1, x2, y2):
     """
+    Description:
+    ------------
 
     https://www.w3.org/TR/svg-paths/
 
@@ -784,7 +795,6 @@ class Path(SVGItem):
     :param y1:
     :param x2:
     :param y2:
-    :return:
     """
     if self.origin is not None:
       x1 = self.origin[0] + x1
@@ -796,6 +806,8 @@ class Path(SVGItem):
 
   def quadratic_bezier_curve_to(self, x1, y1, x2, y2):
     """
+    Description:
+    ------------
 
     https://www.w3.org/TR/svg-paths/
 
@@ -803,7 +815,6 @@ class Path(SVGItem):
     :param y1:
     :param x2:
     :param y2:
-    :return:
     """
     if self.origin is not None:
       x1 = self.origin[0] + x1
@@ -815,13 +826,14 @@ class Path(SVGItem):
 
   def smooth_quadratic_bezier_curve_to(self, x, y, absolute=True):
     """
+    Description:
+    ------------
 
     https://www.w3.org/TR/svg-paths/
 
     :param x:
     :param y:
     :param absolute:
-    :return:
     """
     if self.origin is not None:
       x = self.origin[0] + x

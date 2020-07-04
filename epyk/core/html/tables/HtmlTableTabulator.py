@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import hashlib
 
@@ -28,6 +30,12 @@ class Table(Html.Html):
 
   @property
   def style(self):
+    """
+    Description:
+    ------------
+
+    :rtype: GrpClsTable.Tabulator
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Tabulator(self)
     return self._styleObj
@@ -35,12 +43,20 @@ class Table(Html.Html):
   @property
   def tableId(self):
     """
+    Description:
+    ------------
     Return the Javascript variable of the chart
     """
     return "%s_obj" % self.htmlCode
 
   @property
   def config(self):
+    """
+    Description:
+    ------------
+
+    :rtype: TableConfig
+    """
     if self.__config is None:
       self.__config = TableConfig(self._report)
     return self.__config
@@ -48,6 +64,8 @@ class Table(Html.Html):
   @property
   def js(self):
     """
+    Description:
+    ------------
     Return the Javascript internal object
 
     :return: A Javascript object
@@ -60,6 +78,8 @@ class Table(Html.Html):
 
   def add_column(self, field, title=None):
     """
+    Description:
+    ------------
 
     :param field:
     :param title:
@@ -71,6 +91,8 @@ class Table(Html.Html):
 
   def get_column(self, by_title):
     """
+    Description:
+    ------------
 
     :param by_title:
 
@@ -111,17 +133,6 @@ http://tabulator.info/docs/4.5/layout
     Description:
     -----------
     As an alternative to the default data fit, you can use the fitColumns layout mode to cause Tabulator to resize columns so they fit perfectly in the available table width.
-
-    Related Pages:
-http://tabulator.info/docs/4.5/layout
-    """
-    return self.set()
-
-  def fitDataStretch(self):
-    """
-    Description:
-    -----------
-    The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the empty row to fill the table it stretches the last visible column.
 
     Related Pages:
 http://tabulator.info/docs/4.5/layout

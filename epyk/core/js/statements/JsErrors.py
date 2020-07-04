@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -99,11 +101,6 @@ class JsTry(object):
     return self
 
   def toStr(self):
-    """
-    Description:
-    ------------
-
-    """
     a = JsUtils.jsConvertFncs(self.__try_jsFnc, toStr=True)
     if self.__catch_jsFnc is None:
       raise Exception("Catch must be defined")

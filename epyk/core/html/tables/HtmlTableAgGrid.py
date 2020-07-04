@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 
@@ -22,6 +24,8 @@ class Table(Html.Html):
 
   def headers(self, colsDef):
     """
+    Description:
+    -----------
 
     :param colsDef:
     """
@@ -31,12 +35,26 @@ class Table(Html.Html):
 
   @property
   def style(self):
+    """
+    Description:
+    -----------
+
+    :rtype: GrpClsTable.Aggrid
+    """
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Aggrid(self)
     return self._styleObj
 
   @property
   def config(self):
+    """
+    Description:
+    -----------
+
+    :rtype: TableConfig
+
+    :return:
+    """
     if self.__config is None:
       self.__config = TableConfig(self._report)
     return self.__config
@@ -44,6 +62,8 @@ class Table(Html.Html):
   @property
   def js(self):
     """
+    Description:
+    -----------
     Return the Javascript internal object
 
     :return: A Javascript object
@@ -56,6 +76,8 @@ class Table(Html.Html):
 
   def add_column(self, field, title=None):
     """
+    Description:
+    -----------
 
     :param field:
     :param title:
@@ -70,6 +92,8 @@ class Table(Html.Html):
   @property
   def tableId(self):
     """
+    Description:
+    -----------
     Return the Javascript variable of the chart
     """
     return "%s_obj" % self.htmlCode
@@ -98,6 +122,8 @@ class CellEditor(DataGroup):
 
   def agRichSelectCellEditor(self, values, **kwargs):
     """
+    Description:
+    -----------
 
     https://www.ag-grid.com/javascript-grid-cell-editing/
 
@@ -125,12 +151,20 @@ class AggFnc(DataGroup):
 
   def null(self):
     """
+    Description:
+    -----------
+
+
     https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     self._attrs["renderer"] = None
 
   def sum(self):
     """
+    Description:
+    -----------
+
+
     https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     self._attrs["renderer"] = "sum"
@@ -140,6 +174,8 @@ class ColType(DataGroup):
 
   def nonEditableColumn(self):
     """
+    Description:
+    -----------
 
     https://www.ag-grid.com/javascript-grid-column-definitions/
     """
@@ -282,6 +318,8 @@ class Column(DataClass):
     Cell editing format
 
     https://www.ag-grid.com/javascript-grid-cell-editing/
+
+    :rtype: CellEditor
     """
     return CellEditor(self, self._attrs)
 

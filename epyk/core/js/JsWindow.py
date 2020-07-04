@@ -869,7 +869,7 @@ class JsWindow(object):
     """
     return JsFncs.JsFunction("%s.scrollTo(0, 0)" % windowId)
 
-  def print(self, windowId="window"):
+  def print_(self, windowId="window"):
     """
     Description:
     ------------

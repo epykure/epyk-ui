@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 Base module for the tables
 """
@@ -70,6 +73,8 @@ class Bespoke(Html.Html):
   @property
   def tableId(self):
     """
+    Description:
+    -----------
     Return the Javascript variable of the bespoke
     """
     return self.dom.varId
@@ -77,6 +82,8 @@ class Bespoke(Html.Html):
   @property
   def header(self):
     """
+    Description:
+    -----------
     Get the header row. Returns none if missing
     """
     return self._header
@@ -93,12 +100,16 @@ class Bespoke(Html.Html):
 
   def __getitem__(self, i):
     """
+    Description:
+    -----------
     Get the table rows
     """
     return self.items[i]
 
   def row(self, i, inc_header=False):
     """
+    Description:
+    -----------
     Get the table rows
 
     :param i: Integer. The column number
@@ -113,6 +124,8 @@ class Bespoke(Html.Html):
 
   def col(self, header=None, i=None):
     """
+    Description:
+    -----------
     Get the table column cells as a generator
 
     :param header: String.
@@ -127,6 +140,8 @@ class Bespoke(Html.Html):
 
   def add(self, row, missing="", is_header=False):
     """
+    Description:
+    -----------
     Add a row to the table
 
     Example

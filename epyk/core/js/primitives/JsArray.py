@@ -1,3 +1,7 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+
 """
 Module dedicated to wrap the Javascript Array
 

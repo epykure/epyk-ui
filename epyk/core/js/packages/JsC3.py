@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 
 Related Pages:
@@ -11,6 +14,7 @@ from epyk.core.js.packages import JsPackage
 
 
 class C3Legend(object):
+
   def __init__(self, varName):
     self.varName = varName
 
@@ -20,7 +24,9 @@ class C3Legend(object):
     -----------
     Show legend for each target.
 
-    https://c3js.org/reference.html#api-legend-show
+    Related Pages:
+
+      https://c3js.org/reference.html#api-legend-show
 
     :param targetIds:
     """
@@ -36,7 +42,9 @@ class C3Legend(object):
     -----------
     Show legend for each target.
 
-    https://c3js.org/reference.html#api-legend-show
+    Related Pages:
+
+      https://c3js.org/reference.html#api-legend-show
 
     :param targetIds:
     """
@@ -57,7 +65,9 @@ class C3Data(object):
     -----------
     Get and set axes of the data loaded in the chart.
 
-    https://c3js.org/reference.html#api-data-axes
+    Related Pages:
+
+      https://c3js.org/reference.html#api-data-axes
 
     Attributes:
     ----------
@@ -75,7 +85,9 @@ class C3Data(object):
     -----------
     Get values of the data loaded in the chart.
 
-    https://c3js.org/reference.html#api-data-values
+    Related Pages:
+
+      https://c3js.org/reference.html#api-data-values
 
     Attributes:
     ----------
@@ -93,7 +105,9 @@ class C3Data(object):
     -----------
     Get and set colors of the data loaded in the chart.
 
-    https://c3js.org/reference.html#api-data-colors
+    Related Pages:
+
+      https://c3js.org/reference.html#api-data-colors
 
     Attributes:
     ----------
@@ -111,7 +125,9 @@ class C3Data(object):
     -----------
     Get and set names of the data loaded in the chart.
 
-    https://c3js.org/reference.html#api-data-names
+    Related Pages:
+
+      https://c3js.org/reference.html#api-data-names
 
     Attributes:
     ----------
@@ -129,7 +145,9 @@ class C3Data(object):
     -----------
     Show legend for each target.
 
-    https://c3js.org/reference.html#api-legend-show
+    Related Pages:
+
+      https://c3js.org/reference.html#api-legend-show
 
     Attributes:
     ----------
@@ -147,7 +165,9 @@ class C3Data(object):
     -----------
     Show legend for each target.
 
-    https://c3js.org/reference.html#api-legend-show
+    Related Pages:
+
+      https://c3js.org/reference.html#api-legend-show
 
     Attributes:
     ----------
@@ -197,7 +217,9 @@ class C3(JsPackage):
 
     You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be shown.
 
-    https://c3js.org/reference.html#api-show
+    Related Pages:
+
+      https://c3js.org/reference.html#api-show
 
     Attributes:
     ----------
@@ -219,7 +241,9 @@ class C3(JsPackage):
 
     You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be shown.
 
-    https://c3js.org/reference.html#api-show
+    Related Pages:
+
+      https://c3js.org/reference.html#api-show
 
     Attributes:
     ----------
@@ -240,7 +264,9 @@ class C3(JsPackage):
     -----------
     Get data loaded in the chart.
 
-    https://c3js.org/reference.html#api-data
+    Related Pages:
+
+      https://c3js.org/reference.html#api-data
     """
     return
 
@@ -252,7 +278,9 @@ class C3(JsPackage):
 
     You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be hidden.
 
-    https://c3js.org/reference.html#api-hide
+    Related Pages:
+
+      https://c3js.org/reference.html#api-hide
 
     Attributes:
     ----------
@@ -274,7 +302,9 @@ class C3(JsPackage):
 
     By this API, you can append new data points to the chart.
 
-    https://c3js.org/reference.html#api-flow
+    Related Pages:
+
+      https://c3js.org/reference.html#api-flow
 
     Attributes:
     ----------
@@ -289,7 +319,9 @@ class C3(JsPackage):
     -----------
     Change the type of the chart.
 
-    https://c3js.org/reference.html#api-transform
+    Related Pages:
+
+      https://c3js.org/reference.html#api-transform
 
     :param args:
     """
@@ -308,7 +340,9 @@ class C3(JsPackage):
 
     You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be toggles.
 
-    https://c3js.org/reference.html#api-load
+    Related Pages:
+
+      https://c3js.org/reference.html#api-load
 
     Attributes:
     ----------
@@ -330,7 +364,9 @@ class C3(JsPackage):
 
     You can specify multiple targets by giving an array that includes id as String. If no argument is given, all of targets will be toggles.
 
-    https://c3js.org/reference.html#api-unload
+    Related Pages:
+
+      https://c3js.org/reference.html#api-unload
 
     Attributes:
     ----------
@@ -347,7 +383,9 @@ class C3(JsPackage):
     -----------
     Resize the chart.
 
-    https://c3js.org/reference.html#api-resize
+    Related Pages:
+
+      https://c3js.org/reference.html#api-resize
     """
     size = JsUtils.jsConvertData(size, None)
     return JsObjects.JsVoid("%s.resise(%s)" % (self._selector, size))
@@ -358,7 +396,9 @@ class C3(JsPackage):
     -----------
     Force to redraw.
 
-    https://c3js.org/reference.html#api-flush
+    Related Pages:
+
+      https://c3js.org/reference.html#api-flush
     """
     return JsObjects.JsVoid("%s.flush()" % self._selector)
 
@@ -368,7 +408,9 @@ class C3(JsPackage):
     -----------
     Reset the chart object and remove element and events completely.
 
-    https://c3js.org/reference.html#api-flush
+    Related Pages:
+
+      https://c3js.org/reference.html#api-flush
     """
     return JsObjects.JsVoid("%s.destroy()" % self._selector)
 
@@ -389,7 +431,9 @@ class C3(JsPackage):
 
     By this API, you can select data points. To use this API, data.selection.enabled needs to be set true.
 
-    https://c3js.org/reference.html#api-select
+    Related Pages:
+
+      https://c3js.org/reference.html#api-select
     """
     ids = JsUtils.jsConvertData(ids, None)
     indices = JsUtils.jsConvertData(indices, None)
@@ -404,7 +448,9 @@ class C3(JsPackage):
 
     By this API, you can unselect data points. To use this API, data.selection.enabled needs to be set true.
 
-    https://c3js.org/reference.html#api-select
+    Related Pages:
+
+      https://c3js.org/reference.html#api-select
     """
     ids = JsUtils.jsConvertData(ids, None)
     indices = JsUtils.jsConvertData(indices, None)
@@ -418,7 +464,9 @@ class C3(JsPackage):
 
     By this API, you can get selected data points information. To use this API, data.selection.enabled needs to be set true.
 
-    https://c3js.org/reference.html#api-selected
+    Related Pages:
+
+      https://c3js.org/reference.html#api-selected
     """
     ids = JsUtils.jsConvertData(ids, None)
     return JsObjects.JsVoid("%s.selected(%s)" % (self._selector, ids))
@@ -429,7 +477,9 @@ class C3(JsPackage):
     -----------
     Zoom by giving x domain.
 
-    https://c3js.org/reference.html#api-zoom
+    Related Pages:
+
+      https://c3js.org/reference.html#api-zoom
     """
     domain = JsUtils.jsConvertData(domain, None)
     return JsObjects.JsVoid("%s.zoom(%s)" % (self._selector, domain))
@@ -440,6 +490,8 @@ class C3(JsPackage):
     -----------
     Unzoom to the original domain.
 
-    https://c3js.org/reference.html#api-unzoom
+    Related Pages:
+
+      https://c3js.org/reference.html#api-unzoom
     """
     return JsObjects.JsVoid("%s.unzoom()" % self._selector)

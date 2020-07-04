@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 
 from epyk.core.js.packages import JsPackage
@@ -336,6 +338,10 @@ class ColumnApi(object):
 
       https://www.ag-grid.com/javascript-grid-column-api/
 
+    Attributes:
+    ----------
+    :param colKey:
+    :param toIndex:
     """
     colKey = JsUtils.jsConvertData(colKey, None)
     toIndex = JsUtils.jsConvertData(toIndex, None)
@@ -351,6 +357,10 @@ class ColumnApi(object):
 
       https://www.ag-grid.com/javascript-grid-column-api/
 
+    Attributes:
+    ----------
+    :param colKeys:
+    :param toIndex:
     """
     colKeys = JsUtils.jsConvertData(colKeys, None)
     toIndex = JsUtils.jsConvertData(toIndex, None)
@@ -366,6 +376,10 @@ class ColumnApi(object):
 
       https://www.ag-grid.com/javascript-grid-column-api/
 
+    Attributes:
+    ----------
+    :param column:
+    :param aggFunc:
     """
     column = JsUtils.jsConvertData(column, None)
     aggFunc = JsUtils.jsConvertData(aggFunc, None)
@@ -381,6 +395,11 @@ class ColumnApi(object):
 
       https://www.ag-grid.com/javascript-grid-column-api/
 
+    Attributes:
+    ----------
+    :param colKey:
+    :param newWidth:
+    :param finished:
     """
     colKey = JsUtils.jsConvertData(colKey, None)
     newWidth = JsUtils.jsConvertData(newWidth, None)
@@ -397,6 +416,10 @@ class ColumnApi(object):
 
       https://www.ag-grid.com/javascript-grid-column-api/
 
+    Attributes:
+    ----------
+    :param columnWidths:
+    :param finished:
     """
     columnWidths = JsUtils.jsConvertData(columnWidths, None)
     finished = JsUtils.jsConvertData(finished, None)
@@ -454,6 +477,10 @@ class AgGrid(JsPackage):
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-api/
+
+    Attributes:
+    ----------
+    :param colDefs:
     """
     return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(colDefs, None)))
 
@@ -544,33 +571,53 @@ class AgGrid(JsPackage):
 
   def hideColumns(self, columns):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param columns:
     """
     return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, false)" % {'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
 
   def showColumns(self, columns):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param columns:
     """
     return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, true)" % {'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
 
   def hideColumn(self, column):
     """
+    Description:
+    -----------
 
-    https://www.ag-grid.com/javascript-grid-column-definitions/
+    Related Pages:
 
+      https://www.ag-grid.com/javascript-grid-column-definitions/
+
+    Attributes:
+    ----------
     :param columns:
     """
     return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, false)" % {'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
 
   def showColumn(self, column):
     """
+    Description:
+    -----------
 
-    https://www.ag-grid.com/javascript-grid-column-definitions/
+    Related Pages:
 
-    :param columns:
+      https://www.ag-grid.com/javascript-grid-column-definitions/
+
+    Attributes:
+    ----------
+    :param column:
     """
     return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, true)" % {'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
 
@@ -583,6 +630,10 @@ class AgGrid(JsPackage):
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-api/
+
+    Attributes:
+    ----------
+    :param row_id:
     """
     row_id = JsUtils.jsConvertData(row_id, None)
     return JsObjects.JsVoid("%s.api.getRowNode(%s)" % (self.varId, row_id))
@@ -596,6 +647,10 @@ class AgGrid(JsPackage):
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-api/
+
+    Attributes:
+    ----------
+    :param index:
     """
     index = JsUtils.jsConvertData(index, None)
     return JsObjects.JsVoid("%s.api.getRowNode(%s)" % (self.varId, index))

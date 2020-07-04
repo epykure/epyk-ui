@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 
@@ -194,7 +196,6 @@ class DrawerMulti(Html.Html):
     ----------
     :param link: String | HTML object. The value in the drawer
     :param container: HTML object. The component to be displayed
-    :param display: String. The CSS Display property
     """
     if not hasattr(link, 'options'):
       link = self._report.ui.div(link)

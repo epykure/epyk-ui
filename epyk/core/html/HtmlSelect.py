@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import json
 
@@ -67,6 +69,8 @@ class Select(Html.Html):
   @property
   def style(self):
     """
+    Description:
+    -----------
 
     :rtype: GrpClsList.ClassSelect
     """
@@ -111,6 +115,7 @@ class Select(Html.Html):
     Attributes:
     ----------
     :return: A Javascript Dom object
+
     :rtype: JsSelect.JSelect
     """
     if self._js is None:

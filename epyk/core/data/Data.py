@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 """
 Module in charge of monitoring the internal data sources in the framework.
 

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import json
 
@@ -51,6 +53,8 @@ class DataAggregators(object):
 
   def sortBy(self, column):
     """
+    Description:
+    ------------
     Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value through iteratee.
     iteratee may also be the string name of the property to sort by (eg. length).
 
@@ -341,11 +345,6 @@ class DataFilters(object):
     return self
 
   def toStr(self):
-    """
-    Description:
-    -----------
-
-    """
     result = "%s"
     for rec in self.__filters[::-1]:
       result %= rec

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import sys
 
@@ -77,8 +79,6 @@ class DataClass(object):
     ----------
     :param dflt: Optional. The default value of this attribute
     :param name: Optional. The attribute name. default the name of the function
-
-    :return:
     """
     return self._attrs.get(name or sys._getframe().f_back.f_code.co_name, dflt)
 

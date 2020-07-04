@@ -137,8 +137,6 @@ class JsDate(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_getdate.asp
-
-    :return:
     """
     return JsDate("%s.getDate()" % self.varId, isPyData=False)
 
@@ -156,8 +154,6 @@ class JsDate(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_getday.asp
-
-    :return:
     """
     from epyk.core.js.primitives import JsNumber
     return JsNumber.JsNumber("%s.getDay()" % self.varId, isPyData=False)
@@ -376,6 +372,7 @@ class JsDate(JsObject.JsObject):
     :return: A Python / Javascript object
     """
     from epyk.core.js.primitives import JsString
+
     return JsString.JsString("%s.toISOString().slice(0, 10)" % self.varId, isPyData=False)
 
   def getStrTimeStamp(self):
@@ -396,6 +393,7 @@ class JsDate(JsObject.JsObject):
     :return: A Python / Javascript object
     """
     from epyk.core.js.primitives import JsString
+
     return JsString.JsString("%s.toISOString().replace('T', ' ').slice(0, 19)" % self.varId, isPyData=False)
 
   def getTime(self, in_seconds=True):

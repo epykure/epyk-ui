@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 # https://bl.ocks.org/ctufts/f38ef0187f98c537d791d24fda4a6ef9
 

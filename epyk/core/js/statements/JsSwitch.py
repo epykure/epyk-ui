@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -115,11 +117,6 @@ class JsSwitch(object):
     return self
 
   def toStr(self):
-    """
-    Description:
-    ------------
-
-    """
     strData = []
     for var, jsFncs in self.__js:
       strData.append("case %s: {%s; break}" % (JsUtils.jsConvertData(var, None), JsUtils.jsConvertFncs(jsFncs, toStr=True)))

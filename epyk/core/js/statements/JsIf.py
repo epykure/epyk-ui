@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from epyk.core.js import JsUtils
 
 
@@ -32,10 +35,11 @@ class JsIf(object):
 
     Usage::
 
-      Attributes:
+    Attributes:
     ----------
     :param jsCondition: The Javascript condition. Can be a JsBoolean object
     :param jsFncs: The Javascript functions
+
     :return: The If object to allow the chaining
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs, False)
@@ -55,6 +59,7 @@ class JsIf(object):
     Attributes:
     ----------
     :param jsFncs: The Javascript functions
+
     :return: The If object to allow the chaining
     """
     jsFncs = JsUtils.jsConvertFncs(jsFncs, False)

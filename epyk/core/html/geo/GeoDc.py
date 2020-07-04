@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html.graph import GraphDC
 
@@ -11,7 +13,10 @@ class ChartGeoChoropleth(GraphDC.Chart):
   @property
   def dom(self):
     """
-    :rtype: JsChartDC.JsLine
+    Description:
+    -----------
+
+    :rtype: JsDc.GeoChoropleth
     """
     if self._dom is None:
       self._dom = JsDc.GeoChoropleth(self._report, varName=self.chartId, parent=self)

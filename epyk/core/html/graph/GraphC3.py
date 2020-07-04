@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.data.DataClass import DataClass
 
@@ -50,7 +52,7 @@ class Chart(Html.Html):
       self._js = JsC3.C3(self, varName=self.chartId, report=self._report)
     return self._js
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
     """
     Description:
     -----------
@@ -64,6 +66,7 @@ class Chart(Html.Html):
     ----------
     :param jsFncs:
     :param profile:
+    :param source_event: Not
     """
     self.data.onclick(jsFncs, profile)
     return self
@@ -74,6 +77,7 @@ class Chart(Html.Html):
     Description:
     -----------
 
+    :rtype: JsD3.D3Select
     """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
@@ -355,10 +359,26 @@ class JsScales(DataClass):
 
   @property
   def x(self):
+    """
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y2-show
+
+    :rtype: C3Axis
+    """
     return self.sub_data("x", C3Axis)
 
   @property
   def y(self):
+    """
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y2-show
+
+    :rtype: C3Axis
+    """
     return self.sub_data("y", C3Axis)
 
   @property
@@ -420,6 +440,10 @@ class C3GridAxis(DataClass):
 
   @property
   def lines(self):
+    """
+
+    :rtype: C3GridLine
+    """
     return self.sub_data_enum("lines", C3GridLine)
 
 
@@ -427,10 +451,18 @@ class C3Grid(DataClass):
 
   @property
   def x(self):
+    """
+
+    :rtype: C3GridAxis
+    """
     return self.sub_data("x", C3GridAxis)
 
   @property
   def y(self):
+    """
+
+    :rtype: C3GridAxis
+    """
     return self.sub_data("y", C3GridAxis)
 
 
@@ -722,7 +754,7 @@ class ChartStanford(ChartPie):
   def data(self):
     """
 
-    :rtype: JsScales
+    :rtype: JsDataEpochs
     """
     if not 'data' in self._attrs:
       self._attrs['data'] = JsDataEpochs(self._report)

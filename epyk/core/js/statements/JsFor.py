@@ -30,6 +30,8 @@ class JsFor(object):
   @property
   def var(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -38,6 +40,8 @@ class JsFor(object):
   @var.setter
   def var(self, value):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -46,6 +50,8 @@ class JsFor(object):
   @property
   def start(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -54,6 +60,8 @@ class JsFor(object):
   @start.setter
   def start(self, value):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -62,6 +70,8 @@ class JsFor(object):
   @property
   def end(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -70,6 +80,8 @@ class JsFor(object):
   @end.setter
   def end(self, value):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -78,6 +90,8 @@ class JsFor(object):
   @property
   def step(self):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -86,6 +100,8 @@ class JsFor(object):
   @step.setter
   def step(self, value):
     """
+    Description:
+    -----------
 
     :return:
     """
@@ -110,9 +126,6 @@ class JsFor(object):
     return self
 
   def toStr(self):
-    """
-
-    """
     self.options['expr'] = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
     return "for(var %(var)s = %(start)s; %(var)s < %(end)s; %(var)s++){%(expr)s}" % self.options
 
@@ -121,6 +134,8 @@ class JsIterable(object):
 
   def __init__(self, jsIterable, options=None):
     """
+    Description:
+    -----------
 
     Attributes:
     ----------
@@ -172,9 +187,6 @@ class JsIterable(object):
     return self
 
   def toStr(self):
-    """
-
-    """
     jsNfncs = JsUtils.jsConvertFncs(self.__jsFncs, toStr=True)
     jsIter = JsUtils.jsConvertData(self.__js_it, None)
     return "for(var %s %s %s){%s}" % (self.var, self.options['type'], jsIter, jsNfncs)

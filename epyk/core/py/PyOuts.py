@@ -46,7 +46,7 @@ class OutBrowsers(object):
     else:
       path = os.path.join(path)
     if not os.path.exists(path):
-      os.makedirs(path, exist_ok=True)
+      os.makedirs(path)
     with open(os.path.join(path, "RunnerCodepen.html"), "w") as f:
       f.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
     launcher_file = os.path.join(path, "RunnerCodepen.html")
@@ -276,7 +276,7 @@ class PyOuts(object):
     else:
       path = os.path.join(path, "w3schools")
     if not os.path.exists(path):
-      os.makedirs(path, exist_ok=True)
+      os.makedirs(path)
     if name is None:
       name = int(time.time())
     file_path = os.path.join(path, "%s.html" % name)
@@ -372,7 +372,7 @@ class PyOuts(object):
     if path is None:
       path = os.path.join(os.getcwd(), "outs")
     if not os.path.exists(path):
-      os.makedirs(path, exist_ok=True)
+      os.makedirs(path)
     if name is None:
       name = int(time.time())
     html_file_path = os.path.join(path, "%s.html" % name)
@@ -393,12 +393,12 @@ class PyOuts(object):
       results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (results['cssImports'], options.get("css_route", './css'), name)
       body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (body, options.get("js_route", './js'), name)
       if not os.path.exists(os.path.join(path, 'css')):
-        os.makedirs(os.path.join(path, 'css'), exist_ok=True)
+        os.makedirs(os.path.join(path, 'css'))
       with open(os.path.join(path, 'css', "%s.css" % name), "w") as f:
         f.write(results['cssStyle'])
 
       if not os.path.exists(os.path.join(path, 'js')):
-        os.makedirs(os.path.join(path, 'js'), exist_ok=True)
+        os.makedirs(os.path.join(path, 'js'))
       with open(os.path.join(path, 'js', "%s.js" % name), "w") as f:
         f.write(";".join(results['jsFrgsCommon'].values()))
 
@@ -494,7 +494,7 @@ class PyOuts(object):
     else:
       path = os.path.join(path, "markdowns")
     if not os.path.exists(path):
-      os.makedirs(path, exist_ok=True)
+      os.makedirs(path)
     if os.path.exists(path):
       if name is None:
         name = "md_%s.amd" % int(time.time())

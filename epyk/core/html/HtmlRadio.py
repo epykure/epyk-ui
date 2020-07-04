@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 
@@ -153,7 +155,7 @@ class Switch(Html.Html):
     ----------
     :return: A Javascript Dom object
 
-    :rtype: JsQueryUi.Autocomplete
+    :rtype: JsComponents.Switch
     """
     if self._js is None:
       self._js = JsComponents.Switch(self, report=self._report)

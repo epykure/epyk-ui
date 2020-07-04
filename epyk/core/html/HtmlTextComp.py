@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 from epyk.core.css import Colors
@@ -290,7 +292,7 @@ class TrafficLight(Html.Html):
 
     :return: A Javascript Dom object
 
-    :rtype: JsHtml.JsHtmlRich
+    :rtype: JsHtml.JsHtmlBackground
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlBackground(self, report=self._report)

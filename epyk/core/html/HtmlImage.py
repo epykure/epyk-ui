@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import os
 
@@ -225,7 +227,6 @@ class Icon(Html.Html):
     ----------
     :param jsFncs:
     :param profile:
-    :return:
     """
     self.style.css.cursor = "pointer"
     return super(Icon, self).click(jsFncs, profile, source_event)

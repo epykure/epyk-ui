@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from epyk.core.html import Html
 from epyk.core.html.options import OptJsonFormatter
 

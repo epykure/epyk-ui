@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 
@@ -55,7 +57,7 @@ class ChartLine(Chart):
 
       https://www.tutorialspoint.com/dcjs/dcjs_line_chart.htm
 
-    :rtype: JsChartDC.JsLine
+    :rtype: JsDc.JsLine
     """
     if self._dom is None:
       self._dom = JsDc.Line(self._report, varName=self.chartId, parent=self)

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import datetime
 import json
@@ -383,7 +385,7 @@ class InputDate(Input):
     ------------
     Property to the CSS Style of the component
 
-    :rtype: GrpClsInput.ClassInput
+    :rtype: GrpClsInput.ClassInputDate
     """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputDate(self)
@@ -404,6 +406,8 @@ class InputDate(Input):
 
   def excluded_dates(self, dts=None, jsFncs=None):
     """
+    Description:
+    ------------
 
     Attributes:
     ----------
@@ -502,6 +506,8 @@ class InputRange(Input):
   @property
   def options(self):
     """
+    Description:
+    ------------
     Property to set input range properties
 
     :rtype: OptSelect.OptionsInputRange
@@ -630,7 +636,7 @@ class FieldAutocomplete(Field):
 
     Attributes:
     ----------
-    :param focus:
+    :param jsFnc:
     :param profile:
     """
     if not isinstance(jsFnc, list):
@@ -909,7 +915,7 @@ class TextArea(Html.Html):
 
       https://www.w3schools.com/js/js_htmldom.asp
 
-    :rtype: JsHtmlField.JsHtmlTextarea
+    :rtype: JsHtmlField.Textarea
     """
     if self._dom is None:
       self._dom = JsHtmlField.Textarea(self, report=self._report)
@@ -944,6 +950,10 @@ class Search(Html.Html):
 
   @property
   def dom(self):
+    """
+
+    :rtype: JsHtmlField.JsHtmlFields
+    """
     if self._dom is None:
       self._dom = JsHtmlField.JsHtmlFields(self, report=self._report)
     return self._dom
@@ -953,6 +963,14 @@ class Search(Html.Html):
     return '''htmlObj.find('input').val(data)'''
 
   def click(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
     return self.icon.click(jsFncs, profile, source_event)
 
   def enter(self, jsFncs, profile=False):

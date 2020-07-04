@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from epyk.core.html import Html
 from epyk.core.js.objects import JsCanvas
 
@@ -23,7 +26,7 @@ class Canvas(Html.Html):
   def ctx(self):
     """
 
-    :rtype: JsCanvas.Context2D
+    :rtype: JsCanvas.Canvas
     """
     if self.__ctx is None:
       self._dom = JsCanvas.Canvas(self, report=self._report)

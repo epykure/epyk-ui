@@ -1,3 +1,7 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+
 """
 Entry point for the different Javascript primitives
 
@@ -132,6 +136,10 @@ class JsObjects(object):
     Description:
     -----------
     Interface to the Javascript Object primitive
+
+    Attributes:
+    ----------
+    :param varName:
 
     :return: The requested Python JsObject primitive
     """
@@ -289,10 +297,8 @@ class JsObjects(object):
     The NaN property is the same as the Number.Nan property.
 
     Related Pages:
-
-:
-    https://www.w3schools.com/jsref/jsref_number_nan.asp
-    https://www.w3schools.com/jsref/jsref_isnan.asp
+      https://www.w3schools.com/jsref/jsref_number_nan.asp
+      https://www.w3schools.com/jsref/jsref_isnan.asp
     """
     return JsNumber.JsNumber("Number.NaN")
 
@@ -348,6 +354,8 @@ class JsPromise(object):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param jsFnc:
     """
     if not isinstance(jsFnc, list):
@@ -360,6 +368,8 @@ class JsPromise(object):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param jsFnc:
     """
     if not isinstance(jsFnc, list):
@@ -402,6 +412,10 @@ class XMLHttpRequest(object):
     ------------
     Interface to the Javascript Object primitive
 
+    Attributes:
+    ----------
+    :param varName:
+
     :return: The requested Python JsObject primitive
     """
     return XMLHttpRequest(None, varName, None, None)
@@ -439,6 +453,10 @@ class XMLHttpRequest(object):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType
+
+    Attributes:
+    ----------
+    :param value:
     """
     if value is not None:
       self.__responseType = value
@@ -557,6 +575,14 @@ class XMLHttpRequest(object):
     return self
 
   def onSuccess(self, jsFncs):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__req_success = jsFncs
@@ -577,6 +603,14 @@ class XMLHttpRequest(object):
     """
 
   def onFail(self, jsFncs):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__req_fail = jsFncs
@@ -613,6 +647,7 @@ class XMLHttpRequest(object):
     ----------
     :param jsonData:
     :param encodeURIData:
+    :param stringify: Boolean
     """
     #Initialize jsonData with potential initial data passed in the constructor
     if jsonData:

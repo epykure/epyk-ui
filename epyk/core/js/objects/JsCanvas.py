@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.primitives import JsNumber

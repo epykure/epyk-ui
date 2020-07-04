@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 '''
 Module used as a wrapper to the Javascript C3 libraries
 
@@ -62,7 +65,7 @@ class Chart(Html.Html):
 
     :return: A Javascript object
 
-    :rtype: JsC3.C3
+    :rtype: JsBillboard.Billboard
     """
     if self._js is None:
       self._js = JsBillboard.Billboard(self, varName=self.chartId, report=self._report)
@@ -77,12 +80,26 @@ class Chart(Html.Html):
     """
     return "%s_obj" % self.htmlCode
 
-  def click(self, jsFncs, profile=False):
+  def click(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    :param jsFncs:
+    :param profile:
+    :param source_event: Not used
+    """
     self.data.onclick(jsFncs, profile)
     return self
 
   @property
   def d3(self):
+    """
+    Description:
+    -----------
+
+    :rtype: JsD3.D3Select
+    """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
@@ -268,6 +285,8 @@ class JsData(DataClass):
   @property
   def types(self):
     """
+    Description:
+    -----------
     This setting overwrites data.type setting:
     line, spline, step, area...
 
@@ -334,19 +353,37 @@ class JsScales(DataClass):
 
   @property
   def x(self):
+    """
+    Description:
+    -----------
+
+    https://c3js.org/reference.html#axis-y2-show
+
+    :rtype: BBAxis
+    """
     return self.sub_data("x", BBAxis)
 
   @property
   def y(self):
+    """
+    Description:
+    -----------
+
+    https://c3js.org/reference.html#axis-y2-show
+
+    :rtype: BBAxis
+    """
     return self.sub_data("y", BBAxis)
 
   @property
   def y2(self):
     """
+    Description:
+    -----------
 
     https://c3js.org/reference.html#axis-y2-show
 
-    :rtype: C3Axis
+    :rtype: BBAxis
     """
     return self.sub_data("y2", BBAxis)
 
@@ -538,9 +575,10 @@ class ChartLine(Chart):
   @property
   def axis(self):
     """
+    Description:
+    -----------
 
     :rtype: JsScales
-    :return:
     """
     if not'axis' in self._attrs:
       self._attrs['axis'] = JsScales(self._report)
@@ -549,8 +587,10 @@ class ChartLine(Chart):
   @property
   def point(self):
     """
+    Description:
+    -----------
 
-    :rtype: C3Points
+    :rtype: BBPoints
     """
     if not 'point' in self._attrs:
       self._attrs['point'] = BBPoints(self._report)
@@ -559,6 +599,8 @@ class ChartLine(Chart):
   @property
   def zoom(self):
     """
+    Description:
+    -----------
 
     :rtype: JsZoom
     """
@@ -569,9 +611,11 @@ class ChartLine(Chart):
   @property
   def data(self):
     """
+    Description:
+    -----------
 
-    :rtype: JsScales
-    :return:
+    :rtype: JsData
+
     """
     if not 'data' in self._attrs:
       self._attrs['data'] = JsData(self._report)
@@ -580,9 +624,10 @@ class ChartLine(Chart):
   @property
   def grid(self):
     """
+    Description:
+    -----------
 
-    :rtype: JsScales
-    :return:
+    :rtype: BBGrid
     """
     if not 'grid' in self._attrs:
       self._attrs['grid'] = BBGrid(self._report)

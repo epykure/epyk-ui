@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptPlotly
@@ -27,6 +29,8 @@ class Chart(Html.Html):
   @property
   def chartId(self):
     """
+    Description:
+    ------------
     Return the Javascript variable of the chart
     """
     return "%s_obj" % self.htmlCode
@@ -48,7 +52,7 @@ class Chart(Html.Html):
     self.onReady("%s.on('plotly_legendclick', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
     return self
 
-  def click(self, jsFnc, profile=False):
+  def click(self, jsFnc, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -82,7 +86,7 @@ class Chart(Html.Html):
     self.onReady("%s.on('plotly_doubleclick', function(data) { %s })" % (self.dom.varName, JsUtils.jsConvertFncs(jsFnc, toStr=True)))
     return self
 
-  def hover(self, jsFnc, profile=False):
+  def hover(self, jsFnc, profile=False, source_event=None):
     """
     Description:
     ------------
@@ -130,6 +134,8 @@ class Chart(Html.Html):
   @property
   def options(self):
     """
+    Description:
+    ------------
 
     :rtype: OptPlotly.OptionConfig
     """
@@ -139,6 +145,8 @@ class Chart(Html.Html):
 
   def traces(self, i=None):
     """
+    Description:
+    ------------
 
     :rtype: JsChartJs.DataSetPie
     """
@@ -188,7 +196,7 @@ class Chart(Html.Html):
 
     :return: A Javascript object
 
-    :rtype: JsChartJs.JsChart
+    :rtype: JsPlotly.JsPlotly
     """
     if self._js is None:
       self._js = JsPlotly.JsPlotly(selector="window['%s']" % self.chartId, src=self)
@@ -197,6 +205,8 @@ class Chart(Html.Html):
   @property
   def layout(self):
     """
+    Description:
+    -----------
 
     :rtype: Layout
     """
@@ -207,6 +217,8 @@ class Chart(Html.Html):
   @property
   def d3(self):
     """
+    Description:
+    -----------
 
     :rtype: JsD3.D3Select
     """
@@ -1686,6 +1698,8 @@ class DataChart(DataClass):
   @property
   def marker(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/bubble-charts/
 
@@ -1754,14 +1768,6 @@ class DataPie(DataChart):
   @textinfo.setter
   def textinfo(self, val):
     self._attrs["textinfo"] = val
-
-  @property
-  def textposition(self):
-    return self._attrs["textposition"]
-
-  @textposition.setter
-  def textposition(self, val):
-    self._attrs["textposition"] = val
 
   @property
   def outsidetextfont(self):
@@ -1839,6 +1845,8 @@ class DataZ(DataChart):
   @property
   def project(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/3d-surface-plots/
 
@@ -1852,6 +1860,8 @@ class DataContours(DataChart):
   @property
   def z(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/3d-surface-plots/
 
@@ -1876,6 +1886,8 @@ class DataMove(DataChart):
   @property
   def line(self):
     """
+    Description:
+    ------------
 
     :rtype: DataLine
 
@@ -1897,6 +1909,8 @@ class DataSurface(DataChart):
   @property
   def contours(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/3d-surface-plots/
 
@@ -1907,6 +1921,8 @@ class DataSurface(DataChart):
   @property
   def line(self):
     """
+    Description:
+    ------------
 
     :rtype: DataLine
 
@@ -1985,6 +2001,8 @@ class DataGauge(DataChart):
   @property
   def axis(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2005,6 +2023,8 @@ class DataIndicator(DataChart):
 
   def domain(self, x, y):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2016,6 +2036,8 @@ class DataIndicator(DataChart):
   @property
   def title(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2026,6 +2048,8 @@ class DataIndicator(DataChart):
   @property
   def number(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2036,6 +2060,8 @@ class DataIndicator(DataChart):
   @property
   def gauge(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2066,6 +2092,8 @@ class DataIndicator(DataChart):
   @property
   def delta(self):
     """
+    Description:
+    ------------
 
     https://plot.ly/javascript/3d-surface-plots/
 
@@ -2154,6 +2182,8 @@ class DataCandle(DataChart):
   @property
   def increasing(self):
     """
+    Description:
+    ------------
 
     :rtype: DataMove
 
@@ -2164,6 +2194,8 @@ class DataCandle(DataChart):
   @property
   def decreasing(self):
     """
+    Description:
+    ------------
 
     :rtype: DataMove
 
@@ -2177,6 +2209,9 @@ class Pie(Chart):
   @property
   def chart(self):
     """
+    Description:
+    ------------
+
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
@@ -2186,6 +2221,8 @@ class Pie(Chart):
   @property
   def data(self):
     """
+    Description:
+    ------------
 
     :rtype: DataPie
 
@@ -2238,6 +2275,9 @@ class Surface(Chart):
   @property
   def chart(self):
     """
+    Description:
+    ------------
+
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
@@ -2278,6 +2318,9 @@ class Scatter3D(Chart):
   @property
   def chart(self):
     """
+    Description:
+    ------------
+
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
@@ -2333,6 +2376,9 @@ class Mesh3d(Chart):
   @property
   def chart(self):
     """
+    Description:
+    ------------
+
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
@@ -2358,7 +2404,10 @@ class Indicator(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    Description:
+    ------------
+
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -2387,7 +2436,10 @@ class ScatterPolar(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    Description:
+    ------------
+
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -2409,7 +2461,10 @@ class Box(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    Description:
+    ------------
+
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -2418,10 +2473,10 @@ class Box(Chart):
   @property
   def layout(self):
     """
+    Description:
+    ------------
 
     :rtype: LayoutBox
-
-    :return:
     """
     if self._layout is None:
       self._layout = LayoutBox(self._report)
@@ -2442,7 +2497,10 @@ class CandleStick(Chart):
   @property
   def chart(self):
     """
-    :rtype: JsPlotly.Bar
+    Description:
+    ------------
+
+    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
@@ -2451,10 +2509,10 @@ class CandleStick(Chart):
   @property
   def layout(self):
     """
+    Description:
+    ------------
 
     :rtype: LayoutBox
-
-    :return:
     """
     if self._layout is None:
       self._layout = LayoutBox(self._report)
