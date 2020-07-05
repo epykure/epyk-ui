@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import re
+
+
 from epyk.core.py import OrderedSet
 
 
@@ -627,3 +630,40 @@ class Google(object):
     for rec in data:
       is_data['datasets'].append([rec.get(c, '') for c in rows + cols])
     return is_data
+
+
+class HtmlComponents(object):
+
+  def markdown(self, content, tooltips=None, case_sensitive=False):
+    """
+    Description:
+    ------------
+    Format the markdown text with tooltips
+
+    Attributes:
+    ----------
+    :param content: String. The markdown content
+    :param tooltips: Dictionary. The words to be replaced
+    """
+    if tooltips is None:
+      return content
+
+    code_block, new_content = False, []
+    for line in content.split("\n"):
+      if line.startswith("```") and not code_block:
+        code_block = True
+      elif line.startswith("```"):
+        code_block = False
+
+      if code_block or line.startswith("["):
+        new_content.append(line)
+      else:
+        for k, v in tooltips.items():
+          tooltip = '<a style="color:grey" href="" onmouseout="hideTooltip()" onmouseover="showTooltip(this, \'%s\')">%s</a>' % (v, k)
+          if case_sensitive:
+            line = line.replace(k, tooltip)
+          else:
+            insensitive_replace = re.compile(re.escape(k), re.IGNORECASE)
+            line = insensitive_replace.sub(tooltip, line)
+        new_content.append(line)
+    return "\n".join(new_content)

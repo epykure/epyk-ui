@@ -36,3 +36,5 @@ primitives = DataEvent.DataPrimitives()
 datamap = Datamap
 
 http = URLSearchParams("location.search")
+
+components = DataPy.HtmlComponents()

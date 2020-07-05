@@ -3,6 +3,8 @@
 
 import datetime
 
+from epyk.core.data import components
+
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlEditor
 from epyk.core.js.packages import JsCodeMirror
@@ -427,7 +429,7 @@ class MarkdownReader(Html.Html):
     super(MarkdownReader, self).__init__(report, vals, htmlCode=htmlCode, css_attrs={"width": width, "height": height, 'box-sizing': 'border-box', 'margin': '5px 0'}, profile=profile)
     self.actions = []
 
-  def tooltips(self, data, case_sensitive=False):
+  def tooltips(self, data):
     """
     Description:
     ------------
@@ -437,28 +439,29 @@ class MarkdownReader(Html.Html):
     ----------
     :param data: Dictionary. The list of word to be automatically changed
     """
-    if case_sensitive:
-      self._jsStyles['links'] = {k: {"content": v, 'f': '/%s/g' % k} for k, v in data.items()}
-    else:
-      self._jsStyles['links'] = {k: {"content": v, 'f': '/%s/gi' % k} for k, v in data.items()}
-    div = self._report.ui.div(htmlCode="%s_tooltip" % self.htmlCode, width=("auto", ""))
-    div.style.css.display = False
-    div.style.css.position = "absolute"
-    div.style.css.background = self._report.theme.greys[0]
-    div.style.css.padding = 5
-    div.style.css.border_radius = 5
-    div.style.css.border = "1px solid %s" % self._report.theme.greys[5]
+    if not "markdown_tooltip" in self._report.components:
+      div = self._report.ui.div(htmlCode="markdown_tooltip", width=("auto", ""))
+      div.style.css.display = False
+      div.style.css.position = "absolute"
+      div.style.css.background = self._report.theme.greys[0]
+      div.style.css.padding = 5
+      div.style.css.border_radius = 5
+      div.style.css.border = "1px solid %s" % self._report.theme.greys[5]
+      self.onReady('''
+        function showTooltip(source, content){ console.log('test');
+            source.style.cursor = 'help'; document.querySelector('#markdown_tooltip').innerHTML = content;  
+            document.querySelector('#markdown_tooltip').style.left = event.pageX + 15 + 'px'; 
+            document.querySelector('#markdown_tooltip').style.top = event.pageY + 5 + 'px';
+            document.querySelector('#markdown_tooltip').style.display = 'block'; 
+            document.querySelector('#markdown_tooltip').style.position = 'absolute'}
+        function hideTooltip(){ document.querySelector('#markdown_tooltip').style.display = 'none' }
+      ''')
+    self._vals = components.markdown(self._vals, data)
 
   @property
   def _js__builder__(self):
     return '''
       if (data !== ''){ 
-        if(typeof options.links !== 'undefined'){
-          let tooltipId = "#"+ htmlObj.id +"_tooltip";
-          for(var key in options.links) {
-            let text = options.links[key]; document.querySelector(tooltipId).innerHTML = text.content;
-            data = data.replace(eval(text.f), '<a style="color:grey" href="" onmouseout="document.querySelector(\\\''+ tooltipId +'\\\').style.display = \\\'none\\\'" onmouseover="this.style.cursor = \\\'help\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style.left = event.pageX + 15 + \\\'px\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style.top = event.pageY + 5 + \\\'px\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style.display = \\\'block\\\'; document.querySelector(\\\''+ tooltipId +'\\\').style. position = \\\'absolute\\\'">'+ key +'</a>')
-        }}
         var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data); htmlObj.innerHTML = data;
         document.querySelectorAll('pre code').forEach((block) => {hljs.highlightBlock(block)});
       }'''
