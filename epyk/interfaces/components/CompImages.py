@@ -51,7 +51,7 @@ class Images(object):
     Description:
     ------------
     Get teh picture used by youtube
-    
+
     Attributes:
     ----------
     :param video_id:
