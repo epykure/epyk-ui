@@ -46,6 +46,24 @@ class Images(object):
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
     return html_image
 
+  def youtube(self, video_id=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+    Get teh picture used by youtube
+    
+    Attributes:
+    ----------
+    :param video_id:
+    :param width:
+    :param height:
+    :param align:
+    :param htmlCode:
+    :param profile:
+    :param options:
+    """
+    return self.img("0.jpg", "http://img.youtube.com/vi/%s" % video_id, width, height, align, htmlCode, profile, options)
+
   def circular(self, image=None, path=None, width=(100, "%"), height=('auto', ""), align="center", htmlCode=None,
           profile=None, options=None):
     """
