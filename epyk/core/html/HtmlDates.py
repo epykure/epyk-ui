@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time
+import datetime
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptCalendars
@@ -281,7 +282,7 @@ class Calendar(Html.Html):
     self.__click = JsUtils.jsConvertFncs(jsFncs, toStr=True)
     return self
 
-  def task(self, name, start, capacity, end=None, weekend=False):
+  def task(self, name, start, capacity, end=None, weekend=False, options=None):
     """
     Description:
     ------------
@@ -292,7 +293,15 @@ class Calendar(Html.Html):
     :param start:
     :param capacity: Float. A figure in percentage
     :param end:
+    :param options:
     """
+    if self.options.unit != 100 and options is None:
+      options = {'unit': self.options.unit}
+    if options is not None and 'unit' in options:
+      if isinstance(capacity, list):
+        capacity = [100 * c / options['unit'] for c in capacity]
+      else:
+        capacity = 100 * capacity / options['unit']
     if name not in self.tasks:
       self.tasks[name] = self._report.theme.charts[len(self.tasks)]
       i = 0
@@ -344,6 +353,30 @@ class Calendar(Html.Html):
                   i += 1
                   break
 
+  def weekly(self, name, start, capacity, frequency=1, weekend=False, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    :param start:
+    :param capacity:
+    :param frequency:
+    :param weekend:
+    """
+    dt = datetime.date(*map(lambda x: int(x), start.split("-")))
+    c = []
+    month = dt.month
+    while dt.month == month:
+      if len(c) % (frequency * 5) == 0:
+        c.append(capacity)
+      else:
+        c.append(0)
+      dt += datetime.timedelta(days=1)
+    self.task(name, start, c, weekend=weekend, options=options)
+
   def __str__(self):
     header = ["<th style='width:%s%%;%s'>%s</th>" % (100 / len(self.labels), Defaults.inline(self.options.header), d) for d in self.labels]
     body, row = [], []
@@ -379,4 +412,3 @@ class Calendar(Html.Html):
 
     self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
     return '<table %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</table>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'caption': self.caption, 'header': "".join(header), 'content': "".join(body)}
-

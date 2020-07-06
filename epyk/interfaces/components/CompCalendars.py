@@ -12,7 +12,7 @@ class Calendar(object):
   def __init__(self, context):
     self.context = context
 
-  def days(self, month, content=None, year=None, width=(None, "%"), height=(None, "px"), align=None, options=None, htmlCode=None, profile=None):
+  def days(self, month=None, content=None, year=None, width=(None, "%"), height=(None, "px"), align=None, options=None, htmlCode=None, profile=None):
     """
     Description:
     ------------
@@ -27,8 +27,8 @@ class Calendar(object):
     :param htmlCode:
     :param profile:
     """
-
     today = datetime.date.today()
+    month = month or today.month
     content = content or {}
     dfl_options = {
       'overload': {'font-size': Defaults.font(5), 'text-align': 'center', 'color': self.context.rptObj.theme.danger[1],
@@ -38,6 +38,7 @@ class Calendar(object):
       'header': {'font-size': Defaults.font(3), "background": self.context.rptObj.theme.colors[-1],
                  "color": self.context.rptObj.theme.colors[0], "padding": "5px 2px", "text-align": "center"}
     }
+    factor = 100 / options.get("unit", 100) if options is not None else 1
     if options is not None:
       dfl_options.update(options)
     year = year or today.year
@@ -55,7 +56,7 @@ class Calendar(object):
       day_tasks = content.get(start.isoformat(), {})
       tasks_view = []
       for i, t in enumerate(sorted_tasks):
-        tasks_view.append({"name": t, 'capacity': day_tasks.get(t, 0), 'color': tasks[t]})
+        tasks_view.append({"name": t, 'capacity': factor * day_tasks.get(t, 0), 'color': tasks[t]})
       days_data.append({'today': today == start, "number": start.day, 'tasks': tasks_view, 'date': start.isoformat(), 'weekend': start.weekday() >= 5})
       start += datetime.timedelta(days=1)
     html_table = html.HtmlDates.Calendar(self.context.rptObj, days_data, width, height, align, dfl_options, htmlCode, profile)
@@ -80,21 +81,24 @@ class Calendar(object):
     """
     today = datetime.date.today()
     content = content or {}
-    dfl_options = {
-      'overload': {'font-size': Defaults.font(5), 'text-align': 'center', 'color': self.context.rptObj.theme.danger[1],
-                   'font-weight': 'bold', 'cursor': 'pointer'},
-      'number': {"font-size": Defaults.font(5), "text-align": "center"},
-      'today': {"padding": "0 0 5px 0", "border-bottom": "1px solid grey"},
-      'header': {'font-size': Defaults.font(3), "background": self.context.rptObj.theme.colors[-1],
-                 "color": self.context.rptObj.theme.colors[0], "padding": "5px 2px", "text-align": "center"}
-    }
-    if options is not None:
-      dfl_options.update(options)
-    days_data = []
-    html_table = html.HtmlDates.Calendar(self.context.rptObj, days_data, width, height, align, dfl_options, htmlCode, profile)
-    html_table.labels =["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October",
-                        "November", "December"]
-    return html_table
+    labels = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    rows, tasks = [], {}
+    for i, l in enumerate(labels):
+      record = []
+      for i, k in enumerate(sorted(content.get(i + 1, {}))):
+        record.append({"name": k, 'capacity': content[i + 1][k]})
+        tasks[k] = self.context.rptObj.theme.charts[i]
+      pie = self.context.rptObj.ui.charts.chartJs.pie(record, y_columns=["capacity"], x_axis="name", height=(100, "px"))
+      pie.options.legend.display = False
+      pie.options.title.text = labels[i]
+      pie.options.title.display = True
+      pie.options.title.fontSize = Defaults.Font.size + 5
+      pie.options.title.fontColor = self.context.rptObj.theme.success[1]
+      rows.append(pie)
+    row = self.context.rptObj.ui.row(rows)
+    row.tasks = tasks
+    row[today.month-1].style.css.border = "1px solid %s" % self.context.rptObj.theme.success[0]
+    return row
 
   def legend(self, records, width=(None, "%"), height=(None, "px"), align=None, options=None, profile=None):
     """

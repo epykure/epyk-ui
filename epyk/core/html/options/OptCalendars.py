@@ -23,6 +23,24 @@ class OptionDays(Options):
     self.set(css_attrs)
 
   @property
+  def unit(self):
+    """
+    Description:
+    ------------
+    Change the unit to the calendar.
+    Default is in percentage
+
+    Attributes:
+    ----------
+    :param num: Float. Change the scale
+    """
+    return self.get(100)
+
+  @unit.setter
+  def unit(self, num):
+    self.set(num)
+
+  @property
   def overload(self):
     """
     Description:

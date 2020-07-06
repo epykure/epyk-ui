@@ -500,6 +500,18 @@ class OptionLegend(DataClass):
   def labels(self):
     return self.sub_data("labels", OptionLabels)
 
+  @property
+  def display(self):
+    """
+    https://www.chartjs.org/docs/latest/configuration/title.html
+
+    """
+    return self._attrs["display"]
+
+  @display.setter
+  def display(self, val):
+    self._attrs["display"] = val
+
 
 class OptionTitle(DataClass):
   @property
