@@ -25,6 +25,8 @@ class PyDates(object):
   @property
   def today(self):
     """
+    Description:
+    ------------
     Return a String date in a format YYYY-MM-DD
 
     Even if within the property python date object are used, this function will
@@ -45,6 +47,8 @@ class PyDates(object):
   @property
   def now(self):
     """
+    Description:
+    ------------
     Return the current timestamp in a format YYYY-MM-DD HH:mm:dd
 
     Example
@@ -58,9 +62,25 @@ class PyDates(object):
     """
     return datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
 
+  def path(self, with_time=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param time:
+    """
+    if with_time:
+      return datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
+
+    return datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d')
+
   @property
   def cob(self):
     """
+    Description:
+    ------------
     Returns the last close of business date
 
     In this property the parameter weekdays is forced to True.
@@ -75,6 +95,8 @@ class PyDates(object):
   @property
   def month_end(self):
     """
+    Description:
+    ------------
     Returns the last month end date
 
     In this property the parameter weekdays is forced to True.
@@ -89,6 +111,8 @@ class PyDates(object):
   @property
   def months(self):
     """
+    Description:
+    ------------
     Returns the list of month end dates from the beginning of the year
 
     In this property the parameter weekdays is forced to True.
@@ -104,6 +128,8 @@ class PyDates(object):
   @property
   def quarters(self):
     """
+    Description:
+    ------------
     Return the list of quarter dates since the beginning of the year
 
     In this property the parameter weekdays is forced to True.
@@ -121,12 +147,16 @@ class PyDates(object):
 
   def date_from_alias(self, alias, from_date=None):
     """
+    Description:
+    ------------
     Return the date corresponding to an alias code like T, T-N, M...
 
     Example
     >>> PyDates().date_from_alias("T", "2019-08-08")
     '2019-08-07'
 
+    Attributes:
+    ----------
     :param alias: The alias of the operation (T-3, M-2....)
     :param from_date: The start date from which the time operation is applied. Today by default
 
@@ -182,6 +212,8 @@ class PyDates(object):
 
   def date_from_excel(self, xlDate):
     """
+    Description:
+    ------------
     Convert a Excel date to a AReS standard date format YYYY-MM-DD.
 
     Example
@@ -192,6 +224,8 @@ class PyDates(object):
 
       https://support.office.com/en-gb/article/date-function-e36c0c8c-4104-49da-ab83-82328b832349?ui=en-US&rs=en-GB&ad=GB
 
+    Attributes:
+    ----------
     :param xlDate:
 
     :return: The date as a String in the common format YYYY-MM-DD in AReS
@@ -201,12 +235,16 @@ class PyDates(object):
 
   def month_ends(self, from_dt, to_dt, weekdays=True):
     """
+    Description:
+    ------------
     Return the list of end of month dates between two dates
 
     Example
     >>> PyDates().month_ends("2019-01-01", "2019-06-05", False)
     ['2019-01-31', '2019-02-28', '2019-03-31', '2019-04-30', '2019-05-31']
 
+    Attributes:
+    ----------
     :param from_dt: The start date in format YYYY-MM-DD
     :param to_dt: The end date in format YYYY-MM-DD
     :param weekdays: remove the weekends from the potential dates (take the day before). Default True
@@ -230,8 +268,10 @@ class PyDates(object):
           dt = dt - datetime.timedelta(days=1)
     return results
 
-  def range_dates(self, from_dt, to_dt, weekdays=True):
+  def range_dates(self, to_dt, from_dt=None, weekdays=True):
     """
+    Description:
+    ------------
     Get the list of dates between two dates.
 
     The date should be two string dates in the format YYYY-MM-DD.
@@ -241,12 +281,16 @@ class PyDates(object):
     >>> PyDates().range_dates("2019-01-01", "2019-01-11")
     ['2019-01-11', '2019-01-10', '2019-01-09', '2019-01-08', '2019-01-07', '2019-01-04', '2019-01-03', '2019-01-02', '2019-01-01']
 
+    Attributes:
+    ----------
     :param from_dt: The start date in format YYYY-MM-DD
     :param to_dt: The end date in format YYYY-MM-DD
     :param weekdays: remove the weekends from the potential dates (take the day before). Default True
 
     :return: A list of dates.
     """
+    if from_dt is None:
+      from_dt = datetime.datetime.today().strftime('%Y-%m-%d')
     start_date = self.date_from_alias(from_dt)
     end_date = self.date_from_alias(to_dt, from_date=start_date)
     if start_date < end_date:
@@ -263,11 +307,15 @@ class PyDates(object):
 
   def from_timestamp(self, timestamp, offset=0, reference=60, factor=1000):
     """
+    Description:
+    ------------
     The default value will be given considering the GMT time
 
     Example
     timestamp_s = rptObj.py.dates.from_timestamp(1573074335010, 0)
 
+    Attributes:
+    ----------
     :param timestamp: Integer. The timestamp in miliseconds
     :param offset: Integer. The time zone
     :param reference: Integer. The reference shift in minutes
@@ -280,6 +328,8 @@ class PyDates(object):
 
   def to_server_time(self, timestamp, offset=0, reference=60):
     """
+    Description:
+    ------------
     Return the converted timestamp to be stored in the database.
     This conversion will be based on the offset coming from the UI to convert to common time
 
@@ -287,6 +337,8 @@ class PyDates(object):
     >>> PyDates().to_server_time("2019-08-20 20:04:10", 2)
     '2019-08-20 21:06:10'
 
+    Attributes:
+    ----------
     :param timestamp: The client timestamp
     :param offset: The client offset time to be applied before storage in hour
     :param reference: The reference time used on the server side
@@ -299,6 +351,8 @@ class PyDates(object):
 
   def to_user_time(self, timestamp, offset, reference=60):
     """
+    Description:
+    ------------
     Return the converted timestamp to be returned to the user.
     This is converting a stored timestamp to a user one.
 
@@ -306,6 +360,8 @@ class PyDates(object):
     >>> PyDates().to_user_time('2019-08-20 21:06:10', 2)
     '2019-08-20 20:04:10'
 
+    Attributes:
+    ----------
     :param timestamp: The server timestamp
     :param offset: The client offset time to be applied before storage
     :param reference: The reference time used on the server side
