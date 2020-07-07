@@ -85,9 +85,9 @@ class Calendar(object):
     rows, tasks = [], {}
     for i, l in enumerate(labels):
       record = []
-      for i, k in enumerate(sorted(content.get(i + 1, {}))):
-        record.append({"name": k, 'capacity': content[i + 1][k]})
-        tasks[k] = self.context.rptObj.theme.charts[i]
+      for j, k in enumerate(sorted(content.get(i + 1, {}))):
+        record.append({"name": k, 'capacity': content[j + 1][k]})
+        tasks[k] = self.context.rptObj.theme.charts[j]
       pie = self.context.rptObj.ui.charts.chartJs.pie(record, y_columns=["capacity"], x_axis="name", height=(100, "px"))
       pie.options.legend.display = False
       pie.options.title.text = labels[i]
