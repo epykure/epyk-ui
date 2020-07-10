@@ -51,6 +51,9 @@ class HtmlNavBar(Html.Html):
 
   def __add__(self, htmlObj):
     """ Add items to the footer """
+    if not hasattr(htmlObj, 'options'):
+      htmlObj = self._report.ui.div(htmlObj)
+      htmlObj.style.css.cursor = "pointer"
     htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     htmlObj.style.css.display = 'inline'
     if htmlObj.css('height') is None:

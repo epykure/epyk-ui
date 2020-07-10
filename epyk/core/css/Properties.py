@@ -359,6 +359,25 @@ class CssMixin(object):
     val = val if val is not None else 'None'
     self.htmlObj.css({"background-image": val})
 
+  def background_url(self, val, size="contain", repeat="no-repeat", position="relative", margin="auto"):
+    """
+    Description:
+    ------------
+    Set the container background from an url.
+    This will also set some default usual property.
+
+    Attributes:
+    ----------
+    :param val: String. The picture url
+    :param size: String. The background size property
+    :param repeat: String. The repeat property
+    """
+    self.htmlObj.css({"background-image": "url(%a)" % val})
+    self.htmlObj.css({"background-size": size})
+    self.htmlObj.css({"background-repeat": repeat})
+    self.htmlObj.css({"position": position})
+    self.htmlObj.css({"margin": margin})
+
   @property
   def background_origin(self): return self.htmlObj.css("background-origin")
 
