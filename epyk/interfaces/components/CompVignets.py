@@ -1,4 +1,6 @@
 
+import os
+
 from epyk.core import html
 from epyk.core.css import Defaults as Defaults_css
 
@@ -170,3 +172,58 @@ class Vignets(object):
 
   def line(self):
     pass
+
+  def image(self, title, content, image=None, render="row", align="center", width=(90, '%')):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param title:
+    :param content:
+    :param image:
+    :param render:
+    :param align:
+    :param width:
+    """
+    container = self.context.rptObj.ui.row(align=align, width=width)
+    container.style.css.margin = "20px auto"
+    if not hasattr(title, 'options'):
+      title = self.context.rptObj.ui.titles.title(title)
+      title.style.css.display = "block"
+    if not hasattr(content, 'options'):
+      content = self.context.rptObj.ui.text(content)
+      content.style.css.display = "block"
+    if image is not None:
+      if not hasattr(image, 'options'):
+        split_url = os.path.split(image)
+        container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
+    container.add(self.context.rptObj.ui.col([title, content]))
+    return container
+
+  def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px')):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param title:
+    :param content:
+    :param icon:
+    :param render:
+    :param align:
+    :param width:
+    """
+    container = self.context.rptObj.ui.div(align=align, width=width)
+    container.style.css.margin = "auto"
+    title = self.context.rptObj.ui.titles.title(title)
+    title.style.css.display = "block"
+    text = self.context.rptObj.ui.text(content)
+    text.style.css.display = "block"
+    if icon is not None:
+      container.add(self.context.rptObj.ui.icons.awesome(icon, width=(30, "px"), height=(30, "px")))
+    container.add(title)
+    container.add(text)
+    return container

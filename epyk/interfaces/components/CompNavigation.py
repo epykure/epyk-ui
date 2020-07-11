@@ -331,14 +331,14 @@ class Navigation(object):
       title.style.css.bold()
       components.append(title)
     options, scroll_height = options or {}, -5
-    if options.get('status', True):
+    if options.get('status', False):
       scroll = self.context.rptObj.ui.navigation.scroll()
       scroll_height = 5
       scroll.style.css.display = "block"
       scroll.options.managed = False
       scroll.style.css.height = scroll_height
     html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
-    if options.get('status', True):
+    if options.get('status', False):
       html_nav.scroll = scroll
     logo.style.css.display = "inline-block"
     html_nav.style.css.line_height = height[0]
@@ -588,4 +588,56 @@ class Banners(object):
       div.style.css.top = 0
       div.style.css.transform = "rotate(40deg)"
       div.style.css.margin = "15px -30px 0 0"
+    return div
+
+  def info(self, data, icon="fas fa-info-circle", background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    if not hasattr(data, 'options'):
+      data = self.context.rptObj.ui.div(data, width=("auto", ""))
+      data.style.css.font_size = "inline-block"
+      data.style.css.font_size = Defaults_css.font(4)
+    if not hasattr(icon, 'options'):
+      icon = self.context.rptObj.ui.icons.awesome(icon)
+      icon.style.css.font_size = "inline-block"
+    div.add(icon)
+    div.add(data)
+    div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
+    div.style.css.padding = "20px 15px"
+    div.style.css.font_size = Defaults_css.font(4)
+    div.style.css.color = self.context.rptObj.theme.greys[-1]
+    div.style.css.top = 0
+    return div
+
+  def text(self, data, size_notch=4, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    if not hasattr(data, 'options'):
+      data = self.context.rptObj.ui.div(data, width=("auto", ""))
+      data.style.css.font_size = "inline-block"
+      data.style.css.font_size = Defaults_css.font(size_notch)
+    div.add(data)
+    div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
+    div.style.css.padding = "20px 15px"
+    div.style.css.font_size = Defaults_css.font(size_notch)
+    div.style.css.color = self.context.rptObj.theme.greys[-1]
+    div.style.css.top = 0
+    return div
+
+  def title(self, title, data, size_notch=4, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    if not hasattr(title, 'options'):
+      title = self.context.rptObj.ui.titles.title(title)
+      title.style.css.text_align = align
+      title.style.css.font_weight = 800
+      title.style.css.font_size = Defaults_css.font(20 + size_notch)
+    div.add(title)
+    if not hasattr(data, 'options'):
+      data = self.context.rptObj.ui.div(data, width=("auto", ""))
+      data.style.css.font_size = "inline-block"
+      data.style.css.font_size = Defaults_css.font(size_notch)
+    div.add(data)
+    div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
+    div.style.css.padding = "20px 15px"
+    div.style.css.font_size = Defaults_css.font(size_notch)
+    div.style.css.color = self.context.rptObj.theme.greys[-1]
+    div.style.css.top = 0
     return div
