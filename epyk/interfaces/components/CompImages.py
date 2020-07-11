@@ -82,6 +82,7 @@ class Images(object):
     """
     div = self.context.rptObj.ui.div(height=height, width=width)
     div.style.css.background_url(url, size=size, margin=margin)
+    div.style.css.background_position = "center center"
     div.style.css.display = "block"
     div.style.css.text_align = align
     div.style.css.vertical_align = position

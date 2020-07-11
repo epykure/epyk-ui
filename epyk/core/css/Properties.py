@@ -387,7 +387,17 @@ class CssMixin(object):
     self.htmlObj.css({"background-origin": val})
 
   @property
-  def background_position(self): return self.htmlObj.css("background-position")
+  def background_position(self):
+    """
+    Description:
+    ------------
+    The background-position property sets the starting position of a background image.
+
+    Usage::
+
+      https://www.w3schools.com/cssref/pr_background-position.asp
+    """
+    return self.htmlObj.css("background-position")
 
   @background_position.setter
   def background_position(self, val):
