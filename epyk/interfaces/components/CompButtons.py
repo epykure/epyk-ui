@@ -14,6 +14,7 @@ except:
   has_pandas = False
 
 from epyk.core import html
+from epyk.core.css import Defaults_css
 
 
 class Buttons(object):
@@ -75,8 +76,41 @@ class Buttons(object):
 
     :return: The Button HTML object
     """
-    html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
-                                         tooltip=tooltip, profile=profile, options=options)
+    html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode, tooltip=tooltip, profile=profile, options=options)
+    return html_button
+
+  def absolute(self, text, size_notch=None, icon="", top=(50, "%"), left=(50, "%"), bottom=None, width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param size_notch:
+    :param top:
+    :param left:
+    :param align:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    :return:
+    """
+    html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode, tooltip=None, profile=profile, options=options)
+    html_button.style.position = "absolute"
+    html_button.style.display = "block"
+    if bottom is not None:
+      html_button.style.bottom = "%s%s" % (bottom[0], bottom[1])
+    else:
+      html_button.style.top = "%s%s" % (top[0], top[1])
+    html_button.style.left = "%s%s" % (left[0], left[1])
+    html_button.style.transform = "translate(-%s, -%s)" % (html_button.style.left, html_button.style.top)
+    if size_notch is not None:
+      html_button.style.font_size = Defaults_css.font(size_notch)
+    if width[0] == 'auto':
+      html_button.style.css.display = "inline-block"
     return html_button
 
   def small(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None,

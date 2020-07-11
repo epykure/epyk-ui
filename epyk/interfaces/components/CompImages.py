@@ -46,6 +46,37 @@ class Images(object):
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
     return html_image
 
+  def background(self, url, width=(100, "%"), height=(300, "px"), size="contain", margin=0):
+    div = self.context.rptObj.ui.div(height=height, width=width)
+    div.style.css.background_url(url, size=size, margin=margin)
+    div.style.css.display = "block"
+    div.style.css.text_align = "center"
+    div.style.css.vertical_align = "middle"
+    div.style.css.padding = "auto"
+    return div
+
+  def wallpaper(self, url, width=(100, "%"), height=(100, "%"), size="cover", margin=0):
+    div = self.context.rptObj.ui.div(height=height, width=width)
+    div.style.css.background_url(url, size=size, margin=margin)
+    div.style.css.display = "block"
+    div.style.css.text_align = "center"
+    div.style.css.vertical_align = "middle"
+    div.style.css.padding = "auto"
+    self.context.rptObj.body.style.css.height = "100%"
+    return div
+
+  def logo(self, url, width=(160, "px"), height=(60, "px"), top=(16, "px"), left=(16, "px")):
+    div = self.context.rptObj.ui.div(height=height, width=width)
+    div.style.css.background_url(url)
+    div.style.css.display = "block"
+    div.style.css.position = "absolute"
+    div.style.css.top = "%s%s" % (top[0], top[1])
+    div.style.css.left = "%s%s" % (left[0], left[1])
+    div.style.css.text_align = "center"
+    div.style.css.vertical_align = "middle"
+    div.style.css.padding = "auto"
+    return div
+
   def youtube(self, video_id=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None, profile=None, options=None):
     """
     Description:

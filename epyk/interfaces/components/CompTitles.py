@@ -8,7 +8,7 @@ class Titles(object):
   def __init__(self, context):
     self.context = context
 
-  def head(self, text=None, options=None, tooltip="", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
+  def head(self, text=None, options=None, tooltip="", align="left", width=(None, "px"), height=('auto', ""), htmlCode=None, profile=False):
     """
     Description:
     ------------
@@ -31,6 +31,7 @@ class Titles(object):
     # html_title.style.css.border_left = '5px solid %s' % self.context.rptObj.theme.colors[-1]
     html_title.style.css.font_size = Defaults_css.font(15)
     html_title.style.css.text_transform = 'uppercase'
+    html_title.style.css.text_align = align
     html_title.style.css.margin_left = 2
     html_title.style.css.padding_left = 2
     html_title.style.css.bold()

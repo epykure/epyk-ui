@@ -36,7 +36,7 @@ class Icons(object):
     """
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, options or {}, profile)
     html_edit.style.css.float = position
-    html_edit.style.css.display = "inline-block"
+    html_edit.style.css.display = "inline"
     return html_edit
 
   def fluent(self, icon, text=None, tooltip=None, position=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):

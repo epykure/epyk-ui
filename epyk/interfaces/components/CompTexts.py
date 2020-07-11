@@ -53,6 +53,43 @@ class Texts(object):
       text_comp.style.css.display = "inline-block"
     return text_comp
 
+  def absolute(self, text, size_notch=None, top=(50, "%"), left=(50, "%"), bottom=None, align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param size_notch:
+    :param top:
+    :param left:
+    :param align:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    :return:
+    """
+    dfl_options = {"reset": False, "markdown": False, "maxlength": None}
+    if options is not None:
+      dfl_options.update(options)
+    text_comp = html.HtmlText.Text(self.context.rptObj, text, None, align, width, height, htmlCode, None, dfl_options, None, profile)
+    text_comp.style.position = "absolute"
+    text_comp.style.display = "block"
+    if bottom is not None:
+      text_comp.style.bottom = "%s%s" % (bottom[0], bottom[1])
+    else:
+      text_comp.style.top = "%s%s" % (top[0], top[1])
+    text_comp.style.left = "%s%s" % (left[0], left[1])
+    text_comp.style.transform = "translate(-%s, -%s)" % (text_comp.style.left, text_comp.style.top)
+    if size_notch is not None:
+      text_comp.style.font_size = Defaults_css.font(size_notch)
+    if width[0] == 'auto':
+      text_comp.style.css.display = "inline-block"
+    return text_comp
+
   def label(self, text="", color=None, align='center', width=(100, "px"), height=('auto', ""), htmlCode=None,
             tooltip='', profile=None, options=None):
     """

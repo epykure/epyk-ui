@@ -18,8 +18,8 @@ from epyk.core.css import Defaults
 class Hr(Html.Html):
   name = 'Line delimiter'
 
-  def __init__(self, report, background_color, height, align, profile):
-    super(Hr, self).__init__(report, "", profile=profile, css_attrs={"height": height,
+  def __init__(self, report, background_color, width, height, align, profile):
+    super(Hr, self).__init__(report, "", profile=profile, css_attrs={"height": height, 'width': width,
                              'border-color': background_color or report.theme.greys[5],
                              'background-color': background_color or report.theme.greys[5]})
     if align == "center":

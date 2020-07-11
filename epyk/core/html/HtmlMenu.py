@@ -43,7 +43,7 @@ class HtmlNavBar(Html.Html):
     """
     Description:
     -----------
-
+    Move the object to this position in the final page
     """
     super(HtmlNavBar, self).move()
     self.style.css.position = None
@@ -63,11 +63,30 @@ class HtmlNavBar(Html.Html):
     self.val.append(htmlObj)
     return self
 
+  def no_background(self, to_top=True):
+    """
+    Description:
+    -----------
+    remove the default navigation bar background and remove the padding.
+
+    Attributes:
+    ----------
+    :param to_top: Boolean. To define if the padding must be removed
+    """
+    self.background = False
+    self.style.css.background_color = "#11ffee00"
+    self.style.css.border_bottom = None
+    if to_top:
+      self._report.body.style.css.padding_top = 0
+    return self
+
   def add_text(self, text):
     """
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param text:
     """
     val = self._report.ui.text(text)

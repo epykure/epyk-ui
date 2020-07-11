@@ -286,7 +286,7 @@ class Navigation(object):
     div +=self.context.rptObj.ui.link(records[-1]['text'], url=records[-1].get('url', '#')).css({"display": 'inline-block'})
     return div
 
-  def bar(self, icon=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+  def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -312,8 +312,17 @@ class Navigation(object):
     :param profile:
     """
     components = []
-    if icon is None:
-      components.append(self.context.rptObj.ui.icons.epyk())
+    if logo is None:
+      logo = self.context.rptObj.ui.icons.epyk()
+      components.append(logo)
+    else:
+      # if it is not an option it is considered as a path
+      if not hasattr(logo, 'options'):
+        logo_url = logo
+        logo = self.context.rptObj.ui.div(height=height, width=height)
+        logo.style.css.background_url(logo_url, size="auto %s%s" % (height[0], height[1]))
+      components.append(logo)
+    components[-1].style.css.margin_right = 20
     if title is not None:
       title = self.context.rptObj.ui.div(title, height=(100, "%"))
       title.style.css.text_transform = "uppercase"
@@ -321,13 +330,17 @@ class Navigation(object):
       title.style.css.margin_right = 5
       title.style.css.bold()
       components.append(title)
-    scroll = self.context.rptObj.ui.navigation.scroll()
-    scroll_height = 5
-    scroll.style.css.display = "block"
-    scroll.options.managed = False
-    scroll.style.css.height = scroll_height
+    options, scroll_height = options or {}, -5
+    if options.get('status', True):
+      scroll = self.context.rptObj.ui.navigation.scroll()
+      scroll_height = 5
+      scroll.style.css.display = "block"
+      scroll.options.managed = False
+      scroll.style.css.height = scroll_height
     html_nav = html.HtmlMenu.HtmlNavBar(self.context.rptObj, components, width=width, height=height, options=options, profile=profile)
-    html_nav.scroll = scroll
+    if options.get('status', True):
+      html_nav.scroll = scroll
+    logo.style.css.display = "inline-block"
     html_nav.style.css.line_height = height[0]
     self.context.rptObj.body.style.css.padding_top = height[0] + scroll_height + 5
     return html_nav

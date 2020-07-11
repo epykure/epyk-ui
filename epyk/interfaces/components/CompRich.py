@@ -353,26 +353,29 @@ class Rich(object):
     :return:
     """
     container = self.context.rptObj.ui.div()
-    text = self.context.rptObj.ui.text(section, width=(100, '%'))
-    text.style.css.text_align = "center"
-    text.style.css.font_size = Defaults_css.font(-1)
-    text.style.css.line_height = Defaults_css.font(5)
-    text.style.css.font_weight = 500
-    text.style.css.letter_spacing = "0.15em"
-    text.style.css.text_transform = "uppercase"
-    container.add(text)
+    if section is not None:
+      text = self.context.rptObj.ui.text(section, width=(100, '%'))
+      text.style.css.text_align = "center"
+      text.style.css.font_size = Defaults_css.font(-1)
+      text.style.css.line_height = Defaults_css.font(5)
+      text.style.css.font_weight = 500
+      text.style.css.letter_spacing = "0.15em"
+      text.style.css.text_transform = "uppercase"
+      container.add(text)
 
-    title = self.context.rptObj.ui.text(title, width=(100, '%'))
-    title.style.css.text_align = "center"
-    title.style.css.font_size = Defaults_css.font(12)
-    title.style.css.font_weight = 300
-    title.css({'margin-block-end': '0.67em', 'margin-block-start': '0'})
-    container.add(title)
+    if title is not None:
+      title = self.context.rptObj.ui.text(title, width=(100, '%'))
+      title.style.css.text_align = "center"
+      title.style.css.font_size = Defaults_css.font(12)
+      title.style.css.font_weight = 300
+      title.css({'margin-block-end': '0.67em', 'margin-block-start': '0'})
+      container.add(title)
 
-    content = self.context.rptObj.ui.text(content, width=(80, "%"))
-    content.style.css.text_align = "center"
-    content.style.css.font_size = Defaults_css.font(2)
-    content.style.css.margin = "auto"
+    if content is not None:
+      content = self.context.rptObj.ui.text(content, width=(80, "%"))
+      content.style.css.text_align = "center"
+      content.style.css.font_size = Defaults_css.font(2)
+      content.style.css.margin = "auto"
 
     container.add(content)
     # container0.style.css.border = "10px solid white"

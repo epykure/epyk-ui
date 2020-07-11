@@ -2674,3 +2674,17 @@ class CssMixin(object):
     """
     self.text_decoration = "underline"
     return self
+
+  def absolute(self, top, left, transform=True):
+    """
+
+    :param top:
+    :param left:
+    :return:
+    """
+    self.top = "%s%s" % (top[0], top[1])
+    self.left = "%s%s" % (left[0], left[1])
+    if transform:
+      self.transform = "translate(-%s, -%s)" % (self.left, self.top)
+    self.position = "absolute"
+    return self

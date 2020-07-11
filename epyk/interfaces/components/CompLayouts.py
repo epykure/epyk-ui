@@ -63,7 +63,7 @@ class Layouts(object):
     """
     return self.br(count, profile)
 
-  def hr(self, count=1, background_color=None, height=(None, 'px'), align=None, profile=None):
+  def hr(self, count=1, background_color=None, width=(100, '%'), height=(None, 'px'), align=None, profile=None):
     """
     Description:
     ------------
@@ -91,9 +91,9 @@ class Layouts(object):
     :param align: Optional. The content position. Values (left, right, center). Default center
     :param profile: Optional. A flag to set the component performance storage
     """
-    hr_html = self.context.rptObj.ui.div()
+    hr_html = self.context.rptObj.ui.div(width=width)
     for _ in range(count):
-      hr_item = html.HtmlOthers.Hr(self.context.rptObj, background_color, height, align, profile)
+      hr_item = html.HtmlOthers.Hr(self.context.rptObj, background_color, (100, '%'), height, align, profile)
       hr_html += hr_item
     return hr_html
 
