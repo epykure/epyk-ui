@@ -624,14 +624,18 @@ class Banners(object):
 
   def title(self, title, data, size_notch=4, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    options = options or {}
     if not hasattr(title, 'options'):
       title = self.context.rptObj.ui.titles.title(title)
       title.style.css.text_align = align
       title.style.css.font_weight = 800
-      title.style.css.font_size = Defaults_css.font(20 + size_notch)
+      if 'title_color' in options:
+        title.style.css.color = options['title_color']
+      title.style.css.font_size = Defaults_css.font(options.get("title_notch", 20) + size_notch)
     div.add(title)
     if not hasattr(data, 'options'):
       data = self.context.rptObj.ui.div(data, width=("auto", ""))
+      data.style.css.text_align = align
       data.style.css.font_size = "inline-block"
       data.style.css.font_size = Defaults_css.font(size_notch)
     div.add(data)
