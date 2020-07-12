@@ -591,6 +591,18 @@ class Banners(object):
     return div
 
   def info(self, data, icon="fas fa-info-circle", background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    :param data:
+    :param icon:
+    :param background:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     if not hasattr(data, 'options'):
       data = self.context.rptObj.ui.div(data, width=("auto", ""))
