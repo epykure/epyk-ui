@@ -383,7 +383,7 @@ class Navigation(object):
     div.style.css.padding = "5px 15px"
     return div
 
-  def footer(self, components=None, width=(100, '%'), height=('80', 'px'), profile=False):
+  def footer(self, components=None, width=(100, '%'), height=(80, 'px'), profile=False):
     """
     Description:
     ------------
@@ -402,6 +402,7 @@ class Navigation(object):
     :param profile: get profiling info
     """
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
+    self.context.rptObj.body.style.css.padding_bottom = height[0]
     return footer
 
   def side(self, components=None, anchor=None, size=262, position='right', profile=False):
@@ -595,6 +596,8 @@ class Banners(object):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     :param icon:
     :param background:
@@ -621,20 +624,53 @@ class Banners(object):
     return div
 
   def text(self, data, size_notch=4, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param size_notch:
+    :param background:
+    :param width:
+    :param align:
+    :param height:
+    :param options:
+    :param profile:
+    """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(data, 'options'):
       data = self.context.rptObj.ui.div(data, width=("auto", ""))
-      data.style.css.font_size = "inline-block"
+      data.style.css.display = "inline-block"
+      data.style.css.text_align = align
       data.style.css.font_size = Defaults_css.font(size_notch)
     div.add(data)
     div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
     div.style.css.padding = "20px 15px"
+    div.style.css.margin = "auto"
     div.style.css.font_size = Defaults_css.font(size_notch)
     div.style.css.color = self.context.rptObj.theme.greys[-1]
     div.style.css.top = 0
     return div
 
   def title(self, title, data, size_notch=4, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param title:
+    :param data:
+    :param size_notch:
+    :param background:
+    :param width:
+    :param align:
+    :param height:
+    :param options:
+    :param profile:
+    """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     options = options or {}
     if not hasattr(title, 'options'):
@@ -656,4 +692,44 @@ class Banners(object):
     div.style.css.font_size = Defaults_css.font(size_notch)
     div.style.css.color = self.context.rptObj.theme.greys[-1]
     div.style.css.top = 0
+    return div
+
+  def quote(self, content, author, avatar=None, background=None, size_notch=4, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param content:
+    :param author:
+    :param job:
+    :param avatar:
+    :param background:
+    :param width:
+    :param align:
+    :param height:
+    :param options:
+    :param profile:
+    :return:
+    """
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    if not hasattr(content, 'options'):
+      data = self.context.rptObj.ui.div('"%s"' % content, width=("auto", ""))
+      data.style.css.display = "inline-block"
+      data.style.css.text_align = align
+      data.style.css.font_size = Defaults_css.font(size_notch)
+    div.add(data)
+    div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
+    div.style.css.padding = "20px 15px"
+    div.style.css.margin = "auto"
+    div.style.css.color = self.context.rptObj.theme.greys[-1]
+    div.style.css.top = 0
+    line = self.context.rptObj.ui.layouts.hr(width=(20, 'px'))
+    line.style.css.margin_right = 10
+    line.style.css.display = "inline-block"
+    if not hasattr(author, 'options'):
+      author = self.context.rptObj.ui.div(author, width=("auto", ""))
+      author.style.css.display = "inline-block"
+    div.add(self.context.rptObj.ui.div([line, author]))
     return div

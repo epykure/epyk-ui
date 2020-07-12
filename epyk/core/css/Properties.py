@@ -1851,7 +1851,19 @@ class CssMixin(object):
     self.htmlObj.css({"padding": val})
 
   @property
-  def padding_bottom(self): return self.htmlObj.css("padding-bottom")
+  def padding_bottom(self):
+    """
+    Description:
+    ------------
+    An element's padding is the space between its content and its border.
+
+    The padding-bottom property sets the bottom padding (space) of an element.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_padding-bottom.asp
+    """
+    return self.htmlObj.css("padding-bottom")
 
   @padding_bottom.setter
   def padding_bottom(self, val):

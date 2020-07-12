@@ -101,6 +101,8 @@ class HtmlNavBar(Html.Html):
       if self.scroll.css('width') == '100%':
         self.scroll.style.css.width = None
     str_h = "".join([h.html() for h in self.val])
+    if self.style.css.position != 'fixed':
+      self._report.body.style.css.padding_top = 0
     return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_h)
 
 

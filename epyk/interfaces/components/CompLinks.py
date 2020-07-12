@@ -8,7 +8,7 @@ class Links(object):
   def __init__(self, context):
     self.context = context
 
-  def external(self, text, url, icon=None, helper=None, height=(None, 'px'), decoration=False, options=None, profile=None):
+  def external(self, text, url, icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -42,10 +42,10 @@ class Links(object):
 
     #if url.startswith("http"):
     #  url = "/%s" % url
-    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
     return html_link
 
-  def button(self, text, url, icon=None, helper=None, height=(None, 'px'), decoration=False, options=None, profile=None):
+  def button(self, text, url, icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -70,12 +70,12 @@ class Links(object):
     if options is not None:
       dft_options.update(options)
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration,
-                                            dft_options, profile)
+                                            htmlCode, dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     return html_link
 
-  def link(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, options=None, profile=None):
+  def link(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -106,7 +106,7 @@ class Links(object):
     options = options or {}
     if url is not None and url.startswith("www."):
       url = "//%s" % url
-    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, options, profile)
     return html_link
 
   def data(self, text, value, width=(100, '%'), height=(None, 'px'), format='txt', profile=None):

@@ -51,6 +51,9 @@ class Texts(object):
     text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, dfl_options, helper, profile)
     if width[0] == 'auto':
       text_comp.style.css.display = "inline-block"
+    if align == "center":
+      text_comp.style.css.margin = "auto"
+      text_comp.style.css.display = "block"
     return text_comp
 
   def absolute(self, text, size_notch=None, top=(50, "%"), left=(50, "%"), bottom=None, align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):

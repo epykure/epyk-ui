@@ -738,6 +738,8 @@ class Row(Html.Html):
         self.__add__(htmlObj)
     self.attr["class"].add('row')
     self.style.css.justify_content = self.position
+    if align == 'center':
+      self.css({'margin': 'auto'})
 
   @property
   def options(self):

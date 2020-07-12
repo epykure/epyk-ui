@@ -187,19 +187,34 @@ class Vignets(object):
     :param align:
     :param width:
     """
-    container = self.context.rptObj.ui.row(align=align, width=width)
-    container.style.css.margin = "20px auto"
-    if not hasattr(title, 'options'):
-      title = self.context.rptObj.ui.titles.title(title)
-      title.style.css.display = "block"
-    if not hasattr(content, 'options'):
-      content = self.context.rptObj.ui.text(content)
-      content.style.css.display = "block"
-    if image is not None:
-      if not hasattr(image, 'options'):
-        split_url = os.path.split(image)
-        container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
-    container.add(self.context.rptObj.ui.col([title, content]))
+    if render == "row":
+      container = self.context.rptObj.ui.row(align=align, width=width)
+      container.style.css.margin = "20px auto"
+      if not hasattr(title, 'options'):
+        title = self.context.rptObj.ui.titles.title(title)
+        title.style.css.display = "block"
+      if not hasattr(content, 'options'):
+        content = self.context.rptObj.ui.text(content)
+        content.style.css.display = "block"
+      if image is not None:
+        if not hasattr(image, 'options'):
+          split_url = os.path.split(image)
+          container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
+      container.add(self.context.rptObj.ui.col([title, content]))
+    else:
+      container = self.context.rptObj.ui.col(align=align, width=width)
+      container.style.css.margin = "20px auto"
+      if not hasattr(title, 'options'):
+        title = self.context.rptObj.ui.titles.title(title)
+        title.style.css.display = "block"
+      if not hasattr(content, 'options'):
+        content = self.context.rptObj.ui.text(content)
+        content.style.css.display = "block"
+      if image is not None:
+        if not hasattr(image, 'options'):
+          split_url = os.path.split(image)
+          container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
+      container.add(self.context.rptObj.ui.col([title, content]))
     return container
 
   def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px')):
@@ -216,21 +231,45 @@ class Vignets(object):
     :param align:
     :param width:
     """
-    container = self.context.rptObj.ui.div(align=align, width=width)
-    container.style.css.margin = "auto"
-    if not hasattr(title, 'options'):
-      title = self.context.rptObj.ui.titles.title(title)
-      title.style.css.display = "block"
-      title.style.css.text_align = align
-    if not hasattr(content, 'options'):
-      content = self.context.rptObj.ui.text(content)
-      content.style.css.display = "block"
-      content.style.css.text_align = align
-    if icon is not None:
-      if not hasattr(icon, 'options'):
-        container.add(self.context.rptObj.ui.icons.awesome(icon, width=(30, "px"), height=(30, "px")))
-      else:
-        container.add(icon)
-    container.add(title)
-    container.add(content)
+    if render == "col":
+      container = self.context.rptObj.ui.div(align=align, width=width)
+      container.style.css.margin = "auto"
+      if not hasattr(title, 'options'):
+        title = self.context.rptObj.ui.titles.title(title)
+        title.style.css.display = "block"
+        title.style.css.text_align = align
+      if not hasattr(content, 'options'):
+        content = self.context.rptObj.ui.text(content)
+        content.style.css.display = "block"
+        content.style.css.text_align = align
+      if icon is not None:
+        if not hasattr(icon, 'options'):
+          container.add(self.context.rptObj.ui.icons.awesome(icon, width=(30, "px"), height=(30, "px")))
+        else:
+          container.add(icon)
+      container.add(title)
+      container.add(content)
+    else:
+      container = self.context.rptObj.ui.row(align=align, width=width, position="top")
+      container.options.autoSize = False
+      container.style.css.margin = "auto"
+      if not hasattr(title, 'options'):
+        title = self.context.rptObj.ui.titles.title(title)
+        title.style.css.display = "block"
+        title.style.css.text_align = align
+      if not hasattr(content, 'options'):
+        content = self.context.rptObj.ui.text(content)
+        content.style.css.display = "block"
+        content.style.css.text_align = align
+      if icon is not None:
+        if not hasattr(icon, 'options'):
+          icon_obj  = self.context.rptObj.ui.icons.awesome(icon, width=(25, "px"), height=(25, "px"))
+          icon_obj.style.css.margin_top = 20
+          icon_obj.style.css.display = "block"
+          container.add(icon_obj)
+          container[0].attr["class"].add("col-3")
+        else:
+          container.add(icon)
+      container.add(self.context.rptObj.ui.col([title, content]))
+      container[-1].style.css.border_left = "1px solid %s" % self.context.rptObj.theme.greys[3]
     return container

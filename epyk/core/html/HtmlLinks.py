@@ -11,7 +11,7 @@ from epyk.core.html import Html
 class ExternalLink(Html.Html):
   name = 'External link'
 
-  def __init__(self, report, text, url, icon, helper, height, decoration, options, profile):
+  def __init__(self, report, text, url, icon, helper, height, decoration, htmlCode, options, profile):
     super(ExternalLink, self).__init__(report, {"text": text, "url": url}, css_attrs={'height': height}, profile=profile)
     # Add the internal components icon and helper
     self.add_icon(icon, family=options.get("icon_family"))

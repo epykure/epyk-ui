@@ -63,6 +63,16 @@ class Button(Html.Html):
   def _js__builder__(self):
     return "htmlObj.innerHTML = data"
 
+  def no_background(self):
+    """
+    Description:
+    -----------
+    remove the default button background and remove the padding.
+    """
+    self.background = False
+    self.style.css.background_color = "#11ffee00"
+    return self
+
   def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
     """
     Description:
