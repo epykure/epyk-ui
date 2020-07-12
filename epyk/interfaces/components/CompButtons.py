@@ -43,7 +43,7 @@ class Buttons(object):
       data = [result[k] for k in sorted(result.keys())]
     return data
 
-  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
+  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
     ------------
@@ -77,6 +77,9 @@ class Buttons(object):
     :return: The Button HTML object
     """
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode, tooltip=tooltip, profile=profile, options=options)
+    if align == "center":
+      html_button.style.css.margin = "auto"
+      html_button.style.css.display = "block"
     return html_button
 
   def absolute(self, text, size_notch=None, icon="", top=(50, "%"), left=(50, "%"), bottom=None, width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):

@@ -218,12 +218,19 @@ class Vignets(object):
     """
     container = self.context.rptObj.ui.div(align=align, width=width)
     container.style.css.margin = "auto"
-    title = self.context.rptObj.ui.titles.title(title)
-    title.style.css.display = "block"
-    text = self.context.rptObj.ui.text(content)
-    text.style.css.display = "block"
+    if not hasattr(title, 'options'):
+      title = self.context.rptObj.ui.titles.title(title)
+      title.style.css.display = "block"
+      title.style.css.text_align = align
+    if not hasattr(content, 'options'):
+      content = self.context.rptObj.ui.text(content)
+      content.style.css.display = "block"
+      content.style.css.text_align = align
     if icon is not None:
-      container.add(self.context.rptObj.ui.icons.awesome(icon, width=(30, "px"), height=(30, "px")))
+      if not hasattr(icon, 'options'):
+        container.add(self.context.rptObj.ui.icons.awesome(icon, width=(30, "px"), height=(30, "px")))
+      else:
+        container.add(icon)
     container.add(title)
-    container.add(text)
+    container.add(content)
     return container
