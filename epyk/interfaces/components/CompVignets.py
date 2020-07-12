@@ -173,7 +173,7 @@ class Vignets(object):
   def line(self):
     pass
 
-  def image(self, title, content, image=None, render="row", align="center", width=(90, '%'), height=(None, "px")):
+  def image(self, title, content="", image=None, render="row", align="center", width=(90, '%'), height=(None, "px"), options=None):
     """
     Description:
     ------------
@@ -187,6 +187,7 @@ class Vignets(object):
     :param align:
     :param width:
     """
+    options = options or {}
     if render == "row":
       container = self.context.rptObj.ui.row(align=align, width=width, height=height)
       container.style.css.margin = "20px auto"
@@ -196,11 +197,18 @@ class Vignets(object):
       if not hasattr(content, 'options'):
         content = self.context.rptObj.ui.text(content)
         content.style.css.display = "block"
-      if image is not None:
-        if not hasattr(image, 'options'):
-          split_url = os.path.split(image)
-          container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
-      container.add(self.context.rptObj.ui.col([title, content]))
+      if options.get('picture', 'left') == 'left':
+        if image is not None:
+          if not hasattr(image, 'options'):
+            split_url = os.path.split(image)
+            container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
+        container.add(self.context.rptObj.ui.col([title, content]))
+      else:
+        container.add(self.context.rptObj.ui.col([title, content]))
+        if image is not None:
+          if not hasattr(image, 'options'):
+            split_url = os.path.split(image)
+            container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
     else:
       container = self.context.rptObj.ui.col(align=align, width=width, height=height, position="top")
       container.style.css.margin = "20px auto"
