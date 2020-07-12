@@ -13,6 +13,8 @@ try:
 except:
   has_pandas = False
 
+import os
+
 from epyk.core import html
 from epyk.core.css import Defaults_css
 
@@ -509,3 +511,24 @@ Attributes:
     html_button = html.HtmlButton.ButtonMenu(self.context.rptObj, record, text, icon, width, height, htmlCode=htmlCode,
                                               tooltip=tooltip, profile=profile, options=options)
     return html_button
+
+  def store(self, image, url, width=(7.375, "rem"), height=(2.375, "rem"), align="left"):
+    """
+
+    The badge must be issued from teh Google play store
+
+    https://play.google.com/intl/en_us/badges/
+
+    :param image:
+    :param url:
+    :param width:
+    :param height:
+    """
+    split_url = os.path.split(image)
+    badge = self.context.rptObj.ui.img(split_url[1], path=split_url[0], width=width, height=height)
+    badge.style.css.display = "inline-block"
+    badge.goto(url)
+    if align == "center":
+      badge.style.css.margin = "auto"
+      badge.style.css.display = "block"
+    return badge

@@ -29,6 +29,25 @@ class Image(Html.Html):
       elif align == "right":
         self.css({"margin-left": "auto", "margin-right": "0", "display": "block"})
 
+  def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
+    """
+    Description:
+    -----------
+    Click event which redirect to another page.
+
+    Attributes:
+    ----------
+    :param jsFncs: List. The Javascript Events triggered before the redirection
+    :param profile: Boolean. Optional
+    :param source_event: String. Optional. The event source.
+    """
+    jsFncs = jsFncs or []
+    self.style.css.cursor = 'pointer'
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    jsFncs.append(self.js.location.open_new_tab(url, name))
+    return self.click(jsFncs, profile, source_event)
+
   @property
   def _js__builder__(self):
     return '''
