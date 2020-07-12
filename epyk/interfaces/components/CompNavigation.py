@@ -654,7 +654,7 @@ class Banners(object):
     div.style.css.top = 0
     return div
 
-  def title(self, title, data, size_notch=4, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+  def title(self, title, content, size_notch=4, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -681,12 +681,12 @@ class Banners(object):
         title.style.css.color = options['title_color']
       title.style.css.font_size = Defaults_css.font(options.get("title_notch", 20) + size_notch)
     div.add(title)
-    if not hasattr(data, 'options'):
-      data = self.context.rptObj.ui.div(data, width=("auto", ""))
-      data.style.css.text_align = align
-      data.style.css.font_size = "inline-block"
-      data.style.css.font_size = Defaults_css.font(size_notch)
-    div.add(data)
+    if not hasattr(content, 'options'):
+      content = self.context.rptObj.ui.div(content, width=("auto", ""))
+      content.style.css.text_align = align
+      content.style.css.font_size = "inline-block"
+      content.style.css.font_size = Defaults_css.font(size_notch)
+    div.add(content)
     div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
     div.style.css.padding = "20px 15px"
     div.style.css.font_size = Defaults_css.font(size_notch)
