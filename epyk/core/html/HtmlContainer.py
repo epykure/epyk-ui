@@ -139,12 +139,12 @@ class PanelSlide(Panel):
   def __init__(self, report, htmlObj, title, color, width, height, htmlCode, helper, options, profile):
     super(PanelSlide, self).__init__(report, htmlObj, None, color, width, height, htmlCode, helper, options, profile)
     self.add_helper(helper)
-    self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 2px',
+    self.icon = self._report.ui.icon("").css({"display": 'inline-block', 'margin': '0 5px',
                                               'line-height': "%spx" % Defaults.LINE_HEIGHT, 'font-size': "%spx" % Defaults.BIG_ICONS})
     self.text = self._report.ui.title(title).css({"display": 'inline-block', 'margin': 0})
     self.title = self._report.ui.div([self.icon, self.text])
     self.title.options.managed = False
-    self.title.css({"cursor": 'pointer', "padding": "0 2px 0 0"})
+    self.title.css({"cursor": 'pointer', "padding": "5px"})
     self._vals, self.__clicks = [self.title] + self._vals, []
     self.__options = OptPanel.OptionPanelSliding(report, options)
 
@@ -190,6 +190,8 @@ class PanelSlide(Panel):
       icon_current = self.options.icon_closed
       self._vals[1].style.css.display = 'none'
       self.icon.set_icon(self.options.icon_closed)
+    if self.options.icon_position == "right":
+      self.icon.style.css.float = "right"
     self.title.click(self.__clicks + [
       self._report.js.getElementsByName("panel_%s" % self.htmlCode).first.toggle(),
       self.icon.dom.switchClass(icon_current, icon_change)])

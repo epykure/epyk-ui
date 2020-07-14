@@ -288,7 +288,7 @@ class Lists(object):
     html_list.css({"list-style-type": 'lower-roman'})
     return html_list
 
-  def points(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, options=None, profile=None, helper=None):
+  def points(self, data=None, width=('auto', ""), height=(None, 'px'), align=None,  column=None, htmlCode=None, options=None, profile=None, helper=None):
     """
     Description:
     ------------
@@ -314,6 +314,9 @@ class Lists(object):
     """
     html_list = self.items(data, width, height, column, options, htmlCode, profile, helper)
     html_list.css({"list-style-type": 'circle'})
+    if align == "center":
+      html_list.style.css.margin = "auto"
+      html_list.style.css.display = "block"
     return html_list
 
   def disc(self, data=None, width=('auto', ""), height=(None, 'px'), column=None, htmlCode=None, helper=None, options=None, profile=None):

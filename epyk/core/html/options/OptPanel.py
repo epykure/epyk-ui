@@ -73,6 +73,19 @@ class OptionPanelSliding(Options):
   def icon_closed(self, icon):
     self.set(icon)
 
+  @property
+  def icon_position(self):
+    """
+    Description:
+    ------------
+    Define the position for the arrow icon in the title.
+    """
+    return self.get("left")
+
+  @icon_position.setter
+  def icon_position(self, value):
+    self.set(value)
+
 
 class OptionPanelTabs(Options):
 
