@@ -32,6 +32,7 @@ from epyk.interfaces.components import CompDrawers
 from epyk.interfaces.components import CompSteppers
 from epyk.interfaces.components import CompTitles
 from epyk.interfaces.components import CompCalendars
+from epyk.interfaces.components import CompPictos
 
 
 class Components(object):
@@ -179,6 +180,15 @@ class Components(object):
     Group all the available banners
     """
     return CompNavigation.Banners(self)
+
+  @property
+  def pictos(self):
+    """
+    Description:
+    ------------
+    Group all the built in pictograms
+    """
+    return CompPictos.Pictogram(self)
 
   @property
   def rich(self):

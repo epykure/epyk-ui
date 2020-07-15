@@ -225,7 +225,7 @@ class Vignets(object):
       container.add(self.context.rptObj.ui.col([title, content]))
     return container
 
-  def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px')):
+  def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None):
     """
     Description:
     ------------
@@ -239,6 +239,7 @@ class Vignets(object):
     :param align:
     :param width:
     """
+    options = options or {"position": 'left'}
     if render == "col":
       container = self.context.rptObj.ui.div(align=align, width=width)
       container.style.css.margin = "auto"
@@ -280,4 +281,35 @@ class Vignets(object):
           container.add(icon)
       container.add(self.context.rptObj.ui.col([title, content]))
       container[-1].style.css.border_left = "1px solid %s" % self.context.rptObj.theme.greys[3]
+    return container
+
+  def price(self, value, title, items, align="center", width=(300, 'px'), currency="£"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value:
+    :param title:
+    :param items:
+    :param align:
+    :param width:
+    :param currency:
+    """
+    container = self.context.rptObj.ui.div(align=align, width=width)
+    container.style.css.margin = "auto"
+    if not hasattr(title, 'options'):
+      title = self.context.rptObj.ui.titles.title(title)
+      title.style.css.display = "block"
+      title.style.css.text_align = align
+    container.add(title)
+    if not hasattr(value, 'options'):
+      value = self.context.rptObj.ui.texts.number(value, options={"type_number": 'money', 'symbol': currency})
+      value.style.css.font_size = Defaults_css.font(30)
+    container.add(value)
+    if not hasattr(items, 'options'):
+      items = self.context.rptObj.ui.lists.icons(items)
+      items.style.css.text_align = "left"
+    container.add(items)
     return container

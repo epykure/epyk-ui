@@ -839,7 +839,19 @@ class CssMixin(object):
     self.htmlObj.css({"clear": val})
 
   @property
-  def clip(self): return self.htmlObj.css("clip")
+  def clip(self):
+    """
+    Description:
+    ------------
+    What happens if an image is larger than its containing element?
+
+    The clip property lets you specify a rectangle to clip an absolutely positioned element. The rectangle is specified as four coordinates, all from the top-left corner of the element to be clipped.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/pr_pos_clip.asp
+    """
+    return self.htmlObj.css("clip")
 
   @clip.setter
   def clip(self, val):

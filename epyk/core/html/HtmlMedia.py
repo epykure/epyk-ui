@@ -8,6 +8,7 @@ Module for the HTML Media (audio and video) components
 import os
 
 from epyk.core.html import Html
+from epyk.core.html import Defaults
 
 # The list of JSS modules
 from epyk.core.js import JsUtils
@@ -18,13 +19,7 @@ class Media(Html.Html):
 
   def __init__(self, report, video, path, width, height, htmlCode, profile, options):
     if path is None:
-      path = "/img/%s" % report.run.report_name
-      # Check if the file is available in the default directory
-      # Otherwise raise an exception
-      file_path = os.path.join(report.run.local_path, "static", video)
-      if not os.path.exists(file_path):
-        raise Exception("Missing file %s in %s" % (video, os.path.join(report.run.local_path, "static")))
-
+      path = Defaults.SERVER_PATH or os.path.split(video)[0]
     super(Media, self).__init__(report, {'path': path, 'video': video}, htmlCode=htmlCode,
                                 css_attrs={"width": width, 'height': height}, profile=profile)
     self._jsStyles = options
@@ -63,13 +58,7 @@ class Audio(Html.Html):
 
   def __init__(self, report, audio, path, width, height, htmlCode, profile, options):
     if path is None:
-      path = "/img/%s" % report.run.report_name
-      # Check if the file is available in the default directory
-      # Otherwise raise an exception
-      file_path = os.path.join(report.run.local_path, "static", audio)
-      if not os.path.exists(file_path):
-        raise Exception("Missing file %s in %s" % (audio, os.path.join(report.run.local_path, "static")))
-
+      path = Defaults.SERVER_PATH or os.path.split(audio)[0]
     super(Audio, self).__init__(report, {'path': path, 'audio': audio}, css_attrs={"width": width, 'height': height}, htmlCode=htmlCode, profile=profile)
     self._jsStyles = options
     self.add_options(name="type", value='audio/%s' % {'mp3': 'mpeg'}.get(audio.split(".")[-1].lower(), audio.split(".")[-1]))

@@ -190,7 +190,7 @@ class Panels(object):
     html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs._report.theme.success[1]})
     return html_tabs
 
-  def sliding(self, htmlObjs, title, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=False):
+  def sliding(self, htmlObjs, title, color=None, align="center", width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -215,6 +215,9 @@ class Panels(object):
       htmlObjs = [htmlObjs]
     html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, width, height,
                                                htmlCode, helper, options or {}, profile)
+    if align == "center":
+      html_slide.style.css.margin = "auto"
+      html_slide.style.css.display = "block"
     return html_slide
 
   def split(self, left=None, right=None, width=(100, '%'), height=(200, 'px'), left_width=(160, 'px'), resizable=True,
@@ -302,3 +305,70 @@ class Panels(object):
       dflt_options.update(options)
     h_drawer = html.HtmlMenu.PanelsBar(self.context.rptObj, width, height, dflt_options, helper, profile)
     return h_drawer
+
+  @property
+  def slidings(self):
+    """
+    Description:
+    ------------
+    More custom sliding panels
+    """
+    return Slidings(self.context)
+
+
+class Slidings(object):
+  def __init__(self, context):
+    self.context = context
+
+  def right(self, htmlObjs, title, color=None, align="center", width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+    Sliding panels with the arrown on the right
+
+    Attributes:
+    ----------
+    :param htmlObjs:
+    :param title:
+    :param color:
+    :param align:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    sliding = self.context.rptObj.ui.panels.sliding(htmlObjs, title=title, align="center", options={"icon_position": "right"})
+    sliding.options.icon_closed = "fas fa-chevron-up"
+    sliding.options.icon_expanded = "fas fa-chevron-down"
+    sliding.style.css.width = "80%"
+    sliding.style.css.border_bottom = "1px solid black"
+    return sliding
+
+  def left(self, htmlObjs, title, color=None, align="center", width=(100, "%"), height=(None, "px"), htmlCode=None,
+            helper=None, options=None, profile=False):
+    """
+    Description:
+    ------------
+    Sliding panels with the arrown on the left
+
+    Attributes:
+    ----------
+    :param htmlObjs:
+    :param title:
+    :param color:
+    :param align:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    sliding = self.context.rptObj.ui.panels.sliding(htmlObjs, title=title, align="center")
+    sliding.options.icon_closed = "fas fa-chevron-up"
+    sliding.options.icon_expanded = "fas fa-chevron-down"
+    sliding.style.css.width = "80%"
+    sliding.style.css.border_bottom = "1px solid black"
+    return sliding
