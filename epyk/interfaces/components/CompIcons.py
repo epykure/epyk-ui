@@ -1,6 +1,7 @@
 
 from epyk.core import html
 from epyk.core.js.packages import JsFontAwesome
+from epyk.core.css import Defaults as Defaults_css
 
 
 class Icons(object):
@@ -417,6 +418,43 @@ class Icons(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     return self.awesome('fas fa-wrench', text, tooltip, position, width, height, htmlCode, profile)
+
+  def rss(self, text="RSS", position=None, align="left", tooltip="", width=('auto', ''), height=(25, 'px'),
+             htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-wrench <https://fontawesome.com/icons/rss-square?style=solid>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.rss()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
+
+    Attributes:
+    ----------
+    :param position: Optional. The position of the icon in the line (left, right, center)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    icon = self.awesome('fas fa-rss-square', text, tooltip, position, width, height, htmlCode, profile)
+    icon.style.css.color = "#cc9547"
+    icon.style.css.display = "inline-block"
+    icon.icon.style.css.font_size = Defaults_css.font(5)
+    if text is not None:
+      icon.span.style.css.text_align = "left"
+      icon.span.style.css.float = None
+    if align == "center":
+      icon.style.css.width = "100%"
+      icon.style.css.text_align = "center"
+    return icon
 
   def facebook(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
                htmlCode=None, profile=None):

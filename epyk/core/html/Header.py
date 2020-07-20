@@ -30,7 +30,7 @@ class Meta(object):
     self._metas["viewport"] = '<meta name="viewport" content="%s">' % value
     return self
 
-  def charset(self, value="UTF-8"):
+  def charset(self, value="utf-8"):
     """
     Description:
     ------------
