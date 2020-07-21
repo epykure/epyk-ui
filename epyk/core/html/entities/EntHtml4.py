@@ -5,6 +5,9 @@ Related Pages:
 """
 
 AMPERSAND = '&amp;'
+ASTERISM = '&#x2042;'
+CHARACTER_TIE = '&#x2040;'
+CARET_INSERTION_POINT = '&#x2041;'
 LESS_THAN = '&lt;'
 GREATER_THAN = '&gt;'
 NO_BREAK_SPACE = '&nbsp;'

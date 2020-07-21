@@ -1,8 +1,8 @@
-"""
-
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.html.entities import EntHtml4
+from epyk.core.html.entities import EntUtf8
 from epyk.core.html.entities import EntHtml5_A
 from epyk.core.html.entities import EntHtml5_B
 from epyk.core.html.entities import EntHtml5_C
@@ -38,6 +38,17 @@ class Entities(object):
       https://www.w3schools.com/charsets/ref_html_entities_4.asp
     """
     return EntHtml4
+
+  @property
+  def utf8(self):
+    """
+
+    Related Pages:
+
+      https://www.utf8-chartable.de/unicode-utf8-table.pl?start=8256&utf8=string-literal&unicodeinhtml=hex
+      https://www.utf8-chartable.de/unicode-utf8-table.pl?start=128&number=128&utf8=string-literal&unicodeinhtml=hex
+    """
+    return EntUtf8
 
   @property
   def html5_a(self):
