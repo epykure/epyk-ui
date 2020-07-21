@@ -681,6 +681,21 @@ class JsDoms(JsObject.JsObject):
     """
     return cls(data="document.createElement('%s')" % tagName, varName=varName, setVar=setVar, isPyData=isPyData, report=report)
 
+  @property
+  def parentNode(self):
+    """
+    Description:
+    ------------
+    The parentNode property returns the parent node of the specified node, as a Node object.
+
+    Note: In HTML, the document itself is the parent node of the HTML element, HEAD and BODY are child nodes of the HTML element.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_node_parentnode.asp
+    """
+    return JsDoms("%s.parentNode" % self.toStr())
+
   def querySelector(self, tag):
     """
     Description:
@@ -940,11 +955,15 @@ class JsDoms(JsObject.JsObject):
 
     :return: A JsObj
     """
-    if jsObject is None and isinstance(type, dict):
-      for k, v in type.items():
-        if k == "id":
-          self._id = v
-        self._js.append("%s.setAttribute('%s', %s)" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+    if jsObject is None:
+      if isinstance(type, dict):
+        for k, v in type.items():
+          if k == "id":
+            self._id = v
+          self._js.append("%s.setAttribute('%s', %s)" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+      else:
+        return JsObject.JsObject("%s.getAttribute('%s')" % (self.varId, type))
+
     else:
       if type == "id":
         self._id = jsObject
@@ -1039,6 +1058,7 @@ class JsDoms(JsObject.JsObject):
         split_css = type.split("-")
         type = "%s%s" % (split_css[0], split_css[1].title())
       return JsObject.JsObject("%s.style.%s" % (self.varId, type))
+
     else:
       if "-" in type:
         split_css = type.split("-")
