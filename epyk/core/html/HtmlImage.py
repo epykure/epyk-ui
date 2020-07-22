@@ -156,6 +156,7 @@ class ImgCarrousel(Html.Html):
     img_cont.options.managed = False
     points = self._report.ui.navigation.points(len(self.items))
     points.options.managed = False
+    points.style.css.cursor = "pointer"
     points.click([
       self._report.js.getElementsByName("%s_img" % self.htmlCode).css({"display": 'none'}),
       self._report.js.getElementById("%s_img_' + data.position +'" % self.htmlCode).css({"display": 'block'})
