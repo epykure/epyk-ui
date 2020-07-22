@@ -46,7 +46,7 @@ class KeyCode(object):
     if not isinstance(jsFnc, list):
       jsFnc = [jsFnc]
     tag = "event.which == %s" % key_code
-    if reset or tag not in self.__events_per_source:
+    if reset or source_event not in self.__events_per_source:
       self.__events_per_source[source_event] = {}
     self.__events_per_source[source_event].setdefault(tag, {}).setdefault("content", []).extend(jsFnc)
     self.__events_per_source[source_event][tag]['profile'] = profile

@@ -649,13 +649,7 @@ class Title(Html.Html):
     anchor_name = ' name="%s"' % self._name if self._name is not None else ''
     val = self._report.py.markdown.all(self.val) if self.options.showdown else self.val
     if self.picture is not None:
-      path = "/img/%s" % self._report.run.report_name
-      # Check if the file is available in the default directory
-      # Otherwise raise an exception
-      filePath = os.path.join(self._report.run.local_path, "static", self.picture)
-      if not os.path.exists(filePath):
-        raise Exception("Missing file %s in %s" % (self.picture, os.path.join(self._report.run.local_path, "static")))
-
+      path = Default_html.SERVER_PATH or os.path.split(self.picture)[0]
       return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), path, self.picture, anchor_name, val, self.helper)
 
     return '<div %s><a%s></a>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), anchor_name, val, self.helper)

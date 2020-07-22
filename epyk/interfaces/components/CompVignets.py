@@ -313,3 +313,22 @@ class Vignets(object):
       items.style.css.text_align = "left"
     container.add(items)
     return container
+
+  def slides(self, start=0, width=(100, '%'), height=(100, "%"), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param start:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    dflt_options = {'markdown': True}
+    if options is not None:
+      dflt_options.update(options)
+    html_slides = html.HtmlOthers.Slides(self.context.rptObj, start, width, height, dflt_options, profile)
+    return html_slides

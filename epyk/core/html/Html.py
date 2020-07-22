@@ -357,7 +357,7 @@ Attributes:
     """
     self.icon = ""
     if text is not None:
-      self.icon = self._report.ui.images.icon(text, family=family).css({"margin-right": '5px'})
+      self.icon = self._report.ui.images.icon(text, family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
       if position == "before":
         self.prepend_child(self.icon)
       else:
@@ -598,9 +598,9 @@ Attributes:
 
     :rtype: KeyCodes.KeyCode
     """
-    keydown = KeyCodes.KeyCode(component=self)
-    self._browser_data['keys']['keydown'] = keydown
-    return keydown
+    if self._browser_data.get('keys', {}).get('keydown') is None:
+      self._browser_data['keys']['keydown'] = KeyCodes.KeyCode(component=self)
+    return self._browser_data['keys']['keydown']
 
   @property
   def keypress(self):
@@ -615,9 +615,9 @@ Attributes:
 
     :rtype: KeyCodes.KeyCode
     """
-    keypress = KeyCodes.KeyCode(component=self)
-    self._browser_data['keys']['keypress'] = keypress
-    return keypress
+    if self._browser_data.get('keys', {}).get('keypress') is None:
+      self._browser_data['keys']['keypress'] = keypress = KeyCodes.KeyCode(component=self)
+    return self._browser_data['keys']['keypress']
 
   @property
   def keyup(self):
@@ -632,9 +632,9 @@ Attributes:
 
     :rtype: KeyCodes.KeyCode
     """
-    keyup = KeyCodes.KeyCode(component=self)
-    self._browser_data['keys']['keyup'] = keyup
-    return keyup
+    if self._browser_data.get('keys', {}).get('keyup') is None:
+      self._browser_data['keys']['keyup'] = KeyCodes.KeyCode(component=self)
+    return self._browser_data['keys']['keyup']
 
   @property
   def aria(self):

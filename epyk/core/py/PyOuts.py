@@ -165,6 +165,10 @@ class PyOuts(object):
     for component_id in order_components:
       component = self._report.components[component_id]
       if component.name == 'Body':
+        for event, source_fncs in component._browser_data['keys'].items():
+          for source, event_fncs in source_fncs.get_event().items():
+            str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
+            onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
         continue
 
       onloadParts.extend(component._browser_data['component_ready'])

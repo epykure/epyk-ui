@@ -23,6 +23,7 @@ If necessary the tests folder can be updated in order to catch some specific reg
 
 from epyk.core.js.primitives import JsObject
 from epyk.core.js import JsMaths
+from epyk.core.js import JsUtils
 
 
 class JsNumber(JsObject.JsObject):
@@ -139,6 +140,30 @@ class JsNumber(JsObject.JsObject):
     :return: A new Python Javascript Number
     """
     return JsNumber("%s + %s" % (self.varId, n), isPyData=False)
+
+  def min(self, value):
+    """
+    Description:
+    ------------
+    Add a cap to the value using the min function
+
+    Attributes:
+    ----------
+    :param value: Value. The maximum value for this object
+    """
+    return JsNumber("min(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
+
+  def max(self, value):
+    """
+    Description:
+    ------------
+    Add a floor to the value using the max function
+
+    Attributes:
+    ----------
+    :param value: Value. The minimum value for this object
+    """
+    return JsNumber("max(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
 
   def sub(self, n):
     """

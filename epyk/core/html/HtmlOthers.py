@@ -3,6 +3,7 @@
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptJsonFormatter
+from epyk.core.html.options import OptText
 
 from epyk.core.js.html import JsHtmlStars
 from epyk.core.js.packages import JsJsonFormatter
@@ -13,6 +14,8 @@ from epyk.core.js import JsUtils
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsLayout
 from epyk.core.css import Defaults
+
+from epyk.core import data
 
 
 class Hr(Html.Html):
@@ -312,3 +315,146 @@ class Legend(Html.Html):
       val["css_inline"] = css_inline
       divs.append("<div><div style='background:%(color)s;%(css_inline)s'></div>%(name)s</div>" % val)
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(divs))
+
+
+class Slides(Html.Html):
+  requirements = ('font-awesome', )
+  name = 'Slides'
+
+  def __init__(self, report, start, width, height, options, profile):
+    super(Slides, self).__init__(report, [], css_attrs={"width": width, 'height': height}, profile=profile)
+    self.__options = OptText.OptionsText(self, options)
+    self.attr['data-current_slide'] = start
+    self.title = self._report.ui.title("")
+    self.title.style.css.border_bottom = "1px solid %s" % report.theme.colors[7]
+    self.title.style.css.color = report.theme.colors[7]
+    self.title.style.css.margin = 0
+    self.title.options.managed = False
+    self.next = self._report.ui.icon("fas fa-arrow-alt-circle-right").css({"position": 'fixed',
+          "font-size": '35px', 'bottom': '0',  "padding": '8px', "right": '10px', 'width': 'none'})
+
+    self.previous = self._report.ui.icon("fas fa-arrow-alt-circle-left").css({"position": 'fixed',
+          "font-size": '35px', 'bottom': '0',  "padding": '8px', "left": '10px', 'width': 'none'})
+
+    self.page_number = self._report.ui.text("").css({"position": 'fixed',
+          "font-size": '25px', 'bottom': '0',  "padding": '8px', "left": '50%', 'width': 'none'})
+
+    self.next.click([
+      self._report.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
+        data.primitives.float(self.dom.attr("data-current_slide").toString().parseFloat().add(1), 'slide_index'),
+
+      self.js.if_(report.js.object('slide_index') <= self.dom.attr('data-last_slide'), [
+        self.title.build(self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].attr('data-slide_title')),
+        self.dom.attr("data-current_slide", report.js.object('slide_index')),
+        self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].show(display_value='flex'),
+        self._report.js.getElementById("%s_count" % self.htmlCode).innerHTML(report.js.object('slide_index').toString().parseFloat().add(1)),
+      ]).else_([
+        self.title.build(self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index').add(-1)].attr('data-slide_title')),
+        self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index').add(-1)].show(display_value='flex')]),
+
+      self.js.if_(report.js.object('slide_index') > 0, [
+        self.previous.dom.show()
+      ]),
+
+      self.js.if_(report.js.object('slide_index') == self.dom.attr('data-last_slide'), [
+        self.next.dom.hide()
+      ])
+    ])
+
+    self.previous.click([
+      self._report.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
+      data.primitives.float(self.dom.attr("data-current_slide").toString().parseFloat().add(-1), 'slide_index'),
+
+      self.js.if_(report.js.object('slide_index') >= 0, [
+        self.title.build(self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].attr('data-slide_title')),
+        self.dom.attr("data-current_slide", report.js.object('slide_index')),
+        self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].show(display_value='flex'),
+        self._report.js.getElementById("%s_count" % self.htmlCode).innerHTML(report.js.object('slide_index').toString().parseFloat().add(1)),
+      ]).else_([
+        self.title.build(self._report.js.getElementsByName(self.htmlCode)[0].attr('data-slide_title')),
+        self._report.js.getElementsByName(self.htmlCode)[0].show(display_value='flex')]),
+
+      self.js.if_(report.js.object('slide_index') == 0, [
+        self.previous.dom.hide()
+      ]),
+
+      self.js.if_(report.js.object('slide_index') < self.dom.attr('data-last_slide'), [
+        self.next.dom.show()
+      ])
+
+    ])
+
+    # Add the keyboard shortcut
+    report.body.keydown.right([self.next.dom.events.trigger("click")])
+    report.body.keydown.left([self.previous.dom.events.trigger("click")])
+
+    self.style.css.padding = "0 20px 10px 20px"
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsText
+    """
+    return self.__options
+
+  @property
+  def dom(self):
+    """
+    Description:
+    ------------
+    The JavaScript dom object to be used in any events
+
+    :rtype: JsHtmlStars.Slides
+    """
+    if self._dom is None:
+      self._dom = JsHtmlStars.Slides(self, report=self._report)
+    return self._dom
+
+  def add(self, component):
+    """ Add items to a container """
+    if isinstance(component, list):
+      component = self._report.ui.div(component)
+      component.style.css.width = "100%"
+      component.style.css.height = "90%"
+      component.style.css.display = "flex"
+      component.style.css.padding = 5
+      component.style.css.justify_content = "center"
+      component.style.css.align_items = "center"
+      component.style.css.flex_direction = "column"
+    if hasattr(component, 'htmlCode'):
+      component.options.managed = False
+    self.val.append(component)
+    return self
+
+  def add_slide(self, title, component):
+    self.add(component)
+    self.val[-1].attr["data-slide_title"] = title
+    return self
+
+  @property
+  def _js__builder__(self):
+    return '''
+      let index = htmlObj.getAttribute("data-current_slide");
+      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
+      document.getElementsByName(htmlObj.id)[index].innerHTML = data;
+      '''
+
+  def __str__(self):
+    self._report.body.style.css.height = '100%'
+    self.page_number._vals = "<font id='%s_count'>%s</font> / %s" % (self.htmlCode, self.attr['data-current_slide']+1, len(self.val))
+    comps = []
+    self.attr['data-last_slide'] = len(self.val)-1
+    for i, s in enumerate(self.val):
+      s.attr['name'] = self.htmlCode
+      if i != self.attr['data-current_slide']:
+        s.style.css.display = False
+      else:
+        self.title._vals = s.attr.get("data-slide_title", "")
+        s.style.css.display = 'flex'
+
+      comps.append(s.html())
+    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.title.html(), "".join(comps))

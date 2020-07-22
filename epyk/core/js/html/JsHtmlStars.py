@@ -23,3 +23,15 @@ class Stars(JsHtml.JsHtmlRich):
     The Javascript value of the component. This returned only a value corresponding to the state of the component
     """
     return JsHtml.ContentFormatters(self._report, "%s.dataset.level" % self.varName)
+
+
+class Slides(JsHtml.JsHtmlRich):
+
+  @property
+  def content(self):
+    """
+    Description:
+    ------------
+    The Javascript value of the component. This returned only a value corresponding to the state of the component
+    """
+    return JsHtml.ContentFormatters(self._report, "%s.getAttribute('data-current_slide')" % self.varName)
