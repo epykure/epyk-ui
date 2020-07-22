@@ -34,6 +34,20 @@ class ClassPage(object):
     return self._css_struct
 
   @property
+  def globals(self):
+    """
+    Description:
+    ------------
+    Reference for all the global setting in the page.
+    This should be changed in order to be the proxy to the Default CSS settings in the framework.
+
+    Changing this should only impact the report default settings
+
+    TODO: Extend to more than the font
+    """
+    return Defaults_css.Font
+
+  @property
   def scrollbar_webkit(self):
     if not self.__webkitscrollbar:
       self.__webkitscrollbar = CssStyleScrollbar.CssWebkitScrollbar(self.htmlObj._report)
