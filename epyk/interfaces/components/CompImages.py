@@ -285,8 +285,7 @@ class Images(object):
     div.style.add_classes.div.border_bottom()
     return div
 
-  def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
-               profile=None):
+  def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"), profile=None):
     """
     Description:
     ------------
