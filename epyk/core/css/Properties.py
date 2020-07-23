@@ -374,6 +374,8 @@ class CssMixin(object):
     """
     self.htmlObj.css({"background-image": "url(%a)" % val})
     self.htmlObj.css({"background-size": size})
+    self.htmlObj.css({"background-position": "center"})
+    #self.htmlObj.css({"background-attachment": "fixed"})
     self.htmlObj.css({"background-repeat": repeat})
     self.htmlObj.css({"position": position})
     self.htmlObj.css({"margin": margin})

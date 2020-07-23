@@ -312,6 +312,9 @@ class Navigation(object):
     :param profile:
     """
     components = []
+    options, scroll_height = options or {}, -5
+    if 'logo_height' not in options:
+      options['logo_height'] = (height[0], height[1])
     if logo is None:
       logo = self.context.rptObj.ui.icons.epyk()
       components.append(logo)
@@ -319,8 +322,8 @@ class Navigation(object):
       # if it is not an option it is considered as a path
       if not hasattr(logo, 'options'):
         logo_url = logo
-        logo = self.context.rptObj.ui.div(height=height, width=height)
-        logo.style.css.background_url(logo_url, size="auto %s%s" % (height[0], height[1]))
+        logo = self.context.rptObj.ui.div(height=options['logo_height'], width=height)
+        logo.style.css.background_url(logo_url, size="auto %s%s" % (options['logo_height'][0], options['logo_height'][1]))
       components.append(logo)
     components[-1].style.css.margin_right = 20
     if title is not None:
@@ -330,7 +333,6 @@ class Navigation(object):
       title.style.css.margin_right = 5
       title.style.css.bold()
       components.append(title)
-    options, scroll_height = options or {}, -5
     if options.get('status', False):
       scroll = self.context.rptObj.ui.navigation.scroll()
       scroll_height = 5
