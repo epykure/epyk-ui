@@ -2738,5 +2738,5 @@ class CssMixin(object):
     :param factor:
     """
     self.font_size = Defaults_css.font(factor)
-    return self
+    return self.orign_htmlObj
 
