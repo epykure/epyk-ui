@@ -142,3 +142,39 @@ class Forms(object):
     form = html.HtmlContainer.Form(self.context.rptObj, [col], helper)
     form._has_container = True
     return form
+
+  def subscribe(self, value="", placeholder="Enter email address", button="Subscribe", width=(100, '%'),
+                height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value:
+    :param placeholder:
+    :param button:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    input = self.context.rptObj.ui.input(text=value, placeholder=placeholder)
+    input.attr["class"].add("form-control")
+    input.style.css.display = "inline-block"
+    input.style.css.width = None
+
+    if not hasattr(button, 'options'):
+      button = self.context.rptObj.ui.button(button, width=("auto", ""))
+      button.style.css.margin = 0
+    button_container = self.context.rptObj.ui.div([button])
+    button_container.attr["class"].add("input-group-append")
+    button_container.style.css.width = None
+    container = self.context.rptObj.ui.div([input, button_container], width=width, height=height, options=options, profile=profile)
+    container.attr["class"].add("input-group mb-3")
+    container.button = button
+    container.input = input
+    input.enter(button.dom.events.trigger("click"))
+    return container
+
+
