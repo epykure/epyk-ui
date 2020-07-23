@@ -181,3 +181,32 @@ class Titles(object):
     html_title.style.css.font_size = Defaults_css.font(6)
     html_title.style.css.border_bottom = '2px solid %s' % self.context.rptObj.theme.colors[-1]
     return html_title
+
+  def subtitle(self, text=None, name=None, contents=None, color=None, picture=None, icon=None, marginTop=5, htmlCode=None,
+               width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param name:
+    :param contents:
+    :param color:
+    :param picture:
+    :param icon:
+    :param marginTop:
+    :param htmlCode:
+    :param width:
+    :param height:
+    :param align:
+    :param options:
+    :param profile:
+    """
+    title = self.context.rptObj.ui.title(text=text, name=name, contents=contents, color=color, picture=picture, icon=icon,
+            marginTop=marginTop, htmlCode=htmlCode, width=width, height=height, align=align, options=options, profile=profile)
+    title.style.css.font_size = Defaults_css.font(3)
+    title.style.css.bold()
+    return title
+

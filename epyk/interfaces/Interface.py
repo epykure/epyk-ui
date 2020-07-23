@@ -51,6 +51,7 @@ class Components(object):
     self.pivot = self.tables.pivot #: shortcut for pivot :func:`epyk.interfaces.components.CompTables.Tables.pivot`
     self.text = self.texts.text #: shortcut for text :func:`epyk.interfaces.components.CompTexts.Texts.text`
     self.title = self.texts.title #: shortcut for title :func:`epyk.interfaces.components.CompTexts.Texts.title`
+    self.subtitle = self.titles.subtitle #: shortcut for title :func:`epyk.interfaces.components.CompTexts.Texts.title`
     self.icon = self.images.icon #: shortcut for icon :func:`epyk.interfaces.components.CompImages.Images.icon`
     self.img = self.images.img #: shortcut for img :func:`epyk.interfaces.components.CompImages.Images.img`
     self.list = self.lists.list #: shortcut for list :func:`epyk.interfaces.components.CompLists.Lists.list`

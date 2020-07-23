@@ -94,6 +94,117 @@ class Required(object):
       self.css[package] = version or '*'
 
 
+class EventTouch(object):
+
+  def __init__(self, page):
+    self._page = page
+
+  def start(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+    The touchstart event occurs when the user touches an element.
+
+    Note: The touchstart event will only work on devices with a touch screen.
+
+    Tip: Other events related to the touchstart event are:
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/event_touchstart.asp
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
+    self._page.on("touchstart", jsFncs, profile)
+    return self._page
+
+  def move(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+    The touchmove event occurs when the user moves the finger across the screen.
+
+    The touchmove event will be triggered once for each movement, and will continue to be triggered until the finger is released.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/event_touchmove.asp
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
+    self._page.on("touchmove", jsFncs, profile)
+    return self._page
+
+  def cancel(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+    The touchcancel event occurs when the touch event gets interrupted.
+
+    Different devices will interrupt a touch event at different actions, and it is considered good practice to include this event to clean up code if this "error" should occur.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/event_touchcancel.asp
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
+    self._page.on("touchcancel", jsFncs, profile)
+    return self._page
+
+  def end(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+    The touchend event occurs when the user removes the finger from an element.
+
+    Note: The touchend event will only work on devices with a touch screen.
+
+    Tip: Other events related to the touchend event are:
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/event_touchend.asp
+
+    Attributes:
+    ----------
+    :param jsFncs:
+    :param profile:
+    :param source_event:
+    """
+    self._page.on("touchend", jsFncs, profile)
+    return self._page
+
+  def swap(self, jsFncsLeft, jsFncsRight, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param jsFncsLeft:
+    :param jsFncsRight:
+    :param profile:
+    :param source_event:
+    """
+    self.start(["window.longTouch = event.touches[0].clientX || event.originalEvent.touches[0].clientX"])
+    self.move(self._page.js.if_("window.longTouch != null", ["let swap =  (event.touches[0].clientX || event.originalEvent.touches[0].clientX) - window.longTouch",
+      "window.longTouch = null", self._page.js.if_("swap < 0", jsFncsLeft).else_(jsFncsRight)]))
+    return self
+
+
 class Html(object):
   """
   Description:
@@ -1058,6 +1169,13 @@ Attributes:
                    self._report.js.objects.mouseEvent.preventDefault()]
     self.on("contextmenu", new_js_fncs, profile)
     return self
+
+  @property
+  def touch(self):
+    """
+
+    """
+    return EventTouch(self)
 
   @property
   def _js__builder__(self):

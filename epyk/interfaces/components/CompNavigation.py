@@ -623,7 +623,7 @@ class Banners(object):
     div.style.css.top = 0
     return div
 
-  def text(self, data, size_notch=4, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+  def text(self, data, size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -654,7 +654,7 @@ class Banners(object):
     div.style.css.top = 0
     return div
 
-  def title(self, title, content, size_notch=4, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+  def title(self, title, content, size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -694,7 +694,7 @@ class Banners(object):
     div.style.css.top = 0
     return div
 
-  def quote(self, content, author, avatar=None, background=None, size_notch=4, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+  def quote(self, content, author, avatar=None, background=None, size_notch=0, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
@@ -733,3 +733,134 @@ class Banners(object):
       author.style.css.display = "inline-block"
     div.add(self.context.rptObj.ui.div([line, author]))
     return div
+
+  def disclaimer(self, copyright=None, links=None, width=(100, '%'), height=("auto", ''), align="center", options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param copyright:
+    :param links:
+    :param width:
+    :param height:
+    :param align:
+    :param options:
+    :param profile:
+    """
+    copyright = self.context.rptObj.py.encode_html(copyright or "© 2018 - 2020, Epyk studio")
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    for link in links:
+      if not isinstance(link, dict):
+        link = {"text": link}
+      url = self.context.rptObj.ui.link(text=link['text'], url=link.get("url", '#'))
+      url.style.css.color = self.context.rptObj.theme.greys[6]
+      url.style.css.margin = "0 5px"
+      div.add(url)
+    text = self.context.rptObj.ui.text(copyright)
+    text.style.css.color = self.context.rptObj.theme.greys[2]
+    div.add(text)
+    div.style.css.background_color = self.context.rptObj.theme.greys[4]
+    div.style.css.color = self.context.rptObj.theme.greys[6]
+    div.style.css.padding = "5px 0"
+    return div
+
+  def follow(self, text, width=(100, '%'), height=("auto", ''), align="left", options=None, profile=False,
+             youtube=True, twitter=True, facebook=True, twitch=True, instagram=True, linkedIn=True):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param width:
+    :param height:
+    :param align:
+    :param options:
+    :param profile:
+    :param youtube:
+    :param twitter:
+    :param facebook:
+    :param twitch:
+    :param instagram:
+    :param linkedIn:
+    """
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    div.style.css.padding = "10px 0"
+    text = self.context.rptObj.ui.text(text)
+    div.add(text)
+
+    icon_size = int(Defaults_css.font(8)[:-2])
+    if youtube:
+      div.youtube = self.context.rptObj.ui.icons.youtube(width=(icon_size, 'px'))
+      div.youtube.style.css.margin = "0 2px"
+      div.add(div.youtube)
+
+    if twitter:
+      div.twitter = self.context.rptObj.ui.icons.twitter(width=(icon_size, 'px'))
+      div.twitter.style.css.margin = "0 2px"
+      div.add(div.twitter)
+
+    if facebook:
+      div.facebook = self.context.rptObj.ui.icons.facebook(width=(icon_size, 'px'))
+      div.facebook.style.css.margin = "0 2px"
+      div.add(div.facebook)
+
+    if twitch:
+      div.twitch = self.context.rptObj.ui.icons.twitch(width=(icon_size, 'px'))
+      div.twitch.style.css.margin = "0 2px"
+      div.add(div.twitch)
+
+    if instagram:
+      div.instagram = self.context.rptObj.ui.icons.instagram(width=(icon_size, 'px'))
+      div.instagram.style.css.margin = "0 2px"
+      div.add(div.instagram)
+
+    if linkedIn:
+      div.linkedIn = self.context.rptObj.ui.icons.linkedIn(width=(icon_size, 'px'))
+      div.linkedIn.style.css.margin = "0 2px"
+      div.add(div.linkedIn)
+
+    if width != (100, "%"):
+      div.style.css.margin = "auto"
+      div.style.css.display = "block"
+    else:
+      div.style.css.background_color = self.context.rptObj.theme.greys[2]
+    return div
+
+  def row(self, headers, links, size_notch=0, background=None, width=(100, '%'), align="left", height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param headers:
+    :param links:
+    :param size_notch:
+    :param background:
+    :param width:
+    :param align:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    row = []
+    for i, header in enumerate(headers):
+      col = self.context.rptObj.ui.col([self.context.rptObj.ui.subtitle(header)], position='top')
+      for link in links[i]:
+        html_link = self.context.rptObj.ui.link(link)
+        html_link.style.css.display = 'block'
+        html_link.style.css.margin = "5px 0"
+        col.add(html_link)
+      row.append(col)
+    div.add(self.context.rptObj.ui.row(row))
+    div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
+    div.style.css.padding = "20px 15px"
+    div.style.css.margin = "auto"
+    div.style.css.font_size = Defaults_css.font(size_notch)
+    div.style.css.color = self.context.rptObj.theme.greys[-1]
+    div.style.css.top = 0

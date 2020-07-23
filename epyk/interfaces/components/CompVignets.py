@@ -225,6 +225,30 @@ class Vignets(object):
       container.add(self.context.rptObj.ui.col([title, content]))
     return container
 
+  def background(self, url, width=(90, "%"), height=(450, "px"), size="contain", margin=0, align="center", position="middle"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param url:
+    :param width:
+    :param height:
+    :param size:
+    :param margin:
+    """
+    div = self.context.rptObj.ui.div(height=height, width=width)
+    div.style.css.background_url(url, size=size, margin=margin)
+    div.style.css.display = "block"
+    div.style.css.text_align = align
+    div.style.css.vertical_align = position
+    div.style.css.padding = "auto"
+    if align == "center":
+      div.style.css.margin = "10px auto"
+      div.style.css.display = "block"
+    return div
+
   def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None):
     """
     Description:
