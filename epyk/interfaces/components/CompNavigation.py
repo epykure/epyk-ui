@@ -870,7 +870,11 @@ class Banners(object):
   def contact_us(self, title="Contact Us", background=None, width=(100, '%'), align="left", height=(None, 'px'),
                  htmlCode="contactus", options=None, profile=False):
     """
-    
+    Description:
+    ------------
+
+    Attributes:
+    ----------
     :param title:
     :param background:
     :param width:
@@ -879,7 +883,6 @@ class Banners(object):
     :param htmlCode:
     :param options:
     :param profile:
-    :return:
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     div.style.css.padding = 5
