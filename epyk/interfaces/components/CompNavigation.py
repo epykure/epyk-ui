@@ -866,3 +866,36 @@ class Banners(object):
     div.style.css.font_size = Defaults_css.font(size_notch)
     div.style.css.color = self.context.rptObj.theme.greys[-1]
     div.style.css.top = 0
+
+  def contact_us(self, title="Contact Us", background=None, width=(100, '%'), align="left", height=(None, 'px'),
+                 htmlCode="contactus", options=None, profile=False):
+    """
+    
+    :param title:
+    :param background:
+    :param width:
+    :param align:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    :return:
+    """
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    div.style.css.padding = 5
+    div.add(self.context.rptObj.ui.title(title))
+    row = self.context.rptObj.ui.row([self.context.rptObj.ui.input(placeholder="First Name", width=("calc(100% - 5px)", ""), htmlCode="%s_first_name" % htmlCode),
+          self.context.rptObj.ui.input(placeholder="Last Name", htmlCode="%s_last_name" % htmlCode)]).css({"padding-top": '5px', "margin": '5px', "width": "calc(100% - 10px)"})
+    row.attr["class"].add("no-gutters")
+    div.add(row)
+    div.add(self.context.rptObj.ui.input(placeholder="Email", htmlCode="%s_email" % htmlCode).css({"margin": '5px', "width": "calc(100% - 10px)"}))
+    div.add(self.context.rptObj.ui.input(placeholder="Subject", htmlCode="%s_subject" % htmlCode).css({"margin": '5px', "width": "calc(100% - 10px)"}))
+    div.add(self.context.rptObj.ui.textarea(placeholder="Leave us a message", htmlCode="%s_message" % htmlCode).css({"margin": '5px', "width": "calc(100% - 10px)"}))
+    div.button = self.context.rptObj.ui.button("Submit", align="center")
+    div.add(div.button)
+    div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
+    div.style.css.margin_bottom = 10
+    div._internal_components = ["%s_email" % htmlCode, "%s_first_name" % htmlCode, "%s_last_name" % htmlCode,
+                                "%s_subject" % htmlCode, "%s_message" % htmlCode]
+    return div
+

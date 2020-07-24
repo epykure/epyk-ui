@@ -222,7 +222,6 @@ class Html(object):
   def __init__(self, report, vals, htmlCode=None, options=None, profile=None, css_attrs=None):
     """ Create an python HTML object """
     self.components = collections.OrderedDict() # Child component for this component
-
     self.require = Required()
     for package in self.requirements or []:
       if isinstance(package, tuple):
@@ -266,6 +265,7 @@ class Html(object):
     self._report.components[self.htmlCode] = self
     self._vals = vals
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
+    self._internal_components = [self.htmlCode]
 
   def add(self, component):
     """ Add items to a container """

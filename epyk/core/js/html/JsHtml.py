@@ -587,8 +587,9 @@ class JsHtmlRich(JsHtml):
     -----------
 
     """
+    values = ["'%s': %s" % (k, self._report.components[k].dom.content.toStr()) for k in self._src._internal_components]
     return JsObjects.JsObjects.get(
-      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()} }" % (self.htmlCode, self.content.toStr()))
+      "{%s, offset: new Date().getTimezoneOffset()}" % ", ".join(values))
 
   @property
   def content(self):

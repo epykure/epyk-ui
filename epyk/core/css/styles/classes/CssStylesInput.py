@@ -81,7 +81,7 @@ class CssInputTextArea(CssStyle.Style):
   """
   CSS Style for the textarea component.
   """
-  _attrs = {'resize': 'none', 'margin-bottom': '5px'}
+  _attrs = {'resize': 'none', 'margin-bottom': '5px', 'padding': '5px'}
   _focus = {'outline': 0}
 
   def customize(self):
