@@ -221,7 +221,8 @@ class Vignets(object):
       if image is not None:
         if not hasattr(image, 'options'):
           split_url = os.path.split(image)
-          container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
+          container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0])
+          container.add(container.image)
       container.add(self.context.rptObj.ui.col([title, content]))
     return container
 
