@@ -451,6 +451,7 @@ class ChartTimeline(Chart):
 
   def getCtx(self):
     if self.__cats is not None:
-      return "new vis.Timeline(%s, %s, %s); %s" % (self.dom.varId, self.items, self.options, self.__cats)
+      # Remove the managed parameter to avoid issue with the library
+      return "new vis.Timeline(%s, %s, (function(){let opt = %s; delete opt.managed; return opt})() ); %s" % (self.dom.varId, self.items, self.options, self.__cats)
 
-    return "new vis.Timeline(%s, %s, %s)" % (self.dom.varId, self.items, self.options)
+    return "new vis.Timeline(%s, %s, (function(){let opt = %s; delete opt.managed; return opt})() ))" % (self.dom.varId, self.items, self.options)
