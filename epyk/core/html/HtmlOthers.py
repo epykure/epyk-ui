@@ -417,6 +417,9 @@ class Slides(Html.Html):
   def add(self, component):
     """ Add items to a container """
     if isinstance(component, list):
+      for c in component:
+        if hasattr(c, 'options'):
+          c.options.managed = False
       component = self._report.ui.div(component)
       component.style.css.width = "100%"
       component.style.css.height = "90%"
@@ -425,7 +428,7 @@ class Slides(Html.Html):
       component.style.css.justify_content = "center"
       component.style.css.align_items = "center"
       component.style.css.flex_direction = "column"
-    if hasattr(component, 'htmlCode'):
+    if hasattr(component, 'options'):
       component.options.managed = False
     self.val.append(component)
     return self

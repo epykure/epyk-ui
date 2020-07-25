@@ -273,7 +273,7 @@ class Html(object):
 
   def __add__(self, component):
     """ Add items to a container """
-    if hasattr(component, 'htmlCode'):
+    if hasattr(component, 'options'):
       component.options.managed = False
     self.val.append(component)
     return self
