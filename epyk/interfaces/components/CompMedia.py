@@ -101,18 +101,9 @@ class Media(object):
     :param options: Optional. A dictionary with the components properties
     """
     dflt_options = {"width": "420", "height": "315", "type": "text/html"}
+    if '/embed/' not in link:
+      link = html.HtmlMedia.Youtube.get_embed_link(link)
     if options is not None:
       dflt_options.update(options)
     html_youtube = html.HtmlMedia.Youtube(self.context.rptObj, link, width, height, htmlCode, profile, dflt_options)
     return html_youtube
-
-  # def camera(self):
-  #   """
-  #
-  #   Documentation
-  #   https://www.html5rocks.com/en/tutorials/getusermedia/intro/
-  #
-  #   Attributes:
-  #   ----------
-  #   :return:
-  #   """
