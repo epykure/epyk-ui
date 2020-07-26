@@ -208,7 +208,7 @@ class Navigation(object):
     html_indices = html.HtmlContainer.Indices(self.context.rptObj, count, width, height, None, dflt_options, profile)
     return html_indices
 
-  def points(self, count, selected=0, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def points(self, count, selected=0, width=(100, '%'), height=(None, 'px'), htmlCode=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -230,7 +230,7 @@ class Navigation(object):
     """
     dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
     dflt_options.update(options or {})
-    html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, None, dflt_options, profile)
+    html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, htmlCode, dflt_options, profile)
     return html_points
 
   def dots(self, count, selected=1, position="right", width=(100, '%'), height=(None, 'px'), options=None,

@@ -319,7 +319,7 @@ class Images(object):
     html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, profile)
     return html_id
 
-  def carrousel(self, images, path=None, selected=0, width=(100, "%"), height=(300, "px"), profile=None):
+  def carrousel(self, images, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None, profile=None):
     """
     Description:
     ------------
@@ -350,7 +350,7 @@ class Images(object):
     if height[1] == '%':
       raise Exception("This height cannot be in percentage")
 
-    html_i = html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, selected, width, height, profile)
+    html_i = html.HtmlImage.ImgCarrousel(self.context.rptObj, images, path, selected, width, height, options or {}, profile)
     return html_i
 
   def emoji(self, symbole=None, top=(20, 'px'), profile=None):

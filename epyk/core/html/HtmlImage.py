@@ -12,6 +12,8 @@ from epyk.core.css.styles import GrpClsImage
 # The list of Javascript classes
 from epyk.core.js.html import JsHtml
 
+from epyk.core import data
+
 
 class Image(Html.Html):
   name = 'Picture'
@@ -95,7 +97,7 @@ class AnimatedImage(Html.Html):
 class ImgCarrousel(Html.Html):
   name = 'Carrousel'
 
-  def __init__(self, report, images, path, selected, width, height, profile):
+  def __init__(self, report, images, path, selected, width, height, options, profile):
     if path is None:
       if Defaults.SERVER_PATH is not None:
         path = Defaults.SERVER_PATH
@@ -104,6 +106,7 @@ class ImgCarrousel(Html.Html):
         images = os.path.split(images[0])[-1]
     self.items, self.__click_items = [], []
     super(ImgCarrousel, self).__init__(report, "", css_attrs={"width": width, "height": height}, profile=profile)
+    self.attr['data-current_picture'] = 0
     for i, rec in enumerate(images):
       if not isinstance(rec, dict):
         rec = {"image": rec, 'title': "picture %s" % (i+1)}
@@ -116,8 +119,19 @@ class ImgCarrousel(Html.Html):
       div.set_attrs(name="name", value="%s_img" % self.htmlCode)
       div.options.managed = False
       self.items.append(div)
+    self.__point_display = options.get('points', True)
+    if 'arrows' in options:
+      self.next = self._report.ui.icon("fas fa-chevron-right").css({"position": 'absolute',
+                 "font-size": '35px', "padding": '8px', "right": '10px', 'top': '50%'})
+      self.next.options.managed = False
+
+      self.previous = self._report.ui.icon("fas fa-chevron-left").css({"position": 'absolute',
+                 "font-size": '35px', "padding": '8px', "left": '10px', 'top': '50%'})
+      self.previous.options.managed = False
+    else:
+      self.next, self.previous = "", ""
     self.items[selected].css({"display": 'block'})
-    self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0})
+    self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0, 'position': 'relative'})
 
   def __getitem__(self, i):
     return self.items[i]
@@ -154,16 +168,38 @@ class ImgCarrousel(Html.Html):
   def __str__(self):
     img_cont = self._report.ui.layouts.div(self.items).css({"display": 'block', "width": "100%", "text-align": "center"})
     img_cont.options.managed = False
-    points = self._report.ui.navigation.points(len(self.items))
+    self.attr['data-last_picture'] = len(self.items)-1
+    points = self._report.ui.navigation.points(len(self.items), htmlCode="%s_points" % self.htmlCode)
     points.options.managed = False
     points.style.css.cursor = "pointer"
+    if not self.__point_display:
+      points.style.css.display = 'none'
     points.click([
       self._report.js.getElementsByName("%s_img" % self.htmlCode).css({"display": 'none'}),
       self._report.js.getElementById("%s_img_' + data.position +'" % self.htmlCode).css({"display": 'block'})
     ] + self.__click_items)
-    return '''<div %(strAttr)s>%(img_cont)s%(points)s</div>
-      ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()),
-             'img_cont': img_cont.html(), "points": points.html()}
+
+    if hasattr(self.next, 'html'):
+      self.next.click([
+        data.primitives.float(self.dom.attr("data-current_picture").toString().parseFloat().add(1), 'picture_index'),
+        self.js.if_(self._report.js.object('picture_index') <= self.dom.attr('data-last_picture'), [
+          self.dom.attr("data-current_picture", self._report.js.object('picture_index')),
+          "(function(){var clickEvent = new Event('click'); %s.dispatchEvent(clickEvent)})()" %
+          self._report.js.getElementsByName("%s_points" % self.htmlCode)[
+            self.dom.getAttribute('data-current_picture').toString().parseFloat()]])
+      ])
+    if hasattr(self.previous, 'html'):
+      self.previous.click([
+        data.primitives.float(self.dom.attr("data-current_picture").toString().parseFloat().add(-1), 'picture_index'),
+        self.js.if_(self._report.js.object('picture_index') >= 0, [
+          self.dom.attr("data-current_picture", self._report.js.object('picture_index')),
+          "(function(){var clickEvent = new Event('click'); %s.dispatchEvent(clickEvent) })()" %
+          self._report.js.getElementsByName("%s_points" % self.htmlCode)[
+            self.dom.getAttribute('data-current_picture').toString().parseFloat()]])
+      ])
+    return '''<div %(strAttr)s>%(img_cont)s%(points)s%(next)s%(previous)s</div>
+      ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'img_cont': img_cont.html(),
+             "points": points.html(), 'next': self.next.html() if hasattr(self.next, 'html') else '', 'previous': self.previous.html() if hasattr(self.previous, 'html') else ''}
 
 
 class Icon(Html.Html):

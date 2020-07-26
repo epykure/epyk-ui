@@ -1372,13 +1372,13 @@ class Points(Html.Html):
   name = 'Index'
 
   def __init__(self, report, count, width, height, htmlCode, options, profile):
-    super(Points, self).__init__(report, count, css_attrs={"width": width, "height": height}, profile=profile)
+    super(Points, self).__init__(report, count, css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.items = []
     self.css({"text-align": "center"})
     self.__options = OptPanel.OptionsPanelPoints(self, options)
     for i in range(count):
       div = self._report.ui.div(self._report.entities.non_breaking_space)
-      div.attr["name"] = self.htmlCode
+      div.attr["name"] = htmlCode
       div.attr["data-position"] = i # keep the python indexation
       div.css({"border": "1px solid %s" % self._report.theme.greys[5], "border-radius": "10px", "width": "15px", "height": "15px"})
       div.css(self.options.div_css)
