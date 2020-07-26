@@ -333,6 +333,11 @@ class Slides(Html.Html):
     self.title.style.css.color = report.theme.colors[7]
     self.title.style.css.margin = 0
     self.title.options.managed = False
+    if 'contents' in options:
+      del report._content_table
+
+      self._content_table = options['contents']
+      self._content_table.style.css.z_index = 100
     if 'timer' in options:
       self._report.ui.calendars.timer(options['timer']).css({"position": 'fixed', "font-size": '15px', 'top': '8px',
           "padding": '8px', "right": '15px', 'width': 'none', 'color': report.theme.greys[5]})
@@ -437,7 +442,7 @@ class Slides(Html.Html):
     self.val.append(component)
     return self
 
-  def add_slide(self, title, component):
+  def add_slide(self, title, component, options=None):
     """
     Description:
     ------------
@@ -446,9 +451,19 @@ class Slides(Html.Html):
     ----------
     :param title:
     :param component:
+    :param options:
     """
     self.add(component)
     self.val[-1].attr["data-slide_title"] = title
+    if options is not None:
+      options.get('contents', self._content_table).anchor(options.get('contents_title', title), options.get('contents_level', 0))
+      options.get('contents', self._content_table)[-1].click([self.dom.goTo(len(self.val))])
+    elif hasattr(self, '_content_table'):
+      if options is not None:
+        self._content_table.anchor(options.get('contents_title', title), options.get('contents_level', 0))
+      else:
+        self._content_table.anchor(title)
+      self._content_table[-1].click([self.dom.goTo(len(self.val))])
     return self
 
   @property

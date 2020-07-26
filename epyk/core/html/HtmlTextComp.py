@@ -415,7 +415,7 @@ class ContentsTable(Html.Html):
           menu.appendChild(link)
       })} '''
 
-  def anchor(self, text, level, anchor):
+  def anchor(self, text, level=0, anchor='#'):
     """
     Description:
     ------------
