@@ -33,6 +33,7 @@ from epyk.interfaces.components import CompSteppers
 from epyk.interfaces.components import CompTitles
 from epyk.interfaces.components import CompCalendars
 from epyk.interfaces.components import CompPictos
+from epyk.interfaces.studio import CompStudio
 
 
 class Components(object):
@@ -406,6 +407,15 @@ class Components(object):
     This will mainly rely on bootstrap for the display of the different objects in the page.
     """
     return CompLayouts.Layouts(self)
+
+  @property
+  def studio(self):
+    """
+    Description:
+    ------------
+
+    """
+    return CompStudio.Sudio(self)
 
   @property
   def forms(self):
