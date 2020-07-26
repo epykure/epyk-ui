@@ -459,7 +459,7 @@ class Slides(Html.Html):
 
   def __str__(self):
     self._report.body.style.css.height = '100%'
-    self.page_number._vals = "<font id='%s_count' ondblclick='this.contentEditable = true' onkeydown='if (event.keyCode == 13) {this.contentEditable = false}'>%s</font> / %s" % (self.htmlCode, self.attr['data-current_slide']+1, len(self.val))
+    self.page_number._vals = '<font id="%s_count" ondblclick="this.contentEditable = true" onkeydown="if (event.keyCode == 13){document.getElementById(\'%s\').setAttribute(\'data-current_slide\', Math.min(parseInt(this.innerHTML), %s) -2); %s; this.contentEditable = false}">%s</font> / %s' % (self.htmlCode, self.htmlCode, len(self.val), self.next.dom.events.trigger('click').toStr(), self.attr['data-current_slide']+1, len(self.val))
     comps = []
     self.attr['data-last_slide'] = len(self.val)-1
     for i, s in enumerate(self.val):
