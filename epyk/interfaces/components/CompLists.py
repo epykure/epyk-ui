@@ -183,8 +183,7 @@ class Lists(object):
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
-    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode,
-                                   helper, options or {}, profile)
+    html_list = html.HtmlList.List(self.context.rptObj, data or [], color, width, height, htmlCode, helper, options or {}, profile)
     html_list.css({"list-style": 'none'})
     return html_list
 

@@ -317,9 +317,9 @@ class JsDomEvents(object):
     """
     item = "document.getElementById('%(htmlCode)s')" % {'htmlCode': self._src.htmlCode}
     if withFocus:
-      return JsFncs.JsFunction('(function(){var clickEvent = new Event("%(event)s"); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)})()' % {"event": event, "elem": item})
+      return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.focus(); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
 
-    return JsFncs.JsFunction('(function(){var clickEvent = new Event("%(event)s"); %(elem)s.dispatchEvent(clickEvent)})()' % {"event": event, "elem": item})
+    return JsFncs.JsFunction("(function(){var clickEvent = new Event('%(event)s'); %(elem)s.dispatchEvent(clickEvent)})()" % {"event": event, "elem": item})
 
   def toStr(self):
     if self._src.htmlCode is None:

@@ -179,7 +179,7 @@ class List(Html.Html):
     if self.items is None:
       self.items = []
     li_obj = Li(self._report, d)
-    if hasattr(d, 'inReport'):
+    if hasattr(d, 'options'):
       d.options.managed = False
     li_obj.options.managed = False
     self.items.append(li_obj)

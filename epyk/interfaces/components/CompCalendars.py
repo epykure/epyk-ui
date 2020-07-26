@@ -64,6 +64,24 @@ class Calendar(object):
     html_table.caption = "%s %s" % (datetime.date(year, month, 1).strftime("%B"), year)
     return html_table
 
+  def timer(self, minutes, text="", width=(None, "%"), height=(None, "px"), align=None, options=None, htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param minutes:
+    :param width:
+    :param height:
+    :param align:
+    :param options:
+    :param htmlCode:
+    :param profile:
+    """
+    html_timer = html.HtmlDates.Timer(self.context.rptObj, minutes, text, width, height, align, options, htmlCode, profile)
+    return html_timer
+
   def months(self, year=None, content=None, width=(None, "%"), height=(None, "px"), align=None, options=None, htmlCode=None, profile=None):
     """
     Description:

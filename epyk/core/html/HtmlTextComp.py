@@ -382,7 +382,7 @@ class ContentsTable(Html.Html):
     self.style.css.position = "fixed"
     self.title = self._report.ui.div()
     self.title += self._report.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
-    self.title += self._report.ui.text("[hide]").css({"width": '30px', 'display': 'inline-block', 'margin-left': '5px'})
+    self.title += self._report.ui.text("[hide]").css({"width": '30px', 'display': 'inline-block', 'margin-left': '5px', 'font-size': Defaults_css.font(-5)})
     self.title[0].style.css.font_size = Defaults_css.font(6)
     self.title[0].style.css.font_weight = "bold"
     self.title.options.managed = False
