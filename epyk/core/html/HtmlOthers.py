@@ -347,7 +347,7 @@ class Slides(Html.Html):
     self.previous = self._report.ui.icon("fas fa-arrow-alt-circle-left").css({"position": 'fixed',
           "font-size": '35px', 'bottom': '0',  "padding": '8px', "left": '10px', 'width': 'none'})
 
-    self.page_number = self._report.ui.text("").css({"position": 'fixed',
+    self.page_number = self._report.ui.text("").css({"position": 'fixed', 'z-index': 101,
           "font-size": '25px', 'bottom': '0',  "padding": '8px', "left": '50%', 'width': 'none'})
 
     self.next.click([
