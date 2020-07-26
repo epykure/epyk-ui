@@ -383,7 +383,7 @@ class Slides(Html.Html):
     report.body.keydown.right([self.next.dom.events.trigger("click")])
     report.body.keydown.left([self.previous.dom.events.trigger("click")])
 
-    self.style.css.padding = "0 20px 10px 20px"
+    self.style.css.padding = "0 20px 20px 20px"
 
   @property
   def options(self):
@@ -432,6 +432,8 @@ class Slides(Html.Html):
       component.style.css.flex_direction = "column"
     if hasattr(component, 'options'):
       component.options.managed = False
+      component.style.css.margin_top = '10px'
+      component.style.css.overflow = 'auto'
     self.val.append(component)
     return self
 
