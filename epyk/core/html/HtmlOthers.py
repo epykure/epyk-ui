@@ -448,7 +448,7 @@ class Slides(Html.Html):
 
   def __str__(self):
     self._report.body.style.css.height = '100%'
-    self.page_number._vals = "<font id='%s_count'>%s</font> / %s" % (self.htmlCode, self.attr['data-current_slide']+1, len(self.val))
+    self.page_number._vals = "<font id='%s_count' ondblclick='alert(\"this.contentEditable = true \")'>%s</font> / %s" % (self.htmlCode, self.attr['data-current_slide']+1, len(self.val))
     comps = []
     self.attr['data-last_slide'] = len(self.val)-1
     for i, s in enumerate(self.val):
