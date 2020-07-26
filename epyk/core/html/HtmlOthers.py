@@ -245,6 +245,9 @@ class HtmlJson(Html.Html):
   @property
   def js(self):
     """
+    Description:
+    -----------
+
     Return the Javascript internal object
 
     :return: A Javascript object
@@ -352,13 +355,8 @@ class Slides(Html.Html):
         self.title.build(self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index').add(-1)].attr('data-slide_title')),
         self._report.js.getElementsByName(self.htmlCode)[report.js.object('slide_index').add(-1)].show(display_value='flex')]),
 
-      self.js.if_(report.js.object('slide_index') > 0, [
-        self.previous.dom.show()
-      ]),
-
-      self.js.if_(report.js.object('slide_index') == self.dom.attr('data-last_slide'), [
-        self.next.dom.hide()
-      ])
+      self.js.if_(report.js.object('slide_index') > 0, [self.previous.dom.show()]),
+      self.js.if_(report.js.object('slide_index') == self.dom.attr('data-last_slide'), [self.next.dom.hide()])
     ])
 
     self.previous.click([
@@ -374,14 +372,8 @@ class Slides(Html.Html):
         self.title.build(self._report.js.getElementsByName(self.htmlCode)[0].attr('data-slide_title')),
         self._report.js.getElementsByName(self.htmlCode)[0].show(display_value='flex')]),
 
-      self.js.if_(report.js.object('slide_index') == 0, [
-        self.previous.dom.hide()
-      ]),
-
-      self.js.if_(report.js.object('slide_index') < self.dom.attr('data-last_slide'), [
-        self.next.dom.show()
-      ])
-
+      self.js.if_(report.js.object('slide_index') == 0, [self.previous.dom.hide()]),
+      self.js.if_(report.js.object('slide_index') < self.dom.attr('data-last_slide'), [self.next.dom.show()])
     ])
 
     # Add the keyboard shortcut
@@ -415,7 +407,14 @@ class Slides(Html.Html):
     return self._dom
 
   def add(self, component):
-    """ Add items to a container """
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param component:
+    """
     if isinstance(component, list):
       for c in component:
         if hasattr(c, 'options'):
@@ -434,6 +433,15 @@ class Slides(Html.Html):
     return self
 
   def add_slide(self, title, component):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param title:
+    :param component:
+    """
     self.add(component)
     self.val[-1].attr["data-slide_title"] = title
     return self
@@ -448,7 +456,7 @@ class Slides(Html.Html):
 
   def __str__(self):
     self._report.body.style.css.height = '100%'
-    self.page_number._vals = "<font id='%s_count' ondblclick='alert(\"this.contentEditable = true \")'>%s</font> / %s" % (self.htmlCode, self.attr['data-current_slide']+1, len(self.val))
+    self.page_number._vals = "<font id='%s_count' ondblclick='this.contentEditable = true' onkeydown='if (event.keyCode == 13) {this.contentEditable = false}'>%s</font> / %s" % (self.htmlCode, self.attr['data-current_slide']+1, len(self.val))
     comps = []
     self.attr['data-last_slide'] = len(self.val)-1
     for i, s in enumerate(self.val):
