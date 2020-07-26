@@ -417,6 +417,8 @@ class Vignets(object):
     :param height:
     :param options:
     :param profile:
+
+    TODO: Fix layout issue with F11 (full screen)
     """
     dflt_options = {'markdown': True}
     if options is not None:

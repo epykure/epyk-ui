@@ -41,6 +41,7 @@ class Slides(JsHtml.JsHtmlRich):
     Description:
     ------------
 
+    TODO: ADD if in the JavaScript to display the next and previous if goTo triggered from first or last slides
     :param number:
     """
     return JsObjects.JsObjects.get('''%s.setAttribute('data-current_slide', Math.min(%s, %s)-2);
