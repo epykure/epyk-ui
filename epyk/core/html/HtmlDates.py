@@ -429,9 +429,10 @@ class Timer(Html.Html):
     return '''     
       var time = data.minutes * 60, r = htmlObj, tmp=time;
       setInterval(function(){
-        var c=tmp--, m = (c/60)>>0, s=(c-m*60)+'';
-        r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s
-        tmp != 0||(tmp=time)},1000);
+        if (tmp >= 0){
+          var c=tmp--, m = (c/60)>>0, s=(c-m*60)+'';
+          r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s}
+        tmp != 0 || (tmp=0)}, 1000);
       '''
 
   def __str__(self):
