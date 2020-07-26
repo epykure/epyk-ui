@@ -333,6 +333,8 @@ class Slides(Html.Html):
     self.title.style.css.color = report.theme.colors[7]
     self.title.style.css.margin = 0
     self.title.options.managed = False
+    if 'timer' in options:
+      self._report.ui.calendars.timer(options['timer']).css({"position": 'fixed', "font-size": '25px', 'top': '0', "padding": '8px', "right": '15px', 'width': 'none'})
     self.next = self._report.ui.icon("fas fa-arrow-alt-circle-right").css({"position": 'fixed',
           "font-size": '35px', 'bottom': '0',  "padding": '8px', "right": '10px', 'width': 'none'})
 

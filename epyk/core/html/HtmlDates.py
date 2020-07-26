@@ -412,3 +412,28 @@ class Calendar(Html.Html):
 
     self._report._props['js']['onReady'].add("%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
     return '<table %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</table>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'caption': self.caption, 'header': "".join(header), 'content': "".join(body)}
+
+
+class Timer(Html.Html):
+  name = 'Timer'
+
+  def __init__(self, report, minutes, text, width, height, align, options, htmlCode, profile):
+    super(Timer, self).__init__(report, {"minutes": minutes, 'text': text}, htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
+    if align is not None:
+      if align == 'center':
+        self.style.css.margin_left = 'auto'
+        self.style.css.margin_right = 'auto'
+
+  @property
+  def _js__builder__(self):
+    return '''     
+      var time = data.minutes * 60, r = htmlObj, tmp=time;
+      setInterval(function(){
+        var c=tmp--, m = (c/60)>>0, s=(c-m*60)+'';
+        r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s
+        tmp != 0||(tmp=time)},1000);
+      '''
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
