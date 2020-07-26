@@ -201,14 +201,16 @@ class Vignets(object):
         if image is not None:
           if not hasattr(image, 'options'):
             split_url = os.path.split(image)
-            container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
+            container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0])
+            container.add(container.image)
         container.add(self.context.rptObj.ui.col([title, content]))
       else:
         container.add(self.context.rptObj.ui.col([title, content]))
         if image is not None:
           if not hasattr(image, 'options'):
             split_url = os.path.split(image)
-            container.add(self.context.rptObj.ui.img(split_url[1], path=split_url[0]))
+            container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0])
+            container.add(container.image)
     else:
       container = self.context.rptObj.ui.col(align=align, width=width, height=height, position="top")
       container.style.css.margin = "20px auto"
@@ -223,6 +225,70 @@ class Vignets(object):
           split_url = os.path.split(image)
           container.image = self.context.rptObj.ui.img(split_url[1], path=split_url[0])
           container.add(container.image)
+      container.add(self.context.rptObj.ui.col([title, content]))
+    return container
+
+  def video(self, title, content="", video=None, render="row", align="center", width=(90, '%'), height=(None, "px"), options=None):
+    """
+    Description:
+    ------------
+
+    Component to allow creation of a vignet embedding a video
+
+    Usage:
+    ---------
+
+    Related Pages:
+    --------------
+
+    Issue:
+    ------
+
+      https://github.com/epykure/epyk-ui/issues/92
+
+    """
+
+    def get_video(context, video):
+      if video is not None:
+        if not hasattr(video, 'options'):
+          if not video.startswith('http'):
+            split_url = os.path.split(video)
+            return context.rptObj.ui.media.video(split_url[1], path=split_url[0])
+
+          elif 'www.youtube' in video:
+            return context.rptObj.ui.media.youtube(html.HtmlMedia.Youtube.get_embed_link(video))
+      return None
+
+    options = options or {}
+    if render == "row":
+      container = self.context.rptObj.ui.row(align=align, width=width, height=height)
+      container.style.css.margin = "20px auto"
+      if not hasattr(title, 'options'):
+        title = self.context.rptObj.ui.titles.title(title)
+        title.style.css.display = "block"
+      if not hasattr(content, 'options'):
+        content = self.context.rptObj.ui.text(content)
+        content.style.css.display = "block"
+      if options.get('picture', 'left') == 'left':
+        video_content = get_video(self.context, video)
+      if video_content:
+        container.video = video_content
+        container.add(container.video)
+        container.add(self.context.rptObj.ui.col([title, content]))
+    else:
+      container = self.context.rptObj.ui.col(align=align, width=width, height=height, position="top")
+      container.style.css.margin = "20px auto"
+      if not hasattr(title, 'options'):
+        title = self.context.rptObj.ui.titles.title(title)
+        title.style.css.display = "block"
+      if not hasattr(content, 'options'):
+        content = self.context.rptObj.ui.text(content)
+        content.style.css.display = "block"
+
+      video_content = get_video(self.context, video)
+      if video_content:
+        container.video = video_content
+        container.add(container.video)
       container.add(self.context.rptObj.ui.col([title, content]))
     return container
 

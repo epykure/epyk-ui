@@ -884,6 +884,7 @@ class Banners(object):
     :param options:
     :param profile:
     """
+
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     div.style.css.padding = 5
     div.add(self.context.rptObj.ui.title(title))
