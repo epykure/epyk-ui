@@ -104,3 +104,22 @@ class Youtube(Html.Html):
     return '''
       <div %(attrs)s><iframe %(options)s></iframe></div>
       ''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), 'link': self.val, 'options': " ".join(opts)}
+
+  @staticmethod
+  def get_embed_link(youtube_link):
+    """
+
+    Description:
+    -------------
+    simple function to convert a youtube link to the embedded version
+
+    Usage:
+    ------
+
+      html.HtmlMedia.Youtube.get_embed_link('https://www.youtube.com/watch?v=iPGgnzc34tY')
+
+    :param youtube_link:
+    :return:
+    """
+
+    return 'http://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]
