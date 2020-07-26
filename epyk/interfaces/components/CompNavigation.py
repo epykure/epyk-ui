@@ -935,8 +935,10 @@ class Banners(object):
     div.add(content)
 
     div_logos = self.context.rptObj.ui.div("", align=align)
+    div.logos = []
     for logo in logos:
       img = self.context.rptObj.ui.img("%s?raw=true" % logo, path="https://github.com/epykure/ressources/blob/master/logos", width=("auto", ''))
+      div.logos.append(img)
       img.style.css.display = 'inline-block'
       img.style.css.cursor = 'pointer'
       img.style.css.filter = 'grayscale(100%)'
