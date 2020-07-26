@@ -903,3 +903,50 @@ class Banners(object):
                                 "%s_subject" % htmlCode, "%s_message" % htmlCode]
     return div
 
+  def sponsor(self, logos, title="Sponsors", content='', background=None, width=(100, '%'), height=("auto", ''), align="center", options=None,
+                 profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param logos:
+    :param title:
+    :param content:
+    :param background:
+    :param width:
+    :param height:
+    :param align:
+    :param options:
+    :param profile:
+    """
+    div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    if not hasattr(title, 'options'):
+      title = self.context.rptObj.ui.titles.title(title)
+      title.style.css.text_align = align
+      title.style.css.font_weight = 800
+      title.style.css.font_size = Defaults_css.font(15)
+    div.add(title)
+    if not hasattr(content, 'options'):
+      content = self.context.rptObj.ui.div(content, width=("auto", ""))
+      content.style.css.text_align = align
+      content.style.css.font_size = "inline-block"
+    div.add(content)
+
+    div_logos = self.context.rptObj.ui.div("", align=align)
+    for logo in logos:
+      img = self.context.rptObj.ui.img("%s?raw=true" % logo, path="https://github.com/epykure/ressources/blob/master/logos", width=("auto", ''))
+      img.style.css.display = 'inline-block'
+      img.style.css.cursor = 'pointer'
+      img.style.css.filter = 'grayscale(100%)'
+      img.style.hover({'filter': 'grayscale(0%)'})
+      img.style.css.margin = '0 5px'
+      div_logos.add(img)
+    div.add(div_logos)
+    div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
+    div.style.css.padding = "20px 15px"
+    div.style.css.margin = "auto"
+    div.style.css.color = self.context.rptObj.theme.greys[-1]
+    div.style.css.top = 0
+    return div
