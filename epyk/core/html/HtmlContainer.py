@@ -254,6 +254,7 @@ class Div(Html.Html):
     htmlObj.options.managed = False # Has to be defined here otherwise it is set to late
     if self.options.inline:
       htmlObj.style.css.display = 'inline-block'
+      htmlObj.style.css.font_weight = 900
     if not isinstance(self.val, list):
       self._vals = [self.val]
     self.val.append(htmlObj)
