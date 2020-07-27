@@ -151,7 +151,7 @@ class JsNumber(JsObject.JsObject):
     ----------
     :param value: Value. The maximum value for this object
     """
-    return JsNumber("min(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
+    return JsNumber("Math.min(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
 
   def max(self, value):
     """
@@ -163,7 +163,7 @@ class JsNumber(JsObject.JsObject):
     ----------
     :param value: Value. The minimum value for this object
     """
-    return JsNumber("max(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
+    return JsNumber("Math.max(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
 
   def sub(self, n):
     """

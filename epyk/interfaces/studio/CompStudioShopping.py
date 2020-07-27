@@ -66,23 +66,28 @@ class Shopping(object):
     :param options:
     :param profile:
     """
+    options = options or {}
     div = self.parent.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
-    if not hasattr(price, 'options'):
-      split_price = str(price).split(".")
-      if len(split_price) > 1:
-        div.price = self.parent.context.rptObj.ui.texts.number(split_price[0], options={"type_number": 'number'}, width=(None, "px"))
-        div.price.style.css.font_size = Defaults_css.font(10)
-        price_with_dec = self.parent.context.rptObj.ui.tags.sup("%s%s" % (self.parent.context.rptObj.py.encode_html(currency), split_price[1]), width=(None, "px"))
-        price_with_dec.style.css.font_size = Defaults_css.font(4)
-      else:
-        div.price = self.parent.context.rptObj.ui.texts.number(split_price[0], options={"type_number": 'number'}, width=(None, "px"))
-        div.price.style.css.font_size = Defaults_css.font(10)
-        price_with_dec = self.parent.context.rptObj.ui.tags.sup("%s00" % self.parent.context.rptObj.py.encode_html(currency), width=(None, "px"))
-        price_with_dec.style.css.font_size = Defaults_css.font(4)
-      div.add(self.parent.context.rptObj.ui.div([div.price, price_with_dec]))
+    if options.get("deleted", False):
+      div.price = self.parent.context.rptObj.ui.tags.delete(self.parent.context.rptObj.py.encode_html("%s%s" % (price, currency)), options={"type_number": 'number'}, width=(None, "px"))
     else:
-      div.price = price
-      div.add(div.price)
+      if not hasattr(price, 'options'):
+        split_price = str(price).split(".")
+        if len(split_price) > 1:
+          div.price = self.parent.context.rptObj.ui.texts.number(split_price[0], options={"type_number": 'number'}, width=(None, "px"))
+          div.price.style.css.font_size = Defaults_css.font(options.get("font_factor", 10))
+          price_with_dec = self.parent.context.rptObj.ui.tags.sup("%s%s" % (self.parent.context.rptObj.py.encode_html(currency), split_price[1]), width=(None, "px"))
+          price_with_dec.style.css.font_size = Defaults_css.font(options.get("font_factor", 10)/2)
+        else:
+          div.price = self.parent.context.rptObj.ui.texts.number(split_price[0], options={"type_number": 'number'}, width=(None, "px"))
+          div.price.style.css.font_size = Defaults_css.font(options.get("font_factor", 10))
+          price_with_dec = self.parent.context.rptObj.ui.tags.sup("%s00" % self.parent.context.rptObj.py.encode_html(currency), width=(None, "px"))
+          price_with_dec.style.css.font_size = Defaults_css.font(options.get("font_factor", 10)/2)
+        div.add(self.parent.context.rptObj.ui.div([div.price, price_with_dec]))
+        div.style.css.color = self.parent.context.rptObj.theme.colors[5]
+      else:
+        div.price = price
+        div.add(div.price)
     return div
 
   def price_from(self, price, text="from", currency="€", align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
@@ -120,8 +125,32 @@ class Shopping(object):
       div.add(div.price)
     return div
 
-  def price_discount(self):
-    pass
+  def price_discount(self, price, discount, align="left", width=(100, '%'), height=("auto", ''), options=None, profile=None):
+    """
+
+    :param price:
+    :param discount:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    div = self.parent.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    prev_price = self.price(price, width=("auto", ""), options={"font_factor": 2, "deleted": True})
+    prev_price.style.css.font_factor(-5)
+    prev_price.style.css.color = self.parent.context.rptObj.theme.greys[4]
+    new_price = self.price("%.2f" % (price - (price * discount) / 100), width=("auto", ""))
+    discount = self.discount(discount)
+    div.prev_price = prev_price
+    div.price = new_price
+    div.discount = discount
+    prices = self.parent.context.rptObj.ui.div([prev_price, new_price], width=("auto, "))
+    prices.style.css.display = "inline-block"
+    div.add(prices)
+    discount.style.css.float = "right"
+    div.add(discount)
+    return div
 
   def description(self, text, url, height=("auto", ''), options=None, profile=None):
     """
@@ -141,24 +170,33 @@ class Shopping(object):
     html_link.style.css.color = self.parent.context.rptObj.theme.greys[-1]
     return html_link
 
-  def order(self, price, quantity, code, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
+  def order(self, quantity, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param price:
     :param quantity:
-    :param code:
     :param align:
     :param width:
     :param height:
     :param options:
     :param profile:
     """
-    div = self.parent.context.rptObj.ui.select(width=width, height=height, options=options, profile=profile, align=align)
-
+    div = self.parent.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
+    div.plus = self.parent.context.rptObj.ui.icon("fa fa-plus")
+    div.minus = self.parent.context.rptObj.ui.icon("fa fa-minus")
+    div.plus.style.css.margin = "0 5px"
+    div.minus.style.css.margin = "0 5px"
+    div.input = self.parent.context.rptObj.ui.inputs.d_text(quantity, width=(20, "px"))
+    div.input.style.css.border_radius = "20px"
+    div.input.readonly()
+    div.add(div.minus)
+    div.add(div.input)
+    div.add(div.plus)
+    div.minus.click([div.input.build(div.input.dom.content.number.add(-1).max(0))])
+    div.plus.click([div.input.build(div.input.dom.content.number.add(1))])
     return div
 
   def discount(self, percent, align="left", width=('auto', ''), height=("auto", ''), options=None, profile=None):
@@ -261,13 +299,22 @@ class Shopping(object):
     comp = self.parent.context.rptObj.ui.charts.skillbars(vote_records, y_column='value', x_axis='star', options=dflt_options).css({"width": "%s%s" % (width[0], width[1])})
     return comp
 
-  def question(self, rating, customers, url=None, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
-    pass
+  def question(self, question, answers=None, url=None, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
+    table = self.parent.context.rptObj.ui.layouts.table(options={"header": False})
+    if url is not None:
+      table += ["Question: ", self.parent.context.rptObj.ui.link(question, url)]
+    else:
+      table += ["Question: ", question]
+    table[-1][0].style.css.min_width = 100
+    table[-1][0].style.css.bold()
+    table[-1][1].style.css.width = "100%"
+    table[-1][1].style.css.text_align = "left"
+    table += ["Answers: ", "".join(answers or [])]
+    table[-1][0].style.css.min_width = 100
+    table[-1][0].style.css.bold()
+    return table
 
   def review(self, rating, title, comment, author, date, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
-    pass
-
-  def delivery(self, date, price=None, icon="", align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     pass
 
   def availability(self, flag, comment=None, align="left", width=('auto', ''), height=("auto", ''), options=None, profile=None):

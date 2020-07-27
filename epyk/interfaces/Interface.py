@@ -632,7 +632,7 @@ class Components(object):
       https://davidshimjs.github.io/qrcodejs/
 
     TODO: Add options
-    
+
     Attributes:
     ----------
     :param data: String. The value to be converted to QR Code
