@@ -125,7 +125,7 @@ class Shopping(object):
       div.add(div.price)
     return div
 
-  def price_discount(self, price, discount, align="left", width=(100, '%'), height=("auto", ''), options=None, profile=None):
+  def price_discount(self, price, discount, align="left", width=(120, 'px'), height=("auto", ''), options=None, profile=None):
     """
 
     :param price:
