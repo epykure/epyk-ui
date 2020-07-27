@@ -480,6 +480,9 @@ class Table(Html.Html):
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.__options = OptPanel.OptionPanelTable(report, options)
     self.header, self.body, self.footer = TSection(self._report, 'thead', options=options), TSection(self._report, 'tbody', options=options), TSection(self._report, 'tfoot', options=options)
+    self.header.options.managed = False
+    self.body.options.managed = False
+    self.footer.options.managed = False
     self.caption = None
     if rows is not None:
       for row in rows:

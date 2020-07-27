@@ -485,16 +485,25 @@ class SliderDates(SliderDate):
 class SkillBar(Html.Html):
   name = 'Skill Bars'
 
-  def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, profile):
+  def __init__(self, report, data, y_column, x_axis, title, width, height, htmlCode, options, profile):
     super(SkillBar, self).__init__(report, "", css_attrs={"width": width, "height": height}, htmlCode=htmlCode, profile=profile)
     self.add_title(title, options={'content_table': False})
     self.innerPyHTML = report.ui.layouts.table(options={"header": False}) # data, y_column, x_axis)
     self.innerPyHTML.options.managed = False
     for rec in data:
-      value = report.ui.div(EntHtml4.NO_BREAK_SPACE).css({"width": '%spx' % rec[y_column], 'margin-left': "2px",  "background": report.theme.success[0]})
+      value = report.ui.div(EntHtml4.NO_BREAK_SPACE).css({"width": '%s%s' % (rec[y_column], options.get("unit", 'px')), 'margin-left': "2px",  "background": options.get("background", report.theme.success[0])})
       value.options.managed = False
-      self.innerPyHTML += [rec[x_axis], value]
+      if options.get("values", False):
+        self.innerPyHTML += [rec[x_axis], value, "%s%s" % (int(rec[y_column]), options.get("unit", 'px'))]
+        self.innerPyHTML[-1][2].style.css.padding = "0 5px"
+      else:
+        self.innerPyHTML += [rec[x_axis], value]
       self.innerPyHTML[-1][1].attr["align"] = 'left'
+      self.innerPyHTML[-1][0].style.css.padding = "0 5px"
+      self.innerPyHTML[-1][1].style.css.width = "100%"
+      if options.get("borders", False):
+        self.innerPyHTML[-1][1].style.css.border = "1px solid %s" % report.theme.greys[4]
+        self.innerPyHTML[-1][1][0].style.css.margin_left = 0
     self.innerPyHTML.style.clear()
     self.css({"margin": '5px 0'})
 

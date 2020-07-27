@@ -23,7 +23,7 @@ class Graphs(object):
     self.context = context
 
   def skillbars(self, records=None, y_column=None, x_axis=None, title=None, width=(100, '%'),
-                height=(None, 'px'), htmlCode=None, profile=False):
+                height=(None, 'px'), htmlCode=None, options=None, profile=False):
     """
     Description:
     ------------
@@ -34,7 +34,7 @@ class Graphs(object):
       {"label": 'python', 'value': 12},
       {"label": 'Java', 'value': 5},
       {"label": 'Javascript', 'value': 80}]
-    rptObj.ui.charts.skillbars(records, y_column=['value'], x_axis=['label']).css({"width": '100px'})
+    rptObj.ui.charts.skillbars(records, y_column='value', x_axis='label').css({"width": '100px'})
 
     Related Pages:
 
@@ -54,7 +54,8 @@ class Graphs(object):
     if y_column is None or x_axis is None:
       raise Exception("seriesName and axis must be defined")
 
-    html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, records, y_column, x_axis, title, width, height, htmlCode,  profile)
+    options = options or {}
+    html_skillbar = html.HtmlEvent.SkillBar(self.context.rptObj, records, y_column, x_axis, title, width, height, htmlCode, options, profile)
     return html_skillbar
 
   def sparkline(self, chart_type, data, title=None, options=None, column=None, width=(None, "%"), height=(None, "px")):

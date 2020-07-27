@@ -413,7 +413,10 @@ class Components(object):
     """
     Description:
     ------------
+    Group all the business configuraiton together.
+    This module will rely on the base components available in the UI.
 
+    This will only provide ready to use component for standard business cases.
     """
     return CompStudio.Sudio(self)
 
