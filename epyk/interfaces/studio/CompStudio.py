@@ -14,7 +14,7 @@ class Sudio(object):
     """
     Description:
     ------------
-
+    Property for all the component designed to be used in a e-commerce website
     """
     return CompStudioShopping.Shopping(self)
 

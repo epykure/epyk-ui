@@ -317,6 +317,9 @@ class Shopping(object):
   def review(self, rating, title, comment, author, date, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     pass
 
+  def photos(self):
+    pass
+
   def availability(self, flag, comment=None, align="left", width=('auto', ''), height=("auto", ''), options=None, profile=None):
     """
     Description:
