@@ -167,6 +167,13 @@ JS_IMPORTS = {
     ],
     'website': 'https://openexchangerates.github.io/accounting.js/'},
 
+  # QR Code
+  'qrcodejs': {
+    'modules': [
+      {'script': 'qrcode.min.js', 'version': '1.0.0', 'path': 'qrcodejs/%(version)s/', 'cdnjs': CDNJS_REPO},
+    ],
+    'website': 'https://davidshimjs.github.io/qrcodejs/'},
+
   # data transformation
   'underscore': {
     'register': {'alias': 'underscore', 'module': 'underscore-min', 'npm': 'underscore', 'npm_path': ''},

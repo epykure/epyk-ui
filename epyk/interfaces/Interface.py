@@ -621,6 +621,32 @@ class Components(object):
       h_json.style.css.overflow = 'auto'
     return h_json
 
+  def qrcode(self, data=None, width=(None, '%'), height=(100, '%'), options=None, profile=None):
+    """
+    Description:
+    ------------
+    HTML component to display a QR Code from a string
+
+    Related Pages:
+
+      https://davidshimjs.github.io/qrcodejs/
+
+    TODO: Add options
+    
+    Attributes:
+    ----------
+    :param data: String. The value to be converted to QR Code
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Dictionary with the component properties
+    :param profile: Boolean
+    """
+    data = data or {}
+    h_qrcode = html.HtmlOthers.HtmlQRCode(self.rptObj, data, width, height, options, profile)
+    if height[1] != '%':
+      h_qrcode.style.css.overflow = 'auto'
+    return h_qrcode
+
   def postit(self, components=None, anchor=None):
     """
     Description:

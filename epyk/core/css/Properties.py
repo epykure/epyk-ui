@@ -1690,6 +1690,8 @@ class CssMixin(object):
   @min_width.setter
   def min_width(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"min-width": val})
 
   @property

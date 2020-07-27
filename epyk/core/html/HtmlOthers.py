@@ -489,3 +489,23 @@ class Slides(Html.Html):
 
       comps.append(s.html())
     return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.title.html(), "".join(comps))
+
+
+class HtmlQRCode(Html.Html):
+  name = 'QR Code'
+  requirements = ('qrcodejs', )
+
+  def __init__(self, report, data, width, height, options, profile):
+    super(HtmlQRCode, self).__init__(report, data, profile=profile, css_attrs={"height": height, "width": width})
+
+  @property
+  def _js__builder__(self):
+    return '''
+    console.log(htmlObj.id);
+    console.log(data);
+    new QRCode(htmlObj, data)
+    '''
+
+  def __str__(self):
+    self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())
+    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
