@@ -3,6 +3,7 @@
 
 from epyk.interfaces.studio import CompStudioBlog
 from epyk.interfaces.studio import CompStudioShopping
+from epyk.interfaces.studio import CompStudioNews
 
 
 class Sudio(object):
@@ -14,7 +15,7 @@ class Sudio(object):
     """
     Description:
     ------------
-    Property for all the component designed to be used in a e-commerce website
+    Property for all the components designed to be used in a e-commerce website
     """
     return CompStudioShopping.Shopping(self)
 
@@ -23,7 +24,7 @@ class Sudio(object):
     """
     Description:
     ------------
-
+    Property for all the components to be used in a blog website
     """
     return CompStudioBlog.Blog(self)
 
@@ -57,4 +58,4 @@ class Sudio(object):
     Description:
     ------------
     """
-    return
+    return CompStudioNews.News(self)

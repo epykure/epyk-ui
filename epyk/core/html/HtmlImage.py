@@ -20,11 +20,11 @@ class Image(Html.Html):
 
   def __init__(self, report, image, path, align, htmlCode, width, height, profile, options):
     if path is None:
-      if Defaults.SERVER_PATH is not None:
+      if Defaults.SERVER_PATH is not None and not image.startswith("http"):
         path = Defaults.SERVER_PATH
       else:
-        path = os.path.split(image[0])[0]
-        image = os.path.split(image[0])[-1]
+        path = os.path.split(image)[0]
+        image = os.path.split(image)[-1]
     super(Image, self).__init__(report, {'path': path, 'image': image}, htmlCode=htmlCode, profile=profile,
                                 css_attrs={"width": width, "height": height})
     self._jsStyles = options
@@ -72,7 +72,7 @@ class AnimatedImage(Html.Html):
 
   def __init__(self, report, image, text, title, url, path, width, height, profile):
     if path is None:
-      if Defaults.SERVER_PATH is not None:
+      if Defaults.SERVER_PATH is not None and not image[0].startswith("http"):
         path = Defaults.SERVER_PATH
       else:
         path = os.path.split(image[0])[0]

@@ -523,7 +523,7 @@ class PyExt(object):
     Description:
     ------------
     Property to the Markdown String conversion """
-    return PyMarkdown.Convertor(self._report)
+    return PyMarkdown.MarkDown(self._report)
 
   def import_lib(self, lib_name, folder="libs", report_name=None, path=None):
     """
