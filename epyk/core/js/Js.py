@@ -589,6 +589,26 @@ class JsBase(object):
 
     return JsQuery.JQuery(None)
 
+  def eval(self, jsData, jsFnc=None):
+    """
+    Description:
+    ------------
+    The eval() function evaluates JavaScript code represented as a string.
+
+    Warning: Executing JavaScript from a string is an enormous security risk.
+    It is far too easy for a bad actor to run arbitrary code when you use eval(). See Never use eval()!, below.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
+
+    Attributes:
+    ----------
+    :param jsData: String. Data to be evaluated
+    :param jsFnc:
+    """
+    return JsObject.JsObject("eval(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
+
   def socketio(self, htmlCode=None):
     """
     Description:
