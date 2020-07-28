@@ -645,9 +645,10 @@ class Col(Html.Html):
 
   def __init__(self, report, htmlObjs, position, width, height, align, helper, options, profile):
     self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
-    super(Col, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    super(Col, self).__init__(report, [], profile=profile)
     self.__options, self.__set_size = OptPanel.OptionGrid(report, options), None
     self.style.clear_all(no_default=True)
+    self.css({"width": width, "height": height})
     if htmlObjs is not None:
       for htmlObj in htmlObjs:
         self.__add__(htmlObj)

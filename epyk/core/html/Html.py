@@ -790,7 +790,7 @@ Attributes:
     """
     self._report.components.move_to_end(self.htmlCode)
 
-  def css(self, key, value=None, reset=False):
+  def css(self, key=None, value=None, reset=False):
     """
     Description:
     -----------
@@ -807,6 +807,9 @@ http://api.jquery.com/css/
 
     :return: The python object itself
     """
+    if key is None and value is None:
+      return self.attr['css']
+
     if reset:
       self.style.css.attrs = {}
       self.attr['css'] = self.style.css.attrs
