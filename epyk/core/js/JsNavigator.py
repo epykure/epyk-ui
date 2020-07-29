@@ -1,6 +1,5 @@
-"""
-
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsString
@@ -167,7 +166,7 @@ class JsNavigator(object):
 
       https://www.w3schools.com/js/js_window_navigator.asp
     """
-    return JsString.JsString("navigator.onLine", isPyData=False)
+    return JsBoolean.JsBoolean("navigator.onLine", isPyData=False)
 
   @property
   def platform(self):

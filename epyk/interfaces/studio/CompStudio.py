@@ -7,6 +7,7 @@ from epyk.interfaces.studio import CompStudioNews
 from epyk.interfaces.studio import CompStudioDashboard
 from epyk.interfaces.studio import CompStudioManagement
 from epyk.interfaces.studio import CompStudioVitrine
+from epyk.interfaces.studio import CompStudioEvent
 
 
 class Sudio(object):
@@ -38,6 +39,14 @@ class Sudio(object):
     ------------
     """
     return CompStudioVitrine.Vitrine(self)
+
+  @property
+  def events(self):
+    """
+    Description:
+    ------------
+    """
+    return CompStudioEvent.Event(self)
 
   @property
   def management(self):

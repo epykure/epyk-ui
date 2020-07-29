@@ -489,6 +489,39 @@ class Icons(object):
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
+  def messenger(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
+                htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-facebook-f <https://fontawesome.com/icons/facebook-f>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.facebook()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
+
+    Attributes:
+    ----------
+    :param text:
+    :param url:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
+    icon = self.awesome('fab fa-facebook-messenger', text, tooltip, position, width, width, htmlCode, profile)
+    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0078FF', 'padding': '3px'})
+    icon.style.add_classes.div.background_hover()
+    icon.click([self.context.rptObj.js.navigateTo(url)])
+    return icon
+
   def twitter(self, text=None, url="https://twitter.com", position=None, tooltip="Twitter", width=(25, 'px'),
               htmlCode=None, profile=None):
     """
@@ -751,6 +784,38 @@ class Icons(object):
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
     icon.click([self.context.rptObj.js.navigateTo(url)])
+    return icon
+
+  def mail(self, text=None, url="", position=None, tooltip="Share by mail",
+                    width=(25, 'px'), htmlCode=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-stack-overflow <https://fontawesome.com/icons/stack-overflow>`_ icon
+
+    Usage::
+
+      rptObj.ui.icons.mail()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlButton.IconEdit`
+
+    Attributes:
+    ----------
+    :param text:
+    :param url:
+    :param position:
+    :param tooltip:
+    :param width:
+    :param htmlCode:
+    :param profile:
+    """
+    icon = self.awesome("far fa-envelope", text, tooltip, position, width, width, htmlCode, profile)
+    icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
+    icon.icon.css({"margin-right": "auto", "margin": "auto", 'padding': '3px'})
+    icon.style.add_classes.div.background_hover()
     return icon
 
   def tick(self, flag=True, text=None, icons=(JsFontAwesome.ICON_CHECK, JsFontAwesome.ICON_TIMES), position=None,
