@@ -270,6 +270,32 @@ class Shopping(object):
       container.add(comp_tag)
     return container
 
+  def label(self, component, name, align="center", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param component:
+    :param name:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    label = self.parent.context.rptObj.ui.text(name)
+    label.style.css.background = "orange"
+    label.style.css.color = "white"
+    label.style.css.padding = "0 10px"
+    label.style.css.border_radius = "0 0 20px 0"
+    container = self.parent.context.rptObj.ui.div([label, self.parent.context.rptObj.ui.div(component, align=align).css({'margin': '5px'})],
+                align="left", width=width, height=height, options=options, profile=profile)
+
+    container.style.css.border = "1px solid orange"
+    return container
+
   def quality(self, votes, url=None, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     """
     Description:
@@ -317,8 +343,48 @@ class Shopping(object):
   def review(self, rating, title, comment, author, date, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     pass
 
-  def photos(self):
-    pass
+  def album(self, pictures, selected=0, align="left", width=(500, 'px'), height=("auto", ''), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param pictures:
+    :param selected:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    container = self.parent.context.rptObj.ui.div([], align=align, width=width, height=height, options=options, profile=profile)
+    left_panel = self.parent.context.rptObj.ui.div([], align=align, width=(50, 'px'), height=(100, "%"), options=options, profile=profile)
+    left_panel.style.css.display = "inline-block"
+    left_panel.style.css.vertical_align = "top"
+    right_panel = self.parent.context.rptObj.ui.div([], align=align, width=("calc(100% - 60px)", ''), height=height, options=options, profile=profile)
+    right_panel.style.css.display = "inline-block"
+    right_panel.style.css.padding = 5
+    img_selected = self.parent.context.rptObj.ui.img(pictures[selected])
+    img_selected.style.css.float = "right"
+    right_panel.add(img_selected)
+
+    for i, pic in enumerate(pictures):
+      if isinstance(pic, dict):
+        picture = pic['min']
+        full_picture = pic['max']
+      else:
+        picture = pic
+        full_picture = pic
+      img = self.parent.context.rptObj.ui.img(picture, width=(40, "px"))
+      img.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.greys[-1]
+      img.style.css.margin = "5px 10px"
+      img.style.css.cursor = "pointer"
+      img.style.hover({"border": "1px solid red"})
+      img.click([img_selected.dom.src(full_picture)])
+      left_panel.add(img)
+    container.add(self.parent.context.rptObj.ui.div([left_panel, right_panel]))
+    return container
 
   def availability(self, flag, comment=None, align="left", width=('auto', ''), height=("auto", ''), options=None, profile=None):
     """

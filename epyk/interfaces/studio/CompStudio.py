@@ -4,6 +4,9 @@
 from epyk.interfaces.studio import CompStudioBlog
 from epyk.interfaces.studio import CompStudioShopping
 from epyk.interfaces.studio import CompStudioNews
+from epyk.interfaces.studio import CompStudioDashboard
+from epyk.interfaces.studio import CompStudioManagement
+from epyk.interfaces.studio import CompStudioVitrine
 
 
 class Sudio(object):
@@ -29,12 +32,12 @@ class Sudio(object):
     return CompStudioBlog.Blog(self)
 
   @property
-  def commercial(self):
+  def vitrine(self):
     """
     Description:
     ------------
     """
-    return
+    return CompStudioVitrine.Vitrine(self)
 
   @property
   def management(self):
@@ -42,7 +45,7 @@ class Sudio(object):
     Description:
     ------------
     """
-    return
+    return CompStudioManagement.Management(self)
 
   @property
   def dashboards(self):
@@ -50,7 +53,7 @@ class Sudio(object):
     Description:
     ------------
     """
-    return
+    return CompStudioDashboard.Dashboard(self)
 
   @property
   def news(self):

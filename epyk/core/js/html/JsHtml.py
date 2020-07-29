@@ -641,6 +641,17 @@ class JsHtmlRich(JsHtml):
     return '%s.innerHTML = ""' % self.varName
 
 
+class JsHtmlImg(JsHtml):
+
+  @property
+  def content(self):
+    return ContentFormatters(self._report, "%s.src" % self.varName)
+
+  def src(self, image):
+    image = JsUtils.jsConvertData(image, None)
+    return JsFncs.JsFunctions("%s.src = %s" % (self.varName, image))
+
+
 class JsHtmlButton(JsHtml):
 
   @property

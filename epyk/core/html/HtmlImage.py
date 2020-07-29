@@ -35,6 +35,22 @@ class Image(Html.Html):
       elif align == "right":
         self.css({"margin-left": "auto", "margin-right": "0", "display": "block"})
 
+  @property
+  def dom(self):
+    """
+    Javascript Functions
+
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript by default.
+
+    :return: A Javascript Dom object
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtmlImg(self, report=self._report)
+    return self._dom
+
   def goto(self, url, jsFncs=None, profile=False, name="_blank", source_event=None):
     """
     Description:
