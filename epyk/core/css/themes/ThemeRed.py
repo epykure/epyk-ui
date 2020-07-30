@@ -23,3 +23,8 @@ class Red(Theme.Theme):
   _colors = ["#FFEBEE", '#FFCDD2', '#EF9A9A', '#E57373', '#EF5350', '#F44336', '#E53935', '#D32F2F', '#C62828', '#B71C1C']
   _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242', '#212121', '#000000']
   _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#3bb194')
+
+
+class Pink(Red):
+  _colors = ["#ffffff", "#fff5f6", "#ffe9f4", "#ffdbe6", "#ffced9", "#ffc0cb", "#f1b3be", "#e3a5b0", "#d598a3"]
+

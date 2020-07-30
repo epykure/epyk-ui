@@ -72,6 +72,8 @@ class Report(object):
     """
     if self.__body is None:
       self.__body = html.Html.Body(self, None, htmlCode='body')
+      self.__body.style.css.background = self.theme.greys[0]
+      self.__body.style.css.color = self.theme.greys[-1]
     return self.__body
 
   @body.setter

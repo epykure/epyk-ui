@@ -330,6 +330,7 @@ UTF8_TO_HTML = {
   b'\xc3\xbd': entities.EntUtf8.LATIN_SMALL_LETTER_Y_WITH_ACUTE,
   b'\xc3\xbe': entities.EntUtf8.LATIN_SMALL_LETTER_THORN,
   b'\xc3\xbf': entities.EntUtf8.LATIN_SMALL_LETTER_Y_WITH_DIAERESIS,
+  b'\xe2\x80\x94': entities.EntUtf8.EM_DASH,
 
 }
 
