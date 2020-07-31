@@ -1,6 +1,7 @@
 
 from epyk.core.css import Colors
 from epyk.core.css import Defaults_css
+from epyk.core.css import FontFamily
 
 
 def autoPrefixer(prop):
@@ -1158,6 +1159,8 @@ class CssMixin(object):
   @font_family.setter
   def font_family(self, val):
     val = val if val is not None else 'None'
+    if val not in self.htmlObj._report._props['css']["font-face"] and val in FontFamily.GoogleFonts.fonts:
+      self.htmlObj._report.headers.links.stylesheet(FontFamily.GoogleFonts.href % val)
     self.htmlObj.css({"font-family": val})
 
   @property

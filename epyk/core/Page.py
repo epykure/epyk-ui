@@ -52,7 +52,8 @@ class Report(object):
         'datasets': {}, # Input data used in the various component (Page global variables)
         'configs': {}, # Global server configurations used for connection to the backend
         'builders': OrderedSet()}, # Trigger the component generation using the Js Constructor
-        'context': {'framework': 'JS'} # Used on the Python side to make some decisions
+        'context': {'framework': 'JS'}, # Used on the Python side to make some decisions
+        'css': {"font-face": {}} # Add report font-face CSS definition
     }
     self.components = collections.OrderedDict() # Components for the entire page
     self.start_time, self.inputs, self._propagate = time.time(), inputs or {}, []

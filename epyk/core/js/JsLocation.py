@@ -251,7 +251,7 @@ class JsLocation(object):
     if href is None:
       return JsString.JsString("location.href", isPyData=False)
 
-    if href.startswith("www."):
+    if not hasattr(href, 'toStr') and href.startswith("www."):
       href = r"http:\\%s" % href if not secured else r"https:\\%s" % href
     return JsObject.JsObject("location.href = %s" % JsUtils.jsConvertData(href, None))
 
@@ -279,7 +279,7 @@ class JsLocation(object):
 
     :return:
     """
-    if url.startswith("www."):
+    if not hasattr(url, 'toStr') and url.startswith("www."):
       url = r"http:\\%s" % url if not secured else r"https:\\%s" % url
     url = JsUtils.jsConvertData(url, None)
     name = JsUtils.jsConvertData(name, None)

@@ -5,11 +5,15 @@ import os
 import datetime
 
 from epyk.core.css import Defaults as Defaults_css
+from epyk.core.css.themes import ThemeDark
 
 
 class News(object):
   def __init__(self, context):
     self.parent = context
+
+  def theme(self):
+    self.parent.context.rptObj.theme = ThemeDark.Grey()
 
   def miniature(self, title, url, image, category="", time=None, align="left", width=(100, '%'), height=(None, "px"), options=None, profile=None):
     """
@@ -27,6 +31,7 @@ class News(object):
     container = self.parent.context.rptObj.ui.col(align=align, width=width, height=height, position="top")
     container.style.css.margin = "20px auto"
     container.style.css.padding = "5px"
+    container.style.css.background = self.parent.context.rptObj.theme.greys[0]
     if not hasattr(category, 'options'):
       category = self.parent.context.rptObj.ui.text(category)
       category.style.css.display = "block"
@@ -115,7 +120,7 @@ class News(object):
     component.add(icon)
     return component
 
-  def time(self, date, icon="", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
+  def time(self, date, icon="far fa-clock", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
     """
 
     :param date:
@@ -125,7 +130,7 @@ class News(object):
     current = datetime.datetime.now()
     delta_time = current - date_time_obj
     component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
-    icon = self.parent.context.rptObj.ui.icons.awesome("far fa-clock")
+    icon = self.parent.context.rptObj.ui.icons.awesome(icon)
     icon.icon.style.css.font_factor(2)
     component.add(icon)
     if delta_time.days == 0:
@@ -200,3 +205,95 @@ class News(object):
     text.style.css.bold()
     text.style.css.font_factor(15)
     return self.parent.context.rptObj.ui.div([text, hr], align=align, width=width, height=height, options=options, profile=profile)
+
+  def comments(self, count, url, icon="far fa-comment-alt", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
+    """
+
+    :param count:
+    :param url:
+    :param icon:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
+    icon = self.parent.context.rptObj.ui.icons.awesome(icon)
+    icon.icon.style.css.font_factor(0)
+    component.add(icon)
+    link = self.parent.context.rptObj.ui.link(count, url)
+    link.style.css.color = self.parent.context.rptObj.theme.greys[6]
+    component.add(link)
+    return component
+
+  def live(self, icon="fas fa-circle"):
+    """
+
+    """
+    live = self.parent.context.rptObj.ui.icons.awesome(icon)
+    live.style.css.color = self.parent.context.rptObj.theme.danger[1]
+    live.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.danger[1]
+    live.style.css.border_radius = "50px"
+    live.style.css.padding = "2px"
+    live.style.css.margin = 0
+    live.icon.style.css.font_factor(2)
+    live.icon.style.css.margin_right = 0
+    live.icon.style.css.margin = 0
+    live.icon.style.css.padding_bottom = "2px"
+    live.icon.style.effects.blink(2)
+    return live
+
+  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None,
+             tooltip=None, profile=None, options=None):
+    """
+
+    :param text:
+    :param icon:
+    :param width:
+    :param height:
+    :param align:
+    :param htmlCode:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
+    button = self.parent.context.rptObj.ui.button(text, icon, width=width, height=height, options=options, tooltip=tooltip, profile=profile, align=align)
+    button.style.clear()
+    button.style.css.padding = "0 10px"
+    button.style.css.background = self.parent.context.rptObj.theme.greys[0]
+    button.style.hover({"color": self.parent.context.rptObj.theme.success[1]})
+    return button
+
+  def stepper(self):
+    """
+
+    :return:
+    """
+    data = [
+        {"value": 'test 1', "status": 'success', 'label': 'test'},
+        {"value": 'test 2', "status": 'error'},
+        {"value": 'test 3', "status": 'pending'}]
+    stepper = self.parent.context.rptObj.ui.steppers.vertical(data)
+    return stepper
+
+  def search(self):
+    pass
+
+  def audio(self, text, url, icon="fas fa-volume-up"):
+    """
+
+    :param text:
+    :param url:
+    :param icon:
+    """
+    icon = self.parent.context.rptObj.ui.icons.awesome(icon)
+    icon.icon.style.css.font_factor(0)
+    icon.icon.style.css.color = self.parent.context.rptObj.theme.greys[-1]
+    icon.options.managed = False
+    link = self.parent.context.rptObj.ui.link("%s %s" % (icon.html(), text), url)
+    link.style.css.background = self.parent.context.rptObj.theme.greys[0]
+    link.style.css.color = self.parent.context.rptObj.theme.greys[-1]
+    link.style.css.padding = "2px 5px"
+    return link
+

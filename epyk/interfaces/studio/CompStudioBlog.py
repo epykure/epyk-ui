@@ -11,8 +11,7 @@ class Blog(object):
   def title(self, text):
     """
 
-    :param title:
-    :return:
+    :param text:
     """
     text = self.parent.context.rptObj.py.encode_html(text)
     return self.parent.context.rptObj.ui.title(text)
@@ -25,7 +24,6 @@ class Blog(object):
     """
 
     :param text:
-    :return:
     """
     text = self.parent.context.rptObj.py.encode_html(text)
     return self.parent.context.rptObj.ui.tags.i(text)
@@ -34,7 +32,6 @@ class Blog(object):
     """
 
     :param text:
-    :return:
     """
     text = self.parent.context.rptObj.py.encode_html(text)
     return self.parent.context.rptObj.ui.text(text, align="center")
@@ -67,3 +64,9 @@ class Blog(object):
 
   def video(self, img):
     return self.parent.context.rptObj.ui.img(img)
+
+
+class Gallery(object):
+
+  def __init__(self, context):
+    self.parent = context

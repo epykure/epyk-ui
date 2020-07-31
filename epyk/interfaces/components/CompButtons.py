@@ -101,7 +101,6 @@ class Buttons(object):
     :param htmlCode:
     :param options:
     :param profile:
-    :return:
     """
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode, tooltip=None, profile=profile, options=options)
     html_button.style.position = "absolute"

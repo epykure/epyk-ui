@@ -4,11 +4,26 @@
 import os
 
 from epyk.core.css import Defaults as Defaults_css
+from epyk.core.css.themes import ThemeBlue
 
 
 class Shopping(object):
   def __init__(self, context):
     self.parent = context
+
+  def theme(self):
+    self.parent.context.rptObj.theme = ThemeBlue.Blue()
+
+  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None,
+             tooltip=None, profile=None, options=None):
+    button = self.parent.context.rptObj.ui.button(text, icon, width=width, height=height, options=options, tooltip=tooltip, profile=profile, align=align)
+    button.style.clear()
+    button.style.css.padding = "0 10px"
+    button.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.greys[-1]
+    button.style.css.border_radius = 5
+    button.style.css.background = self.parent.context.rptObj.theme.greys[0]
+    button.style.hover({"color": self.parent.context.rptObj.theme.success[1]})
+    return button
 
   def product(self, content, price, image, rating=None, title=None, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     """
@@ -286,14 +301,14 @@ class Shopping(object):
     :param profile:
     """
     label = self.parent.context.rptObj.ui.text(name)
-    label.style.css.background = "orange"
-    label.style.css.color = "white"
+    label.style.css.background = self.parent.context.rptObj.theme.colors[-1]
+    label.style.css.color = self.parent.context.rptObj.theme.greys[0]
     label.style.css.padding = "0 10px"
     label.style.css.border_radius = "0 0 20px 0"
     container = self.parent.context.rptObj.ui.div([label, self.parent.context.rptObj.ui.div(component, align=align).css({'margin': '5px'})],
                 align="left", width=width, height=height, options=options, profile=profile)
 
-    container.style.css.border = "1px solid orange"
+    container.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.colors[-1]
     return container
 
   def quality(self, votes, url=None, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
@@ -328,7 +343,9 @@ class Shopping(object):
   def question(self, question, answers=None, url=None, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     table = self.parent.context.rptObj.ui.layouts.table(options={"header": False})
     if url is not None:
-      table += ["Question: ", self.parent.context.rptObj.ui.link(question, url)]
+      link = self.parent.context.rptObj.ui.link(question, url)
+      link.style.css.color = self.parent.context.rptObj.theme.colors[6]
+      table += ["Question: ", link]
     else:
       table += ["Question: ", question]
     table[-1][0].style.css.min_width = 100
@@ -411,3 +428,8 @@ class Shopping(object):
       comp_availability.style.css.bold()
       comp_availability._vals = comment or "Not Available"
     return comp_availability
+
+
+class Resto(object):
+  def __init__(self, context):
+    self.parent = context

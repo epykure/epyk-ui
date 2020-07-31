@@ -7,6 +7,7 @@ class Attrs(Properties.CssMixin):
   def __init__(self, htmlObj):
     self.htmlObj, self.attrs = self, {}
     self.orign_htmlObj = htmlObj
+    self._report = htmlObj._report
 
   def css(self, attrs):
     """

@@ -418,7 +418,7 @@ class Components(object):
 
     This will only provide ready to use component for standard business cases.
     """
-    return CompStudio.Sudio(self)
+    return CompStudio.Studio(self)
 
   @property
   def forms(self):

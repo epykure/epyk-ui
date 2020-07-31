@@ -191,6 +191,24 @@ class Meta(object):
     return "\n".join(h)
 
 
+class Links(object):
+
+  def __init__(self, header):
+    self.__header = header
+
+  def stylesheet(self, href, type="text/css"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param href:
+    :param type:
+    """
+    self.__header._links.append({"href": href, "type": type, "rel": "stylesheet"})
+
+
 class Header(object):
   def __init__(self, report=None):
     self._headers, self._links, self._styles, self._scripts, self._base, self.__meta = {}, [], [], [], None, None
@@ -309,18 +327,31 @@ class Header(object):
 
     Attributes:
     ----------
-    :param url:
-
-    :return:
+    :param url: String. The url full path
     """
     self._favicon_url = url
     return self
+
+  @property
+  def links(self):
+    """
+    Description:
+    ------------
+    The various HTML page header links
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/dom_obj_link.asp
+    """
+    return Links(self)
 
   def __str__(self):
     result = [str(self.meta)]
     if self._headers.get("title") is not None:
       result.append("<title>%s</title>" % self._headers.get("title"))
     result.append("<link rel='icon' href='%s' type='image/x-icon'/ >" % self._favicon_url)
+    for link in self._links:
+      result.append("<link rel='%(rel)s' type='%(type)s' href='%(href)s'/ >" % link)
     result.extend(self._scripts)
     return "\n".join(result)
 

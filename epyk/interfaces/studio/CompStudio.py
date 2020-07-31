@@ -10,7 +10,7 @@ from epyk.interfaces.studio import CompStudioVitrine
 from epyk.interfaces.studio import CompStudioEvent
 
 
-class Sudio(object):
+class Studio(object):
   def __init__(self, context):
     self.context = context
 
@@ -24,6 +24,15 @@ class Sudio(object):
     return CompStudioShopping.Shopping(self)
 
   @property
+  def restaurant(self):
+    """
+    Description:
+    ------------
+    Property for all the components designed to be used in a e-commerce website
+    """
+    return CompStudioShopping.Resto(self)
+
+  @property
   def blog(self):
     """
     Description:
@@ -31,6 +40,42 @@ class Sudio(object):
     Property for all the components to be used in a blog website
     """
     return CompStudioBlog.Blog(self)
+
+  @property
+  def gallery(self):
+    """
+    Description:
+    ------------
+    Property for all the components to be used in a blog website
+    """
+    return CompStudioBlog.Gallery(self)
+
+  @property
+  def wedding(self):
+    """
+    Description:
+    ------------
+    Property for all the components to be used in a wedding website
+    """
+    return CompStudioEvent.Wedding(self)
+
+  @property
+  def birthday(self):
+    """
+    Description:
+    ------------
+    Property for all the components to be used in a wedding website
+    """
+    return CompStudioEvent.Birthday(self)
+
+  @property
+  def show(self):
+    """
+    Description:
+    ------------
+    Property for all the components to be used in a wedding website
+    """
+    return CompStudioEvent.Show(self)
 
   @property
   def vitrine(self):

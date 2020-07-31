@@ -24,6 +24,31 @@ class Catalog(object):
     self.__rptObj, self.__class_list = report, classList
     self.__ctx = {}
 
+  def font_face(self, font_family, src, stretch="normal", style="normal", weight="normal"):
+    """
+    Description:
+    ------------
+    With the @font-face rule, web designers do not have to use one of the "web-safe" fonts anymore.
+
+    In the @font-face rule you must first define a name for the font (e.g. myFirstFont), and then point to the font file.
+
+    Entry to get a font family from a local file to avoid loading it online.
+    This is safer but also improve the speed of the website
+
+    https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
+
+    Attributes:
+    ----------
+    :param font_family: String. Required. Defines the name of the font
+    :param src: String. Required. Defines the URL(s) where the font should be downloaded from
+    :param stretch: String. Optional. Defines how the font should be stretched. Default value is "normal"
+    :param style: String. Required. Optional. Defines how the font should be styled. Default value is "normal"
+    :param weight: String. Required. Optional. Defines the boldness of the font. Default value is "normal"
+    """
+    self.__rptObj._props['css']["font-face"][font_family] = {'src': "url(%s)" % src, 'font-stretch': stretch,
+                                                             'font-style': style, 'font-weight': weight}
+    return self
+
   def _class_type(self, type):
     """
     Description:

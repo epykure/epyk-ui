@@ -104,12 +104,12 @@ class Links(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     options = options or {}
-    if url is not None and url.startswith("www."):
+    if url is not None and not hasattr(url, 'toStr') and url.startswith("www."):
       url = "//%s" % url
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, options, profile)
     return html_link
 
-  def data(self, text, value, width=(100, '%'), height=(None, 'px'), format='txt', profile=None):
+  def data(self, text, value, width=(None, '%'), height=(None, 'px'), format='txt', profile=None):
     """
     Description:
     ------------

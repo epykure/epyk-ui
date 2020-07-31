@@ -181,3 +181,74 @@ class Calendar(object):
       else:
         row.append(calendar)
     return self.context.rptObj.ui.grid([row], position=poaition, profile=profile)
+
+  def google(self, task, start, end, details=None, location=None, icon="fab fa-google-plus", text="Add to Google Calendar", options=None, profile=None):
+    """
+    Description:
+    ------------
+    Add link to the google calendar. Will add the event to the Calendar.
+
+    Usage::
+
+      page.ui.calendars.google("hrehr", "Test", "20200801T153000Z", "20200802T163000Z")
+
+    Related Pages:
+
+      https://stackoverflow.com/questions/5179760/add-events-to-google-calendar-yahoo-calendar-outlook-and-ical
+    https://codepen.io/vlemoine/pen/MLwygX
+
+    TODO: improve the time management in this component
+
+    Attributes:
+    ----------
+    :param text:
+    :param task:
+    :param start: String. Date format YYYYMMDD
+    :param end: String. Date format YYYYMMDD
+    """
+    icon = self.context.rptObj.ui.icons.awesome(icon)
+    icon.icon.style.css.font_factor(5)
+    icon.icon.style.css.color = self.context.rptObj.theme.greys[-1]
+    icon.options.managed = False
+    google_url = "http://www.google.com/calendar/event?action=TEMPLATE"
+    link = self.context.rptObj.ui.link("%s %s" % (icon.html(), text),
+      self.context.rptObj.js.objects.get("%(url)s&text=%(task)s&dates=%(start)s/%(end)s&details=%(details)s&location=%(location)s" % {'url': google_url, "task": task, 'start': start, 'end': end, 'details': details or task, 'location': location or ''}))
+    link.style.css.background = self.context.rptObj.theme.greys[0]
+    link.style.css.color = self.context.rptObj.theme.greys[-1]
+    link.style.css.padding = '2px 5px'
+    link.style.css.margin = 2
+    link.style.css.display = 'inline-block'
+    link.style.css.border = "1px solid %s" % self.context.rptObj.theme.greys[3]
+    link.style.css.border_radius = 20
+    return link
+
+  def agenda(self, task, start, end, details=None, location=None, icon="far fa-calendar-alt", text="Add to Calendar", options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://stackoverflow.com/questions/5179760/add-events-to-google-calendar-yahoo-calendar-outlook-and-ical
+    https://codepen.io/vlemoine/pen/MLwygX
+
+    TODO: improve the time management in this component
+    """
+    # Default options
+    calendar_options = {'CALSCALE': 'GREGORIAN', 'VERSION': '2.0'}
+    events_options = {'DTSTART;VALUE=DATE': start, 'DTEND;VALUE=DATE': end, 'SUMMARY': task or '', 'LOCATION': location or '',
+                      'DESCRIPTION': details or '', 'STATUS': 'CONFIRMED', 'SEQUENCE': 3}
+
+    str_calendar = "BEGIN:VCALENDAR\n%s\n%%s\nEND:VCALENDAR" % "\n".join(["%s:%s" % (k, v) for k, v in calendar_options.items()])
+    str_event = "BEGIN:VEVENT\n%s\nEND:VEVENT"% "\n".join(["%s:%s" % (k, v) for k, v in events_options.items()])
+
+    link = self.context.rptObj.ui.links.data("<i style='font-size:%s;color:%s' class='%s'></i> %s" % (Defaults.font(5), self.context.rptObj.theme.greys[-1], icon, text), str_calendar % str_event)
+    link.attr['download'] = 'event.ics'
+    link.style.css.background = self.context.rptObj.theme.greys[0]
+    link.style.css.color = self.context.rptObj.theme.greys[-1]
+    link.style.css.padding = '2px 5px'
+    link.style.css.margin = 2
+    link.style.css.display = 'inline-block'
+    link.style.css.border = "1px solid %s" % self.context.rptObj.theme.greys[3]
+    link.style.css.border_radius = 20
+    return link
