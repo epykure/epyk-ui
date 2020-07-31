@@ -38,7 +38,7 @@ class Catalog(object):
     https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
 
     TODO: Use the page property self.__rptObj._props['css']["font-face"] in the CSS definition
-    
+
     Attributes:
     ----------
     :param font_family: String. Required. Defines the name of the font

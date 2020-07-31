@@ -206,7 +206,11 @@ class Wedding(object):
 
   def block(self, text, align="left", width=("80", '%'), height=(None, "px"), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param align:
     :param width:
@@ -214,11 +218,15 @@ class Wedding(object):
     :param options:
     :param profile:
     """
+    options = options or {}
     component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     component.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.colors[-1]
     component.style.css.border_left = "3px solid %s" % self.parent.context.rptObj.theme.colors[-1]
     if not hasattr(text, 'options'):
-      component.text = self.parent.context.rptObj.ui.text(self.parent.context.rptObj.py.encode_html(text))
+      content = self.parent.context.rptObj.py.encode_html(text.strip())
+      if options.get("initial-letter", False):
+        content = '<span style="line-height:%spx;font-size:%spx;vertical-align:bottom">%s</span>%s' % (options.get("initial-letter"), options.get("initial-letter"), content[0], content[1:])
+      component.text = self.parent.context.rptObj.ui.text(content)
       component.add(component.text)
     component.style.css.margin = "auto"
     component.style.css.padding = 10

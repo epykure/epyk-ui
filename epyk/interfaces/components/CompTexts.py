@@ -354,6 +354,9 @@ class Texts(object):
     dflt_options = {"reset": True, 'markdown': False, "classes": []}
     if options is not None:
       dflt_options.update(options)
+    text = self.context.rptObj.py.encode_html(text.strip())
+    if options.get("initial-letter", False):
+      text = '<span style="line-height:%spx;font-size:%spx;vertical-align:bottom">%s</span>%s' % (options.get("initial-letter"), options.get("initial-letter"), text[0], text[1:])
     html_paragraph = html.HtmlText.Paragraph(self.context.rptObj, text, color, background_color, border, width, height,
                                              htmlCode, encoding, dataSrc, helper, dflt_options, profile)
     return html_paragraph
