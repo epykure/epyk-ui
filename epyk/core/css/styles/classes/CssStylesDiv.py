@@ -225,3 +225,15 @@ class CssDivStepper(CssStyle.Style):
   _selectors = {'child': 'li'}
 
   _attrs = {'float': 'left', 'text-align': 'center'}
+
+
+class CssDivVerticalRotate(CssStyle.Style):
+  _selectors = {'child': '.inner-flip'}
+
+  _hover = {'transform': 'rotateX(180deg)'}
+
+
+class CssDivHorizontalRotate(CssStyle.Style):
+  _selectors = {'child': '.inner-flip'}
+
+  _hover = {'transform': 'rotateY(180deg)'}

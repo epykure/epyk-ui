@@ -1985,6 +1985,8 @@ class CssMixin(object):
   @perspective.setter
   def perspective(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"perspective": val})
 
   @property

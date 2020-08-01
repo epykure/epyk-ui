@@ -12,17 +12,90 @@ class Event(object):
   def __init__(self, context):
     self.parent = context
 
-  def flip(self):
+  def flip(self, heads, tails, orientation='v', width=(300, 'px'), height=(200, 'px')):
     """
+
+    filp = page.ui.studio.wedding.flip("Front Side", "Back Side", height=(100, "px"))
+    filp.heads.style.css.color = 'red'
+
     https://www.w3schools.com/howto/howto_css_flip_box.asp
-    :return:
+
+    :param heads:
+    :param tails:
+    :param orientation:
+    :param width:
+    :param height:
+    """
+    flip_box = self.parent.context.rptObj.ui.div(width=width, height=height)
+    if orientation.lower() == 'v':
+      flip_box.style.add_classes.div.rorate_vertical()
+    else:
+      flip_box.style.add_classes.div.rorate_horizontal()
+
+    flip_box.style.css.background_color = "transparent"
+    flip_box.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.colors[3]
+    flip_box.style.css.perspective = 1000
+
+    flip_box_inner = self.parent.context.rptObj.ui.div(height=(100, '%'))
+    flip_box_inner.attr['class'].add('inner-flip')
+    flip_box_inner.style.css.position = "relative"
+    flip_box_inner.style.css.text_align = "center"
+    flip_box_inner.style.css.transition = "transform 0.8s"
+    flip_box_inner.style.css.transform_style = "preserve-3d"
+
+    flip_box_front = self.parent.context.rptObj.ui.div(height=(100, '%'))
+    flip_box_front.style.css.position = "absolute"
+    flip_box_front.style.css.backface_visibility = "hidden"
+
+    flip_box_back = self.parent.context.rptObj.ui.div(height=(100, '%'))
+    flip_box_back.style.css.position = "absolute"
+    flip_box_back.style.css.backface_visibility = "hidden"
+    if orientation.lower() == 'v':
+      flip_box_back.style.css.transform = "rotateX(180deg)"
+    else:
+      flip_box_back.style.css.transform = "rotateY(180deg)"
+
+    if not hasattr(heads, 'options'):
+      flip_box.heads = self.parent.context.rptObj.ui.text(heads, height=(100, '%'))
+      flip_box.heads.style.css.vertical_align = "middle"
+      flip_box.heads.style.css.margin_top = int(height[0] / 2) - 15
+      flip_box_front.style.css.text_align = "center"
+      flip_box_front.style.css.vertical_align = "middle"
+      flip_box_front.add(flip_box.heads)
+
+    if not hasattr(tails, 'options'):
+      flip_box.tails = self.parent.context.rptObj.ui.text(tails, height=(100, '%'))
+      flip_box.tails.style.css.vertical_align = "middle"
+      flip_box.tails.style.css.margin_top = int(height[0] / 2) - 15
+      flip_box_back.style.css.text_align = "center"
+      flip_box_back.style.css.background = self.parent.context.rptObj.theme.colors[3]
+      flip_box_back.style.css.vertical_align = "middle"
+      flip_box_back.add(flip_box.tails)
+    flip_box_inner.add(flip_box_front)
+    flip_box_inner.add(flip_box_back)
+    flip_box.add(flip_box_inner)
+    return flip_box
+
+  def phone(self, number, icon="fas fa-phone-alt", width=('auto', ''), height=(None, 'px')):
     """
 
+    :param number:
+    :param icon:
+    :param width:
+    :param height:
+    """
+    container = self.parent.context.rptObj.ui.div(width=width, height=height)
+    icon = self.parent.context.rptObj.ui.icons.awesome(icon)
+    icon.icon.style.css.font_factor(0)
+    icon.icon.style.css.color = self.parent.context.rptObj.theme.colors[5]
+    container.add(icon)
+    link = self.parent.context.rptObj.ui.link(number, "tel:+1-303-499-7111")
+    link.style.css.color = self.parent.context.rptObj.theme.colors[5]
+    container.add(link)
+    return container
 
-class Wedding(object):
 
-  def __init__(self, context):
-    self.parent = context
+class Wedding(Event):
 
   def theme(self):
     self.parent.context.rptObj.theme = ThemeRed.Pink()
@@ -195,7 +268,7 @@ class Wedding(object):
     html_image = html.HtmlImage.Image(self.parent.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
     return html_image
 
-  def address(self, street, icon="fas fa-map-marker-alt", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
+  def address(self, street, postcode, city, icon="fas fa-map-marker-alt", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
     component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options,
                                                   profile=profile)
     icon = self.parent.context.rptObj.ui.icons.awesome(icon)
@@ -233,20 +306,37 @@ class Wedding(object):
     component.style.css.display = "block"
     return component
 
-  def paragraph(self):
-    pass
+  def paragraph(self, text, align="left", width=("80", '%'), height=(None, "px"), options=None, profile=None):
+    """
 
-class Birthday(object):
-  def __init__(self, context):
-    self.parent = context
+    :param text:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    text = self.parent.context.rptObj.ui.text.paragraph(text, align=align, width=width, height=height, options=options, profile=profile)
+    return text
 
 
-class Show(object):
-  def __init__(self, context):
-    self.parent = context
+class Birthday(Event):
+  pass
 
-  def contact(self):
-    pass
+
+class Baptism(Event):
+  pass
+
+
+class Birth(Event):
+  pass
+
+
+class EVG(Event):
+  pass
+
+
+class Show(Event):
 
   def location(self):
     pass

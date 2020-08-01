@@ -126,6 +126,14 @@ class CatalogDiv(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesDivComms.CssSpeechBubbleArrow)
 
+  def rorate_vertical(self):
+    """  """
+    return self._set_class(CssStylesDiv.CssDivVerticalRotate)
+
+  def rorate_horizontal(self):
+    """"""
+    return self._set_class(CssStylesDiv.CssDivHorizontalRotate)
+
 
 class CatalogDrawer(Catalog.CatalogGroup):
 

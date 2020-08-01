@@ -60,6 +60,24 @@ class Studio(object):
     return CompStudioEvent.Wedding(self)
 
   @property
+  def birth(self):
+    """
+    """
+    return CompStudioEvent.Birth(self)
+
+  @property
+  def baptism(self):
+    """
+    """
+    return CompStudioEvent.Baptism(self)
+
+  @property
+  def evg(self):
+    """
+    """
+    return CompStudioEvent.EVG(self)
+
+  @property
   def birthday(self):
     """
     Description:
