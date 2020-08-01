@@ -265,17 +265,18 @@ class News(object):
     button.style.hover({"color": self.parent.context.rptObj.theme.success[1]})
     return button
 
-  def stepper(self):
+  def stepper(self, records, width=(200, 'px'), height=(350, 'px')):
     """
 
     :return:
     """
-    data = [
-        {"value": 'test 1', "status": 'success', 'label': 'test'},
-        {"value": 'test 2', "status": 'error'},
-        {"value": 'test 3', "status": 'pending'}]
-    stepper = self.parent.context.rptObj.ui.steppers.vertical(data)
-    return stepper
+    svg = self.parent.context.rptObj.ui.charts.svg.new(width=width, height=height)
+    svg.line(10, 10, 10, 10 + (len(records)-1) * 30, stroke="red")
+    for i, rec in enumerate(records):
+      svg.circle(10, 10 + 30 * i, 5, fill=rec.get("fill", self.parent.context.rptObj.theme.greys[0]), stroke="red")
+      svg.text(rec["time"], 20, 15 + 30 * i).css({"font-weight": 'bold'})
+      svg.text(rec["text"], 55, 15 + 30 * i)
+    return svg
 
   def search(self):
     pass

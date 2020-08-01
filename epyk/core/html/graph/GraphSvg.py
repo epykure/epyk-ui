@@ -65,6 +65,7 @@ class SVG(Html.Html):
     :rtype: Text
     """
     self.html_objs.append(Text(self._report, text, x, y))
+    self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
   def rect(self, x, y, width, height, fill, rx=0, ry=0):
@@ -94,7 +95,7 @@ class SVG(Html.Html):
     self.html_objs.append(Rectangle(self._report, x, y, width, height, fill, rx, ry))
     return self.html_objs[-1]
 
-  def line(self, x1, y1, x2, y2):
+  def line(self, x1, y1, x2, y2, stroke=None, stroke_width=None):
     """
     Description:
     ------------
@@ -115,10 +116,14 @@ class SVG(Html.Html):
 
     :rtype: Line
     """
-    self.html_objs.append(Line(self._report, x1, y1, x2, y2))
+    line = Line(self._report, x1, y1, x2, y2)
+    line.options.managed = False
+    self.html_objs.append(line)
+    if stroke is not None:
+      line.css({"stroke": stroke, "stroke-width": stroke_width or 1})
     return self.html_objs[-1]
 
-  def circle(self, x, y, r, fill="None"):
+  def circle(self, x, y, r, fill="None", stroke=None, stroke_width=None):
     """
     Description:
     ------------
@@ -138,7 +143,11 @@ class SVG(Html.Html):
 
     :rtype: Circle
     """
-    self.html_objs.append(Circle(self._report, x, y, r, fill))
+    circle = Circle(self._report, x, y, r, fill)
+    circle.options.managed = False
+    self.html_objs.append(circle)
+    if stroke is not None:
+      circle.set_attrs({"stroke": stroke, "stroke-width": stroke_width or 1})
     return self.html_objs[-1]
 
   def ellipse(self, cx, cy, rx, ry):
