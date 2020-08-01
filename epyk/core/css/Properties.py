@@ -743,6 +743,8 @@ class CssMixin(object):
   @border_top_width.setter
   def border_top_width(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"border-top-width": val})
 
   @property
@@ -751,6 +753,8 @@ class CssMixin(object):
   @border_width.setter
   def border_width(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"border-width": val})
 
   @property

@@ -202,6 +202,7 @@ class Images(object):
     :param profile:
     :param options:
     """
+    options = options or {}
     status_map = {
       True: self.context.rptObj.theme.success[1],
       'available': self.context.rptObj.theme.success[1],
@@ -225,22 +226,25 @@ class Images(object):
       img.style.css.font_weight = 'bold'
       img.style.css.padding = 0
     img.style.css.middle()
-    status_o = self.context.rptObj.ui.layouts.div("&nbsp;", width=(10, "px"), height=(10, "px"))
-    status_o.style.css.position = 'relative'
+    if options.get('status', True):
+      status_o = self.context.rptObj.ui.layouts.div("&nbsp;", width=(10, "px"), height=(10, "px"))
+      status_o.style.css.position = 'relative'
 
-    status_o.style.css.background_color = status_map.get(status, self.context.rptObj.theme.greys[5])
-    status_o.style.css.border_radius = 10
-    status_o.style.css.margin_top = margin_top
-    status_o.style.css.float = 'right'
+      status_o.style.css.background_color = status_map.get(status, self.context.rptObj.theme.greys[5])
+      status_o.style.css.border_radius = 10
+      status_o.style.css.margin_top = margin_top
+      status_o.style.css.float = 'right'
 
-    div = self.context.rptObj.ui.layouts.div([img, status_o], width=width, height=height)
+      div = self.context.rptObj.ui.layouts.div([img, status_o], width=width, height=height)
+      div.status = status_o
+    else:
+      div = self.context.rptObj.ui.layouts.div([img], width=width, height=height)
     if bgcolor is not None:
       div.style.css.background_color = bgcolor
       div.style.css.text_stoke = "1px %s" % bgcolor
     div.style.css.borders_light()
     div.style.css.border_radius = 50
     div.img = img
-    div.status = status_o
     return div
 
   def section(self, image, name, title, text, url=None, path=None, width=(200, "px"), height=(200, "px")):

@@ -4,6 +4,7 @@ from epyk.core.css import Defaults as Defaults_css
 
 
 class Rich(object):
+
   def __init__(self, context):
     self.context = context
 
@@ -127,7 +128,7 @@ class Rich(object):
     html_help = html.HtmlOthers.Help(self.context.rptObj, text, width=(10, "px"), profile=profile, options=options or {})
     return html_help
 
-  def countdown(self, yyyy_mm_dd, label=None, icon="fas fa-stopwatch", timeInMilliSeconds=1000, width=(100, '%'), height=(None, 'px'),
+  def countdown(self, day, month, year, hour=0, minute=0, second=0, label=None, icon="fas fa-stopwatch", timeInMilliSeconds=1000, width=(100, '%'), height=(None, 'px'),
                 htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
@@ -160,7 +161,7 @@ class Rich(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
-    html_cd = html.HtmlDates.CountDownDate(self.context.rptObj, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, options or {}, profile)
+    html_cd = html.HtmlDates.CountDownDate(self.context.rptObj, day, month, year, hour, minute, second, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, options or {}, profile)
     return html_cd
 
   def update(self, label=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None, profile=None):

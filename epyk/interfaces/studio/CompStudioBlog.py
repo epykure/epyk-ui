@@ -1,12 +1,19 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from epyk.core import html
+import datetime
+
+from epyk.core.css import Defaults_css
+from epyk.core.css.themes import ThemeBlue
 
 
 class Blog(object):
+
   def __init__(self, context):
     self.parent = context
+
+  def theme(self):
+    self.parent.context.rptObj.theme = ThemeBlue.Blue()
 
   def title(self, text):
     """
@@ -36,6 +43,19 @@ class Blog(object):
     text = self.parent.context.rptObj.py.encode_html(text)
     return self.parent.context.rptObj.ui.text(text, align="center")
 
+  def breadcrumb(self, values, selected=None, width=(100, '%'), height=(30, 'px'), options=None, profile=None):
+    """
+
+    :param values:
+    :param selected:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    bcrumb = self.parent.context.rptObj.ui.breadcrumb(values, selected, width, height, options, profile)
+    return bcrumb
+
   def paragraph(self, text, css=None, align="left", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
 
@@ -46,7 +66,6 @@ class Blog(object):
     :param height:
     :param options:
     :param profile:
-    :return:
     """
     text = self.parent.context.rptObj.py.encode_html(text)
     text = self.parent.context.rptObj.py.markdown.resolve(text, css_attrs=css)

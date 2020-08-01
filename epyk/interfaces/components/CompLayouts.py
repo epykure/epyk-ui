@@ -93,8 +93,8 @@ class Layouts(object):
     """
     hr_html = self.context.rptObj.ui.div(width=width)
     for _ in range(count):
-      hr_item = html.HtmlOthers.Hr(self.context.rptObj, background_color, (100, '%'), height, align, profile)
-      hr_html += hr_item
+      hr_html.hr = html.HtmlOthers.Hr(self.context.rptObj, background_color, (100, '%'), height, align, profile)
+      hr_html += hr_html.hr
     return hr_html
 
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):

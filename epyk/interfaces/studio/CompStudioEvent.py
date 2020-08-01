@@ -12,14 +12,143 @@ class Event(object):
   def __init__(self, context):
     self.parent = context
 
+  def delimiter(self, size=1):
+    """
+
+    """
+    hr = self.parent.context.rptObj.ui.layouts.hr()
+    hr.style.css.padding = "0 20%"
+    hr.hr.style.css.border_color = self.parent.context.rptObj.theme.colors[5]
+    hr.hr.style.css.border_width = size
+    return hr
+
+  def mosaic(self, width=(None, '%'), height=(100, 'px'), options=None):
+    pass
+
+  def clients(self, logos, title="Client we have worked with...", content='', width=(100, '%'), height=("auto", ''), align="center", options=None,
+               profile=False):
+    """
+
+    :param logos:
+    :param title:
+    :param content:
+    :param width:
+    :param height:
+    :param align:
+    :param options:
+    :param profile:
+    """
+    banner = self.parent.context.rptObj.ui.banners.sponsor(logos, title, content, width=width, height=height, align=align,
+                                                           options=options, profile=profile)
+    banner.title.style.css.color = self.parent.context.rptObj.theme.colors[0]
+    banner.style.css.background = self.parent.context.rptObj.theme.colors[6]
+    return banner
+
+  def sponsors(self, logos, title="Sponsors", content='', width=(100, '%'), height=("auto", ''), align="center", options=None,
+               profile=False):
+    """
+
+    :param logos:
+    :param title:
+    :param content:
+    :param width:
+    :param height:
+    :param align:
+    :param options:
+    :param profile:
+    """
+    banner = self.parent.context.rptObj.ui.banners.sponsor(logos, title, content, width=width, height=height, align=align,
+                                                           options=options, profile=profile)
+    banner.style.css.background = self.parent.context.rptObj.theme.colors[2]
+    return banner
+
+  def avatar(self, text=None, image=None, path=None, width=(30, "px"), height=(30, "px"), align="center",
+             htmlCode=None, profile=None, options=None):
+    img = self.parent.context.rptObj.ui.images.avatar(image=image, options={"status": False})
+    return img
+
+  def progress(self, value, icon="", width=(100, '%'), height=(None, 'px'), options=None):
+    pass
+
+  def dated(self, date, name=None, width=(None, '%'), height=(None, 'px'), align="left", format=None, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param date:
+    :param name:
+    :param width:
+    :param height:
+    :param format:
+    :param options:
+    """
+    py_date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    container = self.parent.context.rptObj.ui.div(width=width, height=height)
+    container.text = self.parent.context.rptObj.ui.text("Last updated %s, by" % py_date.strftime("%d %B %Y"), width=(None, ""))
+    container.text.style.css.display = 'inline-block'
+    container.text.style.css.color = self.parent.context.rptObj.theme.greys[5]
+    container.add(container.text)
+    container.name = self.parent.context.rptObj.ui.link(name)
+    container.name.style.css.display = 'inline-block'
+    container.name.style.css.color = self.parent.context.rptObj.theme.colors[-1]
+    container.name.style.css.margin_left = 5
+    container.add(container.name)
+    container.style.css.text_align = align
+    return container
+
+  def carrousel(self, components, selected=0, width=('100', '%'), height=(None, 'px'), left="fas fa-chevron-left", right="fas fa-chevron-right", options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param components:
+    :param selected:
+    :param width:
+    :param height:
+    :param left:
+    :param right:
+    :param options:
+    """
+    container = self.parent.context.rptObj.ui.div(width=width, height=height)
+    container.left = self.parent.context.rptObj.ui.icons.awesome(left)
+    container.left.icon.style.css.font_factor(0)
+    container.left.icon.style.css.color = self.parent.context.rptObj.theme.colors[5]
+    container.add(container.left)
+
+    container.box = self.parent.context.rptObj.ui.div(width=(None, '%'), height=height)
+    container.box.style.css.width = "calc(100% - 50px)"
+    container.box.style.css.display = 'inline-block'
+    for i, component in enumerate(components):
+      if not hasattr(component, 'options'):
+        component = self.parent.context.rptObj.ui.text(component, width=(100, '%'))
+        component.style.css.text_align = "center"
+        if i != selected:
+          component.style.css.display = False
+      container.box.add(component)
+    container.add(container.box)
+
+    container.right = self.parent.context.rptObj.ui.icons.awesome(right)
+    container.right.icon.style.css.font_factor(0)
+    container.right.icon.style.css.color = self.parent.context.rptObj.theme.colors[5]
+    container.add(container.right)
+    return container
+
   def flip(self, heads, tails, orientation='v', width=(300, 'px'), height=(200, 'px')):
     """
+    Description:
+    ------------
 
     filp = page.ui.studio.wedding.flip("Front Side", "Back Side", height=(100, "px"))
     filp.heads.style.css.color = 'red'
 
     https://www.w3schools.com/howto/howto_css_flip_box.asp
 
+    Attributes:
+    ----------
     :param heads:
     :param tails:
     :param orientation:
@@ -78,7 +207,11 @@ class Event(object):
 
   def phone(self, number, icon="fas fa-phone-alt", width=('auto', ''), height=(None, 'px')):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param number:
     :param icon:
     :param width:
@@ -200,7 +333,11 @@ class Wedding(Event):
 
   def time(self, date, icon="fas fa-circle", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param date:
     :param icon:
     """
@@ -229,7 +366,7 @@ class Wedding(Event):
       component.add(self.parent.context.rptObj.ui.text(date_time_obj.strftime("%d %B %Y")))
     return component
 
-  def picture(self, image=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
+  def picture(self, image=None, label=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
               profile=None, options=None):
     """
     Description:
@@ -265,8 +402,26 @@ class Wedding(Event):
     """
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
-    html_image = html.HtmlImage.Image(self.parent.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
-    return html_image
+    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options,
+                                                  profile=profile)
+    component.image = html.HtmlImage.Image(self.parent.context.rptObj, image, path, align, htmlCode, (100, '%'), (100, '%'), profile, options or {})
+    component.style.css.position = "relative"
+    component.add(component.image)
+    if not hasattr(label, 'options'):
+      component.label = self.parent.context.rptObj.ui.div(label)
+    else:
+      component.label = self.parent.context.rptObj.ui.div()
+      component.label.add(label)
+    component.label.style.css.position = "absolute"
+    component.label.style.css.text_align = "center"
+    component.label.style.css.width = "calc(100% - 20px)"
+    component.label.style.css.background = "white"
+    component.label.style.css.opacity = 0.6
+    component.label.style.css.margin = 10
+    component.label.style.css.padding = 10
+    component.label.style.css.bottom = 5
+    component.add(component.label)
+    return component
 
   def address(self, street, postcode, city, icon="fas fa-map-marker-alt", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
     component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options,
@@ -308,7 +463,11 @@ class Wedding(Event):
 
   def paragraph(self, text, align="left", width=("80", '%'), height=(None, "px"), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param align:
     :param width:
@@ -333,6 +492,14 @@ class Birth(Event):
 
 
 class EVG(Event):
+  pass
+
+
+class Seminar(Event):
+  pass
+
+
+class Festival(Event):
   pass
 
 

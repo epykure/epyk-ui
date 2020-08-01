@@ -195,9 +195,10 @@ class TimePicker(Html.Html):
 class CountDownDate(Html.Html):
   name = 'Countdown'
 
-  def __init__(self, report, yyyy_mm_dd, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, options, profile):
-    super(CountDownDate, self).__init__(report, yyyy_mm_dd, htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
-    self._jsStyles = {"delete": True}
+  def __init__(self, report, day, month, year, hour, minute, second, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, options, profile):
+    super(CountDownDate, self).__init__(report, {'day': day, 'month': month, 'year': year, 'hour': hour, 'minute': minute, 'second': second},
+      htmlCode=htmlCode, profile=profile, css_attrs={"width": width, "height": height})
+    self._jsStyles = {"delete": True, 'reload': False}
     self.timeInMilliSeconds = timeInMilliSeconds
     # Add the underlying components
     self.add_label(label, css={"padding": '2px 0', 'height': 'auto'})
@@ -210,8 +211,8 @@ class CountDownDate(Html.Html):
 
   @property
   def _js__builder__(self):
-    return ''' 
-      var splitDt = data.split("-"); var endDate = new Date(splitDt[0], parseInt(splitDt[1])-1, splitDt[2]);
+    return '''
+      var endDate = new Date(data.year, data.month-1, data.day, data.hour, data.minute, data.second);
       var now = new Date().getTime(); var distance = endDate.getTime() - now;
 
       var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -220,7 +221,9 @@ class CountDownDate(Html.Html):
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       htmlObj.innerHTML = "<b>"+ days +"d "+ hours +"h "+ minutes + "m "+ seconds +"s </b>"; 
-      if ((distance < 0) && (options.delete)){clearInterval(htmlObj.id +"_interval")
+      if ((distance < 0) && (options.delete)){
+        htmlObj.remove(); if (options.reload){location.reload()}
+        clearInterval(window[htmlObj.id +"_interval"])
       }'''
 
   def __str__(self):

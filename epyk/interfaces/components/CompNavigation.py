@@ -923,11 +923,13 @@ class Banners(object):
     """
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(title, 'options'):
-      title = self.context.rptObj.ui.titles.title(title)
-      title.style.css.text_align = align
-      title.style.css.font_weight = 800
-      title.style.css.font_size = Defaults_css.font(15)
-    div.add(title)
+      div.title = self.context.rptObj.ui.titles.title(title)
+      div.title.style.css.text_align = align
+      div.title.style.css.font_weight = 800
+      div.title.style.css.font_size = Defaults_css.font(15)
+    else:
+      div.title = title
+    div.add(div.title)
     if not hasattr(content, 'options'):
       content = self.context.rptObj.ui.div(content, width=("auto", ""))
       content.style.css.text_align = align

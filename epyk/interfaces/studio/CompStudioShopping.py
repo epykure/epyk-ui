@@ -107,7 +107,11 @@ class Shopping(object):
 
   def price_from(self, price, text="from", currency="€", align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param price:
     :param text:
     :param currency:
@@ -142,7 +146,11 @@ class Shopping(object):
 
   def price_discount(self, price, discount, align="left", width=(120, 'px'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param price:
     :param discount:
     :param align:
@@ -241,7 +249,11 @@ class Shopping(object):
 
   def rating(self, rating, customers, url=None, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param rating:
     :param customers:
     :param url:
@@ -263,7 +275,11 @@ class Shopping(object):
 
   def tags(self, tags, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param tags:
     :param align:
     :param width:
@@ -341,6 +357,21 @@ class Shopping(object):
     return comp
 
   def question(self, question, answers=None, url=None, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param question:
+    :param answers:
+    :param url:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
     table = self.parent.context.rptObj.ui.layouts.table(options={"header": False})
     if url is not None:
       link = self.parent.context.rptObj.ui.link(question, url)
