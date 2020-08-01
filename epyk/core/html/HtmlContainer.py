@@ -716,15 +716,17 @@ class Col(Html.Html):
 
     Attributes:
     ----------
-
+    :param n:
     """
     if self.__set_size is None:
       if not n:
         self.__set_size = False
         return self
 
-      self.__set_size = "col-%s" % n
+      self.__set_size = "col-lg-%s" % n
       self.attr["class"].add(self.__set_size)
+      self.attr["class"].add("col-md-%s" % min(n * 2, 12))
+      self.attr["class"].add("col-12")
     return self
 
   def __str__(self):

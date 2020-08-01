@@ -53,8 +53,27 @@ class Event(object):
     hr.hr.style.css.border_width = size
     return hr
 
-  def mosaic(self, width=(None, '%'), height=(100, 'px'), options=None):
-    pass
+  def mosaic(self, pictures, columns=6, width=(None, '%'), height=('auto', ''), options=None, profile=None):
+    """
+
+    :param pictures:
+    :param columns:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    grid = self.parent.context.rptObj.ui.grid(width=width, height=height, options=options, profile=profile)
+    row = self.parent.context.rptObj.ui.row()
+    for i, picture in enumerate(pictures):
+      if i % columns == 0:
+        grid.add(row)
+        row = self.parent.context.rptObj.ui.row()
+      if not hasattr(picture, 'options'):
+        picture = self.parent.context.rptObj.ui.img(picture)
+      row.add(picture)
+    grid.add(row)
+    return grid
 
   def clients(self, logos, title="Client we have worked with...", content='', width=(100, '%'), height=("auto", ''), align="center", options=None,
                profile=False):
