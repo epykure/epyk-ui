@@ -9,8 +9,39 @@ from epyk.core.css.themes import ThemeRed
 
 
 class Event(object):
+
   def __init__(self, context):
     self.parent = context
+
+  def search(self, text="", placeholder='search', icon="fas fa-search", width=(100, "%"), height=(None, "px"),
+             htmlCode=None, options=None, attrs=None, profile=None):
+    """
+
+    :param text:
+    :param placeholder:
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param attrs:
+    :param profile:
+    """
+    container = self.parent.context.rptObj.ui.div(width=width, height=height, options=options,
+                                                  profile=profile)
+    container.style.css.position = "relative"
+    container.input = self.parent.context.rptObj.ui.inputs.d_search(text, placeholder, width, height, htmlCode, options, attrs, profile)
+    container.input.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.greys[3]
+    container.input.style.css.padding = "0 30px"
+    container.input.style.css.text_align = "left"
+    container.add(container.input)
+    container.icon = self.parent.context.rptObj.ui.icons.awesome(icon)
+    container.icon.icon.style.css.font_factor(0)
+    container.icon.style.css.position = "absolute"
+    container.icon.style.css.left = 5
+    container.icon.icon.style.css.color = self.parent.context.rptObj.theme.colors[5]
+    container.add(container.icon)
+    return container
 
   def delimiter(self, size=1):
     """
@@ -62,13 +93,48 @@ class Event(object):
     banner.style.css.background = self.parent.context.rptObj.theme.colors[2]
     return banner
 
-  def avatar(self, text=None, image=None, path=None, width=(30, "px"), height=(30, "px"), align="center",
-             htmlCode=None, profile=None, options=None):
-    img = self.parent.context.rptObj.ui.images.avatar(image=image, options={"status": False})
+  def avatar(self, image=None, size=80, text=None, htmlCode=None, profile=None, options=None):
+    """
+
+    :param text:
+    :param image:
+    :param size:
+    :param htmlCode:
+    :param profile:
+    :param options:
+    """
+    dfl_options = {"status": False}
+    if options is not None:
+      dfl_options.update(options)
+    img = self.parent.context.rptObj.ui.images.avatar(image=image, text=text, width=(size, 'px'), height=(size, 'px'), htmlCode=htmlCode,
+                                                      options=dfl_options, profile=profile)
     return img
 
   def progress(self, value, icon="", width=(100, '%'), height=(None, 'px'), options=None):
     pass
+
+  def comment(self, avatar, placeholder="Let a comment", width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+    """
+
+    :param avatar:
+    :param placeholder:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    container = self.parent.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
+    if not hasattr(avatar, 'options'):
+      avatar = self.avatar(avatar)
+      avatar.style.css.display = "inline-block"
+    container.add(avatar)
+    container.text = self.parent.context.rptObj.ui.textarea()
+    container.text.style.css.display = "inline-block"
+    container.text.style.css.float = "right"
+    container.text.style.css.color = self.parent.context.rptObj.theme.greys[4]
+    container.text.style.css.width = "calc(100% - 100px)"
+    container.add(container.text)
+    return container
 
   def dated(self, date, name=None, width=(None, '%'), height=(None, 'px'), align="left", format=None, options=None):
     """
@@ -478,6 +544,9 @@ class Wedding(Event):
     text = self.parent.context.rptObj.ui.text.paragraph(text, align=align, width=width, height=height, options=options, profile=profile)
     return text
 
+  def table(self):
+    pass
+
 
 class Birthday(Event):
   pass
@@ -494,9 +563,15 @@ class Birth(Event):
 class EVG(Event):
   pass
 
+  def budget(self):
+    pass
+
 
 class Seminar(Event):
   pass
+
+  def team(self):
+    pass
 
 
 class Festival(Event):

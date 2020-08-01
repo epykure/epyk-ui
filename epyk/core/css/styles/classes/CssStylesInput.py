@@ -19,7 +19,7 @@ class CssInput(CssStyle.Style):
                     'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
                     'border': '1px solid %s' % self.rptObj.theme.colors[0],
                     'font-size': '%s%s' % (Defaults_css.Font.size, Defaults_css.Font.unit)})
-    self.hover.css({'color': self.rptObj.theme.success[1]})
+    self.hover.css({'color': self.rptObj.theme.colors[6]})
 
 
 class CssInputRange(CssStyle.Style):
