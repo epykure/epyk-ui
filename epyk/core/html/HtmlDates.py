@@ -431,12 +431,23 @@ class Timer(Html.Html):
   def _js__builder__(self):
     return '''     
       var time = data.minutes * 60, r = htmlObj, tmp=time;
-      setInterval(function(){
+      window["time_" + htmlObj.id] = setInterval(function(){ 
+        if(tmp < 0){
+          if(typeof options.end !== 'undefined'){
+            eval(options.end);
+          }
+          clearInterval(window["time_" + htmlObj.id])}
         if (tmp >= 0){
           var c=tmp--, m = (c/60)>>0, s=(c-m*60)+'';
           r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s}
         tmp != 0 || (tmp=0)}, 1000);
       '''
+
+  def end(self, jsFncs):
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._jsStyles["end"] = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self
 
   def __str__(self):
     self._report._props.setdefault('js', {}).setdefault("builders", []).append(self.refresh())

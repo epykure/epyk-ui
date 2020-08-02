@@ -183,7 +183,7 @@ class Event(object):
     container.style.css.text_align = align
     return container
 
-  def carrousel(self, components, selected=0, width=('100', '%'), height=(None, 'px'), left="fas fa-chevron-left", right="fas fa-chevron-right", options=None):
+  def carousel(self, components, selected=0, width=('100', '%'), height=(None, 'px'), left="fas fa-chevron-left", right="fas fa-chevron-right", options=None):
     """
     Description:
     ------------

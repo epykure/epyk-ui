@@ -1487,6 +1487,8 @@ class CssMixin(object):
   @letter_spacing.setter
   def letter_spacing(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"letter-spacing": val})
 
   @property

@@ -221,7 +221,13 @@ class PyRest(object):
 
     :return: The HTML content of the REST call as a String
     """
-    default_headers = {'User-Agent': 'Mozilla/5.0'}
+    default_headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36',
+      'referrer': 'https://google.com',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+      #'Accept-Encoding': 'gzip, deflate, br',
+      'Accept-Language': 'en-US,en;q=0.9',
+      'Pragma': 'no-cache'
+    }
     if headers is not None:
       default_headers.update(headers)
     try:
