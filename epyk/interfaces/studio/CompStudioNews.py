@@ -265,17 +265,27 @@ class News(object):
     button.style.hover({"color": self.parent.context.rptObj.theme.success[1]})
     return button
 
-  def stepper(self, records, width=(200, 'px'), height=(350, 'px')):
+  def stepper(self, records, width=(200, 'px'), height=(350, 'px'), options=None, profile=None):
     """
 
     :return:
     """
+    size = (height[0] - 20) / (len(records) - 1)
+    frgs, dflt_size = [], 0
+    for rec in records[:-1]:
+      if 'size' in rec:
+        frgs.append(rec['size'])
+      else:
+        frgs.append(size)
+        dflt_size += 1
+    extra_size = (height[0] - 20 - sum(frgs)) / dflt_size if dflt_size > 0 else 0
+    frgs = [frg + extra_size if frg == size else frg for frg in frgs]
     svg = self.parent.context.rptObj.ui.charts.svg.new(width=width, height=height)
-    svg.line(10, 10, 10, 10 + (len(records)-1) * 30, stroke="red")
+    svg.line(10, 10, 10, sum(frgs) + 10, stroke="red")
     for i, rec in enumerate(records):
-      svg.circle(10, 10 + 30 * i, 5, fill=rec.get("fill", self.parent.context.rptObj.theme.greys[0]), stroke="red")
-      svg.text(rec["time"], 20, 15 + 30 * i).css({"font-weight": 'bold'})
-      svg.text(rec["text"], 55, 15 + 30 * i)
+      svg.circle(10, 10 + sum(frgs[0:i]), 5, fill=rec.get("fill", self.parent.context.rptObj.theme.greys[0]), stroke="red")
+      svg.text(rec["time"], 20, 15 + sum(frgs[0:i])).css({"font-weight": 'bold', 'color': self.parent.context.rptObj.theme.greys[-1]})
+      svg.text(rec["text"], 55, 15 + sum(frgs[0:i])).css({'color': self.parent.context.rptObj.theme.greys[-1]})
     return svg
 
   def search(self):

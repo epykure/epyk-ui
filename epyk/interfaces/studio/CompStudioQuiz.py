@@ -15,6 +15,23 @@ class Quiz(object):
   def theme(self):
     self.parent.context.rptObj.theme = ThemeRed.Pink()
 
+  def progress(self, percentage, icon="fas fa-car-side", width=(100, '%'), height=("auto", ''), options=None, profile=None):
+
+    options = options or {}
+    icon = self.parent.context.rptObj.ui.icons.awesome(icon, height=("auto", ''))
+    progress = self.parent.context.rptObj.ui.div()
+    progress.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.success[1]
+    progress.style.css.display = "inline-block"
+    progress.style.css.width = "calc(100% - 50px)"
+    inner = self.parent.context.rptObj.ui.div("%s%%" % percentage, width=(percentage, '%'))
+    inner.style.css.background = self.parent.context.rptObj.theme.success[0]
+    inner.style.css.color = self.parent.context.rptObj.theme.success[1]
+    inner.style.css.text_align = "center"
+    progress.add(inner)
+    container = self.parent.context.rptObj.ui.div([progress, icon], width=width, height=height)
+    container.style.css.padding = "0 5px"
+    return container
+
   def position(self, longitude, latitude, flag=None, width=(100, '%'), height=("auto", ''), icon="fas fa-map-marked-alt", options=None, profile=None):
     """
 

@@ -13,6 +13,32 @@ class Event(object):
   def __init__(self, context):
     self.parent = context
 
+  def progress(self, percentage, icon="fas fa-plane", width=(100, '%'), height=("auto", ''), options=None, profile=None):
+    """
+
+    :param percentage:
+    :param icon:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    options = options or {}
+    icon = self.parent.context.rptObj.ui.icons.awesome(icon, height=("auto", ''))
+    icon.icon.style.css.color = self.parent.context.rptObj.theme.colors[-1]
+    progress = self.parent.context.rptObj.ui.div()
+    progress.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.colors[-1]
+    progress.style.css.display = "inline-block"
+    progress.style.css.width = "calc(100% - 50px)"
+    inner = self.parent.context.rptObj.ui.div("%s%%" % percentage, width=(percentage, '%'))
+    inner.style.css.background = self.parent.context.rptObj.theme.colors[4]
+    inner.style.css.color = self.parent.context.rptObj.theme.greys[0]
+    inner.style.css.text_align = "center"
+    progress.add(inner)
+    container = self.parent.context.rptObj.ui.div([progress, icon], width=width, height=height)
+    container.style.css.padding = "0 5px"
+    return container
+
   def search(self, text="", placeholder='search', icon="fas fa-search", width=(100, "%"), height=(None, "px"),
              htmlCode=None, options=None, attrs=None, profile=None):
     """
@@ -128,9 +154,6 @@ class Event(object):
     img = self.parent.context.rptObj.ui.images.avatar(image=image, text=text, width=(size, 'px'), height=(size, 'px'), htmlCode=htmlCode,
                                                       options=dfl_options, profile=profile)
     return img
-
-  def progress(self, value, icon="", width=(100, '%'), height=(None, 'px'), options=None):
-    pass
 
   def comment(self, avatar, placeholder="Let a comment", width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
