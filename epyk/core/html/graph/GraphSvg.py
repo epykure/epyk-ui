@@ -262,7 +262,7 @@ class SVG(Html.Html):
     self.html_objs.append(G(self._report, fill, stroke, stroke_width))
     return self.html_objs[-1]
 
-  def path(self, x=0, y=0, fill='none', from_origin=False, bespoke_path=None):
+  def path(self, x=0, y=0, fill='none', from_origin=False, bespoke_path=None, stroke=None):
     """
     Description:
     ------------
@@ -283,7 +283,9 @@ class SVG(Html.Html):
     if from_origin:
       x += self.origine[0]
       y += self.origine[1]
-    self.html_objs.append(Path(self._report, x, y, fill, self.origine, bespoke_path))
+    path = Path(self._report, x, y, fill, self.origine, bespoke_path, stroke=stroke)
+    path.options.managed = False
+    self.html_objs.append(path)
     return self.html_objs[-1]
 
   def foreignObject(self, x, y, width, height):
@@ -723,9 +725,11 @@ class TSpan(SVGItem):
 class Path(SVGItem):
   name = 'SVG Path'
 
-  def __init__(self, report, x, y, fill, origin, bespoke_path):
+  def __init__(self, report, x, y, fill, origin, bespoke_path, stroke=None):
     super(Path, self).__init__(report, "")
-    self.set_attrs({'fill': fill, "stroke": report.theme.greys[-1], "stroke-width": 1})
+    self.set_attrs({'fill': fill})
+    if stroke is not None:
+      self.set_attrs({"stroke": stroke, "stroke-width": 1})
     if bespoke_path:
       if type(bespoke_path) != list:
         bespoke_path = [bespoke_path]

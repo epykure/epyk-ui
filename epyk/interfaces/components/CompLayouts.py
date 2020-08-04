@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Layouts(object):
@@ -87,14 +88,18 @@ class Layouts(object):
     ----------
     :param count: The number of HR tag to be added
     :param background_color: Optional. The component background color
+    :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. The content position. Values (left, right, center). Default center
     :param profile: Optional. A flag to set the component performance storage
     """
-    hr_html = self.context.rptObj.ui.div(width=width)
+    hr_html = self.context.rptObj.ui.div(width=Arguments.size(width))
     for _ in range(count):
-      hr_html.hr = html.HtmlOthers.Hr(self.context.rptObj, background_color, (100, '%'), height, align, profile)
+      hr_html.hr = html.HtmlOthers.Hr(self.context.rptObj, background_color, (100, '%'), Arguments.size(height), align, profile)
       hr_html += hr_html.hr
+    if align == 'center':
+      hr_html.style.css.margin = "auto"
+      hr_html.style.css.display = "block"
     return hr_html
 
   def col(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
@@ -488,3 +493,79 @@ class Layouts(object):
         htmlObjs = [htmlObjs]
       html_obj = html.HtmlContainer.Section(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
       return html_obj
+
+
+class Delimiter(object):
+
+  def __init__(self, context):
+    self.context = context
+
+  def line(self, count=1, width=(100, '%'), align=None, profile=None):
+    """
+    Description:
+    ------------
+    Wrapper around the HT html tag.
+
+    Attributes:
+    ----------
+    :param count: The number of HR tag to be added
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param align: Optional. The content position. Values (left, right, center). Default center
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
+    return hrs
+
+  def double(self, count=1, width=(100, '%'), align="center", profile=None):
+    """
+    Description:
+    ------------
+    Wrapper around the HT html tag.
+
+    Attributes:
+    ----------
+    :param count: The number of HR tag to be added
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param align: Optional. The content position. Values (left, right, center). Default center
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
+    for hr in hrs:
+      hr.style.css.border = "1px double %s" % self.context.rptObj.theme.colors[-1]
+    return hrs
+
+  def dashed(self, count=1, width=(100, '%'), align="center", profile=None):
+    """
+    Description:
+    ------------
+    Wrapper around the HT html tag.
+
+    Attributes:
+    ----------
+    :param count: The number of HR tag to be added
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param align: Optional. The content position. Values (left, right, center). Default center
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
+    for hr in hrs:
+      hr.style.css.border = "1px dashed %s" % self.context.rptObj.theme.colors[-1]
+    return hrs
+
+  def dotted(self, count=1, width=(100, '%'), align="center", profile=None):
+    """
+    Description:
+    ------------
+    Wrapper around the HT html tag.
+
+    Attributes:
+    ----------
+    :param count: The number of HR tag to be added
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param align: Optional. The content position. Values (left, right, center). Default center
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
+    for hr in hrs:
+      hr.style.css.border = "1px dotted %s" % self.context.rptObj.theme.colors[-1]
+    return hrs

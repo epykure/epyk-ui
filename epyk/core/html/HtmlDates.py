@@ -222,9 +222,25 @@ class CountDownDate(Html.Html):
 
       htmlObj.innerHTML = "<b>"+ days +"d "+ hours +"h "+ minutes + "m "+ seconds +"s </b>"; 
       if ((distance < 0) && (options.delete)){
+        if(typeof options.end !== 'undefined'){eval(options.end)}
         htmlObj.remove(); if (options.reload){location.reload()}
         clearInterval(window[htmlObj.id +"_interval"])
       }'''
+
+  def end(self, jsFncs):
+    """
+    Description:
+    -----------
+    Events triggered at the end of the timer
+
+    Attributes:
+    ----------
+    :param jsFncs: List. Javascript functions
+    """
+    if not isinstance(jsFncs, list):
+      jsFncs = [jsFncs]
+    self._jsStyles["end"] = JsUtils.jsConvertFncs(jsFncs, toStr=True)
+    return self
 
   def __str__(self):
     self.jsUpdateDataFnc = '''var %(htmlCode)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)
@@ -280,6 +296,16 @@ class Calendar(Html.Html):
     return self.__options
 
   def click(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param jsFncs: List. Javascript functions
+    :param profile:
+    :param source_event:
+    """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self.__click = JsUtils.jsConvertFncs(jsFncs, toStr=True)
@@ -433,9 +459,7 @@ class Timer(Html.Html):
       var time = data.minutes * 60, r = htmlObj, tmp=time;
       window["time_" + htmlObj.id] = setInterval(function(){ 
         if(tmp < 0){
-          if(typeof options.end !== 'undefined'){
-            eval(options.end);
-          }
+          if(typeof options.end !== 'undefined'){eval(options.end)}
           clearInterval(window["time_" + htmlObj.id])}
         if (tmp >= 0){
           var c=tmp--, m = (c/60)>>0, s=(c-m*60)+'';
@@ -444,6 +468,15 @@ class Timer(Html.Html):
       '''
 
   def end(self, jsFncs):
+    """
+    Description:
+    -----------
+    Events triggered at the end of the timer
+
+    Attributes:
+    ----------
+    :param jsFncs: List. Javascript functions
+    """
     if not isinstance(jsFncs, list):
       jsFncs = [jsFncs]
     self._jsStyles["end"] = JsUtils.jsConvertFncs(jsFncs, toStr=True)

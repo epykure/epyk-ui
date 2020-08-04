@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 
 from epyk.core import html
 
@@ -188,7 +191,7 @@ class Components(object):
     """
     Description:
     ------------
-    Group all the built in pictograms
+    Group all the built in pictogram
     """
     return CompPictos.Pictogram(self)
 
@@ -413,7 +416,7 @@ class Components(object):
     """
     Description:
     ------------
-    Group all the business configuraiton together.
+    Group all the business configuration together.
     This module will rely on the base components available in the UI.
 
     This will only provide ready to use component for standard business cases.
@@ -469,8 +472,21 @@ class Components(object):
     """
     Description:
     ------------
+    Group all the component related to the time and calendar management
     """
     return CompCalendars.Calendar(self)
+
+  @property
+  def delimiters(self):
+    """
+    Description:
+    ------------
+    Shortcut property to the various delimiters styles
+
+    Related Pages:
+      https://codepen.io/ibrahimjabbari/pen/ozinB
+    """
+    return CompLayouts.Delimiter(self)
 
   def contents(self, title="Contents", top=10, right=10, left=None, width=(None, "%"), height=(None, "px"), options=None, profile=None):
     """
@@ -482,6 +498,10 @@ class Components(object):
 
     Attributes:
     ----------
+    :param title:
+    :param top:
+    :param right:
+    :param left:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
@@ -609,7 +629,7 @@ class Components(object):
 
     Attributes:
     ----------
-    :param data: Dictioanry. The Json object to be display
+    :param data: Dictionary. The Json object to be display
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. Dictionary with the component properties
@@ -654,7 +674,7 @@ class Components(object):
 
     Attributes:
     ----------
-    :param components:
+    :param components: Components. Optional.
     :param anchor: Component. Optional.
     """
     postit = self.rptObj.ui.div()
