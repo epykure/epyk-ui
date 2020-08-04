@@ -1,6 +1,7 @@
 
 from epyk.core import html
 from epyk.core.css import Defaults_css
+from epyk.interfaces import Arguments
 
 
 class Navigation(object):
@@ -304,17 +305,21 @@ class Navigation(object):
 
     Attributes:
     ----------
-    :param icon:
+    :param logo:
     :param title:
     :param width:
     :param height:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+
     components = []
     options, scroll_height = options or {}, -5
-    if 'logo_height' not in options:
-      options['logo_height'] = (height[0], height[1])
+    options['logo_height'] = tuple(height) if 'logo_height' not in options else Arguments.size(options['logo_height'], unit="px")
+    options['logo_width'] = tuple(height) if 'logo_width' not in options else Arguments.size(options['logo_width'], unit="px")
+
     if logo is None:
       logo = self.context.rptObj.ui.icons.epyk()
       components.append(logo)
@@ -322,7 +327,7 @@ class Navigation(object):
       # if it is not an option it is considered as a path
       if not hasattr(logo, 'options'):
         logo_url = logo
-        logo = self.context.rptObj.ui.div(height=options['logo_height'], width=height)
+        logo = self.context.rptObj.ui.div(height=options['logo_height'], width=options['logo_width'])
         logo.style.css.background_url(logo_url, size="auto %s%s" % (options['logo_height'][0], options['logo_height'][1]))
       components.append(logo)
     components[-1].style.css.margin_right = 20

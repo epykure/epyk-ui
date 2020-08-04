@@ -514,6 +514,7 @@ class Delimiter(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
+    hrs.style.css.margin = "10px 0"
     return hrs
 
   def double(self, count=1, width=(100, '%'), align="center", profile=None):
@@ -548,6 +549,8 @@ class Delimiter(object):
     :param profile: Optional. A flag to set the component performance storage
     """
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
+    hrs.style.css.margin_top = 10
+    hrs.style.css.margin_bottom = 10
     for hr in hrs:
       hr.style.css.border = "1px dashed %s" % self.context.rptObj.theme.colors[-1]
     return hrs

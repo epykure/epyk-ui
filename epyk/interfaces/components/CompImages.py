@@ -1,6 +1,7 @@
 
 from epyk.core import html
 from epyk.core.css import Colors
+from epyk.interfaces import Arguments
 
 
 class Images(object):
@@ -41,6 +42,8 @@ class Images(object):
     :param profile:
     :param options:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
@@ -59,7 +62,7 @@ class Images(object):
     :param size:
     :param margin:
     """
-    div = self.context.rptObj.ui.div(height=height, width=width)
+    div = self.context.rptObj.ui.div(height=Arguments.size(height, "px"), width=Arguments.size(width))
     div.style.css.background_url(url, size=size, margin=margin)
     div.style.css.display = "block"
     div.style.css.text_align = align
@@ -80,7 +83,7 @@ class Images(object):
     :param size:
     :param margin:
     """
-    div = self.context.rptObj.ui.div(height=height, width=width)
+    div = self.context.rptObj.ui.div(height=Arguments.size(height), width=Arguments.size(width))
     div.style.css.background_url(url, size=size, margin=margin)
     div.style.css.background_position = "center center"
     div.style.css.display = "block"
@@ -103,7 +106,9 @@ class Images(object):
     :param top:
     :param left:
     """
-    div = self.context.rptObj.ui.div(height=height, width=width)
+    top = Arguments.size(top, 'px')
+    left = Arguments.size(left, 'px')
+    div = self.context.rptObj.ui.div(height=Arguments.size(height, 'px'), width=Arguments.size(width))
     div.style.css.background_url(url)
     div.style.css.display = "block"
     div.style.css.position = "absolute"
@@ -130,7 +135,7 @@ class Images(object):
     :param profile:
     :param options:
     """
-    return self.img("0.jpg", "http://img.youtube.com/vi/%s" % video_id, width, height, align, htmlCode, profile, options)
+    return self.img("0.jpg", "http://img.youtube.com/vi/%s" % video_id, Arguments.size(width), Arguments.size(height, 'px'), align, htmlCode, profile, options)
 
   def circular(self, image=None, path=None, width=(100, "%"), height=('auto', ""), align="center", htmlCode=None,
           profile=None, options=None):
@@ -165,6 +170,8 @@ class Images(object):
     :param profile:
     :param options:
     """
+    width = Arguments.size(width)
+
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
@@ -202,6 +209,9 @@ class Images(object):
     :param profile:
     :param options:
     """
+    width = Arguments.size(width, "px")
+    height = Arguments.size(height, "px")
+
     options = options or {}
     status_map = {
       True: self.context.rptObj.theme.success[1],
@@ -275,6 +285,9 @@ class Images(object):
     :param width:
     :param height:
     """
+    width = Arguments.size(width, "px")
+    height = Arguments.size(height, "px")
+
     img = self.img(image, width=(width[0]-10, 'px'), height=(100, "px"), path=path)
     title = self.context.rptObj.ui.title(title, level=2)
     highlight = self.context.rptObj.ui.texts.span(name, width=(50, "px"), height=(20, 'px'))
@@ -320,6 +333,9 @@ class Images(object):
     :param height: Optional. Tuple. The component height in pixel or percentage
     :param profile:
     """
+    width = Arguments.size(width, "px")
+    height = Arguments.size(height, "px")
+
     html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, profile)
     return html_id
 
@@ -351,6 +367,9 @@ class Images(object):
     :param height: Optional. Tuple. The component height in pixel
     :param profile:
     """
+    width = Arguments.size(width)
+    height = Arguments.size(height, "px")
+
     if height[1] == '%':
       raise Exception("This height cannot be in percentage")
 
@@ -380,6 +399,8 @@ class Images(object):
     :param top:
     :param profile:
     """
+    top = Arguments.size(top, "px")
+
     html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbole, top, profile)
     return html_emoji
 
@@ -409,6 +430,9 @@ class Images(object):
     :param tooltip:
     :param profile:
     """
+    width = Arguments.size(width, "px")
+    height = Arguments.size(height, "px")
+
     options = options or {}
     options['icon_family'] = family or 'font-awesome'
     html_icon = html.HtmlImage.Icon(self.context.rptObj, icon, width=width, height=height, color=color, tooltip=tooltip,
@@ -447,10 +471,15 @@ class Images(object):
     :param background_color: Optional, The background color of the badge
     :param color: Optional, The text color of the badge
     :param url:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param tooltip: Optional, The text to display in the tooltip
     :param options:
     :param profile: Optional, A boolean to store the performances for each components
     """
+    width = Arguments.size(width, "px")
+    height = Arguments.size(height, "px")
+
     if background_color is None:
       background_color = self.context.rptObj.theme.greys[0]
     if color is None:
@@ -483,6 +512,9 @@ class Images(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, "px")
+    height = Arguments.size(height, "px")
+
     div = self.context.rptObj.ui.div(code, width=width, height=height, options=options, helper=helper, profile=profile)
     div.style.css.background_color = code
     div.style.css.line_height = "%s%s" % (height[0], height[1])

@@ -1427,5 +1427,31 @@ class Body(Html):
     self.style.css.background_repeat = "no-repeat"
     self.style.css.background_color = self._report.theme.colors[2]
 
+  def template(self, css):
+    """
+    Description:
+    ------------
+    Add an extra layer
+
+    Attributes:
+    ----------
+    :param css:
+    """
+    self.header = self._report.ui.div()
+    self.header.options.managed = False
+    self.header.style.clear_all()
+    self.footer = self._report.ui.div()
+    self.footer.options.managed = False
+    self.footer.style.clear_all()
+    self.template = self._report.ui.div()
+    self.template.options.managed = False
+    self.template.style.clear_all()
+    self.template.css(css)
+    return self
+
   def __str__(self):
+    if hasattr(self, 'template'):
+      self.template._vals = str(self._html_content)
+      return '<body %s>%s%s%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.header.html(), self.template.html(), self.footer.html())
+
     return '<body %s>%s</body>' % (self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self._html_content)
