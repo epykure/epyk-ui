@@ -5,6 +5,7 @@ import os
 
 from epyk.core.css import Defaults as Defaults_css
 from epyk.core.css.themes import ThemeBlue
+from epyk.interfaces import Arguments
 
 
 class Shopping(object):

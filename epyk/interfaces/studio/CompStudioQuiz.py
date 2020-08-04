@@ -5,6 +5,7 @@ import datetime
 
 from epyk.core.css import Defaults_css
 from epyk.core.css.themes import ThemeRed
+from epyk.interfaces import Arguments
 
 
 class Quiz(object):

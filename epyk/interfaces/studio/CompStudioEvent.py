@@ -6,6 +6,7 @@ import datetime
 from epyk.core import html
 from epyk.core.css import Defaults_css
 from epyk.core.css.themes import ThemeRed
+from epyk.interfaces import Arguments
 
 
 class Event(object):
@@ -644,3 +645,7 @@ class Show(Event):
     button.style.css.background = self.parent.context.rptObj.theme.greys[0]
     button.style.hover({"color": self.parent.context.rptObj.theme.success[1]})
     return button
+
+
+class Dating(Event):
+  pass

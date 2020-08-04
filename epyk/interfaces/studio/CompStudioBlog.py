@@ -237,7 +237,7 @@ class Gallery(Blog):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    
+
     grid = self.parent.context.rptObj.ui.grid(width=width, height=height, options=options, profile=profile)
     row = self.parent.context.rptObj.ui.row()
     for i, picture in enumerate(pictures):

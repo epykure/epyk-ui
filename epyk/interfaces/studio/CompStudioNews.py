@@ -6,6 +6,7 @@ import datetime
 
 from epyk.core.css import Defaults as Defaults_css
 from epyk.core.css.themes import ThemeDark
+from epyk.interfaces import Arguments
 
 
 class News(object):

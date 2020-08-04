@@ -13,6 +13,7 @@ from epyk.interfaces.studio import CompStudioEvent
 from epyk.interfaces.studio import CompStudioQuiz
 
 from epyk.core.css import Defaults as Defaults_css
+from epyk.interfaces import Arguments
 
 
 class Studio(object):
@@ -147,6 +148,15 @@ class Studio(object):
     return CompStudioBlog.Gallery(self)
 
   @property
+  def dating(self):
+    """
+    Description:
+    ------------
+
+    """
+    return CompStudioEvent.Dating(self)
+
+  @property
   def wedding(self):
     """
     Description:
@@ -158,24 +168,33 @@ class Studio(object):
   @property
   def birth(self):
     """
+    Description:
+    ------------
     """
     return CompStudioEvent.Birth(self)
 
   @property
   def baptism(self):
     """
+    Description:
+    ------------
     """
     return CompStudioEvent.Baptism(self)
 
   @property
   def evg(self):
     """
+    Description:
+    ------------
     """
     return CompStudioEvent.EVG(self)
 
   @property
   def seminar(self):
     """
+    Description:
+    ------------
+
     https://www.voyage-event.com/autres-themes
     """
     return CompStudioEvent.Seminar(self)
@@ -183,6 +202,9 @@ class Studio(object):
   @property
   def festival(self):
     """
+    Description:
+    ------------
+
     https://www.voyage-event.com/autres-themes
     """
     return CompStudioEvent.Festival(self)
