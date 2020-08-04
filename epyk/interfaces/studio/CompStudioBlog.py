@@ -17,23 +17,30 @@ class Blog(object):
     """
     Description:
     ------------
-
+    Set the default theme for a blog.
+    This will add a template to the body in order to have a header, template and footer
     """
     self.parent.context.rptObj.theme = ThemeBlue.Blue()
     Defaults_css.Font.size = 16
     Defaults_css.Font.header_size = Defaults_css.Font.size + 4
     self.parent.context.rptObj.body.template({"margin": '0 10%'})
 
-  def delimiter(self, size=5):
+  def delimiter(self, size=5, count=1, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
     ------------
+    Add a line delimiter to the page
 
     Attributes:
     ----------
-    :param size:
+    :param size: Integer. The size of the line.
+    :param count: Integer. The number of lines
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
     """
-    hr = self.parent.context.rptObj.ui.layouts.hr()
+    hr = self.parent.context.rptObj.ui.layouts.hr(count)
     hr.style.css.padding = "0 20%"
     hr.hr.style.css.border_top = "%spx double %s" % (size, self.parent.context.rptObj.theme.colors[5])
     return hr
@@ -42,11 +49,11 @@ class Blog(object):
     """
     Description:
     ------------
-
+    Add a title to the page
 
     Attributes:
     ----------
-    :param text:
+    :param text: String.
     :param width:
     :param height:
     :param options:
@@ -191,14 +198,14 @@ class Blog(object):
     button.style.hover({"color": self.parent.context.rptObj.theme.colors[-1]})
     return button
 
-  def picture(self, img, label=None, width=(300, 'px'), align="center", height=(None, 'px'), options=None, profile=False):
+  def picture(self, image, label=None, width=(300, 'px'), align="center", height=(None, 'px'), options=None, profile=False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param img:
+    :param image:
     :param label:
     :param width:
     :param align:
@@ -210,10 +217,34 @@ class Blog(object):
     height = Arguments.size(height, unit="px")
 
     if label is None:
-      img = self.parent.context.rptObj.ui.img(img, width=width, height=height, align=align, options=options, profile=profile)
+      img = self.parent.context.rptObj.ui.img(image, width=width, height=height, align=align, options=options, profile=profile)
       img.style.css.margin_top = 5
       img.style.css.margin_bottom = 5
       return img
+
+    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
+    component.image = self.parent.context.rptObj.ui.img(image, width=width, height=height, options=options, profile=profile)
+    component.style.css.position = "relative"
+    component.add(component.image)
+    if not hasattr(label, 'options'):
+      component.label = self.parent.context.rptObj.ui.div(label)
+    else:
+      component.label = self.parent.context.rptObj.ui.div()
+      component.label.add(label)
+    component.label.style.css.position = "absolute"
+    component.label.style.css.text_align = "center"
+    component.label.style.css.width = "calc(100% - 20px)"
+    component.label.style.css.background = "white"
+    component.label.style.css.margin = 10
+    component.label.style.css.padding = 10
+    component.label.style.css.bottom = 5
+    component.add(component.label)
+    component.style.css.margin_top = 5
+    component.style.css.margin_bottom = 5
+    if align == 'center':
+      component.style.css.margin = "auto"
+      component.style.css.display = "block"
+    return component
 
   def video(self, img):
     return self.parent.context.rptObj.ui.img(img)

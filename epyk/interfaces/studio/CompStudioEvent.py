@@ -510,8 +510,7 @@ class Wedding(Event):
     """
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
-    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options,
-                                                  profile=profile)
+    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     component.image = html.HtmlImage.Image(self.parent.context.rptObj, image, path, align, htmlCode, (100, '%'), (100, '%'), profile, options or {})
     component.style.css.position = "relative"
     component.add(component.image)
