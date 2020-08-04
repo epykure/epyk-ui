@@ -14,8 +14,7 @@ class Shopping(object):
   def theme(self):
     self.parent.context.rptObj.theme = ThemeBlue.Blue()
 
-  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None,
-             tooltip=None, profile=None, options=None):
+  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
     button = self.parent.context.rptObj.ui.button(text, icon, width=width, height=height, options=options, tooltip=tooltip, profile=profile, align=align)
     button.style.clear()
     button.style.css.padding = "0 10px"
@@ -459,6 +458,28 @@ class Shopping(object):
       comp_availability.style.css.bold()
       comp_availability._vals = comment or "Not Available"
     return comp_availability
+
+  def vote(self, number, align="center", width=(50, 'px'), height=("auto", ''), options=None, profile=None):
+    """
+
+    :param number:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    :return:
+    """
+    container = self.parent.context.rptObj.ui.div([], align=align, width=width, height=height, options=options,
+                                                  profile=profile)
+    container.up = self.parent.context.rptObj.ui.icons.awesome("fas fa-caret-up")
+    container.add(container.up)
+    container.text = count_votes = self.parent.context.rptObj.ui.texts.number(number, width=width)
+    container.text.style.css.font_factor(10)
+    container.add(container.text)
+    container.down = self.parent.context.rptObj.ui.icons.awesome("fas fa-caret-down")
+    container.add(container.down)
+    return container
 
 
 class Resto(object):

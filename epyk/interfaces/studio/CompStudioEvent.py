@@ -335,6 +335,26 @@ class Event(object):
     container.add(link)
     return container
 
+  def button(self, text, icon=None, border=True, background=True, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+    """
+
+    :param text:
+    :param icon:
+    :param border:
+    :param background:
+    :param width:
+    :param align:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    button = self.parent.context.rptObj.ui.button(text, icon=icon, width=width, align=align, height=height, options=options, profile=profile)
+    button.style.clear()
+    button.style.css.padding = "0 10px"
+    button.style.css.background = self.parent.context.rptObj.theme.greys[0]
+    button.style.hover({"color": self.parent.context.rptObj.theme.colors[-1]})
+    return button
+
 
 class Wedding(Event):
 
@@ -417,27 +437,6 @@ class Wedding(Event):
     div.style.css.vertical_align = position
     div.style.css.padding = "auto"
     return div
-
-  def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None,
-             tooltip=None, profile=None, options=None):
-    """
-
-    :param text:
-    :param icon:
-    :param width:
-    :param height:
-    :param align:
-    :param htmlCode:
-    :param tooltip:
-    :param profile:
-    :param options:
-    """
-    button = self.parent.context.rptObj.ui.button(text, icon, width=width, height=height, options=options, tooltip=tooltip, profile=profile, align=align)
-    button.style.clear()
-    button.style.css.padding = "0 10px"
-    button.style.css.background = self.parent.context.rptObj.theme.greys[0]
-    button.style.hover({"color": self.parent.context.rptObj.theme.colors[-1]})
-    return button
 
   def time(self, date, icon="fas fa-circle", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
     """
