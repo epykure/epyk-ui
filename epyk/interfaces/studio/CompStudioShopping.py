@@ -5,7 +5,6 @@ import os
 
 from epyk.core.css import Defaults as Defaults_css
 from epyk.core.css.themes import ThemeBlue
-from epyk.interfaces import Arguments
 
 
 class Shopping(object):
@@ -16,6 +15,22 @@ class Shopping(object):
     self.parent.context.rptObj.theme = ThemeBlue.Blue()
 
   def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None, tooltip=None, profile=None, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param icon:
+    :param width:
+    :param height:
+    :param align:
+    :param htmlCode:
+    :param tooltip:
+    :param profile:
+    :param options:
+    """
     button = self.parent.context.rptObj.ui.button(text, icon, width=width, height=height, options=options, tooltip=tooltip, profile=profile, align=align)
     button.style.clear()
     button.style.css.padding = "0 10px"

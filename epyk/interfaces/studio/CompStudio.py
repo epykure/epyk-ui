@@ -11,14 +11,12 @@ from epyk.interfaces.studio import CompStudioManagement
 from epyk.interfaces.studio import CompStudioVitrine
 from epyk.interfaces.studio import CompStudioEvent
 from epyk.interfaces.studio import CompStudioQuiz
+from epyk.interfaces.components import CompLayouts
 
 from epyk.core.css import Defaults as Defaults_css
-from epyk.interfaces import Arguments
 
 
-class Studio(object):
-  def __init__(self, context):
-    self.context = context
+class Studio(CompLayouts.Layouts):
 
   def locked(self, component, day, month, year, hour=0, minute=0, second=0, options=None):
     """
@@ -110,6 +108,64 @@ class Studio(object):
     component.text.style.css.color = self.context.rptObj.theme.greys[5]
     component.add(component.text)
     return component
+
+  def banner(self, data, background=True, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param data:
+    :param background:
+    :param width:
+    :param align:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    if background is True:
+      background = self.context.rptObj.theme.colors[1]
+    banner = self.context.rptObj.ui.banners.text(data=data, background=background, width=width, align=align, height=height, options=options, profile=profile)
+    return banner
+
+  def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param title:
+    :param content:
+    :param icon:
+    :param render:
+    :param align:
+    :param width:
+    :param options:
+    """
+    vignet = self.context.rptObj.ui.vignets.vignet(title=title, content=content, icon=icon, render=render, align=align, width=width, options=options)
+    return vignet
+
+  def background(self, url, width=(100, "%"), height=(300, "px"), size="cover", margin=0, align="center", position="middle"):
+    """
+    Description:
+    ------------
+    Set a background as an image.
+    This is wrapping the image.background base component
+
+    Attributes:
+    ----------
+    :param url:
+    :param width:
+    :param height:
+    :param size:
+    :param margin:
+    :param align:
+    :param position:
+    """
+    background = self.context.rptObj.ui.images.background(url, width=width, height=height, size=size, margin=margin, align=align, position=position)
+    return background
 
   @property
   def shop(self):

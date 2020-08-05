@@ -28,6 +28,7 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
     du = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
                                                 "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
     if top is not None:
@@ -66,6 +67,7 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
     dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
         "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
     if bottom is not None:
@@ -106,6 +108,7 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
     dd = self.context.rptObj.ui.icon(icon).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
                                                 "border-radius": '20px', "padding": '8px', "right": '%spx' % right})
     if bottom is not None:
@@ -146,6 +149,7 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
     dd = self.context.rptObj.ui.icon(icon)
     h_url = self.context.rptObj.ui.link(text, url=url).css({"margin-left": "10px"})
     div = self.context.rptObj.ui.div([dd, h_url]).css({"border": '1px solid black', "position": 'fixed', "width": 'none',
@@ -180,6 +184,7 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    height = Arguments.size(height, unit="px")
     p = self.context.rptObj.ui.sliders.progressbar(position, height=height, options=options, profile=profile)
     self.context.rptObj.js.onReady(
       self.context.rptObj.js.window.events.addScrollListener([
@@ -204,6 +209,8 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
     dflt_options.update(options or {})
     html_indices = html.HtmlContainer.Indices(self.context.rptObj, count, width, height, None, dflt_options, profile)
@@ -229,6 +236,8 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"div_css": {"display": "inline-block", "margin": "0 2px"}, "selected": selected}
     dflt_options.update(options or {})
     html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, htmlCode, dflt_options, profile)
@@ -254,6 +263,8 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"div_css": {"margin": "2px", "float": position}, "selected": selected}
     dflt_options.update(options or {})
     html_points = html.HtmlContainer.Points(self.context.rptObj, count, width, height, None, dflt_options, profile)
@@ -278,6 +289,8 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if divider is None:
       divider = self.context.rptObj.symbols.shapes.BLACK_RIGHT_POINTING_TRIANGLE
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
@@ -314,7 +327,6 @@ class Navigation(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-
     components = []
     options, scroll_height = options or {}, -5
     options['logo_height'] = tuple(height) if 'logo_height' not in options else Arguments.size(options['logo_height'], unit="px")
@@ -376,6 +388,8 @@ class Navigation(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     h_image = self.context.rptObj.ui.img(image)
     h_text = self.context.rptObj.ui.text(text)
@@ -408,6 +422,8 @@ class Navigation(object):
     :param height: the height of the object
     :param profile: get profiling info
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     footer = html.HtmlMenu.HtmlFooter(self.context.rptObj, components, width=width, height=height, profile=profile)
     self.context.rptObj.body.style.css.padding_bottom = height[0]
     return footer
@@ -472,6 +488,8 @@ class Navigation(object):
     :param profile: Optional. A flag to set the component performance storage
     :param helper:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="%")
     dflt_options = {"position": 'top'}
     if options is not None:
       dflt_options.update(options)
@@ -492,6 +510,7 @@ class Navigation(object):
     :param profile:
     :param htmlCode:
     """
+    size = Arguments.size(size, unit="px")
     dflt_options = {"position": 'left'}
     if options is not None:
       dflt_options.update(options)
@@ -529,6 +548,8 @@ class Banners(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
     div.style.css.color = "white"
@@ -555,6 +576,8 @@ class Banners(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
     div.style.css.color = "white"
@@ -576,11 +599,14 @@ class Banners(object):
     ----------
     :param data:
     :param background:
+    :param position:
     :param width:
     :param height:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(data, width=width, height=height, options=options, profile=profile)
     div.style.css.background_color = background or self.context.rptObj.theme.colors[3]
     div.style.css.color = "white"
@@ -613,6 +639,8 @@ class Banners(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     if not hasattr(data, 'options'):
       data = self.context.rptObj.ui.div(data, width=("auto", ""))
@@ -646,6 +674,8 @@ class Banners(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(data, 'options'):
       data = self.context.rptObj.ui.div(data, width=("auto", ""))
@@ -669,7 +699,7 @@ class Banners(object):
     Attributes:
     ----------
     :param title:
-    :param data:
+    :param content:
     :param size_notch:
     :param background:
     :param width:
@@ -678,6 +708,8 @@ class Banners(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     options = options or {}
     if not hasattr(title, 'options'):
@@ -720,13 +752,15 @@ class Banners(object):
     :param profile:
     :return:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(content, 'options'):
-      data = self.context.rptObj.ui.div('"%s"' % content, width=("auto", ""))
-      data.style.css.display = "inline-block"
-      data.style.css.text_align = align
-      data.style.css.font_size = Defaults_css.font(size_notch)
-    div.add(data)
+      content = self.context.rptObj.ui.div('"%s"' % content, width=("auto", ""))
+      content.style.css.display = "inline-block"
+      content.style.css.text_align = align
+      content.style.css.font_size = Defaults_css.font(size_notch)
+    div.add(content)
     div.style.css.background_color = background or self.context.rptObj.theme.greys[0]
     div.style.css.padding = "20px 15px"
     div.style.css.margin = "auto"
@@ -756,6 +790,8 @@ class Banners(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     copyright = self.context.rptObj.py.encode_html(copyright or "© 2018 - 2020, Epyk studio")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     for link in links:
@@ -794,6 +830,8 @@ class Banners(object):
     :param instagram:
     :param linkedIn:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     div.style.css.padding = "10px 0"
     text = self.context.rptObj.ui.text(text)
@@ -854,6 +892,8 @@ class Banners(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     row = []
     for i, header in enumerate(headers):
@@ -889,7 +929,8 @@ class Banners(object):
     :param options:
     :param profile:
     """
-
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     div.style.css.padding = 5
     div.add(self.context.rptObj.ui.title(title))
@@ -926,6 +967,8 @@ class Banners(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile, align=align)
     if not hasattr(title, 'options'):
       div.title = self.context.rptObj.ui.titles.title(title)

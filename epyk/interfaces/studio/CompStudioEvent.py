@@ -6,7 +6,6 @@ import datetime
 from epyk.core import html
 from epyk.core.css import Defaults_css
 from epyk.core.css.themes import ThemeRed
-from epyk.interfaces import Arguments
 
 
 class Event(object):
@@ -16,7 +15,11 @@ class Event(object):
 
   def progress(self, percentage, icon="fas fa-plane", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param percentage:
     :param icon:
     :param width:
@@ -43,7 +46,11 @@ class Event(object):
   def search(self, text="", placeholder='search', icon="fas fa-search", width=(100, "%"), height=(None, "px"),
              htmlCode=None, options=None, attrs=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param placeholder:
     :param icon:
@@ -54,8 +61,7 @@ class Event(object):
     :param attrs:
     :param profile:
     """
-    container = self.parent.context.rptObj.ui.div(width=width, height=height, options=options,
-                                                  profile=profile)
+    container = self.parent.context.rptObj.ui.div(width=width, height=height, options=options, profile=profile)
     container.style.css.position = "relative"
     container.input = self.parent.context.rptObj.ui.inputs.d_search(text, placeholder, width, height, htmlCode, options, attrs, profile)
     container.input.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.greys[3]
@@ -72,6 +78,11 @@ class Event(object):
 
   def delimiter(self, size=1):
     """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
 
     """
     hr = self.parent.context.rptObj.ui.layouts.hr()
@@ -82,7 +93,11 @@ class Event(object):
 
   def mosaic(self, pictures, columns=6, width=(None, '%'), height=('auto', ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param pictures:
     :param columns:
     :param width:
@@ -105,7 +120,11 @@ class Event(object):
   def clients(self, logos, title="Client we have worked with...", content='', width=(100, '%'), height=("auto", ''), align="center", options=None,
                profile=False):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param logos:
     :param title:
     :param content:
@@ -124,7 +143,11 @@ class Event(object):
   def sponsors(self, logos, title="Sponsors", content='', width=(100, '%'), height=("auto", ''), align="center", options=None,
                profile=False):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param logos:
     :param title:
     :param content:
@@ -141,7 +164,11 @@ class Event(object):
 
   def avatar(self, image=None, size=80, text=None, htmlCode=None, profile=None, options=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param image:
     :param size:
@@ -158,7 +185,11 @@ class Event(object):
 
   def comment(self, avatar, placeholder="Let a comment", width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param avatar:
     :param placeholder:
     :param width:
@@ -171,7 +202,7 @@ class Event(object):
       avatar = self.avatar(avatar)
       avatar.style.css.display = "inline-block"
     container.add(avatar)
-    container.text = self.parent.context.rptObj.ui.textarea()
+    container.text = self.parent.context.rptObj.ui.textarea(placeholder=placeholder)
     container.text.style.css.display = "inline-block"
     container.text.style.css.float = "right"
     container.text.style.css.color = self.parent.context.rptObj.theme.greys[4]
@@ -338,7 +369,11 @@ class Event(object):
 
   def button(self, text, icon=None, border=True, background=True, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param icon:
     :param border:
@@ -360,6 +395,11 @@ class Event(object):
 class Wedding(Event):
 
   def theme(self):
+    """
+    Description:
+    ------------
+
+    """
     self.parent.context.rptObj.theme = ThemeRed.Pink()
 
   def banner(self, data, size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'), options=None, profile=False):
@@ -471,7 +511,24 @@ class Wedding(Event):
           seconds = delta_time.seconds - minutes * 60
           component.add(self.parent.context.rptObj.ui.text("%s min %s s" % (minutes, seconds)))
     else:
-      component.add(self.parent.context.rptObj.ui.text(date_time_obj.strftime("%d %B %Y")))
+      text = self.parent.context.rptObj.ui.text(date_time_obj.strftime("%d %B %Y"))
+      delta_time = current - date_time_obj
+      year = delta_time.days // 365
+      months = (delta_time.days - year * 365) // 12
+      days = delta_time.days - year * 365 - months * 12
+      if year:
+        if months:
+          text.tooltip("%s years %s months %s days" % (year, months, days))
+        else:
+          text.tooltip("%s years %s days" % (year, days))
+      elif months:
+        if days:
+          text.tooltip("%s months %s days" % (months, days))
+        else:
+          text.tooltip("%s days" % days)
+      else:
+        text.tooltip("%s days" % days)
+      component.add(text)
     return component
 
   def picture(self, image=None, label=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
@@ -531,8 +588,23 @@ class Wedding(Event):
     return component
 
   def address(self, street, postcode, city, icon="fas fa-map-marker-alt", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
-    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options,
-                                                  profile=profile)
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param street:
+    :param postcode:
+    :param city:
+    :param icon:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     icon = self.parent.context.rptObj.ui.icons.awesome(icon)
     icon.icon.style.css.font_factor(2)
     icon.icon.style.css.color = self.parent.context.rptObj.theme.colors[5]
@@ -627,7 +699,11 @@ class Show(Event):
   def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None,
              tooltip=None, profile=None, options=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param icon:
     :param width:

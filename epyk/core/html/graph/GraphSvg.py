@@ -93,6 +93,7 @@ class SVG(Html.Html):
     :rtype: Rectangle
     """
     self.html_objs.append(Rectangle(self._report, x, y, width, height, fill, rx, ry))
+    self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
   def line(self, x1, y1, x2, y2, stroke=None, stroke_width=None):
@@ -172,6 +173,7 @@ class SVG(Html.Html):
     :rtype: Ellipse
     """
     self.html_objs.append(Ellipse(self._report, cx, cy, rx, ry))
+    self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
   def polygon(self, points, fill="None"):
@@ -193,6 +195,7 @@ class SVG(Html.Html):
     :rtype: Polygone
     """
     self.html_objs.append(Polygone(self._report, points, fill))
+    self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
   def polyline(self, points, fill="None"):
@@ -214,6 +217,7 @@ class SVG(Html.Html):
     :rtype: Polyline
     """
     polygone = Polyline(self._report, points, height=None, width=None, fill=fill, options={})
+    polygone.options.managed = False
     self.html_objs.append(polygone)
     return polygone
 
@@ -237,6 +241,7 @@ class SVG(Html.Html):
     :rtpye: Polyline
     """
     self.html_objs.append(Polyline(self._report, points, None, None, fill, options or {}))
+    self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
   def g(self, fill="None", stroke=None, stroke_width=None):
@@ -260,6 +265,7 @@ class SVG(Html.Html):
     :rtype: G
     """
     self.html_objs.append(G(self._report, fill, stroke, stroke_width))
+    self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
   def path(self, x=0, y=0, fill='none', from_origin=False, bespoke_path=None, stroke=None):
@@ -310,6 +316,7 @@ class SVG(Html.Html):
     :rtype: ForeignObject
     """
     self.html_objs.append(ForeignObject(self._report, x, y, width, height))
+    self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
   def __str__(self):

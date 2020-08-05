@@ -64,7 +64,7 @@ class Layouts(object):
     """
     return self.br(count, profile)
 
-  def hr(self, count=1, background_color=None, width=(100, '%'), height=(None, 'px'), align=None, profile=None):
+  def hr(self, count=1, background_color=None, width=(100, '%'), height=(None, 'px'), align=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -91,8 +91,11 @@ class Layouts(object):
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. The content position. Values (left, right, center). Default center
+    :param options: Optional.
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     hr_html = self.context.rptObj.ui.div(width=Arguments.size(width))
     for _ in range(count):
       hr_html.hr = html.HtmlOthers.Hr(self.context.rptObj, background_color, (100, '%'), Arguments.size(height), align, profile)
@@ -131,14 +134,17 @@ class Layouts(object):
     ----------
     :param htmlObjs:
     :param position:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param align:
     :param helper:
     :param options:
-    :param profile:
+    :param profile: Optional. A flag to set the component performance storage
     """
-    html_col = html.HtmlContainer.Col(self.context.rptObj, htmlObjs, position, width, height, align, helper, options or {}, profile)
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    html_col = html.HtmlContainer.Col(self.context.rptObj, htmlObjs, position, width, height, align, helper, options, profile)
     return html_col
 
   def row(self, htmlObjs=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None, options=None, profile=None):
@@ -171,12 +177,15 @@ class Layouts(object):
     ----------
     :param htmlObjs:
     :param position:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param align:
     :param helper:
+    :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dft_option = {"autoSize": True}
     if options is not None:
       dft_option.update(options)
@@ -200,12 +209,14 @@ class Layouts(object):
     Attributes:
     ----------
     :param htmlObjs:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param helper:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_row = html.HtmlContainer.Table(self.context.rptObj, htmlObjs, width, height, helper, options, profile)
     return html_row
 
@@ -231,33 +242,42 @@ class Layouts(object):
     Attributes:
     ----------
     :param rows:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param align:
-    :param helper:
+    :param position:
+    :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_grid = html.HtmlContainer.Grid(self.context.rptObj, rows, width, height, align, position, options, profile)
     return html_grid
 
   def panel(self, htmlObjs=None, title=None, color=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
             helper=None, options=None, profile=False):
     """
+    Description:
+    ------------
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Panel`
 
+    Attributes:
+    ----------
     :param htmlObjs:
     :param title:
     :param color:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode:
     :param helper:
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
     html_panel = html.HtmlContainer.Panel(self.context.rptObj, htmlObjs or [], title, color, width, height, htmlCode, helper, options, profile)
@@ -287,9 +307,9 @@ class Layouts(object):
     :param htmlObjs:
     :param label:
     :param color:
-    :param width:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param icon:
-    :param height:
     :param editable:
     :param align:
     :param padding:
@@ -297,6 +317,8 @@ class Layouts(object):
     :param tag:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
 
@@ -327,13 +349,15 @@ class Layouts(object):
     Attributes:
     ----------
     :param components:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param options:
     :param profile:
 
     :rtype: html.HtmlPopup.Popup
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dfl_options = {"background": True, 'draggable': False, 'margin': 10}
     if options is not None:
       dfl_options.update(options)
@@ -357,11 +381,13 @@ class Layouts(object):
     Attributes:
     ----------
     :param url:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="%")
     html_frame = html.HtmlContainer.IFrame(self.context.rptObj, url, width, height, helper, profile)
     return html_frame
 
@@ -373,11 +399,13 @@ class Layouts(object):
       - :class:`epyk.core.html.HtmlContainer.Dialog`
 
     :param record:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_dialog = html.HtmlContainer.Dialog(self.context.rptObj, record, width, height, helper, profile)
     return html_dialog
 
@@ -399,12 +427,14 @@ class Layouts(object):
     Attributes:
     ----------
     :param icon_names:
-    :param width:
-    :param height:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode:
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     icon_names = icon_names or None
     if not isinstance(icon_names, list):
       icon_names = [icon_names]
@@ -429,70 +459,75 @@ class Layouts(object):
     return form
 
   def header(self, htmlObjs=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
-      """
-      Description:
-      ------------
-      The HTML <header> element represents introductory content, typically a group of introductory or navigational aids.
-      It may contain some heading elements but also a logo, a search form, an author name, and other elements
+    """
+    Description:
+    ------------
+    The HTML <header> element represents introductory content, typically a group of introductory or navigational aids.
+    It may contain some heading elements but also a logo, a search form, an author name, and other elements
 
-      Usage::
+    Usage::
 
-        div = rptObj.ui.header([html])
-        div += html_2
+      div = rptObj.ui.header([html])
+      div += html_2
 
-      Underlying HTML Objects:
+    Underlying HTML Objects:
 
-        - :class:`epyk.core.html.HtmlContainer.Header`
+      - :class:`epyk.core.html.HtmlContainer.Header`
 
-      Related Pages:
+    Related Pages:
 
-      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header
+    https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header
 
-      Attributes:
-      ----------
-      :param htmlObjs:
-      :param width:
-      :param height:
-      :param htmlCode:
-      :param profile:
-      """
-      if htmlObjs is not None and not isinstance(htmlObjs, list):
-        htmlObjs = [htmlObjs]
-      html_obj = html.HtmlContainer.Header(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
-      return html_obj
+    Attributes:
+    ----------
+    :param htmlObjs:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode:
+    :param profile:
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    if htmlObjs is not None and not isinstance(htmlObjs, list):
+      htmlObjs = [htmlObjs]
+    html_obj = html.HtmlContainer.Header(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
+    return html_obj
 
   def section(self, htmlObjs=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
-      """
-      Description:
-      ------------
-      The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections of the document.
+    """
+    Description:
+    ------------
+    The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections of the document.
 
-      Usage::
+    Usage::
 
-        div = rptObj.ui.header([html])
-        div += html_2
+      div = rptObj.ui.header([html])
+      div += html_2
 
-      Underlying HTML Objects:
+    Underlying HTML Objects:
 
-        - :class:`epyk.core.html.HtmlContainer.Header`
+      - :class:`epyk.core.html.HtmlContainer.Header`
 
-      Related Pages:
+    Related Pages:
 
-      https://www.w3schools.com/tags/tag_section.asp
+    https://www.w3schools.com/tags/tag_section.asp
 
-      Attributes:
-      ----------
-      :param htmlObjs:
-      :param width:
-      :param height:
-      :param htmlCode:
-      :param tag:
-      :param profile:
-      """
-      if htmlObjs is not None and not isinstance(htmlObjs, list):
-        htmlObjs = [htmlObjs]
-      html_obj = html.HtmlContainer.Section(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
-      return html_obj
+    Attributes:
+    ----------
+    :param htmlObjs:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode:
+    :param helper:
+    :param options:
+    :param profile:
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    if htmlObjs is not None and not isinstance(htmlObjs, list):
+      htmlObjs = [htmlObjs]
+    html_obj = html.HtmlContainer.Section(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
+    return html_obj
 
 
 class Delimiter(object):
@@ -513,6 +548,7 @@ class Delimiter(object):
     :param align: Optional. The content position. Values (left, right, center). Default center
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
     hrs.style.css.margin = "10px 0"
     return hrs
@@ -530,6 +566,7 @@ class Delimiter(object):
     :param align: Optional. The content position. Values (left, right, center). Default center
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
     for hr in hrs:
       hr.style.css.border = "1px double %s" % self.context.rptObj.theme.colors[-1]
@@ -548,6 +585,7 @@ class Delimiter(object):
     :param align: Optional. The content position. Values (left, right, center). Default center
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
     hrs.style.css.margin_top = 10
     hrs.style.css.margin_bottom = 10
@@ -568,6 +606,7 @@ class Delimiter(object):
     :param align: Optional. The content position. Values (left, right, center). Default center
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
     hrs = self.context.rptObj.ui.layouts.hr(count, width=width, align=align, profile=profile)
     for hr in hrs:
       hr.style.css.border = "1px dotted %s" % self.context.rptObj.theme.colors[-1]

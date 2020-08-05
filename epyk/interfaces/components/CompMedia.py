@@ -9,7 +9,7 @@ class Media(object):
   def __init__(self, context):
     self.context = context
 
-  def video(self, value, path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+  def video(self, value, align="center", path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
     """
     Add a video from the server to the page.
     The format for the video must be MP4
@@ -40,6 +40,9 @@ class Media(object):
     if options is not None:
       dft_options.update(options)
     html_media = html.HtmlMedia.Media(self.context.rptObj, value, path, width, height, htmlCode, profile, dft_options)
+    if align == "center":
+      html_media.style.css.margin = "auto"
+      html_media.style.css.display = "block"
     return html_media
 
   def audio(self, value, path=None, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):

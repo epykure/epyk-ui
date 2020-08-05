@@ -5,7 +5,6 @@ import datetime
 
 from epyk.core.css import Defaults_css
 from epyk.core.css.themes import ThemeRed
-from epyk.interfaces import Arguments
 
 
 class Quiz(object):
@@ -14,10 +13,27 @@ class Quiz(object):
     self.parent = context
 
   def theme(self):
+    """
+    Description:
+    ------------
+
+    """
     self.parent.context.rptObj.theme = ThemeRed.Pink()
 
   def progress(self, percentage, icon="fas fa-car-side", width=(100, '%'), height=("auto", ''), options=None, profile=None):
+    """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
+    :param percentage:
+    :param icon:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
     options = options or {}
     icon = self.parent.context.rptObj.ui.icons.awesome(icon, height=("auto", ''))
     progress = self.parent.context.rptObj.ui.div()
@@ -35,7 +51,11 @@ class Quiz(object):
 
   def position(self, longitude, latitude, flag=None, width=(100, '%'), height=("auto", ''), icon="fas fa-map-marked-alt", options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param longitude:
     :param latitude:
     :param flag:
@@ -70,7 +90,11 @@ class Quiz(object):
 
   def picture(self, image, question=None, icon="far fa-image", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param image:
     :param question:
     :param icon:
@@ -116,7 +140,11 @@ class Quiz(object):
 
   def question(self, question, icon="fas fa-question", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param question:
     :param icon:
     :param width:
@@ -152,7 +180,11 @@ class Quiz(object):
 
   def charade(self, clues, question=None, icon="fas fa-book", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param clues:
     :param question:
     :param icon:
@@ -195,6 +227,11 @@ class Quiz(object):
 
   def delimiter(self, size=1):
     """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
 
     """
     hr = self.parent.context.rptObj.ui.layouts.hr()
@@ -205,7 +242,11 @@ class Quiz(object):
 
   def missing(self, text, icon="fas fa-ellipsis-h", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param icon:
     :param width:
@@ -245,7 +286,11 @@ class Quiz(object):
 
   def hangman(self, question, text, proposals=None, icon="fas fa-project-diagram", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param question:
     :param text:
     :param proposals:
@@ -297,7 +342,11 @@ class Quiz(object):
 
   def choice(self, question, answers, status=None, icon="fas fa-question", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param question:
     :param answers:
     :param status:
@@ -335,7 +384,11 @@ class Quiz(object):
 
   def chrono(self, component, time=60, flag=None, icon="fas fa-stopwatch-20", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param component:
     :param time:
     :param flag:
@@ -357,7 +410,11 @@ class Quiz(object):
 
   def estimate(self, text, tooltip=None, width=(None, '%'), height=("auto", ''), icon="fas fa-stopwatch", options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param tooltip:
     :param width:
@@ -381,7 +438,11 @@ class Quiz(object):
 
   def level(self, text, tooltip, width=(None, '%'), height=("auto", ''), icon="fas fa-chess-bishop", options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param tooltip:
     :param width:
@@ -404,7 +465,19 @@ class Quiz(object):
     return container
 
   def ranking(self, number=0, width=(None, '%'), height=("auto", ''), icon="fas fa-flag-checkered", options=None, profile=None):
+    """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
+    :param number:
+    :param width:
+    :param height:
+    :param icon:
+    :param options:
+    :param profile:
+    """
     container = self.parent.context.rptObj.ui.div(width=width, height=height)
     container.icon = self.parent.context.rptObj.ui.icons.awesome(icon)
     container.icon.icon.style.css.font_factor(10)
@@ -419,7 +492,11 @@ class Quiz(object):
 
   def points(self, number=0, width=(None, '%'), height=("auto", ''), icon="fas fa-coins", options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param number:
     :param width:
     :param height:
@@ -440,6 +517,21 @@ class Quiz(object):
     return container
 
   def interval(self, start, end, flag=None, width=(100, '%'), height=("auto", ''), icon="fas fa-hourglass-half", options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param start:
+    :param end:
+    :param flag:
+    :param width:
+    :param height:
+    :param icon:
+    :param options:
+    :param profile:
+    """
     container = self.parent.context.rptObj.ui.div(width=width, height=height)
     container.icon = self.parent.context.rptObj.ui.icons.awesome(icon)
     container.icon.icon.style.css.font_factor(10)

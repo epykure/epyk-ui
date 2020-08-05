@@ -6,7 +6,6 @@ import datetime
 
 from epyk.core.css import Defaults as Defaults_css
 from epyk.core.css.themes import ThemeDark
-from epyk.interfaces import Arguments
 
 
 class News(object):
@@ -14,11 +13,20 @@ class News(object):
     self.parent = context
 
   def theme(self):
+    """
+    Description:
+    ------------
+
+    """
     self.parent.context.rptObj.theme = ThemeDark.Grey()
 
   def miniature(self, title, url, image, category="", time=None, align="left", width=(100, '%'), height=(None, "px"), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param title:
     :param url:
     :param image:
@@ -27,7 +35,6 @@ class News(object):
     :param width:
     :param height:
     :param options:
-    :return:
     """
     container = self.parent.context.rptObj.ui.col(align=align, width=width, height=height, position="top")
     container.style.css.margin = "20px auto"
@@ -52,7 +59,20 @@ class News(object):
     return container
 
   def exchange(self, positive, value, align="left", width=(100, '%'), height=(None, "px"), options=None, profile=None):
-    # https://www.bloomberg.com/news/articles/2020-07-28/the-world-s-best-restaurants-2020-tripadvisor-rankings-list
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param positive:
+    :param value:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
     component = self.parent.context.rptObj.ui.div()
     if positive:
       icon = self.parent.context.rptObj.ui.icons.awesome("fas fa-caret-up")
@@ -67,6 +87,21 @@ class News(object):
     return component
 
   def shares(self, positive, value, trend, align="left", width=(100, '%'), height=(None, "px"), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param positive:
+    :param value:
+    :param trend:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
     component = self.parent.context.rptObj.ui.div()
     if positive:
       icon = self.parent.context.rptObj.ui.icons.awesome("fas fa-caret-up")
@@ -83,6 +118,20 @@ class News(object):
     return component
 
   def moves(self, current, previous, align="left", width=(100, '%'), height=(None, "px"), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param current:
+    :param previous:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
     component = self.parent.context.rptObj.ui.div()
     if current-previous >= 0:
       icon = self.parent.context.rptObj.ui.icons.awesome("fas fa-caret-up")
@@ -105,25 +154,44 @@ class News(object):
     # https://finance.yahoo.com/
     pass
 
-  def share(self):
+  def share(self, facebook=True, messenger=True, twitter=True, mail=True):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param facebook: Boolean. Flag to mention if the facebook shortcut need to be displayed
+    :param messenger: Boolean. Flag to mention if the messenger shortcut need to be displayed
+    :param twitter: Boolean. Flag to mention if the twitter shortcut need to be displayed
+    :param mail: Boolean. Flag to mention if the mail shortcut need to be displayed
+    """
     component = self.parent.context.rptObj.ui.div()
-    icon = self.parent.context.rptObj.ui.icons.facebook()
-    icon.icon.style.css.font_factor(2)
-    component.add(icon)
-    icon = self.parent.context.rptObj.ui.icons.messenger()
-    icon.icon.style.css.font_factor(2)
-    component.add(icon)
-    icon = self.parent.context.rptObj.ui.icons.twitter()
-    icon.icon.style.css.font_factor(2)
-    component.add(icon)
-    icon = self.parent.context.rptObj.ui.icons.mail()
-    icon.icon.style.css.font_factor(2)
-    component.add(icon)
+    if facebook:
+      component.facebook = self.parent.context.rptObj.ui.icons.facebook()
+      component.facebook.icon.style.css.font_factor(2)
+      component.add(component.facebook)
+    if messenger:
+      component.messenger = self.parent.context.rptObj.ui.icons.messenger()
+      component.messenger.icon.style.css.font_factor(2)
+      component.add(component.messenger)
+    if twitter:
+      component.twitter = self.parent.context.rptObj.ui.icons.twitter()
+      component.twitter.icon.style.css.font_factor(2)
+      component.add(component.twitter)
+    if mail:
+      component.mail = self.parent.context.rptObj.ui.icons.mail()
+      component.mail.icon.style.css.font_factor(2)
+      component.add(component.mail)
     return component
 
   def time(self, date, icon="far fa-clock", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param date:
     :param icon:
     """
@@ -153,7 +221,11 @@ class News(object):
 
   def tags(self, tags, align="left", width=(300, 'px'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param tags:
     :param align:
     :param width:
@@ -174,12 +246,24 @@ class News(object):
     return container
 
   def border(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+
+    """
     return self.parent.context.rptObj.ui.div("&nbsp;").css({"border-left": '1px solid %s' % self.parent.context.rptObj.theme.greys[5],
                                                           "margin": '5px 0', "display": 'inline-block', 'width': 'auto'})
 
   def delimiter(self):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     """
     hr = self.parent.context.rptObj.ui.layouts.hr()
     hr.style.css.padding = "10px 20%"
@@ -187,7 +271,11 @@ class News(object):
 
   def section(self, text, align="left", width=(100, '%'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param align:
     :param width:
@@ -209,7 +297,11 @@ class News(object):
 
   def comments(self, count, url, icon="far fa-comment-alt", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param count:
     :param url:
     :param icon:
@@ -230,6 +322,11 @@ class News(object):
 
   def live(self, icon="fas fa-circle"):
     """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
 
     """
     live = self.parent.context.rptObj.ui.icons.awesome(icon)
@@ -248,7 +345,11 @@ class News(object):
   def button(self, text="", icon=None, width=(None, "%"), height=(None, "px"), align="left", htmlCode=None,
              tooltip=None, profile=None, options=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param icon:
     :param width:
@@ -268,8 +369,16 @@ class News(object):
 
   def stepper(self, records, width=(200, 'px'), height=(350, 'px'), options=None, profile=None):
     """
+    Description:
+    ------------
 
-    :return:
+    Attributes:
+    ----------
+    :param records:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
     """
     size = (height[0] - 20) / (len(records) - 1)
     frgs, dflt_size = [], 0
@@ -294,7 +403,11 @@ class News(object):
 
   def audio(self, text, url, icon="fas fa-volume-up"):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param text:
     :param url:
     :param icon:
