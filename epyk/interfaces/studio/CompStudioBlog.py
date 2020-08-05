@@ -243,8 +243,11 @@ class Blog(object):
       component.style.css.display = "block"
     return component
 
-  def video(self, img):
-    return self.parent.context.rptObj.ui.img(img)
+  def video(self, video):
+    return self.parent.context.rptObj.ui.media.video(video)
+
+  def youtube(self, link, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+    return self.parent.context.rptObj.ui.media.youtube(link)
 
 
 class Gallery(Blog):

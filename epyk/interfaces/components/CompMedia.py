@@ -75,7 +75,7 @@ class Media(object):
     html_audio = html.HtmlMedia.Audio(self.context.rptObj, value, path, width, height, htmlCode, profile, dft_options)
     return html_audio
 
-  def youtube(self, link, width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
+  def youtube(self, link, align="center", width=(100, '%'), height=(None, 'px'), htmlCode=None, profile=None, options=None):
     """
     This will add a youtube video using the shared line to embedded to a website.
 
@@ -106,4 +106,5 @@ class Media(object):
     if options is not None:
       dflt_options.update(options)
     html_youtube = html.HtmlMedia.Youtube(self.context.rptObj, link, width, height, htmlCode, profile, dflt_options)
+    html_youtube.style.css.text_align = align
     return html_youtube
