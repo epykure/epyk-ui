@@ -228,16 +228,13 @@ class Blog(object):
     component.add(component.image)
     if not hasattr(label, 'options'):
       component.label = self.parent.context.rptObj.ui.div(label)
+      component.label.style.css.position = "absolute"
+      component.label.style.css.background = "white"
+      component.label.style.css.width = "auto"
+      component.label.style.css.padding = "0 10px"
+      component.label.style.css.bottom = 35
     else:
-      component.label = self.parent.context.rptObj.ui.div()
-      component.label.add(label)
-    component.label.style.css.position = "absolute"
-    component.label.style.css.text_align = "center"
-    component.label.style.css.width = "calc(100% - 20px)"
-    component.label.style.css.background = "white"
-    component.label.style.css.margin = 10
-    component.label.style.css.padding = 10
-    component.label.style.css.bottom = 5
+      component.label = label
     component.add(component.label)
     component.style.css.margin_top = 5
     component.style.css.margin_bottom = 5
