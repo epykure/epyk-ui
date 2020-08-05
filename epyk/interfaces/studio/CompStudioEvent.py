@@ -681,7 +681,6 @@ class EVG(Event):
 
 
 class Seminar(Event):
-  pass
 
   def team(self):
     pass
@@ -723,4 +722,9 @@ class Show(Event):
 
 
 class Dating(Event):
-  pass
+
+  def like(self):
+    pass
+
+  def contacts(self):
+    pass

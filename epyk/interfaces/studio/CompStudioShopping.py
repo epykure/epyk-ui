@@ -477,14 +477,17 @@ class Shopping(object):
 
   def vote(self, number, align="center", width=(50, 'px'), height=("auto", ''), options=None, profile=None):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param number:
     :param align:
     :param width:
     :param height:
     :param options:
     :param profile:
-    :return:
     """
     container = self.parent.context.rptObj.ui.div([], align=align, width=width, height=height, options=options,
                                                   profile=profile)
@@ -499,5 +502,6 @@ class Shopping(object):
 
 
 class Resto(object):
+
   def __init__(self, context):
     self.parent = context

@@ -208,7 +208,7 @@ class Studio(CompLayouts.Layouts):
     """
     Description:
     ------------
-
+    Property for all the components to be used in a dating website
     """
     return CompStudioEvent.Dating(self)
 
