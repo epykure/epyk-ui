@@ -1671,6 +1671,8 @@ class CssMixin(object):
   @max_width.setter
   def max_width(self, val):
     val = val if val is not None else 'None'
+    if isinstance(val, int):
+      val = "%spx" % val
     self.htmlObj.css({"max-width": val})
 
   @property

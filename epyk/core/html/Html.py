@@ -1427,7 +1427,7 @@ class Body(Html):
     self.style.css.background_repeat = "no-repeat"
     self.style.css.background_color = self._report.theme.colors[2]
 
-  def template(self, css):
+  def add_template(self, css):
     """
     Description:
     ------------

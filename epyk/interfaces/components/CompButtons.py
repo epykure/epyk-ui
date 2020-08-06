@@ -20,6 +20,7 @@ from epyk.core.css import Defaults_css
 
 
 class Buttons(object):
+
   def __init__(self, context):
     self.context = context
 
@@ -78,6 +79,7 @@ class Buttons(object):
 
     :return: The Button HTML object
     """
+    text = self.context.rptObj.py.encode_html(text)
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode, tooltip=tooltip, profile=profile, options=options)
     if align == "center":
       html_button.style.css.margin = "auto"

@@ -1,7 +1,10 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
 from epyk.core.html import Defaults_html
 from epyk.core.css import Defaults_css
+from epyk.interfaces import Arguments
 
 
 class Texts(object):
@@ -43,11 +46,12 @@ class Texts(object):
 
     :return: The text HTML object
     """
-    if not isinstance(width, tuple):
-      width = (width, 'px')
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dfl_options = {"reset": False, "markdown": False, "maxlength": None}
     if options is not None:
       dfl_options.update(options)
+    text = self.context.rptObj.py.encode_html(text)
     text_comp = html.HtmlText.Text(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, dfl_options, helper, profile)
     if width[0] == 'auto':
       text_comp.style.css.display = "inline-block"
@@ -56,7 +60,8 @@ class Texts(object):
       text_comp.style.css.display = "block"
     return text_comp
 
-  def absolute(self, text, size_notch=None, top=(50, "%"), left=(50, "%"), bottom=None, align='left', width=('auto', ""), height=(None, "px"), htmlCode=None, options=None, profile=None):
+  def absolute(self, text, size_notch=None, top=(50, "%"), left=(50, "%"), bottom=None, align='left', width=('auto', ""),
+               height=(None, "px"), htmlCode=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -67,17 +72,22 @@ class Texts(object):
     :param size_notch:
     :param top:
     :param left:
+    :param bottom:
     :param align:
     :param width:
     :param height:
     :param htmlCode:
     :param options:
     :param profile:
-    :return:
     """
+    left = Arguments.size(left, unit="%")
+    top = Arguments.size(top, unit="%")
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dfl_options = {"reset": False, "markdown": False, "maxlength": None}
     if options is not None:
       dfl_options.update(options)
+    text = self.context.rptObj.py.encode_html(text)
     text_comp = html.HtmlText.Text(self.context.rptObj, text, None, align, width, height, htmlCode, None, dfl_options, None, profile)
     text_comp.style.position = "absolute"
     text_comp.style.display = "block"
@@ -126,9 +136,12 @@ class Texts(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"markdown": True}
     if options is not None:
       dflt_options.update(options)
+    text = self.context.rptObj.py.encode_html(text)
     html_label = html.HtmlText.Label(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip,
                                      profile, dflt_options)
     return html_label
@@ -167,10 +180,8 @@ class Texts(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     """
-    if width is None:
-      width = (Defaults_html.TEXTS_SPAN_WIDTH, 'px')
-    if height is None:
-      height = (Defaults_html.LINE_HEIGHT, 'px')
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_label = html.HtmlText.Span(self.context.rptObj, text, color, align, width, height, htmlCode, tooltip, options, profile)
     return html_label
 
@@ -207,6 +218,9 @@ class Texts(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    text = self.context.rptObj.py.encode_html(text)
     html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, color, width,
                                           height, htmlCode, helper, options or {}, profile)
     return html_light
@@ -247,6 +261,8 @@ class Texts(object):
     if type not in ['success', 'warning', 'danger']:
       raise Exception("This type %s is not recognised" % type)
 
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_light = html.HtmlText.Highlights(self.context.rptObj, text, title, icon, type, color, width,
                                           height, htmlCode, helper, options or {}, profile)
     html_light.style.css.border_left = "4px solid %s" % getattr(self.context.rptObj.theme, type)[1]
@@ -280,6 +296,7 @@ class Texts(object):
     :param helper:
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
     html_formula = html.HtmlTextComp.Formula(self.context.rptObj, text, width, color, helper, profile)
     return html_formula
 
@@ -313,6 +330,8 @@ class Texts(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': language, 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
@@ -351,6 +370,8 @@ class Texts(object):
     :param dataSrc:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"reset": True, 'markdown': False, "classes": []}
     if options is not None:
       dflt_options.update(options)
@@ -395,9 +416,12 @@ class Texts(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"reset": True, 'markdown': False}
     if options is not None:
       dflt_options.update(options)
+    text = self.context.rptObj.py.encode_html(text)
     html_pre = html.HtmlText.Pre(self.context.rptObj, text, color, width, height, htmlCode, dataSrc, dflt_options, helper, profile)
     return html_pre
 
@@ -433,6 +457,9 @@ class Texts(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    text = self.context.rptObj.py.encode_html(text)
     html_blockquote = html.HtmlText.BlockQuote(self.context.rptObj, text, author, color, width, height, htmlCode, helper, options, profile)
     return html_blockquote
 
@@ -502,6 +529,7 @@ class Texts(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
     dflt_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.'}
     if options is not None:
       dflt_options.update(options)
@@ -546,9 +574,12 @@ class Texts(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"reset": True, 'markdown': False}
     if options is not None:
       dflt_options.update(options)
+    text = self.context.rptObj.py.encode_html(text)
     html_title = html.HtmlText.Title(self.context.rptObj, text, level, name, contents, color, picture, icon,
                                      marginTop, htmlCode, width, height, align, dflt_options, profile)
     return html_title
@@ -581,6 +612,8 @@ class Texts(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_fieldset = html.HtmlText.Fieldset(self.context.rptObj, legend, width=width, height=height, helper=helper,
                                            options=options, profile=profile)
     return html_fieldset

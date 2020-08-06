@@ -47,6 +47,8 @@ class Images(object):
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
+    if width[0] is None:
+      html_image.style.css.max_width = '100%'
     return html_image
 
   def background(self, url, width=(100, "%"), height=(300, "px"), size="cover", margin=0, align="center", position="middle"):
