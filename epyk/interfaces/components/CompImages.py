@@ -51,6 +51,27 @@ class Images(object):
       html_image.style.css.max_width = '100%'
     return html_image
 
+  def container(self, component, max_width=(900, 'px'), align="center", profile=None, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param component:
+    :param max_width:
+    :param align:
+    :param profile:
+    :param options:
+    """
+    max_width = Arguments.size(max_width, unit="%")
+    container = self.context.rptObj.ui.div(component, profile=profile, options=options)
+    container.style.css.max_width = max_width[0]
+    container.style.css.text_align = align
+    if align == 'center':
+      container.style.css.margin = "0 auto"
+    return container
+
   def background(self, url, width=(100, "%"), height=(300, "px"), size="cover", margin=0, align="center", position="middle"):
     """
     Description:
@@ -341,7 +362,7 @@ class Images(object):
     html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, profile)
     return html_id
 
-  def carrousel(self, images, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None, profile=None):
+  def carousel(self, images, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None, profile=None):
     """
     Description:
     ------------
