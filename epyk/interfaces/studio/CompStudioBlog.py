@@ -22,7 +22,7 @@ class Blog(object):
     self.parent.context.rptObj.theme = ThemeBlue.Blue()
     Defaults_css.Font.size = 16
     Defaults_css.Font.header_size = Defaults_css.Font.size + 4
-    self.parent.context.rptObj.body.template({"margin": '0 10%'})
+    self.parent.context.rptObj.body.add_template({"margin": '0 10%'})
 
   def delimiter(self, size=5, count=1, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
@@ -306,9 +306,6 @@ class Blog(object):
     """
     return self.parent.context.rptObj.ui.media.youtube(link, width=width, height=height, htmlCode=htmlCode, profile=profile, options=options)
 
-  def signature(self):
-    pass
-
   def time(self, date, icon="fas fa-circle", align="left", width=("auto", ''), height=(None, "px"), options=None, profile=None):
     """
     Description:
@@ -366,8 +363,31 @@ class Blog(object):
       component.add(text)
     return component
 
-  def label(self):
-    pass
+  def by(self, name, url=None, date=None, align="center", width=("100", '%'), height=(None, "px"), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param name:
+    :param url:
+    :param date:
+    :param align:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
+    if date is not None:
+      component.add(self.parent.context.rptObj.ui.text("The %s, by&nbsp;" % date))
+    else:
+      component.add(self.parent.context.rptObj.ui.text("by&nbsp;"))
+    component.name = self.parent.context.rptObj.ui.link(name, url)
+    component.name.style.css.color = self.parent.context.rptObj.theme.colors[6]
+    component.add(component.name)
+    return component
 
 
 class Gallery(Blog):
