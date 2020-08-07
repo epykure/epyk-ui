@@ -87,7 +87,7 @@ class Bespoke(Html.Html):
     """
     return self._header
 
-  def set_header(self, values):
+  def set_header(self, values, css=None):
     """
     Description:
     -----------
@@ -95,9 +95,12 @@ class Bespoke(Html.Html):
     Attributes:
     ----------
     :param values:
+    :param css: Dictionary
     """
     for i, col in enumerate(self._header):
       col._vals = values[i]
+      if css is not None:
+        col.css(css)
     return self
 
   def set_items(self):

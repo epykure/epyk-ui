@@ -602,9 +602,13 @@ class Quiz(object):
 
   def cup(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
+    Description:
+    ------------
 
     https://uxwing.com/winning-cup-icon/
 
+    Attributes:
+    ----------
     :param fill:
     :param border:
     :param width:
@@ -617,9 +621,13 @@ class Quiz(object):
 
   def bookmark(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
+    Description:
+    ------------
 
     https://uxwing.com/bookmark-icon/
 
+    Attributes:
+    ----------
     :param fill:
     :param border:
     :param width:
@@ -632,9 +640,13 @@ class Quiz(object):
 
   def first(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
+    Description:
+    ------------
 
     https://uxwing.com/first-medal-icon/
 
+    Attributes:
+    ----------
     :param fill:
     :param border:
     :param width:
@@ -647,9 +659,13 @@ class Quiz(object):
 
   def brain(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
+    Description:
+    ------------
 
     https://uxwing.com/innovative-brain-icon/
 
+    Attributes:
+    ----------
     :param fill:
     :param border:
     :param width:
@@ -662,9 +678,13 @@ class Quiz(object):
 
   def puzzle(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
+    Description:
+    ------------
 
     https://uxwing.com/innovative-brain-icon/
 
+    Attributes:
+    ----------
     :param fill:
     :param border:
     :param width:
@@ -677,9 +697,13 @@ class Quiz(object):
 
   def numbers(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
+    Description:
+    ------------
 
     https://uxwing.com/numbers-blocks-icon/
 
+    Attributes:
+    ----------
     :param fill:
     :param border:
     :param width:
@@ -692,9 +716,13 @@ class Quiz(object):
 
   def alphabet(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
+    Description:
+    ------------
 
     https://uxwing.com/toy-alphabet-blocks-icon/
 
+    Attributes:
+    ----------
     :param fill:
     :param border:
     :param width:
@@ -707,9 +735,13 @@ class Quiz(object):
 
   def bulb(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
+    Description:
+    ------------
 
     https://uxwing.com/toy-alphabet-blocks-icon/
 
+    Attributes:
+    ----------
     :param fill:
     :param border:
     :param width:
@@ -722,9 +754,13 @@ class Quiz(object):
 
   def road(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
+    Description:
+    ------------
 
     https://uxwing.com/road-route-destination-icon/
 
+    Attributes:
+    ----------
     :param fill:
     :param border:
     :param width:
@@ -734,3 +770,55 @@ class Quiz(object):
       path="M101.41,37.05c-1.95,2.14-4.22,4.05-6.77,5.6c-0.31,0.23-0.74,0.26-1.09,0.03c-3.76-2.39-6.93-5.27-9.41-8.4 c-3.43-4.3-5.59-9.07-6.33-13.66c-0.75-4.66-0.05-9.14,2.27-12.79C81,6.4,82.17,5.08,83.59,3.95c3.27-2.6,7-3.98,10.73-3.95 c3.58,0.03,7.12,1.36,10.18,4.15c1.08,0.98,1.98,2.09,2.72,3.31c2.49,4.11,3.03,9.34,1.93,14.65 C108.07,27.36,105.39,32.69,101.41,37.05L101.41,37.05L101.41,37.05z M9.82,64.7h8.72c1.45,0,2.57,0.36,3.35,1.08 c0.78,0.72,1.17,1.61,1.17,2.67c0,0.89-0.28,1.66-0.83,2.29c-0.37,0.43-0.91,0.76-1.62,1.01c1.08,0.26,1.88,0.7,2.39,1.34 c0.51,0.63,0.76,1.43,0.76,2.39c0,0.78-0.18,1.48-0.54,2.11c-0.36,0.62-0.86,1.12-1.49,1.48c-0.39,0.22-0.98,0.39-1.77,0.49 c-1.05,0.14-1.74,0.21-2.09,0.21H9.82V64.7L9.82,64.7z M14.51,70.62h2.03c0.73,0,1.23-0.13,1.52-0.38 c0.28-0.25,0.43-0.61,0.43-1.09c0-0.44-0.14-0.78-0.43-1.03c-0.28-0.25-0.78-0.37-1.49-0.37h-2.06V70.62L14.51,70.62z M14.51,76.53 h2.37c0.8,0,1.37-0.14,1.7-0.43c0.33-0.28,0.49-0.66,0.49-1.14c0-0.45-0.16-0.8-0.49-1.07c-0.33-0.27-0.9-0.41-1.71-0.41h-2.36 V76.53L14.51,76.53z M96.62,21.82h-5.27l-0.76,2.48h-4.75l5.67-15.07h5.1l5.65,15.07h-4.87L96.62,21.82L96.62,21.82z M95.64,18.56 l-1.64-5.41l-1.65,5.41H95.64L95.64,18.56z M23.88,92.06c-1.95,2.14-4.22,4.05-6.77,5.6c-0.31,0.23-0.74,0.26-1.09,0.03 c-3.76-2.4-6.93-5.27-9.41-8.4C3.19,85,1.03,80.23,0.29,75.63c-0.75-4.66-0.05-9.14,2.27-12.78c0.91-1.44,2.08-2.75,3.51-3.88 c3.27-2.6,7-3.98,10.72-3.95c3.58,0.03,7.12,1.36,10.18,4.15c1.08,0.98,1.98,2.09,2.72,3.31c2.49,4.11,3.03,9.34,1.93,14.65 C30.54,82.37,27.86,87.7,23.88,92.06L23.88,92.06L23.88,92.06z M17.07,103.04c4.51,0,8.32,3.02,9.52,7.14h59.97 c2.96,0,5.66-1.21,7.62-3.17c1.96-1.96,3.17-4.65,3.17-7.62l0,0c0-2.96-1.21-5.66-3.17-7.62c-1.96-1.96-4.65-3.17-7.62-3.17H65.58 v0c-4.71,0-8.99-1.92-12.09-5.02c-3.1-3.1-5.02-7.38-5.02-12.09l0,0c0-4.71,1.92-8.99,5.02-12.09c3.1-3.1,7.38-5.02,12.09-5.02 h18.97c1.3-3.96,5.03-6.82,9.42-6.82c5.48,0,9.92,4.44,9.92,9.92c0,5.48-4.44,9.92-9.92,9.92c-4.35,0-8.04-2.8-9.38-6.69H65.58 c-2.96,0-5.66,1.21-7.62,3.17c-1.96,1.96-3.17,4.65-3.17,7.62l0,0c0,2.96,1.21,5.66,3.17,7.62c1.94,1.94,4.61,3.15,7.55,3.17v0 h21.06c4.71,0,8.99,1.92,12.09,5.02c3.1,3.1,5.02,7.38,5.02,12.09l0,0c0,4.71-1.92,8.99-5.02,12.09c-3.1,3.1-7.38,5.02-12.09,5.02 H26.34c-1.43,3.73-5.04,6.37-9.27,6.37c-5.48,0-9.92-4.44-9.92-9.92C7.15,107.48,11.59,103.04,17.07,103.04L17.07,103.04z"
     )
     return svg
+
+  def summary(self, records, width=('auto', '%'), height=(None, "px"), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param records:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    """
+    html_records = []
+    for values in records:
+      rec = ['', '-', '-', '-', '-']
+      for i, v in enumerate(values):
+        rec[i] = v
+      if not hasattr(rec[0], 'options'):
+        name = self.parent.context.rptObj.ui.text(rec[0], align="left", width=(100, 'px'))
+        name.style.css.color = self.parent.context.rptObj.theme.colors[-1]
+        name.style.css.padding = "5px 10px"
+      else:
+        name = rec[0]
+      name.options.managed = False
+      current = self.parent.context.rptObj.ui.text(rec[1])
+      current.style.css.color = self.parent.context.rptObj.theme.greys[5]
+      current.style.css.padding = "5px 10px"
+      current.options.managed = False
+      move = self.parent.context.rptObj.ui.text(rec[2])
+      move.style.css.padding = "5px 10px"
+      move.options.managed = False
+      percent = self.parent.context.rptObj.ui.text(rec[3])
+      percent.style.css.padding = "5px 10px"
+      percent.options.managed = False
+      ranking = self.parent.context.rptObj.ui.text(rec[4])
+      ranking.style.css.padding = "5px 10px"
+      ranking.options.managed = False
+      html_records.append([name, current, move, percent, ranking])
+    table = self.parent.context.rptObj.ui.tables.basic(html_records, rows=[0], cols=[1, 2, 3, 4], width=width,
+                                                       height=height, options=options, profile=profile)
+
+    table[0][-1].style.css.border_top = "2px dashed %s" % self.parent.context.rptObj.theme.success[1]
+    for row in table:
+      row[-1].style.css.background = self.parent.context.rptObj.theme.colors[2]
+      row[-1].style.css.border_left = "2px dashed %s" % self.parent.context.rptObj.theme.success[1]
+      row[-1].style.css.border_right = "2px dashed %s" % self.parent.context.rptObj.theme.success[1]
+      row.style.css.border_bottom = "1px solid %s" % self.parent.context.rptObj.theme.colors[3]
+    table[-1][-1].style.css.border_bottom = "2px dashed %s" % self.parent.context.rptObj.theme.success[1]
+    table.set_header(["Challenge", 'Score', 'Time', 'Date', 'Ranking'], css={"padding": '5px 20px'})
+    return table
