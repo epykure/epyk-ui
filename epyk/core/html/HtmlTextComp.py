@@ -170,19 +170,19 @@ class Number(Html.Html):
   def __init__(self, report, number, label, width, height, profile, options):
     super(Number, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
     if options.get('url', None) is not None:
-      self.add_link(number, url=options['url'], css={"font-size": Defaults_css.font(10),
+      self.add_link(number, url=options['url'], css={
                       "width": "100%", 'text-decoration': 'none', 'display': 'inline-block', "text-align": 'center',
-                      'margin': 0, 'color': 'inherit', 'padding': 0})
+                      'margin': 0, 'color': 'inherit', 'padding': 0}, options=options)
       self.span = self.link
     else:
-      self.add_link(number, url="#", css={"font-size": Defaults_css.font(10),
+      self.add_link(number, url="#", options=options, css={
                      "width": "100%", 'text-decoration': 'none', 'cursor': 'default',
                      'display': 'inline-block', "text-align": 'center', 'margin': 0, 'color': 'inherit', 'padding': 0})
       self.link.attr['target'] = '_self'
       self.span = self.link
-
-      # self.add_span(number, css={'height': 'auto', "font-size": "%s%s" % (size[0] + 10, size[1]), "width": "100%", 'margin': 0})
-    self.add_label(label, css={'float': 'none', "width": "100%", "margin": 0})
+    self.link.style.css.font_factor(10)
+    self.add_label(label, css={'text-align': 'center', 'float': 'none', "width": "100%", "margin": 0},
+                   position=options.get('label', 'before'))
     self.css({"display": "inline-block", 'padding': '2px 0', 'clear': 'both', 'margin': '2px'})
 
   def __str__(self):

@@ -367,7 +367,7 @@ class News(object):
     button.style.hover({"color": self.parent.context.rptObj.theme.success[1]})
     return button
 
-  def stepper(self, records, width=(200, 'px'), height=(350, 'px'), options=None, profile=None):
+  def stepper(self, records, color=None, width=(200, 'px'), height=(350, 'px'), options=None, profile=None):
     """
     Description:
     ------------
@@ -375,6 +375,7 @@ class News(object):
     Attributes:
     ----------
     :param records:
+    :param color:
     :param width:
     :param height:
     :param options:
@@ -391,15 +392,19 @@ class News(object):
     extra_size = (height[0] - 20 - sum(frgs)) / dflt_size if dflt_size > 0 else 0
     frgs = [frg + extra_size if frg == size else frg for frg in frgs]
     svg = self.parent.context.rptObj.ui.charts.svg.new(width=width, height=height)
-    svg.line(10, 10, 10, sum(frgs) + 10, stroke="red")
+    svg.line(10, 10, 10, sum(frgs) + 10, stroke=color or self.parent.context.rptObj.theme.danger[1])
     for i, rec in enumerate(records):
-      svg.circle(10, 10 + sum(frgs[0:i]), 5, fill=rec.get("fill", self.parent.context.rptObj.theme.greys[0]), stroke="red")
-      svg.text(rec["time"], 20, 15 + sum(frgs[0:i])).css({"font-weight": 'bold', 'color': self.parent.context.rptObj.theme.greys[-1]})
-      svg.text(rec["text"], 55, 15 + sum(frgs[0:i])).css({'color': self.parent.context.rptObj.theme.greys[-1]})
+      svg.circle(10, 10 + sum(frgs[0:i]), 5, fill=rec.get("fill", self.parent.context.rptObj.theme.greys[0]),
+                 stroke=color or self.parent.context.rptObj.theme.danger[1])
+      svg.text(rec["time"], 20, 15 + sum(frgs[0:i])).css({"font-weight": 'bold'})
+      svg.text(rec["text"], 55, 15 + sum(frgs[0:i]))
     return svg
 
-  def search(self):
-    pass
+  def search(self, text='', placeholder='Search..', color=None, height=(None, "px"), htmlCode=None,
+             tooltip='', extensible=True, options=None, profile=None):
+    s = self.parent.context.rptObj.ui.inputs.search(text=text, placeholder=placeholder, color=color, height=height,
+         htmlCode=htmlCode, tooltip=tooltip, extensible=extensible, options=options, profile=profile)
+    return s
 
   def audio(self, text, url, icon="fas fa-volume-up"):
     """

@@ -47,6 +47,8 @@ class Vignets(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     div = self.context.rptObj.ui.div(width=width, height=height)
     bubble = self.context.rptObj.ui.div(width=width, height=(height[0]-60, height[1]))
     div.number = self.context.rptObj.ui.text(recordSet["value"], width=width)
@@ -70,7 +72,7 @@ class Vignets(object):
     div += div.title
     return div
 
-  def number(self, number, label="", width=(100, "px"), height=(None, "px"), profile=None, options=None):
+  def number(self, number, label="", width=('auto', ""), height=(None, "px"), profile=None, options=None):
     """
     Description:
     ------------
@@ -103,7 +105,17 @@ class Vignets(object):
     :param height:
     :param profile:
     """
-    html_number = html.HtmlTextComp.Number(self.context.rptObj, number, label, width, height, profile, options or {})
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    dflt_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.', 'type_number': 'number'}
+    if options is not None:
+      dflt_options.update(options)
+    if 'symbol' in dflt_options:
+      dflt_options['type_number'] = 'money'
+      number = self.context.rptObj.py.format_money(number, digits=dflt_options.get('digits', 0), symbol=dflt_options.get('symbol'))
+    else:
+      number = self.context.rptObj.py.format_number(number, digits=dflt_options.get('digits', 0))
+    html_number = html.HtmlTextComp.Number(self.context.rptObj, number, label, width, height, profile, dflt_options)
     return html_number
 
   def link(self):

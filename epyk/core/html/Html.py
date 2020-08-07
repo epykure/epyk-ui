@@ -549,7 +549,8 @@ Attributes:
         span.css(css)
     return self
 
-  def add_link(self, text, url=None, script_name=None, report_name=None, name=None, icon=None, css=None, position="before"):
+  def add_link(self, text, url=None, script_name=None, report_name=None, name=None, icon=None, css=None,
+               position="before", options=None):
     """
     Description:
     -----------
@@ -573,11 +574,13 @@ Attributes:
     """
     self.link = ""
     if url is not None or script_name is not None:
-      options = {"name": name} if name is not None else {}
+      dflt_options = {"name": name} if name is not None else {}
+      if options is not None:
+        dflt_options.update(options)
       if url is not None:
-        self.link = self._report.ui.links.external(text, url)
+        self.link = self._report.ui.links.external(text, url, options=dflt_options)
       else:
-        self.link = self._report.ui.links.script(text, script_name, report_name, icon=icon, options=options)
+        self.link = self._report.ui.links.script(text, script_name, report_name, icon=icon, options=dflt_options)
       if position == "before":
         self.prepend_child(self.link)
       else:

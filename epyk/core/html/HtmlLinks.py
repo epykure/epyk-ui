@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import Html
+from epyk.core.html.options import OptText
 
 # The list of CSS classes
 # from epyk.core.css.styles import GrpCls
@@ -21,10 +22,26 @@ class ExternalLink(Html.Html):
     if 'target' in options:
       self.set_attrs(name="target", value=options['target'])
     self.decoration, self.__url = decoration, {}
+    self.__options = OptText.OptionsNumber(self, options)
+
+  @property
+  def options(self):
+    """
+    Description:
+    ------------
+    Property to set all the possible object for a button
+
+    :rtype: OptText.OptionsNumber
+    """
+    return self.__options
 
   @property
   def _js__builder__(self):
-    return 'htmlObj.innerHTML = data.text; htmlObj.href = data.url'
+    return '''
+      var text = data.text;
+      if (options.type_number == 'money'){ text = accounting.formatMoney(text, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format) }
+      else if (options.type_number == 'number'){text = accounting.formatNumber(text, options.digits, options.thousand_sep, options.decimal_sep)}
+      htmlObj.innerHTML = text; htmlObj.href = data.url'''
 
   def no_decoration(self, color=None):
     """

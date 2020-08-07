@@ -60,7 +60,7 @@ class SVG(Html.Html):
     self.html_objs.append(Defs(self._report))
     return self.html_objs[-1]
 
-  def text(self, text, x, y):
+  def text(self, text, x, y, fill=None):
     """
     Description:
     ------------
@@ -81,7 +81,8 @@ class SVG(Html.Html):
 
     :rtype: Text
     """
-    self.html_objs.append(Text(self._report, text, x, y))
+    fill = fill or self._report.theme.greys[-1]
+    self.html_objs.append(Text(self._report, text, x, y, fill=fill))
     self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
@@ -701,9 +702,9 @@ class Circle(SVGItem):
 class Text(SVGItem):
   name = 'SVG Text'
 
-  def __init__(self, report, text, x, y):
+  def __init__(self, report, text, x, y, fill):
     super(Text, self).__init__(report, text)
-    self.set_attrs({"x": x, "y": y, 'fill': 'black'})
+    self.set_attrs({"x": x, "y": y, 'fill': fill})
     self.html_objs = []
 
   def line(self, text, x, y):

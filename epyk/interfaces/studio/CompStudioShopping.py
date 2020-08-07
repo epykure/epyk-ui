@@ -475,7 +475,7 @@ class Shopping(object):
       comp_availability._vals = comment or "Not Available"
     return comp_availability
 
-  def vote(self, number, align="center", width=(50, 'px'), height=("auto", ''), options=None, profile=None):
+  def vote(self, number, align="center", width=('auto', ''), height=("auto", ''), options=None, profile=None):
     """
     Description:
     ------------
@@ -492,11 +492,15 @@ class Shopping(object):
     container = self.parent.context.rptObj.ui.div([], align=align, width=width, height=height, options=options,
                                                   profile=profile)
     container.up = self.parent.context.rptObj.ui.icons.awesome("fas fa-caret-up")
+    container.up.style.css.display = 'block'
+    container.up.style.css.margin = '0 auto'
     container.add(container.up)
-    container.text = count_votes = self.parent.context.rptObj.ui.texts.number(number, width=width)
+    container.text = self.parent.context.rptObj.ui.texts.number(number, width=width, options=options)
     container.text.style.css.font_factor(10)
     container.add(container.text)
     container.down = self.parent.context.rptObj.ui.icons.awesome("fas fa-caret-down")
+    container.down.style.css.display = 'block'
+    container.down.style.css.margin = '0 auto'
     container.add(container.down)
     return container
 

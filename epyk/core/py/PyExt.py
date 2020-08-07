@@ -615,3 +615,52 @@ class PyExt(object):
       text = text.replace(k, bytes(v, encoding))
     return text.decode(encoding)
 
+  @staticmethod
+  def format_number(value, digits=0, thousand_sep=",", decimal_sep=".", lang='ENG'):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param value:
+    :param digits:
+    :param thousand_sep:
+    :param decimal_sep:
+    """
+    text = "%.2f" % round(value, digits)
+    if decimal_sep in text:
+      e, d = text.split(decimal_sep)
+    else:
+      e, d = text, ""
+
+    r = []
+    for i, c in enumerate(e[::-1]):
+      if i > 0 and i % 3 == 0:
+        r.append(thousand_sep)
+      r.append(c)
+    if not digits:
+      return "".join(reversed(r))
+
+    return "%s%s%s" % ("".join(reversed(r)), decimal_sep, d[:digits])
+
+  @staticmethod
+  def format_money(text, digits=0, thousand_sep=",", decimal_sep=".", symbol="£", format="%s%v", lang='ENG'):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param digits:
+    :param thousand_sep:
+    :param decimal_sep:
+    :param symbol:
+    :param format:
+    """
+    text = PyExt.format_number(text, digits, thousand_sep, decimal_sep, lang)
+    if symbol not in ["£"]:
+      format = "%v %s"
+    conv_format = format.replace("%s", "%(text)s").replace("%v", "%(value)s")
+    return conv_format % {"text": PyExt.encode_html(symbol), 'value': text}
