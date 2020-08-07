@@ -6,7 +6,6 @@ class CssBorderRadius(CssStyle.Style):
   _attrs = {'border-radius': '5px'}
 
 
-
 class CssButtonBasic(CssStyle.Style):
   # Static properties for this class
   _attrs = {'font-weight': 'bold', 'padding': '2px 20px', 'margin': '2px 0 2px 0', 'text-decoration': 'none',
