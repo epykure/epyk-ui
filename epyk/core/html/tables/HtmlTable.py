@@ -1,10 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-Base module for the tables
-"""
-
 import json
 
 from epyk.core.html import Html
@@ -14,10 +10,10 @@ from epyk.core.html import Html
 
 
 class Row(Html.Html):
-  name, category, callFnc = 'Row', 'Tables', None
+  name = 'Row'
 
-  def __init__(self, report, cells):
-    super(Row, self).__init__(report, cells)
+  def __init__(self, report, cells, options=None):
+    super(Row, self).__init__(report, cells,  options=options)
 
   def __getitem__(self, i):
     return self.val[i]
@@ -31,14 +27,16 @@ class Row(Html.Html):
 
 
 class Cell(Html.Html):
-  name, category, callFnc = 'Cell', 'Tables', None
+  name = 'Cell'
 
-  def __init__(self, report, text, is_header):
-    super(Cell, self).__init__(report, text)
+  def __init__(self, report, text, is_header, options=None):
+    super(Cell, self).__init__(report, text, options=options)
     self.is_header = is_header
 
   def set_html_content(self, htmlObj):
     """
+    Description:
+    ------------
     Set the cell content to be an HTML object
 
     :param htmlObj: Python HTML object
@@ -88,14 +86,29 @@ class Bespoke(Html.Html):
     """
     return self._header
 
+  def set_header(self, values):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param values:
+    """
+    for i, col in enumerate(self._header):
+      col._vals = values[i]
+    return self
+
   def set_items(self):
     if self.items is None:
       self.items = []
     if self._fields is not None:
-      self._header = Row(self._report, [Cell(self._report, d, is_header=True) for d in self._fields])
+      self._header = Row(self._report, [Cell(self._report, d, is_header=True, options={"managed": False}) for d in self._fields])
       self.items.append(self._header)
+      self.items[-1].options.managed = False
     for rec in self.val:
-      self.items.append(Row(self._report, [Cell(self._report, r, is_header=False) for r in rec]))
+      self.items.append(Row(self._report, [Cell(self._report, r, is_header=False, options={"managed": False}) for r in rec]))
+      self.items[-1].options.managed = False
     return self
 
   def __getitem__(self, i):
@@ -112,6 +125,8 @@ class Bespoke(Html.Html):
     -----------
     Get the table rows
 
+    Attributes:
+    ----------
     :param i: Integer. The column number
     :param inc_header: Boolean. Default False
 
@@ -128,6 +143,8 @@ class Bespoke(Html.Html):
     -----------
     Get the table column cells as a generator
 
+    Attributes:
+    ----------
     :param header: String.
     :param i: Integer
     """
@@ -147,18 +164,20 @@ class Bespoke(Html.Html):
     Example
     simple_table.row_add({"column": "value"})
 
+    Attributes:
+    ----------
     :param row: The row to be added to the table
     :param missing: The data to put when a cell is missing
 
     :return: The python table
     """
-
     if isinstance(row, dict):
       data = [row.get(h, missing) for h in self._fields]
     else:
       data = row
     self.val.append(data)
-    self.items.append(Row(self._report, [Cell(self._report, d, is_header=is_header) for d in data]))
+    self.items.append(Row(self._report, [Cell(self._report, d, is_header=is_header, options={"managed": False}) for d in data]))
+    self.items[-1].options.managed = False
     return self
 
   def __str__(self):
