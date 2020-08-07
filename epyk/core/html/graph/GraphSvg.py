@@ -22,6 +22,21 @@ class SVG(Html.Html):
   def __getitem__(self, i):
     return self.html_objs[i]
 
+  def click(self, jsFncs, profile=False, source_event=None):
+    """
+    Description:
+    ------------
+    Add an event on the SVG
+
+    Attributes:
+    ----------
+    :param jsFncs: List of String. The Javascript events
+    :param profile:
+    :param source_event:
+    """
+    self.css({"cursor": 'pointer'})
+    return self.on("click", jsFncs, profile, source_event)
+
   def defs(self):
     """
     Description:
@@ -38,6 +53,8 @@ class SVG(Html.Html):
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs
 
+    Attributes:
+    ----------
     :rtype: Defs
     """
     self.html_objs.append(Defs(self._report))
