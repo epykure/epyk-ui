@@ -228,6 +228,11 @@ class Vitrine(object):
                                                      align=align, width=width, options=options)
     return v
 
+  def up(self, icon="fas fa-arrow-up", top=20, right=20, bottom=None, tooltip=None, width=(100, '%'), options=None, profile=False):
+    n = self.parent.context.rptObj.ui.navigation.up(icon=icon, top=top, right=right, bottom=bottom, tooltip=tooltip,
+                                                    width=width, options=options, profile=profile)
+    return n
+
   def carousel(self):
     pass
 
