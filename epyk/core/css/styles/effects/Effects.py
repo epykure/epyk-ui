@@ -100,7 +100,7 @@ class Effects(object):
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self
 
-  def spin(self, duration):
+  def spin(self, duration=1):
     """
     Description:
     ------------
@@ -115,7 +115,7 @@ class Effects(object):
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self
 
-  def translate(self, duration):
+  def translate(self, duration=1):
     """
     Description:
     ------------
@@ -128,6 +128,104 @@ class Effects(object):
     keyframe_name = "trans_%s" % duration
     self._htmlObj.style.css.animation = "%s %ss ease-in-out infinite alternate" % (keyframe_name, duration)
     attrs = {"from": {"transform": "translateY(-100%)"}, "to": {"transform": "translateY(0)"}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
+    return self
+
+  def down(self, duration=1):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+
+    """
+    keyframe_name = "trans_%s" % duration
+    self._htmlObj.style.css.animation = "%s %ss ease-in-out alternate" % (keyframe_name, duration)
+    attrs = {"from": {"transform": "translateY(-100%)"}, "to": {"transform": "translateY(0)"}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
+    return self
+
+  def up(self, duration=1, bottom=(20, 'px')):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+    :param bottom:
+    """
+    keyframe_name = "up_%s" % duration
+    self._htmlObj.style.css.animation = "%s %ss ease-in-out alternate" % (keyframe_name, duration)
+    attrs = {"0%": {"bottom": "-%s%s" % (bottom[0], bottom[1]), 'position': 'relative', 'opacity': 0},
+             "100%": {"bottom": 0, 'position': 'relative', 'opacity': 1}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
+    return self
+
+  def left(self, duration=1, left=(100, 'px')):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+    :param left:
+    """
+    keyframe_name = "left_%s" % duration
+    self._htmlObj.style.css.animation = "%s %ss ease-in-out" % (keyframe_name, duration)
+    attrs = {"0%": {"left": "-%s%s" % (left[0], left[1]), 'position': 'relative', 'opacity': 0},
+             "100%": {"left": 0, 'position': 'relative', 'opacity': 1}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
+    return self
+
+  def right(self, duration=1, right=(100, 'px')):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+    :param right:
+    """
+    keyframe_name = "right_%s" % duration
+    self._htmlObj.style.css.animation = "%s %ss ease-in-out" % (keyframe_name, duration)
+    attrs = {"0%": {"right": "-%s%s" % (right[0], right[1]), 'position': 'relative', 'opacity': 0},
+             "100%": {"right": 0, 'position': 'relative', 'opacity': 1}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
+    return self
+
+  def appear(self, duration=1):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+    """
+    keyframe_name = "appear_%s" % duration
+    self._htmlObj.style.css.animation = "%s %ss ease-in-out" % (keyframe_name, duration)
+    attrs = {"0%": {'opacity': 0}, "100%": {'opacity': 1}}
+    self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
+    return self
+
+  def disappear(self, duration=1):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+    """
+    keyframe_name = "disappear_%s" % duration
+    self._htmlObj.style.css.opacity = 0
+    self._htmlObj.style.css.animation = "%s %ss ease-in-out" % (keyframe_name, duration)
+    attrs = {"0%": {'opacity': 1}, "100%": {'opacity': 0}}
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self
 

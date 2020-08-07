@@ -9,7 +9,7 @@ class Images(object):
     self.context = context
 
   def img(self, image=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
-          profile=None, options=None):
+          profile=None, tooltip=None, options=None):
     """
     Description:
     ------------
@@ -47,6 +47,8 @@ class Images(object):
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
+    if tooltip is not None:
+      html_image.tooltip(tooltip)
     if width[0] is None:
       html_image.style.css.max_width = '100%'
     return html_image

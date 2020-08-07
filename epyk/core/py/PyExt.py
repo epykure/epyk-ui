@@ -603,6 +603,9 @@ class PyExt(object):
     :param text: String. a test to encode with HTML special symbols
     :param encoding: String. teh encoding type
     """
+    if not isinstance(text, str):
+      return text
+
     if encoding.lower() not in ["utf-8", 'cp1252']:
       raise Exception("Only Windows-1252 and UTF-8 are supported")
 

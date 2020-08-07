@@ -9,6 +9,8 @@ import os
 import argparse
 
 from epyk.core.cli import utils
+from epyk.core.Page import Report
+from epyk.core.py.PyMarkdown import MarkDown
 
 
 def new_parsers(subparser):
@@ -175,6 +177,93 @@ VUE_VIEWS_PATH = None
 ''')
 
 
+def compile_parser(subparser):
+  """
+  Description:
+  ------------
+
+  Attributes:
+  ----------
+  :param subparser:
+  """
+  subparser.set_defaults(func=page)
+  subparser.add_argument('-n', '--name',  required=True, help='''The page / report name to be created (without the extension)''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+  subparser.add_argument('-t', '--theme', help='''The theme in the studio for the page''')
+
+
+def compile(args):
+  """
+  Description:
+  ------------
+  Compile a markdown file to a valid HTML page.
+
+  Attributes:
+  ----------
+  :param args:
+  """
+  project_path = args.path or os.getcwd()
+  sys.path.append(project_path)
+  reports_path = utils.get_report_path(project_path)
+  with open(os.path.join(reports_path, "%s.md" % args.name), "w") as md:
+    md_dta = md.read()
+  page = Report()
+  page.py.markdown.resolve(md_dta)
+  try:
+    settings = __import__("ui_settings", fromlist=['object'])
+    if not os.path.exists(settings.VIEWS_FOLDER):
+      # If it is not an absolute path
+      settings.VIEWS_FOLDER = os.path.join(reports_path, '..', '..', settings.VIEWS_FOLDER)
+    output = page.outs.html_file(path=settings.VIEWS_FOLDER, name=args.name, split_files=settings.SPLIT_FILES,
+                                 install_modules=settings.INSTALL_MODULES, options={"css_route": '/css', "js_route": '/js'})
+  except:
+    output = page.outs.html_file(name=args.name, split_files=False, install_modules=False)
+  print(output)
+
+
+def translate_parser(subparser):
+  """
+  Description:
+  ------------
+
+  Attributes:
+  ----------
+  :param subparser:
+  """
+  subparser.set_defaults(func=page)
+  subparser.add_argument('-n', '--name',  required=True, help='''The page / report name to be created (without the extension)''')
+  subparser.add_argument('-p', '--path', help='''The path where the new environment will be created: -p /foo/bar''')
+  subparser.add_argument('-t', '--theme', help='''The theme in the studio for the page''')
+
+
+def translate(args):
+  """
+  Description:
+  ------------
+  Translate a markdown file to a valid Epyk python page.
+
+  Attributes:
+  ----------
+  :param args:
+  """
+  project_path = args.path or os.getcwd()
+  sys.path.append(project_path)
+  reports_path = utils.get_report_path(project_path)
+  with open(os.path.join(reports_path, "%s.md" % args.name), "w") as md:
+    md_dta = md.read()
+  results = MarkDown.translate(md_dta)
+  with open(os.path.join(reports_path, "%s.py" % args.name), "w") as f:
+    f.write('''
+from epyk.core.Page import Report
+
+# Create a basic report object
+page = Report()
+page.headers.dev()
+
+%s
+''' % "\n".join(results))
+
+
 def page_parser(subparser):
   """
   Description:
@@ -244,6 +333,7 @@ def transpile_all(args):
 
   Attributes:
   ----------
+  :param args:
   """
   project_path = args.path or os.getcwd()
   sys.path.append(project_path)
@@ -270,13 +360,17 @@ def transpile_all(args):
 
 def main():
   """
-
+  Description:
+  ------------
+  Main entry point for the various project command lines
   """
   parser_map = {
     'new': (new_parsers, '''Create new environment'''),
     'add': (add_parser, '''Add UI framework to an existing project'''),
     'app': (app_parser, '''Create a new App'''),
     'page': (page_parser, '''Add a page to the views'''),
+    'compile': (compile_parser, '''Compile Markdown file to a valid HTML page'''),
+    'translate': (compile_parser, '''Translate a Markdown file to a valid Epyk python page'''),
     'transpile_all': (transpile_all_parser, '''Transpile all the pages in the project'''),
   }
   arg_parser = argparse.ArgumentParser(prog='epyk')

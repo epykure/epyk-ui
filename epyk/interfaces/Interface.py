@@ -420,6 +420,8 @@ class Components(object):
     This module will rely on the base components available in the UI.
 
     This will only provide ready to use component for standard business cases.
+
+    TODO: Move this to a dedicated package
     """
     return CompStudio.Studio(self)
 
