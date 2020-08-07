@@ -170,25 +170,27 @@ class News(object):
       if not hasattr(rec[0], 'options'):
         name = self.parent.context.rptObj.ui.text(rec[0])
         name.style.css.color = self.parent.context.rptObj.theme.colors[-1]
-        name.style.css.padding = "0 10px"
+        name.style.css.padding = "5px 10px"
       else:
         name = rec[0]
       name.options.managed = False
       current = self.parent.context.rptObj.ui.text(rec[1])
       current.style.css.color = self.parent.context.rptObj.theme.greys[5]
-      current.style.css.padding = "0 10px"
+      current.style.css.padding = "5px 10px"
       current.options.managed = False
       move = self.parent.context.rptObj.ui.text("+%s" % rec[2] if rec[3] > 0 else rec[2])
       move.style.css.color = self.parent.context.rptObj.theme.danger[1] if rec[2] < 0 else self.parent.context.rptObj.theme.success[1]
-      move.style.css.padding = "0 10px"
+      move.style.css.padding = "5px 10px"
       move.options.managed = False
       percent = self.parent.context.rptObj.ui.text("+%s%%" % rec[3] if rec[3] > 0 else "-%s%%" % rec[3])
       percent.style.css.color = self.parent.context.rptObj.theme.danger[1] if rec[3] < 0 else self.parent.context.rptObj.theme.success[1]
-      percent.style.css.padding = "0 10px"
+      percent.style.css.padding = "5px 10px"
       percent.options.managed = False
       html_records.append([name, current, move, percent])
     table = self.parent.context.rptObj.ui.tables.basic(html_records, rows=[0], cols=[1, 2, 3], width=width, height=height,
                options=options, profile=profile)
+    for row in table:
+      row.style.css.border_bottom = "1px solid %s" % self.parent.context.rptObj.theme.colors[3]
     table.set_header(["Symbol", 'Last Price', 'Change', '% Change'])
     return table
 

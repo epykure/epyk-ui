@@ -113,3 +113,9 @@ class CssTdGridVals(CssStyle.Style):
     self.css({"background-color": self.rptObj.theme.colors[0],
               "border-bottom": '1px solid %s' % self.rptObj.theme.greys[4]})
     self.focus.css({"border-bottom": '1px solid %s' % self.rptObj.theme.success[1]})
+
+
+class CssTrHover(CssStyle.Style):
+
+  def customize(self):
+    self.hover.css({"background": self.rptObj.theme.colors[2]})

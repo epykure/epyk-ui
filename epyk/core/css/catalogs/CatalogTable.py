@@ -10,6 +10,10 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTable.CssTableBasic)
 
+  def row_hover(self):
+    """  """
+    return self._set_class(CssStylesTable.CssTrHover)
+
   def new_row(self):
     """  """
     return self._set_class(CssStylesTable.CssTableNewRow)

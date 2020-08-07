@@ -64,6 +64,7 @@ class Bespoke(Html.Html):
       data.append([rec[c] for c in self._fields])
     super(Bespoke, self).__init__(report, data, htmlCode=htmlCode, css_attrs={"width": width, "height": height}, profile=profile)
     self.items = None
+    self.style.add_classes.table.table()
     self.css({"text-align": 'center', 'border-collapse': 'collapse'})
     self._style = {"rows": {"padding": '5px 0'}, "header": {"padding": '5px 0'}}
     self.set_items()
@@ -109,6 +110,7 @@ class Bespoke(Html.Html):
     for rec in self.val:
       self.items.append(Row(self._report, [Cell(self._report, r, is_header=False, options={"managed": False}) for r in rec]))
       self.items[-1].options.managed = False
+      self.items[-1].style.add_classes.table.row_hover()
     return self
 
   def __getitem__(self, i):
@@ -178,6 +180,7 @@ class Bespoke(Html.Html):
     self.val.append(data)
     self.items.append(Row(self._report, [Cell(self._report, d, is_header=is_header, options={"managed": False}) for d in data]))
     self.items[-1].options.managed = False
+    self.items[-1].style.add_classes.table.row_hover()
     return self
 
   def __str__(self):
