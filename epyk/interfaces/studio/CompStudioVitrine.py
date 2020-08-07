@@ -170,8 +170,37 @@ class Vitrine(object):
     p = self.parent.context.rptObj.ui.vignets.price(value=value, title=title, items=items, align=align, width=width, currency=currency)
     return p
 
-  def subscribe(self):
-    pass
+  def quote(self, text, author, job=None, align="left", width=(100, '%'), height=("auto", ''), options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param author:
+    :param job:
+    :param align:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options:
+    :param profile:
+    """
+    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
+    component.style.css.margin_bottom = 5
+    quote = self.parent.context.rptObj.ui.pictos.quote()
+    quote.style.css.margin_bottom = -20
+    component.add(quote)
+    component.text = self.parent.context.rptObj.ui.text("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%s" % self.parent.context.rptObj.py.encode_html(text))
+    component.add(component.text)
+    component.author = self.parent.context.rptObj.ui.text(self.parent.context.rptObj.py.encode_html(author))
+    component.author.style.css.bold()
+    if job is not None:
+      component.job = self.parent.context.rptObj.ui.text(self.parent.context.rptObj.py.encode_html(job))
+      component.add(self.parent.context.rptObj.ui.div([component.author, self.parent.context.rptObj.ui.text(",&nbsp;"), component.job], align="right"))
+    else:
+      component.add(self.parent.context.rptObj.ui.div([component.author], align="right"))
+    return component
 
   def contact_us(self, title="Contact Us", background=None, width=(100, '%'), align="left", height=(None, 'px'),
                  htmlCode="contactus", options=None, profile=False):
@@ -189,9 +218,6 @@ class Vitrine(object):
                                                   options=options, profile=profile)
     return t
 
-  def list(self):
-    pass
-
   def accordion(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=False):
     s = self.parent.context.rptObj.ui.panels.sliding(components, title=title, color=color, align=align, width=width,
       height=height, htmlCode=htmlCode, helper=helper, options=options, profile=profile)
@@ -203,4 +229,10 @@ class Vitrine(object):
     return v
 
   def carousel(self):
+    pass
+
+  def subscribe(self):
+    pass
+
+  def list(self):
     pass
