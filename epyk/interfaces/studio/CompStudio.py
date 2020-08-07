@@ -256,16 +256,6 @@ class Studio(CompLayouts.Layouts):
     return CompStudioEvent.Seminar(self)
 
   @property
-  def festival(self):
-    """
-    Description:
-    ------------
-
-    https://www.voyage-event.com/autres-themes
-    """
-    return CompStudioEvent.Festival(self)
-
-  @property
   def birthday(self):
     """
     Description:
