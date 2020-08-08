@@ -317,6 +317,7 @@ class Event(object):
       flip_box.style.add_classes.div.rorate_horizontal()
 
     flip_box.style.css.background_color = "transparent"
+    flip_box.style.css.margin = "0 auto"
     flip_box.style.css.border = "1px solid %s" % self.parent.context.rptObj.theme.colors[3]
     flip_box.style.css.perspective = 1000
 

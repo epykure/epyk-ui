@@ -44,7 +44,7 @@ class Images(object):
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    if height[0] is not None and width[1] == '%':
+    if height[0] not in [None, 'auto'] and width[1] == '%':
       width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
     if tooltip is not None:

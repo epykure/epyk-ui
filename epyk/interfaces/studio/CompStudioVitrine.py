@@ -69,6 +69,62 @@ class Vitrine(object):
     a.style.css.border = "1px solid red"
     return a
 
+  def picture(self, image=None, label=None, path=None, width=(100, "%"), height=(None, "px"), align="center", htmlCode=None,
+              profile=None, options=None):
+    """
+    Description:
+    ------------
+    Add an HTML image to the page. The path can be defined either in a absolute or relative format.
+
+    Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the server
+
+    Usage::
+
+      rptObj.ui.img("epykIcon.PNG", path=r"../../../static/images", height=(50, "px"))
+
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlImage.Image`
+
+    Related Pages:
+
+      https://www.w3schools.com/bootstrap/bootstrap_ref_css_images.asp
+      https://www.w3schools.com/cssref/css3_pr_border-radius.asp
+
+    Attributes:
+    ----------
+    :param image: String. The image file name
+    :param path: Optional. String. The image file path
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel or percentage
+    :param align:
+    :param htmlCode:
+    :param profile:
+    :param options:
+    """
+    if height[0] is not None and width[1] == '%':
+      width = ("auto", '')
+    component = self.parent.context.rptObj.ui.div(align=align, width=width, height=height, options=options, profile=profile)
+    component.image = self.parent.context.rptObj.ui.img(image, path, (100, '%'), ('auto', ''), align, htmlCode, profile, "", options or {})
+    component.style.css.position = "relative"
+    component.add(component.image)
+    if not hasattr(label, 'options'):
+      component.label = self.parent.context.rptObj.ui.div(label)
+      component.label.style.css.background = "white"
+      component.label.style.css.opacity = 0.6
+    else:
+      component.label = self.parent.context.rptObj.ui.div()
+      component.label.add(label)
+    component.label.style.css.position = "absolute"
+    component.label.style.css.text_align = "center"
+    component.label.style.css.width = "calc(100% - 20px)"
+    component.label.style.css.margin = 10
+    component.label.style.css.padding = 10
+    component.label.style.css.bottom = 5
+    component.add(component.label)
+    return component
+
   def delimiter(self, size=5, count=1, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
