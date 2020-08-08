@@ -95,3 +95,7 @@ class CatalogLayout(Catalog.CatalogGroup):
   def hover_zoom(self):
     """  """
     return self._set_class(CssStylesCommon.CssHoverZoom)
+
+  def hover_rotate(self):
+    """  """
+    return self._set_class(CssStylesCommon.CssHoverRotate)

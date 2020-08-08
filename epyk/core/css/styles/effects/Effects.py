@@ -221,6 +221,10 @@ class Effects(object):
     self._htmlObj.style.add_classes.layout.hover_zoom()
     return self
 
+  def rotate(self):
+    self._htmlObj.style.add_classes.layout.hover_rotate()
+    return self
+
   def disappear(self, duration=1):
     """
     Description:

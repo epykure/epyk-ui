@@ -68,3 +68,8 @@ class CssHoverReduce(CssStyle.Style):
 
 class CssHoverZoom(CssStyle.Style):
   _hover = {"transform": 'scale(1.1)', 'z-index': 10}
+
+
+class CssHoverRotate(CssStyle.Style):
+  _hover = {"transform": 'rotate(10deg)', 'z-index': 10}
+
