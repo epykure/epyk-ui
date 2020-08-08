@@ -115,9 +115,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../graphs.html">Core Chart Components:</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../html_components.html#core-html-classes">Core Html Classes:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../html_components.html#core-table-components">Core Table Components:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../html_components.html#core-chart-components">Core Chart Components:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
@@ -202,7 +199,7 @@
 <h1>HtmlButton Module<a class="headerlink" href="#htmlbutton-module" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="epyk.core.html.HtmlButton.Button">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">Button</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">icon</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">tooltip</span></em>, <em class="sig-param"><span class="n">profile</span></em>, <em class="sig-param"><span class="n">options</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">Button</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlButton.Button.color">
 <code class="sig-name descname">color</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">color</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.color" title="Permalink to this definition">¶</a></dt>
@@ -293,8 +290,12 @@
 <dl class="py method">
 <dt id="epyk.core.html.HtmlButton.Button.to_word">
 <code class="sig-name descname">to_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.to_word" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply the corresponding function to produce the same result in a word document.
+<dd><dl>
+<dt>Description:</dt><dd><p>Apply the corresponding function to produce the same result in a word document.
 This function is very specific and it has to be defined in each class.</p>
+<p>Related Pages:</p>
+</dd>
+</dl>
 <p><a class="reference external" href="http://python-docx.readthedocs.io/en/latest/">http://python-docx.readthedocs.io/en/latest/</a></p>
 </dd></dl>
 
@@ -303,7 +304,10 @@ This function is very specific and it has to be defined in each class.</p>
 <code class="sig-name descname">to_xls</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">workbook</span></em>, <em class="sig-param"><span class="n">worksheet</span></em>, <em class="sig-param"><span class="n">cursor</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Button.to_xls" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply the corresponding function to produce the same result in a word document.
 This function is very specific and it has to be defined in each class.</p>
-<p><a class="reference external" href="https://xlsxwriter.readthedocs.io/">https://xlsxwriter.readthedocs.io/</a></p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://xlsxwriter.readthedocs.io/">https://xlsxwriter.readthedocs.io/</a></p>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>
@@ -380,7 +384,7 @@ This function is very specific and it has to be defined in each class.</p>
 
 <dl class="py class">
 <dt id="epyk.core.html.HtmlButton.CheckButton">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">CheckButton</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">flag</span></em>, <em class="sig-param"><span class="n">tooltip</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">icon</span></em>, <em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.CheckButton" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlButton.</code><code class="sig-name descname">CheckButton</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">flag</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">tooltip</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">icon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.CheckButton" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlButton.CheckButton.click">
 <code class="sig-name descname">click</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFncsTrue</span></em>, <em class="sig-param"><span class="n">jsFncFalse</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">withColors</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.CheckButton.click" title="Permalink to this definition">¶</a></dt>
@@ -485,8 +489,12 @@ This function is very specific and it has to be defined in each class.</p>
 <dl class="py method">
 <dt id="epyk.core.html.HtmlButton.Checkbox.to_word">
 <code class="sig-name descname">to_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">document</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.to_word" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply the corresponding function to produce the same result in a word document.
+<dd><dl>
+<dt>Description:</dt><dd><p>Apply the corresponding function to produce the same result in a word document.
 This function is very specific and it has to be defined in each class.</p>
+<p>Related Pages:</p>
+</dd>
+</dl>
 <p><a class="reference external" href="http://python-docx.readthedocs.io/en/latest/">http://python-docx.readthedocs.io/en/latest/</a></p>
 </dd></dl>
 
@@ -495,30 +503,10 @@ This function is very specific and it has to be defined in each class.</p>
 <code class="sig-name descname">to_xls</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">workbook</span></em>, <em class="sig-param"><span class="n">worksheet</span></em>, <em class="sig-param"><span class="n">cursor</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.to_xls" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply the corresponding function to produce the same result in a word document.
 This function is very specific and it has to be defined in each class.</p>
-<p><a class="reference external" href="https://xlsxwriter.readthedocs.io/">https://xlsxwriter.readthedocs.io/</a></p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="epyk.core.html.HtmlButton.Checkbox.tooltip">
-<code class="sig-name descname">tooltip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">location</span><span class="o">=</span><span class="default_value">'top'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlButton.Checkbox.tooltip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add the Tooltip feature when the mouse is over the component.
-This tooltip version is coming from Bootstrap</p>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">htmlObj</span><span class="o">.</span><span class="n">tooltip</span><span class="p">(</span><span class="s2">&quot;My tooltip&quot;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><a class="reference external" href="https://getbootstrap.com/docs/4.1/components/tooltips/">https://getbootstrap.com/docs/4.1/components/tooltips/</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> – </p></li>
-<li><p><strong>location</strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The Python object self</p>
-</dd>
-</dl>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://xlsxwriter.readthedocs.io/">https://xlsxwriter.readthedocs.io/</a></p>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>

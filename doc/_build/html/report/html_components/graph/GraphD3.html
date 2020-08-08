@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="GraphDC Module" href="GraphDC.html" />
+    <link rel="prev" title="GraphChartJs Module" href="GraphChartJs.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,8 +80,34 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../report.html">Report Object</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../ui.html">UI Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../html_components.html">HTML Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../components.html">Core Html Components:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tables.html">Core Table Components:</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../graphs.html">Core Chart Components:</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="GraphBillboard.html">GraphBillboard Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphC3.html">GraphC3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphCanvas.html">GraphCanvas Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphChartJs.html">GraphChartJs Module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">GraphD3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphDC.html">GraphDC Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphNVD3.html">GraphNVD3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphPlotly.html">GraphPlotly Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphSparklines.html">GraphSparklines Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphSvg.html">GraphSvg Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphVis.html">GraphVis Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html">Data Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
@@ -129,6 +157,12 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="../../../report.html">Report Object</a> &raquo;</li>
+        
+          <li><a href="../../html_components.html">HTML Interface</a> &raquo;</li>
+        
+          <li><a href="../graphs.html">Core Chart Components:</a> &raquo;</li>
+        
       <li>GraphD3 Module</li>
     
     
@@ -150,38 +184,6 @@
             
   <div class="section" id="graphd3-module">
 <h1>GraphD3 Module<a class="headerlink" href="#graphd3-module" title="Permalink to this headline">¶</a></h1>
-<dl class="py class">
-<dt id="epyk.core.html.graph.GraphD3.Chart">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.graph.GraphD3.</code><code class="sig-name descname">Chart</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">aresObj</span></em>, <em class="sig-param"><span class="n">chartType</span></em>, <em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">widthUnit</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">heightUnit</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">chartOptions</span></em>, <em class="sig-param"><span class="n">toolsbar</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">globalFilter</span></em>, <em class="sig-param"><span class="n">filterSensitive</span></em>, <em class="sig-param"><span class="n">dataSrc</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphD3.Chart" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
-<dt id="epyk.core.html.graph.GraphD3.Chart.chartId">
-<em class="property">property </em><code class="sig-name descname">chartId</code><a class="headerlink" href="#epyk.core.html.graph.GraphD3.Chart.chartId" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the Javascript variable of the chart</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="epyk.core.html.graph.GraphD3.Chart.setSeriesColor">
-<code class="sig-name descname">setSeriesColor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">colors</span></em>, <em class="sig-param"><span class="n">seriesId</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">borderColors</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphD3.Chart.setSeriesColor" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Category</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">Rubric</dt>
-<dd class="field-even"><p>JS</p>
-</dd>
-<dt class="field-odd">Example</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">Dsc</dt>
-<dd class="field-even"><p></p></dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="epyk.core.html.graph.GraphD3.Config">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.graph.GraphD3.</code><code class="sig-name descname">Config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">aresObj</span></em>, <em class="sig-param"><span class="n">script</span></em>, <em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">widthUnit</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">heightUnit</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">chartOptions</span></em>, <em class="sig-param"><span class="n">toolsbar</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">globalFilter</span></em>, <em class="sig-param"><span class="n">filterSensitive</span></em>, <em class="sig-param"><span class="n">dataSrc</span></em>, <em class="sig-param"><span class="n">profile</span></em>, <em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">d3Version</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphD3.Config" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 
 
@@ -189,6 +191,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="GraphDC.html" class="btn btn-neutral float-right" title="GraphDC Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="GraphChartJs.html" class="btn btn-neutral float-left" title="GraphChartJs Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

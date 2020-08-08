@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Javascript Interface" href="../../js.html" />
+    <link rel="prev" title="GraphSvg Module" href="GraphSvg.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,8 +80,34 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../report.html">Report Object</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../ui.html">UI Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../html_components.html">HTML Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../components.html">Core Html Components:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tables.html">Core Table Components:</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../graphs.html">Core Chart Components:</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="GraphBillboard.html">GraphBillboard Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphC3.html">GraphC3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphCanvas.html">GraphCanvas Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphChartJs.html">GraphChartJs Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphD3.html">GraphD3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphDC.html">GraphDC Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphNVD3.html">GraphNVD3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphPlotly.html">GraphPlotly Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphSparklines.html">GraphSparklines Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphSvg.html">GraphSvg Module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">GraphVis Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html">Data Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
@@ -129,6 +157,12 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="../../../report.html">Report Object</a> &raquo;</li>
+        
+          <li><a href="../../html_components.html">HTML Interface</a> &raquo;</li>
+        
+          <li><a href="../graphs.html">Core Chart Components:</a> &raquo;</li>
+        
       <li>GraphVis Module</li>
     
     
@@ -157,6 +191,22 @@
 <dt id="epyk.core.html.graph.GraphVis.Chart.chartId">
 <em class="property">property </em><code class="sig-name descname">chartId</code><a class="headerlink" href="#epyk.core.html.graph.GraphVis.Chart.chartId" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Javascript variable of the chart</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.graph.GraphVis.Chart.js">
+<em class="property">property </em><code class="sig-name descname">js</code><a class="headerlink" href="#epyk.core.html.graph.GraphVis.Chart.js" title="Permalink to this definition">¶</a></dt>
+<dd><p>Javascript base function</p>
+<p>Return all the Javascript functions defined in the framework.
+THis is an entry point to the full Javascript ecosystem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsVis.VisGraph2D</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -286,7 +336,7 @@ THis is an entry point to the full Javascript ecosystem.</p>
 <dd class="field-odd"><p>A Javascript object</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>JsVis.VisTimeline</p>
+<dd class="field-even"><p>JsVis.VisGraph2D</p>
 </dd>
 </dl>
 </dd></dl>
@@ -410,6 +460,15 @@ THis is an entry point to the full Javascript ecosystem.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../js.html" class="btn btn-neutral float-right" title="Javascript Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="GraphSvg.html" class="btn btn-neutral float-left" title="GraphSvg Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

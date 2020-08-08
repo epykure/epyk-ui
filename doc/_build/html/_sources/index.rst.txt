@@ -44,6 +44,12 @@ Those are the basics of the Epyk framework, then you can move to using complex o
 - and more, for an exhaustive list of supported libraries and frameworks please see :doc:`supported_ext`
 
 
+Example
+================================
+
+You can find example of what Epyk can do right here:
+- `Jupyter Playground <https://nbviewer.jupyter.org/github/epykure/epyk-templates-notebooks/blob/master/tutorials/components/00_components.ipynb>`_
+
 Coming Soon
 ================================
 

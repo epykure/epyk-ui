@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="C3 Interface" href="C3.html" />
+    <link rel="prev" title="Charts Compositions:" href="../graphs.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,8 +80,35 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../report.html">Report Object</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../ui.html">UI Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../compositions.html">Simple HTML Compositions:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geo.html">Geo Compositions:</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../graphs.html">Charts Compositions:</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Billboard Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="C3.html">C3 Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Canvas.html">Canvas Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChartJs.html">ChartJs Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="D3.html">D3 Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DC.html">DC Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Graphs.html">Graphs Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Nvd3.html">Nvd3 Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Plotly.html">Plotly Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SVG.html">SVG Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Vis.html">Vis Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tables.html">Table Compositions:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../html_components.html">HTML Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html">Data Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
@@ -129,6 +158,12 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="../../../report.html">Report Object</a> &raquo;</li>
+        
+          <li><a href="../../ui.html">UI Interface</a> &raquo;</li>
+        
+          <li><a href="../graphs.html">Charts Compositions:</a> &raquo;</li>
+        
       <li>Billboard Interface</li>
     
     
@@ -154,17 +189,142 @@
 <dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard">
 <em class="property">class </em><code class="sig-prename descclassname">epyk.interfaces.graphs.CompChartsBillboard.</code><code class="sig-name descname">Billboard</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.gauge">
-<code class="sig-name descname">gauge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.gauge" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.area">
+<code class="sig-name descname">area</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a area chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.AreaChart">https://naver.github.io/billboard.js/demo/#Chart.AreaChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> – </p></li>
-<li><p><strong>text</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>options</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.area_step">
+<code class="sig-name descname">area_step</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.area_step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a area step chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.AreaChart">https://naver.github.io/billboard.js/demo/#Chart.AreaChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.bar">
+<code class="sig-name descname">bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a bar chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.BarChart">https://naver.github.io/billboard.js/demo/#Chart.BarChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.bubble">
+<code class="sig-name descname">bubble</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.bubble" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a bubble chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.BubbleChart">https://naver.github.io/billboard.js/demo/#Chart.BubbleChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.donut">
+<code class="sig-name descname">donut</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.donut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a donut chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.DonutChart">https://naver.github.io/billboard.js/demo/#Chart.DonutChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.gauge">
+<code class="sig-name descname">gauge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.gauge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a gauge chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.GaugeChart">https://naver.github.io/billboard.js/demo/#Chart.GaugeChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>text</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -174,15 +334,68 @@
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.hbar">
 <code class="sig-name descname">hbar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.hbar" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Display a horizontal bar chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.BarChart">https://naver.github.io/billboard.js/demo/#Chart.BarChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.line">
+<code class="sig-name descname">line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a line chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.LineChart">https://naver.github.io/billboard.js/demo/#Chart.LineChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.line_range">
+<code class="sig-name descname">line_range</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">range</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.line_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a line range chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.LineChart">https://naver.github.io/billboard.js/demo/#Chart.LineChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>options</strong> – </p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
@@ -192,16 +405,165 @@
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.pie">
-<code class="sig-name descname">pie</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_column</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.pie" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<code class="sig-name descname">pie</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.pie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a pie chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.PieChart">https://naver.github.io/billboard.js/demo/#Chart.PieChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_column</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.radar">
+<code class="sig-name descname">radar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.radar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a radar chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.RadarChart">https://naver.github.io/billboard.js/demo/#Chart.RadarChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.scatter">
+<code class="sig-name descname">scatter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a scatter chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.ScatterPlot">https://naver.github.io/billboard.js/demo/#Chart.ScatterPlot</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.spline">
+<code class="sig-name descname">spline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.spline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a spline chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.SplineChart">https://naver.github.io/billboard.js/demo/#Chart.SplineChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.stacked">
+<code class="sig-name descname">stacked</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.stacked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a stacked bar chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.StackedBarChart">https://naver.github.io/billboard.js/demo/#Chart.StackedBarChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.step">
+<code class="sig-name descname">step</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a step chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.StepChart">https://naver.github.io/billboard.js/demo/#Chart.StepChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsBillboard.Billboard.timeseries">
+<code class="sig-name descname">timeseries</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsBillboard.Billboard.timeseries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a timeseries chart from Billboard</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://naver.github.io/billboard.js/demo/#Chart.LineChart">https://naver.github.io/billboard.js/demo/#Chart.LineChart</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>options</strong> – </p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
@@ -218,6 +580,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="C3.html" class="btn btn-neutral float-right" title="C3 Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../graphs.html" class="btn btn-neutral float-left" title="Charts Compositions:" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

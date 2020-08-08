@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="GraphCanvas Module" href="GraphCanvas.html" />
+    <link rel="prev" title="GraphBillboard Module" href="GraphBillboard.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,8 +80,34 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../report.html">Report Object</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../ui.html">UI Interface</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../html_components.html">HTML Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../components.html">Core Html Components:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tables.html">Core Table Components:</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../graphs.html">Core Chart Components:</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="GraphBillboard.html">GraphBillboard Module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">GraphC3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphCanvas.html">GraphCanvas Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphChartJs.html">GraphChartJs Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphD3.html">GraphD3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphDC.html">GraphDC Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphNVD3.html">GraphNVD3 Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphPlotly.html">GraphPlotly Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphSparklines.html">GraphSparklines Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphSvg.html">GraphSvg Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GraphVis.html">GraphVis Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html">Data Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
@@ -128,6 +156,12 @@
   <ul class="wy-breadcrumbs">
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../report.html">Report Object</a> &raquo;</li>
+        
+          <li><a href="../../html_components.html">HTML Interface</a> &raquo;</li>
+        
+          <li><a href="../graphs.html">Core Chart Components:</a> &raquo;</li>
         
       <li>GraphC3 Module</li>
     
@@ -188,7 +222,10 @@
 <em class="property">property </em><code class="sig-name descname">enabled</code><a class="headerlink" href="#epyk.core.html.graph.GraphC3.C3Selection.enabled" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set data selection enabled.</p>
 <p>If this option is set true, we can select the data points and get/set its state of selection by API (e.g. select, unselect, selected).</p>
-<p><a class="reference external" href="https://c3js.org/reference.html#data-selection-enabled">https://c3js.org/reference.html#data-selection-enabled</a></p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://c3js.org/reference.html#data-selection-enabled">https://c3js.org/reference.html#data-selection-enabled</a></p>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
@@ -215,6 +252,64 @@
 <dt id="epyk.core.html.graph.GraphC3.Chart.chartId">
 <em class="property">property </em><code class="sig-name descname">chartId</code><a class="headerlink" href="#epyk.core.html.graph.GraphC3.Chart.chartId" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the Javascript variable of the chart</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.graph.GraphC3.Chart.click">
+<code class="sig-name descname">click</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphC3.Chart.click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a callback for click event on each data point.</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference external" href="https://c3js.org/reference.html#data-onclick">https://c3js.org/reference.html#data-onclick</a></p>
+</div></blockquote>
+<p>Attributes:</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFncs</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.graph.GraphC3.Chart.convert">
+<code class="sig-name descname">convert</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.graph.GraphC3.Chart.convert" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.graph.GraphC3.Chart.d3">
+<em class="property">property </em><code class="sig-name descname">d3</code><a class="headerlink" href="#epyk.core.html.graph.GraphC3.Chart.d3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.graph.GraphC3.Chart.js">
+<em class="property">property </em><code class="sig-name descname">js</code><a class="headerlink" href="#epyk.core.html.graph.GraphC3.Chart.js" title="Permalink to this definition">¶</a></dt>
+<dd><p>JC3 reference API</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://c3js.org/reference.html#api-show">https://c3js.org/reference.html#api-show</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A Javascript object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>JsC3.C3</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -456,7 +551,10 @@ The key in the object representation will be the function name</p>
 <em class="property">property </em><code class="sig-name descname">types</code><a class="headerlink" href="#epyk.core.html.graph.GraphC3.JsData.types" title="Permalink to this definition">¶</a></dt>
 <dd><p>This setting overwrites data.type setting:
 line, spline, step, area…</p>
-<p><a class="reference external" href="https://c3js.org/reference.html#data-types">https://c3js.org/reference.html#data-types</a></p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://c3js.org/reference.html#data-types">https://c3js.org/reference.html#data-types</a></p>
+</div></blockquote>
 </dd></dl>
 
 </dd></dl>
@@ -482,13 +580,13 @@ line, spline, step, area…</p>
 <dd><dl class="py method">
 <dt id="epyk.core.html.graph.GraphC3.JsScales.y2">
 <em class="property">property </em><code class="sig-name descname">y2</code><a class="headerlink" href="#epyk.core.html.graph.GraphC3.JsScales.y2" title="Permalink to this definition">¶</a></dt>
-<dd><p>//c3js.org/reference.html#axis-y2-show</p>
+<dd><p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://c3js.org/reference.html#axis-y2-show">https://c3js.org/reference.html#axis-y2-show</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#epyk.core.html.graph.GraphC3.C3Axis" title="epyk.core.html.graph.GraphC3.C3Axis">C3Axis</a></p>
-</dd>
-<dt class="field-even">Type</dt>
-<dd class="field-even"><p>https</p>
 </dd>
 </dl>
 </dd></dl>
@@ -522,6 +620,15 @@ line, spline, step, area…</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="GraphCanvas.html" class="btn btn-neutral float-right" title="GraphCanvas Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="GraphBillboard.html" class="btn btn-neutral float-left" title="GraphBillboard Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

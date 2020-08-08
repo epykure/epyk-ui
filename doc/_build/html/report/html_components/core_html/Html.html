@@ -513,6 +513,38 @@ This will change the options sent to the Javascript</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="epyk.core.html.Html.Html.aria">
+<em class="property">property </em><code class="sig-name descname">aria</code><a class="headerlink" href="#epyk.core.html.Html.Html.aria" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessible Rich Internet Applications is a [HTML] specification module.
+Web developers MAY use the ARIA role and aria-* attributes on HTML elements</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3.org/TR/html-aria/#allowed-aria-roles-states-and-properties">https://www.w3.org/TR/html-aria/#allowed-aria-roles-states-and-properties</a></p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.Html.Html.component">
+<em class="property">property </em><code class="sig-name descname">component</code><a class="headerlink" href="#epyk.core.html.Html.Html.component" title="Permalink to this definition">¶</a></dt>
+<dd><p>The static component definition on the Javascript Side.</p>
+<p>This will be then used by the different framework to define the elementary bricks on which the complex component
+will be based on.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.Html.Html.contextMenu">
+<code class="sig-name descname">contextMenu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">menu</span></em>, <em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.Html.Html.contextMenu" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Attach a context menu to a component and set a function to called before the display</p>
+</div></blockquote>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">----------</code></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
 <dt id="epyk.core.html.Html.Html.css">
 <code class="sig-name descname">css</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="n">value</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">reset</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.Html.Html.css" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
@@ -613,12 +645,58 @@ THis is an entry point to the full Javascript ecosystem.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="epyk.core.html.Html.Html.keydown">
+<em class="property">property </em><code class="sig-name descname">keydown</code><a class="headerlink" href="#epyk.core.html.Html.Html.keydown" title="Permalink to this definition">¶</a></dt>
+<dd><p>The onkeydown event occurs when the user is pressing a key (on the keyboard).</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/jsref/event_onkeydown.asp">https://www.w3schools.com/jsref/event_onkeydown.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KeyCodes.KeyCode</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.Html.Html.keypress">
+<em class="property">property </em><code class="sig-name descname">keypress</code><a class="headerlink" href="#epyk.core.html.Html.Html.keypress" title="Permalink to this definition">¶</a></dt>
+<dd><p>The onkeypress event occurs when the user presses a key (on the keyboard).</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/jsref/event_onkeypress.asp">https://www.w3schools.com/jsref/event_onkeypress.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KeyCodes.KeyCode</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.Html.Html.keyup">
+<em class="property">property </em><code class="sig-name descname">keyup</code><a class="headerlink" href="#epyk.core.html.Html.Html.keyup" title="Permalink to this definition">¶</a></dt>
+<dd><p>The onkeypress event occurs when the user presses a key (on the keyboard)</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://www.w3schools.com/jsref/event_onkeypress.asp">https://www.w3schools.com/jsref/event_onkeypress.asp</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>KeyCodes.KeyCode</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="epyk.core.html.Html.Html.mouse">
-<code class="sig-name descname">mouse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">on_fncs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">out_fncs</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.Html.Html.mouse" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">mouse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">on_fncs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">out_fncs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.Html.Html.mouse" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Wrapper function fot the mouse event.
 This function will cover the on mouse hover event and mouse out.</p>
 <p>More specific events are possible using the generic out function</p>
+<p>Tip: As function are defined to be chaining in most of the components use .r to get the string representation and clean the cache.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">span</span><span class="o">.</span><span class="n">mouse</span><span class="p">([</span>
   <span class="n">span</span><span class="o">.</span><span class="n">dom</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">),</span>
@@ -718,6 +796,12 @@ usually this can be used to add js functions on a chart or a table</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="epyk.core.html.Html.Html.refresh">
+<code class="sig-name descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.Html.Html.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Component refresh function. Javascript function which can be called in any Javascript event</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="epyk.core.html.Html.Html.set_attrs">
 <code class="sig-name descname">set_attrs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attrs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">value</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.Html.Html.set_attrs" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
@@ -756,32 +840,6 @@ This function is very specific and it has to be defined in each class.</p>
 <blockquote>
 <div><p><a class="reference external" href="https://xlsxwriter.readthedocs.io/">https://xlsxwriter.readthedocs.io/</a></p>
 </div></blockquote>
-</dd></dl>
-
-<dl class="py method">
-<dt id="epyk.core.html.Html.Html.tooltip">
-<code class="sig-name descname">tooltip</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">location</span><span class="o">=</span><span class="default_value">'top'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.Html.Html.tooltip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add the Tooltip feature when the mouse is over the component.
-This tooltip version is coming from Bootstrap</p>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">htmlObj</span><span class="o">.</span><span class="n">tooltip</span><span class="p">(</span><span class="s2">&quot;My tooltip&quot;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Related Pages:</p>
-<blockquote>
-<div><p><a class="reference external" href="https://getbootstrap.com/docs/4.1/components/tooltips/">https://getbootstrap.com/docs/4.1/components/tooltips/</a></p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>value</strong> – </p></li>
-<li><p><strong>location</strong> – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The Python object self</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">

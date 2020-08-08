@@ -869,7 +869,7 @@ JS_IMPORTS = {
 
   # Vis Timeline style with CDN Links
   'vis-timeline': {
-    'register': {'npm': 'vis-timeline', 'npm_path': 'dist'},
+    'register': {'alias': 'vis-timeline', 'npm': 'vis-timeline', 'npm_path': 'dist'},
     'website': 'http://visjs.org/',
     'modules': [
       {'script': 'vis-timeline-graph2d.min.js', 'version': '7.3.7', 'path': 'vis-timeline/%(version)s/', 'cdnjs': CDNJS_REPO}]},

@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Plotly Interface" href="Plotly.html" />
+    <link rel="prev" title="Graphs Interface" href="Graphs.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,8 +80,35 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../report.html">Report Object</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../report.html">Report Object</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../ui.html">UI Interface</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../compositions.html">Simple HTML Compositions:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geo.html">Geo Compositions:</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../graphs.html">Charts Compositions:</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Billboard.html">Billboard Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="C3.html">C3 Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Canvas.html">Canvas Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChartJs.html">ChartJs Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="D3.html">D3 Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DC.html">DC Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Graphs.html">Graphs Interface</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Nvd3 Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Plotly.html">Plotly Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SVG.html">SVG Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Vis.html">Vis Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tables.html">Table Compositions:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../html_components.html">HTML Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../js.html">Javascript Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../outs.html">Outputs Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../py.html">Python Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../data.html">Data Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../themes.html">Themes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../html_builtins.html">HTML Built-Ins</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../css_builtins.html">CSS Built-Ins</a></li>
@@ -129,6 +158,12 @@
     
       <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="../../../report.html">Report Object</a> &raquo;</li>
+        
+          <li><a href="../../ui.html">UI Interface</a> &raquo;</li>
+        
+          <li><a href="../graphs.html">Charts Compositions:</a> &raquo;</li>
+        
       <li>Nvd3 Interface</li>
     
     
@@ -155,19 +190,21 @@
 <em class="property">class </em><code class="sig-prename descclassname">epyk.interfaces.graphs.CompChartsNvd3.</code><code class="sig-name descname">Nvd3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.area">
-<code class="sig-name descname">area</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.area" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+<code class="sig-name descname">area</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a area chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -176,19 +213,21 @@
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.bar">
-<code class="sig-name descname">bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.bar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+<code class="sig-name descname">bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a bars chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -197,7 +236,7 @@
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.candlestick">
-<code class="sig-name descname">candlestick</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">closes</span></em>, <em class="sig-param"><span class="n">highs</span></em>, <em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">opens</span></em>, <em class="sig-param"><span class="n">x_axis</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.candlestick" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">candlestick</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">closes</span></em>, <em class="sig-param"><span class="n">highs</span></em>, <em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">opens</span></em>, <em class="sig-param"><span class="n">x_axis</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.candlestick" title="Permalink to this definition">¶</a></dt>
 <dd><p>data = rptObj.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
 sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[“AAPL.High”], lows=[“AAPL.Low”], opens=[“AAPL.Open”], x_axis=’Date’)</p>
 <dl class="field-list simple">
@@ -209,8 +248,6 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 <li><p><strong>lows</strong> – </p></li>
 <li><p><strong>opens</strong> – </p></li>
 <li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
-<li><p><strong>filters</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
 <li><p><strong>options</strong> – </p></li>
 <li><p><strong>width</strong> – </p></li>
@@ -226,19 +263,21 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.donut">
-<code class="sig-name descname">donut</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_column</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.donut" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/pie.html">http://nvd3.org/examples/pie.html</a></p>
+<code class="sig-name descname">donut</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.donut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a donut chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/pie.html">http://nvd3.org/examples/pie.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_column</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -247,11 +286,10 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.forceDirected">
-<code class="sig-name descname">forceDirected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">400, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.forceDirected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">forceDirected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">400, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.forceDirected" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>title</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
 <li><p><strong>options</strong> – </p></li>
 <li><p><strong>width</strong> – </p></li>
@@ -264,17 +302,18 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.gauge">
-<code class="sig-name descname">gauge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">total</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.gauge" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/pie.html">http://nvd3.org/examples/pie.html</a></p>
+<code class="sig-name descname">gauge</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">text</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">total</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.gauge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/pie.html">http://nvd3.org/examples/pie.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>text</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -283,7 +322,7 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.group_box">
-<code class="sig-name descname">group_box</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.group_box" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">group_box</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.group_box" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -300,19 +339,21 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.hbar">
-<code class="sig-name descname">hbar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.hbar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+<code class="sig-name descname">hbar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.hbar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a bars chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -321,19 +362,21 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.histo">
-<code class="sig-name descname">histo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.histo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+<code class="sig-name descname">histo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.histo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a histo chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -342,19 +385,21 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.line">
-<code class="sig-name descname">line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.line" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/line.html">http://nvd3.org/examples/line.html</a></p>
+<code class="sig-name descname">line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a line chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/line.html">http://nvd3.org/examples/line.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -363,19 +408,21 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.line_cumulative">
-<code class="sig-name descname">line_cumulative</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.line_cumulative" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/line.html">http://nvd3.org/examples/line.html</a></p>
+<code class="sig-name descname">line_cumulative</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.line_cumulative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a Cumulative line chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/line.html">http://nvd3.org/examples/line.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -384,17 +431,64 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.line_focus">
-<code class="sig-name descname">line_focus</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.line_focus" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/line.html">http://nvd3.org/examples/line.html</a></p>
+<code class="sig-name descname">line_focus</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.line_focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a line chart with focus from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/line.html">http://nvd3.org/examples/line.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.multi">
+<code class="sig-name descname">multi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.multi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a multi types chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
+<li><p><strong>htmlCode</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.ohlc">
+<code class="sig-name descname">ohlc</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">closes</span></em>, <em class="sig-param"><span class="n">highs</span></em>, <em class="sig-param"><span class="n">lows</span></em>, <em class="sig-param"><span class="n">opens</span></em>, <em class="sig-param"><span class="n">x_axis</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.ohlc" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>records</strong> – </p></li>
+<li><p><strong>closes</strong> – </p></li>
+<li><p><strong>highs</strong> – </p></li>
+<li><p><strong>lows</strong> – </p></li>
+<li><p><strong>opens</strong> – </p></li>
+<li><p><strong>x_axis</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
 <li><p><strong>width</strong> – </p></li>
 <li><p><strong>height</strong> – </p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
@@ -404,18 +498,15 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 </dd></dl>
 
 <dl class="py method">
-<dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.multi">
-<code class="sig-name descname">multi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.multi" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
-<dl class="field-list simple">
+<dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.parallel_coordinates">
+<code class="sig-name descname">parallel_coordinates</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">dimensions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.parallel_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>records</strong> – </p></li>
+<li><p><strong>dimensions</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
+<li><p><strong>options</strong> – </p></li>
 <li><p><strong>width</strong> – </p></li>
 <li><p><strong>height</strong> – </p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
@@ -426,19 +517,21 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.pie">
-<code class="sig-name descname">pie</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_column</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.pie" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/pie.html">http://nvd3.org/examples/pie.html</a></p>
+<code class="sig-name descname">pie</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.pie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a pie chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/pie.html">http://nvd3.org/examples/pie.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_column</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -447,19 +540,21 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.scatter">
-<code class="sig-name descname">scatter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.scatter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/line.html">http://nvd3.org/examples/line.html</a></p>
+<code class="sig-name descname">scatter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a scatter chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/line.html">http://nvd3.org/examples/line.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
-<li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -468,12 +563,11 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.sunburst">
-<code class="sig-name descname">sunburst</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.sunburst" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sunburst</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.sunburst" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>records</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
 <li><p><strong>options</strong> – </p></li>
 <li><p><strong>width</strong> – </p></li>
@@ -486,19 +580,22 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
 
 <dl class="py method">
 <dt id="epyk.interfaces.graphs.CompChartsNvd3.Nvd3.timeseries">
-<code class="sig-name descname">timeseries</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filters</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.timeseries" title="Permalink to this definition">¶</a></dt>
-<dd><p>Documentation
-<a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+<code class="sig-name descname">timeseries</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_columns</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">x_axis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">330, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.graphs.CompChartsNvd3.Nvd3.timeseries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display a Timseries chart from NVD3</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://nvd3.org/examples/discreteBar.html">http://nvd3.org/examples/discreteBar.html</a></p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>record</strong> – </p></li>
-<li><p><strong>y_columns</strong> – </p></li>
+<li><p><strong>record</strong> – List of dict. The Python recordset</p></li>
+<li><p><strong>y_columns</strong> – List. The columns corresponding to keys in the dictionaries in the record</p></li>
+<li><p><strong>x_axis</strong> – String. The column corresponding to a key in the dictionaries in the record</p></li>
 <li><p><strong>x_axis</strong> – </p></li>
-<li><p><strong>title</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
-<li><p><strong>width</strong> – </p></li>
-<li><p><strong>height</strong> – </p></li>
+<li><p><strong>width</strong> – Tuple. The width of the component in the page, default (100, ‘%’)</p></li>
+<li><p><strong>height</strong> – Tuple. The height of the component in the page, default (330, “px”)</p></li>
 <li><p><strong>htmlCode</strong> – </p></li>
 </ul>
 </dd>
@@ -514,6 +611,15 @@ sc = rptObj.ui.charts.nvd3.candlestick(data, closes=[“AAPL.Close”], highs=[�
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Plotly.html" class="btn btn-neutral float-right" title="Plotly Interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Graphs.html" class="btn btn-neutral float-left" title="Graphs Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -215,7 +215,7 @@
 
 <dl class="py class">
 <dt id="epyk.core.html.HtmlContainer.Col">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Col</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Col" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Col</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Col" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlContainer.Col.build">
 <code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Col.build" title="Permalink to this definition">¶</a></dt>
@@ -226,6 +226,16 @@
 <li><p><strong>options</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Col.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Col.options" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OptPanel.OptionGrid</p>
 </dd>
 </dl>
 </dd></dl>
@@ -334,7 +344,7 @@ This function is very specific and it has to be defined in each class.</p>
 
 <dl class="py class">
 <dt id="epyk.core.html.HtmlContainer.Grid">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Grid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Grid" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Grid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">rows</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Grid" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlContainer.Grid.dom">
 <em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Grid.dom" title="Permalink to this definition">¶</a></dt>
@@ -347,6 +357,16 @@ Those functions will use plain javascript by default.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>JsHtmlPanels.JsHtmlGrid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Grid.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Grid.options" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OptPanel.OptionGrid</p>
 </dd>
 </dl>
 </dd></dl>
@@ -619,7 +639,7 @@ This will be triggered first</p>
 
 <dl class="py class">
 <dt id="epyk.core.html.HtmlContainer.Row">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Row</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Row" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">Row</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">htmlObjs</span></em>, <em class="sig-param"><span class="n">position</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">align</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Row" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt id="epyk.core.html.HtmlContainer.Row.dom">
 <em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Row.dom" title="Permalink to this definition">¶</a></dt>
@@ -635,12 +655,32 @@ Those functions will use plain javascript by default.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Row.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.Row.options" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>OptPanel.OptionGrid</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt id="epyk.core.html.HtmlContainer.TSection">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">TSection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">type</span></em>, <em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.TSection" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlContainer.</code><code class="sig-name descname">TSection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">type</span></em>, <em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.TSection" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.TSection.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlContainer.TSection.options" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../options/OptPanel.html#epyk.core.html.options.OptPanel.OptionPanelTable" title="epyk.core.html.options.OptPanel.OptionPanelTable">OptPanel.OptionPanelTable</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="py class">
 <dt id="epyk.core.html.HtmlContainer.Table">
@@ -666,6 +706,16 @@ Those functions will use plain javascript by default.</p>
 <li><p><strong>options</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlContainer.Table.col">
+<code class="sig-name descname">col</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">i</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlContainer.Table.col" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> – </p>
 </dd>
 </dl>
 </dd></dl>
