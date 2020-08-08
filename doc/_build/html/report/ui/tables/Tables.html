@@ -184,8 +184,8 @@
 <dt id="epyk.interfaces.tables.CompTables.Tables">
 <em class="property">class </em><code class="sig-prename descclassname">epyk.interfaces.tables.CompTables.</code><code class="sig-name descname">Tables</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">context</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt id="epyk.interfaces.tables.CompTables.Tables.aggrid">
-<em class="property">property </em><code class="sig-name descname">aggrid</code><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.aggrid" title="Permalink to this definition">¶</a></dt>
+<dt id="epyk.interfaces.tables.CompTables.Tables.aggrids">
+<em class="property">property </em><code class="sig-name descname">aggrids</code><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.aggrids" title="Permalink to this definition">¶</a></dt>
 <dd><p>ag-Grid is the industry standard for JavaScript Enterprise Applications.
 Developers using ag-Grid are building applications that would not be possible if ag-Grid did not exist.</p>
 <p>Related Pages:</p>
@@ -214,9 +214,6 @@ Developers using ag-Grid are building applications that would not be possible if
 <li><p><strong>options</strong> – </p></li>
 <li><p><strong>profile</strong> – </p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
 </dd>
 </dl>
 </dd></dl>
@@ -251,29 +248,6 @@ Developers using ag-Grid are building applications that would not be possible if
 </dd></dl>
 
 <dl class="py method">
-<dt id="epyk.interfaces.tables.CompTables.Tables.datatable">
-<code class="sig-name descname">datatable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">header</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataFncs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">aggFnc</span><span class="o">=</span><span class="default_value">'sum'</span></em>, <em class="sig-param"><span class="n">cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.datatable" title="Permalink to this definition">¶</a></dt>
-<dd><p>The python interface to the javascript Datatable framework. Not all the functions have been wrapped here but you should be able to
-do the most frequent events and interactions with this component from the available function.
-Please keep in mind that the javascript is only trigger on the web browser (namely not with the Python code)</p>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
-
-                  <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">datatables</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">reference</span><span class="o">/</span><span class="n">index</span>
-</pre></div>
-</div>
-<p><a class="reference external" href="https://datatables.net/reference/option/">https://datatables.net/reference/option/</a>
-<a class="reference external" href="https://datatables.net/reference/option/ajax.data">https://datatables.net/reference/option/ajax.data</a>
-<a class="reference external" href="https://datatables.net/reference/option/drawCallback">https://datatables.net/reference/option/drawCallback</a>
-<a class="reference external" href="https://datatables.net/extensions/buttons/examples/initialisation/custom.html">https://datatables.net/extensions/buttons/examples/initialisation/custom.html</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>html_tables.HtlmTableDatatable.DataTable</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt id="epyk.interfaces.tables.CompTables.Tables.datatables">
 <em class="property">property </em><code class="sig-name descname">datatables</code><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.datatables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Interface to the different Datatable configurations</p>
@@ -295,25 +269,14 @@ Please keep in mind that the javascript is only trigger on the web browser (name
 </dd></dl>
 
 <dl class="py method">
-<dt id="epyk.interfaces.tables.CompTables.Tables.pivot">
-<code class="sig-name descname">pivot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">vals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">aggOptions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rendererName</span><span class="o">=</span><span class="default_value">'Table'</span></em>, <em class="sig-param"><span class="n">tableOptions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataSrc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">helper</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.pivot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a HTML Pivot table</p>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
-
-                  <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pivottable</span><span class="o">.</span><span class="n">js</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span>
-</pre></div>
-</div>
-<p><a class="reference external" href="https://react-pivottable.js.org/">https://react-pivottable.js.org/</a>
-<a class="reference external" href="https://jsfiddle.net/nicolaskruchten/w86bgq9o/">https://jsfiddle.net/nicolaskruchten/w86bgq9o/</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The python HTML Table</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>tables.HtmlDataPivot.PivotTable</p>
+<dt id="epyk.interfaces.tables.CompTables.Tables.pivots">
+<em class="property">property </em><code class="sig-name descname">pivots</code><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.pivots" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Description:</dt><dd><p>Interface to the different Pivot Table configurations</p>
+<p>Related Pages:</p>
 </dd>
 </dl>
+<p><a class="reference external" href="https://pivottable.js.org/examples/">https://pivottable.js.org/examples/</a></p>
 </dd></dl>
 
 <dl class="py method">
@@ -329,49 +292,6 @@ Please keep in mind that the javascript is only trigger on the web browser (name
 <dt class="field-odd">rtype</dt>
 <dd class="field-odd"><p>CompTabulator.Tabulators</p>
 </dd>
-</dl>
-</div></blockquote>
-</dd></dl>
-
-<dl class="py method">
-<dt id="epyk.interfaces.tables.CompTables.Tables.tabulator">
-<code class="sig-name descname">tabulator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recordSet</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">header</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">align</span><span class="o">=</span><span class="default_value">'left'</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">htmlCode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.tables.CompTables.Tables.tabulator" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p><a class="reference external" href="http://tabulator.info/">http://tabulator.info/</a></p>
-<blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param recordSet</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param header</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param cols</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param rows</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param title</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param align</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param width</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param height</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param options</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">param htmlCode</dt>
-<dd class="field-even"><p></p></dd>
-<dt class="field-odd">param profile</dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">rtype</dt>
-<dd class="field-even"><p>html.HtmlDataTable.DataTabulator</p>
-</dd>
-<dt class="field-odd">return</dt>
-<dd class="field-odd"><p></p></dd>
 </dl>
 </div></blockquote>
 </dd></dl>

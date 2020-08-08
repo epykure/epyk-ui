@@ -198,17 +198,6 @@
   <div class="section" id="htmlevent-module">
 <h1>HtmlEvent Module<a class="headerlink" href="#htmlevent-module" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="epyk.core.html.HtmlEvent.ContextMenu">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlEvent.</code><code class="sig-name descname">ContextMenu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordSet</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">visible</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.ContextMenu" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
-<dt id="epyk.core.html.HtmlEvent.ContextMenu.onDocumentLoadFnc">
-<code class="sig-name descname">onDocumentLoadFnc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.ContextMenu.onDocumentLoadFnc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pure Javascript onDocumentLoad Function</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt id="epyk.core.html.HtmlEvent.Dialog">
 <em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlEvent.</code><code class="sig-name descname">Dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">text</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">attrs</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.Dialog" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
@@ -264,16 +253,66 @@ Those functions will use plain javascript by default.</p>
 
 <dl class="py class">
 <dt id="epyk.core.html.HtmlEvent.Filters">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlEvent.</code><code class="sig-name descname">Filters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">title</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.Filters" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlEvent.</code><code class="sig-name descname">Filters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">htmlCode</span></em>, <em class="sig-param"><span class="n">helper</span></em>, <em class="sig-param"><span class="n">options</span></em>, <em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.Filters" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
-<dt id="epyk.core.html.HtmlEvent.Filters.val">
-<em class="property">property </em><code class="sig-name descname">val</code><a class="headerlink" href="#epyk.core.html.HtmlEvent.Filters.val" title="Permalink to this definition">¶</a></dt>
-<dd><p>Property to get the jquery value of the HTML object in a python HTML object.
-This method can be used in any jsFunction to get the value of a component in the browser.
-This method will only be used on the javascript side, so please do not consider it in your algorithm in Python</p>
+<dt id="epyk.core.html.HtmlEvent.Filters.append">
+<code class="sig-name descname">append</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">category</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">disabled</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">fixed</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.Filters.append" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – </p></li>
+<li><p><strong>category</strong> – </p></li>
+<li><p><strong>disabled</strong> – </p></li>
+<li><p><strong>fixed</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlEvent.Filters.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.Filters.delete" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFncs</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlEvent.Filters.dom">
+<em class="property">property </em><code class="sig-name descname">dom</code><a class="headerlink" href="#epyk.core.html.HtmlEvent.Filters.dom" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Javascript Dom object</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Javascript string with the function to get the current value of the component</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>JsHtmlList.Tags</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlEvent.Filters.enter">
+<code class="sig-name descname">enter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">jsFncs</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.Filters.enter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jsFncs</strong> – </p></li>
+<li><p><strong>profile</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.core.html.HtmlEvent.Filters.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlEvent.Filters.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>OptList.OptionsTagItems</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>rtype</p>
 </dd>
 </dl>
 </dd></dl>
@@ -335,8 +374,19 @@ Those functions will use plain javascript by default.</p>
 
 <dl class="py class">
 <dt id="epyk.core.html.HtmlEvent.OptionsBar">
-<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlEvent.</code><code class="sig-name descname">OptionsBar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordset</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">size</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">border_color</span></em>, <em class="sig-param"><span class="n">options</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.OptionsBar" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property">class </em><code class="sig-prename descclassname">epyk.core.html.HtmlEvent.</code><code class="sig-name descname">OptionsBar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">report</span></em>, <em class="sig-param"><span class="n">recordset</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">color</span></em>, <em class="sig-param"><span class="n">options</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.core.html.HtmlEvent.OptionsBar" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="epyk.core.html.HtmlEvent.OptionsBar.options">
+<em class="property">property </em><code class="sig-name descname">options</code><a class="headerlink" href="#epyk.core.html.HtmlEvent.OptionsBar.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>OptSliders.OptionBar</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>rtype</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="py class">
 <dt id="epyk.core.html.HtmlEvent.ProgressBar">

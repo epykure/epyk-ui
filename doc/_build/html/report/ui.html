@@ -230,6 +230,12 @@ Components can be self contained in a module and rely on external packages</p>
 <dd><p>shortcut for check <a class="reference internal" href="ui/compositions/Buttons.html#epyk.interfaces.components.CompButtons.Buttons.check" title="epyk.interfaces.components.CompButtons.Buttons.check"><code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompButtons.Buttons.check()</span></code></a></p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt id="epyk.interfaces.Components.Components.chips">
+<code class="sig-name descname">chips</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.chips" title="Permalink to this definition">¶</a></dt>
+<dd><p>shortcut for chips <a class="reference internal" href="ui/compositions/Lists.html#epyk.interfaces.components.CompLists.Lists.chips" title="epyk.interfaces.components.CompLists.Lists.chips"><code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompLists.Lists.chips()</span></code></a></p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="epyk.interfaces.Components.Components.codes">
 <em class="property">property </em><code class="sig-name descname">codes</code><a class="headerlink" href="#epyk.interfaces.Components.Components.codes" title="Permalink to this definition">¶</a></dt>
@@ -263,24 +269,10 @@ Components can be self contained in a module and rely on external packages</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="epyk.interfaces.Components.Components.context_menu">
-<code class="sig-name descname">context_menu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">visible</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.context_menu" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
-This component is generic is need to be added to a component to work</p>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">menu</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">context_menu</span><span class="p">([{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">:</span> <span class="s1">&#39;alert(&quot;ok&quot;)&#39;</span><span class="p">}])</span>
-<span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">attach_menu</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Related Pages:</p>
-</div></blockquote>
 <dl class="py attribute">
-<dt>
-<code class="sig-name descname">----------</code></dt>
-<dd></dd></dl>
-
+<dt id="epyk.interfaces.Components.Components.contextual">
+<code class="sig-name descname">contextual</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.contextual" title="Permalink to this definition">¶</a></dt>
+<dd><p>shortcut for chips <a class="reference internal" href="ui/compositions/Menus.html#epyk.interfaces.components.CompMenus.Menus.contextual" title="epyk.interfaces.components.CompMenus.Menus.contextual"><code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompMenus.Menus.contextual()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
@@ -307,10 +299,36 @@ This component is generic is need to be added to a component to work</p>
 <dd><p>shortcut for div <a class="reference internal" href="ui/compositions/Layouts.html#epyk.interfaces.components.CompLayouts.Layouts.div" title="epyk.interfaces.components.CompLayouts.Layouts.div"><code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompLayouts.Layouts.div()</span></code></a></p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt id="epyk.interfaces.Components.Components.drawer">
+<code class="sig-name descname">drawer</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.drawer" title="Permalink to this definition">¶</a></dt>
+<dd><p>shortcut for drawer <code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompDrawers.Drawers.drawer()</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.Components.Components.drawers">
+<em class="property">property </em><code class="sig-name descname">drawers</code><a class="headerlink" href="#epyk.interfaces.Components.Components.drawers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group all the UI drawers components.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="epyk.interfaces.Components.Components.drops">
 <em class="property">property </em><code class="sig-name descname">drops</code><a class="headerlink" href="#epyk.interfaces.Components.Components.drops" title="Permalink to this definition">¶</a></dt>
 <dd><p>Group all the UI components dedicated to drop data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.Components.Components.extension">
+<code class="sig-name descname">extension</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">package_name</span></em>, <em class="sig-param"><span class="n">alias</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an extension base on it is name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>package_name</strong> – String. The package name</p></li>
+<li><p><strong>alias</strong> – String. The alias for the link in report.ui</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -335,7 +353,6 @@ This category will take into account textarea, input text…</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">form</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Attributes:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -367,6 +384,12 @@ This category will take into account textarea, input text…</p>
 <dt id="epyk.interfaces.Components.Components.grid">
 <code class="sig-name descname">grid</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.grid" title="Permalink to this definition">¶</a></dt>
 <dd><p>shortcut for grid <a class="reference internal" href="ui/compositions/Layouts.html#epyk.interfaces.components.CompLayouts.Layouts.grid" title="epyk.interfaces.components.CompLayouts.Layouts.grid"><code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompLayouts.Layouts.grid()</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="epyk.interfaces.Components.Components.hidden">
+<code class="sig-name descname">hidden</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.hidden" title="Permalink to this definition">¶</a></dt>
+<dd><p>shortcut for chips <a class="reference internal" href="ui/compositions/Inputs.html#epyk.interfaces.components.CompInputs.Inputs.input" title="epyk.interfaces.components.CompInputs.Inputs.input"><code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompInputs.Inputs.input()</span></code></a></p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -412,6 +435,27 @@ This category will take into account textarea, input text…</p>
 <dd><p>Group all the UI components dedicated to produce input items.</p>
 <p>Those components are editable items which need to be updated by the user of the dashboard.
 This category will take into account textarea, input text…</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.Components.Components.json">
+<code class="sig-name descname">json</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">100, '%'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">profile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.json" title="Permalink to this definition">¶</a></dt>
+<dd><p>HTML component to display a Json</p>
+<p>Related Pages:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/mohsen1/json-formatter-js">https://github.com/mohsen1/json-formatter-js</a></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Dictioanry. The Json object to be display</p></li>
+<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
+<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
+<li><p><strong>options</strong> – Optional. Dictionary with the component properties</p></li>
+<li><p><strong>profile</strong> – Boolean</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -528,23 +572,6 @@ Those components are interactive and they would require underlying services and 
 </dd></dl>
 
 <dl class="py method">
-<dt id="epyk.interfaces.Components.Components.options_bar">
-<code class="sig-name descname">options_bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">border_color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">None, 'px'</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.options_bar" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Add a bespoke options / actions bar with icons</p>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Related</span> <span class="n">Pages</span><span class="p">:</span>
-</pre></div>
-</div>
-</div></blockquote>
-<dl class="py attribute">
-<dt>
-<code class="sig-name descname">----------</code></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py method">
 <dt id="epyk.interfaces.Components.Components.panels">
 <em class="property">property </em><code class="sig-name descname">panels</code><a class="headerlink" href="#epyk.interfaces.Components.Components.panels" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -553,6 +580,19 @@ Those components are interactive and they would require underlying services and 
 <dt id="epyk.interfaces.Components.Components.pivot">
 <code class="sig-name descname">pivot</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.pivot" title="Permalink to this definition">¶</a></dt>
 <dd><p>shortcut for pivot <code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompTables.Tables.pivot()</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.Components.Components.postit">
+<code class="sig-name descname">postit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">components</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">anchor</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.postit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>components</strong> – </p></li>
+<li><p><strong>anchor</strong> – Component. Optional.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -596,26 +636,6 @@ Those components are interactive and they would require underlying services and 
 <dd><p>shortcut for select <a class="reference internal" href="ui/compositions/Lists.html#epyk.interfaces.components.CompLists.Lists.select" title="epyk.interfaces.components.CompLists.Lists.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompLists.Lists.select()</span></code></a></p>
 </dd></dl>
 
-<dl class="py method">
-<dt id="epyk.interfaces.Components.Components.side_bar">
-<code class="sig-name descname">side_bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">links</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">servers</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">position</span><span class="o">=</span><span class="default_value">'right'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.side_bar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a side Bar to the report.</p>
-<p>Related Pages:</p>
-<blockquote>
-<div><p><a class="reference external" href="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav">https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sidenav</a></p>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>links</strong> – </p></li>
-<li><p><strong>color</strong> – </p></li>
-<li><p><strong>servers</strong> – </p></li>
-<li><p><strong>position</strong> – </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py attribute">
 <dt id="epyk.interfaces.Components.Components.slider">
 <code class="sig-name descname">slider</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.slider" title="Permalink to this definition">¶</a></dt>
@@ -628,6 +648,24 @@ Those components are interactive and they would require underlying services and 
 <dd><p>Group all the UI components dedicated to produce slider items.</p>
 <p>Those components are interactive and can be used to filter the data on other items in the dashboard.
 Those components are mainly relying on Jquery and JqueryUi</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="epyk.interfaces.Components.Components.stepper">
+<code class="sig-name descname">stepper</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.stepper" title="Permalink to this definition">¶</a></dt>
+<dd><p>shortcut for steppers <code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompSteppers.Steppers.stepper()</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.Components.Components.steppers">
+<em class="property">property </em><code class="sig-name descname">steppers</code><a class="headerlink" href="#epyk.interfaces.Components.Components.steppers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group all the UI steppers components.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="epyk.interfaces.Components.Components.steps">
+<em class="property">property </em><code class="sig-name descname">steps</code><a class="headerlink" href="#epyk.interfaces.Components.Components.steps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group all the UI steps components.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -671,6 +709,12 @@ formatted text…</p>
 <dd><p>shortcut for title <a class="reference internal" href="ui/compositions/Texts.html#epyk.interfaces.components.CompTexts.Texts.title" title="epyk.interfaces.components.CompTexts.Texts.title"><code class="xref py py-func docutils literal notranslate"><span class="pre">epyk.interfaces.components.CompTexts.Texts.title()</span></code></a></p>
 </dd></dl>
 
+<dl class="py method">
+<dt id="epyk.interfaces.Components.Components.titles">
+<em class="property">property </em><code class="sig-name descname">titles</code><a class="headerlink" href="#epyk.interfaces.Components.Components.titles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Group all the UI components dedicated to produce titles</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt id="epyk.interfaces.Components.Components.tree">
 <code class="sig-name descname">tree</code><em class="property"> = None</em><a class="headerlink" href="#epyk.interfaces.Components.Components.tree" title="Permalink to this definition">¶</a></dt>
@@ -688,31 +732,6 @@ formatted text…</p>
 <em class="property">property </em><code class="sig-name descname">vignets</code><a class="headerlink" href="#epyk.interfaces.Components.Components.vignets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Group all the UI components dedicated to produce rich HTML Components.</p>
 <p>This category will take into account very specific and bespoke components.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="epyk.interfaces.Components.Components.workflow">
-<code class="sig-name descname">workflow</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">records</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">None, '%'</span></em>, <em class="sig-param"><span class="n">height</span><span class="o">=</span><span class="default_value">40, 'px'</span></em>, <em class="sig-param"><span class="n">color</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#epyk.interfaces.Components.Components.workflow" title="Permalink to this definition">¶</a></dt>
-<dd><p>Description:</p>
-<p>Entry point for the workflow object</p>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rptObj</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">workflow</span><span class="p">([</span>
-  <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s1">&#39;test 1&#39;</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="s1">&#39;test&#39;</span><span class="p">},</span>
-  <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s1">&#39;test 2&#39;</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s1">&#39;error&#39;</span><span class="p">},</span>
-  <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s1">&#39;test 3&#39;</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s1">&#39;pending&#39;</span><span class="p">}])</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>records</strong> – A list with the different steps defined in the workflow</p></li>
-<li><p><strong>width</strong> – Optional. A tuple with the integer for the component width and its unit</p></li>
-<li><p><strong>height</strong> – Optional. A tuple with the integer for the component height and its unit</p></li>
-<li><p><strong>color</strong> – Optional.</p></li>
-<li><p><strong>options</strong> – Optional. Specific Python options available for this component</p></li>
-</ul>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
