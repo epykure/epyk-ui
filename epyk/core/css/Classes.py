@@ -17,6 +17,7 @@ from epyk.core.css.catalogs import CatalogRadio
 from epyk.core.css.catalogs import CatalogSelect
 from epyk.core.css.catalogs import CatalogTable
 from epyk.core.css.catalogs import CatalogText
+from epyk.core.css.catalogs import CatalogMedia
 from epyk.core.css.catalogs import CatalogImg
 
 
@@ -77,6 +78,19 @@ class Catalog(object):
     if "button" not in self.__ctx:
       self.__ctx['button'] = CatalogButton.CatalogButton(self.__rptObj, self.__class_list_type)
     return self.__ctx['button']
+
+  @property
+  def screens(self):
+    """
+    Description:
+    ------------
+    CSS Classes specific to the screen compatility components
+
+    :rtype: CatalogMedia.CatalogMedia
+    """
+    if "screens" not in self.__ctx:
+      self.__ctx['screens'] = CatalogMedia.CatalogMedia(self.__rptObj, self.__class_list_type)
+    return self.__ctx['screens']
 
   @property
   def icon(self):

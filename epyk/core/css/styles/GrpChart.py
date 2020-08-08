@@ -1,6 +1,6 @@
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-"""
 
 from epyk.core.css.styles import GrpCls
 from epyk.core.css import Classes

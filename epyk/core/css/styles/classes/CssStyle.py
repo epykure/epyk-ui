@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.css import Properties
 
@@ -84,11 +86,9 @@ class Selector(object):
     Selects all <p> elements inside <div> elements
 
     Related Pages:
-
-	  https://www.w3schools.com/cssref/sel_element_element.asp
+	    https://www.w3schools.com/cssref/sel_element_element.asp
 
     :param element:
-    :return:
     """
     if direct_parent:
       self.__this = "%s > %s" % (self.__this, element)
@@ -792,24 +792,30 @@ class Style(object):
     """
     return self.attrs.css(key, value, important, change)
 
-  def media(self, attrs, rule=None, mediatype=None, mediafeature=None, change=True):
+  def media(self, attrs, rule=None, mediatype=None, mediafeature=None, change=True, thisClass=False):
     """
+    Description:
     The @media is used in media queries to apply different styles for different media types/devices.
 
-    Example
-    rptObj.style.media({"body": {"background-color": "lightblue"}}, only, screen,
+    Usage::
+
+      rptObj.style.media({"body": {"background-color": "lightblue"}}, "only", "screen",
     {'and': [{'height': '100px'}, {'min-width': '600px'}]})
 
     The first key of the attributes can be an Epyk html object
 
     Related Pages:
+	    https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
 
-	  https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
+    Attributes:
+    ----------
     :param attrs: String. Required. Percentage of the animation duration.
     :param rule: not or only or and see documentation for more info
     :param media_type: the media to which the rule will need to be applied
     :param mediafeature: Media features provide more specific details to media queries
     """
+    if thisClass:
+      attrs = {".%s" % self.classname: attrs}
 
     if change:
       self.__has_changed = True
