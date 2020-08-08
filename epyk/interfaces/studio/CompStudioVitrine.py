@@ -60,8 +60,13 @@ class Vitrine(object):
     b = self.parent.context.rptObj.ui.images.background()
     return b
 
-  def image(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"), profile=None):
-    a = self.parent.context.rptObj.ui.images.animated()
+  def image(self, image, text=None, title=None, url=None, path=None, width=(200, "px"), height=(200, "px"), options=None, profile=None):
+    if text is None and title is None:
+      return self.parent.context.rptObj.ui.img(image, path=path, width=width, height=height, options=options, profile=profile)
+
+    a = self.parent.context.rptObj.ui.images.animated(image=image, text=text, title=title, url=url, path=path,
+                                                      width=width, height=height, options=options, profile=profile)
+    a.style.css.border = "1px solid red"
     return a
 
   def delimiter(self, size=5, count=1, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
@@ -236,8 +241,14 @@ class Vitrine(object):
   def carousel(self):
     pass
 
-  def subscribe(self):
-    pass
+  def subscribe(self, value="", placeholder="Enter email address", button="Subscribe", width=(100, '%'),
+                height=(None, 'px'), options=None, profile=False):
+    s = self.parent.context.rptObj.ui.forms.subscribe(value=value, placeholder=placeholder, button=button, width=width,
+                                                      height=height, options=options, profile=profile)
+    return s
 
-  def list(self):
-    pass
+  def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), htmlCode=None, helper=None,
+           options=None, profile=None):
+    l = self.parent.context.rptObj.ui.lists.list(data=data, color=color, width=width, height=height, htmlCode=htmlCode,
+                                                 helper=helper, options=options, profile=profile)
+    return l

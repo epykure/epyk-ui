@@ -86,13 +86,13 @@ class Image(Html.Html):
 class AnimatedImage(Html.Html):
   name = 'Animated Picture'
 
-  def __init__(self, report, image, text, title, url, path, width, height, profile):
+  def __init__(self, report, image, text, title, url, path, width, height, options, profile):
     if path is None:
-      if Defaults.SERVER_PATH is not None and not image[0].startswith("http"):
+      if Defaults.SERVER_PATH is not None and not image.startswith("http"):
         path = Defaults.SERVER_PATH
       else:
-        path = os.path.split(image[0])[0]
-        image = os.path.split(image[0])[-1]
+        path = os.path.split(image)[0]
+        image = os.path.split(image)[-1]
     super(AnimatedImage, self).__init__(report, {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
                                         css_attrs={"width": width, "height": height, 'overflow': 'hidden', 'display': 'block'}, profile=profile)
     self.img = report.ui.img(image, path=path, width=(width[0]-5, width[1]), height=("auto", ''))

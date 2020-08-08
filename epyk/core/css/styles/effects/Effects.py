@@ -213,6 +213,14 @@ class Effects(object):
     self._htmlObj.style.css_class.keyframes(keyframe_name, attrs)
     return self
 
+  def reduce(self):
+    self._htmlObj.style.add_classes.layout.hover_reduce()
+    return self
+
+  def zoom(self):
+    self._htmlObj.style.add_classes.layout.hover_zoom()
+    return self
+
   def disappear(self, duration=1):
     """
     Description:

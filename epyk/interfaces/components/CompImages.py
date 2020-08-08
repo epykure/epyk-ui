@@ -327,7 +327,7 @@ class Images(object):
     div.style.add_classes.div.border_bottom()
     return div
 
-  def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"), profile=None):
+  def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"), options=None, profile=None):
     """
     Description:
     ------------
@@ -361,7 +361,7 @@ class Images(object):
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
 
-    html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, profile)
+    html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, options, profile)
     return html_id
 
   def carousel(self, images, path=None, selected=0, width=(100, "%"), height=(300, "px"), options=None, profile=None):

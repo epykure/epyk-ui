@@ -56,6 +56,15 @@ class CssNotSelect(CssStyle.Style):
   _attrs = {"-webkit-touch-callout": 'none', "user-select": 'none', "-webkit-user-select": 'none',
             "-khtml-user-select": 'none', "-moz-user-select": 'none', "-ms-user-select": 'none'}
 
+
 class CssCloseSpan(CssStyle.Style):
   _attrs = {'float': 'right', 'text-align': 'right', 'font-size': '32px', 'z-index': 10, 'color': 'red',
             'position': 'relative', 'top': '-10px'}
+
+
+class CssHoverReduce(CssStyle.Style):
+  _hover = {"transform": 'scale(0.9)'}
+
+
+class CssHoverZoom(CssStyle.Style):
+  _hover = {"transform": 'scale(1.1)', 'z-index': 10}

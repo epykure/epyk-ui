@@ -1,6 +1,5 @@
-"""
-
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.css.catalogs import Catalog
 
@@ -88,3 +87,11 @@ class CatalogLayout(Catalog.CatalogGroup):
   def scrollbar_track_thumb(self):
     """  """
     return self._set_class(CssStylesScrollBar.CssScrollBarTrackThumb)
+
+  def hover_reduce(self):
+    """  """
+    return self._set_class(CssStylesCommon.CssHoverReduce)
+
+  def hover_zoom(self):
+    """  """
+    return self._set_class(CssStylesCommon.CssHoverZoom)
