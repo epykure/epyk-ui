@@ -36,7 +36,6 @@ from epyk.interfaces.components import CompSteppers
 from epyk.interfaces.components import CompTitles
 from epyk.interfaces.components import CompCalendars
 from epyk.interfaces.components import CompPictos
-from epyk.interfaces.studio import CompStudio
 
 
 class Components(object):
@@ -410,20 +409,6 @@ class Components(object):
     This will mainly rely on bootstrap for the display of the different objects in the page.
     """
     return CompLayouts.Layouts(self)
-
-  @property
-  def studio(self):
-    """
-    Description:
-    ------------
-    Group all the business configuration together.
-    This module will rely on the base components available in the UI.
-
-    This will only provide ready to use component for standard business cases.
-
-    TODO: Move this to a dedicated package
-    """
-    return CompStudio.Studio(self)
 
   @property
   def forms(self):
