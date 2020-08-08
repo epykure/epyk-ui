@@ -3,6 +3,7 @@
 
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Modals(object):
@@ -11,6 +12,8 @@ class Modals(object):
 
   def forms(self, html_objs, action, method, header=None, footer=None, helper=None):
     """
+    Description:
+    ------------
     Simple interface to create an html form within a modal
 
     Usage::
@@ -34,7 +37,6 @@ class Modals(object):
     :param html_objs list:
     :param method:
     :param helper:
-    :return:
     """
     if not type(html_objs) == list:
       html_objs = [html_objs]
@@ -47,6 +49,8 @@ class Modals(object):
 
   def disclaimer(self, disc_list, header=None, footer=None, submit=True, validation_text='AGREE', action=None, add_buttons=None, to_html=True, helper=None):
     """
+    Description:
+    ------------
     Disclaimer that will appear as a modal
 
     Usage::
@@ -114,6 +118,8 @@ class Modals(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_pr = html.HtmlEvent.Dialog(self.context.rptObj, text, width, height,  attrs or {}, helper,
                                          options or {}, htmlCode, profile)
     return html_pr

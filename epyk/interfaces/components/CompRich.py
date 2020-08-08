@@ -1,6 +1,9 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
 from epyk.core.css import Defaults as Defaults_css
+from epyk.interfaces import Arguments
 
 
 class Rich(object):
@@ -29,6 +32,8 @@ class Rich(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
                     'red': self.context.rptObj.theme.danger[1], 'green': self.context.rptObj.theme.success[1],
                     'orange': self.context.rptObj.theme.warning[1]}
@@ -94,6 +99,7 @@ class Rich(object):
     :param helper: Optional. The filtering properties for this component
     :param profile: Optional. A flag to set the component performance storage
     """
+    height = Arguments.size(height, unit="px")
     if height is None or height[0] is None:
       height = (Defaults_css.Font.header_size, "px")
     if isinstance(color, bool):
@@ -161,6 +167,8 @@ class Rich(object):
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_cd = html.HtmlDates.CountDownDate(self.context.rptObj, day, month, year, hour, minute, second, label, icon, timeInMilliSeconds, width, height, htmlCode, helper, options or {}, profile)
     return html_cd
 
@@ -187,6 +195,8 @@ class Rich(object):
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_dt = html.HtmlDates.LastUpdated(self.context.rptObj, label, color, width, height, htmlCode, profile)
     return html_dt
 
@@ -208,6 +218,8 @@ class Rich(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"markdown": False, "timestamp": True}
     if options is not None:
       dflt_options.update(options)
@@ -245,6 +257,7 @@ class Rich(object):
     :param extensible:
     :param profile:
     """
+    height = Arguments.size(height, unit="px")
     html_s = html.HtmlInput.Search(self.context.rptObj, text, placeholder, color, height, htmlCode, tooltip,
                                    extensible, options or {}, profile)
     return html_s
@@ -261,6 +274,8 @@ class Rich(object):
     Attributes:
     ----------
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     records = records or []
     html_help = html.HtmlTextComp.SearchResult(self.context.rptObj, records, pageNumber=results_per_page, width=width, height=height, profile=profile, options=options or {})
     return html_help
@@ -290,6 +305,8 @@ class Rich(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_help = html.HtmlTextComp.Composite(self.context.rptObj, schema, width=width, height=height, htmlCode=htmlCode, profile=profile, options=options or {}, helper=helper)
     return html_help
 
@@ -307,6 +324,8 @@ class Rich(object):
     :param profile:
     :param options:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'states': {"Done": 'green', 'In Progress': 'orange', 'Blocked': 'red'}}
     if options is not None:
       dflt_options.update(options)
@@ -335,6 +354,8 @@ class Rich(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="%")
     dflt_options = {"markdown": True}
     if options is not None:
       dflt_options.update(options)

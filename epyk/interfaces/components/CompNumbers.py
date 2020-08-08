@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
 from epyk.core import html
 from epyk.core.html import graph
 
 from epyk.core.html import Defaults as defaults_html
 from epyk.core.css import Defaults as defaults_css
+from epyk.interfaces import Arguments
 
 
 class Numbers(object):

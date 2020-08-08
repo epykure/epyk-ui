@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Panels(object):
@@ -36,6 +39,8 @@ class Panels(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0', 'border-radius': '5px',
                                 'color': self.context.rptObj.theme.greys[-1], "background": self.context.rptObj.theme.greys[0]}}
     if options is not None:
@@ -74,6 +79,8 @@ class Panels(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
                                 "border-bottom": "1px solid white"}}
     if options is not None:
@@ -106,6 +113,8 @@ class Panels(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
                                 "border-bottom": "1px solid white"}}
     if options is not None:
@@ -142,6 +151,8 @@ class Panels(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {
       "css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
                  "border-bottom": "1px solid white"}}
@@ -179,6 +190,8 @@ class Panels(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
                  'border-radius': '10px 10px 0 0'}}
     if options is not None:
@@ -211,6 +224,8 @@ class Panels(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if htmlObjs is not None and not isinstance(htmlObjs, list):
       htmlObjs = [htmlObjs]
     html_slide = html.HtmlContainer.PanelSlide(self.context.rptObj, htmlObjs, title, color, width, height,
@@ -251,6 +266,8 @@ class Panels(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_split = html.HtmlContainer.PanelSplit(self.context.rptObj, width, height, left_width, left, right, resizable, helper, profile)
     return html_split
 
@@ -283,6 +300,8 @@ class Panels(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     chip = self.context.rptObj.ui.chips(items, category, width=width, height=height, htmlCode=htmlCode, helper=helper, options=options, profile=profile)
     chip.input.style.css.display = False
     return chip
@@ -300,6 +319,8 @@ class Panels(object):
     :param profile: Optional. A flag to set the component performance storage
     :param helper:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"position": 'top'}
     if options is not None:
       dflt_options.update(options)
@@ -317,6 +338,7 @@ class Panels(object):
 
 
 class Slidings(object):
+
   def __init__(self, context):
     self.context = context
 

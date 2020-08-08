@@ -1,11 +1,13 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import os
+
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Network(object):
-  """
-
-  """
 
   def __init__(self, context):
     self.context = context
@@ -37,6 +39,8 @@ class Network(object):
     :param height:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'readonly': True, 'markdown': True, 'dated': True}
     if options is not None:
       dflt_options.update(options)
@@ -44,6 +48,8 @@ class Network(object):
 
   def chat(self, htmlCode, recordSet=None, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
     """
+    Description:
+    ------------
 
     Underlying HTML Objects:
 
@@ -56,6 +62,8 @@ class Network(object):
     :param height:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'readonly': False, 'markdown': True, 'dated': True}
     if options is not None:
       dflt_options.update(options)
@@ -63,6 +71,8 @@ class Network(object):
 
   def bot(self, htmlCode, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
     """
+    Description:
+    ------------
 
     Underlying HTML Objects:
 
@@ -75,6 +85,8 @@ class Network(object):
     :param height:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {'readonly': False, 'markdown': True, 'dated': True}
     if options is not None:
       dflt_options.update(options)
@@ -113,6 +125,8 @@ class Network(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"time": 1000, 'delay': 1000, 'type': type, 'close': True, 'markdown': True,
                     'classes': ['alert', 'alert-%s' % type]}
     if options is not None:
@@ -121,9 +135,9 @@ class Network(object):
 
   def danger(self, value="", htmlCode=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
     """
-
     Description:
-    ------------Function to add when the python run some tags to put on the top of your report messages.
+    ------------
+    Function to add when the python run some tags to put on the top of your report messages.
 
     The type of the messages can be different according to its criticality.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
@@ -271,6 +285,8 @@ class Network(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"dated": True, 'markdown': True}
     if options is not None:
       dflt_options.update(options)
@@ -290,6 +306,8 @@ class Network(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"dated": True, 'markdown': True}
     if options is not None:
       dflt_options.update(options)
@@ -312,19 +330,30 @@ class Network(object):
       rptObj.ui.network.dropfile()
 
     Related Pages:
-Attributes:
+
+
+    Attributes:
     ----------
     :param placeholder:
     :param tooltip:
     :param profile:
-
-    :rtype: html.HtmlNetwork.DropFile
-
-    :return:
     """
     return html.HtmlNetwork.DropFile(self.context.rptObj, placeholder, tooltip, options, profile)
 
   def upload(self, icon=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param icon:
+    :param width:
+    :param height:
+    :param htmlCode:
+    :param options:
+    :param profile:
+    """
     if icon is None:
       icon = "fas fa-file-upload"
     file = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, profile=profile)
@@ -351,7 +380,6 @@ Attributes:
       icon = mapped_file[extension]
     if icon is None:
       icon = "fas fa-file-upload"
-
     file = self.context.rptObj.ui.icons.awesome(icon, width=width, height=height, htmlCode=htmlCode, profile=profile)
     file.tooltip(r"Download file: %(path)s\%(name)s" % {"path": path, "name": name})
     if path is not None:

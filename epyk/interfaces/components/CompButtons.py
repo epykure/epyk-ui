@@ -17,6 +17,7 @@ import os
 
 from epyk.core import html
 from epyk.core.css import Defaults_css
+from epyk.interfaces import Arguments
 
 
 class Buttons(object):
@@ -30,7 +31,6 @@ class Buttons(object):
     ----------
     :param recordSet:
     :param column:
-    :return:
     """
     data = None
     is_converted = False
@@ -68,17 +68,17 @@ class Buttons(object):
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the button
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param icon: Optional. A string with the value of the icon to display from font-awesome
-    :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: Optional. A string with the value of the tooltip
+    :param text: String. Optional. The value to be displayed to the button
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: String. Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
-    :param options: Optional. Specific Python options available for this component
-
-    :return: The Button HTML object
+    :param options: Dictionary. Optional. Specific Python options available for this component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     text = self.context.rptObj.py.encode_html(text)
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode, tooltip=tooltip, profile=profile, options=options)
     if align == "center":
@@ -90,20 +90,28 @@ class Buttons(object):
     """
     Description:
     ------------
+    Display a button on the page regardless the current layoyt of components
+
+    Usage::
+
+      rptObj.ui.buttons.absolute("Test")
 
     Attributes:
     ----------
-    :param text:
+    :param text: String. Optional. The value to be displayed to the button
     :param size_notch:
-    :param top:
-    :param left:
-    :param align:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param top: Tuple. Optional. A tuple with the integer for the component's distance to the top of the page
+    :param left: Tuple. Optional. A tuple with the integer for the component's distance to the left of the page
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
+    left = Arguments.size(left, unit="%")
+    top = Arguments.size(top, unit="%")
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode, tooltip=None, profile=profile, options=options)
     html_button.style.position = "absolute"
     html_button.style.display = "block"
@@ -119,23 +127,29 @@ class Buttons(object):
       html_button.style.css.display = "inline-block"
     return html_button
 
-  def small(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None,
-             profile=None, options=None):
+  def small(self, text="", icon=None, width=(None, "%"), height=(None, "px"), htmlCode=None, tooltip=None, profile=None, options=None):
     """
     Description:
     ------------
+    Standard button with a small layout
+
+    Usage::
+
+      rptObj.ui.buttons.small("Small button")
 
     Attributes:
     ----------
-    :param text:
-    :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param tooltip:
-    :param profile:
-    :param options:
+    :param text: String. Optional. The value to be displayed to the button
+    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: String. Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Dictionary. Optional. Specific Python options available for this component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
                                          tooltip=tooltip, profile=profile, options=options)
     html_button.style.css.line_height = 12
@@ -171,9 +185,9 @@ class Buttons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
-
-    :return: The Button HTML object
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_button = html.HtmlButton.Button(self.context.rptObj, text, icon, width, height, htmlCode=htmlCode,
                                          tooltip=tooltip, profile=profile, options=options)
     html_button.style.add_classes.button.important()
@@ -183,6 +197,7 @@ class Buttons(object):
     """
     Description:
     -----------
+    Add a validate button with a predefined icon from font awesome
 
     Usage::
 
@@ -207,6 +222,8 @@ class Buttons(object):
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-check-circle', width, height, htmlCode=htmlCode,
                                       tooltip=tooltip, profile=profile, options=options)
     return html_but
@@ -239,9 +256,9 @@ class Buttons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
-
-    :return: The Button HTML object
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-trash-alt', width, height, htmlCode=htmlCode,
                              tooltip=tooltip, profile=profile, options=options)
     return html_but
@@ -250,6 +267,7 @@ class Buttons(object):
     """
     Description:
     -----------
+    Add a phone button with a predefined icon from font-awesome
 
     Usage::
 
@@ -273,9 +291,9 @@ class Buttons(object):
     :param tooltip: Optional. A string with the value of the tooltip
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
-
-    :return: The Button HTML object
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_button = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-phone', width, height, htmlCode=htmlCode,
                                          tooltip=tooltip, profile=profile, options=options)
     return html_button
@@ -284,6 +302,7 @@ class Buttons(object):
     """
     Description:
     ------------
+    Add a mail button with a predefined icon from font-awesome
 
     Usage::
 
@@ -308,6 +327,8 @@ class Buttons(object):
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_but = html.HtmlButton.Button(self.context.rptObj, text, 'fas fa-envelope', width, height, htmlCode=htmlCode,
                                       tooltip=tooltip, profile=profile, options=options)
     return html_but
@@ -351,6 +372,8 @@ class Buttons(object):
     :param radioType:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     recordSet = recordSet or []
 
     if column is not None:
@@ -367,6 +390,7 @@ class Buttons(object):
     """
     Description:
     ------------
+    Add a toggle component
 
     Usage::
 
@@ -382,14 +406,17 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
 
     Attributes:
     ----------
-    :param recordSet:
-    :param label:
-    :param color:
-    :param width: Optional. Integer for the component width
+    :param recordSet: Dictionary.
+    :param label: String. Optional. The toggle static label displayed
+    :param color: String. Optional.
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param height: Optional. Integer for the component height
-    :param htmlCode:
-    :param profile:
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_toggle = html.HtmlRadio.Switch(self.context.rptObj, recordSet, label, color, width, height, htmlCode, profile)
     return html_toggle
 
@@ -426,6 +453,8 @@ http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
     :param icon:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if dfColumn is not None:
       if has_pandas and issubclass(type(records), pd.DataFrame):
         # if globalFilter:
@@ -476,6 +505,8 @@ Attributes:
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_but = html.HtmlButton.CheckButton(self.context.rptObj, flag, tooltip, width, height, icon, label, htmlCode, options or {}, profile)
     return html_but
 
@@ -509,22 +540,33 @@ Attributes:
     :param profile:
     :param options:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_button = html.HtmlButton.ButtonMenu(self.context.rptObj, record, text, icon, width, height, htmlCode=htmlCode,
                                               tooltip=tooltip, profile=profile, options=options)
     return html_button
 
   def store(self, image, url, width=(7.375, "rem"), height=(2.375, "rem"), align="left"):
     """
-
+    Description:
+    -----------
+    Button for a badge whihc point to the various application stores (Google and Apple)
     The badge must be issued from teh Google play store
 
-    https://play.google.com/intl/en_us/badges/
+    Related Pages:
 
-    :param image:
-    :param url:
-    :param width:
-    :param height:
+      https://play.google.com/intl/en_us/badges/
+
+    Attributes:
+    ----------
+    :param image: String. The url of the image
+    :param url: String. The link to the app in the store
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. The text-align property within this component
     """
+    width = Arguments.size(width, unit="rem")
+    height = Arguments.size(height, unit="rem")
     split_url = os.path.split(image)
     badge = self.context.rptObj.ui.img(split_url[1], path=split_url[0], width=width, height=height)
     badge.style.css.display = "inline-block"

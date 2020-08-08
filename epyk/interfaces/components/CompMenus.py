@@ -1,17 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
 from epyk.core import html
 from epyk.core.css import Defaults_css
+from epyk.interfaces import Arguments
 
 
 class Menus(object):
   def __init__(self, context):
     self.context = context
 
-  def top(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
-           htmlCode=None, helper=None, options=None, profile=None):
+  def top(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Usage::
 
@@ -30,6 +29,8 @@ class Menus(object):
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
     http://astronautweb.co/snippet/font-awesome/
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     menu_li, menu_title, menu_items = [], [], []
     for k in data:
       menu_li.append(k["value"])
@@ -51,8 +52,7 @@ class Menus(object):
     col.css({"background-color": "#333", "position": "fixed", "margin": 0, "top": 0, "left": 0, "color": 'white'})
     return col
 
-  def bottom(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
-           htmlCode=None, helper=None, options=None, profile=None):
+  def bottom(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Usage::
 
@@ -175,8 +175,7 @@ class Menus(object):
       div += self.context.rptObj.ui.icons.fluent(icon=d, text="", width=(15, 'px'), options={"icon_family": 'fluent'})
     return div
 
-  def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'),
-              htmlCode=None, helper=None, options=None, profile=None):
+  def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -202,6 +201,8 @@ class Menus(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dfl_button_css = {"button_css": {"border-radius": 0, "border": "0px solid black"}}
     options = options or {}
     dfl_button_css.update(options)
@@ -360,6 +361,8 @@ class Menus(object):
     :param profile:
     :return:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_pr = html.HtmlEvent.Menu(self.context.rptObj, data, width, height,  attrs or {}, helper, options or {}, htmlCode, profile)
     return html_pr
 
@@ -385,5 +388,7 @@ Attributes:
     :param visible: Optional.
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_menu = html.HtmlMenu.ContextMenu(self.context.rptObj, records or [], width, height, visible, options or {}, profile)
     return html_menu

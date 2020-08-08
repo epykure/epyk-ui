@@ -393,11 +393,15 @@ class Layouts(object):
 
   def dialogs(self, record=None, width=(100, "%"), height=(200, "px"), helper=None, profile=None):
     """
+    Description:
+    ------------
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Dialog`
 
+    Attributes:
+    ----------
     :param record:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -493,7 +497,7 @@ class Layouts(object):
     html_obj = html.HtmlContainer.Header(self.context.rptObj, htmlObjs or [], width, height, htmlCode, helper, options or {}, profile)
     return html_obj
 
-  def section(self, htmlObjs=None, width=(100, "%"),  height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def section(self, htmlObjs=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------

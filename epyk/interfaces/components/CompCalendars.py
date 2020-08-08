@@ -5,6 +5,7 @@ import datetime
 
 from epyk.core import html
 from epyk.core.css import Defaults
+from epyk.interfaces import Arguments
 
 
 class Calendar(object):
@@ -17,16 +18,22 @@ class Calendar(object):
     Description:
     ------------
 
+    Usage::
+
+
     Attributes:
     ----------
     :param month:
     :param content:
     :param width:
     :param height:
+    :param align:
     :param options:
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     today = datetime.date.today()
     month = month or today.month
     content = content or {}
@@ -69,16 +76,22 @@ class Calendar(object):
     Description:
     ------------
 
+    Usage::
+
+
     Attributes:
     ----------
     :param minutes:
-    :param width:
-    :param height:
-    :param align:
-    :param options:
-    :param htmlCode:
-    :param profile:
+    :param text: String. Optional. The value to be displayed to the timer
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. The text-align property within this component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_timer = html.HtmlDates.Timer(self.context.rptObj, minutes, text, width, height, align, options, htmlCode, profile)
     return html_timer
 
@@ -86,6 +99,9 @@ class Calendar(object):
     """
     Description:
     ------------
+
+    Usage::
+
 
     Attributes:
     ----------
@@ -123,14 +139,17 @@ class Calendar(object):
     Description:
     ------------
 
+    Usage::
+
+
     Attributes:
     ----------
     :param records:
-    :param width:
-    :param height:
-    :param align:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align: String. The text-align property within this component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     data = []
     if isinstance(records, dict):
@@ -145,6 +164,8 @@ class Calendar(object):
           row = {"name": rec, "color": self.context.rptObj.theme.charts[i]}
         data.append(row)
     dfl_options = {"style": {"vertical-align": 'middle', "border-radius": '5px', 'width': '10px', 'height': '10px', 'display': 'inline-block', 'margin-right': '2px'}}
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if options is not None:
       dfl_options.update(options)
     html_legend = html.HtmlOthers.Legend(self.context.rptObj, data, width, height, align, dfl_options, profile)
@@ -155,6 +176,9 @@ class Calendar(object):
     Description:
     ------------
     Display a forecast based on a dictionary containing the values for several months
+
+    Usage::
+
 
     Attributes:
     ----------
@@ -226,6 +250,9 @@ class Calendar(object):
     """
     Description:
     ------------
+
+    Usage::
+
 
     Related Pages:
 

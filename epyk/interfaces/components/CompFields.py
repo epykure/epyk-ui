@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 import datetime
 
@@ -12,6 +14,7 @@ except:
 
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Fields(object):
@@ -43,11 +46,15 @@ class Fields(object):
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
     :param color: Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
     :param helper: Optional. A tooltip helper
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dftl_options = {'dateFormat': 'yy-mm-dd'}
     if options is not None:
       dftl_options.update(options)
@@ -77,12 +84,16 @@ class Fields(object):
     ----------
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param color: Optional. The font color in the component. Default inherit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
     :param helper: Optional. A tooltip helper
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dftl_options = {'dateFormat': 'yy-mm-dd'}
     if options is not None:
       dftl_options.update(options)
@@ -114,12 +125,15 @@ class Fields(object):
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
     :param color: Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
-    :param filters: Optional. The filtering properties for this component
     :param helper: Optional. A tooltip helper
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dftl_options = {'dateFormat': 'yy-mm-dd'}
     if options is not None:
       dftl_options.update(options)
@@ -127,8 +141,7 @@ class Fields(object):
     html_cob = html.HtmlDates.DatePicker(self.context.rptObj, value, label, icon, width, height, color, htmlCode, profile, dftl_options, helper)
     return html_cob
 
-  def now(self, deltatime=0, label=None, icon="far fa-clock", color=None, htmlCode=None, profile=None,
-          options=None, helper=None):
+  def now(self, deltatime=0, label=None, icon="far fa-clock", color=None, htmlCode=None, profile=None, options=None, helper=None):
     """
     Description:
     ------------
@@ -195,8 +208,7 @@ class Fields(object):
     html_dt = html.HtmlDates.TimePicker(self.context.rptObj, value, label, icon, color, htmlCode, profile, options or {}, helper)
     return html_dt
 
-  def input(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-            height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def input(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -220,11 +232,12 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options or {}, profile)
     return html_input
 
-  def autocomplete(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-            height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def autocomplete(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -248,6 +261,8 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldAutocomplete(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options or {}, profile)
     return html_input
 
@@ -276,6 +291,8 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.readonly(True)
     return html_input
@@ -307,13 +324,15 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldInput(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.input.readonly(True)
     html_input.style.css.display = False
     return html_input
 
-  def integer(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def integer(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+              helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -337,11 +356,13 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldInteger(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options or {}, profile)
     return html_input
 
-  def file(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def file(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+           helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -365,11 +386,13 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldFile(self.context.rptObj, value, label, placeholder, icon, width, height, htmlCode, helper, options, profile)
     return html_input
 
-  def password(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def password(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+               helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -393,12 +416,14 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldPassword(self.context.rptObj, value, label, placeholder, icon, width, height,
                                               htmlCode, helper, options or {}, profile)
     return html_input
 
-  def textarea(self, value="", label=None, placeholder="", icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def textarea(self, value="", label=None, placeholder="", icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+               helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -422,12 +447,14 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldTextArea(self.context.rptObj, value, label, placeholder, icon, width, height,
                                               htmlCode, helper, options or {}, profile)
     return html_input
 
-  def checkbox(self, value=False, label=None, icon=None, width=(100, "%"), height=(None, "px"),
-               htmlCode=None, helper=None, options=None, profile=None):
+  def checkbox(self, value=False, label=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None, helper=None,
+               options=None, profile=None):
     """
     Description:
     ------------
@@ -454,11 +481,13 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldCheckBox(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, options or {}, profile)
     return html_input
 
-  def radio(self, value=False, label=None, group_name=None, icon=None, width=(100, "%"),
-              height=(None, "px"), htmlCode=None, helper=None, options=None, profile=None):
+  def radio(self, value=False, label=None, group_name=None, icon=None, width=(100, "%"), height=(None, "px"), htmlCode=None,
+            helper=None, options=None, profile=None):
     """
     Description:
     ------------
@@ -489,6 +518,8 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.Radio(self.context.rptObj, value, label, group_name, icon, width, height, htmlCode, helper, options or {}, profile)
     html_input.label.css({"width": '100px', 'float': 'left'})
     html_input.css({"display": 'inline-block'})
@@ -532,6 +563,8 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_input = html.HtmlInput.FieldRange(self.context.rptObj, value, min, max, step, label, placeholder, icon, width,
                                            height, htmlCode, helper, options or {}, profile)
     return html_input
@@ -560,6 +593,8 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if options is not None and 'align' in options:
       self.context.rptObj.css.customText('.filter-option-inner-inner {text-align: %s}' % options['align'])
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, value, label, icon, width, height, htmlCode, helper, options or {}, profile)
@@ -592,6 +627,8 @@ class Fields(object):
     """
     import calendar
 
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if value is None:
       dt = datetime.datetime.today()
       value = dt.month
@@ -628,6 +665,8 @@ class Fields(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dt = datetime.datetime.today()
     if value is None:
       value = datetime.datetime.utcnow().isocalendar()[1]
@@ -664,11 +703,13 @@ class Fields(object):
     :param value:
     :param label:
     :param icon:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dt = datetime.datetime.today()
     if value is None:
       value = dt.year
@@ -700,13 +741,15 @@ class Fields(object):
     :param value:
     :param label:
     :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     import calendar
 
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if value is None:
       dt = datetime.datetime.today()
       value = dt.weekday()
@@ -721,6 +764,7 @@ class Fields(object):
 
 
 class Timelines(object):
+
   def __init__(self, context):
     self.context = context
 
@@ -729,14 +773,17 @@ class Timelines(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
     :param start_date:
     :param end_date:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(start_date, datetime.datetime):
       start_date = datetime.datetime(*[int(x) for x in start_date.split("-")])
@@ -766,14 +813,17 @@ class Timelines(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
     :param start_date:
     :param days:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     today, remaining_days = datetime.datetime.now(), 0
     if not isinstance(start_date, datetime.datetime):
@@ -805,13 +855,16 @@ class Timelines(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
     :param start_date:
-    :param width:
-    :param height:
-    :param options:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     today, remaining_days = datetime.datetime.now(), 0
     if not isinstance(start_date, datetime.datetime):
@@ -840,18 +893,23 @@ class Timelines(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
     :param value:
     :param label:
     :param icon:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode:
     :param helper:
-    :param options:
-    :param profile:
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     values = ["Documentation", 'Analysis', 'Design', 'Implementation', 'Training']
     html_input = html.HtmlInput.FieldSelect(self.context.rptObj, values, label, icon, width, height, htmlCode, helper,
                                             options or {}, profile)
@@ -859,19 +917,22 @@ class Timelines(object):
       html_input.input.selected = value
     return html_input
 
-  def milestone(self, completion_date, icon=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, profile=None):
+  def milestone(self, completion_date, icon=None, width=(25, 'px'), height=(25, 'px'), htmlCode=None, options=None, profile=None):
     """
     Description:
     -----------
+
+    Usage::
+
 
     Attributes:
     ----------
     :param completion_date:
     :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     today, remaining_days = datetime.datetime.now(), 0
     if not isinstance(completion_date, datetime.datetime):
@@ -900,14 +961,17 @@ class Timelines(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
     :param time:
     :param icon:
-    :param width:
-    :param height:
-    :param htmlCode:
-    :param profile:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     dflt_options = {"working_hours": 8}
     if options is not None:
@@ -923,13 +987,16 @@ class Timelines(object):
     Description:
     -----------
 
+    Usage::
+
+
     Attributes:
     ----------
-    :param value:
-    :param width:
-    :param htmlCode:
-    :param options:
-    :param profile:
+    :param value: Float. The workload percentage
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     dflt_options = {"working_hours": 8}
     if options is not None:

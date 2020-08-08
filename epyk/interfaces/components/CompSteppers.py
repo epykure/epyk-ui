@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Steppers(object):
@@ -12,7 +13,7 @@ class Steppers(object):
   def stepper(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
     """
     Description:
-
+    ------------
     Entry point for the stepper object
 
     Usage::
@@ -30,6 +31,8 @@ class Steppers(object):
     :param color: Optional.
     :param options: Optional. Specific Python options available for this component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dft_options = {"line": True}
     if options is not None:
       dft_options.update(options)
@@ -42,18 +45,54 @@ class Steppers(object):
     return st
 
   def arrow(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param records:
+    :param width:
+    :param height:
+    :param color:
+    :param options:
+    """
     dft_options = {"shape": 'arrow'}
     if options is not None:
       dft_options.update(options)
     return self.stepper(records, width, height, color, dft_options)
 
   def rectangle(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param records:
+    :param width:
+    :param height:
+    :param color:
+    :param options:
+    """
     dft_options = {"shape": 'rectangle'}
     if options is not None:
       dft_options.update(options)
     return self.stepper(records, width, height, color, dft_options)
 
   def triangle(self, records, width=(100, '%'), height=(70, 'px'), color=None, options=None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param records:
+    :param width:
+    :param height:
+    :param color:
+    :param options:
+    """
     dft_options = {"shape": 'rectangle'}
     if options is not None:
       dft_options.update(options)
@@ -62,7 +101,7 @@ class Steppers(object):
   def vertical(self, records, shape='circle',  width=(100, '%'), height=(70, 'px'), color=None, options=None):
     """
     Description:
-
+    ------------
     Entry point for the stepper object
 
     Usage::
@@ -80,6 +119,8 @@ class Steppers(object):
     :param color: Optional.
     :param options: Optional. Specific Python options available for this component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dft_options = {"line": False, "shape": shape}
     if options is not None:
       dft_options.update(options)

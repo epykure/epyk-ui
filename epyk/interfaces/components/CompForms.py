@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Forms(object):
@@ -20,8 +21,6 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param action:
-    :param method:
     :param helper:
     """
     form = html.HtmlContainer.Form(self.context.rptObj, [], helper)
@@ -44,8 +43,6 @@ class Forms(object):
 
     Attributes:
     ----------
-    :param action:
-    :param method:
     :param htmlCode:
     :param helper:
     """

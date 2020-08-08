@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Drawers(object):
@@ -13,6 +16,9 @@ class Drawers(object):
     ------------
     Bespoke drawer with handle on the right.
 
+    Usage::
+
+
     Attributes:
     ----------
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -21,6 +27,8 @@ class Drawers(object):
     :param profile: Optional. A flag to set the component performance storage
     :param helper:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)
     h_drawer.style.css.min_height = 200
     return h_drawer
@@ -31,6 +39,9 @@ class Drawers(object):
     ------------
     Bespoke drawer with handle on the left.
 
+    Usage::
+
+
     Attributes:
     ----------
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -39,6 +50,8 @@ class Drawers(object):
     :param profile: Optional. A flag to set the component performance storage
     :param helper:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"side": "left"}
     if options is not None:
       dflt_options.update(options)
@@ -51,6 +64,9 @@ class Drawers(object):
     ------------
     Bespoke drawer with handle on the left.
 
+    Usage::
+
+
     Attributes:
     ----------
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -59,6 +75,8 @@ class Drawers(object):
     :param profile: Optional. A flag to set the component performance storage
     :param helper:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"side": "right"}
     if options is not None:
       dflt_options.update(options)
@@ -67,9 +85,23 @@ class Drawers(object):
 
   def multi(self, component, width=(100, '%'), height=(200, 'px'), options=None, profile=None, helper=None):
     """
+    Description:
+    ------------
 
-    :return:
+    Usage::
+
+
+    Attributes:
+    ----------
+    :param component:
+    :param width:
+    :param height:
+    :param options:
+    :param profile:
+    :param helper:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"side": "right"}
     if options is not None:
       dflt_options.update(options)
@@ -83,6 +115,9 @@ class Drawers(object):
     Bespoke drawer without handle.
     The event to display the panel will be attached to the component.
 
+    Usage::
+
+
     Attributes:
     ----------
     :param component: Html component. Object in charge of managing the panel display
@@ -92,6 +127,8 @@ class Drawers(object):
     :param profile: Optional. A flag to set the component performance storage
     :param helper:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     options["side"] = 'right'
     h_drawer = html.HtmlDrawer.Drawer(self.context.rptObj, width, height, options, helper, profile)

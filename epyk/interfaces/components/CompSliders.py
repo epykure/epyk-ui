@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Sliders(object):
@@ -50,6 +53,8 @@ class Sliders(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     if isinstance(number, list):
       minimum, maximum = min(number), max(number)
       number = minimum
@@ -76,6 +81,8 @@ class Sliders(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     html_slider = html.HtmlEvent.SliderDate(self.context.rptObj, value, min, max, width, height, attrs or {}, helper,
                                             options or {}, htmlCode, profile)
@@ -101,6 +108,8 @@ class Sliders(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     options['range'] = True
     html_slider = html.HtmlEvent.SliderDates(self.context.rptObj, [value1, value2], min, max, width, height, attrs or {}, helper,
@@ -126,6 +135,8 @@ class Sliders(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     options = options or {}
     options['range'] = True
     html_slider = html.HtmlEvent.Range(self.context.rptObj, values, min, max, width, height, attrs or {}, helper,
@@ -162,6 +173,8 @@ class Sliders(object):
     :param helper:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_pr = html.HtmlEvent.ProgressBar(self.context.rptObj, number, total, width, height,  attrs or {}, helper,
                                          options or {}, htmlCode, profile)
     return html_pr
@@ -184,6 +197,8 @@ class Sliders(object):
     :param options:
     :param profile:
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     progress = self.progressbar(number, total, width, height, htmlCode, attrs, helper, options, profile)
     progress.style.css.border_radius = '50px'
     progress.style.css.background = self.context.rptObj.theme.greys[4]

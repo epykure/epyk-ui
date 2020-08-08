@@ -1,7 +1,10 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
 from epyk.core.js.packages import JsFontAwesome
 from epyk.core.css import Defaults as Defaults_css
+from epyk.interfaces import Arguments
 
 
 class Icons(object):
@@ -35,6 +38,8 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, options or {}, profile)
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline"
@@ -62,6 +67,8 @@ class Icons(object):
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_edit = html.HtmlButton.IconEdit(self.context.rptObj, position, icon, text, tooltip, width, height, htmlCode, options or {}, profile)
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline-block"
@@ -478,7 +485,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -511,7 +518,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -544,7 +551,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -577,7 +584,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -610,7 +617,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -643,7 +650,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -676,7 +683,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -709,7 +716,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -742,7 +749,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -775,7 +782,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -786,8 +793,7 @@ class Icons(object):
     icon.click([self.context.rptObj.js.navigateTo(url)])
     return icon
 
-  def mail(self, text=None, url="", position=None, tooltip="Share by mail",
-                    width=(25, 'px'), htmlCode=None, profile=None):
+  def mail(self, text=None, url="", position=None, tooltip="Share by mail", width=(25, 'px'), htmlCode=None, profile=None):
     """
     Description:
     ------------
@@ -808,7 +814,7 @@ class Icons(object):
     :param url:
     :param position:
     :param tooltip:
-    :param width:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param htmlCode:
     :param profile:
     """
@@ -842,6 +848,7 @@ class Icons(object):
     :param htmlCode:
     :param profile:
     """
+    width = Arguments.size(width, unit="px")
     dftl_options = {"true": icons[0], "false": icons[1]}
     dftl_options.update(options or {})
     # report, position, icon, text, tooltip, width, height, htmlCode, profile
@@ -871,7 +878,6 @@ class Icons(object):
     ----------
     :param align:
     :param format:
-    :rtype: html.HtmlImage.Image
     """
     if format == 'logo':
       img, width, height = "epyklogo.ico", (32, 'px'), (32, 'px')
@@ -900,8 +906,9 @@ class Icons(object):
 
     Attributes:
     ----------
-
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     """
+    width = Arguments.size(width, unit="px")
     bar = html.HtmlEvent.SignIn(self.context.rptObj, text, width, icon)
     return bar
 
@@ -914,14 +921,17 @@ class Icons(object):
     Usage::
 
       Related Pages:
-Attributes:
+
+    Attributes:
     ----------
     :param records:
     :param color:
-    :param width:
-    :param height:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options:
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     records = records or []
     options = options or {}
     html_opts = html.HtmlEvent.OptionsBar(self.context.rptObj, records, width, height, color, options)
@@ -932,11 +942,12 @@ Attributes:
     Description:
     ------------
 
-Attributes:
+    Attributes:
     ----------
     :param img:
-    :param width:
-    :param height:
+    :param name:
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param options:
     :param profile:
     """
@@ -944,10 +955,9 @@ Attributes:
     if height[0] is None:
       height = width
     avatar = self.context.rptObj.ui.div("&nbsp;", width=width, height=height, options=options, profile=profile)
-    avatar.css({"padding": '5px', 'border-radius': '30px',
-              'background-repeat': 'no-repeat',
-              'background-position': 'center', 'background-size': 'cover', 'cursor': 'pointer',
-              'background-image': 'url(%s)' % img})
+    avatar.css({"padding": '5px', 'border-radius': '30px', 'background-repeat': 'no-repeat',
+                'background-position': 'center', 'background-size': 'cover', 'cursor': 'pointer',
+                'background-image': 'url(%s)' % img})
     if name is not None:
       avatar.tooltip(name)
     return avatar
@@ -982,11 +992,15 @@ Attributes:
     :param icon: Optional, A String with the icon to display from font-awesome
     :param background_color: Optional, The background color of the badge
     :param color: Optional, The text color of the badge
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param url:
     :param tooltip: Optional, The text to display in the tooltip
     :param options:
     :param profile: Optional, A boolean to store the performances for each components
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     if background_color is None:
       background_color = self.context.rptObj.theme.greys[0]
     if color is None:
@@ -1020,11 +1034,15 @@ Attributes:
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
     :param color: Optional. The font color in the component. Default inherit
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
     :param helper: Optional. A tooltip helper
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     dftl_options = {'dateFormat': 'yy-mm-dd'}
     if options is not None:
       dftl_options.update(options)

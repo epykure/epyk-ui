@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
 from epyk.core.css import Colors
@@ -5,6 +7,7 @@ from epyk.interfaces import Arguments
 
 
 class Images(object):
+
   def __init__(self, context):
     self.context = context
 
@@ -196,7 +199,7 @@ class Images(object):
     :param options:
     """
     width = Arguments.size(width)
-
+    height = Arguments.size(height)
     if height[0] is not None and width[1] == '%':
       width = ("auto", '')
     html_image = html.HtmlImage.Image(self.context.rptObj, image, path, align, htmlCode, width, height, profile, options or {})
@@ -236,7 +239,6 @@ class Images(object):
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-
     options = options or {}
     status_map = {
       True: self.context.rptObj.theme.success[1],
@@ -312,7 +314,6 @@ class Images(object):
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-
     img = self.img(image, width=(width[0]-10, 'px'), height=(100, "px"), path=path)
     title = self.context.rptObj.ui.title(title, level=2)
     highlight = self.context.rptObj.ui.texts.span(name, width=(50, "px"), height=(20, 'px'))
@@ -360,7 +361,6 @@ class Images(object):
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-
     html_id = html.HtmlImage.AnimatedImage(self.context.rptObj, image, text, title, url, path, width, height, options, profile)
     return html_id
 
@@ -394,7 +394,6 @@ class Images(object):
     """
     width = Arguments.size(width)
     height = Arguments.size(height, "px")
-
     if height[1] == '%':
       raise Exception("This height cannot be in percentage")
 
@@ -425,7 +424,6 @@ class Images(object):
     :param profile:
     """
     top = Arguments.size(top, "px")
-
     html_emoji = html.HtmlImage.Emoji(self.context.rptObj, symbole, top, profile)
     return html_emoji
 
@@ -457,7 +455,6 @@ class Images(object):
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-
     options = options or {}
     options['icon_family'] = family or 'font-awesome'
     html_icon = html.HtmlImage.Icon(self.context.rptObj, icon, width=width, height=height, color=color, tooltip=tooltip,
@@ -504,7 +501,6 @@ class Images(object):
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-
     if background_color is None:
       background_color = self.context.rptObj.theme.greys[0]
     if color is None:
@@ -539,7 +535,6 @@ class Images(object):
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
-
     div = self.context.rptObj.ui.div(code, width=width, height=height, options=options, helper=helper, profile=profile)
     div.style.css.background_color = code
     div.style.css.line_height = "%s%s" % (height[0], height[1])

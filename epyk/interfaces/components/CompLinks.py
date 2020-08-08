@@ -1,10 +1,12 @@
-
-import importlib
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Links(object):
+
   def __init__(self, context):
     self.context = context
 
@@ -36,12 +38,10 @@ class Links(object):
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
+    height = Arguments.size(height, unit="px")
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
-
-    #if url.startswith("http"):
-    #  url = "/%s" % url
     html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
     return html_link
 
@@ -66,11 +66,11 @@ class Links(object):
     :param profile:
     :return:
     """
+    height = Arguments.size(height, unit="px")
     dft_options = {"target": '_blank'}
     if options is not None:
       dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration,
-                                            htmlCode, dft_options, profile)
+    html_link = html.HtmlLinks.ExternalLink(self.context.rptObj, text, url, icon, helper, height, decoration, htmlCode, dft_options, profile)
     html_link.style.add_classes.button.basic()
     html_link.style.css.padding = "0 10px"
     return html_link
@@ -103,6 +103,7 @@ class Links(object):
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
+    height = Arguments.size(height, unit="px")
     options = options or {}
     if url is not None and not hasattr(url, 'toStr') and url.startswith("www."):
       url = "//%s" % url
@@ -133,5 +134,6 @@ class Links(object):
     :param format: Optional. The downloaded data format
     :param profile: Optional. A flag to set the component performance storage
     """
+    height = Arguments.size(height, unit="px")
     html_data = html.HtmlLinks.DataLink(self.context.rptObj, text, value, width=width, height=height, format=format, profile=profile)
     return html_data

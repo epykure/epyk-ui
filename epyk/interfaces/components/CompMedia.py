@@ -1,8 +1,8 @@
-"""
-Entry point for all the Media components.
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Media(object):
@@ -30,12 +30,15 @@ class Media(object):
     ----------
     :param value: The name of the video
     :param path: Optional. THe path to the video
+    :param align:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. A dictionary with the components properties
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dft_options = {"autoplay": True}
     if options is not None:
       dft_options.update(options)
@@ -72,6 +75,8 @@ class Media(object):
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. A dictionary with the components properties
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dft_options = {"autoplay": True}
     if options is not None:
       dft_options.update(options)
@@ -97,12 +102,15 @@ class Media(object):
     Attributes:
     ----------
     :param link: The youtube link
+    :param align:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param htmlCode: Optional. The component identifier code (for both Python and Javascript)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. A dictionary with the components properties
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"width": "420", "height": "315", "type": "text/html"}
     if '/embed/' not in link:
       link = html.HtmlMedia.Youtube.get_embed_link(link)

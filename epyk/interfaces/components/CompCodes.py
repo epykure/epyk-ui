@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Code(object):
@@ -21,6 +24,9 @@ class Code(object):
 
       https://codemirror.net/index.html
 
+    Usage::
+
+
     Attributes:
     ----------
     :param text: String. The text
@@ -32,6 +38,8 @@ class Code(object):
     :param helper: String. Optional. The helper message
     :param profile: Dictionary. Profiling details
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
@@ -52,6 +60,9 @@ class Code(object):
 
       https://codemirror.net/index.html
 
+    Usage::
+
+
     Attributes:
     ----------
     :param text: String. The text
@@ -63,6 +74,8 @@ class Code(object):
     :param helper: String. Optional. The helper message
     :param profile: Dictionary. Profiling details
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': 'xml', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
@@ -83,6 +96,9 @@ class Code(object):
 
       https://codemirror.net/index.html
 
+    Usage::
+
+
     Attributes:
     ----------
     :param text: String. The text
@@ -94,6 +110,8 @@ class Code(object):
     :param helper: String. Optional. The helper message
     :param profile: Dictionary. Profiling details
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': 'sql', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
@@ -114,6 +132,9 @@ class Code(object):
 
       https://codemirror.net/index.html
 
+    Usage::
+
+
     Attributes:
     ----------
     :param text: String. The text
@@ -125,6 +146,8 @@ class Code(object):
     :param helper: String. Optional. The helper message
     :param profile: Dictionary. Profiling details
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': 'r', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dflt_options.update(options)
@@ -145,6 +168,9 @@ class Code(object):
 
       https://codemirror.net/index.html
 
+    Usage::
+
+
     Attributes:
     ----------
     :param text: String. The text
@@ -156,6 +182,8 @@ class Code(object):
     :param helper: String. Optional. The helper message
     :param profile: Dictionary. Profiling details
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': 'python', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': False}
     if options is not None:
       dflt_options.update(options)
@@ -176,6 +204,9 @@ class Code(object):
 
       https://codemirror.net/index.html
 
+    Usage::
+
+
     Attributes:
     ----------
     :param text: String. The text
@@ -187,6 +218,8 @@ class Code(object):
     :param helper: String. Optional. The helper message
     :param profile: Dictionary. Profiling details
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': 'javascript', 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
       dflt_options.update(options)
@@ -207,6 +240,9 @@ class Code(object):
 
       https://codemirror.net/index.html
 
+    Usage::
+
+
     Attributes:
     ----------
     :param text: String. The text
@@ -218,6 +254,8 @@ class Code(object):
     :param helper: String. Optional. The helper message
     :param profile: Dictionary. Profiling details
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': 'markdown', 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
       dflt_options.update(options)
@@ -238,6 +276,9 @@ class Code(object):
 
       https://codemirror.net/index.html
 
+    Usage::
+
+
     Attributes:
     ----------
     :param text: String. The text
@@ -249,6 +290,8 @@ class Code(object):
     :param helper: String. Optional. The helper message
     :param profile: Dictionary. Profiling details
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': 'rst', 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
       dflt_options.update(options)
@@ -269,6 +312,9 @@ class Code(object):
 
       https://codemirror.net/index.html
 
+    Usage::
+
+
     Attributes:
     ----------
     :param language: String. The language
@@ -281,6 +327,8 @@ class Code(object):
     :param helper: String. Optional. The helper message
     :param profile: Dictionary. Profiling details
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     dflt_options = {"lineNumbers": True, 'mode': language, 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
       dflt_options.update(options)
