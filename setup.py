@@ -16,7 +16,7 @@ def install_required():
 setuptools.setup(
     name="epyk",
     author="epykure",
-    version="1.1.2",
+    version="1.1.10",
     author_email="smith.pyotr@gmail.com",
     description="A simple way to create rich interactive websites and dashboards compatible with modern web frameworks",
     long_description=long_description,
